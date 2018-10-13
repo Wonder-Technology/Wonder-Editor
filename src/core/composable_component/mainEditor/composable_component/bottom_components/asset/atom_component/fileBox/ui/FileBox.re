@@ -29,7 +29,7 @@ let component = ReasonReact.statelessComponent("FileBox");
 let render =
     (
       (_store, dispatchFunc),
-      (dragImg, imgSrc, fileId, fileType, fileName, widge, isSelected),
+      (dragImg, imgSrc, fileId, fileType, fileName, widget, isSelected),
       _self,
     ) => {
   let className = "item-text " ++ (isSelected ? "item-active" : "");
@@ -41,7 +41,7 @@ let render =
     <div className="box-image">
       <img
         src=imgSrc
-        onDragStart=(DragEventBaseUtils.dragStart(fileId, widge, dragImg))
+        onDragStart=(DragEventBaseUtils.dragStart(fileId, widget, dragImg))
       />
     </div>
     <div className> <span> (DomHelper.textEl(fileName)) </span> </div>
@@ -57,7 +57,7 @@ let make =
       ~fileId,
       ~fileType,
       ~fileName,
-      ~widge,
+      ~widget,
       ~isSelected,
       _children,
     ) => {
@@ -65,7 +65,7 @@ let make =
   render: self =>
     render(
       (store, dispatchFunc),
-      (dragImg, imgSrc, fileId, fileType, fileName, widge, isSelected),
+      (dragImg, imgSrc, fileId, fileType, fileName, widget, isSelected),
       self,
     ),
 };

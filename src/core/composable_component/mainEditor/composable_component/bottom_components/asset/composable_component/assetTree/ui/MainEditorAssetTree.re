@@ -3,8 +3,9 @@ open AssetNodeType;
 open AssetTreeNodeType;
 
 module Method = {
-  let _isSelected = id =>
-    AssetUtils.getTargetTreeNodeId |> StateLogicService.getEditorState === id;
+  let _isSelected = nodeId =>
+    AssetUtils.getTargetTreeNodeId
+    |> StateLogicService.getEditorState === nodeId;
 
   let _isActive = () => {
     let editorState = StateEditorService.getState();
@@ -19,9 +20,9 @@ module Method = {
     };
   };
 
-  let _isNotRoot = id =>
+  let _isNotRoot = nodeId =>
     StateEditorService.getState()
-    |> AssetTreeRootEditorService.getRootTreeNodeId != id;
+    |> AssetTreeRootEditorService.getRootTreeNodeId != nodeId;
 
   let handleToggleShowTreeChildren =
       (store, dispatchFunc, targetId, isShowChildren) => {
@@ -51,27 +52,27 @@ module Method = {
       ) => {
     let rec _iterateAssetTreeArray = assetTreeArray =>
       assetTreeArray
-      |> Js.Array.map(({id, type_, isShowChildren, children}) =>
+      |> Js.Array.map(({nodeId, type_, isShowChildren, children}) =>
            switch (type_) {
            | Folder =>
              let {name}: folderResultType =
                StateEditorService.getState()
                |> AssetFolderNodeMapEditorService.getFolderNodeMap
-               |> WonderCommonlib.SparseMapService.unsafeGet(id);
+               |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
              <TreeNode
                key=(DomHelper.getRandomKey())
-               uid=id
+               id=nodeId
                name
-               isSelected=(_isSelected(id))
+               isSelected=(_isSelected(nodeId))
                isActive=(_isActive())
                dragImg
-               widge=(AssetUtils.getWidge())
+               widget=(AssetUtils.getWidget())
                icon="./public/img/package.png"
-               isDragable=(_isNotRoot(id))
+               isDragable=(_isNotRoot(nodeId))
                onSelect=(onSelectFunc(type_))
                onDrop=onDropFunc
-               isWidge=AssetUtils.isWidge
+               isWidget=AssetUtils.isWidget
                isShowChildren
                isHasChildren=(
                  children
@@ -81,7 +82,7 @@ module Method = {
                handleToggleShowTreeChildren=(
                  handleToggleShowTreeChildren(store, dispatchFunc)
                )
-               handleRelationError=AssetTreeEditorService.isTreeNodeRelationError
+               handleRelationError=AssetUtils.isTreeNodeRelationError
                treeChildren=(_iterateAssetTreeArray(children))
              />;
 

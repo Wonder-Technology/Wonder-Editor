@@ -11,10 +11,10 @@ type action =
   | DragDrop(int);
 
 module Method = {
-  let isWidge = startWidge =>
-    switch (startWidge) {
+  let isWidget = startWidget =>
+    switch (startWidget) {
     | None => false
-    | Some(widge) => widge == AssetUtils.getWidge()
+    | Some(widget) => widget == AssetUtils.getWidget()
     };
 
   let isTypeValid = (startId, editorState) =>
@@ -27,35 +27,35 @@ module Method = {
       |> Js.Option.isSome
     };
 
-  let _isTriggerAction = (isWidgeFunc, isTypeValidFunc) => {
-    let (widge, startId) =
+  let _isTriggerAction = (isWidgetFunc, isTypeValidFunc) => {
+    let (widget, startId) =
       StateEditorService.getState()
       |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-    isWidgeFunc(widge)
+    isWidgetFunc(widget)
     && isTypeValidFunc(startId, StateEditorService.getState());
   };
 
-  let handleDragEnter = (isWidgeFunc, isTypeValidFunc, _event) =>
-    _isTriggerAction(isWidgeFunc, isTypeValidFunc) ? DragEnter : Nothing;
+  let handleDragEnter = (isWidgetFunc, isTypeValidFunc, _event) =>
+    _isTriggerAction(isWidgetFunc, isTypeValidFunc) ? DragEnter : Nothing;
 
-  let handleDragLeave = (isWidgeFunc, isTypeValidFunc, event) => {
+  let handleDragLeave = (isWidgetFunc, isTypeValidFunc, event) => {
     ReactEventType.convertReactMouseEventToJsEvent(event)
     |> DomHelper.stopPropagation;
 
-    _isTriggerAction(isWidgeFunc, isTypeValidFunc) ? DragLeave : Nothing;
+    _isTriggerAction(isWidgetFunc, isTypeValidFunc) ? DragLeave : Nothing;
   };
 
   let handleDragOver = event =>
     ReactEventType.convertReactMouseEventToJsEvent(event)
     |> DomHelper.preventDefault;
 
-  let handleDrop = (isWidgeFunc, isTypeValidFunc, event) => {
+  let handleDrop = (isWidgetFunc, isTypeValidFunc, event) => {
     let startId =
       ReactEventType.convertReactMouseEventToJsEvent(event)
-      |> DragUtils.getDragedUid;
+      |> DragUtils.getDragedId;
 
-    _isTriggerAction(isWidgeFunc, isTypeValidFunc) ?
+    _isTriggerAction(isWidgetFunc, isTypeValidFunc) ?
       DragDrop(startId) : DragLeave;
   };
 
@@ -81,10 +81,10 @@ module Method = {
     <div
       style=state.style
       className="texture_ground"
-      onDragEnter=(_e => send(handleDragEnter(isWidge, isTypeValid, _e)))
-      onDragLeave=(_e => send(handleDragLeave(isWidge, isTypeValid, _e)))
+      onDragEnter=(_e => send(handleDragEnter(isWidget, isTypeValid, _e)))
+      onDragLeave=(_e => send(handleDragLeave(isWidget, isTypeValid, _e)))
       onDragOver=handleDragOver
-      onDrop=(_e => send(handleDrop(isWidge, isTypeValid, _e)))
+      onDrop=(_e => send(handleDrop(isWidget, isTypeValid, _e)))
     />;
 };
 

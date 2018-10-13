@@ -22,6 +22,13 @@ module Method = {
 
   let renameAssetTreeNode = AssetRenameNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
+  let _isFolderNameDisabled = nodeId =>
+    AssetUtils.isIdEqual(
+      AssetTreeRootEditorService.getRootTreeNodeId
+      |> StateLogicService.getEditorState,
+      nodeId,
+    );
+
   let buildFolderComponent = (state, send, currentNodeId, folderNodeMap) =>
     <div className="inspector-asset-folder">
       <h1> (DomHelper.textEl("Folder")) </h1>
@@ -74,7 +81,7 @@ module Method = {
         state,
         textureNodeMap,
       ) => {
-    let {textureIndex} =
+    let {textureComponent} =
       textureNodeMap
       |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId);
 
@@ -82,7 +89,7 @@ module Method = {
       store
       dispatchFunc
       name=state.inputValue
-      textureIndex
+      textureComponent
       renameFunc=(
         renameAssetTreeNode(
           (store, dispatchFunc),
@@ -180,10 +187,11 @@ module Method = {
     {inputValue: baseName, originalName: baseName};
   };
 
-  let initMaterialName = (currentNodeId, materialNodeMap) => {
+  let initMaterialName = (currentNodeId, engineState, materialNodeMap) => {
     let baseName =
-      OperateMaterialLogicService.getMaterialBaseName(
+      AssetMaterialNodeMapLogicService.getMaterialBaseName(
         currentNodeId,
+        engineState,
         materialNodeMap,
       );
 
@@ -245,18 +253,22 @@ let make =
       _children,
     ) => {
   ...component,
-  initialState: () =>
-    AssetNodeUtils.handleSpeficFuncByAssetNodeType(
-      nodeType,
-      (
-        Method.initFolderName(currentNodeId),
-        Method.initJsonName(currentNodeId),
-        Method.initTextureName(currentNodeId),
-        Method.initMaterialName(currentNodeId),
-        Method.initWDBName(currentNodeId),
-      ),
-    )
-    |> StateLogicService.getEditorState,
+  initialState: () => {
+    let editorState = StateEditorService.getState();
+    let engineState = StateEngineService.unsafeGetState();
+
+    editorState
+    |> AssetNodeUtils.handleSpeficFuncByAssetNodeType(
+         nodeType,
+         (
+           Method.initFolderName(currentNodeId),
+           Method.initJsonName(currentNodeId),
+           Method.initTextureName(currentNodeId),
+           Method.initMaterialName(currentNodeId, engineState),
+           Method.initWDBName(currentNodeId),
+         ),
+       );
+  },
   reducer: reducer((store, dispatchFunc), currentNodeId, nodeType),
   render: self =>
     render((store, dispatchFunc), currentNodeId, nodeType, self),

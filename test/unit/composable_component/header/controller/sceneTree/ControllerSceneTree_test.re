@@ -9,6 +9,7 @@ open Sinon;
 let _ =
   describe("controller sceneTree", () => {
     let sandbox = getSandboxDefaultVal();
+
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
@@ -40,27 +41,11 @@ let _ =
           let dragedGameObject =
             StateEngineService.unsafeGetState()
             |> MainEditorSceneTool.getBoxByIndex(1);
-          let firstCubeDomIndex =
-            SceneTreeNodeDomTool.OperateDefaultScene.getFirstCubeDomIndex();
-          let secondCubeDomIndex =
-            SceneTreeNodeDomTool.OperateDefaultScene.getSecondCubeDomIndex();
 
-          let component =
-            BuildComponentTool.buildSceneTree(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-            );
-
-          BaseEventTool.triggerComponentEvent(
-            component,
-            SceneTreeEventTool.triggerDragStart(secondCubeDomIndex),
-          );
-          BaseEventTool.triggerComponentEvent(
-            component,
-            SceneTreeEventTool.triggerDragEnter(firstCubeDomIndex),
-          );
-          BaseEventTool.triggerComponentEvent(
-            component,
-            SceneTreeEventTool.triggerDragDrop(firstCubeDomIndex),
+          MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
+            ~sourceGameObject=dragedGameObject,
+            ~targetGameObject,
+            (),
           );
 
           GameObjectUtils.getParent(

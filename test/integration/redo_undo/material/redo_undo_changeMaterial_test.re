@@ -13,15 +13,6 @@ let _ =
     let _getFromArray = (array, index) =>
       ArrayService.unsafeGetNth(index, array);
 
-    beforeEach(() => {
-      sandbox := createSandbox();
-
-      MainEditorSceneTool.initState(~sandbox, ());
-
-      EventListenerTool.buildFakeDom()
-      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-    });
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     let _simulateChangeMaterial = () =>
       MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
 
@@ -35,6 +26,16 @@ let _ =
       );
 
     let _afterEach = () => ();
+
+    beforeEach(() => {
+      sandbox := createSandbox();
+
+      MainEditorSceneTool.initState(~sandbox, ());
+
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+    });
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoOneStep(
       sandbox,

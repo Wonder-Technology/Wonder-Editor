@@ -50,7 +50,7 @@ let _ =
           BuildComponentForCurryTool.buildDirectionLight,
           (
             GameObjectTool.getCurrentGameObjectDirectionLightComponent,
-            PickColorEventTool.triggerChangeDirectionLightColor,
+            MainEditorDirectionLightTool.changeColor,
             DirectionLightEngineService.getDirectionLightColor,
           ),
         );
@@ -71,26 +71,11 @@ let _ =
           test("test change intensity should set into engine", () => {
             let currentGameObjectDirectionLightComponent =
               GameObjectTool.getCurrentGameObjectDirectionLightComponent();
-            let component =
-              BuildComponentTool.buildDirectionLight(
-                currentGameObjectDirectionLightComponent,
-              );
             let value = 10.1;
-            let intensityDomIndex = MainEditorLightTool.getIntensityDomIndex();
 
-            BaseEventTool.triggerComponentEvent(
-              component,
-              MainEditorLightTool.triggerLightComponentChangeEvent(
-                intensityDomIndex,
-                value,
-              ),
-            );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              MainEditorLightTool.triggerLightComponentBlurEvent(
-                intensityDomIndex,
-                value,
-              ),
+            MainEditorDirectionLightTool.changeIntensity(
+              currentGameObjectDirectionLightComponent,
+              value,
             );
 
             DirectionLightEngineService.getDirectionLightIntensity(

@@ -25,6 +25,37 @@ let getCurrentSceneTreeNodeTransform = () =>
   )
   |> StateLogicService.getEngineStateToGetData;
 
+let getCurrentGameObjectMaterial = () => {
+  let gameObject = unsafeGetCurrentSceneTreeNode();
+  let engineState = StateEngineService.unsafeGetState();
+
+  GameObjectComponentEngineService.hasBasicMaterialComponent(
+    gameObject,
+    engineState,
+  ) ?
+    GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+      gameObject,
+      engineState,
+    ) :
+    GameObjectComponentEngineService.hasLightMaterialComponent(
+      gameObject,
+      engineState,
+    ) ?
+      GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+        gameObject,
+        engineState,
+      ) :
+      WonderLog.Log.fatal(
+        WonderLog.Log.buildFatalMessage(
+          ~title="getCurrentGameObjectMaterial",
+          ~description={j|gameObject should has material, but actual not|j},
+          ~reason="",
+          ~solution={j||j},
+          ~params={j||j},
+        ),
+      );
+};
+
 let getCurrentGameObjectBasicMaterial = () =>
   GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
     unsafeGetCurrentSceneTreeNode(),
@@ -88,3 +119,7 @@ let setCurrentSceneTreeNode = gameObject =>
   |> StateLogicService.getAndSetEditorState;
 
 let isAlive = Wonderjs.AliveGameObjectMainService.isAlive;
+
+let getNewGameObjectUid =
+    (~engineState=StateEngineService.unsafeGetState(), ()) =>
+  engineState.gameObjectRecord.uid;

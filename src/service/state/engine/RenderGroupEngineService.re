@@ -1,5 +1,7 @@
 open Wonderjs;
 
+let buildRenderGroup = RenderGroupAPI.buildRenderGroup;
+
 let createRenderGroup = RenderGroupAPI.createRenderGroup;
 
 let addRenderGroupComponents = RenderGroupAPI.addGameObjectRenderGroupComponents;
@@ -10,4 +12,4 @@ let getRenderGroupComponents = RenderGroupAPI.unsafeGetGameObjectRenderGroupComp
 
 let hasRenderGroupComponents = RenderGroupAPI.hasGameObjectRenderGroupComponents;
 
-let replaceRenderGroupComponents = RenderGroupAPI.replaceRenderGroupComponents;
+let replaceMaterial = RenderGroupAPI.replaceMaterial;

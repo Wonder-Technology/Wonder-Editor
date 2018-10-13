@@ -11,19 +11,19 @@ module Method = {
   let handleDragEnter =
       (
         id,
-        (handleWidgeFunc, handleRelationErrorFunc, isAssetWDBFile),
+        (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFile),
         _event,
       ) =>
     DragEventBaseUtils.isTriggerDragEnter(
       id,
-      handleWidgeFunc,
+      handleWidgetFunc,
       handleRelationErrorFunc,
     )
     || isAssetWDBFile() ?
       DragEnter : Nothing;
 
   let handleDragLeave =
-      (id, (handleWidgeFunc, handleRelationErrorFunc, isAssetWDBFile), event) => {
+      (id, (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFile), event) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     /* DomHelper.stopPropagation(e); */
 
@@ -33,16 +33,16 @@ module Method = {
   let handleDrop =
       (
         rootUid,
-        (handleWidgeFunc, handleRelationErrorFunc, isAssetWDBFile),
+        (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFile),
         event,
       ) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
-    let startId = DragUtils.getDragedUid(e);
+    let startId = DragUtils.getDragedId(e);
 
     DragEventBaseUtils.isTriggerDragDrop(
       rootUid,
       startId,
-      handleWidgeFunc,
+      handleWidgetFunc,
       handleRelationErrorFunc,
     ) ?
       DragGameObject(rootUid, startId) :
@@ -90,7 +90,7 @@ let render =
     (
       treeArray,
       rootUid,
-      (handleWidgeFunc, handleRelationErrorFunc, isAssetWDBFile),
+      (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFile),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="wonder-drag-tree">
@@ -103,7 +103,7 @@ let render =
           send(
             Method.handleDragEnter(
               rootUid,
-              (handleWidgeFunc, handleRelationErrorFunc, isAssetWDBFile),
+              (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFile),
               _e,
             ),
           )
@@ -113,7 +113,7 @@ let render =
           send(
             Method.handleDragLeave(
               rootUid,
-              (handleWidgeFunc, handleRelationErrorFunc, isAssetWDBFile),
+              (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFile),
               _e,
             ),
           )
@@ -124,7 +124,7 @@ let render =
           send(
             Method.handleDrop(
               rootUid,
-              (handleWidgeFunc, handleRelationErrorFunc, isAssetWDBFile),
+              (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFile),
               _e,
             ),
           )
@@ -138,7 +138,7 @@ let make =
       ~rootUid,
       ~dragGameObject,
       ~dragWDB,
-      ~isWidge,
+      ~isWidget,
       ~handleRelationError,
       ~isAssetWDBFile,
       _children,
@@ -152,7 +152,7 @@ let make =
     render(
       treeArray,
       rootUid,
-      (isWidge, handleRelationError, isAssetWDBFile),
+      (isWidget, handleRelationError, isAssetWDBFile),
       self,
     ),
 };

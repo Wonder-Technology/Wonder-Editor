@@ -12,18 +12,18 @@ let _getFolderDefaultName = (index, editorState) =>
   index === (editorState |> AssetTreeRootEditorService.getRootTreeNodeId) ?
     getAssetTreeRootName() : getDefaultFolderName();
 
-let addFolderIntoNodeMap = (index, parentId, editorState) =>
+let addFolderIntoNodeMap = (index, parentNodeId, (editorState, engineState)) =>
   editorState
   |> _getFolderDefaultName(index)
-  |. AssetTreeEditorService.getUniqueTreeNodeName(
+  |. AssetUtils.getUniqueTreeNodeName(
        Folder,
-       parentId,
-       editorState,
+       parentNodeId,
+       (editorState, engineState),
      )
-  |> AssetFolderNodeMapEditorService.buildFolderResult(parentId)
+  |> AssetFolderNodeMapEditorService.buildFolderResult(parentNodeId)
   |> AssetFolderNodeMapEditorService.setResult(index, _, editorState);
 
-let initRootAssetTree = editorState =>
+let initRootAssetTree = (editorState, engineState) =>
   switch (AssetTreeRootEditorService.getAssetTreeRoot(editorState)) {
   | None =>
     let editorState = editorState |> AssetIndexEditorService.increaseIndex;
@@ -31,7 +31,7 @@ let initRootAssetTree = editorState =>
 
     (
       rootIndex |. AssetTreeEditorService.buildAssetTreeNodeByIndex(Folder),
-      editorState |> addFolderIntoNodeMap(rootIndex, None),
+      (editorState, engineState) |> addFolderIntoNodeMap(rootIndex, None),
     );
   | Some(assetTreeRoot) => (assetTreeRoot, editorState)
   };
@@ -115,7 +115,12 @@ let createNodeAndAddToTargetNodeChildren =
   |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);
 
 let handleJsonType =
-    ((fileName, fileResult), (newIndex, parentId), editorState, ()) => {
+    (
+      (fileName, fileResult),
+      (newIndex, parentNodeId),
+      (editorState, engineState),
+      (),
+    ) => {
   let (baseName, extName) = FileNameService.getBaseNameAndExtName(fileName);
 
   let editorState =
@@ -123,18 +128,18 @@ let handleJsonType =
     |> AssetJsonNodeMapEditorService.setResult(
          newIndex,
          baseName
-         |. AssetTreeEditorService.getUniqueTreeNodeName(
+         |. AssetUtils.getUniqueTreeNodeName(
               Json,
-              parentId |. Some,
-              editorState,
+              parentNodeId |. Some,
+              (editorState, engineState),
             )
          |> AssetJsonNodeMapEditorService.buildJsonNodeResult(
               extName,
               fileResult,
-              parentId |. Some,
+              parentNodeId |. Some,
             ),
        )
-    |> createNodeAndAddToTargetNodeChildren(parentId, newIndex, Json)
+    |> createNodeAndAddToTargetNodeChildren(parentNodeId, newIndex, Json)
     |> StateEditorService.setState;
 
   make((~resolve, ~reject) => resolve(. editorState));
@@ -166,24 +171,33 @@ let _getImageIdIfImageBase64MapHasIt = (imgBase64, editorState) => {
     };
 };
 
+let _setImageName = (image, name) => {
+  Obj.magic(image)##name#=name;
+
+  ();
+};
+
 let handleImageType =
     (
       (baseName, fileName, imgBase64),
-      (newIndex, parentId, textureIndex),
+      (newIndex, parentNodeId, textureComponent),
       (editorState, engineState),
     ) =>
   make((~resolve, ~reject) =>
     Image.onload(
       imgBase64,
       loadedImg => {
+        _setImageName(loadedImg, fileName);
+
         engineState
         |> BasicSourceTextureEngineService.setSource(
              loadedImg |> ImageType.convertDomToImageElement,
-             textureIndex,
+             textureComponent,
            )
         |> StateEngineService.setState
         |> ignore;
 
+        /* TODO refactor? */
         let (imageId, editorState) =
           switch (_getImageIdIfImageBase64MapHasIt(imgBase64, editorState)) {
           | None =>
@@ -200,7 +214,8 @@ let handleImageType =
                    AssetImageBase64MapEditorService.buildImageResult(
                      imgBase64,
                      fileName,
-                     ArrayService.create() |> ArrayService.push(textureIndex),
+                     ArrayService.create()
+                     |> ArrayService.push(textureComponent),
                    ),
                  ),
             );
@@ -216,7 +231,7 @@ let handleImageType =
                   textureArray:
                     textureArray
                     |> Js.Array.copy
-                    |> ArrayService.push(textureIndex),
+                    |> ArrayService.push(textureComponent),
                 }
               )
               |. AssetImageBase64MapEditorService.setResult(
@@ -227,18 +242,20 @@ let handleImageType =
             )
           };
 
+        WonderLog.Log.print(("parentNodeId: ", parentNodeId)) |> ignore;
+
         let editorState =
           editorState
           |> AssetTextureNodeMapEditorService.setResult(
                newIndex,
                AssetTextureNodeMapEditorService.buildTextureNodeResult(
-                 textureIndex,
-                 parentId |. Some,
+                 textureComponent,
+                 parentNodeId |. Some,
                  imageId,
                ),
              )
           |> createNodeAndAddToTargetNodeChildren(
-               parentId,
+               parentNodeId,
                newIndex,
                Texture,
              )
@@ -250,7 +267,7 @@ let handleImageType =
   );
 
 let handleAssetWDBType =
-    ((fileName, wdbArrayBuffer), (newIndex, parentId), editorState, ()) => {
+    ((fileName, wdbArrayBuffer), (newIndex, parentNodeId), editorState, ()) => {
   let (baseName, extName) = FileNameService.getBaseNameAndExtName(fileName);
   let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
@@ -321,7 +338,8 @@ let handleAssetWDBType =
 
 let handleFileByTypeAsync = (fileResult: nodeResultType) => {
   let (editorState, newIndex) =
-    AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+    AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
+  let engineState = StateEngineService.unsafeGetState();
   let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
   handleSpecificFuncByTypeAsync(
@@ -333,18 +351,18 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
           fileResult.result |> FileReader.convertResultToString,
         ),
         (newIndex, targetTreeNodeId),
-        editorState,
+        (editorState, engineState),
       ),
       () => {
         let (baseName, _extName) =
           FileNameService.getBaseNameAndExtName(fileResult.name);
-        let (textureIndex, engineState) =
+        let (textureComponent, engineState) =
           TextureUtils.createAndInitTexture(
             baseName
-            |. AssetTreeEditorService.getUniqueTreeNodeName(
+            |. AssetUtils.getUniqueTreeNodeName(
                  Texture,
                  targetTreeNodeId |. Some,
-                 editorState,
+                 (editorState, engineState),
                ),
             StateEngineService.unsafeGetState(),
           );
@@ -355,7 +373,7 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
             fileResult.name,
             fileResult.result |> FileReader.convertResultToString,
           ),
-          (newIndex, targetTreeNodeId, textureIndex),
+          (newIndex, targetTreeNodeId, textureComponent),
           (editorState, engineState),
         );
       },

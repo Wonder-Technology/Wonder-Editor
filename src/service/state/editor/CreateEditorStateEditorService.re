@@ -9,7 +9,7 @@ let create = () => {
   assetRecord: {
     assetTreeRoot: None,
     index: 0,
-    imageIndex: -1,
+    imageIndex: (-1),
     removedAssetIdArray: [||],
     currentNodeData: None,
     currentNodeParentId: None,
@@ -20,8 +20,12 @@ let create = () => {
     wdbNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     materialNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     geometryData: {
-      defaultCubeGeometryIndex: (-1),
-      defaultSphereGeometryIndex: (-1),
+      defaultCubeGeometryComponent: (-1),
+      defaultSphereGeometryComponent: (-1),
+    },
+    materialData: {
+      defaultBasicMaterialData: None,
+      defaultLightMaterialData: None,
     },
     clonedGameObjectMap: WonderCommonlib.SparseMapService.createEmpty(),
   },

@@ -39,27 +39,19 @@ let _ =
                  component,
                )
             |. FloatService.truncateFloatValue(5);
+
           test("test change distance should set into engine", () => {
-            AddableComponentTool.addArcballCameraInCamera();
+            MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
 
             let currentGameObjectArcballCamera =
               GameObjectTool.getCurrentGameObjectArcballCamera();
 
-            let component =
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
-              );
             let value = 21.1;
 
-            BaseEventTool.triggerComponentEvent(
-              component,
-              MainEditorCameraTool.triggerChangeArcballDistance(value),
-            );
-
-            BaseEventTool.triggerComponentEvent(
-              component,
-              MainEditorCameraTool.triggerBlurArcballDistance(value),
+            MainEditorArcballCameraControllerTool.changeDistanceAndBlur(
+              ~cameraController=currentGameObjectArcballCamera,
+              ~value,
+              (),
             );
 
             StateEngineService.unsafeGetState()
@@ -77,26 +69,17 @@ let _ =
             |. FloatService.truncateFloatValue(5);
 
           test("test change minDistance should set into engine", () => {
-            AddableComponentTool.addArcballCameraInCamera();
+            MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
 
             let currentGameObjectArcballCamera =
               GameObjectTool.getCurrentGameObjectArcballCamera();
 
-            let component =
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
-              );
             let value = 11.1;
 
-            BaseEventTool.triggerComponentEvent(
-              component,
-              MainEditorCameraTool.triggerChangeArcballMinDistance(value),
-            );
-
-            BaseEventTool.triggerComponentEvent(
-              component,
-              MainEditorCameraTool.triggerBlurArcballMinDistance(value),
+            MainEditorArcballCameraControllerTool.changeMinDistanceAndBlur(
+              ~cameraController=currentGameObjectArcballCamera,
+              ~value,
+              (),
             );
 
             StateEngineService.unsafeGetState()

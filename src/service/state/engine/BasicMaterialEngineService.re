@@ -12,6 +12,8 @@ let getBasicMaterialGameObjects = (material, engineState) =>
     RecordBasicMaterialMainService.getRecord(engineState),
   );
 
+let getBasicMaterialName = NameBasicMaterialMainService.getName;
+
 let unsafeGetBasicMaterialName = BasicMaterialAPI.unsafeGetBasicMaterialName;
 
 let setBasicMaterialName = BasicMaterialAPI.setBasicMaterialName;

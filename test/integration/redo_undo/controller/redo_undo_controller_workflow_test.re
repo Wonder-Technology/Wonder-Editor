@@ -9,16 +9,10 @@ open Sinon;
 let _ =
   describe("redo_undo: controller workflow", () => {
     let sandbox = getSandboxDefaultVal();
+
     let _addGameObjectWithCount = count =>
-      Array.make(count, 0)
-      |> Array.iter(_ =>
-           BaseEventTool.triggerComponentEvent(
-             BuildComponentTool.buildHeader(
-               TestTool.buildAppStateSceneGraphFromEngine(),
-             ),
-             OperateGameObjectEventTool.triggerClickAddBox,
-           )
-         );
+      Array.make(count, 0) |> Array.iter(_ => MainEditorSceneTreeHeaderTool.addBox());
+
     beforeEach(() => {
       sandbox := createSandbox();
       TestTool.closeContractCheck();
@@ -38,6 +32,7 @@ let _ =
       restoreSandbox(refJsObjToSandbox(sandbox^));
       TestTool.openContractCheck();
     });
+
     test("init default scene", () =>
       StateEngineService.unsafeGetState()
       |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
@@ -47,7 +42,6 @@ let _ =
     test("add two gameObject", () => {
       _addGameObjectWithCount(2);
 
-
       StateEngineService.unsafeGetState()
       |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
@@ -56,8 +50,7 @@ let _ =
     test("undo one step", () => {
       _addGameObjectWithCount(2);
 
-      StateHistoryToolEditor.undo();
-
+      RedoUndoTool.undoHistoryState();
 
       StateEngineService.unsafeGetState()
       |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
@@ -67,14 +60,11 @@ let _ =
     test("click run button(which store all stack), add three gameObject", () => {
       _addGameObjectWithCount(2);
 
-
-      StateHistoryToolEditor.undo();
+      RedoUndoTool.undoHistoryState();
 
       ControllerTool.run();
 
-
       _addGameObjectWithCount(3);
-
 
       StateEngineService.unsafeGetState()
       |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
@@ -84,18 +74,13 @@ let _ =
     test("undo one step", () => {
       _addGameObjectWithCount(2);
 
-
-      StateHistoryToolEditor.undo();
-
+      RedoUndoTool.undoHistoryState();
 
       ControllerTool.run();
 
-
       _addGameObjectWithCount(3);
 
-
-      StateHistoryToolEditor.undo();
-
+      RedoUndoTool.undoHistoryState();
 
       StateEngineService.unsafeGetState()
       |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
@@ -104,11 +89,11 @@ let _ =
     });
     test("redo one step", () => {
       _addGameObjectWithCount(2);
-      StateHistoryToolEditor.undo();
+      RedoUndoTool.undoHistoryState();
       ControllerTool.run();
       _addGameObjectWithCount(3);
-      StateHistoryToolEditor.undo();
-      StateHistoryToolEditor.redo();
+      RedoUndoTool.undoHistoryState();
+      RedoUndoTool.redoHistoryState();
       StateEngineService.unsafeGetState()
       |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
@@ -116,19 +101,15 @@ let _ =
     });
     test("click stop button(which restore all stack)", () => {
       _addGameObjectWithCount(2);
-      
-      StateHistoryToolEditor.undo();
 
+      RedoUndoTool.undoHistoryState();
 
       ControllerTool.run();
 
-
       _addGameObjectWithCount(3);
 
-
-      StateHistoryToolEditor.undo();
-      StateHistoryToolEditor.redo();
-
+      RedoUndoTool.undoHistoryState();
+      RedoUndoTool.redoHistoryState();
 
       ControllerTool.stop();
       StateEngineService.unsafeGetState()
@@ -138,13 +119,13 @@ let _ =
     });
     test("undo one step(which back to the initial state)", () => {
       _addGameObjectWithCount(2);
-      StateHistoryToolEditor.undo();
+      RedoUndoTool.undoHistoryState();
       ControllerTool.run();
       _addGameObjectWithCount(3);
-      StateHistoryToolEditor.undo();
-      StateHistoryToolEditor.redo();
+      RedoUndoTool.undoHistoryState();
+      RedoUndoTool.redoHistoryState();
       ControllerTool.stop();
-      StateHistoryToolEditor.undo();
+      RedoUndoTool.undoHistoryState();
       StateEngineService.unsafeGetState()
       |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
@@ -152,14 +133,14 @@ let _ =
     });
     test("redo two step", () => {
       _addGameObjectWithCount(2);
-      StateHistoryToolEditor.undo();
+      RedoUndoTool.undoHistoryState();
       ControllerTool.run();
       _addGameObjectWithCount(3);
-      StateHistoryToolEditor.undo();
-      StateHistoryToolEditor.redo();
+      RedoUndoTool.undoHistoryState();
+      RedoUndoTool.redoHistoryState();
       ControllerTool.stop();
-      StateHistoryToolEditor.redo();
-      StateHistoryToolEditor.redo();
+      RedoUndoTool.redoHistoryState();
+      RedoUndoTool.redoHistoryState();
       StateEngineService.unsafeGetState()
       |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length

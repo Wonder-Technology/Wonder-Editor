@@ -7,33 +7,17 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("redo_undo: lightMaterial texture", () => {
+  describe("redo_undo: lightMaterial shininess", () => {
     let sandbox = getSandboxDefaultVal();
-    let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
-
-    beforeEach(() => {
-      sandbox := createSandbox();
-      MainEditorSceneTool.initState(~sandbox, ());
-      EventListenerTool.buildFakeDom()
-      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-    });
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+    let _getFromArray = (array, index) =>
+      ArrayService.unsafeGetNth(index, array);
 
     let _changeShininess = value => {
       let currentGameObjectMaterial =
         GameObjectTool.getCurrentGameObjectLightMaterial();
 
-      let component =
-        BuildComponentTool.buildLightMaterial(currentGameObjectMaterial);
-
-      BaseEventTool.triggerComponentEvent(
-        component,
-        MainEditorMaterialTool.triggerShininessChangeEvent(value),
-      );
-      BaseEventTool.triggerComponentEvent(
-        component,
-        MainEditorMaterialTool.triggerShininessBlurEvent(value),
-      );
+      MainEditorLightMaterialTool.changeShininess(~value, ());
+      MainEditorLightMaterialTool.blurShininess(~value, ());
     };
 
     let _simulateTwiceChangeShininess = () => {
@@ -51,6 +35,14 @@ let _ =
           MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
         },
       );
+
+    beforeEach(() => {
+      sandbox := createSandbox();
+      MainEditorSceneTool.initState(~sandbox, ());
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+    });
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,

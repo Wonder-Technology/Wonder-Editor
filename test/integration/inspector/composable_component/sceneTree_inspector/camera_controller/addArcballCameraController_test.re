@@ -43,7 +43,8 @@ let _ =
               StateEngineService.unsafeGetState(),
             );
           engineState |> StateEngineService.setState |> ignore;
-          AddableComponentTool.addArcballCameraInCamera();
+
+          MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
 
           let engineState = StateEngineService.unsafeGetState();
           let currentArcballCameraController =
@@ -65,7 +66,7 @@ let _ =
           ControllerTool.setIsRun(true);
           MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
 
-          AddableComponentTool.addArcballCameraInBox();
+          MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
 
           let engineState = StateEngineService.unsafeGetState();
           let currentSceneTreeNode =

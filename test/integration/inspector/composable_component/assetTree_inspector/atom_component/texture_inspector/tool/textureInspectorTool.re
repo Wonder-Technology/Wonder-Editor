@@ -1,12 +1,5 @@
 open AssetNodeType;
 
-let getWrapSDomIndex = () => 3;
-let getWrapTDomIndex = () => 4;
-
-let getMagFilterDomIndex = () => 5;
-
-let getMinFilterDomIndex = () => 6;
-
 let getWrapRepeatType = () =>
   Wonderjs.SourceTextureType.Repeat |> TextureTypeUtils.convertWrapToInt;
 
@@ -22,9 +15,9 @@ let getFilterNearestMipmapLinearType = () =>
   Wonderjs.SourceTextureType.Nearest_mipmap_linear
   |> TextureTypeUtils.convertFilterToInt;
 
-let getTextureIndexFromCurrentNodeData = () => {
+let getTextureComponentFromCurrentNodeData = () => {
   let editorState = StateEditorService.getState();
-  let {textureIndex} =
+  let {textureComponent} =
     editorState
     |> AssetTextureNodeMapEditorService.getTextureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(
@@ -32,96 +25,17 @@ let getTextureIndexFromCurrentNodeData = () => {
          |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData
          |> (({currentNodeId, nodeType}) => currentNodeId),
        );
-  textureIndex;
+  textureComponent;
 };
 
-let _getFromArray = (array, index) => ArrayService.(unsafeGetNth(index, array));
+let changeWrapS = (textureComponent, value) =>
+  TextureWrapUtils.changeWrapS(textureComponent, value);
 
-let _getTriggerRenameInput = domChildren => {
-  let article = _getFromArray(domChildren, 0);
-  let texArticle = _getFromArray(article##children, 0);
-  let div = _getFromArray(texArticle##children, 0);
-  let renameDiv = _getFromArray(div##children, 2);
-  let renameArticle = _getFromArray(renameDiv##children, 0);
-  let input = _getFromArray(renameArticle##children, 1);
+let changeWrapT = (textureComponent, value) =>
+  TextureWrapUtils.changeWrapT(textureComponent, value);
 
-  input;
-};
+let changeMagFilter = (textureComponent, value) =>
+  TextureFilterUtils.changeMagFilter(textureComponent, value);
 
-let triggerChangeRenameEvent = (value, domChildren) => {
-  let input = _getTriggerRenameInput(domChildren);
-  BaseEventTool.triggerChangeEvent(
-    input,
-    BaseEventTool.buildFormEvent(value),
-  );
-};
-let triggerBlurRenameEvent = (value, domChildren) => {
-  let input = _getTriggerRenameInput(domChildren);
-  BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value));
-};
-
-let triggerChangeWrapEvent = (index, value, domChildren) => {
-  let article = _getFromArray(domChildren, 0);
-  let textureArticle = _getFromArray(article##children, 0);
-  let div = _getFromArray(textureArticle##children, 0);
-  let selectDiv = _getFromArray(div##children, index);
-  let selectArticle = _getFromArray(selectDiv##children, 0);
-  let select = _getFromArray(selectArticle##children, 1);
-  BaseEventTool.triggerChangeEvent(
-    select,
-    BaseEventTool.buildFormEvent(value),
-  );
-};
-
-
-let triggerChangeFilterEvent = (index, value, domChildren) => {
-  let article = _getFromArray(domChildren, 0);
-  let textureArticle = _getFromArray(article##children, 0);
-  let div = _getFromArray(textureArticle##children, 0);
-  let selectDiv = _getFromArray(div##children, index);
-  let selectArticle = _getFromArray(selectDiv##children, 0);
-  let select = _getFromArray(selectArticle##children, 1);
-  BaseEventTool.triggerChangeEvent(
-    select,
-    BaseEventTool.buildFormEvent(value),
-  );
-};
-
-let triggerInspectorRenameEvent = newName => {
-  let inspectorComponent =
-    BuildComponentTool.buildInspectorComponent(
-      TestTool.buildEmptyAppState(),
-      InspectorTool.buildFakeAllShowComponentConfig(),
-    );
-  BaseEventTool.triggerComponentEvent(
-    inspectorComponent,
-    triggerChangeRenameEvent(newName),
-  );
-  BaseEventTool.triggerComponentEvent(
-    inspectorComponent,
-    triggerBlurRenameEvent(newName),
-  );
-};
-let triggerInspectorChangeWrapEvent = (wrapIndex, type_) => {
-  let inspectorComponent =
-    BuildComponentTool.buildInspectorComponent(
-      TestTool.buildEmptyAppState(),
-      InspectorTool.buildFakeAllShowComponentConfig(),
-    );
-  BaseEventTool.triggerComponentEvent(
-    inspectorComponent,
-    triggerChangeWrapEvent(wrapIndex, type_ |> string_of_int),
-  );
-};
-
-let triggerInspectorChangeFilterEvent = (index, type_) => {
-  let inspectorComponent =
-    BuildComponentTool.buildInspectorComponent(
-      TestTool.buildEmptyAppState(),
-      InspectorTool.buildFakeAllShowComponentConfig(),
-    );
-  BaseEventTool.triggerComponentEvent(
-    inspectorComponent,
-    triggerChangeFilterEvent(index, type_ |> string_of_int),
-  );
-};
+let changeMinFilter = (textureComponent, value) =>
+  TextureFilterUtils.changeMinFilter(textureComponent, value);

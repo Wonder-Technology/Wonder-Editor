@@ -9,19 +9,21 @@ open Sinon;
 let _ =
   describe("redo_undo: add gameObject", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     let _simulateAddGameObjectTwice = () => {
-      HeaderTool.triggerAddBox();
-      HeaderTool.triggerAddEmptyGameObject();
+      MainEditorSceneTreeHeaderTool.addBox();
+      MainEditorSceneTreeHeaderTool.addEmptyGameObject();
     };
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());
-      MainEditorSceneTool.createDefaultScene(sandbox, () => ());
-
-      SceneTreeNodeDomTool.OperateDefaultScene.getFirstCubeDomIndex()
-      |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+      MainEditorSceneTool.createDefaultScene(
+        sandbox,
+        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+      );
     };
+
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,

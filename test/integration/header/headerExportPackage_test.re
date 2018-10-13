@@ -16,12 +16,29 @@ let _ =
   describe("header export package", () => {
     let sandbox = getSandboxDefaultVal();
 
-    beforeEach(() => sandbox := createSandbox());
+    beforeEach(() => {
+      sandbox := createSandbox();
+
+      MainEditorSceneTool.initState(~sandbox, ());
+
+      MainEditorSceneTool.createDefaultScene(
+        sandbox,
+        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+      );
+
+      MainEditorAssetHeaderWDBTool.buildFakeTextEncoder();
+      MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
+
+      MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
+    });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test export zip", () => {
       let _prepare = judgeFunc => {
-        MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+        /* MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore; */
+
+        MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAssetTree()
+        |> ignore;
 
         let fakeFetchFunc = ExportPackageTool.buildFakeFetch(~sandbox, ());
 
@@ -30,7 +47,8 @@ let _ =
         HeaderExportUtils.exportPackage(() => obj, fakeFetchFunc)
         |> then_(_ => {
              let file = obj##file;
-             let fetchCount = ExportPackageTool.getFetchCount();
+             let fetchCount =
+               ExportPackageTool.getFetchPackageContentWithoutAssetCount();
 
              judgeFunc(fetchCount, file) |> resolve;
            });
@@ -46,22 +64,8 @@ let _ =
           |> expect == targetText
         );
 
-      beforeEach(() => {
-        MainEditorSceneTool.initState(~sandbox, ());
-
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
-        );
-
-        MainEditorAssetHeaderWDBTool.buildFakeTextEncoder();
-        MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
-
-        MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
-      });
-
       describe("export assets folder's all node", () => {
-        testPromise("test first node is folder and second node is json", () =>
+        testPromise("test first node is folder and second node is folder", () =>
           _prepare((fetchCount, file) =>
             (
               file |> getCall(fetchCount) |> getArgs,
@@ -75,9 +79,9 @@ let _ =
                           {"dir": true} |> Obj.magic,
                         ],
                         [
-                          "Assets/newJson.json",
-                          "json result",
-                          {"binary": true} |> Obj.magic,
+                          "Assets/newFolder/newFolder",
+                          0 |> Obj.magic,
+                          {"dir": true} |> Obj.magic,
                         ],
                       )
           )
@@ -130,7 +134,7 @@ let _ =
         testPromise("export Scene.wdb", () =>
           _prepare((fetchCount, file) =>
             file
-            |> getCall(fetchCount + 2)
+            |> getCall(fetchCount + 3)
             |> getArgs
             |> Js.List.hd
             |> OptionService.unsafeGet
@@ -140,7 +144,7 @@ let _ =
         testPromise("export Assets.json", () =>
           _prepare((fetchCount, file) =>
             file
-            |> getCall(fetchCount + 3)
+            |> getCall(fetchCount + 4)
             |> getArgs
             |> Js.List.hd
             |> OptionService.unsafeGet

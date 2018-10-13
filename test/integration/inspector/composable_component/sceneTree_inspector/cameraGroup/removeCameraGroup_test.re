@@ -49,8 +49,7 @@ let _ =
     describe("test has no camera group after remove ", () =>
       describe("test remove current camera group", () => {
         test("should remove from inspector", () => {
-          SceneTreeNodeDomTool.OperateDefaultScene.getCameraGroupFromCamera()
-          |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+          MainEditorInspectorRemoveComponentTool.removeCameraGroupComponent();
 
           BuildComponentTool.buildInspectorComponent(
             TestTool.buildEmptyAppState(),
@@ -59,8 +58,7 @@ let _ =
           |> ReactTestTool.createSnapshotAndMatch;
         });
         test("should remove activedBasicCameraView from editorState", () => {
-          SceneTreeNodeDomTool.OperateDefaultScene.getCameraGroupFromCamera()
-          |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+          MainEditorInspectorRemoveComponentTool.removeCameraGroupComponent();
 
           GameViewEditorService.getActivedBasicCameraView(
             StateEditorService.getState(),
@@ -82,8 +80,7 @@ let _ =
                    );
               engineState |> StateEngineService.setState |> ignore;
 
-              SceneTreeNodeDomTool.OperateDefaultScene.getCameraGroupFromCamera()
-              |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+              MainEditorInspectorRemoveComponentTool.removeCameraGroupComponent();
 
               let engineState = StateEngineService.unsafeGetState();
               ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
@@ -99,19 +96,23 @@ let _ =
 
     describe("test still has other camera groups after remove ", () => {
       beforeEach(() => {
-        HeaderTool.triggerAddBox();
+        let newGameObject = GameObjectTool.getNewGameObjectUid();
+        MainEditorSceneTreeHeaderTool.addBox();
 
-        SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
-        |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+        MainEditorSceneTreeTool.Select.selectGameObject(
+          ~gameObject=newGameObject,
+          (),
+        );
 
-        AddableComponentTool.addCameraGroupInBox();
+        MainEditorInspectorAddComponentTool.addCameraGroupComponent(
+          ~gameObject=newGameObject,
+          (),
+        );
       });
 
       test(
         "test remove cameraGroup component, should remove from inspector", () => {
-        MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
-        SceneTreeNodeDomTool.OperateDefaultScene.getCameraGroupFromCamera()
-        |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+        MainEditorInspectorRemoveComponentTool.removeCameraGroupComponent();
 
         BuildComponentTool.buildInspectorComponent(
           TestTool.buildEmptyAppState(),
@@ -131,9 +132,7 @@ let _ =
       test(
         "test remove cameraGroup component, current gameObject shouldn't has it",
         () => {
-        MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
-        SceneTreeNodeDomTool.OperateDefaultScene.getCameraGroupFromCamera()
-        |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+        MainEditorInspectorRemoveComponentTool.removeCameraGroupComponent();
 
         CameraEngineService.hasCameraGroup(
           GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -152,8 +151,7 @@ let _ =
              );
         MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
 
-        SceneTreeNodeDomTool.OperateDefaultScene.getCameraGroupFromCamera()
-        |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+        MainEditorInspectorRemoveComponentTool.removeCameraGroupComponent();
 
         GameViewEditorService.getActivedBasicCameraView(
           StateEditorService.getState(),
@@ -176,8 +174,7 @@ let _ =
                  );
             engineState |> StateEngineService.setState |> ignore;
 
-            SceneTreeNodeDomTool.OperateDefaultScene.getCameraGroupFromCamera()
-            |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+            MainEditorInspectorRemoveComponentTool.removeCameraGroupComponent();
 
             let engineState = StateEngineService.unsafeGetState();
             ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
@@ -207,8 +204,7 @@ let _ =
                  );
             engineState |> StateEngineService.setState |> ignore;
 
-            SceneTreeNodeDomTool.OperateDefaultScene.getCameraGroupFromCamera()
-            |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+            MainEditorInspectorRemoveComponentTool.removeCameraGroupComponent();
 
             ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
               lastArcballCameraController,

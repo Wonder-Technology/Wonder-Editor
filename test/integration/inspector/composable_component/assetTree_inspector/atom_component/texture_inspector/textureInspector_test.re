@@ -8,6 +8,8 @@ open AssetNodeType;
 
 open Sinon;
 
+open Js.Promise;
+
 let _ =
   describe("TextureInspector", () => {
     let sandbox = getSandboxDefaultVal();
@@ -40,12 +42,16 @@ let _ =
 
       describe("test component snapshot", () =>
         test("test texture inspector->show default value", () => {
-          let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
 
-          assetTreeDomRecord
-          |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-          |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+          MainEditorAssetChildrenNodeTool.selectTextureNode(
+            ~nodeId=
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                assetTreeData,
+              ),
+            (),
+          );
 
           BuildComponentTool.buildInspectorComponent(
             TestTool.buildEmptyAppState(),
@@ -58,14 +64,18 @@ let _ =
       describe("test texture rename", () => {
         describe("test snapshot", () =>
           test("test rename to specific name", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
             let newName = "newTextureName";
-            assetTreeDomRecord
-            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
-            TextureInspectorTool.triggerInspectorRenameEvent(newName);
+            AssetTreeInspectorTool.Rename.renameAssetTextureNode(
+              ~nodeId=
+                MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                  assetTreeData,
+                ),
+              ~name=newName,
+              (),
+            );
 
             BuildComponentTool.buildAssetComponent()
             |> ReactTestTool.createSnapshotAndMatch;
@@ -78,23 +88,26 @@ let _ =
               MainEditorAssetTool.buildFakeFileReader();
               MainEditorAssetTool.buildFakeImage();
             });
+
             testPromise("upload texture;
               rename texture;", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+              let assetTreeData =
+                MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
               let newName = "newTextureToEngine";
 
-              MainEditorAssetTool.fileLoad(
-                TestTool.getDispatch(),
-                BaseEventTool.buildFileEvent(),
-              )
-              |> Js.Promise.then_(() => {
-                   assetTreeDomRecord
-                   |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-                   TextureInspectorTool.triggerInspectorRenameEvent(newName);
+              MainEditorAssetUploadTool.loadOneTexture()
+              |> then_(uploadedTextureNodeId => {
+                   AssetTreeInspectorTool.Rename.renameAssetTextureNode(
+                     ~nodeId=uploadedTextureNodeId,
+                     ~name=newName,
+                     (),
+                   );
+                   MainEditorAssetChildrenNodeTool.selectTextureNode(
+                     ~nodeId=uploadedTextureNodeId,
+                     (),
+                   );
 
-                   MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId()
+                   MainEditorAssetNodeTool.getTextureComponentFromCurrentNodeId()
                    |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName
                    |> StateLogicService.getEngineStateToGetData
                    |> expect == newName
@@ -108,16 +121,16 @@ let _ =
       describe("test texture change wrap", () => {
         describe("test set wrapS to Repeat", () => {
           test("test snapshot", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-            let wrapSDomIndex = TextureInspectorTool.getWrapSDomIndex();
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
             let wrapRepeatType = TextureInspectorTool.getWrapRepeatType();
 
-            assetTreeDomRecord
-            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-            TextureInspectorTool.triggerInspectorChangeWrapEvent(
-              wrapSDomIndex,
+            TextureInspectorTool.changeWrapS(
+              MainEditorAssetNodeTool.getTextureComponentFromNodeId(
+                MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                  assetTreeData,
+                ),
+              ),
               wrapRepeatType,
             );
 
@@ -128,24 +141,22 @@ let _ =
             |> ReactTestTool.createSnapshotAndMatch;
           });
           test("test logic", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-            let wrapSDomIndex = TextureInspectorTool.getWrapSDomIndex();
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
             let wrapRepeatType = TextureInspectorTool.getWrapRepeatType();
+            let nodeId =
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                assetTreeData,
+              );
 
-            assetTreeDomRecord
-            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-
-            TextureInspectorTool.triggerInspectorChangeWrapEvent(
-              wrapSDomIndex,
+            TextureInspectorTool.changeWrapS(
+              MainEditorAssetNodeTool.getTextureComponentFromNodeId(nodeId),
               wrapRepeatType,
             );
 
-            let textureIndex =
-              TextureInspectorTool.getTextureIndexFromCurrentNodeData();
-
-            BasicSourceTextureEngineService.getWrapS(textureIndex)
+            let textureComponent =
+              MainEditorAssetNodeTool.getTextureComponentFromNodeId(nodeId);
+            BasicSourceTextureEngineService.getWrapS(textureComponent)
             |> StateLogicService.getEngineStateToGetData
             |> TextureTypeUtils.convertWrapToInt
             |> expect == wrapRepeatType;
@@ -154,18 +165,17 @@ let _ =
 
         describe("test set wrapT to Mirrored_repeat", () => {
           test("test snapshot", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-            let wrapTDomIndex = TextureInspectorTool.getWrapTDomIndex();
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
             let wrapMirroredRepeatType =
               TextureInspectorTool.getWrapMirroredRepeatType();
 
-            assetTreeDomRecord
-            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-
-            TextureInspectorTool.triggerInspectorChangeWrapEvent(
-              wrapTDomIndex,
+            TextureInspectorTool.changeWrapT(
+              MainEditorAssetNodeTool.getTextureComponentFromNodeId(
+                MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                  assetTreeData,
+                ),
+              ),
               wrapMirroredRepeatType,
             );
 
@@ -176,24 +186,23 @@ let _ =
             |> ReactTestTool.createSnapshotAndMatch;
           });
           test("test logic", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-            let wrapTDomIndex = TextureInspectorTool.getWrapTDomIndex();
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
             let wrapMirroredRepeatType =
               TextureInspectorTool.getWrapMirroredRepeatType();
+            let nodeId =
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                assetTreeData,
+              );
 
-            assetTreeDomRecord
-            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-            TextureInspectorTool.triggerInspectorChangeWrapEvent(
-              wrapTDomIndex,
+            TextureInspectorTool.changeWrapT(
+              MainEditorAssetNodeTool.getTextureNode(nodeId).textureComponent,
               wrapMirroredRepeatType,
             );
 
-            let textureIndex =
-              TextureInspectorTool.getTextureIndexFromCurrentNodeData();
-
-            BasicSourceTextureEngineService.getWrapT(textureIndex)
+            let textureComponent =
+              MainEditorAssetNodeTool.getTextureComponentFromNodeId(nodeId);
+            BasicSourceTextureEngineService.getWrapT(textureComponent)
             |> StateLogicService.getEngineStateToGetData
             |> TextureTypeUtils.convertWrapToInt
             |> expect == wrapMirroredRepeatType;
@@ -204,19 +213,17 @@ let _ =
       describe("test texture change filter", () => {
         describe("test set MagFilter to Linear_mipmap_linear", () => {
           test("test snapshot", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-            let magFilterDomIndex =
-              TextureInspectorTool.getMagFilterDomIndex();
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
             let filterLinearMipmapLinearType =
               TextureInspectorTool.getFilterLinearMipmapLinearType();
 
-            assetTreeDomRecord
-            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-
-            TextureInspectorTool.triggerInspectorChangeFilterEvent(
-              magFilterDomIndex,
+            TextureInspectorTool.changeMagFilter(
+              MainEditorAssetNodeTool.getTextureComponentFromNodeId(
+                MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                  assetTreeData,
+                ),
+              ),
               filterLinearMipmapLinearType,
             );
 
@@ -227,25 +234,24 @@ let _ =
             |> ReactTestTool.createSnapshotAndMatch;
           });
           test("test logic", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-            let magFilterDomIndex =
-              TextureInspectorTool.getMagFilterDomIndex();
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
             let filterLinearMipmapLinearType =
               TextureInspectorTool.getFilterLinearMipmapLinearType();
 
-            assetTreeDomRecord
-            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-            TextureInspectorTool.triggerInspectorChangeFilterEvent(
-              magFilterDomIndex,
+            let nodeId =
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                assetTreeData,
+              );
+
+            TextureInspectorTool.changeMagFilter(
+              MainEditorAssetNodeTool.getTextureNode(nodeId).textureComponent,
               filterLinearMipmapLinearType,
             );
 
-            let textureIndex =
-              TextureInspectorTool.getTextureIndexFromCurrentNodeData();
-
-            BasicSourceTextureEngineService.getMagFilter(textureIndex)
+            let textureComponent =
+              MainEditorAssetNodeTool.getTextureComponentFromNodeId(nodeId);
+            BasicSourceTextureEngineService.getMagFilter(textureComponent)
             |> StateLogicService.getEngineStateToGetData
             |> TextureTypeUtils.convertFilterToInt
             |> expect == filterLinearMipmapLinearType;
@@ -254,19 +260,18 @@ let _ =
 
         describe("test set MinFilter to Nearest_mipmap_linear", () => {
           test("test snapshot", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-            let minFilterDomIndex =
-              TextureInspectorTool.getMinFilterDomIndex();
-            let filterNearestMipmapLinearType =
-              TextureInspectorTool.getFilterNearestMipmapLinearType();
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
+            let filterLinearMipmapLinearType =
+              TextureInspectorTool.getFilterLinearMipmapLinearType();
 
-            assetTreeDomRecord
-            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-            TextureInspectorTool.triggerInspectorChangeFilterEvent(
-              minFilterDomIndex,
-              filterNearestMipmapLinearType,
+            TextureInspectorTool.changeMinFilter(
+              MainEditorAssetNodeTool.getTextureComponentFromNodeId(
+                MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                  assetTreeData,
+                ),
+              ),
+              filterLinearMipmapLinearType,
             );
 
             BuildComponentTool.buildInspectorComponent(
@@ -277,28 +282,27 @@ let _ =
           });
 
           test("test logic", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-            let minFilterDomIndex =
-              TextureInspectorTool.getMinFilterDomIndex();
-            let filterNearestMipmapLinearType =
-              TextureInspectorTool.getFilterNearestMipmapLinearType();
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
+            let filterLinearMipmapLinearType =
+              TextureInspectorTool.getFilterLinearMipmapLinearType();
 
-            assetTreeDomRecord
-            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-            TextureInspectorTool.triggerInspectorChangeFilterEvent(
-              minFilterDomIndex,
-              filterNearestMipmapLinearType,
+            let nodeId =
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                assetTreeData,
+              );
+
+            TextureInspectorTool.changeMinFilter(
+              MainEditorAssetNodeTool.getTextureNode(nodeId).textureComponent,
+              filterLinearMipmapLinearType,
             );
 
-            let textureIndex =
-              TextureInspectorTool.getTextureIndexFromCurrentNodeData();
-
-            BasicSourceTextureEngineService.getMinFilter(textureIndex)
+            let textureComponent =
+              MainEditorAssetNodeTool.getTextureComponentFromNodeId(nodeId);
+            BasicSourceTextureEngineService.getMinFilter(textureComponent)
             |> StateLogicService.getEngineStateToGetData
             |> TextureTypeUtils.convertFilterToInt
-            |> expect == filterNearestMipmapLinearType;
+            |> expect == filterLinearMipmapLinearType;
           });
         });
       });

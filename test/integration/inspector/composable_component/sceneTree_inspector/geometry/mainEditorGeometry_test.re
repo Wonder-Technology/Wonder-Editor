@@ -75,14 +75,10 @@ let _ =
 
                 let component =
                   BuildComponentTool.buildGeometry(
-                    TestTool.buildEmptyAppState(),
-                    currentGameObjectGeometry,
+                    ~geometryComponent=currentGameObjectGeometry,
+                    ~isShowGeometryGroup=true,
+                    (),
                   );
-
-                BaseEventTool.triggerComponentEvent(
-                  component,
-                  MainEditorGeometryTool.triggerClickShowGeometryGroup,
-                );
 
                 component |> ReactTestTool.createSnapshotAndMatch;
               },
@@ -99,14 +95,10 @@ let _ =
 
               let component =
                 BuildComponentTool.buildGeometry(
-                  TestTool.buildEmptyAppState(),
-                  currentGameObjectGeometry,
+                  ~geometryComponent=currentGameObjectGeometry,
+                  ~isShowGeometryGroup=true,
+                  (),
                 );
-
-              BaseEventTool.triggerComponentEvent(
-                component,
-                MainEditorGeometryTool.triggerClickShowGeometryGroup,
-              );
 
               component |> ReactTestTool.createSnapshotAndMatch;
             });
@@ -118,25 +110,17 @@ let _ =
 
             let component =
               BuildComponentTool.buildGeometry(
-                TestTool.buildEmptyAppState(),
-                currentGameObjectGeometry,
+                ~geometryComponent=currentGameObjectGeometry,
+                ~isShowGeometryGroup=false,
+                (),
               );
-
-            BaseEventTool.triggerComponentEvent(
-              component,
-              MainEditorGeometryTool.triggerClickShowGeometryGroup,
-            );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              MainEditorGeometryTool.triggerClickHideGeometryGroup,
-            );
 
             component |> ReactTestTool.createSnapshotAndMatch;
           });
         });
 
         describe("test logic", () => {
-          test("test the current gameObject geometry should is Cube", () => {
+          test("test the current gameObject geometry should be Cube", () => {
             let currentGameObjectGeometry =
               GameObjectTool.getCurrentGameObjectGeometry();
 
@@ -147,23 +131,13 @@ let _ =
             |> expect == MainEditorGeometryTool.getCubeGeometryName();
           });
           test(
-            "test change geometry to be Sphere, the current gameObject geometry should is Sphere",
+            "change geometry to be Sphere, the current gameObject geometry should be Sphere",
             () => {
-              let component =
-                BuildComponentTool.buildGeometry(
-                  TestTool.buildEmptyAppState(),
-                  GameObjectTool.getCurrentGameObjectGeometry(),
-                );
-
-              BaseEventTool.triggerComponentEvent(
-                component,
-                MainEditorGeometryTool.triggerClickShowGeometryGroup,
-              );
-
-              BaseEventTool.triggerComponentEvent(
-                component,
-                MainEditorGeometryTool.getSphereDomIndex()
-                |> MainEditorGeometryTool.triggerClickSpecificGeometry,
+              MainEditorGeometryTool.changeGeometry(
+                ~sourceGeometry=GameObjectTool.getCurrentGameObjectGeometry(),
+                ~targetGeometry=
+                  MainEditorGeometryTool.getDefaultSphereGeometryComponent(),
+                (),
               );
 
               let newGameObjectGeometry =
@@ -174,6 +148,51 @@ let _ =
               )
               |> StateLogicService.getEngineStateToGetData
               |> expect == MainEditorGeometryTool.getSphereGeometryName();
+            },
+          );
+          test(
+            "test add Cube geometry component again and again, currentSceneTreeNode's geometry should be Cube",
+            () => {
+              let component =
+                BuildComponentTool.buildGeometry(
+                  ~geometryComponent=
+                    GameObjectTool.getCurrentGameObjectGeometry(),
+                  (),
+                );
+
+              MainEditorGeometryTool.changeGeometry(
+                ~sourceGeometry=GameObjectTool.getCurrentGameObjectGeometry(),
+                ~targetGeometry=
+                  MainEditorGeometryTool.getDefaultSphereGeometryComponent(),
+                (),
+              );
+              MainEditorGeometryTool.changeGeometry(
+                ~sourceGeometry=GameObjectTool.getCurrentGameObjectGeometry(),
+                ~targetGeometry=
+                  MainEditorGeometryTool.getDefaultCubeGeometryComponent(),
+                (),
+              );
+              MainEditorGeometryTool.changeGeometry(
+                ~sourceGeometry=GameObjectTool.getCurrentGameObjectGeometry(),
+                ~targetGeometry=
+                  MainEditorGeometryTool.getDefaultSphereGeometryComponent(),
+                (),
+              );
+              MainEditorGeometryTool.changeGeometry(
+                ~sourceGeometry=GameObjectTool.getCurrentGameObjectGeometry(),
+                ~targetGeometry=
+                  MainEditorGeometryTool.getDefaultCubeGeometryComponent(),
+                (),
+              );
+
+              let newGameObjectGeometry =
+                GameObjectTool.getCurrentGameObjectGeometry();
+
+              StateEngineService.unsafeGetState()
+              |> GeometryEngineService.unsafeGetGeometryName(
+                   newGameObjectGeometry,
+                 )
+              |> expect == "Cube";
             },
           );
         });
@@ -194,61 +213,48 @@ let _ =
 
         testPromise(
           "test select geometry group widget should show all geometry", () => {
-          let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+          MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+          |> ignore;
           let fileName = "BoxTextured";
-          let newWDBArrayBuffer =
-            NodeToolEngine.getWDBArrayBuffer(fileName);
+          let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
-          MainEditorAssetTool.fileLoad(
-            TestTool.getDispatch(),
-            BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~fileName,
+            ~arrayBuffer=newWDBArrayBuffer,
+            (),
           )
-          |> then_(_ => {
+          |> then_(uploadedWDBNodeId => {
                let component =
                  BuildComponentTool.buildGeometry(
-                   TestTool.buildEmptyAppState(),
-                   GameObjectTool.getCurrentGameObjectGeometry(),
+                   ~geometryComponent=
+                     GameObjectTool.getCurrentGameObjectGeometry(),
+                   ~isShowGeometryGroup=true,
+                   (),
                  );
-
-               BaseEventTool.triggerComponentEvent(
-                 component,
-                 MainEditorGeometryTool.triggerClickShowGeometryGroup,
-               );
 
                component |> ReactTestTool.createSnapshotAndMatch |> resolve;
              });
         });
         testPromise("test set new geometry should set into engineState", () => {
-          let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+          MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+          |> ignore;
           let fileName = "BoxTextured";
-          let newWDBArrayBuffer =
-            NodeToolEngine.getWDBArrayBuffer(fileName);
+          let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
+          let newGeometry = MainEditorGeometryTool.getNewGeometry();
 
-          MainEditorAssetTool.fileLoad(
-            TestTool.getDispatch(),
-            BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~fileName,
+            ~arrayBuffer=newWDBArrayBuffer,
+            (),
           )
-          |> then_(_ => {
+          |> then_(uploadedWDBNodeId => {
                let oldGameObjectGeometry =
                  GameObjectTool.getCurrentGameObjectGeometry();
 
-               let component =
-                 BuildComponentTool.buildGeometry(
-                   TestTool.buildEmptyAppState(),
-                   oldGameObjectGeometry,
-                 );
-
-               BaseEventTool.triggerComponentEvent(
-                 component,
-                 MainEditorGeometryTool.triggerClickShowGeometryGroup,
-               );
-
-               BaseEventTool.triggerComponentEvent(
-                 component,
-                 MainEditorGeometryTool.getFirstNewGeometryDomIndex()
-                 |> MainEditorGeometryTool.triggerClickSpecificGeometry,
+               MainEditorGeometryTool.changeGeometry(
+                 ~sourceGeometry=oldGameObjectGeometry,
+                 ~targetGeometry=newGeometry,
+                 (),
                );
 
                let newGameObjectGeometry =
@@ -258,7 +264,7 @@ let _ =
                  newGameObjectGeometry,
                )
                |> StateLogicService.getEngineStateToGetData
-               |> expect == MainEditorGeometryTool.getBoxTextureGeometryName()
+               |> expect == MainEditorGeometryTool.getBoxTexturedGeometryName()
                |> resolve;
              });
         });

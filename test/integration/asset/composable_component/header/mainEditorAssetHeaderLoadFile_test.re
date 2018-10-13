@@ -13,7 +13,7 @@ open AssetTreeNodeType;
 open Js.Promise;
 
 let _ =
-  describe("MainEditorAssetHeader->loadFile", () => {
+  describe("MainEditorAssetHeader->load file", () => {
     let sandbox = getSandboxDefaultVal();
 
     beforeEach(() => {
@@ -44,12 +44,10 @@ let _ =
       describe("test snapshot", () => {
         describe("if not select specific treeNode", () =>
           testPromise("load file should add into root node children", () => {
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
+            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+            |> ignore;
 
-            MainEditorAssetTool.fileLoad(
-              TestTool.getDispatch(),
-              BaseEventTool.buildFileEvent(),
-            )
+            MainEditorAssetUploadTool.loadOneTexture()
             |> then_(_ =>
                  BuildComponentTool.buildAssetComponent()
                  |> ReactTestTool.createSnapshotAndMatch
@@ -71,7 +69,8 @@ let _ =
           testPromise(
             "test load zip file should rebuild asset and sceneTree component",
             () => {
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
+            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+            |> ignore;
 
             let fileName = "BoxTextured";
             let newWDBArrayBuffer =
@@ -100,18 +99,16 @@ let _ =
       describe("test logic", () => {
         describe("test should add into root node children", () =>
           testPromise("test children node length", () => {
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
-            let uploadFileLength = 2;
+            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+            |> ignore;
+            let uploadFileLength = 1;
             let originChildrenLen =
               StateEditorService.getState()
               |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
               |> (root => root.children)
               |> Js.Array.length;
 
-            MainEditorAssetTool.fileLoad(
-              TestTool.getDispatch(),
-              BaseEventTool.buildFileEvent(),
-            )
+            MainEditorAssetUploadTool.loadOneTexture()
             |> then_(_ =>
                  StateEditorService.getState()
                  |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
@@ -127,18 +124,16 @@ let _ =
         describe("test should add into nodeMap", () => {
           describe("test imageBase64Map", () => {
             testPromise("add image base64 to imageBase64Map", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+              MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+              |> ignore;
               let imgBase64 = "newImgBase64";
 
-              MainEditorAssetTool.fileLoad(
-                TestTool.getDispatch(),
-                BaseEventTool.buildFileEvent(~imgSrc=imgBase64, ()),
-              )
-              |> then_(_ => {
-                   assetTreeDomRecord
-                   |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+              MainEditorAssetUploadTool.loadOneTexture(~imgSrc=imgBase64, ())
+              |> then_(uploadedTextureNodeId => {
+                   MainEditorAssetChildrenNodeTool.selectTextureNode(
+                     ~nodeId=uploadedTextureNodeId,
+                     (),
+                   );
 
                    let {imageId}: AssetNodeType.textureResultType =
                      StateEditorService.getState()
@@ -157,14 +152,12 @@ let _ =
             });
             testPromise(
               "test show texture image, get it base64 from imageBase64Map", () => {
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
+              MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+              |> ignore;
               let imgBase64 = "newImgBase64";
 
-              MainEditorAssetTool.fileLoad(
-                TestTool.getDispatch(),
-                BaseEventTool.buildFileEvent(~imgSrc=imgBase64, ()),
-              )
-              |> then_(_ =>
+              MainEditorAssetUploadTool.loadOneTexture(~imgSrc=imgBase64, ())
+              |> then_(uploadedTextureNodeId =>
                    BuildComponentTool.buildAssetComponent()
                    |> ReactTestTool.createSnapshotAndMatch
                    |> resolve
@@ -174,57 +167,86 @@ let _ =
 
           describe("test textureNodeMap", () =>
             testPromise("add created texture index to textureNodeMap", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+              MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+              |> ignore;
 
-              MainEditorAssetTool.fileLoad(
-                TestTool.getDispatch(),
-                BaseEventTool.buildFileEvent(),
-              )
-              |> then_(_ => {
-                   assetTreeDomRecord
-                   |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+              MainEditorAssetUploadTool.loadOneTexture()
+              |> then_(uploadedTextureNodeId => {
+                   MainEditorAssetChildrenNodeTool.selectTextureNode(
+                     ~nodeId=uploadedTextureNodeId,
+                     (),
+                   );
 
-                   MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId()
-                   |>
-                   expect == MainEditorAssetNodeTool.OperateTwoLayer.getUploadedTextureIndex(
-                               assetTreeDomRecord,
-                             )
+                   MainEditorAssetNodeTool.getTextureComponentFromCurrentNodeId()
+                   |> expect == 0
                    |> resolve;
                  });
             })
           );
 
-          describe("test jsonNodeMap", () =>
-            testPromise("add json string to jsonNodeMap", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-              let jsonName = "newLoadJson.json";
-              let jsonResult = "I'm the result";
+          /* describe("test jsonNodeMap", () => {
+               testPromise("add json string to jsonNodeMap", () => {
+                 let assetTreeData =
+                   MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+                 let jsonName = "newLoadJson.json";
+                 let jsonResult = "I'm the result";
 
-              MainEditorAssetTool.fileLoad(
-                TestTool.getDispatch(),
-                BaseEventTool.buildFileEvent(~jsonName, ~jsonResult, ()),
-              )
-              |> then_(_ => {
-                   assetTreeDomRecord
-                   |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedSecondNodeDomIndex
-                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                 MainEditorAssetTool.fileLoad(
+                   TestTool.getDispatch(),
+                   BaseEventTool.buildFileEvent(~jsonName, ~jsonResult, ()),
+                 )
+                 |> then_(_ => {
+                      assetTreeData
+                      |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedSecondNodeDomIndex
+                      |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
-                   let {name, jsonResult}: AssetNodeType.jsonResultType =
-                     StateEditorService.getState()
-                     |> AssetJsonNodeMapEditorService.getJsonNodeMap
-                     |> WonderCommonlib.SparseMapService.unsafeGet(
-                          MainEditorAssetNodeTool.getCurrentNodeId(),
-                        );
+                      let {name, jsonResult}: AssetNodeType.jsonResultType =
+                        StateEditorService.getState()
+                        |> AssetJsonNodeMapEditorService.getJsonNodeMap
+                        |> WonderCommonlib.SparseMapService.unsafeGet(
+                             MainEditorAssetNodeTool.getCurrentNodeId(),
+                           );
 
-                   (name, jsonResult)
-                   |> expect == (jsonName, jsonResult)
-                   |> resolve;
-                 });
-            })
-          );
+                      (name, jsonResult)
+                      |> expect == (jsonName, jsonResult)
+                      |> resolve;
+                    });
+               });
+               testPromise(
+                 "test load two same json file, the second json file name should be rebuild",
+                 () => {
+                   let assetTreeData =
+                     MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+                   let jsonName = "newLoadJson";
+                   let jsonResult = "I'm the result";
+
+                   MainEditorAssetTool.fileLoad(
+                     TestTool.getDispatch(),
+                     BaseEventTool.buildTwoJsonFileEvent(
+                       ~jsonName,
+                       ~jsonResult,
+                       (),
+                     ),
+                   )
+                   |> then_(_ => {
+                        assetTreeData
+                        |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedSecondNodeDomIndex
+                        |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
+
+                        let {name, jsonResult}: AssetNodeType.jsonResultType =
+                          StateEditorService.getState()
+                          |> AssetJsonNodeMapEditorService.getJsonNodeMap
+                          |> WonderCommonlib.SparseMapService.unsafeGet(
+                               MainEditorAssetNodeTool.getCurrentNodeId(),
+                             );
+
+                        (name, jsonResult)
+                        |> expect == (jsonName ++ " 1", jsonResult)
+                        |> resolve;
+                      });
+                 },
+               );
+             }); */
 
           describe("test wdbNodeMap", () => {
             beforeEach(() => {
@@ -238,28 +260,25 @@ let _ =
 
             testPromise(
               "add name, wdbGameObject, wdbArrayBuffer to wdbNodeMap", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+              MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+              |> ignore;
               let fileName = "BoxTextured";
               let newWDBArrayBuffer =
                 NodeToolEngine.getWDBArrayBuffer(fileName);
               let defaultSceneNewGameObjectUid =
                 SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectUid();
 
-              MainEditorAssetTool.fileLoad(
-                TestTool.getDispatch(),
-                BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~fileName,
+                ~arrayBuffer=newWDBArrayBuffer,
+                (),
               )
-              |> then_(_ => {
-                   assetTreeDomRecord
-                   |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-
+              |> then_(uploadedWDBNodeId => {
                    let {name, wdbGameObject, wdbArrayBuffer}: AssetNodeType.wdbResultType =
                      StateEditorService.getState()
                      |> AssetWDBNodeMapEditorService.getWDBNodeMap
                      |> WonderCommonlib.SparseMapService.unsafeGet(
-                          MainEditorAssetNodeTool.getCurrentNodeId(),
+                          uploadedWDBNodeId,
                         );
 
                    (name, wdbGameObject, wdbArrayBuffer)
@@ -274,45 +293,6 @@ let _ =
             });
           });
         });
-
-        describe("test asset node path", () =>
-          describe("test the asset node path should be unique", () =>
-            testPromise(
-              "test load two same json file, the second json file name should be rebuild",
-              () => {
-                let assetTreeDomRecord =
-                  MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-                let jsonName = "newLoadJson";
-                let jsonResult = "I'm the result";
-
-                MainEditorAssetTool.fileLoad(
-                  TestTool.getDispatch(),
-                  BaseEventTool.buildTwoJsonFileEvent(
-                    ~jsonName,
-                    ~jsonResult,
-                    (),
-                  ),
-                )
-                |> then_(_ => {
-                     assetTreeDomRecord
-                     |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedSecondNodeDomIndex
-                     |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-
-                     let {name, jsonResult}: AssetNodeType.jsonResultType =
-                       StateEditorService.getState()
-                       |> AssetJsonNodeMapEditorService.getJsonNodeMap
-                       |> WonderCommonlib.SparseMapService.unsafeGet(
-                            MainEditorAssetNodeTool.getCurrentNodeId(),
-                          );
-
-                     (name, jsonResult)
-                     |> expect == (jsonName ++ " 1", jsonResult)
-                     |> resolve;
-                   });
-              },
-            )
-          )
-        );
       });
 
       describe("deal with specific case", () => {

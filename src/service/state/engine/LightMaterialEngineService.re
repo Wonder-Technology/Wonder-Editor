@@ -10,6 +10,8 @@ let getLightMaterialGameObjects = (material, engineState) =>
     RecordLightMaterialMainService.getRecord(engineState),
   );
 
+let getLightMaterialName = NameLightMaterialMainService.getName;
+
 let unsafeGetLightMaterialName = LightMaterialAPI.unsafeGetLightMaterialName;
 
 let setLightMaterialName = LightMaterialAPI.setLightMaterialName;

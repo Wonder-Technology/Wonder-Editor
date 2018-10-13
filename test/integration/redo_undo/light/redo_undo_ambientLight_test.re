@@ -10,33 +10,12 @@ let _ =
   describe("redo_undo: ambientLight", () => {
     let sandbox = getSandboxDefaultVal();
 
-    beforeEach(() => {
-      sandbox := createSandbox();
-
-      MainEditorSceneTool.initState(~sandbox, ());
-
-      EventListenerTool.buildFakeDom()
-      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-    });
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-
     let _changeColorAndPushUndoStack = value => {
-      let component =
-        BuildComponentTool.buildHeader(
-          TestTool.buildAppStateSceneGraphFromEngine(),
-        );
+      let sourceColor = ControllerTool.getColor();
 
-      BaseEventTool.triggerComponentEvent(
-        component,
-        OperateComponentEventTool.triggerShowColorPickEvent,
-      );
+      ControllerTool.changeColor(value);
 
-      Controller.Method.changeColor(value);
-
-      BaseEventTool.triggerComponentEvent(
-        component,
-        OperateComponentEventTool.triggerCloseColorPickEvent,
-      );
+      ControllerTool.closeColorPicker(~color=sourceColor, ());
     };
 
     let _simulateTwiceChangeAmbientLight = () => {
@@ -63,15 +42,23 @@ let _ =
       _changeColorAndPushUndoStack(color2);
     };
 
-    let _beforeEach = () => {
+    let _beforeEach = () =>
       MainEditorSceneTool.createDefaultScene(sandbox, () => ());
 
-    };
+    beforeEach(() => {
+      sandbox := createSandbox();
+
+      MainEditorSceneTool.initState(~sandbox, ());
+
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+    });
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateTwiceChangeAmbientLight, _beforeEach, () => ()),
-      BuildComponentForCurryTool.buildHeader
+      BuildComponentForCurryTool.buildHeader,
     );
   });

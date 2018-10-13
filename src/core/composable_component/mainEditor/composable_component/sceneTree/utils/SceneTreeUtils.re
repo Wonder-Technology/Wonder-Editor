@@ -1,11 +1,11 @@
 open SceneGraphType;
 
-let getWidge = () => EditorType.SceneTree;
+let getWidget = () => EditorType.SceneTree;
 
-let isWidge = startWidge =>
-  switch (startWidge) {
+let isWidget = startWidget =>
+  switch (startWidget) {
   | None => false
-  | Some(startWidge) => startWidge === getWidge()
+  | Some(startWidget) => startWidget === getWidget()
   };
 
 let _isDragedGameObjectBeTargetGameObjectParent =
@@ -117,30 +117,30 @@ let getSceneGraphDataFromEngine = ((editorState, engineState)) => [|
 |];
 
 let rec setSpecificSceneTreeNodeIsShowChildren =
-        (targetId, isShowChildren, sceneGraphArray) =>
+        (targetUid, isShowChildren, sceneGraphArray) =>
   sceneGraphArray
   |> Js.Array.map(({uid, children} as treeNode) =>
-       uid === targetId ?
+       uid === targetUid ?
          {...treeNode, isShowChildren} :
          {
            ...treeNode,
            children:
              setSpecificSceneTreeNodeIsShowChildren(
-               targetId,
+               targetUid,
                isShowChildren,
                children,
              ),
          }
      );
 
-let rec renameSceneGraphData = (targetId, newName, sceneGraphArray) =>
+let rec renameSceneGraphData = (targetUid, newName, sceneGraphArray) =>
   sceneGraphArray
   |> Js.Array.map(({uid, name, children} as treeNode) =>
-       uid === targetId ?
+       uid === targetUid ?
          {...treeNode, name: newName} :
          {
            ...treeNode,
-           children: renameSceneGraphData(targetId, newName, children),
+           children: renameSceneGraphData(targetUid, newName, children),
          }
      );
 
@@ -237,10 +237,10 @@ let removeDragedTreeNode = (dragedUid, sceneGraphArray) => {
 };
 
 let rec dragedTreeNodeToTargetTreeNode =
-        (targetId, (sceneGraphArray, dragedTreeNode)) =>
+        (targetUid, (sceneGraphArray, dragedTreeNode)) =>
   sceneGraphArray
   |> Js.Array.map(({uid, children} as treeNode) =>
-       uid === targetId ?
+       uid === targetUid ?
          {
            ...treeNode,
            children:
@@ -250,7 +250,7 @@ let rec dragedTreeNodeToTargetTreeNode =
            ...treeNode,
            children:
              dragedTreeNodeToTargetTreeNode(
-               targetId,
+               targetUid,
                (children, dragedTreeNode),
              ),
          }
@@ -258,12 +258,12 @@ let rec dragedTreeNodeToTargetTreeNode =
 
 let getDragedSceneGraphData =
     (
-      targetId: int,
+      targetUid: int,
       dragedUid: int,
       sceneGraphArray: array(sceneTreeNodeType),
     ) =>
   removeDragedTreeNode(dragedUid, sceneGraphArray)
-  |> dragedTreeNodeToTargetTreeNode(targetId);
+  |> dragedTreeNodeToTargetTreeNode(targetUid);
 /* |> WonderLog.Contract.ensureCheck(
      dragedSceneGraph =>
        WonderLog.(

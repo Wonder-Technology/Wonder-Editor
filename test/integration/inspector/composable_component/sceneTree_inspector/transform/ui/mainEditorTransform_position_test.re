@@ -14,14 +14,14 @@ let _ =
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    MainEditorTransformBaseTestTool.transformBaseTest(
+    MainEditorTransformTestTool.transformBaseTest(
       sandbox,
       "test change position value",
       (0., TransformUtils.getTransformPositionData),
       (
-        TransformEventTool.triggerChangePositionX,
-        TransformEventTool.triggerChangePositionY,
-        TransformEventTool.triggerChangePositionZ,
+        MainEditorTransformTool.changePositionX,
+        MainEditorTransformTool.changePositionY,
+        MainEditorTransformTool.changePositionZ,
       ),
     );
   });

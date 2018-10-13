@@ -1,9 +1,10 @@
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
+
   type prepareTuple = Wonderjs.MaterialType.material;
   type dataTuple = int;
-  let _handleSetMap =
-      (materialGameObjects, materialComponent, textureIndex, engineState) =>
+
+  let _handleSetMap = (materialComponent, textureComponent, engineState) =>
     switch (
       BasicMaterialEngineService.getBasicMaterialMap(
         materialComponent,
@@ -12,7 +13,7 @@ module CustomEventHandler = {
     ) {
     | None =>
       OperateTextureLogicService.handleMaterialComponentFromNoMapToHasMap(
-        (materialComponent, textureIndex),
+        (materialComponent, textureComponent),
         (
           BasicMaterialEngineService.setBasicMaterialMap,
           BasicMaterialEngineService.reInitAllBasicMaterialsAndClearShaderCache,
@@ -22,17 +23,17 @@ module CustomEventHandler = {
     | Some(_map) =>
       OperateTextureLogicService.changeTextureMapAndRefreshEngineState(
         materialComponent,
-        textureIndex,
+        textureComponent,
         OperateBasicMaterialLogicService.setBasicMaterialMapToEngineState,
         engineState,
       )
     };
 
-  let handleSelfLogic = ((store, dispatchFunc), materialComponent, dragedId) =>
+  let handleSelfLogic = ((store, dispatchFunc), materialComponent, dragedNodeId) =>
     MaterialDragTextureEventHandlerUtils.handleSelfLogic(
       (store, dispatchFunc),
       materialComponent,
-      dragedId,
+      dragedNodeId,
       _handleSetMap,
     );
 };

@@ -18,20 +18,16 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    let _changeColorAndPushUndoStack = (component, materialComponent, color) => {
-      BaseEventTool.triggerComponentEvent(
-        component,
-        PickColorEventTool.triggerShowColorPickEvent,
-      );
+    let _changeColorAndPushUndoStack = (materialComponent, color) => {
+      let sourceColor =
+        MainEditorLightMaterialTool.getColor(materialComponent);
 
-      PickColorEventTool.triggerChangeLightMaterialColor(
-        materialComponent,
-        color,
-      );
+      MainEditorLightMaterialTool.changeColor(materialComponent, color);
 
-      BaseEventTool.triggerComponentEvent(
-        component,
-        PickColorEventTool.triggerCloseColorPickEvent,
+      MainEditorLightMaterialTool.closeColorPicker(
+        ~material=materialComponent,
+        ~color=sourceColor,
+        (),
       );
     };
 
@@ -61,27 +57,16 @@ let _ =
         },
       };
 
-      _changeColorAndPushUndoStack(
-        component,
-        currentGameObjectMaterial,
-        color1,
-      );
+      _changeColorAndPushUndoStack(currentGameObjectMaterial, color1);
 
-      _changeColorAndPushUndoStack(
-        component,
-        currentGameObjectMaterial,
-        color2,
-      );
+      _changeColorAndPushUndoStack(currentGameObjectMaterial, color2);
     };
 
-    let _beforeEach = () => {
+    let _beforeEach = () =>
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
       );
-
-      MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
-    };
 
     let _afterEach = () =>
       StateEditorService.getState()

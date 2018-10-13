@@ -11,22 +11,16 @@ let getDrawModePointType = () => Points |> drawModeToUint8;
 
 let getDrawModeTriangleFanType = () => Triangle_fan |> drawModeToUint8;
 
-let triggerChangeWrapEvent = (value, domChildren) => {
-  let div = _getFromArray(domChildren, 0);
-  let article = _getFromArray(div##children, 0);
-  let select = _getFromArray(article##children, 1);
-  BaseEventTool.triggerChangeEvent(
-    select,
-    BaseEventTool.buildFormEvent(value),
+let changeMode =
+    (
+      ~value,
+      ~meshRenderer=GameObjectTool.getCurrentGameObjectMeshRenderer(),
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorMeshRenderer.Method.changeMode(
+    (store, dispatchFunc),
+    meshRenderer,
+    value,
   );
-};
-
-let triggerChangeDrawModeEvent = type_ => {
-  let inspectorComponent =
-    BuildComponentTool.buildMeshRenderer(TestTool.buildEmptyAppState());
-
-  BaseEventTool.triggerComponentEvent(
-    inspectorComponent,
-    triggerChangeWrapEvent(type_ |> string_of_int),
-  );
-};

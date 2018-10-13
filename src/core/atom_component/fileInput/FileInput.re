@@ -85,13 +85,12 @@ let make =
     (
       ~buttonText: option(string)=?,
       ~onSubmit: option(string => unit)=?,
+      ~isShowInput=false,
+      ~inputValue="",
       _children,
     ) => {
   ...component,
-  initialState: () => {
-    inputValue: "",
-    isShowInput: false,
-  },
+  initialState: () => {inputValue, isShowInput},
   reducer: reducer(onSubmit),
   render: self => render(buttonText, self),
 };

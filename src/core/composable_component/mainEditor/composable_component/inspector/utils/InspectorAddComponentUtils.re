@@ -6,10 +6,14 @@ let addComponentByType =
     (type_, currentSceneTreeNode, (editorState, engineState)) =>
   switch (type_) {
   | RenderGroup =>
-    let (engineState, renderGroup) =
-      RenderGroupEngineService.createRenderGroup(
-        (MeshRendererEngineService.create, LightMaterialEngineService.create),
-        engineState,
+    let defaultLightMaterial =
+      AssetMaterialDataEditorService.unsafeGetDefaultLightMaterial(editorState);
+    let (engineState, meshRenderer) =
+      MeshRendererEngineService.create(engineState);
+    let renderGroup =
+      RenderGroupEngineService.buildRenderGroup(
+        meshRenderer,
+        defaultLightMaterial,
       );
 
     (editorState, engineState)
@@ -27,7 +31,7 @@ let addComponentByType =
     let defaultCubeGeometry =
       editorState
       |> AssetGeometryDataEditorService.getGeometryData
-      |> (({defaultCubeGeometryIndex}) => defaultCubeGeometryIndex);
+      |> (({defaultCubeGeometryComponent}) => defaultCubeGeometryComponent);
 
     (editorState, engineState)
     |> GameObjectLogicService.addGeometry(
@@ -106,7 +110,7 @@ let addComponentByType =
       WonderLog.Log.buildFatalMessage(
         ~title="addComponentByType",
         ~description=
-          {j|the type:$type_ in inspectorComponentType is can't add |j},
+          {j|the type:$type_ in inspectorComponentType can't add |j},
         ~reason="",
         ~solution={j||j},
         ~params={j||j},

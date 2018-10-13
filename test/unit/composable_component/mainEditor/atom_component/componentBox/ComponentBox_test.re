@@ -8,6 +8,8 @@ open Sinon;
 
 let _ =
   describe("componentBox", () => {
+    let sandbox = getSandboxDefaultVal();
+
     let _buildComponentBoxComponent =
         (header, type_, isDisposable, gameObject) =>
       ReactTestRenderer.create(
@@ -23,9 +25,9 @@ let _ =
           }
         />,
       );
-    let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
+    let _getFromArray = (array, index) =>
+      ArrayService.unsafeGetNth(index, array);
 
-    let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
       sandbox := createSandbox();
 
@@ -66,60 +68,45 @@ let _ =
       );
     });
 
-    describe("test show component workflow", () => {
-      let _triggerClickTransformTriangle = domChildren => {
-        let inspector = _getFromArray(domChildren, 0);
-        let transformArcticle = _getFromArray(inspector##children, 1);
-        let headerDiv = _getFromArray(transformArcticle##children, 0);
-        let triangleDiv = _getFromArray(headerDiv##children, 0);
-
-        BaseEventTool.triggerClickEvent(triangleDiv);
-      };
-
+    describe("test show component workflow", () =>
       describe(
-        "test click triangle once to hide the common type component", () => {
+        "test click triangle once to hide the common type component", () =>
         test(
           "test click close first box transform component, the component should be close",
           () => {
-            let component =
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildAppStateSceneGraphFromEngine(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
-              );
+            open ComponentBox;
 
-            BaseEventTool.triggerComponentEvent(
-              component,
-              _triggerClickTransformTriangle,
+            let dispatchFunc = createEmptyStubWithJsObjSandbox(sandbox);
+
+            let state = {isShowComponent: true, triangleDirection: ""};
+
+            let componentType = InspectorComponentType.Transform;
+
+            ComponentBox.reducer(
+              (TestTool.buildEmptyAppState(), dispatchFunc),
+              componentType,
+              ToggleShowComponent,
+              state,
             );
 
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildAppStateSceneGraphAndInspectorState(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
+            let dispatchedAction =
+              dispatchFunc |> getCall(0) |> getArgs |> List.hd;
+
+            switch (dispatchedAction) {
+            | AppStore.InspectorAction(action) =>
+              switch (action) {
+              | SetShowComponent(type_, value) =>
+                (type_, value)
+                |>
+                expect == (
+                            componentType
+                            |> InspectorComponentType.convertComponentTypeToInt,
+                            false,
+                          )
+              }
+            };
           },
-        );
-        test(
-          "test the other gameObject transform component should be close", () => {
-          let component =
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            );
-
-          BaseEventTool.triggerComponentEvent(
-            component,
-            _triggerClickTransformTriangle,
-          );
-
-          MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
-
-          BuildComponentTool.buildInspectorComponent(
-            TestTool.buildAppStateSceneGraphAndInspectorState(),
-            InspectorTool.buildFakeAllShowComponentConfig(),
-          )
-          |> ReactTestTool.createSnapshotAndMatch;
-        });
-      });
-    });
+        )
+      )
+    );
   });

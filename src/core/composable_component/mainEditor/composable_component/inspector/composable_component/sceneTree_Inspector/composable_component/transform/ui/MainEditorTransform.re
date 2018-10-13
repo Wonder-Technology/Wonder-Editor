@@ -1,5 +1,3 @@
-
-
 module Method = {
   let blurPositionEvent =
       ((store, dispatchFunc), transformComponent, (x, y, z)) => {
@@ -124,12 +122,12 @@ module Method = {
     _setCurrentSceneTreeNodeLocalRotation(transformComponent, (x, y, value));
   };
 
-  let buildShadeComponent = gameObject =>
+  let buildShieldComponent = gameObject =>
     StateEngineService.unsafeGetState()
     |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
          gameObject,
        ) ?
-      <div className="transform-shade" /> : ReasonReact.null;
+      <div className="transform-shield" /> : ReasonReact.null;
 };
 
 let component = ReasonReact.statelessComponent("MainEditorTransform");
@@ -179,7 +177,7 @@ let render =
         canBeZero=false
       />
     </div>
-    (Method.buildShadeComponent(gameObject))
+    (Method.buildShieldComponent(gameObject))
   </article>;
 
 let make =

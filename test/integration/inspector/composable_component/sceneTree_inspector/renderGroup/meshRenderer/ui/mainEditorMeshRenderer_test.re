@@ -14,17 +14,8 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
-      EventListenerTool.buildFakeDom()
-      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
-    afterEach(() => {
-      restoreSandbox(refJsObjToSandbox(sandbox^));
-      StateEditorService.getState()
-      |> AssetCurrentNodeDataEditorService.clearCurrentNodeData
-      |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-      |> StateEditorService.setState
-      |> ignore;
-    });
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test meshRenderer change drawMode", () => {
       beforeEach(() =>
@@ -37,7 +28,7 @@ let _ =
         test("test snapshot", () => {
           let lineType = MainEditorMeshRendererTool.getDrawModeLineType();
 
-          MainEditorMeshRendererTool.triggerChangeDrawModeEvent(lineType);
+          MainEditorMeshRendererTool.changeMode(~value=lineType, ());
 
           BuildComponentTool.buildMeshRenderer(TestTool.buildEmptyAppState())
           |> ReactTestTool.createSnapshotAndMatch;
@@ -46,7 +37,7 @@ let _ =
         test("test logic", () => {
           let lineType = MainEditorMeshRendererTool.getDrawModeLineType();
 
-          MainEditorMeshRendererTool.triggerChangeDrawModeEvent(lineType);
+          MainEditorMeshRendererTool.changeMode(~value=lineType, ());
 
           let meshRenderer = GameObjectTool.getCurrentGameObjectMeshRenderer();
 
@@ -59,7 +50,7 @@ let _ =
         test("test snapshot", () => {
           let pointType = MainEditorMeshRendererTool.getDrawModePointType();
 
-          MainEditorMeshRendererTool.triggerChangeDrawModeEvent(pointType);
+          MainEditorMeshRendererTool.changeMode(~value=pointType, ());
 
           BuildComponentTool.buildMeshRenderer(TestTool.buildEmptyAppState())
           |> ReactTestTool.createSnapshotAndMatch;
@@ -68,7 +59,7 @@ let _ =
         test("test logic", () => {
           let pointType = MainEditorMeshRendererTool.getDrawModePointType();
 
-          MainEditorMeshRendererTool.triggerChangeDrawModeEvent(pointType);
+          MainEditorMeshRendererTool.changeMode(~value=pointType, ());
 
           let meshRenderer = GameObjectTool.getCurrentGameObjectMeshRenderer();
 
@@ -82,9 +73,7 @@ let _ =
           let triangleFanType =
             MainEditorMeshRendererTool.getDrawModeTriangleFanType();
 
-          MainEditorMeshRendererTool.triggerChangeDrawModeEvent(
-            triangleFanType,
-          );
+          MainEditorMeshRendererTool.changeMode(~value=triangleFanType, ());
 
           BuildComponentTool.buildMeshRenderer(TestTool.buildEmptyAppState())
           |> ReactTestTool.createSnapshotAndMatch;
@@ -94,9 +83,7 @@ let _ =
           let triangleFanType =
             MainEditorMeshRendererTool.getDrawModeTriangleFanType();
 
-          MainEditorMeshRendererTool.triggerChangeDrawModeEvent(
-            triangleFanType,
-          );
+          MainEditorMeshRendererTool.changeMode(~value=triangleFanType, ());
 
           let meshRenderer = GameObjectTool.getCurrentGameObjectMeshRenderer();
 

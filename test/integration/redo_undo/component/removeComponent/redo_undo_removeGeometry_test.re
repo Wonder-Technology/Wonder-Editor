@@ -9,11 +9,10 @@ open Sinon;
 let _ =
   describe("redo_undo: remove geometry component", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     let _simulateRemoveSpecificComponent = () =>
-      SceneTreeNodeDomTool.OperateDefaultScene.getGeometryComponentFromBox()
-      |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+      MainEditorInspectorRemoveComponentTool.removeGeometryComponent();
+
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
@@ -27,6 +26,9 @@ let _ =
       |> StateLogicService.getAndSetEditorState;
     };
     let _afterEach = () => ();
+
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoOneStep(
       sandbox,

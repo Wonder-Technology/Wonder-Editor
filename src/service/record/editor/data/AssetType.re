@@ -6,6 +6,8 @@ open CurrentNodeDataType;
 
 open AssetGeometryDataType;
 
+open AssetMaterialDataType;
+
 type assetRecord = {
   assetTreeRoot: option(assetTreeNodeType),
   index: int,
@@ -20,5 +22,6 @@ type assetRecord = {
   materialNodeMap: WonderCommonlib.SparseMapService.t(materialResultType),
   imageBase64Map: WonderCommonlib.SparseMapService.t(imageResultType),
   geometryData,
+  materialData,
   clonedGameObjectMap: WonderCommonlib.SparseMapService.t(array(int)),
 };

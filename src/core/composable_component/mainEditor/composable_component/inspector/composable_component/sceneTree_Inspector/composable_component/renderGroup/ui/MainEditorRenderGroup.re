@@ -1,6 +1,6 @@
 let component = ReasonReact.statelessComponent("MainEditorRenderGroup");
 
-let render = ((store, dispatchFunc), _self) =>
+let render = ((store, dispatchFunc), currentSceneTreeNode, _self) =>
   <article key="MainEditorRenderGroup" className="wonder-render-group">
     <div className="">
       <div className=""> (DomHelper.textEl("MeshRender : ")) </div>
@@ -9,11 +9,11 @@ let render = ((store, dispatchFunc), _self) =>
     <hr />
     <div className="">
       <div className=""> (DomHelper.textEl("Material : ")) </div>
-      <MainEditorMaterial store dispatchFunc />
+      <MainEditorMaterial store dispatchFunc currentSceneTreeNode />
     </div>
   </article>;
 
-let make = (~store, ~dispatchFunc, _children) => {
+let make = (~store, ~dispatchFunc, ~currentSceneTreeNode, _children) => {
   ...component,
-  render: self => render((store, dispatchFunc), self),
+  render: self => render((store, dispatchFunc), currentSceneTreeNode, self),
 };

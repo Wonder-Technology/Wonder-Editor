@@ -9,6 +9,7 @@ open Sinon;
 let _ =
   describe("redo_undo: controller engine", () => {
     let sandbox = getSandboxDefaultVal();
+
     beforeEach(() => {
       sandbox := createSandbox();
       TestTool.closeContractCheck();
@@ -17,6 +18,7 @@ let _ =
       restoreSandbox(refJsObjToSandbox(sandbox^));
       TestTool.openContractCheck();
     });
+
     describe("test undo operate", () => {
       describe("test add gameObject", () => {
         beforeEach(() => {
@@ -31,10 +33,10 @@ let _ =
           ControllerTool.run();
         });
         test("test undo one step which from second to first", () => {
-          HeaderTool.triggerAddBox();
-          HeaderTool.triggerAddBox();
+          MainEditorSceneTreeHeaderTool.addBox();
+          MainEditorSceneTreeHeaderTool.addBox();
 
-          StateHistoryToolEditor.undo();
+          RedoUndoTool.undoHistoryState();
 
           StateEngineService.unsafeGetState()
           |> GameObjectUtils.getChildren(
@@ -79,11 +81,11 @@ let _ =
         });
 
         test("test undo one step which from second to first", () => {
-          HeaderTool.triggerDisposeBox();
+          MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
           MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+          MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
 
-          HeaderTool.triggerDisposeBox();
-          StateHistoryToolEditor.undo();
+          RedoUndoTool.undoHistoryState();
 
           StateEngineService.unsafeGetState()
           |> GameObjectUtils.getChildren(
@@ -109,14 +111,15 @@ let _ =
         test("test undo one step which from second to first", () => {
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
-          let firstValue = "155";
-          let secondValue = "200";
-          TransformEventTool.simulateTwiceChangePosition(
+          let firstValue = 155.;
+          let secondValue = 200.;
+          RedoUndoTransformTool.simulateTwiceChangePosition(
             ~firstValue,
             ~secondValue,
             (),
           );
-          StateHistoryToolEditor.undo();
+
+          RedoUndoTool.undoHistoryState();
 
           StateEngineService.unsafeGetState()
           |> TransformEngineService.getLocalPosition(
@@ -141,15 +144,16 @@ let _ =
         test("the undo operate should deep copy current engineState", () => {
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
-          let firstValue = "150";
-          let secondValue = "200";
-          TransformEventTool.simulateTwiceChangePosition(
+          let firstValue = 150.;
+          let secondValue = 200.;
+          RedoUndoTransformTool.simulateTwiceChangePosition(
             ~firstValue,
             ~secondValue,
             (),
           );
-          StateHistoryToolEditor.undo();
-          StateHistoryToolEditor.redo();
+
+          RedoUndoTool.undoHistoryState();
+          RedoUndoTool.redoHistoryState();
 
           StateEngineService.unsafeGetState()
           |> TransformEngineService.getLocalPosition(

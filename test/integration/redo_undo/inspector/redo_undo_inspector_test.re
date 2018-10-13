@@ -9,21 +9,24 @@ open Sinon;
 let _ =
   describe("redo_undo: inspector", () => {
     let sandbox = getSandboxDefaultVal();
+
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     describe("test simulate set currentSceneTreeNode", () => {
       beforeEach(() => {
         TestTool.closeContractCheck();
         MainEditorSceneTool.initState(~sandbox, ());
-        MainEditorSceneTool.createDefaultScene(sandbox, () => ());
-
-        SceneTreeNodeDomTool.OperateDefaultScene.getFirstCubeDomIndex()
-        |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        );
       });
       afterEach(() => {
         GameObjectTool.clearCurrentSceneTreeNode();
         TestTool.openContractCheck();
       });
+
       describe(
         "test set currentSceneTreeNode, have two state add into undoStack", () =>
         describe("test undo operate", () => {
@@ -36,7 +39,7 @@ let _ =
           );
           describe("test undo one step", () =>
             test("step which from second to first", () => {
-              StateHistoryToolEditor.undo();
+              RedoUndoTool.undoHistoryState();
 
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
@@ -47,8 +50,9 @@ let _ =
           );
           describe("test undo two step", () =>
             test("step which from second to zero", () => {
-              StateHistoryToolEditor.undo();
-              StateHistoryToolEditor.undo();
+              RedoUndoTool.undoHistoryState();
+              RedoUndoTool.undoHistoryState();
+
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
                 InspectorTool.buildFakeAllShowComponentConfig(),

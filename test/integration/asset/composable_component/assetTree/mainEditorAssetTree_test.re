@@ -11,6 +11,7 @@ open CurrentNodeDataType;
 let _ =
   describe("MainEditorAssetTree", () => {
     let sandbox = getSandboxDefaultVal();
+
     let _getFromArray = (array, index) =>
       ArrayService.unsafeGetNth(index, array);
 
@@ -37,14 +38,16 @@ let _ =
     describe("test set currentNode and currentNodeParent", () =>
       describe("click assetTree node", () =>
         test("currentNodeId and currentNodeParentId should be same", () => {
-          let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
 
-          assetTreeDomRecord
-          |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-          |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
-               BuildComponentTool.buildAssetComponent(),
-             );
+          MainEditorAssetTreeTool.Select.selectFolderNode(
+            ~nodeId=
+              MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId(
+                assetTreeData,
+              ),
+            (),
+          );
 
           let editorState = StateEditorService.getState();
           let {currentNodeId} =
@@ -64,40 +67,35 @@ let _ =
       describe("test has children case", () => {
         describe("have first layer children", () => {
           test("no drag", () => {
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
 
             BuildComponentTool.buildAssetComponent()
             |> ReactTestTool.createSnapshotAndMatch;
           });
 
           test("drag treeNode into brother treeNode", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-            let firstFolderInAssetTree =
-              assetTreeDomRecord
-              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree;
-            let secondFolderInAssetTree =
-              assetTreeDomRecord
-              |> MainEditorAssetNodeTool.OperateTwoLayer.getSecondFolderDomIndexForAssetTree;
-            let component = BuildComponentTool.buildAssetComponent();
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildTwoFolderAssetTree();
+            let firstFolderNodeId =
+              MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId(
+                assetTreeData,
+              );
+            let secondFolderNodeId =
+              MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getSecondFolderNodeId(
+                assetTreeData,
+              );
 
-            BaseEventTool.triggerComponentEvent(
-              component,
-              AssetTreeDragEventTool.triggerFirstLayerDragStartEvent(
-                secondFolderInAssetTree,
-              ),
+            MainEditorAssetTreeTool.Select.selectFolderNode(
+              ~nodeId=
+                MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId(
+                  assetTreeData,
+                ),
+              (),
             );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              AssetTreeDragEventTool.triggerFirstLayerDragEnterEvent(
-                firstFolderInAssetTree,
-              ),
-            );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              AssetTreeDragEventTool.triggerFirstLayerDropEvent(
-                firstFolderInAssetTree,
-              ),
+            MainEditorAssetTreeTool.Drag.dragAssetTreeNode(
+              secondFolderNodeId,
+              firstFolderNodeId,
             );
 
             BuildComponentTool.buildAssetComponent()
@@ -107,38 +105,28 @@ let _ =
 
         describe("have second layer children", () => {
           test("no drag", () => {
-            MainEditorAssetTool.buildThreeLayerAssetTreeRoot() |> ignore;
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.buildFourFolderAssetTree();
+
             BuildComponentTool.buildAssetComponent()
             |> ReactTestTool.createSnapshotAndMatch;
           });
 
-          test("drag second treeNode into root treeNode", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildThreeLayerAssetTreeRoot();
-            let component = BuildComponentTool.buildAssetComponent();
-            let firstLayerSecondFolderDomIndex =
-              MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserSecondFolderDomIndex(
-                assetTreeDomRecord,
+          test("drag third layer first folderNode into root treeNode", () => {
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.buildFourFolderAssetTree();
+            let nodeId =
+              MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getThirdLayerFirstFolderNodeId(
+                assetTreeData,
               );
-            let secondLayerFirstFolderDomIndexForAssetTree =
-              MainEditorAssetNodeTool.OperateThreeLayer.getSecondLayserFirstFolderDomIndexForAssetTree(
-                assetTreeDomRecord,
-              );
+            MainEditorAssetFolderNodeTool.setFolderName(nodeId, "a1")
+            |> StateLogicService.getAndSetEditorState;
 
-            BaseEventTool.triggerComponentEvent(
-              component,
-              AssetTreeDragEventTool.triggerSecondLayerDragStartEvent(
-                firstLayerSecondFolderDomIndex,
-                secondLayerFirstFolderDomIndexForAssetTree,
+            MainEditorAssetTreeTool.Drag.dragAssetTreeNode(
+              nodeId,
+              MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getRootNodeId(
+                assetTreeData,
               ),
-            );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              AssetTreeDragEventTool.triggerRootDragEnterEvent,
-            );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              AssetTreeDragEventTool.triggerRootDropEvent,
             );
 
             BuildComponentTool.buildAssetComponent()
@@ -150,41 +138,40 @@ let _ =
 
     describe("test drag assetChildrenNode to assetTreeNode", () => {
       test("test no drag", () => {
-        MainEditorAssetTool.buildThreeLayerAssetTreeRoot() |> ignore;
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.buildFourFolderAssetTree();
 
         BuildComponentTool.buildAssetComponent()
         |> ReactTestTool.createSnapshotAndMatch;
       });
 
       test("test drag folder into it's parent's brother folder", () => {
-        let assetTreeDomRecord =
-          MainEditorAssetTool.buildThreeLayerAssetTreeRoot();
-        let firstLayerFirstFolderDomIndex =
-          MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserFirstFolderDomIndex(
-            assetTreeDomRecord,
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.buildFourFolderAssetTree();
+        let secondLayerFirstFolderNodeId =
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getSecondLayerFirstFolderNodeId(
+            assetTreeData,
           );
-        let firstLayerSecondFolderDomIndex =
-          MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserSecondFolderDomIndex(
-            assetTreeDomRecord,
+        let secondLayerSecondFolderNodeId =
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getSecondLayerSecondFolderNodeId(
+            assetTreeData,
           );
-        let secondLayerFirstFolderDomIndexForAssetChildren =
-          MainEditorAssetNodeTool.OperateThreeLayer.getSecondLayserFirstFolderDomIndexForAssetChildren(
-            assetTreeDomRecord,
+        let thirdLayerFirstFolderNodeId =
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getThirdLayerFirstFolderNodeId(
+            assetTreeData,
           );
 
-        firstLayerSecondFolderDomIndex
-        |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
-             BuildComponentTool.buildAssetComponent(),
-           );
-        MainEditorAssetTreeTool.triggerAssetChildrenDragIntoAssetTree(
-          secondLayerFirstFolderDomIndexForAssetChildren,
-          firstLayerFirstFolderDomIndex,
+        /* MainEditorAssetTreeTool.Select.selectFolderNode(
+             ~nodeId=secondLayerSecondFolderNodeId,
+             (),
+           ); */
+        MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
+          thirdLayerFirstFolderNodeId,
+          secondLayerFirstFolderNodeId,
         );
-        BaseEventTool.triggerComponentEvent(
-          BuildComponentTool.buildAssetComponent(),
-          AssetTreeEventTool.clickAssetTreeNode(
-            firstLayerFirstFolderDomIndex,
-          ),
+        MainEditorAssetTreeTool.Select.selectFolderNode(
+          ~nodeId=secondLayerFirstFolderNodeId,
+          (),
         );
 
         BuildComponentTool.buildAssetComponent()
@@ -192,34 +179,24 @@ let _ =
       });
 
       test("test drag texture file into it's parent's brother folder", () => {
-        let assetTreeDomRecord =
-          MainEditorAssetTool.buildThreeLayerAssetTreeRoot();
-        let firstLayerFirstFolderDomIndex =
-          MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserFirstFolderDomIndex(
-            assetTreeDomRecord,
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAssetTree();
+        let secondLayerFirstFolderNodeId =
+          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getSecondLayerFirstFolderNodeId(
+            assetTreeData,
           );
-        let firstLayerSecondFolderDomIndex =
-          MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserSecondFolderDomIndex(
-            assetTreeDomRecord,
-          );
-        let secondLayserSecondTextureDomIndex =
-          MainEditorAssetNodeTool.OperateThreeLayer.getSecondLayserSecondTextureDomIndex(
-            assetTreeDomRecord,
+        let thirdLayerFirstTextureNodeId =
+          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstTextureNodeId(
+            assetTreeData,
           );
 
-        firstLayerSecondFolderDomIndex
-        |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
-             BuildComponentTool.buildAssetComponent(),
-           );
-        MainEditorAssetTreeTool.triggerAssetChildrenDragIntoAssetTree(
-          secondLayserSecondTextureDomIndex,
-          firstLayerFirstFolderDomIndex,
+        MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
+          thirdLayerFirstTextureNodeId,
+          secondLayerFirstFolderNodeId,
         );
-        BaseEventTool.triggerComponentEvent(
-          BuildComponentTool.buildAssetComponent(),
-          AssetTreeEventTool.clickAssetTreeNode(
-            firstLayerFirstFolderDomIndex,
-          ),
+        MainEditorAssetTreeTool.Select.selectFolderNode(
+          ~nodeId=secondLayerFirstFolderNodeId,
+          (),
         );
 
         BuildComponentTool.buildAssetComponent()
@@ -227,28 +204,22 @@ let _ =
       });
 
       test("test drag texture file into it's brother folder", () => {
-        let assetTreeDomRecord =
-          MainEditorAssetTool.buildThreeLayerAssetTreeRoot();
-        let firstLayerSecondFolderDomIndex =
-          MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserSecondFolderDomIndex(
-            assetTreeDomRecord,
-          );
-        let secondLayerFirstFolderDomIndexForAssetChildren =
-          MainEditorAssetNodeTool.OperateThreeLayer.getSecondLayserFirstFolderDomIndexForAssetChildren(
-            assetTreeDomRecord,
-          );
-        let secondLayserSecondTextureDomIndex =
-          MainEditorAssetNodeTool.OperateThreeLayer.getSecondLayserSecondTextureDomIndex(
-            assetTreeDomRecord,
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAssetTree();
+        let thirdLayerFirstFolderNodeId =
+          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstFolderNodeId(
+            assetTreeData,
           );
 
-        firstLayerSecondFolderDomIndex
-        |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
-             BuildComponentTool.buildAssetComponent(),
-           );
-        MainEditorAssetTreeTool.triggerAssetChildrenDragIntoChildrenFolder(
-          secondLayserSecondTextureDomIndex,
-          secondLayerFirstFolderDomIndexForAssetChildren,
+        MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
+          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstTextureNodeId(
+            assetTreeData,
+          ),
+          thirdLayerFirstFolderNodeId,
+        );
+        MainEditorAssetTreeTool.Select.selectFolderNode(
+          ~nodeId=thirdLayerFirstFolderNodeId,
+          (),
         );
 
         BuildComponentTool.buildAssetComponent()
@@ -258,66 +229,31 @@ let _ =
 
     describe("deal with the specific case", () => {
       test("if drag treeNode into itself, keep not change", () => {
-        let assetTreeDomRecord =
-          MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-        let component = BuildComponentTool.buildAssetComponent();
-        let firstFolderDomIndex =
-          MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree(
-            assetTreeDomRecord,
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
+        let firstFolderNodeId =
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId(
+            assetTreeData,
           );
 
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeDragEventTool.triggerFirstLayerDragStartEvent(
-            firstFolderDomIndex,
-          ),
+        MainEditorAssetTreeTool.Drag.dragAssetTreeNode(
+          firstFolderNodeId,
+          firstFolderNodeId,
         );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeDragEventTool.triggerFirstLayerDragEnterEvent(
-            firstFolderDomIndex,
-          ),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeDragEventTool.triggerFirstLayerDropEvent(
-            firstFolderDomIndex,
-          ),
-        );
+
         BuildComponentTool.buildAssetComponent()
         |> ReactTestTool.createSnapshotAndMatch;
       });
       test("if drag treeNode into it's chidlren, keep not change", () => {
-        let assetTreeDomRecord =
-          MainEditorAssetTool.buildThreeLayerAssetTreeRoot();
-        let firstLayerSecondFolderDomIndex =
-          MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserSecondFolderDomIndex(
-            assetTreeDomRecord,
-          );
-        let secondLayerFirstFolderDomIndex =
-          MainEditorAssetNodeTool.OperateThreeLayer.getSecondLayserFirstFolderDomIndexForAssetTree(
-            assetTreeDomRecord,
-          );
-        let component = BuildComponentTool.buildAssetComponent();
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.buildFourFolderAssetTree();
 
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeDragEventTool.triggerFirstLayerDragStartEvent(
-            firstLayerSecondFolderDomIndex,
+        MainEditorAssetTreeTool.Drag.dragAssetTreeNode(
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getSecondLayerSecondFolderNodeId(
+            assetTreeData,
           ),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeDragEventTool.triggerSecondLayerDragEnterEvent(
-            firstLayerSecondFolderDomIndex,
-            secondLayerFirstFolderDomIndex,
-          ),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeDragEventTool.triggerSecondLayerDropEvent(
-            firstLayerSecondFolderDomIndex,
-            secondLayerFirstFolderDomIndex,
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getThirdLayerFirstFolderNodeId(
+            assetTreeData,
           ),
         );
 

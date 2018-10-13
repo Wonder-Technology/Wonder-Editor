@@ -1,4 +1,4 @@
-open MainEditorMaterialType;
+open AssetMaterialDataType;
 
 open Wonderjs;
 
@@ -57,7 +57,7 @@ let hasRenderGroupComponents = (gameObject, engineState) =>
        ),
      );
 
-let _getOperateSourceRenderGroupFunc =
+let _getOperateSourceRenderGroupData =
     (materialType, gameObject, engineStateToGetData) =>
   switch (materialType) {
   | BasicMaterial => (
@@ -84,71 +84,93 @@ let _getOperateSourceRenderGroupFunc =
     )
   };
 
-let _getOperateTargetRenderGroupFunc = (materialType, engineState) =>
+let _getOperateTargetRenderGroupData =
+    (meshRenderer, materialType, engineState) =>
   switch (materialType) {
-  | BasicMaterial => (
-      OperateRenderGroupLogicService.createRenderGroup(
-        (MeshRendererEngineService.create, BasicMaterialEngineService.create),
-        engineState,
-      ),
+  | BasicMaterial =>
+    let (engineState, material) =
+      BasicMaterialEngineService.create(engineState);
+
+    (
+      engineState,
+      RenderGroupEngineService.buildRenderGroup(meshRenderer, material),
       GameObjectComponentEngineService.addBasicMaterialComponent,
-    )
-  | LightMaterial => (
-      OperateRenderGroupLogicService.createRenderGroup(
-        (MeshRendererEngineService.create, LightMaterialEngineService.create),
-        engineState,
-      ),
+    );
+  | LightMaterial =>
+    let (engineState, material) =
+      LightMaterialEngineService.create(engineState);
+
+    (
+      engineState,
+      RenderGroupEngineService.buildRenderGroup(meshRenderer, material),
       GameObjectComponentEngineService.addLightMaterialComponent,
-    )
+    );
   };
 
-let _replaceRenderGroup =
-    (
-      (removeSourceMaterialFunc, addTargetMaterialFunc),
-      sourceMeshRenderer,
-      sourceMaterial,
-      targetMeshRenderer,
-      targetMaterial,
-      gameObject,
-      state,
-    ) =>
-  RenderGroupEngineService.replaceRenderGroupComponents(
-    (
-      {meshRenderer: sourceMeshRenderer, material: sourceMaterial},
-      {meshRenderer: targetMeshRenderer, material: targetMaterial},
-    ),
-    gameObject,
-    (removeSourceMaterialFunc, addTargetMaterialFunc),
-    state,
-  );
-
-let replaceRenderGroupByMaterialType = (sourceMateralType, targetMaterialType) => {
-  let gameObject =
-    SceneEditorService.unsafeGetCurrentSceneTreeNode
-    |> StateLogicService.getEditorState;
-
-  let engineState = StateEngineService.unsafeGetState();
-
+let replaceMaterialByMaterialType =
+    (gameObject, sourceMateralType, targetMaterialType, engineState) => {
   let (sourceRenderGroup, removeSourceMaterialFunc) =
-    _getOperateSourceRenderGroupFunc(
+    _getOperateSourceRenderGroupData(
       sourceMateralType,
       gameObject,
       engineState,
     );
 
-  let ((engineState, targetRenderGroup), addTargetMaterialFunc) =
-    _getOperateTargetRenderGroupFunc(targetMaterialType, engineState);
+  let (engineState, targetRenderGroup, addTargetMaterialFunc) =
+    _getOperateTargetRenderGroupData(
+      sourceRenderGroup.meshRenderer,
+      targetMaterialType,
+      engineState,
+    );
 
   let engineState =
     engineState
-    |> _replaceRenderGroup(
-         (removeSourceMaterialFunc, addTargetMaterialFunc),
-         sourceRenderGroup.meshRenderer,
-         sourceRenderGroup.material,
-         targetRenderGroup.meshRenderer,
-         targetRenderGroup.material,
+    |> RenderGroupEngineService.replaceMaterial(
+         (sourceRenderGroup, targetRenderGroup),
          gameObject,
+         (removeSourceMaterialFunc, addTargetMaterialFunc),
        );
 
-  StateLogicService.refreshEngineState(engineState);
+  engineState;
+};
+
+let replaceMaterialByMaterialData =
+    (
+      gameObject,
+      (
+        (sourceMaterial, targetMaterial),
+        (sourceMaterialType, targetMaterialType),
+      ),
+      engineState,
+    ) => {
+  let meshRenderer =
+    GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
+      gameObject,
+      engineState,
+    );
+  let sourceRenderGroup =
+    RenderGroupEngineService.buildRenderGroup(meshRenderer, sourceMaterial);
+  let targetRenderGroup =
+    RenderGroupEngineService.buildRenderGroup(meshRenderer, targetMaterial);
+
+  let removeSourceMaterialFunc =
+    switch (sourceMaterialType) {
+    | BasicMaterial => GameObjectComponentEngineService.removeBasicMaterialComponent
+    | LightMaterial => GameObjectComponentEngineService.removeLightMaterialComponent
+    };
+  let addTargetMaterialFunc =
+    switch (targetMaterialType) {
+    | BasicMaterial => GameObjectComponentEngineService.addBasicMaterialComponent
+    | LightMaterial => GameObjectComponentEngineService.addLightMaterialComponent
+    };
+
+  let engineState =
+    engineState
+    |> RenderGroupEngineService.replaceMaterial(
+         (sourceRenderGroup, targetRenderGroup),
+         gameObject,
+         (removeSourceMaterialFunc, addTargetMaterialFunc),
+       );
+
+  engineState;
 };

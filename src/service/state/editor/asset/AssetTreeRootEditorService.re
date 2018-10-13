@@ -23,5 +23,5 @@ let clearAssetTreeRoot = editorState => {
 let getRootTreeNodeId = editorState =>
   switch (editorState |> getAssetTreeRoot) {
   | None => editorState.assetRecord |> IndexAssetService.getIndex
-  | Some(assetRecord) => assetRecord.id
+  | Some(assetRecord) => assetRecord.nodeId
   };

@@ -51,8 +51,7 @@ let _ =
       describe("test remove light component", () => {
         describe("test snapshot", () =>
           test("test remove light component, should remove from inspector", () => {
-            SceneTreeNodeDomTool.OperateDefaultScene.getLightComponentFromDirectionLight()
-            |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+            MainEditorInspectorRemoveComponentTool.removeDirectionLightComponent();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -74,8 +73,7 @@ let _ =
           test(
             "test click remove light component, current gameObject shouldn't has it",
             () => {
-            SceneTreeNodeDomTool.OperateDefaultScene.getLightComponentFromDirectionLight()
-            |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+            MainEditorInspectorRemoveComponentTool.removeDirectionLightComponent();
 
             LightEngineService.hasLightComponent(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -92,8 +90,7 @@ let _ =
               let gl = FakeGlToolEngine.getEngineStateGl();
               let glShaderSource = gl##shaderSource;
 
-              SceneTreeNodeDomTool.OperateDefaultScene.getLightComponentFromDirectionLight()
-              |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+              MainEditorInspectorRemoveComponentTool.removeDirectionLightComponent();
 
               GLSLToolEngine.contain(
                 GLSLToolEngine.getVsSource(glShaderSource),
@@ -123,8 +120,7 @@ let _ =
         describe("test snapshot", () =>
           test(
             "test remove geometry component, should remove from inspector", () => {
-            SceneTreeNodeDomTool.OperateDefaultScene.getGeometryComponentFromBox()
-            |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+            MainEditorInspectorRemoveComponentTool.removeGeometryComponent();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -146,8 +142,7 @@ let _ =
           test(
             "test click remove geometry component, current gameObject shouldn't has it",
             () => {
-            SceneTreeNodeDomTool.OperateDefaultScene.getGeometryComponentFromBox()
-            |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+            MainEditorInspectorRemoveComponentTool.removeGeometryComponent();
 
             GameObjectComponentEngineService.hasGeometryComponent(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -162,8 +157,7 @@ let _ =
           test(
             "test remove renderGroup component, should remove from inspector",
             () => {
-            SceneTreeNodeDomTool.OperateDefaultScene.getRenderGroupComponentFromBox()
-            |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+            MainEditorInspectorRemoveComponentTool.removeRenderGroupComponent();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -185,8 +179,7 @@ let _ =
 
           describe("test click remove renderGroup component", () => {
             test("current gameObject shouldn't has it", () => {
-              SceneTreeNodeDomTool.OperateDefaultScene.getRenderGroupComponentFromBox()
-              |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+              MainEditorInspectorRemoveComponentTool.removeRenderGroupComponent();
 
               InspectorRenderGroupUtils.hasRenderGroupComponents(
                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -204,8 +197,7 @@ let _ =
                   engineState,
                 );
 
-              SceneTreeNodeDomTool.OperateDefaultScene.getRenderGroupComponentFromBox()
-              |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+              MainEditorInspectorRemoveComponentTool.removeRenderGroupComponent();
 
               let engineState = StateEngineService.unsafeGetState();
               (
@@ -236,13 +228,14 @@ let _ =
       });
 
       describe("test remove arcballCamera component", () => {
-        beforeEach(() => AddableComponentTool.addArcballCameraInCamera());
+        beforeEach(() =>
+          MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent()
+        );
         describe("test snapshot", () =>
           test(
             "test remove arcballCamera component, should remove from inspector",
             () => {
-            SceneTreeNodeDomTool.OperateDefaultScene.getArcballCameraComponentFromCamera()
-            |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+            MainEditorInspectorRemoveComponentTool.removeArcballCameraControllerComponent();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -264,8 +257,7 @@ let _ =
           test(
             "test click remove arcballCamera component, current gameObject shouldn't has it",
             () => {
-              SceneTreeNodeDomTool.OperateDefaultScene.getArcballCameraComponentFromCamera()
-              |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+              MainEditorInspectorRemoveComponentTool.removeArcballCameraControllerComponent();
 
               GameObjectComponentEngineService.hasArcballCameraControllerComponent(
                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),

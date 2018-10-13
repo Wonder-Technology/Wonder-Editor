@@ -9,7 +9,7 @@ open Js.Promise;
 let rec _getAssetAtomNodeArr = (assetRootArr, assetAtomNodeArr) =>
   assetRootArr
   |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. assetAtomNodeArr, {id, type_, children} as assetTreeNode) => {
+       (. assetAtomNodeArr, {nodeId, type_, children} as assetTreeNode) => {
          let assetAtomNodeArr =
            children |> Js.Array.length == 0 ?
              assetAtomNodeArr |> ArrayService.push(assetTreeNode) :
@@ -20,29 +20,30 @@ let rec _getAssetAtomNodeArr = (assetRootArr, assetAtomNodeArr) =>
        assetAtomNodeArr,
      );
 
-let rec _getAssetNodePathFromAssets = (parentId, namePathArr, editorState) =>
-  switch (parentId) {
+let rec _getAssetNodePathFromAssets =
+        (parentNodeId, namePathArr, (editorState, engineState)) =>
+  switch (parentNodeId) {
   | None => namePathArr |> Js.Array.reverseInPlace |> Js.Array.joinWith("/")
-  | Some(parentId) =>
+  | Some(parentNodeId) =>
     _getAssetNodePathFromAssets(
-      AssetNodeUtils.getAssetNodeParentId(Folder, parentId, editorState),
+      AssetNodeUtils.getAssetNodeParentId(Folder, parentNodeId, editorState),
       namePathArr
       |> Js.Array.copy
       |> ArrayService.push(
            AssetNodeUtils.getAssetNodeTotalName(
              Folder,
-             parentId,
-             editorState,
+             parentNodeId,
+             (editorState, engineState),
            ),
          ),
-      editorState,
+      (editorState, engineState),
     )
   };
 
 let _isAssetNodeNeedHandleSeparate = type_ =>
   type_ === Texture || type_ === Material;
 
-let _storeJsZipByType = ((type_, id), pathName, jsZip, editorState) =>
+let _writeFolderAndWDBToPackage = ((type_, id), pathName, jsZip, editorState) =>
   switch (type_) {
   | Folder =>
     jsZip
@@ -83,36 +84,39 @@ let getAssetTextureDataArr = editorState => {
 
   editorState
   |> AssetTextureNodeMapEditorService.getTextureNodeMap
+  /* TODO not get valid? */
   |> SparseMapService.getValidDataArr
-  |> Js.Array.map(((nodeId, {textureIndex, parentId, imageId})) => {
+  |> Js.Array.map(((nodeId, {textureComponent, parentNodeId, imageId})) => {
        let pathName =
          _getAssetNodePathFromAssets(
-           AssetNodeUtils.getAssetNodeParentId(Texture, nodeId, editorState),
+           /* AssetNodeUtils.getAssetNodeParentId(Texture, nodeId, editorState), */
+           parentNodeId,
            ArrayService.create()
            |> ArrayService.push(
                 AssetNodeUtils.getAssetNodeTotalName(
                   Texture,
                   nodeId,
-                  editorState,
+                  (editorState, engineState),
                 ),
               ),
-           editorState,
+           (editorState, engineState),
          );
 
        (
          pathName,
-         textureIndex,
-         BasicSourceTextureEngineService.getWrapS(textureIndex, engineState)
+         /* TODO use imageId? */
+         textureComponent,
+         BasicSourceTextureEngineService.getWrapS(textureComponent, engineState)
          |> TextureTypeUtils.convertWrapToInt,
-         BasicSourceTextureEngineService.getWrapT(textureIndex, engineState)
+         BasicSourceTextureEngineService.getWrapT(textureComponent, engineState)
          |> TextureTypeUtils.convertWrapToInt,
          BasicSourceTextureEngineService.getMinFilter(
-           textureIndex,
+           textureComponent,
            engineState,
          )
          |> TextureTypeUtils.convertFilterToInt,
          BasicSourceTextureEngineService.getMagFilter(
-           textureIndex,
+           textureComponent,
            engineState,
          )
          |> TextureTypeUtils.convertFilterToInt,
@@ -120,13 +124,14 @@ let getAssetTextureDataArr = editorState => {
      });
 };
 
+/* TODO not get valid? */
 let getImageSourceDataArr = editorState =>
   editorState
   |> AssetImageBase64MapEditorService.getImageBase64Map
   |> SparseMapService.getValidValues
   |> Js.Array.map(image => image |> ExportAssetType.convertImageResultToSource);
 
-let storeAllAssetIntoJson = editorState => {
+let buildAssetJson = editorState => {
   let textureDataArr = getAssetTextureDataArr(editorState);
 
   let imageSourceDataArr = getImageSourceDataArr(editorState);
@@ -134,7 +139,7 @@ let storeAllAssetIntoJson = editorState => {
   HeaderEncodeAssetUtils.encodeAsset(textureDataArr, imageSourceDataArr);
 };
 
-let _jsZipWriteAllAssetAtomNode = (jsZip, editorState) =>
+let _writeAllFolderAndWDBToPackage = (jsZip, (editorState, engineState)) =>
   _getAssetAtomNodeArr(
     [|
       editorState
@@ -144,25 +149,30 @@ let _jsZipWriteAllAssetAtomNode = (jsZip, editorState) =>
     [||],
   )
   |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. jsZip, {id, type_} as assetAtomNode) =>
+       (. jsZip, {nodeId, type_} as assetAtomNode) =>
          _isAssetNodeNeedHandleSeparate(type_) ?
            jsZip :
            {
              let pathName =
                _getAssetNodePathFromAssets(
-                 AssetNodeUtils.getAssetNodeParentId(type_, id, editorState),
+                 AssetNodeUtils.getAssetNodeParentId(type_, nodeId, editorState),
                  ArrayService.create()
                  |> ArrayService.push(
                       AssetNodeUtils.getAssetNodeTotalName(
                         type_,
-                        id,
-                        editorState,
+                        nodeId,
+                        (editorState, engineState),
                       ),
                     ),
-                 editorState,
+                 (editorState, engineState),
                );
 
-             _storeJsZipByType((type_, id), pathName, jsZip, editorState);
+             _writeFolderAndWDBToPackage(
+               (type_, nodeId),
+               pathName,
+               jsZip,
+               editorState,
+             );
            },
        jsZip,
      );
@@ -226,7 +236,10 @@ let exportPackage = (createZipFunc, fetchFunc) => {
      )
   |> WonderBsMost.Most.tap(zip =>
        zip
-       |. _jsZipWriteAllAssetAtomNode(StateEditorService.getState())
+       |. _writeAllFolderAndWDBToPackage((
+            StateEditorService.getState(),
+            StateEngineService.unsafeGetState(),
+          ))
        |. Zip.write(
             ~options=Options.makeWriteOptions(~binary=true, ()),
             "Scene.wdb",
@@ -236,7 +249,7 @@ let exportPackage = (createZipFunc, fetchFunc) => {
           )
        |. Zip.write(
             "Assets.json",
-            `str(storeAllAssetIntoJson |> StateLogicService.getEditorState),
+            `str(buildAssetJson |> StateLogicService.getEditorState),
           )
        |. Zip.generateAsyncBlob(Zip.makeAsyncBlobOptions())
        |> Js.Promise.then_(content =>

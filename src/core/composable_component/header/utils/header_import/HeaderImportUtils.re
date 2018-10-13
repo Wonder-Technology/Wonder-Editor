@@ -16,12 +16,13 @@ let _handleImportJson = (path, jsonResult) => {
       HeaderImportFolderUtils.handleImportFolder(folderPath)
       |> OptionService.unsafeGet;
     let (editorState, newIndex) =
-      AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+      AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
+    let engineState = StateEngineService.unsafeGetState();
 
     AssetTreeNodeUtils.handleJsonType(
       (jsonName, jsonResult),
       (newIndex, jsonFileParentId),
-      editorState,
+      (editorState, engineState),
       (),
     )
     |> then_(editorState => {
@@ -38,8 +39,7 @@ let _handleImportJson = (path, jsonResult) => {
   };
 };
 
-let _handleImportWDB =
-    (dispatchFunc, path, wdbArrayBuffer: Js.Typed_array.array_buffer) => {
+let _handleImportWDB = (path, wdbArrayBuffer: Js.Typed_array.array_buffer) => {
   let (folderPath, wdbName) = FileNameService.getFolderPathAndFileName(path);
 
   switch (folderPath |> Js.Undefined.toOption) {
@@ -56,7 +56,7 @@ let _handleImportWDB =
       HeaderImportFolderUtils.handleImportFolder(folderPath)
       |> OptionService.unsafeGet;
     let (editorState, newIndex) =
-      AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+      AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
 
     AssetTreeNodeUtils.handleAssetWDBType(
       (wdbName, wdbArrayBuffer),
@@ -132,7 +132,6 @@ let handleZipPackFile = (createJsZipFunc, dispatchFunc, packageFile) => {
                          |> Obj.magic
                          |> then_(content =>
                               _handleImportWDB(
-                                dispatchFunc,
                                 relativePath,
                                 content |> Js.Typed_array.Uint8Array.buffer,
                               )

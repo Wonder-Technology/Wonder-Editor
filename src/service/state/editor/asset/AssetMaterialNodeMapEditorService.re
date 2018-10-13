@@ -19,19 +19,27 @@ let setResult = (index, result, editorState) => {
     |> MaterialNodeMapAssetService.setResult(index, result),
 };
 
-let getMaterialParentId = (currentNodeId, materialNodeMap) =>
+let getMaterialParentId = (nodeId, materialNodeMap) =>
   materialNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
-  |> (({parentId}: materialResultType) => parentId);
+  |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
+  |> (({parentNodeId}: materialResultType) => parentNodeId);
 
-let buildMaterialNodeResult = (parentId, type_, materialComponent) => {
-  parentId,
+let getMaterialType = (nodeId, materialNodeMap) =>
+  materialNodeMap
+  |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
+  |> (({type_}: materialResultType) => type_);
+
+let buildMaterialNodeResult = (parentNodeId, type_, materialComponent) => {
+  parentNodeId,
   type_,
   materialComponent,
 };
 
 let setMaterialNodeResultParent =
-    (parentId, materialNodeResult: materialResultType) => {
+    (parentNodeId, materialNodeResult: materialResultType) => {
   ...materialNodeResult,
-  parentId,
+  parentNodeId,
 };
+
+let getResults = editorState =>
+  getMaterialNodeMap(editorState) |> SparseMapService.getValidValues;

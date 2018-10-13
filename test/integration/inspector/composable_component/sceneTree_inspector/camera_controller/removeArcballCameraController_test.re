@@ -48,7 +48,7 @@ let _ =
     describe("if is run", () =>
       test("unbind arcballCameraController event for game view", () => {
         ControllerTool.setIsRun(true);
-        AddableComponentTool.addArcballCameraInCamera();
+        MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
         let cameraController =
           GameObjectTool.unsafeGetCurrentSceneTreeNode()
           |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
@@ -60,8 +60,7 @@ let _ =
         )
         |> StateLogicService.getAndSetEngineState;
 
-        SceneTreeNodeDomTool.OperateDefaultScene.getArcballCameraComponentFromCamera()
-        |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+        MainEditorInspectorRemoveComponentTool.removeArcballCameraControllerComponent();
 
         let engineState = StateEngineService.unsafeGetState();
         ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(

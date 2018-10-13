@@ -9,8 +9,9 @@ open AssetNodeType;
 open Sinon;
 
 let _ =
-  describe("controller mainEditor meshRenderer", () => {
+  describe("controller inspector meshRenderer", () => {
     let sandbox = getSandboxDefaultVal();
+
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
@@ -43,7 +44,7 @@ let _ =
         test("test set drawMode to Lines", () => {
           let lineType = MainEditorMeshRendererTool.getDrawModeLineType();
 
-          MainEditorMeshRendererTool.triggerChangeDrawModeEvent(lineType);
+          MainEditorMeshRendererTool.changeMode(~value=lineType, ());
 
           let meshRenderer = GameObjectTool.getCurrentGameObjectMeshRenderer();
 
@@ -56,9 +57,7 @@ let _ =
             let triangleFanType =
               MainEditorMeshRendererTool.getDrawModeTriangleFanType();
 
-            MainEditorMeshRendererTool.triggerChangeDrawModeEvent(
-              triangleFanType,
-            );
+            MainEditorMeshRendererTool.changeMode(~value=triangleFanType, ());
 
             let meshRenderer =
               GameObjectTool.getCurrentGameObjectMeshRenderer();

@@ -9,6 +9,7 @@ open Sinon;
 let _ =
   describe("controller run and stop", () => {
     let sandbox = getSandboxDefaultVal();
+
     beforeEach(() => {
       sandbox := createSandbox();
       TestTool.closeContractCheck();

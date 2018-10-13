@@ -120,4 +120,37 @@ let buildFakeFetch =
   fetch;
 };
 
-let getFetchCount = () => 14;
+let getFetchPackageContentWithoutAssetCount = () => 14;
+
+let getAssetJson =
+    (
+      ~sandbox,
+      ~buildAssetTreeRootFunc,
+      ~testFunc,
+      ~fileCallCount=getFetchPackageContentWithoutAssetCount(),
+      (),
+    ) => {
+  open Js.Promise;
+
+  let assetTreeData = buildAssetTreeRootFunc();
+
+  let fakeFetchFunc = buildFakeFetch(~sandbox, ());
+
+  let obj = HeaderTool.buildExportFakeJsZipCreateFunc(sandbox^);
+
+  HeaderExportUtils.exportPackage(() => obj, fakeFetchFunc)
+  |> then_(_ => {
+       let file = obj##file;
+
+       (
+         assetTreeData,
+         file
+         |> getCall(fileCallCount + 1)
+         |> getArgs
+         |> Js.List.nth(_, 1)
+         |> OptionService.unsafeGet
+         |> Obj.magic,
+       )
+       |> testFunc;
+     });
+};

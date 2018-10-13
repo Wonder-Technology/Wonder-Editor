@@ -12,25 +12,25 @@ let setTextureNodeMap = (textureNodeMap, editorState) => {
     |> TextureNodeMapAssetService.setTextureNodeMap(textureNodeMap),
 };
 
-let setResult = (index, result, editorState) => {
+let setResult = (nodeId, result, editorState) => {
   ...editorState,
   assetRecord:
     editorState.assetRecord
-    |> TextureNodeMapAssetService.setResult(index, result),
+    |> TextureNodeMapAssetService.setResult(nodeId, result),
 };
 
 let getTextureParentId = (currentNodeId, textureNodeMap) =>
   textureNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
-  |> (({parentId}: textureResultType) => parentId);
+  |> (({parentNodeId}: textureResultType) => parentNodeId);
 
-let buildTextureNodeResult = (textureIndex, parentId, imageId) => {
-  textureIndex,
-  parentId,
+let buildTextureNodeResult = (textureComponent, parentNodeId, imageId) => {
+  textureComponent,
+  parentNodeId,
   imageId,
 };
 
-let setTextureNodeResultParent = (parentId, texureResult: textureResultType) => {
+let setTextureNodeResultParent = (parentNodeId, texureResult: textureResultType) => {
   ...texureResult,
-  parentId,
+  parentNodeId,
 };

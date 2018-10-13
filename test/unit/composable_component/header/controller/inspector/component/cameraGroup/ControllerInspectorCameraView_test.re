@@ -7,7 +7,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("controller cameraView", () => {
+  describe("controller inspector cameraView", () => {
     let sandbox = getSandboxDefaultVal();
 
     beforeEach(() => sandbox := createSandbox());
@@ -30,12 +30,15 @@ let _ =
           "test click run, the current camera arcballCameraController should bind event, the other camera shouldn't bind event",
           () => {
             let (camera1, camera2) =
-              AddableComponentTool.buildTwoAddedArcballCameraControllerCamera(
+              MainEditorInspectorAddComponentTool.buildTwoAddedArcballCameraControllerCamera(
                 sandbox,
               );
-            SceneTreeNodeDomTool.OperateTwoCamera.getSecondCameraDomIndex()
-            |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
-            MainEditorCameraViewTool.triggerClickSetCurrentCameraEvent();
+
+            MainEditorSceneTool.setSceneSecondCameraToBeCurrentSceneTreeNode();
+            MainEditorCameraViewTool.setCurrentCamera(
+              ~cameraView=GameObjectTool.getCurrentGameObjectBasicCameraView(),
+              (),
+            );
 
             ControllerTool.run();
 
@@ -63,7 +66,7 @@ let _ =
           "test click stop, the two camera arcballCameraController shouldn't bind event",
           () => {
           let (camera1, camera2) =
-            AddableComponentTool.buildTwoAddedArcballCameraControllerCamera(
+            MainEditorInspectorAddComponentTool.buildTwoAddedArcballCameraControllerCamera(
               sandbox,
             );
 
@@ -94,7 +97,7 @@ let _ =
         describe("test click run and change current camera", () => {
           let _prepareAndExec = () => {
             let (camera1, camera2) =
-              AddableComponentTool.buildTwoAddedArcballCameraControllerCamera(
+              MainEditorInspectorAddComponentTool.buildTwoAddedArcballCameraControllerCamera(
                 sandbox,
               );
             GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
@@ -109,10 +112,11 @@ let _ =
             |> ignore;
 
             ControllerTool.run();
-            SceneTreeNodeDomTool.OperateTwoCamera.getFirstCameraDomIndex()
-            |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
-
-            MainEditorCameraViewTool.triggerClickSetCurrentCameraEvent();
+            MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
+            MainEditorCameraViewTool.setCurrentCamera(
+              ~cameraView=GameObjectTool.getCurrentGameObjectBasicCameraView(),
+              (),
+            );
 
             (camera1, camera2);
           };

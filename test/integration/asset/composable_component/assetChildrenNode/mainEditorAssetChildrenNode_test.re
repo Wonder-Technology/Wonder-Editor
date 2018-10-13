@@ -34,12 +34,16 @@ let _ =
 
     describe("test set current node", () => {
       test("click texture file to be current node", () => {
-        let assetTreeDomRecord =
-          MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
 
-        assetTreeDomRecord
-        |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+        MainEditorAssetChildrenNodeTool.selectTextureNode(
+          ~nodeId=
+            MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+              assetTreeData,
+            ),
+          (),
+        );
 
         let {currentNodeId, nodeType} =
           StateEditorService.getState()
@@ -48,38 +52,39 @@ let _ =
         (currentNodeId, nodeType)
         |>
         expect == (
-                    assetTreeDomRecord
-                    |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureNodeId,
+                    MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                      assetTreeData,
+                    ),
                     AssetNodeType.Texture,
                   );
       });
 
-      test("click json file to be current node", () => {
-        let assetTreeDomRecord =
-          MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+      /* test("click json file to be current node", () => {
+           let assetTreeData = MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
-        assetTreeDomRecord
-        |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
-        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+           assetTreeData
+           |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
+           |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
-        let {currentNodeId, nodeType} =
-          StateEditorService.getState()
-          |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData;
+           let {currentNodeId, nodeType} =
+             StateEditorService.getState()
+             |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData;
 
-        (currentNodeId, nodeType)
-        |>
-        expect == (
-                    assetTreeDomRecord
-                    |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonNodeId,
-                    AssetNodeType.Json,
-                  );
-      });
+           (currentNodeId, nodeType)
+           |>
+           expect == (
+                       assetTreeData
+                       |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonNodeId,
+                       AssetNodeType.Json,
+                     );
+         }); */
 
       describe("test click folder", () => {
         describe("test single click", () => {
           testPromise("test set folder to be current node", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
+
             let fakeDom =
               EventListenerTool.buildFakeDom()
               |> EventListenerTool.stubGetElementByIdReturnFakeDom;
@@ -100,8 +105,8 @@ let _ =
                       (currentNodeId, nodeType)
                       |>
                       expect == (
-                                  assetTreeDomRecord
-                                  |> MainEditorAssetNodeTool.OperateTwoLayer.getSecondFolderNodeId,
+                                  assetTreeData
+                                  |> MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId,
                                   AssetNodeType.Folder,
                                 );
                     },
@@ -112,7 +117,8 @@ let _ =
             );
           });
           testPromise("test snapshot", () => {
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
             let fakeDom =
               EventListenerTool.buildFakeDom()
               |> EventListenerTool.stubGetElementByIdReturnFakeDom;
@@ -138,7 +144,9 @@ let _ =
         testPromise(
           "double click folder, set folder to be currentAssetNodeParent and currentNode(are the same)",
           () => {
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
+
             let fakeDom =
               EventListenerTool.buildFakeDom()
               |> EventListenerTool.stubGetElementByIdReturnFakeDom;

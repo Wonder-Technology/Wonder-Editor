@@ -9,6 +9,7 @@ open Sinon;
 let _ =
   describe("controller inspector direction light", () => {
     let sandbox = getSandboxDefaultVal();
+
     let _prepareDefaultSceneAndInit = () => {
       MainEditorSceneTool.createDefaultScene(sandbox, () =>
         MainEditorSceneTool.getDirectionLightInDefaultScene
@@ -35,6 +36,7 @@ let _ =
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     };
+
     beforeEach(() => {
       sandbox := createSandbox();
 
@@ -47,10 +49,17 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test set value into engineState", () => {
-      test("test change color", () => {
+      let _getDirectionLightIntensity = (component, engineState) =>
+        engineState
+        |> DirectionLightEngineService.getDirectionLightIntensity(component)
+        |. FloatService.truncateFloatValue(5);
+
+      beforeEach(() => {
         _prepareWithJob();
         _prepareDefaultSceneAndInit();
+      });
 
+      test("test change color", () => {
         let currentGameObjectDirectionLightComponent =
           GameObjectTool.getCurrentGameObjectDirectionLightComponent();
         let newColor = {
@@ -62,7 +71,7 @@ let _ =
           },
         };
 
-        PickColorEventTool.triggerChangeDirectionLightColor(
+        MainEditorDirectionLightTool.changeColor(
           currentGameObjectDirectionLightComponent,
           newColor,
         );
@@ -76,36 +85,19 @@ let _ =
       });
 
       test("test change intensity", () => {
-        let _getDirectionLightIntensity = (component, engineState) =>
-          engineState
-          |> DirectionLightEngineService.getDirectionLightIntensity(
-               component,
-             )
-          |. FloatService.truncateFloatValue(5);
-
         let currentGameObjectDirectionLightComponent =
           GameObjectTool.getCurrentGameObjectDirectionLightComponent();
-        let component =
-          BuildComponentTool.buildDirectionLight(
-            currentGameObjectDirectionLightComponent,
-          );
         let value = 10.1;
 
-        let intensityDomIndex = MainEditorLightTool.getIntensityDomIndex();
-
-        BaseEventTool.triggerComponentEvent(
-          component,
-          MainEditorLightTool.triggerLightComponentChangeEvent(
-            intensityDomIndex,
-            value,
-          ),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          MainEditorLightTool.triggerLightComponentBlurEvent(
-            intensityDomIndex,
-            value,
-          ),
+        MainEditorDirectionLightTool.changeIntensityAndBlur(
+          ~light=currentGameObjectDirectionLightComponent,
+          ~sourceValue=
+            DirectionLightEngineService.getDirectionLightIntensity(
+              currentGameObjectDirectionLightComponent,
+              StateEngineService.unsafeGetState(),
+            ),
+          ~targetValue=value,
+          (),
         );
 
         StateEngineService.unsafeGetState()

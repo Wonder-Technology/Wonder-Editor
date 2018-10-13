@@ -7,72 +7,136 @@ module CustomEventHandler = {
   type prepareTuple = (int, AssetNodeType.assetNodeType);
   type dataTuple = string;
 
-  let _renameFolderNode = (folderId, name, editorState, folderNodeMap) =>
+  let _renameFolderNode =
+      (nodeId, name, (editorState, engineState), folderNodeMap) => (
     folderNodeMap
-    |> WonderCommonlib.SparseMapService.unsafeGet(folderId)
+    |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
     |> AssetFolderNodeMapEditorService.renameFolderNodeResult(name)
-    |> AssetFolderNodeMapEditorService.setResult(folderId, _, editorState)
-    |> StateEditorService.setState
-    |> ignore;
+    |> AssetFolderNodeMapEditorService.setResult(nodeId, _, editorState),
+    engineState,
+  );
 
-  let _renameJsonNode = (jsonId, name, editorState, jsonNodeMap) =>
+  let _renameJsonNode =
+      (nodeId, name, (editorState, engineState), jsonNodeMap) => (
     jsonNodeMap
-    |> WonderCommonlib.SparseMapService.unsafeGet(jsonId)
+    |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
     |> AssetJsonNodeMapEditorService.renameJsonNodeResult(name)
-    |> AssetJsonNodeMapEditorService.setResult(jsonId, _, editorState)
-    |> StateEditorService.setState
-    |> ignore;
+    |> AssetJsonNodeMapEditorService.setResult(nodeId, _, editorState),
+    engineState,
+  );
 
-  let _renameTextureNode = (nodeId, name, textureNodeMap) => {
-    let {textureIndex} =
+  let _renameTextureNode =
+      (nodeId, name, (editorState, engineState), textureNodeMap) => {
+    let {textureComponent} =
       textureNodeMap |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
-    OperateTextureLogicService.renameTextureToEngine(textureIndex, name);
+    (
+      editorState,
+      engineState
+      |> BasicSourceTextureEngineService.setBasicSourceTextureName(
+           name,
+           textureComponent,
+         ),
+    );
   };
 
-  let _renameWDBNode = (nodeId, name, editorState, wdbNodeMap) =>
+  let _isNameEqualDefaultMaterialName = (nodeId, name, materialNodeMap) => {
+    open AssetMaterialDataType;
+
+    let defaultName =
+      switch (
+        AssetMaterialNodeMapEditorService.getMaterialType(
+          nodeId,
+          materialNodeMap,
+        )
+      ) {
+      | BasicMaterial =>
+        PrepareDefaultComponentUtils.getDefaultBasicMaterialName()
+      | LightMaterial =>
+        PrepareDefaultComponentUtils.getDefaultLightMaterialName()
+      };
+
+    name === defaultName;
+  };
+
+  let _renameMaterialNode =
+      (nodeId, name, (editorState, engineState), materialNodeMap) =>
+    _isNameEqualDefaultMaterialName(nodeId, name, materialNodeMap) ?
+      {
+        ConsoleUtils.info(
+          {j|material name:$name shouldn't equal default material name|j},
+        );
+
+        (editorState, engineState);
+      } :
+      (
+        editorState,
+        engineState
+        |> AssetMaterialNodeMapLogicService.setMaterialBaseName(
+             nodeId,
+             name,
+             materialNodeMap,
+           ),
+      );
+
+  let _renameWDBNode = (nodeId, name, (editorState, engineState), wdbNodeMap) => (
     wdbNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
     |> AssetWDBNodeMapEditorService.renameWDBNodeResult(name)
-    |> AssetWDBNodeMapEditorService.setResult(nodeId, _, editorState)
-    |> StateEditorService.setState
-    |> ignore;
+    |> AssetWDBNodeMapEditorService.setResult(nodeId, _, editorState),
+    engineState,
+  );
 
   let handleSelfLogic = ((store, dispatchFunc), (nodeId, nodeType), value) => {
     let editorState = StateEditorService.getState();
+    let engineState = StateEngineService.unsafeGetState();
 
-    editorState
-    |> AssetNodeUtils.getAssetNodeParentId(nodeType, nodeId)
-    |> OptionService.unsafeGet
-    |. AssetTreeEditorService.getChildrenNameAndIdArr(nodeType, editorState)
-    |> Js.Array.map(((name, id)) => name)
-    |> Js.Array.includes(value) ?
-      {
-        ConsoleUtils.warn("the folder is can't has same name !");
+    let (editorState, engineState) =
+      editorState
+      |> AssetNodeUtils.getAssetNodeParentId(nodeType, nodeId)
+      |> OptionService.unsafeGet
+      |. AssetUtils.getChildrenNameAndIdArr(
+           nodeType,
+           (editorState, engineState),
+         )
+      |> Js.Array.map(((name, id)) => name)
+      |> Js.Array.includes(value) ?
+        {
+          ConsoleUtils.warn("the folder can't has the same name !");
 
-        dispatchFunc(
-          AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
-        )
-        |> ignore;
-      } :
-      {
-        AssetNodeUtils.handleSpeficFuncByAssetNodeType(
-          nodeType,
-          (
-            _renameFolderNode(nodeId, value, editorState),
-            _renameJsonNode(nodeId, value, editorState),
-            _renameTextureNode(nodeId, value),
-            OperateMaterialLogicService.renameMaterialToEngine(nodeId, value),
-            _renameWDBNode(nodeId, value, editorState),
-          ),
-          editorState,
-        );
+          dispatchFunc(
+            AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
+          )
+          |> ignore;
 
-        dispatchFunc(
-          AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
-        )
-        |> ignore;
-      };
+          (editorState, engineState);
+        } :
+        {
+          let stateTuple = (editorState, engineState);
+
+          let (editorState, engineState) =
+            AssetNodeUtils.handleSpeficFuncByAssetNodeType(
+              nodeType,
+              (
+                _renameFolderNode(nodeId, value, stateTuple),
+                _renameJsonNode(nodeId, value, stateTuple),
+                _renameTextureNode(nodeId, value, stateTuple),
+                _renameMaterialNode(nodeId, value, stateTuple),
+                _renameWDBNode(nodeId, value, stateTuple),
+              ),
+              editorState,
+            );
+
+          dispatchFunc(
+            AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
+          )
+          |> ignore;
+
+          (editorState, engineState);
+        };
+
+    StateEditorService.setState(editorState) |> ignore;
+    StateEngineService.setState(engineState) |> ignore;
   };
 };
 

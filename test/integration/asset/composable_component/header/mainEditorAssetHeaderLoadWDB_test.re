@@ -26,16 +26,7 @@ let _ =
       );
     });
 
-    afterEach(() =>
-      restoreSandbox(
-        refJsObjToSandbox(sandbox^),
-        /* StateEditorService.getState()
-           |> AssetCurrentNodeDataEditorService.clearCurrentNodeData
-           |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-           |> StateEditorService.setState
-           |> ignore; */
-      )
-    );
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test load file", () => {
       beforeEach(() => {
@@ -58,14 +49,14 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
 
         let fileName = "Scene";
-        let newWDBArrayBuffer =
-          NodeToolEngine.getWDBArrayBuffer(fileName);
+        let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
-        MainEditorAssetTool.fileLoad(
-          TestTool.getDispatch(),
-          BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
+        MainEditorAssetUploadTool.loadOneWDB(
+          ~fileName,
+          ~arrayBuffer=newWDBArrayBuffer,
+          (),
         )
-        |> then_(_ => {
+        |> then_(uploadedWDBNodeId => {
              let engineState = StateEngineService.unsafeGetState();
              let editorState = StateEditorService.getState();
 
@@ -82,26 +73,21 @@ let _ =
         () => {
         EventListenerTool.buildFakeDom()
         |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-        let assetTreeDomRecord =
-          MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+        MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
         let fileName = "BoxTextured";
-        let newWDBArrayBuffer =
-          NodeToolEngine.getWDBArrayBuffer(fileName);
+        let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
-        MainEditorAssetTool.fileLoad(
-          TestTool.getDispatch(),
-          BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
+        MainEditorAssetUploadTool.loadOneWDB(
+          ~fileName,
+          ~arrayBuffer=newWDBArrayBuffer,
+          (),
         )
-        |> then_(_ => {
-             assetTreeDomRecord
-             |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-             |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-
+        |> then_(uploadedWDBNodeId => {
              let {wdbGameObject}: AssetNodeType.wdbResultType =
                StateEditorService.getState()
                |> AssetWDBNodeMapEditorService.getWDBNodeMap
                |> WonderCommonlib.SparseMapService.unsafeGet(
-                    MainEditorAssetNodeTool.getCurrentNodeId(),
+                    uploadedWDBNodeId,
                   );
 
              GameObjectMeshRendererTool.getAllGameObjectMeshRendererComponent(

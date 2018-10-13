@@ -86,7 +86,7 @@ let removeComponentByType =
       WonderLog.Log.buildFatalMessage(
         ~title="removeComponentByTypeForRunEngineState",
         ~description=
-          {j|the type_:$type_ in InspectorComponentType is can't remove|j},
+          {j|the type_:$type_ in InspectorComponentType can't remove|j},
         ~reason="",
         ~solution={j||j},
         ~params={j||j},

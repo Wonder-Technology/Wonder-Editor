@@ -64,15 +64,15 @@ module Method = {
     |> Js.Array.map(({uid, name, isShowChildren, children}) =>
          <TreeNode
            key=(DomHelper.getRandomKey())
-           uid
+           id=uid
            name
            isSelected=(_isSelected(uid, currentSceneTreeNode))
            isActive=true
            dragImg
-           widge=(SceneTreeUtils.getWidge())
+           widget=(SceneTreeUtils.getWidget())
            onSelect=onSelectFunc
            onDrop=onDropFunc
-           isWidge=SceneTreeUtils.isWidge
+           isWidget=SceneTreeUtils.isWidget
            isShowChildren
            isHasChildren=(
              children |> Js.Array.length >= 1
@@ -127,7 +127,7 @@ let render = (store, dispatchFunc, _self) => {
         Method.dragGameObjectIntoGameObject((store, dispatchFunc), ())
       )
       dragWDB=(Method.dragWDBIntoScene((store, dispatchFunc), ()))
-      isWidge=SceneTreeUtils.isWidge
+      isWidget=SceneTreeUtils.isWidget
       handleRelationError=SceneTreeUtils.isGameObjectRelationError
       isAssetWDBFile=AssetUtils.isAssetWDBFile
     />

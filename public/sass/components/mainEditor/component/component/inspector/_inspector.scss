@@ -11,6 +11,5 @@
     .wonder-inspector-assetTree{
         @include inspectorItem("inspector-asset-folder");
         @include inspectorItem("wonder-texture-assetTree");
-        @import "assetTree/inspectorMaterial";
     }
 }

@@ -9,8 +9,10 @@ open Sinon;
 let _ =
   describe("redo_undo: dispose gameObject", () => {
     let sandbox = getSandboxDefaultVal();
+
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     describe("prepare first step: set currentSceneTreeNode", () => {
       beforeEach(() => {
         MainEditorSceneTool.initStateWithJob(
@@ -41,31 +43,13 @@ let _ =
         );
       });
       let _simulateDisposeGameObjectTwice = () => {
-        let headerComponent =
-          BuildComponentTool.buildHeader(
-            TestTool.buildAppStateSceneGraphFromEngine(),
-          );
+        MainEditorSceneTool.setSecondBoxToBeCurrentSceneTreeNode();
 
-        SceneTreeNodeDomTool.OperateDefaultScene.getSecondCubeDomIndex()
-        |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+        MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
 
-        BaseEventTool.triggerComponentEvent(
-          headerComponent,
-          OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-        );
+        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
 
-        let headerComponent =
-          BuildComponentTool.buildHeader(
-            TestTool.buildAppStateSceneGraphFromEngine(),
-          );
-
-        SceneTreeNodeDomTool.OperateDefaultScene.getFirstCubeDomIndex()
-        |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
-
-        BaseEventTool.triggerComponentEvent(
-          headerComponent,
-          OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-        );
+        MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
       };
       describe(
         "test operate disposeGameObject(because the set currentSceneTreeNode operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject)",
@@ -83,8 +67,7 @@ let _ =
               test("undo step which from second to first", () => {
                 _simulateDisposeGameObjectTwice();
 
-                StateHistoryToolEditor.undo();
-                StateHistoryToolEditor.undo();
+                RedoUndoTool.undoHistoryState();
 
                 BuildComponentTool.buildSceneTree(
                   TestTool.buildAppStateSceneGraphFromEngine(),
@@ -95,10 +78,8 @@ let _ =
                 test("step which from second to zero", () => {
                   _simulateDisposeGameObjectTwice();
 
-                  StateHistoryToolEditor.undo();
-                  StateHistoryToolEditor.undo();
-                  StateHistoryToolEditor.undo();
-                  StateHistoryToolEditor.undo();
+                  RedoUndoTool.undoHistoryState();
+                  RedoUndoTool.undoHistoryState();
 
                   BuildComponentTool.buildSceneTree(
                     TestTool.buildAppStateSceneGraphFromEngine(),
@@ -115,12 +96,9 @@ let _ =
                 () => {
                 _simulateDisposeGameObjectTwice();
 
-                StateHistoryToolEditor.undo();
-                StateHistoryToolEditor.undo();
-                StateHistoryToolEditor.undo();
-                StateHistoryToolEditor.undo();
-                StateHistoryToolEditor.redo();
-                StateHistoryToolEditor.redo();
+                RedoUndoTool.undoHistoryState();
+                RedoUndoTool.undoHistoryState();
+                RedoUndoTool.redoHistoryState();
 
                 BuildComponentTool.buildSceneTree(
                   TestTool.buildAppStateSceneGraphFromEngine(),
@@ -133,14 +111,10 @@ let _ =
                 "undo step which from second to zero,redo step which from zero to second",
                 () => {
                 _simulateDisposeGameObjectTwice();
-                StateHistoryToolEditor.undo();
-                StateHistoryToolEditor.undo();
-                StateHistoryToolEditor.undo();
-                StateHistoryToolEditor.undo();
-                StateHistoryToolEditor.redo();
-                StateHistoryToolEditor.redo();
-                StateHistoryToolEditor.redo();
-                StateHistoryToolEditor.redo();
+                RedoUndoTool.undoHistoryState();
+                RedoUndoTool.undoHistoryState();
+                RedoUndoTool.redoHistoryState();
+                RedoUndoTool.redoHistoryState();
                 BuildComponentTool.buildSceneTree(
                   TestTool.buildAppStateSceneGraphFromEngine(),
                 )

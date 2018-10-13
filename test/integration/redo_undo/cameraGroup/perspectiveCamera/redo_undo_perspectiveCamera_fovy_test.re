@@ -13,14 +13,13 @@ let _ =
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    let _changeFovy = value => {
-      let fovyDomIndex = MainEditorCameraProjectionTool.getFovyDomIndex();
-
-      MainEditorCameraProjectionTool.triggerPerspectiveCameraChangeAndBlurEvent(
-        fovyDomIndex,
-        value,
+    let _changeFovy = value =>
+      MainEditorCameraProjectionTool.changeFovyAndBlur(
+        ~cameraProjection=
+          GameObjectTool.getCurrentGameObjectPerspectiveCamera(),
+        ~value,
+        (),
       );
-    };
 
     let _simulateTwiceChangeFovy = () => {
       let value1 = 10.112;

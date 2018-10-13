@@ -1,5 +1,3 @@
-
-
 module Method = {
   let reNameGameObjectBlurEvent =
       ((store, dispatchFunc), gameObject, newName) =>

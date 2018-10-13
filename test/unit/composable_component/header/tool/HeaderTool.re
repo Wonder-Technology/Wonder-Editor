@@ -1,3 +1,5 @@
+open Js.Promise;
+
 let buildFakeZipData = [%bs.raw
   arrayBuffer => {|
   return [
@@ -92,37 +94,15 @@ let buildImportFakeJsZipCreateFunc = [%bs.raw
 |}
 ];
 
-let triggerAddBox = () => {
-  let component =
-    BuildComponentTool.buildHeader(
-      TestTool.buildAppStateSceneGraphFromEngine(),
-    );
-  BaseEventTool.triggerComponentEvent(
-    component,
-    OperateGameObjectEventTool.triggerClickAddBox,
-  );
-};
-
-let triggerDisposeBox = () => {
-  let component =
-    BuildComponentTool.buildHeader(
-      TestTool.buildAppStateSceneGraphFromEngine(),
-    );
-  BaseEventTool.triggerComponentEvent(
-    component,
-    OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-  );
-};
-
-let triggerAddEmptyGameObject = () => {
-  let component =
-    BuildComponentTool.buildHeader(
-      TestTool.buildAppStateSceneGraphFromEngine(),
-    );
-  BaseEventTool.triggerComponentEvent(
-    component,
-    OperateGameObjectEventTool.triggerClickAddEmptyGameObject,
-  );
-};
-
 let fileLoad = HeaderLoadWDBUtils.loadSceneWDB;
+
+let loadOneWDB =
+    (~arrayBuffer, ~dispatchFunc=TestTool.getDispatch(), ~fileName="Wdb", ()) => {
+  let uploadedWDBNodeId = MainEditorAssetIdTool.getNewAssetId();
+
+  HeaderLoadWDBUtils.loadSceneWDB(
+    dispatchFunc,
+    BaseEventTool.buildWDBFileEvent(fileName, arrayBuffer),
+  )
+  |> then_(() => uploadedWDBNodeId |> resolve);
+};

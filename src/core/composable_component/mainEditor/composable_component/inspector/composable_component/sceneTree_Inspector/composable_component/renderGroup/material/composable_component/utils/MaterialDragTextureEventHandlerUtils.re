@@ -1,19 +1,12 @@
 let _handleGeometryAddMap =
     (
-      materialGameObjects,
       (geometryComponent, materialComponent),
-      textureIndex,
+      textureComponent,
       handleSetMapFunc,
       engineState,
     ) =>
   switch (geometryComponent) {
-  | None =>
-    handleSetMapFunc(
-      materialGameObjects,
-      materialComponent,
-      textureIndex,
-      engineState,
-    )
+  | None => handleSetMapFunc(materialComponent, textureComponent, engineState)
   | Some(geometryComponent)
       when
         GeometryEngineService.getGeometryTexCoords(
@@ -21,12 +14,7 @@ let _handleGeometryAddMap =
           engineState,
         )
         |> GeometryService.hasTexCoords =>
-    handleSetMapFunc(
-      materialGameObjects,
-      materialComponent,
-      textureIndex,
-      engineState,
-    )
+    handleSetMapFunc(materialComponent, textureComponent, engineState)
   | _ =>
     WonderLog.Log.warn(
       {j|the geometry:$geometryComponent have no texCoords|j},
@@ -36,32 +24,40 @@ let _handleGeometryAddMap =
   };
 
 let handleSelfLogic =
-    ((store, dispatchFunc), materialComponent, dragedId, handleSetMapFunc) => {
+    (
+      (store, dispatchFunc),
+      materialComponent,
+      dragedNodeId,
+      handleSetMapFunc,
+    ) => {
   StateEditorService.getState()
   |> AssetTextureNodeMapEditorService.getTextureNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(dragedId)
+  |> WonderCommonlib.SparseMapService.unsafeGet(dragedNodeId)
   |> (
-    ({textureIndex}) => {
+    ({textureComponent}) => {
       let gameObject =
-        SceneEditorService.unsafeGetCurrentSceneTreeNode
+        SceneEditorService.getCurrentSceneTreeNode
         |> StateLogicService.getEditorState;
       let engineState = StateEngineService.unsafeGetState();
-      let materialGameObjects = [|gameObject|];
 
       let engineState =
-        _handleGeometryAddMap(
-          materialGameObjects,
-          (
-            GameObjectComponentEngineService.getGeometryComponent(
-              gameObject,
-              engineState,
+        switch (gameObject) {
+        | None =>
+          handleSetMapFunc(materialComponent, textureComponent, engineState)
+        | Some(gameObject) =>
+          _handleGeometryAddMap(
+            (
+              GameObjectComponentEngineService.getGeometryComponent(
+                gameObject,
+                engineState,
+              ),
+              materialComponent,
             ),
-            materialComponent,
-          ),
-          textureIndex,
-          handleSetMapFunc,
-          engineState,
-        );
+            textureComponent,
+            handleSetMapFunc,
+            engineState,
+          )
+        };
 
       engineState |> StateEngineService.setState |> ignore;
     }

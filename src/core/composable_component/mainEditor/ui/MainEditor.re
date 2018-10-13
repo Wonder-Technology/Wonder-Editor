@@ -154,7 +154,11 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
            (
              editorState => {
                let (assetTree, editorState) =
-                 editorState |> AssetTreeNodeUtils.initRootAssetTree;
+                 AssetTreeNodeUtils.initRootAssetTree(
+                   editorState,
+                   StateEngineService.unsafeGetState(),
+                 );
+
                editorState
                |> AssetTreeRootEditorService.setAssetTreeRoot(assetTree);
              }

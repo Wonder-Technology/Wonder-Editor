@@ -80,6 +80,7 @@ module Method = {
         ),
       )
     | Some(value) =>
+    WonderLog.Log.print(value) |> ignore;
       ReasonReactUtils.updateWithSideEffects(
         {...state, inputValue: Some(value)}, _state =>
         triggerOnChange(value, onChangeFunc)

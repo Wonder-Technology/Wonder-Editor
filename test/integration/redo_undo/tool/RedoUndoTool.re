@@ -1,3 +1,33 @@
+let undoHistoryState =
+    (
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~editorState=StateEditorService.getState(),
+      ~engineState=StateEngineService.unsafeGetState(),
+      (),
+    ) =>
+  AllHistoryService.undoHistoryState(
+    store,
+    dispatchFunc,
+    (editorState, engineState),
+  )
+  |> StateHistoryService.refreshStateForHistory;
+
+let redoHistoryState =
+    (
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~editorState=StateEditorService.getState(),
+      ~engineState=StateEngineService.unsafeGetState(),
+      (),
+    ) =>
+  AllHistoryService.redoHistoryState(
+    store,
+    dispatchFunc,
+    (editorState, engineState),
+  )
+  |> StateHistoryService.refreshStateForHistory;
+
 let testRedoUndoOneStep =
     (
       sandbox,
@@ -24,7 +54,7 @@ let testRedoUndoOneStep =
                   test("undo step which from first to zero", () => {
                     simulateFunc();
 
-                    StateHistoryToolEditor.undo();
+                    undoHistoryState();
 
                     component() |> ReactTestTool.createSnapshotAndMatch;
                   })
@@ -37,8 +67,8 @@ let testRedoUndoOneStep =
                     () => {
                     simulateFunc();
 
-                    StateHistoryToolEditor.undo();
-                    StateHistoryToolEditor.redo();
+                    undoHistoryState();
+                    redoHistoryState();
 
                     component() |> ReactTestTool.createSnapshotAndMatch;
                   })
@@ -78,7 +108,7 @@ let testRedoUndoTwoStep =
                   test("step which from second to first", () => {
                     simulateFunc();
 
-                    StateHistoryToolEditor.undo();
+                    undoHistoryState();
 
                     component() |> ReactTestTool.createSnapshotAndMatch;
                   })
@@ -87,8 +117,8 @@ let testRedoUndoTwoStep =
                   test("step which from second to zero", () => {
                     simulateFunc();
 
-                    StateHistoryToolEditor.undo();
-                    StateHistoryToolEditor.undo();
+                    undoHistoryState();
+                    undoHistoryState();
 
                     component() |> ReactTestTool.createSnapshotAndMatch;
                   })
@@ -101,9 +131,9 @@ let testRedoUndoTwoStep =
                     () => {
                     simulateFunc();
 
-                    StateHistoryToolEditor.undo();
-                    StateHistoryToolEditor.undo();
-                    StateHistoryToolEditor.redo();
+                    undoHistoryState();
+                    undoHistoryState();
+                    redoHistoryState();
 
                     component() |> ReactTestTool.createSnapshotAndMatch;
                   })
@@ -115,10 +145,10 @@ let testRedoUndoTwoStep =
                     () => {
                     simulateFunc();
 
-                    StateHistoryToolEditor.undo();
-                    StateHistoryToolEditor.undo();
-                    StateHistoryToolEditor.redo();
-                    StateHistoryToolEditor.redo();
+                    undoHistoryState();
+                    undoHistoryState();
+                    redoHistoryState();
+                    redoHistoryState();
 
                     component() |> ReactTestTool.createSnapshotAndMatch;
                   })

@@ -1,41 +1,59 @@
-let getCubeDomIndex = () => 1;
-
 let getCubeGeometryName = () => "Cube";
-
-let getSphereDomIndex = () => 2;
 
 let getSphereGeometryName = () => "Sphere";
 
-let getFirstNewGeometryDomIndex = () => 3;
+let getBoxTexturedGeometryName = () => "Mesh";
 
-let getBoxTextureGeometryName = () => "Mesh";
+let getDefaultCubeGeometryComponent =
+    (~editorState=StateEditorService.getState(), ()) =>
+  editorState
+  |> AssetGeometryDataEditorService.getGeometryData
+  |> (({defaultCubeGeometryComponent}) => defaultCubeGeometryComponent);
 
-let triggerClickShowGeometryGroup = domChildren => {
-  let geometryDiv = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
+let getDefaultSphereGeometryComponent =
+    (~editorState=StateEditorService.getState(), ()) =>
+  editorState
+  |> AssetGeometryDataEditorService.getGeometryData
+  |> (({defaultSphereGeometryComponent}) => defaultSphereGeometryComponent);
 
-  let selectSpan =
-    WonderCommonlib.ArrayService.unsafeGet(geometryDiv##children, 1);
+let changeGeometry =
+    (
+      ~sourceGeometry,
+      ~targetGeometry,
+      ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorGeometry.Method.changeGeometry(
+    (store, dispatchFunc),
+    gameObject,
+    (sourceGeometry, targetGeometry),
+  );
 
-  BaseEventTool.triggerClickEvent(selectSpan);
-};
+let _getDisposedIndex = disposedIndexArray => (
+  disposedIndexArray,
+  disposedIndexArray |> ArrayService.getLast,
+);
 
-let triggerClickHideGeometryGroup = domChildren => {
-  let selectComponentDiv =
-    WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
+let _generateIndex = (index, disposedIndexArray) =>
+  switch (_getDisposedIndex(disposedIndexArray)) {
+  | (disposedIndexArray, None) => (index, succ(index), disposedIndexArray)
+  | (disposedIndexArray, Some(disposedIndex)) => (
+      disposedIndex,
+      index,
+      disposedIndexArray,
+    )
+  };
 
-  let bg =
-    WonderCommonlib.ArrayService.unsafeGet(selectComponentDiv##children, 1);
+let getNewGeometry = (~engineState=StateEngineService.unsafeGetState(), ()) => {
+  open Wonderjs.GeometryType;
 
-  BaseEventTool.triggerClickEvent(bg);
-};
+  let {disposedIndexArray, aliveIndexArray, index} as geometryRecord =
+    Wonderjs.RecordGeometryMainService.getRecord(engineState);
 
-let triggerClickSpecificGeometry = (index, domChildren) => {
-  let selectComponentDiv =
-    WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
-  let componentItem =
-    WonderCommonlib.ArrayService.unsafeGet(selectComponentDiv##children, 0);
-  let geometryDiv =
-    WonderCommonlib.ArrayService.unsafeGet(componentItem##children, index);
+  let (index, newIndex, disposedIndexArray) =
+    _generateIndex(index, disposedIndexArray);
 
-  BaseEventTool.triggerClickEvent(geometryDiv);
+  index;
 };

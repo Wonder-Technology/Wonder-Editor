@@ -9,55 +9,39 @@ open Sinon;
 let _ =
   describe("redo_undo: asset rename node", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-    let _triggerInspectorRenameEvent = (inspectorComponent, newName) => {
-      BaseEventTool.triggerComponentEvent(
-        inspectorComponent,
-        AssetTreeInspectorTool.triggerRenameChangeEvent(newName),
+
+    let _getAssetFolderName = nodeId =>
+      MainEditorAssetFolderNodeTool.getFolderName(
+        nodeId,
+        StateEditorService.getState(),
       );
-      BaseEventTool.triggerComponentEvent(
-        inspectorComponent,
-        AssetTreeInspectorTool.triggerRenameBlurEvent(newName),
+
+    let _simulateTwiceChangeName = () => {
+      let assetTreeData =
+        MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildTwoFolderAssetTree();
+      let nodeId =
+        MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId(
+          assetTreeData,
+        );
+      let name1 = "mickeyFolder1";
+      let name2 = "mickeyFolder2";
+
+      AssetTreeInspectorTool.Rename.renameAssetFolderNode(
+        ~nodeId,
+        ~name=name1,
+        (),
       );
+      AssetTreeInspectorTool.Rename.renameAssetFolderNode(
+        ~nodeId,
+        ~name=name2,
+        (),
+      );
+
+      (nodeId, (name1, name2));
     };
 
-    let _simulateRenameNodeTwice = () => {
-      let assetTreeDomRecord =
-        MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-      let component = BuildComponentTool.buildAssetComponent();
-
-      assetTreeDomRecord
-      |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
-      |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-
-      let inspectorComponent =
-        BuildComponentTool.buildInspectorComponent(
-          TestTool.buildEmptyAppState(),
-          InspectorTool.buildFakeAllShowComponentConfig(),
-        );
-
-      _triggerInspectorRenameEvent(inspectorComponent, "mickeyJson");
-
-      assetTreeDomRecord
-      |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-      |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(component);
-
-      let inspectorComponent =
-        BuildComponentTool.buildInspectorComponent(
-          TestTool.buildEmptyAppState(),
-          InspectorTool.buildFakeAllShowComponentConfig(),
-        );
-
-      _triggerInspectorRenameEvent(inspectorComponent, "mickeyFolder");
-
-      BaseEventTool.triggerComponentEvent(
-        component,
-        AssetTreeEventTool.clickRootAssetTreeNode,
-      );
-    };
-
-    let _beforeEach = () => {
+    beforeEach(() => {
+      sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
 
       EventListenerTool.buildFakeDom()
@@ -71,19 +55,68 @@ let _ =
         EditorType.Asset,
       )
       |> StateLogicService.getAndSetEditorState;
-    };
+    });
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    let _afterEach = () =>
-      StateEditorService.getState()
-      |> AssetCurrentNodeDataEditorService.clearCurrentNodeData
-      |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-      |> StateEditorService.setState
-      |> ignore;
+    describe("test undo operate", () => {
+      test("test not undo", () => {
+        let (nodeId, (name1, name2)) = _simulateTwiceChangeName();
 
-    RedoUndoTool.testRedoUndoTwoStep(
-      sandbox,
-      "prepare first step: set currentSceneTreeNode",
-      (_simulateRenameNodeTwice, _beforeEach, _afterEach),
-      BuildComponentTool.buildAssetComponent,
-    );
+        _getAssetFolderName(nodeId) |> expect == name2;
+      });
+
+      describe("test undo one step", () =>
+        test("step which from second to first", () => {
+          let (nodeId, (name1, name2)) = _simulateTwiceChangeName();
+
+          RedoUndoTool.undoHistoryState();
+
+          _getAssetFolderName(nodeId) |> expect == name1;
+        })
+      );
+
+      describe("test undo two step", () =>
+        test("step which from second to zero", () => {
+          let sourceName =
+            MainEditorAssetFolderNodeTool.getDefaultFolderName();
+          let (nodeId, (name1, name2)) = _simulateTwiceChangeName();
+
+          RedoUndoTool.undoHistoryState();
+          RedoUndoTool.undoHistoryState();
+
+          _getAssetFolderName(nodeId) |> expect == sourceName;
+        })
+      );
+    });
+
+    describe("test redo operate", () => {
+      describe("test redo one step", () =>
+        test(
+          "undo step which from second to zero, redo step which from zero to first",
+          () => {
+          let (nodeId, (name1, name2)) = _simulateTwiceChangeName();
+
+          RedoUndoTool.undoHistoryState();
+          RedoUndoTool.undoHistoryState();
+          RedoUndoTool.redoHistoryState();
+
+          _getAssetFolderName(nodeId) |> expect == name1;
+        })
+      );
+
+      describe("test redo two step", () =>
+        test(
+          "undo step which from second to zero,redo step which from zero to second",
+          () => {
+          let (nodeId, (name1, name2)) = _simulateTwiceChangeName();
+
+          RedoUndoTool.undoHistoryState();
+          RedoUndoTool.undoHistoryState();
+          RedoUndoTool.redoHistoryState();
+          RedoUndoTool.redoHistoryState();
+
+          _getAssetFolderName(nodeId) |> expect == name2;
+        })
+      );
+    });
   });

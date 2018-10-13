@@ -9,7 +9,8 @@ open Sinon;
 let _ =
   describe("redo_undo: lightMaterial texture", () => {
     let sandbox = getSandboxDefaultVal();
-    let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
+    let _getFromArray = (array, index) =>
+      ArrayService.unsafeGetNth(index, array);
 
     beforeEach(() => {
       sandbox := createSandbox();
@@ -20,23 +21,23 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     let _simulateTwiceDragTexture = () => {
-      let assetTreeDomRecord =
-        MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+      let assetTreeData =
+        MainEditorAssetTreeTool.BuildAssetTree.Texture.buildTwoTextureAssetTree();
 
-      let firstTextureDomIndex =
-        assetTreeDomRecord
-        |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex;
-      let secondTextureDomIndex =
-        assetTreeDomRecord
-        |> MainEditorAssetNodeTool.OperateTwoLayer.getSecondTextureDomIndex;
-
-      firstTextureDomIndex |> MainEditorMaterialTool.triggerFileDragStartEvent;
-
-      MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
-
-      secondTextureDomIndex |> MainEditorMaterialTool.triggerFileDragStartEvent;
-
-      MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
+      MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+        ~textureNodeId=
+          MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+            assetTreeData,
+          ),
+        (),
+      );
+      MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+        ~textureNodeId=
+          MainEditorAssetTreeTool.BuildAssetTree.Texture.getSecondTextureNodeId(
+            assetTreeData,
+          ),
+        (),
+      );
     };
     let _beforeEach = () => {
       MainEditorSceneTool.createDefaultScene(

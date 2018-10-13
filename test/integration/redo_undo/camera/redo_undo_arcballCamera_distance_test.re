@@ -10,50 +10,18 @@ let _ =
   describe("redo_undo: arcballCameraController distance and minDistance", () => {
     let sandbox = getSandboxDefaultVal();
 
-    beforeEach(() => {
-      sandbox := createSandbox();
-
-      MainEditorSceneTool.initState(~sandbox, ());
-
-      EventListenerTool.buildFakeDom()
-      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-    });
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-
-    let _changeDistance = value => {
-      let component =
-        BuildComponentTool.buildInspectorComponent(
-          TestTool.buildEmptyAppState(),
-          InspectorTool.buildFakeAllShowComponentConfig(),
-        );
-
-      BaseEventTool.triggerComponentEvent(
-        component,
-        MainEditorCameraTool.triggerChangeArcballDistance(value),
+    let _changeDistance = value =>
+      MainEditorArcballCameraControllerTool.changeDistanceAndBlur(
+        ~cameraController=GameObjectTool.getCurrentGameObjectArcballCamera(),
+        ~value,
+        (),
       );
-
-      BaseEventTool.triggerComponentEvent(
-        component,
-        MainEditorCameraTool.triggerBlurArcballDistance(value),
+    let _changeMinDistance = value =>
+      MainEditorArcballCameraControllerTool.changeMinDistanceAndBlur(
+        ~cameraController=GameObjectTool.getCurrentGameObjectArcballCamera(),
+        ~value,
+        (),
       );
-    };
-    let _changeMinDistance = value => {
-      let component =
-        BuildComponentTool.buildInspectorComponent(
-          TestTool.buildEmptyAppState(),
-          InspectorTool.buildFakeAllShowComponentConfig(),
-        );
-
-      BaseEventTool.triggerComponentEvent(
-        component,
-        MainEditorCameraTool.triggerChangeArcballMinDistance(value),
-      );
-
-      BaseEventTool.triggerComponentEvent(
-        component,
-        MainEditorCameraTool.triggerBlurArcballMinDistance(value),
-      );
-    };
 
     let _simulateChangeDistanceAndChangeMinDistance = () => {
       let value1 = 23.11;
@@ -74,8 +42,18 @@ let _ =
       )
       |> StateLogicService.getAndSetEditorState;
 
-      AddableComponentTool.addArcballCameraInCamera();
+      MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
     };
+
+    beforeEach(() => {
+      sandbox := createSandbox();
+
+      MainEditorSceneTool.initState(~sandbox, ());
+
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+    });
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,

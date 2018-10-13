@@ -13,14 +13,13 @@ let _ =
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    let _changeNear = value => {
-      let nearDomIndex = MainEditorCameraProjectionTool.getNearDomIndex();
-
-      MainEditorCameraProjectionTool.triggerPerspectiveCameraChangeAndBlurEvent(
-        nearDomIndex,
-        value,
+    let _changeNear = value =>
+      MainEditorCameraProjectionTool.changeNearAndBlur(
+        ~cameraProjection=
+          GameObjectTool.getCurrentGameObjectPerspectiveCamera(),
+        ~value,
+        (),
       );
-    };
 
     let _simulateTwiceChangeNear = () => {
       let value1 = 10.112;

@@ -1,12 +1,12 @@
-let dragStart = (uid, widge, dragImg, event) => {
+let dragStart = (uid, widget, dragImg, event) => {
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);
 
   DomHelper.stopPropagation(e);
   e##dataTransfer##setDragImage(dragImg |> DomHelperType.convertDomToJsObj, 0, 0)
   |> ignore;
   DragUtils.setDataTransferEffectIsMove(e);
-  DragUtils.setDragedUid(uid, e);
-  CurrentDragSourceEditorService.setCurrentDragSource((widge, uid))
+  DragUtils.setDragedId(uid, e);
+  CurrentDragSourceEditorService.setCurrentDragSource((widget, uid))
   |> StateLogicService.getAndSetEditorState;
 };
 
@@ -20,29 +20,29 @@ let _isTreeNodeRelationValid = (targetId, startId, handleRelationErrorFunc) =>
     )
   };
 
-let isTriggerDragEnter = (id, handleWidgeFunc, handleRelationErrorFunc) => {
-  let (widge, startId) =
+let isTriggerDragEnter = (id, handleWidgetFunc, handleRelationErrorFunc) => {
+  let (widget, startId) =
     StateEditorService.getState()
     |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-  handleWidgeFunc(widge)
+  handleWidgetFunc(widget)
   && _isTreeNodeRelationValid(id, startId, handleRelationErrorFunc);
 };
 
-let isTriggerDragLeave = (id, handleWidgeFunc, handleRelationErrorFunc) => {
-  let (widge, startId) =
+let isTriggerDragLeave = (id, handleWidgetFunc, handleRelationErrorFunc) => {
+  let (widget, startId) =
     StateEditorService.getState()
     |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-  handleWidgeFunc(widge)
+  handleWidgetFunc(widget)
   && _isTreeNodeRelationValid(id, startId, handleRelationErrorFunc);
 };
 
-let isTriggerDragDrop = (id, startId, handleWidgeFunc, handleRelationErrorFunc) => {
-  let (widge, _startId) =
+let isTriggerDragDrop = (id, startId, handleWidgetFunc, handleRelationErrorFunc) => {
+  let (widget, _startId) =
     StateEditorService.getState()
     |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-  handleWidgeFunc(widge)
+  handleWidgetFunc(widget)
   && _isTreeNodeRelationValid(id, Some(startId), handleRelationErrorFunc);
 };

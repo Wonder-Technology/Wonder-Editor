@@ -2,6 +2,8 @@ open SelectType;
 
 open MainEditorMaterialType;
 
+open AssetMaterialDataType;
+
 let getMaterialOptions = () => [|
   {key: BasicMaterial |> convertMaterialTypeToInt, value: "basic_material"},
   {key: LightMaterial |> convertMaterialTypeToInt, value: "light_material"},
@@ -41,18 +43,69 @@ let handleSpecificFuncByMaterialType =
   | LightMaterial => handleLightMaterialFunc()
   };
 
-let getMaterialNameByMaterialType =
-    (materialType, materialComponent, engineState) =>
+/* let getMaterialNameByMaterialType =
+     (materialType, materialComponent, engineState) =>
+   switch (materialType) {
+   | BasicMaterial =>
+     BasicMaterialEngineService.unsafeGetBasicMaterialName(
+       materialComponent,
+       engineState,
+     )
+
+   | LightMaterial =>
+     LightMaterialEngineService.unsafeGetLightMaterialName(
+       materialComponent,
+       engineState,
+     )
+   }; */
+let getNewMaterilaAssetName = () => "New Material";
+
+let getMaterilaDefaultName = () => getNewMaterilaAssetName();
+
+let getName = (material, materialType, engineState) =>
   switch (materialType) {
   | BasicMaterial =>
-    BasicMaterialEngineService.unsafeGetBasicMaterialName(
-      materialComponent,
+    switch (
+      BasicMaterialEngineService.getBasicMaterialName(material, engineState)
+    ) {
+    | None => getMaterilaDefaultName()
+    | Some(name) => name
+    }
+  | LightMaterial =>
+    switch (
+      LightMaterialEngineService.getLightMaterialName(material, engineState)
+    ) {
+    | None => getMaterilaDefaultName()
+    | Some(name) => name
+    }
+  };
+
+let setName = (material, materialType, name, engineState) =>
+  switch (materialType) {
+  | BasicMaterial =>
+    BasicMaterialEngineService.setBasicMaterialName(
+      material,
+      name,
       engineState,
     )
-
   | LightMaterial =>
-    LightMaterialEngineService.unsafeGetLightMaterialName(
-      materialComponent,
+    LightMaterialEngineService.setLightMaterialName(
+      material,
+      name,
+      engineState,
+    )
+  };
+
+let getMaterialCompnentByType = (gameObject, materialType, engineState) =>
+  switch (materialType) {
+  | BasicMaterial =>
+    GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+      gameObject,
+      engineState,
+    )
+  | LightMaterial =>
+    GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+      gameObject,
       engineState,
     )
   };

@@ -9,10 +9,10 @@ open Sinon;
 let _ =
   describe("redo_undo: add light component", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     let _simulateAddLightComponent = () =>
-      AddableComponentTool.addDirectionLightInBox();
+      MainEditorInspectorAddComponentTool.addDirectionLightComponent();
+
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(sandbox, () => ());
@@ -22,10 +22,18 @@ let _ =
       )
       |> StateLogicService.getAndSetEditorState;
 
-      SceneTreeNodeDomTool.OperateDefaultScene.getFirstCubeDomIndex()
-      |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+      MainEditorSceneTreeTool.Select.selectGameObject(
+        ~gameObject=
+          MainEditorSceneTool.getFirstBox(
+            StateEngineService.unsafeGetState(),
+          ),
+        (),
+      );
     };
     let _afterEach = () => ();
+
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoOneStep(
       sandbox,

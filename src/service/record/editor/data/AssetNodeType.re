@@ -21,38 +21,38 @@ type nodeResultType = {
 
 type folderResultType = {
   name: string,
-  parentId: option(int),
+  parentNodeId: option(int),
 };
 
 type jsonResultType = {
   name: string,
   postfix: string,
-  parentId: option(int),
+  parentNodeId: option(int),
   jsonResult: string,
 };
 
 type imageResultType = {
   base64: string,
   name: string,
-  textureArray:array(int)
+  textureArray: array(int),
 };
 
 type textureResultType = {
-  textureIndex: int,
+  textureComponent: int,
   imageId: int,
-  parentId: option(int),
+  parentNodeId: option(int),
 };
 
 type wdbResultType = {
   name: string,
   postfix: string,
-  parentId: option(int),
+  parentNodeId: option(int),
   wdbArrayBuffer: Js.Typed_array.ArrayBuffer.t,
   wdbGameObject: int,
 };
 
 type materialResultType = {
-  parentId: option(int),
-  type_: MainEditorMaterialType.materialType,
+  parentNodeId: option(int),
+  type_: AssetMaterialDataType.materialType,
   materialComponent: int,
 };

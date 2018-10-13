@@ -3,35 +3,25 @@ let testDragWDB = (sandbox, fileName, testFunc) => {
 
   SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
 
-  let assetTreeDomRecord = MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+  MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
 
   let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
   let gl = FakeGlToolEngine.getEngineStateGl();
   let glShaderSource = gl##shaderSource;
 
-  MainEditorAssetTool.fileLoad(
-    TestTool.getDispatch(),
-    BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
+  MainEditorAssetUploadTool.loadOneWDB(
+    ~arrayBuffer=newWDBArrayBuffer,
+    ~fileName,
+    (),
   )
-  |> then_(_ => {
-       let component =
-         BuildComponentTool.buildSceneTree(
-           TestTool.buildAppStateSceneGraphFromEngine(),
-         );
-       let rootDivDomIndex =
-         SceneTreeNodeDomTool.OperateThreeLayer.getRootDivDomIndex();
-
-       assetTreeDomRecord
-       |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-       |> MainEditorMaterialTool.triggerFileDragStartEvent;
-
+  |> then_(uploadedWDBNodeId => {
        let shaderSourceCountBeforeDrag =
          GLSLToolEngine.getShaderSourceCallCount(glShaderSource);
 
-       BaseEventTool.triggerComponentEvent(
-         component,
-         SceneTreeEventTool.triggerDragDropDiv(rootDivDomIndex),
+       MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+         ~wdbNodeId=uploadedWDBNodeId,
+         (),
        );
 
        let shaderSourceCountAfterDrag =

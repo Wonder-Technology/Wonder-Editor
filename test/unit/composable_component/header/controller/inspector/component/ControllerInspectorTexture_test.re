@@ -9,6 +9,7 @@ open Sinon;
 let _ =
   describe("controller inspector texture", () => {
     let sandbox = getSandboxDefaultVal();
+
     beforeEach(() => {
       sandbox := createSandbox();
 
@@ -31,122 +32,56 @@ let _ =
       ControllerTool.run();
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     describe("test set value into engineState", () => {
       test("test rename texture", () => {
-        let assetTreeDomRecord =
-          MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
         let newName = "controllerTextureName";
+        let nodeId =
+          MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+            assetTreeData,
+          );
 
-        assetTreeDomRecord
-        |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+        MainEditorAssetChildrenNodeTool.selectTextureNode(~nodeId, ());
+        AssetTreeInspectorTool.Rename.renameAssetTextureNode(
+          ~nodeId,
+          ~name=newName,
+          (),
+        );
 
-        TextureInspectorTool.triggerInspectorRenameEvent(newName);
-
-        let textureIndex =
-          MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId();
+        let textureComponent =
+          MainEditorAssetNodeTool.getTextureComponentFromCurrentNodeId();
 
         StateEngineService.unsafeGetState()
         |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
-             textureIndex,
+             textureComponent,
            )
         |> expect == newName;
       });
 
       test("test change wrapS", () => {
-        let assetTreeDomRecord =
-          MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-        let wrapSDomIndex = TextureInspectorTool.getWrapSDomIndex();
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
         let wrapRepeatType = TextureInspectorTool.getWrapRepeatType();
+        let nodeId =
+          MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+            assetTreeData,
+          );
 
-        assetTreeDomRecord
-        |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-
-        TextureInspectorTool.triggerInspectorChangeWrapEvent(
-          wrapSDomIndex,
+        MainEditorAssetChildrenNodeTool.selectTextureNode(~nodeId, ());
+        TextureInspectorTool.changeWrapS(
+          MainEditorAssetNodeTool.getTextureComponentFromNodeId(nodeId),
           wrapRepeatType,
         );
 
-        let textureIndex =
-          MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId();
+        let textureComponent =
+          MainEditorAssetNodeTool.getTextureComponentFromCurrentNodeId();
 
         StateEngineService.unsafeGetState()
-        |> BasicSourceTextureEngineService.getWrapS(textureIndex)
+        |> BasicSourceTextureEngineService.getWrapS(textureComponent)
         |> TextureTypeUtils.convertWrapToInt
         |> expect == wrapRepeatType;
-      });
-
-      test("test change wrapT", () => {
-        let assetTreeDomRecord =
-          MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-        let wrapTDomIndex = TextureInspectorTool.getWrapTDomIndex();
-        let wrapMirroredRepeatType =
-          TextureInspectorTool.getWrapMirroredRepeatType();
-
-        assetTreeDomRecord
-        |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-        TextureInspectorTool.triggerInspectorChangeWrapEvent(
-          wrapTDomIndex,
-          wrapMirroredRepeatType,
-        );
-
-        let textureIndex =
-          TextureInspectorTool.getTextureIndexFromCurrentNodeData();
-
-        StateEngineService.unsafeGetState()
-        |> BasicSourceTextureEngineService.getWrapT(textureIndex)
-        |> TextureTypeUtils.convertWrapToInt
-        |> expect == wrapMirroredRepeatType;
-      });
-
-      test("test change magFilter", () => {
-        let assetTreeDomRecord =
-          MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-        let magFilterDomIndex = TextureInspectorTool.getMagFilterDomIndex();
-        let filterLinearMipmapLinearType =
-          TextureInspectorTool.getFilterLinearMipmapLinearType();
-
-        assetTreeDomRecord
-        |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-        TextureInspectorTool.triggerInspectorChangeFilterEvent(
-          magFilterDomIndex,
-          filterLinearMipmapLinearType,
-        );
-
-        let textureIndex =
-          TextureInspectorTool.getTextureIndexFromCurrentNodeData();
-
-        StateEngineService.unsafeGetState()
-        |> BasicSourceTextureEngineService.getMagFilter(textureIndex)
-        |> TextureTypeUtils.convertFilterToInt
-        |> expect == filterLinearMipmapLinearType;
-      });
-
-      test("test change minFilter", () => {
-        let assetTreeDomRecord =
-          MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-        let minFilterDomIndex = TextureInspectorTool.getMinFilterDomIndex();
-        let filterNearestMipmapLinearType =
-          TextureInspectorTool.getFilterNearestMipmapLinearType();
-
-        assetTreeDomRecord
-        |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-        TextureInspectorTool.triggerInspectorChangeFilterEvent(
-          minFilterDomIndex,
-          filterNearestMipmapLinearType,
-        );
-
-        let textureIndex =
-          TextureInspectorTool.getTextureIndexFromCurrentNodeData();
-
-        StateEngineService.unsafeGetState()
-        |> BasicSourceTextureEngineService.getMinFilter(textureIndex)
-        |> TextureTypeUtils.convertFilterToInt
-        |> expect == filterNearestMipmapLinearType;
       });
     });
   });

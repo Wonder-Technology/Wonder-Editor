@@ -9,11 +9,10 @@ open Sinon;
 let _ =
   describe("redo_undo: remove cameraGroup component", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     let _simulateRemoveSpecificComponent = () =>
-      SceneTreeNodeDomTool.OperateDefaultScene.getCameraGroupFromCamera()
-      |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+      MainEditorInspectorRemoveComponentTool.removeCameraGroupComponent();
+
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
@@ -26,16 +25,21 @@ let _ =
       )
       |> StateLogicService.getAndSetEditorState;
 
-      HeaderTool.triggerAddBox();
+      let newGameObject = GameObjectTool.getNewGameObjectUid();
 
-      SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
-      |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+      MainEditorSceneTreeHeaderTool.addBox();
 
-      AddableComponentTool.addCameraGroupInBox();
+      MainEditorInspectorAddComponentTool.addCameraGroupComponent(
+        ~gameObject=newGameObject,
+        (),
+      );
 
       MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
     };
     let _afterEach = () => ();
+
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoOneStep(
       sandbox,

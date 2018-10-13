@@ -6,6 +6,7 @@ open Sinon;
 let _ =
   describe("test mainEditor console", () => {
     let sandbox = getSandboxDefaultVal();
+
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());

@@ -1,16 +1,23 @@
-open MainEditorMaterialType;
+open AssetMaterialDataType;
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
-  type prepareTuple = unit;
-  type dataTuple = (materialType, materialType);
+  type prepareTuple = int;
+  type dataTuple = ((int, int), (materialType, materialType));
 
   let handleSelfLogic =
-      ((store, dispatchFunc), (), (originMaterialType, materialType)) => {
-    InspectorRenderGroupUtils.replaceRenderGroupByMaterialType(
-      originMaterialType,
-      materialType,
-    );
+      ((store, dispatchFunc), currentSceneTreeNode, materialData) => {
+    let engineState = StateEngineService.unsafeGetState();
+
+    let engineState =
+      engineState
+      |> InspectorRenderGroupUtils.replaceMaterialByMaterialData(
+           currentSceneTreeNode,
+           materialData,
+         )
+      |> GameObjectEngineService.initGameObject(currentSceneTreeNode);
+
+    StateLogicService.refreshEngineState(engineState);
 
     dispatchFunc(AppStore.UpdateAction(Update([|Inspector|]))) |> ignore;
   };

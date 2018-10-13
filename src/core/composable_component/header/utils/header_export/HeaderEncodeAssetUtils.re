@@ -9,10 +9,10 @@ open ExportAssetType;
 let _encodeAssetTexture = textureDataArr => (
   "textures",
   textureDataArr
-  |> Js.Array.map(((pathName, sourceId, warpS, warpT, minFilter, magFilter)) =>
+  |> Js.Array.map(((pathName, textureIndex, warpS, warpT, minFilter, magFilter)) =>
        [
          ("path", pathName |> string),
-         ("textureIndex", sourceId |> int),
+         ("textureIndex", textureIndex |> int),
          ("warpS", warpS |> int),
          ("warpT", warpT |> int),
          ("minFilter", minFilter |> int),
@@ -30,6 +30,7 @@ let _encodeAssetImageSource = imageSourceDataArr => (
        [
          ("base64", base64 |> string),
          ("name", name |> string),
+         /* TODO remove textureArray? */
          ("textureArray", textureArray |> array(id => id |> int)),
        ]
        |> object_

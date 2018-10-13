@@ -8,18 +8,13 @@ module Method = {
       content
       (isShowChildren ? ReasonReact.array(treeChildren) : ReasonReact.null)
     </ul>;
-
   let buildDragableUl =
-      (
-        (state, send),
-        (uid, widge, dragImg, treeChildren, isShowChildren),
-        content,
-      ) =>
+      (send, (id, widget, dragImg, treeChildren, isShowChildren), content) =>
     <ul
       className="wonder-tree-node"
       draggable=true
       onDragStart=(
-        _e => send(DragEventUtils.handleDragStart(uid, widge, dragImg, _e))
+        _e => send(DragEventUtils.handleDragStart(id, widget, dragImg, _e))
       )
       onDragEnd=(_e => send(DragEventUtils.handleDrageEnd(_e)))>
       content
@@ -29,20 +24,20 @@ module Method = {
   let getContent =
       (
         (state, send),
-        (uid, icon, name, treeChildren, isShowChildren, isHasChildren),
-        (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
+        (id, icon, name, treeChildren, isShowChildren, isHasChildren),
+        (onSelectFunc, handleWidgettFunc, handleRelationErrorFunc),
       ) =>
     <li style=state.style>
       <div
         className="item-ground"
         draggable=true
-        onClick=(_event => onSelectFunc(uid))
+        onClick=(_event => onSelectFunc(id))
         onDragEnter=(
           _e =>
             send(
               DragEventUtils.handleDragEnter(
-                uid,
-                handleWidgeFunc,
+                id,
+                handleWidgettFunc,
                 handleRelationErrorFunc,
                 _e,
               ),
@@ -52,8 +47,8 @@ module Method = {
           _e =>
             send(
               DragEventUtils.handleDragLeave(
-                uid,
-                handleWidgeFunc,
+                id,
+                handleWidgettFunc,
                 handleRelationErrorFunc,
                 _e,
               ),
@@ -64,8 +59,8 @@ module Method = {
           _e =>
             send(
               DragEventUtils.handleDrop(
-                uid,
-                handleWidgeFunc,
+                id,
+                handleWidgettFunc,
                 handleRelationErrorFunc,
                 _e,
               ),
@@ -74,16 +69,16 @@ module Method = {
       />
       (
         isHasChildren ?
-        <div
-        className="item-triangle"
-        onClick=(_e => send(TogggleChildren(uid)))>
-        (
-          isShowChildren ?
-          <img src="./public/img/down.png" /> :
-          <img src="./public/img/right.png" />
-          )
+          <div
+            className="item-triangle"
+            onClick=(_e => send(TogggleChildren(id)))>
+            (
+              isShowChildren ?
+                <img src="./public/img/down.png" /> :
+                <img src="./public/img/right.png" />
+            )
           </div> :
-          <div className="item-triangle" /> 
+          <div className="item-triangle" />
       )
       (
         switch (icon) {
@@ -153,16 +148,16 @@ let reducer =
 let render =
     (
       (
-        uid,
+        id,
         name,
-        widge,
+        widget,
         dragImg,
         icon,
         isDragable,
         isShowChildren,
         isHasChildren,
       ),
-      (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
+      (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
       treeChildren,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
@@ -170,24 +165,24 @@ let render =
     switch (isDragable) {
     | None =>
       Method.buildDragableUl(
-        (state, send),
-        (uid, widge, dragImg, treeChildren, isShowChildren),
+        send,
+        (id, widget, dragImg, treeChildren, isShowChildren),
         Method.getContent(
           (state, send),
-          (uid, icon, name, treeChildren, isShowChildren, isHasChildren),
-          (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
+          (id, icon, name, treeChildren, isShowChildren, isHasChildren),
+          (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
         ),
       )
 
     | Some(isDragable) =>
       isDragable ?
         Method.buildDragableUl(
-          (state, send),
-          (uid, widge, dragImg, treeChildren, isShowChildren),
+          send,
+          (id, widget, dragImg, treeChildren, isShowChildren),
           Method.getContent(
             (state, send),
-            (uid, icon, name, treeChildren, isShowChildren, isHasChildren),
-            (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
+            (id, icon, name, treeChildren, isShowChildren, isHasChildren),
+            (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
           ),
         ) :
         Method.buildNotDragableUl(
@@ -195,8 +190,8 @@ let render =
           isShowChildren,
           Method.getContent(
             (state, send),
-            (uid, icon, name, treeChildren, isShowChildren, isHasChildren),
-            (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
+            (id, icon, name, treeChildren, isShowChildren, isHasChildren),
+            (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
           ),
         )
     };
@@ -213,17 +208,17 @@ let initalState = (isSelected, isActive) =>
 
 let make =
     (
-      ~uid,
+      ~id,
       ~name,
       ~isSelected,
       ~isActive,
       ~dragImg,
-      ~widge,
+      ~widget,
       ~icon: option(string)=?,
       ~isDragable: option(bool)=?,
       ~onSelect,
       ~onDrop,
-      ~isWidge,
+      ~isWidget,
       ~isShowChildren,
       ~isHasChildren,
       ~handleRelationError,
@@ -236,8 +231,17 @@ let make =
   reducer: reducer(isShowChildren, (onDrop, handleToggleShowTreeChildren)),
   render: self =>
     render(
-      (uid, name, widge, dragImg, icon, isDragable, isShowChildren, isHasChildren),
-      (onSelect, isWidge, handleRelationError),
+      (
+        id,
+        name,
+        widget,
+        dragImg,
+        icon,
+        isDragable,
+        isShowChildren,
+        isHasChildren,
+      ),
+      (onSelect, isWidget, handleRelationError),
       treeChildren,
       self,
     ),
