@@ -24,10 +24,15 @@ let _handleGeometryAddMap =
   };
 
 let handleSelfLogic =
-    ((store, dispatchFunc), materialComponent, dragedId, handleSetMapFunc) => {
+    (
+      (store, dispatchFunc),
+      materialComponent,
+      dragedNodeId,
+      handleSetMapFunc,
+    ) => {
   StateEditorService.getState()
   |> AssetTextureNodeMapEditorService.getTextureNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(dragedId)
+  |> WonderCommonlib.SparseMapService.unsafeGet(dragedNodeId)
   |> (
     ({textureComponent}) => {
       let gameObject =

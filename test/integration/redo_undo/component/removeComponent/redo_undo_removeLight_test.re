@@ -9,11 +9,10 @@ open Sinon;
 let _ =
   describe("redo_undo: remove light component", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     let _simulateRemoveSpecificComponent = () =>
-      SceneTreeNodeDomTool.OperateDefaultScene.getLightComponentFromDirectionLight()
-      |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+      MainEditorInspectorRemoveComponentTool.removeDirectionLightComponent();
+
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
@@ -27,6 +26,9 @@ let _ =
       |> StateLogicService.getAndSetEditorState;
     };
     let _afterEach = () => ();
+
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoOneStep(
       sandbox,

@@ -9,6 +9,7 @@ open Sinon;
 let _ =
   describe("controller header addBox", () => {
     let sandbox = getSandboxDefaultVal();
+
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
@@ -23,10 +24,11 @@ let _ =
       ControllerTool.run();
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     describe("test add box", () =>
       describe("box should be added into engineState", () => {
         test("test add one box", () => {
-          HeaderTool.triggerAddBox();
+          HeaderTool.addBox();
 
           StateEngineService.unsafeGetState()
           |> GameObjectUtils.getChildren(
@@ -36,8 +38,8 @@ let _ =
           |> expect == 5;
         });
         test("test add two boxes", () => {
-          HeaderTool.triggerAddBox();
-          HeaderTool.triggerAddBox();
+          HeaderTool.addBox();
+          HeaderTool.addBox();
 
           StateEngineService.unsafeGetState()
           |> GameObjectUtils.getChildren(
@@ -48,7 +50,7 @@ let _ =
         });
         describe("test scene tree", () =>
           test("test add one box", () => {
-            HeaderTool.triggerAddBox();
+            HeaderTool.addBox();
 
             BuildComponentTool.buildSceneTree(
               TestTool.buildAppStateSceneGraphFromEngine(),

@@ -9,11 +9,6 @@ open Sinon;
 let _ =
   describe("controller header dispose gameObject", () => {
     let sandbox = getSandboxDefaultVal();
-    let _triggerClickDispose = component =>
-      BaseEventTool.triggerComponentEvent(
-        component,
-        OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-      );
 
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -42,6 +37,7 @@ let _ =
           (),
         )
       );
+
       describe("gameObject should remove from engineState", () =>
         describe("test dispose current gameObject", () => {
           describe("current gameObject should be disposed from scene", () => {
@@ -54,12 +50,8 @@ let _ =
             test("test scene children shouldn't include it", () => {
               let currentSceneTreeNode =
                 GameObjectTool.unsafeGetCurrentSceneTreeNode();
-              let component =
-                BuildComponentTool.buildHeader(
-                  TestTool.buildAppStateSceneGraphFromEngine(),
-                );
 
-              _triggerClickDispose(component);
+              HeaderTool.disposeCurrentSceneTreeNode();
 
               StateEngineService.unsafeGetState()
               |> GameObjectUtils.getChildren(
@@ -76,34 +68,24 @@ let _ =
                   "should re-init all light material components in the scene",
                   () => {
                   let _prepare = () => {
-                    let component =
-                      BuildComponentTool.buildHeader(
-                        TestTool.buildAppStateSceneGraphFromEngine(),
-                      );
                     let gl = FakeGlToolEngine.getEngineStateGl();
                     let glShaderSource = gl##shaderSource;
                     MainEditorSceneTool.setDirectionLightGameObjectToBeCurrentSceneTreeNode();
 
-                    (component, glShaderSource);
+                    glShaderSource;
                   };
 
                   test("test shaderSource should be called", () => {
-                    let (component, glShaderSource) = _prepare();
+                    let glShaderSource = _prepare();
 
-                    BaseEventTool.triggerComponentEvent(
-                      component,
-                      OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-                    );
+                    HeaderTool.disposeCurrentSceneTreeNode();
 
                     glShaderSource |> getCallCount |> expect == 4;
                   });
                   test("glsl->DIRECTION_LIGHTS_COUNT should == 0", () => {
-                    let (component, glShaderSource) = _prepare();
+                    let glShaderSource = _prepare();
 
-                    BaseEventTool.triggerComponentEvent(
-                      component,
-                      OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-                    );
+                    HeaderTool.disposeCurrentSceneTreeNode();
 
                     GLSLToolEngine.contain(
                       GLSLToolEngine.getVsSource(glShaderSource),
@@ -115,20 +97,16 @@ let _ =
               )
             );
           });
+
           describe("test should remove current gameObject children", () =>
             test("test engineState should remove it's children", () => {
-              let (box1, box2, box3, box4) =
-                SceneTreeTool.buildFourLayerSceneAndGetBox(sandbox);
+              let (scene, (box1, box3, box4), box2) =
+                SceneTreeTool.buildFourLayerSceneGraphToEngine(sandbox);
+              GameObjectTool.setCurrentSceneTreeNode(box1);
 
               let engineState = StateEngineService.unsafeGetState();
-              let component =
-                BuildComponentTool.buildHeader(
-                  TestTool.buildAppStateSceneGraphFromEngine(),
-                );
-              BaseEventTool.triggerComponentEvent(
-                component,
-                OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-              );
+
+              HeaderTool.disposeCurrentSceneTreeNode();
 
               (
                 engineState |> GameObjectTool.isAlive(box1),
@@ -138,23 +116,16 @@ let _ =
               |> expect == (false, false, false);
             })
           );
+
           describe("test if current gameObject is Camera", () => {
             describe("test has other cameras after remove", () => {
               let _test = () => {
                 let (camera1, camera2, _box1) =
                   SceneTreeTool.buildTwoCameraSceneGraphToEngine(sandbox);
 
-                SceneTreeNodeDomTool.OperateTwoCamera.getFirstCameraDomIndex()
-                |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+                MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
 
-                let component =
-                  BuildComponentTool.buildHeader(
-                    TestTool.buildAppStateSceneGraphFromEngine(),
-                  );
-                BaseEventTool.triggerComponentEvent(
-                  component,
-                  OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-                );
+                HeaderTool.disposeCurrentSceneTreeNode();
 
                 (camera1, camera2);
               };
@@ -188,14 +159,7 @@ let _ =
                   MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
                 );
 
-                let component =
-                  BuildComponentTool.buildHeader(
-                    TestTool.buildAppStateSceneGraphFromEngine(),
-                  );
-                BaseEventTool.triggerComponentEvent(
-                  component,
-                  OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-                );
+                HeaderTool.disposeCurrentSceneTreeNode();
 
                 (
                   SceneEngineService.getSceneAllBasicCameraViews(
@@ -226,14 +190,7 @@ let _ =
                          );
                     engineState |> StateEngineService.setState |> ignore;
 
-                    let component =
-                      BuildComponentTool.buildHeader(
-                        TestTool.buildAppStateSceneGraphFromEngine(),
-                      );
-                    BaseEventTool.triggerComponentEvent(
-                      component,
-                      OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-                    );
+                    HeaderTool.disposeCurrentSceneTreeNode();
 
                     let engineState = StateEngineService.unsafeGetState();
                     ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
@@ -249,6 +206,7 @@ let _ =
         })
       );
     });
+
     describe("test scene tree", () => {
       beforeEach(() => {
         MainEditorSceneTool.initStateWithJob(
@@ -310,12 +268,7 @@ let _ =
           MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
         );
 
-        let component =
-          BuildComponentTool.buildHeader(
-            TestTool.buildAppStateSceneGraphFromEngine(),
-          );
-
-        _triggerClickDispose(component);
+        HeaderTool.disposeCurrentSceneTreeNode();
 
         BuildComponentTool.buildSceneTree(
           TestTool.buildAppStateSceneGraphFromEngine(),
@@ -357,12 +310,7 @@ let _ =
         );
         let gl = FakeGlToolEngine.getGl(StateEngineService.unsafeGetState());
 
-        let component =
-          BuildComponentTool.buildHeader(
-            TestTool.buildAppStateSceneGraphFromEngine(),
-          );
-
-        _triggerClickDispose(component);
+        HeaderTool.disposeCurrentSceneTreeNode();
 
         gl##clearColor |> getCallCount |> expect == 1;
       })

@@ -9,22 +9,13 @@ open Sinon;
 let _ =
   describe("redo_undo: add folder", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     let _simulateAddFolderTwice = () => {
-      MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
+      let assetTreeData =
+        MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
 
-      let component = BuildComponentTool.buildAssetComponent();
-
-      BaseEventTool.triggerComponentEvent(
-        component,
-        AssetTreeEventTool.triggerAddFolderClick,
-      );
-      BaseEventTool.triggerComponentEvent(
-        component,
-        AssetTreeEventTool.triggerAddFolderClick,
-      );
+      MainEditorAssetHeaderOperateNodeTool.addFolder();
+      MainEditorAssetHeaderOperateNodeTool.addFolder();
     };
 
     let _beforeEach = () => {
@@ -38,14 +29,10 @@ let _ =
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     };
 
-    let _afterEach = () => {
-      restoreSandbox(refJsObjToSandbox(sandbox^));
-      StateEditorService.getState()
-      |> AssetCurrentNodeDataEditorService.clearCurrentNodeData
-      |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-      |> StateEditorService.setState
-      |> ignore;
-    };
+    let _afterEach = () => restoreSandbox(refJsObjToSandbox(sandbox^));
+
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,

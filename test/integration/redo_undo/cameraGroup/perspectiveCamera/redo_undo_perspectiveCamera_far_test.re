@@ -13,14 +13,13 @@ let _ =
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    let _changeFar = value => {
-      let farDomIndex = MainEditorCameraProjectionTool.getFarDomIndex();
-
-      MainEditorCameraProjectionTool.triggerPerspectiveCameraChangeAndBlurEvent(
-        farDomIndex,
-        value,
+    let _changeFar = value =>
+      MainEditorCameraProjectionTool.changeFarAndBlur(
+        ~cameraProjection=
+          GameObjectTool.getCurrentGameObjectPerspectiveCamera(),
+        ~value,
+        (),
       );
-    };
 
     let _simulateTwiceChangeFar = () => {
       let value1 = 10.112;

@@ -28,7 +28,7 @@ let buildDefaultCubeGeometryComponent = (editorState, engineState) => {
   (
     editorState
     |> AssetGeometryDataEditorService.getGeometryData
-    |> (geometry => {...geometry, defaultCubeGeometryIndex: cubeGeometry})
+    |> (geometry => {...geometry, defaultCubeGeometryComponent: cubeGeometry})
     |. AssetGeometryDataEditorService.setGeometryData(editorState),
     engineState,
     cubeGeometry,
@@ -43,7 +43,7 @@ let buildDefaultSphereGeometryComponent = (editorState, engineState) => {
     editorState
     |> AssetGeometryDataEditorService.getGeometryData
     |> (
-      geometry => {...geometry, defaultSphereGeometryIndex: sphereGeometry}
+      geometry => {...geometry, defaultSphereGeometryComponent: sphereGeometry}
     )
     |. AssetGeometryDataEditorService.setGeometryData(editorState),
     engineState,

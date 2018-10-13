@@ -70,10 +70,7 @@ let _ =
         let fileName = "Scene";
         let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
-        HeaderTool.fileLoad(
-          TestTool.getDispatch(),
-          BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
-        )
+        HeaderTool.loadOneWDB(~fileName, ~arrayBuffer=newWDBArrayBuffer, ())
         |> then_(_ =>
              BuildComponentTool.buildSceneTree(
                TestTool.buildAppStateSceneGraphFromEngine(),
@@ -93,10 +90,7 @@ let _ =
           let shaderSourceCountBeforeLoadSceneWDB =
             GLSLToolEngine.getShaderSourceCallCount(glShaderSource);
 
-          HeaderTool.fileLoad(
-            TestTool.getDispatch(),
-            BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
-          )
+          HeaderTool.loadOneWDB(~fileName, ~arrayBuffer=newWDBArrayBuffer, ())
           |> then_(_ =>
                testFunc(shaderSourceCountBeforeLoadSceneWDB, glShaderSource)
              );
@@ -167,9 +161,10 @@ let _ =
               let newWDBArrayBuffer =
                 NodeToolEngine.getWDBArrayBuffer(fileName);
 
-              HeaderTool.fileLoad(
-                TestTool.getDispatch(),
-                BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
+              HeaderTool.loadOneWDB(
+                ~fileName,
+                ~arrayBuffer=newWDBArrayBuffer,
+                (),
               )
               |> then_(_ => {
                    let editorState = StateEditorService.getState();
@@ -211,21 +206,20 @@ let _ =
               let newWDBArrayBuffer =
                 NodeToolEngine.getWDBArrayBuffer(fileName);
 
-              HeaderTool.fileLoad(
-                TestTool.getDispatch(),
-                BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
+              HeaderTool.loadOneWDB(
+                ~fileName,
+                ~arrayBuffer=newWDBArrayBuffer,
+                (),
               )
               |> then_(_ => {
                    let fileName = "BoxTextured";
                    let newWDBArrayBuffer =
                      NodeToolEngine.getWDBArrayBuffer(fileName);
 
-                   HeaderTool.fileLoad(
-                     TestTool.getDispatch(),
-                     BaseEventTool.buildWDBFileEvent(
-                       fileName,
-                       newWDBArrayBuffer,
-                     ),
+                   HeaderTool.loadOneWDB(
+                     ~fileName,
+                     ~arrayBuffer=newWDBArrayBuffer,
+                     (),
                    )
                    |> then_(_ => {
                         let editorState = StateEditorService.getState();
@@ -253,9 +247,10 @@ let _ =
             let newWDBArrayBuffer =
               NodeToolEngine.getWDBArrayBuffer(fileName);
 
-            HeaderTool.fileLoad(
-              TestTool.getDispatch(),
-              BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
+            HeaderTool.loadOneWDB(
+              ~fileName,
+              ~arrayBuffer=newWDBArrayBuffer,
+              (),
             )
             |> then_(_ => {
                  let engineState = StateEngineService.unsafeGetState();
@@ -293,7 +288,7 @@ let _ =
 
       test("if load no wdb, return", () =>
         expect(() =>
-          HeaderTool.fileLoad(
+          HeaderLoadWDBUtils.loadSceneWDB(
             TestTool.getDispatch(),
             {
               "target": {
@@ -313,10 +308,7 @@ let _ =
           let fileName = "Scene";
           let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
-          HeaderTool.fileLoad(
-            TestTool.getDispatch(),
-            BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
-          )
+          HeaderTool.loadOneWDB(~fileName, ~arrayBuffer=newWDBArrayBuffer, ())
           |> then_(_ => {
                let editorState = StateEditorService.getState();
 
@@ -336,10 +328,7 @@ let _ =
           let fileName = "BoxTextured";
           let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
-          HeaderTool.fileLoad(
-            TestTool.getDispatch(),
-            BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
-          )
+          HeaderTool.loadOneWDB(~fileName, ~arrayBuffer=newWDBArrayBuffer, ())
           |> then_(_ => {
                let editorState = StateEditorService.getState();
 

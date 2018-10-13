@@ -29,7 +29,7 @@ module Method = {
       )
     />;
 
-  let buildItensityComponent = ((store, dispatchFunc), lightComponent) =>
+  let buildIntensityComponent = ((store, dispatchFunc), lightComponent) =>
     <div className="light-intensity">
       <MainEditorFloatInputBaseComponent
         label="Intensity"
@@ -128,7 +128,7 @@ module Method = {
 let render = ((store, dispatchFunc), lightComponent, _self) =>
   <article className="wonder-point-light">
     (Method.buildColorPickComponent((store, dispatchFunc), lightComponent))
-    (Method.buildItensityComponent((store, dispatchFunc), lightComponent))
+    (Method.buildIntensityComponent((store, dispatchFunc), lightComponent))
     (Method.buildConstantComponent((store, dispatchFunc), lightComponent))
     (Method.buildLinearComponent((store, dispatchFunc), lightComponent))
     (Method.buildQuadraticComponent((store, dispatchFunc), lightComponent))

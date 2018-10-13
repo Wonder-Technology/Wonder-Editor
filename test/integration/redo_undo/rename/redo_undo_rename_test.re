@@ -9,47 +9,99 @@ open Sinon;
 let _ =
   describe("redo_undo: rename", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => sandbox := createSandbox());
+
+    let _getCurrentSceneTreeNodeName = () =>
+      GameObjectTool.unsafeGetCurrentSceneTreeNode()
+      |> GameObjectEngineService.unsafeGetGameObjectName(
+           _,
+           StateEngineService.unsafeGetState(),
+         );
+
     let _simulateTwiceChangeName = () => {
-      let inspectorComponent =
-        BuildComponentTool.buildInspectorComponent(
-          TestTool.buildAppStateSceneGraphFromEngine(),
-          InspectorTool.buildFakeAllShowComponentConfig(),
-        );
       let name1 = "gameObject1";
-      BaseEventTool.triggerComponentEvent(
-        inspectorComponent,
-        GameObjectRenameTool.triggerRenameChangeEvent(name1),
-      );
-      BaseEventTool.triggerComponentEvent(
-        inspectorComponent,
-        GameObjectRenameTool.triggerRenameBlurEvent(name1),
-      );
+
+      SceneTreeInspectorTool.renameGameObject(~name=name1, ());
+
       let name2 = "gameObject2";
-      BaseEventTool.triggerComponentEvent(
-        inspectorComponent,
-        GameObjectRenameTool.triggerRenameChangeEvent(name2),
-      );
-      BaseEventTool.triggerComponentEvent(
-        inspectorComponent,
-        GameObjectRenameTool.triggerRenameBlurEvent(name2),
-      );
+
+      SceneTreeInspectorTool.renameGameObject(~name=name2, ());
+
+      (name1, name2);
     };
 
+    beforeEach(() => {
+      sandbox := createSandbox();
+      MainEditorSceneTool.initState(~sandbox, ());
+      MainEditorSceneTool.createDefaultScene(
+        sandbox,
+        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+      );
+    });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    let _beforeEach = () => {
-      MainEditorSceneTool.initState(~sandbox, ());
-      MainEditorSceneTool.createDefaultScene(sandbox, () => ());
+    describe("test undo operate", () => {
+      test("test not undo", () => {
+        let (name1, name2) = _simulateTwiceChangeName();
 
-      SceneTreeNodeDomTool.OperateDefaultScene.getFirstCubeDomIndex()
-      |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
-    };
+        _getCurrentSceneTreeNodeName() |> expect == name2;
+      });
 
-    RedoUndoTool.testRedoUndoTwoStep(
-      sandbox,
-      "prepare first step: set currentSceneTreeNode",
-      (_simulateTwiceChangeName, _beforeEach, () => ()),
-      BuildComponentForCurryTool.buildInspectorComponent,
-    );
+      describe("test undo one step", () =>
+        test("step which from second to first", () => {
+          let (name1, name2) = _simulateTwiceChangeName();
+
+          RedoUndoTool.undoHistoryState();
+
+          _getCurrentSceneTreeNodeName() |> expect == name1;
+        })
+      );
+
+      describe("test undo two step", () =>
+        test("step which from second to zero", () => {
+          let sourceName =
+            GameObjectTool.unsafeGetCurrentSceneTreeNode()
+            |> GameObjectEngineService.unsafeGetGameObjectName(
+                 _,
+                 StateEngineService.unsafeGetState(),
+               );
+          let (name1, name2) = _simulateTwiceChangeName();
+
+          RedoUndoTool.undoHistoryState();
+          RedoUndoTool.undoHistoryState();
+
+          _getCurrentSceneTreeNodeName() |> expect == sourceName;
+        })
+      );
+    });
+
+    describe("test redo operate", () => {
+      describe("test redo one step", () =>
+        test(
+          "undo step which from second to zero, redo step which from zero to first",
+          () => {
+          let (name1, name2) = _simulateTwiceChangeName();
+
+          RedoUndoTool.undoHistoryState();
+          RedoUndoTool.undoHistoryState();
+          RedoUndoTool.redoHistoryState();
+
+          _getCurrentSceneTreeNodeName() |> expect == name1;
+        })
+      );
+
+      describe("test redo two step", () =>
+        test(
+          "undo step which from second to zero,redo step which from zero to second",
+          () => {
+          let (name1, name2) = _simulateTwiceChangeName();
+
+          RedoUndoTool.undoHistoryState();
+          RedoUndoTool.undoHistoryState();
+          RedoUndoTool.redoHistoryState();
+          RedoUndoTool.redoHistoryState();
+
+          _getCurrentSceneTreeNodeName() |> expect == name2;
+        })
+      );
+    });
   });

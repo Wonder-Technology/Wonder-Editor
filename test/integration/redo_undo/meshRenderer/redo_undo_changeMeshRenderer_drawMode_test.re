@@ -10,26 +10,18 @@ let _ =
   describe("redo_undo: change meshRenderer drawMode", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
+    let _getFromArray = (array, index) =>
+      ArrayService.unsafeGetNth(index, array);
 
-    beforeEach(() => {
-      sandbox := createSandbox();
-
-      MainEditorSceneTool.initState(~sandbox, ());
-
-      EventListenerTool.buildFakeDom()
-      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-    });
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     let _simulateChangeTwiceDrawMode = () => {
       let lineType = MainEditorMeshRendererTool.getDrawModeLineType();
 
-      MainEditorMeshRendererTool.triggerChangeDrawModeEvent(lineType);
+      MainEditorMeshRendererTool.changeMode(~value=lineType, ());
 
       let triangleFanType =
         MainEditorMeshRendererTool.getDrawModeTriangleFanType();
 
-      MainEditorMeshRendererTool.triggerChangeDrawModeEvent(triangleFanType);
+      MainEditorMeshRendererTool.changeMode(~value=triangleFanType, ());
     };
 
     let _beforeEach = () =>
@@ -40,6 +32,16 @@ let _ =
           MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
         },
       );
+
+    beforeEach(() => {
+      sandbox := createSandbox();
+
+      MainEditorSceneTool.initState(~sandbox, ());
+
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+    });
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,

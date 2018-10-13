@@ -3,8 +3,9 @@ open AssetNodeType;
 open AssetTreeNodeType;
 
 module Method = {
-  let _isSelected = id =>
-    AssetUtils.getTargetTreeNodeId |> StateLogicService.getEditorState === id;
+  let _isSelected = nodeId =>
+    AssetUtils.getTargetTreeNodeId
+    |> StateLogicService.getEditorState === nodeId;
 
   let _isActive = () => {
     let editorState = StateEditorService.getState();
@@ -19,32 +20,33 @@ module Method = {
     };
   };
 
-  let _isNotRoot = id =>
+  let _isNotRoot = nodeId =>
     StateEditorService.getState()
-    |> AssetTreeRootEditorService.getRootTreeNodeId != id;
+    |> AssetTreeRootEditorService.getRootTreeNodeId != nodeId;
 
   let buildAssetTreeArray =
       (dragImg, (onSelectFunc, onDropFunc), assetTreeRoot) => {
     let rec _iterateAssetTreeArray = assetTreeArray =>
       assetTreeArray
-      |> Js.Array.map(({id, type_, children}) =>
+      |> WonderLog.Log.printJson
+      |> Js.Array.map(({nodeId, type_, children}) =>
            switch (type_) {
            | Folder =>
              let {name}: folderResultType =
                StateEditorService.getState()
                |> AssetFolderNodeMapEditorService.getFolderNodeMap
-               |> WonderCommonlib.SparseMapService.unsafeGet(id);
+               |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
              <TreeNode
                key=(DomHelper.getRandomKey())
-               uid=id
+               id=nodeId
                name
-               isSelected=(_isSelected(id))
+               isSelected=(_isSelected(nodeId))
                isActive=(_isActive())
                dragImg
                widget=(AssetUtils.getWidget())
                icon="./public/img/12.jpg"
-               isDragable=(_isNotRoot(id))
+               isDragable=(_isNotRoot(nodeId))
                onSelect=(onSelectFunc(type_))
                onDrop=onDropFunc
                isWidget=AssetUtils.isWidget

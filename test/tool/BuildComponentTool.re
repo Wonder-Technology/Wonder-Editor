@@ -36,15 +36,24 @@ let buildMeshRenderer = store =>
     <MainEditorMeshRenderer store dispatchFunc=(TestTool.getDispatch()) />,
   );
 
-let buildGeometry = (store, geometryComponent) =>
+let buildGeometry =
+    (
+      ~geometryComponent,
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~isShowGeometryGroup=false,
+      (),
+    ) =>
   ReactTestRenderer.create(
     <MainEditorGeometry
       store
-      dispatchFunc=(TestTool.getDispatch())
+      dispatchFunc
       currentSceneTreeNode=(GameObjectTool.unsafeGetCurrentSceneTreeNode())
       geometryComponent
+      isShowGeometryGroup
     />,
   );
+
 let buildMainEditorTransformComponent = (store, transformComponent) =>
   ReactTestRenderer.create(
     <MainEditorTransform

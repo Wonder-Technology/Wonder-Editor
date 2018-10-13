@@ -3,7 +3,7 @@ open AssetTreeNodeType;
 open AssetNodeType;
 
 let buildAssetTreeNodeByIndex = (index, type_) => {
-  id: index,
+  nodeId: index,
   type_,
   children: [||],
 };
@@ -63,7 +63,7 @@ let getChildrenNameAndIdArr =
       |> Js.Array.filter(({type_ as childType}: assetTreeNodeType) =>
            childType === fileTargetType
          )
-      |> Js.Array.map(({id as currentNodeId, type_}: assetTreeNodeType) => {
+      |> Js.Array.map(({nodeId as currentNodeId, type_}: assetTreeNodeType) => {
            let name =
              editorState
              |> AssetNodeUtils.handleSpeficFuncByAssetNodeType(
@@ -88,7 +88,7 @@ let getChildrenNameAndIdArr =
                   ),
                 );
 
-           (name, id);
+           (name, nodeId);
          })
   );
 };

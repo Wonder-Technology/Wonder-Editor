@@ -1,17 +1,19 @@
-let triggerClickCheckBox = domChildren => {
-  let checkBoxDiv = WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
-  let checkBox =
-    WonderCommonlib.ArrayService.unsafeGet(checkBoxDiv##children, 1);
+let buildEvent = checked => {
+                              "target": {
+                                "checked": checked,
+                              },
+                            } |> Obj.magic;
 
-  BaseEventTool.triggerClickFromEvent(
-    checkBox,
-    BaseEventTool.buildFormEvent(true),
+let setCurrentCamera =
+    (
+      ~cameraView,
+      ~event=buildEvent(true),
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorCameraView.Method.setCurrentCamera(
+    (store, dispatchFunc),
+    cameraView,
+    event,
   );
-};
-
-let triggerClickSetCurrentCameraEvent = () => {
-  let component =
-    BuildComponentTool.buildCameraView(TestTool.buildEmptyAppState());
-
-  BaseEventTool.triggerComponentEvent(component, triggerClickCheckBox);
-};

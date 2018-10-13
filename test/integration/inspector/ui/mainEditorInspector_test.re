@@ -18,10 +18,9 @@ let _ =
         sandbox,
         MainEditorAssetTool.initAssetTree,
       );
-      EventListenerTool.buildFakeDom()
-      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     describe("test should update", () => {
       test("if reatinedProps updateTypeArr include All, should update", () =>
         shouldUpdate(
@@ -50,6 +49,7 @@ let _ =
         |> expect == false
       );
     });
+
     describe("change source to show it's inspector", () => {
       test("if not set currentSelectSource, show nothing", () =>
         BuildComponentTool.buildInspectorComponent(
@@ -83,13 +83,16 @@ let _ =
           |> StateLogicService.getAndSetEditorState
         );
         test("show currentNodeId's asset node component", () => {
-          let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-          let component = BuildComponentTool.buildAssetComponent();
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
 
-          assetTreeDomRecord
-          |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-          |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(component);
+          MainEditorAssetChildrenNodeTool.selectTextureNode(
+            ~nodeId=
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                assetTreeData,
+              ),
+            (),
+          );
 
           BuildComponentTool.buildInspectorComponent(
             TestTool.buildEmptyAppState(),

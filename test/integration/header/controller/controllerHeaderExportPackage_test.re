@@ -73,7 +73,7 @@ let _ =
             |> Js.Array.length;
 
           let _test = controlFunc => {
-            AddableComponentTool.addArcballCameraInCamera();
+            MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
 
             let basicCameraView =
               GameObjectTool.getCurrentGameObjectBasicCameraView();
@@ -119,7 +119,7 @@ let _ =
               })
             );
             test("should unbind after package", () => {
-              AddableComponentTool.addArcballCameraInCamera();
+              MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
               let basicCameraView =
                 GameObjectTool.getCurrentGameObjectBasicCameraView();
               BasicCameraViewEngineService.activeBasicCameraView(

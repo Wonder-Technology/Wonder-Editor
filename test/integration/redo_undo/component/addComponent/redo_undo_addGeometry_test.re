@@ -9,10 +9,9 @@ open Sinon;
 let _ =
   describe("redo_undo: add geometry component", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     let _simulateAddSpecificComponent = () =>
-      AddableComponentTool.addGeometryInCamera();
+      MainEditorInspectorAddComponentTool.addGeometryComponent();
 
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());
@@ -27,6 +26,9 @@ let _ =
       |> StateLogicService.getAndSetEditorState;
     };
     let _afterEach = () => ();
+
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoOneStep(
       sandbox,

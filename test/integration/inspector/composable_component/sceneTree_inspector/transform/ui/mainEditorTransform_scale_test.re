@@ -14,14 +14,14 @@ let _ =
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    MainEditorTransformBaseTestTool.transformBaseTest(
+    MainEditorTransformTestTool.transformBaseTest(
       sandbox,
       "test change scale value",
       (1., TransformUtils.getTransformScaleData),
       (
-        TransformEventTool.triggerChangeScaleX,
-        TransformEventTool.triggerChangeScaleY,
-        TransformEventTool.triggerChangeScaleZ,
+        MainEditorTransformTool.changeScaleX,
+        MainEditorTransformTool.changeScaleY,
+        MainEditorTransformTool.changeScaleZ,
       ),
     );
 
@@ -34,9 +34,6 @@ let _ =
           (),
         );
 
-        EventListenerTool.buildFakeDom()
-        |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
@@ -46,22 +43,24 @@ let _ =
 
       describe("the scale value in engineState can't be 0", () =>
         test("if input 0, set origin value to engineState instead of 0", () => {
+          open FloatInput;
+
+          ConsoleTool.markTestConsole();
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
-          let value = "0";
-          let component =
-            BuildComponentTool.buildMainEditorTransformComponent(
-              TestTool.buildEmptyAppState(),
-              currentGameObjectTransform,
-            );
-          BaseEventTool.triggerComponentEvent(
-            component,
-            TransformEventTool.triggerChangeScaleZ(value),
-          );
-          let (_, _, zFromEngine) =
-            TransformUtils.getTransformScaleData(currentGameObjectTransform);
+          let value = 0.;
+          let state = {inputValue: Some("0."), originValue: "1.0"};
 
-          expect(zFromEngine) == 1.;
+          let reasonStateUpdate =
+            FloatInputTool.reducer(
+              ~canBeZero=Some(false),
+              ~action=Blur,
+              ~state,
+              (),
+            )
+            |> ReactTool.getUpdateState;
+
+          reasonStateUpdate.inputValue |> expect == Some(state.originValue);
         })
       );
     });

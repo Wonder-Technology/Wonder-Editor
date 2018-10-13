@@ -41,6 +41,7 @@ let buildAppStateSceneGraphFromEngine = () =>
       |> _buildSceneTreeAppState
   )
   |> StateLogicService.getStateToGetData;
+
 let buildAppStateSceneGraphAndInspectorState = () =>
   (
     stateTuple =>

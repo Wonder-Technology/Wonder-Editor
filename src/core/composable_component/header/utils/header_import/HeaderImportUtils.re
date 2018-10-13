@@ -16,7 +16,7 @@ let _handleImportJson = (path, jsonResult) => {
       HeaderImportFolderUtils.handleImportFolder(folderPath)
       |> OptionService.unsafeGet;
     let (editorState, newIndex) =
-      AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+      AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
     let engineState = StateEngineService.unsafeGetState();
 
     AssetTreeNodeUtils.handleJsonType(
@@ -56,7 +56,7 @@ let _handleImportWDB = (path, wdbArrayBuffer: Js.Typed_array.array_buffer) => {
       HeaderImportFolderUtils.handleImportFolder(folderPath)
       |> OptionService.unsafeGet;
     let (editorState, newIndex) =
-      AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+      AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
 
     AssetTreeNodeUtils.handleAssetWDBType(
       (wdbName, wdbArrayBuffer),

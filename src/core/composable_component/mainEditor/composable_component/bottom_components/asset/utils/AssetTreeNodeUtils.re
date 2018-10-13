@@ -338,7 +338,7 @@ let handleAssetWDBType =
 
 let handleFileByTypeAsync = (fileResult: nodeResultType) => {
   let (editorState, newIndex) =
-    AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+    AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
   let engineState = StateEngineService.unsafeGetState();
   let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 

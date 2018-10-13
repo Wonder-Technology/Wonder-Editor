@@ -45,7 +45,7 @@ module Method = {
     |> Js.Array.map(({uid, name, children}) =>
          <TreeNode
            key=(DomHelper.getRandomKey())
-           uid
+           id=uid
            name
            isSelected=(_isSelected(uid, currentSceneTreeNode))
            isActive=true

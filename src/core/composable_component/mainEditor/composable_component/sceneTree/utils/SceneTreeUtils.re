@@ -184,21 +184,21 @@ let _checkDragedTreeNodeShouldExist = ((newSceneGraphArr, dragedTreeNode)) => {
   (newSceneGraphArr, dragedTreeNode |> OptionService.unsafeGet);
 };
 
-let removeDragedTreeNode = (dragedUid, sceneGraphArray) => {
+let removeDragedTreeNode = (dragedId, sceneGraphArray) => {
   let rec _iterateSceneGraph =
-          (dragedUid, sceneGraphArray, newSceneGraphArray, dragedTreeNode) =>
+          (dragedId, sceneGraphArray, newSceneGraphArray, dragedTreeNode) =>
     sceneGraphArray
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (.
            (newSceneGraphArray, dragedTreeNode),
            {uid, children} as treeNode,
          ) =>
-           uid === dragedUid ?
+           uid === dragedId ?
              (newSceneGraphArray, Some(treeNode)) :
              {
                let (newChildrenSceneGraphArray, dragedTreeNode) =
                  _iterateSceneGraph(
-                   dragedUid,
+                   dragedId,
                    children,
                    [||],
                    dragedTreeNode,
@@ -214,7 +214,7 @@ let removeDragedTreeNode = (dragedUid, sceneGraphArray) => {
              },
          (newSceneGraphArray, dragedTreeNode),
        );
-  _iterateSceneGraph(dragedUid, sceneGraphArray, [||], None)
+  _iterateSceneGraph(dragedId, sceneGraphArray, [||], None)
   |> _checkDragedTreeNodeShouldExist;
 };
 
@@ -241,10 +241,10 @@ let rec dragedTreeNodeToTargetTreeNode =
 let getDragedSceneGraphData =
     (
       targetUid: int,
-      dragedUid: int,
+      dragedId: int,
       sceneGraphArray: array(sceneTreeNodeType),
     ) =>
-  removeDragedTreeNode(dragedUid, sceneGraphArray)
+  removeDragedTreeNode(dragedId, sceneGraphArray)
   |> dragedTreeNodeToTargetTreeNode(targetUid)
   |> WonderLog.Contract.ensureCheck(
        dragedSceneGraph =>

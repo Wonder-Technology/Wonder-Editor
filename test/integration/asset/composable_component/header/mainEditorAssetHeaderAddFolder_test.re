@@ -14,10 +14,6 @@ let _ =
   describe("MainEditorAssetHeader->add folder", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let _triggerAddFolderClick = MainEditorAssetHeaderOperateNodeTool.triggerAddFolderClick;
-
-    let _triggerRemoveNodeClick = MainEditorAssetHeaderOperateNodeTool.triggerRemoveNodeClick;
-
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
@@ -27,7 +23,6 @@ let _ =
 
       MainEditorSceneTool.createDefaultScene(sandbox, () => ());
     });
-
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
       StateEditorService.getState()
@@ -40,75 +35,67 @@ let _ =
     describe(
       "if not select specific treeNode, add folder into root treeNode", () => {
       test("test snapshot", () => {
-        MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
 
-        _triggerAddFolderClick();
+        MainEditorAssetHeaderOperateNodeTool.addFolder();
 
         BuildComponentTool.buildAssetComponent()
         |> ReactTestTool.createSnapshotAndMatch;
       });
 
       describe("test logic", () => {
-        test("the added folder parentNodeId should be root treeNode id", () => {
-          let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+        test("the added folder parent node should be root", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
+          let addedFolderNodeId = MainEditorAssetIdTool.getNewAssetId();
 
-          _triggerAddFolderClick();
+          MainEditorAssetHeaderOperateNodeTool.addFolder();
 
           let {parentNodeId}: AssetNodeType.folderResultType =
-            MainEditorAssetTreeNodeTool.getAddedFolderResult(
-              assetTreeDomRecord,
-            );
-
+            StateEditorService.getState()
+            |> AssetFolderNodeMapEditorService.getFolderNodeMap
+            |> WonderCommonlib.SparseMapService.unsafeGet(addedFolderNodeId);
           parentNodeId
           |> OptionService.unsafeGet
           |>
-          expect == (
-                      StateEditorService.getState()
-                      |> AssetTreeRootEditorService.getRootTreeNodeId
+          expect == MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getRootNodeId(
+                      assetTreeData,
                     );
         });
 
         test("test add same name folder, the name should add postfix", () => {
-          let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-          let component = BuildComponentTool.buildAssetComponent();
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
 
-          assetTreeDomRecord
-          |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-          |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(
-               component,
-             );
-          _triggerRemoveNodeClick(component);
-
-          _triggerAddFolderClick();
-          _triggerAddFolderClick();
-          _triggerAddFolderClick();
+          MainEditorAssetHeaderOperateNodeTool.addFolder();
+          MainEditorAssetHeaderOperateNodeTool.addFolder();
+          MainEditorAssetHeaderOperateNodeTool.addFolder();
 
           BuildComponentTool.buildAssetTree()
           |> ReactTestTool.createSnapshotAndMatch;
         });
 
         test(
-          "test remove first folder;
-              add three folder;
-              the new name should has removed-folder's name;
-            ",
+          {|remove first folder;
+            add three folder;
+
+            the new name should be removed-folder's name;
+            |},
           () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-            let component = BuildComponentTool.buildAssetComponent();
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
 
-            assetTreeDomRecord
-            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-            |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(
-                 component,
-               );
-            _triggerRemoveNodeClick(component);
-
-            _triggerAddFolderClick();
-            _triggerAddFolderClick();
-            _triggerAddFolderClick();
+            MainEditorAssetHeaderOperateNodeTool.removeFolderNode(
+              ~folderNodeId=
+                MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId(
+                  assetTreeData,
+                ),
+              (),
+            );
+            MainEditorAssetHeaderOperateNodeTool.addFolder();
+            MainEditorAssetHeaderOperateNodeTool.addFolder();
+            MainEditorAssetHeaderOperateNodeTool.addFolder();
 
             BuildComponentTool.buildAssetTree()
             |> ReactTestTool.createSnapshotAndMatch;
@@ -118,33 +105,20 @@ let _ =
     });
     describe("else", () =>
       test("add folder into specific treeNode", () => {
-        let assetTreeDomRecord =
-          MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-        let component = BuildComponentTool.buildAssetComponent();
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
 
-        assetTreeDomRecord
-        |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-        |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(
-             component,
-           );
+        MainEditorAssetTreeTool.Select.selectFolderNode(
+          ~nodeId=
+            MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId(
+              assetTreeData,
+            ),
+          (),
+        );
+        MainEditorAssetHeaderOperateNodeTool.addFolder();
 
-        _triggerAddFolderClick(~component, ());
-
-        BuildComponentTool.buildAssetComponent()
+        BuildComponentTool.buildAssetTree()
         |> ReactTestTool.createSnapshotAndMatch;
       })
     );
-    /*
-     TODO test
-     test("add material into specific treeNode", () => {
-       let component = BuildComponentTool.buildAssetComponent();
-
-       BaseEventTool.triggerComponentEvent(
-         component,
-         AssetTreeEventTool.triggerAddMaterialClick,
-       );
-
-       BuildComponentTool.buildAssetComponent()
-       |> ReactTestTool.createSnapshotAndMatch;
-     }); */
   });

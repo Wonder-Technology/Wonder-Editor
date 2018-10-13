@@ -9,23 +9,25 @@ open Sinon;
 let _ =
   describe("redo_undo: transform position", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());
-      MainEditorSceneTool.createDefaultScene(sandbox, () => ());
-
-      SceneTreeNodeDomTool.OperateDefaultScene.getFirstCubeDomIndex()
-      |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+      MainEditorSceneTool.createDefaultScene(
+        sandbox,
+        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+      );
     };
+
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,
       "test simulate set currentSceneTreeNode",
       (
-        TransformEventTool.simulateTwiceChangePosition(
-          ~firstValue="11.25",
-          ~secondValue="15",
+        RedoUndoTransformTool.simulateTwiceChangePosition(
+          ~firstValue=11.25,
+          ~secondValue=15.,
         ),
         _beforeEach,
         () => (),

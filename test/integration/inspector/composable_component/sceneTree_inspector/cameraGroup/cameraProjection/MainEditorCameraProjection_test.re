@@ -18,29 +18,7 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test set currentSceneTreeNode to be camera", () => {
-      /* describe("test snapshot", () =>
-        test("default aspect should be canvas.width/canvas.height", () => {
-          let canvas = {"width": 100., "height": 200.};
-          let runEngineState = StateEngineService.unsafeGetState();
-          let runEngineState =
-            ViewToolEngine.setCanvas(canvas, runEngineState);
-          StateLogicService.setRunEngineState(runEngineState);
-
-          MainEditorSceneTool.createDefaultScene(
-            sandbox,
-            MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
-          );
-
-          /* let editEngineState = StateEngineService.unsafeGetState();
-             let editEngineState = ViewToolEngine.setCanvas(canvas, editEngineState);
-             StateLogicService.setRunEngineState(editEngineState); */
-
-          BuildComponentTool.buildCameraProjection()
-          |> ReactTestTool.createSnapshotAndMatch;
-        })
-      ); */
-
+    describe("test set currentSceneTreeNode to be camera", () =>
       describe("test logic", () => {
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
@@ -56,12 +34,10 @@ let _ =
                 GameObjectTool.getCurrentGameObjectPerspectiveCamera();
               let value = 10.1;
 
-              let nearDomIndex =
-                MainEditorCameraProjectionTool.getNearDomIndex();
-
-              MainEditorCameraProjectionTool.triggerPerspectiveCameraChangeAndBlurEvent(
-                nearDomIndex,
-                value,
+              MainEditorCameraProjectionTool.changeNearAndBlur(
+                ~cameraProjection=currentGameObjectPerspectiveCamera,
+                ~value,
+                (),
               );
 
               PerspectiveCameraProjectionEngineService.getPerspectiveCameraNear(
@@ -79,12 +55,10 @@ let _ =
                 GameObjectTool.getCurrentGameObjectPerspectiveCamera();
               let value = 120.1123;
 
-              let farDomIndex =
-                MainEditorCameraProjectionTool.getFarDomIndex();
-
-              MainEditorCameraProjectionTool.triggerPerspectiveCameraChangeAndBlurEvent(
-                farDomIndex,
-                value,
+              MainEditorCameraProjectionTool.changeFarAndBlur(
+                ~cameraProjection=currentGameObjectPerspectiveCamera,
+                ~value,
+                (),
               );
 
               PerspectiveCameraProjectionEngineService.getPerspectiveCameraFar(
@@ -96,41 +70,16 @@ let _ =
             })
           );
 
-          /* describe("test change CameraProjection aspect", () =>
-            test("test change aspect should set into engine", () => {
-              let currentGameObjectPerspectiveCamera =
-                GameObjectTool.getCurrentGameObjectPerspectiveCamera();
-              let value = 320.123;
-
-              let aspectDomIndex =
-                MainEditorCameraProjectionTool.getAspectDomIndex();
-
-              MainEditorCameraProjectionTool.triggerPerspectiveCameraChangeAndBlurEvent(
-                aspectDomIndex,
-                value,
-              );
-
-              PerspectiveCameraProjectionEngineService.getPerspectiveCameraAspect(
-                currentGameObjectPerspectiveCamera,
-              )
-              |> StateLogicService.getEngineStateToGetData
-              |. FloatService.truncateFloatValue(5)
-              |> expect == value;
-            })
-          ); */
-
           describe("test change CameraProjection fovy", () =>
             test("test change fovy should set into engine", () => {
               let currentGameObjectPerspectiveCamera =
                 GameObjectTool.getCurrentGameObjectPerspectiveCamera();
               let value = 32.123;
 
-              let fovyDomIndex =
-                MainEditorCameraProjectionTool.getFovyDomIndex();
-
-              MainEditorCameraProjectionTool.triggerPerspectiveCameraChangeAndBlurEvent(
-                fovyDomIndex,
-                value,
+              MainEditorCameraProjectionTool.changeFovyAndBlur(
+                ~cameraProjection=currentGameObjectPerspectiveCamera,
+                ~value,
+                (),
               );
 
               PerspectiveCameraProjectionEngineService.getPerspectiveCameraFovy(
@@ -142,6 +91,6 @@ let _ =
             })
           );
         });
-      });
-    });
+      })
+    );
   });

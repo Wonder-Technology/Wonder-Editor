@@ -9,11 +9,10 @@ open Sinon;
 let _ =
   describe("redo_undo: remove cameraGroup component", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     let _simulateRemoveSpecificComponent = () =>
-      SceneTreeNodeDomTool.OperateDefaultScene.getArcballCameraComponentFromCamera()
-      |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+      MainEditorInspectorRemoveComponentTool.removeArcballCameraControllerComponent();
+
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
@@ -26,9 +25,12 @@ let _ =
       )
       |> StateLogicService.getAndSetEditorState;
 
-      AddableComponentTool.addArcballCameraInCamera();
+      MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
     };
     let _afterEach = () => ();
+
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoOneStep(
       sandbox,

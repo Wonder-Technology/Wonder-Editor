@@ -50,7 +50,7 @@ let handleAssetsTexture = ({textures, sources}) =>
          |> OptionService.unsafeGet;
 
        let (editorState, newIndex) =
-         AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+         AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
        /* TODO fix? */
        let {base64, name} =
          sources

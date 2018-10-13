@@ -30,11 +30,11 @@ module CustomEventHandler = {
       )
     };
 
-  let handleSelfLogic = ((store, dispatchFunc), materialComponent, dragedId) =>
+  let handleSelfLogic = ((store, dispatchFunc), materialComponent, dragedNodeId) =>
     MaterialDragTextureEventHandlerUtils.handleSelfLogic(
       (store, dispatchFunc),
       materialComponent,
-      dragedId,
+      dragedNodeId,
       _handleSetMap,
     );
 };

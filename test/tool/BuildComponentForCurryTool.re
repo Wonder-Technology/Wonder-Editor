@@ -38,6 +38,7 @@ let buildGeometry = () =>
       dispatchFunc=(TestTool.getDispatch())
       currentSceneTreeNode=(GameObjectTool.unsafeGetCurrentSceneTreeNode())
       geometryComponent=(GameObjectTool.getCurrentGameObjectGeometry())
+      isShowGeometryGroup=false
     />,
   );
 let buildMeshRenderer = () =>

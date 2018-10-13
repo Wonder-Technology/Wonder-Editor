@@ -31,7 +31,7 @@ let _ =
       describe("test add light component", () => {
         describe("test snapshot", () =>
           test("test click add light component, should add into inspector", () => {
-            AddableComponentTool.addDirectionLightInBox();
+            MainEditorInspectorAddComponentTool.addDirectionLightComponent();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -52,7 +52,7 @@ let _ =
             |> expect == false
           );
           test("test click add light component, should add into engine", () => {
-            AddableComponentTool.addDirectionLightInBox();
+            MainEditorInspectorAddComponentTool.addDirectionLightComponent();
 
             LightEngineService.hasLightComponent(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -69,7 +69,7 @@ let _ =
               let gl = FakeGlToolEngine.getEngineStateGl();
               let glShaderSource = gl##shaderSource;
 
-              AddableComponentTool.addDirectionLightInBox();
+              MainEditorInspectorAddComponentTool.addDirectionLightComponent();
 
               GLSLToolEngine.contain(
                 GLSLToolEngine.getVsSource(glShaderSource),
@@ -84,7 +84,7 @@ let _ =
       describe("test add cameraGroup component", () => {
         describe("test snapshot", () =>
           test("test click add cameraGroup, should add into inspector", () => {
-            AddableComponentTool.addCameraGroupInBox();
+            MainEditorInspectorAddComponentTool.addCameraGroupComponent();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -106,7 +106,7 @@ let _ =
           );
           test(
             "test click add cameraGroup component, should add into engine", () => {
-            AddableComponentTool.addCameraGroupInBox();
+            MainEditorInspectorAddComponentTool.addCameraGroupComponent();
 
             CameraEngineService.hasCameraGroup(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -134,7 +134,7 @@ let _ =
       describe("test add geometry component", () => {
         describe("test snapshot", () =>
           test("test click add geometry, should add into inspector", () => {
-            AddableComponentTool.addGeometryInCamera();
+            MainEditorInspectorAddComponentTool.addGeometryComponent();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -154,7 +154,7 @@ let _ =
             |> expect == false
           );
           test("test click add geometry component, should add into engine", () => {
-            AddableComponentTool.addGeometryInCamera();
+            MainEditorInspectorAddComponentTool.addGeometryComponent();
 
             GameObjectComponentEngineService.hasGeometryComponent(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -167,7 +167,7 @@ let _ =
       describe("test add renderGroup component", () => {
         describe("test snapshot", () =>
           test("test click add renderGroup, should add into inspector", () => {
-            AddableComponentTool.addRenderGroupInCamera();
+            MainEditorInspectorAddComponentTool.addRenderGroupComponent();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -188,7 +188,7 @@ let _ =
           );
           test(
             "test click add renderGroup component, should add into engine", () => {
-            AddableComponentTool.addRenderGroupInCamera();
+            MainEditorInspectorAddComponentTool.addRenderGroupComponent();
 
             InspectorRenderGroupUtils.hasRenderGroupComponents(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -201,7 +201,7 @@ let _ =
       describe("test add arcballCamera component", () => {
         describe("test snapshot", () =>
           test("test click add arcballCamera, should add into inspector", () => {
-            AddableComponentTool.addArcballCameraInCamera();
+            MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -224,7 +224,7 @@ let _ =
           test(
             "test click add arcballCamera component, should add into engine",
             () => {
-            AddableComponentTool.addArcballCameraInCamera();
+            MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
 
             GameObjectComponentEngineService.hasArcballCameraControllerComponent(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),

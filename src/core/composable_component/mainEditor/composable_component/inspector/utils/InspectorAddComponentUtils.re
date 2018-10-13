@@ -31,7 +31,7 @@ let addComponentByType =
     let defaultCubeGeometry =
       editorState
       |> AssetGeometryDataEditorService.getGeometryData
-      |> (({defaultCubeGeometryIndex}) => defaultCubeGeometryIndex);
+      |> (({defaultCubeGeometryComponent}) => defaultCubeGeometryComponent);
 
     (editorState, engineState)
     |> GameObjectLogicService.addGeometry(

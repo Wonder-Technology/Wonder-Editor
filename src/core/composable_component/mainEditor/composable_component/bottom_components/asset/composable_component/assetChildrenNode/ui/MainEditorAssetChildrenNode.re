@@ -19,7 +19,7 @@ module Method = {
         assetTreeNodeChildrenArr,
       ) =>
     assetTreeNodeChildrenArr
-    |> Js.Array.map(({id as nodeId, type_}) =>
+    |> Js.Array.map(({nodeId, type_}) =>
          switch (type_) {
          | Folder =>
            let {name}: folderResultType =

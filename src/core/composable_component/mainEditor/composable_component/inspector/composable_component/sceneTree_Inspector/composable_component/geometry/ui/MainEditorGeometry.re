@@ -47,16 +47,19 @@ module Method = {
     GeometryEngineService.getAllGeometrys(engineState)
     |> Js.Array.filter(DefaultSceneUtils.isAssetGeometry);
 
+  let _getAllShowGeometrys = (gameObject, engineState) =>
+    _isGameObjectMaterialComponentHasMap(gameObject, engineState) ?
+      engineState
+      |> _getAllAssetGeometrys
+      |> Js.Array.filter(geometry =>
+           GeometryEngineService.hasGeometryTexCoords(geometry, engineState)
+         ) :
+      engineState |> _getAllAssetGeometrys;
+
   let showGeometryAssets = (send, currentSceneTreeNode, currentGeometry) => {
     let engineState = StateEngineService.unsafeGetState();
     let allGeometrys =
-      _isGameObjectMaterialComponentHasMap(currentSceneTreeNode, engineState) ?
-        engineState
-        |> _getAllAssetGeometrys
-        |> Js.Array.filter(geometry =>
-             GeometryEngineService.hasGeometryTexCoords(geometry, engineState)
-           ) :
-        engineState |> _getAllAssetGeometrys;
+      _getAllShowGeometrys(currentSceneTreeNode, engineState);
 
     allGeometrys
     |> Js.Array.map(geometry => {
@@ -152,11 +155,12 @@ let make =
       ~dispatchFunc,
       ~currentSceneTreeNode,
       ~geometryComponent,
+      ~isShowGeometryGroup,
       _children,
     ) => {
   ...component,
   initialState: () => {
-    isShowGeometryGroup: false,
+    isShowGeometryGroup,
     currentGeometry: geometryComponent,
   },
   reducer: reducer((store, dispatchFunc), currentSceneTreeNode),

@@ -10,28 +10,24 @@ let _ =
   describe("redo_undo: directionLight color", () => {
     let sandbox = getSandboxDefaultVal();
 
-    beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-
     let _changeColor = color => {
-      let component = BuildComponentForCurryTool.buildDirectionLight();
-
       let currentGameObjectDirectionLightComponent =
         GameObjectTool.getCurrentGameObjectDirectionLightComponent();
 
-      BaseEventTool.triggerComponentEvent(
-        component,
-        PickColorEventTool.triggerShowColorPickEvent,
-      );
+      let sourceColor =
+        MainEditorDirectionLightTool.getColor(
+          currentGameObjectDirectionLightComponent,
+        );
 
-      PickColorEventTool.triggerChangeDirectionLightColor(
+      MainEditorDirectionLightTool.changeColor(
         currentGameObjectDirectionLightComponent,
         color,
       );
 
-      BaseEventTool.triggerComponentEvent(
-        component,
-        PickColorEventTool.triggerCloseColorPickEvent,
+      MainEditorDirectionLightTool.closeColorPicker(
+        ~light=currentGameObjectDirectionLightComponent,
+        ~color=sourceColor,
+        (),
       );
     };
 
@@ -77,6 +73,9 @@ let _ =
       );
       DirectorToolEngine.prepareAndInitAllEnginState();
     };
+
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,

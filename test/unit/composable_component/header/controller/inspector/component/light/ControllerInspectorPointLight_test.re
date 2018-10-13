@@ -9,6 +9,7 @@ open Sinon;
 let _ =
   describe("controller inspector point light", () => {
     let sandbox = getSandboxDefaultVal();
+
     let _prepareDefaultSceneAndInit = () => {
       MainEditorSceneTool.createDefaultScene(sandbox, () =>
         MainEditorSceneTool.getDirectionLightInDefaultScene
@@ -35,6 +36,7 @@ let _ =
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     };
+
     beforeEach(() => {
       sandbox := createSandbox();
       CurrentSelectSourceEditorService.setCurrentSelectSource(
@@ -51,12 +53,19 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test set value into engineState", () => {
-      test("test change color", () => {
+      let _getPointLightIntensity = (component, engineState) =>
+        engineState
+        |> PointLightEngineService.getPointLightIntensity(component)
+        |. FloatService.truncateFloatValue(5);
+
+      beforeEach(() => {
         _prepareWithJob();
         _prepareDefaultSceneAndInit();
 
         MainEditorLightTool.setLightTypeToBePointLight();
+      });
 
+      test("test change color", () => {
         let currentGameObjectPointLightComponent =
           GameObjectTool.getCurrentGameObjectPointLightComponent();
         let newColor = {
@@ -68,7 +77,7 @@ let _ =
           },
         };
 
-        PickColorEventTool.triggerChangePointLightColor(
+        MainEditorPointLightTool.changeColor(
           currentGameObjectPointLightComponent,
           newColor,
         );
@@ -82,34 +91,21 @@ let _ =
       });
 
       test("test change intensity", () => {
-        let _getPointLightIntensity = (component, engineState) =>
-          engineState
-          |> PointLightEngineService.getPointLightIntensity(component)
-          |. FloatService.truncateFloatValue(5);
-
         let currentGameObjectPointLightComponent =
           GameObjectTool.getCurrentGameObjectPointLightComponent();
-        let component =
-          BuildComponentTool.buildPointLight(
-            currentGameObjectPointLightComponent,
-          );
         let value = 10.1;
-        let intensityDomIndex = MainEditorLightTool.getIntensityDomIndex();
 
-        BaseEventTool.triggerComponentEvent(
-          component,
-          MainEditorLightTool.triggerLightComponentChangeEvent(
-            intensityDomIndex,
-            value,
-          ),
+        MainEditorPointLightTool.changeIntensityAndBlur(
+          ~light=currentGameObjectPointLightComponent,
+          ~sourceValue=
+            PointLightEngineService.getPointLightIntensity(
+              currentGameObjectPointLightComponent,
+              StateEngineService.unsafeGetState(),
+            ),
+          ~targetValue=value,
+          (),
         );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          MainEditorLightTool.triggerLightComponentBlurEvent(
-            intensityDomIndex,
-            value,
-          ),
-        );
+
         StateEngineService.unsafeGetState()
         |> _getPointLightIntensity(currentGameObjectPointLightComponent)
         |> expect == value;

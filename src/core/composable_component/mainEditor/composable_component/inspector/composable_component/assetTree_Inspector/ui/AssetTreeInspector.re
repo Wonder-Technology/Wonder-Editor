@@ -22,6 +22,13 @@ module Method = {
 
   let renameAssetTreeNode = AssetRenameNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
+  let _isFolderNameDisabled = nodeId =>
+    AssetUtils.isIdEqual(
+      AssetTreeRootEditorService.getRootTreeNodeId
+      |> StateLogicService.getEditorState,
+      nodeId,
+    );
+
   let buildFolderComponent = (state, send, currentNodeId, folderNodeMap) =>
     <div className="">
       <h1> (DomHelper.textEl("Folder")) </h1>
@@ -31,13 +38,7 @@ module Method = {
         className="input-component float-input"
         _type="text"
         value=state.inputValue
-        disabled=(
-          AssetUtils.isIdEqual(
-            AssetTreeRootEditorService.getRootTreeNodeId
-            |> StateLogicService.getEditorState,
-            currentNodeId,
-          )
-        )
+        disabled=(_isFolderNameDisabled(currentNodeId))
         onChange=(_e => send(change(_e)))
         onBlur=(_e => send(Blur))
       />
@@ -78,7 +79,10 @@ module Method = {
       name=state.inputValue
       textureComponent
       renameFunc=(
-        renameAssetTreeNode((store, dispatchFunc), (currentNodeId, nodeType))
+        renameAssetTreeNode(
+          (store, dispatchFunc),
+          (currentNodeId, nodeType),
+        )
       )
     />;
   };

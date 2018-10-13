@@ -109,6 +109,7 @@ let _buildThreeLayerSceneGraph = (componentData, editorState, engineState) => {
     |> GameObjectUtils.addChild(box1, box4)
     |> GameObjectUtils.addChild(scene, box2)
     |> GameObjectUtils.addChild(scene, box3),
+    (scene, (box1, box4), box2, box3),
   );
 };
 
@@ -124,7 +125,7 @@ let buildThreeLayerSceneGraphToEngine = sandbox => {
   let defaultLightMaterial =
     AssetMaterialDataEditorService.unsafeGetDefaultLightMaterial(editorState);
 
-  let (editorState, engineState) =
+  let (editorState, engineState, layerGameObjectData) =
     engineState
     |> _buildThreeLayerSceneGraph(
          (cubeGeometry, defaultLightMaterial),
@@ -136,6 +137,8 @@ let buildThreeLayerSceneGraphToEngine = sandbox => {
   |> StateEngineService.setState;
 
   editorState |> StateEditorService.setState |> ignore;
+
+  layerGameObjectData;
 };
 
 let _buildFourLayerSceneGraph = (componentData, editorState, engineState) => {
@@ -149,16 +152,13 @@ let _buildFourLayerSceneGraph = (componentData, editorState, engineState) => {
   let (editorState, engineState, box4) =
     PrimitiveEngineService.createBox(componentData, editorState, engineState);
   (
-    box1,
-    box2,
-    box3,
-    box4,
     editorState,
     engineState
     |> GameObjectUtils.addChild(scene, box1)
     |> GameObjectUtils.addChild(box1, box3)
     |> GameObjectUtils.addChild(box3, box4)
     |> GameObjectUtils.addChild(scene, box2),
+    (scene, (box1, box3, box4), box2),
   );
 };
 
@@ -174,7 +174,7 @@ let buildFourLayerSceneGraphToEngine = sandbox => {
   let defaultLightMaterial =
     AssetMaterialDataEditorService.unsafeGetDefaultLightMaterial(editorState);
 
-  let (box1, box2, box3, box4, editorState, engineState) =
+  let (editorState, engineState, layerGameObjectData) =
     engineState
     |> _buildFourLayerSceneGraph(
          (cubeGeometry, defaultLightMaterial),
@@ -187,33 +187,5 @@ let buildFourLayerSceneGraphToEngine = sandbox => {
 
   editorState |> StateEditorService.setState |> ignore;
 
-  (box1, box2, box3, box4);
-};
-
-let clearCurrentGameObjectAndSetTreeSpecificGameObject = clickTreeNodeIndex => {
-  SceneEditorService.clearCurrentSceneTreeNode
-  |> StateLogicService.getAndSetEditorState;
-
-  let component =
-    BuildComponentTool.buildSceneTree(
-      TestTool.buildAppStateSceneGraphFromEngine(),
-    );
-
-  BaseEventTool.triggerComponentEvent(
-    component,
-    SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex),
-  );
-};
-
-let buildFourLayerSceneAndGetBox = sandbox => {
-  let (box1, box2, box3, box4) = buildFourLayerSceneGraphToEngine(sandbox);
-
-  let firstLayerFirstCubeDomIndex =
-    SceneTreeNodeDomTool.OperateFourLayer.getFirstLayerFirstCubeDomIndex();
-
-  clearCurrentGameObjectAndSetTreeSpecificGameObject(
-    firstLayerFirstCubeDomIndex,
-  );
-
-  (box1, box2, box3, box4);
+  layerGameObjectData;
 };

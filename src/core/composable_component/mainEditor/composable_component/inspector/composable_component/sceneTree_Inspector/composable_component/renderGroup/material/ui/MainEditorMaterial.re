@@ -198,7 +198,6 @@ let render =
       )
     </div>
     <div className="material-value">
-      (Method.buildShieldComponent(state.currentMaterial, state.materialType))
       <div className="">
         <Select
           label="shader"
@@ -221,6 +220,7 @@ let render =
           )
         )
       </div>
+      (Method.buildShieldComponent(state.currentMaterial, state.materialType))
     </div>
   </article>;
 

@@ -50,7 +50,7 @@ let _ =
           BuildComponentForCurryTool.buildLightMaterial,
           (
             GameObjectTool.getCurrentGameObjectLightMaterial,
-            PickColorEventTool.triggerChangeLightMaterialColor,
+            MainEditorLightMaterialTool.changeColor,
             LightMaterialEngineService.getLightMaterialDiffuseColor,
           ),
         );
@@ -92,7 +92,8 @@ let _ =
         describe("test drag texture to set gameObject material map", () => {
           describe("test snapshot", () => {
             test("test no drag", () => {
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
+              let assetTreeData =
+                MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
 
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
@@ -104,14 +105,23 @@ let _ =
             test(
               "test drag texture asset into gameObject material map zone, the zone should show the texture source",
               () => {
-                let assetTreeDomRecord =
-                  MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+                let assetTreeData =
+                  MainEditorAssetTreeTool.BuildAssetTree.Texture.buildTwoTextureAssetTree();
 
-                assetTreeDomRecord
-                |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-                |> MainEditorMaterialTool.triggerFileDragStartEvent;
-
-                MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
+                MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                  ~textureNodeId=
+                    MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                      assetTreeData,
+                    ),
+                  (),
+                );
+                MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                  ~textureNodeId=
+                    MainEditorAssetTreeTool.BuildAssetTree.Texture.getSecondTextureNodeId(
+                      assetTreeData,
+                    ),
+                  (),
+                );
 
                 BuildComponentTool.buildInspectorComponent(
                   TestTool.buildEmptyAppState(),
@@ -124,24 +134,23 @@ let _ =
             test(
               "test set map when already has map, material's map should be the new one",
               () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-              let firstTextureDomIndex =
-                assetTreeDomRecord
-                |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex;
-              let secondTextureDomIndex =
-                assetTreeDomRecord
-                |> MainEditorAssetNodeTool.OperateTwoLayer.getSecondTextureDomIndex;
+              let assetTreeData =
+                MainEditorAssetTreeTool.BuildAssetTree.Texture.buildTwoTextureAssetTree();
 
-              MainEditorMaterialTool.triggerFileDragStartEvent(
-                firstTextureDomIndex,
+              MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                ~textureNodeId=
+                  MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                    assetTreeData,
+                  ),
+                (),
               );
-              MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
-
-              MainEditorMaterialTool.triggerFileDragStartEvent(
-                secondTextureDomIndex,
+              MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                ~textureNodeId=
+                  MainEditorAssetTreeTool.BuildAssetTree.Texture.getSecondTextureNodeId(
+                    assetTreeData,
+                  ),
+                (),
               );
-              MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
 
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
@@ -159,37 +168,22 @@ let _ =
                |},
               () => {
                 let _prepare = testFunc => {
-                  let assetTreeDomRecord =
-                    MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+                  let assetTreeData =
+                    MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
 
-                  MainEditorAssetTool.fileLoad(
-                    TestTool.getDispatch(),
-                    BaseEventTool.buildFileEvent(),
-                  )
-                  |> Js.Promise.then_(() => testFunc(assetTreeDomRecord));
+                  MainEditorAssetUploadTool.loadOneTexture()
+                  |> Js.Promise.then_(uploadedTextureNodeId =>
+                       testFunc(uploadedTextureNodeId, assetTreeData)
+                     );
                 };
 
-                let _exec =
-                    (
-                      ~assetTreeDomRecord,
-                      ~sceneTreeInspectorDomIndex=None,
-                      (),
-                    ) => {
-                  assetTreeDomRecord
-                  |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-                  |> MainEditorMaterialTool.triggerFileDragStartEvent;
+                let _exec = uploadedTextureNodeId =>
+                  MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                    ~textureNodeId=uploadedTextureNodeId,
+                    (),
+                  );
 
-                  switch (sceneTreeInspectorDomIndex) {
-                  | None =>
-                    MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial()
-                  | Some(sceneTreeInspectorDomIndex) =>
-                    MainEditorMaterialTool.triggerDragTextureToGameObjectMaterialWithSceneTreeInspectorDomIndex(
-                      sceneTreeInspectorDomIndex,
-                    )
-                  };
-                };
-
-                let _getMap = () => {
+                let _hasMap = () => {
                   let engineState = StateEngineService.unsafeGetState();
                   let currentGameObject =
                     SceneEditorService.unsafeGetCurrentSceneTreeNode
@@ -199,10 +193,9 @@ let _ =
                   |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                        currentGameObject,
                      )
-                  |. LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
+                  |. LightMaterialEngineService.hasLightMaterialDiffuseMap(
                        engineState,
-                     )
-                  |> TypeArrayType.convertUint32ToInt;
+                     );
                 };
 
                 beforeEach(() => {
@@ -211,40 +204,28 @@ let _ =
                 });
 
                 testPromise("should set texture to be material's map", () =>
-                  _prepare(assetTreeDomRecord => {
-                    _exec(~assetTreeDomRecord, ());
+                  _prepare((uploadedTextureNodeId, assetTreeData) => {
+                    _exec(uploadedTextureNodeId);
 
-                    _getMap()
-                    |>
-                    expect == MainEditorAssetNodeTool.OperateTwoLayer.getUploadedTextureIndex(
-                                assetTreeDomRecord,
-                              )
-                    |> Js.Promise.resolve;
+                    _hasMap() |> expect == true |> Js.Promise.resolve;
                   })
                 );
                 testPromise("if gameObject has no geometry, still can set", () =>
-                  _prepare(assetTreeDomRecord => {
-                    SceneTreeNodeDomTool.OperateDefaultScene.getGeometryComponentFromBox()
-                    |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+                  _prepare((uploadedTextureNodeId, assetTreeData) => {
+                    /* SceneTreeNodeDomTool.OperateDefaultScene.getGeometryComponentFromBox()
+                       |> OperateComponentEventTool.removeComponentFromCurrentGameObject; */
 
-                    _exec(
-                      ~assetTreeDomRecord,
-                      ~sceneTreeInspectorDomIndex=Some(2),
-                      (),
-                    );
+                    MainEditorInspectorRemoveComponentTool.removeGeometryComponent();
 
-                    _getMap()
-                    |>
-                    expect == MainEditorAssetNodeTool.OperateTwoLayer.getUploadedTextureIndex(
-                                assetTreeDomRecord,
-                              )
-                    |> Js.Promise.resolve;
+                    _exec(uploadedTextureNodeId);
+
+                    _hasMap() |> expect == true |> Js.Promise.resolve;
                   })
                 );
                 testPromise(
                   "if gameObject->geometry has no texCoords, warn and can't set",
                   () =>
-                  _prepare(assetTreeDomRecord => {
+                  _prepare((uploadedTextureNodeId, assetTreeData) => {
                     let warn =
                       createMethodStubWithJsObjSandbox(
                         sandbox,
@@ -268,7 +249,7 @@ let _ =
                          );
                     engineState |> StateEngineService.setState |> ignore;
 
-                    _exec(~assetTreeDomRecord, ());
+                    _exec(uploadedTextureNodeId);
 
                     let engineMaterialMap =
                       _getGameObjectMaterialMap(
@@ -307,10 +288,12 @@ let _ =
                     "b": 232,
                   },
                 };
-                PickColorEventTool.triggerChangeLightMaterialColor(
+
+                MainEditorLightMaterialTool.changeColor(
                   currentGameObjectMaterial,
                   newColor,
                 );
+
                 let oldColor =
                   LightMaterialEngineService.getLightMaterialDiffuseColor(
                     currentGameObjectMaterial,
@@ -318,14 +301,23 @@ let _ =
                   |> StateLogicService.getEngineStateToGetData
                   |> Color.getHexString;
 
-                let assetTreeDomRecord =
-                  MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+                let assetTreeData =
+                  MainEditorAssetTreeTool.BuildAssetTree.Texture.buildTwoTextureAssetTree();
 
-                assetTreeDomRecord
-                |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-                |> MainEditorMaterialTool.triggerFileDragStartEvent;
-
-                MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
+                MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                  ~textureNodeId=
+                    MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                      assetTreeData,
+                    ),
+                  (),
+                );
+                MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                  ~textureNodeId=
+                    MainEditorAssetTreeTool.BuildAssetTree.Texture.getSecondTextureNodeId(
+                      assetTreeData,
+                    ),
+                  (),
+                );
 
                 let currentGameObjectMaterial =
                   GameObjectTool.getCurrentGameObjectLightMaterial();
@@ -345,7 +337,16 @@ let _ =
         describe("test set remove texture", () => {
           describe("test snapshop", () => {
             test("test if not set map,should change nothing", () => {
-              MainEditorMaterialTool.triggerTextureRemoveClickEvent();
+              let assetTreeData =
+                MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
+
+              MainEditorAssetHeaderOperateNodeTool.removeTextureNode(
+                ~textureNodeId=
+                  MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                    assetTreeData,
+                  ),
+                (),
+              );
 
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
@@ -355,14 +356,22 @@ let _ =
             });
 
             test("test if have already set map,should remove map", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+              let assetTreeData =
+                MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
 
-              assetTreeDomRecord
-              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-              |> MainEditorMaterialTool.triggerFileDragStartEvent;
-              MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
-              MainEditorMaterialTool.triggerTextureRemoveClickEvent();
+              let textureNodeId =
+                MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                  assetTreeData,
+                );
+
+              MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                ~textureNodeId,
+                (),
+              );
+              MainEditorAssetHeaderOperateNodeTool.removeTextureNode(
+                ~textureNodeId,
+                (),
+              );
 
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
@@ -372,16 +381,24 @@ let _ =
             });
           });
 
-          describe("test logic", () => {
+          describe("test logic", () =>
             test("should remove material's map", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+              let assetTreeData =
+                MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
 
-              assetTreeDomRecord
-              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-              |> MainEditorMaterialTool.triggerFileDragStartEvent;
-              MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
-              MainEditorMaterialTool.triggerTextureRemoveClickEvent();
+              let textureNodeId =
+                MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                  assetTreeData,
+                );
+
+              MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                ~textureNodeId,
+                (),
+              );
+              MainEditorAssetHeaderOperateNodeTool.removeTextureNode(
+                ~textureNodeId,
+                (),
+              );
 
               let currentGameObject =
                 SceneEditorService.unsafeGetCurrentSceneTreeNode
@@ -394,8 +411,8 @@ let _ =
                 );
 
               engineMaterialMap |> expect == None;
-            });
-          });
+            })
+          );
         });
       });
 
@@ -419,13 +436,15 @@ let _ =
               );
             let value = 1.1;
 
-            BaseEventTool.triggerComponentEvent(
-              component,
-              MainEditorMaterialTool.triggerShininessChangeEvent(value),
+            MainEditorLightMaterialTool.changeShininess(
+              ~material=currentGameObjectMaterial,
+              ~value,
+              (),
             );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              MainEditorMaterialTool.triggerShininessBlurEvent(value),
+            MainEditorLightMaterialTool.blurShininess(
+              ~material=currentGameObjectMaterial,
+              ~value,
+              (),
             );
 
             LightMaterialEngineService.getLightMaterialShininess(

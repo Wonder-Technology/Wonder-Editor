@@ -10,31 +10,24 @@ let _ =
   describe("redo_undo: pointLight color", () => {
     let sandbox = getSandboxDefaultVal();
 
-    beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-
     let _changeColor = color => {
-      let component =
-        BuildComponentTool.buildPointLight(
-          GameObjectTool.getCurrentGameObjectPointLightComponent(),
-        );
-
       let currentGameObjectPointLightComponent =
         GameObjectTool.getCurrentGameObjectPointLightComponent();
 
-      BaseEventTool.triggerComponentEvent(
-        component,
-        PickColorEventTool.triggerShowColorPickEvent,
-      );
+      let sourceColor =
+        MainEditorPointLightTool.getColor(
+          currentGameObjectPointLightComponent,
+        );
 
-      PickColorEventTool.triggerChangePointLightColor(
+      MainEditorPointLightTool.changeColor(
         currentGameObjectPointLightComponent,
         color,
       );
 
-      BaseEventTool.triggerComponentEvent(
-        component,
-        PickColorEventTool.triggerCloseColorPickEvent,
+      MainEditorPointLightTool.closeColorPicker(
+        ~light=currentGameObjectPointLightComponent,
+        ~color=sourceColor,
+        (),
       );
     };
 
@@ -82,6 +75,9 @@ let _ =
       );
       DirectorToolEngine.prepareAndInitAllEnginState();
     };
+
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,

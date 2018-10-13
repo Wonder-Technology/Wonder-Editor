@@ -188,7 +188,7 @@ let _ =
           StateEditorService.getState(),
         )
         |>
-        expect == {defaultCubeGeometryIndex: 1, defaultSphereGeometryIndex: 2}
+        expect == {defaultCubeGeometryComponent: 1, defaultSphereGeometryComponent: 2}
       )
     );
 

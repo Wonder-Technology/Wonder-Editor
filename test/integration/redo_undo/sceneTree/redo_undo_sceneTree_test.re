@@ -9,8 +9,6 @@ open Sinon;
 let _ =
   describe("redo_undo: sceneTree", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     let _simulateTwiceDragEvent = () => {
       let firstCameraDomIndex =
@@ -20,40 +18,25 @@ let _ =
       let secondCubeDomIndex =
         SceneTreeNodeDomTool.OperateDefaultScene.getSecondCubeDomIndex();
 
-      let component =
-        BuildComponentTool.buildSceneTree(
-          TestTool.buildAppStateSceneGraphFromEngine(),
-        );
-      BaseEventTool.triggerComponentEvent(
-        component,
-        SceneTreeEventTool.triggerDragStart(secondCubeDomIndex),
-      );
-      BaseEventTool.triggerComponentEvent(
-        component,
-        SceneTreeEventTool.triggerDragEnter(firstCameraDomIndex),
-      );
-      BaseEventTool.triggerComponentEvent(
-        component,
-        SceneTreeEventTool.triggerDragDrop(firstCameraDomIndex),
+      MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
+        ~sourceGameObject=
+          MainEditorSceneTool.getSecondBox(
+            StateEngineService.unsafeGetState(),
+          ),
+        ~targetGameObject=MainEditorSceneTool.getSceneFirstCamera(),
+        (),
       );
 
-      let component2 =
-        BuildComponentTool.buildSceneTree(
-          TestTool.buildAppStateSceneGraphFromEngine(),
-        );
-      BaseEventTool.triggerComponentEvent(
-        component2,
-        SceneTreeEventTool.triggerDragStart(firstCubeDomIndex),
-      );
-      BaseEventTool.triggerComponentEvent(
-        component2,
-        SceneTreeEventTool.triggerDragEnter(firstCameraDomIndex),
-      );
-      BaseEventTool.triggerComponentEvent(
-        component2,
-        SceneTreeEventTool.triggerDragDrop(firstCameraDomIndex),
+      MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
+        ~sourceGameObject=
+          MainEditorSceneTool.getFirstBox(
+            StateEngineService.unsafeGetState(),
+          ),
+        ~targetGameObject=MainEditorSceneTool.getSceneFirstCamera(),
+        (),
       );
     };
+
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
@@ -61,6 +44,9 @@ let _ =
         MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
       );
     };
+
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,
@@ -71,28 +57,13 @@ let _ =
 
     describe("fix bug", () => {
       let execChangeMaterialColorWork = (currentGameObjectMaterial, newColor) =>
-        PickColorEventTool.triggerChangeLightMaterialColor(
+        MainEditorLightMaterialTool.changeColor(
           currentGameObjectMaterial,
           newColor,
         );
 
-      let execChangeTransformWork = () => {
-        let currentGameObjectTransform =
-          GameObjectTool.getCurrentSceneTreeNodeTransform();
-        let transformComponent =
-          BuildComponentTool.buildMainEditorTransformComponent(
-            TestTool.buildEmptyAppState(),
-            currentGameObjectTransform,
-          );
-        BaseEventTool.triggerComponentEvent(
-          transformComponent,
-          TransformEventTool.triggerChangePositionX("11.25"),
-        );
-        BaseEventTool.triggerComponentEvent(
-          transformComponent,
-          TransformEventTool.triggerBlurPositionX("11.25"),
-        );
-      };
+      let execChangeTransformWork = () =>
+        MainEditorTransformTool.changePositionXAndBlur(~value=11.25, ());
 
       beforeEach(() => {
         MainEditorSceneTool.initState(~sandbox, ());
@@ -122,7 +93,7 @@ let _ =
           execChangeMaterialColorWork(currentGameObjectMaterial, newColor);
           execChangeTransformWork();
 
-          StateHistoryToolEditor.undo();
+          RedoUndoTool.undoHistoryState();
 
           LightMaterialEngineService.getLightMaterialDiffuseColor(
             currentGameObjectMaterial,

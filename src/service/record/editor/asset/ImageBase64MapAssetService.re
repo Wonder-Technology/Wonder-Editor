@@ -7,6 +7,10 @@ let setImageBase64Map = (imageBase64Map, assetRecord) => {
   imageBase64Map,
 };
 
+let unsafeGetResult = (imageId, assetRecord) =>
+  assetRecord.imageBase64Map
+  |> WonderCommonlib.SparseMapService.unsafeGet(imageId);
+
 let setResult = (imageId, imageResult, assetRecord) => {
   ...assetRecord,
   imageBase64Map:

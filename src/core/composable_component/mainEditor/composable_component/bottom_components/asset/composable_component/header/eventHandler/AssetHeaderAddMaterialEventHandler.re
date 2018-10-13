@@ -14,7 +14,7 @@ module CustomEventHandler = {
     let newMaterialType = AssetMaterialDataType.LightMaterial;
 
     let (editorState, nodeId) =
-      AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+      AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
 
     let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 

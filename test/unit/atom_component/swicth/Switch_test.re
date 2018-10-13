@@ -9,59 +9,62 @@ open Sinon;
 let _ =
   describe("Swicth", () => {
     let sandbox = getSandboxDefaultVal();
-    let _triggerClickSwitch = domChildren => {
-      let btn = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
-      BaseEventTool.triggerClickEvent(btn);
-    };
-    let buildSwitch = () =>
+
+    let buildSwitch = isOpen =>
       ReactTestRenderer.create(
         <Switch
           openText="run"
-          openFunc=(() => WonderLog.Log.log("start run") |> ignore)
+          openFunc=(() => ())
           closeText="stop"
-          closeFunc=(() => WonderLog.Log.log("start stop") |> ignore)
-          isOpen=false
+          closeFunc=(() => ())
+          isOpen
         />,
       );
+
     beforeEach(() => {
       sandbox := createSandbox();
       WonderLog.Wonder_Console.makeObjInToWindow();
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     describe("test workflow", () => {
       describe("test initial:is close", () => {
         test("show openText", () =>
-          buildSwitch() |> ReactTestTool.createSnapshotAndMatch
+          buildSwitch(false) |> ReactTestTool.createSnapshotAndMatch
         );
-        test("click button should execute openFunc", () => {
-          let log =
-            createMethodStubWithJsObjSandbox(
-              sandbox,
-              ConsoleTool.console,
-              "log",
-            );
-          let component = buildSwitch();
-          BaseEventTool.triggerComponentEvent(component, _triggerClickSwitch);
-          ConsoleTool.getMessage(log) |> expect |> toContain("start run");
+        test("click button should execute onOpen func", () => {
+          open Switch;
+
+          let state = {isOpen: false};
+
+          let onCloseFunc = createEmptyStubWithJsObjSandbox(sandbox);
+          let onOpenFunc = createEmptyStubWithJsObjSandbox(sandbox);
+
+          let state =
+            Switch.reducer(onOpenFunc, onCloseFunc, ChangeState, state)
+            |> ReactTool.getUpdateState;
+
+          (onOpenFunc |> getCallCount, state.isOpen) |> expect == (1, true);
         });
       });
-      describe("click button to open", () => {
-        test("show closeText", () => {
-          let component = buildSwitch();
-          BaseEventTool.triggerComponentEvent(component, _triggerClickSwitch);
-          component |> ReactTestTool.createSnapshotAndMatch;
-        });
-        test("click button should execute closeFunc", () => {
-          let component = buildSwitch();
-          BaseEventTool.triggerComponentEvent(component, _triggerClickSwitch);
-          let log =
-            createMethodStubWithJsObjSandbox(
-              sandbox,
-              ConsoleTool.console,
-              "log",
-            );
-          BaseEventTool.triggerComponentEvent(component, _triggerClickSwitch);
-          ConsoleTool.getMessage(log) |> expect |> toContain("start stop");
+
+      describe("test initial:is open", () => {
+        test("show openText", () =>
+          buildSwitch(true) |> ReactTestTool.createSnapshotAndMatch
+        );
+        test("click button should execute onClose func", () => {
+          open Switch;
+
+          let state = {isOpen: true};
+
+          let onCloseFunc = createEmptyStubWithJsObjSandbox(sandbox);
+          let onOpenFunc = createEmptyStubWithJsObjSandbox(sandbox);
+
+          let state =
+            Switch.reducer(onOpenFunc, onCloseFunc, ChangeState, state)
+            |> ReactTool.getUpdateState;
+
+          (onCloseFunc |> getCallCount, state.isOpen) |> expect == (1, false);
         });
       });
     });

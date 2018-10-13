@@ -1,0 +1,626 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AssetTreeInspector prepare currentSelectSource test component snapshot else test set folder to be current node 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <div
+      className=""
+    >
+      <h1>
+        Folder
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        disabled={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="newFolder"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`AssetTreeInspector prepare currentSelectSource test component snapshot else test set texture to be current node 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <article
+      className="wonder-texture-assetTree"
+    >
+      <div
+        className=""
+      >
+        <h1>
+          Texture
+        </h1>
+        <hr />
+        <div
+          className=""
+        >
+          <article
+            className="wonder-string-input"
+          >
+            <span
+              className="component-label"
+            >
+              name : 
+            </span>
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="texture1"
+            />
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              WrapS Mode
+            </span>
+            <select
+              onChange={[Function]}
+              value="0"
+            >
+              <option
+                value="2"
+              >
+                Repeat
+              </option>
+              <option
+                value="1"
+              >
+                Mirrored_repeat
+              </option>
+              <option
+                value="0"
+              >
+                Clamp_to_edge
+              </option>
+            </select>
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              WrapT Mode
+            </span>
+            <select
+              onChange={[Function]}
+              value="0"
+            >
+              <option
+                value="2"
+              >
+                Repeat
+              </option>
+              <option
+                value="1"
+              >
+                Mirrored_repeat
+              </option>
+              <option
+                value="0"
+              >
+                Clamp_to_edge
+              </option>
+            </select>
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              Mag Filter Mode
+            </span>
+            <select
+              onChange={[Function]}
+              value="1"
+            >
+              <option
+                value="0"
+              >
+                Nearest
+              </option>
+              <option
+                value="1"
+              >
+                Linear
+              </option>
+              <option
+                value="2"
+              >
+                Nearest_mipmap_nearest
+              </option>
+              <option
+                value="3"
+              >
+                Linear_mipmap_nearest
+              </option>
+              <option
+                value="4"
+              >
+                Nearest_mipmap_linear
+              </option>
+              <option
+                value="5"
+              >
+                Linear_mipmap_linear
+              </option>
+            </select>
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              Min Filter Mode
+            </span>
+            <select
+              onChange={[Function]}
+              value="0"
+            >
+              <option
+                value="0"
+              >
+                Nearest
+              </option>
+              <option
+                value="1"
+              >
+                Linear
+              </option>
+              <option
+                value="2"
+              >
+                Nearest_mipmap_nearest
+              </option>
+              <option
+                value="3"
+              >
+                Linear_mipmap_nearest
+              </option>
+              <option
+                value="4"
+              >
+                Nearest_mipmap_linear
+              </option>
+              <option
+                value="5"
+              >
+                Linear_mipmap_linear
+              </option>
+            </select>
+          </article>
+        </div>
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`AssetTreeInspector prepare currentSelectSource test component snapshot if hasn't current node, show nothing 1`] = `
+<article
+  className="wonder-inspector-component"
+/>
+`;
+
+exports[`AssetTreeInspector prepare currentSelectSource test rename folder node test rename asset tree children node if node has ext name if rename success, the newName should include ext name 1`] = `
+<article
+  className="wonder-asset-component"
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="wonder-asset-header"
+    >
+      <div
+        className="header-item"
+      >
+        <button
+          onClick={[Function]}
+        >
+          addFolder
+        </button>
+      </div>
+      <div
+        className="header-item"
+      >
+        <button
+          disabled={false}
+          onClick={[Function]}
+        >
+          remove
+        </button>
+      </div>
+      <div
+        className="header-item"
+      >
+        <input
+          className="file-upload"
+          multiple={true}
+          onChange={[Function]}
+          type="file"
+        />
+      </div>
+      <div
+        className=""
+      >
+        <button
+          onClick={[Function]}
+        >
+          addMaterial
+        </button>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-assetTree"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li
+          onClick={[Function]}
+          style={
+            Object {
+              "border": "1px solid red",
+            }
+          }
+        >
+          <div
+            className="item-ground"
+            draggable={true}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+          />
+          <img
+            src="./public/img/12.jpg"
+          />
+          Assets
+        </li>
+        <ul
+          className="wonder-tree-node"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragStart={[Function]}
+        >
+          <li
+            onClick={[Function]}
+            style={
+              Object {
+                "background": "red",
+              }
+            }
+          >
+            <div
+              className="item-ground"
+              draggable={true}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
+            />
+            <img
+              src="./public/img/12.jpg"
+            />
+            folder.aaa
+          </li>
+        </ul>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="wonder-asset-assetChildren"
+  />
+</article>
+`;
+
+exports[`AssetTreeInspector prepare currentSelectSource test rename folder node test rename asset tree children node if node has ext name rename input should show it 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <div
+      className=""
+    >
+      <h1>
+        Folder
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        disabled={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="folder1.aaa"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`AssetTreeInspector prepare currentSelectSource test rename folder node test rename to specific name 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <div
+      className=""
+    >
+      <h1>
+        Folder
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        disabled={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="mickeyFolder"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`AssetTreeInspector prepare currentSelectSource test rename texture node test rename asset tree children node if node has ext name rename input shouldn't show it 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <article
+      className="wonder-texture-assetTree"
+    >
+      <div
+        className=""
+      >
+        <h1>
+          Texture
+        </h1>
+        <hr />
+        <div
+          className=""
+        >
+          <article
+            className="wonder-string-input"
+          >
+            <span
+              className="component-label"
+            >
+              name : 
+            </span>
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="texture1"
+            />
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              WrapS Mode
+            </span>
+            <select
+              onChange={[Function]}
+              value="0"
+            >
+              <option
+                value="2"
+              >
+                Repeat
+              </option>
+              <option
+                value="1"
+              >
+                Mirrored_repeat
+              </option>
+              <option
+                value="0"
+              >
+                Clamp_to_edge
+              </option>
+            </select>
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              WrapT Mode
+            </span>
+            <select
+              onChange={[Function]}
+              value="0"
+            >
+              <option
+                value="2"
+              >
+                Repeat
+              </option>
+              <option
+                value="1"
+              >
+                Mirrored_repeat
+              </option>
+              <option
+                value="0"
+              >
+                Clamp_to_edge
+              </option>
+            </select>
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              Mag Filter Mode
+            </span>
+            <select
+              onChange={[Function]}
+              value="1"
+            >
+              <option
+                value="0"
+              >
+                Nearest
+              </option>
+              <option
+                value="1"
+              >
+                Linear
+              </option>
+              <option
+                value="2"
+              >
+                Nearest_mipmap_nearest
+              </option>
+              <option
+                value="3"
+              >
+                Linear_mipmap_nearest
+              </option>
+              <option
+                value="4"
+              >
+                Nearest_mipmap_linear
+              </option>
+              <option
+                value="5"
+              >
+                Linear_mipmap_linear
+              </option>
+            </select>
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              Min Filter Mode
+            </span>
+            <select
+              onChange={[Function]}
+              value="0"
+            >
+              <option
+                value="0"
+              >
+                Nearest
+              </option>
+              <option
+                value="1"
+              >
+                Linear
+              </option>
+              <option
+                value="2"
+              >
+                Nearest_mipmap_nearest
+              </option>
+              <option
+                value="3"
+              >
+                Linear_mipmap_nearest
+              </option>
+              <option
+                value="4"
+              >
+                Nearest_mipmap_linear
+              </option>
+              <option
+                value="5"
+              >
+                Linear_mipmap_linear
+              </option>
+            </select>
+          </article>
+        </div>
+      </div>
+    </article>
+  </article>
+</article>
+`;

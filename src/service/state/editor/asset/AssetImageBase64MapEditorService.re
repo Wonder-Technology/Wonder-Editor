@@ -12,6 +12,10 @@ let setImageBase64Map = (imageBase64Map, editorState) => {
     |> ImageBase64MapAssetService.setImageBase64Map(imageBase64Map),
 };
 
+let unsafeGetResult = (imageId, editorState) =>
+  editorState.assetRecord
+  |> ImageBase64MapAssetService.unsafeGetResult(imageId);
+
 let setResult = (imageId, imageResult, editorState) => {
   ...editorState,
   assetRecord:

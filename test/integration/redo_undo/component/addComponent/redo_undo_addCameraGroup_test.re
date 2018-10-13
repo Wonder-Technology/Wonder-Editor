@@ -9,10 +9,9 @@ open Sinon;
 let _ =
   describe("redo_undo: add cameraGroup component", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     let _simulateAddSpecificComponent = () =>
-      AddableComponentTool.addCameraGroupInBox();
+      MainEditorInspectorAddComponentTool.addCameraGroupComponent();
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
@@ -26,6 +25,9 @@ let _ =
       |> StateLogicService.getAndSetEditorState;
     };
     let _afterEach = () => ();
+
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoOneStep(
       sandbox,

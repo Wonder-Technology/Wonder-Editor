@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`redo_undo: cameraView set currentCamera prepare first step: set currentSceneTreeNode to be camera test redo operate test redo one step undo step which from first to zero, redo step which from zero to first 1`] = `
+<article
+  className="wonder-camera-view"
+>
+  <article
+    className="wonder-select"
+  >
+    <span
+      className=""
+    >
+      type : 
+    </span>
+    <select
+      onChange={[Function]}
+      value="0"
+    >
+      <option
+        value="0"
+      >
+        basic_cameraView
+      </option>
+    </select>
+  </article>
+  <div
+    className=""
+  >
+    <div
+      className=""
+    >
+      currentCamera : 
+    </div>
+    <input
+      defaultChecked={true}
+      disabled={true}
+      onClick={[Function]}
+      style={
+        Object {
+          "height": "35px",
+          "width": "35px",
+        }
+      }
+      type="checkbox"
+    />
+  </div>
+</article>
+`;
+
+exports[`redo_undo: cameraView set currentCamera prepare first step: set currentSceneTreeNode to be camera test undo operate test not undo 1`] = `
+<article
+  className="wonder-camera-view"
+>
+  <article
+    className="wonder-select"
+  >
+    <span
+      className=""
+    >
+      type : 
+    </span>
+    <select
+      onChange={[Function]}
+      value="0"
+    >
+      <option
+        value="0"
+      >
+        basic_cameraView
+      </option>
+    </select>
+  </article>
+  <div
+    className=""
+  >
+    <div
+      className=""
+    >
+      currentCamera : 
+    </div>
+    <input
+      defaultChecked={true}
+      disabled={true}
+      onClick={[Function]}
+      style={
+        Object {
+          "height": "35px",
+          "width": "35px",
+        }
+      }
+      type="checkbox"
+    />
+  </div>
+</article>
+`;
+
+exports[`redo_undo: cameraView set currentCamera prepare first step: set currentSceneTreeNode to be camera test undo operate test undo one step undo step which from first to zero 1`] = `
+<article
+  className="wonder-camera-view"
+>
+  <article
+    className="wonder-select"
+  >
+    <span
+      className=""
+    >
+      type : 
+    </span>
+    <select
+      onChange={[Function]}
+      value="0"
+    >
+      <option
+        value="0"
+      >
+        basic_cameraView
+      </option>
+    </select>
+  </article>
+  <div
+    className=""
+  >
+    <div
+      className=""
+    >
+      currentCamera : 
+    </div>
+    <input
+      defaultChecked={true}
+      disabled={true}
+      onClick={[Function]}
+      style={
+        Object {
+          "height": "35px",
+          "width": "35px",
+        }
+      }
+      type="checkbox"
+    />
+  </div>
+</article>
+`;

@@ -43,7 +43,7 @@ module Method = {
         event,
       ) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
-    let startId = DragUtils.getDragedUid(e);
+    let startId = DragUtils.getDragedId(e);
 
     DragEventBaseUtils.isTriggerDragDrop(
       rootUid,

@@ -27,9 +27,9 @@ let _ =
         let root =
           editorState |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot;
 
-        let {id} as textureNode = root.children[0];
+        let {nodeId} as textureNode = root.children[0];
 
-        id;
+        nodeId;
       };
 
       beforeEach(() => {
@@ -45,19 +45,15 @@ let _ =
       });
 
       testPromise("set source name", () => {
-        MainEditorAssetTool.buildEmptyAssetTreeRoot() |> ignore;
+        MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
         let imgName = "1.png";
 
-        MainEditorAssetTool.fileLoad(
-          TestTool.getDispatch(),
-          BaseEventTool.buildOneTextureFileEvent(~imgName, ()),
-        )
-        |> then_(_ => {
+        MainEditorAssetUploadTool.loadOneTexture(~imgName, ())
+        |> then_(uploadedTextureNodeId => {
              let editorState = StateEditorService.getState();
-             let nodeId = _getUploadedTextureNodeId(editorState);
              let textureComponent =
                MainEditorAssetTextureNodeTool.getTextureComponent(
-                 nodeId,
+                 uploadedTextureNodeId,
                  editorState,
                );
              let engineState = StateEngineService.unsafeGetState();

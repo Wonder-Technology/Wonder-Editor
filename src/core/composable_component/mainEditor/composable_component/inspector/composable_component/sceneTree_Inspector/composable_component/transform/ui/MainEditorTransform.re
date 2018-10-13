@@ -1,5 +1,3 @@
-
-
 module Method = {
   let blurPositionEvent =
       ((store, dispatchFunc), transformComponent, (x, y, z)) => {

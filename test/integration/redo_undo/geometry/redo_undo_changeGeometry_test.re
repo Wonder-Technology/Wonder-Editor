@@ -10,7 +10,23 @@ let _ =
   describe("redo_undo: change geometry", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
+    let _getFromArray = (array, index) =>
+      ArrayService.unsafeGetNth(index, array);
+
+    let _simulateChangeGeometry = () =>
+      MainEditorGeometryTool.changeGeometry(
+        ~sourceGeometry=GameObjectTool.getCurrentGameObjectGeometry(),
+        ~targetGeometry=
+          MainEditorGeometryTool.getDefaultSphereGeometryComponent(),
+        (),
+      );
+
+    let _beforeEach = () =>
+      MainEditorSceneTool.createDefaultScene(
+        sandbox,
+        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+      );
+    let _afterEach = () => ();
 
     beforeEach(() => {
       sandbox := createSandbox();
@@ -21,31 +37,6 @@ let _ =
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-    let _simulateChangeGeometry = () => {
-      let component =
-        BuildComponentTool.buildGeometry(
-          TestTool.buildEmptyAppState(),
-          GameObjectTool.getCurrentGameObjectGeometry(),
-        );
-
-      BaseEventTool.triggerComponentEvent(
-        component,
-        MainEditorGeometryTool.triggerClickShowGeometryGroup,
-      );
-
-      BaseEventTool.triggerComponentEvent(
-        component,
-        MainEditorGeometryTool.getSphereDomIndex()
-        |> MainEditorGeometryTool.triggerClickSpecificGeometry,
-      );
-    };
-
-    let _beforeEach = () =>
-      MainEditorSceneTool.createDefaultScene(
-        sandbox,
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
-      );
-    let _afterEach = () => ();
 
     RedoUndoTool.testRedoUndoOneStep(
       sandbox,

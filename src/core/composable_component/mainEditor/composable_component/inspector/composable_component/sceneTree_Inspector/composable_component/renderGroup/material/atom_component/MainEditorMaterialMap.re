@@ -53,7 +53,7 @@ module Method = {
   let handleDrop = (isWidgetFunc, isTypeValidFunc, event) => {
     let startId =
       ReactEventType.convertReactMouseEventToJsEvent(event)
-      |> DragUtils.getDragedUid;
+      |> DragUtils.getDragedId;
 
     _isTriggerAction(isWidgetFunc, isTypeValidFunc) ?
       DragDrop(startId) : DragLeave;

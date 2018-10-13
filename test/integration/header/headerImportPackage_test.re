@@ -22,7 +22,8 @@ let _ =
     describe("test import package->assets", () =>
       describe("test import texture assets", () => {
         let _buildAssetTreeRoot = () => {
-          open MainEditorAssetTool;
+          open MainEditorAssetTreeTool;
+          open MainEditorAssetTreeNodeTool;
 
           let (rootId, editorState) =
             StateEditorService.getState() |> _increaseIndex;
@@ -33,7 +34,7 @@ let _ =
 
           editorState
           |> AssetTreeRootEditorService.setAssetTreeRoot({
-               id: rootId,
+               nodeId: rootId,
                type_: Folder,
                children: [||],
              })
@@ -46,11 +47,11 @@ let _ =
           |> addTextureIntoNodeMap(id1, rootId, "texture1")
           |> addTextureIntoNodeMap(id2, rootId, "texture2")
           |> AssetTreeRootEditorService.setAssetTreeRoot({
-               id: rootId,
+               nodeId: rootId,
                type_: Folder,
                children: [|
-                 {id: id1, type_: Texture, children: [||]},
-                 {id: id2, type_: Texture, children: [||]},
+                 {nodeId: id1, type_: Texture, children: [||]},
+                 {nodeId: id2, type_: Texture, children: [||]},
                |],
              })
           |> StateEditorService.setState;
@@ -88,12 +89,12 @@ let _ =
                 |>
                 expect == [|
                             {
-                              id: textureAssetId1,
+                              nodeId: textureAssetId1,
                               type_: AssetNodeType.Texture,
                               children: [||],
                             },
                             {
-                              id: textureAssetId2,
+                              nodeId: textureAssetId2,
                               type_: AssetNodeType.Texture,
                               children: [||],
                             },

@@ -6,7 +6,8 @@ module CustomEventHandler = {
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
     (
       editorState => {
-        let (editorState, newIndex) = AssetIdUtils.getAssetId(editorState);
+        let (editorState, newIndex) =
+          AssetIdUtils.generateAssetId(editorState);
         let engineState = StateEngineService.unsafeGetState();
 
         let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;

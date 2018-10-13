@@ -35,16 +35,16 @@ let handleDragOver = event => {
   DomHelper.preventDefault(e);
 };
 
-let handleDrop = (uid, handleWidgetFunc, handleRelationErrorFunc, event) => {
+let handleDrop = (id, handleWidgetFunc, handleRelationErrorFunc, event) => {
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);
-  let startId = DragUtils.getDragedUid(e);
+  let startId = DragUtils.getDragedId(e);
   DragEventBaseUtils.isTriggerDragDrop(
-    uid,
+    id,
     startId,
     handleWidgetFunc,
     handleRelationErrorFunc,
   ) ?
-    DragDrop(uid, startId) : DragLeave;
+    DragDrop(id, startId) : DragLeave;
 };
 
 let handleDrageEnd = _event => {

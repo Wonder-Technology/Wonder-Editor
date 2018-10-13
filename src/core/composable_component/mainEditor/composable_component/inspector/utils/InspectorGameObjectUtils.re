@@ -51,13 +51,14 @@ let _buildGeometryFunc = ((store, dispatchFunc), gameObject) =>
       GameObjectComponentEngineService.unsafeGetGeometryComponent(gameObject)
       |> StateLogicService.getEngineStateToGetData
     )
+    isShowGeometryGroup=false
   />;
 
 let _buildCameraGroupFunc = ((store, dispatchFunc), gameObject) =>
   <MainEditorCameraGroup store dispatchFunc />;
 
 let _buildArcballCamera = ((store, dispatchFunc), gameObject) =>
-  <MainEditorArcballCamera
+  <MainEditorArcballCameraController
     store
     dispatchFunc
     arcballCameraController=(

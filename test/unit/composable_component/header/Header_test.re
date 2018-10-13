@@ -13,6 +13,7 @@ open Js.Promise;
 let _ =
   describe("Header", () => {
     let sandbox = getSandboxDefaultVal();
+
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
@@ -48,15 +49,20 @@ let _ =
             MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
           )
         );
+
         describe("test add emptyGameObject", () =>
           test(
             "the added emptyGameObject should only has transform component", () => {
             let engineState = StateEngineService.unsafeGetState();
 
-            HeaderTool.triggerAddEmptyGameObject();
+            let newGameObject = GameObjectTool.getNewGameObjectUid();
 
-            SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
-            |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+            HeaderTool.addEmptyGameObject();
+
+            MainEditorSceneTreeTool.Select.selectGameObject(
+              ~gameObject=newGameObject,
+              (),
+            );
 
             (
               engineState
@@ -88,14 +94,9 @@ let _ =
               "error",
             );
           GameObjectTool.clearCurrentSceneTreeNode();
-          let component =
-            BuildComponentTool.buildHeader(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-            );
-          BaseEventTool.triggerComponentEvent(
-            component,
-            OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-          );
+
+          HeaderTool.disposeCurrentSceneTreeNode();
+
           ConsoleTool.getMessage(error)
           |> expect
           |> toContain("current gameObject should exist, but actual is None");
@@ -107,10 +108,9 @@ let _ =
               BuildComponentTool.buildHeader(
                 TestTool.buildAppStateSceneGraphFromEngine(),
               );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-            );
+
+            HeaderTool.disposeCurrentSceneTreeNode();
+
             GameObjectTool.getCurrentSceneTreeNode()
             |> Js.Option.isNone
             |> expect == true;
@@ -123,19 +123,13 @@ let _ =
           "remove gameObject has children;
             the children should be removed together;",
           () => {
-            let (box1, box2, box3, box4) =
-              SceneTreeTool.buildFourLayerSceneAndGetBox(sandbox);
+            let (scene, (box1, box3, box4), box2) =
+              SceneTreeTool.buildFourLayerSceneGraphToEngine(sandbox);
+            GameObjectTool.setCurrentSceneTreeNode(box1);
 
             let engineState = StateEngineService.unsafeGetState();
 
-            let component =
-              BuildComponentTool.buildHeader(
-                TestTool.buildAppStateSceneGraphFromEngine(),
-              );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-            );
+            HeaderTool.disposeCurrentSceneTreeNode();
 
             (
               engineState |> GameObjectTool.isAlive(box1),
@@ -157,23 +151,7 @@ let _ =
           MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
         );
       });
-      describe("test snapshot", () =>
-        test("show color picker component for change color", () => {
-          BuildCanvasTool.buildFakeCanvas(sandbox);
 
-          let component =
-            BuildComponentTool.buildHeader(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-            );
-
-          BaseEventTool.triggerComponentEvent(
-            component,
-            OperateComponentEventTool.triggerShowColorPickEvent,
-          );
-
-          component |> ReactTestTool.createSnapshotAndMatch;
-        })
-      );
       test("test change color should set into engine", () => {
         let newColor = {
           "hex": "#7df1e8",
@@ -184,7 +162,7 @@ let _ =
           },
         };
 
-        Header.Method.changeColor(newColor);
+        HeaderTool.changeColor(newColor);
 
         SceneEngineService.getAmbientLightColor
         |> StateLogicService.getEngineStateToGetData
@@ -192,5 +170,4 @@ let _ =
         |> expect == newColor##hex;
       });
     });
-
   });

@@ -1,47 +1,86 @@
-let _getFromArray = (array, index) => ArrayService.(unsafeGetNth(index, array));
+let changeNear = (cameraProjection, value) =>
+  MainEditorCameraProjection.Method.changeNear(cameraProjection, value);
 
-let getNearDomIndex = () => 1;
+let blurNear =
+    (
+      ~cameraProjection,
+      ~value,
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorCameraProjection.Method.blurNearEvent(
+    (store, dispatchFunc),
+    cameraProjection,
+    value,
+  );
 
-let getFarDomIndex = () => 2;
-
-/* let getAspectDomIndex = () => 3; */
-
-let getFovyDomIndex = () => 3;
-
-let _getComponentInputByIndex = (index, domChildren) => {
-  let div = _getFromArray(domChildren, index);
-  let article = _getFromArray(div##children, 0);
-  let input = WonderCommonlib.ArrayService.unsafeGet(article##children, 1);
-
-  input;
+let changeNearAndBlur =
+    (
+      ~cameraProjection,
+      ~value,
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) => {
+  MainEditorCameraProjection.Method.changeNear(cameraProjection, value);
+  blurNear(~store, ~dispatchFunc, ~cameraProjection, ~value, ());
 };
 
-let triggerPerspectiveComponentChangeEvent = (index, value, domChildren) => {
-  let input = _getComponentInputByIndex(index, domChildren);
+let changeFar = (cameraProjection, value) =>
+  MainEditorCameraProjection.Method.changeFar(cameraProjection, value);
 
-  BaseEventTool.triggerChangeEvent(
-    input,
-    BaseEventTool.buildFormEvent(value |> string_of_float),
+let blurFar =
+    (
+      ~cameraProjection,
+      ~value,
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorCameraProjection.Method.blurFarEvent(
+    (store, dispatchFunc),
+    cameraProjection,
+    value,
   );
+
+let changeFarAndBlur =
+    (
+      ~cameraProjection,
+      ~value,
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) => {
+  MainEditorCameraProjection.Method.changeFar(cameraProjection, value);
+  blurFar(~store, ~dispatchFunc, ~cameraProjection, ~value, ());
 };
 
-let triggerPerspectiveComponentBlurEvent = (index, value, domChildren) => {
-  let input = _getComponentInputByIndex(index, domChildren);
+let changeFovy = (cameraProjection, value) =>
+  MainEditorCameraProjection.Method.changeFovy(cameraProjection, value);
 
-  BaseEventTool.triggerBlurEvent(
-    input,
-    BaseEventTool.buildFormEvent(value |> string_of_float),
+let blurFovy =
+    (
+      ~cameraProjection,
+      ~value,
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorCameraProjection.Method.blurFovyEvent(
+    (store, dispatchFunc),
+    cameraProjection,
+    value,
   );
-};
 
-let triggerPerspectiveCameraChangeAndBlurEvent = (domIndex, value) => {
-  let component = BuildComponentTool.buildCameraProjection();
-  BaseEventTool.triggerComponentEvent(
-    component,
-    triggerPerspectiveComponentChangeEvent(domIndex, value),
-  );
-  BaseEventTool.triggerComponentEvent(
-    component,
-    triggerPerspectiveComponentBlurEvent(domIndex, value),
-  );
+let changeFovyAndBlur =
+    (
+      ~cameraProjection,
+      ~value,
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) => {
+  MainEditorCameraProjection.Method.changeFovy(cameraProjection, value);
+  blurFovy(~store, ~dispatchFunc, ~cameraProjection, ~value, ());
 };

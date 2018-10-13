@@ -12,11 +12,14 @@ let setFolderNodeMap = (folderNodeMap, editorState) => {
     |> FolderNodeMapAssetService.setFolderNodeMap(folderNodeMap),
 };
 
-let setResult = (index, result, editorState) => {
+let unsafeGetResult = (nodeId, editorState) =>
+  editorState.assetRecord |> FolderNodeMapAssetService.unsafeGetResult(nodeId);
+
+let setResult = (nodeId, result, editorState) => {
   ...editorState,
   assetRecord:
     editorState.assetRecord
-    |> FolderNodeMapAssetService.setResult(index, result),
+    |> FolderNodeMapAssetService.setResult(nodeId, result),
 };
 
 let getFolderName = (currentNodeId, folderNodeMap: array(folderResultType)) =>
@@ -24,7 +27,8 @@ let getFolderName = (currentNodeId, folderNodeMap: array(folderResultType)) =>
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
   |> (({name}) => name);
 
-let getFolderParentId = (currentNodeId, folderNodeMap: array(folderResultType)) =>
+let getFolderParentId =
+    (currentNodeId, folderNodeMap: array(folderResultType)) =>
   folderNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
   |> (({parentNodeId}) => parentNodeId);
@@ -36,7 +40,8 @@ let renameFolderNodeResult = (name, folderNodeResult: folderResultType) => {
   name,
 };
 
-let setFolderNodeResultParent = (parentNodeId, folderNodeResult: folderResultType) => {
+let setFolderNodeResultParent =
+    (parentNodeId, folderNodeResult: folderResultType) => {
   ...folderNodeResult,
   parentNodeId,
 };

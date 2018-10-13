@@ -1,16 +1,57 @@
-let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
-let triggerRenameChangeEvent = (value, domChildren) => {
-  let article = _getFromArray(domChildren, 0);
-  let div = _getFromArray(article##children, 0);
-  let input = _getFromArray(div##children, 3);
-  BaseEventTool.triggerChangeEvent(
-    input,
-    BaseEventTool.buildFormEvent(value),
+module Rename = {
+  let _renameAssetNode = ((store, dispatchFunc), (nodeId, nodeType), name) =>
+    AssetTreeInspector.Method.renameAssetTreeNode(
+      (store, dispatchFunc),
+      (nodeId, nodeType),
+      name,
+    );
+
+  let renameAssetTextureNode =
+      (
+        ~store=TestTool.buildEmptyAppState(),
+        ~dispatchFunc=TestTool.getDispatch(),
+        ~nodeId,
+        ~name,
+        (),
+      ) =>
+    _renameAssetNode(
+      (store, dispatchFunc),
+      (nodeId, AssetNodeType.Texture),
+      name,
+    );
+
+  let renameAssetFolderNode =
+      (
+        ~store=TestTool.buildEmptyAppState(),
+        ~dispatchFunc=TestTool.getDispatch(),
+        ~nodeId,
+        ~name,
+        (),
+      ) =>
+    _renameAssetNode(
+      (store, dispatchFunc),
+      (nodeId, AssetNodeType.Folder),
+      name,
+    );
+
+  let isFolderNameDisabled = nodeId =>
+    AssetTreeInspector.Method._isFolderNameDisabled(nodeId);
+};
+
+let reducer =
+    (
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~nodeId,
+      ~nodeType,
+      ~action,
+      ~state,
+      (),
+    ) =>
+  AssetTreeInspector.reducer(
+    (store, dispatchFunc),
+    nodeId,
+    nodeType,
+    action,
+    state,
   );
-};
-let triggerRenameBlurEvent = (value, domChildren) => {
-  let article = _getFromArray(domChildren, 0);
-  let div = _getFromArray(article##children, 0);
-  let input = _getFromArray(div##children, 3);
-  BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value));
-};

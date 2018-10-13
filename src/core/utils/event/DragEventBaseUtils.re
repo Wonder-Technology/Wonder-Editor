@@ -5,7 +5,7 @@ let dragStart = (uid, widget, dragImg, event) => {
   e##dataTransfer##setDragImage(dragImg |> DomHelperType.convertDomToJsObj, 0, 0)
   |> ignore;
   DragUtils.setDataTransferEffectIsMove(e);
-  DragUtils.setDragedUid(uid, e);
+  DragUtils.setDragedId(uid, e);
   CurrentDragSourceEditorService.setCurrentDragSource((widget, uid))
   |> StateLogicService.getAndSetEditorState;
 };

@@ -32,7 +32,7 @@ let rebuildRootAssetTree = (parentNodeId, pathName, editorState) =>
   switch (AssetTreeRootEditorService.getAssetTreeRoot(editorState)) {
   | None =>
     let (editorState, rootIndex) =
-      AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+      AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
     let editorState =
       rootIndex
       |. AssetTreeEditorService.buildAssetTreeNodeByIndex(Folder)
@@ -57,7 +57,7 @@ let rebuildFolder = (parentNodeId, pathName, (editorState, engineState)) => {
 
   resultArr |> Js.Array.length === 0 ?
     {
-      let (editorState, newIndex) = AssetIdUtils.getAssetId(editorState);
+      let (editorState, newIndex) = AssetIdUtils.generateAssetId(editorState);
 
       let editorState =
         editorState |> addFolderIntoNodeMap(newIndex, pathName, parentNodeId);

@@ -9,7 +9,7 @@ open Js.Promise;
 let rec _getAssetAtomNodeArr = (assetRootArr, assetAtomNodeArr) =>
   assetRootArr
   |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. assetAtomNodeArr, {id, type_, children} as assetTreeNode) => {
+       (. assetAtomNodeArr, {nodeId, type_, children} as assetTreeNode) => {
          let assetAtomNodeArr =
            children |> Js.Array.length == 0 ?
              assetAtomNodeArr |> ArrayService.push(assetTreeNode) :
@@ -149,18 +149,18 @@ let _writeAllFolderAndWDBToPackage = (jsZip, (editorState, engineState)) =>
     [||],
   )
   |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. jsZip, {id, type_} as assetAtomNode) =>
+       (. jsZip, {nodeId, type_} as assetAtomNode) =>
          _isAssetNodeNeedHandleSeparate(type_) ?
            jsZip :
            {
              let pathName =
                _getAssetNodePathFromAssets(
-                 AssetNodeUtils.getAssetNodeParentId(type_, id, editorState),
+                 AssetNodeUtils.getAssetNodeParentId(type_, nodeId, editorState),
                  ArrayService.create()
                  |> ArrayService.push(
                       AssetNodeUtils.getAssetNodeTotalName(
                         type_,
-                        id,
+                        nodeId,
                         (editorState, engineState),
                       ),
                     ),
@@ -168,7 +168,7 @@ let _writeAllFolderAndWDBToPackage = (jsZip, (editorState, engineState)) =>
                );
 
              _writeFolderAndWDBToPackage(
-               (type_, id),
+               (type_, nodeId),
                pathName,
                jsZip,
                editorState,

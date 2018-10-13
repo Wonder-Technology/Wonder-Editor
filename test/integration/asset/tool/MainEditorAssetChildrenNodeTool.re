@@ -1,8 +1,7 @@
-let clickAssetChildrenNodeToSetCurrentNode = index => {
-  let component = BuildComponentTool.buildAssetComponent();
+let selectTextureNode =
+    (~nodeId, ~event=Obj.magic(-1), ~dispatchFunc=TestTool.getDispatch(), ()) =>
+  FileBox.Method.onSelect(nodeId, AssetNodeType.Texture, dispatchFunc, event);
 
-  BaseEventTool.triggerComponentEvent(
-    component,
-    AssetTreeEventTool.clickAssetTreeChildrenNode(index),
-  );
-};
+let selectFolderNode =
+    (~nodeId, ~event=Obj.magic(-1), ~dispatchFunc=TestTool.getDispatch(), ()) =>
+  FileBox.Method.onSelect(nodeId, AssetNodeType.Folder, dispatchFunc, event);

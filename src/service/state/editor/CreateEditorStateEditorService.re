@@ -20,8 +20,8 @@ let create = () => {
     wdbNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     materialNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     geometryData: {
-      defaultCubeGeometryIndex: (-1),
-      defaultSphereGeometryIndex: (-1),
+      defaultCubeGeometryComponent: (-1),
+      defaultSphereGeometryComponent: (-1),
     },
     materialData: {
       defaultBasicMaterialData: None,

@@ -8,6 +8,10 @@ let setFolderNodeMap = (folderNodeMap, assetRecord) => {
   folderNodeMap,
 };
 
+let unsafeGetResult = (index, assetRecord) =>
+  assetRecord.folderNodeMap
+  |> WonderCommonlib.SparseMapService.unsafeGet(index);
+
 let setResult = (index, result, assetRecord) => {
   ...assetRecord,
   folderNodeMap:

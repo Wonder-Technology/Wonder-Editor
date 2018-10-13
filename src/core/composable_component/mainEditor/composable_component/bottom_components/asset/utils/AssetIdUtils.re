@@ -1,4 +1,4 @@
-let getAssetId = editorState =>
+let generateAssetId = editorState =>
   switch (
     editorState
     |> AssetRemovedAssetIdArrayEditorService.getFirstIdIfHasUsableAssetId

@@ -14,6 +14,7 @@ let _ =
     "mainEditor sceneTree specific function",
     () => {
       let sandbox = getSandboxDefaultVal();
+
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -21,6 +22,7 @@ let _ =
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
       describe(
         "test getDragedSceneGraphData function",
         () => {
@@ -29,6 +31,7 @@ let _ =
             () => {
               beforeEach(() => TestTool.closeContractCheck());
               afterEach(() => TestTool.openContractCheck());
+
               test(
                 "test haven't children case",
                 () => {

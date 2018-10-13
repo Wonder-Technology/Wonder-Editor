@@ -1,4 +1,4 @@
 type geometryData = {
-  defaultCubeGeometryIndex: int,
-  defaultSphereGeometryIndex: int,
+  defaultCubeGeometryComponent: Wonderjs.GeometryType.geometry,
+  defaultSphereGeometryComponent: Wonderjs.GeometryType.geometry,
 };

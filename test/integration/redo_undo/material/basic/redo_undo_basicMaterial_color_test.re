@@ -10,29 +10,19 @@ let _ =
   describe("redo_undo: basicMaterial color", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
+    let _getFromArray = (array, index) =>
+      ArrayService.unsafeGetNth(index, array);
 
-    beforeEach(() => {
-      sandbox := createSandbox();
-      MainEditorSceneTool.initState(~sandbox, ());
-      EventListenerTool.buildFakeDom()
-      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-    });
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-    let _changeColorAndPushUndoStack = (component, materialComponent, color) => {
-      BaseEventTool.triggerComponentEvent(
-        component,
-        PickColorEventTool.triggerShowColorPickEvent,
-      );
+    let _changeColorAndPushUndoStack = (materialComponent, color) => {
+      let sourceColor =
+        MainEditorBasicMaterialTool.getColor(materialComponent);
 
-      PickColorEventTool.triggerChangeBasicMaterialColor(
-        materialComponent,
-        color,
-      );
+      MainEditorBasicMaterialTool.changeColor(materialComponent, color);
 
-      BaseEventTool.triggerComponentEvent(
-        component,
-        PickColorEventTool.triggerCloseColorPickEvent,
+      MainEditorBasicMaterialTool.closeColorPicker(
+        ~material=materialComponent,
+        ~color=sourceColor,
+        (),
       );
     };
 
@@ -42,8 +32,6 @@ let _ =
       let currentGameObjectMaterial =
         GameObjectTool.getCurrentGameObjectBasicMaterial();
 
-      let component =
-        BuildComponentTool.buildBasicMaterial(currentGameObjectMaterial);
       let color1 = {
         "hex": "#7df1e8",
         "rgb": {
@@ -61,17 +49,9 @@ let _ =
         },
       };
 
-      _changeColorAndPushUndoStack(
-        component,
-        currentGameObjectMaterial,
-        color1,
-      );
+      _changeColorAndPushUndoStack(currentGameObjectMaterial, color1);
 
-      _changeColorAndPushUndoStack(
-        component,
-        currentGameObjectMaterial,
-        color2,
-      );
+      _changeColorAndPushUndoStack(currentGameObjectMaterial, color2);
     };
 
     let _beforeEach = () => {
@@ -89,8 +69,6 @@ let _ =
       |> StateLogicService.getAndSetEditorState;
 
       MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
-
-      MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
     };
 
     let _afterEach = () =>
@@ -99,6 +77,14 @@ let _ =
       |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
       |> StateEditorService.setState
       |> ignore;
+
+    beforeEach(() => {
+      sandbox := createSandbox();
+      MainEditorSceneTool.initState(~sandbox, ());
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+    });
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,

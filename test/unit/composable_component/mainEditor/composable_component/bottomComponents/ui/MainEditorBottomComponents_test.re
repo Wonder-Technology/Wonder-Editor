@@ -17,6 +17,7 @@ open MainEditorBottomComponents;
 let _ =
   describe("MainEditorBottomComponents", () => {
     let sandbox = getSandboxDefaultVal();
+
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
@@ -25,6 +26,7 @@ let _ =
       ();
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     describe("test should update", () => {
       test("if reatinedProps updateTypeArr include All, should update", () =>
         shouldUpdate(

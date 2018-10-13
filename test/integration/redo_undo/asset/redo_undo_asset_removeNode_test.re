@@ -9,30 +9,25 @@ open Sinon;
 let _ =
   describe("redo_undo: asset remove node", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     let _simulateAddFolderTwice = () => {
-      let assetTreeDomRecord =
-        MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-      let component = BuildComponentTool.buildAssetComponent();
+      let assetTreeData =
+        MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildTwoFolderAssetTree();
 
-      assetTreeDomRecord
-      |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-      |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
-
-      BaseEventTool.triggerComponentEvent(
-        component,
-        AssetTreeEventTool.triggerRemoveNodeClick,
+      MainEditorAssetHeaderOperateNodeTool.removeFolderNode(
+        ~folderNodeId=
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId(
+            assetTreeData,
+          ),
+        (),
       );
 
-      assetTreeDomRecord
-      |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-      |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(component);
-
-      BaseEventTool.triggerComponentEvent(
-        component,
-        AssetTreeEventTool.triggerRemoveNodeClick,
+      MainEditorAssetHeaderOperateNodeTool.removeFolderNode(
+        ~folderNodeId=
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getSecondFolderNodeId(
+            assetTreeData,
+          ),
+        (),
       );
     };
 
@@ -47,14 +42,10 @@ let _ =
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     };
 
-    let _afterEach = () => {
-      restoreSandbox(refJsObjToSandbox(sandbox^));
-      StateEditorService.getState()
-      |> AssetCurrentNodeDataEditorService.clearCurrentNodeData
-      |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-      |> StateEditorService.setState
-      |> ignore;
-    };
+    let _afterEach = () => restoreSandbox(refJsObjToSandbox(sandbox^));
+
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,

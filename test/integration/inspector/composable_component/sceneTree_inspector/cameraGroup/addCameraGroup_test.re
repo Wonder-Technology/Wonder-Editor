@@ -27,7 +27,7 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     test("shouldn't active basicCameraView", () => {
-      AddableComponentTool.addCameraGroupInBox();
+      MainEditorInspectorAddComponentTool.addCameraGroupComponent();
 
       GameObjectTool.unsafeGetCurrentSceneTreeNode()
       |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
