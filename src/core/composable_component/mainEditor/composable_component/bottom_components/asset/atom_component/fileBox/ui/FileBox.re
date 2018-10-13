@@ -32,17 +32,19 @@ let render =
       (dragImg, imgSrc, fileId, fileType, fileName, widge, isSelected),
       _self,
     ) => {
-  let className = "wonder-asset-fileBox " ++ (isSelected ? "item-active" : "");
+  let className = "item-text " ++ (isSelected ? "item-active" : "");
   <article
-    className
+    className="wonder-asset-fileBox "
     onClick=(
       _event => Method.onSelect(fileId, fileType, dispatchFunc, _event)
     )>
-    <img
-      src=imgSrc
-      onDragStart=(DragEventBaseUtils.dragStart(fileId, widge, dragImg))
-    />
-    <span className="item-text"> (DomHelper.textEl(fileName)) </span>
+    <div className="box-image">
+      <img
+        src=imgSrc
+        onDragStart=(DragEventBaseUtils.dragStart(fileId, widge, dragImg))
+      />
+    </div>
+    <div className> <span> (DomHelper.textEl(fileName)) </span> </div>
   </article>;
 };
 

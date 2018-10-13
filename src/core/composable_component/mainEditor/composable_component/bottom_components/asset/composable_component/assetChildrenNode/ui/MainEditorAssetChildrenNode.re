@@ -32,7 +32,7 @@ module Method = {
              store
              dispatchFunc
              dragImg
-             imgSrc="./public/img/11.jpg"
+             imgSrc="./public/img/assetPackage.png"
              folderId=nodeId
              fileType=assetType
              name
@@ -102,7 +102,7 @@ module Method = {
              store
              dispatchFunc
              dragImg
-             imgSrc="./public/img/12.jpg"
+             imgSrc="./public/img/mat.png"
              fileId=nodeId
              fileType=assetType
              fileName=(
@@ -126,7 +126,7 @@ module Method = {
              store
              dispatchFunc
              dragImg
-             imgSrc="./public/img/12.jpg"
+             imgSrc="./public/img/wdb.png"
              fileId=nodeId
              fileType=assetType
              fileName=name

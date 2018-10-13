@@ -12,6 +12,7 @@
         line-height: 22px;
         padding:0px 10px;
         display: flex;
+        align-items: center;
         &:hover{
             color: coral;
         }
@@ -32,9 +33,10 @@
             height:100%;
             width: 90%;
         }
-        img{
-            width:20px;
-            height:20px;
+        .treeNode-icon{
+            width:15px;
+            height:15px;
+            margin:0 3px;
         }
     }
     ul{

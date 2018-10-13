@@ -2,7 +2,7 @@ type state = {isSelectNav: bool};
 
 type action =
   | ToggleShowNav
-  | BlurNav;
+  | BlurNav
 
 module Method = {
   let isCurrentNodeIdEqualRootId = editorState =>
