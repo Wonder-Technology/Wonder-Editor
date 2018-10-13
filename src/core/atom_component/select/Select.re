@@ -35,18 +35,23 @@ let reducer = (onChange, action) =>
   };
 
 let render = (label, options, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
-  <article key="Select" className="wonder-select">
+  <article key="Select" className="inspector-item">
     (
       switch (label) {
       | None => ReasonReact.null
-      | Some(label) => <span className=""> (DomHelper.textEl(label)) </span>
+      | Some(label) =>
+        <div className="item-header">
+          <span className=""> (DomHelper.textEl(label)) </span>
+        </div>
       }
     )
-    <select
-      onChange=(e => send(Method.change(e)))
-      value=(state.selectedKey |> string_of_int)>
-      (ReasonReact.array(Method.renderContent(options, state)))
-    </select>
+    <div className="item-content">
+      <select
+        onChange=(e => send(Method.change(e)))
+        value=(state.selectedKey |> string_of_int)>
+        (ReasonReact.array(Method.renderContent(options, state)))
+      </select>
+    </div>
   </article>;
 
 let make =

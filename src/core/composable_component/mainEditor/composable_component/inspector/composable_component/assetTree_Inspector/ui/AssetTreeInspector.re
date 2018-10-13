@@ -23,24 +23,30 @@ module Method = {
   let renameAssetTreeNode = AssetRenameNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let buildFolderComponent = (state, send, currentNodeId, folderNodeMap) =>
-    <div className="">
+    <div className="inspector-asset-folder">
       <h1> (DomHelper.textEl("Folder")) </h1>
       <hr />
-      <span className=""> (DomHelper.textEl("name:")) </span>
-      <input
-        className="input-component float-input"
-        _type="text"
-        value=state.inputValue
-        disabled=(
-          AssetUtils.isIdEqual(
-            AssetTreeRootEditorService.getRootTreeNodeId
-            |> StateLogicService.getEditorState,
-            currentNodeId,
-          )
-        )
-        onChange=(_e => send(change(_e)))
-        onBlur=(_e => send(Blur))
-      />
+      <div className="inspector-item">
+        <div className="item-header">
+          <span> (DomHelper.textEl("name")) </span>
+        </div>
+        <div className="item-content">
+          <input
+            className="input-component float-input"
+            _type="text"
+            value=state.inputValue
+            disabled=(
+              AssetUtils.isIdEqual(
+                AssetTreeRootEditorService.getRootTreeNodeId
+                |> StateLogicService.getEditorState,
+                currentNodeId,
+              )
+            )
+            onChange=(_e => send(change(_e)))
+            onBlur=(_e => send(Blur))
+          />
+        </div>
+      </div>
     </div>;
 
   let buildJsonComponent = (state, send, currentNodeId, jsonNodeMap) => {
