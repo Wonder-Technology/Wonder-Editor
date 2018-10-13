@@ -12,5 +12,18 @@ html,body{
     .block-component{
         display: block;
     }
+    button{
+        text-align: center;
+        background-color: #555555;
+        border:1px solid #3f3f3f;
+        font-size:16px;
+        color:#ffffff;
+        font-weight: bold;
+        border-radius: 3px;
+        min-height: 25px;
+        &:hover{
+            background-color: #777777;
+        }
+    }
 }
 

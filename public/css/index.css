@@ -9,6 +9,17 @@ html, body {
     display: inline-block; }
   html .block-component, body .block-component {
     display: block; }
+  html button, body button {
+    text-align: center;
+    background-color: #555555;
+    border: 1px solid #3f3f3f;
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 3px;
+    min-height: 25px; }
+    html button:hover, body button:hover {
+      background-color: #777777; }
 
 .wonder-app-component {
   width: 100%;
@@ -48,17 +59,14 @@ html, body {
             display: inline-block;
             padding: 4px 7px;
             width: 100%;
-            height: 28px;
+            height: 24px;
             cursor: text;
             font-size: 12px;
             line-height: 1.5;
-            color: #666;
-            background-color: #fff;
-            background-image: none;
+            color: #fc9b00;
+            background-color: #333333;
             border: 1px solid #d9d9d9;
-            border-radius: 6px;
-            -webkit-transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-            transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1); }
+            border-radius: 3px; }
           .wonder-app-component .wonder-header-component .header-nav .header-item .component-item .wonder-file-input .input-component::placeholder {
             color: #ccc; }
           .wonder-app-component .wonder-header-component .header-nav .header-item .component-item .wonder-file-input .input-component:hover {
@@ -316,7 +324,7 @@ html, body {
                   display: flex;
                   align-items: center; }
                   .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .sceneTree-parent .wonder-sceneTree-component .wonder-drag-tree .wonder-tree-node li:hover {
-                    color: coral; }
+                    color: #fc9b00; }
                   .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .sceneTree-parent .wonder-sceneTree-component .wonder-drag-tree .wonder-tree-node li .item-triangle {
                     flex: initial;
                     width: 22px;
@@ -534,7 +542,7 @@ html, body {
                   display: flex;
                   align-items: center; }
                   .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-asset-component .asset-tree .wonder-asset-assetTree .wonder-tree-node li:hover {
-                    color: coral; }
+                    color: #fc9b00; }
                   .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-asset-component .asset-tree .wonder-asset-assetTree .wonder-tree-node li .item-triangle {
                     flex: initial;
                     width: 22px;
@@ -832,17 +840,14 @@ html, body {
   display: inline-block;
   padding: 4px 7px;
   width: 100%;
-  height: 28px;
+  height: 24px;
   cursor: text;
   font-size: 12px;
   line-height: 1.5;
-  color: #666;
-  background-color: #fff;
-  background-image: none;
+  color: #fc9b00;
+  background-color: #333333;
   border: 1px solid #d9d9d9;
-  border-radius: 6px;
-  -webkit-transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-  transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1); }
+  border-radius: 3px; }
 
 .input-component::placeholder {
   color: #ccc; }
