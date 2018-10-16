@@ -26,4 +26,4 @@ let unsafeGetGameObjectsFromGameObjectMaterialComponentAndCopy =
     (gameObject, engineState) =>
   getGameObjectsFromGameObjectMaterialComponent(gameObject, engineState)
   |> OptionService.unsafeGet
-|> Js.Array.copy;
+  |> Js.Array.copy;

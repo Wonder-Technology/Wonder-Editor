@@ -11,7 +11,7 @@ open AssetMaterialDataType;
 type assetRecord = {
   assetTreeRoot: option(assetTreeNodeType),
   index: int,
-  imageIndex:int,
+  imageIndex: int,
   removedAssetIdArray: array(int),
   currentNodeData: option(currentNodeDataType),
   currentNodeParentId: option(int),
@@ -20,6 +20,7 @@ type assetRecord = {
   folderNodeMap: WonderCommonlib.SparseMapService.t(folderResultType),
   wdbNodeMap: WonderCommonlib.SparseMapService.t(wdbResultType),
   materialNodeMap: WonderCommonlib.SparseMapService.t(materialResultType),
+  materialNodeIdMap: WonderCommonlib.SparseMapService.t(nodeId),
   imageBase64Map: WonderCommonlib.SparseMapService.t(imageResultType),
   geometryData,
   materialData,

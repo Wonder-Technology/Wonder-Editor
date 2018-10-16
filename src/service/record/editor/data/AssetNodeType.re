@@ -1,5 +1,7 @@
 exception LoadException;
 
+type nodeId = int;
+
 type uploadFileType =
   | LoadWDB
   | LoadImage

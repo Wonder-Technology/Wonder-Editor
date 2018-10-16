@@ -19,6 +19,7 @@ let create = () => {
     folderNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     wdbNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     materialNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
+    materialNodeIdMap: WonderCommonlib.SparseMapService.createEmpty(),
     geometryData: {
       defaultCubeGeometryComponent: (-1),
       defaultSphereGeometryComponent: (-1),

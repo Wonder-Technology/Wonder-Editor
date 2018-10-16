@@ -28,42 +28,6 @@ let _getOperateTargetRenderGroupData =
     )
   };
 
-/* TODO test dispose instead of remove */
-let _disposeSourceMaterialIfHasGameObjects =
-    (gameObjects, materialComponent, sourceMaterialType, engineState) =>
-  switch (sourceMaterialType) {
-  | BasicMaterial =>
-    switch (gameObjects) {
-    | None => engineState
-    | Some(gameObjects) =>
-      gameObjects
-      |> WonderCommonlib.ArrayService.reduceOneParam(
-           (. engineState, gameObject) =>
-             GameObjectComponentEngineService.disposeBasicMaterialComponent(
-               gameObject,
-               materialComponent,
-               engineState,
-             ),
-           engineState,
-         )
-    }
-  | LightMaterial =>
-    switch (gameObjects) {
-    | None => engineState
-    | Some(gameObjects) =>
-      gameObjects
-      |> WonderCommonlib.ArrayService.reduceOneParam(
-           (. engineState, gameObject) =>
-             GameObjectComponentEngineService.disposeLightMaterialComponent(
-               gameObject,
-               materialComponent,
-               engineState,
-             ),
-           engineState,
-         )
-    }
-  };
-
 let _replaceMaterial =
     (
       gameObjects,
@@ -111,7 +75,6 @@ let _replaceMaterial =
            engineState,
          );
 
-    engineState |> StateLogicService.refreshEngineState;
     engineState;
   };
 
@@ -121,22 +84,7 @@ let replaceMaterialByMaterialType =
   let editorState = StateEditorService.getState();
 
   let gameObjects =
-    switch (sourceMaterialType) {
-    | BasicMaterial =>
-      BasicMaterialEngineService.getBasicMaterialGameObjects(
-        materialComponent,
-        engineState,
-      )
-    | LightMaterial =>
-      LightMaterialEngineService.getLightMaterialGameObjects(
-        materialComponent,
-        engineState,
-      )
-    };
-
-  let engineState =
-    _disposeSourceMaterialIfHasGameObjects(
-      gameObjects,
+    MainEditorMaterialUtils.getGameObjectsByType(
       materialComponent,
       sourceMaterialType,
       engineState,
@@ -164,19 +112,12 @@ let replaceMaterialByMaterialType =
       engineState,
     );
 
-  engineState |> StateEngineService.setState |> ignore;
+  engineState |> StateLogicService.refreshEngineState;
 
-  editorState
-  |> AssetMaterialNodeMapEditorService.getMaterialNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-  |> (
-    materialResult => {
-      ...materialResult,
-      type_: targetMaterialType,
-      materialComponent: targetMaterial,
-    }
+  AssetMaterialUpdateNodeEditorService.updateMaterialNodeData(
+    nodeId,
+    targetMaterial,
+    targetMaterialType,
   )
-  |> AssetMaterialNodeMapEditorService.setResult(nodeId, _, editorState)
-  |> StateEditorService.setState
-  |> ignore;
+  |> StateLogicService.getAndSetEditorState;
 };

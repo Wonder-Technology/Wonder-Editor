@@ -35,9 +35,9 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     testPromise(
-      {|1.load asset wdb;
-      2.drag wdb;
-      3.select wdb;
+      {|load asset wdb;
+      drag wdb;
+      select wdb;
 
       inspector->material map should show its map|},
       () => {

@@ -6,7 +6,10 @@ type state = {
 
 type action =
   | ChangeMaterialType(int)
-  | ChangeMaterial((int, AssetMaterialDataType.materialType))
+  | ChangeMaterial(
+      option(AssetNodeType.nodeId),
+      (int, AssetMaterialDataType.materialType),
+    )
   | ShowMaterialGroup
   | HideMaterialGroup;
 
@@ -52,10 +55,11 @@ module Method = {
   let _getAllAssetMaterialData = editorState =>
     AssetNodeType.(
       Js.Array.concat(
-        AssetMaterialDataEditorService.getAllDefaultMaterialData(editorState),
+        AssetMaterialDataEditorService.getAllDefaultMaterialData(editorState)
+        |> Js.Array.map(materialData => (None, materialData)),
         AssetMaterialNodeMapEditorService.getResults(editorState)
-        |> Js.Array.map(({materialComponent, type_}) =>
-             (materialComponent, type_)
+        |> Js.Array.map(((materialNodeId, {materialComponent, type_})) =>
+             (Some(materialNodeId), (materialComponent, type_))
            ),
       )
     );
@@ -66,7 +70,7 @@ module Method = {
     let editorState = StateEditorService.getState();
 
     _getAllAssetMaterialData(editorState)
-    |> Js.Array.map(((material, materialType)) => {
+    |> Js.Array.map(((materialNodeId, (material, materialType))) => {
          let className =
            (material, materialType) == (currentMaterial, currentMaterialType) ?
              "item-content item-active" : "item-content";
@@ -74,7 +78,12 @@ module Method = {
          <div
            className
            key=(DomHelper.getRandomKey())
-           onClick=(_e => send(ChangeMaterial((material, materialType))))>
+           onClick=(
+             _e =>
+               send(
+                 ChangeMaterial(materialNodeId, (material, materialType)),
+               )
+           )>
            (
              DomHelper.textEl(
                MainEditorMaterialUtils.getName(
@@ -128,7 +137,7 @@ let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
         (sourceMaterialType, targetMaterialType),
       )
     );
-  | ChangeMaterial((targetMaterial, targetMaterialType)) =>
+  | ChangeMaterial(materialNodeId, (targetMaterial, targetMaterialType)) =>
     let sourceMaterial = state.currentMaterial;
     let sourceMaterialType = state.materialType;
 
@@ -146,6 +155,7 @@ let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
           reduxTuple,
           currentSceneTreeNode,
           (
+            materialNodeId,
             (sourceMaterial, targetMaterial),
             (state.materialType, targetMaterialType),
           ),

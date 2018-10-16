@@ -46,4 +46,4 @@ let setMaterialNodeResultParent =
 };
 
 let getResults = editorState =>
-  getMaterialNodeMap(editorState) |> SparseMapService.getValidValues;
+  getMaterialNodeMap(editorState) |> SparseMapService.getValidDataArr;
