@@ -38,7 +38,7 @@ module Method = {
 let render = ((store, dispatchFunc), lightComponent, _self) =>
   <article className="wonder-direction-light">
     <PickColorComponent
-      label="color : "
+      label="color"
       getColorFunc=(Method.getColor(lightComponent))
       changeColorFunc=(Method.changeColor(lightComponent))
       closeColorPickFunc=(

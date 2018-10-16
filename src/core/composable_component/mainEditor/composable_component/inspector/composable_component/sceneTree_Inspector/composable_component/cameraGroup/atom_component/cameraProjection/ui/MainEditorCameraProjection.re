@@ -173,9 +173,9 @@ let render = ((store, dispatchFunc), _self) => {
          |> StateLogicService.getEditorState,
        );
 
-  <article key="MainEditorCameraProjection" className="wonder-camera-view">
+  <article key="MainEditorCameraProjection" className="wonder-camera-projection">
     <Select
-      label="type : "
+      label="Type"
       options=(MainEditorCameraProjectionUtils.getCameraProjectionOptions())
       onChange=(value => ())
       selectedKey=(PerspectiveCamera |> convertCameraProjectionTypeToInt)

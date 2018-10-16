@@ -2,14 +2,21 @@ let component = ReasonReact.statelessComponent("MainEditorRenderGroup");
 
 let render = ((store, dispatchFunc), currentSceneTreeNode, _self) =>
   <article key="MainEditorRenderGroup" className="wonder-render-group">
-    <div className="">
-      <div className=""> (DomHelper.textEl("MeshRender : ")) </div>
-      <MainEditorMeshRenderer store dispatchFunc />
+    <div className="inspector-component">
+      <div className="component-title">
+        (DomHelper.textEl("MeshRender"))
+      </div>
+      <hr />
+      <div className="component-content">
+        <MainEditorMeshRenderer store dispatchFunc />
+      </div>
     </div>
-    <hr />
-    <div className="">
-      <div className=""> (DomHelper.textEl("Material : ")) </div>
-      <MainEditorMaterial store dispatchFunc currentSceneTreeNode />
+    <div className="inspector-component">
+      <div className="component-title"> (DomHelper.textEl("Material")) </div>
+      <hr />
+      <div className="component-content">
+        <MainEditorMaterial store dispatchFunc currentSceneTreeNode />
+      </div>
     </div>
   </article>;
 

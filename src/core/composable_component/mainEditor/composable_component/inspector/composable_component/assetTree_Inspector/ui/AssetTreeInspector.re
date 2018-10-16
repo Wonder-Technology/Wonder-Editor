@@ -35,7 +35,7 @@ module Method = {
       <hr />
       <div className="inspector-item">
         <div className="item-header">
-          <span> (DomHelper.textEl("name")) </span>
+          <span> (DomHelper.textEl("Name")) </span>
         </div>
         <div className="item-content">
           <input
@@ -127,17 +127,23 @@ module Method = {
   };
 
   let buildWDBComponent = (state, send, currentNodeId, wdbNodeMap) =>
-    <div>
+    <div className="inspector-asset-wdb">
       <h1> (DomHelper.textEl("Model")) </h1>
       <hr />
-      <span className=""> (DomHelper.textEl("name:")) </span>
-      <input
-        className="input-component float-input"
-        _type="text"
-        value=state.inputValue
-        onChange=(_e => send(change(_e)))
-        onBlur=(_e => send(Blur))
-      />
+      <div className="inspector-item">
+        <div className="item-header">
+          <span className=""> (DomHelper.textEl("Name:")) </span>
+        </div>
+        <div className="item-content">
+          <input
+            className="input-component float-input"
+            _type="text"
+            value=state.inputValue
+            onChange=(_e => send(change(_e)))
+            onBlur=(_e => send(Blur))
+          />
+        </div>
+      </div>
     </div>;
 
   let showAssetNodeComponent =

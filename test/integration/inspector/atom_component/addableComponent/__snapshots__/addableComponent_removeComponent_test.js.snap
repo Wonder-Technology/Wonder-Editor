@@ -496,7 +496,7 @@ exports[`AddableComponent remove component test remove box gameObject component 
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>

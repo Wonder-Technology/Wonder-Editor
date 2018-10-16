@@ -398,7 +398,7 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
       </article>
     </div>
     <div
-      className="material-shield"
+      className="material-shade"
     />
   </div>
 </article>

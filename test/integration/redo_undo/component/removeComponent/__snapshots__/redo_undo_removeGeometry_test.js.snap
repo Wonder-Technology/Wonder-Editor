@@ -496,7 +496,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>
@@ -1017,7 +1017,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>
@@ -1580,7 +1580,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>

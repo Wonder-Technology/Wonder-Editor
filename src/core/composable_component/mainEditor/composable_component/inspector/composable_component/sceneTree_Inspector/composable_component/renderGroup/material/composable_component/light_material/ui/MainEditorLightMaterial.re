@@ -61,7 +61,7 @@ let component = ReasonReact.statelessComponent("MainEditorLightMaterial");
 let render = ((store, dispatchFunc), materialComponent, _self) =>
   <article className="wonder-light-material">
     <PickColorComponent
-      label="diffcuse color : "
+      label="Diffcuse color"
       getColorFunc=(Method.getColor(materialComponent))
       changeColorFunc=(Method.changeColor(materialComponent))
       closeColorPickFunc=(
@@ -72,7 +72,7 @@ let render = ((store, dispatchFunc), materialComponent, _self) =>
       store
       dispatchFunc
       materialComponent
-      label="diffuse map : "
+      label="Diffuse map"
       getMapFunc=LightMaterialEngineService.getLightMaterialDiffuseMap
       removeTextureFunc=Method.removeTexture
       onDropFunc=Method.onDrop

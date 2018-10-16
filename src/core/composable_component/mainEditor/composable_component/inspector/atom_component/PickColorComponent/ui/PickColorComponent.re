@@ -28,30 +28,33 @@ let reducer = ((closeColorPickFunc, getColorFunc), action, state) =>
 
 let render =
     (label, changeColorFunc, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
-  <article className="wonder-color-pick">
-    <div className="">
-      <span className=""> (DomHelper.textEl(label)) </span>
-      <span className=""> (DomHelper.textEl(state.colorHex)) </span>
-      <button className="" onClick=(_e => send(ShowColorPick))>
-        (DomHelper.textEl("pick color"))
-      </button>
-      (
-        state.isShowColorPick ?
-          <div className="color-pick-content">
-            <div className="color-pick-item">
-              <ReactColor.Sketch
-                color=state.colorHex
-                onChange=((value, e) => changeColorFunc(value))
-              />
-            </div>
-            <div
-              className="color-pick-bg"
-              onClick=(_e => send(HideColorPick))
-            />
-          </div> :
-          ReasonReact.null
-      )
+  <article className="inspector-item">
+    <div className="item-header"> (DomHelper.textEl(label)) </div>
+    <div className="item-content item-color">
+      <div
+        className="color-hex"
+        style=(ReactDOMRe.Style.make(~background=state.colorHex, ()))
+      />
+      <div className="color-select" onClick=(_e => send(ShowColorPick))>
+        <img src="./public/img/color.png" />
+      </div>
     </div>
+    (
+      state.isShowColorPick ?
+        <div className="color-pick-content">
+          <div className="color-pick-item">
+            <ReactColor.Sketch
+              color=state.colorHex
+              onChange=((value, e) => changeColorFunc(value))
+            />
+          </div>
+          <div
+            className="color-pick-bg"
+            onClick=(_e => send(HideColorPick))
+          />
+        </div> :
+        ReasonReact.null
+    )
   </article>;
 
 let make =

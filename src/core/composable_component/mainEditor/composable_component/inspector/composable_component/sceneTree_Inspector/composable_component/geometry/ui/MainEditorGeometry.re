@@ -112,16 +112,23 @@ let render =
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article key="MainEditorGeometry" className="wonder-inspector-geometry">
-    <div className="geometry-select">
-      (
-        DomHelper.textEl(
-          MainEditorGeometryUtils.getName(state.currentGeometry)
-          |> StateLogicService.getEngineStateToGetData,
-        )
-      )
-      <span className="select-title" onClick=(_e => send(ShowGeometryGroup))>
-        (DomHelper.textEl("select"))
-      </span>
+    <div className="inspector-item">
+      <div className="item-header"> (DomHelper.textEl("Geometry")) </div>
+      <div className="item-content">
+        <div className="inspector-select">
+          <div className="select-name">
+            (
+              DomHelper.textEl(
+                MainEditorGeometryUtils.getName(state.currentGeometry)
+                |> StateLogicService.getEngineStateToGetData,
+              )
+            )
+          </div>
+          <div className="select-img" onClick=(_e => send(ShowGeometryGroup))>
+            <img src="./public/img/select.png" />
+          </div>
+        </div>
+      </div>
     </div>
     (
       state.isShowGeometryGroup ?

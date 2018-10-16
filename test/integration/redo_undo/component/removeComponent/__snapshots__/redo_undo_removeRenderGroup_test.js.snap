@@ -1140,7 +1140,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>

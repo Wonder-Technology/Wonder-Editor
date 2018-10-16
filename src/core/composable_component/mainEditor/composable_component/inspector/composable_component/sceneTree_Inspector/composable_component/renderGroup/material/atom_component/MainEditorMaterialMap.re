@@ -76,16 +76,6 @@ module Method = {
         src=ImageType.convertImageElementToSrcImageElements(source)##src
       />;
     };
-
-  let buildDragDiv = (state, send) =>
-    <div
-      style=state.style
-      className="texture_ground"
-      onDragEnter=(_e => send(handleDragEnter(isWidget, isTypeValid, _e)))
-      onDragLeave=(_e => send(handleDragLeave(isWidget, isTypeValid, _e)))
-      onDragOver=handleDragOver
-      onDrop=(_e => send(handleDrop(isWidget, isTypeValid, _e)))
-    />;
 };
 
 let component = ReasonReact.reducerComponent("MainEditorMaterialMap");
@@ -97,13 +87,13 @@ let reducer =
     ReasonReact.Update({
       ...state,
       style:
-        ReactUtils.addStyleProp("border", "2px dashed blue", state.style),
+        ReactUtils.addStyleProp("border", "2px solid coral", state.style),
     })
 
   | DragLeave =>
     ReasonReact.Update({
       ...state,
-      style: ReactUtils.addStyleProp("border", "1px solid red", state.style),
+      style: ReactUtils.addStyleProp("border", "0px", state.style),
     })
 
   | DragDrop(startId) =>
@@ -120,17 +110,51 @@ let render =
       (getMapFunc, removeTextureFunc),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
-  <article className="wonder-material-texture">
-    (Method.buildDragDiv(state, send))
-    <span className=""> (DomHelper.textEl(label)) </span>
-    (Method.showMapComponent(materialComponent, getMapFunc))
-    <button
-      className="texture_remove"
-      onClick=(
-        e => removeTextureFunc((store, dispatchFunc), (), materialComponent)
-      )>
-      (DomHelper.textEl("remove"))
-    </button>
+  <article className="inspector-item">
+    <div className="item-header"> (DomHelper.textEl(label)) </div>
+    <div className="item-content item-texture">
+      <div className="texture-img" style=state.style>
+        <div
+          className="img-dragBg"
+          onDragEnter=(
+            _e =>
+              send(
+                Method.handleDragEnter(
+                  Method.isWidget,
+                  Method.isTypeValid,
+                  _e,
+                ),
+              )
+          )
+          onDragLeave=(
+            _e =>
+              send(
+                Method.handleDragLeave(
+                  Method.isWidget,
+                  Method.isTypeValid,
+                  _e,
+                ),
+              )
+          )
+          onDragOver=Method.handleDragOver
+          onDrop=(
+            _e =>
+              send(
+                Method.handleDrop(Method.isWidget, Method.isTypeValid, _e),
+              )
+          )
+        />
+        (Method.showMapComponent(materialComponent, getMapFunc))
+      </div>
+      <button
+        className="texture-remove"
+        onClick=(
+          e =>
+            removeTextureFunc((store, dispatchFunc), (), materialComponent)
+        )>
+        (DomHelper.textEl("Remove"))
+      </button>
+    </div>
   </article>;
 
 let make =

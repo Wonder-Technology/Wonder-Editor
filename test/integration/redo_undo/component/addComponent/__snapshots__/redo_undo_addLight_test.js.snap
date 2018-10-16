@@ -538,7 +538,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>
@@ -1224,7 +1224,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>
@@ -1910,7 +1910,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>

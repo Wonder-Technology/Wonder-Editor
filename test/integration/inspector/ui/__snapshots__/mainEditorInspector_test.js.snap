@@ -759,7 +759,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>

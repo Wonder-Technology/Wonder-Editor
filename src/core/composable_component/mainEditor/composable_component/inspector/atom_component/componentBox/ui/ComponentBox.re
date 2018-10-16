@@ -52,13 +52,14 @@ let render =
       <div className="header-title"> (DomHelper.textEl(header)) </div>
       (
         isDisposable ?
-          <span
-            className="header-close"
-            onClick=(
-              _e => Method.removeComponent(reduxTuple, gameObject, type_)
-            )>
-            (DomHelper.textEl("x"))
-          </span> :
+          <div className="header-close">
+            <img
+              src="./public/img/close.png"
+              onClick=(
+                _e => Method.removeComponent(reduxTuple, gameObject, type_)
+              )
+            />
+          </div> :
           ReasonReact.null
       )
     </div>

@@ -39,7 +39,7 @@ module Method = {
 let render = ((store, dispatchFunc), materialComponent, _self) =>
   <article className="wonder-basic-material">
     <PickColorComponent
-      label="color : "
+      label="Color"
       getColorFunc=(Method.getColor(materialComponent))
       changeColorFunc=(Method.changeColor(materialComponent))
       closeColorPickFunc=(
@@ -50,7 +50,7 @@ let render = ((store, dispatchFunc), materialComponent, _self) =>
       store
       dispatchFunc
       materialComponent
-      label="map : "
+      label="Map"
       getMapFunc=BasicMaterialEngineService.getBasicMaterialMap
       removeTextureFunc=Method.removeTexture
       onDropFunc=Method.onDrop

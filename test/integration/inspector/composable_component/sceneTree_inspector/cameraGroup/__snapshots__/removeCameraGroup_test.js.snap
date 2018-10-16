@@ -797,7 +797,7 @@ exports[`test remove camera group test still has other camera groups after remov
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>

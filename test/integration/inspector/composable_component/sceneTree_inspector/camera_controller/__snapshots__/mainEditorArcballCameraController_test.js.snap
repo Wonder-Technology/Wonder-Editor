@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditor ArcballCameraController test set currentSceneTreeNode to be camera add shield dom for transformComponent if has arcballCameraController test snapshot for transform component 1`] = `
+exports[`MainEditor ArcballCameraController test set currentSceneTreeNode to be camera add shade dom for transformComponent if has arcballCameraController test snapshot for transform component 1`] = `
 <article
   className="wonder-inspector-transform"
 >
@@ -188,7 +188,7 @@ exports[`MainEditor ArcballCameraController test set currentSceneTreeNode to be 
     </article>
   </div>
   <div
-    className="transform-shield"
+    className="transform-shade"
   />
 </article>
 `;

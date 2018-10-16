@@ -1144,7 +1144,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
           </article>
         </div>
         <div
-          className="transform-shield"
+          className="transform-shade"
         />
       </article>
     </article>

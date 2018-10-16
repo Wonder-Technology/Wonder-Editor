@@ -240,7 +240,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
           </article>
         </div>
         <div
-          className="transform-shield"
+          className="transform-shade"
         />
       </article>
     </article>
@@ -766,7 +766,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
           </article>
         </div>
         <div
-          className="transform-shield"
+          className="transform-shade"
         />
       </article>
     </article>
@@ -1292,7 +1292,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
           </article>
         </div>
         <div
-          className="transform-shield"
+          className="transform-shade"
         />
       </article>
     </article>

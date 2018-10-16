@@ -27,51 +27,57 @@ module Method = {
         (id, icon, name, treeChildren, isShowChildren, isHasChildren),
         (onSelectFunc, handleWidgettFunc, handleRelationErrorFunc),
       ) =>
-    <li style=state.style>
-      <div
-        className="item-ground"
-        draggable=true
-        onClick=(_event => onSelectFunc(id))
-        onDragEnter=(
-          _e =>
-            send(
-              DragEventUtils.handleDragEnter(
-                id,
-                handleWidgettFunc,
-                handleRelationErrorFunc,
-                _e,
-              ),
-            )
-        )
-        onDragLeave=(
-          _e =>
-            send(
-              DragEventUtils.handleDragLeave(
-                id,
-                handleWidgettFunc,
-                handleRelationErrorFunc,
-                _e,
-              ),
-            )
-        )
-        onDragOver=DragEventUtils.handleDragOver
-        onDrop=(
-          _e =>
-            send(
-              DragEventUtils.handleDrop(
-                id,
-                handleWidgettFunc,
-                handleRelationErrorFunc,
-                _e,
-              ),
-            )
-        )
-      />
+    <li
+      style=state.style
+      draggable=true
+      onClick=(_event => onSelectFunc(id))
+      onDragEnter=(
+        _e =>
+          send(
+            DragEventUtils.handleDragEnter(
+              id,
+              handleWidgettFunc,
+              handleRelationErrorFunc,
+              _e,
+            ),
+          )
+      )
+      onDragLeave=(
+        _e =>
+          send(
+            DragEventUtils.handleDragLeave(
+              id,
+              handleWidgettFunc,
+              handleRelationErrorFunc,
+              _e,
+            ),
+          )
+      )
+      onDragOver=DragEventUtils.handleDragOver
+      onDrop=(
+        _e =>
+          send(
+            DragEventUtils.handleDrop(
+              id,
+              handleWidgettFunc,
+              handleRelationErrorFunc,
+              _e,
+            ),
+          )
+      )>
       (
         isHasChildren ?
           <div
             className="item-triangle"
-            onClick=(_e => send(TogggleChildren(id)))>
+            onClick=(
+              event => {
+                DomHelper.stopPropagation(
+                  ReactEventType.convertReactMouseEventToJsEvent(event),
+                );
+
+                send(TogggleChildren(id));
+              }
+            )>
             (
               isShowChildren ?
                 <img src="./public/img/down.png" /> :

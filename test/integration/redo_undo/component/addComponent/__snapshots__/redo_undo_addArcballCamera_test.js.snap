@@ -240,7 +240,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
           </article>
         </div>
         <div
-          className="transform-shield"
+          className="transform-shade"
         />
       </article>
     </article>
@@ -766,7 +766,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
           </article>
         </div>
         <div
-          className="transform-shield"
+          className="transform-shade"
         />
       </article>
     </article>

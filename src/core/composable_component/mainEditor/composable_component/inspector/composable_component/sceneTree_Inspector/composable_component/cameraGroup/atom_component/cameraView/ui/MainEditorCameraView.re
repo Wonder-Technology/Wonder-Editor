@@ -31,25 +31,26 @@ let render = ((store, dispatchFunc), _self) => {
 
   <article key="MainEditorCameraView" className="wonder-camera-view">
     <Select
-      label="type : "
+      label="Type"
       options=(MainEditorCameraViewUtils.getCameraViewOptions())
       selectedKey=(BasicCameraView |> convertCameraViewTypeToInt)
       onChange=(value => ())
     />
-    <div className="">
-      <div className=""> (DomHelper.textEl("currentCamera : ")) </div>
-      <input
-        style=(ReactDOMRe.Style.make(~width="35px", ~height="35px", ()))
-        _type="checkbox"
-        defaultChecked=isCurrentCamera
-        onClick=(
-          Method.setCurrentCamera(
-            (store, dispatchFunc),
-            currentGameObjectBasicCameraViewComponent,
+    <div className="inspector-item">
+      <div className="item-header"> (DomHelper.textEl("CurrentCamera")) </div>
+      <div className="item-content">
+        <input
+          _type="checkbox"
+          defaultChecked=isCurrentCamera
+          onClick=(
+            Method.setCurrentCamera(
+              (store, dispatchFunc),
+              currentGameObjectBasicCameraViewComponent,
+            )
           )
-        )
-        disabled=isCurrentCamera
-      />
+          disabled=isCurrentCamera
+        />
+      </div>
     </div>
   </article>;
 };

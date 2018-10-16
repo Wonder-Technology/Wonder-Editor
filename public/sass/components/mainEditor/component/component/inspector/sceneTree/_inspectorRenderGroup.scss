@@ -1,0 +1,25 @@
+@import "../../../../../../utils/inspectorItemMixin";
+
+.wonder-render-group{
+    .inspector-component{
+        .component-title{
+            font-size:14px;
+            margin-left:5%;
+        }
+        hr{
+            border: 0;
+            height:1px;
+            width:90%;
+            text-align: center;
+            background-color:#a8a8a8;
+        }
+        .component-content{
+            width:86%;
+            margin-left:10%;
+            @include inspectorItem("wonder-mesh-renderer");
+            @include inspectorItem("wonder-inspector-material");
+            @import "./inspectorMaterial";
+
+        }
+    }
+}

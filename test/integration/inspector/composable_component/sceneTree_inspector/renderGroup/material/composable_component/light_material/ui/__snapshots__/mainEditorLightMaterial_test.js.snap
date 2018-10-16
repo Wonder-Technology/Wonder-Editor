@@ -538,7 +538,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>
@@ -1101,7 +1101,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>
@@ -1664,7 +1664,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>
@@ -2227,7 +2227,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>
@@ -2790,7 +2790,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>

@@ -29,14 +29,12 @@ let reducer = ((store, dispatchFunc), action, state) =>
 let render =
     ((store, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article key="MainEditorMeshRenderer" className="wonder-mesh-renderer">
-    <div className="">
-      <Select
-        label="draw mode"
-        options=(MainEditorMeshRendererUtils.getDrawModeOptions())
-        selectedKey=state.drawMode
-        onChange=(value => send(ChangeMode(value)))
-      />
-    </div>
+    <Select
+      label="draw mode"
+      options=(MainEditorMeshRendererUtils.getDrawModeOptions())
+      selectedKey=state.drawMode
+      onChange=(value => send(ChangeMode(value)))
+    />
   </article>;
 
 let make = (~store, ~dispatchFunc, _children) => {

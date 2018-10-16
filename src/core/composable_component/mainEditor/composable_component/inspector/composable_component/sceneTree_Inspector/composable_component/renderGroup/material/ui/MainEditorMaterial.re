@@ -102,13 +102,13 @@ module Method = {
     material === defaultMaterial;
   };
 
-  let buildShieldComponent = (currentMaterial, materialType) =>
+  let buildShadeComponent = (currentMaterial, materialType) =>
     _isDefaultMaterial(
       currentMaterial,
       materialType,
       StateEditorService.getState(),
     ) ?
-      <div className="material-shield" /> : ReasonReact.null;
+      <div className="material-shade" /> : ReasonReact.null;
 };
 
 let component = ReasonReact.reducerComponent("MainEditorMaterial");
@@ -163,62 +163,62 @@ let render =
       currentSceneTreeNode,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
-  <article key="MainEditorMaterial" className="wonder-material">
-    <div className="material-drag-div">
-      <div className="material-drag-name" />
-      <div className="material-select">
-        (
-          DomHelper.textEl(
-            MainEditorMaterialUtils.getName(
-              state.currentMaterial,
-              state.materialType,
-            )
-            |> StateLogicService.getEngineStateToGetData,
-          )
-        )
-        <span
-          className="select-title" onClick=(_e => send(ShowMaterialGroup))>
-          (DomHelper.textEl("select"))
-        </span>
-      </div>
-      (
-        state.isShowMaterialGroup ?
-          <div className="select-component-content">
-            <div className="select-component-item">
-              <div className="item-header">
-                (DomHelper.textEl("Material"))
-              </div>
-              (
-                ReasonReact.array(
-                  Method.showMaterialAssets(
-                    send,
-                    currentSceneTreeNode,
-                    state.currentMaterial,
-                    state.materialType,
-                  ),
+  <article key="MainEditorMaterial" className="wonder-inspector-material">
+    <div className="inspector-item">
+      <div className="item-header"> (DomHelper.textEl("Material")) </div>
+      <div className="item-content">
+        <div className="inspector-select">
+          <div className="select-name">
+            (
+              DomHelper.textEl(
+                MainEditorMaterialUtils.getName(
+                  state.currentMaterial,
+                  state.materialType,
                 )
+                |> StateLogicService.getEngineStateToGetData,
               )
-            </div>
-            <div
-              className="select-component-bg"
-              onClick=(_e => send(HideMaterialGroup))
-            />
-          </div> :
-          ReasonReact.null
-      )
-    </div>
-    <div className="material-value">
-      <div className="">
-        <Select
-          label="shader"
-          options=(MainEditorMaterialUtils.getMaterialOptions())
-          selectedKey=(
-            state.materialType
-            |> MainEditorMaterialType.convertMaterialTypeToInt
-          )
-          onChange=(value => send(ChangeMaterialType(value)))
-        />
+            )
+          </div>
+          <div className="select-img" onClick=(_e => send(ShowMaterialGroup))>
+            <img src="./public/img/select.png" />
+          </div>
+        </div>
       </div>
+    </div>
+    (
+      state.isShowMaterialGroup ?
+        <div className="select-component-content">
+          <div className="select-component-item">
+            <div className="item-header">
+              (DomHelper.textEl("Material"))
+            </div>
+            (
+              ReasonReact.array(
+                Method.showMaterialAssets(
+                  send,
+                  currentSceneTreeNode,
+                  state.currentMaterial,
+                  state.materialType,
+                ),
+              )
+            )
+          </div>
+          <div
+            className="select-component-bg"
+            onClick=(_e => send(HideMaterialGroup))
+          />
+        </div> :
+        ReasonReact.null
+    )
+    <div className="material-value">
+      <Select
+        label="shader"
+        options=(MainEditorMaterialUtils.getMaterialOptions())
+        selectedKey=(
+          state.materialType |> MainEditorMaterialType.convertMaterialTypeToInt
+        )
+        onChange=(value => send(ChangeMaterialType(value)))
+      />
       <div className="">
         (
           MainEditorMaterialUtils.handleSpecificFuncByMaterialType(
@@ -230,7 +230,7 @@ let render =
           )
         )
       </div>
-      (Method.buildShieldComponent(state.currentMaterial, state.materialType))
+      (Method.buildShadeComponent(state.currentMaterial, state.materialType))
     </div>
   </article>;
 

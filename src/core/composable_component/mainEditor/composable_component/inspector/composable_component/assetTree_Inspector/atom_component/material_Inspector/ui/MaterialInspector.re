@@ -40,40 +40,31 @@ let render =
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article key="MaterialInspector" className="wonder-material-inspector">
-    <div className="">
-      <h1> (DomHelper.textEl("Material")) </h1>
-      <hr />
-      <StringInput
-        label="name"
-        defaultValue=name
-        onBlur=renameFunc
-        canBeNull=false
-      />
-      <div className="inspector-material">
-        <div className="">
-          <Select
-            label="shader"
-            options=(MainEditorMaterialUtils.getMaterialOptions())
-            selectedKey=(
-              state.materialType
-              |> MainEditorMaterialType.convertMaterialTypeToInt
-            )
-            onChange=(value => send(ChangeMaterialType(value)))
-          />
-        </div>
-        <div className="">
-          (
-            switch (state.materialType) {
-            | BasicMaterial =>
-              <MainEditorBasicMaterial store dispatchFunc materialComponent />
+    <h1> (DomHelper.textEl("Material")) </h1>
+    <hr />
+    <StringInput
+      label="Name"
+      defaultValue=name
+      onBlur=renameFunc
+      canBeNull=false
+    />
+    <Select
+      label="Shader"
+      options=(MainEditorMaterialUtils.getMaterialOptions())
+      selectedKey=(
+        state.materialType |> MainEditorMaterialType.convertMaterialTypeToInt
+      )
+      onChange=(value => send(ChangeMaterialType(value)))
+    />
+    (
+      switch (state.materialType) {
+      | BasicMaterial =>
+        <MainEditorBasicMaterial store dispatchFunc materialComponent />
 
-            | LightMaterial =>
-              <MainEditorLightMaterial store dispatchFunc materialComponent />
-            }
-          )
-        </div>
-      </div>
-    </div>
+      | LightMaterial =>
+        <MainEditorLightMaterial store dispatchFunc materialComponent />
+      }
+    )
   </article>;
 
 let make =

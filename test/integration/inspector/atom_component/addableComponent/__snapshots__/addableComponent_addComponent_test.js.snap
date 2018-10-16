@@ -240,7 +240,7 @@ exports[`AddableComponent add component test camera add component test add arcba
           </article>
         </div>
         <div
-          className="transform-shield"
+          className="transform-shade"
         />
       </article>
     </article>
@@ -1709,7 +1709,7 @@ exports[`AddableComponent add component test camera add component test add rende
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>
@@ -2272,7 +2272,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>
@@ -3028,7 +3028,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                 </article>
               </div>
               <div
-                className="material-shield"
+                className="material-shade"
               />
             </div>
           </article>

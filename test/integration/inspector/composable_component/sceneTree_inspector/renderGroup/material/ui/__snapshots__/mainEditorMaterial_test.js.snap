@@ -271,7 +271,7 @@ exports[`MainEditorMaterial test set currentSceneTreeNode test change material t
       </article>
     </div>
     <div
-      className="material-shield"
+      className="material-shade"
     />
   </div>
 </article>

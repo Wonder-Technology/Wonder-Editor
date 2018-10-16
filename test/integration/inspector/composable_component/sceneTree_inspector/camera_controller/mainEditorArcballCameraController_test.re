@@ -80,7 +80,7 @@ let _ =
       );
 
       describe(
-        "add shield dom for transformComponent if has arcballCameraController",
+        "add shade dom for transformComponent if has arcballCameraController",
         () =>
         test("test snapshot for transform component", () => {
           MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();

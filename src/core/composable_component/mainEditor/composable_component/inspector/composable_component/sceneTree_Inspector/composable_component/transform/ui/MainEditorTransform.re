@@ -122,12 +122,12 @@ module Method = {
     _setCurrentSceneTreeNodeLocalRotation(transformComponent, (x, y, value));
   };
 
-  let buildShieldComponent = gameObject =>
+  let buildShadeComponent = gameObject =>
     StateEngineService.unsafeGetState()
     |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
          gameObject,
        ) ?
-      <div className="transform-shield" /> : ReasonReact.null;
+      <div className="transform-shade" /> : ReasonReact.null;
 };
 
 let component = ReasonReact.statelessComponent("MainEditorTransform");
@@ -135,8 +135,11 @@ let component = ReasonReact.statelessComponent("MainEditorTransform");
 let render =
     ((store, dispatchFunc), (transformComponent, gameObject), _self) =>
   <article className="wonder-inspector-transform">
-    <div className="transform-item">
-      <div className=""> (DomHelper.textEl("position : ")) </div>
+    <div className="inspector-item">
+      <div className="item-header"> (DomHelper.textEl("Position")) </div>
+
+      <div className="item-content">
+      
       <TransformTemplate
         store
         dispatchFunc
@@ -148,9 +151,13 @@ let render =
         blurEventFunc=Method.blurPositionEvent
         canBeZero=true
       />
+      </div>
+
     </div>
-    <div className="transform-item">
-      <div className=""> (DomHelper.textEl("rotation : ")) </div>
+    <div className="inspector-item">
+      <div className="item-header"> (DomHelper.textEl("Rotation")) </div>
+      <div className="item-content">
+      
       <TransformTemplate
         store
         dispatchFunc
@@ -162,9 +169,12 @@ let render =
         blurEventFunc=Method.blurRotationEvent
         canBeZero=true
       />
+      </div> 
     </div>
-    <div className="transform-item">
-      <div className=""> (DomHelper.textEl("scale : ")) </div>
+    <div className="inspector-item">
+      <div className="item-header"> (DomHelper.textEl("Scale")) </div>
+      <div className="item-content">
+      
       <TransformTemplate
         store
         dispatchFunc
@@ -176,8 +186,9 @@ let render =
         blurEventFunc=Method.blurScaleEvent
         canBeZero=false
       />
+      </div> 
     </div>
-    (Method.buildShieldComponent(gameObject))
+    (Method.buildShadeComponent(gameObject))
   </article>;
 
 let make =

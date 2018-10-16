@@ -12,7 +12,7 @@ module Method = {
       );
 
   let _buildNameFunc = ((store, dispatchFunc), gameObject) =>
-    <div key=(DomHelper.getRandomKey())>
+    <div key=(DomHelper.getRandomKey()) className="sceneTree-name" >
       <StringInput
         label="Name"
         defaultValue=(

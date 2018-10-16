@@ -1,5 +1,3 @@
-
-
 type state = {componentValueForUndo: float};
 
 type action =
@@ -22,14 +20,12 @@ let render =
       changeComponentValueFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
-  <article className="wonder-floatInput-base">
-    <FloatInput
-      defaultValue=(state.componentValueForUndo |> StringService.floatToString)
-      label
-      onChange=changeComponentValueFunc
-      onBlur=(value => send(TriggerBlur(value)))
-    />
-  </article>;
+  <FloatInput
+    defaultValue=(state.componentValueForUndo |> StringService.floatToString)
+    label
+    onChange=changeComponentValueFunc
+    onBlur=(value => send(TriggerBlur(value)))
+  />;
 
 let make =
     (
