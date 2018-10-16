@@ -58,7 +58,7 @@ let handleSpecificFuncByMaterialType =
        engineState,
      )
    }; */
-let getNewMaterilaAssetName = () => "New Material";
+let getNewMaterilaAssetName = () => "NewMaterial";
 
 let getMaterilaDefaultName = () => getNewMaterilaAssetName();
 

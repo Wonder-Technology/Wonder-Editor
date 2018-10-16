@@ -30,19 +30,21 @@ let render =
     (
       state.isShowComponentList ?
         <div className="category-content">
-          (
-            ReasonReact.array(
-              componentArr
-              |> Js.Array.map(({type_}: componentType) =>
-                   <div
-                     key=(DomHelper.getRandomKey())
-                     className="content-type"
-                     onClick=(_e => addSpecificComponent(type_))>
-                     (DomHelper.textEl(type_))
-                   </div>
-                 ),
+          <div className="content-list">
+            (
+              ReasonReact.array(
+                componentArr
+                |> Js.Array.map(({type_}: componentType) =>
+                     <div
+                       key=(DomHelper.getRandomKey())
+                       className="content-type"
+                       onClick=(_e => addSpecificComponent(type_))>
+                       (DomHelper.textEl(type_))
+                     </div>
+                   ),
+              )
             )
-          )
+          </div>
         </div> :
         ReasonReact.null
     )

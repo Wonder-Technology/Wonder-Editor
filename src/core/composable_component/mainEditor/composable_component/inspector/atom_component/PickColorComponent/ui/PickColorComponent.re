@@ -34,6 +34,7 @@ let render =
       <div
         className="color-hex"
         style=(ReactDOMRe.Style.make(~background=state.colorHex, ()))
+        onClick=(_e => send(ShowColorPick))
       />
       <div className="color-select" onClick=(_e => send(ShowColorPick))>
         <img src="./public/img/color.png" />

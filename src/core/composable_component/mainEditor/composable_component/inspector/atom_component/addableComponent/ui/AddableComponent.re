@@ -68,22 +68,27 @@ let render =
     ) =>
   <article className="wonder-addable-component">
     <div className="addable-component-content">
-      <button
-        className="addable-btn" onClick=(_e => send(ToggleAddableComponent))>
-        (DomHelper.textEl("Add Component"))
-      </button>
+      <div className="content-btn">
+        <button
+          className="addable-btn"
+          onClick=(_e => send(ToggleAddableComponent))>
+          (DomHelper.textEl("Add Component"))
+        </button>
+      </div>
       (
         state.isShowAddableComponent ?
-          <div className="component-list">
-            (
-              ReasonReact.array(
-                addableComponentList
-                |> Method.buildGameObjectAddableComponent(
-                     (store, dispatchFunc),
-                     currentSceneTreeNode,
-                   ),
+          <div className="content-components">
+            <div className="component-list">
+              (
+                ReasonReact.array(
+                  addableComponentList
+                  |> Method.buildGameObjectAddableComponent(
+                       (store, dispatchFunc),
+                       currentSceneTreeNode,
+                     ),
+                )
               )
-            )
+            </div>
           </div> :
           ReasonReact.null
       )

@@ -5,7 +5,7 @@
     background-color: #444444;
     display: flex;
     flex-wrap: wrap;
-    overflow-y: scroll;
+    overflow-y: auto;
     @import "../../../../../utils/_scrollBarUtils.scss";
     .wonder-asset-fileBox,
     .wonder-asset-folderBox
