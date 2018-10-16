@@ -31,34 +31,33 @@ module Method = {
       );
 
   let changeIntensity = (lightComponent, value) =>
-    DirectionLightEngineService.setDirectionLightIntensity(value, lightComponent)
+    DirectionLightEngineService.setDirectionLightIntensity(
+      value,
+      lightComponent,
+    )
     |> StateLogicService.getAndRefreshEngineStateWithFunc;
 };
 
 let render = ((store, dispatchFunc), lightComponent, _self) =>
   <article className="wonder-direction-light">
     <PickColorComponent
-      label="color"
+      label="Color"
       getColorFunc=(Method.getColor(lightComponent))
       changeColorFunc=(Method.changeColor(lightComponent))
       closeColorPickFunc=(
         Method.closeColorPick((store, dispatchFunc), lightComponent)
       )
     />
-    <div className="light-intensity">
-        <MainEditorFloatInputBaseComponent
-          label="Intensity"
-          getComponentValueFunc=(
-            DirectionLightEngineService.getDirectionLightIntensity(
-              lightComponent,
-            )
-          )
-          changeComponentValueFunc=(Method.changeIntensity(lightComponent))
-          blurValueFunc=(
-            Method.blurIntensityEvent((store, dispatchFunc), lightComponent)
-          )
-        />
-      </div>
+    <MainEditorFloatInputBaseComponent
+      label="Intensity"
+      getComponentValueFunc=(
+        DirectionLightEngineService.getDirectionLightIntensity(lightComponent)
+      )
+      changeComponentValueFunc=(Method.changeIntensity(lightComponent))
+      blurValueFunc=(
+        Method.blurIntensityEvent((store, dispatchFunc), lightComponent)
+      )
+    />
   </article>;
 
 let make =

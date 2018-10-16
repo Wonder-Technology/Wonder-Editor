@@ -21,7 +21,7 @@ module Method = {
 
   let buildColorPickComponent = ((store, dispatchFunc), lightComponent) =>
     <PickColorComponent
-      label="color : "
+      label="Color"
       getColorFunc=(getColor(lightComponent))
       changeColorFunc=(changeColor(lightComponent))
       closeColorPickFunc=(
@@ -30,99 +30,89 @@ module Method = {
     />;
 
   let buildIntensityComponent = ((store, dispatchFunc), lightComponent) =>
-    <div className="light-intensity">
-      <MainEditorFloatInputBaseComponent
-        label="Intensity"
-        getComponentValueFunc=(
-          PointLightEngineService.getPointLightIntensity(lightComponent)
+    <MainEditorFloatInputBaseComponent
+      label="Intensity"
+      getComponentValueFunc=(
+        PointLightEngineService.getPointLightIntensity(lightComponent)
+      )
+      changeComponentValueFunc=(
+        MainEditorPointLightUtils.changeIntensity(lightComponent)
+      )
+      blurValueFunc=(
+        MainEditorPointLightUtils.blurIntensityEvent(
+          (store, dispatchFunc),
+          lightComponent,
         )
-        changeComponentValueFunc=(
-          MainEditorPointLightUtils.changeIntensity(lightComponent)
-        )
-        blurValueFunc=(
-          MainEditorPointLightUtils.blurIntensityEvent(
-            (store, dispatchFunc),
-            lightComponent,
-          )
-        )
-      />
-    </div>;
+      )
+    />;
 
   let buildConstantComponent = ((store, dispatchFunc), lightComponent) =>
-    <div className="light-constant">
-      <MainEditorFloatInputBaseComponent
-        label="Constant"
-        getComponentValueFunc=(
-          PointLightEngineService.getPointLightConstant(lightComponent)
+    <MainEditorFloatInputBaseComponent
+      label="Constant"
+      getComponentValueFunc=(
+        PointLightEngineService.getPointLightConstant(lightComponent)
+      )
+      changeComponentValueFunc=(
+        MainEditorPointLightUtils.changeConstant(lightComponent)
+      )
+      blurValueFunc=(
+        MainEditorPointLightUtils.blurConstantEvent(
+          (store, dispatchFunc),
+          lightComponent,
         )
-        changeComponentValueFunc=(
-          MainEditorPointLightUtils.changeConstant(lightComponent)
-        )
-        blurValueFunc=(
-          MainEditorPointLightUtils.blurConstantEvent(
-            (store, dispatchFunc),
-            lightComponent,
-          )
-        )
-      />
-    </div>;
+      )
+    />;
 
   let buildLinearComponent = ((store, dispatchFunc), lightComponent) =>
-    <div className="light-linear">
-      <MainEditorFloatInputBaseComponent
-        label="Linear"
-        getComponentValueFunc=(
-          PointLightEngineService.getPointLightLinear(lightComponent)
+    <MainEditorFloatInputBaseComponent
+      label="Linear"
+      getComponentValueFunc=(
+        PointLightEngineService.getPointLightLinear(lightComponent)
+      )
+      changeComponentValueFunc=(
+        MainEditorPointLightUtils.changeLinear(lightComponent)
+      )
+      blurValueFunc=(
+        MainEditorPointLightUtils.blurLinearEvent(
+          (store, dispatchFunc),
+          lightComponent,
         )
-        changeComponentValueFunc=(
-          MainEditorPointLightUtils.changeLinear(lightComponent)
-        )
-        blurValueFunc=(
-          MainEditorPointLightUtils.blurLinearEvent(
-            (store, dispatchFunc),
-            lightComponent,
-          )
-        )
-      />
-    </div>;
+      )
+    />;
 
   let buildQuadraticComponent = ((store, dispatchFunc), lightComponent) =>
-    <div className="light-quadratic">
-      <MainEditorFloatInputBaseComponent
-        label="Quadratic"
-        getComponentValueFunc=(
-          PointLightEngineService.getPointLightQuadratic(lightComponent)
+    <MainEditorFloatInputBaseComponent
+      label="Quadratic"
+      getComponentValueFunc=(
+        PointLightEngineService.getPointLightQuadratic(lightComponent)
+      )
+      changeComponentValueFunc=(
+        MainEditorPointLightUtils.changeQuadratic(lightComponent)
+      )
+      blurValueFunc=(
+        MainEditorPointLightUtils.blurQuadraticEvent(
+          (store, dispatchFunc),
+          lightComponent,
         )
-        changeComponentValueFunc=(
-          MainEditorPointLightUtils.changeQuadratic(lightComponent)
-        )
-        blurValueFunc=(
-          MainEditorPointLightUtils.blurQuadraticEvent(
-            (store, dispatchFunc),
-            lightComponent,
-          )
-        )
-      />
-    </div>;
+      )
+    />;
 
   let buildRangeComponent = ((store, dispatchFunc), lightComponent) =>
-    <div className="light-range">
-      <MainEditorFloatInputBaseComponent
-        label="Range"
-        getComponentValueFunc=(
-          PointLightEngineService.getPointLightRange(lightComponent)
+    <MainEditorFloatInputBaseComponent
+      label="Range"
+      getComponentValueFunc=(
+        PointLightEngineService.getPointLightRange(lightComponent)
+      )
+      changeComponentValueFunc=(
+        MainEditorPointLightUtils.changeRange(lightComponent)
+      )
+      blurValueFunc=(
+        MainEditorPointLightUtils.blurRangeEvent(
+          (store, dispatchFunc),
+          lightComponent,
         )
-        changeComponentValueFunc=(
-          MainEditorPointLightUtils.changeRange(lightComponent)
-        )
-        blurValueFunc=(
-          MainEditorPointLightUtils.blurRangeEvent(
-            (store, dispatchFunc),
-            lightComponent,
-          )
-        )
-      />
-    </div>;
+      )
+    />;
 };
 
 let render = ((store, dispatchFunc), lightComponent, _self) =>

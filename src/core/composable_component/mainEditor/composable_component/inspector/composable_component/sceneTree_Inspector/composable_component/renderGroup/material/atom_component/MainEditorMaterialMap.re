@@ -64,7 +64,7 @@ module Method = {
       getMapFunc(materialComponent)
       |> StateLogicService.getEngineStateToGetData
     ) {
-    | None => <img src="./public/img/null.jpg" />
+    | None => ReasonReact.null
     | Some(map) =>
       let source =
         BasicSourceTextureEngineService.unsafeGetSource(

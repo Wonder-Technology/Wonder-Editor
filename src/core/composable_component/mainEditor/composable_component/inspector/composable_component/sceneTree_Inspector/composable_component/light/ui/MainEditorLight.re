@@ -68,17 +68,15 @@ let render =
       selectedKey=(state.lightType |> convertLightTypeToInt)
       onChange=(value => send(ChangeLight(value)))
     />
-    <div className="">
-      (
-        MainEditorLightUtils.handleSpecificFuncByLightType(
-          state.lightType,
-          (
-            Method.renderDirectionLight((store, dispatchFunc)),
-            Method.renderPointLight((store, dispatchFunc)),
-          ),
-        )
+    (
+      MainEditorLightUtils.handleSpecificFuncByLightType(
+        state.lightType,
+        (
+          Method.renderDirectionLight((store, dispatchFunc)),
+          Method.renderPointLight((store, dispatchFunc)),
+        ),
       )
-    </div>
+    )
   </article>;
 
 let make = (~store, ~dispatchFunc, _children) => {

@@ -20,6 +20,8 @@
         @include inspectorItem("wonder-inspector-light");
         @import "sceneTree/inspectorLight";
 
+        @include inspectorItem("wonder-inspector-arcballCameraController");
+
         @import "sceneTree/inspectorAddableComponent";
     }
     .wonder-inspector-assetTree{

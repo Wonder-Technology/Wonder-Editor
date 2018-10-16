@@ -31,6 +31,7 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    border-radius: 10px;
                 }
                 .color-select{
                     flex:initial;
@@ -49,8 +50,8 @@
                 display: flex;
                 .texture-img{
                     flex:initial;
-                    width:25px;
-                    height:25px;
+                    width:23px;
+                    height:23px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
