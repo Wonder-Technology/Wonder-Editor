@@ -1,7 +1,7 @@
 module Method = {
   let renderWrapSSelect = textureComponent =>
     <Select
-      label="WrapS Mode"
+      label="WrapS"
       options=(TextureWrapUtils.getWrapOptions())
       selectedKey=(
         BasicSourceTextureEngineService.getWrapS(textureComponent)
@@ -13,7 +13,7 @@ module Method = {
 
   let renderWrapTSelect = textureComponent =>
     <Select
-      label="WrapT Mode"
+      label="WrapT"
       options=(TextureWrapUtils.getWrapOptions())
       selectedKey=(
         BasicSourceTextureEngineService.getWrapT(textureComponent)
@@ -24,7 +24,7 @@ module Method = {
     />;
   let renderMagFilterSelect = textureComponent =>
     <Select
-      label="Mag Filter Mode"
+      label="Mag Filter"
       options=(TextureFilterUtils.getFilterOptions())
       selectedKey=(
         BasicSourceTextureEngineService.getMagFilter(textureComponent)
@@ -36,7 +36,7 @@ module Method = {
 
   let renderMinFilterSelect = textureComponent =>
     <Select
-      label="Min Filter Mode"
+      label="Min Filter"
       options=(TextureFilterUtils.getFilterOptions())
       selectedKey=(
         BasicSourceTextureEngineService.getMinFilter(textureComponent)

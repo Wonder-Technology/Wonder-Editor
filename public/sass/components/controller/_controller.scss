@@ -18,16 +18,33 @@
                 flex-direction: row;
                 .component-item{
                     flex:initial;
-                    .item-title{
-                        display: inline-block;
-                        width:40px;
-                        height:100%;
-                        line-height: 100%;
-                        color:#ffffff;
-                        font-weight: normal;
-                        display:flex;
-                        align-items: center;
-                        justify-content: center;
+                    
+                    .inspector-item{
+                        display: flex;
+                        .item-header{
+                            height:25px;
+                            line-height: 25px;
+                        }
+                        .item-content{
+                            flex:initial;
+                            display: flex;
+                            flex-direction: row;
+                            margin-left:10px;
+                            align-items: center;
+                            justify-content: center;
+                            .color-hex{
+                                border-radius: 10px;
+                                width:40px;
+                                height:15px;
+                            }
+                            .color-select{
+                                margin-left:10px;
+                                img{
+                                    width:15px;
+                                    height:15px;
+                                }
+                            }
+                        }
                     }
                 }
             }

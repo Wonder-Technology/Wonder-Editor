@@ -24,7 +24,7 @@ let createCamera = (editorState, engineState) => {
 
   let engineState =
     engineState
-    |> GameObjectEngineService.setGameObjectName("camera", gameObject);
+    |> GameObjectEngineService.setGameObjectName("Camera", gameObject);
 
   let (editorState, engineState) =
     (editorState, engineState)

@@ -37,7 +37,7 @@ module Method = {
       <div className="component-item">
         <PickColorComponent
           key=(DomHelper.getRandomKey())
-          label="ambient color : "
+          label="Ambient Color : "
           getColorFunc=getColor
           changeColorFunc=changeColor
           closeColorPickFunc=(closeColorPick((store, dispatchFunc), ()))

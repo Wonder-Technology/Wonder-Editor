@@ -212,7 +212,7 @@ let render =
     )
     <div className="material-value">
       <Select
-        label="shader"
+        label="Shader"
         options=(MainEditorMaterialUtils.getMaterialOptions())
         selectedKey=(
           state.materialType |> MainEditorMaterialType.convertMaterialTypeToInt

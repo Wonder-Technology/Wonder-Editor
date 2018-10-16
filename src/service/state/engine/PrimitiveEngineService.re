@@ -25,7 +25,7 @@ let createBox =
     );
 
   let engineState =
-    engineState |> GameObjectEngineService.setGameObjectName("cube", obj);
+    engineState |> GameObjectEngineService.setGameObjectName("Cube", obj);
 
   let (editorState, engineState) =
     (editorState, engineState)

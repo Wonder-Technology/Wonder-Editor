@@ -30,7 +30,7 @@ let render =
     ((store, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article key="MainEditorMeshRenderer" className="wonder-mesh-renderer">
     <Select
-      label="draw mode"
+      label="Draw mode"
       options=(MainEditorMeshRendererUtils.getDrawModeOptions())
       selectedKey=state.drawMode
       onChange=(value => send(ChangeMode(value)))

@@ -131,16 +131,27 @@ html, body {
           flex-direction: row; }
           .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item {
             flex: initial; }
-            .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item .item-title {
-              display: inline-block;
-              width: 40px;
-              height: 100%;
-              line-height: 100%;
-              color: #ffffff;
-              font-weight: normal;
-              display: flex;
-              align-items: center;
-              justify-content: center; }
+            .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item .inspector-item {
+              display: flex; }
+              .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item .inspector-item .item-header {
+                height: 25px;
+                line-height: 25px; }
+              .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item .inspector-item .item-content {
+                flex: initial;
+                display: flex;
+                flex-direction: row;
+                margin-left: 10px;
+                align-items: center;
+                justify-content: center; }
+                .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item .inspector-item .item-content .color-hex {
+                  border-radius: 10px;
+                  width: 40px;
+                  height: 15px; }
+                .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item .inspector-item .item-content .color-select {
+                  margin-left: 10px; }
+                  .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item .inspector-item .item-content .color-select img {
+                    width: 15px;
+                    height: 15px; }
       .wonder-app-component .wonder-controller-component .header-controller .controller-runAndStop {
         flex: initial;
         width: 4%;
