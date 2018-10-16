@@ -20,6 +20,20 @@ module Rename = {
       name,
     );
 
+  let renameAssetMaterialNode =
+      (
+        ~store=TestTool.buildEmptyAppState(),
+        ~dispatchFunc=TestTool.getDispatch(),
+        ~nodeId,
+        ~name,
+        (),
+      ) =>
+    _renameAssetNode(
+      (store, dispatchFunc),
+      (nodeId, AssetNodeType.Material),
+      name,
+    );
+
   let renameAssetFolderNode =
       (
         ~store=TestTool.buildEmptyAppState(),

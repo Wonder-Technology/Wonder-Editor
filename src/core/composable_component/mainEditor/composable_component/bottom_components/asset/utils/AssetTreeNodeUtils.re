@@ -20,8 +20,19 @@ let addFolderIntoNodeMap = (index, parentNodeId, (editorState, engineState)) =>
        parentNodeId,
        (editorState, engineState),
      )
-  |> AssetFolderNodeMapEditorService.buildFolderResult(parentNodeId)
+  |> AssetFolderNodeMapEditorService.buildFolderNodeResult(parentNodeId)
   |> AssetFolderNodeMapEditorService.setResult(index, _, editorState);
+
+let addMaterialIntoNodeMap = (index, parentNodeId, material, editorState) =>
+  editorState
+  |> AssetMaterialNodeMapEditorService.setResult(
+       index,
+       AssetMaterialNodeMapEditorService.buildMaterialNodeResult(
+         parentNodeId,
+         AssetMaterialDataType.LightMaterial,
+         material,
+       ),
+     );
 
 let initRootAssetTree = (editorState, engineState) =>
   switch (AssetTreeRootEditorService.getAssetTreeRoot(editorState)) {

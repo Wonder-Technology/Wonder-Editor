@@ -133,7 +133,7 @@ let buildAssetTree = () =>
       dragImg=(DomHelper.createElement("img"))
     />,
   );
-let buildAssetChildrenNode = debounceTime =>
+let buildAssetChildrenNode = (~debounceTime=10, ()) =>
   ReactTestRenderer.create(
     <MainEditorAssetChildrenNode
       store=(TestTool.buildEmptyAppState())

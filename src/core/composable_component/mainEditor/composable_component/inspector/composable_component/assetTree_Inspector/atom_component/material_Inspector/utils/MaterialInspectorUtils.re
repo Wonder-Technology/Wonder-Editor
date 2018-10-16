@@ -62,12 +62,6 @@ let _disposeSourceMaterialIfHasGameObjects =
            engineState,
          )
     }
-/* =======
-    OperateLightMaterialLogicService.createLightMaterialAndSetName(
-      OperateLightMaterialLogicService.getMaterialDefaultName(),
-      engineState,
-    )
->>>>>>> origin/dev */
   };
 
 let _replaceMaterial =

@@ -12,11 +12,15 @@ let setMaterialNodeMap = (materialNodeMap, editorState) => {
     |> MaterialNodeMapAssetService.setMaterialNodeMap(materialNodeMap),
 };
 
-let setResult = (index, result, editorState) => {
+let unsafeGetResult = (nodeId, editorState) =>
+  editorState.assetRecord
+  |> MaterialNodeMapAssetService.unsafeGetResult(nodeId);
+
+let setResult = (nodeId, result, editorState) => {
   ...editorState,
   assetRecord:
     editorState.assetRecord
-    |> MaterialNodeMapAssetService.setResult(index, result),
+    |> MaterialNodeMapAssetService.setResult(nodeId, result),
 };
 
 let getMaterialParentId = (nodeId, materialNodeMap) =>

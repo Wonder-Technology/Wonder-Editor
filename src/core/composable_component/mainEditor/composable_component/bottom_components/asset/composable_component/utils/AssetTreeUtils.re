@@ -25,7 +25,7 @@ let dragNodeToFolderFunc = AssetDragNodeToFolderEventHandler.MakeEventHandler.pu
 
 let addFolderIntoNodeMap = (index, name, parentNodeId, editorState) =>
   name
-  |> AssetFolderNodeMapEditorService.buildFolderResult(parentNodeId)
+  |> AssetFolderNodeMapEditorService.buildFolderNodeResult(parentNodeId)
   |> AssetFolderNodeMapEditorService.setResult(index, _, editorState);
 
 let rebuildRootAssetTree = (parentNodeId, pathName, editorState) =>

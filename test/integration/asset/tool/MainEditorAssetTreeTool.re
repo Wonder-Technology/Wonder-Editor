@@ -142,6 +142,70 @@ module BuildAssetTree = {
       textureNodeIdArr |> ArrayService.unsafeGetNth(1);
   };
 
+  module Material = {
+    type assetTreeData = {
+      root: int,
+      materialNodeIdArr: array(int),
+    };
+
+    let buildOneMaterialAssetTree = () => {
+      let (rootId, editorState) =
+        StateEditorService.getState() |> _increaseIndex;
+      let engineState = StateEngineService.unsafeGetState();
+
+      let (id1, editorState) = editorState |> _increaseIndex;
+
+      let (newMaterial, engineState) =
+        OperateLightMaterialLogicService.createLightMaterialAndSetName(
+          "material1",
+          engineState,
+        );
+
+      editorState
+      |> AssetTreeRootEditorService.setAssetTreeRoot({
+           nodeId: rootId,
+           type_: Folder,
+           isShowChildren: true,
+           children: [||],
+         })
+      |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+           rootId,
+           None,
+           _,
+           engineState,
+         )
+      |> MainEditorAssetTreeNodeTool.addMaterialIntoNodeMap(
+           id1,
+           rootId |. Some,
+           newMaterial,
+         )
+      |> AssetTreeRootEditorService.setAssetTreeRoot({
+           nodeId: rootId,
+           type_: Folder,
+           isShowChildren: true,
+           children: [|
+             {
+               nodeId: id1,
+               type_: Material,
+               isShowChildren: true,
+               children: [||],
+             },
+           |],
+         })
+      |> StateEditorService.setState
+      |> ignore;
+
+      {root: rootId, materialNodeIdArr: [|id1|]};
+    };
+
+    let getRootNodeId = ({root}) => root;
+
+    let getFirstMaterialNodeId = ({root, materialNodeIdArr}) =>
+      materialNodeIdArr |> ArrayService.unsafeGetFirst;
+    /* let getSecondMaterialNodeId = ({root, materialNodeIdArr}) =>
+       materialNodeIdArr |> ArrayService.unsafeGetNth(1); */
+  };
+
   module Folder = {
     type layerData = {folderNodeIdArr: array(int)};
 
@@ -408,7 +472,7 @@ module BuildAssetTree = {
         thirdLayer: layerData,
       };
 
-      let buildFolderAndTextureAssetTree = () => {
+      let buildFolderAndTextureAndMaterialAssetTree = () => {
         let (rootId, editorState) =
           StateEditorService.getState() |> _increaseIndex;
         let engineState = StateEngineService.unsafeGetState();
@@ -418,6 +482,19 @@ module BuildAssetTree = {
         let (id3, editorState) = editorState |> _increaseIndex;
         let (id4, editorState) = editorState |> _increaseIndex;
         let (id5, editorState) = editorState |> _increaseIndex;
+        let (id6, editorState) = editorState |> _increaseIndex;
+        let (id7, editorState) = editorState |> _increaseIndex;
+
+        let (newMaterial1, engineState) =
+          OperateLightMaterialLogicService.createLightMaterialAndSetName(
+            "material1",
+            engineState,
+          );
+        let (newMaterial2, engineState) =
+          OperateLightMaterialLogicService.createLightMaterialAndSetName(
+            "material2",
+            engineState,
+          );
 
         editorState
         |> AssetTreeRootEditorService.setAssetTreeRoot({
@@ -480,6 +557,16 @@ module BuildAssetTree = {
              id2,
              "texture5",
            )
+        |> MainEditorAssetTreeNodeTool.addMaterialIntoNodeMap(
+             id6,
+             id1 |. Some,
+             newMaterial1,
+           )
+        |> MainEditorAssetTreeNodeTool.addMaterialIntoNodeMap(
+             id7,
+             id2 |. Some,
+             newMaterial2,
+           )
         |> AssetTreeRootEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
@@ -489,7 +576,14 @@ module BuildAssetTree = {
                  nodeId: id1,
                  type_: Folder,
                  isShowChildren: true,
-                 children: [||],
+                 children: [|
+                   {
+                     nodeId: id6,
+                     type_: Material,
+                     isShowChildren: true,
+                     children: [||],
+                   },
+                 |],
                },
                {
                  nodeId: id2,
@@ -511,6 +605,12 @@ module BuildAssetTree = {
                    {
                      nodeId: id5,
                      type_: Texture,
+                     isShowChildren: true,
+                     children: [||],
+                   },
+                   {
+                     nodeId: id7,
+                     type_: Material,
                      isShowChildren: true,
                      children: [||],
                    },
@@ -558,6 +658,9 @@ module Select = {
 
   let selectTextureNode = (~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
     selectNode(~nodeType=AssetNodeType.Texture, ~nodeId, ~dispatchFunc, ());
+
+  let selectMaterialNode = (~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
+    selectNode(~nodeType=AssetNodeType.Material, ~nodeId, ~dispatchFunc, ());
 
   let selectFolderNode = (~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
     selectNode(~nodeType=AssetNodeType.Folder, ~nodeId, ~dispatchFunc, ());

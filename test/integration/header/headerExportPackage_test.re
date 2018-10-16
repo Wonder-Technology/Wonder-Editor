@@ -37,7 +37,7 @@ let _ =
       let _prepare = judgeFunc => {
         /* MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore; */
 
-        MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAssetTree()
+        MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAndMaterialAssetTree()
         |> ignore;
 
         let fakeFetchFunc = ExportPackageTool.buildFakeFetch(~sandbox, ());

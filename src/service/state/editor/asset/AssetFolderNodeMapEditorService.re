@@ -33,7 +33,7 @@ let getFolderParentId =
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
   |> (({parentNodeId}) => parentNodeId);
 
-let buildFolderResult = (parentNodeId, name) => {name, parentNodeId};
+let buildFolderNodeResult = (parentNodeId, name) => {name, parentNodeId};
 
 let renameFolderNodeResult = (name, folderNodeResult: folderResultType) => {
   ...folderNodeResult,

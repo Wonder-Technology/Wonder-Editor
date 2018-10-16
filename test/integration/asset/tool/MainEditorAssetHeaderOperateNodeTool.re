@@ -30,6 +30,21 @@ let removeTextureNode =
     (),
   );
 
+let removeMaterialNode =
+    (
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~store=TestTool.buildEmptyAppState(),
+      ~nodeId,
+      (),
+    ) =>
+  removeNode(
+    ~dispatchFunc,
+    ~store,
+    ~nodeId=nodeId,
+    ~nodeType=AssetNodeType.Material,
+    (),
+  );
+
 let removeFolderNode =
     (
       ~dispatchFunc=TestTool.getDispatch(),
@@ -67,3 +82,11 @@ let addFolder =
       (),
     ) =>
   MainEditorAssetHeader.Method.addFolder((store, dispatchFunc), (), ());
+
+let addMaterial =
+    (
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorAssetHeader.Method.addMaterial((store, dispatchFunc), (), ());

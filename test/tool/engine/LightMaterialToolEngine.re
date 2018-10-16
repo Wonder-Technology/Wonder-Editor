@@ -30,3 +30,16 @@ let isAlive = (material, engineState) =>
     material,
     RecordLightMaterialMainService.getRecord(engineState),
   );
+
+let getNewLightMaterial =
+    (~engineState=StateEngineService.unsafeGetState(), ()) => {
+  open Wonderjs.LightMaterialType;
+
+  let {disposedIndexArray, index} as geometryRecord =
+    Wonderjs.RecordLightMaterialMainService.getRecord(engineState);
+
+  let (index, newIndex, disposedIndexArray) =
+    ComponentToolEngine.generateIndex(index, disposedIndexArray);
+
+  index;
+};

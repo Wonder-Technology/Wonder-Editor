@@ -5,6 +5,8 @@ let addFolderIntoNodeMap = (index, parentNodeId, editorState, engineState) =>
     (editorState, engineState),
   );
 
+let addMaterialIntoNodeMap = AssetTreeNodeUtils.addMaterialIntoNodeMap;
+
 let _buildImageObj = src =>
   {"src": src, "getAttribute": prop => src} |> Obj.magic;
 

@@ -89,7 +89,7 @@ let _ =
               EventListenerTool.buildFakeDom()
               |> EventListenerTool.stubGetElementByIdReturnFakeDom;
 
-            BuildComponentTool.buildAssetChildrenNode(10);
+            BuildComponentTool.buildAssetChildrenNode(~debounceTime=10, ());
 
             EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
             Js.Promise.make((~resolve, ~reject) =>
@@ -123,7 +123,7 @@ let _ =
               EventListenerTool.buildFakeDom()
               |> EventListenerTool.stubGetElementByIdReturnFakeDom;
 
-            BuildComponentTool.buildAssetChildrenNode(10);
+            BuildComponentTool.buildAssetChildrenNode(~debounceTime=10, ());
 
             EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
             Js.Promise.make((~resolve, ~reject) =>
@@ -151,7 +151,7 @@ let _ =
               EventListenerTool.buildFakeDom()
               |> EventListenerTool.stubGetElementByIdReturnFakeDom;
 
-            BuildComponentTool.buildAssetChildrenNode(10);
+            BuildComponentTool.buildAssetChildrenNode(~debounceTime=10, ());
 
             EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
             Js.Promise.make((~resolve, ~reject) =>

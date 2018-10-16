@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`test MainEditorMaterialMap 1.load asset wdb;
-      2.drag wdb;
-      3.select wdb;
+exports[`test MainEditorMaterialMap load asset wdb;
+      drag wdb;
+      select wdb;
 
       inspector->material map should show its map 1`] = `
 <article

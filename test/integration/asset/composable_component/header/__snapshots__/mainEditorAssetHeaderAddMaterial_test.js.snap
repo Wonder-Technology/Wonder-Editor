@@ -1,392 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditorAssetHeader->load file test load file test logic test should add into nodeMap test imageBase64Map test show texture image, get it base64 from imageBase64Map 1`] = `
+exports[`MainEditorAssetHeader->add material else add material into specific treeNode test snapshot 1`] = `
 <article
-  className="wonder-asset-component"
+  className="wonder-asset-assetTree"
 >
-  <div
-    className="asset-tree"
+  <ul
+    className="wonder-tree-node"
   >
-    <article
-      className="wonder-asset-header"
-    >
-      <div
-        className="asset-header-item"
-        onClick={[Function]}
-      >
-        <div
-          className="item-canBeClick"
-        >
-          <img
-            src="./public/img/add.png"
-          />
-        </div>
-      </div>
-      <div
-        className="asset-header-item"
-        onClick={[Function]}
-      >
-        <div
-          className="item-notBeClick"
-        >
-          <img
-            src="./public/img/notRemove.png"
-          />
-        </div>
-      </div>
-      <div
-        className="asset-header-item"
-      >
-        <div
-          className="item-canBeClick"
-        >
-          <img
-            src="./public/img/load.png"
-          />
-          <input
-            className="asset-fileLoad"
-            multiple={true}
-            onChange={[Function]}
-            type="file"
-          />
-        </div>
-      </div>
-    </article>
-    <article
-      className="wonder-asset-assetTree"
-    >
-      <ul
-        className="wonder-tree-node"
-      >
-        <li
-          style={
-            Object {
-              "background": "rgba(255,255,255,0.2)",
-            }
-          }
-        >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
-          <div
-            className="item-triangle"
-          />
-          <img
-            className="treeNode-icon"
-            src="./public/img/package.png"
-          />
-          Assets
-        </li>
-      </ul>
-    </article>
-  </div>
-  <article
-    className="wonder-asset-assetChildren"
-  >
-    <article
-      className="wonder-asset-fileBox "
-      onClick={[Function]}
-    >
-      <div
-        className="box-image"
-      >
-        <img
-          onDragStart={[Function]}
-          src="newImgBase64"
-        />
-      </div>
-      <div
-        className="item-text "
-      >
-        <span>
-          loadImg
-        </span>
-      </div>
-    </article>
-  </article>
-</article>
-`;
-
-exports[`MainEditorAssetHeader->load file test load file test snapshot if not select specific treeNode load file should add into root node children 1`] = `
-<article
-  className="wonder-asset-component"
->
-  <div
-    className="asset-tree"
-  >
-    <article
-      className="wonder-asset-header"
-    >
-      <div
-        className="asset-header-item"
-        onClick={[Function]}
-      >
-        <div
-          className="item-canBeClick"
-        >
-          <img
-            src="./public/img/add.png"
-          />
-        </div>
-      </div>
-      <div
-        className="asset-header-item"
-        onClick={[Function]}
-      >
-        <div
-          className="item-notBeClick"
-        >
-          <img
-            src="./public/img/notRemove.png"
-          />
-        </div>
-      </div>
-      <div
-        className="asset-header-item"
-      >
-        <div
-          className="item-canBeClick"
-        >
-          <img
-            src="./public/img/load.png"
-          />
-          <input
-            className="asset-fileLoad"
-            multiple={true}
-            onChange={[Function]}
-            type="file"
-          />
-        </div>
-      </div>
-    </article>
-    <article
-      className="wonder-asset-assetTree"
-    >
-      <ul
-        className="wonder-tree-node"
-      >
-        <li
-          style={
-            Object {
-              "background": "rgba(255,255,255,0.2)",
-            }
-          }
-        >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
-          <div
-            className="item-triangle"
-          />
-          <img
-            className="treeNode-icon"
-            src="./public/img/package.png"
-          />
-          Assets
-        </li>
-      </ul>
-    </article>
-  </div>
-  <article
-    className="wonder-asset-assetChildren"
-  >
-    <article
-      className="wonder-asset-fileBox "
-      onClick={[Function]}
-    >
-      <div
-        className="box-image"
-      >
-        <img
-          onDragStart={[Function]}
-          src="newImgBase64"
-        />
-      </div>
-      <div
-        className="item-text "
-      >
-        <span>
-          loadImg
-        </span>
-      </div>
-    </article>
-  </article>
-</article>
-`;
-
-exports[`MainEditorAssetHeader->load file test load file test snapshot test load zip file test load zip file should rebuild asset and sceneTree component 1`] = `
-<article
-  className="wonder-asset-component"
->
-  <div
-    className="asset-tree"
-  >
-    <article
-      className="wonder-asset-header"
-    >
-      <div
-        className="asset-header-item"
-        onClick={[Function]}
-      >
-        <div
-          className="item-canBeClick"
-        >
-          <img
-            src="./public/img/add.png"
-          />
-        </div>
-      </div>
-      <div
-        className="asset-header-item"
-        onClick={[Function]}
-      >
-        <div
-          className="item-notBeClick"
-        >
-          <img
-            src="./public/img/notRemove.png"
-          />
-        </div>
-      </div>
-      <div
-        className="asset-header-item"
-      >
-        <div
-          className="item-canBeClick"
-        >
-          <img
-            src="./public/img/load.png"
-          />
-          <input
-            className="asset-fileLoad"
-            multiple={true}
-            onChange={[Function]}
-            type="file"
-          />
-        </div>
-      </div>
-    </article>
-    <article
-      className="wonder-asset-assetTree"
-    >
-      <ul
-        className="wonder-tree-node"
-      >
-        <li
-          style={
-            Object {
-              "background": "rgba(255,255,255,0.2)",
-            }
-          }
-        >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
-          <div
-            className="item-triangle"
-            onClick={[Function]}
-          >
-            <img
-              src="./public/img/down.png"
-            />
-          </div>
-          <img
-            className="treeNode-icon"
-            src="./public/img/package.png"
-          />
-          Assets
-        </li>
-        <ul
-          className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
-        >
-          <li
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
-          >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
-            <div
-              className="item-triangle"
-            />
-            <img
-              className="treeNode-icon"
-              src="./public/img/package.png"
-            />
-            newFolder
-          </li>
-        </ul>
-        <ul
-          className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
-        >
-          <li
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
-          >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
-            <div
-              className="item-triangle"
-            />
-            <img
-              className="treeNode-icon"
-              src="./public/img/package.png"
-            />
-            newFolder 1
-          </li>
-        </ul>
-      </ul>
-    </article>
-  </div>
-  <article
-    className="wonder-asset-assetChildren"
-  >
-    <article
-      className="wonder-asset-folderBox"
-      id="folder-2"
+    <li
       style={
         Object {
           "border": "0px",
@@ -396,59 +17,473 @@ exports[`MainEditorAssetHeader->load file test load file test snapshot test load
       <div
         className="item-ground"
         draggable={true}
-        onDragEnd={[Function]}
+        onClick={[Function]}
         onDragEnter={[Function]}
         onDragLeave={[Function]}
         onDragOver={[Function]}
-        onDragStart={[Function]}
         onDrop={[Function]}
       />
       <div
-        className="box-image"
+        className="item-triangle"
+        onClick={[Function]}
       >
         <img
-          src="./public/img/assetPackage.png"
+          src="./public/img/down.png"
         />
       </div>
-      <div
-        className="item-text "
+      <img
+        className="treeNode-icon"
+        src="./public/img/package.png"
+      />
+      Assets
+    </li>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        style={
+          Object {
+            "background": "#5C7EA6",
+          }
+        }
       >
-        <span>
+        <div
+          className="item-ground"
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
+        <div
+          className="item-triangle"
+        />
+        <img
+          className="treeNode-icon"
+          src="./public/img/package.png"
+        />
+        newFolder
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        style={
+          Object {
+            "border": "0px",
+          }
+        }
+      >
+        <div
+          className="item-ground"
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
+        <div
+          className="item-triangle"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <img
+          className="treeNode-icon"
+          src="./public/img/package.png"
+        />
+        newFolder
+      </li>
+      <ul
+        className="wonder-tree-node"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragStart={[Function]}
+      >
+        <li
+          style={
+            Object {
+              "border": "0px",
+            }
+          }
+        >
+          <div
+            className="item-ground"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
+          />
+          <img
+            className="treeNode-icon"
+            src="./public/img/package.png"
+          />
           newFolder
-        </span>
-      </div>
-    </article>
-    <article
-      className="wonder-asset-folderBox"
-      id="folder-3"
-      style={
-        Object {
-          "border": "0px",
-        }
-      }
-    >
-      <div
-        className="item-ground"
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
         draggable={true}
         onDragEnd={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
         onDragStart={[Function]}
-        onDrop={[Function]}
+      >
+        <li
+          style={
+            Object {
+              "border": "0px",
+            }
+          }
+        >
+          <div
+            className="item-ground"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
+          />
+          <img
+            className="treeNode-icon"
+            src="./public/img/package.png"
+          />
+          newFolder
+        </li>
+      </ul>
+    </ul>
+  </ul>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->add material if not select specific treeNode should add material into root treeNode test snapshot 1`] = `
+<article
+  className="wonder-asset-component"
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="wonder-asset-header"
+    >
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/add.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+      >
+        <div
+          className="item-notBeClick"
+        >
+          <img
+            src="./public/img/notRemove.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/load.png"
+          />
+          <input
+            className="asset-fileLoad"
+            multiple={true}
+            onChange={[Function]}
+            type="file"
+          />
+        </div>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-assetTree"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li
+          style={
+            Object {
+              "background": "rgba(255,255,255,0.2)",
+            }
+          }
+        >
+          <div
+            className="item-ground"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
+          />
+          <img
+            className="treeNode-icon"
+            src="./public/img/package.png"
+          />
+          Assets
+        </li>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="wonder-asset-assetChildren"
+  >
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <div
+        className="box-image"
+      >
+        <img
+          onDragStart={[Function]}
+          src="./public/img/mat.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          material1
+        </span>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <div
+        className="box-image"
+      >
+        <img
+          onDragStart={[Function]}
+          src="./public/img/mat.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          New Material
+        </span>
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->add material test name remove first material which use default name;
+          add three material;
+
+          the first new one's name should be removed-material's name;
+                   1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/mat.png"
       />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Material
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/mat.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Material 1
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/mat.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Material 2
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->add material test name test default name 1`] = `
+<article
+  className="wonder-asset-component"
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="wonder-asset-header"
+    >
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/add.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+      >
+        <div
+          className="item-notBeClick"
+        >
+          <img
+            src="./public/img/notRemove.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/load.png"
+          />
+          <input
+            className="asset-fileLoad"
+            multiple={true}
+            onChange={[Function]}
+            type="file"
+          />
+        </div>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-assetTree"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li
+          style={
+            Object {
+              "background": "rgba(255,255,255,0.2)",
+            }
+          }
+        >
+          <div
+            className="item-ground"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
+          />
+          <img
+            className="treeNode-icon"
+            src="./public/img/package.png"
+          />
+          Assets
+        </li>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="wonder-asset-assetChildren"
+  >
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
       <div
         className="box-image"
       >
         <img
-          src="./public/img/assetPackage.png"
+          onDragStart={[Function]}
+          src="./public/img/mat.png"
         />
       </div>
       <div
         className="item-text "
       >
         <span>
-          newFolder 1
+          material1
         </span>
       </div>
     </article>
@@ -461,34 +496,14 @@ exports[`MainEditorAssetHeader->load file test load file test snapshot test load
       >
         <img
           onDragStart={[Function]}
-          src="./public/img/12.jpg"
+          src="./public/img/mat.png"
         />
       </div>
       <div
         className="item-text "
       >
         <span>
-          newJson
-        </span>
-      </div>
-    </article>
-    <article
-      className="wonder-asset-fileBox "
-      onClick={[Function]}
-    >
-      <div
-        className="box-image"
-      >
-        <img
-          onDragStart={[Function]}
-          src="./public/img/wdb.png"
-        />
-      </div>
-      <div
-        className="item-text "
-      >
-        <span>
-          BoxTexture
+          New Material
         </span>
       </div>
     </article>
