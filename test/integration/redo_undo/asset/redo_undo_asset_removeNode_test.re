@@ -10,7 +10,7 @@ let _ =
   describe("redo_undo: asset remove node", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let _simulateAddFolderTwice = () => {
+    let _simulateTwiceRemoveFolder = () => {
       let assetTreeData =
         MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildTwoFolderAssetTree();
 
@@ -50,7 +50,7 @@ let _ =
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,
       "prepare first step: set currentSceneTreeNode",
-      (_simulateAddFolderTwice, _beforeEach, _afterEach),
+      (_simulateTwiceRemoveFolder, _beforeEach, _afterEach),
       BuildComponentTool.buildAssetComponent,
     );
   });

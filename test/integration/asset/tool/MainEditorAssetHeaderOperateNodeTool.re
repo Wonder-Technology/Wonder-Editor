@@ -8,7 +8,7 @@ let removeNode =
     ) => {
   MainEditorAssetNodeTool.setCurrentNodeData(nodeId, nodeType);
 
-  AssetHeaderRemoveNodeEventHandler.CustomEventHandler.handleSelfLogic(
+  MainEditorAssetHeader.Method.removeAssetNode(
     (store, dispatchFunc),
     (),
     (),

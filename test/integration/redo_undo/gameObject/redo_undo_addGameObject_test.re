@@ -10,7 +10,7 @@ let _ =
   describe("redo_undo: add gameObject", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let _simulateAddGameObjectTwice = () => {
+    let _simulateTwiceAddGameObject = () => {
       MainEditorSceneTreeHeaderTool.addBox();
       MainEditorSceneTreeHeaderTool.addEmptyGameObject();
     };
@@ -28,7 +28,7 @@ let _ =
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,
       "prepare first step: set currentSceneTreeNode",
-      (_simulateAddGameObjectTwice, _beforeEach, () => ()),
+      (_simulateTwiceAddGameObject, _beforeEach, () => ()),
       BuildComponentForCurryTool.buildSceneTree,
     );
   });

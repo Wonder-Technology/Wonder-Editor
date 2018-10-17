@@ -7,15 +7,15 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("redo_undo: asset add folder", () => {
+  describe("redo_undo: asset add material", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let _simulateTwiceAddFolder = () => {
+    let _simulateTwiceAddMaterial = () => {
       let assetTreeData =
-        MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
+        MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
 
-      MainEditorAssetHeaderOperateNodeTool.addFolder();
-      MainEditorAssetHeaderOperateNodeTool.addFolder();
+      MainEditorAssetHeaderOperateNodeTool.addMaterial();
+      MainEditorAssetHeaderOperateNodeTool.addMaterial();
     };
 
     let _beforeEach = () => {
@@ -37,7 +37,7 @@ let _ =
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,
       "prepare first step: set currentSceneTreeNode",
-      (_simulateTwiceAddFolder, _beforeEach, _afterEach),
+      (_simulateTwiceAddMaterial, _beforeEach, _afterEach),
       BuildComponentTool.buildAssetComponent,
     );
   });

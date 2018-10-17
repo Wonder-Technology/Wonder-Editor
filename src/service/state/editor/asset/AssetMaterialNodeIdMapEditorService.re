@@ -21,7 +21,7 @@ let remove = (materialComponent, editorState) => {
     materialNodeIdMap:
       editorState.assetRecord.materialNodeIdMap
       |> Obj.magic
-      |> WonderCommonlib.SparseMapService.deleteVal(materialComponent)
+      |> SparseMapService.immutableDeleteVal(materialComponent)
       |> Obj.magic,
   },
 };

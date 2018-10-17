@@ -14,6 +14,16 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("prepare first step: set currentSceneTreeNode", () => {
+      let _simulateTwiceDisposeGameObject = () => {
+        MainEditorSceneTool.setSecondBoxToBeCurrentSceneTreeNode();
+
+        MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
+
+        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+
+        MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
+      };
+
       beforeEach(() => {
         MainEditorSceneTool.initStateWithJob(
           ~sandbox,
@@ -42,21 +52,13 @@ let _ =
           MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
         );
       });
-      let _simulateDisposeGameObjectTwice = () => {
-        MainEditorSceneTool.setSecondBoxToBeCurrentSceneTreeNode();
 
-        MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
-
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
-
-        MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
-      };
       describe(
         "test operate disposeGameObject(because the set currentSceneTreeNode operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject)",
         () => {
           describe("test undo operate", () => {
             test("test not undo", () => {
-              _simulateDisposeGameObjectTwice();
+              _simulateTwiceDisposeGameObject();
 
               BuildComponentTool.buildSceneTree(
                 TestTool.buildAppStateSceneGraphFromEngine(),
@@ -65,7 +67,7 @@ let _ =
             });
             describe("test undo one step", () => {
               test("undo step which from second to first", () => {
-                _simulateDisposeGameObjectTwice();
+                _simulateTwiceDisposeGameObject();
 
                 RedoUndoTool.undoHistoryState();
 
@@ -76,7 +78,7 @@ let _ =
               });
               describe("test undo two step", () =>
                 test("step which from second to zero", () => {
-                  _simulateDisposeGameObjectTwice();
+                  _simulateTwiceDisposeGameObject();
 
                   RedoUndoTool.undoHistoryState();
                   RedoUndoTool.undoHistoryState();
@@ -94,7 +96,7 @@ let _ =
               test(
                 "undo step which from second to zero,redo step which from zero to first",
                 () => {
-                _simulateDisposeGameObjectTwice();
+                _simulateTwiceDisposeGameObject();
 
                 RedoUndoTool.undoHistoryState();
                 RedoUndoTool.undoHistoryState();
@@ -110,7 +112,7 @@ let _ =
               test(
                 "undo step which from second to zero,redo step which from zero to second",
                 () => {
-                _simulateDisposeGameObjectTwice();
+                _simulateTwiceDisposeGameObject();
                 RedoUndoTool.undoHistoryState();
                 RedoUndoTool.undoHistoryState();
                 RedoUndoTool.redoHistoryState();

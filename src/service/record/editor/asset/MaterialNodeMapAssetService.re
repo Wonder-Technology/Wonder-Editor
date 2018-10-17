@@ -24,6 +24,6 @@ let remove = (index, assetRecord) => {
   materialNodeMap:
     assetRecord.materialNodeMap
     |> Obj.magic
-    |> WonderCommonlib.SparseMapService.deleteVal(index)
+    |> SparseMapService.immutableDeleteVal(index)
     |> Obj.magic,
 };
