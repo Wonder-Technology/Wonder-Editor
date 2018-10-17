@@ -12,23 +12,23 @@ let _getFolderDefaultName = (index, editorState) =>
   index === (editorState |> AssetTreeRootEditorService.getRootTreeNodeId) ?
     getAssetTreeRootName() : getDefaultFolderName();
 
-let addFolderIntoNodeMap = (index, parentNodeId, (editorState, engineState)) =>
+let addFolderIntoNodeMap = (index, parentFolderNodeId, (editorState, engineState)) =>
   editorState
   |> _getFolderDefaultName(index)
   |. AssetUtils.getUniqueTreeNodeName(
        Folder,
-       parentNodeId,
+       parentFolderNodeId,
        (editorState, engineState),
      )
-  |> AssetFolderNodeMapEditorService.buildFolderNodeResult(parentNodeId)
+  |> AssetFolderNodeMapEditorService.buildFolderNodeResult(parentFolderNodeId)
   |> AssetFolderNodeMapEditorService.setResult(index, _, editorState);
 
-let addMaterialIntoNodeMap = (index, parentNodeId, material, editorState) =>
+let addMaterialIntoNodeMap = (index, parentFolderNodeId, material, editorState) =>
   editorState
   |> AssetMaterialNodeMapEditorService.setResult(
        index,
        AssetMaterialNodeMapEditorService.buildMaterialNodeResult(
-         parentNodeId,
+         parentFolderNodeId,
          AssetMaterialDataType.LightMaterial,
          material,
        ),
@@ -128,7 +128,7 @@ let createNodeAndAddToTargetNodeChildren =
 let handleJsonType =
     (
       (fileName, fileResult),
-      (newIndex, parentNodeId),
+      (newIndex, parentFolderNodeId),
       (editorState, engineState),
       (),
     ) => {
@@ -141,16 +141,16 @@ let handleJsonType =
          baseName
          |. AssetUtils.getUniqueTreeNodeName(
               Json,
-              parentNodeId |. Some,
+              parentFolderNodeId |. Some,
               (editorState, engineState),
             )
          |> AssetJsonNodeMapEditorService.buildJsonNodeResult(
               extName,
               fileResult,
-              parentNodeId |. Some,
+              parentFolderNodeId |. Some,
             ),
        )
-    |> createNodeAndAddToTargetNodeChildren(parentNodeId, newIndex, Json)
+    |> createNodeAndAddToTargetNodeChildren(parentFolderNodeId, newIndex, Json)
     |> StateEditorService.setState;
 
   make((~resolve, ~reject) => resolve(. editorState));
@@ -191,7 +191,7 @@ let _setImageName = (image, name) => {
 let handleImageType =
     (
       (baseName, fileName, imgBase64),
-      (newIndex, parentNodeId, textureComponent),
+      (newIndex, parentFolderNodeId, textureComponent),
       (editorState, engineState),
     ) =>
   make((~resolve, ~reject) =>
@@ -253,7 +253,7 @@ let handleImageType =
             )
           };
 
-        WonderLog.Log.print(("parentNodeId: ", parentNodeId)) |> ignore;
+        WonderLog.Log.print(("parentFolderNodeId: ", parentFolderNodeId)) |> ignore;
 
         let editorState =
           editorState
@@ -261,12 +261,12 @@ let handleImageType =
                newIndex,
                AssetTextureNodeMapEditorService.buildTextureNodeResult(
                  textureComponent,
-                 parentNodeId |. Some,
+                 parentFolderNodeId |. Some,
                  imageId,
                ),
              )
           |> createNodeAndAddToTargetNodeChildren(
-               parentNodeId,
+               parentFolderNodeId,
                newIndex,
                Texture,
              )
@@ -278,7 +278,7 @@ let handleImageType =
   );
 
 let handleAssetWDBType =
-    ((fileName, wdbArrayBuffer), (newIndex, parentNodeId), editorState, ()) => {
+    ((fileName, wdbArrayBuffer), (newIndex, parentFolderNodeId), editorState, ()) => {
   let (baseName, extName) = FileNameService.getBaseNameAndExtName(fileName);
   let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 

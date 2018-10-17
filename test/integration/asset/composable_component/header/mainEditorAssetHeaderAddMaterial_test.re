@@ -48,11 +48,11 @@ let _ =
         test("the added material parent node should be root", () => {
           let (
             assetTreeData,
-            {parentNodeId}: AssetNodeType.materialResultType,
+            {parentFolderNodeId}: AssetNodeType.materialResultType,
           ) =
             _prepareAndExecAndGetMaterialNode();
 
-          parentNodeId
+          parentFolderNodeId
           |> OptionService.unsafeGet
           |>
           expect == MainEditorAssetTreeTool.BuildAssetTree.Material.getRootNodeId(

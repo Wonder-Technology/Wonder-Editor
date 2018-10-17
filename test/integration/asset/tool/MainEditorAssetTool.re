@@ -41,10 +41,10 @@ let buildFakeImage = [%bs.raw
 |}
 ];
 
-let _buildJsonResult = parentNodeId => {
+let _buildJsonResult = parentFolderNodeId => {
   name: "newJson",
   postfix: ".json",
-  parentNodeId,
+  parentFolderNodeId,
   jsonResult: "json result",
 };
 let _buildImageObj = src =>

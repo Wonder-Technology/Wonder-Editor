@@ -23,13 +23,13 @@ type nodeResultType = {
 
 type folderResultType = {
   name: string,
-  parentNodeId: option(int),
+  parentFolderNodeId: option(int),
 };
 
 type jsonResultType = {
   name: string,
   postfix: string,
-  parentNodeId: option(int),
+  parentFolderNodeId: option(int),
   jsonResult: string,
 };
 
@@ -42,19 +42,19 @@ type imageResultType = {
 type textureResultType = {
   textureComponent: int,
   imageId: int,
-  parentNodeId: option(int),
+  parentFolderNodeId: option(int),
 };
 
 type wdbResultType = {
   name: string,
   postfix: string,
-  parentNodeId: option(int),
+  parentFolderNodeId: option(int),
   wdbArrayBuffer: Js.Typed_array.ArrayBuffer.t,
   wdbGameObject: int,
 };
 
 type materialResultType = {
-  parentNodeId: option(int),
+  parentFolderNodeId: option(int),
   type_: AssetMaterialDataType.materialType,
   materialComponent: int,
 };

@@ -32,12 +32,12 @@ let getJsonTotalName = (currentNodeId, jsonNodeMap) =>
 let getJsonParentId = (currentNodeId, jsonNodeMap) =>
   jsonNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
-  |> (({parentNodeId}: jsonResultType) => parentNodeId);
+  |> (({parentFolderNodeId}: jsonResultType) => parentFolderNodeId);
 
-let buildJsonNodeResult = (postfix, fileResult, parentNodeId, name) => {
+let buildJsonNodeResult = (postfix, fileResult, parentFolderNodeId, name) => {
   name,
   postfix,
-  parentNodeId,
+  parentFolderNodeId,
   jsonResult: fileResult,
 };
 
@@ -46,7 +46,7 @@ let renameJsonNodeResult = (name, jsonNodeResult: jsonResultType) => {
   name,
 };
 
-let setJsonNodeResultParent = (parentNodeId, jsonNodeResult: jsonResultType) => {
+let setJsonNodeResultParent = (parentFolderNodeId, jsonNodeResult: jsonResultType) => {
   ...jsonNodeResult,
-  parentNodeId,
+  parentFolderNodeId,
 };

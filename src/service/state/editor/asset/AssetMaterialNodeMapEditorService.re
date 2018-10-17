@@ -26,23 +26,23 @@ let setResult = (nodeId, result, editorState) => {
 let getMaterialParentId = (nodeId, materialNodeMap) =>
   materialNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-  |> (({parentNodeId}: materialResultType) => parentNodeId);
+  |> (({parentFolderNodeId}: materialResultType) => parentFolderNodeId);
 
 let getMaterialType = (nodeId, materialNodeMap) =>
   materialNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
   |> (({type_}: materialResultType) => type_);
 
-let buildMaterialNodeResult = (parentNodeId, type_, materialComponent) => {
-  parentNodeId,
+let buildMaterialNodeResult = (parentFolderNodeId, type_, materialComponent) => {
+  parentFolderNodeId,
   type_,
   materialComponent,
 };
 
 let setMaterialNodeResultParent =
-    (parentNodeId, materialNodeResult: materialResultType) => {
+    (parentFolderNodeId, materialNodeResult: materialResultType) => {
   ...materialNodeResult,
-  parentNodeId,
+  parentFolderNodeId,
 };
 
 let getResults = editorState =>

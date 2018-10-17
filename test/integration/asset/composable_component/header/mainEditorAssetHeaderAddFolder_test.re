@@ -44,13 +44,13 @@ let _ =
 
           MainEditorAssetHeaderOperateNodeTool.addFolder();
 
-          let {parentNodeId}: AssetNodeType.folderResultType =
+          let {parentFolderNodeId}: AssetNodeType.folderResultType =
             StateEditorService.getState()
             |> AssetFolderNodeMapEditorService.unsafeGetResult(
                  addedFolderNodeId,
                );
 
-          parentNodeId
+          parentFolderNodeId
           |> OptionService.unsafeGet
           |>
           expect == MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getRootNodeId(

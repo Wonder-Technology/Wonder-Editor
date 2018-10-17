@@ -21,18 +21,18 @@ let rec _getAssetAtomNodeArr = (assetRootArr, assetAtomNodeArr) =>
      );
 
 let rec _getAssetNodePathFromAssets =
-        (parentNodeId, namePathArr, (editorState, engineState)) =>
-  switch (parentNodeId) {
+        (parentFolderNodeId, namePathArr, (editorState, engineState)) =>
+  switch (parentFolderNodeId) {
   | None => namePathArr |> Js.Array.reverseInPlace |> Js.Array.joinWith("/")
-  | Some(parentNodeId) =>
+  | Some(parentFolderNodeId) =>
     _getAssetNodePathFromAssets(
-      AssetNodeUtils.getAssetNodeParentId(Folder, parentNodeId, editorState),
+      AssetNodeUtils.getAssetNodeParentId(Folder, parentFolderNodeId, editorState),
       namePathArr
       |> Js.Array.copy
       |> ArrayService.push(
            AssetNodeUtils.getAssetNodeTotalName(
              Folder,
-             parentNodeId,
+             parentFolderNodeId,
              (editorState, engineState),
            ),
          ),
@@ -86,11 +86,11 @@ let getAssetTextureDataArr = editorState => {
   |> AssetTextureNodeMapEditorService.getTextureNodeMap
   /* TODO not get valid? */
   |> SparseMapService.getValidDataArr
-  |> Js.Array.map(((nodeId, {textureComponent, parentNodeId, imageId})) => {
+  |> Js.Array.map(((nodeId, {textureComponent, parentFolderNodeId, imageId})) => {
        let pathName =
          _getAssetNodePathFromAssets(
            /* AssetNodeUtils.getAssetNodeParentId(Texture, nodeId, editorState), */
-           parentNodeId,
+           parentFolderNodeId,
            ArrayService.create()
            |> ArrayService.push(
                 AssetNodeUtils.getAssetNodeTotalName(

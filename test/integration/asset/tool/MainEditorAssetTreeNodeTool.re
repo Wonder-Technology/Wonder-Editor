@@ -1,7 +1,7 @@
-let addFolderIntoNodeMap = (index, parentNodeId, editorState, engineState) =>
+let addFolderIntoNodeMap = (index, parentFolderNodeId, editorState, engineState) =>
   AssetTreeNodeUtils.addFolderIntoNodeMap(
     index,
-    parentNodeId,
+    parentFolderNodeId,
     (editorState, engineState),
   );
 
@@ -10,7 +10,7 @@ let addMaterialIntoNodeMap = AssetTreeNodeUtils.addMaterialIntoNodeMap;
 let _buildImageObj = src =>
   {"src": src, "getAttribute": prop => src} |> Obj.magic;
 
-let addTextureIntoNodeMap = (index, parentNodeId, textureName, editorState) => {
+let addTextureIntoNodeMap = (index, parentFolderNodeId, textureName, editorState) => {
   let (textureComponent, engineState) =
     TextureUtils.createAndInitTexture(
       textureName,
@@ -41,7 +41,7 @@ let addTextureIntoNodeMap = (index, parentNodeId, textureName, editorState) => {
        index,
        AssetTextureNodeMapEditorService.buildTextureNodeResult(
          textureComponent,
-         parentNodeId |. Some,
+         parentFolderNodeId |. Some,
          textureComponent,
        ),
      );
