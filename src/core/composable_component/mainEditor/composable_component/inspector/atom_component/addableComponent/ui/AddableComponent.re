@@ -113,7 +113,7 @@ let make =
         let target = ReactEventRe.Form.target(e);
         let targetArray = DomHelper.getElementsByClassName("addable-btn");
         let notCloseArray =
-          DomHelper.getElementsByClassName("content-components");
+          DomHelper.getElementsByClassName("component-list");
 
         DomUtils.isSpecificDomChildrenHasTargetDom(target, targetArray) ?
           () :
