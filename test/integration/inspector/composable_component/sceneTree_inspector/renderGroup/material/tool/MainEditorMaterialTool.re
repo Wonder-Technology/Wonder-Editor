@@ -19,3 +19,7 @@ let changeMaterial =
       (sourceMaterialType, targetMaterialType),
     ),
   );
+
+let getDefaultBasicMaterialName = PrepareDefaultComponentUtils.getDefaultBasicMaterialName;
+
+let getDefaultLightMaterialName = PrepareDefaultComponentUtils.getDefaultLightMaterialName;
