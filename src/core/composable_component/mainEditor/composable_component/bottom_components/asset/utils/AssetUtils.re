@@ -400,6 +400,25 @@ let getChildrenNameAndIdArr =
   );
 };
 
+let checkAssetNodeName =
+    (
+      (sourceNodeId, sourceName),
+      targetNodeId,
+      type_,
+      (successFunc, failFunc),
+      (editorState, engineState),
+    ) =>
+  getChildrenNameAndIdArr(targetNodeId, type_, (editorState, engineState))
+  |> Js.Array.filter(((name, id)) => id !== sourceNodeId)
+  |> Js.Array.map(((name, id)) => name)
+  |> Js.Array.includes(sourceName) ?
+    {
+      ConsoleUtils.warn("the asset can't has the same name !");
+
+      successFunc((editorState, engineState));
+    } :
+    failFunc((editorState, engineState));
+
 let _isTargetTreeNodeHasSameNameChild =
     (targetNodeId, removedNodeId, (editorState, engineState)) => {
   let {type_}: assetTreeNodeType =
@@ -424,15 +443,16 @@ let _isTargetTreeNodeHasSameNameChild =
          ),
        );
 
-  getChildrenNameAndIdArr(targetNodeId, type_, (editorState, engineState))
-  |> Js.Array.map(((name, id)) => name)
-  |> Js.Array.includes(removedNodeName) ?
-    {
-      ConsoleUtils.warn("the folder can't has the same name !");
-
-      true;
-    } :
-    false;
+  checkAssetNodeName(
+    (removedNodeId, removedNodeName),
+    targetNodeId,
+    type_,
+    (
+      ((editorState, engineState)) => true,
+      ((editorState, engineState)) => false,
+    ),
+    (editorState, engineState),
+  );
 };
 
 let isTreeNodeRelationError =

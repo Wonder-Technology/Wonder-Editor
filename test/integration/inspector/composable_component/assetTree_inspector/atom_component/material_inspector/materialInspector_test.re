@@ -73,5 +73,35 @@ let _ =
           |> ReactTestTool.createSnapshotAndMatch;
         },
       );
+
+      describe("fix bug", () =>
+        test("if rename the same name, shouldn't warn", () => {
+          ConsoleTool.markTestConsole();
+
+          let warn =
+            createMethodStubWithJsObjSandbox(
+              sandbox,
+              ConsoleTool.console,
+              "warn",
+            );
+
+          let addedMaterialNodeId = MaterialAssetTool.addOneLightMaterial();
+
+          let newName =
+            AssetNodeUtils.getAssetNodeTotalName(
+              AssetNodeType.Material,
+              addedMaterialNodeId,
+            )
+            |> StateLogicService.getStateToGetData;
+
+          AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+            ~nodeId=addedMaterialNodeId,
+            ~name=newName,
+            (),
+          );
+
+          warn |> expect |> not_ |> toCalled;
+        })
+      );
     });
   });
