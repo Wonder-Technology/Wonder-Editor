@@ -20,6 +20,7 @@
             top:0px;
             display: flex;
             flex-direction: column;
+            min-width: 150px;
             @import "component/sceneTree/sceneTreeHeader";
             @import "component/sceneTree/sceneTree";
         }
