@@ -38,7 +38,7 @@ type textureResultType = {
 
 type wdbResultType = {
   name: string,
-  postfix: string,
+  extName: string,
   parentFolderNodeId: option(int),
   wdbArrayBuffer: Js.Typed_array.ArrayBuffer.t,
   wdbGameObject: int,

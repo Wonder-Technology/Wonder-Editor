@@ -25,7 +25,7 @@ let getWDBBaseName = (currentNodeId, wdbNodeMap) =>
 let getWDBTotalName = (currentNodeId, wdbNodeMap) =>
   wdbNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
-  |> (({name, postfix}: wdbResultType) => name ++ postfix);
+  |> (({name, extName}: wdbResultType) => name ++ extName);
 
 let getWDBParentId = (currentNodeId, wdbNodeMap) =>
   wdbNodeMap
@@ -33,9 +33,9 @@ let getWDBParentId = (currentNodeId, wdbNodeMap) =>
   |> (({parentFolderNodeId}: wdbResultType) => parentFolderNodeId);
 
 let buildWDBNodeResult =
-    (name, postfix, parentFolderNodeId, wdbGameObject, wdbArrayBuffer) => {
+    (name, extName, parentFolderNodeId, wdbGameObject, wdbArrayBuffer) => {
   name,
-  postfix,
+  extName,
   parentFolderNodeId,
   wdbGameObject,
   wdbArrayBuffer,
@@ -46,7 +46,9 @@ let renameWDBNodeResult = (name, wdbNodeResult) : wdbResultType => {
   name,
 };
 
-let setWDBNodeResultParent = (parentFolderNodeId, wdbNodeResult) : wdbResultType => {
+let setWDBNodeResultParent =
+    (parentFolderNodeId, wdbNodeResult)
+    : wdbResultType => {
   ...wdbNodeResult,
   parentFolderNodeId,
 };
