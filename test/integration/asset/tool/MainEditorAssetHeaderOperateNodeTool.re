@@ -34,13 +34,13 @@ let removeMaterialNode =
     (
       ~dispatchFunc=TestTool.getDispatch(),
       ~store=TestTool.buildEmptyAppState(),
-      ~nodeId,
+      ~materialNodeId,
       (),
     ) =>
   removeNode(
     ~dispatchFunc,
     ~store,
-    ~nodeId=nodeId,
+    ~nodeId=materialNodeId,
     ~nodeType=AssetNodeType.Material,
     (),
   );

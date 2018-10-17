@@ -188,6 +188,29 @@ let _removeTextureTreeNode = (nodeId, editorState) => {
   _removeTextureEditorData(nodeId, textureComponent, imageId, editorState);
 };
 
+let _removeMaterialTreeNode = (nodeId, editorState) => {
+  let {materialComponent, type_} =
+    editorState |> AssetMaterialNodeMapEditorService.unsafeGetResult(nodeId);
+
+  let (defaultMaterial, defaultMaterialType) =
+    AssetMaterialDataEditorService.unsafeGetMaterialDataByType(
+      type_,
+      editorState,
+    );
+
+  let engineState = StateEngineService.unsafeGetState();
+  let engineState =
+    InspectorRenderGroupUtils.Dispose.replaceGameObjectsMaterialsOfTheMaterial(
+      ((materialComponent, defaultMaterial), (type_, defaultMaterialType)),
+      engineState,
+    );
+
+  engineState |> StateLogicService.refreshEngineState;
+
+  AssetMaterialNodeMapEditorService.remove(nodeId, editorState)
+  |> AssetMaterialNodeIdMapEditorService.remove(materialComponent);
+};
+
 let deepRemoveTreeNode = (removedTreeNode, editorState) => {
   let rec _iterateRemovedTreeNode = (nodeArr, removedAssetIdArr, editorState) =>
     nodeArr
@@ -204,6 +227,7 @@ let deepRemoveTreeNode = (removedTreeNode, editorState) => {
                     editorState,
                   )
              | Texture => _removeTextureTreeNode(nodeId, editorState)
+             | Material => _removeMaterialTreeNode(nodeId, editorState)
              | Json =>
                editorState
                |> AssetJsonNodeMapEditorService.getJsonNodeMap

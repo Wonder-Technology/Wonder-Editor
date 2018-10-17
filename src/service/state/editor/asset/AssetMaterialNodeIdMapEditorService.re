@@ -13,3 +13,15 @@ let setNodeId = (materialComponent, nodeId, editorState) => {
       |> WonderCommonlib.SparseMapService.set(materialComponent, nodeId),
   },
 };
+
+let remove = (materialComponent, editorState) => {
+  ...editorState,
+  assetRecord: {
+    ...editorState.assetRecord,
+    materialNodeIdMap:
+      editorState.assetRecord.materialNodeIdMap
+      |> Obj.magic
+      |> WonderCommonlib.SparseMapService.deleteVal(materialComponent)
+      |> Obj.magic,
+  },
+};

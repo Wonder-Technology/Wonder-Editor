@@ -137,7 +137,7 @@ let _ =
           );
 
           MainEditorAssetHeaderOperateNodeTool.removeMaterialNode(
-            ~nodeId,
+            ~materialNodeId=nodeId,
             (),
           );
           MainEditorAssetHeaderOperateNodeTool.addMaterial();

@@ -98,15 +98,11 @@ module Method = {
   };
 
   let _isDefaultMaterial = (material, materialType, editorState) => {
-    open AssetMaterialDataType;
-
-    let unsafeGetMaterialDataFunc =
-      switch (materialType) {
-      | BasicMaterial => AssetMaterialDataEditorService.unsafeGetDefaultBasicMaterialData
-      | LightMaterial => AssetMaterialDataEditorService.unsafeGetDefaultLightMaterialData
-      };
-
-    let (defaultMaterial, _) = unsafeGetMaterialDataFunc(editorState);
+    let (defaultMaterial, _) =
+      AssetMaterialDataEditorService.unsafeGetMaterialDataByType(
+        materialType,
+        editorState,
+      );
 
     material === defaultMaterial;
   };
@@ -245,7 +241,14 @@ let render =
     </div>
   </article>;
 
-let make = (~store, ~dispatchFunc, ~currentSceneTreeNode, _children) => {
+let make =
+    (
+      ~store,
+      ~dispatchFunc,
+      ~currentSceneTreeNode,
+      ~isShowMaterialGroup=false,
+      _children,
+    ) => {
   ...component,
   initialState: () => {
     let materialType =
@@ -256,7 +259,7 @@ let make = (~store, ~dispatchFunc, ~currentSceneTreeNode, _children) => {
 
     {
       materialType,
-      isShowMaterialGroup: false,
+      isShowMaterialGroup,
       currentMaterial:
         MainEditorMaterialUtils.getMaterialCompnentByType(
           currentSceneTreeNode,

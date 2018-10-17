@@ -47,3 +47,9 @@ let setMaterialNodeResultParent =
 
 let getResults = editorState =>
   getMaterialNodeMap(editorState) |> SparseMapService.getValidDataArr;
+
+let remove = (nodeId, editorState) => {
+  ...editorState,
+  assetRecord:
+    editorState.assetRecord |> MaterialNodeMapAssetService.remove(nodeId),
+};

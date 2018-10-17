@@ -28,7 +28,7 @@ module CustomEventHandler = {
     gameObjects
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. engineState, gameObject) =>
-           InspectorRenderGroupUtils.replaceMaterialByMaterialData(
+           InspectorRenderGroupUtils.Remove.replaceMaterialByMaterialData(
              gameObject,
              materialData,
              engineState,

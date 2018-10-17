@@ -18,3 +18,12 @@ let setResult = (index, result, assetRecord) => {
     assetRecord.materialNodeMap
     |> SparseMapService.immutableSet(index, result),
 };
+
+let remove = (index, assetRecord) => {
+  ...assetRecord,
+  materialNodeMap:
+    assetRecord.materialNodeMap
+    |> Obj.magic
+    |> WonderCommonlib.SparseMapService.deleteVal(index)
+    |> Obj.magic,
+};

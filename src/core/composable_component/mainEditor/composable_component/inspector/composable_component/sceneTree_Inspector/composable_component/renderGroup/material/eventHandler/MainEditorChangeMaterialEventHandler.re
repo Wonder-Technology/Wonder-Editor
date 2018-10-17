@@ -38,7 +38,7 @@ module CustomEventHandler = {
 
     let engineState =
       engineState
-      |> InspectorRenderGroupUtils.replaceMaterialByMaterialData(
+      |> InspectorRenderGroupUtils.Remove.replaceMaterialByMaterialData(
            currentSceneTreeNode,
            (
              (sourceMaterial, targetMaterial),

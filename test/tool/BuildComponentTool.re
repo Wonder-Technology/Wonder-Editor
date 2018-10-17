@@ -64,12 +64,20 @@ let buildMainEditorTransformComponent = (store, transformComponent) =>
     />,
   );
 
-let buildMaterial = () =>
+let buildMaterial =
+    (
+      ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~isShowMaterialGroup=false,
+      (),
+    ) =>
   ReactTestRenderer.create(
     <MainEditorMaterial
       store=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
       currentSceneTreeNode=(GameObjectTool.unsafeGetCurrentSceneTreeNode())
+      isShowMaterialGroup
     />,
   );
 

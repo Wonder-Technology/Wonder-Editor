@@ -1,260 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`redo_undo: change material prepare first step: set currentSceneTreeNode test redo operate test redo one step undo step which from first to zero, redo step which from zero to first 1`] = `
-<article
-  className="wonder-material"
->
-  <div
-    className="material-drag-div"
-  >
-    <div
-      className="material-drag-name"
-    />
-    <div
-      className="material-select"
-    >
-      New Material
-      <span
-        className="select-title"
-        onClick={[Function]}
-      >
-        select
-      </span>
-    </div>
-  </div>
-  <div
-    className="material-value"
-  >
-    <div
-      className=""
-    >
-      <article
-        className="inspector-item"
-      >
-        <div
-          className="item-header"
-        >
-          <span
-            className=""
-          >
-            shader
-          </span>
-        </div>
-        <div
-          className="item-content"
-        >
-          <select
-            onChange={[Function]}
-            value="0"
-          >
-            <option
-              value="0"
-            >
-              basic_material
-            </option>
-            <option
-              value="1"
-            >
-              light_material
-            </option>
-          </select>
-        </div>
-      </article>
-    </div>
-    <div
-      className=""
-    >
-      <article
-        className="wonder-basic-material"
-      >
-        <article
-          className="wonder-color-pick"
-        >
-          <div
-            className=""
-          >
-            <span
-              className=""
-            >
-              color : 
-            </span>
-            <span
-              className=""
-            >
-              #ffffff
-            </span>
-            <button
-              className=""
-              onClick={[Function]}
-            >
-              pick color
-            </button>
-          </div>
-        </article>
-        <article
-          className="wonder-material-texture"
-        >
-          <div
-            className="texture_ground"
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-            style={
-              Object {
-                "opacity": "1",
-              }
-            }
-          />
-          <span
-            className=""
-          >
-            map : 
-          </span>
-          <img
-            src="./public/img/null.jpg"
-          />
-          <button
-            className="texture_remove"
-            onClick={[Function]}
-          >
-            remove
-          </button>
-        </article>
-      </article>
-    </div>
-  </div>
-</article>
-`;
-
-exports[`redo_undo: change material prepare first step: set currentSceneTreeNode test undo operate test not undo 1`] = `
-<article
-  className="wonder-material"
->
-  <div
-    className="material-drag-div"
-  >
-    <div
-      className="material-drag-name"
-    />
-    <div
-      className="material-select"
-    >
-      New Material
-      <span
-        className="select-title"
-        onClick={[Function]}
-      >
-        select
-      </span>
-    </div>
-  </div>
-  <div
-    className="material-value"
-  >
-    <div
-      className=""
-    >
-      <article
-        className="inspector-item"
-      >
-        <div
-          className="item-header"
-        >
-          <span
-            className=""
-          >
-            shader
-          </span>
-        </div>
-        <div
-          className="item-content"
-        >
-          <select
-            onChange={[Function]}
-            value="0"
-          >
-            <option
-              value="0"
-            >
-              basic_material
-            </option>
-            <option
-              value="1"
-            >
-              light_material
-            </option>
-          </select>
-        </div>
-      </article>
-    </div>
-    <div
-      className=""
-    >
-      <article
-        className="wonder-basic-material"
-      >
-        <article
-          className="wonder-color-pick"
-        >
-          <div
-            className=""
-          >
-            <span
-              className=""
-            >
-              color : 
-            </span>
-            <span
-              className=""
-            >
-              #ffffff
-            </span>
-            <button
-              className=""
-              onClick={[Function]}
-            >
-              pick color
-            </button>
-          </div>
-        </article>
-        <article
-          className="wonder-material-texture"
-        >
-          <div
-            className="texture_ground"
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-            style={
-              Object {
-                "opacity": "1",
-              }
-            }
-          />
-          <span
-            className=""
-          >
-            map : 
-          </span>
-          <img
-            src="./public/img/null.jpg"
-          />
-          <button
-            className="texture_remove"
-            onClick={[Function]}
-          >
-            remove
-          </button>
-        </article>
-      </article>
-    </div>
-  </div>
-</article>
-`;
-
-exports[`redo_undo: change material prepare first step: set currentSceneTreeNode test undo operate test undo one step undo step which from first to zero 1`] = `
+exports[`MainEditorAssetHeader->remove material 
+        add material m1;
+        select sceneTree->gameObject g1;
+        g1 change material to m1;
+        remove m1;
+         g1 should use default light material test snapshot 1`] = `
 <article
   className="wonder-material"
 >
@@ -274,6 +25,219 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
       >
         select
       </span>
+    </div>
+    <div
+      className="select-component-content"
+    >
+      <div
+        className="select-component-item"
+      >
+        <div
+          className="item-header"
+        >
+          Material
+        </div>
+        <div
+          className="item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Basic-Material
+        </div>
+        <div
+          className="item-content item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Light-Material
+        </div>
+      </div>
+      <div
+        className="select-component-bg"
+        onClick={[Function]}
+      />
+    </div>
+  </div>
+  <div
+    className="material-value"
+  >
+    <div
+      className=""
+    >
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+        >
+          <span
+            className=""
+          >
+            shader
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <select
+            onChange={[Function]}
+            value="1"
+          >
+            <option
+              value="0"
+            >
+              basic_material
+            </option>
+            <option
+              value="1"
+            >
+              light_material
+            </option>
+          </select>
+        </div>
+      </article>
+    </div>
+    <div
+      className=""
+    >
+      <article
+        className="wonder-light-material"
+      >
+        <article
+          className="wonder-color-pick"
+        >
+          <div
+            className=""
+          >
+            <span
+              className=""
+            >
+              diffcuse color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
+            <button
+              className=""
+              onClick={[Function]}
+            >
+              pick color
+            </button>
+          </div>
+        </article>
+        <article
+          className="wonder-material-texture"
+        >
+          <div
+            className="texture_ground"
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "opacity": "1",
+              }
+            }
+          />
+          <span
+            className=""
+          >
+            diffuse map : 
+          </span>
+          <img
+            src="./public/img/null.jpg"
+          />
+          <button
+            className="texture_remove"
+            onClick={[Function]}
+          >
+            remove
+          </button>
+        </article>
+        <article
+          className="wonder-floatInput-base"
+        >
+          <article
+            className="wonder-float-input"
+          >
+            <span
+              className="component-label"
+            >
+              Shininess : 
+            </span>
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="32"
+            />
+          </article>
+        </article>
+      </article>
+    </div>
+    <div
+      className="material-shield"
+    />
+  </div>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->remove material 
+        add material m1;
+        select sceneTree->gameObject g1;
+        g1 change material to m1;
+        remove m1;
+         select material group shouldn't contain removed material assets 1`] = `
+<article
+  className="wonder-material"
+>
+  <div
+    className="material-drag-div"
+  >
+    <div
+      className="material-drag-name"
+    />
+    <div
+      className="material-select"
+    >
+      Wonder-Default-Light-Material
+      <span
+        className="select-title"
+        onClick={[Function]}
+      >
+        select
+      </span>
+    </div>
+    <div
+      className="select-component-content"
+    >
+      <div
+        className="select-component-item"
+      >
+        <div
+          className="item-header"
+        >
+          Material
+        </div>
+        <div
+          className="item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Basic-Material
+        </div>
+        <div
+          className="item-content item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Light-Material
+        </div>
+      </div>
+      <div
+        className="select-component-bg"
+        onClick={[Function]}
+      />
     </div>
   </div>
   <div
@@ -401,5 +365,44 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
       className="material-shade"
     />
   </div>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->remove material 
+        select material;
+        click remove-button;
+             should remove it from assetTreeRoot 1`] = `
+<article
+  className="wonder-asset-assetTree"
+>
+  <ul
+    className="wonder-tree-node"
+  >
+    <li
+      style={
+        Object {
+          "background": "rgba(255,255,255,0.2)",
+        }
+      }
+    >
+      <div
+        className="item-ground"
+        draggable={true}
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+      />
+      <div
+        className="item-triangle"
+      />
+      <img
+        className="treeNode-icon"
+        src="./public/img/package.png"
+      />
+      Assets
+    </li>
+  </ul>
 </article>
 `;
