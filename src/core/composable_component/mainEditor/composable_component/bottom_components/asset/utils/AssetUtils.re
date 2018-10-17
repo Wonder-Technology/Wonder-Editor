@@ -226,12 +226,6 @@ let deepRemoveTreeNode = (removedTreeNode, editorState) => {
                   )
              | Texture => _removeTextureTreeNode(nodeId, editorState)
              | Material => _removeMaterialTreeNode(nodeId, editorState)
-             | Json =>
-               editorState
-               |> AssetJsonNodeMapEditorService.getJsonNodeMap
-               |> SparseMapService.copy
-               |> DomHelper.deleteKeyInMap(nodeId)
-               |. AssetJsonNodeMapEditorService.setJsonNodeMap(editorState)
              | WDB => _handleRemoveWDBNode(nodeId, editorState)
              | _ => editorState
              };
@@ -388,9 +382,6 @@ let getChildrenNameAndIdArr =
                     AssetFolderNodeMapEditorService.getFolderName(
                       currentNodeId,
                     ),
-                    AssetJsonNodeMapEditorService.getJsonBaseName(
-                      currentNodeId,
-                    ),
                     OperateTextureLogicService.getTextureBaseName(
                       currentNodeId,
                     ),
@@ -424,7 +415,6 @@ let _isTargetTreeNodeHasSameNameChild =
          type_,
          (
            AssetFolderNodeMapEditorService.getFolderName(removedNodeId),
-           AssetJsonNodeMapEditorService.getJsonBaseName(removedNodeId),
            OperateTextureLogicService.getTextureBaseName(removedNodeId),
            AssetMaterialNodeMapLogicService.getMaterialBaseName(
              removedNodeId,

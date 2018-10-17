@@ -5,12 +5,10 @@ type nodeId = int;
 type uploadFileType =
   | LoadWDB
   | LoadImage
-  | LoadJson
   | LoadError;
 
 type assetNodeType =
   | Folder
-  | Json
   | Texture
   | WDB
   | Material;
@@ -24,13 +22,6 @@ type nodeResultType = {
 type folderResultType = {
   name: string,
   parentFolderNodeId: option(int),
-};
-
-type jsonResultType = {
-  name: string,
-  postfix: string,
-  parentFolderNodeId: option(int),
-  jsonResult: string,
 };
 
 type imageResultType = {

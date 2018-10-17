@@ -64,18 +64,6 @@ let _writeFolderAndWDBToPackage = ((type_, id), pathName, jsZip, editorState) =>
          pathName,
          `trustme(wdbArrayBuffer |> TypeArrayType.newBlobFromArrayBuffer),
        );
-  | Json =>
-    let {jsonResult} =
-      editorState
-      |> AssetJsonNodeMapEditorService.getJsonNodeMap
-      |> WonderCommonlib.SparseMapService.unsafeGet(id);
-
-    jsZip
-    |. Zip.write(
-         ~options=Options.makeWriteOptions(~binary=true, ()),
-         pathName,
-         `trustme(jsonResult),
-       );
   | _ => jsZip
   };
 

@@ -5,7 +5,6 @@ let handleSpeficFuncByAssetNodeType =
       type_,
       (
         handleFolderFunc,
-        handleJsonFunc,
         handleTextureFunc,
         handleMaterialFunc,
         handleWDBFunc,
@@ -21,10 +20,6 @@ let handleSpeficFuncByAssetNodeType =
     editorState
     |> AssetTextureNodeMapEditorService.getTextureNodeMap
     |> handleTextureFunc
-  | Json =>
-    editorState
-    |> AssetJsonNodeMapEditorService.getJsonNodeMap
-    |> handleJsonFunc
   | Material =>
     editorState
     |> AssetMaterialNodeMapEditorService.getMaterialNodeMap
@@ -40,7 +35,6 @@ let getAssetNodeTotalName =
        type_,
        (
          AssetFolderNodeMapEditorService.getFolderName(currentNodeId),
-         AssetJsonNodeMapEditorService.getJsonTotalName(currentNodeId),
          OperateTextureLogicService.getTextureBaseName(currentNodeId),
          AssetMaterialNodeMapLogicService.getMaterialBaseName(
            currentNodeId,
@@ -56,7 +50,6 @@ let getAssetNodeParentId = (type_, currentNodeId, editorState) =>
        type_,
        (
          AssetFolderNodeMapEditorService.getFolderParentId(currentNodeId),
-         AssetJsonNodeMapEditorService.getJsonParentId(currentNodeId),
          AssetTextureNodeMapEditorService.getTextureParentId(currentNodeId),
          AssetMaterialNodeMapEditorService.getMaterialParentId(currentNodeId),
          AssetWDBNodeMapEditorService.getWDBParentId(currentNodeId),

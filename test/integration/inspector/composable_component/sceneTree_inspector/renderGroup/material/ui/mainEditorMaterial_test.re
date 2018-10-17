@@ -87,8 +87,8 @@ let _ =
                 MeshRendererToolEngine.getAllRenderArrayCount()
                 |>
                 expect == (
-                            basicMaterialRenderCount + 1,
-                            lightMaterialRenderCount - 1,
+                            basicMaterialRenderCount + 2,
+                            lightMaterialRenderCount - 2,
                           );
               },
             );

@@ -73,24 +73,6 @@ module Method = {
              widget=(AssetUtils.getWidget())
              isSelected=(_isSelected(currentNodeData, nodeId))
            />;
-         | Json =>
-           let {name}: jsonResultType =
-             editorState
-             |> AssetJsonNodeMapEditorService.getJsonNodeMap
-             |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
-
-           <FileBox
-             key=(DomHelper.getRandomKey())
-             store
-             dispatchFunc
-             dragImg
-             imgSrc="./public/img/12.jpg"
-             fileId=nodeId
-             fileType=type_
-             fileName=name
-             widget=(AssetUtils.getWidget())
-             isSelected=(_isSelected(currentNodeData, nodeId))
-           />;
          | Material =>
            let baseName =
              AssetMaterialNodeMapLogicService.getMaterialBaseName(

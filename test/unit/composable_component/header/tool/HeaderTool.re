@@ -6,11 +6,6 @@ let buildFakeZipData = [%bs.raw
     ["Assets/",{}],
     ["Assets/newFolder",{}],
     ["Assets/newFolder 1",{}],
-    ["Assets/newJson.json",{
-      async: function(){
-          return new Promise((resolve, _) => resolve("this is json result"))
-      },
-    }],
     ["Assets/BoxTexture.wdb",{
       async: function(){
           return new Promise((resolve, _) => resolve(

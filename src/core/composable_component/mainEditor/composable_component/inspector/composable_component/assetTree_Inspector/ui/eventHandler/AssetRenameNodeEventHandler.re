@@ -16,15 +16,6 @@ module CustomEventHandler = {
     engineState,
   );
 
-  let _renameJsonNode =
-      (nodeId, name, (editorState, engineState), jsonNodeMap) => (
-    jsonNodeMap
-    |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-    |> AssetJsonNodeMapEditorService.renameJsonNodeResult(name)
-    |> AssetJsonNodeMapEditorService.setResult(nodeId, _, editorState),
-    engineState,
-  );
-
   let _renameTextureNode =
       (nodeId, name, (editorState, engineState), textureNodeMap) => {
     let {textureComponent} =
@@ -119,7 +110,6 @@ module CustomEventHandler = {
               nodeType,
               (
                 _renameFolderNode(nodeId, value, stateTuple),
-                _renameJsonNode(nodeId, value, stateTuple),
                 _renameTextureNode(nodeId, value, stateTuple),
                 _renameMaterialNode(nodeId, value, stateTuple),
                 _renameWDBNode(nodeId, value, stateTuple),

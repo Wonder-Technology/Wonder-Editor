@@ -16,7 +16,6 @@ type assetRecord = {
   currentNodeData: option(currentNodeDataType),
   currentNodeParentId: option(int),
   textureNodeMap: WonderCommonlib.SparseMapService.t(textureResultType),
-  jsonNodeMap: WonderCommonlib.SparseMapService.t(jsonResultType),
   folderNodeMap: WonderCommonlib.SparseMapService.t(folderResultType),
   wdbNodeMap: WonderCommonlib.SparseMapService.t(wdbResultType),
   materialNodeMap: WonderCommonlib.SparseMapService.t(materialResultType),

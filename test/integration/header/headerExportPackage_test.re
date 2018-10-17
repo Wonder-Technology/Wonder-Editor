@@ -65,7 +65,7 @@ let _ =
         );
 
       describe("export assets folder's all node", () => {
-        testPromise("test first node is folder and second node is folder", () =>
+        /* testPromise("test first node is folder and second node is folder", () =>
           _prepare((fetchCount, file) =>
             (
               file |> getCall(fetchCount) |> getArgs,
@@ -85,7 +85,7 @@ let _ =
                         ],
                       )
           )
-        );
+        ); */
         testPromise("export index.html", () => _testText(0, "index.html"));
         testPromise("export wd.min.js", () => _testText(1, "wd.min.js"));
 
@@ -134,7 +134,7 @@ let _ =
         testPromise("export Scene.wdb", () =>
           _prepare((fetchCount, file) =>
             file
-            |> getCall(fetchCount + 3)
+            |> getCall(fetchCount + 2)
             |> getArgs
             |> Js.List.hd
             |> OptionService.unsafeGet
@@ -144,7 +144,7 @@ let _ =
         testPromise("export Assets.json", () =>
           _prepare((fetchCount, file) =>
             file
-            |> getCall(fetchCount + 4)
+            |> getCall(fetchCount + 3)
             |> getArgs
             |> Js.List.hd
             |> OptionService.unsafeGet
