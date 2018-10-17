@@ -19,7 +19,6 @@ module CustomEventHandler = {
 
     StateLogicService.refreshEngineState(engineState);
 
-    dispatchFunc(AppStore.UpdateAction(Update([|Inspector|]))) |> ignore;
   };
 };
 

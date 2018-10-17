@@ -5,6 +5,7 @@ open Antd;
 type state = {isShowAddableComponent: bool};
 
 type action =
+  | HideAddableComponent
   | ToggleAddableComponent;
 
 module Method = {
@@ -57,6 +58,8 @@ let reducer = (action, state) =>
       ...state,
       isShowAddableComponent: ! state.isShowAddableComponent,
     })
+  | HideAddableComponent =>
+    ReasonReact.Update({...state, isShowAddableComponent: false})
   };
 
 let render =
@@ -102,4 +105,20 @@ let make =
   reducer,
   render: self =>
     render(reduxTuple, currentSceneTreeNode, addableComponentList, self),
+  didMount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    DomHelper.addEventListener(
+      DomHelper.document,
+      "click",
+      e => {
+        let target = ReactEventRe.Form.target(e);
+        let targetArray = DomHelper.getElementsByClassName("addable-btn");
+        let notCloseArray =
+          DomHelper.getElementsByClassName("content-components");
+
+        DomUtils.isSpecificDomChildrenHasTargetDom(target, targetArray) ?
+          () :
+          DomUtils.isSpecificDomChildrenHasTargetDom(target, notCloseArray) ?
+            () : send(HideAddableComponent);
+      },
+    ),
 };
