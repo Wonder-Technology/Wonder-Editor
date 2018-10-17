@@ -23,7 +23,7 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("fix bug", () =>
+    describe("fix bug", () => {
       describe("fix change material type bug", () => {
         let _prepareTwoGameObjects = () => {
           let assetTreeData =
@@ -286,6 +286,66 @@ let _ =
             },
           );
         });
-      })
-    );
+      });
+
+      describe(
+        {|
+        add material m1;
+        upload texture t1;
+        drag t1 to m1->diffuseMap;
+        remove t1 by remove texture asset;
+        |},
+        () => {
+          beforeEach(() => {
+            MainEditorAssetTool.buildFakeFileReader();
+            MainEditorAssetTool.buildFakeImage();
+          });
+
+          testPromise("m1->materialInspector->diffuseMap should be none", () => {
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+            let addedMaterialNodeId = MainEditorAssetIdTool.getNewAssetId();
+
+            MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+            let material =
+              MaterialAssetTool.getMaterialComponent(
+                ~nodeId=addedMaterialNodeId,
+                (),
+              );
+
+            MainEditorAssetUploadTool.loadOneTexture()
+            |> then_(uploadedTextureNodeId => {
+                 let editorState = StateEditorService.getState();
+                 let textureComponent =
+                   MainEditorAssetTextureNodeTool.getTextureComponent(
+                     uploadedTextureNodeId,
+                     editorState,
+                   );
+
+                 MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                   ~textureNodeId=uploadedTextureNodeId,
+                   ~material,
+                   (),
+                 );
+                 MainEditorAssetHeaderOperateNodeTool.removeTextureNode(
+                   ~textureNodeId=uploadedTextureNodeId,
+                   (),
+                 );
+                 MainEditorAssetTreeTool.Select.selectMaterialNode(
+                   ~nodeId=addedMaterialNodeId,
+                   (),
+                 );
+
+                 BuildComponentTool.buildInspectorComponent(
+                   TestTool.buildEmptyAppState(),
+                   InspectorTool.buildFakeAllShowComponentConfig(),
+                 )
+                 |> ReactTestTool.createSnapshotAndMatch
+                 |> resolve;
+               });
+          });
+        },
+      );
+    });
   });

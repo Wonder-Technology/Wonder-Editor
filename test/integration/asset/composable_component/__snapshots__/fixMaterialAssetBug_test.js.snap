@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fix material asset bug fix bug 
+        add material m1;
+        upload texture t1;
+        drag t1 to m1->diffuseMap;
+        remove t1 by remove texture asset;
+         m1->materialInspector->diffuseMap should be none 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <article
+      className="wonder-material-inspector"
+    >
+      <div
+        className=""
+      >
+        <h1>
+          Material
+        </h1>
+        <hr />
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            <span
+              className="component-label"
+            >
+              name
+            </span>
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="New Material"
+            />
+          </div>
+        </article>
+        <div
+          className="inspector-material"
+        >
+          <div
+            className=""
+          >
+            <article
+              className="inspector-item"
+            >
+              <div
+                className="item-header"
+              >
+                <span
+                  className=""
+                >
+                  shader
+                </span>
+              </div>
+              <div
+                className="item-content"
+              >
+                <select
+                  onChange={[Function]}
+                  value="1"
+                >
+                  <option
+                    value="0"
+                  >
+                    basic_material
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    light_material
+                  </option>
+                </select>
+              </div>
+            </article>
+          </div>
+          <div
+            className=""
+          >
+            <article
+              className="wonder-light-material"
+            >
+              <article
+                className="wonder-color-pick"
+              >
+                <div
+                  className=""
+                >
+                  <span
+                    className=""
+                  >
+                    diffcuse color : 
+                  </span>
+                  <span
+                    className=""
+                  >
+                    #ffffff
+                  </span>
+                  <button
+                    className=""
+                    onClick={[Function]}
+                  >
+                    pick color
+                  </button>
+                </div>
+              </article>
+              <article
+                className="wonder-material-texture"
+              >
+                <div
+                  className="texture_ground"
+                  onDragEnter={[Function]}
+                  onDragLeave={[Function]}
+                  onDragOver={[Function]}
+                  onDrop={[Function]}
+                  style={
+                    Object {
+                      "opacity": "1",
+                    }
+                  }
+                />
+                <span
+                  className=""
+                >
+                  diffuse map : 
+                </span>
+                <img
+                  src="./public/img/null.jpg"
+                />
+                <button
+                  className="texture_remove"
+                  onClick={[Function]}
+                >
+                  remove
+                </button>
+              </article>
+              <article
+                className="wonder-floatInput-base"
+              >
+                <article
+                  className="wonder-float-input"
+                >
+                  <span
+                    className="component-label"
+                  >
+                    Shininess : 
+                  </span>
+                  <input
+                    className="input-component float-input"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    type="text"
+                    value="32"
+                  />
+                </article>
+              </article>
+            </article>
+          </div>
+        </div>
+      </div>
+    </article>
+  </article>
+</article>
+`;

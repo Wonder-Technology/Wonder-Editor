@@ -48,7 +48,7 @@ let setLightMaterialName = LightMaterialAPI.setLightMaterialName;
 
 let hasLightMaterialSpecularMap = LightMaterialAPI.hasLightMaterialSpecularMap;
 
-let isLightMaterialMap = (material, texture, engineState) =>
+let isDiffuseMap = (material, texture, engineState) =>
   switch (getLightMaterialDiffuseMap(material, engineState)) {
   | Some(map) when map === texture => true
   | _ => false

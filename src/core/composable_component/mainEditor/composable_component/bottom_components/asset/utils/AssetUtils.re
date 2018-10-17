@@ -100,10 +100,9 @@ let _handleRemoveWDBNode = (nodeId, editorState) => {
   |. AssetWDBNodeMapEditorService.setWDBNodeMap(editorState);
 };
 
-let _removeTextureFromSceneBasicMaterials =
+let _removeTextureFromAllBasicMaterials =
     (textureComponent, editorState, engineState) =>
-  /* BasicMaterialEngineService.getAllBasicMaterials(engineState) */
-  SceneEngineService.getSceneAllBasicMaterials(engineState)
+  BasicMaterialEngineService.getAllBasicMaterials(engineState)
   |> Js.Array.filter(basicMaterial =>
        BasicMaterialEngineService.isBasicMaterialMap(
          basicMaterial,
@@ -120,11 +119,11 @@ let _removeTextureFromSceneBasicMaterials =
        engineState,
      );
 
-let _removeTextureFromSceneLightMaterials =
+let _removeTextureFromAllLightMaterials =
     (textureComponent, editorState, engineState) =>
-  SceneEngineService.getSceneAllLightMaterials(engineState)
+  LightMaterialEngineService.getAllLightMaterials(engineState)
   |> Js.Array.filter(lightMaterial =>
-       LightMaterialEngineService.isLightMaterialMap(
+       LightMaterialEngineService.isDiffuseMap(
          lightMaterial,
          textureComponent,
          engineState,
@@ -139,11 +138,10 @@ let _removeTextureFromSceneLightMaterials =
        engineState,
      );
 
-/* TODO remove texture from material assets */
 let _removeTextureEngineData = (textureComponent, editorState, engineState) =>
   engineState
-  |> _removeTextureFromSceneBasicMaterials(textureComponent, editorState)
-  |> _removeTextureFromSceneLightMaterials(textureComponent, editorState);
+  |> _removeTextureFromAllBasicMaterials(textureComponent, editorState)
+  |> _removeTextureFromAllLightMaterials(textureComponent, editorState);
 
 let _removeTextureEditorData =
     (nodeId, textureComponent, imageId, editorState) => {
