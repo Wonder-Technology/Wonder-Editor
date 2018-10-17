@@ -1,6 +1,6 @@
 .wonder-header-component{
     width:100%;
-    height:3%;
+    height:22px;
     .header-nav {
         display: flex;
         width:100%;
@@ -17,10 +17,9 @@
                 .item-title{
                     display: inline-block;
                     width:40px;
+                    font-size:14px;
                     height:100%;
-                    line-height: 100%;
                     color:#ffffff;
-                    font-weight: normal;
                     display:flex;
                     align-items: center;
                     justify-content: center;
@@ -39,8 +38,8 @@
                 height:200px;
                 background-color: #555555;
                 .content-section{
-                    height:35px;
-                    line-height: 35px;
+                    height:26px;
+                    line-height: 26px;
                     width:100%;
                     color:#ffffff;
                     font-weight: normal;
@@ -71,6 +70,7 @@
                 }
             }
             .item-edit{
+                width:170px;
                 .content-section{
                     .section-header{
                         width:160px;

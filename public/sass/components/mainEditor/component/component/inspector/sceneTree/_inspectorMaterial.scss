@@ -4,6 +4,7 @@
     @import "../../../../../../utils/inspectorSelectUtils";
     .material-value {
         position: relative;
+        padding:2px 0;
         .material-shade {
             background: rgba(195, 195, 195, 0.5);
             position: absolute;
@@ -16,4 +17,5 @@
     }
     @include inspectorItem("wonder-light-material");
     @include inspectorItem("wonder-basic-material");
+    
 }

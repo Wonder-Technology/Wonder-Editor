@@ -1,20 +1,19 @@
 .wonder-inspector-transform{
     width:100%;
     position: relative;
+    padding:2px 0;
     .wonder-transform-template {
         display: flex;
         width:100%;
-        .wonder-float-input{
-            flex:1;
-            display: flex;
-            height:25px;
-            line-height: 25px;
-            span{
-                flex:2;
-                text-align: center;
+        .inspector-item{
+            width:100%;
+            .item-header{
+                width:30%;
+                margin-left:0px;
+                justify-content: center;
             }
-            input {
-                flex:4
+            .item-content{
+                width:70%;
             }
         }
     }

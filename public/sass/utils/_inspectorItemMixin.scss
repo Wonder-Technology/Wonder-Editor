@@ -8,6 +8,7 @@
             height:25px;
             display: flex;
             margin: 3px 0px;
+            font-size:12px;
             .item-header{
                 flex: initial;
                 height:100%;
@@ -22,6 +23,7 @@
                 width:68%;
                 display: flex;
                 align-items: center;
+                padding-right:4px;
             }
             .item-color{
                 display: flex;
@@ -57,6 +59,7 @@
                     justify-content: center;
                     border:1px solid rgb(167, 165, 165);
                     position: relative;
+                    box-sizing: border-box;
                     .img-dragBg{
                         position: absolute;
                         z-index:100;

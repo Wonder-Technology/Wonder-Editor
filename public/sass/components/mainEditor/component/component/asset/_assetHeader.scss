@@ -1,7 +1,7 @@
 .wonder-asset-header{
     @import "../../../../../utils/navMixin";
     @include header-nav("asset");
-    height:35px;
+    height:25px;
     .item-canBeClick{
         position: relative;
         .asset-fileLoad{

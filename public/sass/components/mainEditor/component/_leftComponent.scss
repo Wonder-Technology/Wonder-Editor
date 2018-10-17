@@ -8,16 +8,18 @@
     .top-widget{
         flex: initial;
         width:100%;
-        height:73%;
+        height:71%;
         display: flex;
         .sceneTree-parent{
             flex:initial;
-            width:20%;
+            width:17%;
             height:100%;
             background: #666666;
             order:10;
             position: relative;
             top:0px;
+            display: flex;
+            flex-direction: column;
             @import "component/sceneTree/sceneTreeHeader";
             @import "component/sceneTree/sceneTree";
         }
@@ -56,22 +58,25 @@
     .wonder-bottom-component{
         flex: initial;
         width:100%;
-        height:27%;
+        height:29%;
         background-color: #333333;
+        display: flex;
+        flex-direction: column;
         .bottom-widget-category{
             width:100%;
-            height:30px;
+            height:20px;
             border-bottom:1px solid #fff;
             .category-name {
                 width:60px;
-                height:30px;
-                line-height: 30px;
+                font-size:13px;
+                height:20px;
+                line-height: 20px;
                 text-align: center;
                 display: inline-block;
-                margin:0 5px;
+                margin-right:0 5px;
             }
             .category-active{
-                background: #666666;
+                background: #555555;
             }
         }
         @import "component/asset/asset";

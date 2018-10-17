@@ -9,8 +9,7 @@
     li{
         position: relative;
         height:22px;
-        line-height: 22px;
-        padding:0px 10px;
+        padding-top:3px;
         display: flex;
         align-items: center;
         box-sizing: border-box;
@@ -27,9 +26,10 @@
             }
         }
         .treeNode-icon{
-            width:15px;
-            height:15px;
-            margin:0 3px;
+            width:17px;
+            height:17px;
+            margin-top:-3px;
+            margin-right:3px;
         }
     }
     ul{

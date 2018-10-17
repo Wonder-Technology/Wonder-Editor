@@ -160,7 +160,7 @@ let render =
       | None => ReasonReact.null
       | Some(value) =>
         <div className="item-header">
-          <span className="component-label"> (DomHelper.textEl(value)) </span>
+          (DomHelper.textEl(value))
         </div>
       }
     )
