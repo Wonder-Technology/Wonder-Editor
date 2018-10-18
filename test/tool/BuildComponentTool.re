@@ -8,7 +8,8 @@ let buildSceneTree = store =>
     <MainEditorSceneTree store dispatchFunc=(TestTool.getDispatch()) />,
   );
 
-let buildConsole = () => ReactTestRenderer.create(<MainEditorConsole />);
+let buildConsole = () => ReactTestRenderer.create(<MainEditorConsole
+  />);
 
 let buildCameraProjection = () =>
   ReactTestRenderer.create(

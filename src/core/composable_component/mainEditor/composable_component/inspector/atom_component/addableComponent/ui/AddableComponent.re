@@ -115,10 +115,9 @@ let make =
         let notCloseArray =
           DomHelper.getElementsByClassName("component-list");
 
-        DomUtils.isSpecificDomChildrenHasTargetDom(target, targetArray) ?
-          () :
-          DomUtils.isSpecificDomChildrenHasTargetDom(target, notCloseArray) ?
-            () : send(HideAddableComponent);
+        DomUtils.isSpecificDomChildrenHasTargetDom(target, targetArray)
+        || DomUtils.isSpecificDomChildrenHasTargetDom(target, notCloseArray) ?
+          () : send(HideAddableComponent);
       },
     ),
 };

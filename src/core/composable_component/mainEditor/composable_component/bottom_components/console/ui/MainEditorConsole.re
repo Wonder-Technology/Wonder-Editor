@@ -1,14 +1,10 @@
-open MainEditorConsoleType;
+/* open MainEditorConsoleType; */
 
-type state = {consoleMessageArr: array(consoleMessageType)};
 
-type action =
-  | ClearAllMessage
-  | ThrowError(string)
-  | ThrowInfo(string)
-  | ThrowWarn(string)
-  | ThrowTrace(string)
-  | ThrowLog(string);
+/* store into editorState */
+/* type state = {consoleMessageArr: array(consoleMessageType)}; */
+
+open ConsoleMessageType;
 
 module Method = {
   let trigerErrorAction = (send, message) => send(ThrowError(message));
@@ -29,6 +25,7 @@ module Method = {
            <ConsoleBaseComponent
              key=(DomHelper.getRandomKey())
              type_="error"
+             imageSrc="./public/img/error.png"
              message
              traceInfo
            />
@@ -36,6 +33,7 @@ module Method = {
            <ConsoleBaseComponent
              key=(DomHelper.getRandomKey())
              type_="info"
+             imageSrc="./public/img/log.png"
              message
              traceInfo
            />
@@ -43,6 +41,7 @@ module Method = {
            <ConsoleBaseComponent
              key=(DomHelper.getRandomKey())
              type_="warn"
+             imageSrc="./public/img/warn.png"
              message
              traceInfo
            />
@@ -50,6 +49,7 @@ module Method = {
            <ConsoleBaseComponent
              key=(DomHelper.getRandomKey())
              type_="log"
+             imageSrc="./public/img/log.png"
              message
              traceInfo
            />
@@ -146,7 +146,7 @@ let fatal = () =>
     e => Console.throwFatal(e),
   );
 
-let render = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
+let render = (isShow, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article key="console" className="wonder-console-component">
     <div className="">
       <button className="" onClick=(_e => send(ClearAllMessage))>
@@ -177,11 +177,11 @@ let render = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
     )
   </article>;
 
-let make = (_children) => {
+let make = (~isShow: option(bool)=?, _children) => {
   ...component,
   initialState: () => {consoleMessageArr: [||]},
   reducer,
-  render,
+  render: render(isShow),
   didMount: ({send}: ReasonReact.self('a, 'b, 'c)) =>
     Console.stubConsole(
       Method.trigerErrorAction(send),

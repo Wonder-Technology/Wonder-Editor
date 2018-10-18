@@ -92,11 +92,6 @@ module Method = {
              isSelected=(_isSelected(currentNodeData, nodeId))
            />;
          | Material =>
-           /* let {type_, materialComponent}: materialResultType =
-              editorState
-              |> AssetMaterialNodeMapEditorService.getMaterialNodeMap
-              |> WonderCommonlib.SparseMapService.unsafeGet(nodeId); */
-
            let baseName =
              AssetMaterialNodeMapLogicService.getMaterialBaseName(
                nodeId,

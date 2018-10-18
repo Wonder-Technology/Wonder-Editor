@@ -647,31 +647,95 @@ html, body {
           width: 100%;
           height: 90%;
           user-select: auto;
-          overflow-y: auto; }
+          overflow-y: auto;
+          overflow-x: hidden; }
+          .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component::-webkit-scrollbar {
+            width: 4px;
+            height: 4px; }
+          .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component::-webkit-scrollbar-button {
+            display: none; }
+          .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component::-webkit-scrollbar-track {
+            background: rgba(1, 1, 1, 0.6);
+            width: 2px; }
+          .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component::-webkit-scrollbar-thumb {
+            background: #cfcccc;
+            border-radius: 4px; }
           .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-error {
-            border: 1px solid black;
-            background: red; }
+            width: 100%;
+            border-bottom: 1px solid #c0c0c0; }
             .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-error .console-header {
               height: 40px;
-              line-height: 40px; }
-          .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-log {
-            border: 1px solid black;
-            background: #39beca; }
-            .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-log .console-header {
-              height: 40px;
-              line-height: 40px; }
+              display: flex;
+              font-size: 15px;
+              align-items: center; }
+              .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-error .console-header img {
+                margin: 0 5px;
+                width: 20px;
+                height: 20px; }
+              .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-error .console-header .header-message {
+                padding-top: 5px; }
+            .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-error .console-trace {
+              width: 100%;
+              font-size: 14px;
+              background-color: #565656;
+              padding: 5px 2%; }
           .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-info {
-            border: 1px solid black;
-            background: #bd711b; }
+            width: 100%;
+            border-bottom: 1px solid #c0c0c0; }
             .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-info .console-header {
               height: 40px;
-              line-height: 40px; }
+              display: flex;
+              font-size: 15px;
+              align-items: center; }
+              .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-info .console-header img {
+                margin: 0 5px;
+                width: 20px;
+                height: 20px; }
+              .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-info .console-header .header-message {
+                padding-top: 5px; }
+            .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-info .console-trace {
+              width: 100%;
+              font-size: 14px;
+              background-color: #565656;
+              padding: 5px 2%; }
           .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-warn {
-            border: 1px solid black;
-            background: #e9da0f; }
+            width: 100%;
+            border-bottom: 1px solid #c0c0c0; }
             .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-warn .console-header {
               height: 40px;
-              line-height: 40px; }
+              display: flex;
+              font-size: 15px;
+              align-items: center; }
+              .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-warn .console-header img {
+                margin: 0 5px;
+                width: 20px;
+                height: 20px; }
+              .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-warn .console-header .header-message {
+                padding-top: 5px; }
+            .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-warn .console-trace {
+              width: 100%;
+              font-size: 14px;
+              background-color: #565656;
+              padding: 5px 2%; }
+          .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-log {
+            width: 100%;
+            border-bottom: 1px solid #c0c0c0; }
+            .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-log .console-header {
+              height: 40px;
+              display: flex;
+              font-size: 15px;
+              align-items: center; }
+              .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-log .console-header img {
+                margin: 0 5px;
+                width: 20px;
+                height: 20px; }
+              .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-log .console-header .header-message {
+                padding-top: 5px; }
+            .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .wonder-console-component .console-log .console-trace {
+              width: 100%;
+              font-size: 14px;
+              background-color: #565656;
+              padding: 5px 2%; }
     .wonder-app-component .wonder-mainEditor-component .right-component {
       height: 100%;
       width: 20%;
@@ -1237,7 +1301,8 @@ html, body {
               border: 1px solid #d9d9d9;
               border-radius: 3px;
               padding-left: 7px;
-              padding-top: 2px; }
+              padding-top: 2px;
+              margin-top: 2px; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .inspector-select .select-img {
               width: 30px;
               height: 25px;
@@ -1492,7 +1557,8 @@ html, body {
               border: 1px solid #d9d9d9;
               border-radius: 3px;
               padding-left: 7px;
-              padding-top: 2px; }
+              padding-top: 2px;
+              margin-top: 2px; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-geometry .inspector-select .select-img {
               width: 30px;
               height: 25px;

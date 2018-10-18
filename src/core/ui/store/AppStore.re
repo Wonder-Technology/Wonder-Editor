@@ -6,6 +6,8 @@ open MainEditorSceneTreeStore;
 
 open MainEditorInspectorStore;
 
+open BottomShowComponentStore;
+
 type appState = {
   isEditorAndEngineStart: bool,
   isDidMounted: bool,
@@ -13,6 +15,7 @@ type appState = {
   sceneTreeState,
   updateState,
   inspectorState,
+  showComponentState,
 };
 
 type ReduxThunk.thunk('a) +=
@@ -23,10 +26,9 @@ type ReduxThunk.thunk(_) +=
   | StartEngineAction
   | SceneTreeAction(sceneTreeAction(sceneTreeDataType))
   | MapAction(mapAction(componentsMap))
-  | InspectorAction(
-      inspectorAction(int, bool),
-    )
-  | UpdateAction(updateAction(updateComponentTypeArr));
+  | InspectorAction(inspectorAction(int, bool))
+  | UpdateAction(updateAction(updateComponentTypeArr))
+  | ShowComponentAction(showComponentAction(bottomComponentType));
 
 let state: appState = {
   isEditorAndEngineStart: false,
@@ -41,7 +43,10 @@ let state: appState = {
     componentTypeArr: [|All|],
   },
   inspectorState: {
-    showComponentMap: WonderCommonlib.SparseMapService.createEmpty()
+    showComponentMap: WonderCommonlib.SparseMapService.createEmpty(),
+  },
+  showComponentState: {
+    currentComponentType: Project
   },
 };
 
@@ -64,6 +69,11 @@ let appReducter = (state: appState, action) =>
   | UpdateAction(action) => {
       ...state,
       updateState: updateReducer(state.updateState, action),
+    }
+  | ShowComponentAction(action) => {
+      ...state,
+      showComponentState:
+        showComponentReducer(state.showComponentState, action),
     }
   | ReplaceState(replacedState) => replacedState
   | _ => state
