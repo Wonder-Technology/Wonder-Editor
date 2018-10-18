@@ -12,15 +12,14 @@ let setImageBase64Map = (imageBase64Map, editorState) => {
     |> ImageBase64MapAssetService.setImageBase64Map(imageBase64Map),
 };
 
-let unsafeGetResult = (imageId, editorState) =>
-  editorState.assetRecord
-  |> ImageBase64MapAssetService.unsafeGetResult(imageId);
+let unsafeGetResult = (image, editorState) =>
+  editorState.assetRecord |> ImageBase64MapAssetService.unsafeGetResult(image);
 
-let setResult = (imageId, imageResult, editorState) => {
+let setResult = (image, imageResult, editorState) => {
   ...editorState,
   assetRecord:
     editorState.assetRecord
-    |> ImageBase64MapAssetService.setResult(imageId, imageResult),
+    |> ImageBase64MapAssetService.setResult(image, imageResult),
 };
 
 let buildImageResult = (base64, name, textureArray) => {

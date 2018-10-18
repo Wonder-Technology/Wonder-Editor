@@ -2,6 +2,8 @@ exception LoadException;
 
 type nodeId = int;
 
+type imageIndex = int;
+
 type uploadFileType =
   | LoadWDB
   | LoadImage
@@ -21,7 +23,7 @@ type nodeResultType = {
 
 type folderResultType = {
   name: string,
-  parentFolderNodeId: option(int),
+  parentFolderNodeId: option(nodeId),
 };
 
 type imageResultType = {
@@ -32,20 +34,20 @@ type imageResultType = {
 
 type textureResultType = {
   textureComponent: int,
-  imageId: int,
-  parentFolderNodeId: option(int),
+  image: imageIndex,
+  parentFolderNodeId: option(nodeId),
 };
 
 type wdbResultType = {
   name: string,
   extName: string,
-  parentFolderNodeId: option(int),
+  parentFolderNodeId: option(nodeId),
   wdbArrayBuffer: Js.Typed_array.ArrayBuffer.t,
   wdbGameObject: int,
 };
 
 type materialResultType = {
-  parentFolderNodeId: option(int),
+  parentFolderNodeId: option(nodeId),
   type_: AssetMaterialDataType.materialType,
   materialComponent: int,
 };

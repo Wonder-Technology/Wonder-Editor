@@ -134,7 +134,7 @@ let _ =
                      (),
                    );
 
-                   let {imageId}: AssetNodeType.textureResultType =
+                   let {image}: AssetNodeType.textureResultType =
                      StateEditorService.getState()
                      |> AssetTextureNodeMapEditorService.getTextureNodeMap
                      |> WonderCommonlib.SparseMapService.unsafeGet(
@@ -143,7 +143,7 @@ let _ =
 
                    StateEditorService.getState()
                    |> AssetImageBase64MapEditorService.getImageBase64Map
-                   |> WonderCommonlib.SparseMapService.unsafeGet(imageId)
+                   |> WonderCommonlib.SparseMapService.unsafeGet(image)
                    |> (({base64}) => base64)
                    |> expect == imgBase64
                    |> resolve;
