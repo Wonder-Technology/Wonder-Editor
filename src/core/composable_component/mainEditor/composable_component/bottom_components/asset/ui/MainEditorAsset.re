@@ -2,10 +2,17 @@ open AssetNodeType;
 
 let component = ReasonReact.statelessComponent("MainEditorAsset");
 
-let render = ((store, dispatchFunc), isShow, _self) => {
+let render = ((store, dispatchFunc), _self) => {
   let dragImg = DomHelper.createElement("img");
 
-  <article key="asset" className="wonder-asset-component">
+  let style =
+    store
+    |> StoreUtils.getBottomCurrentComponentType
+    |> MainEditorBottomComponentUtils.isTypeEqualProject ?
+      ReactDOMRe.Style.make(~opacity="1", ()) :
+      ReactDOMRe.Style.make(~display="none", ());
+
+  <article key="asset" className="wonder-asset-component" style>
     <div className="asset-tree">
       <MainEditorAssetHeader store dispatchFunc />
       <MainEditorAssetTree store dispatchFunc dragImg />
@@ -14,7 +21,7 @@ let render = ((store, dispatchFunc), isShow, _self) => {
   </article>;
 };
 
-let make = (~store, ~dispatchFunc, ~isShow: option(bool)=?, _children) => {
+let make = (~store, ~dispatchFunc, _children) => {
   ...component,
-  render: self => render((store, dispatchFunc), isShow, self),
+  render: self => render((store, dispatchFunc), self),
 };

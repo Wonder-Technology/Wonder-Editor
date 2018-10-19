@@ -11,8 +11,7 @@ let showComponentReducer =
     (state: showComponentState, action: showComponentAction('a))
     : showComponentState =>
   switch (action) {
-  | ChangeComponent(componentType) => {
-      ...state,
-      currentComponentType: componentType,
-    }
+  | ChangeComponent(componentType) =>
+    Js.log(("change type", componentType)) |> ignore;
+    {...state, currentComponentType: componentType};
   };

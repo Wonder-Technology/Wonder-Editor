@@ -29,6 +29,9 @@ let create = () => {
     },
     clonedGameObjectMap: WonderCommonlib.SparseMapService.createEmpty(),
   },
+  consoleRecord: {
+    consoleMessageArray: [||],
+  },
   sceneViewRecord: {
     viewRect: None,
     gridPlane: None,

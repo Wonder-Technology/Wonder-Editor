@@ -1,46 +1,35 @@
-open BottomShowComponentStore;
-
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
-type state = {bottomComponentType};
-
-type action =
-  | ShowProject
-  | ShowConsole;
-
 module Method = {
-  let isTypeEqualProject = componentType => componentType === Project;
+  let showProject = dispatchFunc => {
+    dispatchFunc(AppStore.ShowComponentAction(ChangeComponent(Project)))
+    |> ignore;
 
-  let isTypeEqualConsole = componentType => componentType === Console;
+    dispatchFunc(
+      AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
+    )
+    |> ignore;
+  };
+
+  let showConsole = dispatchFunc => {
+    dispatchFunc(AppStore.ShowComponentAction(ChangeComponent(Console)))
+    |> ignore;
+
+    dispatchFunc(
+      AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
+    )
+    |> ignore;
+  };
 };
 
 let component =
-  ReasonReact.reducerComponentWithRetainedProps("MainEditorBottomComponents");
+  ReasonReact.statelessComponentWithRetainedProps(
+    "MainEditorBottomComponents",
+  );
 
-let reducer = (dispatchFunc, action, state) =>
-  switch (action) {
-  | ShowProject =>
-    ReasonReactUtils.sideEffects(() => {
-      dispatchFunc(AppStore.ShowComponentAction(ChangeComponent(Project)))
-      |> ignore;
-      dispatchFunc(
-        AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
-      )
-      |> ignore;
-    })
-  | ShowConsole =>
-    ReasonReactUtils.sideEffects(() => {
-      dispatchFunc(AppStore.ShowComponentAction(ChangeComponent(Console)))
-      |> ignore;
-      dispatchFunc(
-        AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
-      )
-      |> ignore;
-    })
-  };
+let render = ((store, dispatchFunc), _self) => {
+  let currentComponentType = store |> StoreUtils.getBottomCurrentComponentType;
 
-let render =
-    ((store, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article
     key="MainEditorBottomComponents" className="wonder-bottom-component">
     <div className="bottom-widget-category">
@@ -48,14 +37,18 @@ let render =
         className=(
           "category-name"
           ++ (
-            Method.isTypeEqualProject(state.bottomComponentType) ?
+            MainEditorBottomComponentUtils.isTypeEqualProject(
+              currentComponentType,
+            ) ?
               " category-active" : ""
           )
         )
         onClick=(
           _e =>
-            Method.isTypeEqualProject(state.bottomComponentType) ?
-              () : send(ShowProject)
+            MainEditorBottomComponentUtils.isTypeEqualProject(
+              currentComponentType,
+            ) ?
+              () : Method.showProject(dispatchFunc)
         )>
         (DomHelper.textEl("Project"))
       </span>
@@ -63,27 +56,26 @@ let render =
         className=(
           "category-name"
           ++ (
-            Method.isTypeEqualConsole(state.bottomComponentType) ?
-              "" : " category-active"
+            MainEditorBottomComponentUtils.isTypeEqualConsole(
+              currentComponentType,
+            ) ?
+              " category-active" : ""
           )
         )
         onClick=(
           _e =>
-            Method.isTypeEqualConsole(state.bottomComponentType) ?
-              () : send(ShowConsole)
+            MainEditorBottomComponentUtils.isTypeEqualConsole(
+              currentComponentType,
+            ) ?
+              () : Method.showConsole(dispatchFunc)
         )>
         (DomHelper.textEl("Console"))
       </span>
     </div>
-    (
-      Method.isTypeEqualProject(state.bottomComponentType) ?
-        <MainEditorAsset store dispatchFunc /> : ReasonReact.null
-    )
-    (
-      Method.isTypeEqualConsole(state.bottomComponentType) ?
-        <MainEditorConsole /> : ReasonReact.null
-    )
+    <MainEditorAsset store dispatchFunc />
+    <MainEditorConsole store dispatchFunc />
   </article>;
+};
 
 let shouldUpdate =
     ({newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
@@ -92,13 +84,9 @@ let shouldUpdate =
 
 let make = (~store, ~dispatchFunc, _children) => {
   ...component,
-  initialState: () => {
-    bottomComponentType: store |> StoreUtils.getBottomCurrentComponentType,
-  },
   retainedProps: {
     updateTypeArr: StoreUtils.getUpdateComponentTypeArr(store),
   },
   shouldUpdate,
-  reducer: reducer(dispatchFunc),
   render: self => render((store, dispatchFunc), self),
 };

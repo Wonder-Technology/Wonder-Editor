@@ -28,12 +28,22 @@
 .wonder-console-component{
     width:100%;
     height:90%;
-    user-select: auto;
-    overflow-y: auto;
-    @import "../../../../../utils/scrollBarUtils";
-    overflow-x: hidden;
-    @include consoleMessage("error");
-    @include consoleMessage("info");
-    @include consoleMessage("warn");
-    @include consoleMessage("log");
+    display: flex;
+    flex-direction: column;
+    .console-header{
+        width:100%;
+        height:25px;
+    }
+    .console-content{
+        overflow-y: auto;
+        user-select: text;
+        overflow-x: hidden;
+        @import "../../../../../utils/scrollBarUtils";
+
+        @include consoleMessage("error");
+        @include consoleMessage("info");
+        @include consoleMessage("warn");
+        @include consoleMessage("log");
+    }
+
 }

@@ -275,13 +275,6 @@ let getDragedSceneGraphData =
                ~actual={j|not|j},
              ),
              () => {
-               WonderLog.Log.print(
-                 getSceneGraphDataFromEngine
-                 |> StateLogicService.getStateToGetData,
-               )
-               |> ignore;
-               WonderLog.Log.print(dragedSceneGraph) |> ignore;
-
                getSceneGraphDataFromEngine
                |> StateLogicService.getStateToGetData == dragedSceneGraph
                |> assertTrue;

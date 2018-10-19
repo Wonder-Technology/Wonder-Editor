@@ -34,7 +34,6 @@ module Method = {
       [|editorState |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot|],
     )
     |> ArrayService.unsafeGetFirst
-    |> WonderLog.Log.print
     |. AssetTreeRootEditorService.setAssetTreeRoot(editorState)
     |> StateEditorService.setState;
 

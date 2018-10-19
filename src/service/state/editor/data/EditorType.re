@@ -12,6 +12,8 @@ open IMGUIType;
 
 open InspectorType;
 
+open ConsoleType;
+
 type widgetType =
   | SceneTree
   | Asset;
@@ -24,6 +26,7 @@ type editorState = {
   eventRecord,
   imguiRecord,
   inspectorRecord,
+  consoleRecord,
   currentDragSource: (option(widgetType), option(int)),
   currentSelectSource: option(widgetType),
   loopId: int,

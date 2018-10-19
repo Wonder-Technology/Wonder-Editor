@@ -1,7 +1,8 @@
 type navType =
   | None
   | File
-  | Edit;
+  | Edit
+  | Help;
 
 type state = {
   isSelectNav: bool,
@@ -127,6 +128,40 @@ module Method = {
       )
     </div>;
   };
+
+  let buildHelpComponent = (state, send, store, dispatchFunc) => {
+    let className =
+      state.currentSelectNav === Help ?
+        "item-title item-active" : "item-title";
+
+    <div className="header-item">
+      <div className="component-item">
+        <span
+          className
+          onClick=(e => send(ToggleShowNav(Help)))
+          onMouseOver=(e => send(HoverNav(Help)))>
+          (DomHelper.textEl("Help"))
+        </span>
+      </div>
+      (
+        state.currentSelectNav === Help ?
+          <div className="item-content">
+            <div
+              className="content-section"
+              onClick=(
+                _e =>
+                  AllHistoryService.undoHistoryState(store, dispatchFunc)
+                  |> StateHistoryService.getAndRefreshStateForHistory
+              )>
+              <span className="section-header">
+                (DomHelper.textEl("Version"))
+              </span>
+            </div>
+          </div> :
+          ReasonReact.null
+      )
+    </div>;
+  };
 };
 let component = ReasonReact.reducerComponent("Header");
 
@@ -164,6 +199,7 @@ let render =
     <div className="header-nav">
       (Method.buildFileComponent(state, send, store, dispatchFunc))
       (Method.buildEditComponent(state, send, store, dispatchFunc))
+      (Method.buildHelpComponent(state, send, store, dispatchFunc))
     </div>
   </article>;
 

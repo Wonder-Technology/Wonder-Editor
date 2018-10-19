@@ -242,8 +242,6 @@ let handleImageType =
             )
           };
 
-        WonderLog.Log.print(("parentNodeId: ", parentNodeId)) |> ignore;
-
         let editorState =
           editorState
           |> AssetTextureNodeMapEditorService.setResult(

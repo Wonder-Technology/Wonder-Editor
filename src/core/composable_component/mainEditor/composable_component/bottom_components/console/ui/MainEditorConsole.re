@@ -1,21 +1,62 @@
-/* open MainEditorConsoleType; */
-
-
-/* store into editorState */
-/* type state = {consoleMessageArr: array(consoleMessageType)}; */
-
 open ConsoleMessageType;
 
 module Method = {
-  let trigerErrorAction = (send, message) => send(ThrowError(message));
+  let triggerConsoleByType = (dispatchFunc, type_, message) => {
+    ConsoleMessageArrayEditorService.addConsoleMessage({
+      message,
+      consoleType: type_,
+      traceInfo: None,
+    })
+    |> StateLogicService.getAndSetEditorState;
 
-  let trigerInfoAction = (send, message) => send(ThrowInfo(message));
+    dispatchFunc(
+      AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
+    )
+    |> ignore;
+  };
 
-  let trigerWarnAction = (send, message) => send(ThrowWarn(message));
+  let triggerTrace = (dispatchFunc, message) => {
+    let editorState = StateEditorService.getState();
+    let copiedMessageArr =
+      editorState
+      |> ConsoleMessageArrayEditorService.getConsoleMessageArray
+      |> Js.Array.copy;
 
-  let trigerTraceAction = (send, message) => send(ThrowTrace(message));
+    switch (copiedMessageArr |> Js.Array.pop) {
+    | None => ()
+    | Some({traceInfo} as messageRecord) =>
+      switch (traceInfo) {
+      | None =>
+        editorState
+        |> ConsoleMessageArrayEditorService.setConsoleMessageArray(
+             copiedMessageArr
+             |> ArrayService.push({
+                  ...messageRecord,
+                  traceInfo: Some(message),
+                }),
+           )
+        |> StateEditorService.setState
+        |> ignore
 
-  let trigerLogAction = (send, message) => send(ThrowLog(message));
+      | Some(_) => ()
+      }
+    };
+
+    dispatchFunc(
+      AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
+    )
+    |> ignore;
+  };
+
+  let clearAllConsoleMessage = dispatchFunc => {
+    ConsoleMessageArrayEditorService.clearConsoleMessageArray
+    |> StateLogicService.getAndSetEditorState;
+
+    dispatchFunc(
+      AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
+    )
+    |> ignore;
+  };
 
   let showConsoleMsgComponent = consoleMessageArr =>
     consoleMessageArr
@@ -58,63 +99,7 @@ module Method = {
        );
 };
 
-let component = ReasonReact.reducerComponent("MainEditorConsole");
-
-let reducer = (action, state) =>
-  switch (action) {
-  | ClearAllMessage =>
-    ReasonReact.Update({...state, consoleMessageArr: ArrayService.create()})
-
-  | ThrowError(message) =>
-    ReasonReact.Update({
-      ...state,
-      consoleMessageArr:
-        state.consoleMessageArr
-        |> ArrayService.push({message, consoleType: Error, traceInfo: None}),
-    })
-  | ThrowInfo(message) =>
-    ReasonReact.Update({
-      ...state,
-      consoleMessageArr:
-        state.consoleMessageArr
-        |> ArrayService.push({message, consoleType: Info, traceInfo: None}),
-    })
-  | ThrowWarn(message) =>
-    ReasonReact.Update({
-      ...state,
-      consoleMessageArr:
-        state.consoleMessageArr
-        |> ArrayService.push({message, consoleType: Warn, traceInfo: None}),
-    })
-  | ThrowTrace(message) =>
-    let copiedMessageArr = state.consoleMessageArr |> Js.Array.copy;
-    switch (copiedMessageArr |> Js.Array.pop) {
-    | None => ReasonReact.NoUpdate
-    | Some({traceInfo} as messageRecord) =>
-      switch (traceInfo) {
-      | None =>
-        ReasonReact.Update({
-          ...state,
-          consoleMessageArr:
-            copiedMessageArr
-            |> ArrayService.push({
-                 ...messageRecord,
-                 traceInfo: Some(message),
-               }),
-        })
-
-      | Some(_) => ReasonReact.NoUpdate
-      }
-    };
-
-  | ThrowLog(message) =>
-    ReasonReact.Update({
-      ...state,
-      consoleMessageArr:
-        state.consoleMessageArr
-        |> ArrayService.push({message, consoleType: Log, traceInfo: None}),
-    })
-  };
+let component = ReasonReact.statelessComponent("MainEditorConsole");
 
 let log11 = () => WonderLog.Log.print("log message") |> ignore;
 
@@ -146,10 +131,22 @@ let fatal = () =>
     e => Console.throwFatal(e),
   );
 
-let render = (isShow, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
-  <article key="console" className="wonder-console-component">
-    <div className="">
-      <button className="" onClick=(_e => send(ClearAllMessage))>
+let render = (store, dispatchFunc, _self) => {
+  let consoleMessageArray =
+    StateEditorService.getState()
+    |> ConsoleMessageArrayEditorService.getConsoleMessageArray;
+  let style =
+    store
+    |> StoreUtils.getBottomCurrentComponentType
+    |> MainEditorBottomComponentUtils.isTypeEqualConsole ?
+      ReactDOMRe.Style.make(~opacity="1", ()) :
+      ReactDOMRe.Style.make(~display="none", ());
+
+  <article key="console" className="wonder-console-component" style>
+    <div className="console-header">
+      <button
+        className=""
+        onClick=(_e => Method.clearAllConsoleMessage(dispatchFunc))>
         (DomHelper.textEl("clear"))
       </button>
       <button className="" onClick=(_e => log11())>
@@ -168,26 +165,27 @@ let render = (isShow, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
         (DomHelper.textEl("add fatal"))
       </button>
     </div>
-    (
-      state.consoleMessageArr |> ArrayService.hasItem ?
-        ReasonReact.array(
-          Method.showConsoleMsgComponent(state.consoleMessageArr),
-        ) :
-        ReasonReact.null
-    )
+    <div className="console-content">
+      (
+        consoleMessageArray |> ArrayService.hasItem ?
+          ReasonReact.array(
+            Method.showConsoleMsgComponent(consoleMessageArray),
+          ) :
+          ReasonReact.null
+      )
+    </div>
   </article>;
+};
 
-let make = (~isShow: option(bool)=?, _children) => {
+let make = (~store, ~dispatchFunc, _children) => {
   ...component,
-  initialState: () => {consoleMessageArr: [||]},
-  reducer,
-  render: render(isShow),
-  didMount: ({send}: ReasonReact.self('a, 'b, 'c)) =>
+  render: render(store, dispatchFunc),
+  didMount: _self =>
     Console.stubConsole(
-      Method.trigerErrorAction(send),
-      Method.trigerInfoAction(send),
-      Method.trigerWarnAction(send),
-      Method.trigerTraceAction(send),
-      Method.trigerLogAction(send),
+      Method.triggerConsoleByType(dispatchFunc, Error),
+      Method.triggerConsoleByType(dispatchFunc, Info),
+      Method.triggerConsoleByType(dispatchFunc, Warn),
+      Method.triggerTrace(dispatchFunc),
+      Method.triggerConsoleByType(dispatchFunc, Log),
     ),
 };

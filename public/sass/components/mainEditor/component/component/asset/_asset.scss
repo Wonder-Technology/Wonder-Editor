@@ -2,13 +2,14 @@
     width:100%;
     height:100%;
     display: flex;
+    flex-direction: row;
     .asset-tree{
         flex: initial;
         width:30%;
         height: 100%;
         background-color: #444444;
-        overflow-y: scroll;
-        @import "../../../../../utils/scrollBarUtils";
+        display: flex;
+        flex-direction: column;
         @import "assetHeader";
         @import "assetTree";
     }
