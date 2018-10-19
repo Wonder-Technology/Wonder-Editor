@@ -145,7 +145,7 @@ module Method = {
       </div>
       (
         state.currentSelectNav === Help ?
-          <div className="item-content">
+          <div className="item-content item-help">
             <div
               className="content-section"
               onClick=(

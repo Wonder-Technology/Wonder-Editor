@@ -20,6 +20,16 @@ module Method = {
     )
     |> ignore;
   };
+
+  let getConsoleMessageUnReadCount = (componentType, editorState) =>
+    componentType |> MainEditorBottomComponentUtils.isTypeEqualConsole ?
+      "0" :
+      {
+        let count =
+          editorState |> ConsoleCheckedCountEditorService.unreadConsoleMessage;
+
+        count >= 99 ? "99" : count |> string_of_int;
+      };
 };
 
 let component =
@@ -33,7 +43,7 @@ let render = ((store, dispatchFunc), _self) => {
   <article
     key="MainEditorBottomComponents" className="wonder-bottom-component">
     <div className="bottom-widget-category">
-      <span
+      <div
         className=(
           "category-name"
           ++ (
@@ -50,9 +60,9 @@ let render = ((store, dispatchFunc), _self) => {
             ) ?
               () : Method.showProject(dispatchFunc)
         )>
-        (DomHelper.textEl("Project"))
-      </span>
-      <span
+        <div className="name-header"> (DomHelper.textEl("Project")) </div>
+      </div>
+      <div
         className=(
           "category-name"
           ++ (
@@ -69,8 +79,17 @@ let render = ((store, dispatchFunc), _self) => {
             ) ?
               () : Method.showConsole(dispatchFunc)
         )>
-        (DomHelper.textEl("Console"))
-      </span>
+        <div className="name-header"> (DomHelper.textEl("Console")) </div>
+        <div className="name-tail">
+          (
+            DomHelper.textEl(
+              Method.getConsoleMessageUnReadCount(currentComponentType)
+              |> StateLogicService.getEditorState,
+            )
+          )
+        </div>
+      </div>
+      <span className="category-name" />
     </div>
     <MainEditorAsset store dispatchFunc />
     <MainEditorConsole store dispatchFunc />

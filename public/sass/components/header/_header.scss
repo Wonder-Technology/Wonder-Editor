@@ -35,8 +35,8 @@
                 height:200px;
                 background-color: #555555;
                 .content-section{
-                    height:26px;
-                    line-height: 26px;
+                    height:28px;
+                    line-height: 28px;
                     width:100%;
                     color:#ffffff;
                     font-weight: normal;
@@ -56,6 +56,7 @@
                     .section-header{
                         flex:initial;
                         display: inline-block;
+                        font-size:14px;
                         padding-left:20px;
                         height:100%;
                         width:70%;
@@ -65,18 +66,14 @@
                         display: inline-block;
                         height:100%;
                         width:30%;
+                        color: #cfcdcd;
                         text-align: center;
                     }
                 }
             }
-            // .item-edit{
-            //     width:170px;
-            //     .content-section{
-            //         .section-header{
-            //             width:160px;
-            //         }
-            //     }
-            // }
+            .item-edit, .item-help{
+                width:150px;
+            }
         }
     }
 }

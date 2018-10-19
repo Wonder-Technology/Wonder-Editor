@@ -48,9 +48,16 @@ module Method = {
     |> ignore;
   };
 
+  let setCheckedMessageCount = editorState =>
+    editorState
+    |> ConsoleMessageArrayEditorService.getConsoleMessageArrayLen
+    |. ConsoleCheckedCountEditorService.setConsoleCheckedCount(editorState);
+
   let clearAllConsoleMessage = dispatchFunc => {
-    ConsoleMessageArrayEditorService.clearConsoleMessageArray
-    |> StateLogicService.getAndSetEditorState;
+    StateEditorService.getState()
+    |> ConsoleMessageArrayEditorService.clearConsoleMessageArray
+    |> ConsoleCheckedCountEditorService.clearConsoleCheckedCount
+    |> StateEditorService.setState;
 
     dispatchFunc(
       AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
@@ -139,7 +146,11 @@ let render = (store, dispatchFunc, _self) => {
     store
     |> StoreUtils.getBottomCurrentComponentType
     |> MainEditorBottomComponentUtils.isTypeEqualConsole ?
-      ReactDOMRe.Style.make(~opacity="1", ()) :
+      {
+        Method.setCheckedMessageCount |> StateLogicService.getAndSetEditorState;
+
+        ReactDOMRe.Style.make(~opacity="1", ());
+      } :
       ReactDOMRe.Style.make(~display="none", ());
 
   <article key="console" className="wonder-console-component" style>

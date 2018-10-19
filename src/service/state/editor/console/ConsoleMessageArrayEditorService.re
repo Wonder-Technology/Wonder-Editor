@@ -26,3 +26,7 @@ let addConsoleMessage = (consoleMessage, editorState) => {
     editorState.consoleRecord
     |> ConsoleMessageArrayConsoleService.addConsoleMessage(consoleMessage),
 };
+
+let getConsoleMessageArrayLen = editorState =>
+  editorState.consoleRecord
+  |> ConsoleMessageArrayConsoleService.getConsoleMessageArrayLen;

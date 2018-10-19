@@ -31,6 +31,7 @@ let create = () => {
   },
   consoleRecord: {
     consoleMessageArray: [||],
+    consoleCheckedCount : 0
   },
   sceneViewRecord: {
     viewRect: None,

@@ -18,3 +18,6 @@ let addConsoleMessage = (consoleMessage, consoleRecord) => {
   consoleMessageArray:
     consoleRecord.consoleMessageArray |> ArrayService.push(consoleMessage),
 };
+
+let getConsoleMessageArrayLen = consoleRecord =>
+  consoleRecord.consoleMessageArray |> Js.Array.length;
