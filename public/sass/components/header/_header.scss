@@ -74,6 +74,13 @@
             .item-edit, .item-help{
                 width:150px;
             }
+            .modal-item-content{
+                padding-top:50px;
+                .content-field{
+                    width:50%;
+                    margin-left:20%;
+                }
+            }
         }
     }
 }

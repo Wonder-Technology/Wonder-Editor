@@ -7,12 +7,15 @@ type navType =
 type state = {
   isSelectNav: bool,
   currentSelectNav: navType,
+  isShowHelpVersion: bool,
 };
 
 type action =
   | HoverNav(navType)
   | ToggleShowNav(navType)
-  | BlurNav;
+  | BlurNav
+  | ShowHelpVersion
+  | HideHelpVersion;
 
 module Method = {
   let getStorageParentKey = () => "userExtension";
@@ -148,16 +151,26 @@ module Method = {
           <div className="item-content item-help">
             <div
               className="content-section"
-              onClick=(
-                _e =>
-                  AllHistoryService.undoHistoryState(store, dispatchFunc)
-                  |> StateHistoryService.getAndRefreshStateForHistory
-              )>
+              onClick=(_e => send(ShowHelpVersion))>
               <span className="section-header">
                 (DomHelper.textEl("Version"))
               </span>
             </div>
           </div> :
+          ReasonReact.null
+      )
+      (
+        state.isShowHelpVersion ?
+          <Modal
+            title="about wonder"
+            closeFunc=(() => send(HideHelpVersion))
+            content={
+              <div className="content-field">
+                <div className="field-title"> (DomHelper.textEl("Version:")) </div>
+                <div className="field-content"> (DomHelper.textEl("1.0.0")) </div>
+              </div>
+            }
+          /> :
           ReasonReact.null
       )
     </div>;
@@ -187,6 +200,11 @@ let reducer = (action, state) =>
     state.isSelectNav ?
       ReasonReact.Update({...state, currentSelectNav: selectNav}) :
       ReasonReact.NoUpdate
+
+  | ShowHelpVersion => ReasonReact.Update({...state, isShowHelpVersion: true})
+
+  | HideHelpVersion =>
+    ReasonReact.Update({...state, isShowHelpVersion: false})
   };
 
 let render =
@@ -205,7 +223,11 @@ let render =
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
-  initialState: () => {isSelectNav: false, currentSelectNav: None},
+  initialState: () => {
+    isSelectNav: false,
+    currentSelectNav: None,
+    isShowHelpVersion: false,
+  },
   reducer,
   didMount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
     DomHelper.addEventListener(

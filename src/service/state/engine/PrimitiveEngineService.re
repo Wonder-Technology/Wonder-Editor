@@ -6,7 +6,7 @@ let createEmptyGameObject = (editorState, engineState) => {
 
   let engineState =
     engineState
-    |> GameObjectEngineService.setGameObjectName("gameObject", obj);
+    |> GameObjectEngineService.setGameObjectName("GameObject", obj);
 
   (editorState, engineState, obj);
 };

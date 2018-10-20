@@ -41,6 +41,73 @@ html, body {
     outline: 0;
     box-shadow: 0 0 0 2px rgba(45, 183, 245, 0.2); }
 
+.wonder-modal {
+  position: fixed;
+  z-index: 200;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .wonder-modal .modal-item {
+    width: 470px;
+    height: 300px;
+    position: relative;
+    background: #c1c1c1;
+    border-radius: 5px;
+    z-index: 150; }
+    .wonder-modal .modal-item .modal-item-header {
+      width: 100%;
+      height: 30px;
+      line-height: 30px;
+      font-size: 14px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 3px 0px;
+      border-bottom: 1px solid #868686;
+      background: #555454; }
+    .wonder-modal .modal-item .modal-item-content {
+      color: #000;
+      height: 214px;
+      overflow-y: auto;
+      width: 90%;
+      margin-left: 5%;
+      padding-top: 10px;
+      box-sizing: border-box;
+      font-size: 16px; }
+      .wonder-modal .modal-item .modal-item-content::-webkit-scrollbar {
+        width: 4px;
+        height: 4px; }
+      .wonder-modal .modal-item .modal-item-content::-webkit-scrollbar-button {
+        display: none; }
+      .wonder-modal .modal-item .modal-item-content::-webkit-scrollbar-track {
+        background: rgba(1, 1, 1, 0.6);
+        width: 2px; }
+      .wonder-modal .modal-item .modal-item-content::-webkit-scrollbar-thumb {
+        background: #cfcccc;
+        border-radius: 4px; }
+      .wonder-modal .modal-item .modal-item-content .content-field {
+        width: 100%;
+        height: 20px;
+        display: flex; }
+        .wonder-modal .modal-item .modal-item-content .content-field .field-content {
+          margin-left: 4px; }
+    .wonder-modal .modal-item .modal-item-footer {
+      height: 50px;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      position: relative; }
+      .wonder-modal .modal-item .modal-item-footer .footer-close {
+        width: 100px;
+        position: absolute;
+        top: 5px;
+        right: 30px; }
+
 .wonder-app-component {
   width: 100%;
   height: 100%;
@@ -115,6 +182,11 @@ html, body {
               text-align: center; }
         .wonder-app-component .wonder-header-component .header-nav .header-item .item-edit, .wonder-app-component .wonder-header-component .header-nav .header-item .item-help {
           width: 150px; }
+        .wonder-app-component .wonder-header-component .header-nav .header-item .modal-item-content {
+          padding-top: 50px; }
+          .wonder-app-component .wonder-header-component .header-nav .header-item .modal-item-content .content-field {
+            width: 50%;
+            margin-left: 20%; }
   .wonder-app-component .wonder-controller-component {
     width: 100%;
     height: 45px; }
@@ -403,7 +475,7 @@ html, body {
           .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .bottom-widget-category .category-name {
             width: 80px;
             font-size: 13px;
-            height: 20px;
+            height: 18px;
             margin-right: 0 5px;
             display: flex; }
             .wonder-app-component .wonder-mainEditor-component .left-component .wonder-bottom-component .bottom-widget-category .category-name .name-header {
@@ -1342,6 +1414,7 @@ html, body {
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .material-value {
             position: relative; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .material-value .material-shade {
+              border-radius: 5px;
               background: rgba(195, 195, 195, 0.5);
               position: absolute;
               z-index: 100;
@@ -2249,11 +2322,12 @@ html, body {
   .select-component-content .select-component-item {
     width: 220px;
     height: 305px;
-    background: #555555;
     position: relative;
     z-index: 120;
     overflow-y: auto;
-    border: 1px solid #333333; }
+    border: 1px solid #333333;
+    background: #c1c1c1;
+    border-radius: 5px; }
     .select-component-content .select-component-item::-webkit-scrollbar {
       width: 4px;
       height: 4px; }
@@ -2272,8 +2346,10 @@ html, body {
       font-size: 14px;
       text-align: center;
       padding: 5px 0px;
-      border-bottom: 1px solid #868686; }
+      border-bottom: 1px solid #868686;
+      background: #555454; }
     .select-component-content .select-component-item .item-content {
+      color: #000;
       height: 20px;
       line-height: 20px;
       padding: 2px 7px; }
@@ -2285,5 +2361,5 @@ html, body {
     left: 0px;
     width: 100%;
     height: 100%;
-    background: rgba(10, 10, 10, 0.7);
+    background: rgba(10, 10, 10, 0.5);
     z-index: 100; }

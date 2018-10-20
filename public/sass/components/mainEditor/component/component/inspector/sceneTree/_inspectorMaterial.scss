@@ -10,6 +10,7 @@
     .material-value {
         position: relative;
         .material-shade {
+            border-radius: 5px;
             background: rgba(195, 195, 195, 0.5);
             position: absolute;
             z-index:100;
