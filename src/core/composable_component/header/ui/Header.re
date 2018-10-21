@@ -7,15 +7,18 @@ type navType =
 type state = {
   isSelectNav: bool,
   currentSelectNav: navType,
-  isShowHelpVersion: bool,
+  isShowEditExportModal: bool,
+  isShowHelpVersionModal: bool,
 };
 
 type action =
   | HoverNav(navType)
   | ToggleShowNav(navType)
   | BlurNav
-  | ShowHelpVersion
-  | HideHelpVersion;
+  | ShowEditExportModal
+  | HideEditExportModal
+  | ShowHelpVersionModal
+  | HideHelpVersionModal;
 
 module Method = {
   let getStorageParentKey = () => "userExtension";
@@ -116,17 +119,38 @@ module Method = {
               className="content-section"
               onClick=(
                 _e =>
-                  HeaderExportUtils.exportPackage(
-                    WonderBsJszip.Zip.create,
-                    Fetch.fetch,
-                  )
-                  |> ignore
+                  send(ShowEditExportModal)
+                  /* HeaderExportUtils.exportPackage(
+                       WonderBsJszip.Zip.create,
+                       Fetch.fetch,
+                     )
+                     |> ignore */
               )>
               <span className="section-header">
                 (DomHelper.textEl("Export Package"))
               </span>
             </div>
           </div> :
+          ReasonReact.null
+      )
+      (
+        /*TODO not use modal */
+        state.isShowEditExportModal ?
+          <SingleInputModal
+           title="Export Package"
+           defaultValue="wonderPackage"
+           closeFunc=(() => send(HideEditExportModal))  
+           submitFunc=((packageName) => {
+              HeaderExportUtils.exportPackage(
+                    WonderBsJszip.Zip.create,
+                    Fetch.fetch,
+                    packageName
+                  )
+                  |> ignore;
+
+              send(HideEditExportModal)
+            })
+          /> :
           ReasonReact.null
       )
     </div>;
@@ -151,7 +175,7 @@ module Method = {
           <div className="item-content item-help">
             <div
               className="content-section"
-              onClick=(_e => send(ShowHelpVersion))>
+              onClick=(_e => send(ShowHelpVersionModal))>
               <span className="section-header">
                 (DomHelper.textEl("Version"))
               </span>
@@ -160,14 +184,18 @@ module Method = {
           ReasonReact.null
       )
       (
-        state.isShowHelpVersion ?
+        state.isShowHelpVersionModal ?
           <Modal
-            title="about wonder"
-            closeFunc=(() => send(HideHelpVersion))
+            title="About Wonder"
+            closeFunc=(() => send(HideHelpVersionModal))
             content={
               <div className="content-field">
-                <div className="field-title"> (DomHelper.textEl("Version:")) </div>
-                <div className="field-content"> (DomHelper.textEl("1.0.0")) </div>
+                <div className="field-title">
+                  (DomHelper.textEl("Version:"))
+                </div>
+                <div className="field-content">
+                  (DomHelper.textEl("1.0.0"))
+                </div>
               </div>
             }
           /> :
@@ -201,10 +229,17 @@ let reducer = (action, state) =>
       ReasonReact.Update({...state, currentSelectNav: selectNav}) :
       ReasonReact.NoUpdate
 
-  | ShowHelpVersion => ReasonReact.Update({...state, isShowHelpVersion: true})
+  | ShowHelpVersionModal =>
+    ReasonReact.Update({...state, isShowHelpVersionModal: true})
 
-  | HideHelpVersion =>
-    ReasonReact.Update({...state, isShowHelpVersion: false})
+  | HideHelpVersionModal =>
+    ReasonReact.Update({...state, isShowHelpVersionModal: false})
+
+  | ShowEditExportModal =>
+    ReasonReact.Update({...state, isShowEditExportModal: true})
+
+  | HideEditExportModal =>
+    ReasonReact.Update({...state, isShowEditExportModal: false})
   };
 
 let render =
@@ -226,7 +261,8 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   initialState: () => {
     isSelectNav: false,
     currentSelectNav: None,
-    isShowHelpVersion: false,
+    isShowHelpVersionModal: false,
+    isShowEditExportModal: false,
   },
   reducer,
   didMount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>

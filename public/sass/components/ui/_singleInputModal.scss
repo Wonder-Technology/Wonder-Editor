@@ -1,4 +1,4 @@
-.wonder-modal{
+.wonder-singleInput-modal{
     position: fixed;
     z-index: 200;
     top:0px;
@@ -8,9 +8,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    @import "./normalInput";
     .modal-item{
         width:470px;
-        height:300px;
+        height:200px;
         position: relative;
         background: #c1c1c1;
         border-radius: 5px;
@@ -41,7 +42,7 @@
         .modal-item-content{
             @import "../../utils/scrollBarUtils";
             color:#000;
-            height:213px;
+            height:114px;
             overflow-y: auto;
             width:90%;
             margin-left:5%;
@@ -50,8 +51,12 @@
             font-size:16px;
             .content-field{
                 width:100%;
-                height:20px;
+                height:24px;
                 display: flex;
+                .field-title{
+                    height:24px;
+                    line-height: 24px;
+                }
                 .field-content{
                     margin-left:4px;
                 }

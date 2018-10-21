@@ -1,21 +1,36 @@
-module Method = {};
-
 let component = ReasonReact.statelessComponent("Modal");
 
-let render = (title, closeFunc, content, _self) =>
+let render = (title, content, (closeFunc, submitFunc), _self) =>
   <article className="wonder-modal">
     <div className="modal-item">
-      <div className="modal-item-header"> (DomHelper.textEl(title)) </div>
-      <div className="modal-item-content"> content </div>
-      <div className="modal-item-footer">
-        <button className="footer-close" onClick=(_e => closeFunc())>
-          (DomHelper.textEl("Close"))
-        </button>
+      <div className="modal-item-header">
+        (DomHelper.textEl(title))
+        <img src="./public/img/close.png" onClick=(_e => closeFunc()) />
       </div>
+      <div className="modal-item-content"> content </div>
+      (
+        switch ( submitFunc ){
+        | None => ReasonReact.null
+        | Some(submitFunc) => 
+        <div className="modal-item-footer">
+          <button className="footer-submit" onClick=(_e => submitFunc())>
+            (DomHelper.textEl("Submit"))
+          </button>
+        </div>
+        }
+      )
+
     </div>
   </article>;
 
-let make = (~closeFunc, ~title, ~content, _children) => {
+let make =
+    (
+      ~closeFunc,
+      ~title,
+      ~content,
+      ~submitFunc: option(unit => unit)=?,
+      _children,
+    ) => {
   ...component,
-  render: _self => render(title, closeFunc, content, _self),
+  render: _self => render(title, content, (closeFunc, submitFunc), _self),
 };

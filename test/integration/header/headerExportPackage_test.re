@@ -44,7 +44,7 @@ let _ =
 
         let obj = HeaderTool.buildExportFakeJsZipCreateFunc(sandbox^);
 
-        HeaderExportUtils.exportPackage(() => obj, fakeFetchFunc)
+        HeaderExportUtils.exportPackage(() => obj, fakeFetchFunc,"editor")
         |> then_(_ => {
              let file = obj##file;
              let fetchCount =

@@ -106,9 +106,15 @@ let getAssetTextureDataArr = editorState => {
          pathName,
          /* TODO use imageId? */
          textureComponent,
-         BasicSourceTextureEngineService.getWrapS(textureComponent, engineState)
+         BasicSourceTextureEngineService.getWrapS(
+           textureComponent,
+           engineState,
+         )
          |> TextureTypeUtils.convertWrapToInt,
-         BasicSourceTextureEngineService.getWrapT(textureComponent, engineState)
+         BasicSourceTextureEngineService.getWrapT(
+           textureComponent,
+           engineState,
+         )
          |> TextureTypeUtils.convertWrapToInt,
          BasicSourceTextureEngineService.getMinFilter(
            textureComponent,
@@ -155,7 +161,11 @@ let _writeAllFolderAndWDBToPackage = (jsZip, (editorState, engineState)) =>
            {
              let pathName =
                _getAssetNodePathFromAssets(
-                 AssetNodeUtils.getAssetNodeParentId(type_, nodeId, editorState),
+                 AssetNodeUtils.getAssetNodeParentId(
+                   type_,
+                   nodeId,
+                   editorState,
+                 ),
                  ArrayService.create()
                  |> ArrayService.push(
                       AssetNodeUtils.getAssetNodeTotalName(
@@ -201,7 +211,7 @@ let _generateWDB = engineState => {
   (engineState, sceneGraphArrayBuffer);
 };
 
-let exportPackage = (createZipFunc, fetchFunc) => {
+let exportPackage = (createZipFunc, fetchFunc, exportPackageName) => {
   let engineState = StateEngineService.unsafeGetState();
 
   let (engineState, sceneGraphArrayBuffer) = _generateWDB(engineState);
@@ -253,7 +263,8 @@ let exportPackage = (createZipFunc, fetchFunc) => {
           )
        |. Zip.generateAsyncBlob(Zip.makeAsyncBlobOptions())
        |> Js.Promise.then_(content =>
-            FileSaver.saveAs(content, "editor.zip") |> Js.Promise.resolve
+            FileSaver.saveAs(content, exportPackageName ++ ".zip")
+            |> Js.Promise.resolve
           )
        |> ignore
      )
