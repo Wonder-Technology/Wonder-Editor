@@ -124,7 +124,7 @@ module Method = {
               triggerOnBlur(value, onBlurFunc)
             ),
           _value => {
-            ConsoleUtils.warn("the value can't be 0 !");
+            ConsoleUtils.warn("the scale value can't be 0 !");
 
             ReasonReact.Update({
               ...state,
