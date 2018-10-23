@@ -160,7 +160,6 @@ let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
   | ShowMaterialGroup =>
     ReasonReact.Update({...state, isShowMaterialGroup: true})
   | HideMaterialGroup =>
-    WonderLog.Log.print("fcck") |> ignore;
     ReasonReact.Update({...state, isShowMaterialGroup: false});
   };
 

@@ -264,30 +264,3 @@ let getDragedSceneGraphData =
     ) =>
   removeDragedTreeNode(dragedUid, sceneGraphArray)
   |> dragedTreeNodeToTargetTreeNode(targetUid);
-/* |> WonderLog.Contract.ensureCheck(
-     dragedSceneGraph =>
-       WonderLog.(
-         Contract.(
-           test(
-             Log.buildAssertMessage(
-               ~expect=
-                 {j|the draged scene graph data == scene data from engine|j},
-               ~actual={j|not|j},
-             ),
-             () => {
-               WonderLog.Log.print(
-                 getSceneGraphDataFromEngine
-                 |> StateLogicService.getStateToGetData,
-               )
-               |> ignore;
-               WonderLog.Log.print(dragedSceneGraph) |> ignore;
-
-               getSceneGraphDataFromEngine
-               |> StateLogicService.getStateToGetData == dragedSceneGraph
-               |> assertTrue;
-             },
-           )
-         )
-       ),
-     StateEditorService.getStateIsDebug(),
-   ); */

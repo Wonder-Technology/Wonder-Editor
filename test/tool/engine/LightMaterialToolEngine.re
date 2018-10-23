@@ -25,16 +25,11 @@ let replaceGameObjectLightMaterial = (gameObject, newMaterial, engineState) =>
        newMaterial,
      );
 
-let isAlive = (material, engineState) =>{
-  WonderLog.Log.print(("disposedI: ", 
- material, 
-RecordLightMaterialMainService.getRecord(engineState).disposedIndexArray
-  )) |> ignore;
+let isAlive = (material, engineState) =>
   DisposeLightMaterialMainService.isAlive(
     material,
     RecordLightMaterialMainService.getRecord(engineState),
   );
-};
 
 let getNewLightMaterial =
     (~engineState=StateEngineService.unsafeGetState(), ()) => {
