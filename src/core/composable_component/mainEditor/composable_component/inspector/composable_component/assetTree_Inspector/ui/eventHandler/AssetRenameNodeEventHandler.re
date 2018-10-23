@@ -36,7 +36,7 @@ module CustomEventHandler = {
 
     let defaultName =
       switch (
-        AssetMaterialNodeMapEditorService.getMaterialType(
+        AssetMaterialNodeMapEditorService.getType(
           nodeId,
           materialNodeMap,
         )

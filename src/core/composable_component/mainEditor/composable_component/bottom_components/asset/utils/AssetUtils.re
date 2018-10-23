@@ -143,36 +143,21 @@ let _removeTextureEngineData = (textureComponent, editorState, engineState) =>
   |> _removeTextureFromAllBasicMaterials(textureComponent, editorState)
   |> _removeTextureFromAllLightMaterials(textureComponent, editorState);
 
-let _removeTextureEditorData =
-    (nodeId, textureComponent, image, editorState) => {
-  let {textureArray} as imageResult =
-    editorState
-    |> AssetImageBase64MapEditorService.getImageBase64Map
-    |> WonderCommonlib.SparseMapService.unsafeGet(image);
-  let newTextureArr =
-    textureArray |> Js.Array.filter(texture => texture !== textureComponent);
-
+let _removeTextureEditorData = (nodeId, textureComponent, image, editorState) => {
   let editorState =
-    switch (newTextureArr |> Js.Array.length) {
-    | 0 =>
-      editorState
-      |> AssetImageBase64MapEditorService.getImageBase64Map
-      |> Js.Array.copy
-      |> DomHelper.deleteKeyInMap(image)
-      |. AssetImageBase64MapEditorService.setImageBase64Map(editorState)
-    | _ =>
-      editorState
-      |> AssetImageBase64MapEditorService.setResult(
-           image,
-           {...imageResult, textureArray: newTextureArr},
-         )
-    };
+    editorState
+    |> AssetTextureNodeMapEditorService.getTextureNodeMap
+    |> SparseMapService.copy
+    |> DomHelper.deleteKeyInMap(nodeId)
+    |. AssetTextureNodeMapEditorService.setTextureNodeMap(editorState);
 
-  editorState
-  |> AssetTextureNodeMapEditorService.getTextureNodeMap
-  |> SparseMapService.copy
-  |> DomHelper.deleteKeyInMap(nodeId)
-  |. AssetTextureNodeMapEditorService.setTextureNodeMap(editorState);
+  AssetTextureNodeMapEditorService.doesAnyTextureUseImage(image, editorState) ?
+    editorState :
+    editorState
+    |> AssetImageNodeMapEditorService.getImageNodeMap
+    |> Js.Array.copy
+    |> DomHelper.deleteKeyInMap(image)
+    |. AssetImageNodeMapEditorService.setImageNodeMap(editorState);
 };
 
 let _removeTextureTreeNode = (nodeId, editorState) => {

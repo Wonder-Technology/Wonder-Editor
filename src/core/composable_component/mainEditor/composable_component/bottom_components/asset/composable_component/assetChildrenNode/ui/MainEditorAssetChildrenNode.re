@@ -11,12 +11,66 @@ module Method = {
     | Some({currentNodeId}) => AssetUtils.isIdEqual(nodeId, currentNodeId)
     };
 
+  let _handleImageNodeData = (assetTreeNodeChildrenArr, editorState) =>
+    assetTreeNodeChildrenArr
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. editorState, {nodeId, type_}) =>
+           switch (type_) {
+           | Texture =>
+             let {image} =
+               editorState
+               |> AssetTextureNodeMapEditorService.getTextureNodeMap
+               |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+
+             editorState
+             |> AssetImageNodeMapEditorService.getImageNodeMap
+             |> WonderCommonlib.SparseMapService.unsafeGet(image)
+             |> (
+               ({base64, uint8Array, mimeType} as result) =>
+                 switch (base64) {
+                 | Some(_) => editorState
+                 | None =>
+                   /* TODO test */
+                   switch (uint8Array) {
+                   | None =>
+                     WonderLog.Log.fatal(
+                       WonderLog.Log.buildFatalMessage(
+                         ~title="_handleImageNodeData",
+                         ~description={j|image->uint8Array should exist|j},
+                         ~reason="",
+                         ~solution={j||j},
+                         ~params={j||j},
+                       ),
+                     )
+                   | Some(uint8Array) =>
+                     AssetImageNodeMapEditorService.setResult(
+                       image,
+                       {
+                         ...result,
+                         base64:
+                           Some(
+                             BufferUtils.convertUint8ArrayToBase64(
+                               uint8Array,
+                               mimeType,
+                             ),
+                           ),
+                       },
+                       editorState,
+                     )
+                   }
+                 }
+             );
+           | _ => editorState
+           },
+         editorState,
+       );
+
   let showSpecificTreeNodeChildren =
       (
+        assetTreeNodeChildrenArr,
         (store, dispatchFunc),
         (dragImg, debounceTime, currentNodeData),
         (editorState, engineState),
-        assetTreeNodeChildrenArr,
       ) =>
     assetTreeNodeChildrenArr
     |> Js.Array.map(({nodeId, type_}) =>
@@ -58,9 +112,9 @@ module Method = {
              dragImg
              imgSrc=(
                editorState
-               |> AssetImageBase64MapEditorService.getImageBase64Map
+               |> AssetImageNodeMapEditorService.getImageNodeMap
                |> WonderCommonlib.SparseMapService.unsafeGet(image)
-               |> (({base64}) => base64)
+               |> (({base64, mimeType}) => base64 |> OptionService.unsafeGet)
              )
              fileId=nodeId
              fileType=type_
@@ -120,22 +174,28 @@ module Method = {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
-    editorState
-    |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-    |> AssetUtils.getSpecificTreeNodeById(
-         editorState |> AssetUtils.getTargetTreeNodeId,
-       )
-    |> OptionService.unsafeGet
-    |> (currentParentNode => currentParentNode.children)
-    |> showSpecificTreeNodeChildren(
-         (store, dispatchFunc),
-         (
-           dragImg,
-           debounceTime,
-           editorState |> AssetCurrentNodeDataEditorService.getCurrentNodeData,
-         ),
-         (editorState, engineState),
-       );
+    let assetTreeNodeChildrenArr =
+      editorState
+      |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+      |> AssetUtils.getSpecificTreeNodeById(
+           editorState |> AssetUtils.getTargetTreeNodeId,
+         )
+      |> OptionService.unsafeGet
+      |> (currentParentNode => currentParentNode.children);
+
+    let editorState =
+      _handleImageNodeData(assetTreeNodeChildrenArr, editorState);
+
+    showSpecificTreeNodeChildren(
+      assetTreeNodeChildrenArr,
+      (store, dispatchFunc),
+      (
+        dragImg,
+        debounceTime,
+        editorState |> AssetCurrentNodeDataEditorService.getCurrentNodeData,
+      ),
+      (editorState, engineState),
+    );
   };
 };
 

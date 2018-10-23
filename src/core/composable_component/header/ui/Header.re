@@ -96,12 +96,7 @@ module Method = {
                 _type="file"
                 multiple=false
                 onChange=(
-                  e =>
-                    HeaderImportUtils.importPackage(
-                      WonderBsJszip.Zip.create,
-                      dispatchFunc,
-                      e,
-                    )
+                  e => HeaderImportPackageUtils.importPackage(dispatchFunc, e)
                 )
               />
               <span className="section-header">
@@ -110,14 +105,7 @@ module Method = {
             </div>
             <div
               className="content-section"
-              onClick=(
-                _e =>
-                  HeaderExportUtils.exportPackage(
-                    WonderBsJszip.Zip.create,
-                    Fetch.fetch,
-                  )
-                  |> ignore
-              )>
+              onClick=(_e => HeaderExportPackageUtils.exportPackage())>
               <span className="section-header">
                 (DomHelper.textEl("Export Package"))
               </span>
@@ -128,6 +116,7 @@ module Method = {
     </div>;
   };
 };
+
 let component = ReasonReact.reducerComponent("Header");
 
 let reducer = (action, state) =>

@@ -1,4 +1,13 @@
-type htmlImage = {. "src": string};
+type error;
+
+type htmlImage = {
+  .
+  "width": int,
+  "height": int,
+  "src": string,
+  "onload": unit => unit,
+  "onerror": error => unit,
+};
 
 external convertImgToHtmlImage : ReasonReact.reactElement => htmlImage =
   "%identity";

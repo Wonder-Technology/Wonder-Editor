@@ -13,11 +13,11 @@ let setTextureName = (nodeId, name, editorState) => {
   let textureComponent = getTextureComponent(nodeId, editorState);
 
   editorState
-  |> AssetImageBase64MapEditorService.setResult(
+  |> AssetImageNodeMapEditorService.setResult(
        textureComponent,
        {
          ...
-           AssetImageBase64MapEditorService.unsafeGetResult(
+           AssetImageNodeMapEditorService.unsafeGetResult(
              textureComponent,
              editorState,
            ),

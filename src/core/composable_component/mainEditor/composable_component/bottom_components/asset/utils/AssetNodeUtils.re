@@ -50,8 +50,8 @@ let getAssetNodeParentId = (type_, currentNodeId, editorState) =>
        type_,
        (
          AssetFolderNodeMapEditorService.getFolderParentId(currentNodeId),
-         AssetTextureNodeMapEditorService.getTextureParentId(currentNodeId),
-         AssetMaterialNodeMapEditorService.getMaterialParentId(currentNodeId),
+         AssetTextureNodeMapEditorService.getParentFolderNodeId(currentNodeId),
+         AssetMaterialNodeMapEditorService.getParentFolderNodeId(currentNodeId),
          AssetWDBNodeMapEditorService.getWDBParentId(currentNodeId),
        ),
      );

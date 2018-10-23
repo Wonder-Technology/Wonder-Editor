@@ -1,19 +1,19 @@
 open AssetType;
 
-let getImageBase64Map = assetRecord => assetRecord.imageBase64Map;
+let getImageNodeMap = assetRecord => assetRecord.imageNodeMap;
 
-let setImageBase64Map = (imageBase64Map, assetRecord) => {
+let setImageNodeMap = (imageNodeMap, assetRecord) => {
   ...assetRecord,
-  imageBase64Map,
+  imageNodeMap,
 };
 
 let unsafeGetResult = (imageId, assetRecord) =>
-  assetRecord.imageBase64Map
+  assetRecord.imageNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(imageId);
 
 let setResult = (imageId, imageResult, assetRecord) => {
   ...assetRecord,
-  imageBase64Map:
-    assetRecord.imageBase64Map
+  imageNodeMap:
+    assetRecord.imageNodeMap
     |> SparseMapService.immutableSet(imageId, imageResult),
 };

@@ -20,7 +20,7 @@ type assetRecord = {
   wdbNodeMap: WonderCommonlib.SparseMapService.t(wdbResultType),
   materialNodeMap: WonderCommonlib.SparseMapService.t(materialResultType),
   materialNodeIdMap: WonderCommonlib.SparseMapService.t(nodeId),
-  imageBase64Map: WonderCommonlib.SparseMapService.t(imageResultType),
+  imageNodeMap: WonderCommonlib.SparseMapService.t(imageResultType),
   geometryData,
   materialData,
   clonedGameObjectMap: WonderCommonlib.SparseMapService.t(array(int)),

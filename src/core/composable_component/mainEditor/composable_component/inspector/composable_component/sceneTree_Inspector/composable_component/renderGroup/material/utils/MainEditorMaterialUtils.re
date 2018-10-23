@@ -88,7 +88,7 @@ let setName = (material, type_, name, engineState) =>
     )
   };
 
-let getMaterialCompnentByType = (gameObject, type_, engineState) =>
+let getMaterialComponentByType = (gameObject, type_, engineState) =>
   switch (type_) {
   | BasicMaterial =>
     GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(

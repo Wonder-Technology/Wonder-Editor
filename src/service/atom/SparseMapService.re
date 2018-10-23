@@ -8,6 +8,10 @@ let immutableDeleteVal = (key, map) =>
 
 let isDeleted = item => item |> Obj.magic |> Js.Nullable.test;
 
+let filter = Js.Array.filter;
+
+let find = Js.Array.find;
+
 let length = Js.Array.length;
 
 let copy = Js.Array.copy;

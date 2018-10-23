@@ -13,7 +13,7 @@ let create = () => {
     currentNodeData: None,
     currentNodeParentId: None,
     textureNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
-    imageBase64Map: WonderCommonlib.SparseMapService.createEmpty(),
+    imageNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     folderNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     wdbNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     materialNodeMap: WonderCommonlib.SparseMapService.createEmpty(),

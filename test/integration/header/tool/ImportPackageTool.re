@@ -1,4 +1,4 @@
-let testImportTexture =
+/* let testImportTexture =
     (
       ~sandbox,
       ~buildAssetTreeRootFunc,
@@ -25,4 +25,4 @@ let testImportTexture =
         },
       (),
     )
-  );
+  ); */

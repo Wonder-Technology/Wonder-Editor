@@ -1,4 +1,5 @@
 open EditorType;
+
 open AssetNodeType;
 
 let getWDBNodeMap = editorState =>
@@ -22,10 +23,12 @@ let getWDBBaseName = (currentNodeId, wdbNodeMap) =>
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
   |> (({name}: wdbResultType) => name);
 
+let _getExtName = () => ".wdb";
+
 let getWDBTotalName = (currentNodeId, wdbNodeMap) =>
   wdbNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
-  |> (({name, extName}: wdbResultType) => name ++ extName);
+  |> (({name}: wdbResultType) => name ++ _getExtName());
 
 let getWDBParentId = (currentNodeId, wdbNodeMap) =>
   wdbNodeMap
@@ -33,9 +36,8 @@ let getWDBParentId = (currentNodeId, wdbNodeMap) =>
   |> (({parentFolderNodeId}: wdbResultType) => parentFolderNodeId);
 
 let buildWDBNodeResult =
-    (name, extName, parentFolderNodeId, wdbGameObject, wdbArrayBuffer) => {
+    (name, parentFolderNodeId, wdbGameObject, wdbArrayBuffer) => {
   name,
-  extName,
   parentFolderNodeId,
   wdbGameObject,
   wdbArrayBuffer,
@@ -52,3 +54,6 @@ let setWDBNodeResultParent =
   ...wdbNodeResult,
   parentFolderNodeId,
 };
+
+let getValidValues = editorState =>
+  getWDBNodeMap(editorState) |> SparseMapService.getValidValues;

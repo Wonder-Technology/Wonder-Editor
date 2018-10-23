@@ -1,4 +1,4 @@
-open Sinon;
+/* open Sinon;
 
 open Js.Typed_array;
 
@@ -153,4 +153,4 @@ let getAssetJson =
        )
        |> testFunc;
      });
-};
+}; */

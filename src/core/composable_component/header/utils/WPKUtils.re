@@ -1,0 +1,1 @@
+let getExtName = () => ".wpk";

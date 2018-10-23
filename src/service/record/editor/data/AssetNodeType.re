@@ -7,6 +7,7 @@ type imageIndex = int;
 type uploadFileType =
   | LoadWDB
   | LoadImage
+  | LoadWPK
   | LoadError;
 
 type assetNodeType =
@@ -27,9 +28,10 @@ type folderResultType = {
 };
 
 type imageResultType = {
-  base64: string,
+  base64: option(string),
+  uint8Array: option(Js.Typed_array.Uint8Array.t),
   name: string,
-  textureArray: array(int),
+  mimeType: string,
 };
 
 type textureResultType = {
@@ -40,7 +42,6 @@ type textureResultType = {
 
 type wdbResultType = {
   name: string,
-  extName: string,
   parentFolderNodeId: option(nodeId),
   wdbArrayBuffer: Js.Typed_array.ArrayBuffer.t,
   wdbGameObject: int,

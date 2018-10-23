@@ -23,12 +23,12 @@ let setResult = (nodeId, result, editorState) => {
     |> MaterialNodeMapAssetService.setResult(nodeId, result),
 };
 
-let getMaterialParentId = (nodeId, materialNodeMap) =>
+let getParentFolderNodeId = (nodeId, materialNodeMap) =>
   materialNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
   |> (({parentFolderNodeId}: materialResultType) => parentFolderNodeId);
 
-let getMaterialType = (nodeId, materialNodeMap) =>
+let getType = (nodeId, materialNodeMap) =>
   materialNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
   |> (({type_}: materialResultType) => type_);
@@ -44,6 +44,9 @@ let setMaterialNodeResultParent =
   ...materialNodeResult,
   parentFolderNodeId,
 };
+
+let getValidValues = editorState =>
+  getMaterialNodeMap(editorState) |> SparseMapService.getValidValues;
 
 let getResults = editorState =>
   getMaterialNodeMap(editorState) |> SparseMapService.getValidDataArr;

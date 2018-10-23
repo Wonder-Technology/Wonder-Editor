@@ -1,6 +1,6 @@
-let handleImportFolder = path => {
-  let editorState = StateEditorService.getState();
-  let engineState = StateEngineService.unsafeGetState();
+let buildFolder = (path, (editorState, engineState)) => {
+  /* let editorState = StateEditorService.getState();
+     let engineState = StateEngineService.unsafeGetState(); */
   let (nodeId, editorState) =
     path
     |> FileNameService.removePathPostfix
@@ -31,7 +31,7 @@ let handleImportFolder = path => {
          (None, editorState),
        );
 
-  editorState |> StateEditorService.setState |> ignore;
+  /* editorState |> StateEditorService.setState |> ignore; */
 
-  nodeId;
+  (nodeId, editorState);
 };
