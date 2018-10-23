@@ -59,21 +59,18 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "background": "rgba(255,255,255,0.2)",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -95,21 +92,18 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "border": "0px",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
             />
@@ -127,21 +121,18 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "border": "0px",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
               onClick={[Function]}
@@ -163,21 +154,18 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
             onDragStart={[Function]}
           >
             <li
+              draggable={true}
+              onClick={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
               style={
                 Object {
                   "border": "0px",
                 }
               }
             >
-              <div
-                className="item-ground"
-                draggable={true}
-                onClick={[Function]}
-                onDragEnter={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDrop={[Function]}
-              />
               <div
                 className="item-triangle"
               />
@@ -195,21 +183,18 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
             onDragStart={[Function]}
           >
             <li
+              draggable={true}
+              onClick={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
               style={
                 Object {
                   "border": "0px",
                 }
               }
             >
-              <div
-                className="item-ground"
-                draggable={true}
-                onClick={[Function]}
-                onDragEnter={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDrop={[Function]}
-              />
               <div
                 className="item-triangle"
               />
@@ -358,21 +343,18 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "background": "rgba(255,255,255,0.2)",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -394,21 +376,18 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "border": "0px",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
             />
@@ -522,21 +501,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "border": "0px",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -558,21 +534,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "background": "#5C7EA6",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
             />
@@ -590,21 +563,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "border": "0px",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
               onClick={[Function]}
@@ -626,21 +596,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
             onDragStart={[Function]}
           >
             <li
+              draggable={true}
+              onClick={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
               style={
                 Object {
                   "border": "0px",
                 }
               }
             >
-              <div
-                className="item-ground"
-                draggable={true}
-                onClick={[Function]}
-                onDragEnter={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDrop={[Function]}
-              />
               <div
                 className="item-triangle"
               />
@@ -658,21 +625,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
             onDragStart={[Function]}
           >
             <li
+              draggable={true}
+              onClick={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
               style={
                 Object {
                   "border": "0px",
                 }
               }
             >
-              <div
-                className="item-ground"
-                draggable={true}
-                onClick={[Function]}
-                onDragEnter={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDrop={[Function]}
-              />
               <div
                 className="item-triangle"
               />
@@ -752,21 +716,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "border": "0px",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -788,21 +749,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "border": "0px",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
             />
@@ -820,21 +778,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "border": "0px",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
               onClick={[Function]}
@@ -856,21 +811,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
             onDragStart={[Function]}
           >
             <li
+              draggable={true}
+              onClick={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
               style={
                 Object {
                   "background": "#5C7EA6",
                 }
               }
             >
-              <div
-                className="item-ground"
-                draggable={true}
-                onClick={[Function]}
-                onDragEnter={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDrop={[Function]}
-              />
               <div
                 className="item-triangle"
               />
@@ -888,21 +840,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
             onDragStart={[Function]}
           >
             <li
+              draggable={true}
+              onClick={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
               style={
                 Object {
                   "border": "0px",
                 }
               }
             >
-              <div
-                className="item-ground"
-                draggable={true}
-                onClick={[Function]}
-                onDragEnter={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDrop={[Function]}
-              />
               <div
                 className="item-triangle"
               />
@@ -982,21 +931,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "border": "0px",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -1018,21 +964,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "background": "#5C7EA6",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
             />
@@ -1050,21 +993,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "border": "0px",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
               onClick={[Function]}
@@ -1086,21 +1026,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
             onDragStart={[Function]}
           >
             <li
+              draggable={true}
+              onClick={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
               style={
                 Object {
                   "border": "0px",
                 }
               }
             >
-              <div
-                className="item-ground"
-                draggable={true}
-                onClick={[Function]}
-                onDragEnter={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDrop={[Function]}
-              />
               <div
                 className="item-triangle"
               />
@@ -1118,21 +1055,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
             onDragStart={[Function]}
           >
             <li
+              draggable={true}
+              onClick={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
               style={
                 Object {
                   "border": "0px",
                 }
               }
             >
-              <div
-                className="item-ground"
-                draggable={true}
-                onClick={[Function]}
-                onDragEnter={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDrop={[Function]}
-              />
               <div
                 className="item-triangle"
               />
@@ -1149,7 +1083,28 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
   </div>
   <article
     className="wonder-asset-assetChildren"
-  />
+  >
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <div
+        className="box-image"
+      >
+        <img
+          onDragStart={[Function]}
+          src="./public/img/mat.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          material1
+        </span>
+      </div>
+    </article>
+  </article>
 </article>
 `;
 
@@ -1212,21 +1167,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "background": "rgba(255,255,255,0.2)",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -1248,21 +1200,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "border": "0px",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
             />
@@ -1280,21 +1229,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "border": "0px",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
               onClick={[Function]}
@@ -1316,21 +1262,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
             onDragStart={[Function]}
           >
             <li
+              draggable={true}
+              onClick={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
               style={
                 Object {
                   "border": "0px",
                 }
               }
             >
-              <div
-                className="item-ground"
-                draggable={true}
-                onClick={[Function]}
-                onDragEnter={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDrop={[Function]}
-              />
               <div
                 className="item-triangle"
               />
@@ -1348,21 +1291,18 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
             onDragStart={[Function]}
           >
             <li
+              draggable={true}
+              onClick={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
               style={
                 Object {
                   "border": "0px",
                 }
               }
             >
-              <div
-                className="item-ground"
-                draggable={true}
-                onClick={[Function]}
-                onDragEnter={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDrop={[Function]}
-              />
               <div
                 className="item-triangle"
               />
@@ -1511,21 +1451,18 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "border": "0px",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -1547,21 +1484,18 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "background": "#5C7EA6",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
             />
@@ -1579,21 +1513,18 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "border": "0px",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
             />
@@ -1672,21 +1603,18 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "background": "rgba(255,255,255,0.2)",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -1708,21 +1636,18 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "border": "0px",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
             />
@@ -1836,21 +1761,18 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "background": "rgba(255,255,255,0.2)",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -1872,21 +1794,18 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "border": "0px",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
             />
@@ -1904,21 +1823,18 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "border": "0px",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
               onClick={[Function]}
@@ -1940,21 +1856,18 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             onDragStart={[Function]}
           >
             <li
+              draggable={true}
+              onClick={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
               style={
                 Object {
                   "border": "0px",
                 }
               }
             >
-              <div
-                className="item-ground"
-                draggable={true}
-                onClick={[Function]}
-                onDragEnter={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDrop={[Function]}
-              />
               <div
                 className="item-triangle"
               />
@@ -1972,21 +1885,18 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             onDragStart={[Function]}
           >
             <li
+              draggable={true}
+              onClick={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
               style={
                 Object {
                   "border": "0px",
                 }
               }
             >
-              <div
-                className="item-ground"
-                draggable={true}
-                onClick={[Function]}
-                onDragEnter={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDrop={[Function]}
-              />
               <div
                 className="item-triangle"
               />
@@ -2135,21 +2045,18 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "background": "rgba(255,255,255,0.2)",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -2171,21 +2078,18 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "border": "0px",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
             />
@@ -2203,21 +2107,18 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "border": "0px",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
               onClick={[Function]}
@@ -2239,21 +2140,18 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             onDragStart={[Function]}
           >
             <li
+              draggable={true}
+              onClick={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
               style={
                 Object {
                   "border": "0px",
                 }
               }
             >
-              <div
-                className="item-ground"
-                draggable={true}
-                onClick={[Function]}
-                onDragEnter={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDrop={[Function]}
-              />
               <div
                 className="item-triangle"
               />
@@ -2271,21 +2169,18 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             onDragStart={[Function]}
           >
             <li
+              draggable={true}
+              onClick={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
               style={
                 Object {
                   "border": "0px",
                 }
               }
             >
-              <div
-                className="item-ground"
-                draggable={true}
-                onClick={[Function]}
-                onDragEnter={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDrop={[Function]}
-              />
               <div
                 className="item-triangle"
               />

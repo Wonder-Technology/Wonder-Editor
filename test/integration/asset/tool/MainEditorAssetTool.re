@@ -41,12 +41,6 @@ let buildFakeImage = [%bs.raw
 |}
 ];
 
-let _buildJsonResult = parentNodeId => {
-  name: "newJson",
-  postfix: ".json",
-  parentNodeId,
-  jsonResult: "json result",
-};
 let _buildImageObj = src =>
   {"src": src, "getAttribute": prop => src} |> Obj.magic;
 

@@ -8,7 +8,7 @@ let removeNode =
     ) => {
   MainEditorAssetNodeTool.setCurrentNodeData(nodeId, nodeType);
 
-  AssetHeaderRemoveNodeEventHandler.CustomEventHandler.handleSelfLogic(
+  MainEditorAssetHeader.Method.removeAssetNode(
     (store, dispatchFunc),
     (),
     (),
@@ -27,6 +27,21 @@ let removeTextureNode =
     ~store,
     ~nodeId=textureNodeId,
     ~nodeType=AssetNodeType.Texture,
+    (),
+  );
+
+let removeMaterialNode =
+    (
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~store=TestTool.buildEmptyAppState(),
+      ~materialNodeId,
+      (),
+    ) =>
+  removeNode(
+    ~dispatchFunc,
+    ~store,
+    ~nodeId=materialNodeId,
+    ~nodeType=AssetNodeType.Material,
     (),
   );
 
@@ -67,3 +82,11 @@ let addFolder =
       (),
     ) =>
   MainEditorAssetHeader.Method.addFolder((store, dispatchFunc), (), ());
+
+let addMaterial =
+    (
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorAssetHeader.Method.addMaterial((store, dispatchFunc), (), ());

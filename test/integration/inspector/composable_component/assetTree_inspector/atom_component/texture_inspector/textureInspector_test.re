@@ -11,22 +11,14 @@ open Sinon;
 open Js.Promise;
 
 let _ =
-  describe("TextureInspector", () => {
+  describe("texture inspector", () => {
     let sandbox = getSandboxDefaultVal();
+
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
-      EventListenerTool.buildFakeDom()
-      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
-    afterEach(() => {
-      restoreSandbox(refJsObjToSandbox(sandbox^));
-      StateEditorService.getState()
-      |> AssetCurrentNodeDataEditorService.clearCurrentNodeData
-      |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-      |> StateEditorService.setState
-      |> ignore;
-    });
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("prepare currentSelectSource", () => {
       beforeEach(() => {
@@ -40,8 +32,8 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
       });
 
-      describe("test component snapshot", () =>
-        test("test texture inspector->show default value", () => {
+      describe("test texture inspector->show default value", () =>
+        test("test snapshot", () => {
           let assetTreeData =
             MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
 
@@ -62,8 +54,8 @@ let _ =
       );
 
       describe("test texture rename", () => {
-        describe("test snapshot", () =>
-          test("test rename to specific name", () => {
+        describe("test rename to specific name", () =>
+          test("test snapshot", () => {
             let assetTreeData =
               MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
             let newName = "newTextureName";
@@ -82,39 +74,39 @@ let _ =
           })
         );
 
-        describe("test logic", () =>
-          describe("test engine", () => {
-            beforeEach(() => {
-              MainEditorAssetTool.buildFakeFileReader();
-              MainEditorAssetTool.buildFakeImage();
-            });
+        testPromise(
+          {|upload texture;
+            rename texture;
 
-            testPromise("upload texture;
-              rename texture;", () => {
-              let assetTreeData =
-                MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
-              let newName = "newTextureToEngine";
+            texture name should be renamed
+              |},
+          () => {
+            MainEditorAssetTool.buildFakeFileReader();
+            MainEditorAssetTool.buildFakeImage();
 
-              MainEditorAssetUploadTool.loadOneTexture()
-              |> then_(uploadedTextureNodeId => {
-                   AssetTreeInspectorTool.Rename.renameAssetTextureNode(
-                     ~nodeId=uploadedTextureNodeId,
-                     ~name=newName,
-                     (),
-                   );
-                   MainEditorAssetChildrenNodeTool.selectTextureNode(
-                     ~nodeId=uploadedTextureNodeId,
-                     (),
-                   );
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
+            let newName = "newTextureToEngine";
 
-                   MainEditorAssetNodeTool.getTextureComponentFromCurrentNodeId()
-                   |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName
-                   |> StateLogicService.getEngineStateToGetData
-                   |> expect == newName
-                   |> Js.Promise.resolve;
-                 });
-            });
-          })
+            MainEditorAssetUploadTool.loadOneTexture()
+            |> then_(uploadedTextureNodeId => {
+                 AssetTreeInspectorTool.Rename.renameAssetTextureNode(
+                   ~nodeId=uploadedTextureNodeId,
+                   ~name=newName,
+                   (),
+                 );
+                 MainEditorAssetChildrenNodeTool.selectTextureNode(
+                   ~nodeId=uploadedTextureNodeId,
+                   (),
+                 );
+
+                 MainEditorAssetNodeTool.getTextureComponentFromCurrentNodeId()
+                 |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName
+                 |> StateLogicService.getEngineStateToGetData
+                 |> expect == newName
+                 |> Js.Promise.resolve;
+               });
+          },
         );
       });
 

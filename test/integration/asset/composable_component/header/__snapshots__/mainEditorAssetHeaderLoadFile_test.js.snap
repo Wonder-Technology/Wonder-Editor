@@ -59,21 +59,18 @@ exports[`MainEditorAssetHeader->load file test load file test logic test should 
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "background": "rgba(255,255,255,0.2)",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
           />
@@ -172,21 +169,18 @@ exports[`MainEditorAssetHeader->load file test load file test snapshot if not se
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "background": "rgba(255,255,255,0.2)",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
           />
@@ -285,21 +279,18 @@ exports[`MainEditorAssetHeader->load file test load file test snapshot test load
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "background": "rgba(255,255,255,0.2)",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -321,21 +312,18 @@ exports[`MainEditorAssetHeader->load file test load file test snapshot test load
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "border": "0px",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
             />
@@ -353,21 +341,18 @@ exports[`MainEditorAssetHeader->load file test load file test snapshot test load
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "border": "0px",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
             />
@@ -449,26 +434,6 @@ exports[`MainEditorAssetHeader->load file test load file test snapshot test load
       >
         <span>
           newFolder 1
-        </span>
-      </div>
-    </article>
-    <article
-      className="wonder-asset-fileBox "
-      onClick={[Function]}
-    >
-      <div
-        className="box-image"
-      >
-        <img
-          onDragStart={[Function]}
-          src="./public/img/12.jpg"
-        />
-      </div>
-      <div
-        className="item-text "
-      >
-        <span>
-          newJson
         </span>
       </div>
     </article>

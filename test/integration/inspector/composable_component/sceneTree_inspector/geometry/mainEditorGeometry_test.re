@@ -240,7 +240,7 @@ let _ =
           |> ignore;
           let fileName = "BoxTextured";
           let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
-          let newGeometry = MainEditorGeometryTool.getNewGeometry();
+          let newGeometry = GeometryToolEngine.getNewGeometry();
 
           MainEditorAssetUploadTool.loadOneWDB(
             ~fileName,

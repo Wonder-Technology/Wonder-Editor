@@ -28,48 +28,6 @@ let _getOperateTargetRenderGroupData =
     )
   };
 
-/* TODO test dispose instead of remove */
-let _disposeSourceMaterialIfHasGameObjects =
-    (gameObjects, materialComponent, sourceMaterialType, engineState) =>
-  switch (sourceMaterialType) {
-  | BasicMaterial =>
-    switch (gameObjects) {
-    | None => engineState
-    | Some(gameObjects) =>
-      gameObjects
-      |> WonderCommonlib.ArrayService.reduceOneParam(
-           (. engineState, gameObject) =>
-             GameObjectComponentEngineService.disposeBasicMaterialComponent(
-               gameObject,
-               materialComponent,
-               engineState,
-             ),
-           engineState,
-         )
-    }
-  | LightMaterial =>
-    switch (gameObjects) {
-    | None => engineState
-    | Some(gameObjects) =>
-      gameObjects
-      |> WonderCommonlib.ArrayService.reduceOneParam(
-           (. engineState, gameObject) =>
-             GameObjectComponentEngineService.disposeLightMaterialComponent(
-               gameObject,
-               materialComponent,
-               engineState,
-             ),
-           engineState,
-         )
-    }
-/* =======
-    OperateLightMaterialLogicService.createLightMaterialAndSetName(
-      OperateLightMaterialLogicService.getMaterialDefaultName(),
-      engineState,
-    )
->>>>>>> origin/dev */
-  };
-
 let _replaceMaterial =
     (
       gameObjects,
@@ -84,69 +42,25 @@ let _replaceMaterial =
     let engineState =
       gameObjects
       |> WonderCommonlib.ArrayService.reduceOneParam(
-           (. engineState, gameObject) => {
-             let meshRenderer =
-               GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
-                 gameObject,
-                 engineState,
-               );
-
-             let (sourceRenderGroup, disposeSourceMaterialFunc) =
-               _getOperateSourceRenderGroupData(
-                 meshRenderer,
-                 sourceMaterial,
-                 sourceMaterialType,
-                 engineState,
-               );
-
-             let (engineState, targetRenderGroup, addTargetMaterialFunc) =
-               _getOperateTargetRenderGroupData(
-                 meshRenderer,
-                 targetMaterial,
-                 targetMaterialType,
-                 engineState,
-               );
-
-             engineState
-             |> RenderGroupEngineService.replaceMaterial(
-                  (sourceRenderGroup, targetRenderGroup),
-                  gameObject,
-                  (disposeSourceMaterialFunc, addTargetMaterialFunc),
-                );
-           },
+           (. engineState, gameObject) =>
+             InspectorRenderGroupUtils.Dispose.replaceMaterial(
+               gameObject,
+               (
+                 (sourceMaterial, targetMaterial),
+                 (sourceMaterialType, targetMaterialType),
+               ),
+               engineState,
+             ),
            engineState,
          );
 
-    engineState |> StateLogicService.refreshEngineState;
     engineState;
   };
 
 let replaceMaterialByMaterialType =
-    ((nodeId, materialComponent), sourceMaterialType, targetMaterialType) => {
+    ((nodeId, sourceMaterial), sourceMaterialType, targetMaterialType) => {
   let engineState = StateEngineService.unsafeGetState();
   let editorState = StateEditorService.getState();
-
-  let gameObjects =
-    switch (sourceMaterialType) {
-    | BasicMaterial =>
-      BasicMaterialEngineService.getBasicMaterialGameObjects(
-        materialComponent,
-        engineState,
-      )
-    | LightMaterial =>
-      LightMaterialEngineService.getLightMaterialGameObjects(
-        materialComponent,
-        engineState,
-      )
-    };
-
-  let engineState =
-    _disposeSourceMaterialIfHasGameObjects(
-      gameObjects,
-      materialComponent,
-      sourceMaterialType,
-      engineState,
-    );
 
   let (engineState, targetMaterial) =
     switch (targetMaterialType) {
@@ -163,26 +77,20 @@ let replaceMaterialByMaterialType =
     );
 
   let engineState =
-    _replaceMaterial(
-      gameObjects,
-      (materialComponent, targetMaterial),
-      (sourceMaterialType, targetMaterialType),
+    InspectorRenderGroupUtils.Dispose.replaceGameObjectsMaterialsOfTheMaterial(
+      (
+        (sourceMaterial, targetMaterial),
+        (sourceMaterialType, targetMaterialType),
+      ),
       engineState,
     );
 
-  engineState |> StateEngineService.setState |> ignore;
+  engineState |> StateLogicService.refreshEngineState;
 
-  editorState
-  |> AssetMaterialNodeMapEditorService.getMaterialNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-  |> (
-    materialResult => {
-      ...materialResult,
-      type_: targetMaterialType,
-      materialComponent: targetMaterial,
-    }
+  AssetMaterialUpdateNodeEditorService.updateMaterialNodeData(
+    nodeId,
+    targetMaterial,
+    targetMaterialType,
   )
-  |> AssetMaterialNodeMapEditorService.setResult(nodeId, _, editorState)
-  |> StateEditorService.setState
-  |> ignore;
+  |> StateLogicService.getAndSetEditorState;
 };

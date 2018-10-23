@@ -30,6 +30,16 @@ let unsafeGetDefaultLightMaterial = editorState => {
   material;
 };
 
+let unsafeGetMaterialDataByType = (type_, editorState) => {
+  let unsafeGetMaterialDataFunc =
+    switch (type_) {
+    | BasicMaterial => unsafeGetDefaultBasicMaterialData
+    | LightMaterial => unsafeGetDefaultLightMaterialData
+    };
+
+  unsafeGetMaterialDataFunc(editorState);
+};
+
 let setDefaultLightMaterialData = (material, editorState) => {
   ...editorState,
   assetRecord: {

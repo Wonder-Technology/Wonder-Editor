@@ -3,6 +3,9 @@ open WonderCommonlib;
 let immutableSet = (key, value, map) =>
   map |> Js.Array.copy |> SparseMapService.set(key, value);
 
+let immutableDeleteVal = (key, map) =>
+  map |> Js.Array.copy |> WonderCommonlib.SparseMapService.deleteVal(key);
+
 let isDeleted = item => item |> Obj.magic |> Js.Nullable.test;
 
 let length = Js.Array.length;

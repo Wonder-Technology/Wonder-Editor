@@ -19,19 +19,12 @@ module CustomEventHandler = {
            ),
         engineState,
       );
-    let newMaterialType = AssetMaterialDataType.LightMaterial;
-
-    let (editorState, nodeId) =
-      AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
 
     editorState
-    |> AssetMaterialNodeMapEditorService.setResult(
+    |> AssetTreeNodeUtils.addMaterialIntoNodeMap(
          newIndex,
-         AssetMaterialNodeMapEditorService.buildMaterialNodeResult(
-           targetTreeNodeId |. Some,
-           AssetMaterialDataType.LightMaterial,
-           newMaterial,
-         ),
+         targetTreeNodeId |. Some,
+         newMaterial,
        )
     |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
          targetTreeNodeId,

@@ -1,3 +1,15 @@
+let changeMaterialTypeToBeLightMaterial =
+    (
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorMaterial.Method.changeMaterialType(
+    (store, dispatchFunc),
+    (),
+    (BasicMaterial, LightMaterial),
+  );
+
 let changeShininess =
     (~material=GameObjectTool.getCurrentGameObjectMaterial(), ~value, ()) =>
   MainEditorLightMaterial.Method.changeShininess(material, value);

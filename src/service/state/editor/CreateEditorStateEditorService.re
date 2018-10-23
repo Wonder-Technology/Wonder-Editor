@@ -2,7 +2,6 @@ open EditorType;
 
 let create = () => {
   sceneRecord: {
-    diffMap: None,
     currentSceneTreeNode: None,
     isRun: false,
   },
@@ -14,11 +13,11 @@ let create = () => {
     currentNodeData: None,
     currentNodeParentId: None,
     textureNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
-    jsonNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     imageBase64Map: WonderCommonlib.SparseMapService.createEmpty(),
     folderNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     wdbNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     materialNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
+    materialNodeIdMap: WonderCommonlib.SparseMapService.createEmpty(),
     geometryData: {
       defaultCubeGeometryComponent: (-1),
       defaultSphereGeometryComponent: (-1),

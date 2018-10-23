@@ -9,12 +9,12 @@ module CustomEventHandler = {
       (
         (store, dispatchFunc),
         (nodeId, materialComponent),
-        (originMaterialType, materialType),
+        (sourceMaterialType, targetMaterialType),
       ) => {
     MaterialInspectorUtils.replaceMaterialByMaterialType(
       (nodeId, materialComponent),
-      originMaterialType,
-      materialType,
+      sourceMaterialType,
+      targetMaterialType,
     );
 
     dispatchFunc(

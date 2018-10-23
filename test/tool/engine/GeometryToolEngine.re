@@ -37,3 +37,15 @@ let createGameObjectAndSetPointData = (~state, ~hasTexCoords=true, ()) => {
     name,
   );
 };
+
+let getNewGeometry = (~engineState=StateEngineService.unsafeGetState(), ()) => {
+  open Wonderjs.GeometryType;
+
+  let {disposedIndexArray, index} as geometryRecord =
+    Wonderjs.RecordGeometryMainService.getRecord(engineState);
+
+  let (index, newIndex, disposedIndexArray) =
+    ComponentToolEngine.generateIndex(index, disposedIndexArray);
+
+  index;
+};

@@ -56,24 +56,6 @@ module Method = {
       </div>
     </div>;
 
-  let buildJsonComponent = (state, send, currentNodeId, jsonNodeMap) => {
-    let {name, jsonResult} =
-      jsonNodeMap |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId);
-    <div>
-      <h1> (DomHelper.textEl("Json")) </h1>
-      <hr />
-      <span className=""> (DomHelper.textEl("name:")) </span>
-      <input
-        className="input-component float-input"
-        _type="text"
-        value=state.inputValue
-        onChange=(_e => send(change(_e)))
-        onBlur=(_e => send(Blur))
-      />
-      <p> (DomHelper.textEl(jsonResult)) </p>
-    </div>;
-  };
-
   let buildTextureComponent =
       (
         (store, dispatchFunc),
@@ -157,7 +139,6 @@ module Method = {
       nodeType,
       (
         buildFolderComponent(state, send, currentNodeId),
-        buildJsonComponent(state, send, currentNodeId),
         buildTextureComponent(reduxTuple, (currentNodeId, nodeType), state),
         buildMaterialComponent(reduxTuple, (currentNodeId, nodeType), state),
         buildWDBComponent(state, send, currentNodeId),
@@ -174,15 +155,7 @@ module Method = {
 
     {inputValue: folderName, originalName: folderName};
   };
-  let initJsonName = (currentNodeId, jsonNodeMap) => {
-    let baseName =
-      AssetJsonNodeMapEditorService.getJsonBaseName(
-        currentNodeId,
-        jsonNodeMap,
-      );
 
-    {inputValue: baseName, originalName: baseName};
-  };
   let initTextureName = (currentNodeId, textureNodeMap) => {
     let baseName =
       OperateTextureLogicService.getTextureBaseName(
@@ -268,7 +241,6 @@ let make =
          nodeType,
          (
            Method.initFolderName(currentNodeId),
-           Method.initJsonName(currentNodeId),
            Method.initTextureName(currentNodeId),
            Method.initMaterialName(currentNodeId, engineState),
            Method.initWDBName(currentNodeId),

@@ -30,30 +30,3 @@ let changeGeometry =
     gameObject,
     (sourceGeometry, targetGeometry),
   );
-
-let _getDisposedIndex = disposedIndexArray => (
-  disposedIndexArray,
-  disposedIndexArray |> ArrayService.getLast,
-);
-
-let _generateIndex = (index, disposedIndexArray) =>
-  switch (_getDisposedIndex(disposedIndexArray)) {
-  | (disposedIndexArray, None) => (index, succ(index), disposedIndexArray)
-  | (disposedIndexArray, Some(disposedIndex)) => (
-      disposedIndex,
-      index,
-      disposedIndexArray,
-    )
-  };
-
-let getNewGeometry = (~engineState=StateEngineService.unsafeGetState(), ()) => {
-  open Wonderjs.GeometryType;
-
-  let {disposedIndexArray, aliveIndexArray, index} as geometryRecord =
-    Wonderjs.RecordGeometryMainService.getRecord(engineState);
-
-  let (index, newIndex, disposedIndexArray) =
-    _generateIndex(index, disposedIndexArray);
-
-  index;
-};

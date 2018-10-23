@@ -36,34 +36,26 @@ let getMaterialTypeByGameObject = (gameObject, engineState) =>
   };
 
 let handleSpecificFuncByMaterialType =
-    (materialType, (handleBasicMaterialFunc, handleLightMaterialFunc)) =>
-  switch (materialType) {
+    (type_, (handleBasicMaterialFunc, handleLightMaterialFunc)) =>
+  switch (type_) {
   | BasicMaterial => handleBasicMaterialFunc()
 
   | LightMaterial => handleLightMaterialFunc()
   };
 
-/* let getMaterialNameByMaterialType =
-     (materialType, materialComponent, engineState) =>
-   switch (materialType) {
-   | BasicMaterial =>
-     BasicMaterialEngineService.unsafeGetBasicMaterialName(
-       materialComponent,
-       engineState,
-     )
+let createMaterialByType = (type_, engineState) =>
+  switch (type_) {
+  | BasicMaterial => BasicMaterialEngineService.create(engineState)
 
-   | LightMaterial =>
-     LightMaterialEngineService.unsafeGetLightMaterialName(
-       materialComponent,
-       engineState,
-     )
-   }; */
-let getNewMaterilaAssetName = () => "NewMaterial";
+  | LightMaterial => LightMaterialEngineService.create(engineState)
+  };
+
+let getNewMaterilaAssetName = () => "New Material";
 
 let getMaterilaDefaultName = () => getNewMaterilaAssetName();
 
-let getName = (material, materialType, engineState) =>
-  switch (materialType) {
+let getName = (material, type_, engineState) =>
+  switch (type_) {
   | BasicMaterial =>
     switch (
       BasicMaterialEngineService.getBasicMaterialName(material, engineState)
@@ -80,8 +72,8 @@ let getName = (material, materialType, engineState) =>
     }
   };
 
-let setName = (material, materialType, name, engineState) =>
-  switch (materialType) {
+let setName = (material, type_, name, engineState) =>
+  switch (type_) {
   | BasicMaterial =>
     BasicMaterialEngineService.setBasicMaterialName(
       material,
@@ -96,8 +88,8 @@ let setName = (material, materialType, name, engineState) =>
     )
   };
 
-let getMaterialCompnentByType = (gameObject, materialType, engineState) =>
-  switch (materialType) {
+let getMaterialCompnentByType = (gameObject, type_, engineState) =>
+  switch (type_) {
   | BasicMaterial =>
     GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
       gameObject,
@@ -111,8 +103,8 @@ let getMaterialCompnentByType = (gameObject, materialType, engineState) =>
   };
 
 let renameMaterialByMaterialType =
-    (newName, materialType, materialComponent, engineState) =>
-  switch (materialType) {
+    (newName, type_, materialComponent, engineState) =>
+  switch (type_) {
   | BasicMaterial =>
     BasicMaterialEngineService.setBasicMaterialName(
       materialComponent,
@@ -127,3 +119,21 @@ let renameMaterialByMaterialType =
       engineState,
     )
   };
+
+let getGameObjectsByType = (material, type_, engineState) =>
+  switch (type_) {
+  | BasicMaterial =>
+    BasicMaterialEngineService.getBasicMaterialGameObjects(
+      material,
+      engineState,
+    )
+  | LightMaterial =>
+    LightMaterialEngineService.getLightMaterialGameObjects(
+      material,
+      engineState,
+    )
+  };
+
+let unsafeGetGameObjectsByType = (material, type_, engineState) =>
+  getGameObjectsByType(material, type_, engineState)
+  |> OptionService.unsafeGet;

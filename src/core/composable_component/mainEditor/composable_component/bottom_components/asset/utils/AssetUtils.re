@@ -100,10 +100,9 @@ let _handleRemoveWDBNode = (nodeId, editorState) => {
   |. AssetWDBNodeMapEditorService.setWDBNodeMap(editorState);
 };
 
-let _removeTextureFromSceneBasicMaterials =
+let _removeTextureFromAllBasicMaterials =
     (textureComponent, editorState, engineState) =>
-  /* BasicMaterialEngineService.getAllBasicMaterials(engineState) */
-  SceneEngineService.getSceneAllBasicMaterials(engineState)
+  BasicMaterialEngineService.getAllBasicMaterials(engineState)
   |> Js.Array.filter(basicMaterial =>
        BasicMaterialEngineService.isBasicMaterialMap(
          basicMaterial,
@@ -120,11 +119,11 @@ let _removeTextureFromSceneBasicMaterials =
        engineState,
      );
 
-let _removeTextureFromSceneLightMaterials =
+let _removeTextureFromAllLightMaterials =
     (textureComponent, editorState, engineState) =>
-  SceneEngineService.getSceneAllLightMaterials(engineState)
+  LightMaterialEngineService.getAllLightMaterials(engineState)
   |> Js.Array.filter(lightMaterial =>
-       LightMaterialEngineService.isLightMaterialMap(
+       LightMaterialEngineService.isDiffuseMap(
          lightMaterial,
          textureComponent,
          engineState,
@@ -139,11 +138,10 @@ let _removeTextureFromSceneLightMaterials =
        engineState,
      );
 
-/* TODO remove texture from material assets */
 let _removeTextureEngineData = (textureComponent, editorState, engineState) =>
   engineState
-  |> _removeTextureFromSceneBasicMaterials(textureComponent, editorState)
-  |> _removeTextureFromSceneLightMaterials(textureComponent, editorState);
+  |> _removeTextureFromAllBasicMaterials(textureComponent, editorState)
+  |> _removeTextureFromAllLightMaterials(textureComponent, editorState);
 
 let _removeTextureEditorData =
     (nodeId, textureComponent, imageId, editorState) => {
@@ -188,6 +186,29 @@ let _removeTextureTreeNode = (nodeId, editorState) => {
   _removeTextureEditorData(nodeId, textureComponent, imageId, editorState);
 };
 
+let _removeMaterialTreeNode = (nodeId, editorState) => {
+  let {materialComponent, type_} =
+    editorState |> AssetMaterialNodeMapEditorService.unsafeGetResult(nodeId);
+
+  let (defaultMaterial, defaultMaterialType) =
+    AssetMaterialDataEditorService.unsafeGetMaterialDataByType(
+      type_,
+      editorState,
+    );
+
+  let engineState = StateEngineService.unsafeGetState();
+  let engineState =
+    InspectorRenderGroupUtils.Dispose.replaceGameObjectsMaterialsOfTheMaterial(
+      ((materialComponent, defaultMaterial), (type_, defaultMaterialType)),
+      engineState,
+    );
+
+  engineState |> StateLogicService.refreshEngineState;
+
+  AssetMaterialNodeMapEditorService.remove(nodeId, editorState)
+  |> AssetMaterialNodeIdMapEditorService.remove(materialComponent);
+};
+
 let deepRemoveTreeNode = (removedTreeNode, editorState) => {
   let rec _iterateRemovedTreeNode = (nodeArr, removedAssetIdArr, editorState) =>
     nodeArr
@@ -204,12 +225,7 @@ let deepRemoveTreeNode = (removedTreeNode, editorState) => {
                     editorState,
                   )
              | Texture => _removeTextureTreeNode(nodeId, editorState)
-             | Json =>
-               editorState
-               |> AssetJsonNodeMapEditorService.getJsonNodeMap
-               |> SparseMapService.copy
-               |> DomHelper.deleteKeyInMap(nodeId)
-               |. AssetJsonNodeMapEditorService.setJsonNodeMap(editorState)
+             | Material => _removeMaterialTreeNode(nodeId, editorState)
              | WDB => _handleRemoveWDBNode(nodeId, editorState)
              | _ => editorState
              };
@@ -366,9 +382,6 @@ let getChildrenNameAndIdArr =
                     AssetFolderNodeMapEditorService.getFolderName(
                       currentNodeId,
                     ),
-                    AssetJsonNodeMapEditorService.getJsonBaseName(
-                      currentNodeId,
-                    ),
                     OperateTextureLogicService.getTextureBaseName(
                       currentNodeId,
                     ),
@@ -387,6 +400,25 @@ let getChildrenNameAndIdArr =
   );
 };
 
+let checkAssetNodeName =
+    (
+      (sourceNodeId, sourceName),
+      targetNodeId,
+      type_,
+      (successFunc, failFunc),
+      (editorState, engineState),
+    ) =>
+  getChildrenNameAndIdArr(targetNodeId, type_, (editorState, engineState))
+  |> Js.Array.filter(((name, id)) => id !== sourceNodeId)
+  |> Js.Array.map(((name, id)) => name)
+  |> Js.Array.includes(sourceName) ?
+    {
+      ConsoleUtils.warn("the asset can't has the same name !");
+
+      successFunc((editorState, engineState));
+    } :
+    failFunc((editorState, engineState));
+
 let _isTargetTreeNodeHasSameNameChild =
     (targetNodeId, removedNodeId, (editorState, engineState)) => {
   let {type_}: assetTreeNodeType =
@@ -402,7 +434,6 @@ let _isTargetTreeNodeHasSameNameChild =
          type_,
          (
            AssetFolderNodeMapEditorService.getFolderName(removedNodeId),
-           AssetJsonNodeMapEditorService.getJsonBaseName(removedNodeId),
            OperateTextureLogicService.getTextureBaseName(removedNodeId),
            AssetMaterialNodeMapLogicService.getMaterialBaseName(
              removedNodeId,
@@ -412,15 +443,16 @@ let _isTargetTreeNodeHasSameNameChild =
          ),
        );
 
-  getChildrenNameAndIdArr(targetNodeId, type_, (editorState, engineState))
-  |> Js.Array.map(((name, id)) => name)
-  |> Js.Array.includes(removedNodeName) ?
-    {
-      ConsoleUtils.warn("the folder can't has the same name !");
-
-      true;
-    } :
-    false;
+  checkAssetNodeName(
+    (removedNodeId, removedNodeName),
+    targetNodeId,
+    type_,
+    (
+      ((editorState, engineState)) => true,
+      ((editorState, engineState)) => false,
+    ),
+    (editorState, engineState),
+  );
 };
 
 let isTreeNodeRelationError =

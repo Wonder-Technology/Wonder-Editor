@@ -25,7 +25,6 @@ let _ =
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
-
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
       StateEditorService.getState()
@@ -306,7 +305,7 @@ let _ =
 
           AssetTreeNodeUtils.handleSpecificFuncByTypeSync(
             _getErrorTypeFile(),
-            (() => (), () => (), () => ()),
+            (() => (), () => ()),
           );
 
           errorStub

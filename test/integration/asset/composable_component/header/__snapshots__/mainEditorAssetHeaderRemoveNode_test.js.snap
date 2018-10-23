@@ -59,21 +59,18 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "border": "0px",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -95,21 +92,18 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
           onDragStart={[Function]}
         >
           <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
             style={
               Object {
                 "background": "#5C7EA6",
               }
             }
           >
-            <div
-              className="item-ground"
-              draggable={true}
-              onClick={[Function]}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
             <div
               className="item-triangle"
             />
@@ -146,21 +140,18 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
       onDragStart={[Function]}
     >
       <li
+        draggable={true}
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
         style={
           Object {
             "border": "0px",
           }
         }
       >
-        <div
-          className="item-ground"
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-        />
         <div
           className="item-triangle"
           onClick={[Function]}
@@ -169,7 +160,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
             src="./public/img/down.png"
           />
         </div>
-        cube
+        Cube
       </li>
       <ul
         className="wonder-tree-node"
@@ -178,6 +169,12 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
         onDragStart={[Function]}
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "border": "0px",
@@ -185,18 +182,9 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
           }
         >
           <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
-          <div
             className="item-triangle"
           />
-          cube
+          Cube
         </li>
       </ul>
     </ul>
@@ -207,6 +195,12 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
       onDragStart={[Function]}
     >
       <li
+        draggable={true}
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
         style={
           Object {
             "border": "0px",
@@ -214,18 +208,9 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
         }
       >
         <div
-          className="item-ground"
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-        />
-        <div
           className="item-triangle"
         />
-        cube
+        Cube
       </li>
     </ul>
     <ul
@@ -235,6 +220,12 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
       onDragStart={[Function]}
     >
       <li
+        draggable={true}
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
         style={
           Object {
             "border": "0px",
@@ -242,18 +233,9 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
         }
       >
         <div
-          className="item-ground"
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-        />
-        <div
           className="item-triangle"
         />
-        cube
+        Cube
       </li>
     </ul>
     <div
@@ -280,15 +262,34 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
   className="wonder-inspector-geometry"
 >
   <div
-    className="geometry-select"
+    className="inspector-item"
   >
-    Cube
-    <span
-      className="select-title"
-      onClick={[Function]}
+    <div
+      className="item-header"
     >
-      select
-    </span>
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+        >
+          Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
   </div>
   <div
     className="select-component-content"
@@ -387,21 +388,18 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "background": "rgba(255,255,255,0.2)",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
           />
@@ -522,21 +520,18 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "background": "rgba(255,255,255,0.2)",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
           />
@@ -614,21 +609,18 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "background": "rgba(255,255,255,0.2)",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
           />
@@ -706,21 +698,18 @@ exports[`MainEditorAssetHeader->remove node test remove tree node if not select 
         className="wonder-tree-node"
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "background": "rgba(255,255,255,0.2)",
             }
           }
         >
-          <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
           <div
             className="item-triangle"
           />

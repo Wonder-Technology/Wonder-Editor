@@ -8,9 +8,22 @@ let setMaterialNodeMap = (materialNodeMap, assetRecord) => {
   materialNodeMap,
 };
 
+let unsafeGetResult = (index, assetRecord) =>
+  assetRecord.materialNodeMap
+  |> WonderCommonlib.SparseMapService.unsafeGet(index);
 
 let setResult = (index, result, assetRecord) => {
   ...assetRecord,
   materialNodeMap:
-    assetRecord.materialNodeMap |> SparseMapService.immutableSet(index, result),
+    assetRecord.materialNodeMap
+    |> SparseMapService.immutableSet(index, result),
+};
+
+let remove = (index, assetRecord) => {
+  ...assetRecord,
+  materialNodeMap:
+    assetRecord.materialNodeMap
+    |> Obj.magic
+    |> SparseMapService.immutableDeleteVal(index)
+    |> Obj.magic,
 };

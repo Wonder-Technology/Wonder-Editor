@@ -25,8 +25,26 @@ let replaceGameObjectLightMaterial = (gameObject, newMaterial, engineState) =>
        newMaterial,
      );
 
-let isAlive = (material, engineState) =>
+let isAlive = (material, engineState) =>{
+  WonderLog.Log.print(("disposedI: ", 
+ material, 
+RecordLightMaterialMainService.getRecord(engineState).disposedIndexArray
+  )) |> ignore;
   DisposeLightMaterialMainService.isAlive(
     material,
     RecordLightMaterialMainService.getRecord(engineState),
   );
+};
+
+let getNewLightMaterial =
+    (~engineState=StateEngineService.unsafeGetState(), ()) => {
+  open Wonderjs.LightMaterialType;
+
+  let {disposedIndexArray, index} as geometryRecord =
+    Wonderjs.RecordLightMaterialMainService.getRecord(engineState);
+
+  let (index, newIndex, disposedIndexArray) =
+    ComponentToolEngine.generateIndex(index, disposedIndexArray);
+
+  index;
+};

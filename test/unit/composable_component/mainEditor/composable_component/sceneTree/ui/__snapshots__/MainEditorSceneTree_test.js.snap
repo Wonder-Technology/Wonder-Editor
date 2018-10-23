@@ -14,6 +14,12 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
       onDragStart={[Function]}
     >
       <li
+        draggable={true}
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
         style={
           Object {
             "border": "0px",
@@ -21,18 +27,9 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
         }
       >
         <div
-          className="item-ground"
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-        />
-        <div
           className="item-triangle"
         />
-        camera
+        Camera
       </li>
     </ul>
     <ul
@@ -42,21 +39,18 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
       onDragStart={[Function]}
     >
       <li
+        draggable={true}
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
         style={
           Object {
             "border": "0px",
           }
         }
       >
-        <div
-          className="item-ground"
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-        />
         <div
           className="item-triangle"
           onClick={[Function]}
@@ -65,7 +59,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
             src="./public/img/down.png"
           />
         </div>
-        cube
+        Cube
       </li>
       <ul
         className="wonder-tree-node"
@@ -74,6 +68,12 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
         onDragStart={[Function]}
       >
         <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
           style={
             Object {
               "background": "#5C7EA6",
@@ -81,18 +81,9 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
           }
         >
           <div
-            className="item-ground"
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
-          <div
             className="item-triangle"
           />
-          cube
+          Cube
         </li>
       </ul>
     </ul>
@@ -103,21 +94,18 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
       onDragStart={[Function]}
     >
       <li
+        draggable={true}
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
         style={
           Object {
             "border": "0px",
           }
         }
       >
-        <div
-          className="item-ground"
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-        />
         <div
           className="item-triangle"
         />
@@ -154,6 +142,12 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
       onDragStart={[Function]}
     >
       <li
+        draggable={true}
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
         style={
           Object {
             "border": "0px",
@@ -161,18 +155,9 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
         }
       >
         <div
-          className="item-ground"
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-        />
-        <div
           className="item-triangle"
         />
-        camera
+        Camera
       </li>
     </ul>
     <ul
@@ -182,6 +167,12 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
       onDragStart={[Function]}
     >
       <li
+        draggable={true}
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
         style={
           Object {
             "background": "#5C7EA6",
@@ -189,18 +180,9 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
         }
       >
         <div
-          className="item-ground"
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-        />
-        <div
           className="item-triangle"
         />
-        cube
+        Cube
       </li>
     </ul>
     <ul
@@ -210,6 +192,12 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
       onDragStart={[Function]}
     >
       <li
+        draggable={true}
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
         style={
           Object {
             "border": "0px",
@@ -217,18 +205,9 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
         }
       >
         <div
-          className="item-ground"
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-        />
-        <div
           className="item-triangle"
         />
-        cube
+        Cube
       </li>
     </ul>
     <ul
@@ -238,21 +217,18 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
       onDragStart={[Function]}
     >
       <li
+        draggable={true}
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
         style={
           Object {
             "border": "0px",
           }
         }
       >
-        <div
-          className="item-ground"
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-        />
         <div
           className="item-triangle"
         />

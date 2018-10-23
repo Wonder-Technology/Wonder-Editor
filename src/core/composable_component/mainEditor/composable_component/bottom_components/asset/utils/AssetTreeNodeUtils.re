@@ -12,16 +12,31 @@ let _getFolderDefaultName = (index, editorState) =>
   index === (editorState |> AssetTreeRootEditorService.getRootTreeNodeId) ?
     getAssetTreeRootName() : getDefaultFolderName();
 
-let addFolderIntoNodeMap = (index, parentNodeId, (editorState, engineState)) =>
+let addFolderIntoNodeMap =
+    (index, parentFolderNodeId, (editorState, engineState)) =>
   editorState
   |> _getFolderDefaultName(index)
   |. AssetUtils.getUniqueTreeNodeName(
        Folder,
-       parentNodeId,
+       parentFolderNodeId,
        (editorState, engineState),
      )
-  |> AssetFolderNodeMapEditorService.buildFolderResult(parentNodeId)
+  |> AssetFolderNodeMapEditorService.buildFolderNodeResult(
+       parentFolderNodeId,
+     )
   |> AssetFolderNodeMapEditorService.setResult(index, _, editorState);
+
+let addMaterialIntoNodeMap =
+    (index, parentFolderNodeId, material, editorState) =>
+  editorState
+  |> AssetMaterialNodeMapEditorService.setResult(
+       index,
+       AssetMaterialNodeMapEditorService.buildMaterialNodeResult(
+         parentFolderNodeId,
+         AssetMaterialDataType.LightMaterial,
+         material,
+       ),
+     );
 
 let initRootAssetTree = (editorState, engineState) =>
   switch (AssetTreeRootEditorService.getAssetTreeRoot(editorState)) {
@@ -49,15 +64,12 @@ let getUploadFileType = name => {
   | ".wdb" => LoadWDB
   | ".jpg"
   | ".png" => LoadImage
-  | ".json" => LoadJson
   | _ => LoadError
   };
 };
 
-let handleSpecificFuncByTypeSync =
-    (type_, (handleJsonFunc, handleImageFunc, handleWDBFunc)) =>
+let handleSpecificFuncByTypeSync = (type_, (handleImageFunc, handleWDBFunc)) =>
   switch (type_) {
-  | LoadJson => handleJsonFunc()
   | LoadImage => handleImageFunc()
   | LoadWDB => handleWDBFunc()
   | LoadError =>
@@ -72,10 +84,8 @@ let handleSpecificFuncByTypeSync =
     )
   };
 
-let handleSpecificFuncByTypeAsync =
-    (type_, (handleJsonFunc, handleImageFunc, handleWDBFunc)) =>
+let handleSpecificFuncByTypeAsync = (type_, (handleImageFunc, handleWDBFunc)) =>
   switch (type_) {
-  | LoadJson => handleJsonFunc()
   | LoadImage => handleImageFunc()
   | LoadWDB => handleWDBFunc()
   | LoadError =>
@@ -98,7 +108,6 @@ let readFileByTypeSync = (reader, fileInfo: fileInfoType) =>
   handleSpecificFuncByTypeSync(
     getUploadFileType(fileInfo.name),
     (
-      () => FileReader.readAsText(reader, fileInfo.file),
       () => FileReader.readAsDataURL(reader, fileInfo.file),
       () => FileReader.readAsArrayBuffer(reader, fileInfo.file),
     ),
@@ -113,37 +122,6 @@ let createNodeAndAddToTargetNodeChildren =
        AssetTreeEditorService.buildAssetTreeNodeByIndex(newIndex, type_),
      )
   |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);
-
-let handleJsonType =
-    (
-      (fileName, fileResult),
-      (newIndex, parentNodeId),
-      (editorState, engineState),
-      (),
-    ) => {
-  let (baseName, extName) = FileNameService.getBaseNameAndExtName(fileName);
-
-  let editorState =
-    editorState
-    |> AssetJsonNodeMapEditorService.setResult(
-         newIndex,
-         baseName
-         |. AssetUtils.getUniqueTreeNodeName(
-              Json,
-              parentNodeId |. Some,
-              (editorState, engineState),
-            )
-         |> AssetJsonNodeMapEditorService.buildJsonNodeResult(
-              extName,
-              fileResult,
-              parentNodeId |. Some,
-            ),
-       )
-    |> createNodeAndAddToTargetNodeChildren(parentNodeId, newIndex, Json)
-    |> StateEditorService.setState;
-
-  make((~resolve, ~reject) => resolve(. editorState));
-};
 
 let _getImageIdIfImageBase64MapHasIt = (imgBase64, editorState) => {
   let sameLengthBase64Arr =
@@ -180,7 +158,7 @@ let _setImageName = (image, name) => {
 let handleImageType =
     (
       (baseName, fileName, imgBase64),
-      (newIndex, parentNodeId, textureComponent),
+      (newIndex, parentFolderNodeId, textureComponent),
       (editorState, engineState),
     ) =>
   make((~resolve, ~reject) =>
@@ -248,12 +226,12 @@ let handleImageType =
                newIndex,
                AssetTextureNodeMapEditorService.buildTextureNodeResult(
                  textureComponent,
-                 parentNodeId |. Some,
+                 parentFolderNodeId |. Some,
                  imageId,
                ),
              )
           |> createNodeAndAddToTargetNodeChildren(
-               parentNodeId,
+               parentFolderNodeId,
                newIndex,
                Texture,
              )
@@ -265,7 +243,12 @@ let handleImageType =
   );
 
 let handleAssetWDBType =
-    ((fileName, wdbArrayBuffer), (newIndex, parentNodeId), editorState, ()) => {
+    (
+      (fileName, wdbArrayBuffer),
+      (newIndex, parentFolderNodeId),
+      editorState,
+      (),
+    ) => {
   let (baseName, extName) = FileNameService.getBaseNameAndExtName(fileName);
   let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
@@ -343,14 +326,6 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
   handleSpecificFuncByTypeAsync(
     fileResult.type_,
     (
-      handleJsonType(
-        (
-          fileResult.name,
-          fileResult.result |> FileReader.convertResultToString,
-        ),
-        (newIndex, targetTreeNodeId),
-        (editorState, engineState),
-      ),
       () => {
         let (baseName, _extName) =
           FileNameService.getBaseNameAndExtName(fileResult.name);

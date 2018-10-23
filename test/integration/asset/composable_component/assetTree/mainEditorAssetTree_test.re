@@ -180,7 +180,7 @@ let _ =
 
       test("test drag texture file into it's parent's brother folder", () => {
         let assetTreeData =
-          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAssetTree();
+          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAndMaterialAssetTree();
         let secondLayerFirstFolderNodeId =
           MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getSecondLayerFirstFolderNodeId(
             assetTreeData,
@@ -205,7 +205,7 @@ let _ =
 
       test("test drag texture file into it's brother folder", () => {
         let assetTreeData =
-          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAssetTree();
+          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAndMaterialAssetTree();
         let thirdLayerFirstFolderNodeId =
           MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstFolderNodeId(
             assetTreeData,

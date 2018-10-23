@@ -11,24 +11,6 @@ let _handleImportJson = (path, jsonResult) => {
     FileNameService.getFolderPathAndFileName(path);
 
   switch (folderPath |> Js.Undefined.toOption) {
-  | Some(folderPath) =>
-    let jsonFileParentId =
-      HeaderImportFolderUtils.handleImportFolder(folderPath)
-      |> OptionService.unsafeGet;
-    let (editorState, newIndex) =
-      AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
-    let engineState = StateEngineService.unsafeGetState();
-
-    AssetTreeNodeUtils.handleJsonType(
-      (jsonName, jsonResult),
-      (newIndex, jsonFileParentId),
-      (editorState, engineState),
-      (),
-    )
-    |> then_(editorState => {
-         WonderLog.Log.print("over file json") |> ignore;
-         editorState |> resolve;
-       });
   | None =>
     HeaderImportAssetJsonUtils.handleImportAssetsJson(jsonResult)
     |> WonderBsMost.Most.drain
@@ -36,6 +18,10 @@ let _handleImportJson = (path, jsonResult) => {
          WonderLog.Log.print("over all texture") |> ignore;
          resolve(StateEditorService.getState());
        })
+  | _ =>
+    ConsoleUtils.error("shouldn't has json assets");
+
+    StateEditorService.getState() |> resolve;
   };
 };
 
