@@ -1,17 +1,24 @@
 type navType =
   | None
   | File
-  | Edit;
+  | Edit
+  | Help;
 
 type state = {
   isSelectNav: bool,
   currentSelectNav: navType,
+  isShowEditExportModal: bool,
+  isShowHelpVersionModal: bool,
 };
 
 type action =
   | HoverNav(navType)
   | ToggleShowNav(navType)
-  | BlurNav;
+  | BlurNav
+  | ShowEditExportModal
+  | HideEditExportModal
+  | ShowHelpVersionModal
+  | HideHelpVersionModal;
 
 module Method = {
   let getStorageParentKey = () => "userExtension";
@@ -120,12 +127,85 @@ module Method = {
             </div>
             <div
               className="content-section"
-              onClick=(_e => HeaderExportPackageUtils.exportPackage())>
+              onClick=(
+                _e =>
+                  send(ShowEditExportModal)
+                  /* HeaderExportUtils.exportPackage(
+                       WonderBsJszip.Zip.create,
+                       Fetch.fetch,
+                     )
+                     |> ignore */
+              )>
               <span className="section-header">
                 (DomHelper.textEl("Export Package"))
               </span>
             </div>
           </div> :
+          ReasonReact.null
+      )
+      (
+        /*TODO not use modal */
+        state.isShowEditExportModal ?
+          <SingleInputModal
+            title="Export Package"
+            defaultValue="wonderPackage"
+            closeFunc=(() => send(HideEditExportModal))
+            submitFunc=(
+              packageName => {
+                HeaderExportPackageUtils.exportPackage();
+
+                send(HideEditExportModal);
+              }
+            )
+          /> :
+          ReasonReact.null
+      )
+    </div>;
+  };
+
+  let buildHelpComponent = (state, send, store, dispatchFunc) => {
+    let className =
+      state.currentSelectNav === Help ?
+        "item-title item-active" : "item-title";
+
+    <div className="header-item">
+      <div className="component-item">
+        <span
+          className
+          onClick=(e => send(ToggleShowNav(Help)))
+          onMouseOver=(e => send(HoverNav(Help)))>
+          (DomHelper.textEl("Help"))
+        </span>
+      </div>
+      (
+        state.currentSelectNav === Help ?
+          <div className="item-content item-help">
+            <div
+              className="content-section"
+              onClick=(_e => send(ShowHelpVersionModal))>
+              <span className="section-header">
+                (DomHelper.textEl("Version"))
+              </span>
+            </div>
+          </div> :
+          ReasonReact.null
+      )
+      (
+        state.isShowHelpVersionModal ?
+          <Modal
+            title="About Wonder"
+            closeFunc=(() => send(HideHelpVersionModal))
+            content={
+              <div className="content-field">
+                <div className="field-title">
+                  (DomHelper.textEl("Version:"))
+                </div>
+                <div className="field-content">
+                  (DomHelper.textEl("1.0.0"))
+                </div>
+              </div>
+            }
+          /> :
           ReasonReact.null
       )
     </div>;
@@ -156,6 +236,18 @@ let reducer = (action, state) =>
     state.isSelectNav ?
       ReasonReact.Update({...state, currentSelectNav: selectNav}) :
       ReasonReact.NoUpdate
+
+  | ShowHelpVersionModal =>
+    ReasonReact.Update({...state, isShowHelpVersionModal: true})
+
+  | HideHelpVersionModal =>
+    ReasonReact.Update({...state, isShowHelpVersionModal: false})
+
+  | ShowEditExportModal =>
+    ReasonReact.Update({...state, isShowEditExportModal: true})
+
+  | HideEditExportModal =>
+    ReasonReact.Update({...state, isShowEditExportModal: false})
   };
 
 let render =
@@ -168,12 +260,18 @@ let render =
     <div className="header-nav">
       (Method.buildFileComponent(state, send, store, dispatchFunc))
       (Method.buildEditComponent(state, send, store, dispatchFunc))
+      (Method.buildHelpComponent(state, send, store, dispatchFunc))
     </div>
   </article>;
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
-  initialState: () => {isSelectNav: false, currentSelectNav: None},
+  initialState: () => {
+    isSelectNav: false,
+    currentSelectNav: None,
+    isShowHelpVersionModal: false,
+    isShowEditExportModal: false,
+  },
   reducer,
   didMount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
     DomHelper.addEventListener(

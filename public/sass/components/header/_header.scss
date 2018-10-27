@@ -7,13 +7,10 @@
         height:100%;
         background-color: #333333;
         .header-item{
-            display: flex;
             flex:initial;
             height:100%;
-            flex-direction: row;
             position: relative;
             .component-item{
-                flex:initial;
                 .item-title{
                     display: inline-block;
                     width:40px;
@@ -34,16 +31,18 @@
                 z-index:100;
                 top:100%;
                 left:0px;
-                width: 250px;
+                width: 200px;
                 height:200px;
                 background-color: #555555;
                 .content-section{
-                    height:26px;
-                    line-height: 26px;
+                    height:28px;
+                    line-height: 28px;
                     width:100%;
                     color:#ffffff;
                     font-weight: normal;
                     position: relative;
+                    display: flex;
+                    flex-direction: row;
                     &:hover{
                         background: #e66b19;
                     }
@@ -55,26 +54,31 @@
                         width:100%;
                     }
                     .section-header{
+                        flex:initial;
                         display: inline-block;
+                        font-size:14px;
+                        padding-left:20px;
                         height:100%;
-                        width:80px;
-                        text-align: center;
+                        width:70%;
                     }
                     .section-tail{
+                        flex:initial;
                         display: inline-block;
                         height:100%;
-                        width:50px;
-                        margin-left:100px;
+                        width:30%;
+                        color: #cfcdcd;
                         text-align: center;
                     }
                 }
             }
-            .item-edit{
-                width:170px;
-                .content-section{
-                    .section-header{
-                        width:160px;
-                    }
+            .item-edit, .item-help{
+                width:150px;
+            }
+            .modal-item-content{
+                padding-top:50px;
+                .content-field{
+                    width:50%;
+                    margin-left:20%;
                 }
             }
         }

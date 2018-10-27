@@ -1,6 +1,5 @@
 .left-component{
     display: flex;
-    justify-content: center;
     flex:initial;
     height:100%;
     width:80%;
@@ -56,32 +55,54 @@
         }
     }
 
-    .wonder-bottom-component{
+    .bottom-widget{
         flex: initial;
         width:100%;
         height:29%;
-        background-color: #333333;
-        display: flex;
-        flex-direction: column;
-        .bottom-widget-category{
+        .wonder-bottom-component{
             width:100%;
-            height:20px;
-            border-bottom:1px solid #fff;
-            .category-name {
-                width:60px;
-                font-size:13px;
+            height:100%;
+            background-color: #333333;
+            display: flex;
+            flex-direction: column;
+            .bottom-widget-category{
+                width:100%;
                 height:20px;
-                line-height: 20px;
-                text-align: center;
-                display: inline-block;
-                margin-right:0 5px;
+                border-bottom:1px solid #fff;
+                display: flex;
+                flex-direction: row;
+                .category-name {
+                    width:80px;
+                    font-size:13px;
+                    height:18px;
+                    margin-right:0 5px;
+                    display: flex;
+                    .name-header{
+                        width:50px;
+                        height:100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    .name-tail{
+                        margin-left:2px;
+                        margin-top:2px;
+                        border-radius: 5px;
+                        background: red;
+                        width:20px;
+                        height:14px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                }
+                .category-active{
+                    background: #555555;
+                }
             }
-            .category-active{
-                background: #555555;
-            }
+            @import "component/asset/asset";
+            @import "component/console/console";
         }
-        @import "component/asset/asset";
-        @import "component/console/console";
     }
 
 }

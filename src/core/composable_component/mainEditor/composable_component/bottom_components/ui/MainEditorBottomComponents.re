@@ -1,59 +1,100 @@
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
-type state = {isShowProject: bool};
+module Method = {
+  let showProject = dispatchFunc => {
+    dispatchFunc(AppStore.ShowComponentAction(ChangeComponent(Project)))
+    |> ignore;
 
-type action =
-  | ShowProject
-  | ShowConsole;
-
-let component =
-  ReasonReact.reducerComponentWithRetainedProps("MainEditorBottomComponents");
-
-let reducer = (dispatchFunc, action, state) =>
-  switch (action) {
-  | ShowProject =>
-    ReasonReactUtils.updateWithSideEffects(
-      {...state, isShowProject: true}, state =>
-      dispatchFunc(
-        AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
-      )
-      |> ignore
+    dispatchFunc(
+      AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
     )
-  | ShowConsole =>
-    ReasonReactUtils.updateWithSideEffects(
-      {...state, isShowProject: false}, state =>
-      dispatchFunc(
-        AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
-      )
-      |> ignore
-    )
+    |> ignore;
   };
 
-let render =
-    ((store, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+  let showConsole = dispatchFunc => {
+    dispatchFunc(AppStore.ShowComponentAction(ChangeComponent(Console)))
+    |> ignore;
+
+    dispatchFunc(
+      AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
+    )
+    |> ignore;
+  };
+
+  let getConsoleMessageUnReadCount = (componentType, editorState) =>
+    componentType |> MainEditorBottomComponentUtils.isTypeEqualConsole ?
+      "0" :
+      {
+        let count =
+          editorState |> ConsoleCheckedCountEditorService.unreadConsoleMessage;
+
+        count >= 99 ? "99" : count |> string_of_int;
+      };
+};
+
+let component =
+  ReasonReact.statelessComponentWithRetainedProps(
+    "MainEditorBottomComponents",
+  );
+
+let render = ((store, dispatchFunc), _self) => {
+  let currentComponentType = store |> StoreUtils.getBottomCurrentComponentType;
+
   <article
     key="MainEditorBottomComponents" className="wonder-bottom-component">
     <div className="bottom-widget-category">
-      <span
+      <div
         className=(
-          "category-name" ++ (state.isShowProject ? " category-active" : "")
+          "category-name"
+          ++ (
+            MainEditorBottomComponentUtils.isTypeEqualProject(
+              currentComponentType,
+            ) ?
+              " category-active" : ""
+          )
         )
-        onClick=(_e => send(ShowProject))>
-        (DomHelper.textEl("Project"))
-      </span>
-      <span
+        onClick=(
+          _e =>
+            MainEditorBottomComponentUtils.isTypeEqualProject(
+              currentComponentType,
+            ) ?
+              () : Method.showProject(dispatchFunc)
+        )>
+        <div className="name-header"> (DomHelper.textEl("Project")) </div>
+      </div>
+      <div
         className=(
-          "category-name" ++ (state.isShowProject ? "" : " category-active")
+          "category-name"
+          ++ (
+            MainEditorBottomComponentUtils.isTypeEqualConsole(
+              currentComponentType,
+            ) ?
+              " category-active" : ""
+          )
         )
-        onClick=(_e => send(ShowConsole))>
-        (DomHelper.textEl("Console"))
-      </span>
+        onClick=(
+          _e =>
+            MainEditorBottomComponentUtils.isTypeEqualConsole(
+              currentComponentType,
+            ) ?
+              () : Method.showConsole(dispatchFunc)
+        )>
+        <div className="name-header"> (DomHelper.textEl("Console")) </div>
+        <div className="name-tail">
+          (
+            DomHelper.textEl(
+              Method.getConsoleMessageUnReadCount(currentComponentType)
+              |> StateLogicService.getEditorState,
+            )
+          )
+        </div>
+      </div>
+      <span className="category-name" />
     </div>
-    (
-      state.isShowProject ?
-        <MainEditorAsset store dispatchFunc /> : <MainEditorConsole />
-    )
+    <MainEditorAsset store dispatchFunc />
+    <MainEditorConsole store dispatchFunc />
   </article>;
+};
 
 let shouldUpdate =
     ({newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
@@ -62,11 +103,9 @@ let shouldUpdate =
 
 let make = (~store, ~dispatchFunc, _children) => {
   ...component,
-  initialState: () => {isShowProject: true},
   retainedProps: {
     updateTypeArr: StoreUtils.getUpdateComponentTypeArr(store),
   },
   shouldUpdate,
-  reducer: reducer(dispatchFunc),
   render: self => render((store, dispatchFunc), self),
 };

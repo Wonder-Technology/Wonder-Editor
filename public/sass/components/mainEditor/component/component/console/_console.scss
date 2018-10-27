@@ -1,38 +1,49 @@
+@mixin consoleMessage($type) {
+    .console-#{$type}{
+        width:100%;
+        border-bottom: 1px solid #c0c0c0;
+        .console-header{
+            height:40px; 
+            display: flex;
+            font-size:15px;
+            align-items: center;
+            img{
+                margin:0 5px;
+                width: 20px;
+                height: 20px;
+            }
+            .header-message{
+                padding-top:5px;
+            }
+        }
+        .console-trace{
+            width:100%;
+            font-size:14px;
+            background-color: rgb(86,86,86);
+            padding:5px 2%;
+        }
+    }
+}
+
 .wonder-console-component{
     width:100%;
     height:90%;
-    user-select: auto;
-    overflow-y: auto;
-    .console-error{
-        .console-header{
-            height:40px; 
-            line-height: 40px;
-        }
-        border: 1px solid black;
-        background: red;
+    display: flex;
+    flex-direction: column;
+    .console-header{
+        width:100%;
+        height:25px;
     }
-    .console-log{
-        .console-header{
-            height:40px; 
-            line-height: 40px;
-        }
-        border: 1px solid black;
-        background: rgb(57, 190, 202);
+    .console-content{
+        overflow-y: auto;
+        user-select: text;
+        overflow-x: hidden;
+        @import "../../../../../utils/scrollBarUtils";
+
+        @include consoleMessage("error");
+        @include consoleMessage("info");
+        @include consoleMessage("warn");
+        @include consoleMessage("log");
     }
-    .console-info{
-        .console-header{
-            height:40px; 
-            line-height: 40px;
-        }
-        border: 1px solid black;
-        background: rgb(189, 113, 27);
-    }
-    .console-warn{
-        .console-header{
-            height:40px; 
-            line-height: 40px;
-        }
-        border: 1px solid black;
-        background: rgb(233, 218, 15);
-    }
+
 }

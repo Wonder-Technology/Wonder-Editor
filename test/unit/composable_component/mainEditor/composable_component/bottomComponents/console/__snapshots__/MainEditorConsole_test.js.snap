@@ -1,0 +1,276 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test mainEditor console test stub console test stub console.error, when execute it should add the message into the widget 1`] = `
+<article
+  className="wonder-console-component"
+  style={
+    Object {
+      "display": "none",
+    }
+  }
+>
+  <div
+    className="console-header"
+  >
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      clear
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add log
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add info
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add warn
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add debug
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add fatal
+    </button>
+  </div>
+  <div
+    className="console-content"
+  />
+</article>
+`;
+
+exports[`test mainEditor console test stub console test stub console.info, when execute it should add the message into the widget 1`] = `
+<article
+  className="wonder-console-component"
+  style={
+    Object {
+      "display": "none",
+    }
+  }
+>
+  <div
+    className="console-header"
+  >
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      clear
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add log
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add info
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add warn
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add debug
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add fatal
+    </button>
+  </div>
+  <div
+    className="console-content"
+  />
+</article>
+`;
+
+exports[`test mainEditor console test stub console test stub console.log, when execute it should add the message into the widget 1`] = `
+<article
+  className="wonder-console-component"
+  style={
+    Object {
+      "display": "none",
+    }
+  }
+>
+  <div
+    className="console-header"
+  >
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      clear
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add log
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add info
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add warn
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add debug
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add fatal
+    </button>
+  </div>
+  <div
+    className="console-content"
+  />
+</article>
+`;
+
+exports[`test mainEditor console test stub console test stub console.trace, when execute it should add the message into the last consoleMessage record 1`] = `
+<article
+  className="wonder-console-component"
+  style={
+    Object {
+      "display": "none",
+    }
+  }
+>
+  <div
+    className="console-header"
+  >
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      clear
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add log
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add info
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add warn
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add debug
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add fatal
+    </button>
+  </div>
+  <div
+    className="console-content"
+  />
+</article>
+`;
+
+exports[`test mainEditor console test stub console test stub console.warn, when execute it should add the message into the widget 1`] = `
+<article
+  className="wonder-console-component"
+  style={
+    Object {
+      "display": "none",
+    }
+  }
+>
+  <div
+    className="console-header"
+  >
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      clear
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add log
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add info
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add warn
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add debug
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+    >
+      add fatal
+    </button>
+  </div>
+  <div
+    className="console-content"
+  />
+</article>
+`;

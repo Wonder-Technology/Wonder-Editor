@@ -7,6 +7,9 @@ let unsafeGetSceneGraphDataFromStore = (store: AppStore.appState) =>
 
 let getUpdateComponentTypeArr = store => store.updateState.componentTypeArr;
 
+let getBottomCurrentComponentType = store =>
+  store.showComponentState.currentComponentType;
+
 let geGameObjectisShowComponentFromStore = (store, componentType) =>
   switch (
     store.inspectorState.showComponentMap
