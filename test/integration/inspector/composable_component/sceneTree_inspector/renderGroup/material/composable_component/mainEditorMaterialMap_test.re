@@ -18,9 +18,7 @@ let _ =
 
       MainEditorAssetTool.buildFakeFileReader();
 
-      LoadTool.buildFakeTextDecoder(
-        LoadTool.convertUint8ArrayToBuffer,
-      );
+      LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
       LoadTool.buildFakeURL(sandbox^);
 
       LoadTool.buildFakeLoadImage(.);
@@ -47,7 +45,7 @@ let _ =
 
         DragWDBTool.testDragWDB(
           sandbox,
-          "BoxTextured",
+          ("BoxTextured", WDBTool.convertGLBToWDB("BoxTextured")),
           (
             shaderSourceCountBeforeDrag,
             shaderSourceCountAfterDrag,

@@ -38,3 +38,11 @@ let getAllPointLightGameObjects = (gameObject, engineState) =>
        engineState,
      )
    ); */
+
+let disposeAllGameObjects = (gameObject, engineState) =>
+  GameObjectEngineService.getAllGameObjects(gameObject, engineState)
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. engineState, gameObject) =>
+         engineState |> GameObjectEngineService.disposeGameObject(gameObject),
+       engineState,
+     );

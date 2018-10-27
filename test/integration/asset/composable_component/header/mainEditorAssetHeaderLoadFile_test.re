@@ -16,6 +16,11 @@ let _ =
   describe("MainEditorAssetHeader->load file", () => {
     let sandbox = getSandboxDefaultVal();
 
+    let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
+
+    beforeAll(() =>
+      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
+    );
     beforeEach(() => {
       sandbox := createSandbox();
 
@@ -40,62 +45,61 @@ let _ =
         MainEditorAssetTool.buildFakeImage();
       });
 
-      describe("test snapshot", ()
-        =>
-          describe("if not select specific treeNode", () =>
-            testPromise("load file should add into root node children", () => {
-              MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
-              |> ignore;
+      describe("test snapshot", () =>
+        describe("if not select specific treeNode", () =>
+          testPromise("load file should add into root node children", () => {
+            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+            |> ignore;
 
-              MainEditorAssetUploadTool.loadOneTexture()
-              |> then_(_ =>
-                   BuildComponentTool.buildAssetComponent()
-                   |> ReactTestTool.createSnapshotAndMatch
-                   |> resolve
-                 );
-            })
-          )
-        );
-        /*
-         TODO open test
-         describe("test load zip file", () => {
-           beforeEach(() => {
-             LoadTool.buildFakeTextDecoder(
-               LoadTool.convertUint8ArrayToBuffer,
-             );
-             LoadTool.buildFakeURL(sandbox^);
-
-             LoadTool.buildFakeLoadImage(.);
-           });
-
-           testPromise(
-             "test load zip file should rebuild asset and sceneTree component",
-             () => {
-             MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
-             |> ignore;
-
-             let fileName = "BoxTextured";
-             let newWDBArrayBuffer =
-               NodeToolEngine.getWDBArrayBuffer(fileName);
-
-             let obj =
-               HeaderTool.buildImportFakeJsZipCreateFunc(
-                 sandbox^,
-                 HeaderTool.buildFakeZipData(newWDBArrayBuffer),
+            MainEditorAssetUploadTool.loadOneTexture()
+            |> then_(_ =>
+                 BuildComponentTool.buildAssetComponent()
+                 |> ReactTestTool.createSnapshotAndMatch
+                 |> resolve
                );
+          })
+        )
+      );
+      /*
+       TODO open test
+       describe("test load zip file", () => {
+         beforeEach(() => {
+           LoadTool.buildFakeTextDecoder(
+             LoadTool.convertUint8ArrayToBuffer,
+           );
+           LoadTool.buildFakeURL(sandbox^);
 
-             HeaderImportUtils.handleZipPackFile(
-               () => obj,
-               TestTool.getDispatch(),
-               "" |> Obj.magic,
-             )
-             |> then_(_ =>
-                  BuildComponentTool.buildAssetComponent()
-                  |> ReactTestTool.createSnapshotAndMatch
-                  |> resolve
-                );
-           });
-         }); */
+           LoadTool.buildFakeLoadImage(.);
+         });
+
+         testPromise(
+           "test load zip file should rebuild asset and sceneTree component",
+           () => {
+           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+           |> ignore;
+
+           let fileName = "BoxTextured";
+           let newWDBArrayBuffer =
+             NodeToolEngine.getWDBArrayBuffer(fileName);
+
+           let obj =
+             HeaderTool.buildImportFakeJsZipCreateFunc(
+               sandbox^,
+               HeaderTool.buildFakeZipData(newWDBArrayBuffer),
+             );
+
+           HeaderImportUtils.handleZipPackFile(
+             () => obj,
+             TestTool.getDispatch(),
+             "" |> Obj.magic,
+           )
+           |> then_(_ =>
+                BuildComponentTool.buildAssetComponent()
+                |> ReactTestTool.createSnapshotAndMatch
+                |> resolve
+              );
+         });
+       }); */
 
       describe("test logic", () => {
         describe("test should add into root node children", () =>
@@ -264,14 +268,12 @@ let _ =
               MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
               |> ignore;
               let fileName = "BoxTextured";
-              let newWDBArrayBuffer =
-                NodeToolEngine.getWDBArrayBuffer(fileName);
               let defaultSceneNewGameObjectUid =
                 SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectUid();
 
               MainEditorAssetUploadTool.loadOneWDB(
                 ~fileName,
-                ~arrayBuffer=newWDBArrayBuffer,
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                 (),
               )
               |> then_(uploadedWDBNodeId => {
@@ -287,7 +289,7 @@ let _ =
                    expect == (
                                fileName,
                                defaultSceneNewGameObjectUid,
-                               newWDBArrayBuffer,
+                               boxTexturedWDBArrayBuffer^,
                              )
                    |> resolve;
                  });

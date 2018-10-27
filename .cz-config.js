@@ -38,6 +38,7 @@ module.exports = {
       { name: "contract" },
       { name: "unit-test" },
       { name: "integration-test" },
+      { name: "unit-integration-test" },
       { name: "coverage" }
     ],
     refactor: [

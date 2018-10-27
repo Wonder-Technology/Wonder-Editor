@@ -12,6 +12,12 @@ let _ =
   describe("header load scene wdb", () => {
     let sandbox = getSandboxDefaultVal();
 
+    let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
+
+    beforeAll(() =>
+      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
+    );
+
     beforeEach(() => {
       sandbox := createSandbox();
 
@@ -58,9 +64,7 @@ let _ =
       beforeEach(() => {
         MainEditorAssetTool.buildFakeFileReader();
 
-        LoadTool.buildFakeTextDecoder(
-          LoadTool.convertUint8ArrayToBuffer,
-        );
+        LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
         LoadTool.buildFakeURL(sandbox^);
 
         LoadTool.buildFakeLoadImage(.);
@@ -68,9 +72,12 @@ let _ =
 
       testPromise("should clear current scene tree node", () => {
         let fileName = "Scene";
-        let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
-        HeaderTool.loadOneWDB(~fileName, ~arrayBuffer=newWDBArrayBuffer, ())
+        HeaderTool.loadOneWDB(
+          ~fileName,
+          ~arrayBuffer=WDBTool.generateSceneWDB(),
+          (),
+        )
         |> then_(_ =>
              BuildComponentTool.buildSceneTree(
                TestTool.buildAppStateSceneGraphFromEngine(),
@@ -83,14 +90,17 @@ let _ =
       describe("test load no light scene wdb from scene has light", () => {
         let _prepare = testFunc => {
           let fileName = "BoxTextured";
-          let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
           let gl = FakeGlToolEngine.getEngineStateGl();
           let glShaderSource = gl##shaderSource;
           let shaderSourceCountBeforeLoadSceneWDB =
             GLSLToolEngine.getShaderSourceCallCount(glShaderSource);
 
-          HeaderTool.loadOneWDB(~fileName, ~arrayBuffer=newWDBArrayBuffer, ())
+          HeaderTool.loadOneWDB(
+            ~fileName,
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            (),
+          )
           |> then_(_ =>
                testFunc(shaderSourceCountBeforeLoadSceneWDB, glShaderSource)
              );
@@ -158,12 +168,10 @@ let _ =
               "should save scene wdb's imgui func and customData to editorState",
               () => {
               let fileName = "Scene";
-              let newWDBArrayBuffer =
-                NodeToolEngine.getWDBArrayBuffer(fileName);
 
               HeaderTool.loadOneWDB(
                 ~fileName,
-                ~arrayBuffer=newWDBArrayBuffer,
+                ~arrayBuffer=WDBTool.generateSceneWDB(),
                 (),
               )
               |> then_(_ => {
@@ -180,16 +188,10 @@ let _ =
                    )
                    |>
                    expect == (
-                               {|(_, api, state) => {
-                                var state = api.label(
-                                    [100, 30, 300, 200], "imgui", 0, state
-                                );
-
-
-
-
-                                return state
-                            }|}
+                               {|function(_,apiJsObj,engineState){
+        var label = apiJsObj.label;
+        return label(/*tuple*/[100,30,300,200], "imgui", 0, engineState);
+                               }|}
                                |> StringTool.removeNewLinesAndSpaces,
                                Obj.magic(Js.Nullable.null),
                              )
@@ -203,22 +205,18 @@ let _ =
               "should remove scene wdb's imgui func and customData from editorState",
               () => {
               let fileName = "Scene";
-              let newWDBArrayBuffer =
-                NodeToolEngine.getWDBArrayBuffer(fileName);
 
               HeaderTool.loadOneWDB(
                 ~fileName,
-                ~arrayBuffer=newWDBArrayBuffer,
+                ~arrayBuffer=WDBTool.generateSceneWDB(),
                 (),
               )
               |> then_(_ => {
                    let fileName = "BoxTextured";
-                   let newWDBArrayBuffer =
-                     NodeToolEngine.getWDBArrayBuffer(fileName);
 
                    HeaderTool.loadOneWDB(
                      ~fileName,
-                     ~arrayBuffer=newWDBArrayBuffer,
+                     ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                      (),
                    )
                    |> then_(_ => {
@@ -244,12 +242,10 @@ let _ =
           "should not bind scene wdb->arcball cameraControllers(instead bind editCamera->arcball cameraController)",
           () => {
             let fileName = "Scene";
-            let newWDBArrayBuffer =
-              NodeToolEngine.getWDBArrayBuffer(fileName);
 
             HeaderTool.loadOneWDB(
               ~fileName,
-              ~arrayBuffer=newWDBArrayBuffer,
+              ~arrayBuffer=WDBTool.generateSceneWDB(),
               (),
             )
             |> then_(_ => {
@@ -306,9 +302,12 @@ let _ =
       describe("set wdb->actived camera to editorState", () => {
         testPromise("test wdb has one", () => {
           let fileName = "Scene";
-          let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
-          HeaderTool.loadOneWDB(~fileName, ~arrayBuffer=newWDBArrayBuffer, ())
+          HeaderTool.loadOneWDB(
+            ~fileName,
+            ~arrayBuffer=WDBTool.generateSceneWDB(),
+            (),
+          )
           |> then_(_ => {
                let editorState = StateEditorService.getState();
 
@@ -326,9 +325,12 @@ let _ =
         });
         testPromise("test wdb not has one", () => {
           let fileName = "BoxTextured";
-          let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
-          HeaderTool.loadOneWDB(~fileName, ~arrayBuffer=newWDBArrayBuffer, ())
+          HeaderTool.loadOneWDB(
+            ~fileName,
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            (),
+          )
           |> then_(_ => {
                let editorState = StateEditorService.getState();
 

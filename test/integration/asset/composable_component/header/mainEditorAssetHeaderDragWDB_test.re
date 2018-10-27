@@ -21,14 +21,19 @@ let _ =
 
       MainEditorSceneTool.initState(~sandbox, ());
 
+      StateEngineService.unsafeGetState()
+      |> FakeGlToolEngine.setFakeGl(
+           FakeGlToolEngine.buildFakeGl(~sandbox, ()),
+         )
+      |> StateEngineService.setState
+      |> ignore;
+
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
 
       MainEditorAssetTool.buildFakeFileReader();
 
-      LoadTool.buildFakeTextDecoder(
-        LoadTool.convertUint8ArrayToBuffer,
-      );
+      LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
       LoadTool.buildFakeURL(sandbox^);
 
       LoadTool.buildFakeLoadImage(.);
@@ -40,7 +45,10 @@ let _ =
         let _test = (sandbox, testFunc) =>
           DragWDBTool.testDragWDB(
             sandbox,
-            "DirectionPointLightsAndBox",
+            (
+              "DirectionPointLightsAndBox",
+              WDBTool.generateDirectionPointLightsAndBoxWDB(),
+            ),
             testFunc,
           );
 
@@ -137,7 +145,7 @@ let _ =
               shaderSourceCountAfterDrag,
               glShaderSource,
             ) =>
-            shaderSourceCountAfterDrag |> expect == 7 |> resolve
+            shaderSourceCountAfterDrag |> expect == 6 |> resolve
           )
         );
 

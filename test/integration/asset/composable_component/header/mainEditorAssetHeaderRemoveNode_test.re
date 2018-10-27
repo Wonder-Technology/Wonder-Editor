@@ -13,7 +13,11 @@ open AssetTreeNodeType;
 let _ =
   describe("MainEditorAssetHeader->remove node", () => {
     let sandbox = getSandboxDefaultVal();
+    let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
 
+    beforeAll(() =>
+      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
+    );
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
@@ -319,12 +323,10 @@ let _ =
                     |> ignore;
 
                     let fileName = "BoxTextured";
-                    let newWDBArrayBuffer =
-                      NodeToolEngine.getWDBArrayBuffer(fileName);
 
                     MainEditorAssetUploadTool.loadOneWDB(
                       ~fileName,
-                      ~arrayBuffer=newWDBArrayBuffer,
+                      ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                       (),
                     )
                     |> then_(uploadedWDBNodeId => {
@@ -351,12 +353,10 @@ let _ =
                   MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
                   |> ignore;
                   let fileName = "BoxTextured";
-                  let newWDBArrayBuffer =
-                    NodeToolEngine.getWDBArrayBuffer(fileName);
 
                   MainEditorAssetUploadTool.loadOneWDB(
                     ~fileName,
-                    ~arrayBuffer=newWDBArrayBuffer,
+                    ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                     (),
                   )
                   |> then_(uploadedWDBNodeId => {
@@ -400,12 +400,10 @@ let _ =
                 MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
                 |> ignore;
                 let fileName = "BoxTextured";
-                let newWDBArrayBuffer =
-                  NodeToolEngine.getWDBArrayBuffer(fileName);
 
                 MainEditorAssetUploadTool.loadOneWDB(
                   ~fileName,
-                  ~arrayBuffer=newWDBArrayBuffer,
+                  ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                   (),
                 )
                 |> then_(uploadedWDBNodeId => {
@@ -415,22 +413,18 @@ let _ =
                      );
 
                      let fileName = "Scene";
-                     let newWDBArrayBuffer =
-                       NodeToolEngine.getWDBArrayBuffer(fileName);
 
                      MainEditorAssetUploadTool.loadOneWDB(
                        ~fileName,
-                       ~arrayBuffer=newWDBArrayBuffer,
+                       ~arrayBuffer=WDBTool.generateSceneWDB(),
                        (),
                      )
                      |> then_(_ => {
                           let fileName = "BoxTextured";
-                          let newWDBArrayBuffer =
-                            NodeToolEngine.getWDBArrayBuffer(fileName);
 
                           MainEditorAssetUploadTool.loadOneWDB(
                             ~fileName,
-                            ~arrayBuffer=newWDBArrayBuffer,
+                            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                             (),
                           )
                           |> then_(_ =>

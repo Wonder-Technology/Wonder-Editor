@@ -199,13 +199,16 @@ let _ =
       });
 
       describe("test load asset wdb", () => {
+        let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
+
+        beforeAll(() =>
+          boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
+        );
         beforeEach(() => {
           MainEditorAssetTool.buildFakeFileReader();
           MainEditorAssetTool.buildFakeImage();
 
-          LoadTool.buildFakeTextDecoder(
-            LoadTool.convertUint8ArrayToBuffer,
-          );
+          LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
           LoadTool.buildFakeURL(sandbox^);
 
           LoadTool.buildFakeLoadImage(.);
@@ -216,11 +219,10 @@ let _ =
           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
           |> ignore;
           let fileName = "BoxTextured";
-          let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
           MainEditorAssetUploadTool.loadOneWDB(
             ~fileName,
-            ~arrayBuffer=newWDBArrayBuffer,
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
             (),
           )
           |> then_(uploadedWDBNodeId => {
@@ -239,12 +241,11 @@ let _ =
           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
           |> ignore;
           let fileName = "BoxTextured";
-          let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
           let newGeometry = GeometryToolEngine.getNewGeometry();
 
           MainEditorAssetUploadTool.loadOneWDB(
             ~fileName,
-            ~arrayBuffer=newWDBArrayBuffer,
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
             (),
           )
           |> then_(uploadedWDBNodeId => {

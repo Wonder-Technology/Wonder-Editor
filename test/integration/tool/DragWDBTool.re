@@ -1,17 +1,15 @@
-let testDragWDB = (sandbox, fileName, testFunc) => {
+let testDragWDB = (sandbox, (fileName, wdbArrayBuffer), testFunc) => {
   open Js.Promise;
 
   SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
 
   MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
 
-  let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
-
   let gl = FakeGlToolEngine.getEngineStateGl();
   let glShaderSource = gl##shaderSource;
 
   MainEditorAssetUploadTool.loadOneWDB(
-    ~arrayBuffer=newWDBArrayBuffer,
+    ~arrayBuffer=wdbArrayBuffer,
     ~fileName,
     (),
   )

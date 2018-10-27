@@ -1,4 +1,5 @@
 open Wonderjs;
+
 let create = DirectionLightAPI.createDirectionLight;
 
 let unsafeGetDirectionLightGameObject = DirectionLightAPI.unsafeGetDirectionLightGameObject;

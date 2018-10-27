@@ -1,4 +1,4 @@
-let _generateWDB = engineState => {
+let _generateWDB = (rootGameObject, engineState) => {
   let isRun = SceneEditorService.getIsRun(StateEditorService.getState());
   let engineState =
     isRun ?
@@ -7,9 +7,9 @@ let _generateWDB = engineState => {
       |> ArcballCameraControllerLogicService.bindGameViewActiveCameraArcballCameraControllerEvent;
 
   /* TODO optimize: pass imageUint8ArrayMap?(imageUint8ArrayMap can't work???need fix or not pass?) */
-  let (engineState, sceneGraphArrayBuffer) =
+  let (engineState, wdbArrayBuffer) =
     GenerateSceneGraphEngineService.generateWDB(
-      SceneEngineService.getSceneGameObject(engineState),
+      rootGameObject,
       Js.Nullable.null,
       engineState,
     );
@@ -20,8 +20,14 @@ let _generateWDB = engineState => {
       engineState
       |> ArcballCameraControllerLogicService.unbindGameViewActiveCameraArcballCameraControllerEvent;
 
-  (engineState, sceneGraphArrayBuffer);
+  (engineState, wdbArrayBuffer);
 };
+
+let _generateSceneWDB = engineState =>
+  _generateWDB(
+    SceneEngineService.getSceneGameObject(engineState),
+    engineState,
+  );
 
 let _download = [%bs.raw
   (content, filename, mimeType) => {|
@@ -52,7 +58,7 @@ let exportPackage = () => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
-  let (engineState, sceneGraphArrayBuffer) = _generateWDB(engineState);
+  let (engineState, sceneGraphArrayBuffer) = _generateSceneWDB(engineState);
 
   let asbArrayBuffer =
     HeaderExportASBUtils.generateASB(editorState, engineState);

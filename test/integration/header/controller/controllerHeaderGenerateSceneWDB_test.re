@@ -86,7 +86,7 @@ let _ =
           controlFunc();
 
           let (engineState, wdb) =
-            HeaderExportPackageUtils._generateWDB(
+            HeaderExportPackageUtils._generateSceneWDB(
               StateEngineService.unsafeGetState(),
             );
 
@@ -127,7 +127,7 @@ let _ =
             ControllerTool.stop();
 
             let (engineState, wdb) =
-              HeaderExportPackageUtils._generateWDB(
+              HeaderExportPackageUtils._generateSceneWDB(
                 StateEngineService.unsafeGetState(),
               );
 

@@ -15,7 +15,11 @@ open Js.Promise;
 let _ =
   describe("MainEditorAssetHeader->load wdb", () => {
     let sandbox = getSandboxDefaultVal();
+    let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
 
+    beforeAll(() =>
+      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
+    );
     beforeEach(() => {
       sandbox := createSandbox();
 
@@ -32,9 +36,7 @@ let _ =
       beforeEach(() => {
         MainEditorAssetTool.buildFakeFileReader();
 
-        LoadTool.buildFakeTextDecoder(
-          LoadTool.convertUint8ArrayToBuffer,
-        );
+        LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
         LoadTool.buildFakeURL(sandbox^);
 
         LoadTool.buildFakeLoadImage(.);
@@ -49,11 +51,10 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
 
         let fileName = "Scene";
-        let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
         MainEditorAssetUploadTool.loadOneWDB(
           ~fileName,
-          ~arrayBuffer=newWDBArrayBuffer,
+          ~arrayBuffer=WDBTool.generateSceneWDB(),
           (),
         )
         |> then_(uploadedWDBNodeId => {
@@ -75,11 +76,10 @@ let _ =
         |> EventListenerTool.stubGetElementByIdReturnFakeDom;
         MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
         let fileName = "BoxTextured";
-        let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
         MainEditorAssetUploadTool.loadOneWDB(
           ~fileName,
-          ~arrayBuffer=newWDBArrayBuffer,
+          ~arrayBuffer=boxTexturedWDBArrayBuffer^,
           (),
         )
         |> then_(uploadedWDBNodeId => {
