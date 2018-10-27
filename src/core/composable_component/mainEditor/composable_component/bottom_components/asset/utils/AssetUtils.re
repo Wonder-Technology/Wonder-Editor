@@ -100,25 +100,6 @@ let _handleRemoveWDBNode = (nodeId, editorState) => {
   |. AssetWDBNodeMapEditorService.setWDBNodeMap(editorState);
 };
 
-let _removeTextureFromAllBasicMaterials =
-    (textureComponent, editorState, engineState) =>
-  BasicMaterialEngineService.getAllBasicMaterials(engineState)
-  |> Js.Array.filter(basicMaterial =>
-       BasicMaterialEngineService.isBasicMaterialMap(
-         basicMaterial,
-         textureComponent,
-         engineState,
-       )
-     )
-  |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. engineState, basicMaterial) =>
-         OperateTextureLogicService.handleBasicMaterialComponentFromHasMapToNoMap(
-           basicMaterial,
-           engineState,
-         ),
-       engineState,
-     );
-
 let _removeTextureFromAllLightMaterials =
     (textureComponent, editorState, engineState) =>
   LightMaterialEngineService.getAllLightMaterials(engineState)
@@ -140,7 +121,6 @@ let _removeTextureFromAllLightMaterials =
 
 let _removeTextureEngineData = (textureComponent, editorState, engineState) =>
   engineState
-  |> _removeTextureFromAllBasicMaterials(textureComponent, editorState)
   |> _removeTextureFromAllLightMaterials(textureComponent, editorState);
 
 let _removeTextureEditorData = (nodeId, textureComponent, image, editorState) => {

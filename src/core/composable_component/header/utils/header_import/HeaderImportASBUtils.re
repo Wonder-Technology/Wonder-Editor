@@ -229,7 +229,7 @@ let _buildMaterialData =
     |> WonderCommonlib.ArrayService.reduceOneParami(
          (.
            (basicMaterialMap, (editorState, engineState)),
-           {name, path, color, map}: ExportAssetType.basicMaterial,
+           {name, path, color}: ExportAssetType.basicMaterial,
            materialIndex,
          ) => {
            let (engineState, material) =
@@ -242,20 +242,6 @@ let _buildMaterialData =
                   name,
                 )
              |> BasicMaterialEngineService.setColor(color, material);
-
-           let engineState =
-             OptionService.isJsonSerializedValueNone(map) ?
-               engineState :
-               {
-                 let map = map |> OptionService.unsafeGetJsonSerializedValue;
-
-                 engineState
-                 |> BasicMaterialEngineService.setBasicMaterialMap(
-                      textureMap
-                      |> WonderCommonlib.SparseMapService.unsafeGet(map),
-                      material,
-                    );
-               };
 
            let editorState =
              _buildMaterialEditorData(

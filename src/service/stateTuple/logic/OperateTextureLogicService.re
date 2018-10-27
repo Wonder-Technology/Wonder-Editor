@@ -49,16 +49,6 @@ let handleMaterialComponentFromHasMapToNoMap =
     engineState,
   );
 
-let handleBasicMaterialComponentFromHasMapToNoMap = (material, engineState) =>
-  handleMaterialComponentFromHasMapToNoMap(
-    material,
-    (
-      BasicMaterialEngineService.removeBasicMaterialMap,
-      BasicMaterialEngineService.reInitAllBasicMaterialsAndClearShaderCache,
-    ),
-    engineState,
-  );
-
 let handleLightMaterialComponentFromHasDiffuseMapToNoMap =
     (material, engineState) =>
   handleMaterialComponentFromHasMapToNoMap(

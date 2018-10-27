@@ -1,5 +1,3 @@
-
-
 let createBasicMaterial = engineState => {
   let (engineState, material) =
     engineState |> BasicMaterialEngineService.create;
@@ -23,6 +21,3 @@ let addBasicMaterial = (gameObject, material, engineState) =>
 
 let setBasicMaterialColor = (color, material, engineState) =>
   engineState |> BasicMaterialEngineService.setColor(color, material);
-
-let setBasicMaterialMapToEngineState = (mapId, newMaterial, engineState) =>
-  engineState |> BasicMaterialEngineService.setBasicMaterialMap(mapId, newMaterial);

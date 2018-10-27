@@ -16,11 +16,12 @@ module Method = {
       gameObject,
       engineState,
     ) ?
-      GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
-        gameObject,
-        engineState,
-      )
-      |> BasicMaterialEngineService.hasBasicMaterialMap(_, engineState) :
+      false :
+      /* GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+           gameObject,
+           engineState,
+         )
+         |> BasicMaterialEngineService.hasBasicMaterialMap(_, engineState) */
       GameObjectComponentEngineService.hasLightMaterialComponent(
         gameObject,
         engineState,

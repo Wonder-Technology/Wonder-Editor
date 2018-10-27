@@ -28,9 +28,9 @@ type image = {
 
 /* type magFilter = Wonderjs.SourceTextureType.filter;
 
-type minFilter = Wonderjs.SourceTextureType.filter;
+   type minFilter = Wonderjs.SourceTextureType.filter;
 
-type wrap = Wonderjs.SourceTextureType.wrap; */
+   type wrap = Wonderjs.SourceTextureType.wrap; */
 
 /* type buffer = {byteLength: int}; */
 
@@ -45,7 +45,6 @@ type basicMaterial = {
   name: string,
   path: string,
   color: array(float),
-  map: option(textureIndex),
 };
 
 type lightMaterial = {

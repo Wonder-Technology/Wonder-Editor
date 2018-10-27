@@ -18,22 +18,6 @@ module Method = {
     |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
   let closeColorPick = BasicMaterialCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
-
-  let onDrop = BasicMaterialDragTextureEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
-
-  let removeTexture = ((store, dispatchFunc), (), materialComponent) =>
-    switch (
-      BasicMaterialEngineService.getBasicMaterialMap(materialComponent)
-      |> StateLogicService.getEngineStateToGetData
-    ) {
-    | None => ()
-    | Some(_mapId) =>
-      BasicMaterialRemoveTextureEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-        (store, dispatchFunc),
-        (),
-        materialComponent,
-      )
-    };
 };
 
 let render = ((store, dispatchFunc), materialComponent, _self) =>
@@ -45,15 +29,6 @@ let render = ((store, dispatchFunc), materialComponent, _self) =>
       closeColorPickFunc=(
         Method.closeColorPick((store, dispatchFunc), materialComponent)
       )
-    />
-    <MainEditorMaterialMap
-      store
-      dispatchFunc
-      materialComponent
-      label="Map"
-      getMapFunc=BasicMaterialEngineService.getBasicMaterialMap
-      removeTextureFunc=Method.removeTexture
-      onDropFunc=Method.onDrop
     />
   </article>;
 

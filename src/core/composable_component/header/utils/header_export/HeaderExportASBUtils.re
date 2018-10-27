@@ -212,14 +212,6 @@ let _buildMaterialData = (textureIndexMap, (editorState, engineState)) =>
                         materialComponent,
                         engineState,
                       ),
-                    map:
-                      _getTextureIndexFromMap(
-                        BasicMaterialEngineService.getBasicMaterialMap(
-                          materialComponent,
-                          engineState,
-                        ),
-                        textureIndexMap,
-                      ),
                   }: ExportAssetType.basicMaterial,
                 ),
              lightMaterialArr,
