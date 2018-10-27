@@ -24,7 +24,7 @@ let _setIMGUIData = (hasWDBIMGUIFunc, editorState, engineState) => {
 let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
   let engineState =
     engineState
-    |> SceneEngineService.disposeSceneAllChildrenKeepOrder
+    |> SceneEngineService.disposeSceneAllChildrenKeepOrderRemoveGeometryRemoveMaterial
     |> SceneEngineService.setSceneGameObject(gameObject);
 
   let editorState = StateEditorService.getState();
@@ -46,18 +46,19 @@ let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
   let (editorState, engineState) =
     _setIMGUIData(hasWDBIMGUIFunc, editorState, engineState);
 
-  let (assetTree, editorState) =
+  /* let (assetTree, editorState) = */
+  let editorState =
     editorState
     |> InspectorEditorService.clearComponentTypeMap
-    |> SceneEditorService.clearCurrentSceneTreeNode
-    |> AssetTreeNodeUtils.initRootAssetTree(_, engineState);
+    |> SceneEditorService.clearCurrentSceneTreeNode;
+  /* |> AssetTreeNodeUtils.initRootAssetTree(_, engineState); */
 
   editorState
   |> GameObjectComponentLogicService.getGameObjectComponentStoreInComponentTypeMap(
        engineState |> GameObjectUtils.getChildren(gameObject),
        engineState,
      )
-  |> AssetTreeRootEditorService.setAssetTreeRoot(assetTree)
+  /* |> AssetTreeRootEditorService.setAssetTreeRoot(assetTree) */
   |> StateEditorService.setState
   |> ignore;
 

@@ -12,6 +12,10 @@ let filter = Js.Array.filter;
 
 let find = Js.Array.find;
 
+let map = Js.Array.map;
+
+let includes = Js.Array.includes;
+
 let length = Js.Array.length;
 
 let copy = Js.Array.copy;
@@ -63,6 +67,18 @@ let forEachiValid = (func, map) =>
        } else {
          func(. value, index);
        }
+     );
+
+let reduceValid = (func, initValue, map) =>
+  map
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. previousValue, value) =>
+         if (value |> Obj.magic === Js.Undefined.empty) {
+           previousValue;
+         } else {
+           func(. previousValue, value);
+         },
+       initValue,
      );
 
 let reduceiValid = (func, initValue, map) =>

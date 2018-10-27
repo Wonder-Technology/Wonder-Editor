@@ -227,7 +227,7 @@ let _ =
                 "texture1.png",
               )
               |> StateLogicService.getAndSetEditorState;
-              MainEditorAssetTreeTool.Select.selectTextureNode(~nodeId, ());
+              MainEditorAssetChildrenNodeTool.selectTextureNode(~nodeId, ());
 
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),

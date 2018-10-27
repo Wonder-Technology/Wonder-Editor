@@ -656,11 +656,11 @@ module Select = {
       (~nodeType, ~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
     AssetTreeUtils.onSelect(dispatchFunc, nodeType, nodeId);
 
-  let selectTextureNode = (~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
+  /* let selectTextureNode = (~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
     selectNode(~nodeType=AssetNodeType.Texture, ~nodeId, ~dispatchFunc, ());
 
   let selectMaterialNode = (~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
-    selectNode(~nodeType=AssetNodeType.Material, ~nodeId, ~dispatchFunc, ());
+    selectNode(~nodeType=AssetNodeType.Material, ~nodeId, ~dispatchFunc, ()); */
 
   let selectFolderNode = (~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
     selectNode(~nodeType=AssetNodeType.Folder, ~nodeId, ~dispatchFunc, ());

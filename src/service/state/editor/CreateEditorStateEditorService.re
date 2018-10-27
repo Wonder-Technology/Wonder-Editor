@@ -47,6 +47,9 @@ let create = () => {
   inspectorRecord: {
     componentTypeMap: WonderCommonlib.SparseMapService.createEmpty(),
   },
+  uiRecord: {
+    isFileInputOpen: false,
+  },
   currentDragSource: (None, None),
   currentSelectSource: None,
   loopId: (-1),

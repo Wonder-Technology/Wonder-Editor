@@ -22,8 +22,7 @@ let reducer =
     let targetMaterialType =
       value |> MainEditorMaterialType.convertIntToMaterialType;
 
-    ReasonReactUtils.updateWithSideEffects(
-      {...state, materialType: targetMaterialType}, state =>
+    ReasonReactUtils.sideEffects(() =>
       Method.changeMaterialType(
         (store, dispatchFunc),
         (currentNodeId, materialComponent),

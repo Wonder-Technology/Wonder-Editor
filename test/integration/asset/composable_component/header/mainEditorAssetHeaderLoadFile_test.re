@@ -60,12 +60,12 @@ let _ =
          TODO open test
          describe("test load zip file", () => {
            beforeEach(() => {
-             MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
-               MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
+             LoadTool.buildFakeTextDecoder(
+               LoadTool.convertUint8ArrayToBuffer,
              );
-             MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
+             LoadTool.buildFakeURL(sandbox^);
 
-             MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
+             LoadTool.buildFakeLoadImage(.);
            });
 
            testPromise(
@@ -251,12 +251,12 @@ let _ =
 
           describe("test wdbNodeMap", () => {
             beforeEach(() => {
-              MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
-                MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
+              LoadTool.buildFakeTextDecoder(
+                LoadTool.convertUint8ArrayToBuffer,
               );
-              MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
+              LoadTool.buildFakeURL(sandbox^);
 
-              MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
+              LoadTool.buildFakeLoadImage(.);
             });
 
             testPromise(

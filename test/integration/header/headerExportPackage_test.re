@@ -26,10 +26,10 @@ let _ =
         MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
       );
 
-      MainEditorAssetHeaderWDBTool.buildFakeTextEncoder();
-      MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
+      LoadTool.buildFakeTextEncoder();
+      LoadTool.buildFakeURL(sandbox^);
 
-      MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
+      LoadTool.buildFakeLoadImage(.);
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 

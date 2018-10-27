@@ -4,35 +4,18 @@ open AssetNodeType;
 
 open Js.Promise;
 
-let _getImageIdIfImageNodeMapHasIt = (imgBase64, editorState) => {
-  let sameLengthBase64Arr =
+let _getImageNodeIdIfImageNodeMapHasIt = (imgBase64, editorState) =>
+  switch (
     editorState
     |> AssetImageNodeMapEditorService.getImageNodeMap
     |> SparseMapService.getValidDataArr
-    |> Js.Array.filter(((imageNodeId, {base64, name})) =>
-         switch (base64) {
-         | None => false
-         | Some(base64) =>
-           base64 |> Js.String.length === (imgBase64 |> Js.String.length)
-         }
-       );
-
-  sameLengthBase64Arr |> Js.Array.length === 0 ?
-    None :
-    {
-      let sameBase64NodeArr =
-        sameLengthBase64Arr
-        |> Js.Array.filter(((imageNodeId, {base64, name})) =>
-             base64 |> OptionService.unsafeGet === imgBase64
-           );
-
-      sameBase64NodeArr |> Js.Array.length === 0 ?
-        None :
-        sameBase64NodeArr
-        |> ArrayService.unsafeGetFirst
-        |> (((imageNodeId, _)) => imageNodeId |. Some);
-    };
-};
+    |> SparseMapService.find(((imageNodeId, {base64})) =>
+         Base64Service.isBase64Equal(Some(imgBase64), base64)
+       )
+  ) {
+  | None => None
+  | Some((imageNodeId, _)) => Some(imageNodeId)
+  };
 
 let _handleImageType =
     (
@@ -54,7 +37,7 @@ let _handleImageType =
              );
 
         let (imageNodeId, editorState) =
-          switch (_getImageIdIfImageNodeMapHasIt(imgBase64, editorState)) {
+          switch (_getImageNodeIdIfImageNodeMapHasIt(imgBase64, editorState)) {
           | None =>
             let (editorState, imageNodeId) =
               AssetIdUtils.generateAssetId(editorState);
@@ -109,7 +92,7 @@ let _handleAssetWDBType =
     (wdbNodeId, parentFolderNodeId),
     (editorState, engineState),
   )
-  |> then_(((allGameObjects, ( editorState, engineState ))) => {
+  |> then_(((allGameObjects, (editorState, engineState))) => {
        let engineState =
          allGameObjects
          |> WonderCommonlib.ArrayService.reduceOneParam(

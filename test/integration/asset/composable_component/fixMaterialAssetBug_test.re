@@ -75,7 +75,7 @@ let _ =
           );
         };
 
-        describe("fix change inspector->MainEditorMaterial type bug", () => {
+        describe("fix change gameObject->material->type bug", () => {
           describe(
             {|
         add material m1;
@@ -182,6 +182,50 @@ let _ =
               addedMaterialNodeId,
             );
           };
+
+          describe(
+            {|
+        add material m1;
+        add material m2;
+        change m2->type to basicMaterial;
+        |},
+            () =>
+            test("m2->name shouldn't equal m1->name", () => {
+              let assetTreeData =
+                MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+              let addedMaterialNodeId1 = MainEditorAssetIdTool.getNewAssetId();
+              let addedMaterialNodeId2 = addedMaterialNodeId1 |> succ;
+              let gameObject = GameObjectTool.unsafeGetCurrentSceneTreeNode();
+
+              MainEditorAssetHeaderOperateNodeTool.addMaterial();
+              MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+              let materialComponent =
+                MaterialAssetTool.getMaterialComponent(
+                  ~nodeId=addedMaterialNodeId2,
+                  (),
+                );
+
+              MaterialInspectorTool.changeMaterialType(
+                ~material=materialComponent,
+                ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
+                ~materialNodeId=addedMaterialNodeId2,
+                (),
+              );
+
+              MainEditorAssetChildrenNodeTool.selectMaterialNode(
+                ~nodeId=addedMaterialNodeId2,
+                (),
+              );
+
+              BuildComponentTool.buildInspectorComponent(
+                TestTool.buildEmptyAppState(),
+                InspectorTool.buildFakeAllShowComponentConfig(),
+              )
+              |> ReactTestTool.createSnapshotAndMatch;
+            })
+          );
 
           describe(
             {|
@@ -332,7 +376,7 @@ let _ =
                    ~textureNodeId=uploadedTextureNodeId,
                    (),
                  );
-                 MainEditorAssetTreeTool.Select.selectMaterialNode(
+                 MainEditorAssetChildrenNodeTool.selectMaterialNode(
                    ~nodeId=addedMaterialNodeId,
                    (),
                  );

@@ -1,10 +1,8 @@
 open Js.Typed_array;
 
-let _writeHeader =
-    (totalByteLength, sceneWDBByteLength, asbByteLength, dataView) =>
+let _writeHeader = (sceneWDBByteLength, asbByteLength, dataView) =>
   dataView
-  |> DataViewUtils.writeUint32_1(totalByteLength, 0)
-  |> DataViewUtils.writeUint32_1(sceneWDBByteLength, _, dataView)
+  |> DataViewUtils.writeUint32_1(sceneWDBByteLength, 0)
   |> DataViewUtils.writeUint32_1(asbByteLength, _, dataView);
 
 let generateWPK = (sceneWDB, asb) => {
@@ -25,18 +23,12 @@ let generateWPK = (sceneWDB, asb) => {
   let wpk = ArrayBuffer.make(totalByteLength);
   let dataView = DataViewUtils.create(wpk);
 
-  let byteOffset =
-    _writeHeader(
-      totalByteLength,
-      sceneWDBByteLength,
-      asbByteLength,
-      dataView,
-    );
+  let byteOffset = _writeHeader(sceneWDBByteLength, asbByteLength, dataView);
 
   let (byteOffset, _, dataView) =
     HeaderExportUtils.writeArrayBufferToArrayBuffer(
       sceneWDB,
-      byteOffset,
+      headerTotalByteLength,
       sceneWDBByteLength,
       dataView,
     );
@@ -44,8 +36,8 @@ let generateWPK = (sceneWDB, asb) => {
   let (byteOffset, _, dataView) =
     HeaderExportUtils.writeArrayBufferToArrayBuffer(
       asb,
-      byteOffset,
-      sceneWDBByteLength,
+      headerTotalByteLength + sceneWDBAlignedByteLength,
+      asbByteLength,
       dataView,
     );
 

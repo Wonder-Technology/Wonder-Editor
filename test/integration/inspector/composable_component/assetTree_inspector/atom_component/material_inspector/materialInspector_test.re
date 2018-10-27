@@ -34,7 +34,7 @@ let _ =
             (),
           );
 
-          MainEditorAssetTreeTool.Select.selectMaterialNode(
+          MainEditorAssetChildrenNodeTool.selectMaterialNode(
             ~nodeId=addedMaterialNodeId,
             (),
           );
@@ -61,7 +61,7 @@ let _ =
             (),
           );
 
-          MainEditorAssetTreeTool.Select.selectMaterialNode(
+          MainEditorAssetChildrenNodeTool.selectMaterialNode(
             ~nodeId=addedMaterialNodeId,
             (),
           );

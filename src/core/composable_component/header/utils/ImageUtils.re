@@ -1,8 +1,14 @@
+let getImageName = image => Obj.magic(image)##name;
+
 let setImageName = (image, name) => {
   Obj.magic(image)##name#=name;
 
   ();
 };
+
+let getImageWidth = image => Obj.magic(image)##width;
+
+let getImageHeight = image => Obj.magic(image)##height;
 
 let getImageMimeType = extName =>
   switch (extName) {

@@ -30,7 +30,6 @@ module Method = {
                  switch (base64) {
                  | Some(_) => editorState
                  | None =>
-                   /* TODO test */
                    switch (uint8Array) {
                    | None =>
                      WonderLog.Log.fatal(

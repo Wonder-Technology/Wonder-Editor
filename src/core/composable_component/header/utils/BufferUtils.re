@@ -30,34 +30,10 @@ let convertBase64ToUint8Array = [%raw
 
 let convertUint8ArrayToBase64 = [%raw
   (uint8Array, mimeType) => {|
-var imageStr = btoa(
+var imageStr = window.btoa(
           uint8Array
             .reduce((data, byte) => data + String.fromCharCode(byte), '')
         );
         return "data:" + mimeType + ";base64," + imageStr;
   |}
 ];
-
-let copyUint8ArrayToArrayBuffer =
-    (
-      byteOffset,
-      (emptyUint8Data, uint8ArrayAlignedByteLength, uint8Array),
-      dataView,
-    ) => {
-  let resultByteOffset = byteOffset + uint8ArrayAlignedByteLength;
-  let byteOffset = ref(byteOffset);
-  let uint8ArrayByteLength = uint8Array |> Uint8Array.length;
-
-  for (i in 0 to uint8ArrayAlignedByteLength - 1) {
-    let value =
-      if (i >= uint8ArrayByteLength) {
-        emptyUint8Data;
-      } else {
-        Uint8Array.unsafe_get(uint8Array, i);
-      };
-
-    byteOffset := DataViewUtils.writeUint8_1(. value, byteOffset^, dataView);
-  };
-
-  (resultByteOffset, uint8Array, dataView);
-};

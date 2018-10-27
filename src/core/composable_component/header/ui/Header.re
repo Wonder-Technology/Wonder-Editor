@@ -96,7 +96,22 @@ module Method = {
                 _type="file"
                 multiple=false
                 onChange=(
-                  e => HeaderImportPackageUtils.importPackage(dispatchFunc, e)
+                  e =>
+                    HeaderImportPackageUtils.importPackage(dispatchFunc, e)
+                    |> Js.Promise.then_(_ =>
+                         send(BlurNav) |> Js.Promise.resolve
+                       )
+                    |> ignore
+                )
+                onFocus=(
+                  e =>
+                    UIEditorService.markFileInputClose
+                    |> StateLogicService.getAndSetEditorState
+                )
+                onClick=(
+                  e =>
+                    UIEditorService.markFileInputOpen
+                    |> StateLogicService.getAndSetEditorState
                 )
               />
               <span className="section-header">
@@ -168,7 +183,9 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
         let target = ReactEventRe.Form.target(e);
         let targetArray = DomHelper.getElementsByClassName("item-title");
 
-        DomUtils.isSpecificDomChildrenHasTargetDom(target, targetArray) ?
+        DomUtils.isSpecificDomChildrenHasTargetDom(target, targetArray)
+        || UIEditorService.isFileInputOpen(StateEditorService.getState()) ?
+          /* ? */
           () : send(BlurNav);
       },
     ),

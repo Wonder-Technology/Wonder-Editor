@@ -36,12 +36,12 @@ let _ =
         MainEditorAssetTool.buildFakeFileReader();
         MainEditorAssetTool.buildFakeImage();
 
-        MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
-          MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
+        LoadTool.buildFakeTextDecoder(
+          LoadTool.convertUint8ArrayToBuffer,
         );
-        MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
+        LoadTool.buildFakeURL(sandbox^);
 
-        MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
+        LoadTool.buildFakeLoadImage(.);
       });
 
       testPromise("set source name", () => {

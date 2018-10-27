@@ -19,17 +19,17 @@ let _getUint8Array = (uint8Array, base64) =>
     }
   };
 
-let _computeBufferViewDataByteLength = bufferViewArr => {
-  let {byteOffset, byteLength}: ExportAssetType.bufferView =
-    bufferViewArr |> ArrayService.unsafeGetLast;
-
-  byteOffset + BufferUtils.alignedLength(byteLength);
-};
+let _computeBufferViewDataByteLength = bufferViewArr =>
+  switch (bufferViewArr |> ArrayService.getLast) {
+  | None => 0
+  | Some(({byteOffset, byteLength}: ExportAssetType.bufferView)) =>
+    byteOffset + BufferUtils.alignedLength(byteLength)
+  };
 
 let _buildImageData = editorState => {
   let (imageIndexMap, imageArr, bufferViewArr, uint8ArrayArr, byteOffset) =
-    AssetImageNodeMapEditorService.getValidValues(editorState)
-    |> WonderCommonlib.ArrayService.reduceOneParami(
+    AssetImageNodeMapEditorService.getImageNodeMap(editorState)
+    |> SparseMapService.reduceiValid(
          (.
            (
              imageIndexMap,
@@ -110,8 +110,8 @@ let rec _getAssetNodePathFromAssets =
   };
 
 let _buildTextureData = (imageIndexMap, (editorState, engineState)) =>
-  AssetTextureNodeMapEditorService.getValidValues(editorState)
-  |> WonderCommonlib.ArrayService.reduceOneParami(
+  AssetTextureNodeMapEditorService.getTextureNodeMap(editorState)
+  |> SparseMapService.reduceiValid(
        (.
          (textureIndexMap, textureArr),
          {textureComponent, image, parentFolderNodeId}: AssetNodeType.textureResultType,
@@ -119,7 +119,8 @@ let _buildTextureData = (imageIndexMap, (editorState, engineState)) =>
        ) => (
          textureIndexMap
          |> WonderCommonlib.SparseMapService.set(
-              textureNodeId,
+              /* textureNodeId, */
+              textureComponent,
               textureArr |> Js.Array.length,
             ),
          textureArr
@@ -170,28 +171,18 @@ let _buildTextureData = (imageIndexMap, (editorState, engineState)) =>
        (WonderCommonlib.SparseMapService.createEmpty(), [||]),
      );
 
-let _getTextureIndexFromMap =
-    (textureComponent, textureIndexMap, validTextureNodeMap) =>
+let _getTextureIndexFromMap = (textureComponent, textureIndexMap) =>
   switch (textureComponent) {
   | None => None
   | Some(textureComponent) =>
     textureIndexMap
-    |> WonderCommonlib.SparseMapService.unsafeGet(
-         validTextureNodeMap
-         |> SparseMapService.filter((result: AssetNodeType.textureResultType) =>
-              result.textureComponent === textureComponent
-            )
-         |> ArrayService.unsafeGetFirst,
-       )
+    |> WonderCommonlib.SparseMapService.unsafeGet(textureComponent)
     |. Some
   };
 
-let _buildMaterialData = (textureIndexMap, (editorState, engineState)) => {
-  let validTextureNodeMap =
-    AssetTextureNodeMapEditorService.getValidValues(editorState);
-
-  AssetMaterialNodeMapEditorService.getValidValues(editorState)
-  |> WonderCommonlib.ArrayService.reduceOneParami(
+let _buildMaterialData = (textureIndexMap, (editorState, engineState)) =>
+  AssetMaterialNodeMapEditorService.getMaterialNodeMap(editorState)
+  |> SparseMapService.reduceiValid(
        (.
          (basicMaterialArr, lightMaterialArr),
          {materialComponent, type_, parentFolderNodeId}: AssetNodeType.materialResultType,
@@ -228,7 +219,6 @@ let _buildMaterialData = (textureIndexMap, (editorState, engineState)) => {
                           engineState,
                         ),
                         textureIndexMap,
-                        validTextureNodeMap,
                       ),
                   }: ExportAssetType.basicMaterial,
                 ),
@@ -258,7 +248,6 @@ let _buildMaterialData = (textureIndexMap, (editorState, engineState)) => {
                           engineState,
                         ),
                         textureIndexMap,
-                        validTextureNodeMap,
                       ),
                     shininess:
                       LightMaterialEngineService.getLightMaterialShininess(
@@ -272,12 +261,11 @@ let _buildMaterialData = (textureIndexMap, (editorState, engineState)) => {
        },
        ([||], [||]),
      );
-};
 
 let _buildWDBData = (imageAlignedByteLength, (editorState, engineState)) => {
   let (wdbArr, arrayBufferArr, bufferViewArr, byteOffset) =
-    AssetWDBNodeMapEditorService.getValidValues(editorState)
-    |> WonderCommonlib.ArrayService.reduceOneParam(
+    AssetWDBNodeMapEditorService.getWDBNodeMap(editorState)
+    |> SparseMapService.reduceValid(
          (.
            (wdbArr, arrayBufferArr, bufferViewArr, byteOffset),
            {name, parentFolderNodeId, wdbArrayBuffer}: AssetNodeType.wdbResultType,
@@ -310,7 +298,13 @@ let _buildWDBData = (imageAlignedByteLength, (editorState, engineState)) => {
          ([||], [||], [||], imageAlignedByteLength),
        );
 
-  (wdbArr, arrayBufferArr, bufferViewArr);
+  (
+    wdbArr,
+    arrayBufferArr,
+    bufferViewArr,
+    bufferViewArr |> Js.Array.length === 0 ?
+      imageAlignedByteLength : _computeBufferViewDataByteLength(bufferViewArr),
+  );
 };
 
 let _buildJsonData = (editorState, engineState) => {
@@ -322,21 +316,24 @@ let _buildJsonData = (editorState, engineState) => {
     imageAlignedByteLength,
   ) =
     _buildImageData(editorState);
+
   let (textureIndexMap, textureArr) =
     _buildTextureData(imageIndexMap, (editorState, engineState));
   let (basicMaterialArr, lightMaterialArr) =
     _buildMaterialData(textureIndexMap, (editorState, engineState));
-  let (wdbArr, wdbArrayBufferArr, wdbBufferViewArr) =
+  let (
+    wdbArr,
+    wdbArrayBufferArr,
+    wdbBufferViewArr,
+    bufferTotalAlignedByteLength,
+  ) =
     _buildWDBData(imageAlignedByteLength, (editorState, engineState));
 
   (
     (imageArr, textureArr, basicMaterialArr, lightMaterialArr, wdbArr),
     (imageBufferViewArr, wdbBufferViewArr),
     (imageUint8ArrayArr, wdbArrayBufferArr),
-    (
-      imageAlignedByteLength,
-      _computeBufferViewDataByteLength(wdbBufferViewArr),
-    ),
+    (imageAlignedByteLength, bufferTotalAlignedByteLength),
   );
 };
 
@@ -378,11 +375,9 @@ let _buildJsonUint8Array =
      );
 };
 
-let _writeHeader =
-    (totalByteLength, jsonByteLength, bufferAlignedByteLength, dataView) =>
+let _writeHeader = (jsonByteLength, bufferAlignedByteLength, dataView) =>
   dataView
-  |> DataViewUtils.writeUint32_1(totalByteLength, 0)
-  |> DataViewUtils.writeUint32_1(jsonByteLength, _, dataView)
+  |> DataViewUtils.writeUint32_1(jsonByteLength, 0)
   |> DataViewUtils.writeUint32_1(bufferAlignedByteLength, _, dataView);
 
 let _getEmptyEncodedUint8Data = () => {
@@ -395,12 +390,12 @@ let _getEmptyEncodedUint8Data = () => {
 let _writeJson =
     (
       byteOffset,
-      (emptyEncodedUint8Data, jsonByteLength, jsonUint8Array),
+      (emptyEncodedUint8Data, jsonAlignedByteLength, jsonUint8Array),
       dataView,
     ) =>
-  BufferUtils.copyUint8ArrayToArrayBuffer(
+  HeaderExportUtils.writeUint8ArrayToArrayBufferWithEmptyData(
     byteOffset,
-    (emptyEncodedUint8Data, jsonByteLength, jsonUint8Array),
+    (emptyEncodedUint8Data, jsonAlignedByteLength, jsonUint8Array),
     dataView,
   );
 
@@ -466,13 +461,13 @@ let generateASB = (editorState, engineState) => {
     (imageArr, textureArr, basicMaterialArr, lightMaterialArr, wdbArr),
     (imageBufferViewArr, wdbBufferViewArr),
     (imageUint8ArrayArr, wdbArrayBufferArr),
-    (imageAlignedByteLength, bufferAlignedByteLength),
+    (imageAlignedByteLength, bufferTotalAlignedByteLength),
   ) =
     _buildJsonData(editorState, engineState);
 
   let jsonUint8Array =
     _buildJsonUint8Array(
-      bufferAlignedByteLength,
+      bufferTotalAlignedByteLength,
       (
         Js.Array.concat(imageBufferViewArr, wdbBufferViewArr),
         imageArr,
@@ -490,18 +485,13 @@ let generateASB = (editorState, engineState) => {
   let totalByteLength =
     ASBUtils.getHeaderTotalByteLength()
     + jsonAlignedByteLength
-    + bufferAlignedByteLength;
+    + bufferTotalAlignedByteLength;
 
   let asb = ArrayBuffer.make(totalByteLength);
   let dataView = DataViewUtils.create(asb);
 
   let byteOffset =
-    _writeHeader(
-      totalByteLength,
-      jsonByteLength,
-      bufferAlignedByteLength,
-      dataView,
-    );
+    _writeHeader(jsonByteLength, bufferTotalAlignedByteLength, dataView);
 
   let emptyEncodedUint8Data = _getEmptyEncodedUint8Data();
 

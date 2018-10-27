@@ -75,3 +75,19 @@ let buildFakeURL = [%raw
       window.URL = URL;
   |}
 ];
+
+let buildFakeAtob = [%raw
+  () => {|
+    window.atob = (a) => {
+        return new Buffer(a, 'base64').toString('binary');
+    }
+    |}
+];
+
+let buildFakeBtoa = [%raw
+  () => {|
+    window.btoa = (b) => {
+        return new Buffer(b).toString('base64');
+    }
+    |}
+];

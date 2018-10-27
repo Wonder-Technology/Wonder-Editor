@@ -22,24 +22,24 @@ let buildWDBFileEvent = (fileName, arrayBuffer) =>
   }
   |> Obj.magic;
 
-let buildTwoJsonFileEvent =
-    (~jsonName="loadJson", ~jsonResult="loadJson string result", ()) =>
-  {
-    "target": {
-      "files": {
-        "0": {
-          name: jsonName ++ ".json",
-          file: jsonResult,
-        },
-        "1": {
-          name: jsonName ++ ".json",
-          file: jsonResult,
-        },
-      },
-    },
-    "preventDefault": () => (),
-  }
-  |> Obj.magic;
+/* let buildTwoJsonFileEvent =
+     (~jsonName="loadJson", ~jsonResult="loadJson string result", ()) =>
+   {
+     "target": {
+       "files": {
+         "0": {
+           name: jsonName ++ ".json",
+           file: jsonResult,
+         },
+         "1": {
+           name: jsonName ++ ".json",
+           file: jsonResult,
+         },
+       },
+     },
+     "preventDefault": () => (),
+   }
+   |> Obj.magic; */
 
 let buildOneTextureFileEvent =
     (~imgName="loadImg.png", ~imgSrc="newImgBase64", ()) =>

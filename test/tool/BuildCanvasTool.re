@@ -35,4 +35,6 @@ let buildFakeCanvas = sandbox => {
   let createElementStub = documentToJsObj(document)##createElement;
 
   createElementStub |> withOneArg("canvas") |> returns(canvasDom) |> ignore;
+
+  canvasDom;
 };

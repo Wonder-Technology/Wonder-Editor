@@ -66,6 +66,13 @@ module Method = {
     ) {
     | None => ReasonReact.null
     | Some(map) =>
+
+    WonderLog.Log.print(("show: ", materialComponent, map, 
+    LightMaterialEngineService.getLightMaterialDiffuseMap(materialComponent)
+|> StateLogicService.getEngineStateToGetData
+
+    
+    )) |> ignore;
       let source =
         BasicSourceTextureEngineService.unsafeGetSource(
           map,

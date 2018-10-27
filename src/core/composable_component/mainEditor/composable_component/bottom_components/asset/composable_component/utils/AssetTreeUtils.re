@@ -25,18 +25,23 @@ let dragNodeToFolderFunc = AssetDragNodeToFolderEventHandler.MakeEventHandler.pu
 
 let addFolderIntoNodeMap = (index, name, parentFolderNodeId, editorState) =>
   name
-  |> AssetFolderNodeMapEditorService.buildFolderNodeResult(parentFolderNodeId)
+  |> AssetFolderNodeMapEditorService.buildFolderNodeResult(
+       parentFolderNodeId,
+     )
   |> AssetFolderNodeMapEditorService.setResult(index, _, editorState);
 
 let rebuildRootAssetTree = (parentFolderNodeId, pathName, editorState) =>
   switch (AssetTreeRootEditorService.getAssetTreeRoot(editorState)) {
   | None =>
-    let (editorState, rootIndex) =
-      AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
+    let (editorState, rootIndex) = AssetIdUtils.generateAssetId(editorState);
+
     let editorState =
       rootIndex
       |. AssetTreeEditorService.buildAssetTreeNodeByIndex(Folder)
-      |. AssetTreeRootEditorService.setAssetTreeRoot(editorState)
+      |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);
+
+    let editorState =
+      editorState
       |> addFolderIntoNodeMap(rootIndex, pathName, parentFolderNodeId);
 
     (rootIndex, editorState);
@@ -46,7 +51,8 @@ let rebuildRootAssetTree = (parentFolderNodeId, pathName, editorState) =>
     )
   };
 
-let rebuildFolder = (parentFolderNodeId, pathName, (editorState, engineState)) => {
+let rebuildFolder =
+    (parentFolderNodeId, pathName, (editorState, engineState)) => {
   let resultArr =
     AssetUtils.getChildrenNameAndIdArr(
       parentFolderNodeId |> OptionService.unsafeGet,
@@ -60,7 +66,8 @@ let rebuildFolder = (parentFolderNodeId, pathName, (editorState, engineState)) =
       let (editorState, newIndex) = AssetIdUtils.generateAssetId(editorState);
 
       let editorState =
-        editorState |> addFolderIntoNodeMap(newIndex, pathName, parentFolderNodeId);
+        editorState
+        |> addFolderIntoNodeMap(newIndex, pathName, parentFolderNodeId);
 
       let editorState =
         editorState

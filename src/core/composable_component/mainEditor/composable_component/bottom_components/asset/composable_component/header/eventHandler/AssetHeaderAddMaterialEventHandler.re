@@ -11,7 +11,7 @@ module CustomEventHandler = {
 
     let (newMaterial, engineState) =
       OperateLightMaterialLogicService.createLightMaterialAndSetName(
-        OperateLightMaterialLogicService.getMaterialDefaultName()
+        MainEditorMaterialUtils.getMaterilaDefaultName()
         |. AssetUtils.getUniqueTreeNodeName(
              Material,
              targetTreeNodeId |. Some,

@@ -244,16 +244,18 @@ let _buildMaterialData =
              |> BasicMaterialEngineService.setColor(color, material);
 
            let engineState =
-             switch (map) {
-             | None => engineState
-             | Some(map) =>
-               engineState
-               |> BasicMaterialEngineService.setBasicMaterialMap(
-                    textureMap
-                    |> WonderCommonlib.SparseMapService.unsafeGet(map),
-                    material,
-                  )
-             };
+             OptionService.isJsonSerializedValueNone(map) ?
+               engineState :
+               {
+                 let map = map |> OptionService.unsafeGetJsonSerializedValue;
+
+                 engineState
+                 |> BasicMaterialEngineService.setBasicMaterialMap(
+                      textureMap
+                      |> WonderCommonlib.SparseMapService.unsafeGet(map),
+                      material,
+                    );
+               };
 
            let editorState =
              _buildMaterialEditorData(
@@ -302,16 +304,21 @@ let _buildMaterialData =
                 );
 
            let engineState =
-             switch (diffuseMap) {
-             | None => engineState
-             | Some(diffuseMap) =>
-               engineState
-               |> LightMaterialEngineService.setLightMaterialDiffuseMap(
-                    textureMap
-                    |> WonderCommonlib.SparseMapService.unsafeGet(diffuseMap),
-                    material,
-                  )
-             };
+             OptionService.isJsonSerializedValueNone(diffuseMap) ?
+               engineState :
+               {
+                 let diffuseMap =
+                   diffuseMap |> OptionService.unsafeGetJsonSerializedValue;
+
+                 engineState
+                 |> LightMaterialEngineService.setLightMaterialDiffuseMap(
+                      textureMap
+                      |> WonderCommonlib.SparseMapService.unsafeGet(
+                           diffuseMap,
+                         ),
+                      material,
+                    );
+               };
 
            let editorState =
              _buildMaterialEditorData(
@@ -335,61 +342,6 @@ let _buildMaterialData =
 
   (basicMaterialMap, lightMaterialMap, (editorState, engineState));
 };
-
-/* let _buildWDBData =
-     (
-       {wdbs, bufferViews}: ExportAssetType.assets,
-       buffer,
-       (editorState, engineState),
-     ) =>
-   wdbs
-   /* |> WonderBsMost.Most.from
-      |> WonderBsMost.Most.reduce( */
-   |> WonderCommonlib.ArrayService.reduceOneParam(
-        /* (allGameObjectsArr, (editorState, engineState)), */
-        (. streamArr, {name, bufferView, path}: ExportAssetType.wdb) => {
-          let arrayBuffer = _getArrayBuffer(buffer, bufferView, bufferViews);
-
-          let (editorState, assetNodeId) =
-            AssetIdUtils.generateAssetId(editorState);
-
-          let (parentFolderNodeId, editorState) =
-            HeaderImportFolderUtils.buildFolder(
-              path,
-              (editorState, engineState),
-            );
-
-          streamArr
-          |> ArrayService.push(
-               AssetWDBUtils.importAssetWDB(
-                 (name, arrayBuffer),
-                 (assetNodeId, parentFolderNodeId |> OptionService.unsafeGet),
-                 (editorState, engineState),
-               ),
-             );
-          /* |> then_(((allGameObjects, editorState, engineState)) =>
-               (
-                 allGameObjectsArr |> ArrayService.push(allGameObjects),
-                 (editorState, engineState),
-               )
-               |> resolve
-             ); */
-        },
-        /* ([||], (editorState, engineState)), */
-        [||],
-      )
-   |> WonderBsMost.Most.mergeArray
-   |> WonderBsMost.Most.reduce(
-        (
-          (allGameObjectsArr, (editorState, engineState)),
-          (allGameObjects, (editorState, engineState)),
-        ) => {
-
-
-
-        },
-        ([||], (editorState, engineState)),
-      ); */
 
 let _buildWDBData =
     (
@@ -561,17 +513,4 @@ let importASB = asb => {
           })
        |> WonderBsMost.Most.fromPromise
      );
-  /* |> then_(((imageMap, editorState)) => {
-          let (textureMap, (editorState, engineState)) =
-            _buildTextureData(asbRecord, imageMap, (editorState, engineState));
-          let (basicMaterialMap, lightMaterialMap, (editorState, engineState)) =
-            _buildMaterialData(
-              asbRecord,
-              textureMap,
-              (editorState, engineState),
-            );
-
-          _buildWDBData(asbRecord, buffer, (editorState, engineState));
-        })
-     |> WonderBsMost.Most.fromPromise; */
 };

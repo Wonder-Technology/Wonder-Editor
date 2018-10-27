@@ -9,6 +9,12 @@ let unsafeGetDefaultBasicMaterialData = editorState =>
   getMaterialData(editorState).defaultBasicMaterialData
   |> OptionService.unsafeGet;
 
+let unsafeGetDefaultBasicMaterial = editorState => {
+  let (material, _) = unsafeGetDefaultBasicMaterialData(editorState);
+
+  material;
+};
+
 let setDefaultBasicMaterialData = (material, editorState) => {
   ...editorState,
   assetRecord: {

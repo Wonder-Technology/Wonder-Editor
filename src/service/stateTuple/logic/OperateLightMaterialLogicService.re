@@ -1,5 +1,3 @@
-let getMaterialDefaultName = () => "NewMaterial";
-
 let createLightMaterialAndSetName = (materialName, engineState) => {
   let (engineState, material) =
     engineState |> LightMaterialEngineService.create;

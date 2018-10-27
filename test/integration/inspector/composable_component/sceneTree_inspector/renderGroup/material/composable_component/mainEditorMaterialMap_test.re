@@ -18,12 +18,12 @@ let _ =
 
       MainEditorAssetTool.buildFakeFileReader();
 
-      MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
-        MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
+      LoadTool.buildFakeTextDecoder(
+        LoadTool.convertUint8ArrayToBuffer,
       );
-      MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
+      LoadTool.buildFakeURL(sandbox^);
 
-      MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
+      LoadTool.buildFakeLoadImage(.);
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(
         EditorType.SceneTree,

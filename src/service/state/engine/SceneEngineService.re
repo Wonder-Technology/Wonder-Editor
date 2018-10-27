@@ -26,7 +26,7 @@ let addSceneChildren = SceneAPI.addSceneChildren;
 
 let setSceneGameObject = SceneAPI.setSceneGameObject;
 
-let disposeSceneAllChildrenKeepOrder = engineState => {
+let disposeSceneAllChildrenKeepOrderRemoveGeometryRemoveMaterial = engineState => {
   let scene = engineState |> getSceneGameObject;
 
   engineState
@@ -35,7 +35,7 @@ let disposeSceneAllChildrenKeepOrder = engineState => {
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. engineState, gameObject) =>
          engineState
-         |> GameObjectEngineService.disposeGameObjectKeepOrderRemoveGeometry(
+         |> GameObjectEngineService.disposeGameObjectKeepOrderRemoveGeometryRemoveMaterial(
               gameObject,
             ),
        engineState,
