@@ -33,11 +33,31 @@ let _createPointLight = (editorState, engineState) => {
   (editorState, engineState, obj);
 };
 
-let generateDirectionPointLightsAndBoxWDB = () => {
+let _createStateTuple = () => {
+  let sandbox = Sinon.createSandbox();
+
+  MainEditorSceneTool.initStateWithJob(
+    ~sandbox=ref(sandbox),
+    ~isBuildFakeDom=false,
+    ~noWorkerJobRecord=
+      NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(),
+    (),
+  );
+
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
-  let copiedEngineState = engineState |> StateEngineService.deepCopyForRestore;
+  let engineState =
+    engineState
+    |> FakeGlToolEngine.setFakeGl(
+         FakeGlToolEngine.buildFakeGl(~sandbox=ref(sandbox), ()),
+       );
+
+  (editorState, engineState);
+};
+
+let generateDirectionPointLightsAndBoxWDBWithNewState = () => {
+  let (editorState, engineState) = _createStateTuple();
 
   let (engineState, geometry) =
     GeometryEngineService.createCubeGeometry(engineState);
@@ -71,26 +91,10 @@ let generateDirectionPointLightsAndBoxWDB = () => {
   let (engineState, wdbArrayBuffer) =
     HeaderExportPackageUtils._generateWDB(rootGameObject, engineState);
 
-  /* let engineState =
-     engineState
-     |> GameObjectToolEngine.disposeAllGameObjects(rootGameObject)
-     |> JobEngineService.execDisposeJob; */
-
-  /* editorState |> StateEditorService.setState |> ignore;
-     engineState |> StateEngineService.setState |> ignore; */
-  StateEngineService.restoreState(engineState, copiedEngineState)
-  |> StateEngineService.setState
-  |> ignore;
-
   wdbArrayBuffer;
 };
 
-let generateSceneWDB = () => {
-  let editorState = StateEditorService.getState();
-  let engineState = StateEngineService.unsafeGetState();
-
-  let copiedEngineState = engineState |> StateEngineService.deepCopyForRestore;
-
+let _generateSceneWDB = (editorState, engineState) => {
   let engineState =
     ManageIMGUIEngineService.setIMGUIFunc(
       Obj.magic(Js.Nullable.null),
@@ -183,16 +187,11 @@ let generateSceneWDB = () => {
   let (engineState, wdbArrayBuffer) =
     HeaderExportPackageUtils._generateWDB(rootGameObject, engineState);
 
-  /* let engineState =
-     engineState
-     |> GameObjectToolEngine.disposeAllGameObjects(rootGameObject)
-     |> JobEngineService.execDisposeJob; */
-
-  /* editorState |> StateEditorService.setState |> ignore; */
-  /* engineState |> StateEngineService.setState |> ignore; */
-  StateEngineService.restoreState(engineState, copiedEngineState)
-  |> StateEngineService.setState
-  |> ignore;
-
   wdbArrayBuffer;
+};
+
+let generateSceneWDBWithNewState = () => {
+  let (editorState, engineState) = _createStateTuple();
+
+  _generateSceneWDB(editorState, engineState);
 };

@@ -13,10 +13,12 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
+    let sceneWDBArrayBuffer = ref(Obj.magic(1));
 
-    beforeAll(() =>
-      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
-    );
+    beforeAll(() => {
+      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
+      sceneWDBArrayBuffer := WDBTool.generateSceneWDBWithNewState();
+    });
 
     beforeEach(() => {
       sandbox := createSandbox();
@@ -75,7 +77,7 @@ let _ =
 
         HeaderTool.loadOneWDB(
           ~fileName,
-          ~arrayBuffer=WDBTool.generateSceneWDB(),
+          ~arrayBuffer=sceneWDBArrayBuffer^,
           (),
         )
         |> then_(_ =>
@@ -171,7 +173,7 @@ let _ =
 
               HeaderTool.loadOneWDB(
                 ~fileName,
-                ~arrayBuffer=WDBTool.generateSceneWDB(),
+                ~arrayBuffer=sceneWDBArrayBuffer^,
                 (),
               )
               |> then_(_ => {
@@ -208,7 +210,7 @@ let _ =
 
               HeaderTool.loadOneWDB(
                 ~fileName,
-                ~arrayBuffer=WDBTool.generateSceneWDB(),
+                ~arrayBuffer=sceneWDBArrayBuffer^,
                 (),
               )
               |> then_(_ => {
@@ -245,7 +247,7 @@ let _ =
 
             HeaderTool.loadOneWDB(
               ~fileName,
-              ~arrayBuffer=WDBTool.generateSceneWDB(),
+              ~arrayBuffer=sceneWDBArrayBuffer^,
               (),
             )
             |> then_(_ => {
@@ -305,7 +307,7 @@ let _ =
 
           HeaderTool.loadOneWDB(
             ~fileName,
-            ~arrayBuffer=WDBTool.generateSceneWDB(),
+            ~arrayBuffer=sceneWDBArrayBuffer^,
             (),
           )
           |> then_(_ => {

@@ -16,17 +16,17 @@ let _ =
   describe("MainEditorAssetHeader->drag wdb", () => {
     let sandbox = getSandboxDefaultVal();
 
+    let directionPointLightsAndBoxWDBArrayBuffer = ref(Obj.magic(1));
+
+    beforeAll(() =>
+      directionPointLightsAndBoxWDBArrayBuffer :=
+        WDBTool.generateDirectionPointLightsAndBoxWDBWithNewState()
+    );
+
     beforeEach(() => {
       sandbox := createSandbox();
 
       MainEditorSceneTool.initState(~sandbox, ());
-
-      StateEngineService.unsafeGetState()
-      |> FakeGlToolEngine.setFakeGl(
-           FakeGlToolEngine.buildFakeGl(~sandbox, ()),
-         )
-      |> StateEngineService.setState
-      |> ignore;
 
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
@@ -47,7 +47,7 @@ let _ =
             sandbox,
             (
               "DirectionPointLightsAndBox",
-              WDBTool.generateDirectionPointLightsAndBoxWDB(),
+              directionPointLightsAndBoxWDBArrayBuffer^,
             ),
             testFunc,
           );

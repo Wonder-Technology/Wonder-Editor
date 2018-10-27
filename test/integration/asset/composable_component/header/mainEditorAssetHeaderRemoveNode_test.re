@@ -14,10 +14,13 @@ let _ =
   describe("MainEditorAssetHeader->remove node", () => {
     let sandbox = getSandboxDefaultVal();
     let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
+    let sceneWDBArrayBuffer = ref(Obj.magic(1));
 
-    beforeAll(() =>
-      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
-    );
+    beforeAll(() => {
+      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
+      sceneWDBArrayBuffer := WDBTool.generateSceneWDBWithNewState();
+    });
+
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
@@ -416,7 +419,7 @@ let _ =
 
                      MainEditorAssetUploadTool.loadOneWDB(
                        ~fileName,
-                       ~arrayBuffer=WDBTool.generateSceneWDB(),
+                       ~arrayBuffer=sceneWDBArrayBuffer^,
                        (),
                      )
                      |> then_(_ => {
