@@ -30,3 +30,6 @@ let changeGeometry =
     gameObject,
     (sourceGeometry, targetGeometry),
   );
+
+let getAllShowGeometrys = (gameObject, engineState) =>
+  MainEditorGeometry.Method._getAllShowGeometrys(gameObject, engineState);

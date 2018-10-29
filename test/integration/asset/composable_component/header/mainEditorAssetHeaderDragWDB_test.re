@@ -20,7 +20,7 @@ let _ =
 
     beforeAll(() =>
       directionPointLightsAndBoxWDBArrayBuffer :=
-        WDBTool.generateDirectionPointLightsAndBoxWDBWithNewState()
+        WDBTool.generateDirectionPointLightsAndBoxWDB()
     );
 
     beforeEach(() => {

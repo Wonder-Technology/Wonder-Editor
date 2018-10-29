@@ -29,7 +29,6 @@ open Js.Promise;
      )
    ); */
 
-/* let testImportWPK = (~testFunc, ()) => { */
 let testImportPackage = (~testFunc, ()) => {
   let wpkArrayBuffer = ExportPackageTool.exportWPK();
 
@@ -82,3 +81,11 @@ let getImportedTextureAssetTextureComponents = () =>
   |> Js.Array.map(({textureComponent}: AssetNodeType.textureResultType) =>
        textureComponent
      );
+
+let getImportedWDBAssetData = () =>
+  StateEditorService.getState()
+  |> AssetWDBNodeMapEditorService.getWDBNodeMap
+  |> SparseMapService.getValidDataArr;
+
+let getFirstImportedWDBAssetData = () =>
+  getImportedWDBAssetData() |> ArrayService.unsafeGetFirst;

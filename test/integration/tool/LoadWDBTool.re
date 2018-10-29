@@ -1,4 +1,4 @@
-let getBoxTexturedMeshGameObject = engineState =>
+let getBoxTexturedMeshGameObjects = engineState =>
   engineState
   |> GameObjectEngineService.getAllGameObjects(
        SceneEngineService.getSceneGameObject(engineState),
@@ -6,5 +6,7 @@ let getBoxTexturedMeshGameObject = engineState =>
   |> Js.Array.filter(gameObject =>
        GameObjectEngineService.getGameObjectName(gameObject, engineState)
        === Some("Mesh")
-     )
-  |> ArrayService.unsafeGetFirst;
+     );
+
+let getBoxTexturedMeshGameObject = engineState =>
+  engineState |> getBoxTexturedMeshGameObjects |> ArrayService.unsafeGetFirst;

@@ -18,21 +18,21 @@ let setResult = (index, result, editorState) => {
     editorState.assetRecord |> WDBNodeMapAssetService.setResult(index, result),
 };
 
-let getWDBBaseName = (currentNodeId, wdbNodeMap) =>
+let getWDBBaseName = (nodeId, wdbNodeMap) =>
   wdbNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+  |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
   |> (({name}: wdbResultType) => name);
 
 let _getExtName = () => ".wdb";
 
-let getWDBTotalName = (currentNodeId, wdbNodeMap) =>
+let getWDBTotalName = (nodeId, wdbNodeMap) =>
   wdbNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+  |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
   |> (({name}: wdbResultType) => name ++ _getExtName());
 
-let getWDBParentId = (currentNodeId, wdbNodeMap) =>
+let getWDBParentId = (nodeId, wdbNodeMap) =>
   wdbNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+  |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
   |> (({parentFolderNodeId}: wdbResultType) => parentFolderNodeId);
 
 let buildWDBNodeResult =

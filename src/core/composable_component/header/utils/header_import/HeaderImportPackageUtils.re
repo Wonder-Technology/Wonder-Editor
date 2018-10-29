@@ -22,16 +22,14 @@ let _readWPK = (wpk, dataView) => {
        ),
     wpk
     |> ArrayBuffer.sliceFrom(
-         byteOffset + sceneWDBByteLength |> BufferUtils.alignedLength,
+         byteOffset + (sceneWDBByteLength |> BufferUtils.alignedLength),
        ),
     dataView,
   );
 };
 
 let _isValueEqual = (key1, key2, getFunc, engineState) =>
-  getFunc(key1, engineState)
-  |>
-  WonderLog.Log.print == (getFunc(key2, engineState) |> WonderLog.Log.print);
+  getFunc(key1, engineState) == getFunc(key2, engineState);
 
 let _isBasicMaterialDataEqual = (material1, material2, engineState) =>
   _isValueEqual(
@@ -48,8 +46,7 @@ let _isBasicMaterialDataEqual = (material1, material2, engineState) =>
      );
 
 let _isImageValueEqual = (image1, image2, getFunc) =>
-  getFunc(image1)
-  |> WonderLog.Log.print == (getFunc(image2) |> WonderLog.Log.print);
+  getFunc(image1) == getFunc(image2);
 
 let _isImageNodeDataEqual = (image1, image2) => {
   WonderLog.Log.print("is image data equal") |> ignore;
@@ -476,30 +473,32 @@ let _replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent =
         (defaultSphereGeometry, defaultSphereGeometryName),
       ),
       engineState,
-    ) => {
-  let geometry =
-    GameObjectComponentEngineService.unsafeGetGeometryComponent(
+    ) =>
+  switch (
+    GameObjectComponentEngineService.getGeometryComponent(
       gameObject,
       engineState,
-    );
+    )
+  ) {
+  | None => engineState
+  | Some(geometry) =>
+    let targetGeometry =
+      _getTargetGeometryByJudgeDefaultGeometry(
+        geometry,
+        (
+          (defaultCubeGeometry, defaultCubeGeometryName),
+          (defaultSphereGeometry, defaultSphereGeometryName),
+        ),
+        engineState,
+      );
 
-  let targetGeometry =
-    _getTargetGeometryByJudgeDefaultGeometry(
+    _replaceGeometryComponent(
+      gameObject,
       geometry,
-      (
-        (defaultCubeGeometry, defaultCubeGeometryName),
-        (defaultSphereGeometry, defaultSphereGeometryName),
-      ),
+      targetGeometry,
       engineState,
     );
-
-  _replaceGeometryComponent(
-    gameObject,
-    geometry,
-    targetGeometry,
-    engineState,
-  );
-};
+  };
 
 let _relateWDBAssetGameObjectsAndAssets =
     (allWDBGameObjectsArr, (basicMaterialMap, lightMaterialMap)) => {
@@ -580,6 +579,8 @@ let _import = result => {
     ));
 
   let wdbAssetGameObjectGeometryArrRef = ref([||]);
+
+  let engineState = StateEngineService.unsafeGetState();
 
   HeaderImportASBUtils.importASB(asb)
   |> WonderBsMost.Most.map(((allWDBGameObjectsArr, materialMapTuple)) => {

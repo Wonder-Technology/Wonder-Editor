@@ -325,7 +325,7 @@ let _buildJsonData = (editorState, engineState) => {
     (imageArr, textureArr, basicMaterialArr, lightMaterialArr, wdbArr),
     (imageBufferViewArr, wdbBufferViewArr),
     (imageUint8ArrayArr, wdbArrayBufferArr),
-    (imageAlignedByteLength, bufferTotalAlignedByteLength),
+    bufferTotalAlignedByteLength,
   );
 };
 
@@ -393,7 +393,7 @@ let _writeJson =
 
 let _writeBuffer =
     (
-      (headerAndJsonAlignedByteOffset, imageAlignedByteLength),
+      headerAndJsonAlignedByteOffset,
       (imageBufferViewArr, wdbBufferViewArr),
       imageUint8ArrayArr,
       wdbArrayBufferArr,
@@ -435,7 +435,8 @@ let _writeBuffer =
            let (_, _, dataView) =
              HeaderExportUtils.writeArrayBufferToArrayBuffer(
                wdbArrayBuffer,
-               imageAlignedByteLength + byteOffset,
+               /* imageAlignedByteLength + byteOffset, */
+               headerAndJsonAlignedByteOffset + byteOffset,
                byteLength,
                dataView,
              );
@@ -453,7 +454,7 @@ let generateASB = (editorState, engineState) => {
     (imageArr, textureArr, basicMaterialArr, lightMaterialArr, wdbArr),
     (imageBufferViewArr, wdbBufferViewArr),
     (imageUint8ArrayArr, wdbArrayBufferArr),
-    (imageAlignedByteLength, bufferTotalAlignedByteLength),
+    bufferTotalAlignedByteLength,
   ) =
     _buildJsonData(editorState, engineState);
 
@@ -496,7 +497,7 @@ let generateASB = (editorState, engineState) => {
 
   let dataView =
     _writeBuffer(
-      (byteOffset, imageAlignedByteLength),
+      byteOffset,
       (imageBufferViewArr, wdbBufferViewArr),
       imageUint8ArrayArr,
       wdbArrayBufferArr,

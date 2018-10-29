@@ -25,7 +25,7 @@ let generateWPK = (sceneWDB, asb) => {
 
   let byteOffset = _writeHeader(sceneWDBByteLength, asbByteLength, dataView);
 
-  let (byteOffset, _, dataView) =
+  let (_, _, dataView) =
     HeaderExportUtils.writeArrayBufferToArrayBuffer(
       sceneWDB,
       headerTotalByteLength,
@@ -33,7 +33,7 @@ let generateWPK = (sceneWDB, asb) => {
       dataView,
     );
 
-  let (byteOffset, _, dataView) =
+  let (_, _, dataView) =
     HeaderExportUtils.writeArrayBufferToArrayBuffer(
       asb,
       headerTotalByteLength + sceneWDBAlignedByteLength,

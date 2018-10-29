@@ -18,7 +18,7 @@ let _ =
 
     beforeAll(() => {
       boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
-      sceneWDBArrayBuffer := WDBTool.generateSceneWDBWithNewState();
+      sceneWDBArrayBuffer := WDBTool.generateSceneWDB();
     });
 
     beforeEach(() => {

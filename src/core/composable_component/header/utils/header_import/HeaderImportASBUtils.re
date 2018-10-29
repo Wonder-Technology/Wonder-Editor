@@ -337,7 +337,7 @@ let _buildWDBData =
     ) => {
   editorState |> StateEditorService.setState |> ignore;
   engineState |> StateEngineService.setState |> ignore;
-  let allGameObjectsArr = [||];
+  let allGameObjectsArrRef = ref([||]);
 
   wdbs
   |> WonderBsMost.Most.from
@@ -366,7 +366,8 @@ let _buildWDBData =
             editorState |> StateEditorService.setState |> ignore;
             engineState |> StateEngineService.setState |> ignore;
 
-            allGameObjectsArr |> ArrayService.push(allGameObjects) |> ignore;
+            allGameObjectsArrRef :=
+              allGameObjectsArrRef^ |> Js.Array.concat(allGameObjects);
 
             () |> resolve;
           })
@@ -377,7 +378,7 @@ let _buildWDBData =
        let editorState = StateEditorService.getState();
        let engineState = StateEngineService.unsafeGetState();
 
-       (allGameObjectsArr, (editorState, engineState)) |> resolve;
+       (allGameObjectsArrRef^, (editorState, engineState)) |> resolve;
      });
   /* |> WonderCommonlib.ArrayService.reduceOneParam(
        (.

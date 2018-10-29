@@ -201,8 +201,6 @@ module Method = {
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
 let render = ((store, dispatchFunc), dragImg, debounceTime, _self) =>{
-  Js.log("children node");
-
   <article key="assetChildrenNode" className="wonder-asset-assetChildren">
     (
       ReasonReact.array(
