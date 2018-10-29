@@ -32,22 +32,8 @@ let _ =
       let currentGameObjectMaterial =
         GameObjectTool.getCurrentGameObjectBasicMaterial();
 
-      let color1 = {
-        "hex": "#7df1e8",
-        "rgb": {
-          "r": 125,
-          "g": 241,
-          "b": 232,
-        },
-      };
-      let color2 = {
-        "hex": "#1918e8",
-        "rgb": {
-          "r": 25,
-          "g": 24,
-          "b": 232,
-        },
-      };
+      let color1 = PickColorTool.buildColor1();
+      let color2 = PickColorTool.buildColor2();
 
       _changeColorAndPushUndoStack(currentGameObjectMaterial, color1);
 

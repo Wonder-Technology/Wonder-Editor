@@ -153,14 +153,7 @@ let _ =
       });
 
       test("test change color should set into engine", () => {
-        let newColor = {
-          "hex": "#7df1e8",
-          "rgb": {
-            "r": 125,
-            "g": 241,
-            "b": 232,
-          },
-        };
+        let newColor = PickColorTool.buildColor1();
 
         ControllerTool.changeColor(newColor);
 

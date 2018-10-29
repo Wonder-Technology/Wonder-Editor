@@ -393,8 +393,6 @@ let _import = result => {
 
   HeaderImportASBUtils.importASB(asb)
   |> WonderBsMost.Most.map(((allWDBGameObjectsArr, materialMapTuple)) => {
-       WonderLog.Log.print(("allWDBGameObjectsArr: ", allWDBGameObjectsArr))
-       |> ignore;
        _relateWDBGameObjectsAndAssets(allWDBGameObjectsArr, materialMapTuple);
 
        materialMapTupleRef := materialMapTuple;
@@ -407,14 +405,11 @@ let _import = result => {
          |> WonderBsMost.Most.map(sceneGameObject => {
               let engineState = StateEngineService.unsafeGetState();
 
-
-              WonderLog.Log.print("replace scene wdb") |> ignore;
               _relateWDBGameObjectsAndAssets(
                 GameObjectEngineService.getAllGameObjects(
                   sceneGameObject,
                   engineState,
-                )
-                |> WonderLog.Log.print,
+                ),
                 materialMapTupleRef^,
               );
 

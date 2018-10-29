@@ -56,6 +56,26 @@ let getImporteMaterialAssetMaterialComponents = () =>
        materialComponent
      );
 
+let getImporteMaterialAssetBasicMaterialComponents = () =>
+  AssetMaterialNodeMapEditorService.getValidValues
+  |> StateLogicService.getEditorState
+  |> Js.Array.filter(({type_}: AssetNodeType.materialResultType) =>
+       type_ === AssetMaterialDataType.BasicMaterial
+     )
+  |> Js.Array.map(({materialComponent}: AssetNodeType.materialResultType) =>
+       materialComponent
+     );
+
+let getImporteMaterialAssetLightMaterialComponents = () =>
+  AssetMaterialNodeMapEditorService.getValidValues
+  |> StateLogicService.getEditorState
+  |> Js.Array.filter(({type_}: AssetNodeType.materialResultType) =>
+       type_ === AssetMaterialDataType.LightMaterial
+     )
+  |> Js.Array.map(({materialComponent}: AssetNodeType.materialResultType) =>
+       materialComponent
+     );
+
 let getImportedTextureAssetTextureComponents = () =>
   AssetTextureNodeMapEditorService.getValidValues
   |> StateLogicService.getEditorState

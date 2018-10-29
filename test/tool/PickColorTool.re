@@ -34,3 +34,21 @@ let testOperateColorPickToChangeColor =
       )
     )
   );
+
+let buildColor1 = () => {
+  "hex": "#7df1e8",
+  "rgb": {
+    "r": 125,
+    "g": 241,
+    "b": 232,
+  },
+};
+
+let buildColor2 = () => {
+  "hex": "#1918e8",
+  "rgb": {
+    "r": 25,
+    "g": 24,
+    "b": 232,
+  },
+};

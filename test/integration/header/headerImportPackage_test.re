@@ -289,8 +289,6 @@ let _ =
                     (),
                   );
 
-                let engineState = StateEngineService.unsafeGetState();
-
                 MainEditorAssetUploadTool.loadOneTexture(
                   ~imgName="1.png",
                   ~imgSrc=base64_1,
@@ -302,6 +300,8 @@ let _ =
                        ~material=material1,
                        (),
                      );
+
+                     let engineState = StateEngineService.unsafeGetState();
 
                      let gameObject1 =
                        MainEditorSceneTool.getFirstBox(engineState);
@@ -382,8 +382,6 @@ let _ =
                     ~nodeId=addedMaterialNodeId2,
                     (),
                   );
-
-                let engineState = StateEngineService.unsafeGetState();
 
                 MainEditorAssetUploadTool.loadOneTexture(
                   ~imgName="1.png",
@@ -482,6 +480,147 @@ let _ =
                           );
                         })
                    );
+              },
+            );
+            testPromise(
+              {|
+                 1.add material asset m1;
+                 2.add material asset m2;
+                 3.change m2 type to basic;
+                 4.set m1,m2 color;
+                 5.add texture asset t1;
+                 6.drag t1 to m1->diffuseMap;
+                 7.change scecne tree g1->material component to m1;
+                 8.change scecne tree g2->material component to m2;
+                 9.export;
+                 10.import;
+
+
+                 g1->material should be m1;
+                 g2->material should be m2;
+                 |},
+              () => {
+                let (base64_1, base64_2) = _prepare();
+
+                let addedMaterialNodeId1 =
+                  MainEditorAssetIdTool.getNewAssetId();
+                let addedMaterialNodeId2 = addedMaterialNodeId1 |> succ;
+
+                MainEditorAssetHeaderOperateNodeTool.addMaterial();
+                MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+                let material1 =
+                  MaterialAssetTool.getMaterialComponent(
+                    ~nodeId=addedMaterialNodeId1,
+                    (),
+                  );
+                let material2 =
+                  MaterialAssetTool.getMaterialComponent(
+                    ~nodeId=addedMaterialNodeId2,
+                    (),
+                  );
+
+                MaterialInspectorTool.changeMaterialType(
+                  ~material=material2,
+                  ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                  ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
+                  ~materialNodeId=addedMaterialNodeId2,
+                  (),
+                );
+
+                let color1 = PickColorTool.buildColor1();
+                let color2 = PickColorTool.buildColor2();
+
+                MainEditorLightMaterialTool.changeColor(material1, color1);
+                MainEditorBasicMaterialTool.changeColor(material2, color2);
+
+                MainEditorAssetUploadTool.loadOneTexture(
+                  ~imgName="1.png",
+                  ~imgSrc=base64_1,
+                  (),
+                )
+                |> then_(uploadedTextureNodeId1 => {
+                     MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                       ~textureNodeId=uploadedTextureNodeId1,
+                       ~material=material1,
+                       (),
+                     );
+
+                     let engineState = StateEngineService.unsafeGetState();
+
+                     let gameObject1 =
+                       MainEditorSceneTool.getFirstBox(engineState);
+
+                     let sourceMaterial1 =
+                       GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                         gameObject1,
+                         engineState,
+                       );
+
+                     MainEditorMaterialTool.changeMaterial(
+                       ~sourceMaterial=sourceMaterial1,
+                       ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                       ~targetMaterial=material1,
+                       ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                       ~gameObject=gameObject1,
+                       ~materialNodeId=Some(addedMaterialNodeId1),
+                       (),
+                     );
+
+                     let gameObject2 =
+                       MainEditorSceneTool.getSecondBox(engineState);
+
+                     let sourceMaterial2 =
+                       GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                         gameObject2,
+                         engineState,
+                       );
+
+                     MainEditorMaterialTool.changeMaterial(
+                       ~sourceMaterial=sourceMaterial2,
+                       ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                       ~targetMaterial=material2,
+                       ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
+                       ~gameObject=gameObject2,
+                       ~materialNodeId=Some(addedMaterialNodeId2),
+                       (),
+                     );
+
+                     ImportPackageTool.testImportPackage(
+                       ~testFunc=
+                         () => {
+                           let engineState =
+                             StateEngineService.unsafeGetState();
+
+                           let gameObject1 =
+                             MainEditorSceneTool.getFirstBox(engineState);
+                           let gameObject2 =
+                             MainEditorSceneTool.getSecondBox(engineState);
+
+                           (
+                             [|
+                               GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                                 gameObject1,
+                                 engineState,
+                               ),
+                             |],
+                             [|
+                               GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+                                 gameObject2,
+                                 engineState,
+                               ),
+                             |],
+                           )
+                           |>
+                           expect == (
+                                       ImportPackageTool.getImporteMaterialAssetLightMaterialComponents(),
+                                       ImportPackageTool.getImporteMaterialAssetBasicMaterialComponents(),
+                                     )
+                           |> resolve;
+                         },
+                       (),
+                     );
+                   });
               },
             );
           });

@@ -45,7 +45,7 @@ let _ =
           _prepareDefaultSceneAndInit();
         });
 
-        PickColorEventTool.testOperateColorPickToChangeColor(
+        PickColorTool.testOperateColorPickToChangeColor(
           sandbox,
           BuildComponentForCurryTool.buildDirectionLight,
           (

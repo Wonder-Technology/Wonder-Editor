@@ -28,7 +28,7 @@ let _ =
         MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
       });
 
-      PickColorEventTool.testOperateColorPickToChangeColor(
+      PickColorTool.testOperateColorPickToChangeColor(
         sandbox,
         BuildComponentForCurryTool.buildBasicMaterial,
         (
