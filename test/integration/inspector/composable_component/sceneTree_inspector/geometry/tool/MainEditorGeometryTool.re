@@ -1,6 +1,6 @@
-let getCubeGeometryName = () => "Cube";
+let getDefaultCubeGeometryName = PrepareDefaultComponentUtils.getDefaultCubeGeometryName;
 
-let getSphereGeometryName = () => "Sphere";
+let getDefaultSphereGeometryName = PrepareDefaultComponentUtils.getDefaultSphereGeometryName;
 
 let getBoxTexturedGeometryName = () => "Mesh";
 

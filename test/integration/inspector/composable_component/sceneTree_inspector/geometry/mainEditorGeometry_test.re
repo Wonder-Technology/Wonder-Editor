@@ -128,7 +128,7 @@ let _ =
               currentGameObjectGeometry,
             )
             |> StateLogicService.getEngineStateToGetData
-            |> expect == MainEditorGeometryTool.getCubeGeometryName();
+            |> expect == MainEditorGeometryTool.getDefaultCubeGeometryName();
           });
           test(
             "change geometry to be Sphere, the current gameObject geometry should be Sphere",
@@ -147,7 +147,7 @@ let _ =
                 newGameObjectGeometry,
               )
               |> StateLogicService.getEngineStateToGetData
-              |> expect == MainEditorGeometryTool.getSphereGeometryName();
+              |> expect == MainEditorGeometryTool.getDefaultSphereGeometryName();
             },
           );
           test(

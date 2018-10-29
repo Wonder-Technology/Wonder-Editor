@@ -1,11 +1,19 @@
 open AssetGeometryDataType;
 
+let getDefaultCubeGeometryName = () => "Wonder-Default-Cube";
+
+let getDefaultSphereGeometryName = () => "Wonder-Default-Sphere";
+
 let _buildDefaultCubeGeometryComponent = engineState => {
   let (engineState, cubeGeometry) =
     GeometryEngineService.createCubeGeometry(engineState);
 
   (
-    engineState |> GeometryEngineService.setGeometryName(cubeGeometry, "Cube"),
+    engineState
+    |> GeometryEngineService.setGeometryName(
+         cubeGeometry,
+         getDefaultCubeGeometryName(),
+       ),
     cubeGeometry,
   );
 };
@@ -16,7 +24,10 @@ let _buildDefaultSphereGeometryComponent = engineState => {
 
   (
     engineState
-    |> GeometryEngineService.setGeometryName(sphereGeometry, "Sphere"),
+    |> GeometryEngineService.setGeometryName(
+         sphereGeometry,
+         getDefaultSphereGeometryName(),
+       ),
     sphereGeometry,
   );
 };
@@ -28,7 +39,9 @@ let buildDefaultCubeGeometryComponent = (editorState, engineState) => {
   (
     editorState
     |> AssetGeometryDataEditorService.getGeometryData
-    |> (geometry => {...geometry, defaultCubeGeometryComponent: cubeGeometry})
+    |> (
+      geometry => {...geometry, defaultCubeGeometryComponent: cubeGeometry}
+    )
     |. AssetGeometryDataEditorService.setGeometryData(editorState),
     engineState,
     cubeGeometry,
@@ -43,7 +56,10 @@ let buildDefaultSphereGeometryComponent = (editorState, engineState) => {
     editorState
     |> AssetGeometryDataEditorService.getGeometryData
     |> (
-      geometry => {...geometry, defaultSphereGeometryComponent: sphereGeometry}
+      geometry => {
+        ...geometry,
+        defaultSphereGeometryComponent: sphereGeometry,
+      }
     )
     |. AssetGeometryDataEditorService.setGeometryData(editorState),
     engineState,
@@ -77,7 +93,9 @@ let buildDefaultMaterialComponents = (editorState, engineState) => {
     |> AssetMaterialDataEditorService.setDefaultBasicMaterialData(
          basicMaterial,
        )
-    |> AssetMaterialDataEditorService.setDefaultLightMaterialData(lightMaterial);
+    |> AssetMaterialDataEditorService.setDefaultLightMaterialData(
+         lightMaterial,
+       );
 
   (editorState, engineState);
 };
