@@ -339,7 +339,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               <div
                 className="select-name"
               >
-                Cube
+                Wonder-Default-Cube
               </div>
               <div
                 className="select-img"
@@ -1122,7 +1122,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               <div
                 className="select-name"
               >
-                Cube
+                Wonder-Default-Cube
               </div>
               <div
                 className="select-img"
@@ -1905,7 +1905,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               <div
                 className="select-name"
               >
-                Cube
+                Wonder-Default-Cube
               </div>
               <div
                 className="select-img"

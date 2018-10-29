@@ -75,6 +75,16 @@ let getAllArcballCameraControllers = (allGameObjects, engineState) =>
     engineState,
   );
 
+let getAllGeometrys = (allGameObjects, engineState) =>
+  _getAllComponents(
+    allGameObjects,
+    (
+      GameObjectComponentEngineService.hasGeometryComponent,
+      GameObjectComponentEngineService.unsafeGetGeometryComponent,
+    ),
+    engineState,
+  );
+
 let disposeGameObjectArrKeepOrder = (gameObjectArr, engineState) =>
   gameObjectArr
   |> WonderCommonlib.ArrayService.reduceOneParam(

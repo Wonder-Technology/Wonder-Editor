@@ -21,7 +21,7 @@ exports[`redo_undo: change geometry prepare first step: set currentSceneTreeNode
         <div
           className="select-name"
         >
-          Sphere
+          Wonder-Default-Sphere
         </div>
         <div
           className="select-img"
@@ -58,7 +58,7 @@ exports[`redo_undo: change geometry prepare first step: set currentSceneTreeNode
         <div
           className="select-name"
         >
-          Sphere
+          Wonder-Default-Sphere
         </div>
         <div
           className="select-img"
@@ -95,7 +95,7 @@ exports[`redo_undo: change geometry prepare first step: set currentSceneTreeNode
         <div
           className="select-name"
         >
-          Cube
+          Wonder-Default-Cube
         </div>
         <div
           className="select-img"

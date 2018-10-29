@@ -9,3 +9,13 @@ let setGeometryData = (geometryData, editorState) => {
     editorState.assetRecord
     |> GeometryDataAssetService.setGeometryData(geometryData),
 };
+
+let unsafeGetDefaultCubeGeometryComponent = editorState =>
+  editorState
+  |> getGeometryData
+  |> (({defaultCubeGeometryComponent}) => defaultCubeGeometryComponent);
+
+let unsafeGetDefaultSphereGeometryComponent = editorState =>
+  editorState
+  |> getGeometryData
+  |> (({defaultSphereGeometryComponent}) => defaultSphereGeometryComponent);

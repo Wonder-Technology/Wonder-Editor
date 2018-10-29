@@ -45,6 +45,7 @@ let buildMeshRenderer = store =>
 let buildGeometry =
     (
       ~geometryComponent,
+      ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
       ~store=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~isShowGeometryGroup=false,
@@ -54,7 +55,7 @@ let buildGeometry =
     <MainEditorGeometry
       store
       dispatchFunc
-      currentSceneTreeNode=(GameObjectTool.unsafeGetCurrentSceneTreeNode())
+      currentSceneTreeNode=gameObject
       geometryComponent
       isShowGeometryGroup
     />,

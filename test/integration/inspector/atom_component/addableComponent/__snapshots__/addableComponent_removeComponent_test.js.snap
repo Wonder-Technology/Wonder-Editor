@@ -940,7 +940,7 @@ exports[`AddableComponent remove component test remove box gameObject component 
               <div
                 className="select-name"
               >
-                Cube
+                Wonder-Default-Cube
               </div>
               <div
                 className="select-img"

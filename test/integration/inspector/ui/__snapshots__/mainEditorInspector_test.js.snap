@@ -560,7 +560,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
               <div
                 className="select-name"
               >
-                Cube
+                Wonder-Default-Cube
               </div>
               <div
                 className="select-img"

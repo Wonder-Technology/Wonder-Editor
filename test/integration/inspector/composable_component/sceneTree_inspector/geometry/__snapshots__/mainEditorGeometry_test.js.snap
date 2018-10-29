@@ -21,7 +21,7 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
         <div
           className="select-name"
         >
-          Cube
+          Wonder-Default-Cube
         </div>
         <div
           className="select-img"
@@ -58,7 +58,7 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
         <div
           className="select-name"
         >
-          Cube
+          Wonder-Default-Cube
         </div>
         <div
           className="select-img"
@@ -86,13 +86,13 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
         className="item-content item-active"
         onClick={[Function]}
       >
-        Cube
+        Wonder-Default-Cube
       </div>
       <div
         className="item-content"
         onClick={[Function]}
       >
-        Sphere
+        Wonder-Default-Sphere
       </div>
     </div>
     <div
@@ -124,7 +124,7 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
         <div
           className="select-name"
         >
-          Cube
+          Wonder-Default-Cube
         </div>
         <div
           className="select-img"
@@ -152,13 +152,13 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
         className="item-content item-active"
         onClick={[Function]}
       >
-        Cube
+        Wonder-Default-Cube
       </div>
       <div
         className="item-content"
         onClick={[Function]}
       >
-        Sphere
+        Wonder-Default-Sphere
       </div>
       <div
         className="item-content"
@@ -196,7 +196,7 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test load as
         <div
           className="select-name"
         >
-          Cube
+          Wonder-Default-Cube
         </div>
         <div
           className="select-img"
@@ -224,13 +224,13 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test load as
         className="item-content item-active"
         onClick={[Function]}
       >
-        Cube
+        Wonder-Default-Cube
       </div>
       <div
         className="item-content"
         onClick={[Function]}
       >
-        Sphere
+        Wonder-Default-Sphere
       </div>
       <div
         className="item-content"

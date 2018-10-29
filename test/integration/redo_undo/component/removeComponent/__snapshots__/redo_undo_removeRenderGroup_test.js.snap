@@ -339,7 +339,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
               <div
                 className="select-name"
               >
-                Cube
+                Wonder-Default-Cube
               </div>
               <div
                 className="select-img"
@@ -715,7 +715,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
               <div
                 className="select-name"
               >
-                Cube
+                Wonder-Default-Cube
               </div>
               <div
                 className="select-img"
@@ -1091,7 +1091,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
               <div
                 className="select-name"
               >
-                Cube
+                Wonder-Default-Cube
               </div>
               <div
                 className="select-img"

@@ -7,7 +7,9 @@ let addComponentByType =
   switch (type_) {
   | RenderGroup =>
     let defaultLightMaterial =
-      AssetMaterialDataEditorService.unsafeGetDefaultLightMaterial(editorState);
+      AssetMaterialDataEditorService.unsafeGetDefaultLightMaterial(
+        editorState,
+      );
     let (engineState, meshRenderer) =
       MeshRendererEngineService.create(engineState);
     let renderGroup =
@@ -29,9 +31,9 @@ let addComponentByType =
     /* let editorState = StateEditorService.getState(); */
 
     let defaultCubeGeometry =
-      editorState
-      |> AssetGeometryDataEditorService.getGeometryData
-      |> (({defaultCubeGeometryComponent}) => defaultCubeGeometryComponent);
+      AssetGeometryDataEditorService.unsafeGetDefaultCubeGeometryComponent(
+        editorState,
+      );
 
     (editorState, engineState)
     |> GameObjectLogicService.addGeometry(

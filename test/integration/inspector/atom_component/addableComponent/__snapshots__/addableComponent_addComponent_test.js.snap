@@ -1132,7 +1132,7 @@ exports[`AddableComponent add component test camera add component test add geome
               <div
                 className="select-name"
               >
-                Cube
+                Wonder-Default-Cube
               </div>
               <div
                 className="select-img"
@@ -2311,7 +2311,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
               <div
                 className="select-name"
               >
-                Cube
+                Wonder-Default-Cube
               </div>
               <div
                 className="select-img"
@@ -3177,7 +3177,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
               <div
                 className="select-name"
               >
-                Cube
+                Wonder-Default-Cube
               </div>
               <div
                 className="select-img"

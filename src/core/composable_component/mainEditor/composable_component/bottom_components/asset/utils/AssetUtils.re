@@ -78,10 +78,11 @@ let _handleRemoveWDBNode = (nodeId, editorState) => {
     editorState
     |> AssetWDBNodeMapEditorService.getWDBNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+
   let defaultCubeGeometryComponent =
-    editorState
-    |> AssetGeometryDataEditorService.getGeometryData
-    |> (({defaultCubeGeometryComponent}) => defaultCubeGeometryComponent);
+    AssetGeometryDataEditorService.unsafeGetDefaultCubeGeometryComponent(
+      editorState,
+    );
 
   let (editorState, engineState) =
     StateEngineService.unsafeGetState()

@@ -283,7 +283,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
         <div
           className="select-name"
         >
-          Cube
+          Wonder-Default-Cube
         </div>
         <div
           className="select-img"
@@ -311,13 +311,13 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
         className="item-content item-active"
         onClick={[Function]}
       >
-        Cube
+        Wonder-Default-Cube
       </div>
       <div
         className="item-content"
         onClick={[Function]}
       >
-        Sphere
+        Wonder-Default-Sphere
       </div>
     </div>
     <div

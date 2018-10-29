@@ -68,6 +68,41 @@ let _ =
         );
       });
 
+      describe("test geometry", () =>
+        testPromise({|
+          1.export;
+          2.import;
+
+          select geometry group widget should have only default geometrys
+          |}, () =>
+          ImportPackageTool.testImportPackage(
+            ~testFunc=
+              () => {
+                let engineState = StateEngineService.unsafeGetState();
+
+                MainEditorSceneTool.getFirstBox(engineState)
+                |> GameObjectTool.setCurrentSceneTreeNode;
+
+                MainEditorSceneTreeTool.Select.selectGameObject(
+                  ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+                  (),
+                );
+
+                let component =
+                  BuildComponentTool.buildGeometry(
+                    ~geometryComponent=
+                      GameObjectTool.getCurrentGameObjectGeometry(),
+                    ~isShowGeometryGroup=true,
+                    (),
+                  );
+
+                component |> ReactTestTool.createSnapshotAndMatch |> resolve;
+              },
+            (),
+          )
+        )
+      );
+
       describe("relate scene gameObjects and material assets", () => {
         testPromise(
           "if scene gameObject use material asset, should still use it after import",

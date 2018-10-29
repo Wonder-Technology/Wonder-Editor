@@ -12,9 +12,9 @@ module CustomEventHandler = {
         let editorState = StateEditorService.getState();
 
         let defaultCubeGeometry =
-          editorState
-          |> AssetGeometryDataEditorService.getGeometryData
-          |> (({defaultCubeGeometryComponent}) => defaultCubeGeometryComponent);
+          AssetGeometryDataEditorService.unsafeGetDefaultCubeGeometryComponent(
+            editorState,
+          );
 
         let defaultLightMaterial =
           AssetMaterialDataEditorService.unsafeGetDefaultLightMaterial(

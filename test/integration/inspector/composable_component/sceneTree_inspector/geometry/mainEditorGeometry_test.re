@@ -192,7 +192,7 @@ let _ =
               |> GeometryEngineService.unsafeGetGeometryName(
                    newGameObjectGeometry,
                  )
-              |> expect == "Cube";
+              |> expect == "Wonder-Default-Cube";
             },
           );
         });

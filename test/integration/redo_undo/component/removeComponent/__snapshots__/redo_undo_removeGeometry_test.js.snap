@@ -1541,7 +1541,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
               <div
                 className="select-name"
               >
-                Cube
+                Wonder-Default-Cube
               </div>
               <div
                 className="select-img"
