@@ -1,12 +1,14 @@
 open Js.Typed_array;
 
+let _getHeaderTotalByteLength = () => 8;
+
 let _writeHeader = (sceneWDBByteLength, asbByteLength, dataView) =>
   dataView
   |> DataViewUtils.writeUint32_1(sceneWDBByteLength, 0)
   |> DataViewUtils.writeUint32_1(asbByteLength, _, dataView);
 
 let generateWPK = (sceneWDB, asb) => {
-  let headerTotalByteLength = 8;
+  let headerTotalByteLength = _getHeaderTotalByteLength();
 
   let sceneWDBByteLength = sceneWDB |> ArrayBuffer.byteLength;
 

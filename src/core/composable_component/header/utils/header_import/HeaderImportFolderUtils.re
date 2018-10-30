@@ -1,6 +1,4 @@
 let buildFolder = (path, (editorState, engineState)) => {
-  /* let editorState = StateEditorService.getState();
-     let engineState = StateEngineService.unsafeGetState(); */
   let (nodeId, editorState) =
     path
     |> FileNameService.removePathPostfix
@@ -30,8 +28,6 @@ let buildFolder = (path, (editorState, engineState)) => {
              },
          (None, editorState),
        );
-
-  /* editorState |> StateEditorService.setState |> ignore; */
 
   (nodeId, editorState);
 };
