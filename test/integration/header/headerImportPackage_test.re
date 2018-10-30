@@ -35,8 +35,8 @@ let _ =
     };
 
     let _prepareFakeCanvas = () => {
-      let base64_1 = "data:image/png;base64,1";
-      let base64_2 = "data:image/jpeg;base64,2";
+      let base64_1 = "data:image/png;base64,aaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaacccccccccccccccccccccccaacccccccccccccccccccccccaaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaccccccccccccccccccccccc";
+      let base64_2 = "data:image/jpeg;base64,bbb";
       let canvas1 = _buildFakeCanvas(sandbox, base64_1, 0);
       let canvas2 = _buildFakeCanvas(sandbox, base64_2, 1);
 

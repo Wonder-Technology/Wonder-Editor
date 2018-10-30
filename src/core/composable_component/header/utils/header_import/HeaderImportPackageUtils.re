@@ -76,9 +76,11 @@ let _import = result => {
   let engineState = StateEngineService.unsafeGetState();
 
   HeaderImportASBUtils.importASB(asb)
-  |> WonderBsMost.Most.map(((allWDBGameObjectsArr, materialMapTuple)) => {
+  |> WonderBsMost.Most.map(
+       (((allWDBGameObjectsArr, imageUint8ArrayDataMap), materialMapTuple)) => {
        RelateGameObjectAndAssetUtils.relateWDBAssetGameObjectsAndAssets(
          allWDBGameObjectsArr,
+         imageUint8ArrayDataMap,
          materialMapTuple,
        );
 
@@ -94,7 +96,8 @@ let _import = result => {
   |> WonderBsMost.Most.concat(
        MostUtils.callStreamFunc(() =>
          SceneWDBUtils.importSceneWDB(sceneWDB)
-         |> WonderBsMost.Most.map(sceneGameObject => {
+         |> WonderBsMost.Most.map(
+              ((sceneGameObject, imageUint8ArrayDataMap)) => {
               let engineState = StateEngineService.unsafeGetState();
 
               RelateGameObjectAndAssetUtils.relateSceneWDBGameObjectsAndAssets(
@@ -102,6 +105,7 @@ let _import = result => {
                   sceneGameObject,
                   engineState,
                 ),
+                imageUint8ArrayDataMap,
                 materialMapTupleRef^,
                 wdbAssetGameObjectGeometryArrRef^,
               );

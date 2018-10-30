@@ -29,5 +29,10 @@ let buildImageNodeResult = (base64, uint8Array, name, mimeType) => {
   mimeType,
 };
 
+let getUint8Array = (nodeId, imageNodeMap) =>
+  imageNodeMap
+  |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
+  |> (({uint8Array}: imageResultType) => uint8Array);
+
 let getValidValues = editorState =>
   getImageNodeMap(editorState) |> SparseMapService.getValidValues;

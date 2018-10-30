@@ -7,6 +7,8 @@ let importAssetWDB =
       (editorState, engineState),
     ) => {
   let allGameObjectsRef = ref([||]);
+  let imageUint8ArrayDataMapRef =
+    ref(WonderCommonlib.SparseMapService.createEmpty());
 
   engineState
   |> AssembleWDBEngineService.assembleWDB(
@@ -15,7 +17,8 @@ let importAssetWDB =
        false,
        false,
      )
-  |> WonderBsMost.Most.tap(((engineState, _, gameObject)) => {
+  |> WonderBsMost.Most.tap(
+       ((engineState, (imageUint8ArrayDataMap, _), gameObject)) => {
        let allGameObjects =
          GameObjectEngineService.getAllGameObjects(gameObject, engineState);
 
@@ -61,6 +64,7 @@ let importAssetWDB =
        engineState |> StateEngineService.setState |> ignore;
 
        allGameObjectsRef := allGameObjects;
+       imageUint8ArrayDataMapRef := imageUint8ArrayDataMap;
 
        /* allGameObjects
           |> WonderCommonlib.ArrayService.reduceOneParam(
@@ -77,7 +81,7 @@ let importAssetWDB =
   |> WonderBsMost.Most.drain
   |> then_(_ =>
        resolve((
-         allGameObjectsRef^,
+         (allGameObjectsRef^, imageUint8ArrayDataMapRef^),
          (StateEditorService.getState(), StateEngineService.unsafeGetState()),
        ))
      );

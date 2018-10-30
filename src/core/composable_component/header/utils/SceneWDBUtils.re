@@ -82,11 +82,17 @@ let importSceneWDB = wdbArrayBuffer =>
   StateEngineService.unsafeGetState()
   |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer, true, false, true)
   |> WonderBsMost.Most.map(
-       ((engineState, (_, hasWDBIMGUIFunc), gameObject)) => {
+       (
+         (
+           engineState,
+           (imageUint8ArrayDataMap, hasWDBIMGUIFunc),
+           gameObject,
+         ),
+       ) => {
        let (gameObject, engineState) =
          _handleEngineState(gameObject, hasWDBIMGUIFunc, engineState);
 
        StateEngineService.setState(engineState) |> ignore;
 
-       gameObject;
+       (gameObject, imageUint8ArrayDataMap);
      });

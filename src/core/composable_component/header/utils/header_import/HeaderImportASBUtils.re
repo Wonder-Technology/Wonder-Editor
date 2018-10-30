@@ -70,12 +70,11 @@ let importASB = asb => {
          buffer,
          (editorState, engineState),
        )
-       |> then_(((allGameObjectsArr, (editorState, engineState))) => {
+       |> then_(((wdbData, (editorState, engineState))) => {
             editorState |> StateEditorService.setState |> ignore;
             engineState |> StateEngineService.setState |> ignore;
 
-            (allGameObjectsArr, (basicMaterialMap, lightMaterialMap))
-            |> resolve;
+            (wdbData, (basicMaterialMap, lightMaterialMap)) |> resolve;
           })
        |> WonderBsMost.Most.fromPromise
      );

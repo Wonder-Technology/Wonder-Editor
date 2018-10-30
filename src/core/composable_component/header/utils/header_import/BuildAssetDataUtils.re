@@ -308,6 +308,40 @@ let buildMaterialData =
   (basicMaterialMap, lightMaterialMap, (editorState, engineState));
 };
 
+let _mergeImageUint8ArrayDataMap =
+    (totalImageUint8ArrayDataMap, targetImageUint8ArrayDataMap) => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect=
+                  {j|different wdb->imageUint8ArrayDataMap->key(texture) are different|j},
+                ~actual={j|not|j},
+              ),
+              () =>
+              targetImageUint8ArrayDataMap
+              |> SparseMapService.getValidKeys
+              |> Js.Array.filter(texture =>
+                   totalImageUint8ArrayDataMap
+                   |> WonderCommonlib.SparseMapService.has(texture)
+                 )
+              |> Js.Array.length == 0
+            )
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
+  SparseMapService.mergeSparseMaps([|
+    totalImageUint8ArrayDataMap,
+    targetImageUint8ArrayDataMap,
+  |]);
+};
+
 let buildWDBData =
     (
       {wdbs, bufferViews}: ExportAssetType.assets,
@@ -317,6 +351,8 @@ let buildWDBData =
   editorState |> StateEditorService.setState |> ignore;
   engineState |> StateEngineService.setState |> ignore;
   let allGameObjectsArrRef = ref([||]);
+  let totalImageUint8ArrayDataMapRef =
+    ref(WonderCommonlib.SparseMapService.createEmpty());
 
   wdbs
   |> WonderBsMost.Most.from
@@ -341,12 +377,24 @@ let buildWDBData =
          (assetNodeId, parentFolderNodeId |> OptionService.unsafeGet),
          (editorState, engineState),
        )
-       |> then_(((allGameObjects, (editorState, engineState))) => {
+       |> then_(
+            (
+              (
+                (allGameObjects, imageUint8ArrayDataMap),
+                (editorState, engineState),
+              ),
+            ) => {
             editorState |> StateEditorService.setState |> ignore;
             engineState |> StateEngineService.setState |> ignore;
 
             allGameObjectsArrRef :=
               allGameObjectsArrRef^ |> Js.Array.concat(allGameObjects);
+
+            totalImageUint8ArrayDataMapRef :=
+              _mergeImageUint8ArrayDataMap(
+                totalImageUint8ArrayDataMapRef^,
+                imageUint8ArrayDataMap,
+              );
 
             () |> resolve;
           })
@@ -357,6 +405,10 @@ let buildWDBData =
        let editorState = StateEditorService.getState();
        let engineState = StateEngineService.unsafeGetState();
 
-       (allGameObjectsArrRef^, (editorState, engineState)) |> resolve;
+       (
+         (allGameObjectsArrRef^, totalImageUint8ArrayDataMapRef^),
+         (editorState, engineState),
+       )
+       |> resolve;
      });
 };

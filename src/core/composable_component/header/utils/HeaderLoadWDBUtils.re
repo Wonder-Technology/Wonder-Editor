@@ -6,7 +6,7 @@ open FileType;
 
 let handleSceneWDB = wdbArrayBuffer =>
   SceneWDBUtils.importSceneWDB(wdbArrayBuffer)
-  |> WonderBsMost.Most.tap(gameObject =>
+  |> WonderBsMost.Most.tap(((gameObject, _)) =>
        GameObjectEngineService.initAllGameObjects(gameObject)
        |> StateLogicService.getAndRefreshEngineStateWithFunc
      );

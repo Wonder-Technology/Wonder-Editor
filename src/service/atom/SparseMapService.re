@@ -92,3 +92,16 @@ let reduceiValid = (func, initValue, map) =>
          },
        initValue,
      );
+
+let mergeSparseMaps = mapArr =>
+  mapArr
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. resultMap, map) =>
+         map
+         |> reduceiValid(
+              (. resultMap, value, key) =>
+                resultMap |> WonderCommonlib.SparseMapService.set(key, value),
+              resultMap,
+            ),
+       WonderCommonlib.SparseMapService.createEmpty(),
+     );

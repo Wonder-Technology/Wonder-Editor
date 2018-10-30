@@ -100,7 +100,7 @@ let _handleAssetWDBType =
     (wdbNodeId, parentFolderNodeId),
     (editorState, engineState),
   )
-  |> then_(((allGameObjects, (editorState, engineState))) => {
+  |> then_((((allGameObjects, _), (editorState, engineState))) => {
        let engineState =
          allGameObjects
          |> WonderCommonlib.ArrayService.reduceOneParam(
