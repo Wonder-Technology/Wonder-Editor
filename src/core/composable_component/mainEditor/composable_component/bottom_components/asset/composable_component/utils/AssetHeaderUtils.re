@@ -88,7 +88,15 @@ let _handleAssetWDBType =
   let (baseName, _) = FileNameService.getBaseNameAndExtName(fileName);
 
   AssetWDBUtils.importAssetWDB(
-    (baseName, wdbArrayBuffer),
+    (
+      baseName
+      |. AssetUtils.getUniqueTreeNodeName(
+           WDB,
+           parentFolderNodeId |. Some,
+           (editorState, engineState),
+         ),
+      wdbArrayBuffer,
+    ),
     (wdbNodeId, parentFolderNodeId),
     (editorState, engineState),
   )

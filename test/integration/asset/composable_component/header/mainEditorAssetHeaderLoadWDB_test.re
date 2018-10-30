@@ -110,5 +110,42 @@ let _ =
              |> resolve;
            });
       });
+
+      describe("fix bug", () =>
+        testPromise("the wdb->name in the same path should be unique", () => {
+          let fileName = "BoxTextured";
+
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~fileName,
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            (),
+          )
+          |> then_(uploadedWDBNodeId1 =>
+               MainEditorAssetUploadTool.loadOneWDB(
+                 ~fileName,
+                 ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                 (),
+               )
+               |> then_(uploadedWDBNodeId2 => {
+                    let editorState = StateEditorService.getState();
+                    let wdbNodeMap =
+                      AssetWDBNodeMapEditorService.getWDBNodeMap(editorState);
+
+                    (
+                      AssetWDBNodeMapEditorService.getWDBBaseName(
+                        uploadedWDBNodeId1,
+                        wdbNodeMap,
+                      ),
+                      AssetWDBNodeMapEditorService.getWDBBaseName(
+                        uploadedWDBNodeId2,
+                        wdbNodeMap,
+                      ),
+                    )
+                    |> expect == (fileName, fileName ++ " 1")
+                    |> resolve;
+                  })
+             );
+        })
+      );
     });
   });
