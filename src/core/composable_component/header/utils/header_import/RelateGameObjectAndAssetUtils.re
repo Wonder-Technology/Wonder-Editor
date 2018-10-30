@@ -3,7 +3,7 @@ open Js.Typed_array;
 let _isValueEqual = (key1, key2, getFunc, engineState) =>
   getFunc(key1, engineState) == getFunc(key2, engineState);
 
-let _isBasicMaterialDataEqual = (material1, material2, _, (_, engineState)) =>
+let _isBasicMaterialDataEqual = (material1, material2, engineState) =>
   _isValueEqual(
     material1,
     material2,
@@ -35,35 +35,13 @@ let _getImageUint8ArrayByTextureComponent = (textureComponent, editorState) =>
     )
   };
 
-let _isImageNodeDataEqual =
-    (
-      (textureAsset1, texture2, wdbImageUint8ArrayDataMap),
-      image1,
-      image2,
-      editorState,
-    ) => {
+let _isImageNodeDataEqual = (image1, image2) =>
   /* WonderLog.Log.print("is image data equal") |> ignore; */
-
-  let (_, imageUint8Array2) =
-    wdbImageUint8ArrayDataMap
-    |> WonderCommonlib.SparseMapService.unsafeGet(texture2);
-
   _isImageValueEqual(image1, image2, ImageUtils.getImageName)
   && _isImageValueEqual(image1, image2, ImageUtils.getImageWidth)
-  && _isImageValueEqual(image1, image2, ImageUtils.getImageHeight)
-  && Uint8ArrayService.isUint8ArrayEqual(
-       _getImageUint8ArrayByTextureComponent(textureAsset1, editorState),
-       Some(imageUint8Array2),
-     );
-};
+  && _isImageValueEqual(image1, image2, ImageUtils.getImageHeight);
 
-let _isTextureDataEqual =
-    (
-      texture1,
-      texture2,
-      wdbImageUint8ArrayDataMap,
-      (editorState, engineState),
-    ) =>
+let _isTextureDataEqual = (texture1, texture2, engineState) =>
   _isValueEqual(
     texture1,
     texture2,
@@ -95,19 +73,11 @@ let _isTextureDataEqual =
        engineState,
      )
   && _isImageNodeDataEqual(
-       (texture1, texture2, wdbImageUint8ArrayDataMap),
        BasicSourceTextureEngineService.unsafeGetSource(texture1, engineState),
        BasicSourceTextureEngineService.unsafeGetSource(texture2, engineState),
-       editorState,
      );
 
-let _isLightMaterialDataEqual =
-    (
-      material1,
-      material2,
-      wdbImageUint8ArrayDataMap,
-      (editorState, engineState),
-    ) =>
+let _isLightMaterialDataEqual = (material1, material2, engineState) =>
   /* WonderLog.Log.print(("is mat equal: ", material1, material2)) |> ignore; */
   _isValueEqual(
     material1,
@@ -140,12 +110,7 @@ let _isLightMaterialDataEqual =
     ) {
     | (None, None) => true
     | (Some(map1), Some(map2)) =>
-      _isTextureDataEqual(
-        map1,
-        map2,
-        wdbImageUint8ArrayDataMap,
-        (editorState, engineState),
-      )
+      _isTextureDataEqual(map1, map2, engineState)
     | _ => false
     }
   );
@@ -154,7 +119,6 @@ let _replaceToMaterialAssetMaterialComponent =
     (
       gameObject,
       materialMap,
-      wdbImageUint8ArrayDataMap,
       defaultMaterial,
       (
         unsafeGetMaterialComponentFunc,
@@ -163,7 +127,7 @@ let _replaceToMaterialAssetMaterialComponent =
         disposeMaterialComponentFunc,
         addMaterialComponentFunc,
       ),
-      (editorState, engineState),
+      engineState,
     ) => {
   WonderLog.Contract.requireCheck(
     () => {
@@ -217,8 +181,7 @@ let _replaceToMaterialAssetMaterialComponent =
                isMaterialDataEqualFunc(
                  assetMaterialComponent,
                  material,
-                 wdbImageUint8ArrayDataMap,
-                 (editorState, engineState),
+                 engineState,
                )
              )
         ) {
@@ -263,10 +226,9 @@ let _isDefaultLightMaterial =
 let _replaceGameObjectMaterialComponentToMaterialAsset =
     (
       gameObject,
-      wdbImageUint8ArrayDataMap,
       (defaultBasicMaterial, defaultLightMaterial),
       (basicMaterialMap, lightMaterialMap),
-      (editorState, engineState),
+      engineState,
     ) =>
   GameObjectComponentEngineService.hasBasicMaterialComponent(
     gameObject,
@@ -275,7 +237,6 @@ let _replaceGameObjectMaterialComponentToMaterialAsset =
     _replaceToMaterialAssetMaterialComponent(
       gameObject,
       basicMaterialMap,
-      wdbImageUint8ArrayDataMap,
       defaultBasicMaterial,
       (
         GameObjectComponentEngineService.unsafeGetBasicMaterialComponent,
@@ -284,7 +245,7 @@ let _replaceGameObjectMaterialComponentToMaterialAsset =
         GameObjectComponentEngineService.disposeBasicMaterialComponent,
         GameObjectComponentEngineService.addBasicMaterialComponent,
       ),
-      (editorState, engineState),
+      engineState,
     ) :
     GameObjectComponentEngineService.hasLightMaterialComponent(
       gameObject,
@@ -293,7 +254,6 @@ let _replaceGameObjectMaterialComponentToMaterialAsset =
       _replaceToMaterialAssetMaterialComponent(
         gameObject,
         lightMaterialMap,
-        wdbImageUint8ArrayDataMap,
         defaultLightMaterial,
         (
           GameObjectComponentEngineService.unsafeGetLightMaterialComponent,
@@ -302,7 +262,7 @@ let _replaceGameObjectMaterialComponentToMaterialAsset =
           GameObjectComponentEngineService.disposeLightMaterialComponent,
           GameObjectComponentEngineService.addLightMaterialComponent,
         ),
-        (editorState, engineState),
+        engineState,
       ) :
       engineState;
 
@@ -477,7 +437,6 @@ let _replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent =
 let relateSceneWDBGameObjectsAndAssets =
     (
       allWDBGameObjectsArr,
-      wdbImageUint8ArrayDataMap,
       (basicMaterialMap, lightMaterialMap),
       wdbAssetGameObjectGeometryArr,
     ) => {
@@ -505,24 +464,19 @@ let relateSceneWDBGameObjectsAndAssets =
   let engineState =
     allWDBGameObjectsArr
     |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. engineState, gameObject) => {
-           let engineState =
-             _replaceGameObjectMaterialComponentToMaterialAsset(
-               gameObject,
-               wdbImageUint8ArrayDataMap,
-               (defaultBasicMaterial, defaultLightMaterial),
-               (basicMaterialMap, lightMaterialMap),
-               (editorState, engineState),
-             );
-
-           engineState
+         (. engineState, gameObject) =>
+           _replaceGameObjectMaterialComponentToMaterialAsset(
+             gameObject,
+             (defaultBasicMaterial, defaultLightMaterial),
+             (basicMaterialMap, lightMaterialMap),
+             engineState,
+           )
            |> _replaceGameObjectGeometryComponentToWDBAssetGeometryComponent(
                 gameObject,
                 (defaultCubeGeometryData, defaultSphereGeometryData),
                 wdbAssetGameObjectGeometryArr,
               )
-           |> GameObjectEngineService.initGameObject(gameObject);
-         },
+           |> GameObjectEngineService.initGameObject(gameObject),
          engineState,
        );
 
@@ -530,11 +484,7 @@ let relateSceneWDBGameObjectsAndAssets =
 };
 
 let relateWDBAssetGameObjectsAndAssets =
-    (
-      allWDBGameObjectsArr,
-      wdbImageUint8ArrayDataMap,
-      (basicMaterialMap, lightMaterialMap),
-    ) => {
+    (allWDBGameObjectsArr, (basicMaterialMap, lightMaterialMap)) => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
@@ -559,23 +509,18 @@ let relateWDBAssetGameObjectsAndAssets =
   let engineState =
     allWDBGameObjectsArr
     |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. engineState, gameObject) => {
-           let engineState =
-             _replaceGameObjectMaterialComponentToMaterialAsset(
-               gameObject,
-               wdbImageUint8ArrayDataMap,
-               (defaultBasicMaterial, defaultLightMaterial),
-               (basicMaterialMap, lightMaterialMap),
-               (editorState, engineState),
-             );
-
-           engineState
+         (. engineState, gameObject) =>
+           _replaceGameObjectMaterialComponentToMaterialAsset(
+             gameObject,
+             (defaultBasicMaterial, defaultLightMaterial),
+             (basicMaterialMap, lightMaterialMap),
+             engineState,
+           )
            |> _replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent(
                 gameObject,
                 (defaultCubeGeometryData, defaultSphereGeometryData),
               )
-           |> GameObjectEngineService.initGameObject(gameObject);
-         },
+           |> GameObjectEngineService.initGameObject(gameObject),
          engineState,
        );
 

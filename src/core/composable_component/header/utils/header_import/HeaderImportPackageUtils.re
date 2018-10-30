@@ -80,7 +80,6 @@ let _import = result => {
        (((allWDBGameObjectsArr, imageUint8ArrayDataMap), materialMapTuple)) => {
        RelateGameObjectAndAssetUtils.relateWDBAssetGameObjectsAndAssets(
          allWDBGameObjectsArr,
-         imageUint8ArrayDataMap,
          materialMapTuple,
        );
 
@@ -105,7 +104,6 @@ let _import = result => {
                   sceneGameObject,
                   engineState,
                 ),
-                imageUint8ArrayDataMap,
                 materialMapTupleRef^,
                 wdbAssetGameObjectGeometryArrRef^,
               );
