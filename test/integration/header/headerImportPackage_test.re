@@ -274,7 +274,7 @@ let _ =
             testPromise(
               {|
           1.add material asset m1;
-          2.add texture asset t1;
+          2.load texture asset t1;
           3.drag t1 to m1->diffuseMap;
           4.change scecne tree g1->material component to m1;
           5.export;
@@ -355,8 +355,8 @@ let _ =
               {|
              1.add material asset m1;
              2.add material asset m2;
-             3.add texture asset t1;
-             4.add texture asset t2;
+             3.load texture asset t1;
+             4.load texture asset t2;
              5.drag t1 to m1->diffuseMap;
              6.drag t2 to m2->diffuseMap;
              7.change scecne tree g1->material component to m1;
@@ -494,7 +494,7 @@ let _ =
                  2.add material asset m2;
                  3.change m2 type to basic;
                  4.set m1,m2 color;
-                 5.add texture asset t1;
+                 5.load texture asset t1;
                  6.drag t1 to m1->diffuseMap;
                  7.change scecne tree g1->material component to m1;
                  8.change scecne tree g2->material component to m2;
@@ -1103,6 +1103,79 @@ let _ =
                  (),
                )
              )
+        );
+      });
+
+      describe("test import wdb assets", () => {
+        beforeEach(() => {
+          MainEditorSceneTool.initStateWithJob(
+            ~sandbox,
+            ~isBuildFakeDom=false,
+            ~noWorkerJobRecord=
+              NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
+            (),
+          );
+
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          );
+
+          DirectorToolEngine.prepareAndInitAllEnginState();
+          MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+          |> ignore;
+
+          _prepareFakeCanvas() |> ignore;
+
+          LoadTool.clearBlobData(.);
+          LoadTool.buildFakeBlob(.);
+        });
+
+        describe("fix bug", () =>
+          testPromise(
+            {|
+          1.load BoxTextured wdb asset w1;
+          2.load texture asset t1;
+          3.export;
+          4.import;
+
+          import asb->t1->blob data should be correct
+          |},
+            () =>
+            MainEditorAssetUploadTool.loadOneWDB(
+              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+              (),
+            )
+            |> then_(uploadedWDBNodeId =>
+                 MainEditorAssetUploadTool.loadOneTexture(
+                   ~imgName="loadImg.png",
+                   ~imgSrc="newImgBase64",
+                   (),
+                 )
+                 |> then_(uploadedTextureNodeId1 => {
+                      LoadTool.clearBlobData(.);
+
+                      ImportPackageTool.testImportPackage(
+                        ~testFunc=
+                          () => {
+                            let blobData = LoadTool.getBlobData(.);
+
+                            let (arrayBuffer, param) =
+                              Array.unsafe_get(blobData, 0);
+
+                            (
+                              blobData |> Js.Array.length,
+                              arrayBuffer |> ArrayBuffer.byteLength,
+                              param,
+                            )
+                            |> expect == (2, 3, {"type": "image/png"})
+                            |> resolve;
+                          },
+                        (),
+                      );
+                    })
+               )
+          )
         );
       });
     });

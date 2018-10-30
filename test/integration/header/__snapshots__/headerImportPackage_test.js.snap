@@ -1304,6 +1304,174 @@ exports[`header import package test import assets test import texture assets sho
 </article>
 `;
 
+exports[`header import package test import assets test import wdb assets fix bug 
+          /* 1.load BoxTextured wdb asset w1;
+          2.add material asset m1;
+          3.load texture asset t1;
+          4.drag t1 to m1->diffuseMap;
+          5.drag w1 to scene tree to be gameObject g1;
+          6.change g1->Mesh child gameObject->material to m1;
+          7.export;
+          8.import; */
+
+
+          aaa
+           1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+        >
+          Mesh
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
+      </div>
+      <div
+        className="item-content item-active"
+        onClick={[Function]}
+      >
+        Mesh
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;
+
+exports[`header import package test import assets test import wdb assets fix bug 
+          1.load BoxTextured wdb asset w1;
+          2.add material asset m1;
+          3.load texture asset t1;
+          4.drag t1 to m1->diffuseMap;
+          5.drag w1 to scene tree to be gameObject g1;
+          6.change g1->Mesh child gameObject->material to m1;
+          7.export;
+          8.import;
+
+
+          aaa
+           1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+        >
+          Mesh
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
+      </div>
+      <div
+        className="item-content item-active"
+        onClick={[Function]}
+      >
+        Mesh
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;
+
 exports[`header import package test import package scene wdb relate scene gameObjects and material assets fix bug test change default material to material asset after import 1`] = `
 <article
   className="wonder-inspector-component"

@@ -51,6 +51,7 @@ let _buildImageData =
          {name, bufferView, mimeType}: ExportAssetType.image,
          imageIndex,
        ) => {
+
          let arrayBuffer = _getArrayBuffer(buffer, bufferView, bufferViews);
 
          streamArr

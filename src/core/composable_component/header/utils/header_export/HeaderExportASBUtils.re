@@ -254,7 +254,10 @@ let _buildMaterialData = (textureIndexMap, (editorState, engineState)) =>
        ([||], [||]),
      );
 
-let _buildWDBData = (imageAlignedByteLength, (editorState, engineState)) => {
+let _buildWDBData =
+    (imageAlignedByteLength, imageBufferViewArr, (editorState, engineState)) => {
+  let imageBufferViewIndex = imageBufferViewArr |> Js.Array.length;
+
   let (wdbArr, arrayBufferArr, bufferViewArr, byteOffset) =
     AssetWDBNodeMapEditorService.getWDBNodeMap(editorState)
     |> SparseMapService.reduceValid(
@@ -276,7 +279,8 @@ let _buildWDBData = (imageAlignedByteLength, (editorState, engineState)) => {
                         [||],
                         (editorState, engineState),
                       ),
-                    bufferView: bufferViewArr |> Js.Array.length,
+                    bufferView:
+                      imageBufferViewIndex + (bufferViewArr |> Js.Array.length),
                   }: ExportAssetType.wdb,
                 ),
              arrayBufferArr |> ArrayService.push(wdbArrayBuffer),
@@ -319,7 +323,11 @@ let _buildJsonData = (editorState, engineState) => {
     wdbBufferViewArr,
     bufferTotalAlignedByteLength,
   ) =
-    _buildWDBData(imageAlignedByteLength, (editorState, engineState));
+    _buildWDBData(
+      imageAlignedByteLength,
+      imageBufferViewArr,
+      (editorState, engineState),
+    );
 
   (
     (imageArr, textureArr, basicMaterialArr, lightMaterialArr, wdbArr),
@@ -462,7 +470,7 @@ let generateASB = (editorState, engineState) => {
     _buildJsonUint8Array(
       bufferTotalAlignedByteLength,
       (
-        Js.Array.concat(imageBufferViewArr, wdbBufferViewArr),
+        Js.Array.concat(wdbBufferViewArr, imageBufferViewArr),
         imageArr,
         textureArr,
         basicMaterialArr,

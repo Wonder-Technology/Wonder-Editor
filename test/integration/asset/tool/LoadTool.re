@@ -91,3 +91,29 @@ let buildFakeBtoa = [%raw
     }
     |}
 ];
+
+let buildFakeBlob = [%raw
+  (.) => {|
+var Blob = function(arrayBufferArr, param){
+if( typeof window.blobData_wonder_forTest === "undefined"){
+window.blobData_wonder_forTest = [
+[arrayBufferArr[0], param]
+];
+} else{
+window.blobData_wonder_forTest.push(
+[arrayBufferArr[0], param]
+);
+}
+};
+
+window.Blob = Blob;
+|}
+];
+
+let getBlobData = [%raw (.) => {|
+return window.blobData_wonder_forTest;
+|}];
+
+let clearBlobData = [%raw (.) => {|
+delete window.blobData_wonder_forTest;
+|}];
