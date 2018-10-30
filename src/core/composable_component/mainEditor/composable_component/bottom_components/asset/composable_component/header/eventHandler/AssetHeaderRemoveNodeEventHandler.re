@@ -21,6 +21,8 @@ module CustomEventHandler = {
         let (editorState, removedAssetIdArr) =
           editorState |> AssetUtils.deepRemoveTreeNode(removedTreeNode);
 
+        StateLogicService.getAndRefreshEngineState();
+
         let editorState =
           editorState
           |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray

@@ -48,13 +48,11 @@ let _isBasicMaterialDataEqual = (material1, material2, engineState) =>
 let _isImageValueEqual = (image1, image2, getFunc) =>
   getFunc(image1) == getFunc(image2);
 
-let _isImageNodeDataEqual = (image1, image2) => {
-  WonderLog.Log.print("is image data equal") |> ignore;
-
+let _isImageNodeDataEqual = (image1, image2) =>
+  /* WonderLog.Log.print("is image data equal") |> ignore; */
   _isImageValueEqual(image1, image2, ImageUtils.getImageName)
   && _isImageValueEqual(image1, image2, ImageUtils.getImageWidth)
   && _isImageValueEqual(image1, image2, ImageUtils.getImageHeight);
-};
 
 let _isTextureDataEqual = (texture1, texture2, engineState) =>
   _isValueEqual(
@@ -92,9 +90,8 @@ let _isTextureDataEqual = (texture1, texture2, engineState) =>
        BasicSourceTextureEngineService.unsafeGetSource(texture2, engineState),
      );
 
-let _isLightMaterialDataEqual = (material1, material2, engineState) => {
-  WonderLog.Log.print(("is mat equal: ", material1, material2)) |> ignore;
-
+let _isLightMaterialDataEqual = (material1, material2, engineState) =>
+  /* WonderLog.Log.print(("is mat equal: ", material1, material2)) |> ignore; */
   _isValueEqual(
     material1,
     material2,
@@ -130,7 +127,6 @@ let _isLightMaterialDataEqual = (material1, material2, engineState) => {
     | _ => false
     }
   );
-};
 
 let _replaceToMaterialAssetMaterialComponent =
     (
@@ -563,6 +559,8 @@ let _initAssetTreeRoot = () => {
 
 let _import = result => {
   _disposeAssets();
+
+  JobEngineService.execDisposeJob |> StateLogicService.getAndSetEngineState;
 
   _initAssetTreeRoot();
 

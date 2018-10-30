@@ -92,7 +92,7 @@ let _handleRemoveWDBNode = (nodeId, editorState) => {
        )
     |> _removeClonedGameObjectIfHasIt(wdbGameObject, editorState);
 
-  StateLogicService.refreshEngineState(engineState);
+  engineState |> StateEngineService.setState |> ignore;
 
   editorState
   |> AssetWDBNodeMapEditorService.getWDBNodeMap
@@ -169,7 +169,7 @@ let _removeMaterialTreeNode = (nodeId, editorState) => {
       engineState,
     );
 
-  engineState |> StateLogicService.refreshEngineState;
+  engineState |> StateEngineService.setState |> ignore;
 
   AssetMaterialNodeMapEditorService.remove(nodeId, editorState)
   |> AssetMaterialNodeIdMapEditorService.remove(materialComponent);
