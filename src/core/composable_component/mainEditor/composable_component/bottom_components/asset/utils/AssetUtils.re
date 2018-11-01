@@ -5,13 +5,13 @@ open AssetNodeType;
 let getWidget = () => EditorType.Asset;
 
 let isAssetWDBFile = () => {
-  let (widget, startNodeId) =
+  let (wnodeIdget, startNodeId) =
     StateEditorService.getState()
     |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-  switch (widget, startNodeId) {
-  | (Some(widget), Some(nodeId)) =>
-    widget === getWidget()
+  switch (wnodeIdget, startNodeId) {
+  | (Some(wnodeIdget), Some(nodeId)) =>
+    wnodeIdget === getWidget()
     && StateEditorService.getState()
     |> AssetWDBNodeMapEditorService.getWDBNodeMap
     |> WonderCommonlib.SparseMapService.get(nodeId)
@@ -53,18 +53,18 @@ let rec getSpecificTreeNodeById = (nodeId, targetTreeNode) =>
       resultNode;
     };
 
-let _removeClonedGameObjectIfHasIt = (gameObjectUid, editorState, engineState) =>
+let _removeClonedGameObjectIfHasIt = (gameObjectUnodeId, editorState, engineState) =>
   switch (
     editorState
     |> AssetClonedGameObjectMapEditorService.getClonedGameObjectMap
-    |> WonderCommonlib.SparseMapService.get(gameObjectUid)
+    |> WonderCommonlib.SparseMapService.get(gameObjectUnodeId)
   ) {
   | None => (editorState, engineState)
   | Some(clonedGameObjectArr) => (
       editorState
       |> AssetClonedGameObjectMapEditorService.getClonedGameObjectMap
       |> SparseMapService.copy
-      |> DomHelper.deleteKeyInMap(gameObjectUid)
+      |> DomHelper.deleteKeyInMap(gameObjectUnodeId)
       |. AssetClonedGameObjectMapEditorService.setClonedGameObjectMap(
            editorState,
          ),
@@ -304,8 +304,7 @@ let _isTargetTreeNodeBeRemovedParent = (targetTreeNode, removedNodeId) =>
   |> Js.Array.length >= 1 ?
     true : false;
 
-let getChildrenNameAndIdArr =
-    (nodeId, fileTargetType, (editorState, engineState)) => {
+let getChildrenNameAndIdArr = (nodeId, nodeType, (editorState, engineState)) => {
   WonderLog.Contract.requireCheck(
     () =>
       WonderLog.(
@@ -337,7 +336,7 @@ let getChildrenNameAndIdArr =
     ({children}: assetTreeNodeType) =>
       children
       |> Js.Array.filter(({type_ as childType}: assetTreeNodeType) =>
-           childType === fileTargetType
+           childType === nodeType
          )
       |> Js.Array.map(({nodeId as currentNodeId, type_}: assetTreeNodeType) => {
            let name =
@@ -375,8 +374,8 @@ let checkAssetNodeName =
       (editorState, engineState),
     ) =>
   getChildrenNameAndIdArr(targetNodeId, type_, (editorState, engineState))
-  |> Js.Array.filter(((name, id)) => id !== sourceNodeId)
-  |> Js.Array.map(((name, id)) => name)
+  |> Js.Array.filter(((name, nodeId)) => nodeId !== sourceNodeId)
+  |> Js.Array.map(((name, nodeId)) => name)
   |> Js.Array.includes(sourceName) ?
     {
       ConsoleUtils.warn("the asset can't has the same name !");
@@ -453,12 +452,19 @@ let rec iterateNameArrBuildNewName = (name, childrenNameArr) =>
     name;
 
 let getUniqueTreeNodeName =
-    (name, fileTargetType, nodeId, (editorState, engineState)) =>
+    (name, nodeType, nodeId, (editorState, engineState)) =>
   switch (nodeId) {
   | None => name
   | Some(nodeId) =>
     (editorState, engineState)
-    |> getChildrenNameAndIdArr(nodeId, fileTargetType)
-    |> Js.Array.map(((name, id)) => name)
+    |> getChildrenNameAndIdArr(nodeId, nodeType)
+    |> Js.Array.map(((name, nodeId)) => name)
     |> iterateNameArrBuildNewName(name)
   };
+
+/* let isNodeWithTheNameExist =
+    (name, nodeType, parentFolderNodeId, (editorState, engineState)) =>
+  (editorState, engineState)
+  |> getChildrenNameAndIdArr(parentFolderNodeId, nodeType)
+  |> Js.Array.map(((name, nodeId)) => name)
+  |> Js.Array.includes(name); */

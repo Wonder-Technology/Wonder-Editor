@@ -35,4 +35,5 @@ let isUint8ArrayEqual = (uint8Array1, uint8Array2) =>
           && _judge(byteLength - 11, byteLength - 1, uint8Array1, uint8Array2);
       } :
       false
+  | _ => false
   };

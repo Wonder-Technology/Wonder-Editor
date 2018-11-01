@@ -6,7 +6,7 @@ open Js.Promise;
 
 let getAssetTreeRootName = () => "Assets";
 
-let getDefaultFolderName = () => "newFolder";
+let getDefaultFolderName = () => "New Folder";
 
 let _getFolderDefaultName = (index, editorState) =>
   index === (editorState |> AssetTreeRootEditorService.getRootTreeNodeId) ?
@@ -35,6 +35,18 @@ let addMaterialIntoNodeMap =
          parentFolderNodeId,
          AssetMaterialDataType.LightMaterial,
          material,
+       ),
+     );
+
+let addTextureIntoNodeMap =
+    (index, parentFolderNodeId, texture, imageNodeId, editorState) =>
+  editorState
+  |> AssetTextureNodeMapEditorService.setResult(
+       index,
+       AssetTextureNodeMapEditorService.buildTextureNodeResult(
+         texture,
+         parentFolderNodeId,
+         imageNodeId,
        ),
      );
 

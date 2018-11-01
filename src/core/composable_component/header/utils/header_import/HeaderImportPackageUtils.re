@@ -78,7 +78,7 @@ let _import = result => {
   HeaderImportASBUtils.importASB(asb)
   |> WonderBsMost.Most.map(
        (((allWDBGameObjectsArr, imageUint8ArrayDataMap), materialMapTuple)) => {
-       RelateGameObjectAndAssetUtils.relateWDBAssetGameObjectsAndAssets(
+       ImportPackageRelateGameObjectAndAssetUtils.relateWDBAssetGameObjectsAndAssets(
          allWDBGameObjectsArr,
          materialMapTuple,
        );
@@ -99,7 +99,7 @@ let _import = result => {
               ((sceneGameObject, imageUint8ArrayDataMap)) => {
               let engineState = StateEngineService.unsafeGetState();
 
-              RelateGameObjectAndAssetUtils.relateSceneWDBGameObjectsAndAssets(
+              ImportPackageRelateGameObjectAndAssetUtils.relateSceneWDBGameObjectsAndAssets(
                 GameObjectEngineService.getAllGameObjects(
                   sceneGameObject,
                   engineState,

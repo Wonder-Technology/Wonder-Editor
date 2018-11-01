@@ -97,7 +97,7 @@ module Method = {
        });
   };
 
-  let _isDefaultMaterial = (material, materialType, editorState) => {
+  let _isEqualDefaultMaterial = (material, materialType, editorState) => {
     let (defaultMaterial, _) =
       AssetMaterialDataEditorService.unsafeGetMaterialDataByType(
         materialType,
@@ -108,7 +108,7 @@ module Method = {
   };
 
   let buildShadeComponent = (currentMaterial, materialType) =>
-    _isDefaultMaterial(
+    _isEqualDefaultMaterial(
       currentMaterial,
       materialType,
       StateEditorService.getState(),

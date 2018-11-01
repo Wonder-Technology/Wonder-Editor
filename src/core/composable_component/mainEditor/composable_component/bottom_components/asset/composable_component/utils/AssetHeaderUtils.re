@@ -4,19 +4,6 @@ open AssetNodeType;
 
 open Js.Promise;
 
-let _getImageNodeIdIfImageNodeMapHasIt = (imgBase64, editorState) =>
-  switch (
-    editorState
-    |> AssetImageNodeMapEditorService.getImageNodeMap
-    |> SparseMapService.getValidDataArr
-    |> SparseMapService.find(((imageNodeId, {base64})) =>
-         Base64Service.isBase64Equal(Some(imgBase64), base64)
-       )
-  ) {
-  | None => None
-  | Some((imageNodeId, _)) => Some(imageNodeId)
-  };
-
 let _handleImageType =
     (
       (mimeType, fileName, imgBase64),
@@ -37,48 +24,188 @@ let _handleImageType =
              );
 
         let (imageNodeId, editorState) =
-          switch (_getImageNodeIdIfImageNodeMapHasIt(imgBase64, editorState)) {
-          | None =>
-            let (editorState, imageNodeId) =
-              AssetIdUtils.generateAssetId(editorState);
-
-            (
-              imageNodeId,
-              editorState
-              |> AssetImageNodeMapEditorService.setResult(
-                   imageNodeId,
-                   AssetImageNodeMapEditorService.buildImageNodeResult(
-                     Some(imgBase64),
-                     None,
-                     fileName,
-                     mimeType,
-                   ),
-                 ),
-            );
-          | Some(imageNodeId) => (imageNodeId, editorState)
-          };
+          AddTextureNodeUtils.addImageNodeByBase64(
+            imgBase64,
+            fileName,
+            mimeType,
+            editorState,
+          );
 
         let editorState =
-          editorState
-          |> AssetTextureNodeMapEditorService.setResult(
-               textureNodeId,
-               AssetTextureNodeMapEditorService.buildTextureNodeResult(
-                 textureComponent,
-                 parentFolderNodeId |. Some,
-                 imageNodeId,
-               ),
-             )
-          |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
-               parentFolderNodeId,
-               textureNodeId,
-               Texture,
-             );
+          AddTextureNodeUtils.addTextureNodeToAssetTree(
+            textureComponent,
+            (parentFolderNodeId, textureNodeId, imageNodeId),
+            editorState,
+          );
 
         resolve(. (editorState, engineState));
       },
     )
   );
 
+let _buildFolderNode =
+    (
+      siblingFolderDataArr,
+      folderName,
+      targetTreeNodeId,
+      (editorState, engineState),
+    ) =>
+  switch (
+    siblingFolderDataArr
+    |> Js.Array.find(((name, nodeId)) => name === folderName)
+  ) {
+  | Some((_, nodeId)) => (editorState, nodeId)
+  | None =>
+    let (editorState, newIndex) = AssetIdUtils.generateAssetId(editorState);
+
+    let editorState =
+      AddFolderNodeUtils.addFolderNodeToAssetTree(
+        (targetTreeNodeId, newIndex),
+        (editorState, engineState),
+      );
+
+    (editorState, newIndex);
+  };
+
+let _addMaterialNodeToAssetTree =
+    (
+      extractedMaterialAssetDataArr,
+      siblingFolderDataArr,
+      (editorState, engineState),
+    ) => {
+  let folderName = "Materials";
+  let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
+
+  let (editorState, folderNodeId) =
+    _buildFolderNode(
+      siblingFolderDataArr,
+      folderName,
+      targetTreeNodeId,
+      (editorState, engineState),
+    );
+
+  extractedMaterialAssetDataArr
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (.
+         (editorState, engineState),
+         ((material, materialType), (getNameFunc, setNameFunc)),
+       ) => {
+         let materialName =
+           getNameFunc(material, materialType, engineState)
+           |. AssetUtils.getUniqueTreeNodeName(
+                AssetNodeType.Material,
+                folderNodeId |. Some,
+                (editorState, engineState),
+              );
+
+         let engineState =
+           setNameFunc(material, materialType, materialName, engineState);
+
+         let (editorState, materialNodeId) =
+           AssetIdUtils.generateAssetId(editorState);
+
+         AddMaterialNodeUtils.addMaterialNodeToAssetTree(
+           material,
+           (folderNodeId, materialNodeId),
+           editorState,
+         );
+
+         (editorState, engineState);
+       },
+       (editorState, engineState),
+     );
+};
+
+let _addTextureNodeToAssetTree =
+    (
+      extractedTextureAssetDataArr,
+      siblingFolderDataArr,
+      (editorState, engineState),
+    ) => {
+  let folderName = "Textures";
+  let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
+
+  let (editorState, folderNodeId) =
+    _buildFolderNode(
+      siblingFolderDataArr,
+      folderName,
+      targetTreeNodeId,
+      (editorState, engineState),
+    );
+
+  extractedTextureAssetDataArr
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (.
+         (editorState, engineState),
+         (
+           texture,
+           (mimeType, imageUint8Array),
+           imageName,
+           (getTextureNameFunc, setTextureNameFunc),
+         ),
+       ) => {
+         let textureName =
+           getTextureNameFunc(texture, engineState)
+           |. AssetUtils.getUniqueTreeNodeName(
+                AssetNodeType.Texture,
+                folderNodeId |. Some,
+                (editorState, engineState),
+              );
+
+         let engineState =
+           setTextureNameFunc(textureName, texture, engineState);
+
+         let (imageNodeId, editorState) =
+           AddTextureNodeUtils.addImageNodeByUint8Array(
+             imageUint8Array,
+             imageName,
+             mimeType,
+             editorState,
+           );
+
+         let (editorState, textureNodeId) =
+           AssetIdUtils.generateAssetId(editorState);
+
+         let editorState =
+           AddTextureNodeUtils.addTextureNodeToAssetTree(
+             texture,
+             (folderNodeId, textureNodeId, imageNodeId),
+             editorState,
+           );
+
+         (editorState, engineState);
+       },
+       (editorState, engineState),
+     );
+};
+
+let _addNodeToAssetTree =
+    (
+      extractedMaterialAssetDataArr,
+      extractedTextureAssetDataArr,
+      (editorState, engineState),
+    ) => {
+  let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
+
+  let siblingFolderDataArr =
+    AssetUtils.getChildrenNameAndIdArr(
+      targetTreeNodeId,
+      AssetNodeType.Folder,
+      (editorState, engineState),
+    );
+
+  (editorState, engineState)
+  |> _addMaterialNodeToAssetTree(
+       extractedMaterialAssetDataArr,
+       siblingFolderDataArr,
+     )
+  |> _addTextureNodeToAssetTree(
+       extractedTextureAssetDataArr,
+       siblingFolderDataArr,
+     );
+};
+
+/* TODO refactor */
 let _handleAssetWDBType =
     (
       (fileName, wdbArrayBuffer),
@@ -100,7 +227,165 @@ let _handleAssetWDBType =
     (wdbNodeId, parentFolderNodeId),
     (editorState, engineState),
   )
-  |> then_((((allGameObjects, _), (editorState, engineState))) => {
+  |> then_(
+       (
+         (
+           (allGameObjects, imageUint8ArrayDataMap),
+           (editorState, engineState),
+         ),
+       ) => {
+       let defaultBasicMaterial =
+         AssetMaterialDataEditorService.unsafeGetDefaultBasicMaterial(
+           editorState,
+         );
+       let defaultLightMaterial =
+         AssetMaterialDataEditorService.unsafeGetDefaultLightMaterial(
+           editorState,
+         );
+
+       let basicMaterialMap =
+         AssetMaterialNodeMapEditorService.getMaterialNodeMap(editorState)
+         |> SparseMapService.filter(
+              ({type_}: AssetNodeType.materialResultType) =>
+              type_ === AssetMaterialDataType.BasicMaterial
+            )
+         |> SparseMapService.map(
+              ({materialComponent}: AssetNodeType.materialResultType) =>
+              materialComponent
+            );
+
+       let lightMaterialMap =
+         AssetMaterialNodeMapEditorService.getMaterialNodeMap(editorState)
+         |> SparseMapService.filter(
+              ({type_}: AssetNodeType.materialResultType) =>
+              type_ === AssetMaterialDataType.LightMaterial
+            )
+         |> SparseMapService.map(
+              ({materialComponent}: AssetNodeType.materialResultType) =>
+              materialComponent
+            );
+
+       let (
+         (extractedMaterialAssetDataArr, extractedTextureAssetDataArr),
+         (editorState, engineState),
+       ) =
+         allGameObjects
+         |> WonderCommonlib.ArrayService.reduceOneParam(
+              (.
+                (
+                  (
+                    extractedMaterialAssetDataArr,
+                    extractedTextureAssetDataArr,
+                  ),
+                  (editorState, engineState),
+                ),
+                gameObject,
+              ) => {
+                let (sourceMaterial, targetMaterial, materialType) as relatedMaterialData =
+                  RelateGameObjectAndAssetUtils.getRelatedMaterialDataFromGameObject(
+                    gameObject,
+                    (defaultBasicMaterial, defaultLightMaterial),
+                    (basicMaterialMap, lightMaterialMap),
+                    engineState,
+                  );
+
+                RelateGameObjectAndAssetUtils.doesNeedReplaceMaterial(
+                  relatedMaterialData,
+                ) ?
+                  {
+                    let engineState =
+                      RelateGameObjectAndAssetUtils.replaceToMaterialAssetMaterialComponent(
+                        gameObject,
+                        relatedMaterialData,
+                        engineState,
+                      );
+
+                    (
+                      (
+                        extractedMaterialAssetDataArr,
+                        extractedTextureAssetDataArr,
+                      ),
+                      (editorState, engineState),
+                    );
+                  } :
+                  {
+                    let extractedMaterialAssetDataArr =
+                      switch (sourceMaterial, materialType) {
+                      | (Some(sourceMaterial), Some(materialType)) =>
+                        extractedMaterialAssetDataArr
+                        |> ArrayService.push((
+                             (sourceMaterial, materialType),
+                             (
+                               MainEditorMaterialUtils.getName,
+                               MainEditorMaterialUtils.setName,
+                             ),
+                           ))
+                      | _ => extractedMaterialAssetDataArr
+                      };
+
+                    let (sourceTexture, targetTexture, setMapFunc) as relatedTextureData =
+                      RelateGameObjectAndAssetUtils.getRelatedTextureDataFromGameObject(
+                        gameObject,
+                        (editorState, engineState),
+                      );
+
+                    RelateGameObjectAndAssetUtils.doesNeedReplaceTexture((
+                      targetTexture,
+                      setMapFunc,
+                    )) ?
+                      {
+                        let engineState =
+                          RelateGameObjectAndAssetUtils.replaceToTextureAssetTextureComponent(
+                            gameObject,
+                            (targetTexture, setMapFunc),
+                            engineState,
+                          );
+
+                        (
+                          (
+                            extractedMaterialAssetDataArr,
+                            extractedTextureAssetDataArr,
+                          ),
+                          (editorState, engineState),
+                        );
+                      } :
+                      {
+                        let extractedTextureAssetDataArr =
+                          switch (sourceTexture) {
+                          | Some(sourceTexture) =>
+                            extractedTextureAssetDataArr
+                            |> ArrayService.push((
+                                 sourceTexture,
+                                 imageUint8ArrayDataMap
+                                 |> WonderCommonlib.SparseMapService.unsafeGet(
+                                      sourceTexture,
+                                    ),
+                                 BasicSourceTextureEngineService.unsafeGetSource(
+                                   sourceTexture,
+                                   engineState,
+                                 )
+                                 |> ImageUtils.getImageName,
+                                 (
+                                   OperateTextureLogicService.getTextureBaseNameByTextureComponent,
+                                   BasicSourceTextureEngineService.setBasicSourceTextureName,
+                                 ),
+                               ))
+                          | None => extractedTextureAssetDataArr
+                          };
+
+                        (
+                          (
+                            extractedMaterialAssetDataArr,
+                            extractedTextureAssetDataArr,
+                          ),
+                          (editorState, engineState),
+                        );
+                      };
+                  };
+              },
+              (([||], [||]), (editorState, engineState)),
+            );
+
        let engineState =
          allGameObjects
          |> WonderCommonlib.ArrayService.reduceOneParam(
@@ -112,6 +397,13 @@ let _handleAssetWDBType =
               engineState,
             )
          |> DirectorEngineService.loopBody(0.);
+
+       let (editorState, engineState) =
+         _addNodeToAssetTree(
+           extractedMaterialAssetDataArr,
+           extractedTextureAssetDataArr,
+           (editorState, engineState),
+         );
 
        (editorState, engineState) |> resolve;
      });

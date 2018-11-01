@@ -12,16 +12,10 @@ module CustomEventHandler = {
 
         let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
-        (editorState, engineState)
-        |> AssetTreeNodeUtils.addFolderIntoNodeMap(
-             newIndex,
-             targetTreeNodeId |. Some,
-           )
-        |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
-             targetTreeNodeId,
-             newIndex,
-             Folder,
-           );
+        AddFolderNodeUtils.addFolderNodeToAssetTree(
+          (targetTreeNodeId, newIndex),
+          (editorState, engineState),
+        );
       }
     )
     |> StateLogicService.getAndSetEditorState;
