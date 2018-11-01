@@ -142,6 +142,7 @@ let isEqualDefaultLightMaterial =
 let getRelatedMaterialData =
     (
       gameObject,
+      replacedTargetMaterialMap,
       (materialType, materialMap, defaultMaterial),
       (
         unsafeGetMaterialComponentFunc,
@@ -191,36 +192,56 @@ let getRelatedMaterialData =
 
   let material = unsafeGetMaterialComponentFunc(gameObject, engineState);
 
-  let targetMaterial =
-    isEqualDefaultMaterialComponentFunc(
-      material,
-      defaultMaterial,
-      engineState,
-    ) ?
-      Some(defaultMaterial) :
-      (
-        switch (
-          materialMap
-          |> SparseMapService.getValidValues
-          |> SparseMapService.find(assetMaterialComponent =>
-               isMaterialDataEqualFunc(
-                 assetMaterialComponent,
-                 material,
-                 engineState,
-               )
-             )
-        ) {
-        | None => None
-        | Some(assetMaterialComponent) => Some(assetMaterialComponent)
-        }
-      );
+  let (targetMaterial, replacedTargetMaterialMap) =
+    switch (
+      replacedTargetMaterialMap
+      |> WonderCommonlib.SparseMapService.get(material)
+    ) {
+    | None =>
+      let targetMaterial =
+        isEqualDefaultMaterialComponentFunc(
+          material,
+          defaultMaterial,
+          engineState,
+        ) ?
+          Some(defaultMaterial) :
+          (
+            switch (
+              materialMap
+              |> SparseMapService.getValidValues
+              |> SparseMapService.find(assetMaterialComponent =>
+                   isMaterialDataEqualFunc(
+                     assetMaterialComponent,
+                     material,
+                     engineState,
+                   )
+                 )
+            ) {
+            | None => None
+            | Some(assetMaterialComponent) => Some(assetMaterialComponent)
+            }
+          );
 
-  (Some(material), targetMaterial, Some(materialType));
+      (
+        targetMaterial,
+        replacedTargetMaterialMap
+        |> WonderCommonlib.SparseMapService.set(material, targetMaterial),
+      );
+    | Some(targetMaterial) => (targetMaterial, replacedTargetMaterialMap)
+    };
+
+  (
+    Some(material),
+    targetMaterial,
+    Some(materialType),
+    replacedTargetMaterialMap,
+  );
 };
 
 let getRelatedMaterialDataFromGameObject =
     (
       gameObject,
+      replacedTargetMaterialMap,
       (defaultBasicMaterial, defaultLightMaterial),
       (basicMaterialMap, lightMaterialMap),
       engineState,
@@ -231,6 +252,7 @@ let getRelatedMaterialDataFromGameObject =
   ) ?
     getRelatedMaterialData(
       gameObject,
+      replacedTargetMaterialMap,
       (
         AssetMaterialDataType.BasicMaterial,
         basicMaterialMap,
@@ -249,6 +271,7 @@ let getRelatedMaterialDataFromGameObject =
     ) ?
       getRelatedMaterialData(
         gameObject,
+        replacedTargetMaterialMap,
         (
           AssetMaterialDataType.LightMaterial,
           lightMaterialMap,
@@ -261,7 +284,7 @@ let getRelatedMaterialDataFromGameObject =
         ),
         engineState,
       ) :
-      (None, None, None);
+      (None, None, None, replacedTargetMaterialMap);
 
 let doesNeedReplaceMaterial =
     ((sourceMaterial, targetMaterial, materialType)) =>
@@ -302,25 +325,52 @@ let replaceToMaterialAssetMaterialComponent =
 let getRelatedTextureData =
     (
       gameObject,
+      replacedTargetTextureMap,
       (unsafeGetMaterialComponentFunc, getMapFunc, setMapFunc),
       (editorState, engineState),
     ) => {
   let material = unsafeGetMaterialComponentFunc(gameObject, engineState);
 
   switch (getMapFunc(material, engineState)) {
-  | None => (None, None, None)
+  | None => (None, None, None, replacedTargetTextureMap)
   | Some(sourceTexture) =>
-    let targetTexture =
-      AssetTextureNodeMapEditorService.getValidValues(editorState)
-      |> SparseMapService.map(
-           ({textureComponent}: AssetNodeType.textureResultType) =>
-           textureComponent
-         )
-      |> SparseMapService.find(textureComponent =>
-           _isTextureDataEqual(textureComponent, material, engineState)
-         );
+    let (targetTexture, replacedTargetTextureMap) =
+      switch (
+        replacedTargetTextureMap
+        |> WonderCommonlib.SparseMapService.get(sourceTexture)
+      ) {
+      | None =>
+        let targetTexture =
+          AssetTextureNodeMapEditorService.getValidValues(editorState)
+          |> SparseMapService.map(
+               ({textureComponent}: AssetNodeType.textureResultType) =>
+               textureComponent
+             )
+          |> SparseMapService.find(textureComponent =>
+               _isTextureDataEqual(
+                 textureComponent,
+                 sourceTexture,
+                 engineState,
+               )
+             );
 
-    (Some(sourceTexture), targetTexture, Some(setMapFunc));
+        (
+          targetTexture,
+          replacedTargetTextureMap
+          |> WonderCommonlib.SparseMapService.set(
+               sourceTexture,
+               targetTexture,
+             ),
+        );
+      | Some(targetTexture) => (targetTexture, replacedTargetTextureMap)
+      };
+
+    (
+      Some(sourceTexture),
+      targetTexture,
+      Some(setMapFunc),
+      replacedTargetTextureMap,
+    );
   };
 };
 
@@ -331,18 +381,19 @@ let doesNeedReplaceTexture = ((targetTexture, setMapFunc)) =>
   };
 
 let getRelatedTextureDataFromGameObject =
-    (gameObject, (editorState, engineState)) =>
+    (gameObject, replacedTargetTextureMap, (editorState, engineState)) =>
   GameObjectComponentEngineService.hasBasicMaterialComponent(
     gameObject,
     engineState,
   ) ?
-    (None, None, None) :
+    (None, None, None, replacedTargetTextureMap) :
     GameObjectComponentEngineService.hasLightMaterialComponent(
       gameObject,
       engineState,
     ) ?
       getRelatedTextureData(
         gameObject,
+        replacedTargetTextureMap,
         (
           GameObjectComponentEngineService.unsafeGetLightMaterialComponent,
           LightMaterialEngineService.getLightMaterialDiffuseMap,
@@ -350,7 +401,7 @@ let getRelatedTextureDataFromGameObject =
         ),
         (editorState, engineState),
       ) :
-      (None, None, None);
+      (None, None, None, replacedTargetTextureMap);
 
 let replaceToTextureAssetTextureComponent =
     (gameObject, (targetTexture, setMapFunc), engineState) =>

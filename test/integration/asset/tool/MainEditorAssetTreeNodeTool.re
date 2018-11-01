@@ -1,8 +1,9 @@
-let addFolderIntoNodeMap =
+let addFolderIntoNodeMapWithDefaultName =
     (index, parentFolderNodeId, editorState, engineState) =>
   AssetTreeNodeUtils.addFolderIntoNodeMap(
     index,
     parentFolderNodeId,
+    AssetTreeNodeUtils.getFolderDefaultName(index, editorState),
     (editorState, engineState),
   );
 

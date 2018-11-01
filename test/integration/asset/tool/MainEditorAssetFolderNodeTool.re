@@ -13,3 +13,16 @@ let setFolderName = (nodeId, name, editorState) =>
   );
 
 let getDefaultFolderName = () => AssetTreeNodeUtils.getDefaultFolderName();
+
+let getNodeIdByName = (folderName, editorState) =>
+  switch (
+    AssetFolderNodeMapEditorService.getFolderNodeMap(editorState)
+    |> WonderLog.Log.print
+    |> SparseMapService.getValidDataArr
+    |> Js.Array.find(((nodeId, {name}: AssetNodeType.folderResultType)) =>
+         name === folderName
+       )
+  ) {
+  | None => None
+  | Some((nodeId, _)) => Some(nodeId)
+  };

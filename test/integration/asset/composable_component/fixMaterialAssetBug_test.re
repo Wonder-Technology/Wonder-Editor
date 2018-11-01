@@ -201,7 +201,7 @@ let _ =
               MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
               let materialComponent =
-                MaterialAssetTool.getMaterialComponent(
+                MainEditorAssetMaterialNodeTool.getMaterialComponent(
                   ~nodeId=addedMaterialNodeId2,
                   (),
                 );
@@ -353,7 +353,7 @@ let _ =
             MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
             let material =
-              MaterialAssetTool.getMaterialComponent(
+              MainEditorAssetMaterialNodeTool.getMaterialComponent(
                 ~nodeId=addedMaterialNodeId,
                 (),
               );

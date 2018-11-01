@@ -25,3 +25,10 @@ let setTextureName = (nodeId, name, editorState) => {
        },
      );
 };
+
+let hasTextureComponent = (material, editorState) =>
+  AssetTextureNodeMapEditorService.getValidValues(editorState)
+  |> Js.Array.find(({textureComponent}: AssetNodeType.textureResultType) =>
+       JudgeTool.isEqual(textureComponent, material)
+     )
+  |> Js.Option.isSome;

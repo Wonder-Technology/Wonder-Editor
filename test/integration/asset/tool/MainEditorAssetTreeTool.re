@@ -17,7 +17,7 @@ module BuildAssetTree = {
          children: [||],
          isShowChildren: true,
        })
-    |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+    |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
          rootId,
          None,
          _,
@@ -49,13 +49,13 @@ module BuildAssetTree = {
            isShowChildren: true,
            children: [||],
          })
-      |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+      |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
            rootId,
            None,
            _,
            engineState,
          )
-      |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+      |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
            id1,
            rootId |. Some,
            _,
@@ -168,7 +168,7 @@ module BuildAssetTree = {
            isShowChildren: true,
            children: [||],
          })
-      |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+      |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
            rootId,
            None,
            _,
@@ -229,13 +229,13 @@ module BuildAssetTree = {
              isShowChildren: true,
              children: [||],
            })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
              rootId,
              None,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
              id1,
              rootId |. Some,
              _,
@@ -275,19 +275,19 @@ module BuildAssetTree = {
              isShowChildren: true,
              children: [||],
            })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
              rootId,
              None,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
              id1,
              rootId |. Some,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
              id2,
              rootId |. Some,
              _,
@@ -351,19 +351,19 @@ module BuildAssetTree = {
              isShowChildren: true,
              children: [||],
            })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
              rootId,
              None,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
              id1,
              rootId |. Some,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
              id2,
              rootId |. Some,
              _,
@@ -388,13 +388,13 @@ module BuildAssetTree = {
                },
              |],
            })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
              id3,
              id2 |. Some,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
              id4,
              id2 |. Some,
              _,
@@ -503,19 +503,19 @@ module BuildAssetTree = {
              isShowChildren: true,
              children: [||],
            })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
              rootId,
              None,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
              id1,
              rootId |. Some,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
              id2,
              rootId |. Some,
              _,
@@ -540,13 +540,13 @@ module BuildAssetTree = {
                },
              |],
            })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
              id3,
              id2 |. Some,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
              id4,
              id2 |. Some,
              _,
@@ -657,10 +657,10 @@ module Select = {
     AssetTreeUtils.onSelect(dispatchFunc, nodeType, nodeId);
 
   /* let selectTextureNode = (~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
-    selectNode(~nodeType=AssetNodeType.Texture, ~nodeId, ~dispatchFunc, ());
+       selectNode(~nodeType=AssetNodeType.Texture, ~nodeId, ~dispatchFunc, ());
 
-  let selectMaterialNode = (~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
-    selectNode(~nodeType=AssetNodeType.Material, ~nodeId, ~dispatchFunc, ()); */
+     let selectMaterialNode = (~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
+       selectNode(~nodeType=AssetNodeType.Material, ~nodeId, ~dispatchFunc, ()); */
 
   let selectFolderNode = (~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
     selectNode(~nodeType=AssetNodeType.Folder, ~nodeId, ~dispatchFunc, ());
@@ -669,24 +669,24 @@ module Select = {
 module Drag = {
   let handleDragStart =
       (
-        ~folderNodeId,
+        ~nodeId,
         ~widget=AssetUtils.getWidget(),
         ~dragImg=DomHelper.createElement("img"),
         ~event=BaseEventTool.buildDragEvent(.),
         (),
       ) =>
-    DragEventUtils.handleDragStart(folderNodeId, widget, dragImg, event);
+    DragEventUtils.handleDragStart(nodeId, widget, dragImg, event);
 
   let handleDragEnter =
       (
-        ~folderNodeId,
+        ~nodeId,
         ~handleWidgetFunc=AssetUtils.isWidget,
         ~handleRelationErrorFunc=AssetUtils.isTreeNodeRelationError,
         ~event=BaseEventTool.buildDragEvent(.),
         (),
       ) =>
     DragEventUtils.handleDragEnter(
-      folderNodeId,
+      nodeId,
       handleWidgetFunc,
       handleRelationErrorFunc,
       event,
@@ -694,14 +694,14 @@ module Drag = {
 
   let handleDrop =
       (
-        ~folderNodeId,
+        ~nodeId,
         ~handleWidgetFunc=AssetUtils.isWidget,
         ~handleRelationErrorFunc=AssetUtils.isTreeNodeRelationError,
         ~event=BaseEventTool.buildDragEvent(.),
         (),
       ) =>
     DragEventUtils.handleDrop(
-      folderNodeId,
+      nodeId,
       handleWidgetFunc,
       handleRelationErrorFunc,
       event,
@@ -713,19 +713,23 @@ module Drag = {
   let dragAssetTreeNode = (startNodeId, targetNodeId) => {
     let event = BaseEventTool.buildDragEvent(.);
 
-    handleDragStart(~folderNodeId=startNodeId, ~event, ());
-    handleDragEnter(~folderNodeId=targetNodeId, ~event, ());
-    handleDrop(~folderNodeId=targetNodeId, ~event, ());
+    handleDragStart(~nodeId=startNodeId, ~event, ());
+    handleDragEnter(~nodeId=targetNodeId, ~event, ());
+    handleDrop(~nodeId=targetNodeId, ~event, ());
     handleDragEnd(~event, ());
   };
 
   let dragAssetChildrenNodeIntoAssetTreeNode =
-      (startAssetChildrenNodeId, targetAssetTreeNodeId) => {
-    let event = BaseEventTool.buildDragEvent(.);
-
-    handleDragStart(~folderNodeId=startAssetChildrenNodeId, ~event, ());
-    handleDragEnter(~folderNodeId=targetAssetTreeNodeId, ~event, ());
-    handleDrop(~folderNodeId=targetAssetTreeNodeId, ~event, ());
-    handleDragEnd(~event, ());
-  };
+      (
+        ~startNodeId,
+        ~targetNodeId,
+        ~store=TestTool.buildEmptyAppState(),
+        ~dispatchFunc=TestTool.getDispatch(),
+        (),
+      ) =>
+    AssetTreeUtils.dragNodeToFolderFunc(
+      (store, dispatchFunc),
+      (),
+      (targetNodeId, startNodeId),
+    );
 };

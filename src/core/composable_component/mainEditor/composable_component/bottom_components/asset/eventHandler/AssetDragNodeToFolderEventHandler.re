@@ -53,10 +53,11 @@ module CustomEventHandler = {
     |> StateEditorService.setState
     |> ignore;
 
-  let handleSelfLogic = ((store, dispatchFunc), (), (targetId, removedId)) => {
+  let handleSelfLogic =
+      ((store, dispatchFunc), (), (targetNodeId, removedNodeId)) => {
     let editorState = StateEditorService.getState();
 
-    AssetUtils.isIdEqual(targetId, removedId) ?
+    AssetUtils.isIdEqual(targetNodeId, removedNodeId) ?
       dispatchFunc(AppStore.UpdateAction(Update([|BottomComponent|])))
       |> ignore :
       {
@@ -64,18 +65,18 @@ module CustomEventHandler = {
           editorState
           |> AssetTreeRootEditorService.getAssetTreeRoot
           |> OptionService.unsafeGet
-          |> AssetUtils.getSpecificTreeNodeById(removedId)
+          |> AssetUtils.getSpecificTreeNodeById(removedNodeId)
           |> OptionService.unsafeGet;
 
         let (newAssetTreeRoot, removedTreeNode) =
           editorState
           |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-          |> AssetUtils.removeSpecificTreeNode(removedId);
+          |> AssetUtils.removeSpecificTreeNode(removedNodeId);
 
         let editorState =
           newAssetTreeRoot
           |> AssetUtils.insertSourceTreeNodeToTargetTreeNodeChildren(
-               targetId,
+               targetNodeId,
                removedTreeNode,
              )
           |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);
@@ -83,10 +84,26 @@ module CustomEventHandler = {
         AssetNodeUtils.handleSpeficFuncByAssetNodeType(
           type_,
           (
-            _setFolderNodeParent(removedId, targetId |. Some, editorState),
-            _setTextureNodeParent(removedId, targetId |. Some, editorState),
-            _setMaterialNodeParent(removedId, targetId |. Some, editorState),
-            _setWDBNodeParent(removedId, targetId |. Some, editorState),
+            _setFolderNodeParent(
+              removedNodeId,
+              targetNodeId |. Some,
+              editorState,
+            ),
+            _setTextureNodeParent(
+              removedNodeId,
+              targetNodeId |. Some,
+              editorState,
+            ),
+            _setMaterialNodeParent(
+              removedNodeId,
+              targetNodeId |. Some,
+              editorState,
+            ),
+            _setWDBNodeParent(
+              removedNodeId,
+              targetNodeId |. Some,
+              editorState,
+            ),
           ),
           editorState,
         );

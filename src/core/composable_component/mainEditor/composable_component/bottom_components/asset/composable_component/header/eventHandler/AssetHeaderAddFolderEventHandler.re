@@ -13,6 +13,7 @@ module CustomEventHandler = {
         let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
         AddFolderNodeUtils.addFolderNodeToAssetTree(
+          AssetTreeNodeUtils.getFolderDefaultName(newIndex, editorState),
           (targetTreeNodeId, newIndex),
           (editorState, engineState),
         );

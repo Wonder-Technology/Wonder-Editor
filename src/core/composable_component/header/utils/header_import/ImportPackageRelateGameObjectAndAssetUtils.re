@@ -6,18 +6,22 @@ let _replaceGameObjectMaterialComponentToMaterialAsset =
       (defaultBasicMaterial, defaultLightMaterial),
       (basicMaterialMap, lightMaterialMap),
       engineState,
-    ) =>
-  RelateGameObjectAndAssetUtils.getRelatedMaterialDataFromGameObject(
+    ) => {
+  let (sourceMaterial, targetMaterial, materialType, _) =
+    RelateGameObjectAndAssetUtils.getRelatedMaterialDataFromGameObject(
+      gameObject,
+      WonderCommonlib.SparseMapService.createEmpty(),
+      (defaultBasicMaterial, defaultLightMaterial),
+      (basicMaterialMap, lightMaterialMap),
+      engineState,
+    );
+
+  RelateGameObjectAndAssetUtils.replaceToMaterialAssetMaterialComponent(
     gameObject,
-    (defaultBasicMaterial, defaultLightMaterial),
-    (basicMaterialMap, lightMaterialMap),
+    (sourceMaterial, targetMaterial, materialType),
     engineState,
-  )
-  |> RelateGameObjectAndAssetUtils.replaceToMaterialAssetMaterialComponent(
-       gameObject,
-       _,
-       engineState,
-     );
+  );
+};
 
 let _isGeometryPointDataEqual = (points1, points2, getLengthFunc, engineState) =>
   getLengthFunc(points1) === getLengthFunc(points2) && points1 == points2;

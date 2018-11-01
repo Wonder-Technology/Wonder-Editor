@@ -1,12 +1,12 @@
-let dragStart = (uid, widget, dragImg, event) => {
+let dragStart = (id, widget, dragImg, event) => {
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);
 
   DomHelper.stopPropagation(e);
   e##dataTransfer##setDragImage(dragImg |> DomHelperType.convertDomToJsObj, 0, 0)
   |> ignore;
   DragUtils.setDataTransferEffectIsMove(e);
-  DragUtils.setDragedId(uid, e);
-  CurrentDragSourceEditorService.setCurrentDragSource((widget, uid))
+  DragUtils.setDragedId(id, e);
+  CurrentDragSourceEditorService.setCurrentDragSource((widget, id))
   |> StateLogicService.getAndSetEditorState;
 };
 

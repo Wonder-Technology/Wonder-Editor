@@ -290,7 +290,7 @@ let _ =
                 MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
                 let material1 =
-                  MaterialAssetTool.getMaterialComponent(
+                  MainEditorAssetMaterialNodeTool.getMaterialComponent(
                     ~nodeId=addedMaterialNodeId1,
                     (),
                   );
@@ -379,12 +379,12 @@ let _ =
                 MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
                 let material1 =
-                  MaterialAssetTool.getMaterialComponent(
+                  MainEditorAssetMaterialNodeTool.getMaterialComponent(
                     ~nodeId=addedMaterialNodeId1,
                     (),
                   );
                 let material2 =
-                  MaterialAssetTool.getMaterialComponent(
+                  MainEditorAssetMaterialNodeTool.getMaterialComponent(
                     ~nodeId=addedMaterialNodeId2,
                     (),
                   );
@@ -516,12 +516,12 @@ let _ =
                 MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
                 let material1 =
-                  MaterialAssetTool.getMaterialComponent(
+                  MainEditorAssetMaterialNodeTool.getMaterialComponent(
                     ~nodeId=addedMaterialNodeId1,
                     (),
                   );
                 let material2 =
-                  MaterialAssetTool.getMaterialComponent(
+                  MainEditorAssetMaterialNodeTool.getMaterialComponent(
                     ~nodeId=addedMaterialNodeId2,
                     (),
                   );
@@ -1153,6 +1153,7 @@ let _ =
                    (),
                  )
                  |> then_(uploadedTextureNodeId1 => {
+                      WonderLog.Log.print("clear blob") |> ignore;
                       LoadTool.clearBlobData(.);
 
                       ImportPackageTool.testImportPackage(
@@ -1162,6 +1163,8 @@ let _ =
 
                             let (arrayBuffer, param) =
                               Array.unsafe_get(blobData, 0);
+
+                            WonderLog.Log.print(blobData) |> ignore;
 
                             (
                               blobData |> Js.Array.length,

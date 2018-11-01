@@ -8,14 +8,15 @@ let getAssetTreeRootName = () => "Assets";
 
 let getDefaultFolderName = () => "New Folder";
 
-let _getFolderDefaultName = (index, editorState) =>
+let getFolderDefaultName = (index, editorState) =>
   index === (editorState |> AssetTreeRootEditorService.getRootTreeNodeId) ?
     getAssetTreeRootName() : getDefaultFolderName();
 
 let addFolderIntoNodeMap =
-    (index, parentFolderNodeId, (editorState, engineState)) =>
-  editorState
-  |> _getFolderDefaultName(index)
+    (index, parentFolderNodeId, name, (editorState, engineState)) =>
+  /* editorState
+     |> getFolderDefaultName(index) */
+  name
   |. AssetUtils.getUniqueTreeNodeName(
        Folder,
        parentFolderNodeId,
@@ -58,7 +59,12 @@ let initRootAssetTree = (editorState, engineState) =>
 
     (
       rootIndex |. AssetTreeEditorService.buildAssetTreeNodeByIndex(Folder),
-      (editorState, engineState) |> addFolderIntoNodeMap(rootIndex, None),
+      (editorState, engineState)
+      |> addFolderIntoNodeMap(
+           rootIndex,
+           None,
+           getFolderDefaultName(rootIndex, editorState),
+         ),
     );
   | Some(assetTreeRoot) => (assetTreeRoot, editorState)
   };

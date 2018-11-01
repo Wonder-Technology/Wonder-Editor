@@ -1,12 +1,3 @@
-let getMaterialComponent =
-    (~nodeId, ~editorState=StateEditorService.getState(), ()) => {
-  let {materialComponent}: AssetNodeType.materialResultType =
-    StateEditorService.getState()
-    |> AssetMaterialNodeMapEditorService.unsafeGetResult(nodeId);
-
-  materialComponent;
-};
-
 let addOneLightMaterial = () => {
   let assetTreeData =
     MainEditorAssetTreeTool.BuildAssetTree.Material.buildOneMaterialAssetTree();
@@ -39,7 +30,10 @@ let addOneBasicMaterial = () => {
   /* MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial(); */
 
   let materialComponent =
-    getMaterialComponent(~nodeId=addedMaterialNodeId, ());
+    MainEditorAssetMaterialNodeTool.getMaterialComponent(
+      ~nodeId=addedMaterialNodeId,
+      (),
+    );
 
   MaterialInspectorTool.changeMaterialType(
     ~material=materialComponent,

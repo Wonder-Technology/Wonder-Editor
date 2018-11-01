@@ -34,6 +34,18 @@ let getTargetTreeNodeId = editorState =>
   | Some(nodeId) => nodeId
   };
 
+let getParentFolderNodeId = (folderNodeId, editorState) =>
+  switch (
+    folderNodeId
+    |> AssetFolderNodeMapEditorService.getFolderParentId(
+         _,
+         AssetFolderNodeMapEditorService.getFolderNodeMap(editorState),
+       )
+  ) {
+  | Some(parentFolderNodeId) => parentFolderNodeId
+  | None => AssetTreeRootEditorService.getRootTreeNodeId(editorState)
+  };
+
 let isIdEqual = (nodeId, targetNodeId) => nodeId === targetNodeId;
 
 let rec getSpecificTreeNodeById = (nodeId, targetTreeNode) =>
@@ -53,7 +65,8 @@ let rec getSpecificTreeNodeById = (nodeId, targetTreeNode) =>
       resultNode;
     };
 
-let _removeClonedGameObjectIfHasIt = (gameObjectUnodeId, editorState, engineState) =>
+let _removeClonedGameObjectIfHasIt =
+    (gameObjectUnodeId, editorState, engineState) =>
   switch (
     editorState
     |> AssetClonedGameObjectMapEditorService.getClonedGameObjectMap
@@ -463,8 +476,8 @@ let getUniqueTreeNodeName =
   };
 
 /* let isNodeWithTheNameExist =
-    (name, nodeType, parentFolderNodeId, (editorState, engineState)) =>
-  (editorState, engineState)
-  |> getChildrenNameAndIdArr(parentFolderNodeId, nodeType)
-  |> Js.Array.map(((name, nodeId)) => name)
-  |> Js.Array.includes(name); */
+     (name, nodeType, parentFolderNodeId, (editorState, engineState)) =>
+   (editorState, engineState)
+   |> getChildrenNameAndIdArr(parentFolderNodeId, nodeType)
+   |> Js.Array.map(((name, nodeId)) => name)
+   |> Js.Array.includes(name); */

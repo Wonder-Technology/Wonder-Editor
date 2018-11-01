@@ -166,8 +166,9 @@ let _ =
              (),
            ); */
         MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
-          thirdLayerFirstFolderNodeId,
-          secondLayerFirstFolderNodeId,
+          ~startNodeId=thirdLayerFirstFolderNodeId,
+          ~targetNodeId=secondLayerFirstFolderNodeId,
+          (),
         );
         MainEditorAssetTreeTool.Select.selectFolderNode(
           ~nodeId=secondLayerFirstFolderNodeId,
@@ -191,15 +192,16 @@ let _ =
           );
 
         MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
-          thirdLayerFirstTextureNodeId,
-          secondLayerFirstFolderNodeId,
+          ~startNodeId=thirdLayerFirstTextureNodeId,
+          ~targetNodeId=secondLayerFirstFolderNodeId,
+          (),
         );
         MainEditorAssetTreeTool.Select.selectFolderNode(
           ~nodeId=secondLayerFirstFolderNodeId,
           (),
         );
 
-        BuildComponentTool.buildAssetComponent()
+        BuildComponentTool.buildAssetChildrenNode()
         |> ReactTestTool.createSnapshotAndMatch;
       });
 
@@ -212,10 +214,12 @@ let _ =
           );
 
         MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
-          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstTextureNodeId(
-            assetTreeData,
-          ),
-          thirdLayerFirstFolderNodeId,
+          ~startNodeId=
+            MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstTextureNodeId(
+              assetTreeData,
+            ),
+          ~targetNodeId=thirdLayerFirstFolderNodeId,
+          (),
         );
         MainEditorAssetTreeTool.Select.selectFolderNode(
           ~nodeId=thirdLayerFirstFolderNodeId,
