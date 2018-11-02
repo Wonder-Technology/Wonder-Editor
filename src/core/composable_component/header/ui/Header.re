@@ -1,8 +1,4 @@
-type navType =
-  | None
-  | File
-  | Edit
-  | Help;
+open HeaderType;
 
 type state = {
   isSelectNav: bool,
@@ -11,21 +7,14 @@ type state = {
   isShowHelpVersionModal: bool,
 };
 
-type action =
-  | HoverNav(navType)
-  | ToggleShowNav(navType)
-  | BlurNav
-  | ShowEditExportModal
-  | HideEditExportModal
-  | ShowHelpVersionModal
-  | HideHelpVersionModal;
-
 module Method = {
   let getStorageParentKey = () => "userExtension";
   /* todo use extension names instead of the name */
 
   let addExtension = text =>
     AppExtensionUtils.setExtension(getStorageParentKey(), text);
+
+  let importPackage = HeaderImportPackageEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let buildFileComponent = (state, send, store, dispatchFunc) => {
     let className =
@@ -104,11 +93,12 @@ module Method = {
                 multiple=false
                 onChange=(
                   e =>
-                    HeaderImportPackageUtils.importPackage(dispatchFunc, e)
-                    |> Js.Promise.then_(_ =>
-                         send(BlurNav) |> Js.Promise.resolve
-                       )
-                    |> ignore
+                    importPackage((store, dispatchFunc), (send, BlurNav), e)
+                    /* HeaderImportPackageUtils.importPackage(dispatchFunc, e)
+                       |> Js.Promise.then_(_ =>
+                            send(BlurNav) |> Js.Promise.resolve
+                          )
+                       |> ignore */
                 )
                 onFocus=(
                   e =>

@@ -16,6 +16,7 @@ module.exports = {
 
   scopes: [
       { name: "scene-tree" },
+      { name: "redo-undo" },
       { name: "inspector" },
       { name: "asset" },
       { name: "package" },
