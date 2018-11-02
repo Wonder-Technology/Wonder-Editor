@@ -191,7 +191,7 @@ module Method = {
                   (DomHelper.textEl("Version:"))
                 </div>
                 <div className="field-content">
-                  (DomHelper.textEl("1.0.0"))
+                  (DomHelper.textEl(Copyright.getVersion()))
                 </div>
               </div>
             }
