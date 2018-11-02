@@ -86,6 +86,12 @@ let _ =
                 assetTreeData,
               );
 
+            MainEditorAssetTreeTool.Drag.dragAssetTreeNode(
+              ~startNodeId=secondFolderNodeId,
+              ~targetNodeId=firstFolderNodeId,
+              (),
+            );
+
             MainEditorAssetTreeTool.Select.selectFolderNode(
               ~nodeId=
                 MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId(
@@ -93,12 +99,7 @@ let _ =
                 ),
               (),
             );
-            MainEditorAssetTreeTool.Drag.dragAssetTreeNode(
-              secondFolderNodeId,
-              firstFolderNodeId,
-            );
-
-            BuildComponentTool.buildAssetComponent()
+            BuildComponentTool.buildAssetTree()
             |> ReactTestTool.createSnapshotAndMatch;
           });
         });
@@ -123,10 +124,12 @@ let _ =
             |> StateLogicService.getAndSetEditorState;
 
             MainEditorAssetTreeTool.Drag.dragAssetTreeNode(
-              nodeId,
-              MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getRootNodeId(
-                assetTreeData,
-              ),
+              ~startNodeId=nodeId,
+              ~targetNodeId=
+                MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getRootNodeId(
+                  assetTreeData,
+                ),
+              (),
             );
 
             BuildComponentTool.buildAssetComponent()
@@ -241,8 +244,9 @@ let _ =
           );
 
         MainEditorAssetTreeTool.Drag.dragAssetTreeNode(
-          firstFolderNodeId,
-          firstFolderNodeId,
+          ~startNodeId=firstFolderNodeId,
+          ~targetNodeId=firstFolderNodeId,
+          (),
         );
 
         BuildComponentTool.buildAssetComponent()
@@ -253,12 +257,15 @@ let _ =
           MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.buildFourFolderAssetTree();
 
         MainEditorAssetTreeTool.Drag.dragAssetTreeNode(
-          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getSecondLayerSecondFolderNodeId(
-            assetTreeData,
-          ),
-          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getThirdLayerFirstFolderNodeId(
-            assetTreeData,
-          ),
+          ~startNodeId=
+            MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getSecondLayerSecondFolderNodeId(
+              assetTreeData,
+            ),
+          ~targetNodeId=
+            MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getThirdLayerFirstFolderNodeId(
+              assetTreeData,
+            ),
+          (),
         );
 
         BuildComponentTool.buildAssetComponent()

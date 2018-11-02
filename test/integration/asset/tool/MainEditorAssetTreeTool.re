@@ -667,57 +667,19 @@ module Select = {
 };
 
 module Drag = {
-  let handleDragStart =
+  let dragAssetTreeNode =
       (
-        ~nodeId,
-        ~widget=AssetUtils.getWidget(),
-        ~dragImg=DomHelper.createElement("img"),
-        ~event=BaseEventTool.buildDragEvent(.),
+        ~startNodeId,
+        ~targetNodeId,
+        ~store=TestTool.buildEmptyAppState(),
+        ~dispatchFunc=TestTool.getDispatch(),
         (),
       ) =>
-    DragEventUtils.handleDragStart(nodeId, widget, dragImg, event);
-
-  let handleDragEnter =
-      (
-        ~nodeId,
-        ~handleWidgetFunc=AssetUtils.isWidget,
-        ~handleRelationErrorFunc=AssetUtils.isTreeNodeRelationError,
-        ~event=BaseEventTool.buildDragEvent(.),
-        (),
-      ) =>
-    DragEventUtils.handleDragEnter(
-      nodeId,
-      handleWidgetFunc,
-      handleRelationErrorFunc,
-      event,
+    AssetTreeUtils.dragNodeToFolderFunc(
+      (store, dispatchFunc),
+      (),
+      (targetNodeId, startNodeId),
     );
-
-  let handleDrop =
-      (
-        ~nodeId,
-        ~handleWidgetFunc=AssetUtils.isWidget,
-        ~handleRelationErrorFunc=AssetUtils.isTreeNodeRelationError,
-        ~event=BaseEventTool.buildDragEvent(.),
-        (),
-      ) =>
-    DragEventUtils.handleDrop(
-      nodeId,
-      handleWidgetFunc,
-      handleRelationErrorFunc,
-      event,
-    );
-
-  let handleDragEnd = (~event=BaseEventTool.buildDragEvent(.), ()) =>
-    DragEventUtils.handleDrageEnd(event);
-
-  let dragAssetTreeNode = (startNodeId, targetNodeId) => {
-    let event = BaseEventTool.buildDragEvent(.);
-
-    handleDragStart(~nodeId=startNodeId, ~event, ());
-    handleDragEnter(~nodeId=targetNodeId, ~event, ());
-    handleDrop(~nodeId=targetNodeId, ~event, ());
-    handleDragEnd(~event, ());
-  };
 
   let dragAssetChildrenNodeIntoAssetTreeNode =
       (
