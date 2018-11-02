@@ -74,57 +74,60 @@ let _addMaterialNodeToAssetTree =
       siblingFolderDataArr,
       parentFolderNodeId,
       (editorState, engineState),
-    ) => {
-  let folderName = "Materials";
+    ) =>
+  extractedMaterialAssetDataArr |> Js.Array.length === 0 ?
+    (editorState, engineState) :
+    {
+      let folderName = "Materials";
 
-  let (editorState, folderNodeId) =
-    _buildFolderNode(
-      siblingFolderDataArr,
-      folderName,
-      parentFolderNodeId,
-      (editorState, engineState),
-    );
+      let (editorState, folderNodeId) =
+        _buildFolderNode(
+          siblingFolderDataArr,
+          folderName,
+          parentFolderNodeId,
+          (editorState, engineState),
+        );
 
-  /* WonderLog.Log.print((
-       "extractedMaterialAssetDataArr: ",
-       extractedMaterialAssetDataArr,
-       folderNodeId,
-       siblingFolderDataArr,
-     ))
-     |> ignore; */
+      /* WonderLog.Log.print((
+           "extractedMaterialAssetDataArr: ",
+           extractedMaterialAssetDataArr,
+           folderNodeId,
+           siblingFolderDataArr,
+         ))
+         |> ignore; */
 
-  extractedMaterialAssetDataArr
-  |> WonderCommonlib.ArrayService.reduceOneParam(
-       (.
-         (editorState, engineState),
-         ((material, materialType), (getNameFunc, setNameFunc)),
-       ) => {
-         let materialName =
-           getNameFunc(material, materialType, engineState)
-           |. AssetUtils.getUniqueTreeNodeName(
-                AssetNodeType.Material,
-                folderNodeId |. Some,
-                (editorState, engineState),
-              );
+      extractedMaterialAssetDataArr
+      |> WonderCommonlib.ArrayService.reduceOneParam(
+           (.
+             (editorState, engineState),
+             ((material, materialType), (getNameFunc, setNameFunc)),
+           ) => {
+             let materialName =
+               getNameFunc(material, materialType, engineState)
+               |. AssetUtils.getUniqueTreeNodeName(
+                    AssetNodeType.Material,
+                    folderNodeId |. Some,
+                    (editorState, engineState),
+                  );
 
-         let engineState =
-           setNameFunc(material, materialType, materialName, engineState);
+             let engineState =
+               setNameFunc(material, materialType, materialName, engineState);
 
-         let (editorState, materialNodeId) =
-           AssetIdUtils.generateAssetId(editorState);
+             let (editorState, materialNodeId) =
+               AssetIdUtils.generateAssetId(editorState);
 
-         let editorState =
-           AddMaterialNodeUtils.addMaterialNodeToAssetTree(
-             material,
-             (folderNodeId, materialNodeId),
-             editorState,
-           );
+             let editorState =
+               AddMaterialNodeUtils.addMaterialNodeToAssetTree(
+                 material,
+                 (folderNodeId, materialNodeId),
+                 editorState,
+               );
 
-         (editorState, engineState);
-       },
-       (editorState, engineState),
-     );
-};
+             (editorState, engineState);
+           },
+           (editorState, engineState),
+         );
+    };
 
 let _addTextureNodeToAssetTree =
     (
@@ -132,70 +135,73 @@ let _addTextureNodeToAssetTree =
       siblingFolderDataArr,
       parentFolderNodeId,
       (editorState, engineState),
-    ) => {
-  let folderName = "Textures";
+    ) =>
+  extractedTextureAssetDataArr |> Js.Array.length === 0 ?
+    (editorState, engineState) :
+    {
+      let folderName = "Textures";
 
-  let (editorState, folderNodeId) =
-    _buildFolderNode(
-      siblingFolderDataArr,
-      folderName,
-      parentFolderNodeId,
-      (editorState, engineState),
-    );
+      let (editorState, folderNodeId) =
+        _buildFolderNode(
+          siblingFolderDataArr,
+          folderName,
+          parentFolderNodeId,
+          (editorState, engineState),
+        );
 
-  /* WonderLog.Log.print((
-       "extractedTextureAssetDataArr: ",
-       extractedTextureAssetDataArr,
-       folderNodeId,
-       siblingFolderDataArr,
-     ))
-     |> ignore; */
+      /* WonderLog.Log.print((
+           "extractedTextureAssetDataArr: ",
+           extractedTextureAssetDataArr,
+           folderNodeId,
+           siblingFolderDataArr,
+         ))
+         |> ignore; */
 
-  extractedTextureAssetDataArr
-  |> WonderCommonlib.ArrayService.reduceOneParam(
-       (.
-         (editorState, engineState),
-         (
-           texture,
-           (mimeType, imageUint8Array),
-           imageName,
-           (getTextureNameFunc, setTextureNameFunc),
-         ),
-       ) => {
-         let textureName =
-           getTextureNameFunc(texture, engineState)
-           |. AssetUtils.getUniqueTreeNodeName(
-                AssetNodeType.Texture,
-                folderNodeId |. Some,
-                (editorState, engineState),
-              );
+      extractedTextureAssetDataArr
+      |> WonderCommonlib.ArrayService.reduceOneParam(
+           (.
+             (editorState, engineState),
+             (
+               texture,
+               (mimeType, imageUint8Array),
+               imageName,
+               (getTextureNameFunc, setTextureNameFunc),
+             ),
+           ) => {
+             let textureName =
+               getTextureNameFunc(texture, engineState)
+               |. AssetUtils.getUniqueTreeNodeName(
+                    AssetNodeType.Texture,
+                    folderNodeId |. Some,
+                    (editorState, engineState),
+                  );
 
-         let engineState =
-           setTextureNameFunc(textureName, texture, engineState);
+             let engineState =
+               setTextureNameFunc(textureName, texture, engineState);
 
-         let (imageNodeId, editorState) =
-           AddTextureNodeUtils.addImageNodeByUint8Array(
-             imageUint8Array,
-             imageName,
-             mimeType,
-             editorState,
-           );
+             let (imageNodeId, editorState) =
+               AddTextureNodeUtils.addImageNodeByUint8Array(
+                 imageUint8Array,
+                 imageName,
+                 mimeType,
+                 editorState,
+               );
 
-         let (editorState, textureNodeId) =
-           AssetIdUtils.generateAssetId(editorState);
+             let (editorState, textureNodeId) =
+               AssetIdUtils.generateAssetId(editorState);
 
-         let editorState =
-           AddTextureNodeUtils.addTextureNodeToAssetTree(
-             texture,
-             (folderNodeId, textureNodeId, imageNodeId),
-             editorState,
-           );
+             let editorState =
+               AddTextureNodeUtils.addTextureNodeToAssetTree(
+                 texture,
+                 (folderNodeId, textureNodeId, imageNodeId),
+                 editorState,
+               );
 
-         (editorState, engineState);
-       },
-       (editorState, engineState),
-     );
-};
+             (editorState, engineState);
+           },
+           (editorState, engineState),
+         );
+    };
 
 let _addNodeToAssetTree =
     (

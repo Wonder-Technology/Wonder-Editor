@@ -114,6 +114,54 @@ let _ =
           |> ignore
         );
 
+        describe("if wdb has no material", () => {
+          let wdbArrayBuffer = ref(Obj.magic(1));
+
+          let _generateWDB = () =>
+            WDBTool.generateWDB((editorState, engineState) => {
+              let (editorState, (engineState, gameObject1)) =
+                GameObjectLogicService.createGameObject((
+                  editorState,
+                  engineState,
+                ));
+
+              let (engineState, rootGameObject) =
+                GameObjectEngineService.create(engineState);
+
+              let engineState =
+                engineState
+                |> GameObjectUtils.addChild(rootGameObject, gameObject1);
+
+              (rootGameObject, (editorState, engineState));
+            });
+
+          beforeAll(() => wdbArrayBuffer := _generateWDB());
+
+          testPromise("should has no extracted assets", () => {
+            EventListenerTool.buildFakeDom()
+            |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+
+            MainEditorAssetUploadTool.loadOneWDB(
+              ~arrayBuffer=wdbArrayBuffer^,
+              (),
+            )
+            |> then_(uploadedWDBNodeId => {
+                 let editorState = StateEditorService.getState();
+
+                 MainEditorAssetTreeTool.Select.selectFolderNode(
+                   ~nodeId=
+                     AssetTreeRootEditorService.getRootTreeNodeId
+                     |> StateLogicService.getEditorState,
+                   (),
+                 );
+
+                 BuildComponentTool.buildAssetChildrenNode()
+                 |> ReactTestTool.createSnapshotAndMatch
+                 |> resolve;
+               });
+          });
+        });
+
         describe("extract material assets", () => {
           describe("test asset tree", () => {
             describe(
@@ -620,7 +668,6 @@ let _ =
           });
         });
 
-        /* TODO refactor */
         describe("fix bug", () => {
           let wdbArrayBuffer = ref(Obj.magic(1));
 
