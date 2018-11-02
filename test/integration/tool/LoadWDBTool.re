@@ -11,11 +11,12 @@ let getBoxTexturedMeshGameObjects = engineState =>
 let getBoxTexturedMeshGameObject = engineState =>
   engineState |> getBoxTexturedMeshGameObjects |> ArrayService.unsafeGetFirst;
 
-let getBoxTexturedMeshGameObjectFromAssetNode = (wdbNodeId, editorState) => {
+let getBoxTexturedMeshGameObjectFromAssetNode =
+    (wdbNodeId, (editorState, engineState)) => {
   let wdbGameObject =
     MainEditorAssetWDBNodeTool.getWDBGameObject(wdbNodeId, editorState);
 
-  wdbGameObject |> GameObjectTool.getChildren |> ArrayService.unsafeGetFirst;
+  GameObjectTool.getChild(wdbGameObject, 0, engineState);
 };
 
 let getBoxTexturedMeshGameObjectMaterialType = () => AssetMaterialDataType.LightMaterial;

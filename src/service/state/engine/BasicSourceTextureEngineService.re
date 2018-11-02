@@ -55,5 +55,11 @@ let setType = (type_, texture, engineState) =>
   engineState
   |> BasicSourceTextureAPI.setBasicSourceTextureType(texture, type_);
 
+let getFlipY = BasicSourceTextureAPI.getBasicSourceTextureFlipY;
+
+let setFlipY = (filpY, texture, engineState) =>
+  engineState
+  |> BasicSourceTextureAPI.setBasicSourceTextureFlipY(texture, filpY);
+
 let initTexture = (texture, state) =>
   InitSourceTextureMainService.initTexture(texture |. Some, state);

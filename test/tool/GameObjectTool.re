@@ -1,6 +1,8 @@
-let getChildren = gameObject =>
-  StateEngineService.unsafeGetState()
-  |> GameObjectUtils.getChildren(gameObject);
+let getChildren = (gameObject, engineState) =>
+  GameObjectUtils.getChildren(gameObject, engineState);
+
+let getChild = (gameObject, index, engineState) =>
+  Array.unsafe_get(getChildren(gameObject, engineState), index);
 
 let unsafeGetCurrentSceneTreeNode = () =>
   SceneEditorService.unsafeGetCurrentSceneTreeNode

@@ -236,7 +236,7 @@ let _ =
                    let boxTexturedMeshGameObject =
                      LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
                        uploadedWDBNodeId,
-                       editorState,
+                       (editorState, engineState),
                      );
                    let material =
                      boxTexturedMeshGameObject
@@ -273,7 +273,7 @@ let _ =
                         let boxTexturedMeshGameObject1 =
                           LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
                             uploadedWDBNodeId1,
-                            editorState,
+                            (editorState, engineState),
                           );
                         let material1 =
                           boxTexturedMeshGameObject1
@@ -285,7 +285,7 @@ let _ =
                         let boxTexturedMeshGameObject2 =
                           LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
                             uploadedWDBNodeId2,
-                            editorState,
+                            (editorState, engineState),
                           );
                         let material2 =
                           boxTexturedMeshGameObject2
@@ -516,7 +516,7 @@ let _ =
                    let boxTexturedMeshGameObject =
                      LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
                        uploadedWDBNodeId,
-                       editorState,
+                       (editorState, engineState),
                      );
                    let diffuseMap =
                      boxTexturedMeshGameObject
@@ -551,7 +551,7 @@ let _ =
                    let boxTexturedMeshGameObject1 =
                      LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
                        uploadedWDBNodeId1,
-                       editorState,
+                       (editorState, engineState),
                      );
                    let material1 =
                      boxTexturedMeshGameObject1
@@ -585,7 +585,7 @@ let _ =
                         let boxTexturedMeshGameObject2 =
                           LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
                             uploadedWDBNodeId2,
-                            editorState,
+                            (editorState, engineState),
                           );
                         let diffuseMap2 =
                           boxTexturedMeshGameObject2
@@ -618,6 +618,121 @@ let _ =
                  })
             );
           });
+        });
+
+        /* TODO refactor */
+        describe("fix bug", () => {
+          let wdbArrayBuffer = ref(Obj.magic(1));
+
+          let _generateWDB = () =>
+            WDBTool.generateWDB((editorState, engineState) => {
+              let (engineState, geometry) =
+                GeometryEngineService.createCubeGeometry(engineState);
+              let (engineState, lightMaterial1) =
+                LightMaterialEngineService.create(engineState);
+
+              let (engineState, lightMaterial2) =
+                LightMaterialEngineService.create(engineState);
+
+              let (engineState, map1) =
+                BasicSourceTextureEngineService.create(engineState);
+
+              let (engineState, map2) =
+                BasicSourceTextureEngineService.create(engineState);
+
+              let source = WDBTool.buildSource(~name="image.png", ());
+
+              let engineState =
+                BasicSourceTextureEngineService.setSource(
+                  source,
+                  map1,
+                  engineState,
+                )
+                |> BasicSourceTextureEngineService.setSource(source, map2);
+
+              let engineState =
+                lightMaterial1
+                |> LightMaterialEngineService.setLightMaterialDiffuseMap(
+                     map1,
+                     _,
+                     engineState,
+                   );
+
+              let engineState =
+                lightMaterial2
+                |> LightMaterialEngineService.setLightMaterialDiffuseMap(
+                     map2,
+                     _,
+                     engineState,
+                   );
+
+              let (editorState, engineState, box1) =
+                PrimitiveEngineService.createBox(
+                  (geometry, lightMaterial1),
+                  editorState,
+                  engineState,
+                );
+
+              let (editorState, engineState, box2) =
+                PrimitiveEngineService.createBox(
+                  (geometry, lightMaterial1),
+                  editorState,
+                  engineState,
+                );
+
+              let (editorState, engineState, box3) =
+                PrimitiveEngineService.createBox(
+                  (geometry, lightMaterial2),
+                  editorState,
+                  engineState,
+                );
+
+              let (engineState, rootGameObject) =
+                GameObjectEngineService.create(engineState);
+
+              let engineState =
+                engineState
+                |> GameObjectUtils.addChild(rootGameObject, box1)
+                |> GameObjectUtils.addChild(rootGameObject, box2)
+                |> GameObjectUtils.addChild(rootGameObject, box3);
+
+              (rootGameObject, (editorState, engineState));
+            });
+
+          beforeAll(() => wdbArrayBuffer := _generateWDB());
+
+          testPromise(
+            {|
+          1.load wdb asset a1(
+          has three children: c1, c2, c3;
+          c1,c2 share one material m1;
+          c3 use material m2;
+          m1 use texture t1;
+          m2 use texture t2;
+          t1,t2 use the same image i1;
+          )
+
+          should extract 2 texture assets;
+          should only has one image node;
+          |},
+            () =>
+            MainEditorAssetUploadTool.loadOneWDB(
+              ~arrayBuffer=wdbArrayBuffer^,
+              (),
+            )
+            |> then_(uploadedWDBNodeId => {
+                 let editorState = StateEditorService.getState();
+
+                 (
+                   AssetTextureNodeMapEditorService.getValidValues(editorState)
+                   |> Js.Array.length,
+                   AssetImageNodeMapEditorService.getValidValues(editorState)
+                   |> Js.Array.length,
+                 )
+                 |> expect == (2, 1)
+                 |> resolve;
+               })
+          );
         });
       });
 

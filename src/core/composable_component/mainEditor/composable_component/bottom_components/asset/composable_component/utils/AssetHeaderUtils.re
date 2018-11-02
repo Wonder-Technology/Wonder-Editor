@@ -360,17 +360,17 @@ let _handleAssetWDBType =
                   {
                     let (
                       extractedMaterialAssetDataArr,
-                      hasExtractedTextureAssetMap,
+                      hasExtractedMaterialAssetMap,
                     ) =
                       switch (sourceMaterial, materialType) {
                       | (Some(sourceMaterial), Some(materialType)) =>
                         _hasExtractedAsset(
                           sourceMaterial,
-                          hasExtractedTextureAssetMap,
+                          hasExtractedMaterialAssetMap,
                         ) ?
                           (
                             extractedMaterialAssetDataArr,
-                            hasExtractedTextureAssetMap,
+                            hasExtractedMaterialAssetMap,
                           ) :
                           (
                             extractedMaterialAssetDataArr
@@ -389,7 +389,7 @@ let _handleAssetWDBType =
                           )
                       | _ => (
                           extractedMaterialAssetDataArr,
-                          hasExtractedTextureAssetMap,
+                          hasExtractedMaterialAssetMap,
                         )
                       };
 

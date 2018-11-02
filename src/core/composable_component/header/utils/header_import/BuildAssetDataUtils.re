@@ -101,7 +101,18 @@ let buildTextureData =
   |> WonderCommonlib.ArrayService.reduceOneParami(
        (.
          (textureMap, (editorState, engineState)),
-         {path, source, name, magFilter, minFilter, wrapS, wrapT}: ExportAssetType.texture,
+         {
+           path,
+           source,
+           name,
+           magFilter,
+           minFilter,
+           wrapS,
+           wrapT,
+           format,
+           type_,
+           flipY,
+         }: ExportAssetType.texture,
          textureIndex,
        ) => {
          let (engineState, texture) =
@@ -125,6 +136,12 @@ let buildTextureData =
                 minFilter |> TextureTypeUtils.convertIntToFilter,
                 texture,
               )
+           |> BasicSourceTextureEngineService.setFormat(
+                format |> TextureTypeUtils.convertIntToFormat,
+                texture,
+              )
+           |> BasicSourceTextureEngineService.setType(type_, texture)
+           |> BasicSourceTextureEngineService.setFlipY(flipY, texture)
            |> BasicSourceTextureEngineService.setBasicSourceTextureName(
                 name,
                 texture,

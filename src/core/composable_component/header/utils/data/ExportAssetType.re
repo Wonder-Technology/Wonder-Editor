@@ -12,6 +12,9 @@ type texture = {
   minFilter: int,
   wrapS: int,
   wrapT: int,
+  format: int,
+  type_: int,
+  flipY: bool
 };
 
 type wdb = {

@@ -132,6 +132,17 @@ let createDefaultScene = (sandbox, initFunc) => {
   initFunc();
 };
 
+let createDefaultComponents = () => {
+  let editorState = StateEditorService.getState();
+  let engineState = StateEngineService.unsafeGetState();
+
+  let (editorState, engineState, cubeGeometry) =
+    DefaultSceneUtils.prepareDefaultComponent(editorState, engineState);
+
+  editorState |> StateEditorService.setState |> ignore;
+  engineState |> StateEngineService.setState |> ignore;
+};
+
 let getCameraInDefaultScene = engineState =>
   GameObjectUtils.getChildren(unsafeGetScene(), engineState)
   |> Js.Array.filter(gameObject =>

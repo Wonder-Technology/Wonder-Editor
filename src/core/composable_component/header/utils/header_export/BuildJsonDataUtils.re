@@ -164,6 +164,22 @@ let _buildTextureData = (imageIndexMap, (editorState, engineState)) =>
                     engineState,
                   )
                   |> TextureTypeUtils.convertFilterToInt,
+                format:
+                  BasicSourceTextureEngineService.getFormat(
+                    textureComponent,
+                    engineState,
+                  )
+                  |> TextureTypeUtils.convertFormatToInt,
+                type_:
+                  BasicSourceTextureEngineService.getType(
+                    textureComponent,
+                    engineState,
+                  ),
+                flipY:
+                  BasicSourceTextureEngineService.getFlipY(
+                    textureComponent,
+                    engineState,
+                  ),
               }: ExportAssetType.texture,
             ),
        ),

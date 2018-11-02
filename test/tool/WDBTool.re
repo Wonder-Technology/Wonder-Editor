@@ -63,8 +63,57 @@ let _createStateTuple = () => {
   (editorState, engineState);
 };
 
+let _buildFakeCanvas = (sandbox, base64, callIndex) => {
+  open Sinon;
+
+  let toDataURLStub = createEmptyStubWithJsObjSandbox(sandbox);
+  toDataURLStub |> returns(base64);
+
+  let canvasDom = {
+    "width": 0,
+    "height": 0,
+    "getContext": () => {
+      "drawImage": createEmptyStubWithJsObjSandbox(sandbox),
+    },
+    "toDataURL": toDataURLStub,
+  };
+
+  canvasDom;
+};
+
+let _prepareFakeCanvas = sandbox => {
+  open Sinon;
+
+  let base64_1 = "data:image/png;base64,aaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaacccccccccccccccccccccccaacccccccccccccccccccccccaaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaccccccccccccccccccccccc";
+  let base64_2 = "data:image/jpeg;base64,bbb";
+  let canvas1 = _buildFakeCanvas(sandbox, base64_1, 0);
+  let canvas2 = _buildFakeCanvas(sandbox, base64_2, 1);
+
+  let createElementStub =
+    createMethodStub(
+      refJsObjToSandbox(sandbox^),
+      DomHelper.document |> Obj.magic,
+      "createElement",
+    );
+
+  createElementStub
+  |> withOneArg("canvas")
+  |> onCall(0)
+  |> returns(canvas1)
+  |> onCall(1)
+  |> returns(canvas2)
+  |> ignore;
+
+  (base64_1, base64_2);
+};
+
 let generateWDB = buildWDBGameObjectFunc => {
+  open Sinon;
+
   let (editorState, engineState) = _createStateTuple();
+
+  let sandbox = ref(createSandbox());
+  let _ = _prepareFakeCanvas(sandbox);
 
   let (rootGameObject, (editorState, engineState)) =
     buildWDBGameObjectFunc(editorState, engineState);
@@ -74,8 +123,13 @@ let generateWDB = buildWDBGameObjectFunc => {
   let (engineState, wdbArrayBuffer) =
     HeaderExportPackageUtils._generateWDB(rootGameObject, engineState);
 
+  restoreSandbox(refJsObjToSandbox(sandbox^));
+
   wdbArrayBuffer;
 };
+
+let buildSource = (~width=1, ~height=2, ~name="image.png", ()) =>
+  {"width": width, "height": height, "name": name} |> Obj.magic;
 
 let generateDirectionPointLightsAndBoxWDB = () =>
   generateWDB((editorState, engineState) => {

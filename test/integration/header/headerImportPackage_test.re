@@ -55,9 +55,9 @@ let _ =
       (base64_1, base64_2);
     };
 
-    beforeAll(() =>
-      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
-    );
+    beforeAll(() => {
+      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
+    });
 
     beforeEach(() => {
       sandbox := createSandbox();
@@ -76,7 +76,7 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test import package scene wdb", () => {
+    describe("test import scene wdb", () => {
       beforeEach(() => {
         MainEditorSceneTool.initStateWithJob(
           ~sandbox,
@@ -1104,6 +1104,70 @@ let _ =
                )
              )
         );
+
+        describe("should keep texture data not change", () => {
+          let _test = (value, (getValueFunc, setValueFunc)) =>
+            MainEditorAssetUploadTool.loadOneTexture()
+            |> then_(uploadedTextureNodeId => {
+                 let editorState = StateEditorService.getState();
+                 let engineState = StateEngineService.unsafeGetState();
+
+                 let texture =
+                   MainEditorAssetTextureNodeTool.getTextureComponent(
+                     uploadedTextureNodeId,
+                     editorState,
+                   );
+
+                 let engineState = setValueFunc(value, texture, engineState);
+
+                 editorState |> StateEditorService.setState |> ignore;
+                 engineState |> StateEngineService.setState |> ignore;
+
+                 ImportPackageTool.testImportPackage(
+                   ~testFunc=
+                     () => {
+                       let engineState = StateEngineService.unsafeGetState();
+
+                       let textureComponent =
+                         ImportPackageTool.getImportedTextureAssetTextureComponents()
+                         |> ArrayService.unsafeGetFirst;
+
+                       getValueFunc(textureComponent, engineState)
+                       |> expect == value
+                       |> resolve;
+                     },
+                   (),
+                 );
+               });
+
+          testPromise("test format", () =>
+            _test(
+              Wonderjs.SourceTextureType.Luminance,
+              (
+                BasicSourceTextureEngineService.getFormat,
+                BasicSourceTextureEngineService.setFormat,
+              ),
+            )
+          );
+          testPromise("test type_", () =>
+            _test(
+              3,
+              (
+                BasicSourceTextureEngineService.getType,
+                BasicSourceTextureEngineService.setType,
+              ),
+            )
+          );
+          testPromise("test flipY", () =>
+            _test(
+              false,
+              (
+                BasicSourceTextureEngineService.getFlipY,
+                BasicSourceTextureEngineService.setFlipY,
+              ),
+            )
+          );
+        });
       });
 
       describe("test import wdb assets", () => {
@@ -1116,10 +1180,17 @@ let _ =
             (),
           );
 
-          MainEditorSceneTool.createDefaultScene(
-            sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
-          );
+          /* MainEditorSceneTool.createDefaultScene(
+               sandbox,
+               MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+             ); */
+
+          MainEditorSceneTool.createDefaultComponents();
+
+          FakeGlToolEngine.setFakeGl(
+            FakeGlToolEngine.buildFakeGl(~sandbox, ()),
+          )
+          |> StateLogicService.getAndSetEngineState;
 
           DirectorToolEngine.prepareAndInitAllEnginState();
           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
@@ -1130,6 +1201,50 @@ let _ =
           LoadTool.clearBlobData(.);
           LoadTool.buildFakeBlob(.);
         });
+
+        describe("relate wdb asset gameObjects and material assets", () =>
+          testPromise("test", () =>
+            MainEditorAssetUploadTool.loadOneWDB(
+              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+              (),
+            )
+            |> then_(uploadedWDBNodeId => {
+                 MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                   ~wdbNodeId=uploadedWDBNodeId,
+                   (),
+                 );
+
+                 ImportPackageTool.testImportPackage(
+                   ~testFunc=
+                     () => {
+                       let editorState = StateEditorService.getState();
+                       let engineState = StateEngineService.unsafeGetState();
+
+                       let material =
+                         LoadWDBTool.getBoxTexturedMeshGameObject(engineState)
+                         |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                              _,
+                              engineState,
+                            );
+                       (
+                         MainEditorAssetMaterialNodeTool.hasMaterialComponent(
+                           material,
+                           LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
+                           editorState,
+                         ),
+                         AssetMaterialNodeMapEditorService.getValidValues(
+                           editorState,
+                         )
+                         |> SparseMapService.length,
+                       )
+                       |> expect == (true, 1)
+                       |> resolve;
+                     },
+                   (),
+                 );
+               })
+          )
+        );
 
         describe("fix bug", () =>
           testPromise(
@@ -1153,7 +1268,6 @@ let _ =
                    (),
                  )
                  |> then_(uploadedTextureNodeId1 => {
-                      WonderLog.Log.print("clear blob") |> ignore;
                       LoadTool.clearBlobData(.);
 
                       ImportPackageTool.testImportPackage(
@@ -1162,16 +1276,14 @@ let _ =
                             let blobData = LoadTool.getBlobData(.);
 
                             let (arrayBuffer, param) =
-                              Array.unsafe_get(blobData, 0);
-
-                            WonderLog.Log.print(blobData) |> ignore;
+                              Array.unsafe_get(blobData, 1);
 
                             (
                               blobData |> Js.Array.length,
                               arrayBuffer |> ArrayBuffer.byteLength,
                               param,
                             )
-                            |> expect == (2, 3, {"type": "image/png"})
+                            |> expect == (3, 3, {"type": "image/png"})
                             |> resolve;
                           },
                         (),
