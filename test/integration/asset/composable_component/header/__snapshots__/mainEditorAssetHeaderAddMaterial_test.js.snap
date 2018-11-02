@@ -60,7 +60,7 @@ exports[`MainEditorAssetHeader->add material else add material into specific tre
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        newFolder
+        New Folder
       </li>
     </ul>
     <ul
@@ -94,7 +94,7 @@ exports[`MainEditorAssetHeader->add material else add material into specific tre
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        newFolder
+        New Folder
       </li>
       <ul
         className="wonder-tree-node"
@@ -122,7 +122,7 @@ exports[`MainEditorAssetHeader->add material else add material into specific tre
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          newFolder
+          New Folder
         </li>
       </ul>
       <ul
@@ -151,7 +151,7 @@ exports[`MainEditorAssetHeader->add material else add material into specific tre
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          newFolder
+          New Folder
         </li>
       </ul>
     </ul>

@@ -1,32 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditorAssetHeader->load wdb test load file extract assets from loaded wdb asset extract material assets fix bug aaa 1`] = `
-<article
-  className="wonder-asset-assetChildren"
->
-  <article
-    className="wonder-asset-fileBox "
-    onClick={[Function]}
-  >
-    <div
-      className="box-image"
-    >
-      <img
-        onDragStart={[Function]}
-        src="./public/img/mat.png"
-      />
-    </div>
-    <div
-      className="item-text "
-    >
-      <span>
-        lightMaterial_0
-      </span>
-    </div>
-  </article>
-</article>
-`;
-
 exports[`MainEditorAssetHeader->load wdb test load file extract assets from loaded wdb asset extract material assets fix bug if wdb gameObjects share the same material, should only extrace the shared material once 1`] = `
 <article
   className="wonder-asset-assetChildren"

@@ -65,7 +65,7 @@ exports[`MainEditorAssetHeader->add folder else add folder into specific treeNod
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        newFolder
+        New Folder
       </li>
       <ul
         className="wonder-tree-node"
@@ -93,7 +93,7 @@ exports[`MainEditorAssetHeader->add folder else add folder into specific treeNod
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          newFolder
+          New Folder
         </li>
       </ul>
     </ul>
@@ -217,7 +217,7 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            newFolder
+            New Folder
           </li>
         </ul>
         <ul
@@ -246,7 +246,7 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            newFolder 1
+            New Folder 1
           </li>
         </ul>
       </ul>
@@ -285,7 +285,7 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
         className="item-text "
       >
         <span>
-          newFolder
+          New Folder
         </span>
       </div>
     </article>
@@ -319,7 +319,7 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
         className="item-text "
       >
         <span>
-          newFolder 1
+          New Folder 1
         </span>
       </div>
     </article>
@@ -391,7 +391,7 @@ exports[`MainEditorAssetHeader->add folder test name remove first folder which u
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        newFolder
+        New Folder
       </li>
     </ul>
     <ul
@@ -420,7 +420,7 @@ exports[`MainEditorAssetHeader->add folder test name remove first folder which u
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        newFolder 1
+        New Folder 1
       </li>
     </ul>
     <ul
@@ -449,7 +449,7 @@ exports[`MainEditorAssetHeader->add folder test name remove first folder which u
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        newFolder 2
+        New Folder 2
       </li>
     </ul>
   </ul>
@@ -516,7 +516,7 @@ exports[`MainEditorAssetHeader->add folder test name test add the same name fold
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        newFolder
+        New Folder
       </li>
     </ul>
     <ul
@@ -545,7 +545,7 @@ exports[`MainEditorAssetHeader->add folder test name test add the same name fold
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        newFolder 1
+        New Folder 1
       </li>
     </ul>
     <ul
@@ -574,7 +574,7 @@ exports[`MainEditorAssetHeader->add folder test name test add the same name fold
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        newFolder 2
+        New Folder 2
       </li>
     </ul>
     <ul
@@ -603,7 +603,7 @@ exports[`MainEditorAssetHeader->add folder test name test add the same name fold
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        newFolder 3
+        New Folder 3
       </li>
     </ul>
   </ul>

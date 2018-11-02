@@ -410,6 +410,7 @@ let _ =
                   (),
                 )
                 |> then_(uploadedWDBNodeId => {
+                  WonderLog.Log.print("aaa") |> ignore;
                      MainEditorAssetHeaderOperateNodeTool.removeWDBNode(
                        ~wdbNodeId=uploadedWDBNodeId,
                        (),
@@ -423,6 +424,7 @@ let _ =
                        (),
                      )
                      |> then_(_ => {
+                  WonderLog.Log.print("bbb") |> ignore;
                           let fileName = "BoxTextured";
 
                           MainEditorAssetUploadTool.loadOneWDB(

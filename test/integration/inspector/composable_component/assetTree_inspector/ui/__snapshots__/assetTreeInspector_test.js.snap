@@ -33,7 +33,7 @@ exports[`assetTree inspector prepare currentSelectSource test component snapshot
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="newFolder"
+            value="New Folder"
           />
         </div>
       </div>

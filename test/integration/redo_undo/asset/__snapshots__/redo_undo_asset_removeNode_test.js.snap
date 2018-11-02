@@ -116,7 +116,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            newFolder
+            New Folder
           </li>
         </ul>
       </ul>
@@ -155,7 +155,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
         className="item-text item-active"
       >
         <span>
-          newFolder
+          New Folder
         </span>
       </div>
     </article>
@@ -467,7 +467,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            newFolder
+            New Folder
           </li>
         </ul>
       </ul>
@@ -506,7 +506,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
         className="item-text item-active"
       >
         <span>
-          newFolder
+          New Folder
         </span>
       </div>
     </article>
@@ -630,7 +630,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            newFolder
+            New Folder
           </li>
         </ul>
         <ul
@@ -659,7 +659,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            newFolder
+            New Folder
           </li>
         </ul>
       </ul>
@@ -698,7 +698,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
         className="item-text item-active"
       >
         <span>
-          newFolder
+          New Folder
         </span>
       </div>
     </article>
@@ -732,7 +732,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
         className="item-text "
       >
         <span>
-          newFolder
+          New Folder
         </span>
       </div>
     </article>
