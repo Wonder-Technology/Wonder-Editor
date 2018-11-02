@@ -143,7 +143,7 @@ let getRelatedMaterialData =
     (
       gameObject,
       replacedTargetMaterialMap,
-      (materialType, materialMap, defaultMaterial),
+      (materialType, assetMaterialComponentMap, defaultMaterial),
       (
         unsafeGetMaterialComponentFunc,
         isEqualDefaultMaterialComponentFunc,
@@ -167,7 +167,7 @@ let getRelatedMaterialData =
           let material =
             unsafeGetMaterialComponentFunc(gameObject, engineState);
 
-          materialMap
+          assetMaterialComponentMap
           |> SparseMapService.getValidValues
           |> SparseMapService.includes(material)
           |> assertFalse;
@@ -207,7 +207,7 @@ let getRelatedMaterialData =
           Some(defaultMaterial) :
           (
             switch (
-              materialMap
+              assetMaterialComponentMap
               |> SparseMapService.getValidValues
               |> SparseMapService.find(assetMaterialComponent =>
                    isMaterialDataEqualFunc(
