@@ -146,11 +146,11 @@ module Method = {
         state.isShowEditExportPackageModal ?
           <SingleInputModal
             title="Export Package"
-            defaultValue="wonderPackage"
+            defaultValue="WonderPackage"
             closeFunc=(() => send(HideEditExportPackageModal))
             submitFunc=(
               packageName => {
-                HeaderExportPackageUtils.exportPackage();
+                HeaderExportPackageUtils.exportPackage(packageName);
 
                 send(HideEditExportPackageModal);
               }
@@ -162,11 +162,11 @@ module Method = {
         state.isShowEditExportSceneModal ?
           <SingleInputModal
             title="Export Scene"
-            defaultValue="wonderScene"
+            defaultValue="WonderScene"
             closeFunc=(() => send(HideEditExportSceneModal))
             submitFunc=(
-              packageName => {
-                HeaderExportSceneUtils.exportScene();
+              sceneName => {
+                HeaderExportSceneUtils.exportScene(sceneName);
 
                 send(HideEditExportSceneModal);
               }

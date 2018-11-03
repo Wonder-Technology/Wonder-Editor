@@ -1,4 +1,4 @@
-let exportPackage = () => {
+let exportPackage = (packageName) => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
@@ -16,7 +16,7 @@ let exportPackage = () => {
 
   HeaderExportUtils.download(
     wpkArrayBuffer,
-    "package" ++ WPKService.getExtName(),
+    packageName ++ WPKService.getExtName(),
     "",
   );
 };

@@ -1,4 +1,4 @@
-let exportScene = () => {
+let exportScene = sceneName => {
   let engineState = StateEngineService.unsafeGetState();
 
   let (engineState, sceneGraphArrayBuffer) =
@@ -8,7 +8,7 @@ let exportScene = () => {
 
   HeaderExportUtils.download(
     sceneGraphArrayBuffer,
-    "Scene" ++ WDBService.getExtName(),
+    sceneName ++ WDBService.getExtName(),
     "",
   );
 };
