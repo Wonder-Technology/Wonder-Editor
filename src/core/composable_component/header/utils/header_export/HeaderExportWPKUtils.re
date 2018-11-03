@@ -1,10 +1,14 @@
 open Js.Typed_array;
 
-let _getHeaderTotalByteLength = () => 8;
+let _getHeaderTotalByteLength = () => 12;
 
 let _writeHeader = (sceneWDBByteLength, asbByteLength, dataView) =>
   dataView
-  |> DataViewUtils.writeUint32_1(sceneWDBByteLength, 0)
+  |> DataViewUtils.writeUint32_1(
+       Copyright.getWPKVersion(Copyright.getVersion()),
+       0,
+     )
+  |> DataViewUtils.writeUint32_1(sceneWDBByteLength, _, dataView)
   |> DataViewUtils.writeUint32_1(asbByteLength, _, dataView);
 
 let generateWPK = (sceneWDB, asb) => {

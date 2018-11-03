@@ -8,20 +8,23 @@ let _disposeAssets = () =>
   |> StateEditorService.setState;
 
 let _readHeader = dataView => {
+  let (version, byteOffset) = DataViewUtils.getUint32_1(. 0, dataView);
+
   let (sceneWDBByteLength, byteOffset) =
-    DataViewUtils.getUint32_1(. 0, dataView);
+    DataViewUtils.getUint32_1(. byteOffset, dataView);
 
   let (asbByteLength, byteOffset) =
     DataViewUtils.getUint32_1(. byteOffset, dataView);
 
-  (byteOffset, sceneWDBByteLength, asbByteLength);
+  (byteOffset, version, sceneWDBByteLength, asbByteLength);
 };
 
 let _readWPK = (wpk, dataView) => {
-  let (byteOffset, sceneWDBByteLength, asbByteLength) =
+  let (byteOffset, version, sceneWDBByteLength, asbByteLength) =
     _readHeader(dataView);
 
   (
+    version,
     wpk
     |> ArrayBuffer.slice(
          ~start=byteOffset,
@@ -63,7 +66,7 @@ let _import = result => {
 
   let dataView = DataViewUtils.create(wpk);
 
-  let (sceneWDB, asb, dataView) = _readWPK(wpk, dataView);
+  let (version, sceneWDB, asb, dataView) = _readWPK(wpk, dataView);
 
   let materialMapTupleRef =
     ref((
