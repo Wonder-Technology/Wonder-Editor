@@ -3,7 +3,8 @@ open HeaderType;
 type state = {
   isSelectNav: bool,
   currentSelectNav: navType,
-  isShowEditExportModal: bool,
+  isShowEditExportPackageModal: bool,
+  isShowEditExportSceneModal: bool,
   isShowHelpVersionModal: bool,
 };
 
@@ -119,7 +120,7 @@ module Method = {
               className="content-section"
               onClick=(
                 _e =>
-                  send(ShowEditExportModal)
+                  send(ShowEditExportPackageModal)
                   /* HeaderExportUtils.exportPackage(
                        WonderBsJszip.Zip.create,
                        Fetch.fetch,
@@ -130,21 +131,44 @@ module Method = {
                 (DomHelper.textEl("Export Package"))
               </span>
             </div>
+            <div
+              className="content-section"
+              onClick=(_e => send(ShowEditExportSceneModal))>
+              <span className="section-header">
+                (DomHelper.textEl("Export Scene"))
+              </span>
+            </div>
           </div> :
           ReasonReact.null
       )
       (
         /*TODO not use modal */
-        state.isShowEditExportModal ?
+        state.isShowEditExportPackageModal ?
           <SingleInputModal
             title="Export Package"
             defaultValue="wonderPackage"
-            closeFunc=(() => send(HideEditExportModal))
+            closeFunc=(() => send(HideEditExportPackageModal))
             submitFunc=(
               packageName => {
                 HeaderExportPackageUtils.exportPackage();
 
-                send(HideEditExportModal);
+                send(HideEditExportPackageModal);
+              }
+            )
+          /> :
+          ReasonReact.null
+      )
+      (
+        state.isShowEditExportSceneModal ?
+          <SingleInputModal
+            title="Export Scene"
+            defaultValue="wonderScene"
+            closeFunc=(() => send(HideEditExportSceneModal))
+            submitFunc=(
+              packageName => {
+                HeaderExportSceneUtils.exportScene();
+
+                send(HideEditExportSceneModal);
               }
             )
           /> :
@@ -233,11 +257,17 @@ let reducer = (action, state) =>
   | HideHelpVersionModal =>
     ReasonReact.Update({...state, isShowHelpVersionModal: false})
 
-  | ShowEditExportModal =>
-    ReasonReact.Update({...state, isShowEditExportModal: true})
+  | ShowEditExportPackageModal =>
+    ReasonReact.Update({...state, isShowEditExportPackageModal: true})
 
-  | HideEditExportModal =>
-    ReasonReact.Update({...state, isShowEditExportModal: false})
+  | HideEditExportPackageModal =>
+    ReasonReact.Update({...state, isShowEditExportPackageModal: false})
+
+  | ShowEditExportSceneModal =>
+    ReasonReact.Update({...state, isShowEditExportSceneModal: true})
+
+  | HideEditExportSceneModal =>
+    ReasonReact.Update({...state, isShowEditExportSceneModal: false})
   };
 
 let render =
@@ -260,7 +290,8 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
     isSelectNav: false,
     currentSelectNav: None,
     isShowHelpVersionModal: false,
-    isShowEditExportModal: false,
+    isShowEditExportPackageModal: false,
+    isShowEditExportSceneModal: false,
   },
   reducer,
   didMount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>

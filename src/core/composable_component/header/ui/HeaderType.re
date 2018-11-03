@@ -8,7 +8,9 @@ type action =
   | HoverNav(navType)
   | ToggleShowNav(navType)
   | BlurNav
-  | ShowEditExportModal
-  | HideEditExportModal
+  | ShowEditExportPackageModal
+  | HideEditExportPackageModal
+  | ShowEditExportSceneModal
+  | HideEditExportSceneModal
   | ShowHelpVersionModal
   | HideHelpVersionModal;

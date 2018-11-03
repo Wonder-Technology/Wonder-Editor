@@ -20,6 +20,7 @@ module.exports = {
       { name: "inspector" },
       { name: "asset" },
       { name: "package" },
+      { name: "scene" },
       { name: "light" },
       { name: "lightMaterial" },
       { name: "imgui" },

@@ -23,12 +23,10 @@ let getWDBBaseName = (nodeId, wdbNodeMap) =>
   |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
   |> (({name}: wdbResultType) => name);
 
-let _getExtName = () => ".wdb";
-
 let getWDBTotalName = (nodeId, wdbNodeMap) =>
   wdbNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-  |> (({name}: wdbResultType) => name ++ _getExtName());
+  |> (({name}: wdbResultType) => name ++ WDBService.getExtName());
 
 let getWDBParentId = (nodeId, wdbNodeMap) =>
   wdbNodeMap

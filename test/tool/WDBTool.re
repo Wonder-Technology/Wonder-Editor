@@ -121,7 +121,7 @@ let generateWDB = buildWDBGameObjectFunc => {
   LoadTool.buildFakeTextEncoder(.);
 
   let (engineState, wdbArrayBuffer) =
-    HeaderExportPackageUtils._generateWDB(rootGameObject, engineState);
+    HeaderExportSceneWDBUtils.generateWDB(rootGameObject, engineState);
 
   restoreSandbox(refJsObjToSandbox(sandbox^));
 

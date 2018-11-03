@@ -45,9 +45,7 @@ let _ =
 
       MainEditorAssetTool.buildFakeFileReader();
 
-      LoadTool.buildFakeTextDecoder(
-        LoadTool.convertUint8ArrayToBuffer,
-      );
+      LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
       LoadTool.buildFakeURL(sandbox^);
 
       LoadTool.buildFakeLoadImage(.);
@@ -86,7 +84,7 @@ let _ =
           controlFunc();
 
           let (engineState, wdb) =
-            HeaderExportPackageUtils._generateSceneWDB(
+            HeaderExportSceneWDBUtils.generateSceneWDB(
               StateEngineService.unsafeGetState(),
             );
 
@@ -127,7 +125,7 @@ let _ =
             ControllerTool.stop();
 
             let (engineState, wdb) =
-              HeaderExportPackageUtils._generateSceneWDB(
+              HeaderExportSceneWDBUtils.generateSceneWDB(
                 StateEngineService.unsafeGetState(),
               );
 

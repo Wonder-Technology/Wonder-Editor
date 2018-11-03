@@ -160,7 +160,7 @@ let exportWPK = () => {
   let engineState = StateEngineService.unsafeGetState();
 
   let (engineState, sceneGraphArrayBuffer) =
-    HeaderExportPackageUtils._generateSceneWDB(engineState);
+    HeaderExportSceneWDBUtils.generateSceneWDB(engineState);
 
   let asbArrayBuffer =
     HeaderExportASBUtils.generateASB(editorState, engineState);
