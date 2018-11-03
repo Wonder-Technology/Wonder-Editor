@@ -47,15 +47,15 @@ let importAssetWDB =
 
        let engineState =
          engineState
-         |> GameObjectUtils.setGameObjectIsRenderIfHasMeshRenderer(
+         |> GameObjectUtils.setAllGameObjectsIsRenderIfHasMeshRenderer(
               false,
               gameObject,
             )
-         |> GameObjectUtils.setGameObjectIsRenderIfHasDirectionLight(
+         |> GameObjectUtils.setAllGameObjectsIsRenderIfHasDirectionLight(
               false,
               gameObject,
             )
-         |> GameObjectUtils.setGameObjectIsRenderIfHasPointLight(
+         |> GameObjectUtils.setAllGameObjectsIsRenderIfHasPointLight(
               false,
               gameObject,
             )

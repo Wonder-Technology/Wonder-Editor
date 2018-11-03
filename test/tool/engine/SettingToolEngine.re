@@ -77,11 +77,13 @@ let buildFakeDomForNotPassCanvasId = sandbox => {
 
 let buildBufferConfigStr =
     (
-      ~geometryPointCount=300,
+      ~geometryPointCount=30000,
       ~geometryCount=30,
       ~transformCount=50,
       ~basicMaterialCount=50,
       ~lightMaterialCount=50,
+      ~directionLightCount=50,
+      ~pointLightCount=50,
       ~meshRendererCount=50,
       ~textureCountPerMaterial=3,
       ~basicSourceTextureCount=50,
@@ -90,23 +92,25 @@ let buildBufferConfigStr =
       ~objectInstanceCountPerSourceInstance=100,
       (),
     ) => {j|
-       {
-            "custom_geometry_point_count": $geometryPointCount,
-            "custom_geometry_count": $geometryCount,
-  "transform_count": $transformCount,
-  "basic_material_count": $basicMaterialCount,
-  "light_material_count": $lightMaterialCount,
-  "meshRenderer_count": $meshRendererCount,
-  "basic_source_texture_count": $basicSourceTextureCount,
-   "arrayBuffer_view_source_texture_count": $arrayBufferViewSourceTextureCount,
+      {
+        "geometry_point_count": $geometryPointCount,
+        "geometry_count": $geometryCount,
+"transform_count": $transformCount,
+"basic_material_count": $basicMaterialCount,
+"light_material_count": $lightMaterialCount,
+"direction_light_count": $directionLightCount,
+"point_light_count": $pointLightCount,
+"meshRenderer_count": $meshRendererCount,
+"basic_source_texture_count": $basicSourceTextureCount,
+"arrayBuffer_view_source_texture_count": $arrayBufferViewSourceTextureCount,
 
-  "texture_count_per_material": $textureCountPerMaterial,
+"texture_count_per_material": $textureCountPerMaterial,
 
-  "instance_buffer": {
-    "sourceInstance_count": $sourceInstanceCount,
+"instance_buffer": {
+"sourceInstance_count": $sourceInstanceCount,
 "objectInstance_count_per_source_instance": $objectInstanceCountPerSourceInstance
-  }
-       }
+}
+   }
         |j};
 
 let buildSetting =

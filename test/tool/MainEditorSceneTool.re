@@ -93,8 +93,12 @@ let initStateWithJob =
     ~isInitJob,
     (),
   );
-  TestTool.openContractCheck();
-  TestToolEngine.openContractCheck();
+
+  /* TestTool.openContractCheck();
+     TestToolEngine.openContractCheck(); */
+  TestTool.closeContractCheck();
+  TestToolEngine.closeContractCheck();
+
   AllMaterialToolEngine.prepareForInit();
 
   SettingToolEngine.setFakeCanvasToEngineState();

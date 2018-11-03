@@ -48,7 +48,7 @@ let getChildren = (gameObject, engineState) =>
 let hasChildren = (gameObject, engineState) =>
   getChildren(gameObject, engineState) |> Js.Array.length > 0;
 
-let setGameObjectIsRenderIfHasMeshRenderer =
+let setAllGameObjectsIsRenderIfHasMeshRenderer =
     (isRender, gameObject, engineState) => {
   let rec _iterateGameObjectArr = (gameObjectArr, engineState) =>
     gameObjectArr
@@ -80,7 +80,7 @@ let setGameObjectIsRenderIfHasMeshRenderer =
   _iterateGameObjectArr([|gameObject|], engineState);
 };
 
-let setGameObjectIsRenderIfHasDirectionLight =
+let setAllGameObjectsIsRenderIfHasDirectionLight =
     (isRender, gameObject, engineState) => {
   let rec _iterateGameObjectArr = (gameObjectArr, engineState) =>
     gameObjectArr
@@ -112,7 +112,7 @@ let setGameObjectIsRenderIfHasDirectionLight =
   _iterateGameObjectArr([|gameObject|], engineState);
 };
 
-let setGameObjectIsRenderIfHasPointLight = (isRender, gameObject, engineState) => {
+let setAllGameObjectsIsRenderIfHasPointLight = (isRender, gameObject, engineState) => {
   let rec _iterateGameObjectArr = (gameObjectArr, engineState) =>
     gameObjectArr
     |> WonderCommonlib.ArrayService.reduceOneParam(

@@ -15,3 +15,14 @@ let _getLocation = (~pos=10, sandbox, name: string) =>
 let getAttribLocation = _getLocation;
 
 let getUniformLocation = _getLocation;
+
+
+let getUniformLocationWithNameArr = (sandbox, stub, nameArr, posArr) =>
+  nameArr
+  |> Js.Array.reducei(
+       (stub, name, index) => {
+         stub |> Sinon.withTwoArgs(Sinon.matchAny, name) |> Sinon.returns(posArr[index]) |> ignore;
+         stub
+       },
+       stub
+     );

@@ -618,7 +618,7 @@ exports[`header import package test import assets test import texture assets sho
 </article>
 `;
 
-exports[`header import package test import package scene wdb relate scene gameObjects and material assets fix bug test change default material to material asset after import 1`] = `
+exports[`header import package test import scene wdb relate scene gameObjects and material assets fix bug test change default material to material asset after import 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -1279,7 +1279,7 @@ exports[`header import package test import package scene wdb relate scene gameOb
 </article>
 `;
 
-exports[`header import package test import package scene wdb relate scene gameObjects and material assets if scene gameObject use default material, should still use it after import 1`] = `
+exports[`header import package test import scene wdb relate scene gameObjects and material assets if scene gameObject use default material, should still use it after import 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -1943,7 +1943,7 @@ exports[`header import package test import package scene wdb relate scene gameOb
 </article>
 `;
 
-exports[`header import package test import package scene wdb relate scene gameObjects and material assets if scene gameObject use material asset, should still use it after import 1`] = `
+exports[`header import package test import scene wdb relate scene gameObjects and material assets if scene gameObject use material asset, should still use it after import 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -2604,7 +2604,7 @@ exports[`header import package test import package scene wdb relate scene gameOb
 </article>
 `;
 
-exports[`header import package test import package scene wdb should reset scene gameObject 1`] = `
+exports[`header import package test import scene wdb should reset scene gameObject 1`] = `
 <article
   className="wonder-sceneTree-component"
 >
