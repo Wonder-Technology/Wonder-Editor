@@ -45,15 +45,19 @@ let handleSpecificFuncByLightType =
   };
 };
 
+let getDirectionLightExceedMaxCountMessage = () => "the direction light count is exceed max count!";
+
+let getPointLightExceedMaxCountMessage = () => "the point light count is exceed max count!";
+
 let isLightExceedMaxCountByType = (targetLightType, engineState) =>
   switch (targetLightType) {
   | DirectionLight => (
-      "the direction light count is exceed max count!",
+      getDirectionLightExceedMaxCountMessage(),
       engineState |> DirectionLightEngineService.isMaxCount,
     )
 
   | PointLight => (
-      "the point light count is exceed max count!",
+      getPointLightExceedMaxCountMessage(),
       engineState |> PointLightEngineService.isMaxCount,
     )
   };
@@ -98,7 +102,7 @@ let replaceLightByType = (sourceLightType, targetLightType) => {
     isLightExceedMaxCountByType(targetLightType, engineState);
 
   isMaxCount ?
-    { ConsoleUtils.warn(message) } :
+    ConsoleUtils.warn(message) :
     {
       let (sourceLight, disposeSourceLightFunc) =
         _getOperateSourceLightFunc(sourceLightType, gameObject, engineState);

@@ -162,3 +162,20 @@ let blurRange =
      changeRange(light, value);
      blurRange(~store, ~dispatchFunc, ~light, ~value, ());
    }; */
+
+let createPointLight = (editorState, engineState) => {
+  let (editorState, (engineState, obj)) =
+    GameObjectLogicService.createGameObject((editorState, engineState));
+  let (engineState, directionLight) =
+    PointLightEngineService.create(engineState);
+
+  let engineState =
+    engineState
+    |> GameObjectEngineService.setGameObjectName("Point Light", obj);
+
+  let (editorState, engineState) =
+    (editorState, engineState)
+    |> GameObjectLogicService.addPointLight(obj, directionLight);
+
+  (editorState, engineState, obj);
+};

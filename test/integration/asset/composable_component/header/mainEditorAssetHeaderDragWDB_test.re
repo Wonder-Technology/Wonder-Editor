@@ -1,14 +1,10 @@
 open Wonder_jest;
 
-open AssetTreeTwoLayerTypeTool;
-
 open Expect;
 
 open Expect.Operators;
 
 open Sinon;
-
-open AssetTreeNodeType;
 
 open Js.Promise;
 
@@ -40,7 +36,7 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test drag wdb to scene tree", () =>
+    describe("test drag wdb to scene tree", () => {
       describe("test wdb has direction and point light gameObjects", () => {
         let _test = (sandbox, testFunc) =>
           DragWDBTool.testDragWDB(
@@ -164,6 +160,224 @@ let _ =
             |> resolve
           )
         );
-      })
-    );
+      });
+
+      describe("check", () =>
+        describe("check light count before drag", () =>
+          describe("if light count will exceed max count after drag, warn", () => {
+            describe("test direction light", () => {
+              let _test = (createLightFunc, judgeFunc) => {
+                ConsoleTool.markTestConsole();
+
+                let warn =
+                  createMethodStubWithJsObjSandbox(
+                    sandbox,
+                    ConsoleTool.console,
+                    "warn",
+                  );
+
+                MainEditorSceneTool.prepareScene(sandbox);
+
+                MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+                |> ignore;
+
+                let editorState = StateEditorService.getState();
+                let engineState = StateEngineService.unsafeGetState();
+
+                let (editorState, engineState) =
+                  createLightFunc(editorState, engineState);
+
+                editorState |> StateEditorService.setState |> ignore;
+                engineState |> StateEngineService.setState |> ignore;
+
+                MainEditorAssetUploadTool.loadOneWDB(
+                  ~arrayBuffer=directionPointLightsAndBoxWDBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId => {
+                     MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                       ~wdbNodeId=uploadedWDBNodeId,
+                       (),
+                     );
+
+                     judgeFunc(warn);
+                   });
+              };
+
+              testPromise("test not exceed", () =>
+                _test(
+                  (editorState, engineState) => {
+                    let (editorState, engineState, directionLight1) =
+                      PrimitiveEngineService.createDirectionLight(
+                        editorState,
+                        engineState,
+                      );
+                    let (editorState, engineState, directionLight2) =
+                      PrimitiveEngineService.createDirectionLight(
+                        editorState,
+                        engineState,
+                      );
+
+                    let (editorState, engineState, directionLight3) =
+                      PrimitiveEngineService.createDirectionLight(
+                        editorState,
+                        engineState,
+                      );
+
+                    (editorState, engineState);
+                  },
+                  warn => warn |> expect |> not_ |> toCalled |> resolve,
+                )
+              );
+              testPromise("test exceed", () =>
+                _test(
+                  (editorState, engineState) => {
+                    let (editorState, engineState, directionLight1) =
+                      PrimitiveEngineService.createDirectionLight(
+                        editorState,
+                        engineState,
+                      );
+                    let (editorState, engineState, directionLight2) =
+                      PrimitiveEngineService.createDirectionLight(
+                        editorState,
+                        engineState,
+                      );
+
+                    let (editorState, engineState, directionLight3) =
+                      PrimitiveEngineService.createDirectionLight(
+                        editorState,
+                        engineState,
+                      );
+
+                    let (editorState, engineState, directionLight4) =
+                      PrimitiveEngineService.createDirectionLight(
+                        editorState,
+                        engineState,
+                      );
+
+                    (editorState, engineState);
+                  },
+                  warn =>
+                    ConsoleTool.getMessage(warn)
+                    |> expect
+                    |> toContain(
+                         "the direction light count is exceed max count!",
+                       )
+                    |> resolve,
+                )
+              );
+            });
+
+            describe("test point light", () => {
+              let _test = (createLightFunc, judgeFunc) => {
+                ConsoleTool.markTestConsole();
+
+                let warn =
+                  createMethodStubWithJsObjSandbox(
+                    sandbox,
+                    ConsoleTool.console,
+                    "warn",
+                  );
+
+                MainEditorSceneTool.prepareScene(sandbox);
+
+                MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+                |> ignore;
+
+                let editorState = StateEditorService.getState();
+                let engineState = StateEngineService.unsafeGetState();
+
+                let (editorState, engineState) =
+                  createLightFunc(editorState, engineState);
+
+                editorState |> StateEditorService.setState |> ignore;
+                engineState |> StateEngineService.setState |> ignore;
+
+                MainEditorAssetUploadTool.loadOneWDB(
+                  ~arrayBuffer=directionPointLightsAndBoxWDBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId => {
+                     MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                       ~wdbNodeId=uploadedWDBNodeId,
+                       (),
+                     );
+
+                     judgeFunc(warn);
+                   });
+              };
+
+              testPromise("test not exceed", () =>
+                _test(
+                  (editorState, engineState) => {
+                    let (editorState, engineState, directionLight1) =
+                      PrimitiveEngineService.createDirectionLight(
+                        editorState,
+                        engineState,
+                      );
+                    let (editorState, engineState, directionLight2) =
+                      PrimitiveEngineService.createDirectionLight(
+                        editorState,
+                        engineState,
+                      );
+
+                    let (editorState, engineState, directionLight3) =
+                      PrimitiveEngineService.createDirectionLight(
+                        editorState,
+                        engineState,
+                      );
+
+                    let (editorState, engineState, _) =
+                      MainEditorPointLightTool.createPointLight(
+                        editorState,
+                        engineState,
+                      );
+
+                    (editorState, engineState);
+                  },
+                  warn => warn |> expect |> not_ |> toCalled |> resolve,
+                )
+              );
+              testPromise("test exceed", () =>
+                _test(
+                  (editorState, engineState) => {
+                    let (editorState, engineState, pointLight1) =
+                      MainEditorPointLightTool.createPointLight(
+                        editorState,
+                        engineState,
+                      );
+                    let (editorState, engineState, pointLight2) =
+                      MainEditorPointLightTool.createPointLight(
+                        editorState,
+                        engineState,
+                      );
+
+                    let (editorState, engineState, pointLight3) =
+                      MainEditorPointLightTool.createPointLight(
+                        editorState,
+                        engineState,
+                      );
+
+                    let (editorState, engineState, pointLight4) =
+                      MainEditorPointLightTool.createPointLight(
+                        editorState,
+                        engineState,
+                      );
+
+                    (editorState, engineState);
+                  },
+                  warn =>
+                    ConsoleTool.getMessage(warn)
+                    |> expect
+                    |> toContain(
+                         "the point light count is exceed max count!",
+                       )
+                    |> resolve,
+                )
+              );
+            });
+          })
+        )
+      );
+    });
   });

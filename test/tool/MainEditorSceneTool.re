@@ -147,6 +147,18 @@ let createDefaultComponents = () => {
   engineState |> StateEngineService.setState |> ignore;
 };
 
+let prepareScene = sandbox => {
+  createDefaultComponents();
+
+  let engineState = StateEngineService.unsafeGetState();
+  engineState
+  |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
+  |> StateEngineService.setState
+  |> ignore;
+
+  MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
+};
+
 let getCameraInDefaultScene = engineState =>
   GameObjectUtils.getChildren(unsafeGetScene(), engineState)
   |> Js.Array.filter(gameObject =>

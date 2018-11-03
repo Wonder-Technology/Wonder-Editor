@@ -85,6 +85,26 @@ let getAllGeometrys = (allGameObjects, engineState) =>
     engineState,
   );
 
+let getAllDirectionLights = (allGameObjects, engineState) =>
+  _getAllComponents(
+    allGameObjects,
+    (
+      GameObjectComponentEngineService.hasDirectionLightComponent,
+      GameObjectComponentEngineService.unsafeGetDirectionLightComponent,
+    ),
+    engineState,
+  );
+
+let getAllPointLights = (allGameObjects, engineState) =>
+  _getAllComponents(
+    allGameObjects,
+    (
+      GameObjectComponentEngineService.hasPointLightComponent,
+      GameObjectComponentEngineService.unsafeGetPointLightComponent,
+    ),
+    engineState,
+  );
+
 let disposeGameObjectArrKeepOrder = (gameObjectArr, engineState) =>
   gameObjectArr
   |> WonderCommonlib.ArrayService.reduceOneParam(
