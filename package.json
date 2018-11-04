@@ -24,6 +24,15 @@
       "path": "node_modules/cz-customizable"
     }
   },
+  "keywords": [
+    "wonder",
+    "functional-programming",
+    "3d",
+    "editor",
+    "reasonml",
+    "reason",
+    "bucklescript"
+  ],
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
