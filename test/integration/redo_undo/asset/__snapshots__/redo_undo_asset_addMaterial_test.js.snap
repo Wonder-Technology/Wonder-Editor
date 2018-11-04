@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditorAssetHeader->remove node test remove tree node else remove-button's disabled props should == false 1`] = `
+exports[`redo_undo: asset add material prepare first step: set currentSceneTreeNode test redo operate test redo one step undo step which from second to zero, redo step which from zero to first 1`] = `
 <article
   className="wonder-asset-component"
   style={
@@ -32,10 +32,10 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
         onClick={[Function]}
       >
         <div
-          className="item-canBeClick"
+          className="item-notBeClick"
         >
           <img
-            src="./public/img/remove.png"
+            src="./public/img/notRemove.png"
           />
         </div>
       </div>
@@ -72,65 +72,50 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
           onDrop={[Function]}
           style={
             Object {
-              "border": "0px",
+              "background": "rgba(255,255,255,0.2)",
             }
           }
         >
           <div
             className="item-triangle"
-            onClick={[Function]}
-          >
-            <img
-              src="./public/img/down.png"
-            />
-          </div>
+          />
           <img
             className="treeNode-icon"
             src="./public/img/package.png"
           />
           Assets
         </li>
-        <ul
-          className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
+      </ul>
+    </article>
+  </div>
+  <article
+    className="wonder-asset-assetChildren"
+  >
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <div
+        className="box-image"
+      >
+        <img
           onDragStart={[Function]}
-        >
-          <li
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-            style={
-              Object {
-                "background": "#5C7EA6",
-              }
-            }
-          >
-            <div
-              className="item-triangle"
-            />
-            <img
-              className="treeNode-icon"
-              src="./public/img/package.png"
-            />
-            New Folder
-          </li>
-        </ul>
-      </ul>
+          src="./public/img/mat.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          New Material
+        </span>
+      </div>
     </article>
-  </div>
-  <article
-    className="wonder-asset-assetChildren"
-  />
+  </article>
 </article>
 `;
 
-exports[`MainEditorAssetHeader->remove node test remove tree node else test select file test texture select texture;
-            click remove-button;
-             should remove it from assetTreeRoot 1`] = `
+exports[`redo_undo: asset add material prepare first step: set currentSceneTreeNode test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
 <article
   className="wonder-asset-component"
   style={
@@ -220,11 +205,52 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
   </div>
   <article
     className="wonder-asset-assetChildren"
-  />
+  >
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <div
+        className="box-image"
+      >
+        <img
+          onDragStart={[Function]}
+          src="./public/img/mat.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          New Material
+        </span>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <div
+        className="box-image"
+      >
+        <img
+          onDragStart={[Function]}
+          src="./public/img/mat.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          New Material 1
+        </span>
+      </div>
+    </article>
+  </article>
 </article>
 `;
 
-exports[`MainEditorAssetHeader->remove node test remove tree node else test select folder click remove-button should remove folder from assetTreeRoot 1`] = `
+exports[`redo_undo: asset add material prepare first step: set currentSceneTreeNode test undo operate test not undo 1`] = `
 <article
   className="wonder-asset-component"
   style={
@@ -314,11 +340,167 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
   </div>
   <article
     className="wonder-asset-assetChildren"
-  />
+  >
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <div
+        className="box-image"
+      >
+        <img
+          onDragStart={[Function]}
+          src="./public/img/mat.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          New Material
+        </span>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <div
+        className="box-image"
+      >
+        <img
+          onDragStart={[Function]}
+          src="./public/img/mat.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          New Material 1
+        </span>
+      </div>
+    </article>
+  </article>
 </article>
 `;
 
-exports[`MainEditorAssetHeader->remove node test remove tree node if not select specific treeNode, remove-button's disabled props should == true  1`] = `
+exports[`redo_undo: asset add material prepare first step: set currentSceneTreeNode test undo operate test undo one step step which from second to first 1`] = `
+<article
+  className="wonder-asset-component"
+  style={
+    Object {
+      "opacity": "1",
+    }
+  }
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="wonder-asset-header"
+    >
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/add.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+      >
+        <div
+          className="item-notBeClick"
+        >
+          <img
+            src="./public/img/notRemove.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/load.png"
+          />
+          <input
+            className="asset-fileLoad"
+            multiple={true}
+            onChange={[Function]}
+            type="file"
+          />
+        </div>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-assetTree"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "background": "rgba(255,255,255,0.2)",
+            }
+          }
+        >
+          <div
+            className="item-triangle"
+          />
+          <img
+            className="treeNode-icon"
+            src="./public/img/package.png"
+          />
+          Assets
+        </li>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="wonder-asset-assetChildren"
+  >
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <div
+        className="box-image"
+      >
+        <img
+          onDragStart={[Function]}
+          src="./public/img/mat.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          New Material
+        </span>
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: asset add material prepare first step: set currentSceneTreeNode test undo operate test undo two step step which from second to zero 1`] = `
 <article
   className="wonder-asset-component"
   style={
