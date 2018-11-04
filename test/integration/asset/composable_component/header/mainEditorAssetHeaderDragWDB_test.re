@@ -165,45 +165,49 @@ let _ =
       describe("check", () =>
         describe("check light count before drag", () =>
           describe("if light count will exceed max count after drag, warn", () => {
+            let _test = (createLightFunc, judgeFunc) => {
+              ConsoleTool.markTestConsole();
+
+              let warn =
+                createMethodStubWithJsObjSandbox(
+                  sandbox,
+                  ConsoleTool.console,
+                  "warn",
+                );
+
+              MainEditorSceneTool.prepareScene(sandbox);
+
+              MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+              |> ignore;
+
+              let editorState = StateEditorService.getState();
+              let engineState = StateEngineService.unsafeGetState();
+
+              let (editorState, engineState) =
+                createLightFunc(editorState, engineState);
+
+              editorState |> StateEditorService.setState |> ignore;
+              engineState |> StateEngineService.setState |> ignore;
+
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=directionPointLightsAndBoxWDBArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId => {
+                   MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     (),
+                   );
+                   MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     (),
+                   );
+
+                   judgeFunc(warn);
+                 });
+            };
+
             describe("test direction light", () => {
-              let _test = (createLightFunc, judgeFunc) => {
-                ConsoleTool.markTestConsole();
-
-                let warn =
-                  createMethodStubWithJsObjSandbox(
-                    sandbox,
-                    ConsoleTool.console,
-                    "warn",
-                  );
-
-                MainEditorSceneTool.prepareScene(sandbox);
-
-                MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
-                |> ignore;
-
-                let editorState = StateEditorService.getState();
-                let engineState = StateEngineService.unsafeGetState();
-
-                let (editorState, engineState) =
-                  createLightFunc(editorState, engineState);
-
-                editorState |> StateEditorService.setState |> ignore;
-                engineState |> StateEngineService.setState |> ignore;
-
-                MainEditorAssetUploadTool.loadOneWDB(
-                  ~arrayBuffer=directionPointLightsAndBoxWDBArrayBuffer^,
-                  (),
-                )
-                |> then_(uploadedWDBNodeId => {
-                     MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
-                       ~wdbNodeId=uploadedWDBNodeId,
-                       (),
-                     );
-
-                     judgeFunc(warn);
-                   });
-              };
-
               testPromise("test not exceed", () =>
                 _test(
                   (editorState, engineState) => {
@@ -213,12 +217,6 @@ let _ =
                         engineState,
                       );
                     let (editorState, engineState, directionLight2) =
-                      PrimitiveEngineService.createDirectionLight(
-                        editorState,
-                        engineState,
-                      );
-
-                    let (editorState, engineState, directionLight3) =
                       PrimitiveEngineService.createDirectionLight(
                         editorState,
                         engineState,
@@ -249,12 +247,6 @@ let _ =
                         engineState,
                       );
 
-                    let (editorState, engineState, directionLight4) =
-                      PrimitiveEngineService.createDirectionLight(
-                        editorState,
-                        engineState,
-                      );
-
                     (editorState, engineState);
                   },
                   warn =>
@@ -269,44 +261,6 @@ let _ =
             });
 
             describe("test point light", () => {
-              let _test = (createLightFunc, judgeFunc) => {
-                ConsoleTool.markTestConsole();
-
-                let warn =
-                  createMethodStubWithJsObjSandbox(
-                    sandbox,
-                    ConsoleTool.console,
-                    "warn",
-                  );
-
-                MainEditorSceneTool.prepareScene(sandbox);
-
-                MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
-                |> ignore;
-
-                let editorState = StateEditorService.getState();
-                let engineState = StateEngineService.unsafeGetState();
-
-                let (editorState, engineState) =
-                  createLightFunc(editorState, engineState);
-
-                editorState |> StateEditorService.setState |> ignore;
-                engineState |> StateEngineService.setState |> ignore;
-
-                MainEditorAssetUploadTool.loadOneWDB(
-                  ~arrayBuffer=directionPointLightsAndBoxWDBArrayBuffer^,
-                  (),
-                )
-                |> then_(uploadedWDBNodeId => {
-                     MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
-                       ~wdbNodeId=uploadedWDBNodeId,
-                       (),
-                     );
-
-                     judgeFunc(warn);
-                   });
-              };
-
               testPromise("test not exceed", () =>
                 _test(
                   (editorState, engineState) => {
@@ -316,12 +270,6 @@ let _ =
                         engineState,
                       );
                     let (editorState, engineState, directionLight2) =
-                      PrimitiveEngineService.createDirectionLight(
-                        editorState,
-                        engineState,
-                      );
-
-                    let (editorState, engineState, directionLight3) =
                       PrimitiveEngineService.createDirectionLight(
                         editorState,
                         engineState,
@@ -353,12 +301,6 @@ let _ =
                       );
 
                     let (editorState, engineState, pointLight3) =
-                      MainEditorPointLightTool.createPointLight(
-                        editorState,
-                        engineState,
-                      );
-
-                    let (editorState, engineState, pointLight4) =
                       MainEditorPointLightTool.createPointLight(
                         editorState,
                         engineState,

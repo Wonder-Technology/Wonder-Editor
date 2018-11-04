@@ -94,10 +94,8 @@ let initStateWithJob =
     (),
   );
 
-  /* TestTool.openContractCheck();
-     TestToolEngine.openContractCheck(); */
-  TestTool.closeContractCheck();
-  TestToolEngine.closeContractCheck();
+  TestTool.openContractCheck();
+  TestToolEngine.openContractCheck();
 
   AllMaterialToolEngine.prepareForInit();
 
