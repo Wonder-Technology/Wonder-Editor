@@ -16,6 +16,8 @@ let disposeGameObjectKeepOrderRemoveGeometry = GameObjectAPI.disposeGameObjectKe
 
 let disposeGameObjectKeepOrderRemoveGeometryRemoveMaterial = GameObjectAPI.disposeGameObjectKeepOrderRemoveGeometryRemoveMaterial;
 
+let disposeGameObjectDisposeGeometryRemoveMaterial = GameObjectAPI.disposeGameObjectDisposeGeometryRemoveMaterial;
+
 /* let hasGameObjectBoxGeometryComponent = GameObjectAPI.hasGameObjectBoxGeometryComponent; */
 /*
  let hasGameObjectLightMaterialComponent = GameObjectAPI.hasGameObjectLightMaterialComponent; */

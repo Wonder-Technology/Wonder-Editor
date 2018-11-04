@@ -177,36 +177,110 @@ let _ =
           });
         });
 
-        testPromise("the geometry of the wdb asset should be removed", () => {
-          MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
+        describe("dispose wdb asset gameObject", () => {
+          testPromise("it's geometry should be disposed", () => {
+            MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
-          MainEditorAssetUploadTool.loadOneWDB(
-            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
-            (),
-          )
-          |> then_(uploadedWDBNodeId => {
-               MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
-                 ~wdbNodeId=uploadedWDBNodeId,
-                 (),
-               );
-
-               MainEditorAssetHeaderOperateNodeTool.removeWDBNode(
-                 ~wdbNodeId=uploadedWDBNodeId,
-                 (),
-               );
-
-               MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
-
-               let component =
-                 BuildComponentTool.buildGeometry(
-                   ~geometryComponent=
-                     GameObjectTool.getCurrentGameObjectGeometry(),
-                   ~isShowGeometryGroup=true,
+            MainEditorAssetUploadTool.loadOneWDB(
+              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+              (),
+            )
+            |> then_(uploadedWDBNodeId => {
+                 MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                   ~wdbNodeId=uploadedWDBNodeId,
                    (),
                  );
 
-               component |> ReactTestTool.createSnapshotAndMatch |> resolve;
-             });
+                 MainEditorAssetHeaderOperateNodeTool.removeWDBNode(
+                   ~wdbNodeId=uploadedWDBNodeId,
+                   (),
+                 );
+
+                 MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+
+                 let component =
+                   BuildComponentTool.buildGeometry(
+                     ~geometryComponent=
+                       GameObjectTool.getCurrentGameObjectGeometry(),
+                     ~isShowGeometryGroup=true,
+                     (),
+                   );
+
+                 component |> ReactTestTool.createSnapshotAndMatch |> resolve;
+               });
+          });
+
+          describe("it's material should be removed", () =>
+            testPromise(
+              "the material asset related with the material component should exist",
+              () => {
+              MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
+
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId => {
+                   MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     (),
+                   );
+
+                   MainEditorAssetHeaderOperateNodeTool.removeWDBNode(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     (),
+                   );
+
+                   let editorState = StateEditorService.getState();
+
+                   MainEditorAssetTreeTool.Select.selectFolderNode(
+                     ~nodeId=
+                       MainEditorAssetFolderNodeTool.getNodeIdByName(
+                         "Materials",
+                         editorState,
+                       )
+                       |> OptionService.unsafeGet,
+                     (),
+                   );
+
+                   BuildComponentTool.buildAssetChildrenNode()
+                   |> ReactTestTool.createSnapshotAndMatch
+                   |> resolve;
+                 });
+            })
+          );
+          testPromise("it should be disposed", () => {
+            MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
+
+            MainEditorAssetUploadTool.loadOneWDB(
+              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+              (),
+            )
+            |> then_(uploadedWDBNodeId => {
+                 MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                   ~wdbNodeId=uploadedWDBNodeId,
+                   (),
+                 );
+
+                 let editorState = StateEditorService.getState();
+                 let engineState = StateEngineService.unsafeGetState();
+
+                 let wdbGameObject =
+                   LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
+                     uploadedWDBNodeId,
+                     (editorState, engineState),
+                   );
+
+                 MainEditorAssetHeaderOperateNodeTool.removeWDBNode(
+                   ~wdbNodeId=uploadedWDBNodeId,
+                   (),
+                 );
+
+                 GameObjectTool.isAlive(wdbGameObject, engineState)
+                 |> expect == false
+                 |> resolve;
+               });
+          });
         });
       },
     );
