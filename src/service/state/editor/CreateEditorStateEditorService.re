@@ -26,11 +26,10 @@ let create = () => {
       defaultBasicMaterialData: None,
       defaultLightMaterialData: None,
     },
-    clonedGameObjectMap: WonderCommonlib.SparseMapService.createEmpty(),
   },
   consoleRecord: {
     consoleMessageArray: [||],
-    consoleCheckedCount : 0
+    consoleCheckedCount: 0,
   },
   sceneViewRecord: {
     viewRect: None,

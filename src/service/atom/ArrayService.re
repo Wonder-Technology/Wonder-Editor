@@ -169,3 +169,6 @@ let removeDuplicateItems = (buildKeyFunc, arr) => {
 
   resultArr;
 };
+
+let exclude = (excludeArr, arr, ) =>
+  arr |> Js.Array.filter(value => ! (excludeArr |> Js.Array.includes(value)));

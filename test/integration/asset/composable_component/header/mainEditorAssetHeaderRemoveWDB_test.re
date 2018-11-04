@@ -54,43 +54,132 @@ let _ =
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
 
-      MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
       MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe(
-      {|drag asset wdb into scene;
+      {|drag wdb asset into scene;
               select wdb to be currentNode;
               click remove-button;
               |},
       () => {
-        testPromise(
-          "cloned gameObjects of the asset wdb in the scene tree should be removed",
-          () =>
-          MainEditorAssetUploadTool.loadOneWDB(
-            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
-            (),
-          )
-          |> then_(uploadedWDBNodeId => {
-               MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
-                 ~wdbNodeId=uploadedWDBNodeId,
-                 (),
-               );
+        describe("test cloned gameObjects of the wdb asset", () => {
+          testPromise("cloned gameObjects shouldn't be removed", () => {
+            MainEditorSceneTool.prepareScene(sandbox);
 
-               MainEditorAssetHeaderOperateNodeTool.removeWDBNode(
-                 ~wdbNodeId=uploadedWDBNodeId,
-                 (),
-               );
+            MainEditorAssetUploadTool.loadOneWDB(
+              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+              (),
+            )
+            |> then_(uploadedWDBNodeId => {
+                 MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                   ~wdbNodeId=uploadedWDBNodeId,
+                   (),
+                 );
 
-               BuildComponentTool.buildSceneTree(
-                 TestTool.buildAppStateSceneGraphFromEngine(),
-               )
-               |> ReactTestTool.createSnapshotAndMatch
-               |> resolve;
-             })
-        );
-        testPromise("the geometry of the asset wdb should be removed", () =>
+                 MainEditorAssetHeaderOperateNodeTool.removeWDBNode(
+                   ~wdbNodeId=uploadedWDBNodeId,
+                   (),
+                 );
+
+                 BuildComponentTool.buildSceneTree(
+                   TestTool.buildAppStateSceneGraphFromEngine(),
+                 )
+                 |> ReactTestTool.createSnapshotAndMatch
+                 |> resolve;
+               });
+          });
+
+          describe("cloned gameObjects->geometrys should be disposed", () => {
+            testPromise("test engine", () => {
+              MainEditorSceneTool.prepareScene(sandbox);
+
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId => {
+                   MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     (),
+                   );
+                   MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     (),
+                   );
+
+                   MainEditorAssetHeaderOperateNodeTool.removeWDBNode(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     (),
+                   );
+
+                   let engineState = StateEngineService.unsafeGetState();
+
+                   let clonedGameObjectsWhoHasGeometryWhenCloned =
+                     LoadWDBTool.getBoxTexturedMeshGameObjects(engineState);
+
+                   clonedGameObjectsWhoHasGeometryWhenCloned
+                   |> Js.Array.map(gameObject =>
+                        GameObjectComponentEngineService.hasGeometryComponent(
+                          gameObject,
+                          engineState,
+                        )
+                      )
+                   |> expect == [|false, false|]
+                   |> resolve;
+                 });
+            });
+            testPromise("test snapshot", () => {
+              MainEditorSceneTool.prepareScene(sandbox);
+
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId => {
+                   MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     (),
+                   );
+                   MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     (),
+                   );
+
+                   MainEditorAssetHeaderOperateNodeTool.removeWDBNode(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     (),
+                   );
+
+                   let engineState = StateEngineService.unsafeGetState();
+
+                   let clonedGameObjectsWhoHasGeometryWhenCloned =
+                     LoadWDBTool.getBoxTexturedMeshGameObjects(engineState);
+
+                   engineState |> StateEngineService.setState |> ignore;
+
+                   MainEditorSceneTreeTool.Select.selectGameObject(
+                     ~gameObject=
+                       clonedGameObjectsWhoHasGeometryWhenCloned
+                       |> ArrayService.unsafeGetFirst,
+                     (),
+                   );
+
+                   BuildComponentTool.buildInspectorComponent(
+                     TestTool.buildEmptyAppState(),
+                     InspectorTool.buildFakeAllShowComponentConfig(),
+                   )
+                   |> ReactTestTool.createSnapshotAndMatch
+                   |> resolve;
+                 });
+            });
+          });
+        });
+
+        testPromise("the geometry of the wdb asset should be removed", () => {
+          MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
+
           MainEditorAssetUploadTool.loadOneWDB(
             ~arrayBuffer=boxTexturedWDBArrayBuffer^,
             (),
@@ -117,8 +206,8 @@ let _ =
                  );
 
                component |> ReactTestTool.createSnapshotAndMatch |> resolve;
-             })
-        );
+             });
+        });
       },
     );
 
@@ -131,7 +220,7 @@ let _ =
               the MainEditorAssetChildrenNode panel should show "Scene","Boxtextured"
                 |},
       () => {
-        MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
+        MainEditorSceneTool.prepareScene(sandbox);
 
         MainEditorAssetUploadTool.loadOneWDB(
           ~arrayBuffer=boxTexturedWDBArrayBuffer^,

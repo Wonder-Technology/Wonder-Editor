@@ -39,62 +39,6 @@ let getAllGeometrys = GeometryAPI.getAllGeometrys;
 
 let unsafeGetGeometryGameObjects = Wonderjs.GeometryAPI.unsafeGetGeometryGameObjects;
 
-let _getAllUniqueGeometrys = (gameObject, engineState) => {
-  let rec _iterateGameObjectArr = (gameObjectArr, resultArr, engineState) =>
-    gameObjectArr
-    |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. resultArr, gameObject) => {
-           let resultArr =
-             engineState
-             |> GameObjectComponentEngineService.hasGeometryComponent(
-                  gameObject,
-                ) ?
-               resultArr
-               |> ArrayService.push(
-                    engineState
-                    |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
-                         gameObject,
-                       ),
-                  ) :
-               resultArr;
-
-           _iterateGameObjectArr(
-             engineState |> GameObjectUtils.getChildren(gameObject),
-             resultArr,
-             engineState,
-           );
-         },
-         resultArr,
-       );
-
-  _iterateGameObjectArr([|gameObject|], [||], engineState)
-  |> ArrayService.removeDuplicateItems((. id) => id |> string_of_int);
-};
-
-let replaceAllGameObjectGeometryToDefaultGeometry =
-    (gameObject, targetGeometry, engineState) =>
-  engineState
-  |> _getAllUniqueGeometrys(gameObject)
-  |> Js.Array.map(geometryIndex =>
-       engineState |> unsafeGetGeometryGameObjects(geometryIndex)
-     )
-  |> WonderCommonlib.ArrayService.flatten
-  |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. state, gameObject) =>
-         state
-         |> GameObjectComponentEngineService.disposeGeometryComponent(
-              gameObject,
-              state
-              |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
-                   gameObject,
-                 ),
-            )
-         |> GameObjectComponentEngineService.addGeometryComponent(
-              gameObject,
-              targetGeometry,
-            ),
-       engineState,
-     );
 
 let rec _generateGridPlanePoints =
         ((size, step, y), (num, index), vertices, indices) =>

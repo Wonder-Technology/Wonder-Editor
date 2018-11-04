@@ -23,11 +23,6 @@ let importAssetWDB =
          GameObjectEngineService.getAllGameObjects(gameObject, engineState);
 
        editorState
-       /* TODO remove */
-       |> AssetClonedGameObjectMapEditorService.setResult(
-            gameObject,
-            allGameObjects,
-          )
        |> AssetWDBNodeMapEditorService.setResult(
             wdbNodeId,
             AssetWDBNodeMapEditorService.buildWDBNodeResult(

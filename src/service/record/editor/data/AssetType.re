@@ -23,5 +23,4 @@ type assetRecord = {
   imageNodeMap: WonderCommonlib.SparseMapService.t(imageResultType),
   geometryData,
   materialData,
-  clonedGameObjectMap: WonderCommonlib.SparseMapService.t(array(int)),
 };

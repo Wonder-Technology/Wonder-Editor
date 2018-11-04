@@ -4,23 +4,6 @@ module CustomEventHandler = {
   type prepareTuple = unit;
   type dataTuple = Wonderjs.GameObjectType.gameObject;
 
-  let _storeCloneGameObjectInMap =
-      (gameObjectUid, cloneGameObjectArr, editorState) => {
-    let resultArr =
-      cloneGameObjectArr
-      |> WonderCommonlib.ArrayService.reduceOneParam(
-           (. resultArr, gameObjectLayerArr) =>
-             resultArr |> Js.Array.concat(gameObjectLayerArr),
-           [||],
-         );
-
-    editorState
-    |> AssetClonedGameObjectMapEditorService.setResult(
-         gameObjectUid,
-         resultArr,
-       );
-  };
-
   let _checkLightCount = (gameObject, engineState) => {
     let result =
       (
@@ -88,12 +71,6 @@ module CustomEventHandler = {
       let engineState =
         engineState |> SceneEngineService.addSceneChild(clonedWDBGameObject);
 
-      let allClonedGameObjectLightMaterials =
-        GameObjectEngineService.getAllLightMaterials(
-          flatCloneGameObjectArr,
-          engineState,
-        );
-
       let engineState =
         engineState
         |> LightMaterialEngineService.reInitAllLightMaterialsAndClearShaderCache(
@@ -105,7 +82,7 @@ module CustomEventHandler = {
            [|clonedWDBGameObject|],
            engineState,
          )
-      |> _storeCloneGameObjectInMap(wdbGameObjectUid, cloneGameObjectArr)
+      /* |> _storeCloneGameObjectInMap(wdbGameObjectUid, cloneGameObjectArr) */
       |> StateEditorService.setState
       |> ignore;
 

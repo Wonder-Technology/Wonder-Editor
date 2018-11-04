@@ -65,26 +65,50 @@ let rec getSpecificTreeNodeById = (nodeId, targetTreeNode) =>
       resultNode;
     };
 
-let _removeClonedGameObjectIfHasIt =
-    (gameObjectUnodeId, editorState, engineState) =>
-  switch (
-    editorState
-    |> AssetClonedGameObjectMapEditorService.getClonedGameObjectMap
-    |> WonderCommonlib.SparseMapService.get(gameObjectUnodeId)
-  ) {
-  | None => (editorState, engineState)
-  | Some(clonedGameObjectArr) => (
-      editorState
-      |> AssetClonedGameObjectMapEditorService.getClonedGameObjectMap
-      |> SparseMapService.copy
-      |> DomHelper.deleteKeyInMap(gameObjectUnodeId)
-      |. AssetClonedGameObjectMapEditorService.setClonedGameObjectMap(
-           editorState,
+let _disposeClonedGameObjectsGeometry =
+    (wdbGameObjects, (editorState, engineState)) =>
+  engineState
+  |> GameObjectEngineService.getAllGeometrys(wdbGameObjects)
+  |> WonderCommonlib.ArrayService.removeDuplicateItems
+  |> Js.Array.map(geometryIndex =>
+       engineState
+       |> GeometryEngineService.unsafeGetGeometryGameObjects(geometryIndex)
+     )
+  |> WonderCommonlib.ArrayService.flatten
+  |> ArrayService.exclude(wdbGameObjects)
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. (editorState, engineState), gameObject) =>
+         GameObjectLogicService.disposeGeometry(
+           gameObject,
+           engineState
+           |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
+                gameObject,
+              ),
+           (editorState, engineState),
          ),
-      clonedGameObjectArr
-      |. GameObjectEngineService.disposeGameObjectArrKeepOrder(engineState),
-    )
-  };
+       (editorState, engineState),
+     );
+
+let _disposeWDBGameObjectGeometry = (wdbGameObjects, engineState) =>
+  wdbGameObjects
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. engineState, gameObject) =>
+         switch (
+           GameObjectComponentEngineService.getGeometryComponent(
+             gameObject,
+             engineState,
+           )
+         ) {
+         | None => engineState
+         | Some(geometry) =>
+           GameObjectComponentEngineService.disposeGeometryComponent(
+             gameObject,
+             geometry,
+             engineState,
+           )
+         },
+       engineState,
+     );
 
 let _handleRemoveWDBNode = (nodeId, editorState) => {
   let {wdbGameObject} =
@@ -92,18 +116,16 @@ let _handleRemoveWDBNode = (nodeId, editorState) => {
     |> AssetWDBNodeMapEditorService.getWDBNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
-  let defaultCubeGeometryComponent =
-    AssetGeometryDataEditorService.unsafeGetDefaultCubeGeometryComponent(
-      editorState,
-    );
+  let engineState = StateEngineService.unsafeGetState();
+
+  let wdbGameObjects =
+    GameObjectEngineService.getAllGameObjects(wdbGameObject, engineState);
 
   let (editorState, engineState) =
-    StateEngineService.unsafeGetState()
-    |> GeometryEngineService.replaceAllGameObjectGeometryToDefaultGeometry(
-         wdbGameObject,
-         defaultCubeGeometryComponent,
-       )
-    |> _removeClonedGameObjectIfHasIt(wdbGameObject, editorState);
+    (editorState, engineState)
+    |> _disposeClonedGameObjectsGeometry(wdbGameObjects);
+  let engineState =
+    engineState |> _disposeWDBGameObjectGeometry(wdbGameObjects);
 
   engineState |> StateEngineService.setState |> ignore;
 
