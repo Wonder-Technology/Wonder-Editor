@@ -70,9 +70,16 @@ let _disposeClonedGameObjectsGeometry =
   engineState
   |> GameObjectEngineService.getAllGeometrys(wdbGameObjects)
   |> WonderCommonlib.ArrayService.removeDuplicateItems
-  |> Js.Array.map(geometryIndex =>
+  |> Js.Array.filter(geometry =>
+       !
+         RelateGameObjectAndAssetUtils.isDefaultGeometry(
+           geometry,
+           (editorState, engineState),
+         )
+     )
+  |> Js.Array.map(geometry =>
        engineState
-       |> GeometryEngineService.unsafeGetGeometryGameObjects(geometryIndex)
+       |> GeometryEngineService.unsafeGetGeometryGameObjects(geometry)
      )
   |> WonderCommonlib.ArrayService.flatten
   |> ArrayService.exclude(wdbGameObjects)
@@ -89,14 +96,35 @@ let _disposeClonedGameObjectsGeometry =
        (editorState, engineState),
      );
 
-let _disposeWDBGameObjects = (wdbGameObjects, engineState) =>
+let _disposeWDBGameObjects = (wdbGameObjects, (editorState, engineState)) =>
   wdbGameObjects
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. engineState, gameObject) =>
-         GameObjectEngineService.disposeGameObjectDisposeGeometryRemoveMaterial(
-           gameObject,
-           engineState,
-         ),
+         switch (
+           GameObjectComponentEngineService.getGeometryComponent(
+             gameObject,
+             engineState,
+           )
+         ) {
+         | Some(geometry) =>
+           RelateGameObjectAndAssetUtils.isDefaultGeometry(
+             geometry,
+             (editorState, engineState),
+           ) ?
+             GameObjectEngineService.disposeGameObjectKeepOrderRemoveGeometryRemoveMaterial(
+               gameObject,
+               engineState,
+             ) :
+             GameObjectEngineService.disposeGameObjectDisposeGeometryRemoveMaterial(
+               gameObject,
+               engineState,
+             )
+         | None =>
+           GameObjectEngineService.disposeGameObjectDisposeGeometryRemoveMaterial(
+             gameObject,
+             engineState,
+           )
+         },
        engineState,
      );
 
@@ -114,7 +142,8 @@ let _handleRemoveWDBNode = (nodeId, editorState) => {
   let (editorState, engineState) =
     (editorState, engineState)
     |> _disposeClonedGameObjectsGeometry(wdbGameObjects);
-  let engineState = engineState |> _disposeWDBGameObjects(wdbGameObjects);
+  let engineState =
+    (editorState, engineState) |> _disposeWDBGameObjects(wdbGameObjects);
 
   engineState |> StateEngineService.setState |> ignore;
 

@@ -1,12 +1,18 @@
-let getBoxTexturedMeshGameObjects = engineState =>
+let findGameObjectsByName = (name, engineState) =>
   engineState
   |> GameObjectEngineService.getAllGameObjects(
        SceneEngineService.getSceneGameObject(engineState),
      )
   |> Js.Array.filter(gameObject =>
        GameObjectEngineService.getGameObjectName(gameObject, engineState)
-       === Some("Mesh")
+       === Some(name)
      );
+
+let findGameObjectByName = (name, engineState) =>
+  findGameObjectsByName(name, engineState) |> ArrayService.unsafeGetFirst;
+
+let getBoxTexturedMeshGameObjects = engineState =>
+  findGameObjectsByName("Mesh", engineState);
 
 let getBoxTexturedMeshGameObject = engineState =>
   engineState |> getBoxTexturedMeshGameObjects |> ArrayService.unsafeGetFirst;

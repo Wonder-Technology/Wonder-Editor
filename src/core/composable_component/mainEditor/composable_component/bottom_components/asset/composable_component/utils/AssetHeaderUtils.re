@@ -81,14 +81,29 @@ let _handleAssetWDBType =
            (editorState, engineState),
          );
 
+       let defaultCubeGeometryData = (
+         AssetGeometryDataEditorService.unsafeGetDefaultCubeGeometryComponent(
+           editorState,
+         ),
+         PrepareDefaultComponentUtils.getDefaultCubeGeometryName(),
+       );
+       let defaultSphereGeometryData = (
+         AssetGeometryDataEditorService.unsafeGetDefaultSphereGeometryComponent(
+           editorState,
+         ),
+         PrepareDefaultComponentUtils.getDefaultSphereGeometryName(),
+       );
+
        let engineState =
          allGameObjects
          |> WonderCommonlib.ArrayService.reduceOneParam(
               (. engineState, gameObject) =>
-                GameObjectEngineService.initGameObject(
-                  gameObject,
-                  engineState,
-                ),
+                engineState
+                |> RelateGameObjectAndAssetUtils.replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent(
+                     gameObject,
+                     (defaultCubeGeometryData, defaultSphereGeometryData),
+                   )
+                |> GameObjectEngineService.initGameObject(gameObject),
               engineState,
             )
          |> DirectorEngineService.loopBody(0.);

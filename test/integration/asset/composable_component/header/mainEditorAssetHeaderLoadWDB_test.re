@@ -783,6 +783,92 @@ let _ =
         });
       });
 
+      describe("relate wdb asset gameObjects with default geometrys", () => {
+        let wdbArrayBuffer = ref(Obj.magic(1));
+
+        let _generateWDB = () =>
+          WDBTool.generateWDB((editorState, engineState) => {
+            let (engineState, rootGameObject) =
+              GameObjectEngineService.create(engineState);
+
+            let geometry =
+              AssetGeometryDataEditorService.unsafeGetDefaultCubeGeometryComponent(
+                editorState,
+              );
+
+            let (engineState, lightMaterial) =
+              LightMaterialEngineService.create(engineState);
+
+            let (editorState, engineState, box1) =
+              PrimitiveEngineService.createBox(
+                (geometry, lightMaterial),
+                editorState,
+                engineState,
+              );
+
+            let engineState =
+              engineState |> GameObjectUtils.addChild(rootGameObject, box1);
+
+            (rootGameObject, (editorState, engineState));
+          });
+
+        beforeAll(() => wdbArrayBuffer := _generateWDB());
+
+        beforeEach(() => {
+          MainEditorSceneTool.initStateWithJob(
+            ~sandbox,
+            ~isBuildFakeDom=false,
+            ~noWorkerJobRecord=
+              NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                ~loopPipelines=
+                  {|
+                   [
+                       {
+                           "name": "default",
+                           "jobs": [
+                               {
+                                   "name": "dispose"
+                               }
+                           ]
+                       }
+                   ]
+               |},
+                (),
+              ),
+            (),
+          );
+
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorAssetTool.initAssetTree,
+          );
+        });
+
+        testPromise({|
+        1.create gameObject g1 with default cube geometry in scene;
+        2.load wdb asset w1(has one box gameObject with default cube geometry);
+
+        g1->geometry->select geometry group widget should only have not-duplicate-default-geometrys and be using default cube geometry
+        |}, () =>
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=wdbArrayBuffer^,
+            (),
+          )
+          |> then_(uploadedWDBNodeId => {
+               MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+
+               BuildComponentTool.buildGeometry(
+                 ~geometryComponent=
+                   GameObjectTool.getCurrentGameObjectGeometry(),
+                 ~isShowGeometryGroup=true,
+                 (),
+               )
+               |> ReactTestTool.createSnapshotAndMatch
+               |> resolve;
+             })
+        );
+      });
+
       describe("fix bug", () => {
         testPromise("the wdb->name in the same path should be unique", () => {
           let fileName = "BoxTextured";

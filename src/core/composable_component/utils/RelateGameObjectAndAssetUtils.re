@@ -402,3 +402,150 @@ let replaceToTextureAssetTextureComponent =
     )
   | _ => engineState
   };
+
+let _isGeometryPointDataEqual = (points1, points2, getLengthFunc, engineState) =>
+  getLengthFunc(points1) === getLengthFunc(points2) && points1 == points2;
+
+let _isGeometryVertexDataEqual = (geometry1, geometry2, engineState) =>
+  _isGeometryPointDataEqual(
+    GeometryEngineService.getGeometryVertices(geometry1, engineState),
+    GeometryEngineService.getGeometryVertices(geometry2, engineState),
+    Float32Array.length,
+    engineState,
+  )
+  && _isGeometryPointDataEqual(
+       GeometryEngineService.getGeometryNormals(geometry1, engineState),
+       GeometryEngineService.getGeometryNormals(geometry2, engineState),
+       Float32Array.length,
+       engineState,
+     )
+  && _isGeometryPointDataEqual(
+       GeometryEngineService.getGeometryTexCoords(geometry1, engineState),
+       GeometryEngineService.getGeometryTexCoords(geometry2, engineState),
+       Float32Array.length,
+       engineState,
+     )
+  && _isGeometryPointDataEqual(
+       GeometryEngineService.getGeometryIndices(geometry1, engineState),
+       GeometryEngineService.getGeometryIndices(geometry2, engineState),
+       Uint16Array.length,
+       engineState,
+     );
+
+let isGeometryDataEqual = (geometry1, geometry2, engineState) =>
+  isValueEqual(
+    geometry1,
+    geometry2,
+    GeometryEngineService.getGeometryName,
+    engineState,
+  )
+  && _isGeometryVertexDataEqual(geometry1, geometry2, engineState);
+
+let _isGeometryEqualDefaultGeometryData =
+    (geometry, defaultGeometry, defaultGeometryName, engineState) =>
+  GeometryEngineService.unsafeGetGeometryName(geometry, engineState)
+  == defaultGeometryName
+  && _isGeometryVertexDataEqual(geometry, defaultGeometry, engineState);
+
+let isDefaultGeometry = (geometry, (editorState, engineState)) => {
+  let (defaultCubeGeometry, defaultCubeGeometryName) = (
+    AssetGeometryDataEditorService.unsafeGetDefaultCubeGeometryComponent(
+      editorState,
+    ),
+    PrepareDefaultComponentUtils.getDefaultCubeGeometryName(),
+  );
+  let (defaultSphereGeometry, defaultSphereGeometryName) = (
+    AssetGeometryDataEditorService.unsafeGetDefaultSphereGeometryComponent(
+      editorState,
+    ),
+    PrepareDefaultComponentUtils.getDefaultSphereGeometryName(),
+  );
+
+  _isGeometryEqualDefaultGeometryData(
+    geometry,
+    defaultCubeGeometry,
+    defaultCubeGeometryName,
+    engineState,
+  )
+  || _isGeometryEqualDefaultGeometryData(
+       geometry,
+       defaultSphereGeometry,
+       defaultSphereGeometryName,
+       engineState,
+     );
+};
+
+let getTargetGeometryByJudgeDefaultGeometry =
+    (
+      geometry,
+      (
+        (defaultCubeGeometry, defaultCubeGeometryName),
+        (defaultSphereGeometry, defaultSphereGeometryName),
+      ),
+      engineState,
+    ) =>
+  _isGeometryEqualDefaultGeometryData(
+    geometry,
+    defaultCubeGeometry,
+    defaultCubeGeometryName,
+    engineState,
+  ) ?
+    Some(defaultCubeGeometry) :
+    _isGeometryEqualDefaultGeometryData(
+      geometry,
+      defaultSphereGeometry,
+      defaultSphereGeometryName,
+      engineState,
+    ) ?
+      Some(defaultSphereGeometry) : None;
+
+let replaceGeometryComponent =
+    (gameObject, sourceGeomtry, targetGeometry, engineState) =>
+  switch (targetGeometry) {
+  | None => engineState
+  | Some(targetGeometry) =>
+    engineState
+    |> GameObjectComponentEngineService.disposeGeometryComponent(
+         gameObject,
+         sourceGeomtry,
+       )
+    |> GameObjectComponentEngineService.addGeometryComponent(
+         gameObject,
+         targetGeometry,
+       )
+  };
+
+let replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent =
+    (
+      gameObject,
+      (
+        (defaultCubeGeometry, defaultCubeGeometryName),
+        (defaultSphereGeometry, defaultSphereGeometryName),
+      ),
+      engineState,
+    ) =>
+  switch (
+    GameObjectComponentEngineService.getGeometryComponent(
+      gameObject,
+      engineState,
+    )
+  ) {
+  | None => engineState
+  | Some(geometry) =>
+    let targetGeometry =
+      getTargetGeometryByJudgeDefaultGeometry(
+        geometry,
+        (
+          (defaultCubeGeometry, defaultCubeGeometryName),
+          (defaultSphereGeometry, defaultSphereGeometryName),
+        ),
+        engineState,
+      );
+
+    replaceGeometryComponent(
+      gameObject,
+      geometry,
+      targetGeometry,
+      engineState,
+    );
+  };

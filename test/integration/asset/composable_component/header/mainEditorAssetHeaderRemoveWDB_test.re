@@ -324,4 +324,110 @@ let _ =
            });
       },
     );
+
+    describe("fix bug", () =>
+      describe(
+        "the default geometry with wdb asset should be remove instead of dispose when remove wdb asset",
+        () => {
+          let wdbArrayBuffer = ref(Obj.magic(1));
+
+          let _generateWDB = () =>
+            WDBTool.generateWDB((editorState, engineState) => {
+              let (engineState, rootGameObject) =
+                GameObjectEngineService.create(engineState);
+
+              let geometry =
+                AssetGeometryDataEditorService.unsafeGetDefaultCubeGeometryComponent(
+                  editorState,
+                );
+
+              let (engineState, lightMaterial) =
+                LightMaterialEngineService.create(engineState);
+
+              let (editorState, engineState, box1) =
+                PrimitiveEngineService.createBox(
+                  (geometry, lightMaterial),
+                  editorState,
+                  engineState,
+                );
+
+              let engineState =
+                GameObjectEngineService.setGameObjectName(
+                  "Box1",
+                  box1,
+                  engineState,
+                );
+
+              let engineState =
+                engineState |> GameObjectUtils.addChild(rootGameObject, box1);
+
+              (rootGameObject, (editorState, engineState));
+            });
+
+          beforeAll(() => wdbArrayBuffer := _generateWDB());
+
+          testPromise(
+            {|
+        1.create gameObject g1 with default cube geometry in scene;
+        2.load wdb asset w1(has one box gameObject with default cube geometry);
+        3.drag wdb asset to scene tree to be c1;
+        4.remove w1;
+
+        c1's and g1's geometry shouldn't be changed
+        |},
+            () => {
+              MainEditorSceneTool.prepareScene(sandbox);
+              MainEditorSceneTool.createDefaultScene(
+                sandbox,
+                MainEditorAssetTool.initAssetTree,
+              );
+
+              let engineState = StateEngineService.unsafeGetState();
+
+              let firstBoxGameObject =
+                MainEditorSceneTool.getFirstBox(engineState);
+
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=wdbArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId => {
+                   MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     (),
+                   );
+
+                   let editorState = StateEditorService.getState();
+                   let engineState = StateEngineService.unsafeGetState();
+
+                   let clonedGameObject =
+                     LoadWDBTool.findGameObjectByName("Box1", engineState);
+
+                   MainEditorAssetHeaderOperateNodeTool.removeWDBNode(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     (),
+                   );
+
+                   let engineState = StateEngineService.unsafeGetState();
+
+                   (
+                     clonedGameObject
+                     |> GameObjectComponentEngineService.hasGeometryComponent(
+                          _,
+                          engineState,
+                        ),
+                     firstBoxGameObject
+                     |> GameObjectComponentEngineService.hasGeometryComponent(
+                          _,
+                          engineState,
+                        ),
+                   )
+                   |> expect == (true, true)
+                   |> resolve;
+                 });
+            },
+          );
+        },
+      )
+    );
   });
