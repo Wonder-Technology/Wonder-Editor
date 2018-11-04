@@ -152,41 +152,26 @@ let getRelatedMaterialData =
       engineState,
     ) => {
   WonderLog.Contract.requireCheck(
-    () => {
-      open WonderLog;
-      open Contract;
-      open Operators;
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect=
+                  {j|default material component has not been added to gameObject|j},
+                ~actual={j|has|j},
+              ),
+              () => {
+                let material =
+                  unsafeGetMaterialComponentFunc(gameObject, engineState);
 
-      test(
-        Log.buildAssertMessage(
-          ~expect=
-            {j|asset material component has not been added to gameObject|j},
-          ~actual={j|has|j},
-        ),
-        () => {
-          let material =
-            unsafeGetMaterialComponentFunc(gameObject, engineState);
-
-          assetMaterialComponentMap
-          |> SparseMapService.getValidValues
-          |> SparseMapService.includes(material)
-          |> assertFalse;
-        },
-      );
-      test(
-        Log.buildAssertMessage(
-          ~expect=
-            {j|default material component has not been added to gameObject|j},
-          ~actual={j|has|j},
-        ),
-        () => {
-          let material =
-            unsafeGetMaterialComponentFunc(gameObject, engineState);
-
-          material !== defaultMaterial;
-        },
-      );
-    },
+                material !== defaultMaterial;
+              },
+            )
+          )
+        )
+      ),
     StateEditorService.getStateIsDebug(),
   );
 
