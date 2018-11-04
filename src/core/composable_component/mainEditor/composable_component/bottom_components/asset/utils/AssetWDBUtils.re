@@ -16,6 +16,7 @@ let importAssetWDB =
        false,
        false,
        false,
+       false,
      )
   |> WonderBsMost.Most.tap(
        ((engineState, (imageUint8ArrayDataMap, _), gameObject)) => {
@@ -43,14 +44,6 @@ let importAssetWDB =
        let engineState =
          engineState
          |> GameObjectUtils.setAllGameObjectsIsRenderIfHasMeshRenderer(
-              false,
-              gameObject,
-            )
-         |> GameObjectUtils.setAllGameObjectsIsRenderIfHasDirectionLight(
-              false,
-              gameObject,
-            )
-         |> GameObjectUtils.setAllGameObjectsIsRenderIfHasPointLight(
               false,
               gameObject,
             )

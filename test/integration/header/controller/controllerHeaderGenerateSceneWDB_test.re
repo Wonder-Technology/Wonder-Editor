@@ -91,7 +91,13 @@ let _ =
           let isBind = ref(false);
 
           engineState
-          |> AssembleWDBEngineService.assembleWDB(wdb, true, true, true)
+          |> AssembleWDBEngineService.assembleWDB(
+               wdb,
+               true,
+               true,
+               true,
+               true,
+             )
           |> WonderBsMost.Most.tap(((engineState, _, gameObject)) => {
                isBind :=
                  _getIsBindLength(gameObject, engineState)

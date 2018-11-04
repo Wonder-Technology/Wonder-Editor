@@ -106,11 +106,17 @@ let initStateWithJob =
 };
 
 let initState =
-    (~sandbox, ~buffer=SettingToolEngine.buildBufferConfigStr(), ()) =>
+    (
+      ~sandbox,
+      ~isBuildFakeDom=true,
+      ~buffer=SettingToolEngine.buildBufferConfigStr(),
+      (),
+    ) =>
   initStateWithJob(
     ~sandbox,
     ~noWorkerJobRecord=
       NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(),
+    ~isBuildFakeDom,
     ~buffer,
     (),
   );

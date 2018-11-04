@@ -783,7 +783,7 @@ let _ =
         });
       });
 
-      describe("fix bug", () =>
+      describe("fix bug", () => {
         testPromise("the wdb->name in the same path should be unique", () => {
           let fileName = "BoxTextured";
 
@@ -817,7 +817,76 @@ let _ =
                     |> resolve;
                   })
              );
-        })
-      );
+        });
+
+        describe(
+          "load wdb contain light shouldn't be exceed max count even though the total light count is exceed(because wdb light is not render)",
+          () => {
+            let wdbArrayBuffer = ref(Obj.magic(1));
+
+            let _generateWDB = () =>
+              WDBTool.generateWDB((editorState, engineState) => {
+                let (engineState, rootGameObject) =
+                  GameObjectEngineService.create(engineState);
+
+                let (editorState, engineState, directionLight1) =
+                  PrimitiveEngineService.createDirectionLight(
+                    editorState,
+                    engineState,
+                  );
+
+                let engineState =
+                  engineState
+                  |> GameObjectUtils.addChild(rootGameObject, directionLight1);
+
+                (rootGameObject, (editorState, engineState));
+              });
+
+            beforeAll(() => wdbArrayBuffer := _generateWDB());
+
+            testPromise("test", () => {
+              MainEditorSceneTool.initState(
+                ~sandbox,
+                ~isBuildFakeDom=false,
+                (),
+              );
+              MainEditorSceneTool.prepareScene(sandbox);
+
+              let editorState = StateEditorService.getState();
+              let engineState = StateEngineService.unsafeGetState();
+
+              let (editorState, engineState, _) =
+                PrimitiveEngineService.createDirectionLight(
+                  editorState,
+                  engineState,
+                );
+              let (editorState, engineState, _) =
+                PrimitiveEngineService.createDirectionLight(
+                  editorState,
+                  engineState,
+                );
+              let (editorState, engineState, _) =
+                PrimitiveEngineService.createDirectionLight(
+                  editorState,
+                  engineState,
+                );
+              let (editorState, engineState, _) =
+                PrimitiveEngineService.createDirectionLight(
+                  editorState,
+                  engineState,
+                );
+
+              editorState |> StateEditorService.setState |> ignore;
+              engineState |> StateEngineService.setState |> ignore;
+
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=wdbArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId => 1 |> expect == 1 |> resolve);
+            });
+          },
+        );
+      });
     });
   });

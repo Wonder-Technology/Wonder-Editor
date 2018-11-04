@@ -80,7 +80,7 @@ let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
 
 let importSceneWDB = wdbArrayBuffer =>
   StateEngineService.unsafeGetState()
-  |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer, true, false, true)
+  |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer, true, false, true, true)
   |> WonderBsMost.Most.map(
        (
          (
