@@ -2,6 +2,7 @@ type navType =
   | None
   | File
   | Edit
+  | Publish
   | Help;
 
 type action =
@@ -12,5 +13,7 @@ type action =
   | HideEditExportPackageModal
   | ShowEditExportSceneModal
   | HideEditExportSceneModal
+  | ShowPublishLocalModal
+  | HidePublishLocalModal
   | ShowHelpVersionModal
   | HideHelpVersionModal;

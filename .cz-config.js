@@ -21,6 +21,7 @@ module.exports = {
       { name: "asset" },
       { name: "package" },
       { name: "scene" },
+      { name: "publish" },
       { name: "light" },
       { name: "lightMaterial" },
       { name: "imgui" },

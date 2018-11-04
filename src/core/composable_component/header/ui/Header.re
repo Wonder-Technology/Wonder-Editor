@@ -5,6 +5,7 @@ type state = {
   currentSelectNav: navType,
   isShowEditExportPackageModal: bool,
   isShowEditExportSceneModal: bool,
+  isShowPublishLocalModal: bool,
   isShowHelpVersionModal: bool,
 };
 
@@ -177,6 +178,59 @@ module Method = {
     </div>;
   };
 
+  let buildPublishComponent = (state, send, store, dispatchFunc) => {
+    let className =
+      state.currentSelectNav === Publish ?
+        "item-title item-active" : "item-title";
+    <div className="header-item">
+      <div className="component-item">
+        <span
+          className
+          onClick=(
+            e =>
+              state.isSelectNav ?
+                send(BlurNav) : send(ToggleShowNav(Publish))
+          )
+          onMouseOver=(e => send(HoverNav(Publish)))>
+          (DomHelper.textEl("Publish"))
+        </span>
+      </div>
+      (
+        state.currentSelectNav === Publish ?
+          <div className="item-content item-edit">
+            <div
+              className="content-section"
+              onClick=(_e => send(ShowPublishLocalModal))>
+              <span className="section-header">
+                (DomHelper.textEl("Local"))
+              </span>
+            </div>
+          </div> :
+          ReasonReact.null
+      )
+      (
+        state.isShowPublishLocalModal ?
+          <SingleInputModal
+            title="Local"
+            defaultValue="WonderLocal"
+            closeFunc=(() => send(HidePublishLocalModal))
+            submitFunc=(
+              zipName => {
+                HeaderPublishLocalUtils.Publish.publishZip(
+                  WonderBsJszip.Zip.create,
+                  Fetch.fetch,
+                  zipName,
+                );
+
+                send(HidePublishLocalModal);
+              }
+            )
+          /> :
+          ReasonReact.null
+      )
+    </div>;
+  };
+
   let buildHelpComponent = (state, send, store, dispatchFunc) => {
     let className =
       state.currentSelectNav === Help ?
@@ -266,6 +320,12 @@ let reducer = (action, state) =>
   | ShowEditExportSceneModal =>
     ReasonReact.Update({...state, isShowEditExportSceneModal: true})
 
+  | ShowPublishLocalModal =>
+    ReasonReact.Update({...state, isShowPublishLocalModal: true})
+
+  | HidePublishLocalModal =>
+    ReasonReact.Update({...state, isShowPublishLocalModal: false})
+
   | HideEditExportSceneModal =>
     ReasonReact.Update({...state, isShowEditExportSceneModal: false})
   };
@@ -280,6 +340,7 @@ let render =
     <div className="header-nav">
       (Method.buildFileComponent(state, send, store, dispatchFunc))
       (Method.buildEditComponent(state, send, store, dispatchFunc))
+      (Method.buildPublishComponent(state, send, store, dispatchFunc))
       (Method.buildHelpComponent(state, send, store, dispatchFunc))
     </div>
   </article>;
@@ -292,6 +353,7 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
     isShowHelpVersionModal: false,
     isShowEditExportPackageModal: false,
     isShowEditExportSceneModal: false,
+    isShowPublishLocalModal: false,
   },
   reducer,
   didMount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>

@@ -6,18 +6,63 @@
 
     <link rel="icon" href="./res/loading/favicon.ico" type="image/x-icon" />
 
-    <title>exported package</title>
+    <title>Wonder</title>
+    <style>
+        #loading {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #1d1b22;
+        }
+
+        #loading .loading-content {
+            width: 50%;
+            height: 50%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #loading .loading-content .loading-img {
+            width: 250px;
+            height: 250px;
+        }
+
+        #loading .loading-content .loading-text {
+            color: #e7981f;
+            margin-top: 10px;
+            font-size: 85px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
     <h1 id="detect" style="display: none">your browser not support sharedArrayBuffer or offscreenCanvas, can't use
         worker. please use no worker!</h1>
 
-    <div id="loading">
+    <!-- <div id="loading">
         <img id="logo" style="display: none;" src="./res/loading/logo.png" width=100 height=100 />
         <br />
         <span id="text"></span>
+    </div> -->
+
+
+    <div id="loading">
+        <div class="loading-content">
+            <div>
+                <img id="logo" class="loading-img" src="./res/loading/logo.png" />
+            </div>
+            <div>
+                <div id="text" class="loading-text"></div>
+            </div>
+        </div>
     </div>
+
 
 
     <script src="./wd.min.js"></script>
@@ -40,12 +85,12 @@
                     var windowHeight = window.innerHeight;
 
 
-                    document.querySelector("#logo").style.display = "inline";
+                    // document.querySelector("#logo").style.display = "inline";
 
-                    var dom = document.querySelector("#loading");
+                    // var dom = document.querySelector("#loading");
 
 
-                    dom.style.cssText = 'position:absolute;top:' + windowHeight * 0.55 + 'px;left:' + windowWidth * 0.4 + 'px;width:' + windowWidth * (0.6 - 0.4) + 'px;height:50px;font-size:80px; color:bisque; text-align: center;';
+                    // dom.style.cssText = 'position:absolute;top:' + windowHeight * 0.55 + 'px;left:' + windowWidth * 0.4 + 'px;width:' + windowWidth * (0.6 - 0.4) + 'px;height:50px;font-size:80px; color:bisque; text-align: center;';
 
 
 
@@ -105,8 +150,8 @@
             var loadedIMGUIByteLength = 0;
 
             var totalIMGUIByteLength = (35 + 41 + 95) * 1024;
-            // var totalWDBByteLength = 1.28 * 1024 * 1024;
-            var totalWDBByteLength = $totalWDBByteLength;
+            var totalWDBByteLength = 1.28 * 1024 * 1024;
+            // var totalWDBByteLength = $totalWDBByteLength;
             var totalByteLength = totalIMGUIByteLength + totalWDBByteLength;
 
             return AssetTool.loadConfig(["./config/setting.json", "./config/"], null, function () {
