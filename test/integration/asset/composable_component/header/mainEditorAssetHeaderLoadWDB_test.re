@@ -17,10 +17,12 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
+    let truckWDBArrayBuffer = ref(Obj.magic(1));
     let sceneWDBArrayBuffer = ref(Obj.magic(1));
 
     beforeAll(() => {
       boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
+      truckWDBArrayBuffer := WDBTool.convertGLBToWDB("CesiumMilkTruck");
       sceneWDBArrayBuffer := WDBTool.generateSceneWDB();
     });
 
@@ -844,12 +846,14 @@ let _ =
           );
         });
 
-        testPromise({|
+        testPromise(
+          {|
         1.create gameObject g1 with default cube geometry in scene;
         2.load wdb asset w1(has one box gameObject with default cube geometry);
 
         g1->geometry->select geometry group widget should only have not-duplicate-default-geometrys and be using default cube geometry
-        |}, () =>
+        |},
+          () =>
           MainEditorAssetUploadTool.loadOneWDB(
             ~arrayBuffer=wdbArrayBuffer^,
             (),
@@ -972,6 +976,34 @@ let _ =
               |> then_(uploadedWDBNodeId => 1 |> expect == 1 |> resolve);
             });
           },
+        );
+
+        describe("fix geometry bug", () =>
+          testPromise(
+            {|
+        1.create gameObject g1 in scene;
+        2.load truck wdb asset w1;
+
+        g1->geometry->select geometry group widget shouldn't has "NoName Geometry"
+        |},
+            () =>
+            MainEditorAssetUploadTool.loadOneWDB(
+              ~arrayBuffer=truckWDBArrayBuffer^,
+              (),
+            )
+            |> then_(uploadedWDBNodeId => {
+                 MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+
+                 BuildComponentTool.buildGeometry(
+                   ~geometryComponent=
+                     GameObjectTool.getCurrentGameObjectGeometry(),
+                   ~isShowGeometryGroup=true,
+                   (),
+                 )
+                 |> ReactTestTool.createSnapshotAndMatch
+                 |> resolve;
+               })
+          )
         );
       });
     });

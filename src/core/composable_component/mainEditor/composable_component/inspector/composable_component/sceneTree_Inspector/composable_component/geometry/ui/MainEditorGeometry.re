@@ -11,6 +11,10 @@ type action =
 module Method = {
   let changeGeometry = MainEditorChangeGeometryEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
+  let _isValidGeometry = (geometry, engineState) =>
+    GeometryEngineService.getGeometryVertices(geometry, engineState)
+    |> Js.Typed_array.Float32Array.length > 0;
+
   let _isGameObjectMaterialComponentHasMap = (gameObject, engineState) =>
     GameObjectComponentEngineService.hasBasicMaterialComponent(
       gameObject,
@@ -44,9 +48,13 @@ module Method = {
         } :
         false;
 
-  let _getAllAssetGeometrys = engineState =>
+  let _getAllAssetGeometrys = engineState => {
     GeometryEngineService.getAllGeometrys(engineState)
-    |> Js.Array.filter(DefaultSceneUtils.isAssetGeometry);
+    |> Js.Array.filter(geometry =>
+         DefaultSceneUtils.isAssetGeometry(geometry)
+         && _isValidGeometry(geometry, engineState)
+       );
+  };
 
   let _getAllShowGeometrys = (gameObject, engineState) =>
     _isGameObjectMaterialComponentHasMap(gameObject, engineState) ?
