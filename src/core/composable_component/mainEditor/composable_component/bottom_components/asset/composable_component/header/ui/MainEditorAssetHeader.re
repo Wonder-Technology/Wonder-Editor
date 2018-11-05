@@ -80,7 +80,7 @@ let render =
         <input
           className="asset-fileLoad"
           _type="file"
-          multiple=true
+          multiple=false
           onChange=(e => Method.fileLoad((store, dispatchFunc), (), e))
         />
       </div>
