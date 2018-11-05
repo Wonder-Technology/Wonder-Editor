@@ -62,6 +62,10 @@ module Method = {
              (Some(materialNodeId), (materialComponent, type_))
            ),
       )
+      |> Js.Array.sortInPlaceWith(
+           ((_, (materialComponent1, _)), (_, (materialComponent2, _))) =>
+           materialComponent2 - materialComponent1
+         )
     );
 
   let showMaterialAssets =
@@ -160,7 +164,7 @@ let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
   | ShowMaterialGroup =>
     ReasonReact.Update({...state, isShowMaterialGroup: true})
   | HideMaterialGroup =>
-    ReasonReact.Update({...state, isShowMaterialGroup: false});
+    ReasonReact.Update({...state, isShowMaterialGroup: false})
   };
 
 let render =

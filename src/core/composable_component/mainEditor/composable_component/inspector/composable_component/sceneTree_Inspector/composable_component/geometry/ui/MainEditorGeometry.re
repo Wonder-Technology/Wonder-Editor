@@ -48,13 +48,13 @@ module Method = {
         } :
         false;
 
-  let _getAllAssetGeometrys = engineState => {
+  let _getAllAssetGeometrys = engineState =>
     GeometryEngineService.getAllGeometrys(engineState)
     |> Js.Array.filter(geometry =>
          DefaultSceneUtils.isAssetGeometry(geometry)
          && _isValidGeometry(geometry, engineState)
-       );
-  };
+       )
+    |> Js.Array.sortInPlaceWith((a, b) => b - a);
 
   let _getAllShowGeometrys = (gameObject, engineState) =>
     _isGameObjectMaterialComponentHasMap(gameObject, engineState) ?
