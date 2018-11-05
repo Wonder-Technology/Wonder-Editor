@@ -430,11 +430,7 @@ let checkAssetNodeName =
   |> Js.Array.filter(((name, nodeId)) => nodeId !== sourceNodeId)
   |> Js.Array.map(((name, nodeId)) => name)
   |> Js.Array.includes(sourceName) ?
-    {
-      ConsoleUtils.warn("the asset can't has the same name !");
-
-      successFunc((editorState, engineState));
-    } :
+    successFunc((editorState, engineState)) :
     failFunc((editorState, engineState));
 
 let _isTargetTreeNodeHasSameNameChild =
