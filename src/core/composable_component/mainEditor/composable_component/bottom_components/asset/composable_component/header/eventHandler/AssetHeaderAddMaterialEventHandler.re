@@ -10,7 +10,7 @@ module CustomEventHandler = {
     let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
     let materialName =
-      MainEditorMaterialUtils.getMaterilaDefaultName()
+      MainEditorMaterialUtils.getNewMaterilaName()
       |. AssetUtils.getUniqueTreeNodeName(
            Material,
            targetTreeNodeId |. Some,

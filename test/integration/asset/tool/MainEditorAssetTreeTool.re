@@ -17,7 +17,7 @@ module BuildAssetTree = {
          children: [||],
          isShowChildren: true,
        })
-    |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+    |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
          rootId,
          None,
          _,
@@ -49,13 +49,13 @@ module BuildAssetTree = {
            isShowChildren: true,
            children: [||],
          })
-      |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+      |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
            rootId,
            None,
            _,
            engineState,
          )
-      |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+      |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
            id1,
            rootId |. Some,
            _,
@@ -168,7 +168,7 @@ module BuildAssetTree = {
            isShowChildren: true,
            children: [||],
          })
-      |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+      |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
            rootId,
            None,
            _,
@@ -229,13 +229,13 @@ module BuildAssetTree = {
              isShowChildren: true,
              children: [||],
            })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
              rootId,
              None,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
              id1,
              rootId |. Some,
              _,
@@ -275,19 +275,19 @@ module BuildAssetTree = {
              isShowChildren: true,
              children: [||],
            })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
              rootId,
              None,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
              id1,
              rootId |. Some,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
              id2,
              rootId |. Some,
              _,
@@ -351,19 +351,19 @@ module BuildAssetTree = {
              isShowChildren: true,
              children: [||],
            })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
              rootId,
              None,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
              id1,
              rootId |. Some,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
              id2,
              rootId |. Some,
              _,
@@ -388,13 +388,13 @@ module BuildAssetTree = {
                },
              |],
            })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
              id3,
              id2 |. Some,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
              id4,
              id2 |. Some,
              _,
@@ -503,19 +503,19 @@ module BuildAssetTree = {
              isShowChildren: true,
              children: [||],
            })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
              rootId,
              None,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
              id1,
              rootId |. Some,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
              id2,
              rootId |. Some,
              _,
@@ -540,13 +540,13 @@ module BuildAssetTree = {
                },
              |],
            })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
              id3,
              id2 |. Some,
              _,
              engineState,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithDefaultName(
+        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
              id4,
              id2 |. Some,
              _,

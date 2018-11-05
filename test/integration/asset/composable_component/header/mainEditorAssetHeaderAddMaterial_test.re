@@ -132,7 +132,7 @@ let _ =
             );
           AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
             ~nodeId,
-            ~name=MainEditorMaterialUtils.getMaterilaDefaultName(),
+            ~name=MainEditorMaterialUtils.getNoNameMaterialName(),
             (),
           );
 

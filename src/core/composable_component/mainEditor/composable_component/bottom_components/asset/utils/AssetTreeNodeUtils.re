@@ -6,16 +6,16 @@ open Js.Promise;
 
 let getAssetTreeRootName = () => "Assets";
 
-let getDefaultFolderName = () => "New Folder";
+let getNewFolderName = () => "New Folder";
 
-let getFolderDefaultName = (index, editorState) =>
-  index === (editorState |> AssetTreeRootEditorService.getRootTreeNodeId) ?
-    getAssetTreeRootName() : getDefaultFolderName();
+let getNoNameFolderName = () => "NoName Folder";
+
+let getNoNameFolderNameByNodeId = (nodeId, editorState) =>
+  nodeId === (editorState |> AssetTreeRootEditorService.getRootTreeNodeId) ?
+    getAssetTreeRootName() : getNoNameFolderName();
 
 let addFolderIntoNodeMap =
-    (index, parentFolderNodeId, name, (editorState, engineState)) =>
-  /* editorState
-     |> getFolderDefaultName(index) */
+    (nodeId, parentFolderNodeId, name, (editorState, engineState)) =>
   name
   |. AssetUtils.getUniqueTreeNodeName(
        Folder,
@@ -25,13 +25,13 @@ let addFolderIntoNodeMap =
   |> AssetFolderNodeMapEditorService.buildFolderNodeResult(
        parentFolderNodeId,
      )
-  |> AssetFolderNodeMapEditorService.setResult(index, _, editorState);
+  |> AssetFolderNodeMapEditorService.setResult(nodeId, _, editorState);
 
 let addMaterialIntoNodeMap =
-    (index, parentFolderNodeId, material, editorState) =>
+    (nodeId, parentFolderNodeId, material, editorState) =>
   editorState
   |> AssetMaterialNodeMapEditorService.setResult(
-       index,
+       nodeId,
        AssetMaterialNodeMapEditorService.buildMaterialNodeResult(
          parentFolderNodeId,
          AssetMaterialDataType.LightMaterial,
@@ -40,10 +40,10 @@ let addMaterialIntoNodeMap =
      );
 
 let addTextureIntoNodeMap =
-    (index, parentFolderNodeId, texture, imageNodeId, editorState) =>
+    (nodeId, parentFolderNodeId, texture, imageNodeId, editorState) =>
   editorState
   |> AssetTextureNodeMapEditorService.setResult(
-       index,
+       nodeId,
        AssetTextureNodeMapEditorService.buildTextureNodeResult(
          texture,
          parentFolderNodeId,
@@ -60,11 +60,7 @@ let initRootAssetTree = (editorState, engineState) =>
     (
       rootIndex |. AssetTreeEditorService.buildAssetTreeNodeByIndex(Folder),
       (editorState, engineState)
-      |> addFolderIntoNodeMap(
-           rootIndex,
-           None,
-           getFolderDefaultName(rootIndex, editorState),
-         ),
+      |> addFolderIntoNodeMap(rootIndex, None, getAssetTreeRootName()),
     );
   | Some(assetTreeRoot) => (assetTreeRoot, editorState)
   };
@@ -116,11 +112,11 @@ let readFileByTypeSync = (reader, fileInfo: fileInfoType) =>
   );
 
 let createNodeAndAddToTargetNodeChildren =
-    (targetTreeNode, newIndex, type_, editorState) =>
+    (targetTreeNode, nodeId, type_, editorState) =>
   editorState
   |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
   |> AssetUtils.insertSourceTreeNodeToTargetTreeNodeChildren(
        targetTreeNode,
-       AssetTreeEditorService.buildAssetTreeNodeByIndex(newIndex, type_),
+       AssetTreeEditorService.buildAssetTreeNodeByIndex(nodeId, type_),
      )
   |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);

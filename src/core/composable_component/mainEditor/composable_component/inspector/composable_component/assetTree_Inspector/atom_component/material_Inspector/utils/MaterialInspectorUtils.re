@@ -73,7 +73,7 @@ let replaceMaterialByMaterialType =
       targetMaterial,
       targetMaterialType,
       AssetUtils.getUniqueTreeNodeName(
-        MainEditorMaterialUtils.getNewMaterilaAssetName(),
+        MainEditorMaterialUtils.getNewMaterilaName(),
         Material,
         AssetMaterialNodeMapEditorService.getParentFolderNodeId(
           nodeId,

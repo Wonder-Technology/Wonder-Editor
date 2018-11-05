@@ -50,9 +50,9 @@ let createMaterialByType = (type_, engineState) =>
   | LightMaterial => LightMaterialEngineService.create(engineState)
   };
 
-let getNewMaterilaAssetName = () => "New Material";
+let getNewMaterilaName = () => "New Material";
 
-let getMaterilaDefaultName = () => getNewMaterilaAssetName();
+let getNoNameMaterialName = () => "NoName Material";
 
 let getName = (material, type_, engineState) =>
   switch (type_) {
@@ -60,14 +60,14 @@ let getName = (material, type_, engineState) =>
     switch (
       BasicMaterialEngineService.getBasicMaterialName(material, engineState)
     ) {
-    | None => getMaterilaDefaultName()
+    | None => getNoNameMaterialName()
     | Some(name) => name
     }
   | LightMaterial =>
     switch (
       LightMaterialEngineService.getLightMaterialName(material, engineState)
     ) {
-    | None => getMaterilaDefaultName()
+    | None => getNoNameMaterialName()
     | Some(name) => name
     }
   };

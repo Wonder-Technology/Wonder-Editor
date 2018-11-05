@@ -77,8 +77,7 @@ let _ =
 
       describe("test undo two step", () =>
         test("step which from second to zero", () => {
-          let sourceName =
-            MainEditorAssetFolderNodeTool.getDefaultFolderName();
+          let sourceName = MainEditorAssetFolderNodeTool.getNoNameFolderName();
           let (nodeId, (name1, name2)) = _simulateTwiceChangeName();
 
           RedoUndoTool.undoHistoryState();

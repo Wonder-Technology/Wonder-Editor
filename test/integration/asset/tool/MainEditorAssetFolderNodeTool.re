@@ -12,7 +12,7 @@ let setFolderName = (nodeId, name, editorState) =>
     editorState,
   );
 
-let getDefaultFolderName = () => AssetTreeNodeUtils.getDefaultFolderName();
+let getNoNameFolderName = () => AssetTreeNodeUtils.getNoNameFolderName();
 
 let getNodeIdByName = (folderName, editorState) =>
   switch (

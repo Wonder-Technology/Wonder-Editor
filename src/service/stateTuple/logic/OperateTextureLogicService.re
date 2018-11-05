@@ -1,6 +1,6 @@
 open AssetNodeType;
 
-let getTextureDefaultName = () => "New Texture";
+let getNoNameTextureName = () => "NoName Texture";
 
 let getTextureBaseNameByTextureComponent = (texture, engineState) =>
   switch (
@@ -9,7 +9,7 @@ let getTextureBaseNameByTextureComponent = (texture, engineState) =>
       engineState,
     )
   ) {
-  | None => getTextureDefaultName()
+  | None => getNoNameTextureName()
   | Some(name) => name
   };
 
