@@ -7,7 +7,7 @@ let addComponentByType =
   switch (type_) {
   | RenderGroup =>
     let defaultLightMaterial =
-      AssetMaterialDataEditorService.unsafeGetDefaultLightMaterial(
+      MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(
         editorState,
       );
     let (engineState, meshRenderer) =
@@ -31,7 +31,7 @@ let addComponentByType =
     /* let editorState = StateEditorService.getState(); */
 
     let defaultCubeGeometry =
-      AssetGeometryDataEditorService.unsafeGetDefaultCubeGeometryComponent(
+      GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
         editorState,
       );
 

@@ -13,11 +13,11 @@ let setTextureName = (nodeId, name, editorState) => {
   let textureComponent = getTextureComponent(nodeId, editorState);
 
   editorState
-  |> AssetImageNodeMapEditorService.setResult(
+  |> ImageNodeMapAssetEditorService.setResult(
        textureComponent,
        {
          ...
-           AssetImageNodeMapEditorService.unsafeGetResult(
+           ImageNodeMapAssetEditorService.unsafeGetResult(
              textureComponent,
              editorState,
            ),
@@ -27,7 +27,7 @@ let setTextureName = (nodeId, name, editorState) => {
 };
 
 let hasTextureComponent = (material, editorState) =>
-  AssetTextureNodeMapEditorService.getValidValues(editorState)
+  TextureNodeMapAssetEditorService.getValidValues(editorState)
   |> Js.Array.find(({textureComponent}: AssetNodeType.textureResultType) =>
        JudgeTool.isEqual(textureComponent, material)
      )

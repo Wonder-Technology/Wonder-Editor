@@ -16,7 +16,7 @@ let addTextureNodeToAssetTree =
 let _getImageNodeIdByBase64 = (imageBase64, editorState) =>
   switch (
     editorState
-    |> AssetImageNodeMapEditorService.getImageNodeMap
+    |> ImageNodeMapAssetEditorService.getImageNodeMap
     |> SparseMapService.getValidDataArr
     |> SparseMapService.find(
          ((imageNodeId, {base64}: AssetNodeType.imageResultType)) =>
@@ -30,7 +30,7 @@ let _getImageNodeIdByBase64 = (imageBase64, editorState) =>
 let _getImageNodeIdByUint8Array = (imageUint8Array, editorState) =>
   switch (
     editorState
-    |> AssetImageNodeMapEditorService.getImageNodeMap
+    |> ImageNodeMapAssetEditorService.getImageNodeMap
     |> SparseMapService.getValidDataArr
     |> SparseMapService.find(
          ((imageNodeId, {uint8Array}: AssetNodeType.imageResultType)) =>
@@ -53,9 +53,9 @@ let addImageNodeByBase64 = (base64, fileName, mimeType, editorState) =>
     (
       imageNodeId,
       editorState
-      |> AssetImageNodeMapEditorService.setResult(
+      |> ImageNodeMapAssetEditorService.setResult(
            imageNodeId,
-           AssetImageNodeMapEditorService.buildImageNodeResult(
+           ImageNodeMapAssetEditorService.buildImageNodeResult(
              Some(base64),
              None,
              fileName,
@@ -75,9 +75,9 @@ let addImageNodeByUint8Array = (uint8Array, name, mimeType, editorState) =>
     (
       imageNodeId,
       editorState
-      |> AssetImageNodeMapEditorService.setResult(
+      |> ImageNodeMapAssetEditorService.setResult(
            imageNodeId,
-           AssetImageNodeMapEditorService.buildImageNodeResult(
+           ImageNodeMapAssetEditorService.buildImageNodeResult(
              None,
              Some(uint8Array),
              name,

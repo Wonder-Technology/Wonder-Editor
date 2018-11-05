@@ -9,10 +9,10 @@ module CustomEventHandler = {
       (folderId, parentFolderNodeId, editorState, folderNodeMap) =>
     folderNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(folderId)
-    |> AssetFolderNodeMapEditorService.setFolderNodeResultParent(
+    |> FolderNodeMapAssetEditorService.setFolderNodeResultParent(
          parentFolderNodeId,
        )
-    |> AssetFolderNodeMapEditorService.setResult(folderId, _, editorState)
+    |> FolderNodeMapAssetEditorService.setResult(folderId, _, editorState)
     |> StateEditorService.setState
     |> ignore;
 
@@ -20,10 +20,10 @@ module CustomEventHandler = {
       (textureComponent, parentFolderNodeId, editorState, textureNodeMap) =>
     textureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(textureComponent)
-    |> AssetTextureNodeMapEditorService.setTextureNodeResultParent(
+    |> TextureNodeMapAssetEditorService.setTextureNodeResultParent(
          parentFolderNodeId,
        )
-    |> AssetTextureNodeMapEditorService.setResult(
+    |> TextureNodeMapAssetEditorService.setResult(
          textureComponent,
          _,
          editorState,
@@ -35,10 +35,10 @@ module CustomEventHandler = {
       (nodeId, parentFolderNodeId, editorState, materialNodeMap) =>
     materialNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-    |> AssetMaterialNodeMapEditorService.setMaterialNodeResultParent(
+    |> MaterialNodeMapAssetEditorService.setMaterialNodeResultParent(
          parentFolderNodeId,
        )
-    |> AssetMaterialNodeMapEditorService.setResult(nodeId, _, editorState)
+    |> MaterialNodeMapAssetEditorService.setResult(nodeId, _, editorState)
     |> StateEditorService.setState
     |> ignore;
 
@@ -46,10 +46,10 @@ module CustomEventHandler = {
       (nodeId, parentFolderNodeId, editorState, wdbNodeMap) =>
     wdbNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-    |> AssetWDBNodeMapEditorService.setWDBNodeResultParent(
+    |> WDBNodeMapAssetEditorService.setWDBNodeResultParent(
          parentFolderNodeId,
        )
-    |> AssetWDBNodeMapEditorService.setResult(nodeId, _, editorState)
+    |> WDBNodeMapAssetEditorService.setResult(nodeId, _, editorState)
     |> StateEditorService.setState
     |> ignore;
 
@@ -57,20 +57,20 @@ module CustomEventHandler = {
       ((store, dispatchFunc), (), (targetNodeId, removedNodeId)) => {
     let editorState = StateEditorService.getState();
 
-    AssetTreeEditorService.isIdEqual(targetNodeId, removedNodeId) ?
+    TreeAssetEditorService.isIdEqual(targetNodeId, removedNodeId) ?
       dispatchFunc(AppStore.UpdateAction(Update([|BottomComponent|])))
       |> ignore :
       {
         let {type_}: AssetTreeNodeType.assetTreeNodeType =
           editorState
-          |> AssetTreeRootEditorService.getAssetTreeRoot
+          |> TreeRootAssetEditorService.getAssetTreeRoot
           |> OptionService.unsafeGet
-          |> AssetTreeEditorService.getSpecificTreeNodeById(removedNodeId)
+          |> TreeAssetEditorService.getSpecificTreeNodeById(removedNodeId)
           |> OptionService.unsafeGet;
 
         let (newAssetTreeRoot, removedTreeNode) =
           editorState
-          |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+          |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
           |> RemoveNodeAssetTreeAssetEditorService.removeSpecificTreeNode(
                removedNodeId,
              );
@@ -81,7 +81,7 @@ module CustomEventHandler = {
                targetNodeId,
                removedTreeNode,
              )
-          |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);
+          |. TreeRootAssetEditorService.setAssetTreeRoot(editorState);
 
         AssetNodeUtils.handleSpeficFuncByAssetNodeType(
           type_,

@@ -10,10 +10,10 @@ module Method = {
   let _isActive = () => {
     let editorState = StateEditorService.getState();
 
-    switch (AssetCurrentNodeDataEditorService.getCurrentNodeData(editorState)) {
+    switch (CurrentNodeDataAssetEditorService.getCurrentNodeData(editorState)) {
     | None => false
     | Some({currentNodeId}) =>
-      AssetTreeEditorService.isIdEqual(
+      TreeAssetEditorService.isIdEqual(
         AssetTreeUtils.getTargetTreeNodeId(editorState),
         currentNodeId,
       )
@@ -22,7 +22,7 @@ module Method = {
 
   let _isNotRoot = nodeId =>
     StateEditorService.getState()
-    |> AssetTreeRootEditorService.getRootTreeNodeId != nodeId;
+    |> TreeRootAssetEditorService.getRootTreeNodeId != nodeId;
 
   let handleToggleShowTreeChildren =
       (store, dispatchFunc, targetId, isShowChildren) => {
@@ -31,10 +31,10 @@ module Method = {
     AssetTreeUtils.setSpecificAssetTreeNodeIsShowChildren(
       targetId,
       isShowChildren,
-      [|editorState |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot|],
+      [|editorState |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot|],
     )
     |> ArrayService.unsafeGetFirst
-    |. AssetTreeRootEditorService.setAssetTreeRoot(editorState)
+    |. TreeRootAssetEditorService.setAssetTreeRoot(editorState)
     |> StateEditorService.setState;
 
     dispatchFunc(
@@ -56,7 +56,7 @@ module Method = {
            | Folder =>
              let {name}: folderResultType =
                StateEditorService.getState()
-               |> AssetFolderNodeMapEditorService.getFolderNodeMap
+               |> FolderNodeMapAssetEditorService.getFolderNodeMap
                |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
              <TreeNode
@@ -99,7 +99,7 @@ let render = ((store, dispatchFunc), dragImg, _self) =>
     (
       ReasonReact.array(
         StateEditorService.getState()
-        |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+        |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
         |> Method.buildAssetTreeArray(
              (store, dispatchFunc, dragImg),
              (

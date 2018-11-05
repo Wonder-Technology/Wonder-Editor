@@ -46,7 +46,7 @@ let _ =
           MainEditorAssetHeaderOperateNodeTool.addMaterial();
           let {materialComponent}: AssetNodeType.materialResultType =
             StateEditorService.getState()
-            |> AssetMaterialNodeMapEditorService.unsafeGetResult(
+            |> MaterialNodeMapAssetEditorService.unsafeGetResult(
                  addedMaterialNodeId,
                );
           MainEditorMaterialTool.changeMaterial(
@@ -93,7 +93,7 @@ let _ =
               MainEditorAssetHeaderOperateNodeTool.addMaterial();
               let {materialComponent}: AssetNodeType.materialResultType =
                 StateEditorService.getState()
-                |> AssetMaterialNodeMapEditorService.unsafeGetResult(
+                |> MaterialNodeMapAssetEditorService.unsafeGetResult(
                      addedMaterialNodeId,
                    );
               MainEditorMaterialTool.changeMaterial(
@@ -111,7 +111,7 @@ let _ =
 
               let {type_}: AssetNodeType.materialResultType =
                 StateEditorService.getState()
-                |> AssetMaterialNodeMapEditorService.unsafeGetResult(
+                |> MaterialNodeMapAssetEditorService.unsafeGetResult(
                      addedMaterialNodeId,
                    );
               type_ |> expect == AssetMaterialDataType.BasicMaterial;
@@ -143,7 +143,7 @@ let _ =
 
               let {type_}: AssetNodeType.materialResultType =
                 StateEditorService.getState()
-                |> AssetMaterialNodeMapEditorService.unsafeGetResult(
+                |> MaterialNodeMapAssetEditorService.unsafeGetResult(
                      addedMaterialNodeId,
                    );
               let engineState = StateEngineService.unsafeGetState();
@@ -313,7 +313,7 @@ let _ =
 
                   let {type_}: AssetNodeType.materialResultType =
                     StateEditorService.getState()
-                    |> AssetMaterialNodeMapEditorService.unsafeGetResult(
+                    |> MaterialNodeMapAssetEditorService.unsafeGetResult(
                          addedMaterialNodeId,
                        );
                   let engineState = StateEngineService.unsafeGetState();

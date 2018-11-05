@@ -7,13 +7,13 @@ let getBoxTexturedGeometryName = () => "Mesh";
 let getDefaultCubeGeometryComponent =
     (~editorState=StateEditorService.getState(), ()) =>
   editorState
-  |> AssetGeometryDataEditorService.getGeometryData
+  |> GeometryDataAssetEditorService.getGeometryData
   |> (({defaultCubeGeometryComponent}) => defaultCubeGeometryComponent);
 
 let getDefaultSphereGeometryComponent =
     (~editorState=StateEditorService.getState(), ()) =>
   editorState
-  |> AssetGeometryDataEditorService.getGeometryData
+  |> GeometryDataAssetEditorService.getGeometryData
   |> (({defaultSphereGeometryComponent}) => defaultSphereGeometryComponent);
 
 let changeGeometry =

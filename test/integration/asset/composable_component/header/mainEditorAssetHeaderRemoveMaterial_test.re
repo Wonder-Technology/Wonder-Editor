@@ -70,7 +70,7 @@ let _ =
 
           let {materialComponent}: AssetNodeType.materialResultType =
             StateEditorService.getState()
-            |> AssetMaterialNodeMapEditorService.unsafeGetResult(
+            |> MaterialNodeMapAssetEditorService.unsafeGetResult(
                  addedMaterialNodeId,
                );
           MainEditorMaterialTool.changeMaterial(
@@ -115,7 +115,7 @@ let _ =
 
             let {materialComponent}: AssetNodeType.materialResultType =
               StateEditorService.getState()
-              |> AssetMaterialNodeMapEditorService.unsafeGetResult(
+              |> MaterialNodeMapAssetEditorService.unsafeGetResult(
                    addedMaterialNodeId,
                  );
             MainEditorMaterialTool.changeMaterial(
@@ -158,7 +158,7 @@ let _ =
 
             let {materialComponent}: AssetNodeType.materialResultType =
               StateEditorService.getState()
-              |> AssetMaterialNodeMapEditorService.unsafeGetResult(
+              |> MaterialNodeMapAssetEditorService.unsafeGetResult(
                    addedMaterialNodeId,
                  );
             MainEditorMaterialTool.changeMaterial(

@@ -2,13 +2,13 @@ let getMaterialComponent =
     (~nodeId, ~editorState=StateEditorService.getState(), ()) => {
   let {materialComponent}: AssetNodeType.materialResultType =
     StateEditorService.getState()
-    |> AssetMaterialNodeMapEditorService.unsafeGetResult(nodeId);
+    |> MaterialNodeMapAssetEditorService.unsafeGetResult(nodeId);
 
   materialComponent;
 };
 
 let hasMaterialComponent = (material, materialType, editorState) =>
-  AssetMaterialNodeMapEditorService.getValidValues(editorState)
+  MaterialNodeMapAssetEditorService.getValidValues(editorState)
   |> Js.Array.find(
        ({materialComponent, type_}: AssetNodeType.materialResultType) =>
        materialComponent === material && materialType === type_
@@ -17,7 +17,7 @@ let hasMaterialComponent = (material, materialType, editorState) =>
 
 let findNodeIdByMaterialComponent = (material, materialType, editorState) =>
   switch (
-    AssetMaterialNodeMapEditorService.getResults(editorState)
+    MaterialNodeMapAssetEditorService.getResults(editorState)
     |> Js.Array.find(
          (
            (

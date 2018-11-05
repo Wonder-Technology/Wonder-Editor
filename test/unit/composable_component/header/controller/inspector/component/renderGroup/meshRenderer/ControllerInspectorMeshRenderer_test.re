@@ -21,8 +21,8 @@ let _ =
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
       StateEditorService.getState()
-      |> AssetCurrentNodeDataEditorService.clearCurrentNodeData
-      |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+      |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
+      |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
       |> StateEditorService.setState
       |> ignore;
     });

@@ -52,12 +52,12 @@ module Method = {
     />;
   };
 
-  let _getAllAssetMaterialData = editorState =>
+  let _getAllMaterialDataAsset = editorState =>
     AssetNodeType.(
       Js.Array.concat(
-        AssetMaterialDataEditorService.getAllDefaultMaterialData(editorState)
+        MaterialDataAssetEditorService.getAllDefaultMaterialData(editorState)
         |> Js.Array.map(materialData => (None, materialData)),
-        AssetMaterialNodeMapEditorService.getResults(editorState)
+        MaterialNodeMapAssetEditorService.getResults(editorState)
         |> Js.Array.map(((materialNodeId, {materialComponent, type_})) =>
              (Some(materialNodeId), (materialComponent, type_))
            ),
@@ -73,7 +73,7 @@ module Method = {
     let engineState = StateEngineService.unsafeGetState();
     let editorState = StateEditorService.getState();
 
-    _getAllAssetMaterialData(editorState)
+    _getAllMaterialDataAsset(editorState)
     |> Js.Array.map(((materialNodeId, (material, materialType))) => {
          let className =
            (material, materialType) == (currentMaterial, currentMaterialType) ?
@@ -103,7 +103,7 @@ module Method = {
 
   let _isEqualDefaultMaterial = (material, materialType, editorState) => {
     let (defaultMaterial, _) =
-      AssetMaterialDataEditorService.unsafeGetMaterialDataByType(
+      MaterialDataAssetEditorService.unsafeGetMaterialDataByType(
         materialType,
         editorState,
       );

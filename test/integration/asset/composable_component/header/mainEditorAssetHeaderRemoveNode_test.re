@@ -25,8 +25,8 @@ let _ =
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
       StateEditorService.getState()
-      |> AssetCurrentNodeDataEditorService.clearCurrentNodeData
-      |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+      |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
+      |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
       |> StateEditorService.setState
       |> ignore;
     });
@@ -289,7 +289,7 @@ let _ =
                 );
 
                 StateEditorService.getState()
-                |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray
+                |> RemovedAssetIdArrayAssetEditorService.getRemovedAssetIdArray
                 |> expect == [|removedFolderNodeId|];
               });
               test("test add a new folder, use the removed id", () => {
@@ -307,7 +307,7 @@ let _ =
                 MainEditorAssetHeaderOperateNodeTool.addFolder();
 
                 StateEditorService.getState()
-                |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+                |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
                 |> (root => root.children)
                 |> ArrayService.unsafeGetLast
                 |> (assetNode => assetNode.nodeId)
@@ -331,7 +331,7 @@ let _ =
                 MainEditorAssetHeaderOperateNodeTool.addFolder();
 
                 StateEditorService.getState()
-                |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+                |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
                 |> (root => root.children)
                 |> Js.Array.sliceFrom(-2)
                 |> Js.Array.map(assetNode => assetNode.nodeId)

@@ -1,13 +1,13 @@
 let updateMaterialNodeData =
     (materialNodeId, targetMaterial, targetMaterialType, editorState) => {
   let materialNodeResult =
-    AssetMaterialNodeMapEditorService.unsafeGetResult(
+    MaterialNodeMapAssetEditorService.unsafeGetResult(
       materialNodeId,
       editorState,
     );
 
   editorState
-  |> AssetMaterialNodeMapEditorService.setResult(
+  |> MaterialNodeMapAssetEditorService.setResult(
        materialNodeId,
        {
          ...materialNodeResult,
@@ -15,7 +15,7 @@ let updateMaterialNodeData =
          type_: targetMaterialType,
        },
      )
-  |> AssetMaterialNodeIdMapEditorService.setNodeId(
+  |> MaterialNodeIdMapAssetEditorService.setNodeId(
        targetMaterial,
        materialNodeId,
      );

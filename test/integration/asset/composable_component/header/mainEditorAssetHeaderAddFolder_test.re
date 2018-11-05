@@ -46,7 +46,7 @@ let _ =
 
           let {parentFolderNodeId}: AssetNodeType.folderResultType =
             StateEditorService.getState()
-            |> AssetFolderNodeMapEditorService.unsafeGetResult(
+            |> FolderNodeMapAssetEditorService.unsafeGetResult(
                  addedFolderNodeId,
                );
 

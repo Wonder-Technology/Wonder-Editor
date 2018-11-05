@@ -159,7 +159,7 @@ let _extractAndRelateTextureAssets =
 };
 
 let _buildMaterialMap = (materialType, editorState) =>
-  AssetMaterialNodeMapEditorService.getValidValues(editorState)
+  MaterialNodeMapAssetEditorService.getValidValues(editorState)
   |> SparseMapService.filter(({type_}: AssetNodeType.materialResultType) =>
        type_ === materialType
      )
@@ -171,9 +171,9 @@ let _buildMaterialMap = (materialType, editorState) =>
 let extractAndRelateAssets =
     (allGameObjects, imageUint8ArrayDataMap, (editorState, engineState)) => {
   let defaultBasicMaterial =
-    AssetMaterialDataEditorService.unsafeGetDefaultBasicMaterial(editorState);
+    MaterialDataAssetEditorService.unsafeGetDefaultBasicMaterial(editorState);
   let defaultLightMaterial =
-    AssetMaterialDataEditorService.unsafeGetDefaultLightMaterial(editorState);
+    MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
 
   let basicMaterialMap =
     _buildMaterialMap(AssetMaterialDataType.BasicMaterial, editorState);

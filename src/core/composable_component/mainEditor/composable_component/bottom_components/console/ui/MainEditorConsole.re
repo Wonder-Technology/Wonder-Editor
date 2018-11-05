@@ -2,7 +2,7 @@ open ConsoleMessageType;
 
 module Method = {
   let triggerConsoleByType = (dispatchFunc, type_, message) => {
-    ConsoleMessageArrayEditorService.addConsoleMessage({
+    MessageArrayConsoleEditorService.addConsoleMessage({
       message,
       consoleType: type_,
       traceInfo: None,
@@ -19,7 +19,7 @@ module Method = {
     let editorState = StateEditorService.getState();
     let copiedMessageArr =
       editorState
-      |> ConsoleMessageArrayEditorService.getConsoleMessageArray
+      |> MessageArrayConsoleEditorService.getConsoleMessageArray
       |> Js.Array.copy;
 
     switch (copiedMessageArr |> Js.Array.pop) {
@@ -28,7 +28,7 @@ module Method = {
       switch (traceInfo) {
       | None =>
         editorState
-        |> ConsoleMessageArrayEditorService.setConsoleMessageArray(
+        |> MessageArrayConsoleEditorService.setConsoleMessageArray(
              copiedMessageArr
              |> ArrayService.push({
                   ...messageRecord,
@@ -50,13 +50,13 @@ module Method = {
 
   let setCheckedMessageCount = editorState =>
     editorState
-    |> ConsoleMessageArrayEditorService.getConsoleMessageArrayLen
-    |. ConsoleCheckedCountEditorService.setConsoleCheckedCount(editorState);
+    |> MessageArrayConsoleEditorService.getConsoleMessageArrayLen
+    |. CheckedCountConsoleEditorService.setConsoleCheckedCount(editorState);
 
   let clearAllConsoleMessage = dispatchFunc => {
     StateEditorService.getState()
-    |> ConsoleMessageArrayEditorService.clearConsoleMessageArray
-    |> ConsoleCheckedCountEditorService.clearConsoleCheckedCount
+    |> MessageArrayConsoleEditorService.clearConsoleMessageArray
+    |> CheckedCountConsoleEditorService.clearConsoleCheckedCount
     |> StateEditorService.setState;
 
     dispatchFunc(
@@ -141,7 +141,7 @@ let fatal = () =>
 let render = (store, dispatchFunc, _self) => {
   let consoleMessageArray =
     StateEditorService.getState()
-    |> ConsoleMessageArrayEditorService.getConsoleMessageArray;
+    |> MessageArrayConsoleEditorService.getConsoleMessageArray;
   let style =
     store
     |> StoreUtils.getBottomCurrentComponentType

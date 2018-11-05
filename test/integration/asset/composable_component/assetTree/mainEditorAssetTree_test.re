@@ -29,8 +29,8 @@ let _ =
       restoreSandbox(refJsObjToSandbox(sandbox^));
 
       StateEditorService.getState()
-      |> AssetCurrentNodeDataEditorService.clearCurrentNodeData
-      |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+      |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
+      |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
       |> StateEditorService.setState
       |> ignore;
     });
@@ -52,11 +52,11 @@ let _ =
           let editorState = StateEditorService.getState();
           let {currentNodeId} =
             editorState
-            |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData;
+            |> CurrentNodeDataAssetEditorService.unsafeGetCurrentNodeData;
 
           let currentNodeParentId =
             editorState
-            |> AssetCurrentNodeParentIdEditorService.unsafeGetCurrentNodeParentId;
+            |> CurrentNodeParentIdAssetEditorService.unsafeGetCurrentNodeParentId;
 
           expect(currentNodeId) == currentNodeParentId;
         })

@@ -9,7 +9,7 @@ let testImportPackage = (~testFunc, ()) => {
 };
 
 let getImportedMaterialAssetResults = () =>
-  AssetMaterialNodeMapEditorService.getResults
+  MaterialNodeMapAssetEditorService.getResults
   |> StateLogicService.getEditorState;
 
 let getFirstImportedMaterialAssetData = () => {
@@ -20,14 +20,14 @@ let getFirstImportedMaterialAssetData = () => {
 };
 
 let getImporteMaterialAssetMaterialComponents = () =>
-  AssetMaterialNodeMapEditorService.getValidValues
+  MaterialNodeMapAssetEditorService.getValidValues
   |> StateLogicService.getEditorState
   |> Js.Array.map(({materialComponent}: AssetNodeType.materialResultType) =>
        materialComponent
      );
 
 let getImporteMaterialAssetBasicMaterialComponents = () =>
-  AssetMaterialNodeMapEditorService.getValidValues
+  MaterialNodeMapAssetEditorService.getValidValues
   |> StateLogicService.getEditorState
   |> Js.Array.filter(({type_}: AssetNodeType.materialResultType) =>
        type_ === AssetMaterialDataType.BasicMaterial
@@ -37,7 +37,7 @@ let getImporteMaterialAssetBasicMaterialComponents = () =>
      );
 
 let getImporteMaterialAssetLightMaterialComponents = () =>
-  AssetMaterialNodeMapEditorService.getValidValues
+  MaterialNodeMapAssetEditorService.getValidValues
   |> StateLogicService.getEditorState
   |> Js.Array.filter(({type_}: AssetNodeType.materialResultType) =>
        type_ === AssetMaterialDataType.LightMaterial
@@ -47,7 +47,7 @@ let getImporteMaterialAssetLightMaterialComponents = () =>
      );
 
 let getImportedTextureAssetTextureComponents = () =>
-  AssetTextureNodeMapEditorService.getValidValues
+  TextureNodeMapAssetEditorService.getValidValues
   |> StateLogicService.getEditorState
   |> Js.Array.map(({textureComponent}: AssetNodeType.textureResultType) =>
        textureComponent
@@ -55,7 +55,7 @@ let getImportedTextureAssetTextureComponents = () =>
 
 let getImportedWDBAssetData = () =>
   StateEditorService.getState()
-  |> AssetWDBNodeMapEditorService.getWDBNodeMap
+  |> WDBNodeMapAssetEditorService.getWDBNodeMap
   |> SparseMapService.getValidDataArr;
 
 let getFirstImportedWDBAssetData = () =>

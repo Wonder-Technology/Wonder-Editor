@@ -1,11 +1,11 @@
 let generateAssetId = editorState =>
   switch (
     editorState
-    |> AssetRemovedAssetIdArrayEditorService.getFirstIdIfHasUsableAssetId
+    |> RemovedAssetIdArrayAssetEditorService.getFirstIdIfHasUsableAssetId
   ) {
   | (None, editorState) =>
-    let editorState = editorState |> AssetIndexEditorService.increaseIndex;
+    let editorState = editorState |> IndexAssetEditorService.increaseIndex;
 
-    (editorState, editorState |> AssetIndexEditorService.getIndex);
+    (editorState, editorState |> IndexAssetEditorService.getIndex);
   | (Some(assetId), editorState) => (editorState, assetId)
   };

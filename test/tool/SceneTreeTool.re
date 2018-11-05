@@ -69,7 +69,7 @@ let buildTwoCameraSceneGraphToEngine = sandbox => {
     DefaultSceneUtils.prepareDefaultComponent(editorState, engineState);
 
   let defaultLightMaterial =
-    AssetMaterialDataEditorService.unsafeGetDefaultLightMaterial(editorState);
+    MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
 
   let (camera1, camera2, box1, editorState, engineState) =
     engineState
@@ -123,7 +123,7 @@ let buildThreeLayerSceneGraphToEngine = sandbox => {
     DefaultSceneUtils.prepareDefaultComponent(editorState, engineState);
 
   let defaultLightMaterial =
-    AssetMaterialDataEditorService.unsafeGetDefaultLightMaterial(editorState);
+    MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
 
   let (editorState, engineState, layerGameObjectData) =
     engineState
@@ -172,7 +172,7 @@ let buildFourLayerSceneGraphToEngine = sandbox => {
     DefaultSceneUtils.prepareDefaultComponent(editorState, engineState);
 
   let defaultLightMaterial =
-    AssetMaterialDataEditorService.unsafeGetDefaultLightMaterial(editorState);
+    MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
 
   let (editorState, engineState, layerGameObjectData) =
     engineState

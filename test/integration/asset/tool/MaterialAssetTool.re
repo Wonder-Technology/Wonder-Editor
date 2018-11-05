@@ -17,7 +17,7 @@ let addOneBasicMaterial = () => {
 
   /* let {materialComponent}: AssetNodeType.materialResultType =
      StateEditorService.getState()
-     |> AssetMaterialNodeMapEditorService.unsafeGetResult(addedMaterialNodeId); */
+     |> MaterialNodeMapAssetEditorService.unsafeGetResult(addedMaterialNodeId); */
   /* MainEditorMaterialTool.changeMaterial(
        ~sourceMaterial=GameObjectTool.getCurrentGameObjectLightMaterial(),
        ~sourceMaterialType=AssetMaterialDataType.LightMaterial,

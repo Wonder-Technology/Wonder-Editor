@@ -9,7 +9,7 @@ let isAssetWDBFile = () => {
   | (Some(wnodeIdget), Some(nodeId)) =>
     wnodeIdget === getWidget()
     && StateEditorService.getState()
-    |> AssetWDBNodeMapEditorService.getWDBNodeMap
+    |> WDBNodeMapAssetEditorService.getWDBNodeMap
     |> WonderCommonlib.SparseMapService.get(nodeId)
     |> Js.Option.isSome
   | _ => false

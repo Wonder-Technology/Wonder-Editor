@@ -4,11 +4,11 @@ open AssetTreeNodeType;
 
 let enterFolder = (dispatchFunc, nodeType, nodeId) => {
   StateEditorService.getState()
-  |> AssetCurrentNodeDataEditorService.setCurrentNodeData({
+  |> CurrentNodeDataAssetEditorService.setCurrentNodeData({
        currentNodeId: nodeId,
        nodeType,
      })
-  |> AssetCurrentNodeParentIdEditorService.setCurrentNodeParentId(nodeId)
+  |> CurrentNodeParentIdAssetEditorService.setCurrentNodeParentId(nodeId)
   |> StateEditorService.setState
   |> ignore;
 
@@ -42,13 +42,13 @@ let rec setSpecificAssetTreeNodeIsShowChildren =
      );
 
 let initRootAssetTree = (editorState, engineState) =>
-  switch (AssetTreeRootEditorService.getAssetTreeRoot(editorState)) {
+  switch (TreeRootAssetEditorService.getAssetTreeRoot(editorState)) {
   | None =>
-    let editorState = editorState |> AssetIndexEditorService.increaseIndex;
-    let rootIndex = editorState |> AssetIndexEditorService.getIndex;
+    let editorState = editorState |> IndexAssetEditorService.increaseIndex;
+    let rootIndex = editorState |> IndexAssetEditorService.getIndex;
 
     (
-      rootIndex |. AssetTreeEditorService.buildAssetTreeNodeByIndex(Folder),
+      rootIndex |. TreeAssetEditorService.buildAssetTreeNodeByIndex(Folder),
       (editorState, engineState)
       |> FolderNodeUtils.addFolderIntoNodeMap(
            rootIndex,
@@ -61,9 +61,9 @@ let initRootAssetTree = (editorState, engineState) =>
 
 let getTargetTreeNodeId = editorState =>
   switch (
-    AssetCurrentNodeParentIdEditorService.getCurrentNodeParentId(editorState)
+    CurrentNodeParentIdAssetEditorService.getCurrentNodeParentId(editorState)
   ) {
-  | None => editorState |> AssetTreeRootEditorService.getRootTreeNodeId
+  | None => editorState |> TreeRootAssetEditorService.getRootTreeNodeId
   | Some(nodeId) => nodeId
   };
 
@@ -73,7 +73,7 @@ let insertSourceTreeNodeToTargetTreeNodeChildren =
           (targetNodeId, newTreeNode, assetTreeArr) =>
     assetTreeArr
     |> Js.Array.map(({nodeId, children} as treeNode) =>
-         AssetTreeEditorService.isIdEqual(nodeId, targetNodeId) ?
+         TreeAssetEditorService.isIdEqual(nodeId, targetNodeId) ?
            {
              ...treeNode,
              children:
@@ -97,15 +97,15 @@ let insertSourceTreeNodeToTargetTreeNodeChildren =
 let createNodeAndAddToTargetNodeChildren =
     (targetTreeNode, nodeId, type_, editorState) =>
   editorState
-  |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+  |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
   |> insertSourceTreeNodeToTargetTreeNodeChildren(
        targetTreeNode,
-       AssetTreeEditorService.buildAssetTreeNodeByIndex(nodeId, type_),
+       TreeAssetEditorService.buildAssetTreeNodeByIndex(nodeId, type_),
      )
-  |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);
+  |. TreeRootAssetEditorService.setAssetTreeRoot(editorState);
 
 let rec _isRemovedTreeNodeBeTargetParent = (targetNodeId, removedTreeNode) =>
-  AssetTreeEditorService.isIdEqual(targetNodeId, removedTreeNode.nodeId) ?
+  TreeAssetEditorService.isIdEqual(targetNodeId, removedTreeNode.nodeId) ?
     true :
     removedTreeNode.children
     |> WonderCommonlib.ArrayService.reduceOneParam(
@@ -118,7 +118,7 @@ let rec _isRemovedTreeNodeBeTargetParent = (targetNodeId, removedTreeNode) =>
 let _isTargetTreeNodeBeRemovedParent = (targetTreeNode, removedNodeId) =>
   targetTreeNode.children
   |> Js.Array.filter(child =>
-       AssetTreeEditorService.isIdEqual(child.nodeId, removedNodeId)
+       TreeAssetEditorService.isIdEqual(child.nodeId, removedNodeId)
      )
   |> Js.Array.length >= 1 ?
     true : false;
@@ -146,9 +146,9 @@ let _isTargetTreeNodeHasSameNameChild =
     (targetNodeId, removedNodeId, (editorState, engineState)) => {
   let {type_}: assetTreeNodeType =
     editorState
-    |> AssetTreeRootEditorService.getAssetTreeRoot
+    |> TreeRootAssetEditorService.getAssetTreeRoot
     |> OptionService.unsafeGet
-    |> AssetTreeEditorService.getSpecificTreeNodeById(removedNodeId)
+    |> TreeAssetEditorService.getSpecificTreeNodeById(removedNodeId)
     |> OptionService.unsafeGet;
 
   let removedNodeName =
@@ -156,13 +156,13 @@ let _isTargetTreeNodeHasSameNameChild =
     |> AssetNodeUtils.handleSpeficFuncByAssetNodeType(
          type_,
          (
-           AssetFolderNodeMapEditorService.getFolderName(removedNodeId),
+           FolderNodeMapAssetEditorService.getFolderName(removedNodeId),
            OperateTextureLogicService.getTextureBaseName(removedNodeId),
            AssetMaterialNodeMapLogicService.getMaterialBaseName(
              removedNodeId,
              engineState,
            ),
-           AssetWDBNodeMapEditorService.getWDBBaseName(removedNodeId),
+           WDBNodeMapAssetEditorService.getWDBBaseName(removedNodeId),
          ),
        );
 
@@ -180,20 +180,20 @@ let _isTargetTreeNodeHasSameNameChild =
 
 let isTreeNodeRelationError =
     (targetNodeId, removedNodeId, (editorState, engineState)) =>
-  AssetTreeEditorService.isIdEqual(targetNodeId, removedNodeId) ?
+  TreeAssetEditorService.isIdEqual(targetNodeId, removedNodeId) ?
     true :
     _isRemovedTreeNodeBeTargetParent(
       targetNodeId,
       editorState
-      |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-      |> AssetTreeEditorService.getSpecificTreeNodeById(removedNodeId)
+      |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
+      |> TreeAssetEditorService.getSpecificTreeNodeById(removedNodeId)
       |> OptionService.unsafeGet,
     ) ?
       true :
       _isTargetTreeNodeBeRemovedParent(
         editorState
-        |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-        |> AssetTreeEditorService.getSpecificTreeNodeById(targetNodeId)
+        |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
+        |> TreeAssetEditorService.getSpecificTreeNodeById(targetNodeId)
         |> OptionService.unsafeGet,
         removedNodeId,
       )
@@ -205,14 +205,14 @@ let isTreeNodeRelationError =
 
 let rebuildRootAssetTree =
     (parentFolderNodeId, pathName, (editorState, engineState)) =>
-  switch (AssetTreeRootEditorService.getAssetTreeRoot(editorState)) {
+  switch (TreeRootAssetEditorService.getAssetTreeRoot(editorState)) {
   | None =>
     let (editorState, rootIndex) = AssetIdUtils.generateAssetId(editorState);
 
     let editorState =
       rootIndex
-      |. AssetTreeEditorService.buildAssetTreeNodeByIndex(Folder)
-      |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);
+      |. TreeAssetEditorService.buildAssetTreeNodeByIndex(Folder)
+      |. TreeRootAssetEditorService.setAssetTreeRoot(editorState);
 
     let editorState =
       FolderNodeUtils.addFolderIntoNodeMap(
@@ -224,7 +224,7 @@ let rebuildRootAssetTree =
 
     (rootIndex, editorState);
   | Some(assetTreeRoot) => (
-      editorState |> AssetTreeRootEditorService.getRootTreeNodeId,
+      editorState |> TreeRootAssetEditorService.getRootTreeNodeId,
       editorState,
     )
   };

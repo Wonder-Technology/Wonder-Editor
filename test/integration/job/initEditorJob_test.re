@@ -184,7 +184,7 @@ let _ =
 
     describe("build default geometry components", () =>
       test("build cube, sphere components", () =>
-        AssetGeometryDataEditorService.getGeometryData(
+        GeometryDataAssetEditorService.getGeometryData(
           StateEditorService.getState(),
         )
         |>

@@ -1,14 +1,14 @@
 let getFolderName = (nodeId, editorState) =>
-  AssetFolderNodeMapEditorService.getFolderName(
+  FolderNodeMapAssetEditorService.getFolderName(
     nodeId,
-    AssetFolderNodeMapEditorService.getFolderNodeMap(editorState),
+    FolderNodeMapAssetEditorService.getFolderNodeMap(editorState),
   );
 
 let setFolderName = (nodeId, name, editorState) =>
-  AssetFolderNodeMapEditorService.setResult(
+  FolderNodeMapAssetEditorService.setResult(
     nodeId,
-    AssetFolderNodeMapEditorService.unsafeGetResult(nodeId, editorState)
-    |> AssetFolderNodeMapEditorService.renameFolderNodeResult(name),
+    FolderNodeMapAssetEditorService.unsafeGetResult(nodeId, editorState)
+    |> FolderNodeMapAssetEditorService.renameFolderNodeResult(name),
     editorState,
   );
 
@@ -16,7 +16,7 @@ let getNoNameFolderName = () => FolderNodeUtils.getNoNameFolderName();
 
 let getNodeIdByName = (folderName, editorState) =>
   switch (
-    AssetFolderNodeMapEditorService.getFolderNodeMap(editorState)
+    FolderNodeMapAssetEditorService.getFolderNodeMap(editorState)
     |> SparseMapService.getValidDataArr
     |> Js.Array.find(((nodeId, {name}: AssetNodeType.folderResultType)) =>
          name === folderName

@@ -160,7 +160,7 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
                  );
 
                editorState
-               |> AssetTreeRootEditorService.setAssetTreeRoot(assetTree);
+               |> TreeRootAssetEditorService.setAssetTreeRoot(assetTree);
              }
            )
            |> StateLogicService.getAndSetEditorState;

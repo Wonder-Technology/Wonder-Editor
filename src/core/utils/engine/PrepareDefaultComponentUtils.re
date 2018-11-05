@@ -38,11 +38,11 @@ let buildDefaultCubeGeometryComponent = (editorState, engineState) => {
 
   (
     editorState
-    |> AssetGeometryDataEditorService.getGeometryData
+    |> GeometryDataAssetEditorService.getGeometryData
     |> (
       geometry => {...geometry, defaultCubeGeometryComponent: cubeGeometry}
     )
-    |. AssetGeometryDataEditorService.setGeometryData(editorState),
+    |. GeometryDataAssetEditorService.setGeometryData(editorState),
     engineState,
     cubeGeometry,
   );
@@ -54,14 +54,14 @@ let buildDefaultSphereGeometryComponent = (editorState, engineState) => {
 
   (
     editorState
-    |> AssetGeometryDataEditorService.getGeometryData
+    |> GeometryDataAssetEditorService.getGeometryData
     |> (
       geometry => {
         ...geometry,
         defaultSphereGeometryComponent: sphereGeometry,
       }
     )
-    |. AssetGeometryDataEditorService.setGeometryData(editorState),
+    |. GeometryDataAssetEditorService.setGeometryData(editorState),
     engineState,
   );
 };
@@ -90,10 +90,10 @@ let buildDefaultMaterialComponents = (editorState, engineState) => {
 
   let editorState =
     editorState
-    |> AssetMaterialDataEditorService.setDefaultBasicMaterialData(
+    |> MaterialDataAssetEditorService.setDefaultBasicMaterialData(
          basicMaterial,
        )
-    |> AssetMaterialDataEditorService.setDefaultLightMaterialData(
+    |> MaterialDataAssetEditorService.setDefaultLightMaterialData(
          lightMaterial,
        );
 

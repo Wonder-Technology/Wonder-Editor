@@ -82,18 +82,18 @@ let relateSceneWDBGameObjectsAndAssets =
   let engineState = StateEngineService.unsafeGetState();
 
   let defaultBasicMaterial =
-    AssetMaterialDataEditorService.unsafeGetDefaultBasicMaterial(editorState);
+    MaterialDataAssetEditorService.unsafeGetDefaultBasicMaterial(editorState);
   let defaultLightMaterial =
-    AssetMaterialDataEditorService.unsafeGetDefaultLightMaterial(editorState);
+    MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
 
   let defaultCubeGeometryData = (
-    AssetGeometryDataEditorService.unsafeGetDefaultCubeGeometryComponent(
+    GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
       editorState,
     ),
     PrepareDefaultComponentUtils.getDefaultCubeGeometryName(),
   );
   let defaultSphereGeometryData = (
-    AssetGeometryDataEditorService.unsafeGetDefaultSphereGeometryComponent(
+    GeometryDataAssetEditorService.unsafeGetDefaultSphereGeometryComponent(
       editorState,
     ),
     PrepareDefaultComponentUtils.getDefaultSphereGeometryName(),
@@ -127,18 +127,18 @@ let relateWDBAssetGameObjectsAndAssets =
   let engineState = StateEngineService.unsafeGetState();
 
   let defaultBasicMaterial =
-    AssetMaterialDataEditorService.unsafeGetDefaultBasicMaterial(editorState);
+    MaterialDataAssetEditorService.unsafeGetDefaultBasicMaterial(editorState);
   let defaultLightMaterial =
-    AssetMaterialDataEditorService.unsafeGetDefaultLightMaterial(editorState);
+    MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
 
   let defaultCubeGeometryData = (
-    AssetGeometryDataEditorService.unsafeGetDefaultCubeGeometryComponent(
+    GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
       editorState,
     ),
     PrepareDefaultComponentUtils.getDefaultCubeGeometryName(),
   );
   let defaultSphereGeometryData = (
-    AssetGeometryDataEditorService.unsafeGetDefaultSphereGeometryComponent(
+    GeometryDataAssetEditorService.unsafeGetDefaultSphereGeometryComponent(
       editorState,
     ),
     PrepareDefaultComponentUtils.getDefaultSphereGeometryName(),

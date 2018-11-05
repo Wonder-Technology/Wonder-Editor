@@ -73,9 +73,9 @@ let buildImageData =
            imageNodeIdMap
            |> WonderCommonlib.SparseMapService.set(imageIndex, assetNodeId),
            editorState
-           |> AssetImageNodeMapEditorService.setResult(
+           |> ImageNodeMapAssetEditorService.setResult(
                 assetNodeId,
-                AssetImageNodeMapEditorService.buildImageNodeResult(
+                ImageNodeMapAssetEditorService.buildImageNodeResult(
                   None,
                   Some(uint8Array),
                   name,
@@ -164,9 +164,9 @@ let buildTextureData =
 
          let editorState =
            editorState
-           |> AssetTextureNodeMapEditorService.setResult(
+           |> TextureNodeMapAssetEditorService.setResult(
                 assetNodeId,
-                AssetTextureNodeMapEditorService.buildTextureNodeResult(
+                TextureNodeMapAssetEditorService.buildTextureNodeResult(
                   texture,
                   parentFolderNodeId,
                   imageNodeIdMap
@@ -199,9 +199,9 @@ let _buildMaterialEditorData =
     HeaderImportFolderUtils.buildFolder(path, (editorState, engineState));
 
   editorState
-  |> AssetMaterialNodeMapEditorService.setResult(
+  |> MaterialNodeMapAssetEditorService.setResult(
        assetNodeId,
-       AssetMaterialNodeMapEditorService.buildMaterialNodeResult(
+       MaterialNodeMapAssetEditorService.buildMaterialNodeResult(
          parentFolderNodeId,
          type_,
          material,

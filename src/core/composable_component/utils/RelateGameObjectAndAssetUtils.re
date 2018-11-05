@@ -22,16 +22,16 @@ let _isImageValueEqual = (image1, image2, getFunc) =>
 
 let _getImageUint8ArrayByTextureComponent = (textureComponent, editorState) =>
   switch (
-    AssetTextureNodeMapEditorService.getResultByTextureComponent(
+    TextureNodeMapAssetEditorService.getResultByTextureComponent(
       textureComponent,
       editorState,
     )
   ) {
   | None => None
   | Some(({image}: AssetNodeType.textureResultType)) =>
-    AssetImageNodeMapEditorService.getUint8Array(
+    ImageNodeMapAssetEditorService.getUint8Array(
       image,
-      AssetImageNodeMapEditorService.getImageNodeMap(editorState),
+      ImageNodeMapAssetEditorService.getImageNodeMap(editorState),
     )
   };
 
@@ -326,7 +326,7 @@ let getRelatedTextureData =
       ) {
       | None =>
         let targetTexture =
-          AssetTextureNodeMapEditorService.getValidValues(editorState)
+          TextureNodeMapAssetEditorService.getValidValues(editorState)
           |> SparseMapService.map(
                ({textureComponent}: AssetNodeType.textureResultType) =>
                textureComponent
@@ -449,13 +449,13 @@ let _isGeometryEqualDefaultGeometryData =
 
 let isDefaultGeometry = (geometry, (editorState, engineState)) => {
   let (defaultCubeGeometry, defaultCubeGeometryName) = (
-    AssetGeometryDataEditorService.unsafeGetDefaultCubeGeometryComponent(
+    GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
       editorState,
     ),
     PrepareDefaultComponentUtils.getDefaultCubeGeometryName(),
   );
   let (defaultSphereGeometry, defaultSphereGeometryName) = (
-    AssetGeometryDataEditorService.unsafeGetDefaultSphereGeometryComponent(
+    GeometryDataAssetEditorService.unsafeGetDefaultSphereGeometryComponent(
       editorState,
     ),
     PrepareDefaultComponentUtils.getDefaultSphereGeometryName(),

@@ -25,7 +25,7 @@ module CustomEventHandler = {
       switch (materialNodeId) {
       | None => editorState
       | Some(materialNodeId) =>
-        AssetMaterialNodeIdMapEditorService.setNodeId(
+        MaterialNodeIdMapAssetEditorService.setNodeId(
           targetMaterial,
           materialNodeId,
           editorState,

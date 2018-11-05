@@ -11,8 +11,8 @@ module CustomEventHandler = {
       (nodeId, name, (editorState, engineState), folderNodeMap) => (
     folderNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-    |> AssetFolderNodeMapEditorService.renameFolderNodeResult(name)
-    |> AssetFolderNodeMapEditorService.setResult(nodeId, _, editorState),
+    |> FolderNodeMapAssetEditorService.renameFolderNodeResult(name)
+    |> FolderNodeMapAssetEditorService.setResult(nodeId, _, editorState),
     engineState,
   );
 
@@ -36,7 +36,7 @@ module CustomEventHandler = {
 
     let defaultName =
       switch (
-        AssetMaterialNodeMapEditorService.getType(nodeId, materialNodeMap)
+        MaterialNodeMapAssetEditorService.getType(nodeId, materialNodeMap)
       ) {
       | BasicMaterial =>
         PrepareDefaultComponentUtils.getDefaultBasicMaterialName()
@@ -70,8 +70,8 @@ module CustomEventHandler = {
   let _renameWDBNode = (nodeId, name, (editorState, engineState), wdbNodeMap) => (
     wdbNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-    |> AssetWDBNodeMapEditorService.renameWDBNodeResult(name)
-    |> AssetWDBNodeMapEditorService.setResult(nodeId, _, editorState),
+    |> WDBNodeMapAssetEditorService.renameWDBNodeResult(name)
+    |> WDBNodeMapAssetEditorService.setResult(nodeId, _, editorState),
     engineState,
   );
 

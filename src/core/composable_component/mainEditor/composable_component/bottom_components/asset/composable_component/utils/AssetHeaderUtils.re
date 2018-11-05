@@ -82,13 +82,13 @@ let _handleAssetWDBType =
          );
 
        let defaultCubeGeometryData = (
-         AssetGeometryDataEditorService.unsafeGetDefaultCubeGeometryComponent(
+         GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
            editorState,
          ),
          PrepareDefaultComponentUtils.getDefaultCubeGeometryName(),
        );
        let defaultSphereGeometryData = (
-         AssetGeometryDataEditorService.unsafeGetDefaultSphereGeometryComponent(
+         GeometryDataAssetEditorService.unsafeGetDefaultSphereGeometryComponent(
            editorState,
          ),
          PrepareDefaultComponentUtils.getDefaultSphereGeometryName(),

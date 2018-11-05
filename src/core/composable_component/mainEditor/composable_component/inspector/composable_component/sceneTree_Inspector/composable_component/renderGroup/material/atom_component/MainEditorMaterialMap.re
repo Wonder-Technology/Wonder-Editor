@@ -22,7 +22,7 @@ module Method = {
     | None => false
     | Some(id) =>
       editorState
-      |> AssetTextureNodeMapEditorService.getTextureNodeMap
+      |> TextureNodeMapAssetEditorService.getTextureNodeMap
       |> WonderCommonlib.SparseMapService.get(id)
       |> Js.Option.isSome
     };

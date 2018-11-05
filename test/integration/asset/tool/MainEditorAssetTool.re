@@ -54,7 +54,7 @@ let initAssetTree = () =>
           StateEngineService.unsafeGetState(),
         );
 
-      editorState |> AssetTreeRootEditorService.setAssetTreeRoot(asseTreeRoot);
+      editorState |> TreeRootAssetEditorService.setAssetTreeRoot(asseTreeRoot);
     }
   )
   |> StateLogicService.getAndSetEditorState;

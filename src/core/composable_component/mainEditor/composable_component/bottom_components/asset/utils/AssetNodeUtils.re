@@ -14,18 +14,18 @@ let handleSpeficFuncByAssetNodeType =
   switch (type_) {
   | Folder =>
     editorState
-    |> AssetFolderNodeMapEditorService.getFolderNodeMap
+    |> FolderNodeMapAssetEditorService.getFolderNodeMap
     |> handleFolderFunc
   | Texture =>
     editorState
-    |> AssetTextureNodeMapEditorService.getTextureNodeMap
+    |> TextureNodeMapAssetEditorService.getTextureNodeMap
     |> handleTextureFunc
   | Material =>
     editorState
-    |> AssetMaterialNodeMapEditorService.getMaterialNodeMap
+    |> MaterialNodeMapAssetEditorService.getMaterialNodeMap
     |> handleMaterialFunc
   | WDB =>
-    editorState |> AssetWDBNodeMapEditorService.getWDBNodeMap |> handleWDBFunc
+    editorState |> WDBNodeMapAssetEditorService.getWDBNodeMap |> handleWDBFunc
   };
 
 let getAssetNodeTotalName =
@@ -34,13 +34,13 @@ let getAssetNodeTotalName =
   |> handleSpeficFuncByAssetNodeType(
        type_,
        (
-         AssetFolderNodeMapEditorService.getFolderName(currentNodeId),
+         FolderNodeMapAssetEditorService.getFolderName(currentNodeId),
          OperateTextureLogicService.getTextureBaseName(currentNodeId),
          AssetMaterialNodeMapLogicService.getMaterialBaseName(
            currentNodeId,
            engineState,
          ),
-         AssetWDBNodeMapEditorService.getWDBTotalName(currentNodeId),
+         WDBNodeMapAssetEditorService.getWDBTotalName(currentNodeId),
        ),
      );
 
@@ -49,13 +49,13 @@ let getAssetNodeParentId = (type_, currentNodeId, editorState) =>
   |> handleSpeficFuncByAssetNodeType(
        type_,
        (
-         AssetFolderNodeMapEditorService.getFolderParentId(currentNodeId),
-         AssetTextureNodeMapEditorService.getParentFolderNodeId(
+         FolderNodeMapAssetEditorService.getFolderParentId(currentNodeId),
+         TextureNodeMapAssetEditorService.getParentFolderNodeId(
            currentNodeId,
          ),
-         AssetMaterialNodeMapEditorService.getParentFolderNodeId(
+         MaterialNodeMapAssetEditorService.getParentFolderNodeId(
            currentNodeId,
          ),
-         AssetWDBNodeMapEditorService.getWDBParentId(currentNodeId),
+         WDBNodeMapAssetEditorService.getWDBParentId(currentNodeId),
        ),
      );

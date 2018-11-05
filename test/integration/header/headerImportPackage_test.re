@@ -131,7 +131,7 @@ let _ =
 
             let {materialComponent}: AssetNodeType.materialResultType =
               StateEditorService.getState()
-              |> AssetMaterialNodeMapEditorService.unsafeGetResult(
+              |> MaterialNodeMapAssetEditorService.unsafeGetResult(
                    addedMaterialNodeId,
                  );
             MainEditorMaterialTool.changeMaterial(
@@ -213,7 +213,7 @@ let _ =
 
             let {materialComponent}: AssetNodeType.materialResultType =
               StateEditorService.getState()
-              |> AssetMaterialNodeMapEditorService.unsafeGetResult(
+              |> MaterialNodeMapAssetEditorService.unsafeGetResult(
                    addedMaterialNodeId,
                  );
 
@@ -713,7 +713,7 @@ let _ =
           let _generateBoxWDB = () =>
             WDBTool.generateWDB((editorState, engineState) => {
               let geometry =
-                AssetGeometryDataEditorService.unsafeGetDefaultCubeGeometryComponent(
+                GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
                   editorState,
                 );
 
@@ -1232,7 +1232,7 @@ let _ =
                            LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
                            editorState,
                          ),
-                         AssetMaterialNodeMapEditorService.getValidValues(
+                         MaterialNodeMapAssetEditorService.getValidValues(
                            editorState,
                          )
                          |> SparseMapService.length,

@@ -26,8 +26,8 @@ let _ =
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
       StateEditorService.getState()
-      |> AssetCurrentNodeDataEditorService.clearCurrentNodeData
-      |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+      |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
+      |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
       |> StateEditorService.setState
       |> ignore;
     });
@@ -47,7 +47,7 @@ let _ =
 
         let {currentNodeId, nodeType} =
           StateEditorService.getState()
-          |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData;
+          |> CurrentNodeDataAssetEditorService.unsafeGetCurrentNodeData;
 
         (currentNodeId, nodeType)
         |>
@@ -68,7 +68,7 @@ let _ =
 
            let {currentNodeId, nodeType} =
              StateEditorService.getState()
-             |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData;
+             |> CurrentNodeDataAssetEditorService.unsafeGetCurrentNodeData;
 
            (currentNodeId, nodeType)
            |>
@@ -100,7 +100,7 @@ let _ =
                     {
                       let {currentNodeId, nodeType} =
                         StateEditorService.getState()
-                        |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData;
+                        |> CurrentNodeDataAssetEditorService.unsafeGetCurrentNodeData;
 
                       (currentNodeId, nodeType)
                       |>
@@ -171,7 +171,7 @@ let _ =
                             MainEditorAssetNodeTool.getCurrentNodeId();
 
                           let currentNodeParentId =
-                            AssetCurrentNodeParentIdEditorService.unsafeGetCurrentNodeParentId
+                            CurrentNodeParentIdAssetEditorService.unsafeGetCurrentNodeParentId
                             |> StateLogicService.getEditorState;
 
                           currentNodeId |> expect == currentNodeParentId;

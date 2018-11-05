@@ -1,12 +1,12 @@
 let getFirstIdIfHasUsableAssetId = editorState =>
-  editorState |> AssetRemovedAssetIdArrayEditorService.hasUsableAssetId ?
+  editorState |> RemovedAssetIdArrayAssetEditorService.hasUsableAssetId ?
     editorState
-    |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray
+    |> RemovedAssetIdArrayAssetEditorService.getRemovedAssetIdArray
     |> (removedAssetIdArr => Some(Array.unsafe_get(removedAssetIdArr, 0))) :
     None;
 
 let getNewAssetId = (~editorState=StateEditorService.getState(), ()) =>
   switch (editorState |> getFirstIdIfHasUsableAssetId) {
-  | None => AssetIndexEditorService.getIndex(editorState) |> succ
+  | None => IndexAssetEditorService.getIndex(editorState) |> succ
   | Some(assetId) => assetId
   };

@@ -19,10 +19,10 @@ let getTextureComponentFromCurrentNodeData = () => {
   let editorState = StateEditorService.getState();
   let {textureComponent} =
     editorState
-    |> AssetTextureNodeMapEditorService.getTextureNodeMap
+    |> TextureNodeMapAssetEditorService.getTextureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(
          editorState
-         |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData
+         |> CurrentNodeDataAssetEditorService.unsafeGetCurrentNodeData
          |> (({currentNodeId, nodeType}) => currentNodeId),
        );
   textureComponent;

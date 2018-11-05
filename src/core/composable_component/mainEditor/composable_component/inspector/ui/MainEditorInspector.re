@@ -48,7 +48,7 @@ let render = ((store, dispatchFunc), addableComponentConfig, _self) => {
         (
           CurrentSelectSourceEditorService.getCurrentSelectSource(editorState),
           SceneEditorService.getCurrentSceneTreeNode(editorState),
-          AssetCurrentNodeDataEditorService.getCurrentNodeData
+          CurrentNodeDataAssetEditorService.getCurrentNodeData
           |> StateLogicService.getEditorState,
         ),
       )

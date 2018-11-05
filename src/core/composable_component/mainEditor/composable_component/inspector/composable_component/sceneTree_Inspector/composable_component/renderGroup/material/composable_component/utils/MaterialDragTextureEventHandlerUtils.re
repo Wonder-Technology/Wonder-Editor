@@ -31,7 +31,7 @@ let handleSelfLogic =
       handleSetMapFunc,
     ) => {
   StateEditorService.getState()
-  |> AssetTextureNodeMapEditorService.getTextureNodeMap
+  |> TextureNodeMapAssetEditorService.getTextureNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(dragedNodeId)
   |> (
     ({textureComponent}) => {

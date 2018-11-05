@@ -26,7 +26,7 @@ module Method = {
       "0" :
       {
         let count =
-          editorState |> ConsoleCheckedCountEditorService.unreadConsoleMessage;
+          editorState |> CheckedCountConsoleEditorService.unreadConsoleMessage;
 
         count >= 99 ? "99" : count |> string_of_int;
       };

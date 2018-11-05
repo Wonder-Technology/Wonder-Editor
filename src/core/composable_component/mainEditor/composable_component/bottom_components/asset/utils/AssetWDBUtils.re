@@ -24,9 +24,9 @@ let importAssetWDB =
          GameObjectEngineService.getAllGameObjects(gameObject, engineState);
 
        editorState
-       |> AssetWDBNodeMapEditorService.setResult(
+       |> WDBNodeMapAssetEditorService.setResult(
             wdbNodeId,
-            AssetWDBNodeMapEditorService.buildWDBNodeResult(
+            WDBNodeMapAssetEditorService.buildWDBNodeResult(
               name,
               parentFolderNodeId |. Some,
               gameObject,

@@ -1,6 +1,6 @@
 let _increaseIndex = editorState => {
-  let editorState = AssetIndexEditorService.increaseIndex(editorState);
-  let index = editorState |> AssetIndexEditorService.getIndex;
+  let editorState = IndexAssetEditorService.increaseIndex(editorState);
+  let index = editorState |> IndexAssetEditorService.getIndex;
   (index, editorState);
 };
 
@@ -11,7 +11,7 @@ module BuildAssetTree = {
     let engineState = StateEngineService.unsafeGetState();
 
     editorState
-    |> AssetTreeRootEditorService.setAssetTreeRoot({
+    |> TreeRootAssetEditorService.setAssetTreeRoot({
          nodeId: rootId,
          type_: Folder,
          children: [||],
@@ -43,7 +43,7 @@ module BuildAssetTree = {
       let (id1, editorState) = editorState |> _increaseIndex;
 
       editorState
-      |> AssetTreeRootEditorService.setAssetTreeRoot({
+      |> TreeRootAssetEditorService.setAssetTreeRoot({
            nodeId: rootId,
            type_: Folder,
            isShowChildren: true,
@@ -66,7 +66,7 @@ module BuildAssetTree = {
            rootId,
            "texture1",
          )
-      |> AssetTreeRootEditorService.setAssetTreeRoot({
+      |> TreeRootAssetEditorService.setAssetTreeRoot({
            nodeId: rootId,
            type_: Folder,
            isShowChildren: true,
@@ -94,7 +94,7 @@ module BuildAssetTree = {
       let (id2, editorState) = editorState |> _increaseIndex;
 
       editorState
-      |> AssetTreeRootEditorService.setAssetTreeRoot({
+      |> TreeRootAssetEditorService.setAssetTreeRoot({
            nodeId: rootId,
            type_: Folder,
            isShowChildren: true,
@@ -110,7 +110,7 @@ module BuildAssetTree = {
            rootId,
            "texture2",
          )
-      |> AssetTreeRootEditorService.setAssetTreeRoot({
+      |> TreeRootAssetEditorService.setAssetTreeRoot({
            nodeId: rootId,
            type_: Folder,
            isShowChildren: true,
@@ -162,7 +162,7 @@ module BuildAssetTree = {
         );
 
       editorState
-      |> AssetTreeRootEditorService.setAssetTreeRoot({
+      |> TreeRootAssetEditorService.setAssetTreeRoot({
            nodeId: rootId,
            type_: Folder,
            isShowChildren: true,
@@ -179,7 +179,7 @@ module BuildAssetTree = {
            rootId |. Some,
            newMaterial,
          )
-      |> AssetTreeRootEditorService.setAssetTreeRoot({
+      |> TreeRootAssetEditorService.setAssetTreeRoot({
            nodeId: rootId,
            type_: Folder,
            isShowChildren: true,
@@ -223,7 +223,7 @@ module BuildAssetTree = {
         let (id1, editorState) = editorState |> _increaseIndex;
 
         editorState
-        |> AssetTreeRootEditorService.setAssetTreeRoot({
+        |> TreeRootAssetEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
              isShowChildren: true,
@@ -241,7 +241,7 @@ module BuildAssetTree = {
              _,
              engineState,
            )
-        |> AssetTreeRootEditorService.setAssetTreeRoot({
+        |> TreeRootAssetEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
              isShowChildren: true,
@@ -269,7 +269,7 @@ module BuildAssetTree = {
         let (id2, editorState) = editorState |> _increaseIndex;
 
         editorState
-        |> AssetTreeRootEditorService.setAssetTreeRoot({
+        |> TreeRootAssetEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
              isShowChildren: true,
@@ -293,7 +293,7 @@ module BuildAssetTree = {
              _,
              engineState,
            )
-        |> AssetTreeRootEditorService.setAssetTreeRoot({
+        |> TreeRootAssetEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
              isShowChildren: true,
@@ -345,7 +345,7 @@ module BuildAssetTree = {
         let (id4, editorState) = editorState |> _increaseIndex;
 
         editorState
-        |> AssetTreeRootEditorService.setAssetTreeRoot({
+        |> TreeRootAssetEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
              isShowChildren: true,
@@ -369,7 +369,7 @@ module BuildAssetTree = {
              _,
              engineState,
            )
-        |> AssetTreeRootEditorService.setAssetTreeRoot({
+        |> TreeRootAssetEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
              isShowChildren: true,
@@ -400,7 +400,7 @@ module BuildAssetTree = {
              _,
              engineState,
            )
-        |> AssetTreeRootEditorService.setAssetTreeRoot({
+        |> TreeRootAssetEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
              isShowChildren: true,
@@ -497,7 +497,7 @@ module BuildAssetTree = {
           );
 
         editorState
-        |> AssetTreeRootEditorService.setAssetTreeRoot({
+        |> TreeRootAssetEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
              isShowChildren: true,
@@ -521,7 +521,7 @@ module BuildAssetTree = {
              _,
              engineState,
            )
-        |> AssetTreeRootEditorService.setAssetTreeRoot({
+        |> TreeRootAssetEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
              isShowChildren: true,
@@ -567,7 +567,7 @@ module BuildAssetTree = {
              id2 |. Some,
              newMaterial2,
            )
-        |> AssetTreeRootEditorService.setAssetTreeRoot({
+        |> TreeRootAssetEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
              isShowChildren: true,

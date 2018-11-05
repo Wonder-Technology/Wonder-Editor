@@ -152,7 +152,7 @@ let _ =
 
                  MainEditorAssetTreeTool.Select.selectFolderNode(
                    ~nodeId=
-                     AssetTreeRootEditorService.getRootTreeNodeId
+                     TreeRootAssetEditorService.getRootTreeNodeId
                      |> StateLogicService.getEditorState,
                    (),
                  );
@@ -355,7 +355,7 @@ let _ =
                             LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
                             editorState,
                           ),
-                          AssetMaterialNodeMapEditorService.getValidValues(
+                          MaterialNodeMapAssetEditorService.getValidValues(
                             editorState,
                           )
                           |> SparseMapService.length,
@@ -527,7 +527,7 @@ let _ =
 
               MainEditorAssetTreeTool.Select.selectFolderNode(
                 ~nodeId=
-                  AssetTreeRootEditorService.getRootTreeNodeId
+                  TreeRootAssetEditorService.getRootTreeNodeId
                   |> StateLogicService.getEditorState,
                 (),
               );
@@ -653,11 +653,11 @@ let _ =
                             diffuseMap2,
                             editorState,
                           ),
-                          AssetTextureNodeMapEditorService.getValidValues(
+                          TextureNodeMapAssetEditorService.getValidValues(
                             editorState,
                           )
                           |> SparseMapService.length,
-                          AssetImageNodeMapEditorService.getValidValues(
+                          ImageNodeMapAssetEditorService.getValidValues(
                             editorState,
                           )
                           |> SparseMapService.length,
@@ -773,9 +773,9 @@ let _ =
                  let editorState = StateEditorService.getState();
 
                  (
-                   AssetTextureNodeMapEditorService.getValidValues(editorState)
+                   TextureNodeMapAssetEditorService.getValidValues(editorState)
                    |> Js.Array.length,
-                   AssetImageNodeMapEditorService.getValidValues(editorState)
+                   ImageNodeMapAssetEditorService.getValidValues(editorState)
                    |> Js.Array.length,
                  )
                  |> expect == (2, 1)
@@ -794,7 +794,7 @@ let _ =
               GameObjectEngineService.create(engineState);
 
             let geometry =
-              AssetGeometryDataEditorService.unsafeGetDefaultCubeGeometryComponent(
+              GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
                 editorState,
               );
 
@@ -891,14 +891,14 @@ let _ =
                |> then_(uploadedWDBNodeId2 => {
                     let editorState = StateEditorService.getState();
                     let wdbNodeMap =
-                      AssetWDBNodeMapEditorService.getWDBNodeMap(editorState);
+                      WDBNodeMapAssetEditorService.getWDBNodeMap(editorState);
 
                     (
-                      AssetWDBNodeMapEditorService.getWDBBaseName(
+                      WDBNodeMapAssetEditorService.getWDBBaseName(
                         uploadedWDBNodeId1,
                         wdbNodeMap,
                       ),
-                      AssetWDBNodeMapEditorService.getWDBBaseName(
+                      WDBNodeMapAssetEditorService.getWDBBaseName(
                         uploadedWDBNodeId2,
                         wdbNodeMap,
                       ),

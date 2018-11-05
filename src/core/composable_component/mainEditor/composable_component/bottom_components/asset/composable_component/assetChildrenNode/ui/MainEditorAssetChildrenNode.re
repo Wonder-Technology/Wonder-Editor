@@ -9,7 +9,7 @@ module Method = {
     switch (currentNodeData) {
     | None => false
     | Some({currentNodeId}) =>
-      AssetTreeEditorService.isIdEqual(nodeId, currentNodeId)
+      TreeAssetEditorService.isIdEqual(nodeId, currentNodeId)
     };
 
   let _handleImageNodeData = (assetTreeNodeChildrenArr, editorState) =>
@@ -20,11 +20,11 @@ module Method = {
            | Texture =>
              let {image} =
                editorState
-               |> AssetTextureNodeMapEditorService.getTextureNodeMap
+               |> TextureNodeMapAssetEditorService.getTextureNodeMap
                |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
              editorState
-             |> AssetImageNodeMapEditorService.getImageNodeMap
+             |> ImageNodeMapAssetEditorService.getImageNodeMap
              |> WonderCommonlib.SparseMapService.unsafeGet(image)
              |> (
                ({base64, uint8Array, mimeType} as result) =>
@@ -43,7 +43,7 @@ module Method = {
                        ),
                      )
                    | Some(uint8Array) =>
-                     AssetImageNodeMapEditorService.setResult(
+                     ImageNodeMapAssetEditorService.setResult(
                        image,
                        {
                          ...result,
@@ -78,7 +78,7 @@ module Method = {
          | Folder =>
            let {name}: folderResultType =
              editorState
-             |> AssetFolderNodeMapEditorService.getFolderNodeMap
+             |> FolderNodeMapAssetEditorService.getFolderNodeMap
              |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
            <FolderBox
@@ -105,7 +105,7 @@ module Method = {
          | Texture =>
            let {textureComponent, image} =
              editorState
-             |> AssetTextureNodeMapEditorService.getTextureNodeMap
+             |> TextureNodeMapAssetEditorService.getTextureNodeMap
              |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
            <FileBox
@@ -115,7 +115,7 @@ module Method = {
              dragImg
              imgSrc=(
                editorState
-               |> AssetImageNodeMapEditorService.getImageNodeMap
+               |> ImageNodeMapAssetEditorService.getImageNodeMap
                |> WonderCommonlib.SparseMapService.unsafeGet(image)
                |> (({base64, mimeType}) => base64 |> OptionService.unsafeGet)
              )
@@ -136,7 +136,7 @@ module Method = {
                nodeId,
                engineState,
                editorState
-               |> AssetMaterialNodeMapEditorService.getMaterialNodeMap,
+               |> MaterialNodeMapAssetEditorService.getMaterialNodeMap,
              );
 
            <FileBox
@@ -154,7 +154,7 @@ module Method = {
          | WDB =>
            let {name}: wdbResultType =
              editorState
-             |> AssetWDBNodeMapEditorService.getWDBNodeMap
+             |> WDBNodeMapAssetEditorService.getWDBNodeMap
              |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
            <FileBox
@@ -179,8 +179,8 @@ module Method = {
 
     let assetTreeNodeChildrenArr =
       editorState
-      |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-      |> AssetTreeEditorService.getSpecificTreeNodeById(
+      |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
+      |> TreeAssetEditorService.getSpecificTreeNodeById(
            editorState |> AssetTreeUtils.getTargetTreeNodeId,
          )
       |> OptionService.unsafeGet
@@ -195,7 +195,7 @@ module Method = {
       (
         dragImg,
         debounceTime,
-        editorState |> AssetCurrentNodeDataEditorService.getCurrentNodeData,
+        editorState |> CurrentNodeDataAssetEditorService.getCurrentNodeData,
       ),
       (editorState, engineState),
     );

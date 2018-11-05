@@ -20,7 +20,7 @@ let _ =
       (
         assetTreeData,
         StateEditorService.getState()
-        |> AssetMaterialNodeMapEditorService.unsafeGetResult(
+        |> MaterialNodeMapAssetEditorService.unsafeGetResult(
              addedMaterialNodeId,
            ),
       );
@@ -93,7 +93,7 @@ let _ =
 
       let {materialComponent}: AssetNodeType.materialResultType =
         StateEditorService.getState()
-        |> AssetMaterialNodeMapEditorService.unsafeGetResult(
+        |> MaterialNodeMapAssetEditorService.unsafeGetResult(
              addedMaterialNodeId,
            );
 

@@ -11,7 +11,7 @@ let getNewFolderName = () => "New Folder";
 let getNoNameFolderName = () => "NoName Folder";
 
 let getNoNameFolderNameByNodeId = (nodeId, editorState) =>
-  nodeId === (editorState |> AssetTreeRootEditorService.getRootTreeNodeId) ?
+  nodeId === (editorState |> TreeRootAssetEditorService.getRootTreeNodeId) ?
     getAssetTreeRootName() : getNoNameFolderName();
 
 let addFolderIntoNodeMap =
@@ -22,17 +22,17 @@ let addFolderIntoNodeMap =
        parentFolderNodeId,
        (editorState, engineState),
      )
-  |> AssetFolderNodeMapEditorService.buildFolderNodeResult(
+  |> FolderNodeMapAssetEditorService.buildFolderNodeResult(
        parentFolderNodeId,
      )
-  |> AssetFolderNodeMapEditorService.setResult(nodeId, _, editorState);
+  |> FolderNodeMapAssetEditorService.setResult(nodeId, _, editorState);
 
 let addMaterialIntoNodeMap =
     (nodeId, parentFolderNodeId, material, editorState) =>
   editorState
-  |> AssetMaterialNodeMapEditorService.setResult(
+  |> MaterialNodeMapAssetEditorService.setResult(
        nodeId,
-       AssetMaterialNodeMapEditorService.buildMaterialNodeResult(
+       MaterialNodeMapAssetEditorService.buildMaterialNodeResult(
          parentFolderNodeId,
          AssetMaterialDataType.LightMaterial,
          material,
@@ -42,9 +42,9 @@ let addMaterialIntoNodeMap =
 let addTextureIntoNodeMap =
     (nodeId, parentFolderNodeId, texture, imageNodeId, editorState) =>
   editorState
-  |> AssetTextureNodeMapEditorService.setResult(
+  |> TextureNodeMapAssetEditorService.setResult(
        nodeId,
-       AssetTextureNodeMapEditorService.buildTextureNodeResult(
+       TextureNodeMapAssetEditorService.buildTextureNodeResult(
          texture,
          parentFolderNodeId,
          imageNodeId,
@@ -54,11 +54,11 @@ let addTextureIntoNodeMap =
 /* let getParentFolderNodeId = (folderNodeId, editorState) =>
    switch (
      folderNodeId
-     |> AssetFolderNodeMapEditorService.getFolderParentId(
+     |> FolderNodeMapAssetEditorService.getFolderParentId(
           _,
-          AssetFolderNodeMapEditorService.getFolderNodeMap(editorState),
+          FolderNodeMapAssetEditorService.getFolderNodeMap(editorState),
         )
    ) {
    | Some(parentFolderNodeId) => parentFolderNodeId
-   | None => AssetTreeRootEditorService.getRootTreeNodeId(editorState)
+   | None => TreeRootAssetEditorService.getRootTreeNodeId(editorState)
    }; */

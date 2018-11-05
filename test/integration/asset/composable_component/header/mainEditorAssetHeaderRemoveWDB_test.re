@@ -337,7 +337,7 @@ let _ =
                 GameObjectEngineService.create(engineState);
 
               let geometry =
-                AssetGeometryDataEditorService.unsafeGetDefaultCubeGeometryComponent(
+                GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
                   editorState,
                 );
 

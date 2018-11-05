@@ -8,14 +8,14 @@ module CustomEventHandler = {
   let _updateMaterialNodeData =
       (sourceMaterial, targetMaterial, targetMaterialType, editorState) =>
     switch (
-      AssetMaterialNodeIdMapEditorService.getNodeId(
+      MaterialNodeIdMapAssetEditorService.getNodeId(
         sourceMaterial,
         editorState,
       )
     ) {
     | None => editorState
     | Some(materialNodeId) =>
-      AssetMaterialUpdateNodeEditorService.updateMaterialNodeData(
+      MaterialUpdateNodeAssetEditorService.updateMaterialNodeData(
         materialNodeId,
         targetMaterial,
         targetMaterialType,

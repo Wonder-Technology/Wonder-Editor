@@ -7,13 +7,13 @@ type action =
 module Method = {
   let isCurrentNodeIdEqualRootId = editorState =>
     switch (
-      editorState |> AssetCurrentNodeDataEditorService.getCurrentNodeData
+      editorState |> CurrentNodeDataAssetEditorService.getCurrentNodeData
     ) {
     | None => true
     | Some({currentNodeId}) =>
-      AssetTreeEditorService.isIdEqual(
+      TreeAssetEditorService.isIdEqual(
         currentNodeId,
-        editorState |> AssetTreeRootEditorService.getRootTreeNodeId,
+        editorState |> TreeRootAssetEditorService.getRootTreeNodeId,
       )
     };
   let addFolder = AssetHeaderAddFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;

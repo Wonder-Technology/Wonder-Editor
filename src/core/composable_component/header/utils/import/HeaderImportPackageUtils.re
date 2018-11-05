@@ -46,7 +46,7 @@ let _initAssetTreeRoot = () => {
     editorState |> AssetTreeUtils.initRootAssetTree(_, engineState);
 
   editorState
-  |> AssetTreeRootEditorService.setAssetTreeRoot(assetTree)
+  |> TreeRootAssetEditorService.setAssetTreeRoot(assetTree)
   |> StateEditorService.setState
   |> ignore;
 

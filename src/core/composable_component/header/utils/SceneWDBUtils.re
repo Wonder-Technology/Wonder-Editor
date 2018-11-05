@@ -58,7 +58,7 @@ let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
        engineState |> GameObjectUtils.getChildren(gameObject),
        engineState,
      )
-  /* |> AssetTreeRootEditorService.setAssetTreeRoot(assetTree) */
+  /* |> TreeRootAssetEditorService.setAssetTreeRoot(assetTree) */
   |> StateEditorService.setState
   |> ignore;
 

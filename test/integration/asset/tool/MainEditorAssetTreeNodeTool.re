@@ -34,18 +34,18 @@ let addTextureIntoNodeMap =
   let extName = ".jpg";
 
   editorState
-  |> AssetImageNodeMapEditorService.setResult(
+  |> ImageNodeMapAssetEditorService.setResult(
        textureComponent,
-       AssetImageNodeMapEditorService.buildImageNodeResult(
+       ImageNodeMapAssetEditorService.buildImageNodeResult(
          Some(imageSrc),
          None,
          textureName ++ extName,
          ImageUtils.getImageMimeType(extName),
        ),
      )
-  |> AssetTextureNodeMapEditorService.setResult(
+  |> TextureNodeMapAssetEditorService.setResult(
        index,
-       AssetTextureNodeMapEditorService.buildTextureNodeResult(
+       TextureNodeMapAssetEditorService.buildTextureNodeResult(
          textureComponent,
          parentFolderNodeId |. Some,
          textureComponent,

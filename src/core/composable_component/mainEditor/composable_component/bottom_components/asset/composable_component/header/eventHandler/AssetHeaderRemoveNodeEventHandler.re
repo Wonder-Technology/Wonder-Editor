@@ -6,17 +6,17 @@ module CustomEventHandler = {
   type dataTuple = unit;
 
   let _isRemoveAssetTreeNode = (currentNodeId, currentNodeParentId) =>
-    AssetTreeEditorService.isIdEqual(currentNodeParentId, currentNodeId);
+    TreeAssetEditorService.isIdEqual(currentNodeParentId, currentNodeId);
 
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
     let {currentNodeId} =
-      editorState |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData;
+      editorState |> CurrentNodeDataAssetEditorService.unsafeGetCurrentNodeData;
     let (newAssetTreeRoot, removedTreeNode) =
       editorState
-      |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+      |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
       |> RemoveNodeAssetTreeAssetEditorService.removeSpecificTreeNode(
            currentNodeId,
          );
@@ -31,9 +31,9 @@ module CustomEventHandler = {
 
     let editorState =
       editorState
-      |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray
+      |> RemovedAssetIdArrayAssetEditorService.getRemovedAssetIdArray
       |> Js.Array.concat(removedAssetIdArr)
-      |. AssetRemovedAssetIdArrayEditorService.setRemovedAssetIdArray(
+      |. RemovedAssetIdArrayAssetEditorService.setRemovedAssetIdArray(
            editorState,
          );
 
@@ -43,12 +43,12 @@ module CustomEventHandler = {
         AssetTreeUtils.getTargetTreeNodeId(editorState),
       ) ?
         editorState
-        |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-        |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTreeRoot)
-        |> AssetCurrentNodeDataEditorService.clearCurrentNodeData :
+        |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
+        |> TreeRootAssetEditorService.setAssetTreeRoot(newAssetTreeRoot)
+        |> CurrentNodeDataAssetEditorService.clearCurrentNodeData :
         editorState
-        |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTreeRoot)
-        |> AssetCurrentNodeDataEditorService.clearCurrentNodeData;
+        |> TreeRootAssetEditorService.setAssetTreeRoot(newAssetTreeRoot)
+        |> CurrentNodeDataAssetEditorService.clearCurrentNodeData;
 
     editorState |> StateEditorService.setState |> ignore;
 

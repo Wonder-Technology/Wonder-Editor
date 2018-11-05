@@ -97,7 +97,7 @@ module Drag = {
 
     let wdbGameObjectUid =
       StateEditorService.getState()
-      |> AssetWDBNodeMapEditorService.getWDBNodeMap
+      |> WDBNodeMapAssetEditorService.getWDBNodeMap
       |> WonderCommonlib.SparseMapService.unsafeGet(wdbNodeId)
       |> (({wdbGameObject}) => wdbGameObject);
     MainEditorSceneTree.Method.dragWDBIntoScene(

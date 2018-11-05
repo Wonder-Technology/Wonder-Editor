@@ -2,7 +2,7 @@ open AssetNodeType;
 
 let getWDBGameObject = (nodeId, editorState) => {
   let {wdbGameObject} =
-    AssetWDBNodeMapEditorService.getWDBNodeMap(editorState)
+    WDBNodeMapAssetEditorService.getWDBNodeMap(editorState)
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
   wdbGameObject;

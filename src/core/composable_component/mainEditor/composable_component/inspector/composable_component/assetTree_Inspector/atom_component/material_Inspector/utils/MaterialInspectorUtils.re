@@ -75,9 +75,9 @@ let replaceMaterialByMaterialType =
       IterateAssetTreeAssetEditorService.getUniqueTreeNodeName(
         MainEditorMaterialUtils.getNewMaterilaName(),
         Material,
-        AssetMaterialNodeMapEditorService.getParentFolderNodeId(
+        MaterialNodeMapAssetEditorService.getParentFolderNodeId(
           nodeId,
-          AssetMaterialNodeMapEditorService.getMaterialNodeMap(editorState),
+          MaterialNodeMapAssetEditorService.getMaterialNodeMap(editorState),
         ),
         (editorState, engineState),
       ),
@@ -95,7 +95,7 @@ let replaceMaterialByMaterialType =
 
   engineState |> StateLogicService.refreshEngineState;
 
-  AssetMaterialUpdateNodeEditorService.updateMaterialNodeData(
+  MaterialUpdateNodeAssetEditorService.updateMaterialNodeData(
     nodeId,
     targetMaterial,
     targetMaterialType,

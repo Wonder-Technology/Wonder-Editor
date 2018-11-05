@@ -28,7 +28,7 @@ let _computeBufferViewDataByteLength = bufferViewArr =>
 
 let _buildImageData = editorState => {
   let (imageIndexMap, imageArr, bufferViewArr, uint8ArrayArr, byteOffset) =
-    AssetImageNodeMapEditorService.getImageNodeMap(editorState)
+    ImageNodeMapAssetEditorService.getImageNodeMap(editorState)
     |> SparseMapService.reduceiValid(
          (.
            (
@@ -110,7 +110,7 @@ let rec _getAssetNodePathFromAssets =
   };
 
 let _buildTextureData = (imageIndexMap, (editorState, engineState)) =>
-  AssetTextureNodeMapEditorService.getTextureNodeMap(editorState)
+  TextureNodeMapAssetEditorService.getTextureNodeMap(editorState)
   |> SparseMapService.reduceiValid(
        (.
          (textureIndexMap, textureArr),
@@ -196,7 +196,7 @@ let _getTextureIndexFromMap = (textureComponent, textureIndexMap) =>
   };
 
 let _buildMaterialData = (textureIndexMap, (editorState, engineState)) =>
-  AssetMaterialNodeMapEditorService.getMaterialNodeMap(editorState)
+  MaterialNodeMapAssetEditorService.getMaterialNodeMap(editorState)
   |> SparseMapService.reduceiValid(
        (.
          (basicMaterialArr, lightMaterialArr),
@@ -274,7 +274,7 @@ let _buildWDBData =
   let imageBufferViewIndex = imageBufferViewArr |> Js.Array.length;
 
   let (wdbArr, arrayBufferArr, bufferViewArr, byteOffset) =
-    AssetWDBNodeMapEditorService.getWDBNodeMap(editorState)
+    WDBNodeMapAssetEditorService.getWDBNodeMap(editorState)
     |> SparseMapService.reduceValid(
          (.
            (wdbArr, arrayBufferArr, bufferViewArr, byteOffset),

@@ -25,7 +25,7 @@ let _ =
     describe("test load texture", () => {
       let _getUploadedTextureNodeId = editorState => {
         let root =
-          editorState |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot;
+          editorState |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot;
 
         let {nodeId} as textureNode = root.children[0];
 

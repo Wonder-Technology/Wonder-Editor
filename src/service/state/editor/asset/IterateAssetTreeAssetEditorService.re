@@ -14,9 +14,9 @@ let getChildrenNameAndIdArr = (nodeId, nodeType, (editorState, engineState)) => 
             ),
             () =>
             editorState
-            |> AssetTreeRootEditorService.getAssetTreeRoot
+            |> TreeRootAssetEditorService.getAssetTreeRoot
             |> OptionService.unsafeGet
-            |> AssetTreeEditorService.getSpecificTreeNodeById(nodeId)
+            |> TreeAssetEditorService.getSpecificTreeNodeById(nodeId)
             |> OptionService.unsafeGet
             |> (({type_}) => type_ == Folder |> assertTrue)
           )
@@ -26,9 +26,9 @@ let getChildrenNameAndIdArr = (nodeId, nodeType, (editorState, engineState)) => 
   );
 
   editorState
-  |> AssetTreeRootEditorService.getAssetTreeRoot
+  |> TreeRootAssetEditorService.getAssetTreeRoot
   |> OptionService.unsafeGet
-  |> AssetTreeEditorService.getSpecificTreeNodeById(nodeId)
+  |> TreeAssetEditorService.getSpecificTreeNodeById(nodeId)
   |> OptionService.unsafeGet
   |> (
     ({children}: assetTreeNodeType) =>
@@ -42,7 +42,7 @@ let getChildrenNameAndIdArr = (nodeId, nodeType, (editorState, engineState)) => 
              |> AssetNodeUtils.handleSpeficFuncByAssetNodeType(
                   type_,
                   (
-                    AssetFolderNodeMapEditorService.getFolderName(
+                    FolderNodeMapAssetEditorService.getFolderName(
                       currentNodeId,
                     ),
                     OperateTextureLogicService.getTextureBaseName(
@@ -52,7 +52,7 @@ let getChildrenNameAndIdArr = (nodeId, nodeType, (editorState, engineState)) => 
                       currentNodeId,
                       engineState,
                     ),
-                    AssetWDBNodeMapEditorService.getWDBBaseName(
+                    WDBNodeMapAssetEditorService.getWDBBaseName(
                       currentNodeId,
                     ),
                   ),

@@ -50,7 +50,7 @@ module Method = {
         {
           let wdbGameObjectUid =
             StateEditorService.getState()
-            |> AssetWDBNodeMapEditorService.getWDBNodeMap
+            |> WDBNodeMapAssetEditorService.getWDBNodeMap
             |> WonderCommonlib.SparseMapService.unsafeGet(startId)
             |> (({wdbGameObject}) => wdbGameObject);
 
