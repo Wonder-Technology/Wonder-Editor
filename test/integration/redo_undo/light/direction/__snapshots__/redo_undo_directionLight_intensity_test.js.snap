@@ -1,0 +1,286 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`redo_undo: directionLight intensity prepare first step: set currentSceneTreeNode test redo operate test redo one step undo step which from second to zero, redo step which from zero to first 1`] = `
+<article
+  className="wonder-direction-light"
+>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Color
+    </div>
+    <div
+      className="item-content item-color"
+    >
+      <div
+        className="color-hex"
+        onClick={[Function]}
+        style={
+          Object {
+            "background": "#ffffff",
+          }
+        }
+      />
+      <div
+        className="color-select"
+        onClick={[Function]}
+      >
+        <img
+          src="./public/img/color.png"
+        />
+      </div>
+    </div>
+  </article>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Intensity
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="10.1"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: directionLight intensity prepare first step: set currentSceneTreeNode test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
+<article
+  className="wonder-direction-light"
+>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Color
+    </div>
+    <div
+      className="item-content item-color"
+    >
+      <div
+        className="color-hex"
+        onClick={[Function]}
+        style={
+          Object {
+            "background": "#ffffff",
+          }
+        }
+      />
+      <div
+        className="color-select"
+        onClick={[Function]}
+      >
+        <img
+          src="./public/img/color.png"
+        />
+      </div>
+    </div>
+  </article>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Intensity
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="12.12"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: directionLight intensity prepare first step: set currentSceneTreeNode test undo operate test not undo 1`] = `
+<article
+  className="wonder-direction-light"
+>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Color
+    </div>
+    <div
+      className="item-content item-color"
+    >
+      <div
+        className="color-hex"
+        onClick={[Function]}
+        style={
+          Object {
+            "background": "#ffffff",
+          }
+        }
+      />
+      <div
+        className="color-select"
+        onClick={[Function]}
+      >
+        <img
+          src="./public/img/color.png"
+        />
+      </div>
+    </div>
+  </article>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Intensity
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="12.12"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: directionLight intensity prepare first step: set currentSceneTreeNode test undo operate test undo one step step which from second to first 1`] = `
+<article
+  className="wonder-direction-light"
+>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Color
+    </div>
+    <div
+      className="item-content item-color"
+    >
+      <div
+        className="color-hex"
+        onClick={[Function]}
+        style={
+          Object {
+            "background": "#ffffff",
+          }
+        }
+      />
+      <div
+        className="color-select"
+        onClick={[Function]}
+      >
+        <img
+          src="./public/img/color.png"
+        />
+      </div>
+    </div>
+  </article>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Intensity
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="10.1"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: directionLight intensity prepare first step: set currentSceneTreeNode test undo operate test undo two step step which from second to zero 1`] = `
+<article
+  className="wonder-direction-light"
+>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Color
+    </div>
+    <div
+      className="item-content item-color"
+    >
+      <div
+        className="color-hex"
+        onClick={[Function]}
+        style={
+          Object {
+            "background": "#ffffff",
+          }
+        }
+      />
+      <div
+        className="color-select"
+        onClick={[Function]}
+      >
+        <img
+          src="./public/img/color.png"
+        />
+      </div>
+    </div>
+  </article>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Intensity
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="1"
+      />
+    </div>
+  </article>
+</article>
+`;
