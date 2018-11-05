@@ -33,7 +33,7 @@ let importAssetWDB =
               wdbArrayBuffer,
             ),
           )
-       |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
+       |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
             parentFolderNodeId,
             wdbNodeId,
             AssetNodeType.WDB,

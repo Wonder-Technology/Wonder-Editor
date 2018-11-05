@@ -173,7 +173,7 @@ let buildTextureData =
                   |> WonderCommonlib.SparseMapService.unsafeGet(source),
                 ),
               )
-           |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
+           |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
                 parentFolderNodeId |> OptionService.unsafeGet,
                 assetNodeId,
                 AssetNodeType.Texture,
@@ -207,7 +207,7 @@ let _buildMaterialEditorData =
          material,
        ),
      )
-  |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
+  |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
        parentFolderNodeId |> OptionService.unsafeGet,
        assetNodeId,
        AssetNodeType.Material,

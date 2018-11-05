@@ -654,7 +654,7 @@ module BuildAssetTree = {
 module Select = {
   let selectNode =
       (~nodeType, ~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
-    AssetTreeUtils.onSelect(dispatchFunc, nodeType, nodeId);
+    AssetTreeUtils.enterFolder(dispatchFunc, nodeType, nodeId);
 
   /* let selectTextureNode = (~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
        selectNode(~nodeType=AssetNodeType.Texture, ~nodeId, ~dispatchFunc, ());
@@ -675,7 +675,7 @@ module Drag = {
         ~dispatchFunc=TestTool.getDispatch(),
         (),
       ) =>
-    AssetTreeUtils.dragNodeToFolderFunc(
+    AssetDragNodeToFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
       (store, dispatchFunc),
       (),
       (targetNodeId, startNodeId),
@@ -689,7 +689,7 @@ module Drag = {
         ~dispatchFunc=TestTool.getDispatch(),
         (),
       ) =>
-    AssetTreeUtils.dragNodeToFolderFunc(
+    AssetDragNodeToFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
       (store, dispatchFunc),
       (),
       (targetNodeId, startNodeId),

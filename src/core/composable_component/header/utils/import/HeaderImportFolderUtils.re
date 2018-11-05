@@ -5,13 +5,13 @@ let buildFolder = (path, (editorState, engineState)) => {
     |> Js.String.split("/")
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. (parentFolderNodeId, editorState), pathName) =>
-           pathName === AssetTreeNodeUtils.getAssetTreeRootName() ?
+           pathName === FolderNodeUtils.getAssetTreeRootName() ?
              {
                let (nodeId, editorState) =
                  AssetTreeUtils.rebuildRootAssetTree(
                    parentFolderNodeId,
                    pathName,
-                   editorState,
+                   (editorState, engineState),
                  );
 
                (Some(nodeId), editorState);

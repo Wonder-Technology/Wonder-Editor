@@ -1,12 +1,12 @@
 let addMaterialNodeToAssetTree =
     (material, (targetTreeNodeId, newNodeId), editorState) =>
   editorState
-  |> AssetTreeNodeUtils.addMaterialIntoNodeMap(
+  |> FolderNodeUtils.addMaterialIntoNodeMap(
        newNodeId,
        targetTreeNodeId |. Some,
        material,
      )
-  |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
+  |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
        targetTreeNodeId,
        newNodeId,
        AssetNodeType.Material,

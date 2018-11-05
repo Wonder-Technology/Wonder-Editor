@@ -3,7 +3,7 @@ open DragEventUtils;
 type state = {style: ReactDOMRe.Style.t};
 
 module Method = {
-  let onDoubleClick = AssetTreeUtils.onSelect;
+  let onDoubleClick = AssetTreeUtils.enterFolder;
 
   let onClick = FileBox.Method.onSelect;
 };

@@ -54,7 +54,7 @@ let _handleAssetWDBType =
   AssetWDBUtils.importAssetWDB(
     (
       baseName
-      |. AssetUtils.getUniqueTreeNodeName(
+      |. IterateAssetTreeAssetEditorService.getUniqueTreeNodeName(
            WDB,
            parentFolderNodeId |. Some,
            (editorState, engineState),
@@ -145,7 +145,7 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
     AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
   let engineState = StateEngineService.unsafeGetState();
 
-  let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
+  let targetTreeNodeId = editorState |> AssetTreeUtils.getTargetTreeNodeId;
 
   _handleSpecificFuncByTypeAsync(
     fileResult.type_,
@@ -156,7 +156,7 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
         let (textureComponent, engineState) =
           TextureUtils.createAndInitTexture(
             baseName
-            |. AssetUtils.getUniqueTreeNodeName(
+            |. IterateAssetTreeAssetEditorService.getUniqueTreeNodeName(
                  Texture,
                  targetTreeNodeId |. Some,
                  (editorState, engineState),
@@ -202,7 +202,7 @@ let fileLoad = (dispatchFunc, event) => {
   let fileInfoArr =
     target##files
     |> Js.Dict.values
-    |> Js.Array.map(AssetTreeNodeUtils.convertFileJsObjectToFileInfoRecord);
+    |> Js.Array.map(FileReader.convertFileJsObjectToFileInfoRecord);
 
   WonderBsMost.Most.from(fileInfoArr)
   |> WonderBsMost.Most.flatMap((fileInfo: fileInfoType) =>
@@ -213,12 +213,12 @@ let fileLoad = (dispatchFunc, event) => {
            FileReader.onload(reader, result =>
              resolve(. {
                name: fileInfo.name,
-               type_: AssetTreeNodeUtils.getUploadFileType(fileInfo.name),
+               type_: LoadAssetUtils.getUploadFileType(fileInfo.name),
                result,
              })
            );
 
-           AssetTreeNodeUtils.readFileByTypeSync(reader, fileInfo);
+           LoadAssetUtils.readFileByTypeSync(reader, fileInfo);
          }),
        )
      )

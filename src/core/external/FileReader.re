@@ -30,6 +30,12 @@ let makeSureCanLoadSameNameFileAgain = targetDom => {
   ();
 };
 
+let convertFileJsObjectToFileInfoRecord = fileObject => {
+  name: fileObject##name,
+  type_: fileObject##_type,
+  file: FileType.convertFileJsObjectToFile(fileObject),
+};
+
 external convertResultToString : resultType => string = "%identity";
 
 external convertResultToArrayBuffer :

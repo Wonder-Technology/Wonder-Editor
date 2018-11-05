@@ -49,7 +49,7 @@ let initAssetTree = () =>
   (
     editorState => {
       let (asseTreeRoot, editorState) =
-        AssetTreeNodeUtils.initRootAssetTree(
+        AssetTreeUtils.initRootAssetTree(
           editorState,
           StateEngineService.unsafeGetState(),
         );

@@ -4,7 +4,7 @@ open Js.Typed_array;
 
 let _disposeAssets = () =>
   StateLogicService.getAndSetStateToGetData(
-    AssetTreeEditorService.deepDisposeAssetTreeRoot,
+    RemoveNodeAssetTreeAssetEditorService.deepDisposeAssetTreeRoot,
   );
 
 let _readHeader = dataView => {
@@ -43,7 +43,7 @@ let _initAssetTreeRoot = () => {
   let engineState = StateEngineService.unsafeGetState();
 
   let (assetTree, editorState) =
-    editorState |> AssetTreeNodeUtils.initRootAssetTree(_, engineState);
+    editorState |> AssetTreeUtils.initRootAssetTree(_, engineState);
 
   editorState
   |> AssetTreeRootEditorService.setAssetTreeRoot(assetTree)
@@ -135,7 +135,7 @@ let importPackage = (dispatchFunc, event) => {
     )
   | Some(file) =>
     let fileInfo: FileType.fileInfoType =
-      file |> AssetTreeNodeUtils.convertFileJsObjectToFileInfoRecord;
+      file |> FileReader.convertFileJsObjectToFileInfoRecord;
 
     WonderBsMost.Most.fromPromise(
       Js.Promise.make((~resolve, ~reject) => {
@@ -145,13 +145,13 @@ let importPackage = (dispatchFunc, event) => {
           resolve(.
             {
               name: fileInfo.name,
-              type_: AssetTreeNodeUtils.getUploadFileType(fileInfo.name),
+              type_: LoadAssetUtils.getUploadFileType(fileInfo.name),
               result,
             }: AssetNodeType.nodeResultType,
           )
         );
 
-        AssetTreeNodeUtils.readFileByTypeSync(reader, fileInfo);
+        LoadAssetUtils.readFileByTypeSync(reader, fileInfo);
       }),
     )
     |> WonderBsMost.Most.flatMap((fileResult: AssetNodeType.nodeResultType) =>

@@ -7,11 +7,11 @@ module CustomEventHandler = {
     let engineState = StateEngineService.unsafeGetState();
     let (editorState, newIndex) =
       AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
-    let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
+    let targetTreeNodeId = editorState |> AssetTreeUtils.getTargetTreeNodeId;
 
     let materialName =
       MainEditorMaterialUtils.getNewMaterilaName()
-      |. AssetUtils.getUniqueTreeNodeName(
+      |. IterateAssetTreeAssetEditorService.getUniqueTreeNodeName(
            Material,
            targetTreeNodeId |. Some,
            (editorState, engineState),

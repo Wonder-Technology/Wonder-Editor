@@ -36,10 +36,7 @@ module CustomEventHandler = {
 
     let defaultName =
       switch (
-        AssetMaterialNodeMapEditorService.getType(
-          nodeId,
-          materialNodeMap,
-        )
+        AssetMaterialNodeMapEditorService.getType(nodeId, materialNodeMap)
       ) {
       | BasicMaterial =>
         PrepareDefaultComponentUtils.getDefaultBasicMaterialName()
@@ -88,7 +85,7 @@ module CustomEventHandler = {
       |> OptionService.unsafeGet;
 
     let (editorState, engineState) =
-      AssetUtils.checkAssetNodeName(
+      AssetTreeUtils.checkAssetNodeName(
         (nodeId, value),
         parentNodeId,
         nodeType,

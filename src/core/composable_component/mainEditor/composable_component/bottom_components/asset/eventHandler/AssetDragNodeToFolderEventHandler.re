@@ -57,7 +57,7 @@ module CustomEventHandler = {
       ((store, dispatchFunc), (), (targetNodeId, removedNodeId)) => {
     let editorState = StateEditorService.getState();
 
-    AssetUtils.isIdEqual(targetNodeId, removedNodeId) ?
+    AssetTreeEditorService.isIdEqual(targetNodeId, removedNodeId) ?
       dispatchFunc(AppStore.UpdateAction(Update([|BottomComponent|])))
       |> ignore :
       {
@@ -65,17 +65,19 @@ module CustomEventHandler = {
           editorState
           |> AssetTreeRootEditorService.getAssetTreeRoot
           |> OptionService.unsafeGet
-          |> AssetUtils.getSpecificTreeNodeById(removedNodeId)
+          |> AssetTreeEditorService.getSpecificTreeNodeById(removedNodeId)
           |> OptionService.unsafeGet;
 
         let (newAssetTreeRoot, removedTreeNode) =
           editorState
           |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-          |> AssetUtils.removeSpecificTreeNode(removedNodeId);
+          |> RemoveNodeAssetTreeAssetEditorService.removeSpecificTreeNode(
+               removedNodeId,
+             );
 
         let editorState =
           newAssetTreeRoot
-          |> AssetUtils.insertSourceTreeNodeToTargetTreeNodeChildren(
+          |> AssetTreeUtils.insertSourceTreeNodeToTargetTreeNodeChildren(
                targetNodeId,
                removedTreeNode,
              )

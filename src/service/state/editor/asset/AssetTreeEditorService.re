@@ -9,26 +9,21 @@ let buildAssetTreeNodeByIndex = (index, type_) => {
   isShowChildren: true,
 };
 
-let deepDisposeAssetTreeRoot = ((editorState, engineState)) => {
-  let removedTreeNode =
-    editorState
-    |> AssetTreeRootEditorService.getAssetTreeRoot
-    |> OptionService.unsafeGet;
+let isIdEqual = (nodeId, targetNodeId) => nodeId === targetNodeId;
 
-  let ((editorState, engineState), removedAssetIdArr) =
-    (editorState, engineState)
-    |> AssetUtils.deepRemoveTreeNode(removedTreeNode);
-
-  (
-    editorState
-    |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray
-    |> Js.Array.concat(removedAssetIdArr)
-    |. AssetRemovedAssetIdArrayEditorService.setRemovedAssetIdArray(
-         editorState,
-       )
-    |> AssetTreeRootEditorService.clearAssetTreeRoot
-    |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-    |> AssetCurrentNodeDataEditorService.clearCurrentNodeData,
-    engineState,
-  );
-};
+let rec getSpecificTreeNodeById = (nodeId, targetTreeNode) =>
+  isIdEqual(nodeId, targetTreeNode.nodeId) ?
+    Some(targetTreeNode) :
+    {
+      let (resultNode, _) =
+        targetTreeNode.children
+        |> WonderCommonlib.ArrayService.reduceOneParam(
+             (. (resultNode, nodeId), child) =>
+               switch (resultNode) {
+               | Some(_) => (resultNode, nodeId)
+               | None => (getSpecificTreeNodeById(nodeId, child), nodeId)
+               },
+             (None, nodeId),
+           );
+      resultNode;
+    };

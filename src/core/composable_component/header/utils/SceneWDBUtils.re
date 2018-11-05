@@ -51,7 +51,7 @@ let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
     editorState
     |> InspectorEditorService.clearComponentTypeMap
     |> SceneEditorService.clearCurrentSceneTreeNode;
-  /* |> AssetTreeNodeUtils.initRootAssetTree(_, engineState); */
+  /* |> AssetTreeUtils.initRootAssetTree(_, engineState); */
 
   editorState
   |> GameObjectComponentLogicService.getGameObjectComponentStoreInComponentTypeMap(

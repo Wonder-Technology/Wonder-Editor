@@ -11,7 +11,7 @@ module Method = {
     ) {
     | None => true
     | Some({currentNodeId}) =>
-      AssetUtils.isIdEqual(
+      AssetTreeEditorService.isIdEqual(
         currentNodeId,
         editorState |> AssetTreeRootEditorService.getRootTreeNodeId,
       )

@@ -18,7 +18,7 @@ let loadSceneWDB = (dispatchFunc, event) => {
   switch (
     e##target##files
     |> Js.Dict.values
-    |> Js.Array.map(AssetTreeNodeUtils.convertFileJsObjectToFileInfoRecord)
+    |> Js.Array.map(FileReader.convertFileJsObjectToFileInfoRecord)
     |> ArrayService.getFirst
   ) {
   | None =>
@@ -39,12 +39,12 @@ let loadSceneWDB = (dispatchFunc, event) => {
              FileReader.onload(reader, result =>
                resolve(. {
                  name: wdbInfo.name,
-                 type_: AssetTreeNodeUtils.getUploadFileType(wdbInfo.name),
+                 type_: LoadAssetUtils.getUploadFileType(wdbInfo.name),
                  result,
                })
              );
 
-             AssetTreeNodeUtils.readFileByTypeSync(reader, wdbInfo);
+             LoadAssetUtils.readFileByTypeSync(reader, wdbInfo);
            }),
          )
        )

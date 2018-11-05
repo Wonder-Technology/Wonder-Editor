@@ -1,12 +1,12 @@
 let addFolderNodeToAssetTree =
     (name, (targetTreeNodeId, newNodeId), (editorState, engineState)) =>
   (editorState, engineState)
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(
+  |> FolderNodeUtils.addFolderIntoNodeMap(
        newNodeId,
        targetTreeNodeId |. Some,
        name,
      )
-  |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
+  |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
        targetTreeNodeId,
        newNodeId,
        AssetNodeType.Folder,

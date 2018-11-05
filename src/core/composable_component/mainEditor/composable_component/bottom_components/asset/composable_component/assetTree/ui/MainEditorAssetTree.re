@@ -4,7 +4,7 @@ open AssetTreeNodeType;
 
 module Method = {
   let _isSelected = nodeId =>
-    AssetUtils.getTargetTreeNodeId
+    AssetTreeUtils.getTargetTreeNodeId
     |> StateLogicService.getEditorState === nodeId;
 
   let _isActive = () => {
@@ -13,8 +13,8 @@ module Method = {
     switch (AssetCurrentNodeDataEditorService.getCurrentNodeData(editorState)) {
     | None => false
     | Some({currentNodeId}) =>
-      AssetUtils.isIdEqual(
-        AssetUtils.getTargetTreeNodeId(editorState),
+      AssetTreeEditorService.isIdEqual(
+        AssetTreeUtils.getTargetTreeNodeId(editorState),
         currentNodeId,
       )
     };
@@ -81,7 +81,7 @@ module Method = {
                handleToggleShowTreeChildren=(
                  handleToggleShowTreeChildren(store, dispatchFunc)
                )
-               handleRelationError=AssetUtils.isTreeNodeRelationError
+               handleRelationError=AssetTreeUtils.isTreeNodeRelationError
                treeChildren=(_iterateAssetTreeArray(children))
              />;
 
@@ -103,8 +103,8 @@ let render = ((store, dispatchFunc), dragImg, _self) =>
         |> Method.buildAssetTreeArray(
              (store, dispatchFunc, dragImg),
              (
-               AssetTreeUtils.onSelect(dispatchFunc),
-               AssetTreeUtils.dragNodeToFolderFunc(
+               AssetTreeUtils.enterFolder(dispatchFunc),
+               AssetDragNodeToFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
                  (store, dispatchFunc),
                  (),
                ),

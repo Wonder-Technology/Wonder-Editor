@@ -23,7 +23,7 @@ module Method = {
   let renameAssetTreeNode = AssetRenameNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let _isFolderNameDisabled = nodeId =>
-    AssetUtils.isIdEqual(
+    AssetTreeEditorService.isIdEqual(
       AssetTreeRootEditorService.getRootTreeNodeId
       |> StateLogicService.getEditorState,
       nodeId,
@@ -43,7 +43,7 @@ module Method = {
             _type="text"
             value=state.inputValue
             disabled=(
-              AssetUtils.isIdEqual(
+              AssetTreeEditorService.isIdEqual(
                 AssetTreeRootEditorService.getRootTreeNodeId
                 |> StateLogicService.getEditorState,
                 currentNodeId,

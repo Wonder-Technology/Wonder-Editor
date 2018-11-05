@@ -1,13 +1,13 @@
 let addFolderIntoNodeMapWithNoNameName =
     (index, parentFolderNodeId, editorState, engineState) =>
-  AssetTreeNodeUtils.addFolderIntoNodeMap(
+  FolderNodeUtils.addFolderIntoNodeMap(
     index,
     parentFolderNodeId,
-    AssetTreeNodeUtils.getNoNameFolderNameByNodeId(index, editorState),
+    FolderNodeUtils.getNoNameFolderNameByNodeId(index, editorState),
     (editorState, engineState),
   );
 
-let addMaterialIntoNodeMap = AssetTreeNodeUtils.addMaterialIntoNodeMap;
+let addMaterialIntoNodeMap = FolderNodeUtils.addMaterialIntoNodeMap;
 
 let _buildImageObj = src =>
   {"src": src, "getAttribute": prop => src} |> Obj.magic;

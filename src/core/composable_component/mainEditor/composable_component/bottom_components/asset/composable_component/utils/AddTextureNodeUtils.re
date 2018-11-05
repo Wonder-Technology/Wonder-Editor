@@ -1,13 +1,13 @@
 let addTextureNodeToAssetTree =
     (texture, (targetTreeNodeId, newNodeId, imageNodeId), editorState) =>
   editorState
-  |> AssetTreeNodeUtils.addTextureIntoNodeMap(
+  |> FolderNodeUtils.addTextureIntoNodeMap(
        newNodeId,
        targetTreeNodeId |. Some,
        texture,
        imageNodeId,
      )
-  |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
+  |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
        targetTreeNodeId,
        newNodeId,
        AssetNodeType.Texture,

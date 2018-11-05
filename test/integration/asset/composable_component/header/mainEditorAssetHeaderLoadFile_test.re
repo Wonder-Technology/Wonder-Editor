@@ -300,14 +300,14 @@ let _ =
 
       describe("deal with specific case", () => {
         let _getErrorTypeFile = () =>
-          AssetTreeNodeUtils.getUploadFileType("aaa.bb");
+          LoadAssetUtils.getUploadFileType("aaa.bb");
 
         test("if upload error file type, should error", () => {
           let component = BuildComponentTool.buildConsole();
           let errorStub =
             createMethodStub(sandbox^, ConsoleTool.console, "error");
 
-          AssetTreeNodeUtils.handleSpecificFuncByTypeSync(
+          LoadAssetUtils.handleSpecificFuncByTypeSync(
             _getErrorTypeFile(),
             (() => (), () => (), () => ()),
           );

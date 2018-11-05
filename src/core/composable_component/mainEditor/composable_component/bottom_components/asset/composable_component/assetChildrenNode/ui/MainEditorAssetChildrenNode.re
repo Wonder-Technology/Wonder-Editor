@@ -8,7 +8,8 @@ module Method = {
   let _isSelected = (currentNodeData, nodeId) =>
     switch (currentNodeData) {
     | None => false
-    | Some({currentNodeId}) => AssetUtils.isIdEqual(nodeId, currentNodeId)
+    | Some({currentNodeId}) =>
+      AssetTreeEditorService.isIdEqual(nodeId, currentNodeId)
     };
 
   let _handleImageNodeData = (assetTreeNodeChildrenArr, editorState) =>
@@ -93,10 +94,13 @@ module Method = {
              widget=(AssetUtils.getWidget())
              debounceTime
              onDrop=(
-               AssetTreeUtils.dragNodeToFolderFunc((store, dispatchFunc), ())
+               AssetDragNodeToFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+                 (store, dispatchFunc),
+                 (),
+               )
              )
              isWidget=AssetUtils.isWidget
-             handleRelationError=AssetUtils.isTreeNodeRelationError
+             handleRelationError=AssetTreeUtils.isTreeNodeRelationError
            />;
          | Texture =>
            let {textureComponent, image} =
@@ -176,8 +180,8 @@ module Method = {
     let assetTreeNodeChildrenArr =
       editorState
       |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-      |> AssetUtils.getSpecificTreeNodeById(
-           editorState |> AssetUtils.getTargetTreeNodeId,
+      |> AssetTreeEditorService.getSpecificTreeNodeById(
+           editorState |> AssetTreeUtils.getTargetTreeNodeId,
          )
       |> OptionService.unsafeGet
       |> (currentParentNode => currentParentNode.children);
@@ -200,7 +204,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
-let render = ((store, dispatchFunc), dragImg, debounceTime, _self) =>{
+let render = ((store, dispatchFunc), dragImg, debounceTime, _self) =>
   <article key="assetChildrenNode" className="wonder-asset-assetChildren">
     (
       ReasonReact.array(
@@ -212,7 +216,6 @@ let render = ((store, dispatchFunc), dragImg, debounceTime, _self) =>{
       )
     )
   </article>;
-};
 
 let make = (~store, ~dispatchFunc, ~dragImg, ~debounceTime, _children) => {
   ...component,

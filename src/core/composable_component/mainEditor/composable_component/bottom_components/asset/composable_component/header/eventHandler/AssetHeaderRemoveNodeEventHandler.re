@@ -6,7 +6,7 @@ module CustomEventHandler = {
   type dataTuple = unit;
 
   let _isRemoveAssetTreeNode = (currentNodeId, currentNodeParentId) =>
-    AssetUtils.isIdEqual(currentNodeParentId, currentNodeId);
+    AssetTreeEditorService.isIdEqual(currentNodeParentId, currentNodeId);
 
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
     let editorState = StateEditorService.getState();
@@ -17,11 +17,15 @@ module CustomEventHandler = {
     let (newAssetTreeRoot, removedTreeNode) =
       editorState
       |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-      |> AssetUtils.removeSpecificTreeNode(currentNodeId);
+      |> RemoveNodeAssetTreeAssetEditorService.removeSpecificTreeNode(
+           currentNodeId,
+         );
 
     let ((editorState, engineState), removedAssetIdArr) =
       (editorState, engineState)
-      |> AssetUtils.deepRemoveTreeNode(removedTreeNode);
+      |> RemoveNodeAssetTreeAssetEditorService.deepRemoveTreeNode(
+           removedTreeNode,
+         );
 
     StateLogicService.refreshEngineState(engineState);
 
@@ -36,7 +40,7 @@ module CustomEventHandler = {
     let editorState =
       _isRemoveAssetTreeNode(
         currentNodeId,
-        AssetUtils.getTargetTreeNodeId(editorState),
+        AssetTreeUtils.getTargetTreeNodeId(editorState),
       ) ?
         editorState
         |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId

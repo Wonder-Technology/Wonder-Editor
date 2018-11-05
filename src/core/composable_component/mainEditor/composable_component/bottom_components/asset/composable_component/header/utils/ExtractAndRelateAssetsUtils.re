@@ -325,7 +325,7 @@ let _addMaterialNodeToAssetTree =
            ) => {
              let materialName =
                getNameFunc(material, materialType, engineState)
-               |. AssetUtils.getUniqueTreeNodeName(
+               |. IterateAssetTreeAssetEditorService.getUniqueTreeNodeName(
                     AssetNodeType.Material,
                     folderNodeId |. Some,
                     (editorState, engineState),
@@ -383,7 +383,7 @@ let _addTextureNodeToAssetTree =
            ) => {
              let textureName =
                getTextureNameFunc(texture, engineState)
-               |. AssetUtils.getUniqueTreeNodeName(
+               |. IterateAssetTreeAssetEditorService.getUniqueTreeNodeName(
                     AssetNodeType.Texture,
                     folderNodeId |. Some,
                     (editorState, engineState),
@@ -422,10 +422,10 @@ let addNodeToAssetTree =
       extractedTextureAssetDataArr,
       (editorState, engineState),
     ) => {
-  let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
+  let targetTreeNodeId = editorState |> AssetTreeUtils.getTargetTreeNodeId;
 
   let siblingFolderDataArr =
-    AssetUtils.getChildrenNameAndIdArr(
+    IterateAssetTreeAssetEditorService.getChildrenNameAndIdArr(
       targetTreeNodeId,
       AssetNodeType.Folder,
       (editorState, engineState),
