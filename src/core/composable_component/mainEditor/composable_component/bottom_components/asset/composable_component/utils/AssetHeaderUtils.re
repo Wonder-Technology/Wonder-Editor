@@ -197,8 +197,10 @@ let fileLoad = (dispatchFunc, event) => {
   let e = ReactEventType.convertReactFormEventToJsEvent(event);
   DomHelper.preventDefault(e);
 
+  let target = e##target;
+
   let fileInfoArr =
-    e##target##files
+    target##files
     |> Js.Dict.values
     |> Js.Array.map(AssetTreeNodeUtils.convertFileJsObjectToFileInfoRecord);
 
@@ -224,10 +226,12 @@ let fileLoad = (dispatchFunc, event) => {
        WonderBsMost.Most.fromPromise(fileResult |> handleFileByTypeAsync)
      )
   |> WonderBsMost.Most.drain
-  |> then_(_ =>
+  |> then_(_ => {
+       FileReader.makeSureCanLoadSameNameFileAgain(target);
+
        dispatchFunc(
          AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
        )
-       |> resolve
-     );
+       |> resolve;
+     });
 };

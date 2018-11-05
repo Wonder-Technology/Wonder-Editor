@@ -24,6 +24,12 @@ let onload: (fileReader, resultType => unit) => unit = [%bs.raw
   |}
 ];
 
+let makeSureCanLoadSameNameFileAgain = targetDom => {
+  targetDom##value#="";
+
+  ();
+};
+
 external convertResultToString : resultType => string = "%identity";
 
 external convertResultToArrayBuffer :
