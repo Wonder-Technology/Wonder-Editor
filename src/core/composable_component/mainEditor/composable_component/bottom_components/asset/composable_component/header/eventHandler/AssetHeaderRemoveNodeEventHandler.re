@@ -9,42 +9,44 @@ module CustomEventHandler = {
     AssetUtils.isIdEqual(currentNodeParentId, currentNodeId);
 
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
-    (
-      editorState => {
-        let {currentNodeId} =
-          editorState
-          |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData;
-        let (newAssetTreeRoot, removedTreeNode) =
-          editorState
-          |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-          |> AssetUtils.removeSpecificTreeNode(currentNodeId);
-        let (editorState, removedAssetIdArr) =
-          editorState |> AssetUtils.deepRemoveTreeNode(removedTreeNode);
+    let editorState = StateEditorService.getState();
+    let engineState = StateEngineService.unsafeGetState();
 
-        StateLogicService.getAndRefreshEngineState();
+    let {currentNodeId} =
+      editorState |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData;
+    let (newAssetTreeRoot, removedTreeNode) =
+      editorState
+      |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+      |> AssetUtils.removeSpecificTreeNode(currentNodeId);
 
-        let editorState =
-          editorState
-          |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray
-          |> Js.Array.concat(removedAssetIdArr)
-          |. AssetRemovedAssetIdArrayEditorService.setRemovedAssetIdArray(
-               editorState,
-             );
+    let ((editorState, engineState), removedAssetIdArr) =
+      (editorState, engineState)
+      |> AssetUtils.deepRemoveTreeNode(removedTreeNode);
 
-        _isRemoveAssetTreeNode(
-          currentNodeId,
-          AssetUtils.getTargetTreeNodeId(editorState),
-        ) ?
-          editorState
-          |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-          |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTreeRoot)
-          |> AssetCurrentNodeDataEditorService.clearCurrentNodeData :
-          editorState
-          |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTreeRoot)
-          |> AssetCurrentNodeDataEditorService.clearCurrentNodeData;
-      }
-    )
-    |> StateLogicService.getAndSetEditorState;
+    StateLogicService.refreshEngineState(engineState);
+
+    let editorState =
+      editorState
+      |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray
+      |> Js.Array.concat(removedAssetIdArr)
+      |. AssetRemovedAssetIdArrayEditorService.setRemovedAssetIdArray(
+           editorState,
+         );
+
+    let editorState =
+      _isRemoveAssetTreeNode(
+        currentNodeId,
+        AssetUtils.getTargetTreeNodeId(editorState),
+      ) ?
+        editorState
+        |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+        |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTreeRoot)
+        |> AssetCurrentNodeDataEditorService.clearCurrentNodeData :
+        editorState
+        |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTreeRoot)
+        |> AssetCurrentNodeDataEditorService.clearCurrentNodeData;
+
+    editorState |> StateEditorService.setState |> ignore;
 
     dispatchFunc(
       AppStore.SceneTreeAction(

@@ -9,22 +9,26 @@ let buildAssetTreeNodeByIndex = (index, type_) => {
   isShowChildren: true,
 };
 
-let deepDisposeAssetTreeRoot = editorState => {
+let deepDisposeAssetTreeRoot = ((editorState, engineState)) => {
   let removedTreeNode =
     editorState
     |> AssetTreeRootEditorService.getAssetTreeRoot
     |> OptionService.unsafeGet;
 
-  let (editorState, removedAssetIdArr) =
-    editorState |> AssetUtils.deepRemoveTreeNode(removedTreeNode);
+  let ((editorState, engineState), removedAssetIdArr) =
+    (editorState, engineState)
+    |> AssetUtils.deepRemoveTreeNode(removedTreeNode);
 
-  editorState
-  |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray
-  |> Js.Array.concat(removedAssetIdArr)
-  |. AssetRemovedAssetIdArrayEditorService.setRemovedAssetIdArray(
-       editorState,
-     )
-  |> AssetTreeRootEditorService.clearAssetTreeRoot
-  |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-  |> AssetCurrentNodeDataEditorService.clearCurrentNodeData;
+  (
+    editorState
+    |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray
+    |> Js.Array.concat(removedAssetIdArr)
+    |. AssetRemovedAssetIdArrayEditorService.setRemovedAssetIdArray(
+         editorState,
+       )
+    |> AssetTreeRootEditorService.clearAssetTreeRoot
+    |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+    |> AssetCurrentNodeDataEditorService.clearCurrentNodeData,
+    engineState,
+  );
 };

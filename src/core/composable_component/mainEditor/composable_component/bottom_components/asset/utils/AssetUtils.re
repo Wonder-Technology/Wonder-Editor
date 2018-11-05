@@ -128,13 +128,11 @@ let _disposeWDBGameObjects = (wdbGameObjects, (editorState, engineState)) =>
        engineState,
      );
 
-let _handleRemoveWDBNode = (nodeId, editorState) => {
+let _handleRemoveWDBNode = (nodeId, (editorState, engineState)) => {
   let {wdbGameObject} =
     editorState
     |> AssetWDBNodeMapEditorService.getWDBNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
-
-  let engineState = StateEngineService.unsafeGetState();
 
   let wdbGameObjects =
     GameObjectEngineService.getAllGameObjects(wdbGameObject, engineState);
@@ -145,17 +143,17 @@ let _handleRemoveWDBNode = (nodeId, editorState) => {
   let engineState =
     (editorState, engineState) |> _disposeWDBGameObjects(wdbGameObjects);
 
-  engineState |> StateEngineService.setState |> ignore;
-
-  editorState
-  |> AssetWDBNodeMapEditorService.getWDBNodeMap
-  |> SparseMapService.copy
-  |> DomHelper.deleteKeyInMap(nodeId)
-  |. AssetWDBNodeMapEditorService.setWDBNodeMap(editorState);
+  (
+    editorState
+    |> AssetWDBNodeMapEditorService.getWDBNodeMap
+    |> SparseMapService.copy
+    |> DomHelper.deleteKeyInMap(nodeId)
+    |. AssetWDBNodeMapEditorService.setWDBNodeMap(editorState),
+    engineState,
+  );
 };
 
-let _removeTextureFromAllLightMaterials =
-    (textureComponent, editorState, engineState) =>
+let _removeTextureFromAllLightMaterials = (textureComponent, engineState) =>
   LightMaterialEngineService.getAllLightMaterials(engineState)
   |> Js.Array.filter(lightMaterial =>
        LightMaterialEngineService.isDiffuseMap(
@@ -173,9 +171,8 @@ let _removeTextureFromAllLightMaterials =
        engineState,
      );
 
-let _removeTextureEngineData = (textureComponent, editorState, engineState) =>
-  engineState
-  |> _removeTextureFromAllLightMaterials(textureComponent, editorState);
+let _removeTextureEngineData = (textureComponent, engineState) =>
+  engineState |> _removeTextureFromAllLightMaterials(textureComponent);
 
 let _removeTextureEditorData = (nodeId, textureComponent, image, editorState) => {
   let editorState =
@@ -194,18 +191,21 @@ let _removeTextureEditorData = (nodeId, textureComponent, image, editorState) =>
     |. AssetImageNodeMapEditorService.setImageNodeMap(editorState);
 };
 
-let _removeTextureTreeNode = (nodeId, editorState) => {
+let _removeTextureTreeNode = (nodeId, (editorState, engineState)) => {
   let {textureComponent, image} =
     editorState
     |> AssetTextureNodeMapEditorService.getTextureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
-  _removeTextureEngineData(textureComponent, editorState)
-  |> StateLogicService.getAndSetEngineState;
-  _removeTextureEditorData(nodeId, textureComponent, image, editorState);
+  let engineState = _removeTextureEngineData(textureComponent, engineState);
+
+  (
+    _removeTextureEditorData(nodeId, textureComponent, image, editorState),
+    engineState,
+  );
 };
 
-let _removeMaterialTreeNode = (nodeId, editorState) => {
+let _removeMaterialTreeNode = (nodeId, (editorState, engineState)) => {
   let {materialComponent, type_} =
     editorState |> AssetMaterialNodeMapEditorService.unsafeGetResult(nodeId);
 
@@ -215,50 +215,63 @@ let _removeMaterialTreeNode = (nodeId, editorState) => {
       editorState,
     );
 
-  let engineState = StateEngineService.unsafeGetState();
   let engineState =
     InspectorRenderGroupUtils.Dispose.replaceGameObjectsMaterialsOfTheMaterial(
       ((materialComponent, defaultMaterial), (type_, defaultMaterialType)),
       engineState,
     );
 
-  engineState |> StateEngineService.setState |> ignore;
-
-  AssetMaterialNodeMapEditorService.remove(nodeId, editorState)
-  |> AssetMaterialNodeIdMapEditorService.remove(materialComponent);
+  (
+    AssetMaterialNodeMapEditorService.remove(nodeId, editorState)
+    |> AssetMaterialNodeIdMapEditorService.remove(materialComponent),
+    engineState,
+  );
 };
 
-let deepRemoveTreeNode = (removedTreeNode, editorState) => {
-  let rec _iterateRemovedTreeNode = (nodeArr, removedAssetIdArr, editorState) =>
+let deepRemoveTreeNode = (removedTreeNode, (editorState, engineState)) => {
+  let rec _iterateRemovedTreeNode =
+          (nodeArr, removedAssetIdArr, (editorState, engineState)) =>
     nodeArr
     |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. (editorState, removedAssetIdArr), {nodeId, type_, children}) => {
-           let editorState =
+         (.
+           ((editorState, engineState), removedAssetIdArr),
+           {nodeId, type_, children},
+         ) => {
+           let (editorState, engineState) =
              switch (type_) {
-             | Folder =>
-               editorState
-               |> AssetFolderNodeMapEditorService.getFolderNodeMap
-               |> SparseMapService.copy
-               |> DomHelper.deleteKeyInMap(nodeId)
-               |. AssetFolderNodeMapEditorService.setFolderNodeMap(
-                    editorState,
-                  )
-             | Texture => _removeTextureTreeNode(nodeId, editorState)
-             | Material => _removeMaterialTreeNode(nodeId, editorState)
-             | WDB => _handleRemoveWDBNode(nodeId, editorState)
-             | _ => editorState
+             | Folder => (
+                 editorState
+                 |> AssetFolderNodeMapEditorService.getFolderNodeMap
+                 |> SparseMapService.copy
+                 |> DomHelper.deleteKeyInMap(nodeId)
+                 |. AssetFolderNodeMapEditorService.setFolderNodeMap(
+                      editorState,
+                    ),
+                 engineState,
+               )
+             | Texture =>
+               _removeTextureTreeNode(nodeId, (editorState, engineState))
+             | Material =>
+               _removeMaterialTreeNode(nodeId, (editorState, engineState))
+             | WDB =>
+               _handleRemoveWDBNode(nodeId, (editorState, engineState))
+             | _ => (editorState, engineState)
              };
 
            _iterateRemovedTreeNode(
              children,
              removedAssetIdArr |> ArrayService.push(nodeId),
-             editorState,
+             (editorState, engineState),
            );
          },
-         (editorState, removedAssetIdArr),
+         ((editorState, engineState), removedAssetIdArr),
        );
 
-  _iterateRemovedTreeNode([|removedTreeNode|], [||], editorState);
+  _iterateRemovedTreeNode(
+    [|removedTreeNode|],
+    [||],
+    (editorState, engineState),
+  );
 };
 
 let _checkRemovedTreeNodeAndGetVal = ((newAssetTreeArr, removedTreeNode)) => {
@@ -319,7 +332,8 @@ let removeSpecificTreeNode = (targetNodeId, assetTreeRoot) => {
 
 let insertSourceTreeNodeToTargetTreeNodeChildren =
     (targetNodeId, newTreeNode, assetTreeRoot) => {
-  let rec _iterateInsertAssetTree = (targetNodeId, newTreeNode, assetTreeArr) =>
+  let rec _iterateInsertIntoAssetTree =
+          (targetNodeId, newTreeNode, assetTreeArr) =>
     assetTreeArr
     |> Js.Array.map(({nodeId, children} as treeNode) =>
          isIdEqual(nodeId, targetNodeId) ?
@@ -331,12 +345,15 @@ let insertSourceTreeNodeToTargetTreeNodeChildren =
            {
              ...treeNode,
              children:
-               _iterateInsertAssetTree(targetNodeId, newTreeNode, children),
+               _iterateInsertIntoAssetTree(
+                 targetNodeId,
+                 newTreeNode,
+                 children,
+               ),
            }
        );
 
-  _iterateInsertAssetTree(targetNodeId, newTreeNode, [|assetTreeRoot|])
-  /* TODO fix: first is root??? */
+  _iterateInsertIntoAssetTree(targetNodeId, newTreeNode, [|assetTreeRoot|])
   |> (assetTreeArr => assetTreeArr |> ArrayService.unsafeGetFirst);
 };
 

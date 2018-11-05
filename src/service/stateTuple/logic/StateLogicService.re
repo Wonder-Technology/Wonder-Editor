@@ -40,3 +40,14 @@ let getAndSetEditorState = handleFunc =>
 let getStateToGetData = handleFunc =>
   (StateEditorService.getState(), StateEngineService.unsafeGetState())
   |> handleFunc;
+
+let getAndSetStateToGetData = handleFunc => {
+  let (editorState, engineState) =
+    (StateEditorService.getState(), StateEngineService.unsafeGetState())
+    |> handleFunc;
+
+  editorState |> StateEditorService.setState |> ignore;
+  engineState |> StateEngineService.setState |> ignore;
+
+  ();
+};

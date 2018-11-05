@@ -3,9 +3,9 @@ open Js.Promise;
 open Js.Typed_array;
 
 let _disposeAssets = () =>
-  StateEditorService.getState()
-  |> AssetTreeEditorService.deepDisposeAssetTreeRoot
-  |> StateEditorService.setState;
+  StateLogicService.getAndSetStateToGetData(
+    AssetTreeEditorService.deepDisposeAssetTreeRoot,
+  );
 
 let _readHeader = dataView => {
   let (version, byteOffset) = DataViewUtils.getUint32_1(. 0, dataView);
