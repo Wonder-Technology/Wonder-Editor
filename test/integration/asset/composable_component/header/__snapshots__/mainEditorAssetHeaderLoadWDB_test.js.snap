@@ -323,3 +323,497 @@ exports[`MainEditorAssetHeader->load wdb test load file extract assets from load
   </article>
 </article>
 `;
+
+exports[`MainEditorAssetHeader->load wdb test load file fix bug aaa 
+        1.create gameObject g1 with default cube geometry in scene;
+        2.load wdb asset w1(has one box gameObject with default cube geometry);
+
+        g1->geometry->select geometry group widget should only have not-duplicate-default-geometrys and be using default cube geometry
+         1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="item-content item-active"
+        onClick={[Function]}
+      >
+        Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wheels
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Cesium_Milk_Truck_0
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Cesium_Milk_Truck_1
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Cesium_Milk_Truck_2
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->load wdb test load file fix bug aaa aaa 1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="item-content item-active"
+        onClick={[Function]}
+      >
+        Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Mesh
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->load wdb test load file fix bug aaa test 1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="item-content item-active"
+        onClick={[Function]}
+      >
+        Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->load wdb test load file fix bug fix geometry bug 
+        1.create gameObject g1 in scene;
+        1.load truck wdb asset w1;
+
+        g1->geometry->select geometry group widget shouldn't has "NoName Geometry"
+         1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="item-content item-active"
+        onClick={[Function]}
+      >
+        Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wheels
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Cesium_Milk_Truck_0
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Cesium_Milk_Truck_1
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Cesium_Milk_Truck_2
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->load wdb test load file fix bug fix geometry bug 
+        1.create gameObject g1 in scene;
+        2.load truck wdb asset w1;
+
+        g1->geometry->select geometry group widget shouldn't has "NoName Geometry"
+         1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="item-content item-active"
+        onClick={[Function]}
+      >
+        Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wheels
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Cesium_Milk_Truck_0
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Cesium_Milk_Truck_1
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Cesium_Milk_Truck_2
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->load wdb test load file relate wdb asset gameObjects with default geometrys 
+        1.create gameObject g1 with default cube geometry in scene;
+        2.load wdb asset w1(has one box gameObject with default cube geometry);
+
+        g1->geometry->select geometry group widget should only have not-duplicate-default-geometrys and be using default cube geometry
+         1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="item-content item-active"
+        onClick={[Function]}
+      >
+        Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;

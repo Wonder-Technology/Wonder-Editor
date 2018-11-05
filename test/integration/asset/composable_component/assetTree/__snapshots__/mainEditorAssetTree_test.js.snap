@@ -116,7 +116,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
         </ul>
       </ul>
@@ -155,7 +155,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
         className="item-text "
       >
         <span>
-          New Folder
+          NoName Folder
         </span>
       </div>
     </article>
@@ -279,7 +279,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
         </ul>
       </ul>
@@ -318,7 +318,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
         className="item-text "
       >
         <span>
-          New Folder
+          NoName Folder
         </span>
       </div>
     </article>
@@ -447,7 +447,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
           <ul
             className="wonder-tree-node"
@@ -475,7 +475,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
                 className="treeNode-icon"
                 src="./public/img/package.png"
               />
-              New Folder
+              NoName Folder
             </li>
           </ul>
         </ul>
@@ -510,7 +510,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
           <ul
             className="wonder-tree-node"
@@ -538,7 +538,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
                 className="treeNode-icon"
                 src="./public/img/package.png"
               />
-              New Folder
+              NoName Folder
             </li>
           </ul>
         </ul>
@@ -578,7 +578,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
         className="item-text "
       >
         <span>
-          New Folder
+          NoName Folder
         </span>
       </div>
     </article>
@@ -702,7 +702,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
         </ul>
         <ul
@@ -736,7 +736,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
           <ul
             className="wonder-tree-node"
@@ -764,7 +764,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
                 className="treeNode-icon"
                 src="./public/img/package.png"
               />
-              New Folder
+              NoName Folder
             </li>
           </ul>
           <ul
@@ -793,7 +793,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
                 className="treeNode-icon"
                 src="./public/img/package.png"
               />
-              New Folder
+              NoName Folder
             </li>
           </ul>
         </ul>
@@ -990,7 +990,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
         </ul>
         <ul
@@ -1024,7 +1024,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
           <ul
             className="wonder-tree-node"
@@ -1052,7 +1052,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
                 className="treeNode-icon"
                 src="./public/img/package.png"
               />
-              New Folder
+              NoName Folder
             </li>
           </ul>
           <ul
@@ -1081,7 +1081,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
                 className="treeNode-icon"
                 src="./public/img/package.png"
               />
-              New Folder
+              NoName Folder
             </li>
           </ul>
         </ul>
@@ -1121,7 +1121,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
         className="item-text "
       >
         <span>
-          New Folder
+          NoName Folder
         </span>
       </div>
     </article>
@@ -1155,7 +1155,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
         className="item-text "
       >
         <span>
-          New Folder
+          NoName Folder
         </span>
       </div>
     </article>
@@ -1228,7 +1228,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        New Folder
+        NoName Folder
       </li>
       <ul
         className="wonder-tree-node"
@@ -1256,7 +1256,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          New Folder
+          NoName Folder
         </li>
       </ul>
     </ul>
@@ -1380,7 +1380,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
         </ul>
       </ul>
@@ -1419,7 +1419,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
         className="item-text "
       >
         <span>
-          New Folder
+          NoName Folder
         </span>
       </div>
     </article>
@@ -1543,7 +1543,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
         </ul>
         <ul
@@ -1577,7 +1577,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
           <ul
             className="wonder-tree-node"
@@ -1605,7 +1605,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
                 className="treeNode-icon"
                 src="./public/img/package.png"
               />
-              New Folder
+              NoName Folder
             </li>
           </ul>
         </ul>
@@ -1674,7 +1674,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
         className="item-text "
       >
         <span>
-          New Folder
+          NoName Folder
         </span>
       </div>
     </article>
@@ -1708,7 +1708,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
         className="item-text "
       >
         <span>
-          New Folder
+          NoName Folder
         </span>
       </div>
     </article>
@@ -1866,7 +1866,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
         </ul>
         <ul
@@ -1900,7 +1900,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
           <ul
             className="wonder-tree-node"
@@ -1928,7 +1928,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
                 className="treeNode-icon"
                 src="./public/img/package.png"
               />
-              New Folder
+              NoName Folder
             </li>
           </ul>
           <ul
@@ -1957,7 +1957,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
                 className="treeNode-icon"
                 src="./public/img/package.png"
               />
-              New Folder
+              NoName Folder
             </li>
           </ul>
         </ul>
@@ -1997,7 +1997,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
         className="item-text "
       >
         <span>
-          New Folder
+          NoName Folder
         </span>
       </div>
     </article>
@@ -2031,7 +2031,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
         className="item-text "
       >
         <span>
-          New Folder
+          NoName Folder
         </span>
       </div>
     </article>

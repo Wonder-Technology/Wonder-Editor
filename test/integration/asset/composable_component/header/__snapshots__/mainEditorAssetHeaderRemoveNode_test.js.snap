@@ -116,7 +116,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
         </ul>
       </ul>

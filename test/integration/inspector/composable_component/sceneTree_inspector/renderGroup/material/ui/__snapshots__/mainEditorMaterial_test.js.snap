@@ -21,7 +21,7 @@ exports[`MainEditorMaterial test set currentSceneTreeNode test change material t
         <div
           className="select-name"
         >
-          New Material
+          NoName Material
         </div>
         <div
           className="select-img"

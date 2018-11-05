@@ -116,7 +116,7 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
         </ul>
       </ul>
@@ -155,7 +155,7 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
         className="item-text item-active"
       >
         <span>
-          New Folder
+          NoName Folder
         </span>
       </div>
     </article>

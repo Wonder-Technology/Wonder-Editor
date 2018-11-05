@@ -116,7 +116,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
         </ul>
         <ul
@@ -145,7 +145,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder 1
+            New Folder
           </li>
         </ul>
       </ul>
@@ -184,7 +184,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
         className="item-text "
       >
         <span>
-          New Folder
+          NoName Folder
         </span>
       </div>
     </article>
@@ -218,7 +218,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
         className="item-text "
       >
         <span>
-          New Folder 1
+          New Folder
         </span>
       </div>
     </article>
@@ -342,6 +342,35 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
+            NoName Folder
+          </li>
+        </ul>
+        <ul
+          className="wonder-tree-node"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragStart={[Function]}
+        >
+          <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "border": "0px",
+              }
+            }
+          >
+            <div
+              className="item-triangle"
+            />
+            <img
+              className="treeNode-icon"
+              src="./public/img/package.png"
+            />
             New Folder
           </li>
         </ul>
@@ -372,35 +401,6 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               src="./public/img/package.png"
             />
             New Folder 1
-          </li>
-        </ul>
-        <ul
-          className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
-        >
-          <li
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
-          >
-            <div
-              className="item-triangle"
-            />
-            <img
-              className="treeNode-icon"
-              src="./public/img/package.png"
-            />
-            New Folder 2
           </li>
         </ul>
       </ul>
@@ -439,7 +439,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
         className="item-text "
       >
         <span>
-          New Folder
+          NoName Folder
         </span>
       </div>
     </article>
@@ -473,7 +473,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
         className="item-text "
       >
         <span>
-          New Folder 1
+          New Folder
         </span>
       </div>
     </article>
@@ -507,7 +507,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
         className="item-text "
       >
         <span>
-          New Folder 2
+          New Folder 1
         </span>
       </div>
     </article>
@@ -631,6 +631,35 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
+            NoName Folder
+          </li>
+        </ul>
+        <ul
+          className="wonder-tree-node"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragStart={[Function]}
+        >
+          <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "border": "0px",
+              }
+            }
+          >
+            <div
+              className="item-triangle"
+            />
+            <img
+              className="treeNode-icon"
+              src="./public/img/package.png"
+            />
             New Folder
           </li>
         </ul>
@@ -661,35 +690,6 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               src="./public/img/package.png"
             />
             New Folder 1
-          </li>
-        </ul>
-        <ul
-          className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
-        >
-          <li
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
-          >
-            <div
-              className="item-triangle"
-            />
-            <img
-              className="treeNode-icon"
-              src="./public/img/package.png"
-            />
-            New Folder 2
           </li>
         </ul>
       </ul>
@@ -728,7 +728,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
         className="item-text "
       >
         <span>
-          New Folder
+          NoName Folder
         </span>
       </div>
     </article>
@@ -762,7 +762,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
         className="item-text "
       >
         <span>
-          New Folder 1
+          New Folder
         </span>
       </div>
     </article>
@@ -796,7 +796,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
         className="item-text "
       >
         <span>
-          New Folder 2
+          New Folder 1
         </span>
       </div>
     </article>
@@ -920,7 +920,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
         </ul>
         <ul
@@ -949,7 +949,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder 1
+            New Folder
           </li>
         </ul>
       </ul>
@@ -988,7 +988,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
         className="item-text "
       >
         <span>
-          New Folder
+          NoName Folder
         </span>
       </div>
     </article>
@@ -1022,7 +1022,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
         className="item-text "
       >
         <span>
-          New Folder 1
+          New Folder
         </span>
       </div>
     </article>
@@ -1146,7 +1146,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            NoName Folder
           </li>
         </ul>
       </ul>
@@ -1185,7 +1185,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
         className="item-text "
       >
         <span>
-          New Folder
+          NoName Folder
         </span>
       </div>
     </article>
