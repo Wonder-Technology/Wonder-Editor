@@ -51,7 +51,7 @@ let _convertMouseEventToPointEvent =
 
 let _bindDomEventToTriggerPointEvent =
     (
-      (domEventName, customEventName, pointEventName),
+      (domEventName, customEventName, pointEventName, eventTarget),
       (
         onDomEventFunc,
         convertDomEventToPointEventFunc,
@@ -78,7 +78,10 @@ let _bindDomEventToTriggerPointEvent =
                 engineState,
               );
 
-            _loopBodyWhenStop(engineState);
+            switch (eventTarget) {
+            | Scene => _loopBodyWhenStop(engineState)
+            | _ => engineState
+            };
           } :
           engineState,
     ~state=engineState,
@@ -90,11 +93,12 @@ let _bindMouseEventToTriggerViewPointEvent =
       mouseEventName,
       customEventName,
       pointEventName,
+      eventTarget,
       isTriggerCustomGlobalEventFunc,
       engineState,
     ) =>
   _bindDomEventToTriggerPointEvent(
-    (mouseEventName, customEventName, pointEventName),
+    (mouseEventName, customEventName, pointEventName, eventTarget),
     (
       ManageEventEngineService.onMouseEvent(~priority=0),
       _convertMouseEventToPointEvent,
@@ -115,6 +119,7 @@ let _bindMouseEventToTriggerSceneViewPointEvent =
     mouseEventName,
     customEventName,
     pointEventName,
+    Scene,
     isTriggerCustomGlobalEventFunc,
     engineState,
   );
@@ -131,6 +136,7 @@ let _bindMouseEventToTriggerGameViewPointEvent =
     mouseEventName,
     customEventName,
     pointEventName,
+    Game,
     isTriggerCustomGlobalEventFunc,
     engineState,
   );
@@ -366,17 +372,19 @@ let _mapAndExecMouseEventHandle = (eventName, event) =>
   |> _execMouseEventHandle;
 
 let _execViewKeyboardEventHandle =
-    (sceneViewEventName, gameViewEventName, event) => {
+    (sceneViewEventName, gameViewEventName, event) =>
   _isTriggerGameViewEvent() ?
     {
       _triggerRefreshInspectorEvent |> StateLogicService.getAndSetEngineState;
       _execKeyboardEventHandle(gameViewEventName, event);
     } :
     _isTriggerSceneViewEvent() ?
-      _execKeyboardEventHandle(sceneViewEventName |> Obj.magic, event) : ();
+      {
+        _execKeyboardEventHandle(sceneViewEventName |> Obj.magic, event);
 
-  _loopBodyWhenStop |> StateLogicService.getAndSetEngineState;
-};
+        _loopBodyWhenStop |> StateLogicService.getAndSetEngineState;
+      } :
+      ();
 
 let _fromPCDomEventArr = engineState => [|
   WonderBsMost.Most.fromEvent("contextmenu", _getBody(), false)

@@ -200,16 +200,6 @@ let _ =
             |> expect == (locationInViewX, locationInViewY);
           };
 
-          test("if is stop, loopBody", () => {
-            _prepareMouseEvent(~sandbox, ());
-            ControllerTool.setIsRun(false);
-
-            let _ = _prepareAndExec(10, 20, EventTool.buildCanvasTarget());
-
-            let gl = FakeGlToolEngine.getEngineStateGl();
-            gl##clearColor |> expect |> toCalled;
-          });
-
           describe("test set eventTarget to Other", () => {
             test("if event->target isn't canvas, set to Other", () => {
               _prepareMouseEvent(~sandbox, ());
@@ -233,9 +223,44 @@ let _ =
                 |> expect == EventType.Other;
               })
             );
+
+            describe("test loopBody", () =>
+              test("if not run, not loopBody", () => {
+                _prepareMouseEvent(~sandbox, ());
+                ControllerTool.setIsRun(false);
+
+                let _ = _prepareAndExec(10, 20, EventTool.buildBodyTarget());
+
+                let gl = FakeGlToolEngine.getEngineStateGl();
+                gl##clearColor |> expect |> not_ |> toCalled;
+              })
+            );
           });
 
-          describe("test trigger in scene view", () =>
+          describe("test trigger in scene view", () => {
+            describe("test loopBody", () => {
+              test("if not run, loopBody", () => {
+                _prepareMouseEvent(~sandbox, ());
+                ControllerTool.setIsRun(false);
+
+                let _ =
+                  _prepareAndExec(10, 20, EventTool.buildCanvasTarget());
+
+                let gl = FakeGlToolEngine.getEngineStateGl();
+                gl##clearColor |> expect |> toCalled;
+              });
+              test("else, not loopBody", () => {
+                _prepareMouseEvent(~sandbox, ());
+                ControllerTool.setIsRun(true);
+
+                let _ =
+                  _prepareAndExec(10, 20, EventTool.buildCanvasTarget());
+
+                let gl = FakeGlToolEngine.getEngineStateGl();
+                gl##clearColor |> expect |> not_ |> toCalled;
+              });
+            });
+
             describe("test locationInView", () => {
               test("test view has no offsetParent", () => {
                 _prepareMouseEvent(~sandbox, ~offsetLeft=1, ~offsetTop=2, ());
@@ -265,10 +290,33 @@ let _ =
                   EventTool.buildCanvasTarget(),
                 );
               });
-            })
-          );
+            });
+          });
 
-          describe("test trigger in game view", () =>
+          describe("test trigger in game view", () => {
+            describe("test loopBody", () => {
+              test("if not run, not loopBody", () => {
+                _prepareMouseEvent(~sandbox, ());
+                ControllerTool.setIsRun(false);
+
+                let _ =
+                  _prepareAndExec(60, 20, EventTool.buildCanvasTarget());
+
+                let gl = FakeGlToolEngine.getEngineStateGl();
+                gl##clearColor |> expect |> not_ |> toCalled;
+              });
+              test("else, not loopBody", () => {
+                _prepareMouseEvent(~sandbox, ());
+                ControllerTool.setIsRun(true);
+
+                let _ =
+                  _prepareAndExec(60, 20, EventTool.buildCanvasTarget());
+
+                let gl = FakeGlToolEngine.getEngineStateGl();
+                gl##clearColor |> expect |> not_ |> toCalled;
+              });
+            });
+
             describe("test locationInView", () => {
               test("test view has no offsetParent", () => {
                 _prepareMouseEvent(~sandbox, ~offsetLeft=1, ~offsetTop=2, ());
@@ -297,8 +345,8 @@ let _ =
                   EventTool.buildCanvasTarget(),
                 );
               });
-            })
-          );
+            });
+          });
         });
 
         describe("bind mousemove event", () => {
@@ -550,6 +598,23 @@ let _ =
 
           describe("test eventTarget is other", () =>
             describe("do nothing", () => {
+              describe("test loopBody", () =>
+                test("if is stop, not loopBody", () => {
+                  _prepareKeyboardEvent(~sandbox, ());
+                  ControllerTool.setIsRun(false);
+
+                  let _ =
+                    _prepareAndExec(
+                      KeyUp_editor |> Obj.magic,
+                      "keyup",
+                      ((-1), 20),
+                    );
+
+                  let gl = FakeGlToolEngine.getEngineStateGl();
+                  gl##clearColor |> expect |> not_ |> toCalled;
+                })
+              );
+
               test("not trigger keyup_editor event", () => {
                 _prepareKeyboardEvent(~sandbox, ());
 
@@ -572,15 +637,77 @@ let _ =
             })
           );
 
-          describe("test eventTarget is scene view", () =>
+          describe("test eventTarget is scene view", () => {
+            describe("test loopBody", () => {
+              test("if not run, loopBody", () => {
+                _prepareMouseEvent(~sandbox, ());
+                ControllerTool.setIsRun(false);
+
+                let _ =
+                  _prepareAndExec(
+                    KeyUp_editor |> Obj.magic,
+                    "keyup",
+                    (10, 20),
+                  );
+
+                let gl = FakeGlToolEngine.getEngineStateGl();
+                gl##clearColor |> expect |> toCalled;
+              });
+              test("else, not loopBody", () => {
+                _prepareMouseEvent(~sandbox, ());
+                ControllerTool.setIsRun(true);
+
+                let _ =
+                  _prepareAndExec(
+                    KeyUp_editor |> Obj.magic,
+                    "keyup",
+                    (10, 20),
+                  );
+
+                let gl = FakeGlToolEngine.getEngineStateGl();
+                gl##clearColor |> expect |> not_ |> toCalled;
+              });
+            });
+
             test("trigger keyup_editor event", () => {
               _prepareKeyboardEvent(~sandbox, ());
 
               _test(KeyUp_editor |> Obj.magic, "keyup", (10, 20));
-            })
-          );
+            });
+          });
 
           describe("test eventTarget is game view", () => {
+            describe("test loopBody", () => {
+              test("if not run, not loopBody", () => {
+                _prepareMouseEvent(~sandbox, ());
+                ControllerTool.setIsRun(false);
+
+                let _ =
+                  _prepareAndExec(
+                    KeyUp_editor |> Obj.magic,
+                    "keyup",
+                    (60, 20),
+                  );
+
+                let gl = FakeGlToolEngine.getEngineStateGl();
+                gl##clearColor |> expect |> not_ |> toCalled;
+              });
+              test("else, not loopBody", () => {
+                _prepareMouseEvent(~sandbox, ());
+                ControllerTool.setIsRun(true);
+
+                let _ =
+                  _prepareAndExec(
+                    KeyUp_editor |> Obj.magic,
+                    "keyup",
+                    (60, 20),
+                  );
+
+                let gl = FakeGlToolEngine.getEngineStateGl();
+                gl##clearColor |> expect |> not_ |> toCalled;
+              });
+            });
+
             test("trigger keyup event", () => {
               _prepareKeyboardEvent(~sandbox, ());
 
@@ -648,21 +775,23 @@ let _ =
           value^ |> expect == 1;
         };
 
-        test("if is stop, loopBody", () => {
-          _prepareMouseEvent(~sandbox, ());
-          ControllerTool.setIsRun(false);
+        describe("test eventTarget is other", () => {
+          describe("test loopBody", () =>
+            test("if is stop, not loopBody", () => {
+              _prepareMouseEvent(~sandbox, ());
+              ControllerTool.setIsRun(false);
 
-          let _ =
-            _prepareAndExec(
-              EventEditorService.getPointScaleEventName(),
-              (10, 20),
-            );
+              let _ =
+                _prepareAndExec(
+                  EventEditorService.getPointScaleEventName(),
+                  ((-1), 20),
+                );
 
-          let gl = FakeGlToolEngine.getEngineStateGl();
-          gl##clearColor |> expect |> toCalled;
-        });
+              let gl = FakeGlToolEngine.getEngineStateGl();
+              gl##clearColor |> expect |> not_ |> toCalled;
+            })
+          );
 
-        describe("test eventTarget is other", () =>
           describe("do nothing", () => {
             test("not trigger editor point event", () => {
               _prepareMouseEvent(~sandbox, ());
@@ -686,18 +815,50 @@ let _ =
 
               value^ |> expect == 0;
             });
-          })
-        );
+          });
+        });
 
-        describe("test eventTarget is scene view", () =>
+        describe("test eventTarget is scene view", () => {
+          describe("test loopBody", () =>
+            test("if is stop, loopBody", () => {
+              _prepareMouseEvent(~sandbox, ());
+              ControllerTool.setIsRun(false);
+
+              let _ =
+                _prepareAndExec(
+                  EventEditorService.getPointScaleEventName(),
+                  (10, 20),
+                );
+
+              let gl = FakeGlToolEngine.getEngineStateGl();
+              gl##clearColor |> expect |> toCalled;
+            })
+          );
+
           test("trigger editor point event", () => {
             _prepareMouseEvent(~sandbox, ());
 
             _test(EventEditorService.getPointScaleEventName(), (10, 20));
-          })
-        );
+          });
+        });
 
         describe("test eventTarget is game view", () => {
+          describe("test loopBody", () =>
+            test("if is stop, not_ loopBody", () => {
+              _prepareMouseEvent(~sandbox, ());
+              ControllerTool.setIsRun(false);
+
+              let _ =
+                _prepareAndExec(
+                  EventEditorService.getPointScaleEventName(),
+                  (60, 20),
+                );
+
+              let gl = FakeGlToolEngine.getEngineStateGl();
+              gl##clearColor |> expect |> not_ |> toCalled;
+            })
+          );
+
           test("trigger engine point event", () => {
             _prepareMouseEvent(~sandbox, ());
 
