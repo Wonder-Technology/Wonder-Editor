@@ -2609,7 +2609,7 @@ exports[`header import package test import scene wdb should reset scene gameObje
   className="wonder-sceneTree-component"
 >
   <article
-    className="wonder-drag-tree"
+    className="wonder-tree"
   >
     <ul
       className="wonder-tree-node"
@@ -2736,18 +2736,6 @@ exports[`header import package test import scene wdb should reset scene gameObje
         Cube
       </li>
     </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#666666",
-        }
-      }
-    />
   </article>
 </article>
 `;

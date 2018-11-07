@@ -5,7 +5,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
   className="wonder-sceneTree-component"
 >
   <article
-    className="wonder-drag-tree"
+    className="wonder-tree"
   >
     <ul
       className="wonder-tree-node"
@@ -82,18 +82,6 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
         Direction Light
       </li>
     </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#666666",
-        }
-      }
-    />
   </article>
 </article>
 `;
@@ -103,7 +91,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
   className="wonder-sceneTree-component"
 >
   <article
-    className="wonder-drag-tree"
+    className="wonder-tree"
   >
     <ul
       className="wonder-tree-node"
@@ -155,18 +143,6 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
         Direction Light
       </li>
     </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#666666",
-        }
-      }
-    />
   </article>
 </article>
 `;
@@ -176,7 +152,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
   className="wonder-sceneTree-component"
 >
   <article
-    className="wonder-drag-tree"
+    className="wonder-tree"
   >
     <ul
       className="wonder-tree-node"
@@ -228,18 +204,6 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
         Direction Light
       </li>
     </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#666666",
-        }
-      }
-    />
   </article>
 </article>
 `;
@@ -249,7 +213,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
   className="wonder-sceneTree-component"
 >
   <article
-    className="wonder-drag-tree"
+    className="wonder-tree"
   >
     <ul
       className="wonder-tree-node"
@@ -351,18 +315,6 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
         Direction Light
       </li>
     </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#666666",
-        }
-      }
-    />
   </article>
 </article>
 `;
@@ -372,7 +324,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
   className="wonder-sceneTree-component"
 >
   <article
-    className="wonder-drag-tree"
+    className="wonder-tree"
   >
     <ul
       className="wonder-tree-node"
@@ -449,18 +401,6 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
         Direction Light
       </li>
     </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#666666",
-        }
-      }
-    />
   </article>
 </article>
 `;

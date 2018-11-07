@@ -5,7 +5,7 @@ exports[`controller header addBox test add box box should be added into engineSt
   className="wonder-sceneTree-component"
 >
   <article
-    className="wonder-drag-tree"
+    className="wonder-tree"
   >
     <ul
       className="wonder-tree-node"
@@ -132,18 +132,6 @@ exports[`controller header addBox test add box box should be added into engineSt
         Cube
       </li>
     </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#666666",
-        }
-      }
-    />
   </article>
 </article>
 `;

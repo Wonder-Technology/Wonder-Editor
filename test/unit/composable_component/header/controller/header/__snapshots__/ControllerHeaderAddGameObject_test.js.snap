@@ -5,7 +5,7 @@ exports[`controller header add gameObject test add box test scene tree snapshot 
   className="wonder-sceneTree-component"
 >
   <article
-    className="wonder-drag-tree"
+    className="wonder-tree"
   >
     <ul
       className="wonder-tree-node"
@@ -132,18 +132,6 @@ exports[`controller header add gameObject test add box test scene tree snapshot 
         Cube
       </li>
     </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#666666",
-        }
-      }
-    />
   </article>
 </article>
 `;
@@ -153,7 +141,7 @@ exports[`controller header add gameObject test add emptyGameObject test scene tr
   className="wonder-sceneTree-component"
 >
   <article
-    className="wonder-drag-tree"
+    className="wonder-tree"
   >
     <ul
       className="wonder-tree-node"
@@ -280,18 +268,6 @@ exports[`controller header add gameObject test add emptyGameObject test scene tr
         GameObject
       </li>
     </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#666666",
-        }
-      }
-    />
   </article>
 </article>
 `;

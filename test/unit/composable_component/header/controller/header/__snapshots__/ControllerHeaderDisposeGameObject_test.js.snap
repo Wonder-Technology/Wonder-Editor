@@ -5,7 +5,7 @@ exports[`controller header dispose gameObject test scene tree dispose current ga
   className="wonder-sceneTree-component"
 >
   <article
-    className="wonder-drag-tree"
+    className="wonder-tree"
   >
     <ul
       className="wonder-tree-node"
@@ -82,18 +82,6 @@ exports[`controller header dispose gameObject test scene tree dispose current ga
         Direction Light
       </li>
     </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#666666",
-        }
-      }
-    />
   </article>
 </article>
 `;

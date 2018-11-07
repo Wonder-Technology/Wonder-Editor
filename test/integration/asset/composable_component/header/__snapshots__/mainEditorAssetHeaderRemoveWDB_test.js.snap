@@ -107,7 +107,7 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
   className="wonder-sceneTree-component"
 >
   <article
-    className="wonder-drag-tree"
+    className="wonder-tree"
   >
     <ul
       className="wonder-tree-node"
@@ -164,18 +164,6 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
         </li>
       </ul>
     </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#666666",
-        }
-      }
-    />
   </article>
 </article>
 `;

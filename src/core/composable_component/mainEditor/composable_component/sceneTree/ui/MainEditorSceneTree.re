@@ -98,37 +98,27 @@ let render = (store, dispatchFunc, _self) => {
   let editorState = StateEditorService.getState();
 
   <article key="sceneTree" className="wonder-sceneTree-component">
-    <DragTree
-      key=(DomHelper.getRandomKey())
-      treeArray=(
-        store
-        |> StoreUtils.unsafeGetSceneGraphDataFromStore
-        |> ArrayService.unsafeGetFirst
-        |> (scene => scene.children)
-        |> Method.buildSceneTreeArray(
-             (store, dispatchFunc, DomHelper.createElement("img")),
-             editorState |> SceneEditorService.getCurrentSceneTreeNode,
-             (
-               Method.onSelect((store, dispatchFunc)),
-               Method.dragGameObjectIntoGameObject(
-                 (store, dispatchFunc),
-                 (),
+    <article className="wonder-tree">
+      (
+        ReasonReact.array(
+          store
+          |> StoreUtils.unsafeGetSceneGraphDataFromStore
+          |> ArrayService.unsafeGetFirst
+          |> (scene => scene.children)
+          |> Method.buildSceneTreeArray(
+               (store, dispatchFunc, DomHelper.createElement("img")),
+               editorState |> SceneEditorService.getCurrentSceneTreeNode,
+               (
+                 Method.onSelect((store, dispatchFunc)),
+                 Method.dragGameObjectIntoGameObject(
+                   (store, dispatchFunc),
+                   (),
+                 ),
                ),
              ),
-           )
+        )
       )
-      rootUid=(
-        SceneEngineService.getSceneGameObject
-        |> StateLogicService.getEngineStateToGetData
-      )
-      dragGameObject=(
-        Method.dragGameObjectIntoGameObject((store, dispatchFunc), ())
-      )
-      dragWDB=(Method.dragWDBIntoScene((store, dispatchFunc), ()))
-      isWidget=SceneTreeUtils.isWidget
-      handleRelationError=SceneTreeUtils.isGameObjectRelationError
-      isWDBAssetFile=AssetUtils.isWDBAssetFile
-    />
+    </article>
   </article>;
 };
 
