@@ -48,7 +48,11 @@ let initRootAssetTree = (editorState, engineState) =>
     let rootIndex = editorState |> IndexAssetEditorService.getIndex;
 
     (
-      rootIndex |. TreeAssetEditorService.buildAssetTreeNodeByIndex(Folder),
+      rootIndex
+      |. TreeAssetEditorService.buildAssetTreeNodeByIndex(
+           Folder,
+           TreeAssetEditorService.getRootTreeNodeIsShowChildren(),
+         ),
       (editorState, engineState)
       |> FolderNodeUtils.addFolderIntoNodeMap(
            rootIndex,
@@ -100,7 +104,11 @@ let createNodeAndAddToTargetNodeChildren =
   |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
   |> insertSourceTreeNodeToTargetTreeNodeChildren(
        targetTreeNode,
-       TreeAssetEditorService.buildAssetTreeNodeByIndex(nodeId, type_),
+       TreeAssetEditorService.buildAssetTreeNodeByIndex(
+         nodeId,
+         type_,
+         TreeAssetEditorService.getTreeNodeDefaultIsShowChildren(),
+       ),
      )
   |. TreeRootAssetEditorService.setAssetTreeRoot(editorState);
 
@@ -211,7 +219,10 @@ let rebuildRootAssetTree =
 
     let editorState =
       rootIndex
-      |. TreeAssetEditorService.buildAssetTreeNodeByIndex(Folder)
+      |. TreeAssetEditorService.buildAssetTreeNodeByIndex(
+           Folder,
+           TreeAssetEditorService.getRootTreeNodeIsShowChildren(),
+         )
       |. TreeRootAssetEditorService.setAssetTreeRoot(editorState);
 
     let editorState =

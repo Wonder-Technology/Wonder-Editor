@@ -2,11 +2,15 @@ open AssetTreeNodeType;
 
 open AssetNodeType;
 
-let buildAssetTreeNodeByIndex = (index, type_) => {
+let getRootTreeNodeIsShowChildren = () => true;
+
+let getTreeNodeDefaultIsShowChildren = () => false;
+
+let buildAssetTreeNodeByIndex = (index, type_, isShowChildren) => {
   nodeId: index,
   type_,
   children: [||],
-  isShowChildren: true,
+  isShowChildren,
 };
 
 let isIdEqual = (nodeId, targetNodeId) => nodeId === targetNodeId;
