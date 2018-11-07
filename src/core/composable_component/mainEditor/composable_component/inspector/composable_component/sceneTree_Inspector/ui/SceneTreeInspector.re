@@ -12,7 +12,7 @@ module Method = {
       );
 
   let _buildNameFunc = ((store, dispatchFunc), gameObject) =>
-    <div key=(DomHelper.getRandomKey()) className="sceneTree-name" >
+    <div key=(DomHelper.getRandomKey()) className="sceneTree-name">
       <StringInput
         label="Name"
         defaultValue=(
@@ -39,6 +39,12 @@ module Method = {
       ((store, dispatchFunc), addableComponentConfig, currentSceneTreeNode) =>
     switch (currentSceneTreeNode) {
     | None => [||]
+    | Some(gameObject)
+        when
+          gameObject
+          === SceneEngineService.getSceneGameObject(
+                StateEngineService.unsafeGetState(),
+              ) => [||]
     | Some(gameObject) =>
       [|_buildNameFunc((store, dispatchFunc), gameObject)|]
       |> Js.Array.concat(

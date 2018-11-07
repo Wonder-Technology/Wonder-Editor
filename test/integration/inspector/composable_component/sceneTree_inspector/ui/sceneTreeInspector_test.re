@@ -51,5 +51,23 @@ let _ =
           })
         );
       });
+
+      describe("test show Scene inspector", () =>
+        test("should show nothing", () => {
+          MainEditorSceneTreeTool.Select.selectGameObject(
+            ~gameObject=
+              SceneEngineService.getSceneGameObject(
+                StateEngineService.unsafeGetState(),
+              ),
+            (),
+          );
+
+          BuildComponentTool.buildInspectorComponent(
+            TestTool.buildEmptyAppState(),
+            InspectorTool.buildFakeAllShowComponentConfig(),
+          )
+          |> ReactTestTool.createSnapshotAndMatch;
+        })
+      );
     });
   });
