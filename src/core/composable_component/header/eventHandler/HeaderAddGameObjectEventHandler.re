@@ -31,15 +31,19 @@ module CustomEventHandler = {
         SceneUtils.addGameObject(PrimitiveEngineService.createEmptyGameObject)
       };
 
+    let engineState = StateEngineService.unsafeGetState();
+
     dispatchFunc(
       AppStore.SceneTreeAction(
         SetSceneGraph(
           Some(
-            SceneTreeUtils.buildSceneGraphDataWithNewGameObject(
-              newGameObject,
-              store |> StoreUtils.unsafeGetSceneGraphDataFromStore,
-            )
-            |> StateLogicService.getEngineStateToGetData,
+            SceneTreeUtils.buildTreeNode(newGameObject, engineState)
+            |> SceneTreeUtils.addTreeNodeSceneGraphData(
+                 _,
+                 SceneEngineService.getSceneGameObject(engineState),
+                 store |> StoreUtils.unsafeGetSceneGraphDataFromStore,
+                 engineState,
+               ),
           ),
         ),
       ),

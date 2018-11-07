@@ -71,7 +71,7 @@ let isGameObjectRelationError =
         engineState,
       );
 
-let _buildTreeNode = (gameObject, engineState) => {
+let buildTreeNode = (gameObject, engineState) => {
   name:
     engineState |> GameObjectEngineService.unsafeGetGameObjectName(gameObject),
   uid: gameObject,
@@ -93,7 +93,7 @@ let _buildSceneGraphData = (gameObject, engineState) => {
                |> ArrayService.push(
                     _buildSceneGraphDataRec(
                       child,
-                      _buildTreeNode(child, engineState),
+                      buildTreeNode(child, engineState),
                       engineState,
                     ),
                   ),
@@ -104,7 +104,7 @@ let _buildSceneGraphData = (gameObject, engineState) => {
 
   _buildSceneGraphDataRec(
     gameObject,
-    _buildTreeNode(gameObject, engineState),
+    buildTreeNode(gameObject, engineState),
     engineState,
   );
 };
@@ -133,6 +133,23 @@ let rec setSpecificSceneTreeNodeIsShowChildren =
          }
      );
 
+let rec setIsShowChildrenByMap = (isShowChildrenMap, sceneGraphArray) =>
+  sceneGraphArray
+  |> Js.Array.map(({uid, isShowChildren, children} as treeNode) =>
+       {
+         ...treeNode,
+         isShowChildren:
+           switch (
+             isShowChildrenMap |> WonderCommonlib.SparseMapService.get(uid)
+           ) {
+           | Some(true) => true
+           | Some(false) => false
+           | _ => isShowChildren
+           },
+         children: setIsShowChildrenByMap(isShowChildrenMap, children),
+       }
+     );
+
 let rec renameSceneGraphData = (targetUid, newName, sceneGraphArray) =>
   sceneGraphArray
   |> Js.Array.map(({uid, name, children} as treeNode) =>
@@ -144,41 +161,37 @@ let rec renameSceneGraphData = (targetUid, newName, sceneGraphArray) =>
          }
      );
 
-let buildSceneGraphDataWithNewGameObject =
+let addTreeNodeSceneGraphData =
     (
-      newGameObject,
-      oldSceneGraphData: array(SceneGraphType.sceneTreeNodeType),
+      treeNodeSceneGraphData,
+      targetUid,
+      sceneGraphArray: array(SceneGraphType.sceneTreeNodeType),
       engineState,
-    ) => {
-  let scene = oldSceneGraphData |> ArrayService.unsafeGetFirst;
-  [|
-    {
-      ...scene,
-      children:
-        scene.children
-        |> Js.Array.copy
-        |> ArrayService.push(engineState |> _buildTreeNode(newGameObject)),
-    },
-  |];
-  /* |> WonderLog.Contract.ensureCheck(
-       sceneGraphArray =>
-         WonderLog.(
-           Contract.(
-             test(
-               Log.buildAssertMessage(
-                 ~expect=
-                   {j|the draged scene graph data == scene data from engine|j},
-                 ~actual={j|not|j},
-               ),
-               () =>
-               getSceneGraphDataFromEngine
-               |> StateLogicService.getStateToGetData == sceneGraphArray
-               |> assertTrue
-             )
-           )
-         ),
-       StasdteEditorService.getStateIsDebug(),
-     ); */
+    ) =>
+  sceneGraphArray
+  |> Js.Array.map(({uid, children} as treeNode) =>
+       uid === targetUid ?
+         {
+           ...treeNode,
+           children: children |> ArrayService.push(treeNodeSceneGraphData),
+         } :
+         treeNode
+     );
+
+let buildIsShowChildrenMap = sceneGraphArray => {
+  let rec _build = (sceneGraphArray, map) =>
+    sceneGraphArray
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. map, {uid, isShowChildren, children} as treeNode) => {
+           let map =
+             map |> WonderCommonlib.SparseMapService.set(uid, isShowChildren);
+
+           _build(children, map);
+         },
+         map,
+       );
+
+  _build(sceneGraphArray, WonderCommonlib.SparseMapService.createEmpty());
 };
 
 let _checkDragedTreeNodeShouldExist = ((newSceneGraphArr, dragedTreeNode)) => {
