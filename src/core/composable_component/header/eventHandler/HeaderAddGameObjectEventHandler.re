@@ -37,8 +37,8 @@ module CustomEventHandler = {
       AppStore.SceneTreeAction(
         SetSceneGraph(
           Some(
-            SceneTreeUtils.buildTreeNode(newGameObject, engineState)
-            |> SceneTreeUtils.addTreeNodeSceneGraphData(
+            SceneGraphUtils.buildTreeNode(newGameObject, engineState)
+            |> SceneGraphUtils.addTreeNodeSceneGraphData(
                  _,
                  SceneEngineService.getSceneGameObject(engineState),
                  store |> StoreUtils.unsafeGetSceneGraphDataFromStore,

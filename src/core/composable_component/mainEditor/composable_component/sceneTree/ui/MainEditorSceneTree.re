@@ -29,7 +29,7 @@ module Method = {
     let newSceneGraphData =
       store
       |> StoreUtils.unsafeGetSceneGraphDataFromStore
-      |> SceneTreeUtils.setSpecificSceneTreeNodeIsShowChildren(
+      |> SceneGraphUtils.setSpecificSceneTreeNodeIsShowChildren(
            targetId,
            isShowChildren,
          );
@@ -50,7 +50,7 @@ module Method = {
   let buildSceneNode = (children, engineState) => {
     uid: SceneEngineService.getSceneGameObject(engineState),
     name: "Scene",
-    isShowChildren: SceneTreeUtils.getSceneTreeNodeIsShowChildren(),
+    isShowChildren: SceneGraphUtils.getSceneTreeNodeIsShowChildren(),
     children,
   };
 

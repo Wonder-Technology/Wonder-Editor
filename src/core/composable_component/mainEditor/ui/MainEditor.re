@@ -181,7 +181,7 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
              AppStore.SceneTreeAction(
                SetSceneGraph(
                  Some(
-                   SceneTreeUtils.getSceneGraphDataFromEngine
+                   SceneGraphUtils.getSceneGraphDataFromEngine
                    |> StateLogicService.getStateToGetData,
                  ),
                ),

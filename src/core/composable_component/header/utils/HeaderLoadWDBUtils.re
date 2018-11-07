@@ -59,7 +59,7 @@ let loadSceneWDB = (dispatchFunc, event) => {
            AppStore.SceneTreeAction(
              SetSceneGraph(
                Some(
-                 SceneTreeUtils.getSceneGraphDataFromEngine
+                 SceneGraphUtils.getSceneGraphDataFromEngine
                  |> StateLogicService.getStateToGetData,
                ),
              ),

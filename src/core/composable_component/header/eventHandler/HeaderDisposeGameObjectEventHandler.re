@@ -7,24 +7,24 @@ module CustomEventHandler = {
 
   let _checkSceneGraphDataAndDispatch = (dispatchFunc, newSceneGraphArr) => {
     /* WonderLog.Contract.requireCheck(
-      () =>
-        WonderLog.(
-          Contract.(
-            test(
-              Log.buildAssertMessage(
-                ~expect=
-                  {j|the newSceneGraphArr should equal the sceneGraph from engine|j},
-                ~actual={j|not|j},
-              ),
-              () =>
-              SceneTreeUtils.getSceneGraphDataFromEngine
-              |> StateLogicService.getStateToGetData == newSceneGraphArr
-              |> assertTrue
-            )
-          )
-        ),
-      StateEditorService.getStateIsDebug(),
-    ); */
+         () =>
+           WonderLog.(
+             Contract.(
+               test(
+                 Log.buildAssertMessage(
+                   ~expect=
+                     {j|the newSceneGraphArr should equal the sceneGraph from engine|j},
+                   ~actual={j|not|j},
+                 ),
+                 () =>
+                 SceneGraphUtils.getSceneGraphDataFromEngine
+                 |> StateLogicService.getStateToGetData == newSceneGraphArr
+                 |> assertTrue
+               )
+             )
+           ),
+         StateEditorService.getStateIsDebug(),
+       ); */
 
     dispatchFunc(
       AppStore.SceneTreeAction(SetSceneGraph(Some(newSceneGraphArr))),
@@ -73,13 +73,14 @@ module CustomEventHandler = {
             ();
 
           let (newSceneGraphArr, removedTreeNode) =
-            sceneGraphArr |> SceneTreeUtils.removeDragedTreeNode(gameObject);
+            sceneGraphArr |> SceneGraphUtils.removeDragedTreeNode(gameObject);
 
           (newSceneGraphArr, removedTreeNode |. Some);
         } :
         {
           let (newSceneGraphArr, removedTreeNode) =
-            sceneGraphArr |> SceneTreeUtils.removeDragedTreeNode(gameObject);
+            sceneGraphArr |> SceneGraphUtils.removeDragedTreeNode(gameObject);
+
           (newSceneGraphArr, removedTreeNode |. Some);
         };
     };

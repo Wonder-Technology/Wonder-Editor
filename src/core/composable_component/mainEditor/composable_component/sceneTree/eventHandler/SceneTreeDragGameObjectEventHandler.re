@@ -9,13 +9,7 @@ module CustomEventHandler = {
 
   let handleSelfLogic = ((store, dispatchFunc), (), (targetUid, dragedUid)) => {
     let isShowChildrenMap =
-      (
-        switch (store |> StoreUtils.getSceneGraphDataFromStore) {
-        | None => [||]
-        | Some(sceneGraphArray) => sceneGraphArray
-        }
-      )
-      |> SceneTreeUtils.buildIsShowChildrenMap
+      SceneGraphUtils.buildIsShowChildrenMapFromStore(store)
       |> WonderCommonlib.SparseMapService.set(targetUid, true);
 
     GameObjectUtils.setParentKeepOrder(targetUid, dragedUid)
@@ -28,11 +22,11 @@ module CustomEventHandler = {
       AppStore.SceneTreeAction(
         SetSceneGraph(
           Some(
-            SceneTreeUtils.getSceneGraphDataFromEngine((
+            SceneGraphUtils.getSceneGraphDataFromEngine((
               editorState,
               engineState,
             ))
-            |> SceneTreeUtils.setIsShowChildrenByMap(isShowChildrenMap),
+            |> SceneGraphUtils.setIsShowChildrenByMap(isShowChildrenMap),
           ),
         ),
       ),

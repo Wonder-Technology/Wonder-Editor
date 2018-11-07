@@ -4,13 +4,7 @@ let handleSelfLogic =
   let engineState = StateEngineService.unsafeGetState();
 
   let isShowChildrenMap =
-    (
-      switch (store |> StoreUtils.getSceneGraphDataFromStore) {
-      | None => [||]
-      | Some(sceneGraphArray) => sceneGraphArray
-      }
-    )
-    |> SceneTreeUtils.buildIsShowChildrenMap
+    SceneGraphUtils.buildIsShowChildrenMapFromStore(store)
     |> WonderCommonlib.SparseMapService.set(targetGameObjectUid, true);
 
   let (isSuccess, (editorState, engineState)) =
@@ -26,11 +20,11 @@ let handleSelfLogic =
         AppStore.SceneTreeAction(
           SetSceneGraph(
             Some(
-              SceneTreeUtils.getSceneGraphDataFromEngine((
+              SceneGraphUtils.getSceneGraphDataFromEngine((
                 editorState,
                 engineState,
               ))
-              |> SceneTreeUtils.setIsShowChildrenByMap(isShowChildrenMap),
+              |> SceneGraphUtils.setIsShowChildrenByMap(isShowChildrenMap),
             ),
           ),
         ),

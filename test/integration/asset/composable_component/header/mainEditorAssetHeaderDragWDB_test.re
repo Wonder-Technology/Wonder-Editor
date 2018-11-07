@@ -413,11 +413,11 @@ let _ =
             let engineState = StateEngineService.unsafeGetState();
 
             let isShowChildrenMap =
-              SceneTreeUtils.getSceneGraphDataFromEngine((
+              SceneGraphUtils.getSceneGraphDataFromEngine((
                 editorState,
                 engineState,
               ))
-              |> SceneTreeUtils.buildIsShowChildrenMap;
+              |> SceneGraphUtils.buildIsShowChildrenMap;
 
             let isShowChildrenMap =
               isShowChildrenMap
@@ -438,12 +438,12 @@ let _ =
             let engineState =
               engineState |> SceneEngineService.addSceneChild(newGameObject1);
 
-            SceneTreeUtils.getSceneGraphDataFromEngine((
+            SceneGraphUtils.getSceneGraphDataFromEngine((
               editorState,
               engineState,
             ))
-            |> SceneTreeUtils.setIsShowChildrenByMap(isShowChildrenMap)
-            |> SceneTreeUtils.buildIsShowChildrenMap
+            |> SceneGraphUtils.setIsShowChildrenByMap(isShowChildrenMap)
+            |> SceneGraphUtils.buildIsShowChildrenMap
             |>
             expect == [|
                         true,

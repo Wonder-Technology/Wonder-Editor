@@ -1,6 +1,5 @@
 open AppStore;
 
-
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = Wonderjs.GameObjectType.gameObject;
@@ -15,7 +14,7 @@ module CustomEventHandler = {
         SetSceneGraph(
           store
           |> StoreUtils.unsafeGetSceneGraphDataFromStore
-          |> SceneTreeUtils.renameSceneGraphData(gameObject, newName)
+          |> SceneGraphUtils.renameSceneGraphData(gameObject, newName)
           |. Some,
         ),
       ),

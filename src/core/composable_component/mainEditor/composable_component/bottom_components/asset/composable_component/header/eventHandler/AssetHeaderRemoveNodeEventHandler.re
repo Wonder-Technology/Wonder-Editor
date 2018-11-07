@@ -56,7 +56,7 @@ module CustomEventHandler = {
       AppStore.SceneTreeAction(
         SetSceneGraph(
           Some(
-            SceneTreeUtils.getSceneGraphDataFromEngine
+            SceneGraphUtils.getSceneGraphDataFromEngine
             |> StateLogicService.getStateToGetData,
           ),
         ),
