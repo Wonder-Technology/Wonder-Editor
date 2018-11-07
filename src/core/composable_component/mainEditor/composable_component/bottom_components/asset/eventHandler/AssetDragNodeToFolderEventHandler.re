@@ -54,25 +54,32 @@ module CustomEventHandler = {
     |> ignore;
 
   let handleSelfLogic =
-      ((store, dispatchFunc), (), (targetNodeId, removedNodeId)) => {
+      ((store, dispatchFunc), (), (targetNodeId, sourceNodeId)) => {
     let editorState = StateEditorService.getState();
 
-    TreeAssetEditorService.isIdEqual(targetNodeId, removedNodeId) ?
+    TreeAssetEditorService.isIdEqual(targetNodeId, sourceNodeId) ?
       dispatchFunc(AppStore.UpdateAction(Update([|BottomComponent|])))
       |> ignore :
       {
+        let editorState =
+          editorState
+          |> AssetTreeUtils.setSpecificAssetTreeNodeIsShowChildrenFromEditorState(
+               targetNodeId,
+               true,
+             );
+
         let {type_}: AssetTreeNodeType.assetTreeNodeType =
           editorState
           |> TreeRootAssetEditorService.getAssetTreeRoot
           |> OptionService.unsafeGet
-          |> TreeAssetEditorService.getSpecificTreeNodeById(removedNodeId)
+          |> TreeAssetEditorService.getSpecificTreeNodeById(sourceNodeId)
           |> OptionService.unsafeGet;
 
         let (newAssetTreeRoot, removedTreeNode) =
           editorState
           |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
           |> RemoveNodeAssetTreeAssetEditorService.removeSpecificTreeNode(
-               removedNodeId,
+               sourceNodeId,
              );
 
         let editorState =
@@ -87,22 +94,22 @@ module CustomEventHandler = {
           type_,
           (
             _setFolderNodeParent(
-              removedNodeId,
+              sourceNodeId,
               targetNodeId |. Some,
               editorState,
             ),
             _setTextureNodeParent(
-              removedNodeId,
+              sourceNodeId,
               targetNodeId |. Some,
               editorState,
             ),
             _setMaterialNodeParent(
-              removedNodeId,
+              sourceNodeId,
               targetNodeId |. Some,
               editorState,
             ),
             _setWDBNodeParent(
-              removedNodeId,
+              sourceNodeId,
               targetNodeId |. Some,
               editorState,
             ),

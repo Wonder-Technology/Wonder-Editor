@@ -10,10 +10,10 @@ module CustomEventHandler = {
           AssetIdUtils.generateAssetId(editorState);
         let engineState = StateEngineService.unsafeGetState();
 
-        let targetTreeNodeId = editorState |> AssetTreeUtils.getTargetTreeNodeId;
+        let targetTreeNodeId =
+          editorState |> AssetTreeUtils.getTargetTreeNodeId;
 
         AddFolderNodeUtils.addFolderNodeToAssetTree(
-          /* FolderNodeUtils.getFolderDefaultName(newIndex, editorState), */
           FolderNodeUtils.getNewFolderName(),
           (targetTreeNodeId, newIndex),
           (editorState, engineState),

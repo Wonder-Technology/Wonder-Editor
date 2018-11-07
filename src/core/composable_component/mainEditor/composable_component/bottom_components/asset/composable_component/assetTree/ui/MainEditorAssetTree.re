@@ -47,7 +47,7 @@ module Method = {
       (
         (store, dispatchFunc, dragImg),
         (onSelectFunc, onDropFunc),
-        assetTreeRoot,
+        assetTreeArray,
       ) => {
     let rec _iterateAssetTreeArray = assetTreeArray =>
       assetTreeArray
@@ -88,7 +88,7 @@ module Method = {
            | _ => ReasonReact.null
            }
          );
-    _iterateAssetTreeArray([|assetTreeRoot|]);
+    _iterateAssetTreeArray(assetTreeArray);
   };
 };
 
@@ -99,7 +99,7 @@ let render = ((store, dispatchFunc), dragImg, _self) =>
     (
       ReasonReact.array(
         StateEditorService.getState()
-        |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
+        |> AssetTreeUtils.buildAssetTreeArray
         |> Method.buildAssetTreeArray(
              (store, dispatchFunc, dragImg),
              (

@@ -23,6 +23,10 @@ let enterFolder = (dispatchFunc, nodeType, nodeId) => {
   dispatchFunc(AppStore.UpdateAction(Update([|All|]))) |> ignore;
 };
 
+let buildAssetTreeArray = editorState => [|
+  editorState |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot,
+|];
+
 let rec setSpecificAssetTreeNodeIsShowChildren =
         (targetId, isShowChildren, assetTreeArray) =>
   assetTreeArray
@@ -40,6 +44,19 @@ let rec setSpecificAssetTreeNodeIsShowChildren =
              ),
          }
      );
+
+let updateAssetTreeArrayData = (assetTreeArray, editorState) =>
+  TreeRootAssetEditorService.setAssetTreeRoot(
+    assetTreeArray |> ArrayService.unsafeGetFirst,
+    editorState,
+  );
+
+let setSpecificAssetTreeNodeIsShowChildrenFromEditorState =
+    (targetId, isShowChildren, editorState) =>
+  editorState
+  |> buildAssetTreeArray
+  |> setSpecificAssetTreeNodeIsShowChildren(targetId, isShowChildren)
+  |> updateAssetTreeArrayData(_, editorState);
 
 let initRootAssetTree = (editorState, engineState) =>
   switch (TreeRootAssetEditorService.getAssetTreeRoot(editorState)) {

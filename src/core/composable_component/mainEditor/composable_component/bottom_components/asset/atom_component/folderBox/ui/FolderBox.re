@@ -3,7 +3,29 @@ open DragEventUtils;
 type state = {style: ReactDOMRe.Style.t};
 
 module Method = {
-  let onDoubleClick = AssetTreeUtils.enterFolder;
+  let onDoubleClick = (dispatchFunc, nodeType, nodeId) => {
+    let editorState = StateEditorService.getState();
+
+    let editorState =
+      switch (
+        FolderNodeMapAssetEditorService.getFolderParentId(
+          nodeId,
+          FolderNodeMapAssetEditorService.getFolderNodeMap(editorState),
+        )
+      ) {
+      | None => editorState
+      | Some(parentFolderNodeId) =>
+        AssetTreeUtils.setSpecificAssetTreeNodeIsShowChildrenFromEditorState(
+          parentFolderNodeId,
+          true,
+          editorState,
+        )
+      };
+
+    editorState |> StateEditorService.setState |> ignore;
+
+    AssetTreeUtils.enterFolder(dispatchFunc, nodeType, nodeId);
+  };
 
   let onClick = FileBox.Method.onSelect;
 };

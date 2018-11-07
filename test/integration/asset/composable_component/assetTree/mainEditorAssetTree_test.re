@@ -273,7 +273,7 @@ let _ =
       });
     });
 
-    describe("test asse tree node->isShowChildren", () =>
+    describe("test asse tree node->isShowChildren", () => {
       test("default node->isShowChildren should be false except root node", () => {
         let assetTreeData =
           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
@@ -300,6 +300,82 @@ let _ =
 
         BuildComponentTool.buildAssetTree()
         |> ReactTestTool.createSnapshotAndMatch;
-      })
-    );
+      });
+
+      describe("test drag treeNode to target treeNode", () =>
+        test("target treeNode->isShowChildren should set to true", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+
+          let addedFolderNodeId1 = MainEditorAssetIdTool.getNewAssetId();
+
+          MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+          MainEditorAssetTreeTool.Select.selectFolderNode(
+            ~nodeId=addedFolderNodeId1,
+            (),
+          );
+
+          let addedFolderNodeId2 = addedFolderNodeId1 |> succ;
+
+          MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+          AssetTreeUtils.setSpecificAssetTreeNodeIsShowChildrenFromEditorState(
+            addedFolderNodeId1,
+            false,
+          )
+          |> StateLogicService.getAndSetEditorState;
+
+          let addedFolderNodeId3 = addedFolderNodeId2 |> succ;
+
+          MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+          MainEditorAssetTreeTool.Drag.dragAssetTreeNode(
+            ~startNodeId=addedFolderNodeId3,
+            ~targetNodeId=addedFolderNodeId1,
+            (),
+          );
+
+          MainEditorAssetTreeTool.Select.selectFolderNode(
+            ~nodeId=
+              TreeRootAssetEditorService.getRootTreeNodeId
+              |> StateLogicService.getEditorState,
+            (),
+          );
+
+          BuildComponentTool.buildAssetTree()
+          |> ReactTestTool.createSnapshotAndMatch;
+        })
+      );
+
+      describe("test add treeNode to target treeNode", () =>
+        test("target treeNode->isShowChildren should not change", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+
+          let addedFolderNodeId1 = MainEditorAssetIdTool.getNewAssetId();
+
+          MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+          MainEditorAssetTreeTool.Select.selectFolderNode(
+            ~nodeId=addedFolderNodeId1,
+            (),
+          );
+
+          let addedFolderNodeId2 = addedFolderNodeId1 |> succ;
+
+          MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+          MainEditorAssetTreeTool.Select.selectFolderNode(
+            ~nodeId=
+              TreeRootAssetEditorService.getRootTreeNodeId
+              |> StateLogicService.getEditorState,
+            (),
+          );
+
+          BuildComponentTool.buildAssetTree()
+          |> ReactTestTool.createSnapshotAndMatch;
+        })
+      );
+    });
   });

@@ -1,4 +1,5 @@
 open AssetType;
+
 open AssetNodeType;
 
 let getFolderNodeMap = assetRecord => assetRecord.folderNodeMap;

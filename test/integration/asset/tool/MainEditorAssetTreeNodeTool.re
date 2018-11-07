@@ -52,3 +52,9 @@ let addTextureIntoNodeMap =
        ),
      );
 };
+
+let getSpecificTreeNode = (nodeId, editorState) =>
+  TreeAssetEditorService.getSpecificTreeNodeById(
+    nodeId,
+    TreeRootAssetEditorService.unsafeGetAssetTreeRoot(editorState),
+  );
