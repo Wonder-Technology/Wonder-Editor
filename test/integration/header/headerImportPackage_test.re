@@ -761,7 +761,7 @@ let _ =
                          ImportPackageTool.getImportedWDBAssetData()
                          |> ArrayService.unsafeGetFirst;
 
-                       MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                       MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
                          ~wdbNodeId,
                          (),
                        );
@@ -826,11 +826,11 @@ let _ =
                                   ImportPackageTool.getImportedWDBAssetData()
                                   |> ArrayService.unsafeGetNth(1);
 
-                                MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                                MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
                                   ~wdbNodeId=wdbNodeId1,
                                   (),
                                 );
-                                MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                                MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
                                   ~wdbNodeId=wdbNodeId2,
                                   (),
                                 );
@@ -915,7 +915,7 @@ let _ =
               (),
             )
             |> then_(uploadedWDBNodeId => {
-                 MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                 MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
                    ~wdbNodeId=uploadedWDBNodeId,
                    (),
                  );
@@ -1209,7 +1209,7 @@ let _ =
               (),
             )
             |> then_(uploadedWDBNodeId => {
-                 MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                 MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
                    ~wdbNodeId=uploadedWDBNodeId,
                    (),
                  );

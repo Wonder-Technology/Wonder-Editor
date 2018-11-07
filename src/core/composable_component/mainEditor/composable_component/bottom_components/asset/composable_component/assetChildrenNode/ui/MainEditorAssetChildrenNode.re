@@ -12,7 +12,7 @@ module Method = {
       TreeAssetEditorService.isIdEqual(nodeId, currentNodeId)
     };
 
-  let _handleImageNodeData = (assetTreeNodeChildrenArr, editorState) =>
+  let _buildImageNodeBase64 = (assetTreeNodeChildrenArr, editorState) =>
     assetTreeNodeChildrenArr
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. editorState, {nodeId, type_}) =>
@@ -35,7 +35,7 @@ module Method = {
                    | None =>
                      WonderLog.Log.fatal(
                        WonderLog.Log.buildFatalMessage(
-                         ~title="_handleImageNodeData",
+                         ~title="_buildImageNodeBase64",
                          ~description={j|image->uint8Array should exist|j},
                          ~reason="",
                          ~solution={j||j},
@@ -86,6 +86,7 @@ module Method = {
              store
              dispatchFunc
              dragImg
+             effectAllowd="move"
              imgSrc="./public/img/assetPackage.png"
              folderId=nodeId
              fileType=type_
@@ -113,6 +114,7 @@ module Method = {
              store
              dispatchFunc
              dragImg
+             effectAllowd="move"
              imgSrc=(
                editorState
                |> ImageNodeMapAssetEditorService.getImageNodeMap
@@ -144,6 +146,7 @@ module Method = {
              store
              dispatchFunc
              dragImg
+             effectAllowd="move"
              imgSrc="./public/img/mat.png"
              fileId=nodeId
              fileType=type_
@@ -161,6 +164,7 @@ module Method = {
              key=(DomHelper.getRandomKey())
              store
              dispatchFunc
+             effectAllowd="copy"
              dragImg
              imgSrc="./public/img/wdb.png"
              fileId=nodeId
@@ -187,7 +191,7 @@ module Method = {
       |> (currentParentNode => currentParentNode.children);
 
     let editorState =
-      _handleImageNodeData(assetTreeNodeChildrenArr, editorState);
+      _buildImageNodeBase64(assetTreeNodeChildrenArr, editorState);
 
     showSpecificTreeNodeChildren(
       assetTreeNodeChildrenArr,

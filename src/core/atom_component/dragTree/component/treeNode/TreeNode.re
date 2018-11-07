@@ -14,7 +14,10 @@ module Method = {
       className="wonder-tree-node"
       draggable=true
       onDragStart=(
-        _e => send(DragEventUtils.handleDragStart(id, widget, dragImg, _e))
+        _e =>
+          send(
+            DragEventUtils.handleDragStart(id, widget, dragImg, "move", _e),
+          )
       )
       onDragEnd=(_e => send(DragEventUtils.handleDrageEnd(_e)))>
       content
@@ -53,7 +56,7 @@ module Method = {
             ),
           )
       )
-      onDragOver=DragEventUtils.handleDragOver
+      onDragOver=(e => DragEventUtils.handleDragOver("move", e))
       onDrop=(
         _e =>
           send(
@@ -163,7 +166,7 @@ let render =
         isShowChildren,
         isHasChildren,
       ),
-      (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
+      (onSelectFunc, isWidgetFunc, handleRelationErrorFunc),
       treeChildren,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
@@ -176,7 +179,7 @@ let render =
         Method.getContent(
           (state, send),
           (id, icon, name, treeChildren, isShowChildren, isHasChildren),
-          (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
+          (onSelectFunc, isWidgetFunc, handleRelationErrorFunc),
         ),
       )
 
@@ -188,7 +191,7 @@ let render =
           Method.getContent(
             (state, send),
             (id, icon, name, treeChildren, isShowChildren, isHasChildren),
-            (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
+            (onSelectFunc, isWidgetFunc, handleRelationErrorFunc),
           ),
         ) :
         Method.buildNotDragableUl(
@@ -197,7 +200,7 @@ let render =
           Method.getContent(
             (state, send),
             (id, icon, name, treeChildren, isShowChildren, isHasChildren),
-            (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
+            (onSelectFunc, isWidgetFunc, handleRelationErrorFunc),
           ),
         )
     };

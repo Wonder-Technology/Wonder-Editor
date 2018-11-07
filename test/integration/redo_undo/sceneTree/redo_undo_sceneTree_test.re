@@ -11,13 +11,6 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     let _simulateTwiceDragEvent = () => {
-      let firstCameraDomIndex =
-        SceneTreeNodeDomTool.OperateDefaultScene.getFirstCameraDomIndex();
-      let firstCubeDomIndex =
-        SceneTreeNodeDomTool.OperateDefaultScene.getFirstCubeDomIndex();
-      let secondCubeDomIndex =
-        SceneTreeNodeDomTool.OperateDefaultScene.getSecondCubeDomIndex();
-
       MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
         ~sourceGameObject=
           MainEditorSceneTool.getSecondBox(

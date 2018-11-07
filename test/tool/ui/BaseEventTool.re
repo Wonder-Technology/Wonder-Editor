@@ -90,6 +90,7 @@ stopPropagation: () => undefined,
 preventDefault: () => undefined,
 dataTransfer: {
   effectAllowed: "move",
+  dropEffect: "move",
   setDragImage: (image, value1, value2) => undefined,
   setData: (key, value) => {
     dataMap[key] = value;

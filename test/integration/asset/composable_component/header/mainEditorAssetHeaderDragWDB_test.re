@@ -194,11 +194,11 @@ let _ =
                 (),
               )
               |> then_(uploadedWDBNodeId => {
-                   MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                   MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
                      ~wdbNodeId=uploadedWDBNodeId,
                      (),
                    );
-                   MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+                   MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
                      ~wdbNodeId=uploadedWDBNodeId,
                      (),
                    );

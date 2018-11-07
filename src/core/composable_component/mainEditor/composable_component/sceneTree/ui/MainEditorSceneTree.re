@@ -74,9 +74,7 @@ module Method = {
            onDrop=onDropFunc
            isWidget=SceneTreeUtils.isWidget
            isShowChildren
-           isHasChildren=(
-             children |> Js.Array.length >= 1
-           )
+           isHasChildren=(children |> Js.Array.length >= 1)
            handleToggleShowTreeChildren=(
              handleToggleShowTreeChildren(store, dispatchFunc)
            )
@@ -129,7 +127,7 @@ let render = (store, dispatchFunc, _self) => {
       dragWDB=(Method.dragWDBIntoScene((store, dispatchFunc), ()))
       isWidget=SceneTreeUtils.isWidget
       handleRelationError=SceneTreeUtils.isGameObjectRelationError
-      isAssetWDBFile=AssetUtils.isAssetWDBFile
+      isWDBAssetFile=AssetUtils.isWDBAssetFile
     />
   </article>;
 };

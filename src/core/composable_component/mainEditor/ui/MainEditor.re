@@ -86,16 +86,23 @@ module Method = {
     )
     |> StateEngineService.setState
     |> ignore;
+
+  let dragWDB = MainEditorDragWDBEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
 
-let _buildNotStartElement = () =>
+let _buildNotStartElement = (store, dispatchFunc) =>
   <article key="mainEditor" className="wonder-mainEditor-component">
     <div key="leftComponent" className="left-component">
       <div className="top-widget">
         <div id="canvasParent" key="webglParent" className="webgl-parent">
-          <canvas key="webgl" id="canvas" />
+          <Canvas
+            key="webgl"
+            domId="canvas"
+            dragWDB=(Method.dragWDB((store, dispatchFunc), ()))
+            isWDBAssetFile=AssetUtils.isWDBAssetFile
+          />
         </div>
       </div>
       <div className="bottom-widget" />
@@ -113,7 +120,12 @@ let _buildStartedElement = (store, dispatchFunc) =>
         </div>
         <div id="canvasParent" key="webglParent" className="webgl-parent">
           (Method.buildStartedRunWebglComponent())
-          <canvas key="webgl" id="canvas" />
+          <Canvas
+            key="webgl"
+            domId="canvas"
+            dragWDB=(Method.dragWDB((store, dispatchFunc), ()))
+            isWDBAssetFile=AssetUtils.isWDBAssetFile
+          />
         </div>
       </div>
       <div className="bottom-widget">
@@ -135,7 +147,8 @@ let _buildStartedElement = (store, dispatchFunc) =>
 
 let render = (store: AppStore.appState, dispatchFunc, _self) =>
   store.isEditorAndEngineStart ?
-    _buildStartedElement(store, dispatchFunc) : _buildNotStartElement();
+    _buildStartedElement(store, dispatchFunc) :
+    _buildNotStartElement(store, dispatchFunc);
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,

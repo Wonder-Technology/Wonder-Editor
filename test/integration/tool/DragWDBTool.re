@@ -17,7 +17,7 @@ let testDragWDB = (sandbox, (fileName, wdbArrayBuffer), testFunc) => {
        let shaderSourceCountBeforeDrag =
          GLSLToolEngine.getShaderSourceCallCount(glShaderSource);
 
-       MainEditorSceneTreeTool.Drag.dragAssetWDBToSceneTree(
+       MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
          ~wdbNodeId=uploadedWDBNodeId,
          (),
        );

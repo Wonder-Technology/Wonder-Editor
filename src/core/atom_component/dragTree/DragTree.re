@@ -11,29 +11,33 @@ module Method = {
   let handleDragEnter =
       (
         id,
-        (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFile),
+        (isWidgetFunc, handleRelationErrorFunc, isWDBAssetFileFunc),
         _event,
       ) =>
     DragEventBaseUtils.isTriggerDragEnter(
       id,
-      handleWidgetFunc,
+      isWidgetFunc,
       handleRelationErrorFunc,
     )
-    || isAssetWDBFile() ?
+    || isWDBAssetFileFunc() ?
       DragEnter : Nothing;
 
   let handleDragLeave =
-      (id, (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFile), event) => {
+      (
+        id,
+        (isWidgetFunc, handleRelationErrorFunc, isWDBAssetFileFunc),
+        event,
+      ) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     /* DomHelper.stopPropagation(e); */
 
     DragLeave;
   };
 
-  let handleDrop =
+  let handleDragOver =
       (
         rootUid,
-        (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFile),
+        (isWidgetFunc, handleRelationErrorFunc, isWDBAssetFileFunc),
         event,
       ) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
@@ -42,11 +46,30 @@ module Method = {
     DragEventBaseUtils.isTriggerDragDrop(
       rootUid,
       startId,
-      handleWidgetFunc,
+      isWidgetFunc,
+      handleRelationErrorFunc,
+    ) ?
+      DragEventUtils.handleDragOver("move", event) :
+      isWDBAssetFileFunc() ? DragEventUtils.handleDragOver("copy", event) : ();
+  };
+
+  let handleDrop =
+      (
+        rootUid,
+        (isWidgetFunc, handleRelationErrorFunc, isWDBAssetFileFunc),
+        event,
+      ) => {
+    let e = ReactEventType.convertReactMouseEventToJsEvent(event);
+    let startId = DragUtils.getDragedId(e);
+
+    DragEventBaseUtils.isTriggerDragDrop(
+      rootUid,
+      startId,
+      isWidgetFunc,
       handleRelationErrorFunc,
     ) ?
       DragGameObject(rootUid, startId) :
-      isAssetWDBFile() ?
+      isWDBAssetFileFunc() ?
         {
           let wdbGameObjectUid =
             StateEditorService.getState()
@@ -67,7 +90,8 @@ let reducer = (dragGameObject, dragWDB, action, state) =>
   | DragEnter =>
     ReasonReact.Update({
       ...state,
-      style: ReactUtils.addStyleProp("backgroundColor", "#333333", state.style),
+      style:
+        ReactUtils.addStyleProp("backgroundColor", "#333333", state.style),
     })
 
   | DragLeave =>
@@ -90,7 +114,7 @@ let render =
     (
       treeArray,
       rootUid,
-      (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFile),
+      (isWidgetFunc, handleRelationErrorFunc, isWDBAssetFileFunc),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="wonder-drag-tree">
@@ -103,7 +127,7 @@ let render =
           send(
             Method.handleDragEnter(
               rootUid,
-              (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFile),
+              (isWidgetFunc, handleRelationErrorFunc, isWDBAssetFileFunc),
               _e,
             ),
           )
@@ -113,18 +137,25 @@ let render =
           send(
             Method.handleDragLeave(
               rootUid,
-              (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFile),
+              (isWidgetFunc, handleRelationErrorFunc, isWDBAssetFileFunc),
               _e,
             ),
           )
       )
-      onDragOver=DragEventUtils.handleDragOver
+      onDragOver=(
+        _e =>
+          Method.handleDragOver(
+            rootUid,
+            (isWidgetFunc, handleRelationErrorFunc, isWDBAssetFileFunc),
+            _e,
+          )
+      )
       onDrop=(
         _e =>
           send(
             Method.handleDrop(
               rootUid,
-              (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFile),
+              (isWidgetFunc, handleRelationErrorFunc, isWDBAssetFileFunc),
               _e,
             ),
           )
@@ -140,7 +171,7 @@ let make =
       ~dragWDB,
       ~isWidget,
       ~handleRelationError,
-      ~isAssetWDBFile,
+      ~isWDBAssetFile,
       _children,
     ) => {
   ...component,
@@ -152,7 +183,7 @@ let make =
     render(
       treeArray,
       rootUid,
-      (isWidget, handleRelationError, isAssetWDBFile),
+      (isWidget, handleRelationError, isWDBAssetFile),
       self,
     ),
 };

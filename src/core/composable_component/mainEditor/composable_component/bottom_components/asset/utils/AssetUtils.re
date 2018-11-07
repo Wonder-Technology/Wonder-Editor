@@ -1,13 +1,13 @@
 let getWidget = () => EditorType.Asset;
 
-let isAssetWDBFile = () => {
-  let (wnodeIdget, startNodeId) =
+let isWDBAssetFile = () => {
+  let (widget, startNodeId) =
     StateEditorService.getState()
     |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-  switch (wnodeIdget, startNodeId) {
-  | (Some(wnodeIdget), Some(nodeId)) =>
-    wnodeIdget === getWidget()
+  switch (widget, startNodeId) {
+  | (Some(widget), Some(nodeId)) =>
+    widget === getWidget()
     && StateEditorService.getState()
     |> WDBNodeMapAssetEditorService.getWDBNodeMap
     |> WonderCommonlib.SparseMapService.get(nodeId)

@@ -46,7 +46,7 @@ let reducer = (onDrop, action, state) =>
 let render =
     (
       (_store, _dispatchFunc),
-      (dragImg, imgSrc, folderId, name, widget, isSelected),
+      (dragImg, effectAllowd, imgSrc, folderId, name, widget, isSelected),
       (isWidget, handleRelationError),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
@@ -59,7 +59,15 @@ let render =
       draggable=true
       onDragStart=(
         _e =>
-          send(DragEventUtils.handleDragStart(folderId, widget, dragImg, _e))
+          send(
+            DragEventUtils.handleDragStart(
+              folderId,
+              widget,
+              dragImg,
+              effectAllowd,
+              _e,
+            ),
+          )
       )
       onDragEnd=(_e => send(DragEventUtils.handleDrageEnd(_e)))
       onDragEnter=(
@@ -84,7 +92,7 @@ let render =
             ),
           )
       )
-      onDragOver=DragEventUtils.handleDragOver
+      onDragOver=(e => DragEventUtils.handleDragOver("move", e))
       onDrop=(
         _e =>
           send(
@@ -107,6 +115,7 @@ let make =
       ~store,
       ~dispatchFunc,
       ~dragImg,
+      ~effectAllowd,
       ~imgSrc,
       ~folderId,
       ~fileType,
@@ -148,7 +157,7 @@ let make =
   render: self =>
     render(
       (store, dispatchFunc),
-      (dragImg, imgSrc, folderId, name, widget, isSelected),
+      (dragImg, effectAllowd, imgSrc, folderId, name, widget, isSelected),
       (isWidget, handleRelationError),
       self,
     ),

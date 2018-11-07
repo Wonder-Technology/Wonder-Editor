@@ -54,13 +54,20 @@ module Drag = {
         ~dispatchFunc=_ => (),
         ~store=TestTool.buildEmptyAppState(),
         ~widget=AssetUtils.getWidget(),
+        ~effectAllowd="move",
         ~dragImg=DomHelper.createElement("img"),
         ~event=BaseEventTool.buildDragEvent(.),
         ~material=GameObjectTool.getCurrentGameObjectMaterial(),
         ~textureNodeId,
         (),
       ) => {
-    DragEventUtils.handleDragStart(textureNodeId, widget, dragImg, event);
+    DragEventUtils.handleDragStart(
+      textureNodeId,
+      widget,
+      dragImg,
+      effectAllowd,
+      event,
+    );
     MainEditorLightMaterial.Method.onDrop(
       (store, dispatchFunc),
       material,

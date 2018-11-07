@@ -11,7 +11,10 @@ module CustomEventHandler = {
     let (isSuccess, (editorState, engineState)) =
       DragWDBUtils.dragWDB(
         wdbGameObjectUid,
-        SceneEngineService.getSceneGameObject(engineState),
+        switch (editorState |> SceneEditorService.getCurrentSceneTreeNode) {
+        | None => SceneEngineService.getSceneGameObject(engineState)
+        | Some(gameObject) => gameObject
+        },
         (editorState, engineState),
       );
 
