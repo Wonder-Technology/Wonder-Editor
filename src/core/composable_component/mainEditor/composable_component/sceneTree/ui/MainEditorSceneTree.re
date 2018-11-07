@@ -47,6 +47,13 @@ module Method = {
 
   let dragWDBIntoScene = SceneTreeDragWDBEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
+  let buildSceneNode = (children, engineState) => {
+    uid: SceneEngineService.getSceneGameObject(engineState),
+    name: "Scene",
+    isShowChildren: true,
+    children,
+  };
+
   let _isSelected = (uid, currentSceneTreeNode) =>
     switch (currentSceneTreeNode) {
     | None => false
@@ -105,17 +112,26 @@ let render = (store, dispatchFunc, _self) => {
           |> StoreUtils.unsafeGetSceneGraphDataFromStore
           |> ArrayService.unsafeGetFirst
           |> (scene => scene.children)
-          |> Method.buildSceneTreeArray(
-               (store, dispatchFunc, DomHelper.createElement("img")),
-               editorState |> SceneEditorService.getCurrentSceneTreeNode,
-               (
-                 Method.onSelect((store, dispatchFunc)),
-                 Method.dragGameObjectIntoGameObject(
-                   (store, dispatchFunc),
-                   (),
-                 ),
-               ),
-             ),
+          |> (
+            sceneGraphArr =>
+              [|
+                Method.buildSceneNode(
+                  sceneGraphArr,
+                  StateEngineService.unsafeGetState(),
+                ),
+              |]
+              |> Method.buildSceneTreeArray(
+                   (store, dispatchFunc, DomHelper.createElement("img")),
+                   editorState |> SceneEditorService.getCurrentSceneTreeNode,
+                   (
+                     Method.onSelect((store, dispatchFunc)),
+                     Method.dragGameObjectIntoGameObject(
+                       (store, dispatchFunc),
+                       (),
+                     ),
+                   ),
+                 )
+          ),
         )
       )
     </article>
