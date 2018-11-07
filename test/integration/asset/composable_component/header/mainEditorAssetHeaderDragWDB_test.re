@@ -36,6 +36,56 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
+    describe("test drag wdb to folder node", () =>
+      testPromise(
+        {|
+        1.load wdb asset w1;
+        2.add folder f1;
+        3.drag w1 to f1;
+        4.select f1;
+
+        asset children should show w1
+        |},
+        () => {
+          MainEditorSceneTool.prepareScene(sandbox);
+
+          MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+          |> ignore;
+
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=directionPointLightsAndBoxWDBArrayBuffer^,
+            (),
+          )
+          |> then_(uploadedWDBNodeId => {
+               MainEditorAssetTreeTool.Select.selectFolderNode(
+                 ~nodeId=
+                   TreeRootAssetEditorService.getRootTreeNodeId
+                   |> StateLogicService.getEditorState,
+                 (),
+               );
+
+               let addedFolderNodeId = MainEditorAssetIdTool.getNewAssetId();
+
+               MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+               MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
+                 ~startNodeId=uploadedWDBNodeId,
+                 ~targetNodeId=addedFolderNodeId,
+                 (),
+               );
+
+               MainEditorAssetTreeTool.Select.selectFolderNode(
+                 ~nodeId=addedFolderNodeId,
+                 (),
+               );
+               BuildComponentTool.buildAssetChildrenNode()
+               |> ReactTestTool.createSnapshotAndMatch
+               |> resolve;
+             });
+        },
+      )
+    );
+
     describe("test drag wdb to scene tree", () => {
       describe("test wdb has direction and point light gameObjects", () => {
         let _test = (sandbox, testFunc) =>

@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorAssetHeader->drag wdb test drag wdb to folder node 
+        1.load wdb asset w1;
+        2.add folder f1;
+        3.drag w1 to f1;
+        4.select f1;
+
+        asset children should show w1
+         1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/wdb.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        Wdb
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->drag wdb test drag wdb to folder node aaa 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/wdb.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        Wdb
+      </span>
+    </div>
+  </article>
+</article>
+`;

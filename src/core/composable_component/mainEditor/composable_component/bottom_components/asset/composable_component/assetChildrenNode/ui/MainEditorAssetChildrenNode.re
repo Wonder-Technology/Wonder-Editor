@@ -164,7 +164,7 @@ module Method = {
              key=(DomHelper.getRandomKey())
              store
              dispatchFunc
-             effectAllowd="copy"
+             effectAllowd="copyMove"
              dragImg
              imgSrc="./public/img/wdb.png"
              fileId=nodeId
