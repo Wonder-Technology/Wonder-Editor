@@ -10,7 +10,8 @@ let handleSelfLogic =
       | Some(sceneGraphArray) => sceneGraphArray
       }
     )
-    |> SceneTreeUtils.buildIsShowChildrenMap;
+    |> SceneTreeUtils.buildIsShowChildrenMap
+    |> WonderCommonlib.SparseMapService.set(targetGameObjectUid, true);
 
   let (isSuccess, (editorState, engineState)) =
     DragWDBUtils.dragWDB(

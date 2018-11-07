@@ -1,7 +1,5 @@
 open SceneGraphType;
 
-let getDragedSceneGraphData = SceneTreeUtils.getDragedSceneGraphData;
-
 let getSimpleSceneTree = () => [|
   {
     uid: 0,

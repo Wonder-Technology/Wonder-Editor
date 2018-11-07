@@ -1,5 +1,3 @@
-
-
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
 
@@ -10,23 +8,39 @@ module CustomEventHandler = {
   );
 
   let handleSelfLogic = ((store, dispatchFunc), (), (targetUid, dragedUid)) => {
+    let isShowChildrenMap =
+      (
+        switch (store |> StoreUtils.getSceneGraphDataFromStore) {
+        | None => [||]
+        | Some(sceneGraphArray) => sceneGraphArray
+        }
+      )
+      |> SceneTreeUtils.buildIsShowChildrenMap
+      |> WonderCommonlib.SparseMapService.set(targetUid, true);
+
     GameObjectUtils.setParentKeepOrder(targetUid, dragedUid)
     |> StateLogicService.getAndRefreshEngineStateWithFunc;
+
+    let editorState = StateEditorService.getState();
+    let engineState = StateEngineService.unsafeGetState();
 
     dispatchFunc(
       AppStore.SceneTreeAction(
         SetSceneGraph(
           Some(
-            SceneTreeUtils.getDragedSceneGraphData(
-              targetUid,
-              dragedUid,
-              store |> StoreUtils.unsafeGetSceneGraphDataFromStore,
-            ),
+            SceneTreeUtils.getSceneGraphDataFromEngine((
+              editorState,
+              engineState,
+            ))
+            |> SceneTreeUtils.setIsShowChildrenByMap(isShowChildrenMap),
           ),
         ),
       ),
     )
     |> ignore;
+
+    editorState |> StateEditorService.setState |> ignore;
+    engineState |> StateEngineService.setState |> ignore;
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))
     |> ignore;
