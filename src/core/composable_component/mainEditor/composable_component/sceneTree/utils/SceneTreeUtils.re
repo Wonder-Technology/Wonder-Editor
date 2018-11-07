@@ -71,11 +71,15 @@ let isGameObjectRelationError =
         engineState,
       );
 
+let getSceneTreeNodeIsShowChildren = () => true;
+
 let buildTreeNode = (gameObject, engineState) => {
   name:
     engineState |> GameObjectEngineService.unsafeGetGameObjectName(gameObject),
   uid: gameObject,
-  isShowChildren: true,
+  isShowChildren:
+    gameObject === SceneEngineService.getSceneGameObject(engineState) ?
+      getSceneTreeNodeIsShowChildren() : false,
   children: [||],
 };
 

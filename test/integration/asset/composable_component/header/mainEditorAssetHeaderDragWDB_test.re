@@ -422,7 +422,7 @@ let _ =
             let isShowChildrenMap =
               isShowChildrenMap
               |> WonderCommonlib.SparseMapService.set(box1, true)
-              |> WonderCommonlib.SparseMapService.set(box4, false)
+              |> WonderCommonlib.SparseMapService.set(box4, true)
               |> WonderCommonlib.SparseMapService.set(box2, false);
 
             let (engineState, newGameObject1, _) =
@@ -451,9 +451,9 @@ let _ =
                         Js.Nullable.undefined |> Obj.magic,
                         true,
                         false,
-                        true,
                         false,
                         true,
+                        false,
                       |];
           })
         )

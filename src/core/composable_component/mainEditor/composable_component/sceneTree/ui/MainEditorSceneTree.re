@@ -50,7 +50,7 @@ module Method = {
   let buildSceneNode = (children, engineState) => {
     uid: SceneEngineService.getSceneGameObject(engineState),
     name: "Scene",
-    isShowChildren: true,
+    isShowChildren: SceneTreeUtils.getSceneTreeNodeIsShowChildren(),
     children,
   };
 
