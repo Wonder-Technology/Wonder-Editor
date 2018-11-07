@@ -9,8 +9,8 @@ module CustomEventHandler = {
     Wonderjs.GameObjectType.gameObject,
   );
 
-  let handleSelfLogic = ((store, dispatchFunc), (), (targetUid, dragedId)) => {
-    GameObjectUtils.setParentKeepOrder(targetUid, dragedId)
+  let handleSelfLogic = ((store, dispatchFunc), (), (targetUid, dragedUid)) => {
+    GameObjectUtils.setParentKeepOrder(targetUid, dragedUid)
     |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
     dispatchFunc(
@@ -19,7 +19,7 @@ module CustomEventHandler = {
           Some(
             SceneTreeUtils.getDragedSceneGraphData(
               targetUid,
-              dragedId,
+              dragedUid,
               store |> StoreUtils.unsafeGetSceneGraphDataFromStore,
             ),
           ),

@@ -59,7 +59,7 @@ module Method = {
                |> FolderNodeMapAssetEditorService.getFolderNodeMap
                |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
-             <TreeNode
+             <AssetTreeNode
                key=(DomHelper.getRandomKey())
                id=nodeId
                name

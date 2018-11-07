@@ -86,6 +86,9 @@ module Drag = {
   let dragWDBAssetToSceneTree =
       (
         ~wdbNodeId,
+        ~targetGameObject=SceneEngineService.getSceneGameObject(
+                            StateEngineService.unsafeGetState(),
+                          ),
         ~dispatchFunc=TestTool.getDispatch(),
         ~store=TestTool.buildEmptyAppState(),
         ~widget=AssetUtils.getWidget(),
@@ -110,7 +113,7 @@ module Drag = {
     MainEditorSceneTree.Method.dragWDBIntoScene(
       (store, dispatchFunc),
       (),
-      wdbGameObjectUid,
+      (targetGameObject, wdbGameObjectUid),
     );
 
     DragEventUtils.handleDrageEnd(event);

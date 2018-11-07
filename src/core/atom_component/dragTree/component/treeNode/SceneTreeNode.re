@@ -1,34 +1,102 @@
-open DragEventUtils;
+type action =
+  | TogggleChildren(int)
+  | Nothing
+  | DragEnter
+  | DragLeave
+  | DragEnd
+  | DragStart
+  | DragGameObject(int, int)
+  | DragWDB(int, int);
 
 type state = {style: ReactDOMRe.Style.t};
 
 module Method = {
-  let buildNotDragableUl = (treeChildren, isShowChildren, content) =>
-    <ul className="wonder-tree-node">
-      content
-      (isShowChildren ? ReasonReact.array(treeChildren) : ReasonReact.null)
-    </ul>;
+  let handleDragStart = (id, widget, dragImg, effectAllowd, event) => {
+    DragEventBaseUtils.dragStart(id, widget, dragImg, effectAllowd, event);
+    DragStart;
+  };
+
+  let handleDragEnter =
+      (
+        id,
+        (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFileFunc),
+        _event,
+      ) =>
+    DragEventBaseUtils.isTriggerDragEnter(
+      id,
+      handleWidgetFunc,
+      handleRelationErrorFunc,
+    )
+    || isAssetWDBFileFunc() ?
+      DragEnter : Nothing;
+
+  let handleDragLeave =
+      (
+        id,
+        (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFileFunc),
+        event,
+      ) => {
+    let e = ReactEventType.convertReactMouseEventToJsEvent(event);
+
+    DragLeave;
+  };
+
+  let handleDrageEnd = _event => {
+    CurrentDragSourceEditorService.clearCurrentDragSource
+    |> StateLogicService.getAndSetEditorState;
+    DragEnd;
+  };
+
+  let handleDrop =
+      (
+        id,
+        (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFileFunc),
+        event,
+      ) => {
+    let e = ReactEventType.convertReactMouseEventToJsEvent(event);
+    let startId = DragUtils.getDragedId(e);
+
+    DragEventBaseUtils.isTriggerDragDrop(
+      id,
+      startId,
+      handleWidgetFunc,
+      handleRelationErrorFunc,
+    ) ?
+      DragGameObject(id, startId) :
+      isAssetWDBFileFunc() ?
+        {
+          let wdbGameObjectUid =
+            StateEditorService.getState()
+            |> WDBNodeMapAssetEditorService.getWDBNodeMap
+            |> WonderCommonlib.SparseMapService.unsafeGet(startId)
+            |> (({wdbGameObject}) => wdbGameObject);
+
+          DragWDB(id, wdbGameObjectUid);
+        } :
+        DragLeave;
+  };
+
+  let buildNotDragableUl = TreeNodeUtils.buildNotDragableUl;
+
   let buildDragableUl =
       (send, (id, widget, dragImg, treeChildren, isShowChildren), content) =>
-    <ul
-      className="wonder-tree-node"
-      draggable=true
-      onDragStart=(
-        _e =>
-          send(
-            DragEventUtils.handleDragStart(id, widget, dragImg, "move", _e),
-          )
-      )
-      onDragEnd=(_e => send(DragEventUtils.handleDrageEnd(_e)))>
-      content
-      (isShowChildren ? ReasonReact.array(treeChildren) : ReasonReact.null)
-    </ul>;
+    TreeNodeUtils.buildDragableUl(
+      send,
+      (id, widget, dragImg, treeChildren, isShowChildren),
+      content,
+      (handleDragStart, handleDrageEnd),
+    );
 
   let getContent =
       (
         (state, send),
         (id, icon, name, treeChildren, isShowChildren, isHasChildren),
-        (onSelectFunc, handleWidgettFunc, handleRelationErrorFunc),
+        (
+          onSelectFunc,
+          handleWidgetFunc,
+          handleRelationErrorFunc,
+          isAssetWDBFileFunc,
+        ),
       ) =>
     <li
       style=state.style
@@ -37,10 +105,9 @@ module Method = {
       onDragEnter=(
         _e =>
           send(
-            DragEventUtils.handleDragEnter(
+            handleDragEnter(
               id,
-              handleWidgettFunc,
-              handleRelationErrorFunc,
+              (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFileFunc),
               _e,
             ),
           )
@@ -48,10 +115,9 @@ module Method = {
       onDragLeave=(
         _e =>
           send(
-            DragEventUtils.handleDragLeave(
+            handleDragLeave(
               id,
-              handleWidgettFunc,
-              handleRelationErrorFunc,
+              (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFileFunc),
               _e,
             ),
           )
@@ -60,10 +126,9 @@ module Method = {
       onDrop=(
         _e =>
           send(
-            DragEventUtils.handleDrop(
+            handleDrop(
               id,
-              handleWidgettFunc,
-              handleRelationErrorFunc,
+              (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFileFunc),
               _e,
             ),
           )
@@ -99,15 +164,19 @@ module Method = {
     </li>;
 };
 
-let component = ReasonReact.reducerComponent("TreeNode");
+let component = ReasonReact.reducerComponent("SceneTreeNode");
 
 let reducer =
-    (isShowChildren, (onDropFunc, handleToggleShowTreeChildren), action) =>
+    (
+      isShowChildren,
+      (dragGameObject, dragWDB, handleToggleShowTreeChildren),
+      action,
+    ) =>
   switch (action) {
-  | TogggleChildren(targetId) => (
+  | TogggleChildren(targetUid) => (
       state =>
         ReasonReactUtils.sideEffects(() =>
-          handleToggleShowTreeChildren(targetId, ! isShowChildren)
+          handleToggleShowTreeChildren(targetUid, ! isShowChildren)
         )
     )
 
@@ -146,9 +215,18 @@ let reducer =
         })
     )
 
-  | DragDrop(targetId, removedId) => (
+  | DragGameObject(targetUid, removedUid) => (
       _state =>
-        ReasonReactUtils.sideEffects(() => onDropFunc((targetId, removedId)))
+        ReasonReactUtils.sideEffects(() =>
+          dragGameObject((targetUid, removedUid))
+        )
+    )
+
+  | DragWDB(targetUid, wdbGameObjectUid) => (
+      _state =>
+        ReasonReactUtils.sideEffects(() =>
+          dragWDB((targetUid, wdbGameObjectUid))
+        )
     )
 
   | Nothing => (_state => ReasonReact.NoUpdate)
@@ -166,7 +244,12 @@ let render =
         isShowChildren,
         isHasChildren,
       ),
-      (onSelectFunc, isWidgetFunc, handleRelationErrorFunc),
+      (
+        onSelectFunc,
+        isWidgetFunc,
+        handleRelationErrorFunc,
+        isAssetWDBFileFunc,
+      ),
       treeChildren,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
@@ -179,7 +262,12 @@ let render =
         Method.getContent(
           (state, send),
           (id, icon, name, treeChildren, isShowChildren, isHasChildren),
-          (onSelectFunc, isWidgetFunc, handleRelationErrorFunc),
+          (
+            onSelectFunc,
+            isWidgetFunc,
+            handleRelationErrorFunc,
+            isAssetWDBFileFunc,
+          ),
         ),
       )
 
@@ -191,7 +279,12 @@ let render =
           Method.getContent(
             (state, send),
             (id, icon, name, treeChildren, isShowChildren, isHasChildren),
-            (onSelectFunc, isWidgetFunc, handleRelationErrorFunc),
+            (
+              onSelectFunc,
+              isWidgetFunc,
+              handleRelationErrorFunc,
+              isAssetWDBFileFunc,
+            ),
           ),
         ) :
         Method.buildNotDragableUl(
@@ -200,7 +293,12 @@ let render =
           Method.getContent(
             (state, send),
             (id, icon, name, treeChildren, isShowChildren, isHasChildren),
-            (onSelectFunc, isWidgetFunc, handleRelationErrorFunc),
+            (
+              onSelectFunc,
+              isWidgetFunc,
+              handleRelationErrorFunc,
+              isAssetWDBFileFunc,
+            ),
           ),
         )
     };
@@ -226,18 +324,24 @@ let make =
       ~icon: option(string)=?,
       ~isDragable: option(bool)=?,
       ~onSelect,
-      ~onDrop,
+      ~dragGameObject,
+      ~dragWDB,
       ~isWidget,
       ~isShowChildren,
       ~isHasChildren,
       ~handleRelationError,
       ~handleToggleShowTreeChildren,
+      ~isAssetWDBFile,
       ~treeChildren,
       _children,
     ) => {
   ...component,
   initialState: () => initalState(isSelected, isActive),
-  reducer: reducer(isShowChildren, (onDrop, handleToggleShowTreeChildren)),
+  reducer:
+    reducer(
+      isShowChildren,
+      (dragGameObject, dragWDB, handleToggleShowTreeChildren),
+    ),
   render: self =>
     render(
       (
@@ -250,7 +354,7 @@ let make =
         isShowChildren,
         isHasChildren,
       ),
-      (onSelect, isWidget, handleRelationError),
+      (onSelect, isWidget, handleRelationError, isAssetWDBFile),
       treeChildren,
       self,
     ),

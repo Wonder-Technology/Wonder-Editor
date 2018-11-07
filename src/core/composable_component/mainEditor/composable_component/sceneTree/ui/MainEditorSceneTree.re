@@ -64,12 +64,12 @@ module Method = {
           (
             (store, dispatchFunc, dragImg),
             currentSceneTreeNode,
-            (onSelectFunc, onDropFunc),
+            (onSelectFunc, dragGameObjectFunc, dragWDBFunc),
             sceneGraphArr,
           ) =>
     sceneGraphArr
     |> Js.Array.map(({uid, name, isShowChildren, children}) =>
-         <TreeNode
+         <SceneTreeNode
            key=(DomHelper.getRandomKey())
            id=uid
            name
@@ -78,9 +78,11 @@ module Method = {
            dragImg
            widget=(SceneTreeUtils.getWidget())
            onSelect=onSelectFunc
-           onDrop=onDropFunc
+           dragGameObject=dragGameObjectFunc
+           dragWDB=dragWDBFunc
            isWidget=SceneTreeUtils.isWidget
            isShowChildren
+           isAssetWDBFile=AssetUtils.isWDBAssetFile
            isHasChildren=(children |> Js.Array.length >= 1)
            handleToggleShowTreeChildren=(
              handleToggleShowTreeChildren(store, dispatchFunc)
@@ -90,7 +92,7 @@ module Method = {
              buildSceneTreeArray(
                (store, dispatchFunc, dragImg),
                currentSceneTreeNode,
-               (onSelectFunc, onDropFunc),
+               (onSelectFunc, dragGameObjectFunc, dragWDBFunc),
                children,
              )
            )
@@ -129,6 +131,7 @@ let render = (store, dispatchFunc, _self) => {
                        (store, dispatchFunc),
                        (),
                      ),
+                     Method.dragWDBIntoScene((store, dispatchFunc), ()),
                    ),
                  )
           ),

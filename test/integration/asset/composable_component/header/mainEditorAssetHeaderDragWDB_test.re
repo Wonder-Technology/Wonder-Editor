@@ -371,5 +371,35 @@ let _ =
           })
         )
       );
+
+      describe("test drag wdb to gameObject", () =>
+        testPromise("should add to target sceneTree node's children", () => {
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree,
+          );
+
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=directionPointLightsAndBoxWDBArrayBuffer^,
+            (),
+          )
+          |> then_(uploadedWDBNodeId => {
+               let engineState = StateEngineService.unsafeGetState();
+
+               MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                 ~wdbNodeId=uploadedWDBNodeId,
+                 ~targetGameObject=
+                   MainEditorSceneTool.getFirstBox(engineState),
+                 (),
+               );
+
+               BuildComponentTool.buildSceneTree(
+                 TestTool.buildAppStateSceneGraphFromEngine(),
+               )
+               |> ReactTestTool.createSnapshotAndMatch
+               |> resolve;
+             });
+        })
+      );
     });
   });
