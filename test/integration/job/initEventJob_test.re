@@ -713,24 +713,33 @@ let _ =
 
               _test(KeyUp, "keyup", (60, 20));
             });
-            test("trigger refresh_inspector event", () => {
-              _prepareKeyboardEvent(~sandbox, ());
-              let value = [||];
-              EventTool.onCustomGlobalEvent(
-                EventEditorService.getRefreshInspectorEventName(),
-                0,
-                (. event, engineState) => {
-                  value |> ArrayService.push(1) |> ignore;
 
-                  (engineState, event);
-                },
-              )
-              |> StateLogicService.getAndSetEngineState;
+            describe("trigger refresh_inspector event", () =>
+              test("defer 0 ms to exec", () => {
+                TimeoutTool.buildFakeSetTimeoutFunc();
+                _prepareKeyboardEvent(~sandbox, ());
+                let value = [||];
+                EventTool.onCustomGlobalEvent(
+                  EventEditorService.getRefreshInspectorEventName(),
+                  0,
+                  (. event, engineState) => {
+                    value |> ArrayService.push(1) |> ignore;
 
-              let _ = _prepareAndExec(KeyUp |> Obj.magic, "keyup", (60, 20));
+                    (engineState, event);
+                  },
+                )
+                |> StateLogicService.getAndSetEngineState;
 
-              value |> expect == [|1, 1|];
-            });
+                let _ =
+                  _prepareAndExec(KeyUp |> Obj.magic, "keyup", (60, 20));
+
+                let funcArr = TimeoutTool.getTimeoutFuncArr();
+                let (func, time) = funcArr |> ArrayService.unsafeGetFirst;
+                func();
+                (funcArr |> Js.Array.length, value, time)
+                |> expect == (2, [|1|], 0);
+              })
+            );
           });
         })
       );
@@ -864,28 +873,36 @@ let _ =
 
             _test(NameEventEngineService.getPointScaleEventName(), (60, 20));
           });
-          test("trigger refresh_inspector event", () => {
-            _prepareMouseEvent(~sandbox, ());
-            let value = [||];
-            EventTool.onCustomGlobalEvent(
-              EventEditorService.getRefreshInspectorEventName(),
-              0,
-              (. event, engineState) => {
-                value |> ArrayService.push(1) |> ignore;
 
-                (engineState, event);
-              },
-            )
-            |> StateLogicService.getAndSetEngineState;
+          describe("trigger refresh_inspector event", () =>
+            test("defer 0 ms to exec", () => {
+              TimeoutTool.buildFakeSetTimeoutFunc();
+              _prepareMouseEvent(~sandbox, ());
+              let value = [||];
+              EventTool.onCustomGlobalEvent(
+                EventEditorService.getRefreshInspectorEventName(),
+                0,
+                (. event, engineState) => {
+                  value |> ArrayService.push(1) |> ignore;
 
-            let _ =
-              _prepareAndExec(
-                NameEventEngineService.getPointScaleEventName(),
-                (60, 20),
-              );
+                  (engineState, event);
+                },
+              )
+              |> StateLogicService.getAndSetEngineState;
 
-            value |> expect == [|1, 1|];
-          });
+              let _ =
+                _prepareAndExec(
+                  NameEventEngineService.getPointScaleEventName(),
+                  (60, 20),
+                );
+
+              let funcArr = TimeoutTool.getTimeoutFuncArr();
+              let (func, time) = funcArr |> ArrayService.unsafeGetFirst;
+              func();
+              (funcArr |> Js.Array.length, value, time)
+              |> expect == (2, [|1|], 0);
+            })
+          );
         });
       })
     );

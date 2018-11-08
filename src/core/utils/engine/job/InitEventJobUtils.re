@@ -4,15 +4,28 @@ let _loopBodyWhenStop = engineState =>
   SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
     engineState : engineState |> DirectorEngineService.loopBody(0.);
 
+let _deferExec = [%bs.raw
+  func => {|
+      setTimeout(() => {
+        func();
+      }, 0)
+      |}
+];
+
 let _triggerRefreshInspectorEvent = engineState => {
-  let (engineState, _) =
-    ManageEventEngineService.triggerCustomGlobalEvent(
-      CreateCustomEventEngineService.create(
-        EventEditorService.getRefreshInspectorEventName(),
-        None,
-      ),
-      engineState,
-    );
+  _deferExec(() => {
+    let engineState = StateEngineService.unsafeGetState();
+    let (engineState, _) =
+      ManageEventEngineService.triggerCustomGlobalEvent(
+        CreateCustomEventEngineService.create(
+          EventEditorService.getRefreshInspectorEventName(),
+          None,
+        ),
+        engineState,
+      );
+
+    engineState |> StateEngineService.setState |> ignore;
+  });
 
   engineState;
 };
