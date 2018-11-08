@@ -144,40 +144,17 @@ let _ =
                 shaderSourceCountAfterDrag,
                 glShaderSource,
               ) =>
-              (
-                GLSLToolEngine.containMultiline(
-                  GLSLToolEngine.getFsSourceByCount(
-                    glShaderSource,
-                    shaderSourceCountBeforeDrag + 1,
-                  ),
-                  [
-                    {|#define DIRECTION_LIGHTS_COUNT 1|},
-                    {|#define POINT_LIGHTS_COUNT 1|},
-                  ],
+              GLSLToolEngine.containMultiline(
+                GLSLToolEngine.getFsSourceByCount(
+                  glShaderSource,
+                  shaderSourceCountBeforeDrag,
                 ),
-                GLSLToolEngine.contain(
-                  GLSLToolEngine.getVsSourceByCount(
-                    glShaderSource,
-                    shaderSourceCountBeforeDrag + 2,
-                  ),
+                [
                   {|#define DIRECTION_LIGHTS_COUNT 1|},
-                ),
-                GLSLToolEngine.contain(
-                  GLSLToolEngine.getVsSourceByCount(
-                    glShaderSource,
-                    shaderSourceCountBeforeDrag + 3,
-                  ),
-                  {|#define DIRECTION_LIGHTS_COUNT 1|},
-                ),
-                GLSLToolEngine.contain(
-                  GLSLToolEngine.getVsSourceByCount(
-                    glShaderSource,
-                    shaderSourceCountBeforeDrag + 4,
-                  ),
-                  {|#define DIRECTION_LIGHTS_COUNT 1|},
-                ),
+                  {|#define POINT_LIGHTS_COUNT 1|},
+                ],
               )
-              |> expect == (true, true, true, true)
+              |> expect == true
               |> resolve
             )
           )
@@ -191,7 +168,10 @@ let _ =
               shaderSourceCountAfterDrag,
               glShaderSource,
             ) =>
-            shaderSourceCountAfterDrag |> expect == 6 |> resolve
+            shaderSourceCountAfterDrag
+            - shaderSourceCountBeforeDrag
+            |> expect == 1
+            |> resolve
           )
         );
 

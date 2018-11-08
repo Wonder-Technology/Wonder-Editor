@@ -80,7 +80,7 @@ let _ =
 
                     MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
 
-                    glShaderSource |> getCallCount |> expect == 4;
+                    glShaderSource |> getCallCount |> expect == 2;
                   });
                   test("glsl->DIRECTION_LIGHTS_COUNT should == 0", () => {
                     let glShaderSource = _prepare();
