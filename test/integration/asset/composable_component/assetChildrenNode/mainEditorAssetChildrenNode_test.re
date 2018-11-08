@@ -188,4 +188,52 @@ let _ =
         );
       });
     });
+
+    describe("test asse tree node->isShowChildren", () =>
+      describe("test double click folder", () =>
+        test("folder->parent folder->isShowChildren should set to true", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+
+          let addedFolderNodeId1 = MainEditorAssetIdTool.getNewAssetId();
+
+          MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+          MainEditorAssetTreeTool.Select.selectFolderNode(
+            ~nodeId=addedFolderNodeId1,
+            (),
+          );
+
+          let addedFolderNodeId2 = addedFolderNodeId1 |> succ;
+
+          MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+          MainEditorAssetTreeTool.Select.selectFolderNode(
+            ~nodeId=addedFolderNodeId2,
+            (),
+          );
+
+          let addedFolderNodeId3 = addedFolderNodeId2 |> succ;
+
+          MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+          AssetTreeUtils.setSpecificAssetTreeNodeIsShowChildrenFromEditorState(
+            addedFolderNodeId1,
+            false,
+          )
+          |> StateLogicService.getAndSetEditorState;
+
+          FolderBoxTool.onDoubleClick(~nodeId=addedFolderNodeId2, ());
+
+          let {isShowChildren}: AssetTreeNodeType.assetTreeNodeType =
+            MainEditorAssetTreeNodeTool.getSpecificTreeNode(
+              addedFolderNodeId1,
+            )
+            |> StateLogicService.getEditorState
+            |> OptionService.unsafeGet;
+
+          isShowChildren |> expect == true;
+        })
+      )
+    );
   });
