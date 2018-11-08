@@ -11,6 +11,12 @@ let getFilterLinearMipmapLinearType = () =>
   Wonderjs.SourceTextureType.Linear_mipmap_linear
   |> TextureTypeUtils.convertFilterToInt;
 
+
+let getFilterNearestType = () =>
+  Wonderjs.SourceTextureType.Nearest
+  |> TextureTypeUtils.convertFilterToInt;
+
+
 let getFilterNearestMipmapLinearType = () =>
   Wonderjs.SourceTextureType.Nearest_mipmap_linear
   |> TextureTypeUtils.convertFilterToInt;

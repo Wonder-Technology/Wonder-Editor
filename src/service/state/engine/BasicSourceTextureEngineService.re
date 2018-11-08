@@ -61,5 +61,17 @@ let setFlipY = (filpY, texture, engineState) =>
   engineState
   |> BasicSourceTextureAPI.setBasicSourceTextureFlipY(texture, filpY);
 
+let getIsNeedUpdate = (texture, state) =>
+  OperateBasicSourceTextureMainService.getIsNeedUpdate(texture, state);
+
+let setIsNeedUpdate = (isNeedUpdate, texture, state) =>
+  OperateBasicSourceTextureMainService.setIsNeedUpdate(
+    texture,
+    isNeedUpdate ?
+      BufferSourceTextureService.getNeedUpdate() :
+      BufferSourceTextureService.getNotNeedUpdate(),
+    state,
+  );
+
 let initTexture = (texture, state) =>
   InitSourceTextureMainService.initTexture(texture |. Some, state);

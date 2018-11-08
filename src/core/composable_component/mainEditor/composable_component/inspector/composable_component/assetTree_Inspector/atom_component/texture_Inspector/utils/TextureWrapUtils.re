@@ -16,16 +16,26 @@ let getWrapOptions = () => [|
   },
 |];
 
-let changeWrapS = (textureComponent, value) =>
-  BasicSourceTextureEngineService.setWrapS(
-    value |> TextureTypeUtils.convertIntToWrap,
-    textureComponent,
-  )
-  |> StateLogicService.getAndRefreshEngineStateWithFunc;
+let changeWrapS = (textureComponent, value) => {
+  let engineState = StateEngineService.unsafeGetState();
 
-let changeWrapT = (textureComponent, value) =>
-  BasicSourceTextureEngineService.setWrapT(
-    value |> TextureTypeUtils.convertIntToWrap,
-    textureComponent,
-  )
-  |> StateLogicService.getAndRefreshEngineStateWithFunc;
+  engineState
+  |> BasicSourceTextureEngineService.setWrapS(
+       value |> TextureTypeUtils.convertIntToWrap,
+       textureComponent,
+     )
+  |> BasicSourceTextureEngineService.setIsNeedUpdate(true, textureComponent)
+  |> StateLogicService.refreshEngineState;
+};
+
+let changeWrapT = (textureComponent, value) => {
+  let engineState = StateEngineService.unsafeGetState();
+
+  engineState
+  |> BasicSourceTextureEngineService.setWrapT(
+       value |> TextureTypeUtils.convertIntToWrap,
+       textureComponent,
+     )
+  |> BasicSourceTextureEngineService.setIsNeedUpdate(true, textureComponent)
+  |> StateLogicService.refreshEngineState;
+};

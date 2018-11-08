@@ -6,6 +6,12 @@ exports[`texture inspector prepare currentSelectSource test texture change filte
 />
 `;
 
+exports[`texture inspector prepare currentSelectSource test texture change filter test set MagFilter to Nearest test snapshot 1`] = `
+<article
+  className="wonder-inspector-component"
+/>
+`;
+
 exports[`texture inspector prepare currentSelectSource test texture change filter test set MinFilter to Nearest_mipmap_linear test snapshot 1`] = `
 <article
   className="wonder-inspector-component"

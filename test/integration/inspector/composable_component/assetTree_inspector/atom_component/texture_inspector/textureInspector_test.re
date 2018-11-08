@@ -110,12 +110,16 @@ let _ =
         );
       });
 
-      describe("test texture change wrap", () => {
+      describe("test texture change wrap", () =>
         describe("test set wrapS to Repeat", () => {
-          test("test snapshot", () => {
+          let _prepareAndExec = () => {
             let assetTreeData =
               MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
             let wrapRepeatType = TextureInspectorTool.getWrapRepeatType();
+            let nodeId =
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                assetTreeData,
+              );
 
             TextureInspectorTool.changeWrapS(
               MainEditorAssetNodeTool.getTextureComponentFromNodeId(
@@ -126,111 +130,49 @@ let _ =
               wrapRepeatType,
             );
 
+            (
+              MainEditorAssetNodeTool.getTextureComponentFromNodeId(nodeId),
+              wrapRepeatType,
+            );
+          };
+
+          test("test snapshot", () => {
+            let _ = _prepareAndExec();
+
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
               InspectorTool.buildFakeAllShowComponentConfig(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
           });
-          test("test logic", () => {
-            let assetTreeData =
-              MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
-            let wrapRepeatType = TextureInspectorTool.getWrapRepeatType();
-            let nodeId =
-              MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
-                assetTreeData,
-              );
+          test("set wrapS", () => {
+            let (textureComponent, wrapRepeatType) = _prepareAndExec();
 
-            TextureInspectorTool.changeWrapS(
-              MainEditorAssetNodeTool.getTextureComponentFromNodeId(nodeId),
-              wrapRepeatType,
-            );
-
-            let textureComponent =
-              MainEditorAssetNodeTool.getTextureComponentFromNodeId(nodeId);
             BasicSourceTextureEngineService.getWrapS(textureComponent)
             |> StateLogicService.getEngineStateToGetData
             |> TextureTypeUtils.convertWrapToInt
             |> expect == wrapRepeatType;
           });
-        });
+          test("mark need update", () => {
+            let (textureComponent, wrapRepeatType) = _prepareAndExec();
 
-        describe("test set wrapT to Mirrored_repeat", () => {
-          test("test snapshot", () => {
-            let assetTreeData =
-              MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
-            let wrapMirroredRepeatType =
-              TextureInspectorTool.getWrapMirroredRepeatType();
-
-            TextureInspectorTool.changeWrapT(
-              MainEditorAssetNodeTool.getTextureComponentFromNodeId(
-                MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
-                  assetTreeData,
-                ),
-              ),
-              wrapMirroredRepeatType,
-            );
-
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildEmptyAppState(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
+            let engineState = StateEngineService.unsafeGetState();
+            BasicSourceTextureToolEngine.getIsNeedUpdate(
+              textureComponent,
+              engineState,
             )
-            |> ReactTestTool.createSnapshotAndMatch;
+            |> expect == true;
           });
-          test("test logic", () => {
-            let assetTreeData =
-              MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
-            let wrapMirroredRepeatType =
-              TextureInspectorTool.getWrapMirroredRepeatType();
-            let nodeId =
-              MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
-                assetTreeData,
-              );
-
-            TextureInspectorTool.changeWrapT(
-              MainEditorAssetNodeTool.getTextureNode(nodeId).textureComponent,
-              wrapMirroredRepeatType,
-            );
-
-            let textureComponent =
-              MainEditorAssetNodeTool.getTextureComponentFromNodeId(nodeId);
-            BasicSourceTextureEngineService.getWrapT(textureComponent)
-            |> StateLogicService.getEngineStateToGetData
-            |> TextureTypeUtils.convertWrapToInt
-            |> expect == wrapMirroredRepeatType;
-          });
-        });
-      });
+        })
+      );
 
       describe("test texture change filter", () => {
-        describe("test set MagFilter to Linear_mipmap_linear", () => {
-          test("test snapshot", () => {
+        describe("test set MagFilter to Nearest", () => {
+          let _prepareAndExec = () => {
             let assetTreeData =
               MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
-            let filterLinearMipmapLinearType =
-              TextureInspectorTool.getFilterLinearMipmapLinearType();
-
-            TextureInspectorTool.changeMagFilter(
-              MainEditorAssetNodeTool.getTextureComponentFromNodeId(
-                MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
-                  assetTreeData,
-                ),
-              ),
-              filterLinearMipmapLinearType,
-            );
-
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildEmptyAppState(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
-          test("test logic", () => {
-            let assetTreeData =
-              MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
-            let filterLinearMipmapLinearType =
-              TextureInspectorTool.getFilterLinearMipmapLinearType();
-
+            let filterNearestType =
+              TextureInspectorTool.getFilterNearestType();
             let nodeId =
               MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
                 assetTreeData,
@@ -238,42 +180,47 @@ let _ =
 
             TextureInspectorTool.changeMagFilter(
               MainEditorAssetNodeTool.getTextureNode(nodeId).textureComponent,
-              filterLinearMipmapLinearType,
+              filterNearestType,
             );
 
-            let textureComponent =
-              MainEditorAssetNodeTool.getTextureComponentFromNodeId(nodeId);
+            (
+              MainEditorAssetNodeTool.getTextureComponentFromNodeId(nodeId),
+              filterNearestType,
+            );
+          };
+
+          test("test snapshot", () => {
+            let _ = _prepareAndExec();
+
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
+
+          test("set magFilter", () => {
+            let (textureComponent, filterNearestType) = _prepareAndExec();
+
             BasicSourceTextureEngineService.getMagFilter(textureComponent)
             |> StateLogicService.getEngineStateToGetData
             |> TextureTypeUtils.convertFilterToInt
-            |> expect == filterLinearMipmapLinearType;
+            |> expect == filterNearestType;
+          });
+          test("mark need update", () => {
+            let (textureComponent, _) = _prepareAndExec();
+
+            let engineState = StateEngineService.unsafeGetState();
+            BasicSourceTextureToolEngine.getIsNeedUpdate(
+              textureComponent,
+              engineState,
+            )
+            |> expect == true;
           });
         });
 
         describe("test set MinFilter to Nearest_mipmap_linear", () => {
-          test("test snapshot", () => {
-            let assetTreeData =
-              MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
-            let filterLinearMipmapLinearType =
-              TextureInspectorTool.getFilterLinearMipmapLinearType();
-
-            TextureInspectorTool.changeMinFilter(
-              MainEditorAssetNodeTool.getTextureComponentFromNodeId(
-                MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
-                  assetTreeData,
-                ),
-              ),
-              filterLinearMipmapLinearType,
-            );
-
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildEmptyAppState(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
-
-          test("test logic", () => {
+          let _prepareAndExec = () => {
             let assetTreeData =
               MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
             let filterLinearMipmapLinearType =
@@ -285,16 +232,47 @@ let _ =
               );
 
             TextureInspectorTool.changeMinFilter(
-              MainEditorAssetNodeTool.getTextureNode(nodeId).textureComponent,
+              MainEditorAssetNodeTool.getTextureComponentFromNodeId(
+                MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                  assetTreeData,
+                ),
+              ),
               filterLinearMipmapLinearType,
             );
 
-            let textureComponent =
-              MainEditorAssetNodeTool.getTextureComponentFromNodeId(nodeId);
+            (
+              MainEditorAssetNodeTool.getTextureComponentFromNodeId(nodeId),
+              filterLinearMipmapLinearType,
+            );
+          };
+
+          test("test snapshot", () => {
+            let _ = _prepareAndExec();
+
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
+
+          test("set minFilter", () => {
+            let (textureComponent, filterNearestType) = _prepareAndExec();
+
             BasicSourceTextureEngineService.getMinFilter(textureComponent)
             |> StateLogicService.getEngineStateToGetData
             |> TextureTypeUtils.convertFilterToInt
-            |> expect == filterLinearMipmapLinearType;
+            |> expect == filterNearestType;
+          });
+          test("mark need update", () => {
+            let (textureComponent, _) = _prepareAndExec();
+
+            let engineState = StateEngineService.unsafeGetState();
+            BasicSourceTextureToolEngine.getIsNeedUpdate(
+              textureComponent,
+              engineState,
+            )
+            |> expect == true;
           });
         });
       });
