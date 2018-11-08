@@ -1,6 +1,7 @@
 open EditorType;
 
 let create = () => {
+  settingRecord: RecordSettingService.create(),
   sceneRecord: {
     currentSceneTreeNode: None,
     isRun: false,

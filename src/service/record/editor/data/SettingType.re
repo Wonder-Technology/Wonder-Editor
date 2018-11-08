@@ -1,0 +1,1 @@
+type settingRecord = {isDebug: option(bool)};

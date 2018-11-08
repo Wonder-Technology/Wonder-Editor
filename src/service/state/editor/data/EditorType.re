@@ -1,3 +1,5 @@
+open SettingType;
+
 open SceneType;
 
 open AssetType;
@@ -21,6 +23,7 @@ type widgetType =
   | Asset;
 
 type editorState = {
+  settingRecord,
   sceneRecord,
   assetRecord,
   sceneViewRecord,
