@@ -4,7 +4,6 @@
   "authors": "Wonder",
   "repository": "git@github.com:Wonder-Technology/Wonder-Editor.git",
   "homepage": "https://github.com/Wonder-Technology/Wonder-Editor.js",
-  "license": "MIT",
   "scripts": {
     "start": "node ./server/app.js",
     "bsb:watch": "bsb -clean-world -make-world -w",
