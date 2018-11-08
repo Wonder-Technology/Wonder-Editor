@@ -61,10 +61,13 @@ let dragWDB =
       |> GameObjectUtils.addChild(targetGameObjectUid, clonedWDBGameObject);
 
     let engineState =
-      engineState
-      |> LightMaterialEngineService.reInitAllLightMaterialsAndClearShaderCache(
-           SceneEngineService.getSceneAllLightMaterials(engineState),
-         );
+      SceneEngineService.doesNeedReInitSceneAllLightMaterials(
+        flatCloneGameObjectArr,
+        engineState,
+      ) ?
+        engineState
+        |> SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials :
+        engineState;
 
     let editorState =
       editorState

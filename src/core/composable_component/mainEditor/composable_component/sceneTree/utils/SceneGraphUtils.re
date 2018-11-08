@@ -136,8 +136,6 @@ let buildIsShowChildrenMapFromStore = store =>
   )
   |> buildIsShowChildrenMap;
 
-
-
 let _checkDragedTreeNodeShouldExist = ((newSceneGraphArr, dragedTreeNode)) => {
   WonderLog.Contract.requireCheck(
     () =>
@@ -191,4 +189,16 @@ let removeDragedTreeNode = (dragedUid, sceneGraphArray) => {
        );
   _iterateSceneGraph(dragedUid, sceneGraphArray, [||], None)
   |> _checkDragedTreeNodeShouldExist;
+};
+
+let getAllGameObjects = treeNode => {
+  let rec _iterateGet = (treeNodeArr, resultArr) =>
+    treeNodeArr
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. resultArr, {uid, children}) =>
+           _iterateGet(children, resultArr |> ArrayService.push(uid)),
+         resultArr,
+       );
+
+  _iterateGet([|treeNode|], [||]);
 };

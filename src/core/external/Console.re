@@ -47,3 +47,8 @@ let throwFatal = e => {
   WonderLog.Log._error(e##message);
   WonderLog.Log._trace(e##stack);
 };
+
+
+[@bs.val] [@bs.scope "console"] external profile : string => unit = "";
+
+[@bs.val] [@bs.scope "console"] external profileEnd : unit => unit = "";

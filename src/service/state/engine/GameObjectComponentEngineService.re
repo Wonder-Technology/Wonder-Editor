@@ -105,6 +105,10 @@ let unsafeGetPointLightComponent = GameObjectAPI.unsafeGetGameObjectPointLightCo
 
 let hasPointLightComponent = GameObjectAPI.hasGameObjectPointLightComponent;
 
+let hasLightComponent = (gameObject, engineState) =>
+  hasDirectionLightComponent(gameObject, engineState)
+  || hasPointLightComponent(gameObject, engineState);
+
 /* arcball camera */
 
 let addArcballCameraControllerComponent = GameObjectAPI.addGameObjectArcballCameraControllerComponent;

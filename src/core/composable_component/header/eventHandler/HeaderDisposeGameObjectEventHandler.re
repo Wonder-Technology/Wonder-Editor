@@ -86,35 +86,9 @@ module CustomEventHandler = {
     };
   };
 
-  let _hasLightComponent = removedTreeNode => {
-    open SceneGraphType;
-
-    let engineState = StateEngineService.unsafeGetState();
-
-    let rec _iterateJudge = (result, removedTreeNodeArr) =>
-      result ?
-        result :
-        removedTreeNodeArr
-        |> WonderCommonlib.ArrayService.reduceOneParam(
-             (. result, {uid, children}) =>
-               result ?
-                 result :
-                 _iterateJudge(
-                   GameObjectComponentEngineService.hasDirectionLightComponent(
-                     uid,
-                     engineState,
-                   )
-                   || GameObjectComponentEngineService.hasPointLightComponent(
-                        uid,
-                        engineState,
-                      ),
-                   children,
-                 ),
-             result,
-           );
-
-    _iterateJudge(false, [|removedTreeNode|]);
-  };
+  let _hasLightComponent = (removedTreeNode, engineState) =>
+    SceneGraphUtils.getAllGameObjects(removedTreeNode)
+    |> SceneEngineService.doesNeedReInitSceneAllLightMaterials(_, engineState);
 
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
     let sceneGraphArr = store |> StoreUtils.unsafeGetSceneGraphDataFromStore;
@@ -125,7 +99,12 @@ module CustomEventHandler = {
     switch (removedTreeNode) {
     | None => ()
     | Some(removedTreeNode) =>
-      let hasLightComponent = _hasLightComponent(removedTreeNode);
+      let engineState = StateEngineService.unsafeGetState();
+
+      let hasLightComponent =
+        _hasLightComponent(removedTreeNode, engineState);
+
+      engineState |> StateEngineService.setState |> ignore;
 
       removedTreeNode
       |> CurrentSceneTreeNodeLogicService.disposeCurrentSceneTreeNode;

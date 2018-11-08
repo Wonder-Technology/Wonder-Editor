@@ -1,0 +1,1 @@
+[@bs.val] [@bs.scope "performance"] external now : unit => float = "";
