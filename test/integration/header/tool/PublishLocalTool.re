@@ -138,7 +138,7 @@ let getAssetJson =
 
   let fakeFetchFunc = buildFakeFetch(~sandbox, ());
 
-  let obj = HeaderTool.buildExportFakeJsZipCreateFunc(sandbox^);
+  let obj = HeaderTool.buildPublishFakeJsZipCreateFunc(sandbox^);
 
   HeaderExportUtils.exportPackage(() => obj, fakeFetchFunc)
   |> then_(_ => {

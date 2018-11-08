@@ -47,7 +47,7 @@ let buildFakeZipData = [%bs.raw
 |}
 ];
 
-let buildExportFakeJsZipCreateFunc = [%bs.raw
+let buildPublishFakeJsZipCreateFunc = [%bs.raw
   sandbox => {|
         var obj = {
            file: sandbox.stub(),
@@ -57,31 +57,6 @@ let buildExportFakeJsZipCreateFunc = [%bs.raw
         obj.file = obj.file.returns(obj);
         obj.generateAsync = (a,b) => {
           return new Promise((resolve, _) => resolve(obj))
-        };
-
-        return obj;
-
-|}
-];
-let buildImportFakeJsZipCreateFunc = [%bs.raw
-  (sandbox, zipData) => {|
-        var obj = {
-           loadAsync: sandbox.stub(),
-        };
-
-        var obj2 = {
-           forEach: function(handleFunc){
-             zipData.forEach((data) => {
-               handleFunc(data[0],data[1]);
-             })
-           },
-           async: function() {
-             return obj2
-           }
-        };
-
-        obj.loadAsync = (zip, a) => {
-          return new Promise((resolve, _) => resolve(obj2))
         };
 
         return obj;

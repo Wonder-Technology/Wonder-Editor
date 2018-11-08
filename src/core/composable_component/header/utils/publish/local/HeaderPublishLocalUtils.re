@@ -4,7 +4,7 @@ module LoadData = {
   open WonderBsJszip;
 
   let loadAndWriteIndexJsData = (fetchFunc, zip) =>
-    fetchFunc("./export/wd.min.js")
+    fetchFunc("./publish/wd.min.js")
     |> then_(response =>
          response
          |> Fetch.Response.text
@@ -23,7 +23,7 @@ module LoadData = {
        );
 
   let loadAndWriteIndexHtmlData = (sceneGraphArrayBuffer, fetchFunc, zip) =>
-    fetchFunc("./export/index.html")
+    fetchFunc("./publish/index.html")
     |> then_(response =>
          response
          |> Fetch.Response.text
@@ -38,7 +38,7 @@ module LoadData = {
        );
 
   let _loadAndWriteSingleResArrayBufferData =
-      (~name, ~fetchFunc, ~zip, ~dirname="./export/res/loading", ()) =>
+      (~name, ~fetchFunc, ~zip, ~dirname="./publish/res/loading", ()) =>
     fetchFunc({j|$dirname/$name|j})
     |> then_(response =>
          response
@@ -59,7 +59,7 @@ module LoadData = {
 
   let loadAndWriteResData = (fetchFunc, zip) =>
     WonderBsMost.Most.mergeArray([|
-      fetchFunc({j|./export/res/loading/Lato-Regular-64.fnt|j})
+      fetchFunc({j|./publish/res/loading/Lato-Regular-64.fnt|j})
       |> then_(response =>
            response
            |> Fetch.Response.text
@@ -98,7 +98,7 @@ module LoadData = {
     |> then_(_ => zip |> resolve);
 
   let _loadAndWriteSingleConfigData = (fileNamePath, fetchFunc, zip) =>
-    fetchFunc({j|./export/config/$fileNamePath|j})
+    fetchFunc({j|./publish/config/$fileNamePath|j})
     |> then_(response =>
          response
          |> Fetch.Response.text

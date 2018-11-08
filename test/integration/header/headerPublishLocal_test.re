@@ -33,14 +33,14 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("export zip", () => {
+    describe("download zip", () => {
       let _prepare = judgeFunc => {
         MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAndMaterialAssetTree()
         |> ignore;
 
         let fakeFetchFunc = PublishLocalTool.buildFakeFetch(~sandbox, ());
 
-        let obj = HeaderTool.buildExportFakeJsZipCreateFunc(sandbox^);
+        let obj = HeaderTool.buildPublishFakeJsZipCreateFunc(sandbox^);
 
         HeaderPublishLocalUtils.Publish.publishZip(
           () => obj,
