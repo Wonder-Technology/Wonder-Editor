@@ -20,8 +20,8 @@ let getTransformScaleData = transformComponent =>
   |> truncateTransformValue;
 
 let getTransformRotationData = transformComponent =>
-  TransformEngineService.getLocalEulerAngles(transformComponent)
-  |> StateLogicService.getEngineStateToGetData
+  TransformEditorService.getLocalEulerAngle(transformComponent)
+  |> StateLogicService.getStateToGetData
   |> truncateTransformValue;
 
 let isTransformVec3Equal = ((x, y, z), (newX, newY, newZ)) =>

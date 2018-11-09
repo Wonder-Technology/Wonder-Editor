@@ -99,6 +99,9 @@ module Method = {
     |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
   let changeRotationX = (transformComponent, value) => {
+    TransformEditorService.setLocalEulerAngleX(transformComponent, value)
+    |> StateLogicService.getAndSetEditorState;
+
     let (_x, y, z) =
       TransformEngineService.getLocalEulerAngles(transformComponent)
       |> StateLogicService.getEngineStateToGetData;
@@ -107,6 +110,9 @@ module Method = {
   };
 
   let changeRotationY = (transformComponent, value) => {
+    TransformEditorService.setLocalEulerAngleY(transformComponent, value)
+    |> StateLogicService.getAndSetEditorState;
+
     let (x, _y, z) =
       TransformEngineService.getLocalEulerAngles(transformComponent)
       |> StateLogicService.getEngineStateToGetData;
@@ -115,6 +121,9 @@ module Method = {
   };
 
   let changeRotationZ = (transformComponent, value) => {
+    TransformEditorService.setLocalEulerAngleZ(transformComponent, value)
+    |> StateLogicService.getAndSetEditorState;
+
     let (x, y, _z) =
       TransformEngineService.getLocalEulerAngles(transformComponent)
       |> StateLogicService.getEngineStateToGetData;
@@ -137,56 +146,51 @@ let render =
   <article className="wonder-inspector-transform">
     <div className="inspector-item">
       <div className="item-header"> (DomHelper.textEl("Position")) </div>
-
       <div className="item-content">
-      
-      <TransformTemplate
-        store
-        dispatchFunc
-        transformComponent
-        changeXFunc=Method.changePositionX
-        changeYFunc=Method.changePositionY
-        changeZFunc=Method.changePositionZ
-        getDataFunc=TransformUtils.getTransformPositionData
-        blurEventFunc=Method.blurPositionEvent
-        canBeZero=true
-      />
+        <TransformTemplate
+          store
+          dispatchFunc
+          transformComponent
+          changeXFunc=Method.changePositionX
+          changeYFunc=Method.changePositionY
+          changeZFunc=Method.changePositionZ
+          getDataFunc=TransformUtils.getTransformPositionData
+          blurEventFunc=Method.blurPositionEvent
+          canBeZero=true
+        />
       </div>
-
     </div>
     <div className="inspector-item">
       <div className="item-header"> (DomHelper.textEl("Rotation")) </div>
       <div className="item-content">
-      
-      <TransformTemplate
-        store
-        dispatchFunc
-        transformComponent
-        changeXFunc=Method.changeRotationX
-        changeYFunc=Method.changeRotationY
-        changeZFunc=Method.changeRotationZ
-        getDataFunc=TransformUtils.getTransformRotationData
-        blurEventFunc=Method.blurRotationEvent
-        canBeZero=true
-      />
-      </div> 
+        <TransformTemplate
+          store
+          dispatchFunc
+          transformComponent
+          changeXFunc=Method.changeRotationX
+          changeYFunc=Method.changeRotationY
+          changeZFunc=Method.changeRotationZ
+          getDataFunc=TransformUtils.getTransformRotationData
+          blurEventFunc=Method.blurRotationEvent
+          canBeZero=true
+        />
+      </div>
     </div>
     <div className="inspector-item">
       <div className="item-header"> (DomHelper.textEl("Scale")) </div>
       <div className="item-content">
-      
-      <TransformTemplate
-        store
-        dispatchFunc
-        transformComponent
-        changeXFunc=Method.changeScaleX
-        changeYFunc=Method.changeScaleY
-        changeZFunc=Method.changeScaleZ
-        getDataFunc=TransformUtils.getTransformScaleData
-        blurEventFunc=Method.blurScaleEvent
-        canBeZero=false
-      />
-      </div> 
+        <TransformTemplate
+          store
+          dispatchFunc
+          transformComponent
+          changeXFunc=Method.changeScaleX
+          changeYFunc=Method.changeScaleY
+          changeZFunc=Method.changeScaleZ
+          getDataFunc=TransformUtils.getTransformScaleData
+          blurEventFunc=Method.blurScaleEvent
+          canBeZero=false
+        />
+      </div>
     </div>
     (Method.buildShadeComponent(gameObject))
   </article>;

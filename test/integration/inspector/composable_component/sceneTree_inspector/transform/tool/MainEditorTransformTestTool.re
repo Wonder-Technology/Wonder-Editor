@@ -21,7 +21,7 @@ let transformBaseTest =
               });
 
               describe(
-                "changeX should set current gameObject localPosition x", () => {
+                "changeX should set current gameObject->transform->value x", () => {
                 test("set x value to floatInput", () => {
                   let currentGameObjectTransform =
                     GameObjectTool.getCurrentSceneTreeNodeTransform();

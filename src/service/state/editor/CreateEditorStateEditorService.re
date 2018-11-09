@@ -54,6 +54,11 @@ let create = () => {
   uiRecord: {
     isFileInputOpen: false,
   },
+  transformRecord: {
+    localEulerAngleMapX: WonderCommonlib.SparseMapService.createEmpty(),
+    localEulerAngleMapY: WonderCommonlib.SparseMapService.createEmpty(),
+    localEulerAngleMapZ: WonderCommonlib.SparseMapService.createEmpty(),
+  },
   currentDragSource: (None, None),
   currentSelectSource: None,
   loopId: (-1),

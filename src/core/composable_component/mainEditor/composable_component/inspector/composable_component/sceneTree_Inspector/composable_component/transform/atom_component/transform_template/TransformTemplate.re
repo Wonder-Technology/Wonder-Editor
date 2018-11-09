@@ -1,5 +1,3 @@
-
-
 type state = {
   x: float,
   y: float,
