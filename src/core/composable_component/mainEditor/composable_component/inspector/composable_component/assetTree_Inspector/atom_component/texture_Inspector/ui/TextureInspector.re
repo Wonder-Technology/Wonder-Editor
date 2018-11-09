@@ -25,7 +25,7 @@ module Method = {
   let renderMagFilterSelect = textureComponent =>
     <Select
       label="Mag Filter"
-      options=(TextureFilterUtils.getFilterOptions())
+      options=(TextureFilterUtils.getMagFilterOptions())
       selectedKey=(
         BasicSourceTextureEngineService.getMagFilter(textureComponent)
         |> StateLogicService.getEngineStateToGetData
@@ -37,7 +37,7 @@ module Method = {
   let renderMinFilterSelect = textureComponent =>
     <Select
       label="Min Filter"
-      options=(TextureFilterUtils.getFilterOptions())
+      options=(TextureFilterUtils.getMinFilterOptions())
       selectedKey=(
         BasicSourceTextureEngineService.getMinFilter(textureComponent)
         |> StateLogicService.getEngineStateToGetData

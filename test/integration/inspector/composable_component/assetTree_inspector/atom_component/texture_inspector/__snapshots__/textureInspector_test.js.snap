@@ -1,5 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`texture inspector prepare currentSelectSource test texture change filter test set MagFilter mag 1`] = `
+<article
+  className="wonder-inspector-component"
+/>
+`;
+
+exports[`texture inspector prepare currentSelectSource test texture change filter test set MagFilter magFilter 1`] = `
+<article
+  className="wonder-inspector-component"
+/>
+`;
+
+exports[`texture inspector prepare currentSelectSource test texture change filter test set MagFilter magFilter->select options should only has Nearest, 1`] = `
+<article
+  className="wonder-inspector-component"
+/>
+`;
+
+exports[`texture inspector prepare currentSelectSource test texture change filter test set MagFilter magFilter->select options should only has Nearest,Linear 1`] = `
+<article
+  className="wonder-inspector-component"
+/>
+`;
+
+exports[`texture inspector prepare currentSelectSource test texture change filter test set MagFilter test snapshot magFilter->select options should only has Nearest,Linear 1`] = `
+<article
+  className="wonder-inspector-component"
+/>
+`;
+
 exports[`texture inspector prepare currentSelectSource test texture change filter test set MagFilter to Linear_mipmap_linear test snapshot 1`] = `
 <article
   className="wonder-inspector-component"
@@ -170,26 +200,6 @@ exports[`texture inspector prepare currentSelectSource test texture inspector->s
               value="1"
             >
               Linear
-            </option>
-            <option
-              value="2"
-            >
-              Nearest_mipmap_nearest
-            </option>
-            <option
-              value="3"
-            >
-              Linear_mipmap_nearest
-            </option>
-            <option
-              value="4"
-            >
-              Nearest_mipmap_linear
-            </option>
-            <option
-              value="5"
-            >
-              Linear_mipmap_linear
             </option>
           </select>
         </div>

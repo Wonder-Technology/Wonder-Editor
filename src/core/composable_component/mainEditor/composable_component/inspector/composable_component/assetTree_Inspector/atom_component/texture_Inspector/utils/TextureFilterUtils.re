@@ -4,7 +4,12 @@ open SourceTextureType;
 
 open SelectType;
 
-let getFilterOptions = () => [|
+let getMagFilterOptions = () => [|
+  {key: Nearest |> TextureTypeUtils.convertFilterToInt, value: "Nearest"},
+  {key: Linear |> TextureTypeUtils.convertFilterToInt, value: "Linear"},
+|];
+
+let getMinFilterOptions = () => [|
   {key: Nearest |> TextureTypeUtils.convertFilterToInt, value: "Nearest"},
   {key: Linear |> TextureTypeUtils.convertFilterToInt, value: "Linear"},
   {

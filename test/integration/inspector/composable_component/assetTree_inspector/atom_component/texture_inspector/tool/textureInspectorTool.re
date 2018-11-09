@@ -11,11 +11,8 @@ let getFilterLinearMipmapLinearType = () =>
   Wonderjs.SourceTextureType.Linear_mipmap_linear
   |> TextureTypeUtils.convertFilterToInt;
 
-
 let getFilterNearestType = () =>
-  Wonderjs.SourceTextureType.Nearest
-  |> TextureTypeUtils.convertFilterToInt;
-
+  Wonderjs.SourceTextureType.Nearest |> TextureTypeUtils.convertFilterToInt;
 
 let getFilterNearestMipmapLinearType = () =>
   Wonderjs.SourceTextureType.Nearest_mipmap_linear
@@ -45,3 +42,7 @@ let changeMagFilter = (textureComponent, value) =>
 
 let changeMinFilter = (textureComponent, value) =>
   TextureFilterUtils.changeMinFilter(textureComponent, value);
+
+let getMagFilterOptions = TextureFilterUtils.getMagFilterOptions;
+
+let getMinFilterOptions = TextureFilterUtils.getMinFilterOptions;

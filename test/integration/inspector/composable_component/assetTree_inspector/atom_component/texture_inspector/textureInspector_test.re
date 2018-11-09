@@ -167,7 +167,7 @@ let _ =
       );
 
       describe("test texture change filter", () => {
-        describe("test set MagFilter to Nearest", () => {
+        describe("test set MagFilter", () => {
           let _prepareAndExec = () => {
             let assetTreeData =
               MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
@@ -188,16 +188,6 @@ let _ =
               filterNearestType,
             );
           };
-
-          test("test snapshot", () => {
-            let _ = _prepareAndExec();
-
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildEmptyAppState(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
 
           test("set magFilter", () => {
             let (textureComponent, filterNearestType) = _prepareAndExec();
