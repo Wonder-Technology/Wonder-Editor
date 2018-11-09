@@ -26,3 +26,5 @@ let getImageMimeType = extName =>
       ),
     )
   };
+
+let getNullImageSrc = () => "./public/null.png";

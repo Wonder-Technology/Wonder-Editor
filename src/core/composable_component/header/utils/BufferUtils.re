@@ -27,13 +27,3 @@ let convertBase64ToUint8Array = [%raw
     return array;
     |}
 ];
-
-let convertUint8ArrayToBase64 = [%raw
-  (uint8Array, mimeType) => {|
-var imageStr = window.btoa(
-          uint8Array
-            .reduce((data, byte) => data + String.fromCharCode(byte), '')
-        );
-        return "data:" + mimeType + ";base64," + imageStr;
-  |}
-];

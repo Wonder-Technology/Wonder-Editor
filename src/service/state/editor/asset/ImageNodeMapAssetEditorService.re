@@ -25,6 +25,7 @@ let setResult = (nodeId, imageResult, editorState) => {
 let buildImageNodeResult = (base64, uint8Array, name, mimeType) => {
   base64,
   uint8Array,
+  blobObjectURL: None,
   name,
   mimeType,
 };
