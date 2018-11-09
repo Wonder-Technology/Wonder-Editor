@@ -8,17 +8,38 @@
 
     <title>Wonder</title>
     <style>
-        #loading {
+        #stream-loading {
+            display: none;
+        }
+
+        #stream-loading .loading-img {
+            display: block;
+            width: 250px;
+            height: 250px;
+        }
+
+        #stream-loading .loading-text {
+            color: #e7981f;
+            margin-top: 10px;
+            font-size: 85px;
+            font-weight: bold;
+        }
+
+
+
+
+        #whole-loading {
             position: absolute;
             width: 100%;
             height: 100%;
-            display: flex;
+            /* display: flex; */
+            display: none;
             justify-content: center;
             align-items: center;
             background: #1d1b22;
         }
 
-        #loading .loading-content {
+        #whole-loading .loading-content {
             width: 50%;
             height: 50%;
             text-align: center;
@@ -27,12 +48,12 @@
             flex-direction: column;
         }
 
-        #loading .loading-content .loading-img {
+        #whole-loading .loading-content .loading-img {
             width: 250px;
             height: 250px;
         }
 
-        #loading .loading-content .loading-text {
+        #whole-loading .loading-content .loading-text {
             color: #e7981f;
             margin-top: 10px;
             font-size: 85px;
@@ -45,14 +66,14 @@
     <h1 id="detect" style="display: none">your browser not support sharedArrayBuffer or offscreenCanvas, can't use
         worker. please use no worker!</h1>
 
-    <!-- <div id="loading">
-        <img id="logo" style="display: none;" src="./res/loading/logo.png" width=100 height=100 />
+    <div id="stream-loading">
+        <img id="logo" class="loading-img" src="./res/loading/logo.png" />
         <br />
-        <span id="text"></span>
-    </div> -->
+        <span id="text" class="loading-text"></span>
+    </div>
 
 
-    <div id="loading">
+    <div id="whole-loading">
         <div class="loading-content">
             <div>
                 <img id="logo" class="loading-img" src="./res/loading/logo.png" />
@@ -62,6 +83,8 @@
             </div>
         </div>
     </div>
+
+
 
 
 
@@ -76,34 +99,60 @@
                 return loadedIMGUIByteLength >= totalByteLength ? 100 : Math.ceil(loadedIMGUIByteLength / totalByteLength * 100);
             }
 
+            function getStreamLoadTextDom() {
+                return document.querySelector("#stream-loading #text");
+            }
+
+            function getWholeLoadTextDom() {
+                return document.querySelector("#whole-loading #text");
+            }
+
             return {
-                showOrCreateLoadingInfo: function (
-                    loadedIMGUIByteLength,
-                    totalByteLength,
-                ) {
+                isSupportStreamLoad: function () {
+                    return typeof window.ReadableStream !== "undefined";
+                },
+                showStreamLoading: function () {
                     var windowWidth = window.innerWidth;
                     var windowHeight = window.innerHeight;
 
 
-                    // document.querySelector("#logo").style.display = "inline";
-
-                    // var dom = document.querySelector("#loading");
-
-
-                    // dom.style.cssText = 'position:absolute;top:' + windowHeight * 0.55 + 'px;left:' + windowWidth * 0.4 + 'px;width:' + windowWidth * (0.6 - 0.4) + 'px;height:50px;font-size:80px; color:bisque; text-align: center;';
+                    document.querySelector("#stream-loading").style.display = "block";
+                    document.querySelector("#whole-loading").style.display = "none";
 
 
 
+                    var dom = document.querySelector("#stream-loading");
 
-                    document.querySelector("#text")
-                        .innerHTML = String(computeLoadingPercent(
+                    var totalWidth = 250;
+                    var totalHeight = 360 - 10;
 
-                            loadedIMGUIByteLength,
-                            totalByteLength
-                        )) + '%';
+                    var top = (windowHeight - totalHeight) / 2;
+                    var left = (windowWidth - totalWidth) / 2;
+
+
+                    dom.style.cssText = 'display:block;position:absolute;top:' + top + 'px;left:' + left + 'px;color:bisque; text-align: center;';
+                },
+                showWholeLoading: function () {
+                    document.querySelector("#stream-loading").style.display = "none";
+                    document.querySelector("#whole-loading").style.display = "flex";
+                },
+                showOrCreateLoadingInfo: function (
+                    loadedIMGUIByteLength,
+                    totalByteLength,
+                ) {
+                    var loadingPercentStr = String(computeLoadingPercent(
+
+                        loadedIMGUIByteLength,
+                        totalByteLength
+                    )) + '%';
+
+                    getStreamLoadTextDom().innerHTML = loadingPercentStr;
+                    getWholeLoadTextDom().innerHTML = loadingPercentStr;
+
                 },
                 removeLoadingInfo: function () {
-                    document.querySelector("#loading").remove();
+                    document.querySelector("#stream-loading").remove();
+                    document.querySelector("#whole-loading").remove();
                 },
                 loadConfig: function (jsonPathArr, nextFunc, completeFunc) {
                     return wd.loadConfig(jsonPathArr).forEach(function (state) {
@@ -150,9 +199,18 @@
             var loadedIMGUIByteLength = 0;
 
             var totalIMGUIByteLength = (35 + 41 + 95) * 1024;
-            var totalWDBByteLength = 1.28 * 1024 * 1024;
-            // var totalWDBByteLength = $totalWDBByteLength;
+            // var totalWDBByteLength = 1.28 * 1024 * 1024;
+            var totalWDBByteLength = $totalWDBByteLength;
             var totalByteLength = totalIMGUIByteLength + totalWDBByteLength;
+
+            if (
+                AssetTool.isSupportStreamLoad()
+            ) {
+                AssetTool.showStreamLoading();
+            }
+            else {
+                AssetTool.showWholeLoading();
+            }
 
             return AssetTool.loadConfig(["./config/setting.json", "./config/"], null, function () {
                 return AssetTool.loadIMGUIAsset(
