@@ -910,7 +910,7 @@ let _ =
         });
 
         describe(
-          "load wdb contain light shouldn't be exceed max count even though the total light count is exceed(because wdb light is not render)",
+          "load wdb contain light shouldn't warn exceed max count even though the total light count is exceed(because wdb light is not render)",
           () => {
             let wdbArrayBuffer = ref(Obj.magic(1));
 
@@ -941,6 +941,13 @@ let _ =
                 (),
               );
               MainEditorSceneTool.prepareScene(sandbox);
+              ConsoleTool.markTestConsole();
+              let warn =
+                createMethodStubWithJsObjSandbox(
+                  sandbox,
+                  ConsoleTool.console,
+                  "warn",
+                );
 
               let editorState = StateEditorService.getState();
               let engineState = StateEngineService.unsafeGetState();
@@ -973,7 +980,9 @@ let _ =
                 ~arrayBuffer=wdbArrayBuffer^,
                 (),
               )
-              |> then_(uploadedWDBNodeId => 1 |> expect == 1 |> resolve);
+              |> then_(uploadedWDBNodeId =>
+                   warn |> expect |> not_ |> toCalled |> resolve
+                 );
             });
           },
         );

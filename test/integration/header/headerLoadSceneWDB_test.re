@@ -89,7 +89,7 @@ let _ =
            );
       });
 
-      describe("test load no light scene wdb from scene has light", () => {
+      describe("test load no light scene wdb to scene which has light", () => {
         let _prepare = testFunc => {
           let fileName = "BoxTextured";
 

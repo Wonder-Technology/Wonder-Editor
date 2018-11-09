@@ -1,7 +1,10 @@
 open Js.Promise;
 
-let testImportPackage = (~testFunc, ()) => {
+let testImportPackage =
+    (~testFunc, ~execBeforeImportFunc=wpkArrayBuffer => (), ()) => {
   let wpkArrayBuffer = ExportPackageTool.exportWPK();
+
+  execBeforeImportFunc(wpkArrayBuffer);
 
   HeaderImportPackageUtils._import(wpkArrayBuffer |> Obj.magic)
   |> WonderBsMost.Most.drain

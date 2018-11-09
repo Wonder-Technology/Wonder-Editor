@@ -17,6 +17,14 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
+    let directionPointLightsAndBoxWDBArrayBuffer = ref(Obj.magic(1));
+
+    /* beforeEach(() => _prepareFakeCanvas() |> ignore); */
+
+    /* beforeAll(() =>
+         directionPointLightsAndBoxWDBArrayBuffer :=
+           WDBTool.generateDirectionPointLightsAndBoxWDB()
+       ); */
 
     let _buildFakeCanvas = (sandbox, base64, callIndex) => {
       let toDataURLStub = createEmptyStubWithJsObjSandbox(sandbox);
@@ -57,6 +65,9 @@ let _ =
 
     beforeAll(() => {
       boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
+
+      directionPointLightsAndBoxWDBArrayBuffer :=
+        WDBTool.generateDirectionPointLightsAndBoxWDB();
     });
 
     beforeEach(() => {
@@ -1294,4 +1305,111 @@ let _ =
         );
       });
     });
+
+    describe(
+      "shouldn't warn exceed max count when c1(current scene(before import package)->total light count) + c2(scene wdb->total light count) is exceed but c2 is not exceed",
+      () => {
+        beforeEach(() => {
+          MainEditorSceneTool.initStateWithJob(
+            ~sandbox,
+            ~isBuildFakeDom=false,
+            ~noWorkerJobRecord=
+              NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                ~loopPipelines=
+                  {|
+                   [
+                       {
+                           "name": "default",
+                           "jobs": [
+                               {
+                                   "name": "dispose"
+                               }
+                           ]
+                       }
+                   ]
+               |},
+                (),
+              ),
+            (),
+          );
+
+          MainEditorSceneTool.prepareScene(sandbox);
+
+          DirectorToolEngine.prepareAndInitAllEnginState();
+        });
+
+        testPromise("test", () => {
+          ConsoleTool.markTestConsole();
+          let warn =
+            createMethodStubWithJsObjSandbox(
+              sandbox,
+              ConsoleTool.console,
+              "warn",
+            );
+          let editorState = StateEditorService.getState();
+          let engineState = StateEngineService.unsafeGetState();
+          let (editorState, engineState, light1) =
+            PrimitiveEngineService.createDirectionLight(
+              editorState,
+              engineState,
+            );
+          let (editorState, engineState, light2) =
+            PrimitiveEngineService.createDirectionLight(
+              editorState,
+              engineState,
+            );
+          let (editorState, engineState, light3) =
+            PrimitiveEngineService.createDirectionLight(
+              editorState,
+              engineState,
+            );
+          let (editorState, engineState, light4) =
+            PrimitiveEngineService.createDirectionLight(
+              editorState,
+              engineState,
+            );
+
+          let engineState =
+            SceneEngineService.addSceneChildren(
+              [|light1, light2, light3, light4|],
+              engineState,
+            );
+          editorState |> StateEditorService.setState |> ignore;
+          engineState |> StateEngineService.setState |> ignore;
+
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=directionPointLightsAndBoxWDBArrayBuffer^,
+            (),
+          )
+          |> then_(uploadedWDBNodeId =>
+               ImportPackageTool.testImportPackage(
+                 ~execBeforeImportFunc=
+                   _ => {
+                     let editorState = StateEditorService.getState();
+                     let engineState = StateEngineService.unsafeGetState();
+
+                     let engineState =
+                       engineState
+                       |> SceneEngineService.disposeSceneAllChildrenKeepOrderRemoveGeometryRemoveMaterial
+                       |> JobEngineService.execDisposeJob;
+
+                     let (editorState, engineState, light5) =
+                       PrimitiveEngineService.createDirectionLight(
+                         editorState,
+                         engineState,
+                       );
+
+                     let engineState =
+                       SceneEngineService.addSceneChild(light5, engineState);
+
+                     editorState |> StateEditorService.setState |> ignore;
+                     engineState |> StateEngineService.setState |> ignore;
+                   },
+                 ~testFunc=() => warn |> expect |> not_ |> toCalled |> resolve,
+                 (),
+               )
+             );
+        });
+      },
+    );
   });
