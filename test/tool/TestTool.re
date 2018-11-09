@@ -69,7 +69,14 @@ let initScene = () => {
 };
 
 let initEditorAndEngineStateAndInitSceneWithJob =
-    (~sandbox, ~buffer, ~noWorkerJobRecord, ~isBuildFakeDom=true, ~isInitJob=true, ()) => {
+    (
+      ~sandbox,
+      ~buffer,
+      ~noWorkerJobRecord,
+      ~isBuildFakeDom=true,
+      ~isInitJob=true,
+      (),
+    ) => {
   TestToolEngine.createAndSetEngineState(
     ~sandbox,
     ~buffer,
@@ -86,8 +93,12 @@ let initEditorAndEngineStateAndInitScene = (~sandbox, ~buffer, ()) => {
   initScene();
 };
 
-let openContractCheck = () =>
-  CreateEditorStateDataEditorService.editorStateData.isDebug = true;
+let openContractCheck = () => {
+  StateEditorService.setStateIsDebug(true);
+  StateEngineService.setIsDebug(true) |> ignore;
+};
 
-let closeContractCheck = () =>
-  CreateEditorStateDataEditorService.editorStateData.isDebug = false;
+let closeContractCheck = () => {
+  StateEditorService.setStateIsDebug(false);
+  StateEngineService.setIsDebug(false) |> ignore;
+};
