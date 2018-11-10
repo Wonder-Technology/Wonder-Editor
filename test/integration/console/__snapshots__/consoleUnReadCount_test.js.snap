@@ -31,6 +31,11 @@ exports[`test console unread count should show unread count in bottom header
       </div>
       <div
         className="name-tail"
+        style={
+          Object {
+            "display": "none",
+          }
+        }
       >
         0
       </div>
@@ -68,6 +73,7 @@ exports[`test console unread count should show unread count in bottom header if 
       </div>
       <div
         className="name-tail"
+        style={Object {}}
       >
         1
       </div>

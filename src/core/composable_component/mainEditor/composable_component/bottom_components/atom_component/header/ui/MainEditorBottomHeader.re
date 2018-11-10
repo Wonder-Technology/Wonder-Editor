@@ -41,6 +41,9 @@ let component =
 
 let render = (store, dispatchFunc, _self) => {
   let currentComponentType = store |> StoreUtils.getBottomCurrentComponentType;
+  let unreadCount =
+    Method.getConsoleMessageUnReadCount(currentComponentType)
+    |> StateLogicService.getEditorState;
 
   <article key="MainEditorBottomHeader">
     <div className="bottom-widget-category">
@@ -81,13 +84,14 @@ let render = (store, dispatchFunc, _self) => {
               () : Method.showConsole(dispatchFunc)
         )>
         <div className="name-header"> (DomHelper.textEl("Console")) </div>
-        <div className="name-tail">
-          (
-            DomHelper.textEl(
-              Method.getConsoleMessageUnReadCount(currentComponentType)
-              |> StateLogicService.getEditorState,
-            )
-          )
+        <div
+          className="name-tail"
+          style=(
+            unreadCount === "0" ?
+              ReactDOMRe.Style.make(~display="none", ()) :
+              ReactDOMRe.Style.make()
+          )>
+          (DomHelper.textEl(unreadCount))
         </div>
       </div>
       <span className="category-name" />
