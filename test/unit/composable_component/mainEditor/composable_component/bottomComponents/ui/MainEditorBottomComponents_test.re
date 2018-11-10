@@ -1,4 +1,4 @@
-open Wonder_jest;
+/* open Wonder_jest;
 
 open Wonder_jest;
 
@@ -37,10 +37,10 @@ let _ =
         |> expect == true
       );
       test(
-        "else if reatinedProps updateTypeArr include BottomComponent, should update", () =>
+        "else if reatinedProps updateTypeArr include Project, should update", () =>
         shouldUpdate(
           OldNewSelfTool.buildNewSelf({
-            updateTypeArr: [|UpdateStore.BottomComponent|] |> Obj.magic,
+            updateTypeArr: [|UpdateStore.Project|] |> Obj.magic,
           }),
         )
         |> expect == true
@@ -54,4 +54,4 @@ let _ =
         |> expect == false
       );
     });
-  });
+  }); */

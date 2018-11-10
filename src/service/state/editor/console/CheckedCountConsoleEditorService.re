@@ -2,13 +2,13 @@ open EditorType;
 
 let getConsoleCheckedCount = editorState =>
   editorState.consoleRecord
-  |> ConsoleCheckedCountConsoleService.getConsoleCheckedCount;
+  |> CheckedCountConsoleService.getConsoleCheckedCount;
 
 let setConsoleCheckedCount = (consoleCheckedCount, editorState) => {
   ...editorState,
   consoleRecord:
     editorState.consoleRecord
-    |> ConsoleCheckedCountConsoleService.setConsoleCheckedCount(
+    |> CheckedCountConsoleService.setConsoleCheckedCount(
          consoleCheckedCount,
        ),
 };
@@ -17,15 +17,15 @@ let clearConsoleCheckedCount = editorState => {
   ...editorState,
   consoleRecord:
     editorState.consoleRecord
-    |> ConsoleCheckedCountConsoleService.clearConsoleCheckedCount,
+    |> CheckedCountConsoleService.clearConsoleCheckedCount,
 };
 
 let unreadConsoleMessage = editorState =>
   (
     editorState.consoleRecord
-    |> ConsoleMessageArrayConsoleService.getConsoleMessageArrayLen
+    |> MessageArrayConsoleService.getConsoleMessageArrayLen
   )
   - (
     editorState.consoleRecord
-    |> ConsoleCheckedCountConsoleService.getConsoleCheckedCount
+    |> CheckedCountConsoleService.getConsoleCheckedCount
   );

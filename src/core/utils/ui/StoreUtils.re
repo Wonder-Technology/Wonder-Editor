@@ -27,3 +27,8 @@ let shouldComponentUpdate = (componentType, updateComponentTypeArr) =>
   |> Js.Array.includes(componentType)
   || updateComponentTypeArr
   |> Js.Array.includes(All);
+
+let shouldComponentUpdateMany = (componentTypeArr, updateComponentTypeArr) =>
+  ArrayService.hasIntersect(updateComponentTypeArr, componentTypeArr)
+  || updateComponentTypeArr
+  |> Js.Array.includes(UpdateStore.All);

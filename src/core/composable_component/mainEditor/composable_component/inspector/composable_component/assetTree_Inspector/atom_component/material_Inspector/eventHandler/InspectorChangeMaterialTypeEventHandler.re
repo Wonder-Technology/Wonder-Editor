@@ -18,7 +18,7 @@ module CustomEventHandler = {
     );
 
     dispatchFunc(
-      AppStore.UpdateAction(Update([|BottomComponent, Inspector|])),
+      AppStore.UpdateAction(Update([|Project, Inspector|])),
     )
     |> ignore;
   };

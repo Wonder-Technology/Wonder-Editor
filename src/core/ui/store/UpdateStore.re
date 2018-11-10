@@ -2,10 +2,12 @@ type updateAction('a) =
   | Update('a);
 
 type updateComponentType =
-  | NoUpdate 
+  | NoUpdate
   | All
   | Inspector
-  | BottomComponent
+  | BottomHeader
+  | Project
+  | Console
   | SceneTree;
 
 type updateComponentTypeArr = array(updateComponentType);

@@ -2,13 +2,13 @@ open EditorType;
 
 let getConsoleMessageArray = editorState =>
   editorState.consoleRecord
-  |> ConsoleMessageArrayConsoleService.getConsoleMessageArray;
+  |> MessageArrayConsoleService.getConsoleMessageArray;
 
 let setConsoleMessageArray = (consoleMessageArray, editorState) => {
   ...editorState,
   consoleRecord:
     editorState.consoleRecord
-    |> ConsoleMessageArrayConsoleService.setConsoleMessageArray(
+    |> MessageArrayConsoleService.setConsoleMessageArray(
          consoleMessageArray,
        ),
 };
@@ -17,16 +17,16 @@ let clearConsoleMessageArray = editorState => {
   ...editorState,
   consoleRecord:
     editorState.consoleRecord
-    |> ConsoleMessageArrayConsoleService.clearConsoleMessageArray,
+    |> MessageArrayConsoleService.clearConsoleMessageArray,
 };
 
 let addConsoleMessage = (consoleMessage, editorState) => {
   ...editorState,
   consoleRecord:
     editorState.consoleRecord
-    |> ConsoleMessageArrayConsoleService.addConsoleMessage(consoleMessage),
+    |> MessageArrayConsoleService.addConsoleMessage(consoleMessage),
 };
 
 let getConsoleMessageArrayLen = editorState =>
   editorState.consoleRecord
-  |> ConsoleMessageArrayConsoleService.getConsoleMessageArrayLen;
+  |> MessageArrayConsoleService.getConsoleMessageArrayLen;

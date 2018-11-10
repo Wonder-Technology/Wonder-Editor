@@ -65,7 +65,7 @@ let handleSelfLogic =
 
   dispatchFunc(
     AppStore.UpdateAction(
-      Update([|UpdateStore.BottomComponent, UpdateStore.Inspector|]),
+      Update([|UpdateStore.Project, UpdateStore.Inspector|]),
     ),
   )
   |> ignore;

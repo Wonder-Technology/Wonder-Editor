@@ -51,7 +51,7 @@ let _ =
           shouldUpdate(
             OldNewSelfTool.buildNewSelf({
               updateTypeArr:
-                [|UpdateStore.BottomComponent, UpdateStore.Inspector|]
+                [|UpdateStore.Project, UpdateStore.Inspector|]
                 |> Obj.magic,
             }),
           )
