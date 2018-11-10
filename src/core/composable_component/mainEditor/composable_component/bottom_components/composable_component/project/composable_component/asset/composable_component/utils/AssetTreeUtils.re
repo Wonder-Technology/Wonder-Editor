@@ -165,7 +165,7 @@ let checkAssetNodeName =
   |> Js.Array.map(((name, nodeId)) => name)
   |> Js.Array.includes(sourceName) ?
     {
-      ConsoleUtils.warn("the asset can't has the same name !");
+      ConsoleUtils.warn("the asset can't has the same name !", editorState);
 
       successFunc((editorState, engineState));
     } :

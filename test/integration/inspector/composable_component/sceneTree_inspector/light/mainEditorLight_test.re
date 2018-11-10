@@ -101,8 +101,8 @@ let _ =
         );
 
         describe("deal with specific cases", () => {
-          beforeEach(() => ConsoleTool.markTestConsole());
-          afterEach(() => ConsoleTool.markNotTestConsole());
+          beforeEach(() => ConsoleTool.notShowMessage());
+          afterEach(() => ConsoleTool.showMessage());
 
           test(
             "if target light type is maxCount, not change to it and warn", () => {

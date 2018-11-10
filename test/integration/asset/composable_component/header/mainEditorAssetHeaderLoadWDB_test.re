@@ -941,7 +941,7 @@ let _ =
                 (),
               );
               MainEditorSceneTool.prepareScene(sandbox);
-              ConsoleTool.markTestConsole();
+              ConsoleTool.notShowMessage();
               let warn =
                 createMethodStubWithJsObjSandbox(
                   sandbox,

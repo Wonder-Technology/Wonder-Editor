@@ -1339,7 +1339,7 @@ let _ =
         });
 
         testPromise("test", () => {
-          ConsoleTool.markTestConsole();
+          ConsoleTool.notShowMessage();
           let warn =
             createMethodStubWithJsObjSandbox(
               sandbox,

@@ -13,7 +13,7 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.prepareScene(sandbox);
 
-      ConsoleTool.markTestConsole();
+      ConsoleTool.notShowMessage();
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
@@ -21,25 +21,25 @@ let _ =
       beforeEach(() => BuildComponentTool.buildConsole() |> ignore);
 
       test("console.log should add the message into content", () => {
-        ConsoleUtils.log({j|message|j});
+        ConsoleUtils.log({j|message|j}) |> StateLogicService.getEditorState;
 
         BuildComponentTool.buildConsole()
         |> ReactTestTool.createSnapshotAndMatch;
       });
       test("console.info should add the message into content", () => {
-        ConsoleUtils.info({j|message|j});
+        ConsoleUtils.info({j|message|j}) |> StateLogicService.getEditorState;
 
         BuildComponentTool.buildConsole()
         |> ReactTestTool.createSnapshotAndMatch;
       });
       test("console.warn should add the message into content", () => {
-        ConsoleUtils.warn({j|message|j});
+        ConsoleUtils.warn({j|message|j}) |> StateLogicService.getEditorState;
 
         BuildComponentTool.buildConsole()
         |> ReactTestTool.createSnapshotAndMatch;
       });
       test("console.error should add the message into content", () => {
-        ConsoleUtils.error({j|message|j});
+        ConsoleUtils.error({j|message|j}) |> StateLogicService.getEditorState;
 
         BuildComponentTool.buildConsole()
         |> ReactTestTool.createSnapshotAndMatch;
@@ -47,7 +47,7 @@ let _ =
       test("console.trace should invoke Error.captureStackTrace", () => {
         let errorObj = ConsoleTool.buildFakeError(sandbox^);
 
-        ConsoleUtils.error({j|message|j});
+        ConsoleUtils.error({j|message|j}) |> StateLogicService.getEditorState;
 
         errorObj##captureStackTrace |> expect |> toCalledOnce;
       });

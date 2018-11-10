@@ -13,7 +13,7 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.prepareScene(sandbox);
 
-      ConsoleTool.markTestConsole();
+      ConsoleTool.notShowMessage();
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
@@ -29,7 +29,8 @@ let _ =
             (),
           );
 
-        ConsoleUtils.warn({j|warn message|j});
+        ConsoleUtils.warn({j|warn message|j})
+        |> StateLogicService.getEditorState;
 
         BuildComponentTool.buildBottomHeader(
           ~store=TestTool.buildEmptyAppState(),
@@ -51,7 +52,8 @@ let _ =
               (),
             );
 
-          ConsoleUtils.warn({j|warn message|j});
+          ConsoleUtils.warn({j|warn message|j})
+          |> StateLogicService.getEditorState;
 
           let component = BuildComponentTool.buildConsole(~store, ());
 

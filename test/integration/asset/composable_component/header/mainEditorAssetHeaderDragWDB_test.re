@@ -196,7 +196,7 @@ let _ =
         describe("check light count before drag", () =>
           describe("if light count will exceed max count after drag, warn", () => {
             let _test = (createLightFunc, judgeFunc) => {
-              ConsoleTool.markTestConsole();
+              ConsoleTool.notShowMessage();
 
               let warn =
                 createMethodStubWithJsObjSandbox(

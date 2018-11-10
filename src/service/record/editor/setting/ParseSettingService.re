@@ -6,5 +6,16 @@ let convertToRecord = setting => {
 
   let json = setting;
 
-  {isDebug: json |> optional(field("is_debug", bool))};
+  {
+    debug:
+      json
+      |> optional(
+           field("debug", json =>
+             {
+               isDebug: json |> field("is_debug", bool),
+               showMessage: json |> field("show_message", bool),
+             }
+           ),
+         ),
+  };
 };

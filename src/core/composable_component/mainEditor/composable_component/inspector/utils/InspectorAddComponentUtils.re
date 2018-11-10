@@ -44,7 +44,10 @@ let addComponentByType =
   | Light =>
     engineState |> DirectionLightEngineService.isMaxCount ?
       {
-        ConsoleUtils.warn("the direction light count is exceed max count !");
+        ConsoleUtils.warn(
+          "the direction light count is exceed max count !",
+          editorState,
+        );
 
         (editorState, engineState);
       } :

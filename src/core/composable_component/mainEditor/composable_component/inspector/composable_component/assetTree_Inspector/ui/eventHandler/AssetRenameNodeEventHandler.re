@@ -51,8 +51,9 @@ module CustomEventHandler = {
       (nodeId, name, (editorState, engineState), materialNodeMap) =>
     _isNameEqualDefaultMaterialName(nodeId, name, materialNodeMap) ?
       {
-        ConsoleUtils.info(
+        ConsoleUtils.warn(
           {j|material name:$name shouldn't equal default material name|j},
+          editorState,
         );
 
         (editorState, engineState);

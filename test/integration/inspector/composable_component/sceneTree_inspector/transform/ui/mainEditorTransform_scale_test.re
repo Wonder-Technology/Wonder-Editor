@@ -45,7 +45,7 @@ let _ =
         test("if input 0, set origin value to engineState instead of 0", () => {
           open FloatInput;
 
-          ConsoleTool.markTestConsole();
+          ConsoleTool.notShowMessage();
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
           let value = 0.;

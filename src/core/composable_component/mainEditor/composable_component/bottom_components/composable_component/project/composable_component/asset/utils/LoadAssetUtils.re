@@ -10,7 +10,19 @@ let getUploadFileType = name => {
   | ".jpg"
   | ".png" => LoadImage
   | ".wpk" => LoadWPK
-  | _ => LoadError
+  | _ =>
+    ConsoleUtils.error(
+      WonderLog.Log.buildErrorMessage(
+        ~title="",
+        ~description={j|the loaded asset type is error|j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j||j},
+      ),
+    )
+    |> StateLogicService.getEditorState;
+
+    LoadError;
   };
 };
 
@@ -20,16 +32,7 @@ let handleSpecificFuncByTypeSync =
   | LoadImage => handleImageFunc()
   | LoadWDB => handleWDBFunc()
   | LoadWPK => handleWPKFunc()
-  | LoadError =>
-    WonderLog.Log.error(
-      WonderLog.Log.buildErrorMessage(
-        ~title="handleSpecificFuncByType",
-        ~description={j|the load file type is error|j},
-        ~reason="",
-        ~solution={j||j},
-        ~params={j||j},
-      ),
-    )
+  | LoadError => ()
   };
 
 let readFileByTypeSync = (reader, fileInfo: fileInfoType) =>

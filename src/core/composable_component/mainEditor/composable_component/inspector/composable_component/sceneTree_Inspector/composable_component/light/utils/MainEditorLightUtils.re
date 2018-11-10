@@ -96,13 +96,14 @@ let replaceLightByType = (sourceLightType, targetLightType) => {
   let gameObject =
     SceneEditorService.unsafeGetCurrentSceneTreeNode
     |> StateLogicService.getEditorState;
+  let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
   let (message, isMaxCount) =
     isLightExceedMaxCountByType(targetLightType, engineState);
 
   isMaxCount ?
-    ConsoleUtils.warn(message) :
+    ConsoleUtils.warn(message, editorState) :
     {
       let (sourceLight, disposeSourceLightFunc) =
         _getOperateSourceLightFunc(sourceLightType, gameObject, engineState);

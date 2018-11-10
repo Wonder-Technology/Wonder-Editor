@@ -124,20 +124,7 @@ let _handleSpecificFuncByTypeAsync =
   switch (type_) {
   | LoadImage => handleImageFunc()
   | LoadWDB => handleWDBFunc()
-  | LoadError =>
-    make((~resolve, ~reject) => {
-      ConsoleUtils.error(
-        WonderLog.Log.buildErrorMessage(
-          ~title="handleSpecificFuncByType",
-          ~description={j|the load file type is error|j},
-          ~reason="",
-          ~solution={j||j},
-          ~params={j||j},
-        ),
-      );
-
-      reject(. LoadException);
-    })
+  | LoadError => make((~resolve, ~reject) => reject(. LoadException))
   };
 
 let handleFileByTypeAsync = (fileResult: nodeResultType) => {
@@ -229,9 +216,7 @@ let fileLoad = (dispatchFunc, event) => {
   |> then_(_ => {
        FileReader.makeSureCanLoadSameNameFileAgain(target);
 
-       dispatchFunc(
-         AppStore.UpdateAction(Update([|UpdateStore.Project|])),
-       )
+       dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])))
        |> resolve;
      });
 };

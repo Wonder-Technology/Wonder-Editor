@@ -6,28 +6,24 @@ type console = Sinon.obj;
 
 let getMessage = output => output |> getCall(0) |> getArgs |> List.hd;
 
-let markTestConsole = [%bs.raw
-  () => {|
-    window.isTestConsole = true;
-    |}
-];
+let notShowMessage = () =>
+  SettingTool.initSetting
+  |> StateLogicService.getEditorState
+  |> DebugSettingEditorService.setIsShowMessage(false)
+  |> StateEditorService.setState
+  |> ignore;
 
-let markNotTestConsole = [%bs.raw
-  () => {|
-    window.isTestConsole = false;
-    |}
-];
+let showMessage = () =>
+  SettingTool.initSetting
+  |> StateLogicService.getEditorState
+  |> DebugSettingEditorService.setIsShowMessage(true)
+  |> StateEditorService.setState
+  |> ignore;
 
 let buildFakeError = [%bs.raw
-  (sandbox) => {|
+  sandbox => {|
     sandbox.spy(Error, "captureStackTrace");
-  /* var Error =  {
-    captureStackTrace: sandbox.stub()
-  };
 
-  window.Error = Error; */
-
-  return Error;
-
+    return Error;
   |}
 ];

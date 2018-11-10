@@ -1,7 +1,5 @@
-let warn = message => {
-  let root = RootUtils.getRoot();
-
-  root##isTestConsole ?
+let warn = (message, editorState) => {
+  DebugSettingEditorService.isNotShowMessage(editorState) ?
     () :
     Antd.Message.message
     |> Antd.Message.convertToJsObj
@@ -11,10 +9,8 @@ let warn = message => {
   WonderLog.Log.warn(message);
 };
 
-let log = message => {
-  let root = RootUtils.getRoot();
-
-  root##isTestConsole ?
+let log = (message, editorState) => {
+  DebugSettingEditorService.isNotShowMessage(editorState) ?
     () :
     Antd.Message.message
     |> Antd.Message.convertToJsObj
@@ -24,10 +20,8 @@ let log = message => {
   WonderLog.Log.log(message);
 };
 
-let info = message => {
-  let root = RootUtils.getRoot();
-
-  root##isTestConsole ?
+let info = (message, editorState) => {
+  DebugSettingEditorService.isNotShowMessage(editorState) ?
     () :
     Antd.Message.message
     |> Antd.Message.convertToJsObj
@@ -37,10 +31,8 @@ let info = message => {
   WonderLog.Log.info(message);
 };
 
-let error = message => {
-  let root = RootUtils.getRoot();
-
-  root##isTestConsole ?
+let error = (message, editorState) => {
+  DebugSettingEditorService.isNotShowMessage(editorState) ?
     () :
     Antd.Message.message
     |> Antd.Message.convertToJsObj
@@ -48,17 +40,4 @@ let error = message => {
     |> ignore;
 
   WonderLog.Log.error(message);
-};
-
-let success = message => {
-  let root = RootUtils.getRoot();
-
-  root##isTestConsole ?
-    () :
-    Antd.Message.message
-    |> Antd.Message.convertToJsObj
-    |> (messageObj => messageObj##success(message, 4))
-    |> ignore;
-
-  WonderLog.Log.log(message);
 };

@@ -83,7 +83,7 @@ module Method = {
       ReasonReactUtils.updateWithSideEffects(
         {...state, inputValue: Some(value)}, _state =>
         triggerOnChange(value, onChangeFunc)
-      );
+      )
     };
 
   let handleBlurAction = (state, (onChangeFunc, onBlurFunc), canBeZero) =>
@@ -124,7 +124,8 @@ module Method = {
               triggerOnBlur(value, onBlurFunc)
             ),
           _value => {
-            ConsoleUtils.warn("the scale value can't be 0 !");
+            ConsoleUtils.warn("the scale value can't be 0 !")
+            |> StateLogicService.getEditorState;
 
             ReasonReact.Update({
               ...state,
@@ -158,9 +159,7 @@ let render =
       switch (label) {
       | None => ReasonReact.null
       | Some(value) =>
-        <div className="item-header">
-          (DomHelper.textEl(value))
-        </div>
+        <div className="item-header"> (DomHelper.textEl(value)) </div>
       }
     )
     <div className="item-content">

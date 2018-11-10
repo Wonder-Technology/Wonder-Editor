@@ -1,3 +1,3 @@
 open SettingType;
 
-let create = () => {isDebug: None};
+let create = () => {debug: None};

@@ -39,6 +39,7 @@ module Method = {
                      | None =>
                        ConsoleUtils.error(
                          "_buildImageNodeObjectURLIfNoBase64:image->uint8Array should exist",
+                         editorState,
                        );
 
                        editorState;
@@ -132,6 +133,7 @@ module Method = {
                        | None =>
                          ConsoleUtils.error(
                            "texture->source should has base64 or blobObjectURL data, but acutally not has",
+                           editorState,
                          );
 
                          ImageUtils.getNullImageSrc();

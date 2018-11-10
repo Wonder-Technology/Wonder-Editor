@@ -1,4 +1,4 @@
-let _checkLightCount = (gameObject, engineState) => {
+let _checkLightCount = (gameObject, (editorState, engineState)) => {
   let result =
     (
       GameObjectEngineService.getAllDirectionLights(
@@ -12,6 +12,7 @@ let _checkLightCount = (gameObject, engineState) => {
       {
         ConsoleUtils.warn(
           MainEditorLightUtils.getDirectionLightExceedMaxCountMessage(),
+          editorState,
         );
 
         false;
@@ -28,6 +29,7 @@ let _checkLightCount = (gameObject, engineState) => {
         {
           ConsoleUtils.warn(
             MainEditorLightUtils.getPointLightExceedMaxCountMessage(),
+            editorState,
           );
 
           false;
@@ -39,7 +41,7 @@ let _checkLightCount = (gameObject, engineState) => {
 
 let dragWDB =
     (wdbGameObjectUid, targetGameObjectUid, (editorState, engineState)) =>
-  switch (_checkLightCount(wdbGameObjectUid, engineState)) {
+  switch (_checkLightCount(wdbGameObjectUid, (editorState, engineState))) {
   | (engineState, false) => (false, (editorState, engineState))
   | (engineState, true) =>
     let (cloneGameObjectArr, engineState) =
