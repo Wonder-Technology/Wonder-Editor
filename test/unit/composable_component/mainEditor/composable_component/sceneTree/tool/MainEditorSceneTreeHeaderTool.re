@@ -4,7 +4,7 @@ let addBox =
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
-  MainEditorSceneTreeHeader.Method.addGameObjectByType(
+  MainEditorLeftHeader.Method.addGameObjectByType(
     (store, dispatchFunc),
     AddGameObjectType.Box,
     (),
@@ -16,7 +16,7 @@ let addEmptyGameObject =
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
-  MainEditorSceneTreeHeader.Method.addGameObjectByType(
+  MainEditorLeftHeader.Method.addGameObjectByType(
     (store, dispatchFunc),
     AddGameObjectType.EmptyGameObject,
     (),
@@ -28,7 +28,7 @@ let disposeCurrentSceneTreeNode =
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
-  MainEditorSceneTreeHeader.Method.disposeCurrentSceneTreeNode(
+  MainEditorLeftHeader.Method.disposeCurrentSceneTreeNode(
     (store, dispatchFunc |> Obj.magic),
     (),
     (),

@@ -18,7 +18,7 @@ module Method = {
   let disposeCurrentSceneTreeNode = HeaderDisposeGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 };
 
-let component = ReasonReact.reducerComponent("MainEditorSceneTreeHeader");
+let component = ReasonReact.reducerComponent("MainEditorLeftHeader");
 
 let reducer = (action, state) =>
   switch (action) {
@@ -52,7 +52,8 @@ let render =
       dispatchFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
-  <article key="mainEditorScenetreeHeader" className="wonder-sceneTree-header">
+  <article
+    key="mainEditorScenetreeHeader" className="wonder-left-components-header">
     <div
       className="sceneTree-header-item" onClick=(_e => send(ToggleShowNav))>
       <div className="item-canBeClick">

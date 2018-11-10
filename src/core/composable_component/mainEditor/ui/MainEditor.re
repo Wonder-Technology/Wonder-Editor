@@ -43,12 +43,7 @@ module Method = {
 
     StateEngineService.unsafeGetState()
     |> PerspectiveCameraProjectionEngineService.markAllPerspectiveCameraProjectionsDirty
-    |> DeviceManagerEngineService.setViewport((
-         0,
-         0,
-         width,
-         height,
-       ))
+    |> DeviceManagerEngineService.setViewport((0, 0, width, height))
     |> DirectorEngineService.loopBody(0.)
     |> StateEngineService.setState
     |> ignore;
@@ -114,10 +109,7 @@ let _buildStartedElement = (store, dispatchFunc) =>
   <article key="mainEditor" className="wonder-mainEditor-component">
     <div key="leftComponent" className="left-component">
       <div className="top-widget">
-        <div className="inline-component sceneTree-parent">
-          <MainEditorSceneTreeHeader store dispatchFunc />
-          <MainEditorSceneTree store dispatchFunc />
-        </div>
+        <MainEditorLeftComponents store dispatchFunc />
         <div id="canvasParent" key="webglParent" className="webgl-parent">
           (Method.buildStartedRunWebglComponent())
           <Canvas
