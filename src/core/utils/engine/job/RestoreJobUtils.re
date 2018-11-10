@@ -1,6 +1,6 @@
 let restoreJob = (_, engineState) => {
-  let (x, y, width, height, _, _) = ScreenEngineService.queryFullScreenData();
-  let viewportData = (x, y, width, height);
+  let editorState = StateEditorService.getState();
+  let viewportData = ViewEditorService.getSize(editorState);
 
   engineState
   |> DeviceManagerEngineService.setViewport(viewportData)

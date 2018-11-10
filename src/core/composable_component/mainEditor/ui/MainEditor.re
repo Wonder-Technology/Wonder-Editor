@@ -46,8 +46,8 @@ module Method = {
     |> DeviceManagerEngineService.setViewport((
          0,
          0,
-         width |> NumberType.convertFloatToInt,
-         height |> NumberType.convertFloatToInt,
+         width,
+         height,
        ))
     |> DirectorEngineService.loopBody(0.)
     |> StateEngineService.setState
