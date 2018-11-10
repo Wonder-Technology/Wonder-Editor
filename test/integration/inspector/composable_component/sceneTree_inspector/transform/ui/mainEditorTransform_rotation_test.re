@@ -66,9 +66,18 @@ let _ =
       });
 
       describe("deal with the specific case", () => {
+        beforeEach(() => {
+          let currentGameObjectTransform =
+            GameObjectTool.getCurrentSceneTreeNodeTransform();
+
+          TransformUtils.getTransformRotationData(currentGameObjectTransform)
+          |> ignore;
+        });
+
         test(
           {|
-      1.set rotation to (x:-45.0, y:180.0, z:0.0)
+      1.getTransformRotationData;
+      2.set rotation to (x:-45.0, y:180.0, z:0.0);
 
       inspector->transform->rotation should show (-45.0, 180.0, 0.0)
       |},
@@ -101,9 +110,10 @@ let _ =
         );
         test(
           {|
-      1.set rotation to (x:-45.0, y:180.0)
+      1.getTransformRotationData;
+      2.set rotation to (x:-45.0, y:180.0);
 
-      inspector->transform->rotation should show (-45.0, 180.0, 180.0)
+      inspector->transform->rotation should show (-45.0, 180.0, 0.0)
       |},
           () => {
             let currentGameObjectTransform =
