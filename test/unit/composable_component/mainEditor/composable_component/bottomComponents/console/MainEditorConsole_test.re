@@ -4,83 +4,52 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("test mainEditor console", () => {
+  describe("MainEditorConsole", () => {
     let sandbox = getSandboxDefaultVal();
 
     beforeEach(() => {
       sandbox := createSandbox();
+
       MainEditorSceneTool.initState(~sandbox, ());
-      MainEditorSceneTool.createDefaultScene(
-        sandbox,
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
-      );
+      MainEditorSceneTool.prepareScene(sandbox);
+
+      ConsoleTool.markTestConsole();
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test stub console", () => {
-      test(
-        "test stub console.log, when execute it should add the message into the widget",
-        () => {
-          let component = BuildComponentTool.buildConsole();
+      beforeEach(() => BuildComponentTool.buildConsole() |> ignore);
 
-          Js.log("log message");
+      test("console.log should add the message into content", () => {
+        ConsoleUtils.log({j|message|j});
 
-          component |> ReactTestTool.createSnapshotAndMatch;
-        },
-      );
-      test(
-        "test stub console.info, when execute it should add the message into the widget",
-        () => {
-          let component = BuildComponentTool.buildConsole();
+        BuildComponentTool.buildConsole()
+        |> ReactTestTool.createSnapshotAndMatch;
+      });
+      test("console.info should add the message into content", () => {
+        ConsoleUtils.info({j|message|j});
 
-          WonderLog.Log.info({j|info message|j});
+        BuildComponentTool.buildConsole()
+        |> ReactTestTool.createSnapshotAndMatch;
+      });
+      test("console.warn should add the message into content", () => {
+        ConsoleUtils.warn({j|message|j});
 
-          component |> ReactTestTool.createSnapshotAndMatch;
-        },
-      );
-      test(
-        "test stub console.warn, when execute it should add the message into the widget",
-        () => {
-          let component = BuildComponentTool.buildConsole();
+        BuildComponentTool.buildConsole()
+        |> ReactTestTool.createSnapshotAndMatch;
+      });
+      test("console.error should add the message into content", () => {
+        ConsoleUtils.error({j|message|j});
 
-          WonderLog.Log.warn({j|warn message|j});
+        BuildComponentTool.buildConsole()
+        |> ReactTestTool.createSnapshotAndMatch;
+      });
+      test("console.trace should invoke Error.captureStackTrace", () => {
+        let errorObj = ConsoleTool.buildFakeError(sandbox^);
 
-          component |> ReactTestTool.createSnapshotAndMatch;
-        },
-      );
-      test(
-        "test stub console.error, when execute it should add the message into the widget",
-        () => {
-          let component = BuildComponentTool.buildConsole();
+        ConsoleUtils.error({j|message|j});
 
-          WonderLog.Log.error(
-            WonderLog.Log.buildErrorMessage(
-              ~title="error message",
-              ~description={j||j},
-              ~reason="",
-              ~solution={j||j},
-              ~params={j||j},
-            ),
-          );
-
-          component |> ReactTestTool.createSnapshotAndMatch;
-        },
-      );
-      test(
-        "test stub console.trace, when execute it should add the message into the last consoleMessage record",
-        () => {
-          let component = BuildComponentTool.buildConsole();
-
-          WonderLog.Log.debug(
-            WonderLog.Log.buildDebugMessage(
-              ~description={j|debug message|j},
-              ~params={j||j},
-            ),
-            StateEditorService.getStateIsDebug(),
-          );
-
-          component |> ReactTestTool.createSnapshotAndMatch;
-        },
-      );
+        errorObj##captureStackTrace |> expect |> toCalledOnce;
+      });
     });
   });

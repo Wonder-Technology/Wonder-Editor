@@ -17,3 +17,17 @@ let markNotTestConsole = [%bs.raw
     window.isTestConsole = false;
     |}
 ];
+
+let buildFakeError = [%bs.raw
+  (sandbox) => {|
+    sandbox.spy(Error, "captureStackTrace");
+  /* var Error =  {
+    captureStackTrace: sandbox.stub()
+  };
+
+  window.Error = Error; */
+
+  return Error;
+
+  |}
+];

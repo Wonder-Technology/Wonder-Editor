@@ -8,13 +8,29 @@ let buildSceneTree = store =>
     <MainEditorSceneTree store dispatchFunc=(TestTool.getDispatch()) />,
   );
 
-let buildConsole = () =>
-  ReactTestRenderer.create(
-    <MainEditorConsole
-      store=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
-    />,
-  );
+let buildConsole =
+    (
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  ReactTestRenderer.create(<MainEditorConsole store dispatchFunc />);
+
+let buildBottom =
+    (
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  ReactTestRenderer.create(<MainEditorBottomComponents store dispatchFunc />);
+
+let buildBottomHeader =
+    (
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  ReactTestRenderer.create(<MainEditorBottomHeader store dispatchFunc />);
 
 let buildCameraProjection = () =>
   ReactTestRenderer.create(
