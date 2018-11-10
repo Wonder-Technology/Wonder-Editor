@@ -153,7 +153,7 @@ let checkAssetNodeName =
       (sourceNodeId, sourceName),
       targetNodeId,
       type_,
-      (successFunc, failFunc),
+      (failFunc, successFunc),
       (editorState, engineState),
     ) =>
   IterateAssetTreeAssetEditorService.getChildrenNameAndIdArr(
@@ -167,9 +167,9 @@ let checkAssetNodeName =
     {
       ConsoleUtils.warn("the asset can't has the same name !", editorState);
 
-      successFunc((editorState, engineState));
+      failFunc((editorState, engineState));
     } :
-    failFunc((editorState, engineState));
+    successFunc((editorState, engineState));
 
 let _isTargetTreeNodeHasSameNameChild =
     (targetNodeId, removedNodeId, (editorState, engineState)) => {
