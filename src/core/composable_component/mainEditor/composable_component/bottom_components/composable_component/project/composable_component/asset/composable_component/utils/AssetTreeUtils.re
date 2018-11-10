@@ -150,6 +150,7 @@ let _isTargetTreeNodeBeRemovedParent = (targetTreeNode, removedNodeId) =>
 
 let checkAssetNodeName =
     (
+      isWarn,
       (sourceNodeId, sourceName),
       targetNodeId,
       type_,
@@ -165,14 +166,19 @@ let checkAssetNodeName =
   |> Js.Array.map(((name, nodeId)) => name)
   |> Js.Array.includes(sourceName) ?
     {
-      ConsoleUtils.warn("the asset can't has the same name !", editorState);
+      isWarn ?
+        ConsoleUtils.warn(
+          "the asset can't has the same name !",
+          editorState,
+        ) :
+        ();
 
       failFunc((editorState, engineState));
     } :
     successFunc((editorState, engineState));
 
 let _isTargetTreeNodeHasSameNameChild =
-    (targetNodeId, removedNodeId, (editorState, engineState)) => {
+    (isWarn, targetNodeId, removedNodeId, (editorState, engineState)) => {
   let {type_}: assetTreeNodeType =
     editorState
     |> TreeRootAssetEditorService.getAssetTreeRoot
@@ -196,6 +202,7 @@ let _isTargetTreeNodeHasSameNameChild =
        );
 
   checkAssetNodeName(
+    isWarn,
     (removedNodeId, removedNodeName),
     targetNodeId,
     type_,
@@ -208,7 +215,7 @@ let _isTargetTreeNodeHasSameNameChild =
 };
 
 let isTreeNodeRelationError =
-    (targetNodeId, removedNodeId, (editorState, engineState)) =>
+    (isWarn, targetNodeId, removedNodeId, (editorState, engineState)) =>
   TreeAssetEditorService.isIdEqual(targetNodeId, removedNodeId) ?
     true :
     _isRemovedTreeNodeBeTargetParent(
@@ -227,6 +234,7 @@ let isTreeNodeRelationError =
         removedNodeId,
       )
       || _isTargetTreeNodeHasSameNameChild(
+           isWarn,
            targetNodeId,
            removedNodeId,
            (editorState, engineState),

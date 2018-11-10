@@ -30,12 +30,7 @@ module Method = {
     || isAssetWDBFileFunc() ?
       DragEnter : Nothing;
 
-  let handleDragLeave =
-      (
-        id,
-        (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFileFunc),
-        event,
-      ) => {
+  let handleDragLeave = (id, event) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
 
     DragLeave;
@@ -112,16 +107,7 @@ module Method = {
             ),
           )
       )
-      onDragLeave=(
-        _e =>
-          send(
-            handleDragLeave(
-              id,
-              (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFileFunc),
-              _e,
-            ),
-          )
-      )
+      onDragLeave=(_e => send(handleDragLeave(id, _e)))
       onDragOver=(e => DragEventUtils.handleDragOver("move", e))
       onDrop=(
         _e =>

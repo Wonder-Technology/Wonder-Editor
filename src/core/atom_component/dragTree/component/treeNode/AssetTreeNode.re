@@ -30,22 +30,12 @@ module Method = {
             DragEventUtils.handleDragEnter(
               id,
               handleWidgettFunc,
-              handleRelationErrorFunc,
+              handleRelationErrorFunc(false),
               _e,
             ),
           )
       )
-      onDragLeave=(
-        _e =>
-          send(
-            DragEventUtils.handleDragLeave(
-              id,
-              handleWidgettFunc,
-              handleRelationErrorFunc,
-              _e,
-            ),
-          )
-      )
+      onDragLeave=(_e => send(DragEventUtils.handleDragLeave(id, _e)))
       onDragOver=(e => DragEventUtils.handleDragOver("move", e))
       onDrop=(
         _e =>
@@ -53,7 +43,7 @@ module Method = {
             DragEventUtils.handleDrop(
               id,
               handleWidgettFunc,
-              handleRelationErrorFunc,
+              handleRelationErrorFunc(true),
               _e,
             ),
           )

@@ -98,22 +98,12 @@ let render =
             DragEventUtils.handleDragEnter(
               folderId,
               isWidget,
-              handleRelationError,
+              handleRelationError(false),
               _e,
             ),
           )
       )
-      onDragLeave=(
-        _e =>
-          send(
-            DragEventUtils.handleDragLeave(
-              folderId,
-              isWidget,
-              handleRelationError,
-              _e,
-            ),
-          )
-      )
+      onDragLeave=(_e => send(DragEventUtils.handleDragLeave(folderId, _e)))
       onDragOver=(e => DragEventUtils.handleDragOver("move", e))
       onDrop=(
         _e =>
@@ -121,7 +111,7 @@ let render =
             DragEventUtils.handleDrop(
               folderId,
               isWidget,
-              handleRelationError,
+              handleRelationError(true),
               _e,
             ),
           )

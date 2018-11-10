@@ -87,6 +87,7 @@ module CustomEventHandler = {
 
     let (editorState, engineState) =
       AssetTreeUtils.checkAssetNodeName(
+        true,
         (nodeId, value),
         parentNodeId,
         nodeType,

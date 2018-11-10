@@ -20,7 +20,7 @@ let handleDragEnter = (id, isWidgetFunc, handleRelationErrorFunc, _event) =>
   ) ?
     DragEnter : Nothing;
 
-let handleDragLeave = (id, handleWidgeFunc, handleRelationErrorFunc, event) => {
+let handleDragLeave = (id, event) => {
   DomHelper.stopPropagation(
     ReactEventType.convertReactMouseEventToJsEvent(event),
   );
