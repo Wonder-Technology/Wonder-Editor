@@ -45,3 +45,27 @@ let buildFatalMessage = (~description, ~reason, ~solution, ~params) =>
 
 let buildErrorMessage = (~description, ~reason, ~solution, ~params) =>
   _buildMessage(description, reason, solution, params);
+
+let buildDebugMessage = (~description, ~params, ()) => {
+  let message = "";
+
+  let message =
+    _isNotEmpty(description) && _isEmpty(params) ?
+      message ++ description :
+      {
+        let message =
+          _isNotEmpty(description) ?
+            message ++ {j|description
+    $description|j} : message;
+
+        let message =
+          _isNotEmpty(params) ?
+            message ++ {j|
+    params
+    $params|j} : message;
+
+        message;
+      };
+
+  message;
+};

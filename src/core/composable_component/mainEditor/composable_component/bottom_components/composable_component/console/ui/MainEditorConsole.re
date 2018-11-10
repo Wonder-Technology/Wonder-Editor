@@ -125,7 +125,7 @@ let warn11 = () => WonderLog.Log.warn({j|warn message|j});
 
 let debug = () =>
   WonderLog.Log.debug(
-    WonderLog.Log.buildDebugMessage(
+    LogUtils.buildDebugMessage(
       ~description={j|create test debug|j},
       ~params={j||j},
     ),

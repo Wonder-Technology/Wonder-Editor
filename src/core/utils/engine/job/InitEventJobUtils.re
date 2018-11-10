@@ -471,7 +471,7 @@ let handleDomEventStreamError = e => {
   let stack = Obj.magic(e)##stack;
 
   WonderLog.Log.debug(
-    WonderLog.Log.buildDebugMessage(
+    LogUtils.buildDebugMessage(
       ~description={j|from dom event stream error|j},
       ~params={j|message:$message\nstack:$stack|j},
     ),

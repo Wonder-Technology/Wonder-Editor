@@ -170,7 +170,7 @@ let getEngineStateIMGUIFunc = () =>
         _getScenePointLights(scene, engineState),
       );
 
-    /* WonderLog.Log.debug(WonderLog.Log.buildDebugMessage(~description={j|imgui -> scene: $scene|j}, ~params={j||j}), true); */
+    /* WonderLog.Log.debug(LogUtils.buildDebugMessage(~description={j|imgui -> scene: $scene|j}, ~params={j||j}), true); */
 
     let _drawSceneCamera = (maxDistance, scene, engineState) =>
       WonderCommonlib.ArrayService.reduceOneParam(
