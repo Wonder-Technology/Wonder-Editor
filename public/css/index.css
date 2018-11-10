@@ -896,8 +896,7 @@ html, body {
               height: 25px; }
             .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content {
               overflow-y: auto;
-              user-select: text;
-              overflow-x: hidden; }
+              user-select: text; }
               .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content::-webkit-scrollbar {
                 width: 4px;
                 height: 4px; }
@@ -913,7 +912,8 @@ html, body {
                 width: 100%;
                 border-bottom: 1px solid #c0c0c0; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-error .console-header {
-                  height: 40px;
+                  height: auto;
+                  min-height: 40px;
                   display: flex;
                   font-size: 15px;
                   align-items: center; }
@@ -922,6 +922,7 @@ html, body {
                     width: 20px;
                     height: 20px; }
                   .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-error .console-header .header-message {
+                    white-space: pre-line;
                     padding-top: 5px; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-error .console-trace {
                   width: 96%;
@@ -934,7 +935,8 @@ html, body {
                 width: 100%;
                 border-bottom: 1px solid #c0c0c0; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-info .console-header {
-                  height: 40px;
+                  height: auto;
+                  min-height: 40px;
                   display: flex;
                   font-size: 15px;
                   align-items: center; }
@@ -943,6 +945,7 @@ html, body {
                     width: 20px;
                     height: 20px; }
                   .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-info .console-header .header-message {
+                    white-space: pre-line;
                     padding-top: 5px; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-info .console-trace {
                   width: 96%;
@@ -955,7 +958,8 @@ html, body {
                 width: 100%;
                 border-bottom: 1px solid #c0c0c0; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-warn .console-header {
-                  height: 40px;
+                  height: auto;
+                  min-height: 40px;
                   display: flex;
                   font-size: 15px;
                   align-items: center; }
@@ -964,6 +968,7 @@ html, body {
                     width: 20px;
                     height: 20px; }
                   .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-warn .console-header .header-message {
+                    white-space: pre-line;
                     padding-top: 5px; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-warn .console-trace {
                   width: 96%;
@@ -976,7 +981,8 @@ html, body {
                 width: 100%;
                 border-bottom: 1px solid #c0c0c0; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-log .console-header {
-                  height: 40px;
+                  height: auto;
+                  min-height: 40px;
                   display: flex;
                   font-size: 15px;
                   align-items: center; }
@@ -985,6 +991,7 @@ html, body {
                     width: 20px;
                     height: 20px; }
                   .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-log .console-header .header-message {
+                    white-space: pre-line;
                     padding-top: 5px; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-log .console-trace {
                   width: 96%;

@@ -36,13 +36,7 @@ let render =
     <div className="console-header" onClick=(_e => send(ToggleShowTrace))>
       <img src=imageSrc />
       (state.hasTrace ? <img src="./public/img/more.png" /> : ReasonReact.null)
-      <div className="header-message">
-        (
-          DomHelper.textEl(
-            message |> Js.Json.stringifyAny |> OptionService.unsafeGet,
-          )
-        )
-      </div>
+      <div className="header-message"> (DomHelper.textEl(message)) </div>
     </div>
     (
       state.hasTrace && state.isShowTrace ?
