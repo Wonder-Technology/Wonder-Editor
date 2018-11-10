@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PanelExtension test build component accord to user json data, build component 1`] = `
+<article>
+  <div
+    className="inline-component"
+  >
+    <button>
+      xme
+    </button>
+  </div>
+  <div
+    className="inline-component"
+  >
+    <div>
+      hehe
+    </div>
+  </div>
+  <div
+    className="inline-component"
+  >
+    <article
+      className="inspector-item"
+    >
+      <div
+        className="item-header"
+      >
+        xXX
+      </div>
+      <div
+        className="item-content"
+      >
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </div>
+    </article>
+  </div>
+</article>
+`;
+
+exports[`PanelExtension test build component if the parent is different from the one specified in extensionText, don't render 1`] = `
+<div
+  className="float-div-for-test"
+/>
+`;

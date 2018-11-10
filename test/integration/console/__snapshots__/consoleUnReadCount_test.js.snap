@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test console unread count should show unread count in bottom header 
+        1.warn
+        2.show Console ui
+
+        unread count should be clear to 0
+         1`] = `
+<article>
+  <div
+    className="bottom-widget-category"
+  >
+    <div
+      className="category-name"
+      onClick={[Function]}
+    >
+      <div
+        className="name-header"
+      >
+        Project
+      </div>
+    </div>
+    <div
+      className="category-name category-active"
+      onClick={[Function]}
+    >
+      <div
+        className="name-header"
+      >
+        Console
+      </div>
+      <div
+        className="name-tail"
+      >
+        0
+      </div>
+    </div>
+    <span
+      className="category-name"
+    />
+  </div>
+</article>
+`;
+
+exports[`test console unread count should show unread count in bottom header if console one message, unread count should + 1 1`] = `
+<article>
+  <div
+    className="bottom-widget-category"
+  >
+    <div
+      className="category-name category-active"
+      onClick={[Function]}
+    >
+      <div
+        className="name-header"
+      >
+        Project
+      </div>
+    </div>
+    <div
+      className="category-name"
+      onClick={[Function]}
+    >
+      <div
+        className="name-header"
+      >
+        Console
+      </div>
+      <div
+        className="name-tail"
+      >
+        1
+      </div>
+    </div>
+    <span
+      className="category-name"
+    />
+  </div>
+</article>
+`;

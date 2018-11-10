@@ -1,11 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditorTransform rotation test change rotation value deal with the specific case 
-      1.getTransformRotationData;
-      2.set rotation to (x:-45.0, y:180.0);
-
-      inspector->transform->rotation should show (-45.0, 180.0, 0.0)
-       1`] = `
+exports[`redo_undo: transform position test simulate set currentSceneTreeNode test redo operate test redo one step undo step which from second to zero, redo step which from zero to first 1`] = `
 <article
   className="wonder-inspector-transform"
 >
@@ -39,7 +34,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="0"
+              value="11.25"
             />
           </div>
         </article>
@@ -116,7 +111,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="-45"
+              value="0"
             />
           </div>
         </article>
@@ -136,7 +131,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="180"
+              value="0"
             />
           </div>
         </article>
@@ -243,12 +238,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
 </article>
 `;
 
-exports[`MainEditorTransform rotation test change rotation value deal with the specific case 
-      1.getTransformRotationData;
-      2.set rotation to (x:-45.0, y:180.0, z:0.0);
-
-      inspector->transform->rotation should show (-45.0, 180.0, 0.0)
-       1`] = `
+exports[`redo_undo: transform position test simulate set currentSceneTreeNode test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
 <article
   className="wonder-inspector-transform"
 >
@@ -282,7 +272,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="0"
+              value="11.25"
             />
           </div>
         </article>
@@ -302,7 +292,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="0"
+              value="15"
             />
           </div>
         </article>
@@ -359,7 +349,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="-45"
+              value="0"
             />
           </div>
         </article>
@@ -379,7 +369,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="180"
+              value="0"
             />
           </div>
         </article>
@@ -486,7 +476,483 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
 </article>
 `;
 
-exports[`MainEditorTransform rotation test change rotation value test change localEulerAngle x test snapshot 1`] = `
+exports[`redo_undo: transform position test simulate set currentSceneTreeNode test undo operate test not undo 1`] = `
+<article
+  className="wonder-inspector-transform"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Position
+    </div>
+    <div
+      className="item-content"
+    >
+      <article
+        className="wonder-transform-template"
+      >
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            X
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="11.25"
+            />
+          </div>
+        </article>
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Y
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="15"
+            />
+          </div>
+        </article>
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Z
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="0"
+            />
+          </div>
+        </article>
+      </article>
+    </div>
+  </div>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Rotation
+    </div>
+    <div
+      className="item-content"
+    >
+      <article
+        className="wonder-transform-template"
+      >
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            X
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="0"
+            />
+          </div>
+        </article>
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Y
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="0"
+            />
+          </div>
+        </article>
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Z
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="0"
+            />
+          </div>
+        </article>
+      </article>
+    </div>
+  </div>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Scale
+    </div>
+    <div
+      className="item-content"
+    >
+      <article
+        className="wonder-transform-template"
+      >
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            X
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="1"
+            />
+          </div>
+        </article>
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Y
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="1"
+            />
+          </div>
+        </article>
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Z
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="1"
+            />
+          </div>
+        </article>
+      </article>
+    </div>
+  </div>
+</article>
+`;
+
+exports[`redo_undo: transform position test simulate set currentSceneTreeNode test undo operate test undo one step step which from second to first 1`] = `
+<article
+  className="wonder-inspector-transform"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Position
+    </div>
+    <div
+      className="item-content"
+    >
+      <article
+        className="wonder-transform-template"
+      >
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            X
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="11.25"
+            />
+          </div>
+        </article>
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Y
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="0"
+            />
+          </div>
+        </article>
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Z
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="0"
+            />
+          </div>
+        </article>
+      </article>
+    </div>
+  </div>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Rotation
+    </div>
+    <div
+      className="item-content"
+    >
+      <article
+        className="wonder-transform-template"
+      >
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            X
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="0"
+            />
+          </div>
+        </article>
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Y
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="0"
+            />
+          </div>
+        </article>
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Z
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="0"
+            />
+          </div>
+        </article>
+      </article>
+    </div>
+  </div>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Scale
+    </div>
+    <div
+      className="item-content"
+    >
+      <article
+        className="wonder-transform-template"
+      >
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            X
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="1"
+            />
+          </div>
+        </article>
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Y
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="1"
+            />
+          </div>
+        </article>
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Z
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="1"
+            />
+          </div>
+        </article>
+      </article>
+    </div>
+  </div>
+</article>
+`;
+
+exports[`redo_undo: transform position test simulate set currentSceneTreeNode test undo operate test undo two step step which from second to zero 1`] = `
 <article
   className="wonder-inspector-transform"
 >
@@ -597,7 +1063,7 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="-10.1213"
+              value="0"
             />
           </div>
         </article>
