@@ -9,8 +9,8 @@ let getInspectorComponentType = type_ =>
   | "ArcballCameraController" => ArcballCameraController
   | _ =>
     WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="getInspectorComponentType",
+      LogUtils.buildFatalMessage(
+        
         ~description=
           {j|the type:$type_ in InspectorComponentType can't add|j},
         ~reason="",

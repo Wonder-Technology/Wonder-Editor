@@ -22,8 +22,8 @@ let getLightTypeByGameObject = (gameObject, engineState) =>
   | (false, true) => PointLight
   | _ =>
     WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="getLightTypeByGameObject",
+      LogUtils.buildFatalMessage(
+        
         ~description={j|gameObject:$gameObject should has light component|j},
         ~reason="",
         ~solution={j||j},

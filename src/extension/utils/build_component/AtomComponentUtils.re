@@ -7,8 +7,8 @@ let buildButton = (text, onClick) =>
   switch text {
   | None =>
     WonderLog.Log.error(
-      WonderLog.Log.buildErrorMessage(
-        ~title="buildButton",
+      LogUtils.buildErrorMessage(
+        
         ~description={j|the button component: text is empty|j},
         ~reason="",
         ~solution={j|check extension->panelExtension->render->name->button should add text|j},
@@ -23,8 +23,8 @@ let buildDiv = (text) =>
   switch text {
   | None =>
     WonderLog.Log.error(
-      WonderLog.Log.buildErrorMessage(
-        ~title="buildDiv",
+      LogUtils.buildErrorMessage(
+        
         ~description={j|the div component: text is empty|j},
         ~reason="",
         ~solution={j|check extension->panelExtension->render->name->div should add text|j},

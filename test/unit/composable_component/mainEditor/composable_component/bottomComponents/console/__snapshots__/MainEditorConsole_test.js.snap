@@ -64,7 +64,7 @@ exports[`MainEditorConsole test stub console console.error should add the messag
           <div
             className="header-message"
           >
-            "message"
+            message
           </div>
         </div>
       </article>
@@ -134,7 +134,7 @@ exports[`MainEditorConsole test stub console console.info should add the message
           <div
             className="header-message"
           >
-            "Info: message"
+            Info: message
           </div>
         </div>
       </article>
@@ -204,80 +204,7 @@ exports[`MainEditorConsole test stub console console.log should add the message 
           <div
             className="header-message"
           >
-            "Log: message"
-          </div>
-        </div>
-      </article>
-    </div>
-  </article>
-</article>
-`;
-
-exports[`MainEditorConsole test stub console console.trace should add the message into the last consoleMessage record 1`] = `
-<article>
-  <article
-    className="wonder-console-component"
-  >
-    <div
-      className="console-header"
-    >
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        clear
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add log
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add info
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add warn
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add debug
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add fatal
-      </button>
-    </div>
-    <div
-      className="console-content"
-    >
-      <article
-        className="console-error"
-      >
-        <div
-          className="console-header"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/error.png"
-          />
-          <img
-            src="./public/img/more.png"
-          />
-          <div
-            className="header-message"
-          >
-            "message"
+            Log: message
           </div>
         </div>
       </article>
@@ -347,7 +274,7 @@ exports[`MainEditorConsole test stub console console.warn should add the message
           <div
             className="header-message"
           >
-            "Warn: message"
+            Warn: message
           </div>
         </div>
       </article>

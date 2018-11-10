@@ -12,8 +12,8 @@ let getUploadFileType = name => {
   | ".wpk" => LoadWPK
   | _ =>
     ConsoleUtils.error(
-      WonderLog.Log.buildErrorMessage(
-        ~title="",
+      LogUtils.buildErrorMessage(
+        
         ~description={j|the loaded asset type is error|j},
         ~reason="",
         ~solution={j||j},

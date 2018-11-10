@@ -16,8 +16,8 @@ let unsafeGetMaterialComponent = (gameObject, engineState) =>
         engineState,
       ) :
       WonderLog.Log.fatal(
-        WonderLog.Log.buildFatalMessage(
-          ~title="unsafeGetMaterialComponent",
+        LogUtils.buildFatalMessage(
+          
           ~description=
             {j|gameObject:$gameObject should has material component|j},
           ~reason="",

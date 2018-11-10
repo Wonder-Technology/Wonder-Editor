@@ -24,8 +24,8 @@ let getMaterialTypeByGameObject = (gameObject, engineState) =>
   | (false, true) => LightMaterial
   | _ =>
     WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="getMaterialTypeByGameObject",
+      LogUtils.buildFatalMessage(
+        
         ~description=
           {j|gameObject:$gameObject should has material component|j},
         ~reason="",

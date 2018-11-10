@@ -7,8 +7,8 @@ let buildComponentByName = (componentName, argumentArray) =>
   | "div" => DomHelper.apply(argumentArray, buildDiv)
   | _ =>
     WonderLog.Log.error(
-      WonderLog.Log.buildErrorMessage(
-        ~title="buildComponentByName",
+      LogUtils.buildErrorMessage(
+        
         ~description={j|the specific component: $componentName is not find|j},
         ~reason="",
         ~solution={j|check extension->panelExtension->render->name->$componentName should correct|j},

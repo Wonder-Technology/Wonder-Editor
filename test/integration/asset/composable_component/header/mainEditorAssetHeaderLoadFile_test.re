@@ -303,6 +303,7 @@ let _ =
           LoadAssetUtils.getUploadFileType("aaa.bb");
 
         test("if upload error file type, should error", () => {
+          ConsoleTool.notShowMessage();
           let component = BuildComponentTool.buildConsole();
           let errorStub =
             createMethodStub(sandbox^, ConsoleTool.console, "error");
@@ -312,11 +313,7 @@ let _ =
             (() => (), () => (), () => ()),
           );
 
-          errorStub
-          |> expect
-          |> toCalledWith([|
-               "\n  Error:\n\n  title\n  handleSpecificFuncByType\n\n  description\n  the load file type is error\n\n  reason\n  \n\n  solution\n  \n\n  params\n  \n\n   ",
-             |]);
+          ConsoleTool.judgeError("type is error", errorStub);
         });
       });
     });

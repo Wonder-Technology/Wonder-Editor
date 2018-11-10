@@ -56,8 +56,8 @@ let restoreHistoryStack = (dispatchFunc, engineState, historyState) =>
     });
   | _ =>
     WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="restoreHistoryStack",
+      LogUtils.buildFatalMessage(
+        
         ~description=
           {j|expect history copiedRedoUndoStackRecord undo stack have value, but not|j},
         ~reason="",

@@ -83,8 +83,8 @@ let removeComponentByType =
        );
   | _ =>
     WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="removeComponentByTypeForRunEngineState",
+      LogUtils.buildFatalMessage(
+        
         ~description=
           {j|the type_:$type_ in InspectorComponentType can't remove|j},
         ~reason="",

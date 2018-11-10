@@ -112,8 +112,8 @@ let addComponentByType =
        );
   | _ =>
     WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="addComponentByType",
+      LogUtils.buildFatalMessage(
+        
         ~description=
           {j|the type:$type_ in inspectorComponentType can't add |j},
         ~reason="",

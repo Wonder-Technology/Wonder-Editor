@@ -17,8 +17,8 @@ let getImageMimeType = extName =>
   | ".jpeg" => "image/jpeg"
   | mimeType =>
     WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="getImageMimeType",
+      LogUtils.buildFatalMessage(
+        
         ~description={j|unknown image mimeType: $mimeType|j},
         ~reason="",
         ~solution={j||j},

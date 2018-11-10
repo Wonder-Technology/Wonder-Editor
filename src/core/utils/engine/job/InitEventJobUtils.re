@@ -231,8 +231,8 @@ let bindDomEventToTriggerPointEvent = engineState =>
        ) :
     /* TODO error to user, not fatal */
     WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="bindDomEventToTriggerPointEvent",
+      LogUtils.buildFatalMessage(
+        
         ~description={j|unknown browser|j},
         ~reason="",
         ~solution={j||j},
@@ -456,8 +456,8 @@ let fromDomEvent = engineState =>
       _fromPCDomEventArr(engineState) :
       /* TODO error to user, not fatal */
       WonderLog.Log.fatal(
-        WonderLog.Log.buildFatalMessage(
-          ~title="fromDomEvent",
+        LogUtils.buildFatalMessage(
+          
           ~description={j|unknown browser|j},
           ~reason="",
           ~solution={j||j},

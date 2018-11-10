@@ -26,8 +26,8 @@ let isHasSpecificComponentByType = (type_, gameObject, engineState) =>
        )
   | _ =>
     WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="isHasSpecificComponentByType",
+      LogUtils.buildFatalMessage(
+        
         ~description=
           {j|the type:$type_ in inspectorComponentType can't add |j},
         ~reason="",

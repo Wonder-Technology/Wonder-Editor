@@ -48,8 +48,8 @@ let getCurrentGameObjectMaterial = () => {
         engineState,
       ) :
       WonderLog.Log.fatal(
-        WonderLog.Log.buildFatalMessage(
-          ~title="getCurrentGameObjectMaterial",
+        LogUtils.buildFatalMessage(
+          
           ~description={j|gameObject should has material, but actual not|j},
           ~reason="",
           ~solution={j||j},

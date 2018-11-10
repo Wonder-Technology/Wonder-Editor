@@ -256,7 +256,7 @@ let _ =
                  GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                )
           )
-          |> toThrowMessageRe([%re {|/addComponentByType/img|}])
+          |> toThrowMessageRe([%re {|/inspectorComponentType/img|}])
         )
       );
 
@@ -270,7 +270,7 @@ let _ =
                  GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                )
           )
-          |> toThrowMessageRe([%re {|/isHasSpecificComponentByType/img|}])
+          |> toThrowMessageRe([%re {|/inspectorComponentType/img|}])
         )
       );
     });

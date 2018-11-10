@@ -136,8 +136,7 @@ let fatal = () =>
   Console.tryCatch(
     () =>
       WonderLog.Log.fatal(
-        WonderLog.Log.buildFatalMessage(
-          ~title="test add fatal",
+        LogUtils.buildFatalMessage(
           ~description={j|sss|j},
           ~reason="",
           ~solution={j||j},

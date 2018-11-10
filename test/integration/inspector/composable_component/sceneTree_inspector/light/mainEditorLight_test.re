@@ -154,7 +154,7 @@ let _ =
             )
             |> StateLogicService.getEngineStateToGetData;
           })
-          |> toThrowMessageRe([%re {|/getLightTypeByGameObject/img|}])
+          |> toThrowMessageRe([%re {|/should\shas\slight\scomponent/img|}])
         )
       );
     });

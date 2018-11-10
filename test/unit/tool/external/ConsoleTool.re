@@ -27,3 +27,19 @@ let buildFakeError = [%bs.raw
     return Error;
   |}
 ];
+
+let judgeError = (message, errorStub) =>
+  Wonder_jest.(
+    Expect.(
+      Expect.Operators.(
+        Sinon.(
+          errorStub
+          |> getArgs
+          |> Js.Json.stringifyAny
+          |> OptionService.unsafeGet
+          |> expect
+          |> toContainString(message)
+        )
+      )
+    )
+  );

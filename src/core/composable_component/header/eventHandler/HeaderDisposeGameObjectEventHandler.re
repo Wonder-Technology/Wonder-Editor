@@ -41,8 +41,7 @@ module CustomEventHandler = {
     switch (SceneEditorService.getCurrentSceneTreeNode(editorState)) {
     | None =>
       WonderLog.Log.error(
-        WonderLog.Log.buildErrorMessage(
-          ~title="_getRemovedSceneGraphData",
+        LogUtils.buildErrorMessage(
           ~description=
             {j|current gameObject should exist, but actual is None|j},
           ~reason="",

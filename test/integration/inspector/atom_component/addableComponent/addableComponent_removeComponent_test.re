@@ -290,7 +290,7 @@ let _ =
                  GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                )
           )
-          |> toThrowMessageRe([%re {|/removeComponentByType/img|}])
+          |> toThrowMessageRe([%re {|/can't\sremove/img|}])
         )
       );
     });

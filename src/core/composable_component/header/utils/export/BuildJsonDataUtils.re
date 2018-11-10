@@ -8,8 +8,7 @@ let _getUint8Array = (uint8Array, base64) =>
     | Some(base64) => BufferUtils.convertBase64ToUint8Array(base64)
     | None =>
       WonderLog.Log.fatal(
-        WonderLog.Log.buildFatalMessage(
-          ~title="_buildImageData",
+        LogUtils.buildFatalMessage(
           ~description={j|image->base64 should exist|j},
           ~reason="",
           ~solution={j||j},

@@ -133,7 +133,7 @@ let _ =
               )
               |> StateLogicService.getEngineStateToGetData;
             })
-            |> toThrowMessageRe([%re {|/getMaterialTypeByGameObject/img|}])
+            |> toThrowMessageRe([%re {|/should\shas\smaterial\scomponent/g|}])
           )
         )
       );

@@ -13,8 +13,8 @@ let getUpdateState = reducerResult =>
   | ReasonReact.Update(reasonStateUpdate) => reasonStateUpdate
   | _ =>
     WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="getUpdateState",
+      LogUtils.buildFatalMessage(
+        
         ~description={j||j},
         ~reason="",
         ~solution={j||j},

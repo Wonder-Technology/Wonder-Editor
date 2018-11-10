@@ -8,8 +8,8 @@ let _getUniqueAtomAttribute = (atomName: string) =>
       switch (atomAttributeArr |> Js.Array.length) {
       | 0 =>
         WonderLog.Log.error(
-          WonderLog.Log.buildErrorMessage(
-            ~title="_getUniqueAtomAttribute",
+          LogUtils.buildErrorMessage(
+            
             ~description={j|the specific atom : $atomName not exist|j},
             ~reason="",
             ~solution={j|check extension->panelExtension->render->$atomName should correct |j},
@@ -42,8 +42,8 @@ let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =
   switch state.mapState.componentsMap {
   | None =>
     WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="_getUniqueMapByComponentName",
+      LogUtils.buildFatalMessage(
+        
         ~description={j|appState->mapState->componentsMap is none|j},
         ~reason="",
         ~solution={j||j},
@@ -54,8 +54,8 @@ let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =
     switch (maps |> WonderCommonlib.HashMapService.get(uiComponentName)) {
     | None =>
       WonderLog.Log.fatal(
-        WonderLog.Log.buildFatalMessage(
-          ~title="_getUniqueMapByComponentName",
+        LogUtils.buildFatalMessage(
+          
           ~description={j|can't find $uiComponentName in appState->mapState->componentsMap|j},
           ~reason="",
           ~solution={j||j},
@@ -81,8 +81,8 @@ let _createArgumentArray =
         ) {
         | None =>
           WonderLog.Log.error(
-            WonderLog.Log.buildErrorMessage(
-              ~title="_createArgumentArray",
+            LogUtils.buildErrorMessage(
+              
               ~description={j|the specific function $name : $value not exist in appState->mapState->componentsMap|j},
               ~reason="",
               ~solution={j|check extension:$uiComponentName->panelExtension->render->($prop)->$value should exist in methodExtension|j},
@@ -94,8 +94,8 @@ let _createArgumentArray =
         }
       | _ =>
         WonderLog.Log.error(
-          WonderLog.Log.buildErrorMessage(
-            ~title="_createArgumentArray",
+          LogUtils.buildErrorMessage(
+            
             ~description={j|the specific type : $type_ not exist in atomComponent's propArray|j},
             ~reason="",
             ~solution={j|check extension:$uiComponentName->panelExtension->render->($prop)->$type_ should correct|j},
