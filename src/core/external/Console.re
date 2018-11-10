@@ -7,15 +7,15 @@ let stubConsole = [%bs.raw
 
         window.wonder_console.warn = warnFunc;
 
-        var getStackTrace = function () {
+        var getStackTrace = function (func) {
             var obj = {};
-            Error.captureStackTrace(obj, getStackTrace);
+            Error.captureStackTrace(obj, func);
 
             return obj.stack;
         };
 
-        window.wonder_console.trace = () => {
-           var traceInfo = getStackTrace();
+        window.wonder_console.trace = (func) => {
+           var traceInfo = getStackTrace(func);
 
            traceFunc(traceInfo)
         };
@@ -43,12 +43,7 @@ let tryCatch = [%bs.raw
   |}
 ];
 
-let throwFatal = e => {
+let rec throwFatal = e => {
   WonderLog.Log._error(e##message);
-  WonderLog.Log._trace(e##stack);
+  WonderLog.Log._trace(throwFatal);
 };
-
-
-[@bs.val] [@bs.scope "console"] external profile : string => unit = "";
-
-[@bs.val] [@bs.scope "console"] external profileEnd : unit => unit = "";
