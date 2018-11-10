@@ -20,7 +20,8 @@ let copyHistoryStack = (store, (editorState, engineState), historyState) => {
   });
 };
 
-let restoreHistoryStack = (dispatchFunc, engineState, historyState) =>
+let restoreHistoryStack =
+    (dispatchFunc, (editorState, engineState, historyState)) =>
   switch (
     Stack.first(historyState.copiedRedoUndoStackRecord.uiUndoStack),
     Stack.first(historyState.copiedRedoUndoStackRecord.editorUndoStack),
@@ -55,14 +56,16 @@ let restoreHistoryStack = (dispatchFunc, engineState, historyState) =>
       engineRedoStack: historyState.copiedRedoUndoStackRecord.engineRedoStack,
     });
   | _ =>
-    WonderLog.Log.fatal(
-      LogUtils.buildFatalMessage(
-        
+    ConsoleUtils.error(
+      LogUtils.buildErrorMessage(
         ~description=
           {j|expect history copiedRedoUndoStackRecord undo stack have value, but not|j},
         ~reason="",
         ~solution={j|check history copiedRedoUndoStackRecord undo stack|j},
         ~params={j|historyState:$historyState|j},
       ),
-    )
+      editorState,
+    );
+
+    ();
   };

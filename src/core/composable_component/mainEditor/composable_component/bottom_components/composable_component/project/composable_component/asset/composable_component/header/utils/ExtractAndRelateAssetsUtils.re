@@ -109,7 +109,7 @@ let _extractAndRelateTextureAssets =
         RelateGameObjectAndAssetUtils.replaceToTextureAssetTextureComponent(
           gameObject,
           (targetTexture, setMapFunc),
-          engineState,
+          (editorState, engineState),
         );
 
       (

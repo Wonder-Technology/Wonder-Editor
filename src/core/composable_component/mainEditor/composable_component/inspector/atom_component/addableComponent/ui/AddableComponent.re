@@ -11,13 +11,17 @@ type action =
 module Method = {
   let addSpecificComponent =
       ((store, dispatchFunc), currentSceneTreeNode, type_) => {
-    let type_ = OperateComponentUtils.getInspectorComponentType(type_);
+    let type_ =
+      OperateComponentUtils.getInspectorComponentType(
+        type_,
+        StateEditorService.getState(),
+      );
 
     InspectorHasComponentUtils.isHasSpecificComponentByType(
       type_,
       currentSceneTreeNode,
     )
-    |> StateLogicService.getEngineStateToGetData ?
+    |> StateLogicService.getStateToGetData ?
       Message.message
       |> Message.convertToJsObj
       |> (

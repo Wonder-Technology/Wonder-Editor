@@ -23,7 +23,6 @@ let getLightTypeByGameObject = (gameObject, engineState) =>
   | _ =>
     WonderLog.Log.fatal(
       LogUtils.buildFatalMessage(
-        
         ~description={j|gameObject:$gameObject should has light component|j},
         ~reason="",
         ~solution={j||j},
@@ -40,7 +39,6 @@ let handleSpecificFuncByLightType =
 
   switch (lightType) {
   | DirectionLight => currentSceneTreeNode |> handleDirectionLightFunc
-
   | PointLight => currentSceneTreeNode |> handlePointLightFunc
   };
 };

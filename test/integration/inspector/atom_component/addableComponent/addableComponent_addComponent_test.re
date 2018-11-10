@@ -245,33 +245,38 @@ let _ =
       );
       describe(
         "test InspectorAddComponentUtils addComponentByType function", () =>
-        test("test add unaddable component should throw error", () =>
-          expect(() =>
-            (
-              StateEditorService.getState(),
-              StateEngineService.unsafeGetState(),
-            )
-            |> InspectorAddComponentUtils.addComponentByType(
-                 InspectorComponentType.SourceInstance,
-                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-               )
-          )
-          |> toThrowMessageRe([%re {|/inspectorComponentType/img|}])
-        )
+        test("test add unaddable component should throw error", () => {
+          ConsoleTool.notShowMessage();
+          let errorStub =
+            createMethodStub(sandbox^, ConsoleTool.console, "error");
+
+          (StateEditorService.getState(), StateEngineService.unsafeGetState())
+          |> InspectorAddComponentUtils.addComponentByType(
+               InspectorComponentType.SourceInstance,
+               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+             )
+          |> ignore;
+
+          ConsoleTool.judgeError("inspectorComponentType", errorStub);
+        })
       );
 
       describe(
         "test InspectorHasComponentUtils isHasSpecificComponentByType", () =>
-        test("test has sourceInstance component, should throw error", () =>
-          expect(() =>
-            StateEngineService.unsafeGetState()
-            |> InspectorHasComponentUtils.isHasSpecificComponentByType(
-                 InspectorComponentType.SourceInstance,
-                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-               )
+        test("test has sourceInstance component, should throw error", () => {
+          ConsoleTool.notShowMessage();
+          let errorStub =
+            createMethodStub(sandbox^, ConsoleTool.console, "error");
+
+          InspectorHasComponentUtils.isHasSpecificComponentByType(
+            InspectorComponentType.SourceInstance,
+            GameObjectTool.unsafeGetCurrentSceneTreeNode(),
           )
-          |> toThrowMessageRe([%re {|/inspectorComponentType/img|}])
-        )
+          |> StateLogicService.getStateToGetData
+          |> ignore;
+
+          ConsoleTool.judgeError("inspectorComponentType", errorStub);
+        })
       );
     });
   });

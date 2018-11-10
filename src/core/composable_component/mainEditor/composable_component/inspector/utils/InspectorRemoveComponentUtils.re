@@ -71,10 +71,10 @@ let removeComponentByType =
          );
 
     /* let engineState =
-      engineState
-      |> ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponent(
-           currentSceneTreeNode,
-         ); */
+       engineState
+       |> ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponent(
+            currentSceneTreeNode,
+          ); */
 
     (editorState, engineState)
     |> GameObjectLogicService.disposeArcballCameraController(
@@ -82,14 +82,16 @@ let removeComponentByType =
          arcballCameraController,
        );
   | _ =>
-    WonderLog.Log.fatal(
-      LogUtils.buildFatalMessage(
-        
+    ConsoleUtils.error(
+      LogUtils.buildErrorMessage(
         ~description=
-          {j|the type_:$type_ in InspectorComponentType can't remove|j},
+          {j|the type:$type_ in inspectorComponentType can't remove |j},
         ~reason="",
         ~solution={j||j},
         ~params={j||j},
       ),
-    )
+      editorState,
+    );
+
+    (editorState, engineState);
   };

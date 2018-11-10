@@ -1,20 +1,25 @@
 open Js.Typed_array;
 
-let _getUint8Array = (uint8Array, base64) =>
+let _buildEmptyUint8Array = () => Uint8Array.make([||]);
+
+let _getUint8Array = (uint8Array, base64, editorState) =>
   switch (uint8Array) {
   | Some(uint8Array) => uint8Array
   | None =>
     switch (base64) {
     | Some(base64) => BufferUtils.convertBase64ToUint8Array(base64)
     | None =>
-      WonderLog.Log.fatal(
-        LogUtils.buildFatalMessage(
+      ConsoleUtils.error(
+        LogUtils.buildErrorMessage(
           ~description={j|image->base64 should exist|j},
           ~reason="",
           ~solution={j||j},
           ~params={j||j},
         ),
-      )
+        editorState,
+      );
+
+      _buildEmptyUint8Array();
     }
   };
 
@@ -40,7 +45,7 @@ let _buildImageData = editorState => {
            {name, mimeType, uint8Array, base64}: AssetNodeType.imageResultType,
            imageNodeId,
          ) => {
-           let uint8Array = _getUint8Array(uint8Array, base64);
+           let uint8Array = _getUint8Array(uint8Array, base64, editorState);
            let byteLength = uint8Array |> Uint8Array.length;
            let alignedByteLength = BufferUtils.alignedLength(byteLength);
 

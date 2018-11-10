@@ -1,6 +1,7 @@
 open InspectorComponentType;
 
-let isHasSpecificComponentByType = (type_, gameObject, engineState) =>
+let isHasSpecificComponentByType =
+    (type_, gameObject, (editorState, engineState)) =>
   switch (type_) {
   | RenderGroup =>
     engineState
@@ -25,14 +26,16 @@ let isHasSpecificComponentByType = (type_, gameObject, engineState) =>
          gameObject,
        )
   | _ =>
-    WonderLog.Log.fatal(
-      LogUtils.buildFatalMessage(
-        
+    ConsoleUtils.error(
+      LogUtils.buildErrorMessage(
         ~description=
-          {j|the type:$type_ in inspectorComponentType can't add |j},
+          {j|the type:$type_ in inspectorComponentType can't be judge|j},
         ~reason="",
         ~solution={j||j},
         ~params={j||j},
       ),
-    )
+      editorState,
+    );
+
+    false;
   };

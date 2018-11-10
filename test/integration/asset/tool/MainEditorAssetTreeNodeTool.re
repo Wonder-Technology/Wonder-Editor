@@ -40,7 +40,7 @@ let addTextureIntoNodeMap =
          Some(imageSrc),
          None,
          textureName ++ extName,
-         ImageUtils.getImageMimeType(extName),
+         ImageUtils.getImageMimeType(extName, editorState),
        ),
      )
   |> TextureNodeMapAssetEditorService.setResult(

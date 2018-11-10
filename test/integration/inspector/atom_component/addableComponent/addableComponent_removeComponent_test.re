@@ -279,19 +279,20 @@ let _ =
       );
       describe(
         "test InspectorRemoveComponentUtils removeComponentByType function", () =>
-        test("remove unRemovable component should throw error", () =>
-          expect(() =>
-            (
-              StateEditorService.getState(),
-              StateEngineService.unsafeGetState(),
-            )
-            |> InspectorRemoveComponentUtils.removeComponentByType(
-                 InspectorComponentType.SourceInstance,
-                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-               )
-          )
-          |> toThrowMessageRe([%re {|/can't\sremove/img|}])
-        )
+        test("remove unRemovable component should throw error", () => {
+          ConsoleTool.notShowMessage();
+          let errorStub =
+            createMethodStub(sandbox^, ConsoleTool.console, "error");
+
+          (StateEditorService.getState(), StateEngineService.unsafeGetState())
+          |> InspectorRemoveComponentUtils.removeComponentByType(
+               InspectorComponentType.SourceInstance,
+               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+             )
+          |> ignore;
+
+          ConsoleTool.judgeError("can't remove", errorStub);
+        })
       );
     });
   });

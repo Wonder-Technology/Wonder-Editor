@@ -1,6 +1,6 @@
 open InspectorComponentType;
 
-let getInspectorComponentType = type_ =>
+let getInspectorComponentType = (type_, editorState) =>
   switch (type_) {
   | "Light" => Light
   | "Geometry" => Geometry
@@ -8,49 +8,50 @@ let getInspectorComponentType = type_ =>
   | "CameraGroup" => CameraGroup
   | "ArcballCameraController" => ArcballCameraController
   | _ =>
-    WonderLog.Log.fatal(
-      LogUtils.buildFatalMessage(
-        
-        ~description=
-          {j|the type:$type_ in InspectorComponentType can't add|j},
+    ConsoleUtils.error(
+      LogUtils.buildErrorMessage(
+        ~description={j|unknown type:$type_|j},
         ~reason="",
         ~solution={j||j},
         ~params={j||j},
       ),
-    )
+      editorState,
+    );
+
+    Unknown;
   };
 
 /* let _bindArcballCameraEventIfHasActiveCameraGroup =
-    (currentSceneTreeNode, runEngineState) =>
-  runEngineState |> CameraEngineService.hasCameraGroup(currentSceneTreeNode) ?
-    BasicCameraViewEngineService.isActiveBasicCameraView(
-      GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-        currentSceneTreeNode,
-        runEngineState,
-      ),
-      runEngineState,
-    ) ?
+     (currentSceneTreeNode, runEngineState) =>
+   runEngineState |> CameraEngineService.hasCameraGroup(currentSceneTreeNode) ?
+     BasicCameraViewEngineService.isActiveBasicCameraView(
+       GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
+         currentSceneTreeNode,
+         runEngineState,
+       ),
+       runEngineState,
+     ) ?
+       ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponent(
+         currentSceneTreeNode,
+         runEngineState,
+       ) :
+       runEngineState :
+     runEngineState; */
+
+/* let handleAddArcballCameraControllerIfInRunMode =
+     (currentSceneTreeNode, runEngineState) =>
+   SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
+     _bindArcballCameraEventIfHasActiveCameraGroup(
+       currentSceneTreeNode,
+       runEngineState,
+     ) :
+     runEngineState; */
+
+/* let handleAddCameraGroupIfInRunMode = (currentSceneTreeNode, runEngineState) =>
+    SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
       ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponent(
         currentSceneTreeNode,
         runEngineState,
       ) :
-      runEngineState :
-    runEngineState; */
-
-/* let handleAddArcballCameraControllerIfInRunMode =
-    (currentSceneTreeNode, runEngineState) =>
-  SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
-    _bindArcballCameraEventIfHasActiveCameraGroup(
-      currentSceneTreeNode,
-      runEngineState,
-    ) :
-    runEngineState; */
-
-/* let handleAddCameraGroupIfInRunMode = (currentSceneTreeNode, runEngineState) =>
-  SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
-    ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponent(
-      currentSceneTreeNode,
-      runEngineState,
-    ) :
-    runEngineState;
- */
+      runEngineState;
+   */

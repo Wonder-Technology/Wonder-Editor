@@ -111,14 +111,16 @@ let addComponentByType =
          cameraController,
        );
   | _ =>
-    WonderLog.Log.fatal(
-      LogUtils.buildFatalMessage(
-        
+    ConsoleUtils.error(
+      LogUtils.buildErrorMessage(
         ~description=
           {j|the type:$type_ in inspectorComponentType can't add |j},
         ~reason="",
         ~solution={j||j},
         ~params={j||j},
       ),
-    )
+      editorState,
+    );
+
+    (editorState, engineState);
   };

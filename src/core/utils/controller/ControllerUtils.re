@@ -1,4 +1,4 @@
-let run = (store) => {
+let run = store => {
   SceneEditorService.setIsRun(true)
   |> StateLogicService.getAndSetEditorState
   |> ignore;
@@ -16,16 +16,19 @@ let run = (store) => {
   LoopEngineService.loop() |> ignore;
 };
 
-let stop = (dispatchFunc) => {
+let stop = dispatchFunc => {
   StateEditorService.getState()
   |> LoopEditorService.getLoopId
   |> LoopEngineService.stopLoop;
 
-  AllStateData.getHistoryState()
-  |> ControllerHistoryUtils.restoreHistoryStack(
-       dispatchFunc,
-       StateEngineService.unsafeGetState(),
-     );
+  ControllerHistoryUtils.restoreHistoryStack(
+    dispatchFunc,
+    (
+      StateEditorService.getState(),
+      StateEngineService.unsafeGetState(),
+      AllStateData.getHistoryState(),
+    ),
+  );
 
   StateEngineService.unsafeGetState()
   |> ArcballCameraControllerLogicService.unbindGameViewActiveCameraArcballCameraControllerEvent

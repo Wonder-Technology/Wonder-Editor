@@ -6,6 +6,12 @@ open StateDataMainType;
 
 let hasLightMaterialComponent = GameObjectAPI.hasGameObjectLightMaterialComponent;
 
+let getLightMaterialComponent = (gameObject, engineState) =>
+  GetComponentGameObjectService.getLightMaterialComponent(.
+    gameObject,
+    engineState.gameObjectRecord,
+  );
+
 let unsafeGetLightMaterialComponent = GameObjectAPI.unsafeGetGameObjectLightMaterialComponent;
 
 let addLightMaterialComponent = GameObjectAPI.addGameObjectLightMaterialComponent;
@@ -17,6 +23,12 @@ let removeLightMaterialComponent = GameObjectAPI.removeGameObjectLightMaterialCo
 /* basic material */
 
 let hasBasicMaterialComponent = GameObjectAPI.hasGameObjectBasicMaterialComponent;
+
+let getBasicMaterialComponent = (gameObject, engineState) =>
+  GetComponentGameObjectService.getBasicMaterialComponent(.
+    gameObject,
+    engineState.gameObjectRecord,
+  );
 
 let unsafeGetBasicMaterialComponent = GameObjectAPI.unsafeGetGameObjectBasicMaterialComponent;
 

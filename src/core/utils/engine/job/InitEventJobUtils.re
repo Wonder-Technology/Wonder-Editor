@@ -154,7 +154,7 @@ let _bindMouseEventToTriggerGameViewPointEvent =
     engineState,
   );
 
-let bindDomEventToTriggerPointEvent = engineState =>
+let bindDomEventToTriggerPointEvent = (editorState, engineState) =>
   BrowserEngineService.isPC(engineState) ?
     engineState
     |> _bindMouseEventToTriggerGameViewPointEvent(
@@ -229,16 +229,19 @@ let bindDomEventToTriggerPointEvent = engineState =>
          PointDrag,
          _isTriggerSceneViewEvent,
        ) :
-    /* TODO error to user, not fatal */
-    WonderLog.Log.fatal(
-      LogUtils.buildFatalMessage(
-        
-        ~description={j|unknown browser|j},
-        ~reason="",
-        ~solution={j||j},
-        ~params={j||j},
-      ),
-    );
+    {
+      ConsoleUtils.error(
+        LogUtils.buildErrorMessage(
+          ~description={j|unknown browser|j},
+          ~reason="",
+          ~solution={j||j},
+          ~params={j||j},
+        ),
+        editorState,
+      );
+
+      engineState;
+    };
 
 let _preventContextMenuEvent = event => {
   HandleDomEventEngineService.preventDefault(
@@ -450,20 +453,23 @@ let _fromPCDomEventArr = engineState => [|
      ),
 |];
 
-let fromDomEvent = engineState =>
+let fromDomEvent = (editorState, engineState) =>
   WonderBsMost.Most.mergeArray(
     BrowserEngineService.isPC(engineState) ?
       _fromPCDomEventArr(engineState) :
-      /* TODO error to user, not fatal */
-      WonderLog.Log.fatal(
-        LogUtils.buildFatalMessage(
-          
-          ~description={j|unknown browser|j},
-          ~reason="",
-          ~solution={j||j},
-          ~params={j||j},
-        ),
-      ),
+      {
+        ConsoleUtils.error(
+          LogUtils.buildErrorMessage(
+            ~description={j|unknown browser|j},
+            ~reason="",
+            ~solution={j||j},
+            ~params={j||j},
+          ),
+          editorState,
+        );
+
+        [||];
+      },
   );
 
 let handleDomEventStreamError = e => {
@@ -480,8 +486,9 @@ let handleDomEventStreamError = e => {
 };
 
 let initEventForEditorJob = (_, engineState) => {
+  let editorState = StateEditorService.getState();
   let domEventStreamSubscription =
-    fromDomEvent(engineState)
+    fromDomEvent(editorState, engineState)
     |> WonderBsMost.Most.subscribe({
          "next": _ => (),
          "error": e => handleDomEventStreamError(e),
@@ -492,5 +499,5 @@ let initEventForEditorJob = (_, engineState) => {
   |> ManageEventEngineService.setDomEventStreamSubscription(
        domEventStreamSubscription,
      )
-  |> bindDomEventToTriggerPointEvent;
+  |> bindDomEventToTriggerPointEvent(editorState);
 };

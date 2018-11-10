@@ -1,9 +1,9 @@
-let unsafeGetMaterialComponent = (gameObject, engineState) =>
+let getMaterialComponent = (gameObject, (editorState, engineState)) =>
   GameObjectComponentEngineService.hasBasicMaterialComponent(
     gameObject,
     engineState,
   ) ?
-    GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+    GameObjectComponentEngineService.getBasicMaterialComponent(
       gameObject,
       engineState,
     ) :
@@ -11,20 +11,24 @@ let unsafeGetMaterialComponent = (gameObject, engineState) =>
       gameObject,
       engineState,
     ) ?
-      GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+      GameObjectComponentEngineService.getLightMaterialComponent(
         gameObject,
         engineState,
       ) :
-      WonderLog.Log.fatal(
-        LogUtils.buildFatalMessage(
-          
-          ~description=
-            {j|gameObject:$gameObject should has material component|j},
-          ~reason="",
-          ~solution={j||j},
-          ~params={j||j},
-        ),
-      );
+      {
+        ConsoleUtils.error(
+          LogUtils.buildErrorMessage(
+            ~description=
+              {j|gameObject:$gameObject should has material component|j},
+            ~reason="",
+            ~solution={j||j},
+            ~params={j||j},
+          ),
+          editorState,
+        );
+
+        None;
+      };
 
 let getGameObjectsFromGameObjectMaterialComponent = (gameObject, engineState) =>
   GameObjectComponentEngineService.hasBasicMaterialComponent(

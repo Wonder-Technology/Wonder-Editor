@@ -7,7 +7,8 @@ type componentType =
   | ArcballCameraController
   | CameraGroup
   | Light
-  | SourceInstance;
+  | SourceInstance
+  | Unknown;
 
 type gameObjectComponent = {
   componentType,

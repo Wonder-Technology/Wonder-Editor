@@ -389,17 +389,20 @@ let getRelatedTextureDataFromGameObject =
       (None, None, None, replacedTargetTextureMap);
 
 let replaceToTextureAssetTextureComponent =
-    (gameObject, (targetTexture, setMapFunc), engineState) =>
+    (gameObject, (targetTexture, setMapFunc), (editorState, engineState)) =>
   switch (targetTexture, setMapFunc) {
   | (Some(targetTexture), Some(setMapFunc)) =>
-    setMapFunc(
-      targetTexture,
-      AllMaterialEngineService.unsafeGetMaterialComponent(
+    switch (
+      AllMaterialEngineService.getMaterialComponent(
         gameObject,
-        engineState,
-      ),
-      engineState,
-    )
+        (editorState, engineState),
+      )
+    ) {
+    | None => engineState
+    | Some(materialComponent) =>
+      setMapFunc(targetTexture, materialComponent, engineState)
+    }
+
   | _ => engineState
   };
 

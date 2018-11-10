@@ -153,7 +153,7 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
 
         _handleImageType(
           (
-            ImageUtils.getImageMimeType(extName),
+            ImageUtils.getImageMimeType(extName, editorState),
             fileResult.name,
             fileResult.result |> FileReader.convertResultToString,
           ),
