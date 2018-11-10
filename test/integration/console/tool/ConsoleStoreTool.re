@@ -4,7 +4,7 @@ let buildStore = (~currentComponentType=BottomShowComponentStore.Project, ()) =>
     ...store,
     showComponentState: {
       ...store.showComponentState,
-      currentComponentType: Console,
+      currentComponentType,
     },
   };
 };
