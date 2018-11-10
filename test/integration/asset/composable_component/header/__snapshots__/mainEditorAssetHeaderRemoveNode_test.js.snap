@@ -1,0 +1,413 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorAssetHeader->remove node test remove tree node else remove-button's disabled props should == false 1`] = `
+<article
+  className="wonder-asset-component"
+  style={
+    Object {
+      "opacity": "1",
+    }
+  }
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="wonder-asset-header"
+    >
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/add.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/remove.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/load.png"
+          />
+          <input
+            className="asset-fileLoad"
+            multiple={false}
+            onChange={[Function]}
+            type="file"
+          />
+        </div>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-assetTree"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "border": "0px",
+            }
+          }
+        >
+          <div
+            className="item-triangle"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/down.png"
+            />
+          </div>
+          <img
+            className="treeNode-icon"
+            src="./public/img/package.png"
+          />
+          Assets
+        </li>
+        <ul
+          className="wonder-tree-node"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragStart={[Function]}
+        >
+          <li
+            draggable={true}
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "background": "#5C7EA6",
+              }
+            }
+          >
+            <div
+              className="item-triangle"
+            />
+            <img
+              className="treeNode-icon"
+              src="./public/img/package.png"
+            />
+            NoName Folder
+          </li>
+        </ul>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="wonder-asset-assetChildren"
+  />
+</article>
+`;
+
+exports[`MainEditorAssetHeader->remove node test remove tree node else test select file test texture select texture;
+            click remove-button;
+             should remove it from assetTreeRoot 1`] = `
+<article
+  className="wonder-asset-component"
+  style={
+    Object {
+      "opacity": "1",
+    }
+  }
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="wonder-asset-header"
+    >
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/add.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+      >
+        <div
+          className="item-notBeClick"
+        >
+          <img
+            src="./public/img/notRemove.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/load.png"
+          />
+          <input
+            className="asset-fileLoad"
+            multiple={false}
+            onChange={[Function]}
+            type="file"
+          />
+        </div>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-assetTree"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "background": "rgba(255,255,255,0.2)",
+            }
+          }
+        >
+          <div
+            className="item-triangle"
+          />
+          <img
+            className="treeNode-icon"
+            src="./public/img/package.png"
+          />
+          Assets
+        </li>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="wonder-asset-assetChildren"
+  />
+</article>
+`;
+
+exports[`MainEditorAssetHeader->remove node test remove tree node else test select folder click remove-button should remove folder from assetTreeRoot 1`] = `
+<article
+  className="wonder-asset-component"
+  style={
+    Object {
+      "opacity": "1",
+    }
+  }
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="wonder-asset-header"
+    >
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/add.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+      >
+        <div
+          className="item-notBeClick"
+        >
+          <img
+            src="./public/img/notRemove.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/load.png"
+          />
+          <input
+            className="asset-fileLoad"
+            multiple={false}
+            onChange={[Function]}
+            type="file"
+          />
+        </div>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-assetTree"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "background": "rgba(255,255,255,0.2)",
+            }
+          }
+        >
+          <div
+            className="item-triangle"
+          />
+          <img
+            className="treeNode-icon"
+            src="./public/img/package.png"
+          />
+          Assets
+        </li>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="wonder-asset-assetChildren"
+  />
+</article>
+`;
+
+exports[`MainEditorAssetHeader->remove node test remove tree node if not select specific treeNode, remove-button's disabled props should == true  1`] = `
+<article
+  className="wonder-asset-component"
+  style={
+    Object {
+      "opacity": "1",
+    }
+  }
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="wonder-asset-header"
+    >
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/add.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+      >
+        <div
+          className="item-notBeClick"
+        >
+          <img
+            src="./public/img/notRemove.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/load.png"
+          />
+          <input
+            className="asset-fileLoad"
+            multiple={false}
+            onChange={[Function]}
+            type="file"
+          />
+        </div>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-assetTree"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "background": "rgba(255,255,255,0.2)",
+            }
+          }
+        >
+          <div
+            className="item-triangle"
+          />
+          <img
+            className="treeNode-icon"
+            src="./public/img/package.png"
+          />
+          Assets
+        </li>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="wonder-asset-assetChildren"
+  />
+</article>
+`;

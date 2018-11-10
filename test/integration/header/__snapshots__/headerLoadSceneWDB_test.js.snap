@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`header load scene wdb test load scene wdb should clear current scene tree node 1`] = `
+<article
+  className="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        draggable={true}
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "border": "0px",
+          }
+        }
+      >
+        <div
+          className="item-triangle"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        Scene
+      </li>
+      <ul
+        className="wonder-tree-node"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragStart={[Function]}
+      >
+        <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "border": "0px",
+            }
+          }
+        >
+          <div
+            className="item-triangle"
+          />
+          Cube
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragStart={[Function]}
+      >
+        <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "border": "0px",
+            }
+          }
+        >
+          <div
+            className="item-triangle"
+          />
+          Camera
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragStart={[Function]}
+      >
+        <li
+          draggable={true}
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "border": "0px",
+            }
+          }
+        >
+          <div
+            className="item-triangle"
+          />
+          Direction Light
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
