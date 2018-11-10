@@ -126,7 +126,7 @@ let _handleSpecificFuncByTypeAsync =
   | LoadWDB => handleWDBFunc()
   | LoadError =>
     make((~resolve, ~reject) => {
-      WonderLog.Log.error(
+      ConsoleUtils.error(
         WonderLog.Log.buildErrorMessage(
           ~title="handleSpecificFuncByType",
           ~description={j|the load file type is error|j},

@@ -30,7 +30,8 @@ module.exports = {
       { name: "camera" },
       { name: "transform" },
       { name: "state" },
-      { name: "component" }
+      { name: "component" },
+      { name: "console" }
   ],
 
 
