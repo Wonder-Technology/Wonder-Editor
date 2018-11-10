@@ -18,5 +18,9 @@ let updateReducer =
     (state: updateState, action: updateAction('a))
     : updateState =>
   switch (action) {
-  | Update(componentTypeArr) => {...state, componentTypeArr}
+  | Update(newComponentTypeArr) => {
+      ...state,
+      componentTypeArr:
+        state.componentTypeArr |> Js.Array.concat(_, newComponentTypeArr),
+    }
   };
