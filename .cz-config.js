@@ -31,7 +31,8 @@ module.exports = {
       { name: "transform" },
       { name: "state" },
       { name: "component" },
-      { name: "console" }
+      { name: "console" },
+      { name: "ui" }
   ],
 
 
