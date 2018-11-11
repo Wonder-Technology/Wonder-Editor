@@ -412,7 +412,7 @@ let _ =
           gl##getUniformLocation
           |> withTwoArgs(Sinon.matchAny, "u_pMatrix")
           |> returns(pos1);
-          StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
+          StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
           IMGUITool.prepareImgui();
           PrepareRenderViewJobTool.setViewRect(~width=400, ~height=150, ());
 
@@ -505,7 +505,7 @@ let _ =
         let lines = 2;
         let gl = FakeGlToolEngine.setLines(lines, gl);
 
-        StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
+        StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
         IMGUITool.prepareImgui();
         PrepareRenderViewJobTool.setViewRect();
 

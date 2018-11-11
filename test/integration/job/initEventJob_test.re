@@ -135,7 +135,7 @@ let _ =
           test("preventDefault", () => {
             _prepareMouseEvent(~sandbox, ());
             StateLogicService.getAndSetEngineState(
-              MainUtils.handleEngineState,
+              MainUtils._handleEngineState,
             );
 
             let preventDefaultFunc = createEmptyStubWithJsObjSandbox(sandbox);
@@ -165,7 +165,7 @@ let _ =
           let _prepareAndExec = (pageX, pageY, target) => {
             PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
             StateLogicService.getAndSetEngineState(
-              MainUtils.handleEngineState,
+              MainUtils._handleEngineState,
             );
 
             let (valueX, valueY) = (ref(0), ref(0));
@@ -358,7 +358,7 @@ let _ =
               ) => {
             PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
             StateLogicService.getAndSetEngineState(
-              MainUtils.handleEngineState,
+              MainUtils._handleEngineState,
             );
 
             let (valueX, valueY) = (ref(0), ref(0));
@@ -460,7 +460,7 @@ let _ =
               ) => {
             PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
             StateLogicService.getAndSetEngineState(
-              MainUtils.handleEngineState,
+              MainUtils._handleEngineState,
             );
 
             let (valueX, valueY) = (ref(0), ref(0));
@@ -535,7 +535,7 @@ let _ =
               ) => {
             PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
             StateLogicService.getAndSetEngineState(
-              MainUtils.handleEngineState,
+              MainUtils._handleEngineState,
             );
 
             let value = ref(0);
@@ -749,7 +749,7 @@ let _ =
       describe("bind mouse event to trigger point event", () => {
         let _prepareAndExec = (pointEventName, (pageX, pageY)) => {
           PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
-          StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
+          StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
 
           let value = ref(0);
 

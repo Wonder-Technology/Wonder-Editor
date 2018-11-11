@@ -238,7 +238,7 @@ let _ =
         let lines = 2;
         let gl = FakeGlToolEngine.setLines(lines, gl);
 
-        StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
+        StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
         IMGUITool.prepareImgui();
         PrepareRenderViewJobTool.setViewRect();
 

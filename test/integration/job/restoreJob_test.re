@@ -66,7 +66,7 @@ let _ =
     describe("set viewport", () =>
       test("restore to view", () => {
         _prepareState();
-        StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
+        StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
 
         let ((x1, y1, width1, height1), (x2, y2, width2, height2)) =
           _updateView();
@@ -86,7 +86,7 @@ let _ =
 
     test("disable scissor test", () => {
       _prepareState();
-      StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
+      StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
       let _ = _updateView();
       StateLogicService.getAndSetEngineState(
         DeviceManagerEngineService.setScissorTest(true),

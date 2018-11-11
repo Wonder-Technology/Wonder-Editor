@@ -3,7 +3,7 @@ let setViewRect = (~width=10, ~height=20, ()) =>
 
 let prepare = prepareStateFunc => {
   prepareStateFunc();
-  StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
+  StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
 
   IMGUITool.prepareImgui();
 

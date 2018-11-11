@@ -9,7 +9,7 @@ let _getLoadData = () => {
   );
 };
 
-let handleEngineState = engineState => {
+let _handleEngineState = engineState => {
   let engineState =
     JobEngineService.registerNoWorkerInitJob(
       "init_editor",
@@ -88,7 +88,7 @@ let init = () =>
             )
          |> WonderBsMost.Most.fromPromise
        )
-    |> WonderBsMost.Most.map(engineState => engineState |> handleEngineState)
+    |> WonderBsMost.Most.map(engineState => engineState |> _handleEngineState)
     |> WonderBsMost.Most.drain
   );
 

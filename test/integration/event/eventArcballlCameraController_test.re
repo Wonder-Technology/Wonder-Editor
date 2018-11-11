@@ -95,7 +95,7 @@ let _ =
            );
 
       PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
-      let engineState = engineState |> MainUtils.handleEngineState;
+      let engineState = engineState |> MainUtils._handleEngineState;
 
       let engineState = bindEventFunc(cameraController, engineState);
 
@@ -121,7 +121,7 @@ let _ =
       engineState |> StateEngineService.setState |> ignore;
 
       PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
-      StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
+      StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
 
       /* EventTool.triggerDomEvent(
            "click",

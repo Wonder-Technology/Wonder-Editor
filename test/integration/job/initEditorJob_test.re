@@ -44,7 +44,7 @@ let _ =
       sandbox := createSandbox();
 
       _prepareState();
-      StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
+      StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
