@@ -87,6 +87,7 @@ let _ =
         );
         test(
           "if not set current gameObject, log error message and continue", () => {
+          ConsoleTool.notShowMessage();
           let error =
             createMethodStubWithJsObjSandbox(
               sandbox,
