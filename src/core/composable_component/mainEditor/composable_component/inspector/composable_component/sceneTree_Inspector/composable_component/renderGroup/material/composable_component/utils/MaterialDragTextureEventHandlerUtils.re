@@ -3,7 +3,7 @@ let _handleGeometryAddMap =
       (geometryComponent, materialComponent),
       textureComponent,
       handleSetMapFunc,
-      engineState,
+      (editorState, engineState),
     ) =>
   switch (geometryComponent) {
   | None => handleSetMapFunc(materialComponent, textureComponent, engineState)
@@ -16,8 +16,9 @@ let _handleGeometryAddMap =
         |> GeometryService.hasTexCoords =>
     handleSetMapFunc(materialComponent, textureComponent, engineState)
   | _ =>
-    WonderLog.Log.warn(
+    ConsoleUtils.warn(
       {j|the geometry:$geometryComponent have no texCoords|j},
+      editorState,
     );
 
     engineState;
@@ -35,9 +36,9 @@ let handleSelfLogic =
   |> WonderCommonlib.SparseMapService.unsafeGet(dragedNodeId)
   |> (
     ({textureComponent}) => {
+      let editorState = StateEditorService.getState();
       let gameObject =
-        SceneEditorService.getCurrentSceneTreeNode
-        |> StateLogicService.getEditorState;
+        SceneEditorService.getCurrentSceneTreeNode(editorState);
       let engineState = StateEngineService.unsafeGetState();
 
       let engineState =
@@ -55,7 +56,7 @@ let handleSelfLogic =
             ),
             textureComponent,
             handleSetMapFunc,
-            engineState,
+            (editorState, engineState),
           )
         };
 

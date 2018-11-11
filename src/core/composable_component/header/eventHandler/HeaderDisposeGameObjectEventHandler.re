@@ -40,7 +40,7 @@ module CustomEventHandler = {
 
     switch (SceneEditorService.getCurrentSceneTreeNode(editorState)) {
     | None =>
-      WonderLog.Log.error(
+      ConsoleUtils.error(
         LogUtils.buildErrorMessage(
           ~description=
             {j|current gameObject should exist, but actual is None|j},
@@ -48,6 +48,7 @@ module CustomEventHandler = {
           ~solution={j|set current gameObject|j},
           ~params={j||j},
         ),
+        editorState,
       );
       (sceneGraphArr, None);
 

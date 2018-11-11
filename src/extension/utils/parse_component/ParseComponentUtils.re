@@ -9,6 +9,7 @@ let _getUniqueAtomAttribute = (atomName: string) =>
     atomAttributeArr =>
       switch (atomAttributeArr |> Js.Array.length) {
       | 0 =>
+        /* TODO use ConsoleUtils.error */
         WonderLog.Log.error(
           LogUtils.buildErrorMessage(
             ~description={j|the specific atom : $atomName not exist|j},
@@ -51,7 +52,7 @@ let _findUniquePropArrayByAtomName =
 let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =>
   switch (state.mapState.componentsMap) {
   | None =>
-  /* TODO use error instead of fatal */
+    /* TODO use error instead of fatal */
     WonderLog.Log.fatal(
       LogUtils.buildFatalMessage(
         ~description={j|appState->mapState->componentsMap is none|j},
@@ -63,7 +64,7 @@ let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =
   | Some(maps) =>
     switch (maps |> WonderCommonlib.HashMapService.get(uiComponentName)) {
     | None =>
-  /* TODO use error instead of fatal */
+      /* TODO use error instead of fatal */
       WonderLog.Log.fatal(
         LogUtils.buildFatalMessage(
           ~description=

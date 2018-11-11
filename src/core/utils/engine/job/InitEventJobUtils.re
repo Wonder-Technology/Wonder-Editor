@@ -472,16 +472,17 @@ let fromDomEvent = (editorState, engineState) =>
       },
   );
 
-let handleDomEventStreamError = e => {
+let handleDomEventStreamError = (e, editorState) => {
   let message = Obj.magic(e)##message;
   let stack = Obj.magic(e)##stack;
 
-  WonderLog.Log.debug(
+  ConsoleUtils.debug(
     LogUtils.buildDebugMessage(
       ~description={j|from dom event stream error|j},
       ~params={j|message:$message\nstack:$stack|j},
     ),
     StateEditorService.getStateIsDebug(),
+    editorState,
   );
 };
 
@@ -491,7 +492,7 @@ let initEventForEditorJob = (_, engineState) => {
     fromDomEvent(editorState, engineState)
     |> WonderBsMost.Most.subscribe({
          "next": _ => (),
-         "error": e => handleDomEventStreamError(e),
+         "error": e => handleDomEventStreamError(e, editorState),
          "complete": () => (),
        });
 

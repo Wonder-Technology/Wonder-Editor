@@ -31,6 +31,17 @@ let info = (message, editorState) => {
   WonderLog.Log.info(message);
 };
 
+let debug = (buildMessageFunc, isDebug, editorState) => {
+  DebugSettingEditorService.isNotShowMessage(editorState) ?
+    () :
+    Antd.Message.message
+    |> Antd.Message.convertToJsObj
+    |> (messageObj => messageObj##info(buildMessageFunc(), 4))
+    |> ignore;
+
+  WonderLog.Log.debug(buildMessageFunc, isDebug);
+};
+
 let error = (message, editorState) => {
   DebugSettingEditorService.isNotShowMessage(editorState) ?
     () :
