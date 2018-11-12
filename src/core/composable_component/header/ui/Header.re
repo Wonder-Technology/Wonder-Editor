@@ -197,7 +197,7 @@ module Method = {
       </div>
       (
         state.currentSelectNav === Publish ?
-          <div className="item-content item-edit">
+          <div className="item-content">
             <div
               className="content-section"
               onClick=(_e => send(ShowPublishLocalModal))>

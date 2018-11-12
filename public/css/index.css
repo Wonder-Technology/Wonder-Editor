@@ -141,8 +141,17 @@ html, body {
         width: 100%;
         height: 20px;
         display: flex; }
+        .wonder-modal .modal-item .modal-item-content .content-field .field-title {
+          width: 20%;
+          text-align: center;
+          height: 24px;
+          line-height: 24px; }
         .wonder-modal .modal-item .modal-item-content .content-field .field-content {
-          margin-left: 4px; }
+          width: 80%;
+          margin-left: 4px;
+          text-align: center;
+          height: 24px;
+          line-height: 24px; }
     .wonder-modal .modal-item .modal-item-footer {
       height: 50px;
       border-bottom-left-radius: 5px;
@@ -242,10 +251,16 @@ html, body {
         height: 24px;
         display: flex; }
         .wonder-singleInput-modal .modal-item .modal-item-content .content-field .field-title {
+          width: 20%;
+          text-align: center;
           height: 24px;
           line-height: 24px; }
         .wonder-singleInput-modal .modal-item .modal-item-content .content-field .field-content {
-          margin-left: 4px; }
+          width: 80%;
+          margin-left: 4px;
+          text-align: center;
+          height: 24px;
+          line-height: 24px; }
     .wonder-singleInput-modal .modal-item .modal-item-footer {
       height: 50px;
       border-bottom-left-radius: 5px;
@@ -279,7 +294,8 @@ html, body {
         position: relative; }
         .wonder-app-component .wonder-header-component .header-nav .header-item .component-item .item-title {
           display: inline-block;
-          width: 40px;
+          padding-left: 5px;
+          padding-right: 5px;
           font-size: 14px;
           height: 100%;
           color: #ffffff;
@@ -292,17 +308,19 @@ html, body {
           width: 500px;
           height: 200px; }
         .wonder-app-component .wonder-header-component .header-nav .header-item .item-content {
+          white-space: nowrap;
           position: absolute;
           z-index: 100;
           top: 100%;
           left: 0px;
-          width: 200px;
-          height: 200px;
+          padding-bottom: 20px;
+          min-height: 50px;
           background-color: #555555; }
           .wonder-app-component .wonder-header-component .header-nav .header-item .item-content .content-section {
+            padding-left: 20px;
+            padding-right: 20px;
             height: 28px;
             line-height: 28px;
-            width: 100%;
             color: #ffffff;
             font-weight: normal;
             position: relative;
@@ -320,23 +338,16 @@ html, body {
               flex: initial;
               display: inline-block;
               font-size: 14px;
-              padding-left: 20px;
-              height: 100%;
-              width: 70%; }
+              height: 100%; }
             .wonder-app-component .wonder-header-component .header-nav .header-item .item-content .content-section .section-tail {
               flex: initial;
               display: inline-block;
               height: 100%;
-              width: 30%;
+              padding-left: 20px;
               color: #cfcdcd;
               text-align: center; }
-        .wonder-app-component .wonder-header-component .header-nav .header-item .item-edit, .wonder-app-component .wonder-header-component .header-nav .header-item .item-help {
-          width: 150px; }
         .wonder-app-component .wonder-header-component .header-nav .header-item .modal-item-content {
           padding-top: 50px; }
-          .wonder-app-component .wonder-header-component .header-nav .header-item .modal-item-content .content-field {
-            width: 50%;
-            margin-left: 20%; }
   .wonder-app-component .wonder-controller-component {
     width: 100%;
     height: 45px; }
