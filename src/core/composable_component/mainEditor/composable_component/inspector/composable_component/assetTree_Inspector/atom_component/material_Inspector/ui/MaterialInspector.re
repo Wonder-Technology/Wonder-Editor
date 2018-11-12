@@ -48,7 +48,7 @@ let render =
       canBeNull=false
     />
     <Select
-      label="Shader"
+      label="Type"
       options=(MainEditorMaterialUtils.getMaterialOptions())
       selectedKey=(
         state.materialType |> MainEditorMaterialType.convertMaterialTypeToInt
