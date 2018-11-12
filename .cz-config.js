@@ -32,7 +32,8 @@ module.exports = {
       { name: "state" },
       { name: "component" },
       { name: "console" },
-      { name: "ui" }
+      { name: "ui" },
+      { name: "config" }
   ],
 
 

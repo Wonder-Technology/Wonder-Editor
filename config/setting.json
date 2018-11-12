@@ -1,3 +1,6 @@
 {
-    "is_debug": true
+    "debug": {
+        "is_debug": true,
+        "show_message": true
+    }
 }
