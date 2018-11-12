@@ -373,19 +373,19 @@ let _ =
             let _generateShareMaterialWDB = () =>
               WDBTool.generateWDB((editorState, engineState) => {
                 let (engineState, geometry) =
-                  GeometryEngineService.createCubeGeometry(engineState);
+                  GeometryEngineService.createBoxGeometry(engineState);
                 let (engineState, lightMaterial) =
                   LightMaterialEngineService.create(engineState);
 
                 let (editorState, engineState, box1) =
-                  PrimitiveEngineService.createBox(
+                  PrimitiveEngineService.createCube(
                     (geometry, lightMaterial),
                     editorState,
                     engineState,
                   );
 
                 let (editorState, engineState, box2) =
-                  PrimitiveEngineService.createBox(
+                  PrimitiveEngineService.createCube(
                     (geometry, lightMaterial),
                     editorState,
                     engineState,
@@ -676,7 +676,7 @@ let _ =
           let _generateWDB = () =>
             WDBTool.generateWDB((editorState, engineState) => {
               let (engineState, geometry) =
-                GeometryEngineService.createCubeGeometry(engineState);
+                GeometryEngineService.createBoxGeometry(engineState);
               let (engineState, lightMaterial1) =
                 LightMaterialEngineService.create(engineState);
 
@@ -716,21 +716,21 @@ let _ =
                    );
 
               let (editorState, engineState, box1) =
-                PrimitiveEngineService.createBox(
+                PrimitiveEngineService.createCube(
                   (geometry, lightMaterial1),
                   editorState,
                   engineState,
                 );
 
               let (editorState, engineState, box2) =
-                PrimitiveEngineService.createBox(
+                PrimitiveEngineService.createCube(
                   (geometry, lightMaterial1),
                   editorState,
                   engineState,
                 );
 
               let (editorState, engineState, box3) =
-                PrimitiveEngineService.createBox(
+                PrimitiveEngineService.createCube(
                   (geometry, lightMaterial2),
                   editorState,
                   engineState,
@@ -802,7 +802,7 @@ let _ =
               LightMaterialEngineService.create(engineState);
 
             let (editorState, engineState, box1) =
-              PrimitiveEngineService.createBox(
+              PrimitiveEngineService.createCube(
                 (geometry, lightMaterial),
                 editorState,
                 engineState,

@@ -12,7 +12,7 @@ let unsafeGetGeometryName = GeometryAPI.unsafeGetGeometryName;
 
 let setGeometryName = GeometryAPI.setGeometryName;
 
-let createCubeGeometry = GeometryAPI.createBoxGeometry;
+let createBoxGeometry = GeometryAPI.createBoxGeometry;
 
 let createSphereGeometry = GeometryAPI.createSphereGeometry;
 

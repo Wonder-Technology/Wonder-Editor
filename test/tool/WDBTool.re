@@ -137,12 +137,12 @@ let buildSource = (~width=1, ~height=2, ~name="image.png", ()) =>
 let generateDirectionPointLightsAndBoxWDB = () =>
   generateWDB((editorState, engineState) => {
     let (engineState, geometry) =
-      GeometryEngineService.createCubeGeometry(engineState);
+      GeometryEngineService.createBoxGeometry(engineState);
     let (engineState, lightMaterial) =
       LightMaterialEngineService.create(engineState);
 
     let (editorState, engineState, box1) =
-      PrimitiveEngineService.createBox(
+      PrimitiveEngineService.createCube(
         (geometry, lightMaterial),
         editorState,
         engineState,
@@ -182,12 +182,12 @@ let generateSceneWDB = () =>
       );
 
     let (engineState, geometry) =
-      GeometryEngineService.createCubeGeometry(engineState);
+      GeometryEngineService.createBoxGeometry(engineState);
     let (engineState, lightMaterial) =
       LightMaterialEngineService.create(engineState);
 
     let (editorState, engineState, box1) =
-      PrimitiveEngineService.createBox(
+      PrimitiveEngineService.createCube(
         (geometry, lightMaterial),
         editorState,
         engineState,

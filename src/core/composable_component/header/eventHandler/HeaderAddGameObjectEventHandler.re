@@ -22,7 +22,7 @@ module CustomEventHandler = {
           );
 
         SceneUtils.addGameObject(
-          PrimitiveEngineService.createBox((
+          PrimitiveEngineService.createCube((
             defaultCubeGeometry,
             defaultLightMaterial,
           )),

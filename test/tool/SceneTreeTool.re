@@ -40,7 +40,7 @@ let _buildTwoCameraSceneGraph = (componentData, editorState, engineState) => {
   let (editorState, engineState, camera2) =
     CameraEngineService.createCamera(editorState, engineState);
   let (editorState, engineState, box1) =
-    PrimitiveEngineService.createBox(componentData, editorState, engineState);
+    PrimitiveEngineService.createCube(componentData, editorState, engineState);
 
   (
     camera1,
@@ -94,13 +94,13 @@ let buildTwoCameraSceneGraphToEngine = sandbox => {
 let _buildThreeLayerSceneGraph = (componentData, editorState, engineState) => {
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (editorState, engineState, box1) =
-    PrimitiveEngineService.createBox(componentData, editorState, engineState);
+    PrimitiveEngineService.createCube(componentData, editorState, engineState);
   let (editorState, engineState, box2) =
-    PrimitiveEngineService.createBox(componentData, editorState, engineState);
+    PrimitiveEngineService.createCube(componentData, editorState, engineState);
   let (editorState, engineState, box3) =
-    PrimitiveEngineService.createBox(componentData, editorState, engineState);
+    PrimitiveEngineService.createCube(componentData, editorState, engineState);
   let (editorState, engineState, box4) =
-    PrimitiveEngineService.createBox(componentData, editorState, engineState);
+    PrimitiveEngineService.createCube(componentData, editorState, engineState);
 
   (
     editorState,
@@ -144,13 +144,13 @@ let buildThreeLayerSceneGraphToEngine = sandbox => {
 let _buildFourLayerSceneGraph = (componentData, editorState, engineState) => {
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (editorState, engineState, box1) =
-    PrimitiveEngineService.createBox(componentData, editorState, engineState);
+    PrimitiveEngineService.createCube(componentData, editorState, engineState);
   let (editorState, engineState, box2) =
-    PrimitiveEngineService.createBox(componentData, editorState, engineState);
+    PrimitiveEngineService.createCube(componentData, editorState, engineState);
   let (editorState, engineState, box3) =
-    PrimitiveEngineService.createBox(componentData, editorState, engineState);
+    PrimitiveEngineService.createCube(componentData, editorState, engineState);
   let (editorState, engineState, box4) =
-    PrimitiveEngineService.createBox(componentData, editorState, engineState);
+    PrimitiveEngineService.createCube(componentData, editorState, engineState);
   (
     editorState,
     engineState

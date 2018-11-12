@@ -732,7 +732,7 @@ let _ =
                 LightMaterialEngineService.create(engineState);
 
               let (editorState, engineState, box1) =
-                PrimitiveEngineService.createBox(
+                PrimitiveEngineService.createCube(
                   (geometry, lightMaterial),
                   editorState,
                   engineState,

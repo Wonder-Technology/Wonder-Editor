@@ -11,7 +11,7 @@ let createEmptyGameObject = (editorState, engineState) => {
   (editorState, engineState, obj);
 };
 
-let createBox = ((cubeGeometry, lightMaterial), editorState, engineState) => {
+let createCube = ((cubeGeometry, lightMaterial), editorState, engineState) => {
   let (editorState, (engineState, obj)) =
     GameObjectLogicService.createGameObject((editorState, engineState));
 
