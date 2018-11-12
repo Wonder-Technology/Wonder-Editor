@@ -84,15 +84,13 @@ let render = (store, dispatchFunc, _self) => {
               () : Method.showConsole(dispatchFunc)
         )>
         <div className="name-header"> (DomHelper.textEl("Console")) </div>
-        <div
-          className="name-tail"
-          style=(
-            unreadCount === "0" ?
-              ReactDOMRe.Style.make(~display="none", ()) :
-              ReactDOMRe.Style.make()
-          )>
-          (DomHelper.textEl(unreadCount))
-        </div>
+        (
+          unreadCount !== "0" ?
+            <div className="name-tail">
+              (DomHelper.textEl(unreadCount))
+            </div> :
+            ReasonReact.null
+        )
       </div>
       <span className="category-name" />
     </div>

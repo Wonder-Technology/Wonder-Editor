@@ -18,7 +18,7 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test stub console", () => {
-      beforeEach(() => BuildComponentTool.buildConsole() |> ignore);
+      beforeEach(() => BuildComponentTool.buildBottom() |> ignore);
 
       test("console.log should add the message into content", () => {
         ConsoleUtils.log({j|message|j}) |> StateLogicService.getEditorState;

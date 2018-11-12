@@ -18,7 +18,7 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("should show unread count in bottom header", () => {
-      beforeEach(() => BuildComponentTool.buildConsole() |> ignore);
+      beforeEach(() => BuildComponentTool.buildBottom() |> ignore);
 
       test("if console one message, unread count should + 1", () => {
         open AppStore;

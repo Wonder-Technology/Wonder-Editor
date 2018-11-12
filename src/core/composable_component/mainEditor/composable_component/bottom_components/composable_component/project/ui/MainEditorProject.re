@@ -4,7 +4,7 @@ let component =
   ReasonReact.statelessComponentWithRetainedProps("MainEditorProject");
 
 let render = ((store, dispatchFunc), _self) =>
-  <article key="MainEditorProject" className="wonder-project-component">
+  <article key="MainEditorProject" className="wonder-bottom-project">
     <MainEditorAsset store dispatchFunc />
   </article>;
 

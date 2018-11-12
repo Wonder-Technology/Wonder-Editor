@@ -3,57 +3,6 @@ open ConsoleMessageType;
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
 module Method = {
-  let triggerConsoleByType = (dispatchFunc, type_, message) => {
-    MessageArrayConsoleEditorService.addConsoleMessage({
-      message,
-      consoleType: type_,
-      traceInfo: None,
-    })
-    |> StateLogicService.getAndSetEditorState;
-
-    dispatchFunc(
-      AppStore.UpdateAction(
-        Update([|UpdateStore.Console, UpdateStore.BottomHeader|]),
-      ),
-    )
-    |> ignore;
-  };
-
-  let triggerTrace = (dispatchFunc, message) => {
-    let editorState = StateEditorService.getState();
-    let copiedMessageArr =
-      editorState
-      |> MessageArrayConsoleEditorService.getConsoleMessageArray
-      |> Js.Array.copy;
-
-    switch (copiedMessageArr |> Js.Array.pop) {
-    | None => ()
-    | Some({traceInfo} as messageRecord) =>
-      switch (traceInfo) {
-      | None =>
-        editorState
-        |> MessageArrayConsoleEditorService.setConsoleMessageArray(
-             copiedMessageArr
-             |> ArrayService.push({
-                  ...messageRecord,
-                  traceInfo: Some(message),
-                }),
-           )
-        |> StateEditorService.setState
-        |> ignore
-
-      | Some(_) => ()
-      }
-    };
-
-    dispatchFunc(
-      AppStore.UpdateAction(
-        Update([|UpdateStore.Console, UpdateStore.BottomHeader|]),
-      ),
-    )
-    |> ignore;
-  };
-
   let setCheckedMessageCount = editorState =>
     editorState
     |> MessageArrayConsoleEditorService.getConsoleMessageArrayLen
@@ -165,7 +114,7 @@ let render = (store, dispatchFunc, _self) => {
     Method.setCheckedMessageCount |> StateLogicService.getAndSetEditorState :
     ();
 
-  <article key="console">
+  <article key="console" className="wonder-bottom-console">
     <article className="wonder-console-component">
       <div className="console-header">
         <button
@@ -214,13 +163,4 @@ let make = (~store, ~dispatchFunc, _children) => {
   },
   shouldUpdate,
   render: render(store, dispatchFunc),
-  didMount: _self =>
-    Console.stubConsole(
-      Method.triggerConsoleByType(dispatchFunc, Error),
-      Method.triggerConsoleByType(dispatchFunc, Info),
-      Method.triggerConsoleByType(dispatchFunc, Warn),
-      Method.triggerConsoleByType(dispatchFunc, Debug),
-      Method.triggerTrace(dispatchFunc),
-      Method.triggerConsoleByType(dispatchFunc, Log),
-    ),
 };
