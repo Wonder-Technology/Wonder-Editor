@@ -536,6 +536,7 @@ html, body {
             -webkit-user-drag: element; }
           .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .wonder-left-components .wonder-sceneTree-component {
             width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             overflow-y: auto; }
@@ -629,16 +630,19 @@ html, body {
           background-color: #333333;
           display: flex;
           flex-direction: column; }
+          .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .bottom-header {
+            height: 10%;
+            min-height: 20px; }
           .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .bottom-widget-category {
             width: 100%;
-            height: 10%;
+            height: 100%;
             border-bottom: 1px solid #fff;
             display: flex;
             flex-direction: row; }
             .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .bottom-widget-category .category-name {
               width: 80px;
               font-size: 13px;
-              height: 100%;
+              height: 99%;
               margin-right: 0 5px;
               display: flex; }
               .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .bottom-widget-category .category-name .name-header {
@@ -659,12 +663,18 @@ html, body {
                 align-items: center; }
             .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .bottom-widget-category .category-active {
               background: #555555; }
+          .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-bottom-project {
+            height: 90%; }
+          .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-bottom-console {
+            height: 90%; }
           .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component {
+            margin-top: 1px;
             width: 100%;
-            height: 80%;
+            height: 100%;
             display: flex;
             flex-direction: row; }
             .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .asset-tree {
+              border-right: 1px solid #fff;
               flex: initial;
               width: 30%;
               height: 100%;
@@ -786,7 +796,7 @@ html, body {
                 width: 100%;
                 height: 100%;
                 font-size: 14px;
-                overflow-y: scroll; }
+                overflow-y: auto; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .asset-tree .wonder-asset-assetTree::-webkit-scrollbar {
                   width: 4px;
                   height: 4px; }
@@ -830,6 +840,7 @@ html, body {
                   .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .asset-tree .wonder-asset-assetTree .wonder-tree-node ul {
                     margin-left: 18px; }
             .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .wonder-asset-assetChildren {
+              margin-left: 1px;
               flex: initial;
               width: 70%;
               height: 100%;
@@ -898,14 +909,18 @@ html, body {
                 background: #5C7EA6;
                 border-radius: 10px; }
           .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component {
+            padding-top: 1px;
             width: 100%;
-            height: 80%;
+            height: 100%;
             display: flex;
             flex-direction: column; }
             .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-header {
               width: 100%;
-              height: 25px; }
+              height: 20%; }
+              .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-header button {
+                height: 100%; }
             .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content {
+              height: 80%;
               overflow-y: auto;
               user-select: text; }
               .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content::-webkit-scrollbar {

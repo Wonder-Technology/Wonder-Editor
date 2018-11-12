@@ -6,7 +6,7 @@ let render = ((store, dispatchFunc), _self) => {
   <article
     key="MainEditorBottomComponents" className="wonder-bottom-component">
     <MainEditorBottomHeader store dispatchFunc />
-    <article
+    <article className="wonder-bottom-project"
       style=(
         MainEditorBottomComponentUtils.isTypeEqualProject(
           currentComponentType,
@@ -21,7 +21,7 @@ let render = ((store, dispatchFunc), _self) => {
           currentComponentType,
         ) ?
           ReactDOMRe.Style.make() : ReactDOMRe.Style.make(~display="none", ())
-      )>
+      ) className="wonder-bottom-console">
       <MainEditorConsole store dispatchFunc />
     </article>
   </article>;

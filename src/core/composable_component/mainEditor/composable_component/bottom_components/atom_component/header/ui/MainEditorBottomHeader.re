@@ -45,7 +45,7 @@ let render = (store, dispatchFunc, _self) => {
     Method.getConsoleMessageUnReadCount(currentComponentType)
     |> StateLogicService.getEditorState;
 
-  <article key="MainEditorBottomHeader">
+  <article className="bottom-header" key="MainEditorBottomHeader">
     <div className="bottom-widget-category">
       <div
         className=(

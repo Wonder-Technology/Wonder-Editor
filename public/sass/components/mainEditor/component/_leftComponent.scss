@@ -1,108 +1,115 @@
-.left-component{
+.left-component {
     display: flex;
-    flex:initial;
-    height:100%;
-    width:80%;
+    flex: initial;
+    height: 100%;
+    width: 80%;
     flex-direction: column;
-    .top-widget{
+    .top-widget {
         flex: initial;
-        width:100%;
-        height:71%;
+        width: 100%;
+        height: 71%;
         display: flex;
-        .wonder-left-components{
-            flex:initial;
-            width:17%;
-            height:100%;
+        .wonder-left-components {
+            flex: initial;
+            width: 17%;
+            height: 100%;
             background: #666666;
-            order:10;
+            order: 10;
             position: relative;
-            top:0px;
+            top: 0px;
             display: flex;
             flex-direction: column;
             min-width: 150px;
             @import "component/sceneTree/sceneTreeHeader";
             @import "component/sceneTree/sceneTree";
         }
-        .webgl-parent{
-            flex:1;
-            order:20;
-            position:relative;
-
-            canvas{
+        .webgl-parent {
+            flex: 1;
+            order: 20;
+            position: relative;
+            canvas {
                 position: absolute;
-                top:0px;
-                left:0px;
-                width:100%;
-                height:100%;
+                top: 0px;
+                left: 0px;
+                width: 100%;
+                height: 100%;
                 z-index: 10;
             }
-            .gameViewNoCamera{
+            .gameViewNoCamera {
                 position: absolute;
-                top:0px;
-                left:50%;
-                width:50%;
-                height:100%;
+                top: 0px;
+                left: 50%;
+                width: 50%;
+                height: 100%;
                 z-index: 50;
                 background: black;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                .gameViewNoCamera-text{
-                    color:#ffffff;
-                    font-size:24px;
+                .gameViewNoCamera-text {
+                    color: #ffffff;
+                    font-size: 24px;
                 }
             }
         }
     }
-
-    .bottom-widget{
+    .bottom-widget {
         flex: initial;
-        width:100%;
-        height:29%;
-        .wonder-bottom-component{
-            width:100%;
-            height:100%;
+        width: 100%;
+        height: 29%;
+        .wonder-bottom-component {
+            width: 100%;
+            height: 100%;
             background-color: #333333;
             display: flex;
             flex-direction: column;
-            .bottom-widget-category{
-                width:100%;
-                height:10%;
-                border-bottom:1px solid #fff;
+            .bottom-header {
+                height: 10%;
+                min-height: 20px;
+            }
+            .bottom-widget-category {
+                width: 100%;
+                height: 100%;
+                border-bottom: 1px solid #fff;
                 display: flex;
                 flex-direction: row;
                 .category-name {
-                    width:80px;
-                    font-size:13px;
-                    height:100%;
-                    margin-right:0 5px;
+                    width: 80px;
+                    font-size: 13px;
+                    height: 99%;
+                    margin-right: 0 5px;
                     display: flex;
-                    .name-header{
-                        width:100%;
-                        height:100%;
+                    .name-header {
+                        width: 100%;
+                        height: 100%;
                         display: flex;
                         justify-content: center;
                         align-items: center;
                     }
-                    .name-tail{
-                        margin-left:2px;
-                        margin-top:2px;
+                    .name-tail {
+                        margin-left: 2px;
+                        margin-top: 2px;
                         border-radius: 5px;
                         background: red;
-                        width:20px;
-                        height:14px;
+                        width: 20px;
+                        height: 14px;
                         display: flex;
                         justify-content: center;
                         align-items: center;
                     }
                 }
-                .category-active{
+                .category-active {
                     background: #555555;
                 }
+            }
+            .wonder-bottom-project {
+                height: 90%;
+            }
+            .wonder-bottom-console {
+                height: 90%
             }
             @import "component/asset/asset";
             @import "component/console/console";
         }
     }
-
 }

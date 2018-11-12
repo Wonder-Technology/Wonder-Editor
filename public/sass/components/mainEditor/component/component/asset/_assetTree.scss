@@ -2,7 +2,7 @@
     width:100%;
     height:100%;
     font-size:14px;
-    overflow-y: scroll;
+    overflow-y: auto;
     @import "../../../../../utils/scrollBarUtils";
     @import "../../../../ui/treeNode";
 }

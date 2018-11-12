@@ -1,6 +1,7 @@
-.wonder-asset-assetChildren{
+.wonder-asset-assetChildren {
+    margin-left: 1px;
     flex: initial;
-    width:70%;
+    width: 70%;
     height: 100%;
     background-color: #444444;
     display: flex;
@@ -8,46 +9,45 @@
     overflow-y: auto;
     @import "../../../../../utils/_scrollBarUtils.scss";
     .wonder-asset-fileBox,
-    .wonder-asset-folderBox
-    {
-        width:80px;
-        height:80px;
-        margin:5px;
-        z-index:100;
+    .wonder-asset-folderBox {
+        width: 80px;
+        height: 80px;
+        margin: 5px;
+        z-index: 100;
         position: relative;
         flex: initial;
         display: flex;
         flex-direction: column;
-        .item-ground{
+        .item-ground {
             position: absolute;
-            top:0px;
-            left:0px;
-            height:100%;
-            width:100%;
+            top: 0px;
+            left: 0px;
+            height: 100%;
+            width: 100%;
         }
-        .box-image{
-            width:80px;
-            height:60px;
+        .box-image {
+            width: 80px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            img{
-                width:50px;
-                height:50px;
+            img {
+                width: 50px;
+                height: 50px;
             }
         }
-        .item-text{
-            width:100%;
-            height:20px;
+        .item-text {
+            width: 100%;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size:12px;
-            span{
-                padding-top:2px;
-                width:80%;
+            font-size: 12px;
+            span {
+                padding-top: 2px;
+                width: 80%;
                 display: block;
-                height:20px;
+                height: 20px;
                 line-height: 20px;
                 text-align: center;
                 overflow: hidden;
@@ -55,7 +55,7 @@
             }
         }
     }
-    .item-active{
+    .item-active {
         background: #5C7EA6;
         border-radius: 10px;
     }
