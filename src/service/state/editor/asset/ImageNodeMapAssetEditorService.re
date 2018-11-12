@@ -15,6 +15,9 @@ let setImageNodeMap = (imageNodeMap, editorState) => {
 let unsafeGetResult = (nodeId, editorState) =>
   editorState.assetRecord |> ImageNodeMapAssetService.unsafeGetResult(nodeId);
 
+let unsafeGetResult = (nodeId, editorState) =>
+  editorState.assetRecord |> ImageNodeMapAssetService.unsafeGetResult(nodeId);
+
 let setResult = (nodeId, imageResult, editorState) => {
   ...editorState,
   assetRecord:

@@ -159,10 +159,11 @@ module Publish = {
   open WonderBsJszip;
 
   let publishZip = (createZipFunc, fetchFunc, zipName) => {
+    let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
     let (engineState, sceneGraphArrayBuffer) =
-      HeaderExportSceneWDBUtils.generateSceneWDB(engineState);
+      HeaderExportSceneWDBUtils.generateSceneWDB(editorState, engineState);
 
     engineState |> StateEngineService.setState;
 

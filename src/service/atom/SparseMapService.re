@@ -69,6 +69,8 @@ let forEachiValid = (func, map) =>
        }
      );
 
+let reduce = ArrayService.reduceOneParam;
+
 let reduceValid = (func, initValue, map) =>
   map
   |> WonderCommonlib.ArrayService.reduceOneParam(

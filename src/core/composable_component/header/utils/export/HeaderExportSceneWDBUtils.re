@@ -1,4 +1,26 @@
-let generateWDB = (rootGameObject, engineState) => {
+let _buildImageUint8ArrayMap = editorState =>
+  editorState
+  |> TextureNodeMapAssetEditorService.getValidValues
+  |> SparseMapService.reduce(
+       (. map, {textureComponent, image}: AssetNodeType.textureResultType) => {
+         let {mimeType, uint8Array}: AssetNodeType.imageResultType =
+           ImageNodeMapAssetEditorService.unsafeGetResult(image, editorState);
+
+         switch (uint8Array) {
+         | Some(uint8Array) =>
+           map
+           |> WonderCommonlib.SparseMapService.set(
+                textureComponent,
+                (mimeType, uint8Array),
+              )
+         | None => map
+         };
+       },
+       WonderCommonlib.SparseMapService.createEmpty(),
+     )
+  |> Js.Nullable.return;
+
+let generateWDB = (rootGameObject, (editorState, engineState)) => {
   let isRun = SceneEditorService.getIsRun(StateEditorService.getState());
   let engineState =
     isRun ?
@@ -10,7 +32,7 @@ let generateWDB = (rootGameObject, engineState) => {
   let (engineState, _, wdbArrayBuffer) =
     GenerateSceneGraphEngineService.generateWDB(
       rootGameObject,
-      Js.Nullable.null,
+      _buildImageUint8ArrayMap(editorState),
       engineState,
     );
 
@@ -23,8 +45,8 @@ let generateWDB = (rootGameObject, engineState) => {
   (engineState, wdbArrayBuffer);
 };
 
-let generateSceneWDB = engineState =>
+let generateSceneWDB = (editorState, engineState) =>
   generateWDB(
     SceneEngineService.getSceneGameObject(engineState),
-    engineState,
+    (editorState, engineState),
   );

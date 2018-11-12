@@ -85,6 +85,7 @@ let _ =
 
           let (engineState, wdb) =
             HeaderExportSceneWDBUtils.generateSceneWDB(
+              StateEditorService.getState(),
               StateEngineService.unsafeGetState(),
             );
 
@@ -132,6 +133,7 @@ let _ =
 
             let (engineState, wdb) =
               HeaderExportSceneWDBUtils.generateSceneWDB(
+                StateEditorService.getState(),
                 StateEngineService.unsafeGetState(),
               );
 

@@ -1,27 +1,28 @@
 open Js.Typed_array;
 
-let _buildEmptyUint8Array = () => Uint8Array.make([||]);
+/* let _buildEmptyUint8Array = () => Uint8Array.make([||]); */
 
 let _getUint8Array = (uint8Array, base64, editorState) =>
-  switch (uint8Array) {
-  | Some(uint8Array) => uint8Array
-  | None =>
-    switch (base64) {
-    | Some(base64) => BufferUtils.convertBase64ToUint8Array(base64)
-    | None =>
-      ConsoleUtils.error(
-        LogUtils.buildErrorMessage(
-          ~description={j|image->base64 should exist|j},
-          ~reason="",
-          ~solution={j||j},
-          ~params={j||j},
-        ),
-        editorState,
-      );
+  /* switch (uint8Array) {
+     | Some(uint8Array) => uint8Array
+     | None =>
+       switch (base64) {
+       | Some(base64) => BufferUtils.convertBase64ToUint8Array(base64)
+       | None =>
+         ConsoleUtils.error(
+           LogUtils.buildErrorMessage(
+             ~description={j|image->base64 should exist|j},
+             ~reason="",
+             ~solution={j||j},
+             ~params={j||j},
+           ),
+           editorState,
+         );
 
-      _buildEmptyUint8Array();
-    }
-  };
+         _buildEmptyUint8Array();
+       }
+     }; */
+  uint8Array |> OptionService.unsafeGet;
 
 let _computeBufferViewDataByteLength = bufferViewArr =>
   switch (bufferViewArr |> ArrayService.getLast) {
