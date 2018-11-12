@@ -38,6 +38,19 @@ let _ =
         BuildComponentTool.buildConsole()
         |> ReactTestTool.createSnapshotAndMatch;
       });
+      test("console.debug should add the message into content", () => {
+        ConsoleUtils.debug(
+          LogUtils.buildDebugMessage(
+            ~description={j|debug|j},
+            ~params={j||j},
+          ),
+          true,
+        )
+        |> StateLogicService.getEditorState;
+
+        BuildComponentTool.buildConsole()
+        |> ReactTestTool.createSnapshotAndMatch;
+      });
       test("console.error should add the message into content", () => {
         ConsoleUtils.error({j|message|j}) |> StateLogicService.getEditorState;
 
