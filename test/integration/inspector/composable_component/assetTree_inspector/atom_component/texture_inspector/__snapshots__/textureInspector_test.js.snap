@@ -271,19 +271,7 @@ exports[`texture inspector prepare currentSelectSource test texture rename test 
       <ul
         className="wonder-tree-node"
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "background": "rgba(255,255,255,0.2)",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
           />
@@ -291,7 +279,24 @@ exports[`texture inspector prepare currentSelectSource test texture rename test 
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          Assets
+          <div
+            className="draggable-container"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "background": "rgba(255,255,255,0.2)",
+              }
+            }
+          >
+            Assets
+          </div>
         </li>
       </ul>
     </article>

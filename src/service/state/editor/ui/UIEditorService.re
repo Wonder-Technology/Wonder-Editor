@@ -1,10 +1,9 @@
 open EditorType;
 
-/* open UIType; */
-
 let markFileInputOpen = editorState => {
   ...editorState,
   uiRecord: {
+    ...editorState.uiRecord,
     isFileInputOpen: true,
   },
 };
@@ -12,6 +11,7 @@ let markFileInputOpen = editorState => {
 let markFileInputClose = editorState => {
   ...editorState,
   uiRecord: {
+    ...editorState.uiRecord,
     isFileInputOpen: false,
   },
 };

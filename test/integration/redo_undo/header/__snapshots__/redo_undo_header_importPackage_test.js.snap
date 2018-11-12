@@ -58,19 +58,7 @@ exports[`redo_undo: import package test redo operate test redo one step undo ste
       <ul
         className="wonder-tree-node"
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "background": "rgba(255,255,255,0.2)",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
           />
@@ -78,7 +66,24 @@ exports[`redo_undo: import package test redo operate test redo one step undo ste
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          Assets
+          <div
+            className="draggable-container"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "background": "rgba(255,255,255,0.2)",
+              }
+            }
+          >
+            Assets
+          </div>
         </li>
       </ul>
     </article>
@@ -168,19 +173,7 @@ exports[`redo_undo: import package test undo operate test undo one step step whi
       <ul
         className="wonder-tree-node"
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "background": "rgba(255,255,255,0.2)",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
           />
@@ -188,7 +181,24 @@ exports[`redo_undo: import package test undo operate test undo one step step whi
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          Assets
+          <div
+            className="draggable-container"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "background": "rgba(255,255,255,0.2)",
+              }
+            }
+          >
+            Assets
+          </div>
         </li>
       </ul>
     </article>
@@ -208,23 +218,8 @@ exports[`redo_undo: import package test undo operate test undo two step step whi
   >
     <ul
       className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
     >
-      <li
-        draggable={true}
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "border": "0px",
-          }
-        }
-      >
+      <li>
         <div
           className="item-triangle"
           onClick={[Function]}
@@ -233,106 +228,131 @@ exports[`redo_undo: import package test undo operate test undo two step step whi
             src="./public/img/down.png"
           />
         </div>
-        Scene
+        <div
+          className="draggable-container"
+          draggable={true}
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "border": "0px",
+            }
+          }
+        >
+          Scene
+        </div>
       </li>
       <ul
         className="wonder-tree-node"
-        draggable={true}
-        onDragEnd={[Function]}
-        onDragStart={[Function]}
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
           />
-          Camera
+          <div
+            className="draggable-container"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "border": "0px",
+              }
+            }
+          >
+            Camera
+          </div>
         </li>
       </ul>
       <ul
         className="wonder-tree-node"
-        draggable={true}
-        onDragEnd={[Function]}
-        onDragStart={[Function]}
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "background": "#5C7EA6",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
           />
-          Cube
+          <div
+            className="draggable-container"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "background": "#5C7EA6",
+              }
+            }
+          >
+            Cube
+          </div>
         </li>
       </ul>
       <ul
         className="wonder-tree-node"
-        draggable={true}
-        onDragEnd={[Function]}
-        onDragStart={[Function]}
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
           />
-          Cube
+          <div
+            className="draggable-container"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "border": "0px",
+              }
+            }
+          >
+            Cube
+          </div>
         </li>
       </ul>
       <ul
         className="wonder-tree-node"
-        draggable={true}
-        onDragEnd={[Function]}
-        onDragStart={[Function]}
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
           />
-          Direction Light
+          <div
+            className="draggable-container"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "border": "0px",
+              }
+            }
+          >
+            Direction Light
+          </div>
         </li>
       </ul>
     </ul>

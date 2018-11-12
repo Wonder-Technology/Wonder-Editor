@@ -5,49 +5,27 @@ type state = {style: ReactDOMRe.Style.t};
 module Method = {
   let buildNotDragableUl = TreeNodeUtils.buildNotDragableUl;
 
-  let buildDragableUl =
-      (send, (id, widget, dragImg, treeChildren, isShowChildren), content) =>
-    TreeNodeUtils.buildDragableUl(
-      send,
-      (id, widget, dragImg, treeChildren, isShowChildren),
-      content,
-      (DragEventUtils.handleDragStart, DragEventUtils.handleDrageEnd),
-    );
-
   let getContent =
       (
         (state, send),
-        (id, icon, name, treeChildren, isShowChildren, isHasChildren),
-        (onSelectFunc, handleWidgettFunc, handleRelationErrorFunc),
+        (
+          id,
+          icon,
+          widget,
+          dragImg,
+          name,
+          treeChildren,
+          isShowChildren,
+          isHasChildren,
+        ),
+        (
+          onSelectFunc,
+          handleWidgetFunc,
+          handleRelationErrorFunc,
+          isAssetWDBFileFunc,
+        ),
       ) =>
-    <li
-      style=state.style
-      draggable=true
-      onClick=(_event => onSelectFunc(id))
-      onDragEnter=(
-        _e =>
-          send(
-            DragEventUtils.handleDragEnter(
-              id,
-              handleWidgettFunc,
-              handleRelationErrorFunc(false),
-              _e,
-            ),
-          )
-      )
-      onDragLeave=(_e => send(DragEventUtils.handleDragLeave(id, _e)))
-      onDragOver=(e => DragEventUtils.handleDragOver("move", e))
-      onDrop=(
-        _e =>
-          send(
-            DragEventUtils.handleDrop(
-              id,
-              handleWidgettFunc,
-              handleRelationErrorFunc(true),
-              _e,
-            ),
-          )
-      )>
+    <li>
       (
         isHasChildren ?
           <div
@@ -75,7 +53,41 @@ module Method = {
         | Some(icon) => <img src=icon className="treeNode-icon" />
         }
       )
-      (DomHelper.textEl(name))
+      <div
+        className="draggable-container"
+        style=state.style
+        draggable=true
+        onClick=(_event => onSelectFunc(id))
+        onDragStart=(
+          _e => send(handleDragStart(id, widget, dragImg, "move", _e))
+        )
+        onDragEnd=(_e => send(handleDrageEnd(_e)))
+        onDragEnter=(
+          _e =>
+            send(
+              DragEventUtils.handleDragEnter(
+                id,
+                handleWidgetFunc,
+                handleRelationErrorFunc(false),
+                _e,
+              ),
+            )
+        )
+        onDragLeave=(_e => send(DragEventUtils.handleDragLeave(id, _e)))
+        onDragOver=(e => DragEventUtils.handleDragOver("move", e))
+        onDrop=(
+          _e =>
+            send(
+              DragEventUtils.handleDrop(
+                id,
+                handleWidgetFunc,
+                handleRelationErrorFunc(true),
+                _e,
+              ),
+            )
+        )>
+        (DomHelper.textEl(name))
+      </div>
     </li>;
 };
 
@@ -136,57 +148,34 @@ let reducer =
 
 let render =
     (
-      (
-        id,
-        name,
-        widget,
-        dragImg,
-        icon,
-        isDragable,
-        isShowChildren,
-        isHasChildren,
-      ),
+      (id, name, widget, dragImg, icon, isShowChildren, isHasChildren),
       (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
       treeChildren,
       {state, send}: ReasonReact.self('a, 'b, 'c),
-    ) => {
-  let _buildContent = () =>
-    switch (isDragable) {
-    | None =>
-      Method.buildDragableUl(
-        send,
-        (id, widget, dragImg, treeChildren, isShowChildren),
-        Method.getContent(
-          (state, send),
-          (id, icon, name, treeChildren, isShowChildren, isHasChildren),
-          (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
-        ),
-      )
-
-    | Some(isDragable) =>
-      isDragable ?
-        Method.buildDragableUl(
-          send,
-          (id, widget, dragImg, treeChildren, isShowChildren),
-          Method.getContent(
-            (state, send),
-            (id, icon, name, treeChildren, isShowChildren, isHasChildren),
-            (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
-          ),
-        ) :
-        Method.buildNotDragableUl(
-          treeChildren,
-          isShowChildren,
-          Method.getContent(
-            (state, send),
-            (id, icon, name, treeChildren, isShowChildren, isHasChildren),
-            (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
-          ),
-        )
-    };
-
-  _buildContent();
-};
+    ) =>
+  Method.buildNotDragableUl(
+    treeChildren,
+    isShowChildren,
+    Method.getContent(
+      (state, send),
+      (
+        id,
+        icon,
+        widget,
+        dragImg,
+        name,
+        treeChildren,
+        isShowChildren,
+        isHasChildren,
+      ),
+      (
+        onSelectFunc,
+        handleWidgetFunc,
+        handleRelationErrorFunc,
+        handleRelationErrorFunc,
+      ),
+    ),
+  );
 
 let initalState = (isSelected, isActive) =>
   isSelected ?
@@ -204,7 +193,6 @@ let make =
       ~dragImg,
       ~widget,
       ~icon: option(string)=?,
-      ~isDragable: option(bool)=?,
       ~onSelect,
       ~onDrop,
       ~isWidget,
@@ -220,16 +208,7 @@ let make =
   reducer: reducer(isShowChildren, (onDrop, handleToggleShowTreeChildren)),
   render: self =>
     render(
-      (
-        id,
-        name,
-        widget,
-        dragImg,
-        icon,
-        isDragable,
-        isShowChildren,
-        isHasChildren,
-      ),
+      (id, name, widget, dragImg, icon, isShowChildren, isHasChildren),
       (onSelect, isWidget, handleRelationError),
       treeChildren,
       self,

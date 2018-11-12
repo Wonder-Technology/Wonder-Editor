@@ -58,19 +58,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
       <ul
         className="wonder-tree-node"
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -83,27 +71,29 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          Assets
-        </li>
-        <ul
-          className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
-        >
-          <li
+          <div
+            className="draggable-container"
             draggable={true}
             onClick={[Function]}
+            onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
+            onDragStart={[Function]}
             onDrop={[Function]}
             style={
               Object {
-                "background": "#5C7EA6",
+                "border": "0px",
               }
             }
           >
+            Assets
+          </div>
+        </li>
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
             <div
               className="item-triangle"
             />
@@ -111,7 +101,24 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            NoName Folder
+            <div
+              className="draggable-container"
+              draggable={true}
+              onClick={[Function]}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              style={
+                Object {
+                  "background": "#5C7EA6",
+                }
+              }
+            >
+              NoName Folder
+            </div>
           </li>
         </ul>
       </ul>
@@ -183,19 +190,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
       <ul
         className="wonder-tree-node"
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "background": "rgba(255,255,255,0.2)",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
           />
@@ -203,7 +198,24 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          Assets
+          <div
+            className="draggable-container"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "background": "rgba(255,255,255,0.2)",
+              }
+            }
+          >
+            Assets
+          </div>
         </li>
       </ul>
     </article>
@@ -272,19 +284,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
       <ul
         className="wonder-tree-node"
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "background": "rgba(255,255,255,0.2)",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
           />
@@ -292,7 +292,24 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          Assets
+          <div
+            className="draggable-container"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "background": "rgba(255,255,255,0.2)",
+              }
+            }
+          >
+            Assets
+          </div>
         </li>
       </ul>
     </article>
@@ -361,19 +378,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node if not select 
       <ul
         className="wonder-tree-node"
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "background": "rgba(255,255,255,0.2)",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
           />
@@ -381,7 +386,24 @@ exports[`MainEditorAssetHeader->remove node test remove tree node if not select 
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          Assets
+          <div
+            className="draggable-container"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "background": "rgba(255,255,255,0.2)",
+              }
+            }
+          >
+            Assets
+          </div>
         </li>
       </ul>
     </article>

@@ -7,19 +7,7 @@ exports[`MainEditorAssetHeader->add folder else add folder into specific treeNod
   <ul
     className="wonder-tree-node"
   >
-    <li
-      draggable={true}
-      onClick={[Function]}
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "border": "0px",
-        }
-      }
-    >
+    <li>
       <div
         className="item-triangle"
         onClick={[Function]}
@@ -32,27 +20,29 @@ exports[`MainEditorAssetHeader->add folder else add folder into specific treeNod
         className="treeNode-icon"
         src="./public/img/package.png"
       />
-      Assets
-    </li>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
+      <div
+        className="draggable-container"
         draggable={true}
         onClick={[Function]}
+        onDragEnd={[Function]}
         onDragEnter={[Function]}
         onDragLeave={[Function]}
         onDragOver={[Function]}
+        onDragStart={[Function]}
         onDrop={[Function]}
         style={
           Object {
-            "background": "#5C7EA6",
+            "border": "0px",
           }
         }
       >
+        Assets
+      </div>
+    </li>
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
         <div
           className="item-triangle"
           onClick={[Function]}
@@ -65,27 +55,29 @@ exports[`MainEditorAssetHeader->add folder else add folder into specific treeNod
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        NoName Folder
-      </li>
-      <ul
-        className="wonder-tree-node"
-        draggable={true}
-        onDragEnd={[Function]}
-        onDragStart={[Function]}
-      >
-        <li
+        <div
+          className="draggable-container"
           draggable={true}
           onClick={[Function]}
+          onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
+          onDragStart={[Function]}
           onDrop={[Function]}
           style={
             Object {
-              "border": "0px",
+              "background": "#5C7EA6",
             }
           }
         >
+          NoName Folder
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
           <div
             className="item-triangle"
           />
@@ -93,7 +85,24 @@ exports[`MainEditorAssetHeader->add folder else add folder into specific treeNod
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          New Folder
+          <div
+            className="draggable-container"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "border": "0px",
+              }
+            }
+          >
+            New Folder
+          </div>
         </li>
       </ul>
     </ul>
@@ -159,19 +168,7 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
       <ul
         className="wonder-tree-node"
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "background": "rgba(255,255,255,0.2)",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -184,27 +181,29 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          Assets
-        </li>
-        <ul
-          className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
-        >
-          <li
+          <div
+            className="draggable-container"
             draggable={true}
             onClick={[Function]}
+            onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
+            onDragStart={[Function]}
             onDrop={[Function]}
             style={
               Object {
-                "border": "0px",
+                "background": "rgba(255,255,255,0.2)",
               }
             }
           >
+            Assets
+          </div>
+        </li>
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
             <div
               className="item-triangle"
             />
@@ -212,28 +211,30 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            NoName Folder
+            <div
+              className="draggable-container"
+              draggable={true}
+              onClick={[Function]}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              style={
+                Object {
+                  "border": "0px",
+                }
+              }
+            >
+              NoName Folder
+            </div>
           </li>
         </ul>
         <ul
           className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
         >
-          <li
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
-          >
+          <li>
             <div
               className="item-triangle"
             />
@@ -241,7 +242,24 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            <div
+              className="draggable-container"
+              draggable={true}
+              onClick={[Function]}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              style={
+                Object {
+                  "border": "0px",
+                }
+              }
+            >
+              New Folder
+            </div>
           </li>
         </ul>
       </ul>
@@ -333,19 +351,7 @@ exports[`MainEditorAssetHeader->add folder test name remove first folder which u
   <ul
     className="wonder-tree-node"
   >
-    <li
-      draggable={true}
-      onClick={[Function]}
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "background": "rgba(255,255,255,0.2)",
-        }
-      }
-    >
+    <li>
       <div
         className="item-triangle"
         onClick={[Function]}
@@ -358,27 +364,29 @@ exports[`MainEditorAssetHeader->add folder test name remove first folder which u
         className="treeNode-icon"
         src="./public/img/package.png"
       />
-      Assets
+      <div
+        className="draggable-container"
+        draggable={true}
+        onClick={[Function]}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "background": "rgba(255,255,255,0.2)",
+          }
+        }
+      >
+        Assets
+      </div>
     </li>
     <ul
       className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
     >
-      <li
-        draggable={true}
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "border": "0px",
-          }
-        }
-      >
+      <li>
         <div
           className="item-triangle"
         />
@@ -386,28 +394,30 @@ exports[`MainEditorAssetHeader->add folder test name remove first folder which u
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        New Folder
+        <div
+          className="draggable-container"
+          draggable={true}
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "border": "0px",
+            }
+          }
+        >
+          New Folder
+        </div>
       </li>
     </ul>
     <ul
       className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
     >
-      <li
-        draggable={true}
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "border": "0px",
-          }
-        }
-      >
+      <li>
         <div
           className="item-triangle"
         />
@@ -415,28 +425,30 @@ exports[`MainEditorAssetHeader->add folder test name remove first folder which u
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        New Folder 1
+        <div
+          className="draggable-container"
+          draggable={true}
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "border": "0px",
+            }
+          }
+        >
+          New Folder 1
+        </div>
       </li>
     </ul>
     <ul
       className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
     >
-      <li
-        draggable={true}
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "border": "0px",
-          }
-        }
-      >
+      <li>
         <div
           className="item-triangle"
         />
@@ -444,7 +456,24 @@ exports[`MainEditorAssetHeader->add folder test name remove first folder which u
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        New Folder 2
+        <div
+          className="draggable-container"
+          draggable={true}
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "border": "0px",
+            }
+          }
+        >
+          New Folder 2
+        </div>
       </li>
     </ul>
   </ul>
@@ -458,19 +487,7 @@ exports[`MainEditorAssetHeader->add folder test name test add the same name fold
   <ul
     className="wonder-tree-node"
   >
-    <li
-      draggable={true}
-      onClick={[Function]}
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "background": "rgba(255,255,255,0.2)",
-        }
-      }
-    >
+    <li>
       <div
         className="item-triangle"
         onClick={[Function]}
@@ -483,27 +500,29 @@ exports[`MainEditorAssetHeader->add folder test name test add the same name fold
         className="treeNode-icon"
         src="./public/img/package.png"
       />
-      Assets
+      <div
+        className="draggable-container"
+        draggable={true}
+        onClick={[Function]}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "background": "rgba(255,255,255,0.2)",
+          }
+        }
+      >
+        Assets
+      </div>
     </li>
     <ul
       className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
     >
-      <li
-        draggable={true}
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "border": "0px",
-          }
-        }
-      >
+      <li>
         <div
           className="item-triangle"
         />
@@ -511,28 +530,30 @@ exports[`MainEditorAssetHeader->add folder test name test add the same name fold
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        NoName Folder
+        <div
+          className="draggable-container"
+          draggable={true}
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "border": "0px",
+            }
+          }
+        >
+          NoName Folder
+        </div>
       </li>
     </ul>
     <ul
       className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
     >
-      <li
-        draggable={true}
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "border": "0px",
-          }
-        }
-      >
+      <li>
         <div
           className="item-triangle"
         />
@@ -540,28 +561,30 @@ exports[`MainEditorAssetHeader->add folder test name test add the same name fold
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        New Folder
+        <div
+          className="draggable-container"
+          draggable={true}
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "border": "0px",
+            }
+          }
+        >
+          New Folder
+        </div>
       </li>
     </ul>
     <ul
       className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
     >
-      <li
-        draggable={true}
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "border": "0px",
-          }
-        }
-      >
+      <li>
         <div
           className="item-triangle"
         />
@@ -569,28 +592,30 @@ exports[`MainEditorAssetHeader->add folder test name test add the same name fold
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        New Folder 1
+        <div
+          className="draggable-container"
+          draggable={true}
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "border": "0px",
+            }
+          }
+        >
+          New Folder 1
+        </div>
       </li>
     </ul>
     <ul
       className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
     >
-      <li
-        draggable={true}
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "border": "0px",
-          }
-        }
-      >
+      <li>
         <div
           className="item-triangle"
         />
@@ -598,7 +623,24 @@ exports[`MainEditorAssetHeader->add folder test name test add the same name fold
           className="treeNode-icon"
           src="./public/img/package.png"
         />
-        New Folder 2
+        <div
+          className="draggable-container"
+          draggable={true}
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "border": "0px",
+            }
+          }
+        >
+          New Folder 2
+        </div>
       </li>
     </ul>
   </ul>

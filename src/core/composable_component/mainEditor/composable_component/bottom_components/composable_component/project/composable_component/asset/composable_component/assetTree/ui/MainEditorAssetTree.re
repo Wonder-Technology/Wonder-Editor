@@ -37,9 +37,7 @@ module Method = {
     |. TreeRootAssetEditorService.setAssetTreeRoot(editorState)
     |> StateEditorService.setState;
 
-    dispatchFunc(
-      AppStore.UpdateAction(Update([|UpdateStore.Project|])),
-    )
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])))
     |> ignore;
   };
 
@@ -68,7 +66,6 @@ module Method = {
                dragImg
                widget=(AssetUtils.getWidget())
                icon="./public/img/package.png"
-               isDragable=(_isNotRoot(nodeId))
                onSelect=(onSelectFunc(type_))
                onDrop=onDropFunc
                isWidget=AssetUtils.isWidget

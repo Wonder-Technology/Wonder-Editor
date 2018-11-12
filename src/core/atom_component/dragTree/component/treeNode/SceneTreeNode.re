@@ -20,8 +20,10 @@ module Method = {
       (
         id,
         (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFileFunc),
-        _event,
-      ) =>
+        event,
+      ) => {
+    let e = ReactEventType.convertReactMouseEventToJsEvent(event);
+
     DragEventBaseUtils.isTriggerDragEnter(
       id,
       handleWidgetFunc,
@@ -29,6 +31,7 @@ module Method = {
     )
     || isAssetWDBFileFunc() ?
       DragEnter : Nothing;
+  };
 
   let handleDragLeave = (id, event) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
@@ -39,6 +42,7 @@ module Method = {
   let handleDrageEnd = _event => {
     CurrentDragSourceEditorService.clearCurrentDragSource
     |> StateLogicService.getAndSetEditorState;
+
     DragEnd;
   };
 
@@ -73,19 +77,19 @@ module Method = {
 
   let buildNotDragableUl = TreeNodeUtils.buildNotDragableUl;
 
-  let buildDragableUl =
-      (send, (id, widget, dragImg, treeChildren, isShowChildren), content) =>
-    TreeNodeUtils.buildDragableUl(
-      send,
-      (id, widget, dragImg, treeChildren, isShowChildren),
-      content,
-      (handleDragStart, handleDrageEnd),
-    );
-
   let getContent =
       (
         (state, send),
-        (id, icon, name, treeChildren, isShowChildren, isHasChildren),
+        (
+          id,
+          icon,
+          widget,
+          dragImg,
+          name,
+          treeChildren,
+          isShowChildren,
+          isHasChildren,
+        ),
         (
           onSelectFunc,
           handleWidgetFunc,
@@ -93,32 +97,7 @@ module Method = {
           isAssetWDBFileFunc,
         ),
       ) =>
-    <li
-      style=state.style
-      draggable=true
-      onClick=(_event => onSelectFunc(id))
-      onDragEnter=(
-        _e =>
-          send(
-            handleDragEnter(
-              id,
-              (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFileFunc),
-              _e,
-            ),
-          )
-      )
-      onDragLeave=(_e => send(handleDragLeave(id, _e)))
-      onDragOver=(e => DragEventUtils.handleDragOver("move", e))
-      onDrop=(
-        _e =>
-          send(
-            handleDrop(
-              id,
-              (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFileFunc),
-              _e,
-            ),
-          )
-      )>
+    <li>
       (
         isHasChildren ?
           <div
@@ -146,7 +125,47 @@ module Method = {
         | Some(icon) => <img src=icon className="treeNode-icon" />
         }
       )
-      (DomHelper.textEl(name))
+      <div
+        className="draggable-container"
+        style=state.style
+        draggable=true
+        onClick=(_event => onSelectFunc(id))
+        onDragStart=(
+          _e => send(handleDragStart(id, widget, dragImg, "move", _e))
+        )
+        onDragEnd=(_e => send(handleDrageEnd(_e)))
+        onDragEnter=(
+          _e =>
+            send(
+              handleDragEnter(
+                id,
+                (
+                  handleWidgetFunc,
+                  handleRelationErrorFunc,
+                  isAssetWDBFileFunc,
+                ),
+                _e,
+              ),
+            )
+        )
+        onDragLeave=(_e => send(handleDragLeave(id, _e)))
+        onDragOver=(e => DragEventUtils.handleDragOver("move", e))
+        onDrop=(
+          _e =>
+            send(
+              handleDrop(
+                id,
+                (
+                  handleWidgetFunc,
+                  handleRelationErrorFunc,
+                  isAssetWDBFileFunc,
+                ),
+                _e,
+              ),
+            )
+        )>
+        (DomHelper.textEl(name))
+      </div>
     </li>;
 };
 
@@ -220,13 +239,28 @@ let reducer =
 
 let render =
     (
+      (id, name, widget, dragImg, icon, isShowChildren, isHasChildren),
+      (
+        onSelectFunc,
+        isWidgetFunc,
+        handleRelationErrorFunc,
+        isAssetWDBFileFunc,
+      ),
+      treeChildren,
+      {state, send}: ReasonReact.self('a, 'b, 'c),
+    ) =>
+  Method.buildNotDragableUl(
+    treeChildren,
+    isShowChildren,
+    Method.getContent(
+      (state, send),
       (
         id,
-        name,
+        icon,
         widget,
         dragImg,
-        icon,
-        isDragable,
+        name,
+        treeChildren,
         isShowChildren,
         isHasChildren,
       ),
@@ -236,61 +270,8 @@ let render =
         handleRelationErrorFunc,
         isAssetWDBFileFunc,
       ),
-      treeChildren,
-      {state, send}: ReasonReact.self('a, 'b, 'c),
-    ) => {
-  let _buildContent = () =>
-    switch (isDragable) {
-    | None =>
-      Method.buildDragableUl(
-        send,
-        (id, widget, dragImg, treeChildren, isShowChildren),
-        Method.getContent(
-          (state, send),
-          (id, icon, name, treeChildren, isShowChildren, isHasChildren),
-          (
-            onSelectFunc,
-            isWidgetFunc,
-            handleRelationErrorFunc,
-            isAssetWDBFileFunc,
-          ),
-        ),
-      )
-
-    | Some(isDragable) =>
-      isDragable ?
-        Method.buildDragableUl(
-          send,
-          (id, widget, dragImg, treeChildren, isShowChildren),
-          Method.getContent(
-            (state, send),
-            (id, icon, name, treeChildren, isShowChildren, isHasChildren),
-            (
-              onSelectFunc,
-              isWidgetFunc,
-              handleRelationErrorFunc,
-              isAssetWDBFileFunc,
-            ),
-          ),
-        ) :
-        Method.buildNotDragableUl(
-          treeChildren,
-          isShowChildren,
-          Method.getContent(
-            (state, send),
-            (id, icon, name, treeChildren, isShowChildren, isHasChildren),
-            (
-              onSelectFunc,
-              isWidgetFunc,
-              handleRelationErrorFunc,
-              isAssetWDBFileFunc,
-            ),
-          ),
-        )
-    };
-
-  _buildContent();
-};
+    ),
+  );
 
 let initalState = (isSelected, isActive) =>
   isSelected ?
@@ -308,7 +289,6 @@ let make =
       ~dragImg,
       ~widget,
       ~icon: option(string)=?,
-      ~isDragable: option(bool)=?,
       ~onSelect,
       ~dragGameObject,
       ~dragWDB,
@@ -330,16 +310,7 @@ let make =
     ),
   render: self =>
     render(
-      (
-        id,
-        name,
-        widget,
-        dragImg,
-        icon,
-        isDragable,
-        isShowChildren,
-        isHasChildren,
-      ),
+      (id, name, widget, dragImg, icon, isShowChildren, isHasChildren),
       (onSelect, isWidget, handleRelationError, isAssetWDBFile),
       treeChildren,
       self,

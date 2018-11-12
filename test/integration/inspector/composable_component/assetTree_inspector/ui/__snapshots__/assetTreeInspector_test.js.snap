@@ -307,19 +307,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename folder node
       <ul
         className="wonder-tree-node"
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -332,27 +320,29 @@ exports[`assetTree inspector prepare currentSelectSource test rename folder node
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          Assets
-        </li>
-        <ul
-          className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
-        >
-          <li
+          <div
+            className="draggable-container"
             draggable={true}
             onClick={[Function]}
+            onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
+            onDragStart={[Function]}
             onDrop={[Function]}
             style={
               Object {
-                "background": "#5C7EA6",
+                "border": "0px",
               }
             }
           >
+            Assets
+          </div>
+        </li>
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
             <div
               className="item-triangle"
             />
@@ -360,7 +350,24 @@ exports[`assetTree inspector prepare currentSelectSource test rename folder node
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            folder.aaa
+            <div
+              className="draggable-container"
+              draggable={true}
+              onClick={[Function]}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              style={
+                Object {
+                  "background": "#5C7EA6",
+                }
+              }
+            >
+              folder.aaa
+            </div>
           </li>
         </ul>
       </ul>

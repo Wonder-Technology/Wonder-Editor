@@ -33,15 +33,6 @@ let isTriggerDragEnter = (id, isWidgetFunc, handleRelationErrorFunc) => {
   && _isTreeNodeRelationValid(id, startId, handleRelationErrorFunc);
 };
 
-let isTriggerDragLeave = (id, isWidgetFunc, handleRelationErrorFunc) => {
-  let (widget, startId) =
-    StateEditorService.getState()
-    |> CurrentDragSourceEditorService.getCurrentDragSource;
-
-  isWidgetFunc(widget)
-  && _isTreeNodeRelationValid(id, startId, handleRelationErrorFunc);
-};
-
 let isTriggerDragDrop = (id, startId, isWidgetFunc, handleRelationErrorFunc) => {
   let (widget, _startId) =
     StateEditorService.getState()

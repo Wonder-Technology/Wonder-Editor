@@ -1,38 +1,46 @@
-.wonder-tree-node{
+.wonder-tree-node {
     position: relative;
-    margin:0px;
-    padding:0px;
-    top:0px;
+    margin: 0px;
+    padding: 0px;
+    top: 0px;
     z-index: 40;
-    color:#fff;
+    color: #fff;
     font-weight: normal;
-    li{
+    li {
         position: relative;
-        height:22px;
-        padding-top:3px;
+        height: 22px;
+        padding-top: 3px;
         display: flex;
         align-items: center;
         box-sizing: border-box;
-        &:hover{
+        &:hover {
             color: rgb(252, 155, 0);
         }
-        .item-triangle{
-            flex:initial;
-            width:22px;
-            height:22px;
-            img{
-                width:22px;
-                height:22px;
+        .item-triangle {
+            flex: initial;
+            width: 22px;
+            height: 22px;
+            img {
+                width: 22px;
+                height: 22px;
             }
         }
-        .treeNode-icon{
-            width:17px;
-            height:17px;
-            margin-top:-3px;
-            margin-right:3px;
+        .treeNode-icon {
+            width: 17px;
+            height: 17px;
+            margin-top: -3px;
+            margin-right: 3px;
+        }
+        .draggable-container {
+            width: 100%;
+            height: 22px;
+            line-height: 22px;
+            * {
+                pointer-events: none
+            }
         }
     }
-    ul{
-        margin-left:18px;
+    ul {
+        margin-left: 18px;
     }
 }

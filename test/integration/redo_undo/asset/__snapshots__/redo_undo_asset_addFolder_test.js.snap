@@ -58,19 +58,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
       <ul
         className="wonder-tree-node"
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "background": "rgba(255,255,255,0.2)",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -83,27 +71,29 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          Assets
-        </li>
-        <ul
-          className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
-        >
-          <li
+          <div
+            className="draggable-container"
             draggable={true}
             onClick={[Function]}
+            onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
+            onDragStart={[Function]}
             onDrop={[Function]}
             style={
               Object {
-                "border": "0px",
+                "background": "rgba(255,255,255,0.2)",
               }
             }
           >
+            Assets
+          </div>
+        </li>
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
             <div
               className="item-triangle"
             />
@@ -111,28 +101,30 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            NoName Folder
+            <div
+              className="draggable-container"
+              draggable={true}
+              onClick={[Function]}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              style={
+                Object {
+                  "border": "0px",
+                }
+              }
+            >
+              NoName Folder
+            </div>
           </li>
         </ul>
         <ul
           className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
         >
-          <li
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
-          >
+          <li>
             <div
               className="item-triangle"
             />
@@ -140,7 +132,24 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            <div
+              className="draggable-container"
+              draggable={true}
+              onClick={[Function]}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              style={
+                Object {
+                  "border": "0px",
+                }
+              }
+            >
+              New Folder
+            </div>
           </li>
         </ul>
       </ul>
@@ -279,19 +288,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
       <ul
         className="wonder-tree-node"
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "background": "rgba(255,255,255,0.2)",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -304,27 +301,29 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          Assets
+          <div
+            className="draggable-container"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "background": "rgba(255,255,255,0.2)",
+              }
+            }
+          >
+            Assets
+          </div>
         </li>
         <ul
           className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
         >
-          <li
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
-          >
+          <li>
             <div
               className="item-triangle"
             />
@@ -332,28 +331,30 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            NoName Folder
+            <div
+              className="draggable-container"
+              draggable={true}
+              onClick={[Function]}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              style={
+                Object {
+                  "border": "0px",
+                }
+              }
+            >
+              NoName Folder
+            </div>
           </li>
         </ul>
         <ul
           className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
         >
-          <li
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
-          >
+          <li>
             <div
               className="item-triangle"
             />
@@ -361,28 +362,30 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            <div
+              className="draggable-container"
+              draggable={true}
+              onClick={[Function]}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              style={
+                Object {
+                  "border": "0px",
+                }
+              }
+            >
+              New Folder
+            </div>
           </li>
         </ul>
         <ul
           className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
         >
-          <li
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
-          >
+          <li>
             <div
               className="item-triangle"
             />
@@ -390,7 +393,24 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder 1
+            <div
+              className="draggable-container"
+              draggable={true}
+              onClick={[Function]}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              style={
+                Object {
+                  "border": "0px",
+                }
+              }
+            >
+              New Folder 1
+            </div>
           </li>
         </ul>
       </ul>
@@ -563,19 +583,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
       <ul
         className="wonder-tree-node"
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "background": "rgba(255,255,255,0.2)",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -588,27 +596,29 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          Assets
+          <div
+            className="draggable-container"
+            draggable={true}
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "background": "rgba(255,255,255,0.2)",
+              }
+            }
+          >
+            Assets
+          </div>
         </li>
         <ul
           className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
         >
-          <li
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
-          >
+          <li>
             <div
               className="item-triangle"
             />
@@ -616,28 +626,30 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            NoName Folder
+            <div
+              className="draggable-container"
+              draggable={true}
+              onClick={[Function]}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              style={
+                Object {
+                  "border": "0px",
+                }
+              }
+            >
+              NoName Folder
+            </div>
           </li>
         </ul>
         <ul
           className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
         >
-          <li
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
-          >
+          <li>
             <div
               className="item-triangle"
             />
@@ -645,28 +657,30 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            <div
+              className="draggable-container"
+              draggable={true}
+              onClick={[Function]}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              style={
+                Object {
+                  "border": "0px",
+                }
+              }
+            >
+              New Folder
+            </div>
           </li>
         </ul>
         <ul
           className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
         >
-          <li
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
-          >
+          <li>
             <div
               className="item-triangle"
             />
@@ -674,7 +688,24 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder 1
+            <div
+              className="draggable-container"
+              draggable={true}
+              onClick={[Function]}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              style={
+                Object {
+                  "border": "0px",
+                }
+              }
+            >
+              New Folder 1
+            </div>
           </li>
         </ul>
       </ul>
@@ -847,19 +878,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
       <ul
         className="wonder-tree-node"
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "background": "rgba(255,255,255,0.2)",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -872,27 +891,29 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          Assets
-        </li>
-        <ul
-          className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
-        >
-          <li
+          <div
+            className="draggable-container"
             draggable={true}
             onClick={[Function]}
+            onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
+            onDragStart={[Function]}
             onDrop={[Function]}
             style={
               Object {
-                "border": "0px",
+                "background": "rgba(255,255,255,0.2)",
               }
             }
           >
+            Assets
+          </div>
+        </li>
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
             <div
               className="item-triangle"
             />
@@ -900,28 +921,30 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            NoName Folder
+            <div
+              className="draggable-container"
+              draggable={true}
+              onClick={[Function]}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              style={
+                Object {
+                  "border": "0px",
+                }
+              }
+            >
+              NoName Folder
+            </div>
           </li>
         </ul>
         <ul
           className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
         >
-          <li
-            draggable={true}
-            onClick={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
-          >
+          <li>
             <div
               className="item-triangle"
             />
@@ -929,7 +952,24 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            New Folder
+            <div
+              className="draggable-container"
+              draggable={true}
+              onClick={[Function]}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              style={
+                Object {
+                  "border": "0px",
+                }
+              }
+            >
+              New Folder
+            </div>
           </li>
         </ul>
       </ul>
@@ -1068,19 +1108,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
       <ul
         className="wonder-tree-node"
       >
-        <li
-          draggable={true}
-          onClick={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDrop={[Function]}
-          style={
-            Object {
-              "background": "rgba(255,255,255,0.2)",
-            }
-          }
-        >
+        <li>
           <div
             className="item-triangle"
             onClick={[Function]}
@@ -1093,27 +1121,29 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             className="treeNode-icon"
             src="./public/img/package.png"
           />
-          Assets
-        </li>
-        <ul
-          className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
-        >
-          <li
+          <div
+            className="draggable-container"
             draggable={true}
             onClick={[Function]}
+            onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
+            onDragStart={[Function]}
             onDrop={[Function]}
             style={
               Object {
-                "border": "0px",
+                "background": "rgba(255,255,255,0.2)",
               }
             }
           >
+            Assets
+          </div>
+        </li>
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
             <div
               className="item-triangle"
             />
@@ -1121,7 +1151,24 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               className="treeNode-icon"
               src="./public/img/package.png"
             />
-            NoName Folder
+            <div
+              className="draggable-container"
+              draggable={true}
+              onClick={[Function]}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              style={
+                Object {
+                  "border": "0px",
+                }
+              }
+            >
+              NoName Folder
+            </div>
           </li>
         </ul>
       </ul>
