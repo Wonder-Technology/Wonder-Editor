@@ -68,11 +68,11 @@
     "wonder-bs-jszip": "0.0.2",
     "wonder-bs-most": "^0.0.3",
     "wonder-commonlib": "0.2.23",
-    "wonder-log": "^0.2.8",
+    "wonder-log": "^0.2.9",
     "wonder.js": "1.0.0-alpha.23.86"
   },
   "resolutions": {
-    "wonder-log": "^0.2.8",
+    "wonder-log": "^0.2.9",
     "wonder-webgl": "^0.0.5",
     "wonder-bs-sinon": "0.1.7",
     "component-classes": "1.2.5",
