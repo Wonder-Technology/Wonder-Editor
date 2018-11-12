@@ -44,11 +44,13 @@ let _ =
             );
 
           MainEditorAssetHeaderOperateNodeTool.addMaterial();
-          let {materialComponent}: AssetNodeType.materialResultType =
-            StateEditorService.getState()
-            |> MaterialNodeMapAssetEditorService.unsafeGetResult(
-                 addedMaterialNodeId,
-               );
+
+          let materialComponent =
+            MainEditorAssetMaterialNodeTool.getMaterialComponent(
+              ~nodeId=addedMaterialNodeId,
+              (),
+            );
+
           MainEditorMaterialTool.changeMaterial(
             ~sourceMaterial=sourceMaterial1,
             ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
@@ -183,49 +185,140 @@ let _ =
             );
           };
 
-          describe(
-            {|
+          describe("fix name", () => {
+            beforeEach(() => {
+              let _ =
+                MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+              ();
+            });
+
+            test(
+              {|
+              1.change to basic material type;
+
+              name shouldn't change
+              |},
+              () => {
+                let addedMaterialNodeId =
+                  MainEditorAssetIdTool.getNewAssetId();
+
+                MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+                let materialComponent =
+                  MainEditorAssetMaterialNodeTool.getMaterialComponent(
+                    ~nodeId=addedMaterialNodeId,
+                    (),
+                  );
+
+                MaterialInspectorTool.changeMaterialType(
+                  ~material=materialComponent,
+                  ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                  ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
+                  ~materialNodeId=addedMaterialNodeId,
+                  (),
+                );
+
+                MainEditorAssetChildrenNodeTool.selectMaterialNode(
+                  ~nodeId=addedMaterialNodeId,
+                  (),
+                );
+                BuildComponentTool.buildInspectorComponent(
+                  TestTool.buildEmptyAppState(),
+                  InspectorTool.buildFakeAllShowComponentConfig(),
+                )
+                |> ReactTestTool.createSnapshotAndMatch;
+              },
+            );
+            test(
+              {|
+              1.change name to n1;
+              2.change to basic material type;
+
+              name should still be n1
+              |},
+              () => {
+                let addedMaterialNodeId =
+                  MainEditorAssetIdTool.getNewAssetId();
+
+                MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+                let name = "Material222";
+                AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+                  ~nodeId=addedMaterialNodeId,
+                  ~name,
+                  (),
+                );
+
+                let materialComponent =
+                  MainEditorAssetMaterialNodeTool.getMaterialComponent(
+                    ~nodeId=addedMaterialNodeId,
+                    (),
+                  );
+
+                MaterialInspectorTool.changeMaterialType(
+                  ~material=materialComponent,
+                  ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                  ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
+                  ~materialNodeId=addedMaterialNodeId,
+                  (),
+                );
+
+                MainEditorAssetChildrenNodeTool.selectMaterialNode(
+                  ~nodeId=addedMaterialNodeId,
+                  (),
+                );
+                BuildComponentTool.buildInspectorComponent(
+                  TestTool.buildEmptyAppState(),
+                  InspectorTool.buildFakeAllShowComponentConfig(),
+                )
+                |> ReactTestTool.createSnapshotAndMatch;
+              },
+            );
+
+            describe(
+              {|
         add material m1;
         add material m2;
         change m2->type to basicMaterial;
         |},
-            () =>
-            test("m2->name shouldn't equal m1->name", () => {
-              let assetTreeData =
-                MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
-              let addedMaterialNodeId1 = MainEditorAssetIdTool.getNewAssetId();
-              let addedMaterialNodeId2 = addedMaterialNodeId1 |> succ;
-              let gameObject = GameObjectTool.unsafeGetCurrentSceneTreeNode();
+              () =>
+              test("m2->name shouldn't equal m1->name", () => {
+                let addedMaterialNodeId1 =
+                  MainEditorAssetIdTool.getNewAssetId();
+                let addedMaterialNodeId2 = addedMaterialNodeId1 |> succ;
+                let gameObject =
+                  GameObjectTool.unsafeGetCurrentSceneTreeNode();
 
-              MainEditorAssetHeaderOperateNodeTool.addMaterial();
-              MainEditorAssetHeaderOperateNodeTool.addMaterial();
+                MainEditorAssetHeaderOperateNodeTool.addMaterial();
+                MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
-              let materialComponent =
-                MainEditorAssetMaterialNodeTool.getMaterialComponent(
+                let materialComponent =
+                  MainEditorAssetMaterialNodeTool.getMaterialComponent(
+                    ~nodeId=addedMaterialNodeId2,
+                    (),
+                  );
+
+                MaterialInspectorTool.changeMaterialType(
+                  ~material=materialComponent,
+                  ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                  ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
+                  ~materialNodeId=addedMaterialNodeId2,
+                  (),
+                );
+
+                MainEditorAssetChildrenNodeTool.selectMaterialNode(
                   ~nodeId=addedMaterialNodeId2,
                   (),
                 );
 
-              MaterialInspectorTool.changeMaterialType(
-                ~material=materialComponent,
-                ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
-                ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
-                ~materialNodeId=addedMaterialNodeId2,
-                (),
-              );
-
-              MainEditorAssetChildrenNodeTool.selectMaterialNode(
-                ~nodeId=addedMaterialNodeId2,
-                (),
-              );
-
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
-              )
-              |> ReactTestTool.createSnapshotAndMatch;
-            })
-          );
+                BuildComponentTool.buildInspectorComponent(
+                  TestTool.buildEmptyAppState(),
+                  InspectorTool.buildFakeAllShowComponentConfig(),
+                )
+                |> ReactTestTool.createSnapshotAndMatch;
+              })
+            );
+          });
 
           describe(
             {|

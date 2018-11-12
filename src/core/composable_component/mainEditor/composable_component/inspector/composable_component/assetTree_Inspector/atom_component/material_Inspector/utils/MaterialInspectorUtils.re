@@ -69,22 +69,6 @@ let replaceMaterialByMaterialType =
     };
 
   let engineState =
-    MainEditorMaterialUtils.setName(
-      targetMaterial,
-      targetMaterialType,
-      IterateAssetTreeAssetEditorService.getUniqueTreeNodeName(
-        MainEditorMaterialUtils.getNewMaterilaName(),
-        Material,
-        MaterialNodeMapAssetEditorService.getParentFolderNodeId(
-          nodeId,
-          MaterialNodeMapAssetEditorService.getMaterialNodeMap(editorState),
-        ),
-        (editorState, engineState),
-      ),
-      engineState,
-    );
-
-  let engineState =
     InspectorRenderGroupUtils.Dispose.replaceGameObjectsMaterialsOfTheMaterial(
       (
         (sourceMaterial, targetMaterial),
@@ -93,12 +77,26 @@ let replaceMaterialByMaterialType =
       engineState,
     );
 
-  engineState |> StateLogicService.refreshEngineState;
+  let editorState =
+    MaterialUpdateNodeAssetEditorService.updateMaterialNodeData(
+      nodeId,
+      targetMaterial,
+      targetMaterialType,
+      editorState,
+    );
 
-  MaterialUpdateNodeAssetEditorService.updateMaterialNodeData(
-    nodeId,
-    targetMaterial,
-    targetMaterialType,
-  )
-  |> StateLogicService.getAndSetEditorState;
+  let engineState =
+    MainEditorMaterialUtils.setName(
+      targetMaterial,
+      targetMaterialType,
+      MainEditorMaterialUtils.getName(
+        sourceMaterial,
+        sourceMaterialType,
+        engineState,
+      ),
+      engineState,
+    );
+
+  editorState |> StateEditorService.setState |> ignore;
+  engineState |> StateLogicService.refreshEngineState;
 };
