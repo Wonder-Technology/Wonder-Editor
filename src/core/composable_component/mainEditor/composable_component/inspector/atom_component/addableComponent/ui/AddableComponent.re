@@ -2,9 +2,13 @@ open GameObjectAllComponentParseType;
 
 open Antd;
 
-type state = {isShowAddableComponent: bool};
+type state = {
+  isShowAddableComponent: bool,
+  streamSubscription: option(WonderBsMost.Most.subscription),
+};
 
 type action =
+  | SetSubscription(WonderBsMost.Most.subscription)
   | HideAddableComponent
   | ToggleAddableComponent;
 
@@ -57,6 +61,8 @@ let component = ReasonReact.reducerComponent("AddableComponent");
 
 let reducer = (action, state) =>
   switch (action) {
+  | SetSubscription(subscription) =>
+    ReasonReact.Update({...state, streamSubscription: Some(subscription)})
   | ToggleAddableComponent =>
     ReasonReact.Update({
       ...state,
@@ -105,16 +111,17 @@ let render =
 let make =
     (~reduxTuple, ~currentSceneTreeNode, ~addableComponentList, _children) => {
   ...component,
-  initialState: () => {isShowAddableComponent: false},
+  initialState: () => {
+    isShowAddableComponent: false,
+    streamSubscription: None,
+  },
   reducer,
   render: self =>
     render(reduxTuple, currentSceneTreeNode, addableComponentList, self),
   didMount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
-    DomHelper.addEventListener(
-      DomHelper.document,
-      "click",
+    EventUtils.bindEventInDidMount(
       e => {
-        let target = ReactEventRe.Form.target(e);
+        let target = ReactEventRe.Form.target(Obj.magic(e));
         let targetArray = DomHelper.getElementsByClassName("addable-btn");
         let notCloseArray =
           DomHelper.getElementsByClassName("component-list");
@@ -123,5 +130,8 @@ let make =
         || DomUtils.isSpecificDomChildrenHasTargetDom(target, notCloseArray) ?
           () : send(HideAddableComponent);
       },
+      subscription => send(SetSubscription(subscription)),
     ),
+  willUnmount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    EventUtils.unmountStreamSubscription(state.streamSubscription),
 };

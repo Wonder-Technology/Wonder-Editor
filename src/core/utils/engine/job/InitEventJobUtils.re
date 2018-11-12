@@ -30,8 +30,6 @@ let _triggerRefreshInspectorEvent = engineState => {
   engineState;
 };
 
-let _getBody = () => DomHelper.document##body |> bodyToEventTarget;
-
 let _isTriggerGameViewEvent = () =>
   EventEditorService.getEventTarget(StateEditorService.getState()) === Game;
 
@@ -42,10 +40,10 @@ let _isTriggerOtherEvent = () =>
   EventEditorService.getEventTarget(StateEditorService.getState()) === Other;
 
 let _fromPointDomEvent = (eventName, engineState) =>
-  WonderBsMost.Most.fromEvent(eventName, _getBody(), false);
+  WonderBsMost.Most.fromEvent(eventName, EventUtils.getBody(), false);
 
 let _fromKeyboardDomEvent = (eventName, engineState) =>
-  WonderBsMost.Most.fromEvent(eventName, _getBody(), false);
+  WonderBsMost.Most.fromEvent(eventName, EventUtils.getBody(), false);
 
 let _convertMouseEventToPointEvent =
     (
@@ -403,7 +401,7 @@ let _execViewKeyboardEventHandle =
       ();
 
 let _fromPCDomEventArr = engineState => [|
-  WonderBsMost.Most.fromEvent("contextmenu", _getBody(), false)
+  WonderBsMost.Most.fromEvent("contextmenu", EventUtils.getBody(), false)
   |> WonderBsMost.Most.tap(event => _preventContextMenuEvent(event)),
   _fromPointDomEvent("click", engineState)
   |> WonderBsMost.Most.tap(event => _mapAndExecMouseEventHandle(Click, event)),

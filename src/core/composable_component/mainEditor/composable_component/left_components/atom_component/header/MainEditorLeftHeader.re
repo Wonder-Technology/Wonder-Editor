@@ -5,9 +5,11 @@ type navType =
 type state = {
   isSelectNav: bool,
   currentSelectItem: navType,
+  streamSubscription: option(WonderBsMost.Most.subscription),
 };
 
 type action =
+  | SetSubscription(WonderBsMost.Most.subscription)
   | HoverItem(navType)
   | ToggleShowNav
   | BlurNav;
@@ -22,6 +24,8 @@ let component = ReasonReact.reducerComponent("MainEditorLeftHeader");
 
 let reducer = (action, state) =>
   switch (action) {
+  | SetSubscription(subscription) =>
+    ReasonReact.Update({...state, streamSubscription: Some(subscription)})
   | ToggleShowNav =>
     state.isSelectNav ?
       ReasonReact.Update({
@@ -34,14 +38,12 @@ let reducer = (action, state) =>
         isSelectNav: true,
         currentSelectItem: None,
       })
-
   | BlurNav =>
     ReasonReact.Update({
       ...state,
       isSelectNav: false,
       currentSelectItem: None,
     })
-
   | HoverItem(selectNav) =>
     ReasonReact.Update({...state, currentSelectItem: selectNav})
   };
@@ -150,12 +152,14 @@ let render =
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
-  initialState: () => {isSelectNav: false, currentSelectItem: None},
+  initialState: () => {
+    isSelectNav: false,
+    currentSelectItem: None,
+    streamSubscription: None,
+  },
   reducer,
   didMount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
-    DomHelper.addEventListener(
-      DomHelper.document,
-      "click",
+    EventUtils.bindEventInDidMount(
       e => {
         let target = ReactEventRe.Form.target(e);
         let targetArray =
@@ -164,6 +168,9 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
         DomUtils.isSpecificDomChildrenHasTargetDom(target, targetArray) ?
           () : send(BlurNav);
       },
+      subscription => send(SetSubscription(subscription)),
     ),
   render: self => render(store, dispatchFunc, self),
+  willUnmount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    EventUtils.unmountStreamSubscription(state.streamSubscription),
 };
