@@ -2,6 +2,7 @@ type consoleType =
   | Error
   | Info
   | Warn
+  | Debug
   | Trace
   | Log;
 

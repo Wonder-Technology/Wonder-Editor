@@ -1,11 +1,13 @@
 let stubConsole = [%bs.raw
   {|
-    function(errorFunc, infoFunc, warnFunc, traceFunc, logFunc ) {
+    function(errorFunc, infoFunc, warnFunc, debugFunc, traceFunc, logFunc ) {
         window.wonder_console.error = errorFunc;
 
         window.wonder_console.info = infoFunc;
 
         window.wonder_console.warn = warnFunc;
+
+        window.wonder_console.debug = debugFunc;
 
         var getStackTrace = function (func) {
             var obj = {};

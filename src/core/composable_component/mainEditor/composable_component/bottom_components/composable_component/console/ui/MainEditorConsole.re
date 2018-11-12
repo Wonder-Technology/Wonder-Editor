@@ -89,7 +89,7 @@ module Method = {
            <ConsoleBaseComponent
              key=(DomHelper.getRandomKey())
              type_="info"
-             imageSrc="./public/img/log.png"
+             imageSrc="./public/img/info.png"
              message
              traceInfo
            />
@@ -98,6 +98,14 @@ module Method = {
              key=(DomHelper.getRandomKey())
              type_="warn"
              imageSrc="./public/img/warn.png"
+             message
+             traceInfo
+           />
+         | Debug =>
+           <ConsoleBaseComponent
+             key=(DomHelper.getRandomKey())
+             type_="debug"
+             imageSrc="./public/img/debug.png"
              message
              traceInfo
            />
@@ -211,6 +219,7 @@ let make = (~store, ~dispatchFunc, _children) => {
       Method.triggerConsoleByType(dispatchFunc, Error),
       Method.triggerConsoleByType(dispatchFunc, Info),
       Method.triggerConsoleByType(dispatchFunc, Warn),
+      Method.triggerConsoleByType(dispatchFunc, Debug),
       Method.triggerTrace(dispatchFunc),
       Method.triggerConsoleByType(dispatchFunc, Log),
     ),

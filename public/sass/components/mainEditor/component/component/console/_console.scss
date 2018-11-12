@@ -46,6 +46,7 @@
         @include consoleMessage("error");
         @include consoleMessage("info");
         @include consoleMessage("warn");
+        @include consoleMessage("debug");
         @include consoleMessage("log");
     }
 }

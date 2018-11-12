@@ -977,6 +977,29 @@ html, body {
                   padding: 5px 2%; }
                   .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-warn .console-trace .trace-info {
                     word-wrap: break-word; }
+              .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-debug {
+                width: 100%;
+                border-bottom: 1px solid #c0c0c0; }
+                .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-debug .console-header {
+                  height: auto;
+                  min-height: 40px;
+                  display: flex;
+                  font-size: 15px;
+                  align-items: center; }
+                  .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-debug .console-header img {
+                    margin: 0 5px;
+                    width: 20px;
+                    height: 20px; }
+                  .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-debug .console-header .header-message {
+                    white-space: pre-line;
+                    padding-top: 5px; }
+                .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-debug .console-trace {
+                  width: 96%;
+                  font-size: 14px;
+                  background-color: #565656;
+                  padding: 5px 2%; }
+                  .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-debug .console-trace .trace-info {
+                    word-wrap: break-word; }
               .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-log {
                 width: 100%;
                 border-bottom: 1px solid #c0c0c0; }
