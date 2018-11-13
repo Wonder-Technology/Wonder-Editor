@@ -150,7 +150,6 @@ let _isTargetTreeNodeBeRemovedParent = (targetTreeNode, removedNodeId) =>
 
 let checkAssetNodeName =
     (
-      isWarn,
       (sourceNodeId, sourceName),
       targetNodeId,
       type_,
@@ -165,16 +164,7 @@ let checkAssetNodeName =
   |> Js.Array.filter(((name, nodeId)) => nodeId !== sourceNodeId)
   |> Js.Array.map(((name, nodeId)) => name)
   |> Js.Array.includes(sourceName) ?
-    {
-      isWarn ?
-        ConsoleUtils.warn(
-          "the asset can't has the same name !",
-          editorState,
-        ) :
-        ();
-
-      failFunc((editorState, engineState));
-    } :
+    failFunc((editorState, engineState)) :
     successFunc((editorState, engineState));
 
 let _isTargetTreeNodeHasSameNameChild =
@@ -202,12 +192,20 @@ let _isTargetTreeNodeHasSameNameChild =
        );
 
   checkAssetNodeName(
-    isWarn,
     (removedNodeId, removedNodeName),
     targetNodeId,
     type_,
     (
-      ((editorState, engineState)) => true,
+      ((editorState, engineState)) => {
+        isWarn ?
+          ConsoleUtils.warn(
+            "the asset can't has the same name !",
+            editorState,
+          ) :
+          ();
+
+        true;
+      },
       ((editorState, engineState)) => false,
     ),
     (editorState, engineState),

@@ -20,7 +20,6 @@ let updateReducer =
   switch (action) {
   | Update(newComponentTypeArr) => {
       ...state,
-      componentTypeArr:
-        state.componentTypeArr |> Js.Array.concat(_, newComponentTypeArr),
+      componentTypeArr: newComponentTypeArr,
     }
   };

@@ -87,14 +87,24 @@ module CustomEventHandler = {
 
     let (editorState, engineState) =
       AssetTreeUtils.checkAssetNodeName(
-        true,
         (nodeId, value),
         parentNodeId,
         nodeType,
         (
           ((editorState, engineState)) => {
+            ConsoleUtils.warn(
+              "the asset can't has the same name !",
+              editorState,
+            );
+
             dispatchFunc(
-              AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
+              AppStore.UpdateAction(
+                Update([|
+                  UpdateStore.Console,
+                  UpdateStore.BottomHeader,
+                  UpdateStore.Inspector,
+                |]),
+              ),
             )
             |> ignore;
 
