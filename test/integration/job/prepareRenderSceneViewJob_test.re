@@ -179,20 +179,6 @@ let _ =
                   var viewWidth = match[2];
       |}
                 |> StringTool.removeNewLinesAndSpaces,
-                {|
-                  var engineState$1 = _drawPointLight(500, scene, _drawDirectionLight(500, scene, engineState));
-                  return ArrayService$WonderCommonlib.reduceOneParam(function (engineState, sceneCameraGameObject) {
-                    var match = getTransformPosition(unsafeGetGameObjectTransformComponent(sceneCameraGameObject, engineState), engineState);
-                    var z = match[2];
-                    var y = match[1];
-                    var x = match[0];
-                    var match$1 = _getDeepWidthAndHeight(80, 80, maxDistance, _getDistanceWithTwoGameObject( /* tuple */[x, y, z], _getEditCameraPosition(editCamera, engineState)));
-                    var imageHeight = match$1[1];
-                    var imageWidth = match$1[0];
-                    var match$2 = _convertAnchorFromTopLeftToCenter( /* tuple */[imageWidth, imageHeight], convertWorldToScreen(unsafeGetGameObjectBasicCameraViewComponent(editCamera, engineState), unsafeGetGameObjectPerspectiveCameraProjectionComponent(editCamera, engineState), /* tuple */[x, y, z, viewWidth, viewHeight], engineState));
-                    return imageFunc( /* tuple */[match$2[0], match$2[1], imageWidth, imageHeight], /* tuple */[0, 0, 1, 1], "camera", engineState);
-                  }, engineState$1, _getSceneCameras(scene$1, engineState$1));|}
-                |> StringTool.removeNewLinesAndSpaces,
               ],
             )
             |> expect == true;
@@ -412,7 +398,9 @@ let _ =
           gl##getUniformLocation
           |> withTwoArgs(Sinon.matchAny, "u_pMatrix")
           |> returns(pos1);
-          StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
+          StateLogicService.getAndSetEngineState(
+            MainUtils._handleEngineState,
+          );
           IMGUITool.prepareImgui();
           PrepareRenderViewJobTool.setViewRect(~width=400, ~height=150, ());
 

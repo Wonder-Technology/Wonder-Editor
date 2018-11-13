@@ -50,20 +50,20 @@ let getEngineStateIMGUIFunc = () =>
       (width *. coefficient, height *. coefficient);
     };
 
-    let _getSceneCameras = (scene, engineState) =>
-      getAllGameObjects(. scene, engineState)
+    let _getSceneCameras = (scene, allGameObjects, engineState) =>
+      allGameObjects
       |> Js.Array.filter(gameObject =>
            hasGameObjectBasicCameraViewComponent(. gameObject, engineState)
          );
 
-    let _getSceneDirectionLights = (scene, engineState) =>
-      getAllGameObjects(. scene, engineState)
+    let _getSceneDirectionLights = (scene, allGameObjects, engineState) =>
+      allGameObjects
       |> Js.Array.filter(gameObject =>
            hasGameObjectDirectionLightComponent(. gameObject, engineState)
          );
 
-    let _getScenePointLights = (scene, engineState) =>
-      getAllGameObjects(. scene, engineState)
+    let _getScenePointLights = (scene, allGameObjects, engineState) =>
+      allGameObjects
       |> Js.Array.filter(gameObject =>
            hasGameObjectPointLightComponent(. gameObject, engineState)
          );
@@ -74,7 +74,8 @@ let getEngineStateIMGUIFunc = () =>
         engineState,
       );
 
-    let _drawDirectionLight = (maxDistance, scene, engineState) =>
+    let _drawDirectionLight =
+        (maxDistance, scene, allGameObjects, engineState) =>
       WonderCommonlib.ArrayService.reduceOneParam(
         (. engineState, directionLightGameObject) => {
           let (x, y, z) =
@@ -119,10 +120,10 @@ let getEngineStateIMGUIFunc = () =>
           );
         },
         engineState,
-        _getSceneDirectionLights(scene, engineState),
+        _getSceneDirectionLights(scene, allGameObjects, engineState),
       );
 
-    let _drawPointLight = (maxDistance, scene, engineState) =>
+    let _drawPointLight = (maxDistance, scene, allGameObjects, engineState) =>
       WonderCommonlib.ArrayService.reduceOneParam(
         (. engineState, pointLightGameObject) => {
           let (x, y, z) =
@@ -167,10 +168,10 @@ let getEngineStateIMGUIFunc = () =>
           );
         },
         engineState,
-        _getScenePointLights(scene, engineState),
+        _getScenePointLights(scene, allGameObjects, engineState),
       );
 
-    let _drawSceneCamera = (maxDistance, scene, engineState) =>
+    let _drawSceneCamera = (maxDistance, scene, allGameObjects, engineState) =>
       WonderCommonlib.ArrayService.reduceOneParam(
         (. engineState, sceneCameraGameObject) => {
           let (x, y, z) =
@@ -215,13 +216,15 @@ let getEngineStateIMGUIFunc = () =>
           );
         },
         engineState,
-        _getSceneCameras(scene, engineState),
+        _getSceneCameras(scene, allGameObjects, engineState),
       );
 
+    let allGameObjects = getAllGameObjects(. scene, engineState);
+
     let engineState =
-      _drawDirectionLight(maxDistance, scene, engineState)
-      |> _drawPointLight(maxDistance, scene)
-      |> _drawSceneCamera(maxDistance, scene);
+      _drawDirectionLight(maxDistance, scene, allGameObjects, engineState)
+      |> _drawPointLight(maxDistance, scene, allGameObjects)
+      |> _drawSceneCamera(maxDistance, scene, allGameObjects);
 
     engineState;
   });
