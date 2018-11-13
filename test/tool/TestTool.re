@@ -68,6 +68,13 @@ let initScene = () => {
      |> StateLogicService.setRunEngineState; */
 };
 
+let _buildFakeConsole = [%bs.raw
+  () => {|
+  window.console.profile = (_) => {};
+  window.console.profileEnd = () => {};
+  |}
+];
+
 let initEditorAndEngineStateAndInitSceneWithJob =
     (
       ~sandbox,
@@ -86,6 +93,7 @@ let initEditorAndEngineStateAndInitSceneWithJob =
     (),
   );
   initScene();
+  _buildFakeConsole(.);
 };
 
 let initEditorAndEngineStateAndInitScene = (~sandbox, ~buffer, ()) => {

@@ -1,18 +1,13 @@
 open Js.Typed_array;
 
 let _replaceGameObjectMaterialComponentToMaterialAsset =
-    (
-      gameObject,
-      (defaultBasicMaterial, defaultLightMaterial),
-      (basicMaterialMap, lightMaterialMap),
-      engineState,
-    ) => {
+    (gameObject, defaultMaterialData, materialDataMapData, engineState) => {
   let (sourceMaterial, targetMaterial, materialType, _) =
     RelateGameObjectAndAssetUtils.getRelatedMaterialDataFromGameObject(
       gameObject,
       WonderCommonlib.SparseMapService.createEmpty(),
-      (defaultBasicMaterial, defaultLightMaterial),
-      (basicMaterialMap, lightMaterialMap),
+      defaultMaterialData,
+      materialDataMapData,
       engineState,
     );
 
@@ -26,11 +21,8 @@ let _replaceGameObjectMaterialComponentToMaterialAsset =
 let _replaceGameObjectGeometryComponentToWDBAssetGeometryComponent =
     (
       gameObject,
-      (
-        (defaultCubeGeometry, defaultCubeGeometryName),
-        (defaultSphereGeometry, defaultSphereGeometryName),
-      ),
-      wdbAssetGameObjectGeometryArr,
+      defaultGeometryData,
+      wdbAssetGameObjectGeometryDataArr,
       engineState,
     ) =>
   switch (
@@ -41,27 +33,33 @@ let _replaceGameObjectGeometryComponentToWDBAssetGeometryComponent =
   ) {
   | None => engineState
   | Some(geometry) =>
+    let geometryData =
+      RelateGameObjectAndAssetUtils.getGeometryData(geometry, engineState);
+
     let targetGeometry =
       switch (
         RelateGameObjectAndAssetUtils.getTargetGeometryByJudgeDefaultGeometry(
-          geometry,
-          (
-            (defaultCubeGeometry, defaultCubeGeometryName),
-            (defaultSphereGeometry, defaultSphereGeometryName),
-          ),
+          geometryData,
+          defaultGeometryData,
           engineState,
         )
       ) {
       | Some(targetGeometry) => Some(targetGeometry)
       | None =>
-        wdbAssetGameObjectGeometryArr
-        |> Js.Array.find(wdbAssetGameObjectGeometry =>
-             RelateGameObjectAndAssetUtils.isGeometryDataEqual(
-               wdbAssetGameObjectGeometry,
-               geometry,
-               engineState,
+        switch (
+          wdbAssetGameObjectGeometryDataArr
+          |> Js.Array.find(((_, wdbAssetGameObjectGeometryData)) =>
+               RelateGameObjectAndAssetUtils.isGeometryDataEqual(
+                 wdbAssetGameObjectGeometryData,
+                 geometryData,
+                 engineState,
+               )
              )
-           )
+        ) {
+        | None => None
+        | Some((wdbAssetGameObjectGeometry, _)) =>
+          Some(wdbAssetGameObjectGeometry)
+        }
       };
 
     RelateGameObjectAndAssetUtils.replaceGeometryComponent(
@@ -72,6 +70,15 @@ let _replaceGameObjectGeometryComponentToWDBAssetGeometryComponent =
     );
   };
 
+let _getGeometryDataArr = (geometryArr, engineState) =>
+  geometryArr
+  |> Js.Array.map(geometry =>
+       (
+         geometry,
+         RelateGameObjectAndAssetUtils.getGeometryData(geometry, engineState),
+       )
+     );
+
 let relateSceneWDBGameObjectsAndAssets =
     (
       allWDBGameObjectsArr,
@@ -81,23 +88,32 @@ let relateSceneWDBGameObjectsAndAssets =
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
-  let defaultBasicMaterial =
-    MaterialDataAssetEditorService.unsafeGetDefaultBasicMaterial(editorState);
-  let defaultLightMaterial =
-    MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
+  let basicMaterialDataMap =
+    RelateGameObjectAndAssetUtils.getBasicMaterialDataMap(
+      basicMaterialMap,
+      engineState,
+    );
 
-  let defaultCubeGeometryData = (
-    GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
+  let lightMaterialDataMap =
+    RelateGameObjectAndAssetUtils.getLightMaterialDataMap(
+      lightMaterialMap,
+      engineState,
+    );
+
+  let defaultMaterialData =
+    RelateGameObjectAndAssetUtils.getDefaultMaterialData(
       editorState,
-    ),
-    PrepareDefaultComponentUtils.getDefaultCubeGeometryName(),
-  );
-  let defaultSphereGeometryData = (
-    GeometryDataAssetEditorService.unsafeGetDefaultSphereGeometryComponent(
+      engineState,
+    );
+
+  let defaultGeometryData =
+    RelateGameObjectAndAssetUtils.getDefaultGeometryData(
       editorState,
-    ),
-    PrepareDefaultComponentUtils.getDefaultSphereGeometryName(),
-  );
+      engineState,
+    );
+
+  let wdbAssetGameObjectGeometryDataArr =
+    _getGeometryDataArr(wdbAssetGameObjectGeometryArr, engineState);
 
   let engineState =
     allWDBGameObjectsArr
@@ -105,14 +121,14 @@ let relateSceneWDBGameObjectsAndAssets =
          (. engineState, gameObject) =>
            _replaceGameObjectMaterialComponentToMaterialAsset(
              gameObject,
-             (defaultBasicMaterial, defaultLightMaterial),
-             (basicMaterialMap, lightMaterialMap),
+             defaultMaterialData,
+             (basicMaterialDataMap, lightMaterialDataMap),
              engineState,
            )
            |> _replaceGameObjectGeometryComponentToWDBAssetGeometryComponent(
                 gameObject,
-                (defaultCubeGeometryData, defaultSphereGeometryData),
-                wdbAssetGameObjectGeometryArr,
+                defaultGeometryData,
+                wdbAssetGameObjectGeometryDataArr,
               )
            |> GameObjectEngineService.initGameObject(gameObject),
          engineState,
@@ -126,23 +142,29 @@ let relateWDBAssetGameObjectsAndAssets =
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
-  let defaultBasicMaterial =
-    MaterialDataAssetEditorService.unsafeGetDefaultBasicMaterial(editorState);
-  let defaultLightMaterial =
-    MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
+  let basicMaterialDataMap =
+    RelateGameObjectAndAssetUtils.getBasicMaterialDataMap(
+      basicMaterialMap,
+      engineState,
+    );
 
-  let defaultCubeGeometryData = (
-    GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
+  let lightMaterialDataMap =
+    RelateGameObjectAndAssetUtils.getLightMaterialDataMap(
+      lightMaterialMap,
+      engineState,
+    );
+
+  let defaultMaterialData =
+    RelateGameObjectAndAssetUtils.getDefaultMaterialData(
       editorState,
-    ),
-    PrepareDefaultComponentUtils.getDefaultCubeGeometryName(),
-  );
-  let defaultSphereGeometryData = (
-    GeometryDataAssetEditorService.unsafeGetDefaultSphereGeometryComponent(
+      engineState,
+    );
+
+  let defaultGeometryData =
+    RelateGameObjectAndAssetUtils.getDefaultGeometryData(
       editorState,
-    ),
-    PrepareDefaultComponentUtils.getDefaultSphereGeometryName(),
-  );
+      engineState,
+    );
 
   let engineState =
     allWDBGameObjectsArr
@@ -150,13 +172,13 @@ let relateWDBAssetGameObjectsAndAssets =
          (. engineState, gameObject) =>
            _replaceGameObjectMaterialComponentToMaterialAsset(
              gameObject,
-             (defaultBasicMaterial, defaultLightMaterial),
-             (basicMaterialMap, lightMaterialMap),
+             defaultMaterialData,
+             (basicMaterialDataMap, lightMaterialDataMap),
              engineState,
            )
            |> RelateGameObjectAndAssetUtils.replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent(
                 gameObject,
-                (defaultCubeGeometryData, defaultSphereGeometryData),
+                defaultGeometryData,
               )
            |> GameObjectEngineService.initGameObject(gameObject),
          engineState,

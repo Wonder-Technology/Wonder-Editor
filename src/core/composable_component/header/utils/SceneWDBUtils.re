@@ -23,8 +23,7 @@ let _setIMGUIData = (hasWDBIMGUIFunc, editorState, engineState) => {
 
 let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
   let engineState =
-    engineState
-    |> SceneEngineService.setSceneGameObject(gameObject);
+    engineState |> SceneEngineService.setSceneGameObject(gameObject);
 
   let editorState = StateEditorService.getState();
   let editorState =
@@ -66,9 +65,7 @@ let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
   let engineState =
     engineState |> GameObjectEngineService.setGameObjectName("scene", scene);
 
-  let engineState =
-    engineState
-    |> ShaderEngineService.clearShaderCache;
+  let engineState = engineState |> ShaderEngineService.clearShaderCache;
 
   /* GameObjectEngineService.initAllGameObjects(gameObject)
      |> StateLogicService.getAndRefreshEngineStateWithFunc; */
@@ -76,10 +73,17 @@ let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
   (gameObject, engineState);
 };
 
-let importSceneWDB = wdbArrayBuffer =>
-  StateEngineService.unsafeGetState()
-  |> SceneEngineService.disposeSceneAllChildrenKeepOrderRemoveGeometryRemoveMaterial
-  |> JobEngineService.execDisposeJob
+let importSceneWDB = wdbArrayBuffer => {
+  let t1 = Performance.now();
+
+  let engineState =
+    StateEngineService.unsafeGetState()
+    |> SceneEngineService.disposeSceneAllChildrenKeepOrderRemoveGeometryRemoveMaterial
+    |> JobEngineService.execDisposeJob;
+
+  let t2 = Performance.now();
+
+  engineState
   |> AssembleWDBEngineService.assembleWDB(
        wdbArrayBuffer,
        true,
@@ -91,10 +95,23 @@ let importSceneWDB = wdbArrayBuffer =>
        (
          (engineState, (imageUint8ArrayDataMap, hasWDBIMGUIFunc), gameObject),
        ) => {
+       let t3 = Performance.now();
+
        let (gameObject, engineState) =
          _handleEngineState(gameObject, hasWDBIMGUIFunc, engineState);
+
+       let t4 = Performance.now();
+
+       WonderLog.Log.print((
+         "import scene wdb:",
+         t2 -. t1,
+         t3 -. t2,
+         t4 -. t3,
+       ))
+       |> ignore;
 
        StateEngineService.setState(engineState) |> ignore;
 
        (gameObject, imageUint8ArrayDataMap);
      });
+};

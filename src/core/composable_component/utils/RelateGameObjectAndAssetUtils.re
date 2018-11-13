@@ -3,19 +3,10 @@ open Js.Typed_array;
 let isValueEqual = (key1, key2, getFunc, engineState) =>
   getFunc(key1, engineState) == getFunc(key2, engineState);
 
-let isBasicMaterialDataEqual = (material1, material2, engineState) =>
-  isValueEqual(
-    material1,
-    material2,
-    BasicMaterialEngineService.getBasicMaterialName,
-    engineState,
-  )
-  && isValueEqual(
-       material1,
-       material2,
-       BasicMaterialEngineService.getColor,
-       engineState,
-     );
+let isBasicMaterialDataEqual = ((name, color), material2, engineState) =>
+  name
+  == BasicMaterialEngineService.getBasicMaterialName(material2, engineState)
+  && color == BasicMaterialEngineService.getColor(material2, engineState);
 
 let _isImageValueEqual = (image1, image2, getFunc) =>
   getFunc(image1) == getFunc(image2);
@@ -35,113 +26,85 @@ let _getImageUint8ArrayByTextureComponent = (textureComponent, editorState) =>
     )
   };
 
-let _isImageNodeDataEqual = (image1, image2) =>
-  _isImageValueEqual(image1, image2, ImageUtils.getImageName)
-  && _isImageValueEqual(image1, image2, ImageUtils.getImageWidth)
-  && _isImageValueEqual(image1, image2, ImageUtils.getImageHeight);
+let _isImageNodeDataEqual = ((name, width, height), image2) =>
+  name == ImageUtils.getImageName(image2)
+  && width == ImageUtils.getImageWidth(image2)
+  && height == ImageUtils.getImageHeight(image2);
 
-let _isTextureDataEqual = (texture1, texture2, engineState) =>
-  isValueEqual(
-    texture1,
-    texture2,
-    BasicSourceTextureEngineService.getBasicSourceTextureName,
-    engineState,
-  )
-  && isValueEqual(
-       texture1,
+let isTextureDataEqual =
+    (
+      (name, wrapS, wrapT, minFilter, magFilter, imageData),
+      texture2,
+      engineState,
+    ) =>
+  name
+  == BasicSourceTextureEngineService.getBasicSourceTextureName(
        texture2,
-       BasicSourceTextureEngineService.getWrapS,
        engineState,
      )
-  && isValueEqual(
-       texture1,
-       texture2,
-       BasicSourceTextureEngineService.getWrapT,
-       engineState,
-     )
-  && isValueEqual(
-       texture1,
-       texture2,
-       BasicSourceTextureEngineService.getMinFilter,
-       engineState,
-     )
-  && isValueEqual(
-       texture1,
-       texture2,
-       BasicSourceTextureEngineService.getMagFilter,
-       engineState,
-     )
+  && wrapS == BasicSourceTextureEngineService.getWrapS(texture2, engineState)
+  && wrapT == BasicSourceTextureEngineService.getWrapT(texture2, engineState)
+  &&
+  minFilter == BasicSourceTextureEngineService.getMinFilter(
+                 texture2,
+                 engineState,
+               )
+  &&
+  magFilter == BasicSourceTextureEngineService.getMagFilter(
+                 texture2,
+                 engineState,
+               )
   && _isImageNodeDataEqual(
-       BasicSourceTextureEngineService.unsafeGetSource(texture1, engineState),
+       imageData,
        BasicSourceTextureEngineService.unsafeGetSource(texture2, engineState),
      );
 
-let isLightMaterialDataEqual = (material1, material2, engineState) =>
-  isValueEqual(
-    material1,
-    material2,
-    LightMaterialEngineService.getLightMaterialName,
-    engineState,
-  )
-  && isValueEqual(
-       material1,
-       material2,
-       LightMaterialEngineService.getLightMaterialDiffuseColor,
-       engineState,
-     )
-  && isValueEqual(
-       material1,
-       material2,
-       LightMaterialEngineService.getLightMaterialShininess,
-       engineState,
-     )
+let isLightMaterialDataEqual =
+    ((name, diffuseColor, shininess, textureData), material2, engineState) =>
+  name
+  == LightMaterialEngineService.getLightMaterialName(material2, engineState)
+  &&
+  diffuseColor == LightMaterialEngineService.getLightMaterialDiffuseColor(
+                    material2,
+                    engineState,
+                  )
+  &&
+  shininess == LightMaterialEngineService.getLightMaterialShininess(
+                 material2,
+                 engineState,
+               )
   && (
     switch (
-      LightMaterialEngineService.getLightMaterialDiffuseMap(
-        material1,
-        engineState,
-      ),
+      textureData,
       LightMaterialEngineService.getLightMaterialDiffuseMap(
         material2,
         engineState,
       ),
     ) {
     | (None, None) => true
-    | (Some(map1), Some(map2)) =>
-      _isTextureDataEqual(map1, map2, engineState)
+    | (Some(textureData), Some(map2)) =>
+      isTextureDataEqual(textureData, map2, engineState)
     | _ => false
     }
   );
 
 let isEqualDefaultBasicMaterial =
-    (gameObjectMaterial, defaultMaterial, engineState) =>
+    (gameObjectMaterial, (_, (name, _)), engineState) =>
   engineState
   |>
-  BasicMaterialEngineService.getBasicMaterialName(gameObjectMaterial) === (
-                                                                    engineState
-                                                                    |>
-                                                                    BasicMaterialEngineService.getBasicMaterialName(
-                                                                    defaultMaterial,
-                                                                    )
-                                                                    );
+  BasicMaterialEngineService.getBasicMaterialName(gameObjectMaterial) === name;
 
 let isEqualDefaultLightMaterial =
-    (gameObjectMaterial, defaultMaterial, engineState) =>
+    (gameObjectMaterial, (_, (name, _, _, _)), engineState) =>
   engineState
   |>
-  LightMaterialEngineService.getLightMaterialName(gameObjectMaterial) === (
-                                                                    engineState
-                                                                    |>
-                                                                    LightMaterialEngineService.getLightMaterialName(
-                                                                    defaultMaterial,
-                                                                    )
-                                                                    );
+  LightMaterialEngineService.getLightMaterialName(gameObjectMaterial) === name;
 
 let getRelatedMaterialData =
     (
       gameObject,
       replacedTargetMaterialMap,
-      (materialType, assetMaterialComponentMap, defaultMaterial),
+      (materialType, assetMaterialDataMap, defaultMaterialData),
       (
         unsafeGetMaterialComponentFunc,
         isEqualDefaultMaterialComponentFunc,
@@ -161,6 +124,7 @@ let getRelatedMaterialData =
                 ~actual={j|has|j},
               ),
               () => {
+                let (defaultMaterial, _) = defaultMaterialData;
                 let material =
                   unsafeGetMaterialComponentFunc(gameObject, engineState);
 
@@ -174,6 +138,7 @@ let getRelatedMaterialData =
   );
 
   let material = unsafeGetMaterialComponentFunc(gameObject, engineState);
+  let (defaultMaterial, _) = defaultMaterialData;
 
   let (targetMaterial, replacedTargetMaterialMap) =
     switch (
@@ -184,24 +149,24 @@ let getRelatedMaterialData =
       let targetMaterial =
         isEqualDefaultMaterialComponentFunc(
           material,
-          defaultMaterial,
+          defaultMaterialData,
           engineState,
         ) ?
           Some(defaultMaterial) :
           (
             switch (
-              assetMaterialComponentMap
-              |> SparseMapService.getValidValues
-              |> SparseMapService.find(assetMaterialComponent =>
+              assetMaterialDataMap
+              |> SparseMapService.find(((_, assetMaterialData)) =>
                    isMaterialDataEqualFunc(
-                     assetMaterialComponent,
+                     assetMaterialData,
                      material,
                      engineState,
                    )
                  )
             ) {
             | None => None
-            | Some(assetMaterialComponent) => Some(assetMaterialComponent)
+            | Some((assetMaterialComponent, _)) =>
+              Some(assetMaterialComponent)
             }
           );
 
@@ -225,8 +190,8 @@ let getRelatedMaterialDataFromGameObject =
     (
       gameObject,
       replacedTargetMaterialMap,
-      (defaultBasicMaterial, defaultLightMaterial),
-      (basicMaterialMap, lightMaterialMap),
+      (defaultBasicMaterialData, defaultLightMaterialData),
+      (basicMaterialDataMap, lightMaterialDataMap),
       engineState,
     ) =>
   GameObjectComponentEngineService.hasBasicMaterialComponent(
@@ -238,8 +203,8 @@ let getRelatedMaterialDataFromGameObject =
       replacedTargetMaterialMap,
       (
         AssetMaterialDataType.BasicMaterial,
-        basicMaterialMap,
-        defaultBasicMaterial,
+        basicMaterialDataMap,
+        defaultBasicMaterialData,
       ),
       (
         GameObjectComponentEngineService.unsafeGetBasicMaterialComponent,
@@ -257,8 +222,8 @@ let getRelatedMaterialDataFromGameObject =
         replacedTargetMaterialMap,
         (
           AssetMaterialDataType.LightMaterial,
-          lightMaterialMap,
-          defaultLightMaterial,
+          lightMaterialDataMap,
+          defaultLightMaterialData,
         ),
         (
           GameObjectComponentEngineService.unsafeGetLightMaterialComponent,
@@ -309,6 +274,7 @@ let getRelatedTextureData =
     (
       gameObject,
       replacedTargetTextureMap,
+      textureAssetDataMap,
       (unsafeGetMaterialComponentFunc, getMapFunc, setMapFunc),
       (editorState, engineState),
     ) => {
@@ -324,18 +290,19 @@ let getRelatedTextureData =
       ) {
       | None =>
         let targetTexture =
-          TextureNodeMapAssetEditorService.getValidValues(editorState)
-          |> SparseMapService.map(
-               ({textureComponent}: AssetNodeType.textureResultType) =>
-               textureComponent
-             )
-          |> SparseMapService.find(textureComponent =>
-               _isTextureDataEqual(
-                 textureComponent,
-                 sourceTexture,
-                 engineState,
+          switch (
+            textureAssetDataMap
+            |> SparseMapService.find(((textureComponent, textureAssetData)) =>
+                 isTextureDataEqual(
+                   textureAssetData,
+                   sourceTexture,
+                   engineState,
+                 )
                )
-             );
+          ) {
+          | None => None
+          | Some((targetTexture, _)) => Some(targetTexture)
+          };
 
         (
           targetTexture,
@@ -364,7 +331,12 @@ let doesNeedReplaceTexture = ((targetTexture, setMapFunc)) =>
   };
 
 let getRelatedTextureDataFromGameObject =
-    (gameObject, replacedTargetTextureMap, (editorState, engineState)) =>
+    (
+      gameObject,
+      replacedTargetTextureMap,
+      textureAssetDataMap,
+      (editorState, engineState),
+    ) =>
   GameObjectComponentEngineService.hasBasicMaterialComponent(
     gameObject,
     engineState,
@@ -377,6 +349,7 @@ let getRelatedTextureDataFromGameObject =
       getRelatedTextureData(
         gameObject,
         replacedTargetTextureMap,
+        textureAssetDataMap,
         (
           GameObjectComponentEngineService.unsafeGetLightMaterialComponent,
           LightMaterialEngineService.getLightMaterialDiffuseMap,
@@ -404,43 +377,51 @@ let replaceToTextureAssetTextureComponent =
   | _ => engineState
   };
 
-let _isGeometryPointDataEqual = (points1, points2, getLengthFunc, engineState) =>
-  getLengthFunc(points1) === getLengthFunc(points2) && points1 == points2;
+let _isGeometryPointDataEqual = (points1, points2, getLengthFunc) =>
+  /* getLengthFunc(points1) === getLengthFunc(points2) && points1 == points2; */
+  getLengthFunc(points1) === getLengthFunc(points2);
 
 let _isGeometryVertexDataEqual = (geometry1, geometry2, engineState) =>
   _isGeometryPointDataEqual(
     GeometryEngineService.getGeometryVertices(geometry1, engineState),
     GeometryEngineService.getGeometryVertices(geometry2, engineState),
     Float32Array.length,
-    engineState,
   )
   && _isGeometryPointDataEqual(
        GeometryEngineService.getGeometryNormals(geometry1, engineState),
        GeometryEngineService.getGeometryNormals(geometry2, engineState),
        Float32Array.length,
-       engineState,
      )
   && _isGeometryPointDataEqual(
        GeometryEngineService.getGeometryTexCoords(geometry1, engineState),
        GeometryEngineService.getGeometryTexCoords(geometry2, engineState),
        Float32Array.length,
-       engineState,
      )
   && _isGeometryPointDataEqual(
        GeometryEngineService.getGeometryIndices(geometry1, engineState),
        GeometryEngineService.getGeometryIndices(geometry2, engineState),
        Uint16Array.length,
-       engineState,
      );
 
-let isGeometryDataEqual = (geometry1, geometry2, engineState) =>
-  isValueEqual(
-    geometry1,
-    geometry2,
-    GeometryEngineService.getGeometryName,
-    engineState,
-  )
-  && _isGeometryVertexDataEqual(geometry1, geometry2, engineState);
+let getGeometryData = (geometry, engineState) => (
+  GeometryEngineService.getGeometryName(geometry, engineState),
+  GeometryEngineService.getGeometryVertices(geometry, engineState),
+  GeometryEngineService.getGeometryNormals(geometry, engineState),
+  GeometryEngineService.getGeometryTexCoords(geometry, engineState),
+  GeometryEngineService.getGeometryIndices(geometry, engineState),
+);
+
+let isGeometryDataEqual =
+    (
+      (name1, vertices1, normals1, texCoords1, indices1),
+      (name2, vertices2, normals2, texCoords2, indices2),
+      engineState,
+    ) =>
+  name1 === name2
+  && _isGeometryPointDataEqual(vertices1, vertices2, Float32Array.length)
+  && _isGeometryPointDataEqual(normals1, normals2, Float32Array.length)
+  && _isGeometryPointDataEqual(texCoords1, texCoords2, Float32Array.length)
+  && _isGeometryPointDataEqual(indices1, indices2, Uint16Array.length);
 
 let _isGeometryEqualDefaultGeometryData =
     (geometry, defaultGeometry, defaultGeometryName, engineState) =>
@@ -478,26 +459,24 @@ let isDefaultGeometry = (geometry, (editorState, engineState)) => {
 
 let getTargetGeometryByJudgeDefaultGeometry =
     (
-      geometry,
+      geometryData,
       (
-        (defaultCubeGeometry, defaultCubeGeometryName),
-        (defaultSphereGeometry, defaultSphereGeometryName),
+        (
+          defaultCubeGeometry,
+          defaultCubeGeometryName,
+          defaultCubeGeometryData,
+        ),
+        (
+          defaultSphereGeometry,
+          defaultSphereGeometryName,
+          defaultSphereGeometryData,
+        ),
       ),
       engineState,
     ) =>
-  _isGeometryEqualDefaultGeometryData(
-    geometry,
-    defaultCubeGeometry,
-    defaultCubeGeometryName,
-    engineState,
-  ) ?
+  isGeometryDataEqual(geometryData, defaultCubeGeometryData, engineState) ?
     Some(defaultCubeGeometry) :
-    _isGeometryEqualDefaultGeometryData(
-      geometry,
-      defaultSphereGeometry,
-      defaultSphereGeometryName,
-      engineState,
-    ) ?
+    isGeometryDataEqual(geometryData, defaultSphereGeometryData, engineState) ?
       Some(defaultSphereGeometry) : None;
 
 let replaceGeometryComponent =
@@ -520,8 +499,16 @@ let replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent =
     (
       gameObject,
       (
-        (defaultCubeGeometry, defaultCubeGeometryName),
-        (defaultSphereGeometry, defaultSphereGeometryName),
+        (
+          defaultCubeGeometry,
+          defaultCubeGeometryName,
+          defaultCubeGeometryData,
+        ),
+        (
+          defaultSphereGeometry,
+          defaultSphereGeometryName,
+          defaultSphereGeometryData,
+        ),
       ),
       engineState,
     ) =>
@@ -535,10 +522,18 @@ let replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent =
   | Some(geometry) =>
     let targetGeometry =
       getTargetGeometryByJudgeDefaultGeometry(
-        geometry,
+        getGeometryData(geometry, engineState),
         (
-          (defaultCubeGeometry, defaultCubeGeometryName),
-          (defaultSphereGeometry, defaultSphereGeometryName),
+          (
+            defaultCubeGeometry,
+            defaultCubeGeometryName,
+            defaultCubeGeometryData,
+          ),
+          (
+            defaultSphereGeometry,
+            defaultSphereGeometryName,
+            defaultSphereGeometryData,
+          ),
         ),
         engineState,
       );
@@ -550,3 +545,101 @@ let replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent =
       engineState,
     );
   };
+
+let getDefaultGeometryData = (editorState, engineState) => {
+  let defaultGeometry =
+    GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
+      editorState,
+    );
+  let defaultCubeGeometryData = (
+    defaultGeometry,
+    PrepareDefaultComponentUtils.getDefaultCubeGeometryName(),
+    getGeometryData(defaultGeometry, engineState),
+  );
+
+  let defaultGeometry =
+    GeometryDataAssetEditorService.unsafeGetDefaultSphereGeometryComponent(
+      editorState,
+    );
+  let defaultSphereGeometryData = (
+    defaultGeometry,
+    PrepareDefaultComponentUtils.getDefaultSphereGeometryName(),
+    getGeometryData(defaultGeometry, engineState),
+  );
+
+  (defaultCubeGeometryData, defaultSphereGeometryData);
+};
+
+let getBasicMaterialData = (material, engineState) => (
+  BasicMaterialEngineService.getBasicMaterialName(material, engineState),
+  BasicMaterialEngineService.getColor(material, engineState),
+);
+
+let _getImageData = image => (
+  ImageUtils.getImageName(image),
+  ImageUtils.getImageWidth(image),
+  ImageUtils.getImageHeight(image),
+);
+
+let getTextureData = (texture, engineState) => (
+  BasicSourceTextureEngineService.getBasicSourceTextureName(
+    texture,
+    engineState,
+  ),
+  BasicSourceTextureEngineService.getWrapS(texture, engineState),
+  BasicSourceTextureEngineService.getWrapT(texture, engineState),
+  BasicSourceTextureEngineService.getMinFilter(texture, engineState),
+  BasicSourceTextureEngineService.getMagFilter(texture, engineState),
+  BasicSourceTextureEngineService.unsafeGetSource(texture, engineState)
+  |> _getImageData,
+);
+
+let getLightMaterialData = (material, engineState) => (
+  LightMaterialEngineService.getLightMaterialName(material, engineState),
+  LightMaterialEngineService.getLightMaterialDiffuseColor(
+    material,
+    engineState,
+  ),
+  LightMaterialEngineService.getLightMaterialShininess(material, engineState),
+  switch (
+    LightMaterialEngineService.getLightMaterialDiffuseMap(
+      material,
+      engineState,
+    )
+  ) {
+  | None => None
+  | Some(map) => Some(getTextureData(map, engineState))
+  },
+);
+
+let getDefaultMaterialData = (editorState, engineState) => {
+  let defaultBasicMaterial =
+    MaterialDataAssetEditorService.unsafeGetDefaultBasicMaterial(editorState);
+  let defaultBasicMaterialData = (
+    defaultBasicMaterial,
+    getBasicMaterialData(defaultBasicMaterial, engineState),
+  );
+
+  let defaultLightMaterial =
+    MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
+  let defaultLightMaterialData = (
+    defaultLightMaterial,
+    getLightMaterialData(defaultLightMaterial, engineState),
+  );
+
+  (defaultBasicMaterialData, defaultLightMaterialData);
+};
+
+let getBasicMaterialDataMap = (basicMaterialMap, engineState) =>
+  basicMaterialMap
+  |> SparseMapService.getValidValues
+  |> Js.Array.map(material =>
+       (material, getBasicMaterialData(material, engineState))
+     );
+
+let getLightMaterialDataMap = (lightMaterialMap, engineState) =>
+  lightMaterialMap
+  |> SparseMapService.getValidValues
+  |> Js.Array.map(material =>
+       (material, getLightMaterialData(material, engineState))
+     );

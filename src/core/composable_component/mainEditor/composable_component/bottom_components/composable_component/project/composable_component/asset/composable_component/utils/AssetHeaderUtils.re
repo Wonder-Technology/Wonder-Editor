@@ -81,18 +81,11 @@ let _handleAssetWDBType =
            (editorState, engineState),
          );
 
-       let defaultCubeGeometryData = (
-         GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
+       let defaultGeometryData =
+         RelateGameObjectAndAssetUtils.getDefaultGeometryData(
            editorState,
-         ),
-         PrepareDefaultComponentUtils.getDefaultCubeGeometryName(),
-       );
-       let defaultSphereGeometryData = (
-         GeometryDataAssetEditorService.unsafeGetDefaultSphereGeometryComponent(
-           editorState,
-         ),
-         PrepareDefaultComponentUtils.getDefaultSphereGeometryName(),
-       );
+           engineState,
+         );
 
        let engineState =
          allGameObjects
@@ -101,7 +94,7 @@ let _handleAssetWDBType =
                 engineState
                 |> RelateGameObjectAndAssetUtils.replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent(
                      gameObject,
-                     (defaultCubeGeometryData, defaultSphereGeometryData),
+                     defaultGeometryData,
                    )
                 |> GameObjectEngineService.initGameObject(gameObject),
               engineState,

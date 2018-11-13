@@ -56,11 +56,14 @@ let _initAssetTreeRoot = () => {
 };
 
 let _import = result => {
+  let t1 = Performance.now();
   _disposeAssets();
 
   JobEngineService.execDisposeJob |> StateLogicService.getAndSetEngineState;
 
   _initAssetTreeRoot();
+
+  let t2 = Performance.now();
 
   let wpk = result |> FileReader.convertResultToArrayBuffer;
 
@@ -78,9 +81,21 @@ let _import = result => {
 
   let engineState = StateEngineService.unsafeGetState();
 
+  let t3 = Performance.now();
+
+       WonderLog.Log.print(("before import", t2 -. t1, t3 -. t2)) |> ignore;
+
+
+
   HeaderImportASBUtils.importASB(asb)
   |> WonderBsMost.Most.map(
        (((allWDBGameObjectsArr, imageUint8ArrayDataMap), materialMapTuple)) => {
+WonderLog.Console.profile("relate wdb asset");
+
+
+       let t4 = Performance.now();
+
+
        ImportPackageRelateGameObjectAndAssetUtils.relateWDBAssetGameObjectsAndAssets(
          allWDBGameObjectsArr,
          materialMapTuple,
@@ -93,6 +108,13 @@ let _import = result => {
            StateEngineService.unsafeGetState(),
          );
 
+       let t5 = Performance.now();
+
+
+WonderLog.Console.profileEnd();
+
+       WonderLog.Log.print(("relate wdb asset: ", t5 -. t4)) |> ignore;
+
        ();
      })
   |> WonderBsMost.Most.concat(
@@ -101,6 +123,10 @@ let _import = result => {
          |> WonderBsMost.Most.map(
               ((sceneGameObject, imageUint8ArrayDataMap)) => {
               let engineState = StateEngineService.unsafeGetState();
+
+
+WonderLog.Console.profile("relate scene wdb");
+              let t6 = Performance.now();
 
               ImportPackageRelateGameObjectAndAssetUtils.relateSceneWDBGameObjectsAndAssets(
                 GameObjectEngineService.getAllGameObjects(
@@ -111,12 +137,24 @@ let _import = result => {
                 wdbAssetGameObjectGeometryArrRef^,
               );
 
+              let t7 = Performance.now();
+
+WonderLog.Console.profileEnd();
+
+              WonderLog.Log.print(("relate scene wdb: ", t7 -. t6)) |> ignore;
               ();
             })
        ),
      )
   |> WonderBsMost.Most.concat(
-       MostUtils.callFunc(() => StateLogicService.getAndRefreshEngineState()),
+       MostUtils.callFunc(() => {
+         let t6 = Performance.now();
+         StateLogicService.getAndRefreshEngineState();
+
+         let t7 = Performance.now();
+
+         WonderLog.Log.print(("refresh", t7 -. t6)) |> ignore;
+       }),
      );
 };
 
