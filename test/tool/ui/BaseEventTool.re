@@ -22,6 +22,20 @@ let buildWDBFileEvent = (fileName, arrayBuffer) =>
   }
   |> Obj.magic;
 
+let buildGLBFileEvent = (fileName, arrayBuffer) =>
+  {
+    "target": {
+      "files": {
+        "0": {
+          name: fileName ++ ".glb",
+          file: arrayBuffer,
+        },
+      },
+    },
+    "preventDefault": () => (),
+  }
+  |> Obj.magic;
+
 /* let buildTwoJsonFileEvent =
      (~jsonName="loadJson", ~jsonResult="loadJson string result", ()) =>
    {

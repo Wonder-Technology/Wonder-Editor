@@ -37,7 +37,7 @@ let tryCatch = [%bs.raw
         try{
          retValue =  tryFunc();
         } catch(e) {
-          catchFunc(e);
+          retValue = catchFunc(e);
         };
 
       return retValue;

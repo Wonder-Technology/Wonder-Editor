@@ -119,11 +119,41 @@ let _handleAssetWDBType =
      });
 };
 
+let _handleGLBType =
+    (
+      (fileName, glbArrayBuffer),
+      (wdbNodeId, parentFolderNodeId),
+      (editorState, engineState),
+    ) =>
+  Console.tryCatch(
+    () =>
+      _handleAssetWDBType(
+        (fileName, ConverterEngineService.convertGLBToWDB(glbArrayBuffer)),
+        (wdbNodeId, parentFolderNodeId),
+        (editorState, engineState),
+      ),
+    e => {
+      let message = e##message;
+      ConsoleUtils.error(
+        LogUtils.buildErrorMessage(
+          ~description={j|$message|j},
+          ~reason="",
+          ~solution={j||j},
+          ~params={j||j},
+        ),
+        editorState,
+      );
+
+      make((~resolve, ~reject) => resolve(. (editorState, engineState)));
+    },
+  );
+
 let _handleSpecificFuncByTypeAsync =
-    (type_, (handleImageFunc, handleWDBFunc)) =>
+    (type_, (handleImageFunc, handleWDBFunc, handleGLBFunc)) =>
   switch (type_) {
   | LoadImage => handleImageFunc()
   | LoadWDB => handleWDBFunc()
+  | LoadGLB => handleGLBFunc()
   | LoadError => make((~resolve, ~reject) => reject(. LoadException))
   };
 
@@ -163,6 +193,15 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
       },
       () =>
         _handleAssetWDBType(
+          (
+            fileResult.name,
+            fileResult.result |> FileReader.convertResultToArrayBuffer,
+          ),
+          (assetNodeId, targetTreeNodeId),
+          (editorState, engineState),
+        ),
+      () =>
+        _handleGLBType(
           (
             fileResult.name,
             fileResult.result |> FileReader.convertResultToArrayBuffer,

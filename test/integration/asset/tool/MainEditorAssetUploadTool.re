@@ -26,3 +26,14 @@ let loadOneWDB =
   )
   |> then_(() => uploadedWDBNodeId |> resolve);
 };
+
+let loadOneGLB =
+    (~arrayBuffer, ~dispatchFunc=TestTool.getDispatch(), ~fileName="Glb", ()) => {
+  let uploadedWDBNodeId = MainEditorAssetIdTool.getNewAssetId();
+
+  AssetHeaderUtils.fileLoad(
+    dispatchFunc,
+    BaseEventTool.buildGLBFileEvent(fileName, arrayBuffer),
+  )
+  |> then_(() => uploadedWDBNodeId |> resolve);
+};

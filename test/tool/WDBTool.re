@@ -1,19 +1,10 @@
-let buildGLBPath = glbName =>
-  Node.Path.join([|
-    Node.Process.cwd(),
-    "./test/res/glb/",
-    {j|$glbName.glb|j},
-  |]);
-
 let convertGLBToWDB = glbName => {
-  /*! fix fs.readFileSync returns corrupt ArrayBuffer (fs.readFile works as expected):
-    https://github.com/nodejs/node/issues/11132 */
-  let buffer = NodeExtendTool.readFileBufferSync(buildGLBPath(glbName));
+  let glbArrayBuffer = GLBTool.getGLBArrayBuffer(glbName);
 
   LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
   LoadTool.buildFakeTextEncoder(.);
 
-  buffer##buffer |> Wonderjs.ConverterAPI.convertGLBToWDB;
+  glbArrayBuffer |> Wonderjs.ConverterAPI.convertGLBToWDB;
 };
 
 let _createPointLight = (editorState, engineState) => {

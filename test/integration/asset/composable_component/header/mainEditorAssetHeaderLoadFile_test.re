@@ -310,7 +310,7 @@ let _ =
 
           LoadAssetUtils.handleSpecificFuncByTypeSync(
             _getErrorTypeFile(),
-            (() => (), () => (), () => ()),
+            (() => (), () => (), () => (), () => ()),
           );
 
           ConsoleTool.judgeError("type is error", errorStub);

@@ -6,6 +6,7 @@ type imageIndex = int;
 
 type uploadFileType =
   | LoadWDB
+  | LoadGLB
   | LoadImage
   | LoadWPK
   | LoadError;

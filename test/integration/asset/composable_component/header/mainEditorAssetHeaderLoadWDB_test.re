@@ -38,7 +38,7 @@ let _ =
 
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test load file", () => {
+    describe("test load wdb", () => {
       beforeEach(() => {
         MainEditorAssetTool.buildFakeFileReader();
 
