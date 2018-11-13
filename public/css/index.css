@@ -540,6 +540,7 @@ html, body {
             display: flex;
             flex-direction: column;
             overflow-y: auto;
+            overflow-x: hidden;
             white-space: nowrap; }
             .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .wonder-left-components .wonder-sceneTree-component::-webkit-scrollbar {
               width: 4px;
@@ -578,6 +579,7 @@ html, body {
                     color: #fc9b00; }
                   .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .wonder-left-components .wonder-sceneTree-component .wonder-tree .wonder-tree-node li .item-triangle {
                     flex: initial;
+                    min-width: 22px;
                     width: 22px;
                     height: 22px; }
                     .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .wonder-left-components .wonder-sceneTree-component .wonder-tree .wonder-tree-node li .item-triangle img {
@@ -804,6 +806,7 @@ html, body {
                 height: 100%;
                 font-size: 14px;
                 overflow-y: auto;
+                overflow-x: hidden;
                 white-space: nowrap; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .asset-tree .wonder-asset-assetTree::-webkit-scrollbar {
                   width: 4px;
@@ -835,6 +838,7 @@ html, body {
                       color: #fc9b00; }
                     .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .asset-tree .wonder-asset-assetTree .wonder-tree-node li .item-triangle {
                       flex: initial;
+                      min-width: 22px;
                       width: 22px;
                       height: 22px; }
                       .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .asset-tree .wonder-asset-assetTree .wonder-tree-node li .item-triangle img {
