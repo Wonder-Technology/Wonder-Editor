@@ -1,6 +1,10 @@
-type state = {isSelectNav: bool};
+type state = {
+  isSelectNav: bool,
+  streamSubscription: option(WonderBsMost.Most.subscription),
+};
 
 type action =
+  | SetSubscription(WonderBsMost.Most.subscription)
   | ToggleShowNav
   | BlurNav;
 
@@ -89,22 +93,21 @@ let render =
 
 let reducer = (action, state) =>
   switch (action) {
+  | SetSubscription(subscription) =>
+    ReasonReact.Update({...state, streamSubscription: Some(subscription)})
   | ToggleShowNav =>
     state.isSelectNav ?
       ReasonReact.Update({...state, isSelectNav: false}) :
       ReasonReact.Update({...state, isSelectNav: true})
-
   | BlurNav => ReasonReact.Update({...state, isSelectNav: false})
   };
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
-  initialState: () => {isSelectNav: false},
+  initialState: () => {isSelectNav: false, streamSubscription: None},
   reducer,
   didMount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
-    DomHelper.addEventListener(
-      DomHelper.document,
-      "click",
+    EventUtils.bindEventInDidMount(
       e => {
         let target = ReactEventRe.Form.target(e);
         let targetArray =
@@ -113,6 +116,9 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
         DomUtils.isSpecificDomChildrenHasTargetDom(target, targetArray) ?
           () : send(BlurNav);
       },
+      subscription => send(SetSubscription(subscription)),
     ),
   render: self => render((store, dispatchFunc), self),
+  willUnmount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    EventUtils.unmountStreamSubscription(state.streamSubscription),
 };
