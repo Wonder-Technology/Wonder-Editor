@@ -69,13 +69,13 @@ exports[`MainEditorAssetHeader->load file test load file test logic test should 
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "background": "rgba(255,255,255,0.2)",
@@ -184,13 +184,13 @@ exports[`MainEditorAssetHeader->load file test load file test snapshot if not se
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "background": "rgba(255,255,255,0.2)",

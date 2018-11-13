@@ -13,7 +13,7 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
       <li>
         <div
           className="item-triangle"
-          onClick={[Function]}
+          onMouseDown={[Function]}
         >
           <img
             src="./public/img/down.png"
@@ -22,13 +22,13 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
         <div
           className="draggable-container"
           draggable={true}
-          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
+          onMouseDown={[Function]}
           style={
             Object {
               "border": "0px",
@@ -48,13 +48,13 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",
@@ -71,7 +71,7 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
         <li>
           <div
             className="item-triangle"
-            onClick={[Function]}
+            onMouseDown={[Function]}
           >
             <img
               src="./public/img/right.png"
@@ -80,13 +80,13 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "background": "#5C7EA6",
@@ -107,13 +107,13 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",
@@ -134,13 +134,13 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",
@@ -169,7 +169,7 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
       <li>
         <div
           className="item-triangle"
-          onClick={[Function]}
+          onMouseDown={[Function]}
         >
           <img
             src="./public/img/down.png"
@@ -178,13 +178,13 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
         <div
           className="draggable-container"
           draggable={true}
-          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
+          onMouseDown={[Function]}
           style={
             Object {
               "border": "0px",
@@ -204,13 +204,13 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",
@@ -231,13 +231,13 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",
@@ -258,13 +258,13 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",
@@ -285,13 +285,13 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",
@@ -308,7 +308,7 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
         <li>
           <div
             className="item-triangle"
-            onClick={[Function]}
+            onMouseDown={[Function]}
           >
             <img
               src="./public/img/right.png"
@@ -317,13 +317,13 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",

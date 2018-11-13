@@ -13,7 +13,7 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
       <li>
         <div
           className="item-triangle"
-          onClick={[Function]}
+          onMouseDown={[Function]}
         >
           <img
             src="./public/img/down.png"
@@ -22,13 +22,13 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
         <div
           className="draggable-container"
           draggable={true}
-          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
+          onMouseDown={[Function]}
           style={
             Object {
               "border": "0px",
@@ -48,13 +48,13 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",
@@ -75,13 +75,13 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",
@@ -102,13 +102,13 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",

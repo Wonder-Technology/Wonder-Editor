@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditorAssetHeader->load wdb test load file extract assets from loaded wdb asset extract material assets fix bug if wdb gameObjects share the same material, should only extrace the shared material once 1`] = `
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract material assets fix bug if wdb gameObjects share the same material, should only extrace the shared material once 1`] = `
 <article
   className="wonder-asset-assetChildren"
 >
@@ -27,7 +27,7 @@ exports[`MainEditorAssetHeader->load wdb test load file extract assets from load
 </article>
 `;
 
-exports[`MainEditorAssetHeader->load wdb test load file extract assets from loaded wdb asset extract material assets test asset tree material asset should has unique name 1`] = `
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract material assets test asset tree material asset should has unique name 1`] = `
 <article
   className="wonder-asset-assetChildren"
 >
@@ -142,7 +142,7 @@ exports[`MainEditorAssetHeader->load wdb test load file extract assets from load
 </article>
 `;
 
-exports[`MainEditorAssetHeader->load wdb test load file extract assets from loaded wdb asset extract material assets test asset tree should add "Materials" folder node and add material node into it test load the same wdb once 1`] = `
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract material assets test asset tree should add "Materials" folder node and add material node into it test load the same wdb once 1`] = `
 <article
   className="wonder-asset-assetChildren"
 >
@@ -169,7 +169,7 @@ exports[`MainEditorAssetHeader->load wdb test load file extract assets from load
 </article>
 `;
 
-exports[`MainEditorAssetHeader->load wdb test load file extract assets from loaded wdb asset extract material assets test asset tree should add "Materials" folder node and add material node into it test load the same wdb twice 1`] = `
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract material assets test asset tree should add "Materials" folder node and add material node into it test load the same wdb twice 1`] = `
 <article
   className="wonder-asset-assetChildren"
 >
@@ -196,7 +196,7 @@ exports[`MainEditorAssetHeader->load wdb test load file extract assets from load
 </article>
 `;
 
-exports[`MainEditorAssetHeader->load wdb test load file extract assets from loaded wdb asset extract texture assets test asset tree should add "Textures" folder node and add texture node into it test load the same wdb once 1`] = `
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract texture assets test asset tree should add "Textures" folder node and add texture node into it test load the same wdb once 1`] = `
 <article
   className="wonder-asset-assetChildren"
 >
@@ -223,7 +223,7 @@ exports[`MainEditorAssetHeader->load wdb test load file extract assets from load
 </article>
 `;
 
-exports[`MainEditorAssetHeader->load wdb test load file extract assets from loaded wdb asset extract texture assets test asset tree should add "Textures" folder node and add texture node into it test load the same wdb twice 1`] = `
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract texture assets test asset tree should add "Textures" folder node and add texture node into it test load the same wdb twice 1`] = `
 <article
   className="wonder-asset-assetChildren"
 >
@@ -250,7 +250,7 @@ exports[`MainEditorAssetHeader->load wdb test load file extract assets from load
 </article>
 `;
 
-exports[`MainEditorAssetHeader->load wdb test load file extract assets from loaded wdb asset extract texture assets test asset tree texture asset should has unique name 1`] = `
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract texture assets test asset tree texture asset should has unique name 1`] = `
 <article
   className="wonder-asset-assetChildren"
 >
@@ -297,7 +297,7 @@ exports[`MainEditorAssetHeader->load wdb test load file extract assets from load
 </article>
 `;
 
-exports[`MainEditorAssetHeader->load wdb test load file extract assets from loaded wdb asset if wdb has no material should has no extracted assets 1`] = `
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset if wdb has no material should has no extracted assets 1`] = `
 <article
   className="wonder-asset-assetChildren"
 >
@@ -324,7 +324,7 @@ exports[`MainEditorAssetHeader->load wdb test load file extract assets from load
 </article>
 `;
 
-exports[`MainEditorAssetHeader->load wdb test load file fix bug fix geometry bug 
+exports[`MainEditorAssetHeader->load wdb test load wdb fix bug fix geometry bug 
         1.create gameObject g1 in scene;
         2.load truck wdb asset w1;
 
@@ -419,7 +419,7 @@ exports[`MainEditorAssetHeader->load wdb test load file fix bug fix geometry bug
 </article>
 `;
 
-exports[`MainEditorAssetHeader->load wdb test load file relate wdb asset gameObjects with default geometrys 
+exports[`MainEditorAssetHeader->load wdb test load wdb relate wdb asset gameObjects with default geometrys 
         1.create gameObject g1 with default cube geometry in scene;
         2.load wdb asset w1(has one box gameObject with default cube geometry);
 

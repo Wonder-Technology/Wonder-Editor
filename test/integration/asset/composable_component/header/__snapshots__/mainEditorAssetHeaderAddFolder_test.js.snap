@@ -10,7 +10,7 @@ exports[`MainEditorAssetHeader->add folder else add folder into specific treeNod
     <li>
       <div
         className="item-triangle"
-        onClick={[Function]}
+        onMouseDown={[Function]}
       >
         <img
           src="./public/img/down.png"
@@ -23,13 +23,13 @@ exports[`MainEditorAssetHeader->add folder else add folder into specific treeNod
       <div
         className="draggable-container"
         draggable={true}
-        onClick={[Function]}
         onDragEnd={[Function]}
         onDragEnter={[Function]}
         onDragLeave={[Function]}
         onDragOver={[Function]}
         onDragStart={[Function]}
         onDrop={[Function]}
+        onMouseDown={[Function]}
         style={
           Object {
             "border": "0px",
@@ -45,7 +45,7 @@ exports[`MainEditorAssetHeader->add folder else add folder into specific treeNod
       <li>
         <div
           className="item-triangle"
-          onClick={[Function]}
+          onMouseDown={[Function]}
         >
           <img
             src="./public/img/down.png"
@@ -58,13 +58,13 @@ exports[`MainEditorAssetHeader->add folder else add folder into specific treeNod
         <div
           className="draggable-container"
           draggable={true}
-          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
+          onMouseDown={[Function]}
           style={
             Object {
               "background": "#5C7EA6",
@@ -88,13 +88,13 @@ exports[`MainEditorAssetHeader->add folder else add folder into specific treeNod
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",
@@ -171,7 +171,7 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
         <li>
           <div
             className="item-triangle"
-            onClick={[Function]}
+            onMouseDown={[Function]}
           >
             <img
               src="./public/img/down.png"
@@ -184,13 +184,13 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "background": "rgba(255,255,255,0.2)",
@@ -214,13 +214,13 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
             <div
               className="draggable-container"
               draggable={true}
-              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
+              onMouseDown={[Function]}
               style={
                 Object {
                   "border": "0px",
@@ -245,13 +245,13 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
             <div
               className="draggable-container"
               draggable={true}
-              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
+              onMouseDown={[Function]}
               style={
                 Object {
                   "border": "0px",
@@ -354,7 +354,7 @@ exports[`MainEditorAssetHeader->add folder test name remove first folder which u
     <li>
       <div
         className="item-triangle"
-        onClick={[Function]}
+        onMouseDown={[Function]}
       >
         <img
           src="./public/img/down.png"
@@ -367,13 +367,13 @@ exports[`MainEditorAssetHeader->add folder test name remove first folder which u
       <div
         className="draggable-container"
         draggable={true}
-        onClick={[Function]}
         onDragEnd={[Function]}
         onDragEnter={[Function]}
         onDragLeave={[Function]}
         onDragOver={[Function]}
         onDragStart={[Function]}
         onDrop={[Function]}
+        onMouseDown={[Function]}
         style={
           Object {
             "background": "rgba(255,255,255,0.2)",
@@ -397,13 +397,13 @@ exports[`MainEditorAssetHeader->add folder test name remove first folder which u
         <div
           className="draggable-container"
           draggable={true}
-          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
+          onMouseDown={[Function]}
           style={
             Object {
               "border": "0px",
@@ -428,13 +428,13 @@ exports[`MainEditorAssetHeader->add folder test name remove first folder which u
         <div
           className="draggable-container"
           draggable={true}
-          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
+          onMouseDown={[Function]}
           style={
             Object {
               "border": "0px",
@@ -459,13 +459,13 @@ exports[`MainEditorAssetHeader->add folder test name remove first folder which u
         <div
           className="draggable-container"
           draggable={true}
-          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
+          onMouseDown={[Function]}
           style={
             Object {
               "border": "0px",
@@ -490,7 +490,7 @@ exports[`MainEditorAssetHeader->add folder test name test add the same name fold
     <li>
       <div
         className="item-triangle"
-        onClick={[Function]}
+        onMouseDown={[Function]}
       >
         <img
           src="./public/img/down.png"
@@ -503,13 +503,13 @@ exports[`MainEditorAssetHeader->add folder test name test add the same name fold
       <div
         className="draggable-container"
         draggable={true}
-        onClick={[Function]}
         onDragEnd={[Function]}
         onDragEnter={[Function]}
         onDragLeave={[Function]}
         onDragOver={[Function]}
         onDragStart={[Function]}
         onDrop={[Function]}
+        onMouseDown={[Function]}
         style={
           Object {
             "background": "rgba(255,255,255,0.2)",
@@ -533,13 +533,13 @@ exports[`MainEditorAssetHeader->add folder test name test add the same name fold
         <div
           className="draggable-container"
           draggable={true}
-          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
+          onMouseDown={[Function]}
           style={
             Object {
               "border": "0px",
@@ -564,13 +564,13 @@ exports[`MainEditorAssetHeader->add folder test name test add the same name fold
         <div
           className="draggable-container"
           draggable={true}
-          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
+          onMouseDown={[Function]}
           style={
             Object {
               "border": "0px",
@@ -595,13 +595,13 @@ exports[`MainEditorAssetHeader->add folder test name test add the same name fold
         <div
           className="draggable-container"
           draggable={true}
-          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
+          onMouseDown={[Function]}
           style={
             Object {
               "border": "0px",
@@ -626,13 +626,13 @@ exports[`MainEditorAssetHeader->add folder test name test add the same name fold
         <div
           className="draggable-container"
           draggable={true}
-          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
+          onMouseDown={[Function]}
           style={
             Object {
               "border": "0px",

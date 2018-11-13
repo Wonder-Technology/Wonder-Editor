@@ -115,7 +115,7 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
       <li>
         <div
           className="item-triangle"
-          onClick={[Function]}
+          onMouseDown={[Function]}
         >
           <img
             src="./public/img/down.png"
@@ -124,13 +124,13 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
         <div
           className="draggable-container"
           draggable={true}
-          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
+          onMouseDown={[Function]}
           style={
             Object {
               "border": "0px",
@@ -146,7 +146,7 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
         <li>
           <div
             className="item-triangle"
-            onClick={[Function]}
+            onMouseDown={[Function]}
           >
             <img
               src="./public/img/right.png"
@@ -155,13 +155,13 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",
@@ -848,7 +848,7 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
         <li>
           <div
             className="item-triangle"
-            onClick={[Function]}
+            onMouseDown={[Function]}
           >
             <img
               src="./public/img/down.png"
@@ -861,13 +861,13 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "background": "rgba(255,255,255,0.2)",
@@ -891,13 +891,13 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
             <div
               className="draggable-container"
               draggable={true}
-              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
+              onMouseDown={[Function]}
               style={
                 Object {
                   "border": "0px",
@@ -922,13 +922,13 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
             <div
               className="draggable-container"
               draggable={true}
-              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
+              onMouseDown={[Function]}
               style={
                 Object {
                   "border": "0px",

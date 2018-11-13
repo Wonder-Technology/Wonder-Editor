@@ -69,13 +69,13 @@ exports[`redo_undo: import package test redo operate test redo one step undo ste
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "background": "rgba(255,255,255,0.2)",
@@ -184,13 +184,13 @@ exports[`redo_undo: import package test undo operate test undo one step step whi
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "background": "rgba(255,255,255,0.2)",
@@ -222,7 +222,7 @@ exports[`redo_undo: import package test undo operate test undo two step step whi
       <li>
         <div
           className="item-triangle"
-          onClick={[Function]}
+          onMouseDown={[Function]}
         >
           <img
             src="./public/img/down.png"
@@ -231,13 +231,13 @@ exports[`redo_undo: import package test undo operate test undo two step step whi
         <div
           className="draggable-container"
           draggable={true}
-          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
+          onMouseDown={[Function]}
           style={
             Object {
               "border": "0px",
@@ -257,13 +257,13 @@ exports[`redo_undo: import package test undo operate test undo two step step whi
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",
@@ -284,13 +284,13 @@ exports[`redo_undo: import package test undo operate test undo two step step whi
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "background": "#5C7EA6",
@@ -311,13 +311,13 @@ exports[`redo_undo: import package test undo operate test undo two step step whi
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",
@@ -338,13 +338,13 @@ exports[`redo_undo: import package test undo operate test undo two step step whi
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",

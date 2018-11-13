@@ -61,7 +61,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
         <li>
           <div
             className="item-triangle"
-            onClick={[Function]}
+            onMouseDown={[Function]}
           >
             <img
               src="./public/img/down.png"
@@ -74,13 +74,13 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "background": "rgba(255,255,255,0.2)",
@@ -104,13 +104,13 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             <div
               className="draggable-container"
               draggable={true}
-              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
+              onMouseDown={[Function]}
               style={
                 Object {
                   "border": "0px",
@@ -135,13 +135,13 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             <div
               className="draggable-container"
               draggable={true}
-              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
+              onMouseDown={[Function]}
               style={
                 Object {
                   "border": "0px",
@@ -291,7 +291,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
         <li>
           <div
             className="item-triangle"
-            onClick={[Function]}
+            onMouseDown={[Function]}
           >
             <img
               src="./public/img/down.png"
@@ -304,13 +304,13 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "background": "rgba(255,255,255,0.2)",
@@ -334,13 +334,13 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             <div
               className="draggable-container"
               draggable={true}
-              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
+              onMouseDown={[Function]}
               style={
                 Object {
                   "border": "0px",
@@ -365,13 +365,13 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             <div
               className="draggable-container"
               draggable={true}
-              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
+              onMouseDown={[Function]}
               style={
                 Object {
                   "border": "0px",
@@ -396,13 +396,13 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             <div
               className="draggable-container"
               draggable={true}
-              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
+              onMouseDown={[Function]}
               style={
                 Object {
                   "border": "0px",
@@ -586,7 +586,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
         <li>
           <div
             className="item-triangle"
-            onClick={[Function]}
+            onMouseDown={[Function]}
           >
             <img
               src="./public/img/down.png"
@@ -599,13 +599,13 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "background": "rgba(255,255,255,0.2)",
@@ -629,13 +629,13 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             <div
               className="draggable-container"
               draggable={true}
-              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
+              onMouseDown={[Function]}
               style={
                 Object {
                   "border": "0px",
@@ -660,13 +660,13 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             <div
               className="draggable-container"
               draggable={true}
-              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
+              onMouseDown={[Function]}
               style={
                 Object {
                   "border": "0px",
@@ -691,13 +691,13 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             <div
               className="draggable-container"
               draggable={true}
-              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
+              onMouseDown={[Function]}
               style={
                 Object {
                   "border": "0px",
@@ -881,7 +881,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
         <li>
           <div
             className="item-triangle"
-            onClick={[Function]}
+            onMouseDown={[Function]}
           >
             <img
               src="./public/img/down.png"
@@ -894,13 +894,13 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "background": "rgba(255,255,255,0.2)",
@@ -924,13 +924,13 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             <div
               className="draggable-container"
               draggable={true}
-              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
+              onMouseDown={[Function]}
               style={
                 Object {
                   "border": "0px",
@@ -955,13 +955,13 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             <div
               className="draggable-container"
               draggable={true}
-              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
+              onMouseDown={[Function]}
               style={
                 Object {
                   "border": "0px",
@@ -1111,7 +1111,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
         <li>
           <div
             className="item-triangle"
-            onClick={[Function]}
+            onMouseDown={[Function]}
           >
             <img
               src="./public/img/down.png"
@@ -1124,13 +1124,13 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "background": "rgba(255,255,255,0.2)",
@@ -1154,13 +1154,13 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             <div
               className="draggable-container"
               draggable={true}
-              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
+              onMouseDown={[Function]}
               style={
                 Object {
                   "border": "0px",

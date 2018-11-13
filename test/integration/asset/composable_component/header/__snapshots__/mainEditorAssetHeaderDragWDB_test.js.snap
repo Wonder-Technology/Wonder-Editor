@@ -47,7 +47,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
       <li>
         <div
           className="item-triangle"
-          onClick={[Function]}
+          onMouseDown={[Function]}
         >
           <img
             src="./public/img/down.png"
@@ -56,13 +56,13 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
         <div
           className="draggable-container"
           draggable={true}
-          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
+          onMouseDown={[Function]}
           style={
             Object {
               "border": "0px",
@@ -82,13 +82,13 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",
@@ -105,7 +105,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
         <li>
           <div
             className="item-triangle"
-            onClick={[Function]}
+            onMouseDown={[Function]}
           >
             <img
               src="./public/img/right.png"
@@ -114,13 +114,13 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",
@@ -141,13 +141,13 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",
@@ -168,13 +168,13 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "border": "0px",

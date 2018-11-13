@@ -61,7 +61,7 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
         <li>
           <div
             className="item-triangle"
-            onClick={[Function]}
+            onMouseDown={[Function]}
           >
             <img
               src="./public/img/down.png"
@@ -74,13 +74,13 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
           <div
             className="draggable-container"
             draggable={true}
-            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
+            onMouseDown={[Function]}
             style={
               Object {
                 "background": "rgba(255,255,255,0.2)",
@@ -104,13 +104,13 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
             <div
               className="draggable-container"
               draggable={true}
-              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
+              onMouseDown={[Function]}
               style={
                 Object {
                   "border": "0px",

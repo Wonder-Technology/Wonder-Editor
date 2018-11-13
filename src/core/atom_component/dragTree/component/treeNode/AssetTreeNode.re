@@ -30,7 +30,7 @@ module Method = {
         isHasChildren ?
           <div
             className="item-triangle"
-            onClick=(
+            onMouseDown=(
               event => {
                 DomHelper.stopPropagation(
                   ReactEventType.convertReactMouseEventToJsEvent(event),
@@ -57,7 +57,7 @@ module Method = {
         className="draggable-container"
         style=state.style
         draggable=true
-        onClick=(_event => onSelectFunc(id))
+        onMouseDown=(_event => onSelectFunc(id))
         onDragStart=(
           _e => send(handleDragStart(id, widget, dragImg, "move", _e))
         )
