@@ -29,11 +29,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -55,11 +51,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -73,7 +65,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -82,11 +74,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "#5C7EA6",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -109,11 +97,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>
@@ -153,11 +137,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -179,11 +159,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -206,11 +182,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>
@@ -250,11 +222,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -276,11 +244,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -303,11 +267,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>
@@ -347,11 +307,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -373,11 +329,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -400,11 +352,30 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container select-active"
+            draggable={true}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            onMouseDown={[Function]}
+            style={Object {}}
           >
             Cube
           </div>
@@ -427,38 +398,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "#5C7EA6",
-              }
-            }
-          >
-            Cube
-          </div>
-        </li>
-      </ul>
-      <ul
-        className="wonder-tree-node"
-      >
-        <li>
-          <div
-            className="item-triangle"
-          />
-          <div
-            className="draggable-container"
-            draggable={true}
-            onDragEnd={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDragStart={[Function]}
-            onDrop={[Function]}
-            onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>
@@ -498,11 +438,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -524,11 +460,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -542,7 +474,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -551,11 +483,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "#5C7EA6",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -578,11 +506,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>

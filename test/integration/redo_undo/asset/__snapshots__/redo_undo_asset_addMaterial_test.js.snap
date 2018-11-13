@@ -67,7 +67,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -76,11 +76,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -182,7 +178,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -191,11 +187,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -317,7 +309,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -326,11 +318,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -452,7 +440,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -461,11 +449,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -567,7 +551,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -576,11 +560,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>

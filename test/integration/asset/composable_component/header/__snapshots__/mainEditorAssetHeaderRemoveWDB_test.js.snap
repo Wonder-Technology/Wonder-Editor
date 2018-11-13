@@ -131,11 +131,7 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -162,11 +158,7 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Wdb
           </div>
@@ -859,7 +851,7 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -868,11 +860,7 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -898,11 +886,7 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               Materials
             </div>
@@ -929,11 +913,7 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               Textures
             </div>

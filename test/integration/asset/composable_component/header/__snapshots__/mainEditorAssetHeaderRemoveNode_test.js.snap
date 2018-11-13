@@ -81,11 +81,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -102,7 +98,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
               src="./public/img/package.png"
             />
             <div
-              className="draggable-container"
+              className="draggable-container select-active"
               draggable={true}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
@@ -111,11 +107,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "background": "#5C7EA6",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -199,7 +191,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -208,11 +200,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -293,7 +281,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -302,11 +290,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -387,7 +371,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node if not select 
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -396,11 +380,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node if not select 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>

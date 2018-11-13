@@ -29,11 +29,7 @@ exports[`controller header dispose gameObject test scene tree dispose current ga
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -55,11 +51,7 @@ exports[`controller header dispose gameObject test scene tree dispose current ga
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -82,11 +74,7 @@ exports[`controller header dispose gameObject test scene tree dispose current ga
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -109,11 +97,7 @@ exports[`controller header dispose gameObject test scene tree dispose current ga
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>

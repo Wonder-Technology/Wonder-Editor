@@ -29,11 +29,7 @@ exports[`controller header add gameObject test add box test scene tree snapshot 
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -55,11 +51,7 @@ exports[`controller header add gameObject test add box test scene tree snapshot 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -73,7 +65,7 @@ exports[`controller header add gameObject test add box test scene tree snapshot 
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -82,11 +74,7 @@ exports[`controller header add gameObject test add box test scene tree snapshot 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "#5C7EA6",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -109,11 +97,7 @@ exports[`controller header add gameObject test add box test scene tree snapshot 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -136,11 +120,7 @@ exports[`controller header add gameObject test add box test scene tree snapshot 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>
@@ -163,11 +143,7 @@ exports[`controller header add gameObject test add box test scene tree snapshot 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -207,11 +183,7 @@ exports[`controller header add gameObject test add emptyGameObject test scene tr
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -233,11 +205,7 @@ exports[`controller header add gameObject test add emptyGameObject test scene tr
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -251,7 +219,7 @@ exports[`controller header add gameObject test add emptyGameObject test scene tr
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -260,11 +228,7 @@ exports[`controller header add gameObject test add emptyGameObject test scene tr
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "#5C7EA6",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -287,11 +251,7 @@ exports[`controller header add gameObject test add emptyGameObject test scene tr
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -314,11 +274,7 @@ exports[`controller header add gameObject test add emptyGameObject test scene tr
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>
@@ -341,11 +297,7 @@ exports[`controller header add gameObject test add emptyGameObject test scene tr
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             GameObject
           </div>

@@ -67,7 +67,7 @@ exports[`redo_undo: import package test redo operate test redo one step undo ste
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -76,11 +76,7 @@ exports[`redo_undo: import package test redo operate test redo one step undo ste
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -182,7 +178,7 @@ exports[`redo_undo: import package test undo operate test undo one step step whi
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -191,11 +187,7 @@ exports[`redo_undo: import package test undo operate test undo one step step whi
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -238,11 +230,7 @@ exports[`redo_undo: import package test undo operate test undo two step step whi
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -264,11 +252,7 @@ exports[`redo_undo: import package test undo operate test undo two step step whi
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -282,7 +266,7 @@ exports[`redo_undo: import package test undo operate test undo two step step whi
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -291,11 +275,7 @@ exports[`redo_undo: import package test undo operate test undo two step step whi
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "#5C7EA6",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -318,11 +298,7 @@ exports[`redo_undo: import package test undo operate test undo two step step whi
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -345,11 +321,7 @@ exports[`redo_undo: import package test undo operate test undo two step step whi
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>

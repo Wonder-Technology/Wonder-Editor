@@ -67,7 +67,7 @@ exports[`MainEditorAssetHeader->load file test load file test logic test should 
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -76,11 +76,7 @@ exports[`MainEditorAssetHeader->load file test load file test logic test should 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -182,7 +178,7 @@ exports[`MainEditorAssetHeader->load file test load file test snapshot if not se
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -191,11 +187,7 @@ exports[`MainEditorAssetHeader->load file test load file test snapshot if not se
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>

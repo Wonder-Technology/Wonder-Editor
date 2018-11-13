@@ -29,11 +29,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -60,11 +56,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -78,7 +70,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -87,11 +79,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "#5C7EA6",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -114,11 +102,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>
@@ -158,11 +142,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -189,11 +169,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -216,11 +192,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>
@@ -260,11 +232,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -291,11 +259,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -318,11 +282,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>
@@ -362,11 +322,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -393,11 +349,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -411,7 +363,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -420,11 +372,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "#5C7EA6",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -447,11 +395,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>
@@ -491,11 +435,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -517,11 +457,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -535,7 +471,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -544,11 +480,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "#5C7EA6",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -571,11 +503,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -598,11 +526,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>

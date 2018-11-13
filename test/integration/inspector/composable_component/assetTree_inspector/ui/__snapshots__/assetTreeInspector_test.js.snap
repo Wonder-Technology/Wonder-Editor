@@ -330,11 +330,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename folder node
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -351,7 +347,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename folder node
               src="./public/img/package.png"
             />
             <div
-              className="draggable-container"
+              className="draggable-container select-active"
               draggable={true}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
@@ -360,11 +356,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename folder node
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "background": "#5C7EA6",
-                }
-              }
+              style={Object {}}
             >
               folder.aaa
             </div>

@@ -2633,11 +2633,7 @@ exports[`header import package test import scene wdb should reset scene gameObje
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -2659,11 +2655,7 @@ exports[`header import package test import scene wdb should reset scene gameObje
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -2686,11 +2678,7 @@ exports[`header import package test import scene wdb should reset scene gameObje
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -2713,11 +2701,7 @@ exports[`header import package test import scene wdb should reset scene gameObje
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -2740,11 +2724,7 @@ exports[`header import package test import scene wdb should reset scene gameObje
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>
@@ -2767,11 +2747,7 @@ exports[`header import package test import scene wdb should reset scene gameObje
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>

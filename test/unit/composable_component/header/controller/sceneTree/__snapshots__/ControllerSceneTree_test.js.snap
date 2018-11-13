@@ -29,11 +29,7 @@ exports[`controller sceneTree test set parent in engine no drag 1`] = `
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -55,11 +51,7 @@ exports[`controller sceneTree test set parent in engine no drag 1`] = `
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -73,7 +65,7 @@ exports[`controller sceneTree test set parent in engine no drag 1`] = `
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -82,11 +74,7 @@ exports[`controller sceneTree test set parent in engine no drag 1`] = `
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "#5C7EA6",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -109,11 +97,7 @@ exports[`controller sceneTree test set parent in engine no drag 1`] = `
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -136,11 +120,7 @@ exports[`controller sceneTree test set parent in engine no drag 1`] = `
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>

@@ -70,7 +70,7 @@ module Method = {
     sceneGraphArr
     |> Js.Array.map(({uid, name, isShowChildren, children}) =>
          <SceneTreeNode
-           key=(DomHelper.getRandomKey())
+           key=(StringService.intToString(uid))
            id=uid
            name
            isSelected=(_isSelected(uid, currentSceneTreeNode))

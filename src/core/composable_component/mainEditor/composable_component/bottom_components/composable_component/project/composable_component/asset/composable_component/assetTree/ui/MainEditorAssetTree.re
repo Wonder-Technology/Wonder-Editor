@@ -58,7 +58,7 @@ module Method = {
                |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
              <AssetTreeNode
-               key=(DomHelper.getRandomKey())
+               key=(StringService.intToString(nodeId))
                id=nodeId
                name
                isSelected=(_isSelected(nodeId))

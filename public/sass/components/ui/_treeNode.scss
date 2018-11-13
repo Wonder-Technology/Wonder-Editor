@@ -40,6 +40,12 @@
                 pointer-events: none
             }
         }
+        .select-active {
+            background-color: #5C7EA6;
+        }
+        .select-not-active {
+            background-color: rgba(255, 255, 255, 0.2)
+        }
     }
     ul {
         margin-left: 18px;

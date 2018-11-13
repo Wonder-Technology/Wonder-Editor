@@ -72,7 +72,7 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -81,11 +81,7 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -111,11 +107,7 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>

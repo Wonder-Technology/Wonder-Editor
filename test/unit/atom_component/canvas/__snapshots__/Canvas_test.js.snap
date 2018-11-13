@@ -29,11 +29,7 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -55,11 +51,7 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -78,7 +70,7 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
             />
           </div>
           <div
-            className="draggable-container"
+            className="draggable-container select-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -87,11 +79,7 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "#5C7EA6",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -114,11 +102,7 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -141,11 +125,7 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>
@@ -185,11 +165,7 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -211,11 +187,7 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -238,11 +210,7 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -265,11 +233,7 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -292,11 +256,7 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>
@@ -324,11 +284,7 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Wdb
           </div>

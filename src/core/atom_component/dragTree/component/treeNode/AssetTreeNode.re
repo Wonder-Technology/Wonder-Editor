@@ -3,6 +3,13 @@ open DragEventUtils;
 type state = {style: ReactDOMRe.Style.t};
 
 module Method = {
+  let buildDragEndState = state => {
+    ...state,
+    style:
+      ReactUtils.addStyleProp("opacity", "1", state.style)
+      |> ReactUtils.addStyleProp("border", "0px"),
+  };
+
   let buildNotDragableUl = TreeNodeUtils.buildNotDragableUl;
 
   let getContent =
@@ -17,6 +24,8 @@ module Method = {
           treeChildren,
           isShowChildren,
           isHasChildren,
+          isSelected,
+          isActive,
         ),
         (
           onSelectFunc,
@@ -54,7 +63,13 @@ module Method = {
         }
       )
       <div
-        className="draggable-container"
+        className=(
+          "draggable-container"
+          ++ (
+            isSelected ?
+              isActive ? " select-active" : " select-not-active" : ""
+          )
+        )
         style=state.style
         draggable=true
         onMouseDown=(_event => onSelectFunc(id))
@@ -128,19 +143,14 @@ let reducer =
         })
     )
 
-  | DragEnd => (
-      state =>
-        ReasonReact.Update({
-          ...state,
-          style:
-            ReactUtils.addStyleProp("opacity", "1", state.style)
-            |> ReactUtils.addStyleProp("border", "0px"),
-        })
-    )
+  | DragEnd => (state => ReasonReact.Update(Method.buildDragEndState(state)))
 
   | DragDrop(targetId, removedId) => (
-      _state =>
-        ReasonReactUtils.sideEffects(() => onDropFunc((targetId, removedId)))
+      state =>
+        ReasonReactUtils.updateWithSideEffects(
+          Method.buildDragEndState(state), _state =>
+          onDropFunc((targetId, removedId))
+        )
     )
 
   | Nothing => (_state => ReasonReact.NoUpdate)
@@ -148,7 +158,17 @@ let reducer =
 
 let render =
     (
-      (id, name, widget, dragImg, icon, isShowChildren, isHasChildren),
+      (
+        id,
+        name,
+        widget,
+        dragImg,
+        icon,
+        isShowChildren,
+        isHasChildren,
+        isSelected,
+        isActive,
+      ),
       (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
       treeChildren,
       {state, send}: ReasonReact.self('a, 'b, 'c),
@@ -167,6 +187,8 @@ let render =
         treeChildren,
         isShowChildren,
         isHasChildren,
+        isSelected,
+        isActive,
       ),
       (
         onSelectFunc,
@@ -176,13 +198,6 @@ let render =
       ),
     ),
   );
-
-let initalState = (isSelected, isActive) =>
-  isSelected ?
-    isActive ?
-      {style: ReactDOMRe.Style.make(~background="#5C7EA6", ())} :
-      {style: ReactDOMRe.Style.make(~background="rgba(255,255,255,0.2)", ())} :
-    {style: ReactDOMRe.Style.make(~border="0px", ())};
 
 let make =
     (
@@ -204,11 +219,21 @@ let make =
       _children,
     ) => {
   ...component,
-  initialState: () => initalState(isSelected, isActive),
+  initialState: () => {style: ReactDOMRe.Style.make()},
   reducer: reducer(isShowChildren, (onDrop, handleToggleShowTreeChildren)),
   render: self =>
     render(
-      (id, name, widget, dragImg, icon, isShowChildren, isHasChildren),
+      (
+        id,
+        name,
+        widget,
+        dragImg,
+        icon,
+        isShowChildren,
+        isHasChildren,
+        isSelected,
+        isActive,
+      ),
       (onSelect, isWidget, handleRelationError),
       treeChildren,
       self,

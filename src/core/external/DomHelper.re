@@ -9,7 +9,8 @@ external createElement : string => document = "createElement";
 external getElementById : string => Dom.element = "getElementById";
 
 [@bs.val] [@bs.scope "document"]
-external getElementsByClassName : string => array(Dom.element) = "getElementsByClassName";
+external getElementsByClassName : string => array(Dom.element) =
+  "getElementsByClassName";
 
 [@bs.val] external alert : string => unit = "alert";
 
@@ -53,7 +54,7 @@ let stopPropagation = e : unit => e##stopPropagation();
 let preventDefault = e : unit => e##preventDefault();
 
 let getRandomKey = () : string =>
-  string_of_float(Js.Date.now() *. Js.Math.random());
+  StringService.floatToString(Js.Date.now() *. Js.Math.random());
 
 let intEl = n => ReasonReact.string(string_of_int(n));
 

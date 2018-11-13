@@ -11,6 +11,13 @@ type action =
 type state = {style: ReactDOMRe.Style.t};
 
 module Method = {
+  let buildDragEndState = state => {
+    ...state,
+    style:
+      ReactUtils.addStyleProp("opacity", "1", state.style)
+      |> ReactUtils.addStyleProp("border", "0px"),
+  };
+
   let handleDragStart = (id, widget, dragImg, effectAllowd, event) => {
     DragEventBaseUtils.dragStart(id, widget, dragImg, effectAllowd, event);
     DragStart;
@@ -89,6 +96,8 @@ module Method = {
           treeChildren,
           isShowChildren,
           isHasChildren,
+          isSelected,
+          isActive,
         ),
         (
           onSelectFunc,
@@ -126,7 +135,13 @@ module Method = {
         }
       )
       <div
-        className="draggable-container"
+        className=(
+          "draggable-container"
+          ++ (
+            isSelected ?
+              isActive ? " select-active" : " select-not-active" : ""
+          )
+        )
         style=state.style
         draggable=true
         onMouseDown=(_event => onSelectFunc(id))
@@ -210,26 +225,20 @@ let reducer =
         })
     )
 
-  | DragEnd => (
-      state =>
-        ReasonReact.Update({
-          ...state,
-          style:
-            ReactUtils.addStyleProp("opacity", "1", state.style)
-            |> ReactUtils.addStyleProp("border", "0px"),
-        })
-    )
+  | DragEnd => (state => ReasonReact.Update(Method.buildDragEndState(state)))
 
   | DragGameObject(targetUid, removedUid) => (
-      _state =>
-        ReasonReactUtils.sideEffects(() =>
+      state =>
+        ReasonReactUtils.updateWithSideEffects(
+          Method.buildDragEndState(state), _state =>
           dragGameObject((targetUid, removedUid))
         )
     )
 
   | DragWDB(targetUid, wdbGameObjectUid) => (
-      _state =>
-        ReasonReactUtils.sideEffects(() =>
+      state =>
+        ReasonReactUtils.updateWithSideEffects(
+          Method.buildDragEndState(state), _state =>
           dragWDB((targetUid, wdbGameObjectUid))
         )
     )
@@ -239,7 +248,17 @@ let reducer =
 
 let render =
     (
-      (id, name, widget, dragImg, icon, isShowChildren, isHasChildren),
+      (
+        id,
+        name,
+        widget,
+        dragImg,
+        icon,
+        isShowChildren,
+        isHasChildren,
+        isSelected,
+        isActive,
+      ),
       (
         onSelectFunc,
         isWidgetFunc,
@@ -263,6 +282,8 @@ let render =
         treeChildren,
         isShowChildren,
         isHasChildren,
+        isSelected,
+        isActive,
       ),
       (
         onSelectFunc,
@@ -272,13 +293,6 @@ let render =
       ),
     ),
   );
-
-let initalState = (isSelected, isActive) =>
-  isSelected ?
-    isActive ?
-      {style: ReactDOMRe.Style.make(~background="#5C7EA6", ())} :
-      {style: ReactDOMRe.Style.make(~background="rgba(255,255,255,0.2)", ())} :
-    {style: ReactDOMRe.Style.make(~border="0px", ())};
 
 let make =
     (
@@ -302,15 +316,25 @@ let make =
       _children,
     ) => {
   ...component,
-  initialState: () => initalState(isSelected, isActive),
+  initialState: () => {style: ReactDOMRe.Style.make()},
   reducer:
     reducer(
       isShowChildren,
       (dragGameObject, dragWDB, handleToggleShowTreeChildren),
     ),
-  render: self =>
+  render: (({state}: ReasonReact.self('a, 'b, 'c)) as self) =>
     render(
-      (id, name, widget, dragImg, icon, isShowChildren, isHasChildren),
+      (
+        id,
+        name,
+        widget,
+        dragImg,
+        icon,
+        isShowChildren,
+        isHasChildren,
+        isSelected,
+        isActive,
+      ),
       (onSelect, isWidget, handleRelationError, isAssetWDBFile),
       treeChildren,
       self,

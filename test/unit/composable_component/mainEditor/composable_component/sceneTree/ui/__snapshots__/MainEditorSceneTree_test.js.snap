@@ -29,11 +29,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -55,11 +51,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -87,11 +79,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -114,11 +102,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>
@@ -158,11 +142,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           Scene
         </div>
@@ -184,11 +164,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Camera
           </div>
@@ -202,7 +178,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -211,11 +187,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "#5C7EA6",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -238,11 +210,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Cube
           </div>
@@ -265,11 +233,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Direction Light
           </div>

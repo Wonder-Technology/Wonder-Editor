@@ -30,11 +30,7 @@ exports[`MainEditorAssetHeader->add material else add material into specific tre
         onDragStart={[Function]}
         onDrop={[Function]}
         onMouseDown={[Function]}
-        style={
-          Object {
-            "border": "0px",
-          }
-        }
+        style={Object {}}
       >
         Assets
       </div>
@@ -51,7 +47,7 @@ exports[`MainEditorAssetHeader->add material else add material into specific tre
           src="./public/img/package.png"
         />
         <div
-          className="draggable-container"
+          className="draggable-container select-active"
           draggable={true}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
@@ -60,11 +56,7 @@ exports[`MainEditorAssetHeader->add material else add material into specific tre
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "background": "#5C7EA6",
-            }
-          }
+          style={Object {}}
         >
           NoName Folder
         </div>
@@ -96,11 +88,7 @@ exports[`MainEditorAssetHeader->add material else add material into specific tre
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           NoName Folder
         </div>
@@ -126,11 +114,7 @@ exports[`MainEditorAssetHeader->add material else add material into specific tre
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             NoName Folder
           </div>
@@ -157,11 +141,7 @@ exports[`MainEditorAssetHeader->add material else add material into specific tre
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             NoName Folder
           </div>
@@ -239,7 +219,7 @@ exports[`MainEditorAssetHeader->add material if not select specific treeNode sho
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -248,11 +228,7 @@ exports[`MainEditorAssetHeader->add material if not select specific treeNode sho
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -445,7 +421,7 @@ exports[`MainEditorAssetHeader->add material test name test default name 1`] = `
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -454,11 +430,7 @@ exports[`MainEditorAssetHeader->add material test name test default name 1`] = `
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>

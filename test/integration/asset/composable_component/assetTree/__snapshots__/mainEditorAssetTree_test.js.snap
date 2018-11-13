@@ -72,7 +72,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -81,11 +81,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -111,11 +107,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -237,7 +229,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -246,11 +238,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -276,11 +264,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -351,7 +335,7 @@ exports[`MainEditorAssetTree test asse tree node->isShowChildren default node->i
         src="./public/img/package.png"
       />
       <div
-        className="draggable-container"
+        className="draggable-container select-active"
         draggable={true}
         onDragEnd={[Function]}
         onDragEnter={[Function]}
@@ -360,11 +344,7 @@ exports[`MainEditorAssetTree test asse tree node->isShowChildren default node->i
         onDragStart={[Function]}
         onDrop={[Function]}
         onMouseDown={[Function]}
-        style={
-          Object {
-            "background": "#5C7EA6",
-          }
-        }
+        style={Object {}}
       >
         Assets
       </div>
@@ -395,11 +375,7 @@ exports[`MainEditorAssetTree test asse tree node->isShowChildren default node->i
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           New Folder
         </div>
@@ -430,7 +406,7 @@ exports[`MainEditorAssetTree test asse tree node->isShowChildren test add treeNo
         src="./public/img/package.png"
       />
       <div
-        className="draggable-container"
+        className="draggable-container select-active"
         draggable={true}
         onDragEnd={[Function]}
         onDragEnter={[Function]}
@@ -439,11 +415,7 @@ exports[`MainEditorAssetTree test asse tree node->isShowChildren test add treeNo
         onDragStart={[Function]}
         onDrop={[Function]}
         onMouseDown={[Function]}
-        style={
-          Object {
-            "background": "#5C7EA6",
-          }
-        }
+        style={Object {}}
       >
         Assets
       </div>
@@ -474,11 +446,7 @@ exports[`MainEditorAssetTree test asse tree node->isShowChildren test add treeNo
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           New Folder
         </div>
@@ -509,7 +477,7 @@ exports[`MainEditorAssetTree test asse tree node->isShowChildren test drag treeN
         src="./public/img/package.png"
       />
       <div
-        className="draggable-container"
+        className="draggable-container select-active"
         draggable={true}
         onDragEnd={[Function]}
         onDragEnter={[Function]}
@@ -518,11 +486,7 @@ exports[`MainEditorAssetTree test asse tree node->isShowChildren test drag treeN
         onDragStart={[Function]}
         onDrop={[Function]}
         onMouseDown={[Function]}
-        style={
-          Object {
-            "background": "#5C7EA6",
-          }
-        }
+        style={Object {}}
       >
         Assets
       </div>
@@ -553,11 +517,7 @@ exports[`MainEditorAssetTree test asse tree node->isShowChildren test drag treeN
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "border": "0px",
-            }
-          }
+          style={Object {}}
         >
           New Folder
         </div>
@@ -583,11 +543,7 @@ exports[`MainEditorAssetTree test asse tree node->isShowChildren test drag treeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             New Folder
           </div>
@@ -614,11 +570,7 @@ exports[`MainEditorAssetTree test asse tree node->isShowChildren test drag treeN
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             New Folder 1
           </div>
@@ -710,11 +662,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -736,7 +684,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
               src="./public/img/package.png"
             />
             <div
-              className="draggable-container"
+              className="draggable-container select-active"
               draggable={true}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
@@ -745,11 +693,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "background": "#5C7EA6",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -775,11 +719,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onMouseDown={[Function]}
-                style={
-                  Object {
-                    "border": "0px",
-                  }
-                }
+                style={Object {}}
               >
                 NoName Folder
               </div>
@@ -812,11 +752,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -842,11 +778,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onMouseDown={[Function]}
-                style={
-                  Object {
-                    "border": "0px",
-                  }
-                }
+                style={Object {}}
               >
                 NoName Folder
               </div>
@@ -978,11 +910,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -1008,11 +936,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -1044,11 +968,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -1065,7 +985,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
                 src="./public/img/package.png"
               />
               <div
-                className="draggable-container"
+                className="draggable-container select-active"
                 draggable={true}
                 onDragEnd={[Function]}
                 onDragEnter={[Function]}
@@ -1074,11 +994,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onMouseDown={[Function]}
-                style={
-                  Object {
-                    "background": "#5C7EA6",
-                  }
-                }
+                style={Object {}}
               >
                 NoName Folder
               </div>
@@ -1105,11 +1021,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onMouseDown={[Function]}
-                style={
-                  Object {
-                    "border": "0px",
-                  }
-                }
+                style={Object {}}
               >
                 NoName Folder
               </div>
@@ -1265,7 +1177,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -1274,11 +1186,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -1304,11 +1212,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -1340,11 +1244,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -1370,11 +1270,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onMouseDown={[Function]}
-                style={
-                  Object {
-                    "border": "0px",
-                  }
-                }
+                style={Object {}}
               >
                 NoName Folder
               </div>
@@ -1401,11 +1297,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onMouseDown={[Function]}
-                style={
-                  Object {
-                    "border": "0px",
-                  }
-                }
+                style={Object {}}
               >
                 NoName Folder
               </div>
@@ -1520,11 +1412,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
         onDragStart={[Function]}
         onDrop={[Function]}
         onMouseDown={[Function]}
-        style={
-          Object {
-            "border": "0px",
-          }
-        }
+        style={Object {}}
       >
         Assets
       </div>
@@ -1546,7 +1434,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           src="./public/img/package.png"
         />
         <div
-          className="draggable-container"
+          className="draggable-container select-active"
           draggable={true}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
@@ -1555,11 +1443,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           onDragStart={[Function]}
           onDrop={[Function]}
           onMouseDown={[Function]}
-          style={
-            Object {
-              "background": "#5C7EA6",
-            }
-          }
+          style={Object {}}
         >
           NoName Folder
         </div>
@@ -1585,11 +1469,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "border": "0px",
-              }
-            }
+            style={Object {}}
           >
             NoName Folder
           </div>
@@ -1672,7 +1552,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -1681,11 +1561,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -1711,11 +1587,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -1837,7 +1709,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -1846,11 +1718,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -1876,11 +1744,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -1912,11 +1776,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -1942,11 +1802,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onMouseDown={[Function]}
-                style={
-                  Object {
-                    "border": "0px",
-                  }
-                }
+                style={Object {}}
               >
                 NoName Folder
               </div>
@@ -1974,11 +1830,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               a1
             </div>
@@ -2168,7 +2020,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -2177,11 +2029,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -2207,11 +2055,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -2243,11 +2087,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -2273,11 +2113,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onMouseDown={[Function]}
-                style={
-                  Object {
-                    "border": "0px",
-                  }
-                }
+                style={Object {}}
               >
                 NoName Folder
               </div>
@@ -2304,11 +2140,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onMouseDown={[Function]}
-                style={
-                  Object {
-                    "border": "0px",
-                  }
-                }
+                style={Object {}}
               >
                 NoName Folder
               </div>

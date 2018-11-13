@@ -72,7 +72,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -81,11 +81,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -111,11 +107,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -142,11 +134,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               New Folder
             </div>
@@ -302,7 +290,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -311,11 +299,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -341,11 +325,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -372,11 +352,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               New Folder
             </div>
@@ -403,11 +379,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               New Folder 1
             </div>
@@ -597,7 +569,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -606,11 +578,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -636,11 +604,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -667,11 +631,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               New Folder
             </div>
@@ -698,11 +658,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               New Folder 1
             </div>
@@ -892,7 +848,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -901,11 +857,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -931,11 +883,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
@@ -962,11 +910,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               New Folder
             </div>
@@ -1122,7 +1066,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             src="./public/img/package.png"
           />
           <div
-            className="draggable-container"
+            className="draggable-container select-not-active"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
@@ -1131,11 +1075,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
             onDragStart={[Function]}
             onDrop={[Function]}
             onMouseDown={[Function]}
-            style={
-              Object {
-                "background": "rgba(255,255,255,0.2)",
-              }
-            }
+            style={Object {}}
           >
             Assets
           </div>
@@ -1161,11 +1101,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
               onDragStart={[Function]}
               onDrop={[Function]}
               onMouseDown={[Function]}
-              style={
-                Object {
-                  "border": "0px",
-                }
-              }
+              style={Object {}}
             >
               NoName Folder
             </div>
