@@ -14,15 +14,9 @@ let _disposeWDBGameObjects = (wdbGameObjects, (editorState, engineState)) =>
      );
 
 let _getClonedGameObjects = (wdbGameObjects, (editorState, engineState)) =>
-  engineState
-  |> GameObjectEngineService.getAllGeometrys(wdbGameObjects)
-  |> WonderCommonlib.ArrayService.removeDuplicateItems
-  |> Js.Array.filter(geometry =>
-       !
-         RelateGameObjectAndAssetUtils.isDefaultGeometry(
-           geometry,
-           (editorState, engineState),
-         )
+  (editorState, engineState)
+  |> GeometryAssetLogicService.getGeometryAssetsFromWDBGameObjects(
+       wdbGameObjects,
      )
   |> Js.Array.map(geometry =>
        engineState

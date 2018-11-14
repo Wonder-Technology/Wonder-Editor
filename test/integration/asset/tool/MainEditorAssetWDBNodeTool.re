@@ -31,3 +31,15 @@ let addWDBNode =
 
   addedNodeId;
 };
+
+let getWDBNodeIdByName = (wdbGameObjectName, editorState) =>
+  WDBNodeMapAssetEditorService.getWDBNodeMap(editorState)
+  |> SparseMapService.reduceiValid(
+       (. resultNodeId, {name}: AssetNodeType.wdbResultType, nodeId) =>
+         switch (resultNodeId) {
+         | Some(_) => resultNodeId
+         | None => name === wdbGameObjectName ? Some(nodeId) : resultNodeId
+         },
+       None,
+     )
+  |> OptionService.unsafeGet;

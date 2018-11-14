@@ -83,7 +83,7 @@ let relateSceneWDBGameObjectsAndAssets =
     (
       allWDBGameObjectsArr,
       (basicMaterialMap, lightMaterialMap),
-      wdbAssetGameObjectGeometryArr,
+      wdbAssetGameObjectGeometryAssetArr,
     ) => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
@@ -113,7 +113,7 @@ let relateSceneWDBGameObjectsAndAssets =
     );
 
   let wdbAssetGameObjectGeometryDataArr =
-    _getGeometryDataArr(wdbAssetGameObjectGeometryArr, engineState);
+    _getGeometryDataArr(wdbAssetGameObjectGeometryAssetArr, engineState);
 
   let engineState =
     allWDBGameObjectsArr
@@ -135,6 +135,41 @@ let relateSceneWDBGameObjectsAndAssets =
        );
 
   engineState |> StateEngineService.setState |> ignore;
+
+  ()
+  |> WonderLog.Contract.ensureCheck(
+       r => {
+         open WonderLog;
+         open Contract;
+         open Operators;
+
+         /* TODO add material asset check? */
+
+         let sceneGeometryAssets =
+           GeometryAssetLogicService.getGeometryAssetsFromWDBGameObjects(
+             allWDBGameObjectsArr,
+             (editorState, engineState),
+           );
+         test(
+           Log.buildAssertMessage(
+             ~expect=
+               {j|wdb assets->geometry assets: $wdbAssetGameObjectGeometryAssetArr include scene wdb gameObjects->geometry assets: $sceneGeometryAssets|j},
+             ~actual={j|not|j},
+           ),
+           () => {
+             let editorState = StateEditorService.getState();
+             let engineState = StateEngineService.unsafeGetState();
+
+             ArrayService.isInclude(
+               wdbAssetGameObjectGeometryAssetArr,
+               sceneGeometryAssets,
+             )
+             |> assertTrue;
+           },
+         );
+       },
+       StateEditorService.getStateIsDebug(),
+     );
 };
 
 let relateWDBAssetGameObjectsAndAssets =

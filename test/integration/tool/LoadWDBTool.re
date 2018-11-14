@@ -32,3 +32,9 @@ let getBoxTexturedMeshGameObjectMaterialName = () => "Texture";
 let getBoxTexturedMeshGameObjectTextureName = () => "texture_0";
 
 let getBoxTexturedMeshGameObjectImageName = () => "CesiumLogoFlat.png";
+
+module Truck = {
+  let getTruckGameObjectName = () => "CesiumMilkTruck";
+
+  let getTruck1GameObjectName = () => "Cesium_Milk_Truck_1";
+};

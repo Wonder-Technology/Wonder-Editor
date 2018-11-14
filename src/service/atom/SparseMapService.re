@@ -49,6 +49,16 @@ let getValidDataArr = map =>
        [||],
      );
 
+let filteriValid = (func, map) =>
+  map
+  |> Js.Array.filteri((value, index) =>
+       if (value |> Obj.magic === Js.Undefined.empty) {
+         false;
+       } else {
+         func(. value, index);
+       }
+     );
+
 let forEachValid = (func, map) =>
   map
   |> WonderCommonlib.ArrayService.forEach((. value) =>

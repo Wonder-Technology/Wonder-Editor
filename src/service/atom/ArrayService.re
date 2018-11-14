@@ -185,3 +185,9 @@ let fastConcat = (arr1, arr2) =>
        (. arr1, value2) => arr1 |> push(value2),
        arr1,
      );
+
+let isEqual = (arr1, arr2) =>
+  arr1 |> Js.Array.sortInPlace == (arr2 |> Js.Array.sortInPlace);
+
+let isInclude = (sourceArr, targetArr) =>
+  intersect(sourceArr, targetArr) |> isEqual(_, targetArr);

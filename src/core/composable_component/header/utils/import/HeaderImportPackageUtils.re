@@ -63,10 +63,6 @@ let _import = result => {
 
   JobEngineService.execDisposeJob |> StateLogicService.getAndSetEngineState;
 
-
-    GeometryEngineService.getAllGeometrys(StateEngineService.unsafeGetState())
-    |> WonderLog.Log.print;
-
   let t2 = Performance.now();
 
   WonderLog.Console.profileEnd();
@@ -85,7 +81,7 @@ let _import = result => {
       WonderCommonlib.SparseMapService.createEmpty(),
     ));
 
-  let wdbAssetGameObjectGeometryArrRef = ref([||]);
+  let wdbAssetGameObjectGeometryAssetArrRef = ref([||]);
 
   let engineState = StateEngineService.unsafeGetState();
 
@@ -106,12 +102,11 @@ let _import = result => {
        );
 
        materialMapTupleRef := materialMapTuple;
-       wdbAssetGameObjectGeometryArrRef :=
-         GameObjectEngineService.getAllGeometrys(
+       wdbAssetGameObjectGeometryAssetArrRef :=
+         GeometryAssetLogicService.getGeometryAssetsFromWDBGameObjects(
            allWDBGameObjectsArr,
-           StateEngineService.unsafeGetState(),
-         );
-
+         )
+         |> StateLogicService.getStateToGetData;
        let t5 = Performance.now();
 
        WonderLog.Console.profileEnd();
@@ -136,7 +131,7 @@ let _import = result => {
                   engineState,
                 ),
                 materialMapTupleRef^,
-                wdbAssetGameObjectGeometryArrRef^,
+                wdbAssetGameObjectGeometryAssetArrRef^,
               );
 
               let t7 = Performance.now();
@@ -144,6 +139,7 @@ let _import = result => {
               WonderLog.Console.profileEnd();
 
               WonderLog.Log.print(("relate scene wdb: ", t7 -. t6)) |> ignore;
+
               ();
             })
        ),

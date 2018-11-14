@@ -311,7 +311,7 @@ let _ =
       },
     );
 
-    describe("fix bug", () =>
+    describe("fix bug", () => {
       describe(
         "the default geometry with wdb asset should be remove instead of dispose when remove wdb asset",
         () => {
@@ -414,6 +414,111 @@ let _ =
             },
           );
         },
-      )
-    );
+      );
+
+      describe("test with import package", () => {
+        let truckWDBArrayBuffer = ref(Obj.magic(1));
+
+        beforeAll(() =>
+          truckWDBArrayBuffer := WDBTool.convertGLBToWDB("CesiumMilkTruck")
+        );
+
+        beforeEach(() => {
+          MainEditorSceneTool.initStateWithJob(
+            ~sandbox,
+            ~isBuildFakeDom=false,
+            ~buffer=
+              SettingToolEngine.buildBufferConfigStr(
+                ~geometryPointCount=300000,
+                ~geometryCount=300,
+                (),
+              ),
+            ~noWorkerJobRecord=
+              NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                ~loopPipelines=
+                  {|
+                   [
+                       {
+                           "name": "default",
+                           "jobs": [
+                               {
+                                   "name": "dispose"
+                               }
+                           ]
+                       }
+                   ]
+               |},
+                (),
+              ),
+            (),
+          );
+
+          MainEditorSceneTool.prepareScene(sandbox);
+        });
+
+        testPromise(
+          {|
+        1.load truck wdb asset w1;
+        2.drag w1 to scene tree to be c1;
+        3.export package;
+        4.import package;
+        3.export package;
+        4.import package;
+        4.remove w1;
+
+        c1's all geometrys shouldn be disposed
+        |},
+          () => {
+            let wdbName = "TruckWDB";
+
+            MainEditorAssetUploadTool.loadOneWDB(
+              ~arrayBuffer=truckWDBArrayBuffer^,
+              ~fileName=wdbName,
+              (),
+            )
+            |> then_(uploadedWDBNodeId => {
+                 MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                   ~wdbNodeId=uploadedWDBNodeId,
+                   (),
+                 );
+
+                 ImportPackageTool.testImportPackage(
+                   ~testFunc=
+                     () =>
+                       ImportPackageTool.testImportPackage(
+                         ~testFunc=
+                           () => {
+                             let editorState = StateEditorService.getState();
+                             let engineState =
+                               StateEngineService.unsafeGetState();
+
+                             MainEditorAssetHeaderOperateNodeTool.removeWDBNode(
+                               ~wdbNodeId=
+                                 MainEditorAssetWDBNodeTool.getWDBNodeIdByName(
+                                   wdbName,
+                                   editorState,
+                                 ),
+                               (),
+                             );
+
+                             LoadWDBTool.findGameObjectByName(
+                               LoadWDBTool.Truck.getTruck1GameObjectName(),
+                               engineState,
+                             )
+                             |> GameObjectComponentEngineService.hasGeometryComponent(
+                                  _,
+                                  engineState,
+                                )
+                             |> expect == false
+                             |> resolve;
+                           },
+                         (),
+                       ),
+                   (),
+                 );
+               });
+          },
+        );
+      });
+    });
   });
