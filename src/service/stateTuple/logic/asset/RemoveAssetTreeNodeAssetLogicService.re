@@ -125,6 +125,8 @@ let _removeMaterialTreeNode = (nodeId, (editorState, engineState)) => {
       engineState,
     );
 
+  /* TODO dispose material asset which has no gameObject */
+
   (
     RemoveNodeAssetEditorService.removeMaterialNodeEditorData(
       nodeId,

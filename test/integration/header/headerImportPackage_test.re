@@ -80,7 +80,7 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("dispose assets", () =>
+    describe("dispose assets", () => {
       describe("dispose wdb assets", () => {
         beforeEach(() => {
           MainEditorSceneTool.initStateWithJob(
@@ -118,7 +118,7 @@ let _ =
           4.import;
 
 
-          g1->geometry->select geometry group widget should have one wdb geometry and be using it
+          g1->geometry->select geometry group widget should have only one wdb geometry and be using it
           |},
             () =>
             MainEditorAssetUploadTool.loadOneWDB(
@@ -269,23 +269,55 @@ let _ =
                })
           );
         });
-      })
-    );
-    /* describe
-       ("dispose material assets",
-       (
-       () => {
+      });
 
-       })
-       );
+      describe("dispose material assets", () => {
+        beforeEach(() => MainEditorSceneTool.prepareScene(sandbox));
 
-       describe
-       ("dispose texture assets",
-       (
-       () => {
+        testPromise(
+          {|
+          1.load BoxTextured wdb asset w1;
+          2.drag w1 to scene tree to be gameObject g1;
+          3.export;
+          4.import;
 
-       })
-       ); */
+          g1->material->select material group widget should have only one wdb material
+          |},
+          () =>
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            (),
+          )
+          |> then_(uploadedWDBNodeId => {
+               MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                 ~wdbNodeId=uploadedWDBNodeId,
+                 (),
+               );
+
+               ImportPackageTool.testImportPackage(
+                 ~testFunc=
+                   () => {
+                     let engineState = StateEngineService.unsafeGetState();
+
+                     LoadWDBTool.getBoxTexturedMeshGameObject(engineState)
+                     |> WonderLog.Log.print
+                     |> GameObjectTool.setCurrentSceneTreeNode;
+
+                     BuildComponentTool.buildMaterial(
+                       ~gameObject=
+                         GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+                       ~isShowMaterialGroup=true,
+                       (),
+                     )
+                     |> ReactTestTool.createSnapshotAndMatch
+                     |> resolve;
+                   },
+                 (),
+               );
+             })
+        );
+      });
+    });
 
     describe("test import scene wdb", () => {
       beforeEach(() => {

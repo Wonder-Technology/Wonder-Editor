@@ -46,6 +46,8 @@ let deepDisposeAssetTreeRoot = ((editorState, engineState)) => {
     _disposeAllGeometryAssets(allWDBGameObjects, (editorState, engineState))
     |> _disposeWDBGameObjects(allWDBGameObjects);
 
+  /* TODO dispose material asset */
+
   let editorState = _clearAssetNodeMap(editorState);
 
   (
