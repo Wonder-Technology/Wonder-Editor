@@ -1,77 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`header import package test geometry 
-          1.export;
-          2.import;
-
-          select geometry group widget should have only default geometrys
-           1`] = `
-<article
-  className="wonder-inspector-geometry"
->
-  <div
-    className="inspector-item"
-  >
-    <div
-      className="item-header"
-    >
-      Geometry
-    </div>
-    <div
-      className="item-content"
-    >
-      <div
-        className="inspector-select"
-      >
-        <div
-          className="select-name"
-        >
-          Wonder-Default-Cube
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    className="select-component-content"
-  >
-    <div
-      className="select-component-item"
-    >
-      <div
-        className="item-header"
-      >
-        Geometry
-      </div>
-      <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Sphere
-      </div>
-      <div
-        className="item-content item-active"
-        onClick={[Function]}
-      >
-        Wonder-Default-Cube
-      </div>
-    </div>
-    <div
-      className="select-component-bg"
-      onClick={[Function]}
-    />
-  </div>
-</article>
-`;
-
-exports[`header import package test geometry test with wdb assets relate scene wdb gameObjects with wdb asset gameObjects->geometrys 
+exports[`header import package dispose assets dispose wdb assets dispose geometry assets 
           1.load BoxTextured wdb asset w1;
           2.drag w1 to scene tree to be gameObject g1;
           3.export;
@@ -138,6 +67,77 @@ exports[`header import package test geometry test with wdb assets relate scene w
       </div>
       <div
         className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Cube
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;
+
+exports[`header import package test geometry 
+          1.export;
+          2.import;
+
+          select geometry group widget should have only default geometrys
+           1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
+      </div>
+      <div
+        className="item-content item-active"
         onClick={[Function]}
       >
         Wonder-Default-Cube

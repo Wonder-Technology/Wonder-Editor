@@ -122,4 +122,4 @@ let createDefaultScene = (cubeGeometry, editorState, engineState) => {
   );
 };
 
-let isAssetGeometry = geometry => geometry >= 1;
+/* let isAssetGeometry = geometry => geometry >= 1; */

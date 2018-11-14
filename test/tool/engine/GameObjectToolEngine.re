@@ -46,3 +46,5 @@ let disposeAllGameObjects = (gameObject, engineState) =>
          engineState |> GameObjectEngineService.disposeGameObject(gameObject),
        engineState,
      );
+
+let isAlive = Wonderjs.AliveGameObjectMainService.isAlive;

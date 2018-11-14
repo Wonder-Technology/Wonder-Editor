@@ -25,7 +25,7 @@ let createGameObjectAndSetPointData = (~state, ~hasTexCoords=true, ()) => {
       |> GeometryEngineService.setGeometryTexCoords(geometry, texCoords1) :
       state;
 
-  let name = "geometryNoTexCoord";
+  let name = hasTexCoords ? "geometryWithTexCoord" : "geometryNoTexCoord";
 
   let state = state |> GeometryEngineService.setGeometryName(geometry, name);
 
@@ -49,3 +49,10 @@ let getNewGeometry = (~engineState=StateEngineService.unsafeGetState(), ()) => {
 
   index;
 };
+
+let isGeometryDisposed = (geometry, state) =>
+  !
+    Wonderjs.DisposeGeometryMainService.isAlive(
+      geometry,
+      state |> Wonderjs.RecordGeometryMainService.getRecord,
+    );

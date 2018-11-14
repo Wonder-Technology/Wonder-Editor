@@ -2,8 +2,18 @@ open AssetTreeNodeType;
 
 open AssetNodeType;
 
-let _disposeClonedGameObjectsGeometry =
-    (wdbGameObjects, (editorState, engineState)) =>
+let _disposeWDBGameObjects = (wdbGameObjects, (editorState, engineState)) =>
+  wdbGameObjects
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. engineState, gameObject) =>
+         GameObjectEngineService.disposeGameObjectKeepOrderRemoveGeometryRemoveMaterial(
+           gameObject,
+           engineState,
+         ),
+       engineState,
+     );
+
+let _getClonedGameObjects = (wdbGameObjects, (editorState, engineState)) =>
   engineState
   |> GameObjectEngineService.getAllGeometrys(wdbGameObjects)
   |> WonderCommonlib.ArrayService.removeDuplicateItems
@@ -19,53 +29,28 @@ let _disposeClonedGameObjectsGeometry =
        |> GeometryEngineService.unsafeGetGeometryGameObjects(geometry)
      )
   |> WonderCommonlib.ArrayService.flatten
-  |> ArrayService.exclude(wdbGameObjects)
+  |> ArrayService.exclude(wdbGameObjects);
+
+let _removeClonedGameObjectsComponentType = (clonedGameObjects, editorState) =>
+  clonedGameObjects
   |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. (editorState, engineState), gameObject) =>
-         GameObjectLogicService.disposeGeometry(
-           gameObject,
-           engineState
-           |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
-                gameObject,
-              ),
-           (editorState, engineState),
-         ),
-       (editorState, engineState),
+       (. editorState, wdbGameObject) =>
+         editorState
+         |> InspectorEditorService.removeComponentTypeToMap(
+              wdbGameObject,
+              InspectorComponentType.Geometry,
+            ),
+       editorState,
      );
 
-let _disposeWDBGameObjects = (wdbGameObjects, (editorState, engineState)) =>
-  wdbGameObjects
-  |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. engineState, gameObject) =>
-         switch (
-           GameObjectComponentEngineService.getGeometryComponent(
-             gameObject,
-             engineState,
-           )
-         ) {
-         | Some(geometry) =>
-           RelateGameObjectAndAssetUtils.isDefaultGeometry(
-             geometry,
-             (editorState, engineState),
-           ) ?
-             GameObjectEngineService.disposeGameObjectKeepOrderRemoveGeometryRemoveMaterial(
-               gameObject,
-               engineState,
-             ) :
-             GameObjectEngineService.disposeGameObjectDisposeGeometryRemoveMaterial(
-               gameObject,
-               engineState,
-             )
-         | None =>
-           GameObjectEngineService.disposeGameObjectDisposeGeometryRemoveMaterial(
-             gameObject,
-             engineState,
-           )
-         },
-       engineState,
-     );
+let _disposeGeometryAssets = (wdbGameObjects, (editorState, engineState)) =>
+  GeometryAssetLogicService.getGeometryAssetsFromWDBGameObjects(
+    wdbGameObjects,
+    (editorState, engineState),
+  )
+  |> GeometryEngineService.batchDisposeGeometry(_, engineState);
 
-let _handleRemoveWDBNode = (nodeId, (editorState, engineState)) => {
+let _removeWDBTreeNode = (nodeId, (editorState, engineState)) => {
   let {wdbGameObject} =
     editorState
     |> WDBNodeMapAssetEditorService.getWDBNodeMap
@@ -74,18 +59,20 @@ let _handleRemoveWDBNode = (nodeId, (editorState, engineState)) => {
   let wdbGameObjects =
     GameObjectEngineService.getAllGameObjects(wdbGameObject, engineState);
 
-  let (editorState, engineState) =
-    (editorState, engineState)
-    |> _disposeClonedGameObjectsGeometry(wdbGameObjects);
+  let editorState =
+    editorState
+    |> _removeClonedGameObjectsComponentType(
+         _getClonedGameObjects(wdbGameObjects, (editorState, engineState)),
+       );
+
+  let engineState =
+    _disposeGeometryAssets(wdbGameObjects, (editorState, engineState));
+
   let engineState =
     (editorState, engineState) |> _disposeWDBGameObjects(wdbGameObjects);
 
   (
-    editorState
-    |> WDBNodeMapAssetEditorService.getWDBNodeMap
-    |> SparseMapService.copy
-    |> DomHelper.deleteKeyInMap(nodeId)
-    |. WDBNodeMapAssetEditorService.setWDBNodeMap(editorState),
+    RemoveNodeAssetEditorService.removeWDBNodeEditorData(nodeId, editorState),
     engineState,
   );
 };
@@ -111,25 +98,8 @@ let _removeTextureFromAllLightMaterials = (textureComponent, engineState) =>
 let _removeTextureEngineData = (textureComponent, engineState) =>
   engineState |> _removeTextureFromAllLightMaterials(textureComponent);
 
-let _removeTextureEditorData = (nodeId, textureComponent, image, editorState) => {
-  let editorState =
-    editorState
-    |> TextureNodeMapAssetEditorService.getTextureNodeMap
-    |> SparseMapService.copy
-    |> DomHelper.deleteKeyInMap(nodeId)
-    |. TextureNodeMapAssetEditorService.setTextureNodeMap(editorState);
-
-  TextureNodeMapAssetEditorService.doesAnyTextureUseImage(image, editorState) ?
-    editorState :
-    editorState
-    |> ImageNodeMapAssetEditorService.getImageNodeMap
-    |> Js.Array.copy
-    |> DomHelper.deleteKeyInMap(image)
-    |. ImageNodeMapAssetEditorService.setImageNodeMap(editorState);
-};
-
 let _removeTextureTreeNode = (nodeId, (editorState, engineState)) => {
-  let {textureComponent, image} =
+  let {textureComponent} =
     editorState
     |> TextureNodeMapAssetEditorService.getTextureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
@@ -137,7 +107,10 @@ let _removeTextureTreeNode = (nodeId, (editorState, engineState)) => {
   let engineState = _removeTextureEngineData(textureComponent, engineState);
 
   (
-    _removeTextureEditorData(nodeId, textureComponent, image, editorState),
+    RemoveNodeAssetEditorService.removeTextureNodeEditorData(
+      nodeId,
+      editorState,
+    ),
     engineState,
   );
 };
@@ -159,8 +132,10 @@ let _removeMaterialTreeNode = (nodeId, (editorState, engineState)) => {
     );
 
   (
-    MaterialNodeMapAssetEditorService.remove(nodeId, editorState)
-    |> MaterialNodeIdMapAssetEditorService.remove(materialComponent),
+    RemoveNodeAssetEditorService.removeMaterialNodeEditorData(
+      nodeId,
+      editorState,
+    ),
     engineState,
   );
 };
@@ -233,21 +208,17 @@ let deepRemoveTreeNode = (removedTreeNode, (editorState, engineState)) => {
            let (editorState, engineState) =
              switch (type_) {
              | Folder => (
-                 editorState
-                 |> FolderNodeMapAssetEditorService.getFolderNodeMap
-                 |> SparseMapService.copy
-                 |> DomHelper.deleteKeyInMap(nodeId)
-                 |. FolderNodeMapAssetEditorService.setFolderNodeMap(
-                      editorState,
-                    ),
+                 RemoveNodeAssetEditorService.removeFolderNodeEditorData(
+                   nodeId,
+                   editorState,
+                 ),
                  engineState,
                )
              | Texture =>
                _removeTextureTreeNode(nodeId, (editorState, engineState))
              | Material =>
                _removeMaterialTreeNode(nodeId, (editorState, engineState))
-             | WDB =>
-               _handleRemoveWDBNode(nodeId, (editorState, engineState))
+             | WDB => _removeWDBTreeNode(nodeId, (editorState, engineState))
              | _ => (editorState, engineState)
              };
 
@@ -277,15 +248,10 @@ let deepDisposeAssetTreeRoot = ((editorState, engineState)) => {
     (editorState, engineState) |> deepRemoveTreeNode(removedTreeNode);
 
   (
-    editorState
-    |> RemovedAssetIdArrayAssetEditorService.getRemovedAssetIdArray
-    |> Js.Array.concat(removedAssetIdArr)
-    |. RemovedAssetIdArrayAssetEditorService.setRemovedAssetIdArray(
-         editorState,
-       )
-    |> TreeRootAssetEditorService.clearAssetTreeRoot
-    |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
-    |> CurrentNodeDataAssetEditorService.clearCurrentNodeData,
+    RemoveNodeAssetEditorService.deepDisposeAssetTreeRoot(
+      removedAssetIdArr,
+      editorState,
+    ),
     engineState,
   );
 };

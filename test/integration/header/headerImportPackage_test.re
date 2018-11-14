@@ -19,13 +19,6 @@ let _ =
     let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
     let directionPointLightsAndBoxWDBArrayBuffer = ref(Obj.magic(1));
 
-    /* beforeEach(() => _prepareFakeCanvas() |> ignore); */
-
-    /* beforeAll(() =>
-         directionPointLightsAndBoxWDBArrayBuffer :=
-           WDBTool.generateDirectionPointLightsAndBoxWDB()
-       ); */
-
     let _buildFakeCanvas = (sandbox, base64, callIndex) => {
       let toDataURLStub = createEmptyStubWithJsObjSandbox(sandbox);
       toDataURLStub |> returns(base64);
@@ -86,6 +79,213 @@ let _ =
       MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
+    describe("dispose assets", () =>
+      describe("dispose wdb assets", () => {
+        beforeEach(() => {
+          MainEditorSceneTool.initStateWithJob(
+            ~sandbox,
+            ~isBuildFakeDom=false,
+            ~noWorkerJobRecord=
+              NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                ~loopPipelines=
+                  {|
+                   [
+                       {
+                           "name": "default",
+                           "jobs": [
+                               {
+                                   "name": "dispose"
+                               }
+                           ]
+                       }
+                   ]
+               |},
+                (),
+              ),
+            (),
+          );
+
+          MainEditorSceneTool.prepareScene(sandbox);
+        });
+
+        describe("dispose geometry assets", () => {
+          testPromise(
+            {|
+          1.load BoxTextured wdb asset w1;
+          2.drag w1 to scene tree to be gameObject g1;
+          3.export;
+          4.import;
+
+
+          g1->geometry->select geometry group widget should have one wdb geometry and be using it
+          |},
+            () =>
+            MainEditorAssetUploadTool.loadOneWDB(
+              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+              (),
+            )
+            |> then_(uploadedWDBNodeId => {
+                 MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                   ~wdbNodeId=uploadedWDBNodeId,
+                   (),
+                 );
+
+                 ImportPackageTool.testImportPackage(
+                   ~testFunc=
+                     () => {
+                       let engineState = StateEngineService.unsafeGetState();
+
+                       LoadWDBTool.getBoxTexturedMeshGameObject(engineState)
+                       |> GameObjectTool.setCurrentSceneTreeNode;
+
+                       MainEditorSceneTreeTool.Select.selectGameObject(
+                         ~gameObject=
+                           GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+                         (),
+                       );
+
+                       let component =
+                         BuildComponentTool.buildGeometry(
+                           ~geometryComponent=
+                             GameObjectTool.getCurrentGameObjectGeometry(),
+                           ~isShowGeometryGroup=true,
+                           (),
+                         );
+
+                       component
+                       |> ReactTestTool.createSnapshotAndMatch
+                       |> resolve;
+                     },
+                   (),
+                 );
+               })
+          );
+          testPromise("should dispose geometry engine data", () =>
+            MainEditorAssetUploadTool.loadOneWDB(
+              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+              (),
+            )
+            |> then_(uploadedWDBNodeId => {
+                 let engineState = StateEngineService.unsafeGetState();
+                 let editorState = StateEditorService.getState();
+                 let geometryAssets =
+                   GeometryAssetLogicService.getGeometryAssets(
+                     editorState,
+                     engineState,
+                   );
+
+                 ImportPackageTool.disposeAssets();
+
+                 let engineState = StateEngineService.unsafeGetState();
+                 geometryAssets
+                 |> Js.Array.filter(geometryAsset =>
+                      !
+                        GeometryToolEngine.isGeometryDisposed(
+                          geometryAsset,
+                          engineState,
+                        )
+                    )
+                 |> Js.Array.length
+                 |> expect == 0
+                 |> resolve;
+               })
+          );
+        });
+
+        describe("dispose wdb gameObjects", () => {
+          let wdbArrayBuffer = ref(Obj.magic(1));
+
+          let generateWDB = () =>
+            WDBTool.generateWDB((editorState, engineState) => {
+              let (engineState, geometry) =
+                GeometryEngineService.createSphereGeometry(
+                  1.,
+                  3,
+                  engineState,
+                );
+              let (engineState, lightMaterial) =
+                LightMaterialEngineService.create(engineState);
+
+              let (editorState, engineState, box1) =
+                PrimitiveEngineService.createCube(
+                  (geometry, lightMaterial),
+                  editorState,
+                  engineState,
+                );
+
+              let defaultCubeGeometryComponent =
+                GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
+                  editorState,
+                );
+              let (engineState, lightMaterial) =
+                LightMaterialEngineService.create(engineState);
+
+              let (editorState, engineState, box2) =
+                PrimitiveEngineService.createCube(
+                  (defaultCubeGeometryComponent, lightMaterial),
+                  editorState,
+                  engineState,
+                );
+
+              let (engineState, rootGameObject) =
+                GameObjectEngineService.create(engineState);
+
+              let engineState =
+                engineState
+                |> GameObjectUtils.addChild(rootGameObject, box1)
+                |> GameObjectUtils.addChild(rootGameObject, box2);
+
+              (rootGameObject, (editorState, engineState));
+            });
+
+          beforeAll(() => wdbArrayBuffer := generateWDB());
+
+          testPromise("should dispose gameObject engine data", () =>
+            MainEditorAssetUploadTool.loadOneWDB(
+              ~arrayBuffer=wdbArrayBuffer^,
+              (),
+            )
+            |> then_(uploadedWDBNodeId => {
+                 let engineState = StateEngineService.unsafeGetState();
+                 let editorState = StateEditorService.getState();
+
+                 let allWDBGameObjects =
+                   MainEditorAssetWDBNodeTool.getAllWDBGameObjects(
+                     editorState,
+                     engineState,
+                   );
+
+                 ImportPackageTool.disposeAssets();
+
+                 let engineState = StateEngineService.unsafeGetState();
+                 allWDBGameObjects
+                 |> Js.Array.filter(gameObject =>
+                      GameObjectToolEngine.isAlive(gameObject, engineState)
+                    )
+                 |> Js.Array.length
+                 |> expect == 0
+                 |> resolve;
+               })
+          );
+        });
+      })
+    );
+    /* describe
+       ("dispose material assets",
+       (
+       () => {
+
+       })
+       );
+
+       describe
+       ("dispose texture assets",
+       (
+       () => {
+
+       })
+       ); */
 
     describe("test import scene wdb", () => {
       beforeEach(() => {
@@ -906,62 +1106,61 @@ let _ =
             },
           );
         });
+        /* describe(
+             "relate scene wdb gameObjects with wdb asset gameObjects->geometrys",
+             () =>
+             testPromise(
+               {|
+             1.load BoxTextured wdb asset w1;
+             2.drag w1 to scene tree to be gameObject g1;
+             3.export;
+             4.import;
 
-        describe(
-          "relate scene wdb gameObjects with wdb asset gameObjects->geometrys",
-          () =>
-          testPromise(
-            {|
-          1.load BoxTextured wdb asset w1;
-          2.drag w1 to scene tree to be gameObject g1;
-          3.export;
-          4.import;
 
+             g1->geometry->select geometry group widget should have one wdb geometry and be using it
+             |},
+               () =>
+               MainEditorAssetUploadTool.loadOneWDB(
+                 ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                 (),
+               )
+               |> then_(uploadedWDBNodeId => {
+                    MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                      ~wdbNodeId=uploadedWDBNodeId,
+                      (),
+                    );
 
-          g1->geometry->select geometry group widget should have one wdb geometry and be using it
-          |},
-            () =>
-            MainEditorAssetUploadTool.loadOneWDB(
-              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
-              (),
-            )
-            |> then_(uploadedWDBNodeId => {
-                 MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
-                   ~wdbNodeId=uploadedWDBNodeId,
-                   (),
-                 );
+                    ImportPackageTool.testImportPackage(
+                      ~testFunc=
+                        () => {
+                          let engineState = StateEngineService.unsafeGetState();
 
-                 ImportPackageTool.testImportPackage(
-                   ~testFunc=
-                     () => {
-                       let engineState = StateEngineService.unsafeGetState();
+                          LoadWDBTool.getBoxTexturedMeshGameObject(engineState)
+                          |> GameObjectTool.setCurrentSceneTreeNode;
 
-                       LoadWDBTool.getBoxTexturedMeshGameObject(engineState)
-                       |> GameObjectTool.setCurrentSceneTreeNode;
+                          MainEditorSceneTreeTool.Select.selectGameObject(
+                            ~gameObject=
+                              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+                            (),
+                          );
 
-                       MainEditorSceneTreeTool.Select.selectGameObject(
-                         ~gameObject=
-                           GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-                         (),
-                       );
+                          let component =
+                            BuildComponentTool.buildGeometry(
+                              ~geometryComponent=
+                                GameObjectTool.getCurrentGameObjectGeometry(),
+                              ~isShowGeometryGroup=true,
+                              (),
+                            );
 
-                       let component =
-                         BuildComponentTool.buildGeometry(
-                           ~geometryComponent=
-                             GameObjectTool.getCurrentGameObjectGeometry(),
-                           ~isShowGeometryGroup=true,
-                           (),
-                         );
-
-                       component
-                       |> ReactTestTool.createSnapshotAndMatch
-                       |> resolve;
-                     },
-                   (),
-                 );
-               })
-          )
-        );
+                          component
+                          |> ReactTestTool.createSnapshotAndMatch
+                          |> resolve;
+                        },
+                      (),
+                    );
+                  })
+             )
+           ); */
       });
     });
 

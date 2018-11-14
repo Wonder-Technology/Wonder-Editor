@@ -178,3 +178,10 @@ let intersect = (arr1, arr2) =>
 
 let hasIntersect = (arr1, arr2) =>
   intersect(arr1, arr2) |> Js.Array.length > 0;
+
+let fastConcat = (arr1, arr2) =>
+  arr2
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. arr1, value2) => arr1 |> push(value2),
+       arr1,
+     );

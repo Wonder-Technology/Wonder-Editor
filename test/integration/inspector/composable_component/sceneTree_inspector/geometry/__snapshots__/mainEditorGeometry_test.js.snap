@@ -103,7 +103,7 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
 </article>
 `;
 
-exports[`MainEditorGeometry component test set currentSceneTreeNode test change geometry test snapshot test show select geometry group widget if current geometry has no texCoord, select geometry group should contain geometry which has texCoord or no texCoord 1`] = `
+exports[`MainEditorGeometry component test set currentSceneTreeNode test change geometry test snapshot test show select geometry group widget if current material has no map, select geometry group should contain geometry which has texCoord or no texCoord 1`] = `
 <article
   className="wonder-inspector-geometry"
 >

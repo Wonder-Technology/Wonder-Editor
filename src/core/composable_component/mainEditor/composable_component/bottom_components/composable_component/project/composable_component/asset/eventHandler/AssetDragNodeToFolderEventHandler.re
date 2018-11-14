@@ -58,8 +58,7 @@ module CustomEventHandler = {
     let editorState = StateEditorService.getState();
 
     TreeAssetEditorService.isIdEqual(targetNodeId, sourceNodeId) ?
-      dispatchFunc(AppStore.UpdateAction(Update([|Project|])))
-      |> ignore :
+      dispatchFunc(AppStore.UpdateAction(Update([|Project|]))) |> ignore :
       {
         let editorState =
           editorState
@@ -78,7 +77,7 @@ module CustomEventHandler = {
         let (newAssetTreeRoot, removedTreeNode) =
           editorState
           |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
-          |> RemoveNodeAssetTreeAssetEditorService.removeSpecificTreeNode(
+          |> RemoveAssetTreeNodeAssetLogicService.removeSpecificTreeNode(
                sourceNodeId,
              );
 
@@ -117,8 +116,7 @@ module CustomEventHandler = {
           editorState,
         );
 
-        dispatchFunc(AppStore.UpdateAction(Update([|Project|])))
-        |> ignore;
+        dispatchFunc(AppStore.UpdateAction(Update([|Project|]))) |> ignore;
       };
   };
 };

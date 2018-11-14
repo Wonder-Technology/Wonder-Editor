@@ -92,45 +92,7 @@ let _ =
           });
 
           describe("cloned gameObjects->geometrys should be disposed", () => {
-            testPromise("test engine", () => {
-              MainEditorSceneTool.prepareScene(sandbox);
-
-              MainEditorAssetUploadTool.loadOneWDB(
-                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
-                (),
-              )
-              |> then_(uploadedWDBNodeId => {
-                   MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
-                     ~wdbNodeId=uploadedWDBNodeId,
-                     (),
-                   );
-                   MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
-                     ~wdbNodeId=uploadedWDBNodeId,
-                     (),
-                   );
-
-                   MainEditorAssetHeaderOperateNodeTool.removeWDBNode(
-                     ~wdbNodeId=uploadedWDBNodeId,
-                     (),
-                   );
-
-                   let engineState = StateEngineService.unsafeGetState();
-
-                   let clonedGameObjectsWhoHasGeometryWhenCloned =
-                     LoadWDBTool.getBoxTexturedMeshGameObjects(engineState);
-
-                   clonedGameObjectsWhoHasGeometryWhenCloned
-                   |> Js.Array.map(gameObject =>
-                        GameObjectComponentEngineService.hasGeometryComponent(
-                          gameObject,
-                          engineState,
-                        )
-                      )
-                   |> expect == [|false, false|]
-                   |> resolve;
-                 });
-            });
-            testPromise("test snapshot", () => {
+            let _prepare = testFunc => {
               MainEditorSceneTool.prepareScene(sandbox);
 
               MainEditorAssetUploadTool.loadOneWDB(
@@ -159,21 +121,45 @@ let _ =
 
                    engineState |> StateEngineService.setState |> ignore;
 
-                   MainEditorSceneTreeTool.Select.selectGameObject(
-                     ~gameObject=
-                       clonedGameObjectsWhoHasGeometryWhenCloned
-                       |> ArrayService.unsafeGetFirst,
-                     (),
+                   testFunc(
+                     clonedGameObjectsWhoHasGeometryWhenCloned,
+                     engineState,
                    );
-
-                   BuildComponentTool.buildInspectorComponent(
-                     TestTool.buildEmptyAppState(),
-                     InspectorTool.buildFakeAllShowComponentConfig(),
-                   )
-                   |> ReactTestTool.createSnapshotAndMatch
-                   |> resolve;
                  });
-            });
+            };
+
+            testPromise("test engine", () =>
+              _prepare(
+                (clonedGameObjectsWhoHasGeometryWhenCloned, engineState) =>
+                clonedGameObjectsWhoHasGeometryWhenCloned
+                |> Js.Array.map(gameObject =>
+                     GameObjectComponentEngineService.hasGeometryComponent(
+                       gameObject,
+                       engineState,
+                     )
+                   )
+                |> expect == [|false, false|]
+                |> resolve
+              )
+            );
+            testPromise("test snapshot", () =>
+              _prepare(
+                (clonedGameObjectsWhoHasGeometryWhenCloned, engineState) => {
+                MainEditorSceneTreeTool.Select.selectGameObject(
+                  ~gameObject=
+                    clonedGameObjectsWhoHasGeometryWhenCloned
+                    |> ArrayService.unsafeGetFirst,
+                  (),
+                );
+
+                BuildComponentTool.buildInspectorComponent(
+                  TestTool.buildEmptyAppState(),
+                  InspectorTool.buildFakeAllShowComponentConfig(),
+                )
+                |> ReactTestTool.createSnapshotAndMatch
+                |> resolve;
+              })
+            );
           });
         });
 

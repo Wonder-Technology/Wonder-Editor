@@ -4,7 +4,7 @@ open Js.Typed_array;
 
 let _disposeAssets = () =>
   StateLogicService.getAndSetStateToGetData(
-    RemoveNodeAssetTreeAssetEditorService.deepDisposeAssetTreeRoot,
+    RemoveWholeAssetTreeAssetLogicService.deepDisposeAssetTreeRoot,
   );
 
 let _readHeader = dataView => {
@@ -56,14 +56,22 @@ let _initAssetTreeRoot = () => {
 };
 
 let _import = result => {
+  WonderLog.Console.profile("dispose assets");
+
   let t1 = Performance.now();
   _disposeAssets();
 
   JobEngineService.execDisposeJob |> StateLogicService.getAndSetEngineState;
 
-  _initAssetTreeRoot();
+
+    GeometryEngineService.getAllGeometrys(StateEngineService.unsafeGetState())
+    |> WonderLog.Log.print;
 
   let t2 = Performance.now();
+
+  WonderLog.Console.profileEnd();
+
+  _initAssetTreeRoot();
 
   let wpk = result |> FileReader.convertResultToArrayBuffer;
 
@@ -83,18 +91,14 @@ let _import = result => {
 
   let t3 = Performance.now();
 
-       WonderLog.Log.print(("before import", t2 -. t1, t3 -. t2)) |> ignore;
-
-
+  WonderLog.Log.print(("before import", t2 -. t1, t3 -. t2)) |> ignore;
 
   HeaderImportASBUtils.importASB(asb)
   |> WonderBsMost.Most.map(
        (((allWDBGameObjectsArr, imageUint8ArrayDataMap), materialMapTuple)) => {
-WonderLog.Console.profile("relate wdb asset");
-
+       WonderLog.Console.profile("relate wdb asset");
 
        let t4 = Performance.now();
-
 
        ImportPackageRelateGameObjectAndAssetUtils.relateWDBAssetGameObjectsAndAssets(
          allWDBGameObjectsArr,
@@ -110,8 +114,7 @@ WonderLog.Console.profile("relate wdb asset");
 
        let t5 = Performance.now();
 
-
-WonderLog.Console.profileEnd();
+       WonderLog.Console.profileEnd();
 
        WonderLog.Log.print(("relate wdb asset: ", t5 -. t4)) |> ignore;
 
@@ -124,8 +127,7 @@ WonderLog.Console.profileEnd();
               ((sceneGameObject, imageUint8ArrayDataMap)) => {
               let engineState = StateEngineService.unsafeGetState();
 
-
-WonderLog.Console.profile("relate scene wdb");
+              WonderLog.Console.profile("relate scene wdb");
               let t6 = Performance.now();
 
               ImportPackageRelateGameObjectAndAssetUtils.relateSceneWDBGameObjectsAndAssets(
@@ -139,7 +141,7 @@ WonderLog.Console.profile("relate scene wdb");
 
               let t7 = Performance.now();
 
-WonderLog.Console.profileEnd();
+              WonderLog.Console.profileEnd();
 
               WonderLog.Log.print(("relate scene wdb: ", t7 -. t6)) |> ignore;
               ();

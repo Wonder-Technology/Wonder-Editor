@@ -34,15 +34,18 @@ let _ =
       describe("test change geometry", () => {
         describe("test snapshot", () => {
           describe("test show select geometry group widget", () => {
-            let _addNoTexCoordGeometry = () => {
+            let _addNoTexCoordGeometryWDBGameObject = () => {
               let engineState = StateEngineService.unsafeGetState();
 
-              let (engineState, _, _, _, _) =
+              let (engineState, gameObject, _, _, name) =
                 GeometryToolEngine.createGameObjectAndSetPointData(
                   ~state=engineState,
                   ~hasTexCoords=false,
                   (),
                 );
+
+              MainEditorAssetWDBNodeTool.addWDBNode(~name, ~gameObject, ())
+              |> ignore;
 
               engineState |> StateEngineService.setState |> ignore;
             };
@@ -67,9 +70,9 @@ let _ =
             };
 
             test(
-              "if current geometry has no texCoord, select geometry group should contain geometry which has texCoord or no texCoord",
+              "if current material has no map, select geometry group should contain geometry which has texCoord or no texCoord",
               () => {
-                _addNoTexCoordGeometry();
+                _addNoTexCoordGeometryWDBGameObject();
                 let currentGameObjectGeometry =
                   GameObjectTool.getCurrentGameObjectGeometry();
 
@@ -86,7 +89,7 @@ let _ =
             test(
               "else, select geometry group should only contain geometry which has texCoord",
               () => {
-              _addNoTexCoordGeometry();
+              _addNoTexCoordGeometryWDBGameObject();
               _setGameObjectLightMateiralDiffuseMap(
                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
               );
@@ -147,7 +150,8 @@ let _ =
                 newGameObjectGeometry,
               )
               |> StateLogicService.getEngineStateToGetData
-              |> expect == MainEditorGeometryTool.getDefaultSphereGeometryName();
+              |>
+              expect == MainEditorGeometryTool.getDefaultSphereGeometryName();
             },
           );
           test(

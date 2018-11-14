@@ -377,32 +377,6 @@ let replaceToTextureAssetTextureComponent =
   | _ => engineState
   };
 
-let _isGeometryPointDataEqual = (points1, points2, getLengthFunc) =>
-  /* getLengthFunc(points1) === getLengthFunc(points2) && points1 == points2; */
-  getLengthFunc(points1) === getLengthFunc(points2);
-
-let _isGeometryVertexDataEqual = (geometry1, geometry2, engineState) =>
-  _isGeometryPointDataEqual(
-    GeometryEngineService.getGeometryVertices(geometry1, engineState),
-    GeometryEngineService.getGeometryVertices(geometry2, engineState),
-    Float32Array.length,
-  )
-  && _isGeometryPointDataEqual(
-       GeometryEngineService.getGeometryNormals(geometry1, engineState),
-       GeometryEngineService.getGeometryNormals(geometry2, engineState),
-       Float32Array.length,
-     )
-  && _isGeometryPointDataEqual(
-       GeometryEngineService.getGeometryTexCoords(geometry1, engineState),
-       GeometryEngineService.getGeometryTexCoords(geometry2, engineState),
-       Float32Array.length,
-     )
-  && _isGeometryPointDataEqual(
-       GeometryEngineService.getGeometryIndices(geometry1, engineState),
-       GeometryEngineService.getGeometryIndices(geometry2, engineState),
-       Uint16Array.length,
-     );
-
 let getGeometryData = (geometry, engineState) => (
   GeometryEngineService.getGeometryName(geometry, engineState),
   GeometryEngineService.getGeometryVertices(geometry, engineState),
@@ -418,16 +392,26 @@ let isGeometryDataEqual =
       engineState,
     ) =>
   name1 === name2
-  && _isGeometryPointDataEqual(vertices1, vertices2, Float32Array.length)
-  && _isGeometryPointDataEqual(normals1, normals2, Float32Array.length)
-  && _isGeometryPointDataEqual(texCoords1, texCoords2, Float32Array.length)
-  && _isGeometryPointDataEqual(indices1, indices2, Uint16Array.length);
-
-let _isGeometryEqualDefaultGeometryData =
-    (geometry, defaultGeometry, defaultGeometryName, engineState) =>
-  GeometryEngineService.unsafeGetGeometryName(geometry, engineState)
-  == defaultGeometryName
-  && _isGeometryVertexDataEqual(geometry, defaultGeometry, engineState);
+  && GeometryAssetLogicService.isGeometryPointDataEqual(
+       vertices1,
+       vertices2,
+       Float32Array.length,
+     )
+  && GeometryAssetLogicService.isGeometryPointDataEqual(
+       normals1,
+       normals2,
+       Float32Array.length,
+     )
+  && GeometryAssetLogicService.isGeometryPointDataEqual(
+       texCoords1,
+       texCoords2,
+       Float32Array.length,
+     )
+  && GeometryAssetLogicService.isGeometryPointDataEqual(
+       indices1,
+       indices2,
+       Uint16Array.length,
+     );
 
 let isDefaultGeometry = (geometry, (editorState, engineState)) => {
   let (defaultCubeGeometry, defaultCubeGeometryName) = (
@@ -443,13 +427,13 @@ let isDefaultGeometry = (geometry, (editorState, engineState)) => {
     PrepareDefaultComponentUtils.getDefaultSphereGeometryName(),
   );
 
-  _isGeometryEqualDefaultGeometryData(
+  GeometryAssetLogicService.isGeometryEqualDefaultGeometryData(
     geometry,
     defaultCubeGeometry,
     defaultCubeGeometryName,
     engineState,
   )
-  || _isGeometryEqualDefaultGeometryData(
+  || GeometryAssetLogicService.isGeometryEqualDefaultGeometryData(
        geometry,
        defaultSphereGeometry,
        defaultSphereGeometryName,

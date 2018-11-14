@@ -259,7 +259,9 @@ module Dispose = {
         engineState,
       )
     ) {
-    | None => engineState
+    | None =>
+      /* TODO dispose material */
+      engineState
     | Some(gameObjects) =>
       let engineState =
         gameObjects

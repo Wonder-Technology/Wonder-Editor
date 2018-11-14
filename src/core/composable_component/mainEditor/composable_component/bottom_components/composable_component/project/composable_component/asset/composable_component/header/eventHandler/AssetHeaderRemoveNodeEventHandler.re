@@ -17,13 +17,13 @@ module CustomEventHandler = {
     let (newAssetTreeRoot, removedTreeNode) =
       editorState
       |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
-      |> RemoveNodeAssetTreeAssetEditorService.removeSpecificTreeNode(
+      |> RemoveAssetTreeNodeAssetLogicService.removeSpecificTreeNode(
            currentNodeId,
          );
 
     let ((editorState, engineState), removedAssetIdArr) =
       (editorState, engineState)
-      |> RemoveNodeAssetTreeAssetEditorService.deepRemoveTreeNode(
+      |> RemoveAssetTreeNodeAssetLogicService.deepRemoveTreeNode(
            removedTreeNode,
          );
 

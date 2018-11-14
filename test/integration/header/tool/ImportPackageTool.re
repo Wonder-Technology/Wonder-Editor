@@ -63,3 +63,9 @@ let getImportedWDBAssetData = () =>
 
 let getFirstImportedWDBAssetData = () =>
   getImportedWDBAssetData() |> ArrayService.unsafeGetFirst;
+
+let disposeAssets = () => {
+  HeaderImportPackageUtils._disposeAssets();
+
+  JobEngineService.execDisposeJob |> StateLogicService.getAndSetEngineState;
+};

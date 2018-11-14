@@ -39,7 +39,6 @@ let getAllGeometrys = GeometryAPI.getAllGeometrys;
 
 let unsafeGetGeometryGameObjects = Wonderjs.GeometryAPI.unsafeGetGeometryGameObjects;
 
-
 let rec _generateGridPlanePoints =
         ((size, step, y), (num, index), vertices, indices) =>
   WonderEditor.(
@@ -107,3 +106,5 @@ let createGridPlaneGameObject = ((size, step, y), color, engineState) => {
 };
 
 let getGeometryTexCoords = GeometryAPI.getGeometryTexCoords;
+
+let batchDisposeGeometry = GeometryAPI.batchDisposeGeometry;

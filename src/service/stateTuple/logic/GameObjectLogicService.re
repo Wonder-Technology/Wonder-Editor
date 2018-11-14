@@ -47,19 +47,6 @@ let addGeometry = (gameObject, component, (editorState, engineState)) => (
   ),
 );
 
-let addGeometry = (gameObject, component, (editorState, engineState)) => (
-  editorState
-  |> InspectorEditorService.addComponentTypeToMap(
-       gameObject,
-       InspectorComponentType.Geometry,
-     ),
-  GameObjectAPI.addGameObjectGeometryComponent(
-    gameObject,
-    component,
-    engineState,
-  ),
-);
-
 let addCameraGroup = (gameObject, cameraGroup, (editorState, engineState)) => (
   editorState
   |> InspectorEditorService.addComponentTypeToMap(

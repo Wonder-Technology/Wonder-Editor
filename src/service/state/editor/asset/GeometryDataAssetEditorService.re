@@ -19,3 +19,8 @@ let unsafeGetDefaultSphereGeometryComponent = editorState =>
   editorState
   |> getGeometryData
   |> (({defaultSphereGeometryComponent}) => defaultSphereGeometryComponent);
+
+let unsafeGetDefaultGeometryComponents = editorState => [|
+  unsafeGetDefaultCubeGeometryComponent(editorState),
+  unsafeGetDefaultSphereGeometryComponent(editorState),
+|];

@@ -2,6 +2,24 @@ open AssetTreeNodeType;
 
 open CurrentNodeDataType;
 
+let getAllChildrennNodeIds = node => {
+  let rec _iterate = (nodeArr, removedAssetIdArr) =>
+    nodeArr
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (.
+           removedAssetIdArr,
+           {nodeId, type_, children}: AssetTreeNodeType.assetTreeNodeType,
+         ) =>
+           _iterate(
+             children,
+             removedAssetIdArr |> ArrayService.push(nodeId),
+           ),
+         removedAssetIdArr,
+       );
+
+  _iterate([|node|], [||]);
+};
+
 let getChildrenNameAndIdArr = (nodeId, nodeType, (editorState, engineState)) => {
   WonderLog.Contract.requireCheck(
     () =>
