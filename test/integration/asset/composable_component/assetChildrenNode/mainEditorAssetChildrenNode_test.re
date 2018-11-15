@@ -10,6 +10,8 @@ open Sinon;
 
 open AssetNodeType;
 
+open Js.Promise;
+
 let _ =
   describe("MainEditorAssetChildrenNode", () => {
     let sandbox = getSandboxDefaultVal();
@@ -236,4 +238,99 @@ let _ =
         })
       )
     );
+
+    describe("test show order", () => {
+      let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
+
+      beforeAll(() =>
+        boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
+      );
+
+      beforeEach(() => {
+        MainEditorAssetTool.buildFakeFileReader();
+
+        LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
+        LoadTool.buildFakeURL(sandbox^);
+
+        LoadTool.buildFakeLoadImage(.);
+
+        MainEditorAssetTool.buildFakeImage();
+      });
+
+      testPromise(
+        {|
+        order should be:
+        1)for different type_:folder,wdb,material,texture;
+        2)for the same type_:sort by firstname alphabetically
+        |},
+        () => {
+          let addedFolderNodeId1 = MainEditorAssetIdTool.getNewAssetId();
+          MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+          let addedMaterialNodeId1 = addedFolderNodeId1 |> succ;
+          MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+          let addedFolderNodeId2 = addedMaterialNodeId1 |> succ;
+          MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+          let addedMaterialNodeId2 = addedFolderNodeId2 |> succ;
+          MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+          let wdbName1 = "C_WDB";
+
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~fileName=wdbName1,
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            (),
+          )
+          |> then_(uploadedWDBNodeId1 => {
+               let imgName1 = "BImage.png";
+               MainEditorAssetUploadTool.loadOneTexture(~imgName=imgName1, ())
+               |> then_(uploadedTextureNodeId1 => {
+                    let wdbName2 = "A_WDB";
+
+                    MainEditorAssetUploadTool.loadOneWDB(
+                      ~fileName=wdbName2,
+                      ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                      (),
+                    )
+                    |> then_(uploadedWDBNodeId2 => {
+                         let imgName2 = "AImage.jpg";
+                         MainEditorAssetUploadTool.loadOneTexture(
+                           ~imgName=imgName2,
+                           (),
+                         )
+                         |> then_(uploadedTextureNodeId2 => {
+                              AssetTreeInspectorTool.Rename.renameAssetFolderNode(
+                                ~nodeId=addedFolderNodeId1,
+                                ~name="FFolder",
+                                (),
+                              );
+                              AssetTreeInspectorTool.Rename.renameAssetFolderNode(
+                                ~nodeId=addedFolderNodeId2,
+                                ~name="AFolder",
+                                (),
+                              );
+
+                              AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+                                ~nodeId=addedMaterialNodeId1,
+                                ~name="CMaterial",
+                                (),
+                              );
+                              AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+                                ~nodeId=addedMaterialNodeId2,
+                                ~name="AMaterial",
+                                (),
+                              );
+
+                              BuildComponentTool.buildAssetChildrenNode()
+                              |> ReactTestTool.createSnapshotAndMatch
+                              |> resolve;
+                            });
+                       });
+                  });
+             });
+        },
+      );
+    });
   });

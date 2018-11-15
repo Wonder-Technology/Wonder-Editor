@@ -13,8 +13,8 @@ module Method = {
     };
 
   let _buildImageNodeObjectURLIfNoBase64 =
-      (assetTreeNodeChildrenArr, editorState) =>
-    assetTreeNodeChildrenArr
+      (assetTreeChildrenNodeArr, editorState) =>
+    assetTreeChildrenNodeArr
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. editorState, {nodeId, type_}) =>
            switch (type_) {
@@ -68,15 +68,105 @@ module Method = {
          editorState,
        );
 
+  let _getNodeNameByType = ({nodeId, type_}, (editorState, engineState)) =>
+    switch (type_) {
+    | Folder =>
+      let {name}: folderResultType =
+        editorState
+        |> FolderNodeMapAssetEditorService.getFolderNodeMap
+        |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+
+      name;
+    | WDB =>
+      let {name}: wdbResultType =
+        editorState
+        |> WDBNodeMapAssetEditorService.getWDBNodeMap
+        |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+
+      name;
+    | Material =>
+      let baseName =
+        MaterialNodeMapAssetLogicService.getMaterialBaseName(
+          nodeId,
+          engineState,
+          editorState |> MaterialNodeMapAssetEditorService.getMaterialNodeMap,
+        );
+
+      baseName;
+    | Texture =>
+      let {textureComponent} =
+        editorState
+        |> TextureNodeMapAssetEditorService.getTextureNodeMap
+        |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+
+      BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
+        textureComponent,
+        engineState,
+      );
+    };
+
+  let _sortByName = (assetTreeChildrenNodeArr, (editorState, engineState)) =>
+    assetTreeChildrenNodeArr
+    |> Js.Array.sortInPlaceWith((node1, node2) =>
+         Js.String.localeCompare(
+           _getNodeNameByType(node2, (editorState, engineState))
+           |> Js.String.charAt(0),
+           _getNodeNameByType(node1, (editorState, engineState))
+           |> Js.String.charAt(0),
+         )
+         |> NumberType.convertFloatToInt
+       );
+
+  let sortAssetTreeChildrenNode =
+      (assetTreeChildrenNodeArr, (editorState, engineState)) => {
+    let folderAssetTreeChildrenNodeArr =
+      assetTreeChildrenNodeArr
+      |> Js.Array.filter(({type_}) => type_ === Folder);
+
+    let wdbAssetTreeChildrenNodeArr =
+      assetTreeChildrenNodeArr |> Js.Array.filter(({type_}) => type_ === WDB);
+
+    let materialAssetTreeChildrenNodeArr =
+      assetTreeChildrenNodeArr
+      |> Js.Array.filter(({type_}) => type_ === Material);
+
+    let textureAssetTreeChildrenNodeArr =
+      assetTreeChildrenNodeArr
+      |> Js.Array.filter(({type_}) => type_ === Texture);
+
+    ArrayService.fastConcat(
+      _sortByName(
+        folderAssetTreeChildrenNodeArr,
+        (editorState, engineState),
+      ),
+      _sortByName(wdbAssetTreeChildrenNodeArr, (editorState, engineState)),
+    )
+    |> ArrayService.fastConcat(
+         _,
+         _sortByName(
+           materialAssetTreeChildrenNodeArr,
+           (editorState, engineState),
+         ),
+       )
+    |> ArrayService.fastConcat(
+         _,
+         _sortByName(
+           textureAssetTreeChildrenNodeArr,
+           (editorState, engineState),
+         ),
+       );
+  };
+
   let showSpecificTreeNodeChildren =
       (
-        assetTreeNodeChildrenArr,
+        assetTreeChildrenNodeArr,
         (store, dispatchFunc),
         (dragImg, debounceTime, currentNodeData),
         (editorState, engineState),
       ) => {
     let result =
-      assetTreeNodeChildrenArr
+      assetTreeChildrenNodeArr
+      |> sortAssetTreeChildrenNode(_, (editorState, engineState))
       |> Js.Array.map(({nodeId, type_}) =>
            switch (type_) {
            | Folder =>
@@ -207,7 +297,7 @@ module Method = {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
-    let assetTreeNodeChildrenArr =
+    let assetTreeChildrenNodeArr =
       editorState
       |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
       |> TreeAssetEditorService.getSpecificTreeNodeById(
@@ -218,13 +308,13 @@ module Method = {
 
     let editorState =
       _buildImageNodeObjectURLIfNoBase64(
-        assetTreeNodeChildrenArr,
+        assetTreeChildrenNodeArr,
         editorState,
       );
 
     let result =
       showSpecificTreeNodeChildren(
-        assetTreeNodeChildrenArr,
+        assetTreeChildrenNodeArr,
         (store, dispatchFunc),
         (
           dragImg,
