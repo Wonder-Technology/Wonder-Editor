@@ -188,7 +188,7 @@ let render =
           changeZFunc=Method.changeScaleZ
           getDataFunc=TransformUtils.getTransformScaleData
           blurEventFunc=Method.blurScaleEvent
-          canBeZero=false
+          canBeZero=true
         />
       </div>
     </div>

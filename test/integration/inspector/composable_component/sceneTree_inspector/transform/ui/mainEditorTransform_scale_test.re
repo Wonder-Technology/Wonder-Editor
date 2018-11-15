@@ -45,7 +45,6 @@ let _ =
         test("if input 0, set origin value to engineState instead of 0", () => {
           open FloatInput;
 
-          ConsoleTool.notShowMessage();
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
           let value = 0.;
@@ -53,14 +52,14 @@ let _ =
 
           let reasonStateUpdate =
             FloatInputTool.reducer(
-              ~canBeZero=Some(false),
+              ~canBeZero=Some(true),
               ~action=Blur,
               ~state,
               (),
             )
             |> ReactTool.getUpdateState;
 
-          reasonStateUpdate.inputValue |> expect == Some(state.originValue);
+          reasonStateUpdate.inputValue |> expect == Some("0");
         })
       );
     });
