@@ -66,7 +66,7 @@ let getChildrenNameAndIdArr = (nodeId, nodeType, (editorState, engineState)) => 
                     OperateTextureLogicService.getTextureBaseName(
                       currentNodeId,
                     ),
-                    AssetMaterialNodeMapLogicService.getMaterialBaseName(
+                    MaterialNodeMapAssetLogicService.getMaterialBaseName(
                       currentNodeId,
                       engineState,
                     ),

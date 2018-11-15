@@ -168,7 +168,7 @@ module Method = {
 
   let initMaterialName = (currentNodeId, engineState, materialNodeMap) => {
     let baseName =
-      AssetMaterialNodeMapLogicService.getMaterialBaseName(
+      MaterialNodeMapAssetLogicService.getMaterialBaseName(
         currentNodeId,
         engineState,
         materialNodeMap,

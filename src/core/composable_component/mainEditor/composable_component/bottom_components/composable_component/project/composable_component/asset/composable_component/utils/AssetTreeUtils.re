@@ -183,7 +183,7 @@ let _isTargetTreeNodeHasSameNameChild =
          (
            FolderNodeMapAssetEditorService.getFolderName(removedNodeId),
            OperateTextureLogicService.getTextureBaseName(removedNodeId),
-           AssetMaterialNodeMapLogicService.getMaterialBaseName(
+           MaterialNodeMapAssetLogicService.getMaterialBaseName(
              removedNodeId,
              engineState,
            ),

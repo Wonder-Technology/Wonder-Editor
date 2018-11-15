@@ -154,7 +154,7 @@ module Method = {
              />;
            | Material =>
              let baseName =
-               AssetMaterialNodeMapLogicService.getMaterialBaseName(
+               MaterialNodeMapAssetLogicService.getMaterialBaseName(
                  nodeId,
                  engineState,
                  editorState

@@ -61,7 +61,7 @@ module CustomEventHandler = {
       (
         editorState,
         engineState
-        |> AssetMaterialNodeMapLogicService.setMaterialBaseName(
+        |> MaterialNodeMapAssetLogicService.setMaterialBaseName(
              nodeId,
              name,
              materialNodeMap,
