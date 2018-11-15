@@ -74,14 +74,10 @@ let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
 };
 
 let importSceneWDB = wdbArrayBuffer => {
-  let t1 = Performance.now();
-
   let engineState =
     StateEngineService.unsafeGetState()
     |> SceneEngineService.disposeSceneAllChildrenKeepOrderRemoveGeometryRemoveMaterial
     |> JobEngineService.execDisposeJob;
-
-  let t2 = Performance.now();
 
   engineState
   |> AssembleWDBEngineService.assembleWDB(
@@ -95,20 +91,8 @@ let importSceneWDB = wdbArrayBuffer => {
        (
          (engineState, (imageUint8ArrayDataMap, hasWDBIMGUIFunc), gameObject),
        ) => {
-       let t3 = Performance.now();
-
        let (gameObject, engineState) =
          _handleEngineState(gameObject, hasWDBIMGUIFunc, engineState);
-
-       let t4 = Performance.now();
-
-       WonderLog.Log.print((
-         "import scene wdb:",
-         t2 -. t1,
-         t3 -. t2,
-         t4 -. t3,
-       ))
-       |> ignore;
 
        StateEngineService.setState(engineState) |> ignore;
 
