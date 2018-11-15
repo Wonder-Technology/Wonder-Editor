@@ -6,19 +6,6 @@ exports[`header import package dispose assets dispose material assets
           3.export;
           4.import;
 
-          g1->material->select material group widget should have one wdb material
-           1`] = `
-<article
-  className="wonder-inspector-component"
-/>
-`;
-
-exports[`header import package dispose assets dispose material assets 
-          1.load BoxTextured wdb asset w1;
-          2.drag w1 to scene tree to be gameObject g1;
-          3.export;
-          4.import;
-
           g1->material->select material group widget should have only one wdb material
            1`] = `
 <article
@@ -231,86 +218,6 @@ exports[`header import package dispose assets dispose wdb assets dispose geometr
           4.import;
 
 
-          g1->geometry->select geometry group widget should have one wdb geometry and be using it
-           1`] = `
-<article
-  className="wonder-inspector-geometry"
->
-  <div
-    className="inspector-item"
-  >
-    <div
-      className="item-header"
-    >
-      Geometry
-    </div>
-    <div
-      className="item-content"
-    >
-      <div
-        className="inspector-select"
-      >
-        <div
-          className="select-name"
-        >
-          Mesh
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    className="select-component-content"
-  >
-    <div
-      className="select-component-item"
-    >
-      <div
-        className="item-header"
-      >
-        Geometry
-      </div>
-      <div
-        className="item-content item-active"
-        onClick={[Function]}
-      >
-        Mesh
-      </div>
-      <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Sphere
-      </div>
-      <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Cube
-      </div>
-    </div>
-    <div
-      className="select-component-bg"
-      onClick={[Function]}
-    />
-  </div>
-</article>
-`;
-
-exports[`header import package dispose assets dispose wdb assets dispose geometry assets 
-          1.load BoxTextured wdb asset w1;
-          2.drag w1 to scene tree to be gameObject g1;
-          3.export;
-          4.import;
-
-
           g1->geometry->select geometry group widget should have only one wdb geometry and be using it
            1`] = `
 <article
@@ -367,13 +274,13 @@ exports[`header import package dispose assets dispose wdb assets dispose geometr
         className="item-content"
         onClick={[Function]}
       >
-        Wonder-Default-Sphere
+        Wonder-Default-Cube
       </div>
       <div
         className="item-content"
         onClick={[Function]}
       >
-        Wonder-Default-Cube
+        Wonder-Default-Sphere
       </div>
     </div>
     <div
@@ -435,16 +342,16 @@ exports[`header import package test geometry
         Geometry
       </div>
       <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Sphere
-      </div>
-      <div
         className="item-content item-active"
         onClick={[Function]}
       >
         Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
       </div>
     </div>
     <div
@@ -508,16 +415,16 @@ exports[`header import package test geometry test with wdb assets relate wdb ass
         Geometry
       </div>
       <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Sphere
-      </div>
-      <div
         className="item-content item-active"
         onClick={[Function]}
       >
         Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
       </div>
     </div>
     <div
@@ -581,16 +488,16 @@ exports[`header import package test geometry test with wdb assets relate wdb ass
         Geometry
       </div>
       <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Sphere
-      </div>
-      <div
         className="item-content item-active"
         onClick={[Function]}
       >
         Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
       </div>
     </div>
     <div
@@ -655,16 +562,16 @@ exports[`header import package test geometry test with wdb assets relate wdb ass
         Geometry
       </div>
       <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Sphere
-      </div>
-      <div
         className="item-content item-active"
         onClick={[Function]}
       >
         Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
       </div>
     </div>
     <div

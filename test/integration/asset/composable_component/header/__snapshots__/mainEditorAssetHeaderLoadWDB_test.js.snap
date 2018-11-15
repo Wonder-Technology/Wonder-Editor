@@ -32,46 +32,6 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
   className="wonder-asset-assetChildren"
 >
   <article
-    className="wonder-asset-fileBox "
-    onClick={[Function]}
-  >
-    <div
-      className="box-image"
-    >
-      <img
-        onDragStart={[Function]}
-        src="./public/img/mat.png"
-      />
-    </div>
-    <div
-      className="item-text "
-    >
-      <span>
-        Texture
-      </span>
-    </div>
-  </article>
-  <article
-    className="wonder-asset-fileBox "
-    onClick={[Function]}
-  >
-    <div
-      className="box-image"
-    >
-      <img
-        onDragStart={[Function]}
-        src="./public/img/wdb.png"
-      />
-    </div>
-    <div
-      className="item-text "
-    >
-      <span>
-        Wdb
-      </span>
-    </div>
-  </article>
-  <article
     className="wonder-asset-folderBox"
     id="folder-6"
     style={
@@ -136,6 +96,46 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
     >
       <span>
         Textures
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/wdb.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        Wdb
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/mat.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        Texture
       </span>
     </div>
   </article>
@@ -378,7 +378,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb fix bug fix geometry bug
         className="item-content"
         onClick={[Function]}
       >
-        Cesium_Milk_Truck_2
+        Cesium_Milk_Truck_0
       </div>
       <div
         className="item-content"
@@ -390,7 +390,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb fix bug fix geometry bug
         className="item-content"
         onClick={[Function]}
       >
-        Cesium_Milk_Truck_0
+        Cesium_Milk_Truck_2
       </div>
       <div
         className="item-content"
@@ -399,16 +399,16 @@ exports[`MainEditorAssetHeader->load wdb test load wdb fix bug fix geometry bug
         Wheels
       </div>
       <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Sphere
-      </div>
-      <div
         className="item-content item-active"
         onClick={[Function]}
       >
         Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
       </div>
     </div>
     <div
@@ -470,16 +470,16 @@ exports[`MainEditorAssetHeader->load wdb test load wdb relate wdb asset gameObje
         Geometry
       </div>
       <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Sphere
-      </div>
-      <div
         className="item-content item-active"
         onClick={[Function]}
       >
         Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
       </div>
     </div>
     <div
