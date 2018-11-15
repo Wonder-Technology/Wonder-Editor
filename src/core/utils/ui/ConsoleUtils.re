@@ -52,3 +52,5 @@ let error = (message, editorState) => {
 
   WonderLog.Log.error(message);
 };
+
+let logStack = stack => WonderLog.Log.log(stack);

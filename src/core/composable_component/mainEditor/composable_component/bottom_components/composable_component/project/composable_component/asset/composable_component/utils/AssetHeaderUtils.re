@@ -147,7 +147,8 @@ let _handleSpecificFuncByTypeAsync =
   | LoadImage => handleImageFunc()
   | LoadWDB => handleWDBFunc()
   | LoadGLB => handleGLBFunc()
-  | LoadError => make((~resolve, ~reject) => reject(. LoadException))
+  | LoadError =>
+    make((~resolve, ~reject) => reject(. LoadException("load asset error")))
   };
 
 let handleFileByTypeAsync = (fileResult: nodeResultType) => {
@@ -207,6 +208,40 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
   |> then_(((editorState, engineState)) => {
        editorState |> StateEditorService.setState |> ignore;
        engineState |> StateEngineService.setState |> ignore;
+
+       () |> resolve;
+     })
+  |> catch(e => {
+       let e = Obj.magic(e);
+       let editorState = StateEditorService.getState();
+
+       switch (e) {
+       | LoadException(message) =>
+         ConsoleUtils.error(
+           LogUtils.buildErrorMessage(
+             ~description={j|$message|j},
+             ~reason="",
+             ~solution={j||j},
+             ~params={j||j},
+           ),
+           editorState,
+         )
+       | _ =>
+         let message = Obj.magic(e)##message;
+         let stack = Obj.magic(e)##stack;
+
+         ConsoleUtils.error(
+           LogUtils.buildErrorMessage(
+             ~description={j|$message|j},
+             ~reason="",
+             ~solution={j||j},
+             ~params={j||j},
+           ),
+           editorState,
+         );
+
+         ConsoleUtils.logStack(stack) |> ignore;
+       };
 
        () |> resolve;
      });

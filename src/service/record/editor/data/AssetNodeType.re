@@ -1,4 +1,4 @@
-exception LoadException;
+exception LoadException(string);
 
 type nodeId = int;
 
@@ -7,6 +7,7 @@ type imageIndex = int;
 type uploadFileType =
   | LoadWDB
   | LoadGLB
+  | LoadGLTFZip
   | LoadImage
   | LoadWPK
   | LoadError;
