@@ -48,22 +48,34 @@ module Method = {
         } :
         false;
 
-  let _getAllAssetGeometrysAndDefaultGeometrys = (editorState, engineState) =>
+  let _sortByName = (allGeometryAssets, engineState) =>
+    allGeometryAssets
+    |> Js.Array.sortInPlaceWith((geometry1, geometry2) =>
+         Js.String.localeCompare(
+           MainEditorGeometryUtils.getName(geometry2, engineState)
+           |> Js.String.charAt(0),
+           MainEditorGeometryUtils.getName(geometry1, engineState)
+           |> Js.String.charAt(0),
+         )
+         |> NumberType.convertFloatToInt
+       );
+
+  let _getAllGeometryAssetsAndDefaultGeometrys = (editorState, engineState) =>
     ArrayService.fastConcat(
-      GeometryAssetLogicService.getGeometryAssets(editorState, engineState),
+      GeometryAssetLogicService.getGeometryAssets(editorState, engineState)
+      |> _sortByName(_, engineState),
       GeometryDataAssetEditorService.unsafeGetDefaultGeometryComponents(
         editorState,
       ),
-    )
-    |> Js.Array.sortInPlaceWith((a, b) => b - a);
+    );
 
   let _getAllShowGeometrys = (gameObject, (editorState, engineState)) =>
     _isGameObjectMaterialComponentHasMap(gameObject, engineState) ?
-      _getAllAssetGeometrysAndDefaultGeometrys(editorState, engineState)
+      _getAllGeometryAssetsAndDefaultGeometrys(editorState, engineState)
       |> Js.Array.filter(geometry =>
            GeometryEngineService.hasGeometryTexCoords(geometry, engineState)
          ) :
-      _getAllAssetGeometrysAndDefaultGeometrys(editorState, engineState);
+      _getAllGeometryAssetsAndDefaultGeometrys(editorState, engineState);
 
   let showGeometryAssets = (send, currentSceneTreeNode, currentGeometry) => {
     let editorState = StateEditorService.getState();

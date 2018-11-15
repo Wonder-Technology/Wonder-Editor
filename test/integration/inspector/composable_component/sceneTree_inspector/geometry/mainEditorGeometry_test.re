@@ -275,4 +275,46 @@ let _ =
         });
       });
     });
+
+    describe("test select geometry group->show order", () => {
+      let truckWDBArrayBuffer = ref(Obj.magic(1));
+
+      beforeAll(() =>
+        truckWDBArrayBuffer := WDBTool.convertGLBToWDB("CesiumMilkTruck")
+      );
+      beforeEach(() => {
+        MainEditorAssetTool.buildFakeFileReader();
+        MainEditorAssetTool.buildFakeImage();
+
+        LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
+        LoadTool.buildFakeURL(sandbox^);
+
+        LoadTool.buildFakeLoadImage(.);
+
+        MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
+      });
+
+      testPromise(
+        {|
+        order should be:
+        1)default geometry is in the end;
+        2)sort geometry assets by firstname alphabetically
+        |},
+        () =>
+        MainEditorAssetUploadTool.loadOneWDB(
+          ~arrayBuffer=truckWDBArrayBuffer^,
+          (),
+        )
+        |> then_(uploadedWDBNodeId =>
+             BuildComponentTool.buildGeometry(
+               ~geometryComponent=
+                 GameObjectTool.getCurrentGameObjectGeometry(),
+               ~isShowGeometryGroup=true,
+               (),
+             )
+             |> ReactTestTool.createSnapshotAndMatch
+             |> resolve
+           )
+      );
+    });
   });

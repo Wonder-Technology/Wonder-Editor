@@ -1,5 +1,99 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`MainEditorGeometry component test select geometry group->show order 
+        order should be:
+        1)default geometry is in the end;
+        2)sort geometry assets by firstname alphabetically
+         1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Cesium_Milk_Truck_0
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Cesium_Milk_Truck_1
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Cesium_Milk_Truck_2
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wheels
+      </div>
+      <div
+        className="item-content item-active"
+        onClick={[Function]}
+      >
+        Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;
+
 exports[`MainEditorGeometry component test set currentSceneTreeNode test change geometry test snapshot test hide select geometry group widget 1`] = `
 <article
   className="wonder-inspector-geometry"
@@ -83,16 +177,16 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
         Geometry
       </div>
       <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Sphere
-      </div>
-      <div
         className="item-content item-active"
         onClick={[Function]}
       >
         Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
       </div>
     </div>
     <div
@@ -155,16 +249,16 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
         geometryNoTexCoord
       </div>
       <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Sphere
-      </div>
-      <div
         className="item-content item-active"
         onClick={[Function]}
       >
         Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
       </div>
     </div>
     <div
@@ -227,16 +321,16 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test load as
         Mesh
       </div>
       <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Sphere
-      </div>
-      <div
         className="item-content item-active"
         onClick={[Function]}
       >
         Wonder-Default-Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Wonder-Default-Sphere
       </div>
     </div>
     <div
