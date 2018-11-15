@@ -41,14 +41,50 @@ module Method = {
     |> ignore;
   };
 
+  let _getNodeNameByType = ({nodeId, type_}, editorState) =>
+    switch (type_) {
+    | Folder =>
+      let {name}: folderResultType =
+        editorState
+        |> FolderNodeMapAssetEditorService.getFolderNodeMap
+        |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+
+      name;
+    | type_ =>
+      ConsoleUtils.error(
+        LogUtils.buildErrorMessage(
+          ~description={j|unknown type: $type_|j},
+          ~reason="",
+          ~solution={j||j},
+          ~params={j||j},
+        ),
+        editorState,
+      );
+
+      "";
+    };
+
+  let _sortByName = (assetTreeArray, editorState) =>
+    assetTreeArray
+    |> Js.Array.filter(({type_}) => type_ === Folder)
+    |> Js.Array.sortInPlaceWith((node1, node2) =>
+         Js.String.localeCompare(
+           _getNodeNameByType(node2, editorState) |> Js.String.charAt(0),
+           _getNodeNameByType(node1, editorState) |> Js.String.charAt(0),
+         )
+         |> NumberType.convertFloatToInt
+       );
+
   let buildAssetTreeArray =
       (
         (store, dispatchFunc, dragImg),
         (onSelectFunc, onDropFunc),
         assetTreeArray,
+        editorState,
       ) => {
-    let rec _iterateAssetTreeArray = assetTreeArray =>
+    let rec _iterateAssetTreeArray = (assetTreeArray, editorState) =>
       assetTreeArray
+      |> _sortByName(_, editorState)
       |> Js.Array.map(({nodeId, type_, isShowChildren, children}) =>
            switch (type_) {
            | Folder =>
@@ -79,23 +115,26 @@ module Method = {
                  handleToggleShowTreeChildren(store, dispatchFunc)
                )
                handleRelationError=AssetTreeUtils.isTreeNodeRelationError
-               treeChildren=(_iterateAssetTreeArray(children))
+               treeChildren=(_iterateAssetTreeArray(children, editorState))
              />;
 
            | _ => ReasonReact.null
            }
          );
-    _iterateAssetTreeArray(assetTreeArray);
+
+    _iterateAssetTreeArray(assetTreeArray, editorState);
   };
 };
 
 let component = ReasonReact.statelessComponent("AssetTree");
 
-let render = ((store, dispatchFunc), dragImg, _self) =>
+let render = ((store, dispatchFunc), dragImg, _self) => {
+  let editorState = StateEditorService.getState();
+
   <article key="assetTreeRoot" className="wonder-asset-assetTree">
     (
       ReasonReact.array(
-        StateEditorService.getState()
+        editorState
         |> AssetTreeUtils.buildAssetTreeArray
         |> Method.buildAssetTreeArray(
              (store, dispatchFunc, dragImg),
@@ -106,10 +145,13 @@ let render = ((store, dispatchFunc), dragImg, _self) =>
                  (),
                ),
              ),
+             _,
+             editorState,
            ),
       )
     )
   </article>;
+};
 
 let make = (~store, ~dispatchFunc, ~dragImg, _children) => {
   ...component,

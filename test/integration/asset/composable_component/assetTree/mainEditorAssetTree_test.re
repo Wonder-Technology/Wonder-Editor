@@ -378,4 +378,69 @@ let _ =
         })
       );
     });
+
+    describe("test show order", () => {
+      beforeEach(() => {
+        MainEditorAssetTool.buildFakeFileReader();
+
+        LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
+        LoadTool.buildFakeURL(sandbox^);
+
+        LoadTool.buildFakeLoadImage(.);
+
+        MainEditorAssetTool.buildFakeImage();
+      });
+
+      test("sort the same layer folder by firstname alphabetically", () => {
+        let addedFolderNodeId1 = MainEditorAssetIdTool.getNewAssetId();
+        MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+        let addedMaterialNodeId1 = addedFolderNodeId1 |> succ;
+        MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+        let addedFolderNodeId2 = addedMaterialNodeId1 |> succ;
+        MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+        MainEditorAssetTreeTool.Select.selectFolderNode(
+          ~nodeId=addedFolderNodeId2,
+          (),
+        );
+
+        AssetTreeUtils.setSpecificAssetTreeNodeIsShowChildrenFromEditorState(
+          addedFolderNodeId2,
+          true,
+        )
+        |> StateLogicService.getAndSetEditorState;
+
+        let addedFolderNodeId3 = addedFolderNodeId2 |> succ;
+        MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+        let addedFolderNodeId4 = addedFolderNodeId3 |> succ;
+        MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+        AssetTreeInspectorTool.Rename.renameAssetFolderNode(
+          ~nodeId=addedFolderNodeId1,
+          ~name="FFolder",
+          (),
+        );
+        AssetTreeInspectorTool.Rename.renameAssetFolderNode(
+          ~nodeId=addedFolderNodeId2,
+          ~name="BFolder",
+          (),
+        );
+        AssetTreeInspectorTool.Rename.renameAssetFolderNode(
+          ~nodeId=addedFolderNodeId3,
+          ~name="ZFolder",
+          (),
+        );
+        AssetTreeInspectorTool.Rename.renameAssetFolderNode(
+          ~nodeId=addedFolderNodeId4,
+          ~name="AFolder",
+          (),
+        );
+
+        BuildComponentTool.buildAssetTree()
+        |> ReactTestTool.createSnapshotAndMatch;
+      });
+    });
   });
