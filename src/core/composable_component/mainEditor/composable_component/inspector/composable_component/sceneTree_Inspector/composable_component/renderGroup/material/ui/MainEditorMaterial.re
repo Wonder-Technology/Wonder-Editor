@@ -52,20 +52,41 @@ module Method = {
     />;
   };
 
-  let _getAllMaterialDataAsset = editorState =>
+  let _sortByName = (allMaterialAssetData, engineState) =>
+    allMaterialAssetData
+    |> Js.Array.sortInPlaceWith(
+         (
+           (_, (materialComponent1, materialType1)),
+           (_, (materialComponent2, materialType2)),
+         ) =>
+         Js.String.localeCompare(
+           MainEditorMaterialUtils.getName(
+             materialComponent2,
+             materialType2,
+             engineState,
+           )
+           |> Js.String.charAt(0),
+           MainEditorMaterialUtils.getName(
+             materialComponent1,
+             materialType1,
+             engineState,
+           )
+           |> Js.String.charAt(0),
+         )
+         |> NumberType.convertFloatToInt
+       );
+
+  let _getAllMaterialAssetData = (editorState, engineState) =>
     AssetNodeType.(
-      Js.Array.concat(
-        MaterialDataAssetEditorService.getAllDefaultMaterialData(editorState)
-        |> Js.Array.map(materialData => (None, materialData)),
+      ArrayService.fastConcat(
         MaterialNodeMapAssetEditorService.getResults(editorState)
         |> Js.Array.map(((materialNodeId, {materialComponent, type_})) =>
              (Some(materialNodeId), (materialComponent, type_))
            ),
+        MaterialDataAssetEditorService.getAllDefaultMaterialData(editorState)
+        |> Js.Array.map(materialData => (None, materialData)),
       )
-      |> Js.Array.sortInPlaceWith(
-           ((_, (materialComponent1, _)), (_, (materialComponent2, _))) =>
-           materialComponent2 - materialComponent1
-         )
+      |> _sortByName(_, engineState)
     );
 
   let showMaterialAssets =
@@ -73,7 +94,7 @@ module Method = {
     let engineState = StateEngineService.unsafeGetState();
     let editorState = StateEditorService.getState();
 
-    _getAllMaterialDataAsset(editorState)
+    _getAllMaterialAssetData(editorState, engineState)
     |> Js.Array.map(((materialNodeId, (material, materialType))) => {
          let className =
            (material, materialType) == (currentMaterial, currentMaterialType) ?

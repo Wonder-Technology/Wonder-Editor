@@ -23,6 +23,7 @@ let _ =
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     describe("test set currentSceneTreeNode", () => {
       beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
@@ -136,6 +137,50 @@ let _ =
             |> toThrowMessageRe([%re {|/should\shas\smaterial\scomponent/g|}])
           )
         )
+      );
+    });
+
+    describe("test select material group->show order", () => {
+      beforeEach(() => {
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        );
+
+        MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
+      });
+
+      test(
+        {|
+        order should be:
+        1)default material is in the end;
+        2)sort material assets by firstname alphabetically
+        |},
+        () => {
+          let addedMaterialNodeId1 = MainEditorAssetIdTool.getNewAssetId();
+          MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+          let addedMaterialNodeId2 = addedMaterialNodeId1 |> succ;
+          MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+          AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+            ~nodeId=addedMaterialNodeId1,
+            ~name="BMaterial",
+            (),
+          );
+          AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+            ~nodeId=addedMaterialNodeId2,
+            ~name="AMaterial",
+            (),
+          );
+
+          BuildComponentTool.buildMaterial(
+            ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            ~isShowMaterialGroup=true,
+            (),
+          )
+          |> ReactTestTool.createSnapshotAndMatch;
+        },
       );
     });
   });
