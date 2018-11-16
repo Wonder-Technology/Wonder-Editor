@@ -63,16 +63,3 @@ let buildPublishFakeJsZipCreateFunc = [%bs.raw
 
 |}
 ];
-
-let fileLoad = HeaderLoadWDBUtils.loadSceneWDB;
-
-let loadOneWDB =
-    (~arrayBuffer, ~dispatchFunc=TestTool.getDispatch(), ~fileName="Wdb", ()) => {
-  let uploadedWDBNodeId = MainEditorAssetIdTool.getNewAssetId();
-
-  HeaderLoadWDBUtils.loadSceneWDB(
-    dispatchFunc,
-    BaseEventTool.buildWDBFileEvent(fileName, arrayBuffer),
-  )
-  |> then_(() => uploadedWDBNodeId |> resolve);
-};

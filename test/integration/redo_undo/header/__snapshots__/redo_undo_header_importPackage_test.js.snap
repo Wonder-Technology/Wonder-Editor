@@ -197,7 +197,28 @@ exports[`redo_undo: import package test undo operate test undo one step step whi
   </div>
   <article
     className="wonder-asset-assetChildren"
-  />
+  >
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <div
+        className="box-image"
+      >
+        <img
+          onDragStart={[Function]}
+          src="./public/img/mat.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          New Material
+        </span>
+      </div>
+    </article>
+  </article>
 </article>
 `;
 
@@ -324,6 +345,29 @@ exports[`redo_undo: import package test undo operate test undo two step step whi
             style={Object {}}
           >
             Direction Light
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container"
+            draggable={true}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            onMouseDown={[Function]}
+            style={Object {}}
+          >
+            Cube
           </div>
         </li>
       </ul>

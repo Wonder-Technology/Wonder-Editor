@@ -2,7 +2,7 @@ open AssetNodeType;
 
 open FileType;
 
-let getUploadFileType = name => {
+let getUploadAssetType = name => {
   let (_, extname) = FileNameService.getBaseNameAndExtName(name);
 
   switch (extname) {
@@ -10,11 +10,30 @@ let getUploadFileType = name => {
   | ".glb" => LoadGLB
   | ".jpg"
   | ".png" => LoadImage
-  | ".wpk" => LoadWPK
   | _ =>
     ConsoleUtils.error(
       LogUtils.buildErrorMessage(
         ~description={j|the loaded asset type is error|j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j||j},
+      ),
+    )
+    |> StateLogicService.getEditorState;
+
+    LoadError;
+  };
+};
+
+let getUploadPackageType = name => {
+  let (_, extname) = FileNameService.getBaseNameAndExtName(name);
+
+  switch (extname) {
+  | ".wpk" => LoadWPK
+  | _ =>
+    ConsoleUtils.error(
+      LogUtils.buildErrorMessage(
+        ~description={j|the loaded package type is error|j},
         ~reason="",
         ~solution={j||j},
         ~params={j||j},
@@ -36,9 +55,20 @@ let handleSpecificFuncByTypeSync =
   | LoadError => ()
   };
 
-let readFileByTypeSync = (reader, fileInfo: fileInfoType) =>
+let readPakckageByTypeSync = (reader, fileInfo: fileInfoType) =>
   handleSpecificFuncByTypeSync(
-    getUploadFileType(fileInfo.name),
+    getUploadPackageType(fileInfo.name),
+    (
+      () => FileReader.readAsDataURL(reader, fileInfo.file),
+      () => FileReader.readAsArrayBuffer(reader, fileInfo.file),
+      () => FileReader.readAsArrayBuffer(reader, fileInfo.file),
+      () => FileReader.readAsArrayBuffer(reader, fileInfo.file),
+    ),
+  );
+
+let readAssetByTypeSync = (reader, fileInfo: fileInfoType) =>
+  handleSpecificFuncByTypeSync(
+    getUploadAssetType(fileInfo.name),
     (
       () => FileReader.readAsDataURL(reader, fileInfo.file),
       () => FileReader.readAsArrayBuffer(reader, fileInfo.file),

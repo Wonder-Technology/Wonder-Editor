@@ -233,12 +233,12 @@ let fileLoad = ((store, dispatchFunc), event) => {
            FileReader.onload(reader, result =>
              resolve(. {
                name: fileInfo.name,
-               type_: LoadAssetUtils.getUploadFileType(fileInfo.name),
+               type_: LoadAssetUtils.getUploadAssetType(fileInfo.name),
                result,
              })
            );
 
-           LoadAssetUtils.readFileByTypeSync(reader, fileInfo);
+           LoadAssetUtils.readAssetByTypeSync(reader, fileInfo);
          }),
        )
      )

@@ -300,7 +300,7 @@ let _ =
 
       describe("deal with specific case", () => {
         let _getErrorTypeFile = () =>
-          LoadAssetUtils.getUploadFileType("aaa.bb");
+          LoadAssetUtils.getUploadAssetType("aaa.bb");
 
         test("if upload error file type, should error", () => {
           ConsoleTool.notShowMessage();

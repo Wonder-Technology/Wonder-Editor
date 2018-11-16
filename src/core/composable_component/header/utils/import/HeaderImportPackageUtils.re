@@ -145,13 +145,13 @@ let importPackage = (dispatchFunc, event) => {
           resolve(.
             {
               name: fileInfo.name,
-              type_: LoadAssetUtils.getUploadFileType(fileInfo.name),
+              type_: LoadAssetUtils.getUploadPackageType(fileInfo.name),
               result,
             }: AssetNodeType.nodeResultType,
           )
         );
 
-        LoadAssetUtils.readFileByTypeSync(reader, fileInfo);
+        LoadAssetUtils.readPakckageByTypeSync(reader, fileInfo);
       }),
     )
     |> WonderBsMost.Most.flatMap((fileResult: AssetNodeType.nodeResultType) =>

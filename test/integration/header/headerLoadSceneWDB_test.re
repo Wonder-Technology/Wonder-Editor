@@ -75,7 +75,7 @@ let _ =
       testPromise("should clear current scene tree node", () => {
         let fileName = "Scene";
 
-        HeaderTool.loadOneWDB(
+        LoadSceneWDBTool.loadSceneWDB(
           ~fileName,
           ~arrayBuffer=sceneWDBArrayBuffer^,
           (),
@@ -98,7 +98,7 @@ let _ =
           let shaderSourceCountBeforeLoadSceneWDB =
             GLSLToolEngine.getShaderSourceCallCount(glShaderSource);
 
-          HeaderTool.loadOneWDB(
+          LoadSceneWDBTool.loadSceneWDB(
             ~fileName,
             ~arrayBuffer=boxTexturedWDBArrayBuffer^,
             (),
@@ -171,7 +171,7 @@ let _ =
               () => {
               let fileName = "Scene";
 
-              HeaderTool.loadOneWDB(
+              LoadSceneWDBTool.loadSceneWDB(
                 ~fileName,
                 ~arrayBuffer=sceneWDBArrayBuffer^,
                 (),
@@ -208,7 +208,7 @@ let _ =
               () => {
               let fileName = "Scene";
 
-              HeaderTool.loadOneWDB(
+              LoadSceneWDBTool.loadSceneWDB(
                 ~fileName,
                 ~arrayBuffer=sceneWDBArrayBuffer^,
                 (),
@@ -216,7 +216,7 @@ let _ =
               |> then_(_ => {
                    let fileName = "BoxTextured";
 
-                   HeaderTool.loadOneWDB(
+                   LoadSceneWDBTool.loadSceneWDB(
                      ~fileName,
                      ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                      (),
@@ -245,7 +245,7 @@ let _ =
           () => {
             let fileName = "Scene";
 
-            HeaderTool.loadOneWDB(
+            LoadSceneWDBTool.loadSceneWDB(
               ~fileName,
               ~arrayBuffer=sceneWDBArrayBuffer^,
               (),
@@ -286,7 +286,7 @@ let _ =
 
       test("if load no wdb, return", () =>
         expect(() =>
-          HeaderLoadWDBUtils.loadSceneWDB(
+          LoadSceneWDBTool.load(
             TestTool.getDispatch(),
             {
               "target": {
@@ -305,7 +305,7 @@ let _ =
         testPromise("test wdb has one", () => {
           let fileName = "Scene";
 
-          HeaderTool.loadOneWDB(
+          LoadSceneWDBTool.loadSceneWDB(
             ~fileName,
             ~arrayBuffer=sceneWDBArrayBuffer^,
             (),
@@ -328,7 +328,7 @@ let _ =
         testPromise("test wdb not has one", () => {
           let fileName = "BoxTextured";
 
-          HeaderTool.loadOneWDB(
+          LoadSceneWDBTool.loadSceneWDB(
             ~fileName,
             ~arrayBuffer=boxTexturedWDBArrayBuffer^,
             (),

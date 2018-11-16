@@ -1,9 +1,5 @@
 open Js.Promise;
 
-open AssetNodeType;
-
-open FileType;
-
 let handleSceneWDB = wdbArrayBuffer =>
   SceneWDBUtils.importSceneWDB(wdbArrayBuffer)
   |> WonderBsMost.Most.tap(((gameObject, _)) =>
@@ -11,7 +7,43 @@ let handleSceneWDB = wdbArrayBuffer =>
        |> StateLogicService.getAndRefreshEngineStateWithFunc
      );
 
-let loadSceneWDB = (dispatchFunc, event) => {
+let _getUploadAssetType = name => {
+  open AssetNodeType;
+
+  let (_, extname) = FileNameService.getBaseNameAndExtName(name);
+
+  switch (extname) {
+  | ".wdb" => LoadWDB
+  | _ =>
+    ConsoleUtils.error(
+      LogUtils.buildErrorMessage(
+        ~description={j|the loaded type is error|j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j||j},
+      ),
+    )
+    |> StateLogicService.getEditorState;
+
+    LoadError;
+  };
+};
+
+let _readWDBByTypeSync = (reader, fileInfo: FileType.fileInfoType) =>
+  LoadAssetUtils.handleSpecificFuncByTypeSync(
+    _getUploadAssetType(fileInfo.name),
+    (
+      () => FileReader.readAsDataURL(reader, fileInfo.file),
+      () => FileReader.readAsArrayBuffer(reader, fileInfo.file),
+      () => FileReader.readAsArrayBuffer(reader, fileInfo.file),
+      () => FileReader.readAsArrayBuffer(reader, fileInfo.file),
+    ),
+  );
+
+let load = (dispatchFunc, event) => {
+  open AssetNodeType;
+  open FileType;
+
   let e = ReactEventType.convertReactFormEventToJsEvent(event);
   DomHelper.preventDefault(e);
 
@@ -39,12 +71,12 @@ let loadSceneWDB = (dispatchFunc, event) => {
              FileReader.onload(reader, result =>
                resolve(. {
                  name: wdbInfo.name,
-                 type_: LoadAssetUtils.getUploadFileType(wdbInfo.name),
+                 type_: _getUploadAssetType(wdbInfo.name),
                  result,
                })
              );
 
-             LoadAssetUtils.readFileByTypeSync(reader, wdbInfo);
+             _readWDBByTypeSync(reader, wdbInfo);
            }),
          )
        )
@@ -70,4 +102,12 @@ let loadSceneWDB = (dispatchFunc, event) => {
          |> resolve;
        })
   };
+};
+
+let loadSceneWDB =
+    (~arrayBuffer, ~dispatchFunc=TestTool.getDispatch(), ~fileName="Wdb", ()) => {
+  let uploadedWDBNodeId = MainEditorAssetIdTool.getNewAssetId();
+
+  load(dispatchFunc, BaseEventTool.buildWDBFileEvent(fileName, arrayBuffer))
+  |> then_(() => uploadedWDBNodeId |> resolve);
 };
