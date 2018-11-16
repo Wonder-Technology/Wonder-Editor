@@ -85,7 +85,9 @@ let render =
           className="asset-fileLoad"
           _type="file"
           multiple=false
-          onChange=(e => Method.fileLoad((store, dispatchFunc), (), e))
+          onChange=(
+            e => Method.fileLoad((store, dispatchFunc), (), e) |> ignore
+          )
         />
       </div>
     </div>

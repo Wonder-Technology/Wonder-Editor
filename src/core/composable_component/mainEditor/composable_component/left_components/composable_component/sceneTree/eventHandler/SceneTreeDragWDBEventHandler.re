@@ -6,6 +6,7 @@ module CustomEventHandler = {
     Wonderjs.GameObjectType.gameObject,
     Wonderjs.GameObjectType.gameObject,
   );
+  type return = unit;
 
   let handleSelfLogic =
       ((store, dispatchFunc), (), (targetGameObjectUid, wdbGameObjectUid)) =>

@@ -2,6 +2,7 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
   type dataTuple = unit;
+  type return = unit;
 
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
     let engineState = StateEngineService.unsafeGetState();

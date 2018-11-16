@@ -210,44 +210,10 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
        engineState |> StateEngineService.setState |> ignore;
 
        () |> resolve;
-     })
-  |> catch(e => {
-       let e = Obj.magic(e);
-       let editorState = StateEditorService.getState();
-
-       switch (e) {
-       | LoadException(message) =>
-         ConsoleUtils.error(
-           LogUtils.buildErrorMessage(
-             ~description={j|$message|j},
-             ~reason="",
-             ~solution={j||j},
-             ~params={j||j},
-           ),
-           editorState,
-         )
-       | _ =>
-         let message = Obj.magic(e)##message;
-         let stack = Obj.magic(e)##stack;
-
-         ConsoleUtils.error(
-           LogUtils.buildErrorMessage(
-             ~description={j|$message|j},
-             ~reason="",
-             ~solution={j||j},
-             ~params={j||j},
-           ),
-           editorState,
-         );
-
-         ConsoleUtils.logStack(stack) |> ignore;
-       };
-
-       () |> resolve;
      });
 };
 
-let fileLoad = (dispatchFunc, event) => {
+let fileLoad = ((store, dispatchFunc), event) => {
   let e = ReactEventType.convertReactFormEventToJsEvent(event);
   DomHelper.preventDefault(e);
 
@@ -283,7 +249,8 @@ let fileLoad = (dispatchFunc, event) => {
   |> then_(_ => {
        FileReader.makeSureCanLoadSameNameFileAgain(target);
 
-       dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])))
-       |> resolve;
+       dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])));
+
+       resolve();
      });
 };

@@ -8,6 +8,7 @@ module CustomEventHandler = {
     (int, int),
     (materialType, materialType),
   );
+  type return = unit;
 
   let handleSelfLogic =
       (

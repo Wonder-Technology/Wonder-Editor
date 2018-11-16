@@ -4,6 +4,7 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
   type dataTuple = (int, int);
+  type return = unit;
 
   let _setFolderNodeParent =
       (folderId, parentFolderNodeId, editorState, folderNodeMap) =>

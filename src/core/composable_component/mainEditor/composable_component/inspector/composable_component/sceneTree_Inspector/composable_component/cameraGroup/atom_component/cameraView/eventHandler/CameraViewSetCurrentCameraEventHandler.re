@@ -2,6 +2,7 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
   type dataTuple = int;
+  type return = unit;
 
   let _unbindCurrentActiveCameraEventIfHasComponentAndInRunMode = engineState =>
     switch (

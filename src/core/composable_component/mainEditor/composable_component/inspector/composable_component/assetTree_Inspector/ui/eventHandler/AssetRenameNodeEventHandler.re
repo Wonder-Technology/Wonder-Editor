@@ -6,6 +6,7 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = (int, AssetNodeType.assetNodeType);
   type dataTuple = string;
+  type return = unit;
 
   let _renameFolderNode =
       (nodeId, name, (editorState, engineState), folderNodeMap) => (

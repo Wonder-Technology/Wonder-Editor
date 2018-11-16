@@ -1,9 +1,8 @@
-
-
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
   type dataTuple = string;
+  type return = unit;
 
   let setUndoValueToCopiedEngineState = ((store, dispatchFunc), (), value) =>
     StateEngineService.unsafeGetState()

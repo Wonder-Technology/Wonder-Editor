@@ -4,6 +4,7 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = Wonderjs.GameObjectType.gameObject;
   type dataTuple = componentType;
+  type return = unit;
 
   let _isRemoveLight = type_ => type_ === Light;
 

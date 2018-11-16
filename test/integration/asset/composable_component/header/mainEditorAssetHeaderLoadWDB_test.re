@@ -1014,6 +1014,60 @@ let _ =
                })
           )
         );
+
+        describe("fix load wdb after load wdb error", () => {
+          let stoveWDBArrayBuffer = ref(Obj.magic(1));
+
+          beforeAll(() =>
+            stoveWDBArrayBuffer :=
+              WDBTool.convertGLBToWDB("SuperLowPolyStove")
+          );
+
+          testPromise(
+            {|
+            1.load wdb w1(error);
+            2.load wdb w2;
+
+            should load w2 success
+            |},
+            () => {
+              MainEditorSceneTool.initState(
+                ~sandbox,
+                ~isBuildFakeDom=false,
+                ~buffer=
+                  SettingToolEngine.buildBufferConfigStr(
+                    ~geometryPointCount=10000,
+                    ~geometryCount=30,
+                    (),
+                  ),
+                (),
+              );
+              MainEditorSceneTool.prepareScene(sandbox);
+              ConsoleTool.notShowMessage();
+
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=stoveWDBArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId => {
+                   let error =
+                     createMethodStubWithJsObjSandbox(
+                       sandbox,
+                       ConsoleTool.console,
+                       "error",
+                     );
+
+                   MainEditorAssetUploadTool.loadOneWDB(
+                     ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                     (),
+                   )
+                   |> then_(uploadedWDBNodeId =>
+                        error |> expect |> not_ |> toCalled |> resolve
+                      );
+                 });
+            },
+          );
+        });
       });
     });
   });

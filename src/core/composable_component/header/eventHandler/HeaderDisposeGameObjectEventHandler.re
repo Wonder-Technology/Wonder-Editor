@@ -4,6 +4,7 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
   type dataTuple = unit;
+  type return = unit;
 
   let _checkSceneGraphDataAndDispatch = (dispatchFunc, newSceneGraphArr) => {
     /* WonderLog.Contract.requireCheck(

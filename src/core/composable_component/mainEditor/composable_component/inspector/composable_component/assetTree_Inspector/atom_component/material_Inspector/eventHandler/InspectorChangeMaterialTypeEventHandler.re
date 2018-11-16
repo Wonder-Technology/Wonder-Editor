@@ -4,6 +4,7 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = (int, int);
   type dataTuple = (materialType, materialType);
+  type return = unit;
 
   let handleSelfLogic =
       (

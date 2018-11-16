@@ -6,6 +6,7 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = Wonderjs.GameObjectType.gameObject;
   type dataTuple = componentType;
+  type return = unit;
 
   let handleSelfLogic = ((store, dispatchFunc), currentSceneTreeNode, type_) => {
     let (editorState, engineState) =

@@ -3,6 +3,7 @@ module CustomEventHandler = {
 
   type prepareTuple = Wonderjs.MaterialType.material;
   type dataTuple = int;
+  type return = unit;
 
   let _handleSetMap =
       (materialComponent, textureComponent, engineState) =>

@@ -2,6 +2,7 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = Wonderjs.MaterialType.material;
   type dataTuple = string;
+  type return = unit;
 
   let setUndoValueToCopiedEngineState =
       ((store, dispatchFunc), materialComponent, value) =>

@@ -4,6 +4,7 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
   type dataTuple = Wonderjs.GameObjectType.gameObject;
+  type return = unit;
 
   let handleSelfLogic = ((store, dispatchFunc), (), uid) => {
     StateEditorService.getState()

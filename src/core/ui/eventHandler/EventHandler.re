@@ -3,6 +3,7 @@ open Wonderjs;
 module type EventHandler = {
   type prepareTuple;
   type dataTuple;
+  type return;
 
   let handleSelfLogic:
     (
@@ -10,7 +11,7 @@ module type EventHandler = {
       prepareTuple,
       dataTuple
     ) =>
-    unit;
+    return;
 
   let setUndoValueToCopiedEngineState:
     (

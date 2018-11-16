@@ -4,6 +4,7 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = addGameObjectType;
   type dataTuple = unit;
+  type return = unit;
 
   let handleSelfLogic = ((store, dispatchFunc), type_, ()) => {
     let newGameObject =

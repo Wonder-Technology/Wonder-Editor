@@ -4,6 +4,7 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
   type dataTuple = (materialType, materialType);
+  type return = unit;
 
   let _updateMaterialNodeData =
       (sourceMaterial, targetMaterial, targetMaterialType, editorState) =>
