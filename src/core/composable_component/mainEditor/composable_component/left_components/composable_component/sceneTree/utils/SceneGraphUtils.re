@@ -106,7 +106,7 @@ let addTreeNodeSceneGraphData =
        uid === targetUid ?
          {
            ...treeNode,
-           children: children |> ArrayService.push(treeNodeSceneGraphData),
+           children: children |> Js.Array.copy |> ArrayService.push(treeNodeSceneGraphData),
          } :
          treeNode
      );
