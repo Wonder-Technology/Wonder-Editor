@@ -118,27 +118,10 @@ let _handleGLBType =
       (wdbNodeId, parentFolderNodeId),
       (editorState, engineState),
     ) =>
-  Console.tryCatch(
-    () =>
-      _handleAssetWDBType(
-        (fileName, ConverterEngineService.convertGLBToWDB(glbArrayBuffer)),
-        (wdbNodeId, parentFolderNodeId),
-        (editorState, engineState),
-      ),
-    e => {
-      let message = e##message;
-      ConsoleUtils.error(
-        LogUtils.buildErrorMessage(
-          ~description={j|$message|j},
-          ~reason="",
-          ~solution={j||j},
-          ~params={j||j},
-        ),
-        editorState,
-      );
-
-      make((~resolve, ~reject) => resolve(. (editorState, engineState)));
-    },
+  _handleAssetWDBType(
+    (fileName, ConverterEngineService.convertGLBToWDB(glbArrayBuffer)),
+    (wdbNodeId, parentFolderNodeId),
+    (editorState, engineState),
   );
 
 let _handleSpecificFuncByTypeAsync =
