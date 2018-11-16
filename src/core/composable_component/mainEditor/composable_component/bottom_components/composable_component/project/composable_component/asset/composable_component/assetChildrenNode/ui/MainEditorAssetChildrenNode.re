@@ -176,7 +176,7 @@ module Method = {
                |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
              <FolderBox
-               key=(DomHelper.getRandomKey())
+               key=(StringService.intToString(nodeId))
                store
                dispatchFunc
                dragImg
@@ -204,7 +204,7 @@ module Method = {
                |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
              <FileBox
-               key=(DomHelper.getRandomKey())
+               key=(StringService.intToString(nodeId))
                store
                dispatchFunc
                dragImg
@@ -252,7 +252,7 @@ module Method = {
                );
 
              <FileBox
-               key=(DomHelper.getRandomKey())
+               key=(StringService.intToString(nodeId))
                store
                dispatchFunc
                dragImg
@@ -271,7 +271,7 @@ module Method = {
                |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
              <FileBox
-               key=(DomHelper.getRandomKey())
+               key=(StringService.intToString(nodeId))
                store
                dispatchFunc
                effectAllowd="copyMove"
