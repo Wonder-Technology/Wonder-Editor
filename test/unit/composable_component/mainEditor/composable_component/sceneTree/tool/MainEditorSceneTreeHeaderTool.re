@@ -1,4 +1,4 @@
-let addBox =
+let addCube =
     (
       ~store=TestTool.buildAppStateSceneGraphFromEngine(),
       ~dispatchFunc=TestTool.getDispatch(),

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`controller header addBox test add box box should be added into engineState test scene tree test add one box 1`] = `
+exports[`controller header addCube test add box box should be added into engineState test scene tree test add one box 1`] = `
 <article
   className="wonder-sceneTree-component"
 >

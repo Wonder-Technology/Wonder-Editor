@@ -33,8 +33,8 @@ let _ =
           ControllerTool.run();
         });
         test("test undo one step which from second to first", () => {
-          MainEditorSceneTreeHeaderTool.addBox();
-          MainEditorSceneTreeHeaderTool.addBox();
+          MainEditorSceneTreeHeaderTool.addCube();
+          MainEditorSceneTreeHeaderTool.addCube();
 
           RedoUndoTool.undoHistoryState();
 

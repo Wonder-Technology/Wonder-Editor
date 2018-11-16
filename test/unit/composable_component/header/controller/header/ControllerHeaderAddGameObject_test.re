@@ -27,7 +27,7 @@ let _ =
 
     describe("test add box", () => {
       test("test add one box", () => {
-        MainEditorSceneTreeHeaderTool.addBox();
+        MainEditorSceneTreeHeaderTool.addCube();
 
         StateEngineService.unsafeGetState()
         |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
@@ -35,8 +35,8 @@ let _ =
         |> expect == 5;
       });
       test("test add two boxes", () => {
-        MainEditorSceneTreeHeaderTool.addBox();
-        MainEditorSceneTreeHeaderTool.addBox();
+        MainEditorSceneTreeHeaderTool.addCube();
+        MainEditorSceneTreeHeaderTool.addCube();
 
         StateEngineService.unsafeGetState()
         |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
@@ -45,7 +45,7 @@ let _ =
       });
       describe("test scene tree snapshot", () =>
         test("test add one box", () => {
-          MainEditorSceneTreeHeaderTool.addBox();
+          MainEditorSceneTreeHeaderTool.addCube();
 
           BuildComponentTool.buildSceneTree(
             TestTool.buildAppStateSceneGraphFromEngine(),
