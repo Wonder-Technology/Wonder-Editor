@@ -1,15 +1,27 @@
 let exportScene = sceneName => {
   let editorState = StateEditorService.getState();
-  let engineState = StateEngineService.unsafeGetState();
 
-  let (engineState, sceneGraphArrayBuffer) =
-    HeaderExportSceneWDBUtils.generateSceneWDB(editorState, engineState);
+  SceneEditorService.getIsRun(editorState) ?
+    {
+      ConsoleUtils.warn(
+        "should export scene when stop, but now is run!",
+        editorState,
+      );
 
-  engineState |> StateEngineService.setState |> ignore;
+      ();
+    } :
+    {
+      let engineState = StateEngineService.unsafeGetState();
 
-  HeaderExportUtils.download(
-    sceneGraphArrayBuffer,
-    sceneName ++ WDBService.getExtName(),
-    "",
-  );
+      let (engineState, sceneGraphArrayBuffer) =
+        HeaderExportSceneWDBUtils.generateSceneWDB(editorState, engineState);
+
+      engineState |> StateEngineService.setState |> ignore;
+
+      HeaderExportUtils.download(
+        sceneGraphArrayBuffer,
+        sceneName ++ WDBService.getExtName(),
+        "",
+      );
+    };
 };

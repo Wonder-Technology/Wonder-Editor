@@ -20,6 +20,27 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
+    describe("if is run", () =>
+      test("warn", () => {
+        ConsoleTool.notShowMessage();
+        let warn =
+          createMethodStubWithJsObjSandbox(
+            sandbox,
+            ConsoleTool.console,
+            "warn",
+          );
+        ControllerTool.run();
+
+        HeaderExportPackageUtils.exportPackage("aaa");
+
+        warn
+        |> expect
+        |> toCalledWith([|
+             "should export package when stop, but now is run!",
+           |]);
+      })
+    );
+
     describe("optimize", () => {
       beforeEach(() => {
         LoadTool.buildFakeAtob();

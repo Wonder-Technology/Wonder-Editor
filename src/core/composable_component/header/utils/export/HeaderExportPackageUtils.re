@@ -58,11 +58,24 @@ let _export = () => {
 };
 
 let exportPackage = packageName => {
-  let wpkArrayBuffer = _export();
+  let editorState = StateEditorService.getState();
 
-  HeaderExportUtils.download(
-    wpkArrayBuffer,
-    packageName ++ WPKService.getExtName(),
-    "",
-  );
+  SceneEditorService.getIsRun(editorState) ?
+    {
+      ConsoleUtils.warn(
+        "should export package when stop, but now is run!",
+        editorState,
+      );
+
+      ();
+    } :
+    {
+      let wpkArrayBuffer = _export();
+
+      HeaderExportUtils.download(
+        wpkArrayBuffer,
+        packageName ++ WPKService.getExtName(),
+        "",
+      );
+    };
 };
