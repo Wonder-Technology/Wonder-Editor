@@ -1,14 +1,42 @@
 open Js.Promise;
 
+let testImportPackageWithoutExport =
+    (
+      ~testFunc,
+      ~wpkArrayBuffer,
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~fileName="Wpk",
+      (),
+    ) =>
+  HeaderImportPackageEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+    (store, dispatchFunc),
+    (_ => (), Obj.magic(-1)),
+    BaseEventTool.buildPackageFileEvent(fileName, wpkArrayBuffer),
+  )
+  |> then_(_ => testFunc());
+
 let testImportPackage =
-    (~testFunc, ~execBeforeImportFunc=wpkArrayBuffer => (), ()) => {
+    (
+      ~testFunc,
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~execBeforeImportFunc=wpkArrayBuffer => (),
+      ~fileName="Wpk",
+      (),
+    ) => {
   let wpkArrayBuffer = ExportPackageTool.exportWPK();
 
   execBeforeImportFunc(wpkArrayBuffer);
 
-  HeaderImportPackageUtils._import(wpkArrayBuffer |> Obj.magic)
-  |> WonderBsMost.Most.drain
-  |> then_(_ => testFunc());
+  testImportPackageWithoutExport(
+    ~testFunc,
+    ~wpkArrayBuffer,
+    ~store,
+    ~dispatchFunc,
+    ~fileName,
+    (),
+  );
 };
 
 let getImportedMaterialAssetResults = () =>

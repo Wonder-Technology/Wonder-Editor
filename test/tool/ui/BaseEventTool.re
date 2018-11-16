@@ -22,6 +22,20 @@ let buildWDBFileEvent = (fileName, arrayBuffer) =>
   }
   |> Obj.magic;
 
+let buildPackageFileEvent = (fileName, wpk) =>
+  {
+    "target": {
+      "files": {
+        "0": {
+          name: fileName ++ ".wpk",
+          file: wpk,
+        },
+      },
+    },
+    "preventDefault": () => (),
+  }
+  |> Obj.magic;
+
 let buildGLBFileEvent = (fileName, arrayBuffer) =>
   {
     "target": {

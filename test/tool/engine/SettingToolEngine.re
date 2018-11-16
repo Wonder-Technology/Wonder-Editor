@@ -184,7 +184,7 @@ let createStateAndSetToStateData =
   |> StateToolEngine.setState;
 };
 
-let setMemory = (state: StateDataMainType.state, ~maxDisposeCount=1000, ()) => {
+let setMemory = (~state: StateDataMainType.state, ~maxDisposeCount=1000, ()) => {
   ...state,
   settingRecord: {
     ...state.settingRecord,
@@ -197,7 +197,7 @@ let setMemory = (state: StateDataMainType.state, ~maxDisposeCount=1000, ()) => {
 };
 
 let setBufferSize =
-    (state: StateDataMainType.state, ~geometryPointCount=100, ()) => {
+    (~state: StateDataMainType.state, ~geometryPointCount=100, ()) => {
   ...state,
   settingRecord: {
     ...state.settingRecord,
@@ -208,6 +208,7 @@ let setBufferSize =
       }),
   },
 };
+/* |> Wonderjs.RecordGeometryMainService.create; */
 
 let unsafeGetGPU = state =>
   state.settingRecord |> OperateSettingService.unsafeGetGPU;

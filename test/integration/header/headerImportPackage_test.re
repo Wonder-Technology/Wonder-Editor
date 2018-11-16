@@ -300,7 +300,6 @@ let _ =
                      let engineState = StateEngineService.unsafeGetState();
 
                      LoadWDBTool.getBoxTexturedMeshGameObject(engineState)
-                     |> WonderLog.Log.print
                      |> GameObjectTool.setCurrentSceneTreeNode;
 
                      BuildComponentTool.buildMaterial(
@@ -1643,4 +1642,89 @@ let _ =
         });
       },
     );
+
+    describe("fix bug", () => {
+      let stoveWDBArrayBuffer = ref(Obj.magic(1));
+
+      beforeAll(() =>
+        stoveWDBArrayBuffer := WDBTool.convertGLBToWDB("SuperLowPolyStove")
+      );
+
+      testPromise(
+        {|
+            1.import package p1(error);
+            2.import package p2;
+
+            should import p2 success
+            |},
+        () => {
+          MainEditorSceneTool.initState(
+            ~sandbox,
+            ~isBuildFakeDom=false,
+            ~buffer=
+              SettingToolEngine.buildBufferConfigStr(
+                ~geometryPointCount=100000,
+                ~geometryCount=30,
+                (),
+              ),
+            (),
+          );
+          MainEditorSceneTool.prepareScene(sandbox);
+          ConsoleTool.notShowMessage();
+
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            (),
+          )
+          |> then_(uploadedWDBNodeId => {
+               let boxTexturedWPKArrayBuffer = ExportPackageTool.exportWPK();
+
+               MainEditorAssetUploadTool.loadOneWDB(
+                 ~arrayBuffer=stoveWDBArrayBuffer^,
+                 (),
+               )
+               |> then_(uploadedWDBNodeId => {
+                    let boxTextuedAndStoveWPKArrayBuffer =
+                      ExportPackageTool.exportWPK();
+
+                    MainEditorSceneTool.initState(
+                      ~sandbox,
+                      ~isBuildFakeDom=false,
+                      ~buffer=
+                        SettingToolEngine.buildBufferConfigStr(
+                          ~geometryPointCount=5000,
+                          ~geometryCount=30,
+                          (),
+                        ),
+                      (),
+                    );
+                    MainEditorSceneTool.prepareScene(sandbox);
+                    ConsoleTool.notShowMessage();
+
+                    ImportPackageTool.testImportPackageWithoutExport(
+                      ~wpkArrayBuffer=boxTextuedAndStoveWPKArrayBuffer,
+                      ~testFunc=
+                        () => {
+                          let error =
+                            createMethodStubWithJsObjSandbox(
+                              sandbox,
+                              ConsoleTool.console,
+                              "error",
+                            );
+
+                          ImportPackageTool.testImportPackageWithoutExport(
+                            ~wpkArrayBuffer=boxTexturedWPKArrayBuffer,
+                            ~testFunc=
+                              () =>
+                                error |> expect |> not_ |> toCalled |> resolve,
+                            (),
+                          );
+                        },
+                      (),
+                    );
+                  });
+             });
+        },
+      );
+    });
   });

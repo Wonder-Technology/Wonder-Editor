@@ -96,11 +96,7 @@ module Method = {
                 onChange=(
                   e =>
                     importPackage((store, dispatchFunc), (send, BlurNav), e)
-                    /* HeaderImportPackageUtils.importPackage(dispatchFunc, e)
-                       |> Js.Promise.then_(_ =>
-                            send(BlurNav) |> Js.Promise.resolve
-                          )
-                       |> ignore */
+                    |> ignore
                 )
                 onFocus=(
                   e =>
