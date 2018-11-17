@@ -32,6 +32,10 @@ let getGeometryIndices = GeometryAPI.getGeometryIndices;
 
 let setGeometryIndices = GeometryAPI.setGeometryIndices;
 
+let getGeometryIndices32 = GeometryAPI.getGeometryIndices32;
+
+let setGeometryIndices32 = GeometryAPI.setGeometryIndices32;
+
 let hasGeometryTexCoords = (geometry, engineState) =>
   getGeometryTexCoords(geometry, engineState) |> Float32Array.length > 0;
 
