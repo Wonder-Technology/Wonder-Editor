@@ -225,7 +225,7 @@ finalBuffer
 ];
 
 let convertGLTFToGLB = (jsZipBlob, createJsZipFunc) => {
-  let gltfJson = ref(Obj.magic(-1));
+  let gltfJson = ref(None);
   let outerDataMap = WonderCommonlib.HashMapService.createEmpty();
 
   createJsZipFunc()
@@ -247,7 +247,7 @@ let convertGLTFToGLB = (jsZipBlob, createJsZipFunc) => {
                      |. ZipObject.asyncString()
                      |> Obj.magic
                      |> then_(content => {
-                          gltfJson := content |> Js.Json.parseExn;
+                          gltfJson := content |> Js.Json.parseExn |. Some;
 
                           resolve();
                         })
@@ -295,6 +295,18 @@ let convertGLTFToGLB = (jsZipBlob, createJsZipFunc) => {
      })
   |> WonderBsMost.Most.drain
   |> then_(_ =>
-       _convert(gltfJson^, outerDataMap, FileNameService.getBaseName)
+       switch (gltfJson^) {
+       | None =>
+         WonderLog.Log.fatal(
+           LogUtils.buildFatalMessage(
+             ~description={j|gltf file should exist|j},
+             ~reason="",
+             ~solution={j||j},
+             ~params={j||j},
+           ),
+         )
+       | Some(gltfJson) =>
+         _convert(gltfJson, outerDataMap, FileNameService.getBaseName)
+       }
      );
 };
