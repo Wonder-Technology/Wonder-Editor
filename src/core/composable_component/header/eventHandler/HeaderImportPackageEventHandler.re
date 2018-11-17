@@ -8,9 +8,7 @@ module CustomEventHandler = {
     HeaderImportPackageUtils.importPackage(dispatchFunc, event)
     |> Js.Promise.then_(_ => send(blurNav) |> Js.Promise.resolve)
     |> Js.Promise.catch(e => {
-         AllHistoryService.undoHistoryState(store, Obj.magic(dispatchFunc))
-         |> StateHistoryService.getAndRefreshStateForHistory
-         |> ignore;
+         AllHistoryService.handleUndo(store, Obj.magic(dispatchFunc));
 
          let e = Obj.magic(e);
          let editorState = StateEditorService.getState();

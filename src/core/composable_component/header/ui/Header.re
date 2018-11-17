@@ -39,8 +39,12 @@ module Method = {
               className="content-section"
               onClick=(
                 _e =>
-                  AllHistoryService.undoHistoryState(store, dispatchFunc)
-                  |> StateHistoryService.getAndRefreshStateForHistory
+                  OperateStateHistoryService.hasUndoState(
+                    AllStateData.getHistoryState(),
+                  ) ?
+                    AllHistoryService.undoHistoryState(store, dispatchFunc)
+                    |> StateHistoryService.getAndRefreshStateForHistory :
+                    ()
               )>
               <span className="section-header">
                 (DomHelper.textEl("Undo"))
@@ -53,8 +57,12 @@ module Method = {
               className="content-section"
               onClick=(
                 _e =>
-                  AllHistoryService.redoHistoryState(store, dispatchFunc)
-                  |> StateHistoryService.getAndRefreshStateForHistory
+                  OperateStateHistoryService.hasRedoState(
+                    AllStateData.getHistoryState(),
+                  ) ?
+                    AllHistoryService.redoHistoryState(store, dispatchFunc)
+                    |> StateHistoryService.getAndRefreshStateForHistory :
+                    ()
               )>
               <span className="section-header">
                 (DomHelper.textEl("Redo"))

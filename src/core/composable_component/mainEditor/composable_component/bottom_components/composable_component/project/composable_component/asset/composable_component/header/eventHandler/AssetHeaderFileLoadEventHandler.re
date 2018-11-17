@@ -7,9 +7,7 @@ module CustomEventHandler = {
   let handleSelfLogic = ((store, dispatchFunc), (), event) =>
     AssetHeaderUtils.fileLoad((store, dispatchFunc), event)
     |> Js.Promise.catch(e => {
-         AllHistoryService.undoHistoryState(store, Obj.magic(dispatchFunc))
-         |> StateHistoryService.getAndRefreshStateForHistory
-         |> ignore;
+         AllHistoryService.handleUndo(store, Obj.magic(dispatchFunc));
 
          let e = Obj.magic(e);
          let editorState = StateEditorService.getState();

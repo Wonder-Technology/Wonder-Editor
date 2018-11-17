@@ -20,6 +20,7 @@ let undoHistoryState = (store, dispatchFunc, (editorState, engineState)) => {
 
   let editorState =
     editorState |> EditorHistoryService.undo(AllStateData.getHistoryState());
+
   let engineState =
     engineState |> EngineHistoryService.undo(AllStateData.getHistoryState());
 
@@ -50,3 +51,9 @@ let redoHistoryState = (store, dispatchFunc, (editorState, engineState)) => {
 
   (editorState, engineState);
 };
+
+let handleUndo = (store, dispatchFunc) =>
+  OperateStateHistoryService.hasUndoState(AllStateData.getHistoryState()) ?
+    undoHistoryState(store, dispatchFunc)
+    |> StateHistoryService.getAndRefreshStateForHistory :
+    ();
