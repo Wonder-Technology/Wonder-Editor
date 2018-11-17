@@ -14,7 +14,8 @@
                 height: 20px;
             }
             .header-message {
-                white-space: pre-line;
+                width:96%;
+                word-wrap: break-word;
                 padding-top: 5px;
             }
         }
