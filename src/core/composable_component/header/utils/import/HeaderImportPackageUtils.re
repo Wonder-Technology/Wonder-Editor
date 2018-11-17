@@ -121,56 +121,78 @@ let _import = result => {
 };
 
 let importPackage = (dispatchFunc, event) => {
-  let e = ReactEventType.convertReactFormEventToJsEvent(event);
-  DomHelper.preventDefault(e);
+  let editorState = StateEditorService.getState();
 
-  switch (e##target##files |> Js.Dict.values |> ArrayService.getFirst) {
-  | None =>
-    Js.Promise.make((~resolve, ~reject) =>
-      resolve(.
-        dispatchFunc(
-          AppStore.UpdateAction(Update([|UpdateStore.NoUpdate|])),
-        ),
-      )
-    )
-  | Some(file) =>
-    let fileInfo: FileType.fileInfoType =
-      file |> FileReader.convertFileJsObjectToFileInfoRecord;
+  SceneEditorService.getIsRun(editorState) ?
+    {
+      ConsoleUtils.warn(
+        "should import package when stop, but now is run!",
+        editorState,
+      );
 
-    WonderBsMost.Most.fromPromise(
-      Js.Promise.make((~resolve, ~reject) => {
-        let reader = FileReader.createFileReader();
+      Js.Promise.make((~resolve, ~reject) =>
+        resolve(.
+          dispatchFunc(
+            AppStore.UpdateAction(Update([|UpdateStore.NoUpdate|])),
+          ),
+        )
+      );
+    } :
+    {
+      let e = ReactEventType.convertReactFormEventToJsEvent(event);
+      DomHelper.preventDefault(e);
 
-        FileReader.onload(reader, result =>
+      switch (e##target##files |> Js.Dict.values |> ArrayService.getFirst) {
+      | None =>
+        Js.Promise.make((~resolve, ~reject) =>
           resolve(.
-            {
-              name: fileInfo.name,
-              type_: LoadAssetUtils.getUploadPackageType(fileInfo.name),
-              result,
-            }: AssetNodeType.nodeResultType,
+            dispatchFunc(
+              AppStore.UpdateAction(Update([|UpdateStore.NoUpdate|])),
+            ),
           )
-        );
+        )
+      | Some(file) =>
+        let fileInfo: FileType.fileInfoType =
+          file |> FileReader.convertFileJsObjectToFileInfoRecord;
 
-        LoadAssetUtils.readPakckageByTypeSync(reader, fileInfo);
-      }),
-    )
-    |> WonderBsMost.Most.flatMap((fileResult: AssetNodeType.nodeResultType) =>
-         _import(fileResult.result)
-       )
-    |> WonderBsMost.Most.drain
-    |> then_(_ => {
-         dispatchFunc(
-           AppStore.SceneTreeAction(
-             SetSceneGraph(
-               Some(
-                 SceneGraphUtils.getSceneGraphDataFromEngine
-                 |> StateLogicService.getStateToGetData,
+        WonderBsMost.Most.fromPromise(
+          Js.Promise.make((~resolve, ~reject) => {
+            let reader = FileReader.createFileReader();
+
+            FileReader.onload(reader, result =>
+              resolve(.
+                {
+                  name: fileInfo.name,
+                  type_: LoadAssetUtils.getUploadPackageType(fileInfo.name),
+                  result,
+                }: AssetNodeType.nodeResultType,
+              )
+            );
+
+            LoadAssetUtils.readPakckageByTypeSync(reader, fileInfo);
+          }),
+        )
+        |> WonderBsMost.Most.flatMap(
+             (fileResult: AssetNodeType.nodeResultType) =>
+             _import(fileResult.result)
+           )
+        |> WonderBsMost.Most.drain
+        |> then_(_ => {
+             dispatchFunc(
+               AppStore.SceneTreeAction(
+                 SetSceneGraph(
+                   Some(
+                     SceneGraphUtils.getSceneGraphDataFromEngine
+                     |> StateLogicService.getStateToGetData,
+                   ),
+                 ),
                ),
-             ),
-           ),
-         );
-         dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))
-         |> resolve;
-       });
-  };
+             );
+             dispatchFunc(
+               AppStore.UpdateAction(Update([|UpdateStore.All|])),
+             )
+             |> resolve;
+           });
+      };
+    };
 };

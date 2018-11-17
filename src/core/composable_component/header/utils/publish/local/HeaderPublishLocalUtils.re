@@ -162,53 +162,69 @@ module Publish = {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
-    let (engineState, sceneGraphArrayBuffer) =
-      HeaderExportSceneWDBUtils.generateSceneWDB(editorState, engineState);
+    SceneEditorService.getIsRun(editorState) ?
+      {
+        ConsoleUtils.warn(
+          "should publish local when stop, but now is run!",
+          editorState,
+        );
 
-    engineState |> StateEngineService.setState;
+        Js.Promise.make((~resolve, ~reject) => resolve(. None));
+      } :
+      {
+        let (engineState, sceneGraphArrayBuffer) =
+          HeaderExportSceneWDBUtils.generateSceneWDB(
+            editorState,
+            engineState,
+          );
 
-    createZipFunc()
-    |> WonderBsMost.Most.just
-    |> WonderBsMost.Most.flatMap(zip =>
-         WonderBsMost.Most.fromPromise(
-           LoadData.loadAndWriteIndexHtmlData(
-             sceneGraphArrayBuffer,
-             fetchFunc,
-             zip,
-           ),
-         )
-       )
-    |> WonderBsMost.Most.flatMap(zip =>
-         WonderBsMost.Most.fromPromise(
-           LoadData.loadAndWriteIndexJsData(fetchFunc, zip),
-         )
-       )
-    |> WonderBsMost.Most.flatMap(zip =>
-         WonderBsMost.Most.fromPromise(
-           LoadData.loadAndWriteResData(fetchFunc, zip),
-         )
-       )
-    |> WonderBsMost.Most.flatMap(zip =>
-         WonderBsMost.Most.fromPromise(
-           LoadData.loadAndWriteConfigData(fetchFunc, zip),
-         )
-       )
-    |> WonderBsMost.Most.tap(zip =>
-         zip
-         |. Zip.write(
-              ~options=Options.makeWriteOptions(~binary=true, ()),
-              "Scene.wdb",
-              `trustme(
-                sceneGraphArrayBuffer |> TypeArrayType.newBlobFromArrayBuffer,
-              ),
-            )
-         |. Zip.generateAsyncBlob(Zip.makeAsyncBlobOptions())
-         |> Js.Promise.then_(content =>
-              FileSaver.saveAs(content, zipName ++ ".zip")
-              |> Js.Promise.resolve
-            )
-         |> ignore
-       )
-    |> WonderBsMost.Most.drain;
+        engineState |> StateEngineService.setState;
+
+        createZipFunc()
+        |> WonderBsMost.Most.just
+        |> WonderBsMost.Most.flatMap(zip =>
+             WonderBsMost.Most.fromPromise(
+               LoadData.loadAndWriteIndexHtmlData(
+                 sceneGraphArrayBuffer,
+                 fetchFunc,
+                 zip,
+               ),
+             )
+           )
+        |> WonderBsMost.Most.flatMap(zip =>
+             WonderBsMost.Most.fromPromise(
+               LoadData.loadAndWriteIndexJsData(fetchFunc, zip),
+             )
+           )
+        |> WonderBsMost.Most.flatMap(zip =>
+             WonderBsMost.Most.fromPromise(
+               LoadData.loadAndWriteResData(fetchFunc, zip),
+             )
+           )
+        |> WonderBsMost.Most.flatMap(zip =>
+             WonderBsMost.Most.fromPromise(
+               LoadData.loadAndWriteConfigData(fetchFunc, zip),
+             )
+           )
+        |> WonderBsMost.Most.tap(zip =>
+             zip
+             |. Zip.write(
+                  ~options=Options.makeWriteOptions(~binary=true, ()),
+                  "Scene.wdb",
+                  `trustme(
+                    sceneGraphArrayBuffer
+                    |> TypeArrayType.newBlobFromArrayBuffer,
+                  ),
+                )
+             |. Zip.generateAsyncBlob(Zip.makeAsyncBlobOptions())
+             |> Js.Promise.then_(content =>
+                  FileSaver.saveAs(content, zipName ++ ".zip")
+                  |> Js.Promise.resolve
+                )
+             |> ignore
+           )
+        |> WonderBsMost.Most.drain
+        |> then_(_ => None |> resolve);
+      };
   };
 };
