@@ -976,7 +976,9 @@ html, body {
                   .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-error .console-header .header-message {
                     width: 96%;
                     word-wrap: break-word;
-                    padding-top: 5px; }
+                    padding-top: 5px;
+                    padding-bottom: 10px;
+                    overflow-y: auto; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-error .console-trace {
                   width: 96%;
                   font-size: 14px;
@@ -1000,7 +1002,9 @@ html, body {
                   .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-info .console-header .header-message {
                     width: 96%;
                     word-wrap: break-word;
-                    padding-top: 5px; }
+                    padding-top: 5px;
+                    padding-bottom: 10px;
+                    overflow-y: auto; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-info .console-trace {
                   width: 96%;
                   font-size: 14px;
@@ -1024,7 +1028,9 @@ html, body {
                   .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-warn .console-header .header-message {
                     width: 96%;
                     word-wrap: break-word;
-                    padding-top: 5px; }
+                    padding-top: 5px;
+                    padding-bottom: 10px;
+                    overflow-y: auto; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-warn .console-trace {
                   width: 96%;
                   font-size: 14px;
@@ -1048,7 +1054,9 @@ html, body {
                   .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-debug .console-header .header-message {
                     width: 96%;
                     word-wrap: break-word;
-                    padding-top: 5px; }
+                    padding-top: 5px;
+                    padding-bottom: 10px;
+                    overflow-y: auto; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-debug .console-trace {
                   width: 96%;
                   font-size: 14px;
@@ -1072,7 +1080,9 @@ html, body {
                   .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-log .console-header .header-message {
                     width: 96%;
                     word-wrap: break-word;
-                    padding-top: 5px; }
+                    padding-top: 5px;
+                    padding-bottom: 10px;
+                    overflow-y: auto; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-log .console-trace {
                   width: 96%;
                   font-size: 14px;
