@@ -3,13 +3,14 @@ open AssetNodeType;
 open FileType;
 
 let getUploadAssetType = name => {
-  let (_, extname) = FileNameService.getBaseNameAndExtName(name);
+  let extname = FileNameService.getExtName(name);
 
   switch (extname) {
   | ".wdb" => LoadWDB
   | ".glb" => LoadGLB
   | ".jpg"
   | ".png" => LoadImage
+  | ".zip" => LoadGLTFZip
   | _ =>
     ConsoleUtils.error(
       LogUtils.buildErrorMessage(
@@ -26,7 +27,7 @@ let getUploadAssetType = name => {
 };
 
 let getUploadPackageType = name => {
-  let (_, extname) = FileNameService.getBaseNameAndExtName(name);
+  let extname = FileNameService.getExtName(name);
 
   switch (extname) {
   | ".wpk" => LoadWPK
@@ -45,29 +46,33 @@ let getUploadPackageType = name => {
   };
 };
 
-let handleSpecificFuncByTypeSync =
-    (type_, (handleImageFunc, handleWDBFunc, handleGLBFunc, handleWPKFunc)) =>
+let _handlePackageSpecificFuncByTypeSync = (type_, handleWPKFunc) =>
   switch (type_) {
-  | LoadImage => handleImageFunc()
-  | LoadWDB => handleWDBFunc()
-  | LoadGLB => handleGLBFunc()
   | LoadWPK => handleWPKFunc()
   | LoadError => ()
   };
 
-let readPakckageByTypeSync = (reader, fileInfo: fileInfoType) =>
-  handleSpecificFuncByTypeSync(
-    getUploadPackageType(fileInfo.name),
+let _handleAssetSpecificFuncByTypeSync =
     (
-      () => FileReader.readAsDataURL(reader, fileInfo.file),
-      () => FileReader.readAsArrayBuffer(reader, fileInfo.file),
-      () => FileReader.readAsArrayBuffer(reader, fileInfo.file),
-      () => FileReader.readAsArrayBuffer(reader, fileInfo.file),
-    ),
+      type_,
+      (handleImageFunc, handleWDBFunc, handleGLBFunc, handleGLTFZipFunc),
+    ) =>
+  switch (type_) {
+  | LoadImage => handleImageFunc()
+  | LoadWDB => handleWDBFunc()
+  | LoadGLB => handleGLBFunc()
+  | LoadGLTFZip => handleGLTFZipFunc()
+  | LoadError => ()
+  };
+
+let readPakckageByTypeSync = (reader, fileInfo: fileInfoType) =>
+  _handlePackageSpecificFuncByTypeSync(
+    getUploadPackageType(fileInfo.name), () =>
+    FileReader.readAsArrayBuffer(reader, fileInfo.file)
   );
 
 let readAssetByTypeSync = (reader, fileInfo: fileInfoType) =>
-  handleSpecificFuncByTypeSync(
+  _handleAssetSpecificFuncByTypeSync(
     getUploadAssetType(fileInfo.name),
     (
       () => FileReader.readAsDataURL(reader, fileInfo.file),

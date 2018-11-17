@@ -1,11 +1,11 @@
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
-  type prepareTuple = unit;
+  type prepareTuple = unit => WonderBsJszip.Zip.jszip;
   type dataTuple = ReactEventRe.Form.t;
   type return = Js.Promise.t(unit);
 
-  let handleSelfLogic = ((store, dispatchFunc), (), event) =>
-    AssetHeaderUtils.fileLoad((store, dispatchFunc), event)
+  let handleSelfLogic = ((store, dispatchFunc), createJsZipFunc, event) =>
+    AssetHeaderUtils.fileLoad((store, dispatchFunc), createJsZipFunc, event)
     |> Js.Promise.catch(e => {
          AllHistoryService.handleUndo(store, Obj.magic(dispatchFunc));
 

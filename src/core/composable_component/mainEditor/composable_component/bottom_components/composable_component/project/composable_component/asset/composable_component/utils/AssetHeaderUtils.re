@@ -49,7 +49,7 @@ let _handleAssetWDBType =
       (wdbNodeId, parentFolderNodeId),
       (editorState, engineState),
     ) => {
-  let (baseName, _) = FileNameService.getBaseNameAndExtName(fileName);
+  let baseName = FileNameService.getBaseName(fileName);
 
   AssetWDBUtils.importAssetWDB(
     (
@@ -124,17 +124,37 @@ let _handleGLBType =
     (editorState, engineState),
   );
 
+let _handleGLTFZipType =
+    (
+      (fileName, jsZipBlob),
+      (wdbNodeId, parentFolderNodeId),
+      createJsZipFunc,
+      (editorState, engineState),
+    ) =>
+  LoadGLTFZipUtils.convertGLTFToGLB(jsZipBlob, createJsZipFunc)
+  |> then_(glbArrayBuffer =>
+       _handleGLBType(
+         (fileName, glbArrayBuffer),
+         (wdbNodeId, parentFolderNodeId),
+         (editorState, engineState),
+       )
+     );
+
 let _handleSpecificFuncByTypeAsync =
-    (type_, (handleImageFunc, handleWDBFunc, handleGLBFunc)) =>
+    (
+      type_,
+      (handleImageFunc, handleWDBFunc, handleGLBFunc, handleGLTFZipFuncc),
+    ) =>
   switch (type_) {
   | LoadImage => handleImageFunc()
   | LoadWDB => handleWDBFunc()
   | LoadGLB => handleGLBFunc()
+  | LoadGLTFZip => handleGLTFZipFuncc()
   | LoadError =>
     make((~resolve, ~reject) => reject(. LoadException("load asset error")))
   };
 
-let handleFileByTypeAsync = (fileResult: nodeResultType) => {
+let handleFileByTypeAsync = (fileResult: nodeResultType, createJsZipFunc) => {
   let (editorState, assetNodeId) =
     AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
   let engineState = StateEngineService.unsafeGetState();
@@ -145,8 +165,9 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
     fileResult.type_,
     (
       () => {
-        let (baseName, extName) =
-          FileNameService.getBaseNameAndExtName(fileResult.name);
+        let baseName = FileNameService.getBaseName(fileResult.name);
+        let extName = FileNameService.getExtName(fileResult.name);
+
         let (textureComponent, engineState) =
           TextureUtils.createAndInitTexture(
             baseName
@@ -186,6 +207,16 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
           (assetNodeId, targetTreeNodeId),
           (editorState, engineState),
         ),
+      () =>
+        _handleGLTFZipType(
+          (
+            fileResult.name,
+            fileResult.result |> FileReader.convertResultToJsZipBlob,
+          ),
+          (assetNodeId, targetTreeNodeId),
+          createJsZipFunc,
+          (editorState, engineState),
+        ),
     ),
   )
   |> then_(((editorState, engineState)) => {
@@ -196,44 +227,46 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
      });
 };
 
-let fileLoad = ((store, dispatchFunc), event) => {
+let fileLoad = ((store, dispatchFunc), createJsZipFunc, event) => {
   let e = ReactEventType.convertReactFormEventToJsEvent(event);
   DomHelper.preventDefault(e);
 
   let target = e##target;
 
-  let fileInfoArr =
-    target##files
-    |> Js.Dict.values
-    |> Js.Array.map(FileReader.convertFileJsObjectToFileInfoRecord);
+  switch (target##files |> Js.Dict.values |> ArrayService.getFirst) {
+  | None => resolve()
+  | Some(file) =>
+    let fileInfo = FileReader.convertFileJsObjectToFileInfoRecord(file);
 
-  WonderBsMost.Most.from(fileInfoArr)
-  |> WonderBsMost.Most.flatMap((fileInfo: fileInfoType) =>
-       WonderBsMost.Most.fromPromise(
-         Js.Promise.make((~resolve, ~reject) => {
-           let reader = FileReader.createFileReader();
+    WonderBsMost.Most.fromPromise(
+      Js.Promise.make((~resolve, ~reject) => {
+        let reader = FileReader.createFileReader();
 
-           FileReader.onload(reader, result =>
-             resolve(. {
-               name: fileInfo.name,
-               type_: LoadAssetUtils.getUploadAssetType(fileInfo.name),
-               result,
-             })
-           );
+        FileReader.onload(reader, result =>
+          resolve(. {
+            name: fileInfo.name,
+            type_: LoadAssetUtils.getUploadAssetType(fileInfo.name),
+            result,
+          })
+        );
 
-           LoadAssetUtils.readAssetByTypeSync(reader, fileInfo);
-         }),
+        LoadAssetUtils.readAssetByTypeSync(reader, fileInfo);
+      }),
+    )
+    |> WonderBsMost.Most.flatMap((fileResult: nodeResultType) =>
+         WonderBsMost.Most.fromPromise(
+           handleFileByTypeAsync(fileResult, createJsZipFunc),
+         )
        )
-     )
-  |> WonderBsMost.Most.flatMap((fileResult: nodeResultType) =>
-       WonderBsMost.Most.fromPromise(fileResult |> handleFileByTypeAsync)
-     )
-  |> WonderBsMost.Most.drain
-  |> then_(_ => {
-       FileReader.makeSureCanLoadSameNameFileAgain(target);
+    |> WonderBsMost.Most.drain
+    |> then_(() => {
+         FileReader.makeSureCanLoadSameNameFileAgain(target);
 
-       dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])));
+         dispatchFunc(
+           AppStore.UpdateAction(Update([|UpdateStore.Project|])),
+         );
 
-       resolve();
-     });
+         resolve();
+       });
+  };
 };

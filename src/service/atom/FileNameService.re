@@ -1,19 +1,18 @@
-let getFileExtName = fileName =>
-  switch ([%re {|/^.*(\.\w+)$/|}] |> Js.Re.exec(fileName)) {
-  | None => None
-  | Some(result) =>
-    let resultArr = Js.Re.matches(result);
+let getExtName = fileName => {
+  let lastIndex = fileName |> Js.String.lastIndexOf(".");
 
-    resultArr[1] |. Some;
-  };
+  lastIndex === (-1) ?
+    "" : fileName |> Js.String.substringToEnd(~from=lastIndex);
+};
 
-let getBaseNameAndExtName = fileName =>
-  switch ([%re {|/^(.*)(\.\w+)$/|}] |> Js.Re.exec(fileName)) {
-  | None => (fileName, "")
-  | Some(result) =>
-    let resultArr = Js.Re.matches(result);
-    (resultArr[1], resultArr[2]);
-  };
+let getBaseName = [%bs.raw
+  fileName => {|
+var base = new String(fileName).substring(fileName.lastIndexOf('/') + 1);
+    if(base.lastIndexOf(".") !== -1)
+        base = base.substring(0, base.lastIndexOf("."));
+   return base;
+  |}
+];
 
 let getFolderPathAndFileName = filePath =>
   switch ([%re {|/^(.*[\/])?(\w+\.\w+)$/|}] |> Js.Re.exec(filePath)) {

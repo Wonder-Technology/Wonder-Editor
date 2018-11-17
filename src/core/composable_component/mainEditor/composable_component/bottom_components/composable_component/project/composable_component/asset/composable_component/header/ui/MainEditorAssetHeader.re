@@ -86,7 +86,13 @@ let render =
           _type="file"
           multiple=false
           onChange=(
-            e => Method.fileLoad((store, dispatchFunc), (), e) |> ignore
+            e =>
+              Method.fileLoad(
+                (store, dispatchFunc),
+                WonderBsJszip.Zip.create,
+                e,
+              )
+              |> ignore
           )
         />
       </div>

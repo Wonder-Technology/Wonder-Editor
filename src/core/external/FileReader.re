@@ -6,8 +6,6 @@ open FileType;
 
 [@bs.send] external readAsDataURL : (fileReader, file) => unit = "";
 
-[@bs.send] external readAsDataURL : (fileReader, file) => unit = "";
-
 [@bs.send] external readAsArrayBuffer : (fileReader, file) => unit = "";
 
 [@bs.send] external readAsText : (fileReader, file) => unit = "";
@@ -40,4 +38,7 @@ external convertResultToString : resultType => string = "%identity";
 
 external convertResultToArrayBuffer :
   resultType => Js.Typed_array.ArrayBuffer.t =
+  "%identity";
+
+external convertResultToJsZipBlob : resultType => WonderBsJszip.Blob.t =
   "%identity";

@@ -10,7 +10,7 @@ let handleSceneWDB = wdbArrayBuffer =>
 let _getUploadAssetType = name => {
   open AssetNodeType;
 
-  let (_, extname) = FileNameService.getBaseNameAndExtName(name);
+  let extname = FileNameService.getExtName(name);
 
   switch (extname) {
   | ".wdb" => LoadWDB
@@ -30,15 +30,7 @@ let _getUploadAssetType = name => {
 };
 
 let _readWDBByTypeSync = (reader, fileInfo: FileType.fileInfoType) =>
-  LoadAssetUtils.handleSpecificFuncByTypeSync(
-    _getUploadAssetType(fileInfo.name),
-    (
-      () => FileReader.readAsDataURL(reader, fileInfo.file),
-      () => FileReader.readAsArrayBuffer(reader, fileInfo.file),
-      () => FileReader.readAsArrayBuffer(reader, fileInfo.file),
-      () => FileReader.readAsArrayBuffer(reader, fileInfo.file),
-    ),
-  );
+  FileReader.readAsArrayBuffer(reader, fileInfo.file);
 
 let load = (dispatchFunc, event) => {
   open AssetNodeType;

@@ -308,7 +308,7 @@ let _ =
           let errorStub =
             createMethodStub(sandbox^, ConsoleTool.console, "error");
 
-          LoadAssetUtils.handleSpecificFuncByTypeSync(
+          LoadAssetUtils._handleAssetSpecificFuncByTypeSync(
             _getErrorTypeFile(),
             (() => (), () => (), () => (), () => ()),
           );
