@@ -23,7 +23,7 @@ let prepareDefaultComponent = (editorState, engineState) => {
 let prepareSpecificGameObjects = (editorState, engineState) => {
   let (engineState, gridPlane) =
     GeometryEngineService.createGridPlaneGameObject(
-      (300., 10., 0.),
+      (30., 1., 0.),
       [|0.6, 0.6, 0.6|],
       engineState,
     );
@@ -34,20 +34,21 @@ let prepareSpecificGameObjects = (editorState, engineState) => {
 
   let engineState =
     engineState
-    |> TransformEngineService.setLocalPosition(
-         (20., 0., 100.),
-         GameObjectComponentEngineService.unsafeGetTransformComponent(
-           camera,
-           engineState,
-         ),
-       )
     |> ArcballCameraEngineService.setArcballCameraControllerDistance(
-         200.,
+         20.,
          arcballCameraController,
        )
     |> ArcballCameraEngineService.setArcballCameraControllerWheelSpeed(
          arcballCameraController,
-         8.,
+         0.5,
+       )
+    |> ArcballCameraEngineService.setArcballCameraControllerMoveSpeedX(
+         arcballCameraController,
+         1.,
+       )
+    |> ArcballCameraEngineService.setArcballCameraControllerMoveSpeedY(
+         arcballCameraController,
+         1.,
        )
     |> ArcballCameraEngineService.setArcballCameraControllerTheta(
          arcballCameraController,
@@ -79,21 +80,21 @@ let _prepareEngineState = ((camera, directionLight, box1, box2), engineState) =>
      )
   |. BasicCameraViewEngineService.activeBasicCameraView(engineState)
   |> TransformEngineService.setLocalPosition(
-       (0., 0., 40.),
+       (0., 0., 4.),
        GameObjectComponentEngineService.unsafeGetTransformComponent(
          camera,
          engineState,
        ),
      )
   |> TransformEngineService.setLocalPosition(
-       (30., 4., 10.),
+       (3., 4., 1.),
        GameObjectComponentEngineService.unsafeGetTransformComponent(
          directionLight,
          engineState,
        ),
      )
   |> TransformEngineService.setTransformLocalEulerAngles(
-       (45., 0., 0.),
+       (45., 135., 0.),
        GameObjectComponentEngineService.unsafeGetTransformComponent(
          directionLight,
          engineState,

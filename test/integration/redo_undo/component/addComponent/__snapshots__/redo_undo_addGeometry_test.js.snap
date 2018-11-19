@@ -128,7 +128,7 @@ exports[`redo_undo: add geometry component prepare first step: set currentSceneT
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="40"
+                    value="4"
                   />
                 </div>
               </article>
@@ -706,7 +706,7 @@ exports[`redo_undo: add geometry component prepare first step: set currentSceneT
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="40"
+                    value="4"
                   />
                 </div>
               </article>
@@ -1284,7 +1284,7 @@ exports[`redo_undo: add geometry component prepare first step: set currentSceneT
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="40"
+                    value="4"
                   />
                 </div>
               </article>

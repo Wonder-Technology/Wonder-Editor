@@ -193,7 +193,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1"
+              value="0.1"
             />
           </div>
         </article>
@@ -213,7 +213,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1"
+              value="0.1"
             />
           </div>
         </article>
@@ -233,7 +233,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1"
+              value="0.1"
             />
           </div>
         </article>
@@ -436,7 +436,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1"
+              value="0.1"
             />
           </div>
         </article>
@@ -456,7 +456,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1"
+              value="0.1"
             />
           </div>
         </article>
@@ -476,7 +476,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1"
+              value="0.1"
             />
           </div>
         </article>
@@ -674,7 +674,7 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1"
+              value="0.1"
             />
           </div>
         </article>
@@ -694,7 +694,7 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1"
+              value="0.1"
             />
           </div>
         </article>
@@ -714,7 +714,7 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1"
+              value="0.1"
             />
           </div>
         </article>

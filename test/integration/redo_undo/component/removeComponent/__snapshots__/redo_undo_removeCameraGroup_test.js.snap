@@ -128,7 +128,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="40"
+                    value="4"
                   />
                 </div>
               </article>
@@ -441,7 +441,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="40"
+                    value="4"
                   />
                 </div>
               </article>
@@ -754,7 +754,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="40"
+                    value="4"
                   />
                 </div>
               </article>

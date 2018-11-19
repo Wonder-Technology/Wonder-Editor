@@ -128,7 +128,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="40"
+                    value="4"
                   />
                 </div>
               </article>
@@ -931,7 +931,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="40"
+                    value="4"
                   />
                 </div>
               </article>
@@ -1734,7 +1734,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="40"
+                    value="4"
                   />
                 </div>
               </article>

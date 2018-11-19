@@ -23,8 +23,8 @@ let getEngineStateIMGUIFunc = () =>
     let hasGameObjectPointLightComponent = apiJsObj##hasGameObjectPointLightComponent;
 
     let convertWorldToScreen = apiJsObj##convertWorldToScreen;
-    let imageMaxWidth = 80.;
-    let imageMaxHeight = 80.;
+    let imageMaxWidth = 30.;
+    let imageMaxHeight = 30.;
     let maxDistance = 500.;
 
     let _convertAnchorFromTopLeftToCenter = ((width, height), (x, y)) => (

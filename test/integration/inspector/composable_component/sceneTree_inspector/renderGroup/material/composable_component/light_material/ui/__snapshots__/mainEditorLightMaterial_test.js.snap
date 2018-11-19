@@ -242,7 +242,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -262,7 +262,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -282,7 +282,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -909,7 +909,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -929,7 +929,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -949,7 +949,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -1573,7 +1573,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -1593,7 +1593,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -1613,7 +1613,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -2240,7 +2240,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -2260,7 +2260,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -2280,7 +2280,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -2904,7 +2904,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -2924,7 +2924,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -2944,7 +2944,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>

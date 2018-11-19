@@ -188,7 +188,7 @@ exports[`MainEditorTransform position test change position value changeX should 
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1"
+              value="0.1"
             />
           </div>
         </article>
@@ -208,7 +208,7 @@ exports[`MainEditorTransform position test change position value changeX should 
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1"
+              value="0.1"
             />
           </div>
         </article>
@@ -228,7 +228,7 @@ exports[`MainEditorTransform position test change position value changeX should 
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="1"
+              value="0.1"
             />
           </div>
         </article>

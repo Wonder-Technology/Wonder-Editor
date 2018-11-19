@@ -242,7 +242,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -262,7 +262,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -282,7 +282,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -843,7 +843,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -863,7 +863,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -883,7 +883,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -1444,7 +1444,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -1464,7 +1464,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -1484,7 +1484,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>

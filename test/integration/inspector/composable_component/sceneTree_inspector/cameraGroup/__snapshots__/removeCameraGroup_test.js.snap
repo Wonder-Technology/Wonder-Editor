@@ -128,7 +128,7 @@ exports[`test remove camera group test has no camera group after remove  test re
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="40"
+                    value="4"
                   />
                 </div>
               </article>
@@ -555,7 +555,7 @@ exports[`test remove camera group test still has other camera groups after remov
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -575,7 +575,7 @@ exports[`test remove camera group test still has other camera groups after remov
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>
@@ -595,7 +595,7 @@ exports[`test remove camera group test still has other camera groups after remov
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1"
+                    value="0.1"
                   />
                 </div>
               </article>

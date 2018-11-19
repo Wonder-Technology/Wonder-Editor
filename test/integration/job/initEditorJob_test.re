@@ -97,16 +97,16 @@ let _ =
                           732,
                           244,
                           Js.Typed_array.Float32Array.make([|
-                            (-300.),
+                            (-30.),
                             0.,
-                            (-300.),
-                            300.,
+                            (-30.),
+                            30.,
                             0.,
-                            (-300.),
-                            (-300.),
+                            (-30.),
+                            (-30.),
                             0.,
-                            (-300.),
-                            (-300.),
+                            (-30.),
+                            (-30.),
                           |]),
                           Js.Typed_array.Uint16Array.make([|
                             0,
@@ -188,7 +188,10 @@ let _ =
           StateEditorService.getState(),
         )
         |>
-        expect == {defaultCubeGeometryComponent: 1, defaultSphereGeometryComponent: 2}
+        expect == {
+                    defaultCubeGeometryComponent: 1,
+                    defaultSphereGeometryComponent: 2,
+                  }
       )
     );
 
@@ -241,7 +244,7 @@ let _ =
             |> GameObjectAPI.unsafeGetGameObjectTransformComponent(gameObject);
           engineState
           |> TransformAPI.getTransformLocalPosition(transform)
-          |> expect == (0., 0., 40.);
+          |> expect == (0., 0., 4.);
         });
       });
 

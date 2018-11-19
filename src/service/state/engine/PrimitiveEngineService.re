@@ -15,6 +15,16 @@ let createCube = ((cubeGeometry, lightMaterial), editorState, engineState) => {
   let (editorState, (engineState, obj)) =
     GameObjectLogicService.createGameObject((editorState, engineState));
 
+  let transform =
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      obj,
+      engineState,
+    );
+
+  let engineState =
+    engineState
+    |> TransformEngineService.setLocalScale((0.1, 0.1, 0.1), transform);
+
   let (engineState, meshRenderer) =
     MeshRendererEngineService.create(engineState);
   let renderGroup =
