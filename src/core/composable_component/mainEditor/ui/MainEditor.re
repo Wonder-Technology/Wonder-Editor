@@ -39,14 +39,19 @@ module Method = {
     |> ScreenEngineService.setScreenSize((width, height, width, height))
     |> ignore;
 
-    _updateViewRect(width, height) |> ignore;
+    DeviceManagerEngineService.getGl(StateEngineService.unsafeGetState())
+    |> Js.Option.isSome ?
+      {
+        _updateViewRect(width, height) |> ignore;
 
-    StateEngineService.unsafeGetState()
-    |> PerspectiveCameraProjectionEngineService.markAllPerspectiveCameraProjectionsDirty
-    |> DeviceManagerEngineService.setViewport((0, 0, width, height))
-    |> DirectorEngineService.loopBody(0.)
-    |> StateEngineService.setState
-    |> ignore;
+        StateEngineService.unsafeGetState()
+        |> PerspectiveCameraProjectionEngineService.markAllPerspectiveCameraProjectionsDirty
+        |> DeviceManagerEngineService.setViewport((0, 0, width, height))
+        |> DirectorEngineService.loopBody(0.)
+        |> StateEngineService.setState
+        |> ignore;
+      } :
+      ();
   };
 
   let buildStartedRunWebglComponent = () =>
