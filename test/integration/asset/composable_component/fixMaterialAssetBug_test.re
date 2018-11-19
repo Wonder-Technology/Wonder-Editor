@@ -274,6 +274,44 @@ let _ =
                 |> ReactTestTool.createSnapshotAndMatch;
               },
             );
+            test(
+              {|
+              add material m1;
+              change m1->name to n1;
+              select sceneTree->gameObject g1;
+              g1 change material to m1;
+              change m1->type to basicMaterial;
+
+              m1->name should still be n1
+              |},
+              () => {
+                let ((gameObject1, gameObject2), _, addedMaterialNodeId) =
+                  _prepareAndExec();
+
+                let name = "Material222";
+                AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+                  ~nodeId=addedMaterialNodeId,
+                  ~name,
+                  (),
+                );
+
+                let engineState = StateEngineService.unsafeGetState();
+
+                gameObject1 |> GameObjectTool.setCurrentSceneTreeNode;
+
+                MainEditorLightMaterialTool.changeMaterialTypeToBeLightMaterial();
+
+                MainEditorAssetChildrenNodeTool.selectMaterialNode(
+                  ~nodeId=addedMaterialNodeId,
+                  (),
+                );
+                BuildComponentTool.buildInspectorComponent(
+                  TestTool.buildEmptyAppState(),
+                  InspectorTool.buildFakeAllShowComponentConfig(),
+                )
+                |> ReactTestTool.createSnapshotAndMatch;
+              },
+            );
 
             describe(
               {|

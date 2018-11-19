@@ -76,6 +76,18 @@ module CustomEventHandler = {
         engineState,
       );
 
+    let engineState =
+      MainEditorMaterialUtils.setName(
+        targetMaterial,
+        targetMaterialType,
+        MainEditorMaterialUtils.getName(
+          sourceMaterial,
+          sourceMaterialType,
+          engineState,
+        ),
+        engineState,
+      );
+
     engineState |> StateLogicService.refreshEngineState;
 
     _updateMaterialNodeData(
