@@ -1165,7 +1165,7 @@ html, body {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 1px solid #a7a5a5;
+                border: 2px solid #a7a5a5;
                 position: relative;
                 box-sizing: border-box; }
                 .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .sceneTree-name .inspector-item .item-texture .texture-img .img-dragBg {
@@ -1284,7 +1284,7 @@ html, body {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 1px solid #a7a5a5;
+                border: 2px solid #a7a5a5;
                 position: relative;
                 box-sizing: border-box; }
                 .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform .inspector-item .item-texture .texture-img .img-dragBg {
@@ -1390,7 +1390,7 @@ html, body {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 1px solid #a7a5a5;
+                border: 2px solid #a7a5a5;
                 position: relative;
                 box-sizing: border-box; }
                 .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-camera-group .inspector-component .component-content .wonder-camera-view .inspector-item .item-texture .texture-img .img-dragBg {
@@ -1459,7 +1459,7 @@ html, body {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 1px solid #a7a5a5;
+                border: 2px solid #a7a5a5;
                 position: relative;
                 box-sizing: border-box; }
                 .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-camera-group .inspector-component .component-content .wonder-camera-projection .inspector-item .item-texture .texture-img .img-dragBg {
@@ -1553,7 +1553,7 @@ html, body {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 1px solid #a7a5a5;
+                border: 2px solid #a7a5a5;
                 position: relative;
                 box-sizing: border-box; }
                 .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-mesh-renderer .inspector-item .item-texture .texture-img .img-dragBg {
@@ -1622,7 +1622,7 @@ html, body {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 1px solid #a7a5a5;
+                border: 2px solid #a7a5a5;
                 position: relative;
                 box-sizing: border-box; }
                 .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .inspector-item .item-texture .texture-img .img-dragBg {
@@ -1731,7 +1731,7 @@ html, body {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 1px solid #a7a5a5;
+                border: 2px solid #a7a5a5;
                 position: relative;
                 box-sizing: border-box; }
                 .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-light-material .inspector-item .item-texture .texture-img .img-dragBg {
@@ -1800,7 +1800,7 @@ html, body {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 1px solid #a7a5a5;
+                border: 2px solid #a7a5a5;
                 position: relative;
                 box-sizing: border-box; }
                 .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-basic-material .inspector-item .item-texture .texture-img .img-dragBg {
@@ -1879,7 +1879,7 @@ html, body {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 1px solid #a7a5a5;
+                border: 2px solid #a7a5a5;
                 position: relative;
                 box-sizing: border-box; }
                 .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-geometry .inspector-item .item-texture .texture-img .img-dragBg {
@@ -1975,7 +1975,7 @@ html, body {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 1px solid #a7a5a5;
+                border: 2px solid #a7a5a5;
                 position: relative;
                 box-sizing: border-box; }
                 .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .inspector-item .item-texture .texture-img .img-dragBg {
@@ -2044,7 +2044,7 @@ html, body {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 1px solid #a7a5a5;
+                border: 2px solid #a7a5a5;
                 position: relative;
                 box-sizing: border-box; }
                 .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .wonder-direction-light .inspector-item .item-texture .texture-img .img-dragBg {
@@ -2113,7 +2113,7 @@ html, body {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 1px solid #a7a5a5;
+                border: 2px solid #a7a5a5;
                 position: relative;
                 box-sizing: border-box; }
                 .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .wonder-point-light .inspector-item .item-texture .texture-img .img-dragBg {
@@ -2182,7 +2182,7 @@ html, body {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 1px solid #a7a5a5;
+                border: 2px solid #a7a5a5;
                 position: relative;
                 box-sizing: border-box; }
                 .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-arcballCameraController .inspector-item .item-texture .texture-img .img-dragBg {
@@ -2316,7 +2316,7 @@ html, body {
               display: flex;
               align-items: center;
               justify-content: center;
-              border: 1px solid #a7a5a5;
+              border: 2px solid #a7a5a5;
               position: relative;
               box-sizing: border-box; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .inspector-asset-folder .inspector-item .item-texture .texture-img .img-dragBg {
@@ -2385,7 +2385,7 @@ html, body {
               display: flex;
               align-items: center;
               justify-content: center;
-              border: 1px solid #a7a5a5;
+              border: 2px solid #a7a5a5;
               position: relative;
               box-sizing: border-box; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-texture-assetTree .inspector-item .item-texture .texture-img .img-dragBg {
@@ -2454,7 +2454,7 @@ html, body {
               display: flex;
               align-items: center;
               justify-content: center;
-              border: 1px solid #a7a5a5;
+              border: 2px solid #a7a5a5;
               position: relative;
               box-sizing: border-box; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .inspector-asset-wdb .inspector-item .item-texture .texture-img .img-dragBg {
@@ -2523,7 +2523,7 @@ html, body {
               display: flex;
               align-items: center;
               justify-content: center;
-              border: 1px solid #a7a5a5;
+              border: 2px solid #a7a5a5;
               position: relative;
               box-sizing: border-box; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-material-inspector .inspector-item .item-texture .texture-img .img-dragBg {

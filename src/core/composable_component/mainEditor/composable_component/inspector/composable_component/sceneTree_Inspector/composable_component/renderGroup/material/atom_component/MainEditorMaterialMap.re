@@ -93,7 +93,12 @@ let reducer =
   | DragLeave =>
     ReasonReact.Update({
       ...state,
-      style: ReactUtils.addStyleProp("border", "0px", state.style),
+      style:
+        ReactUtils.addStyleProp(
+          "border",
+          "2px solid rgb(167,165,165)",
+          state.style,
+        ),
     })
 
   | DragDrop(startId) =>
