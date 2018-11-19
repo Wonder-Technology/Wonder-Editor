@@ -10,11 +10,11 @@ type state = {
 };
 
 module Method = {
-  let getStorageParentKey = () => "userExtension";
-  /* todo use extension names instead of the name */
+  /* let getStorageParentKey = () => "userExtension";
+     /* todo use extension names instead of the name */
 
-  let addExtension = text =>
-    AppExtensionUtils.setExtension(getStorageParentKey(), text);
+     let addExtension = text =>
+       AppExtensionUtils.setExtension(getStorageParentKey(), text); */
 
   let importPackage = HeaderImportPackageEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
@@ -371,7 +371,6 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
 
         DomUtils.isSpecificDomChildrenHasTargetDom(target, targetArray)
         || UIEditorService.isFileInputOpen(StateEditorService.getState()) ?
-          /* ? */
           () : send(BlurNav);
       },
     ),
