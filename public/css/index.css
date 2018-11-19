@@ -979,7 +979,7 @@ html, body {
                     width: 96%;
                     word-wrap: break-word;
                     padding-top: 5px;
-                    padding-bottom: 10px;
+                    padding-bottom: 5px;
                     overflow-y: auto; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-error .console-trace {
                   width: 96%;
@@ -1005,7 +1005,7 @@ html, body {
                     width: 96%;
                     word-wrap: break-word;
                     padding-top: 5px;
-                    padding-bottom: 10px;
+                    padding-bottom: 5px;
                     overflow-y: auto; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-info .console-trace {
                   width: 96%;
@@ -1031,7 +1031,7 @@ html, body {
                     width: 96%;
                     word-wrap: break-word;
                     padding-top: 5px;
-                    padding-bottom: 10px;
+                    padding-bottom: 5px;
                     overflow-y: auto; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-warn .console-trace {
                   width: 96%;
@@ -1057,7 +1057,7 @@ html, body {
                     width: 96%;
                     word-wrap: break-word;
                     padding-top: 5px;
-                    padding-bottom: 10px;
+                    padding-bottom: 5px;
                     overflow-y: auto; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-debug .console-trace {
                   width: 96%;
@@ -1083,7 +1083,7 @@ html, body {
                     width: 96%;
                     word-wrap: break-word;
                     padding-top: 5px;
-                    padding-bottom: 10px;
+                    padding-bottom: 5px;
                     overflow-y: auto; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content .console-log .console-trace {
                   width: 96%;
