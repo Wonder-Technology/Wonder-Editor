@@ -7,7 +7,7 @@ module Method = {
     ...state,
     style:
       ReactUtils.addStyleProp("opacity", "1", state.style)
-      |> ReactUtils.addStyleProp("border", "0px"),
+      |> ReactUtils.addStyleProp("border", TreeNodeUtils.getNoBorderCss()),
   };
 
   let buildNotDragableUl = TreeNodeUtils.buildNotDragableUl;
@@ -139,7 +139,12 @@ let reducer =
       state =>
         ReasonReact.Update({
           ...state,
-          style: ReactUtils.addStyleProp("border", "0px", state.style),
+          style:
+            ReactUtils.addStyleProp(
+              "border",
+              TreeNodeUtils.getNoBorderCss(),
+              state.style,
+            ),
         })
     )
 
