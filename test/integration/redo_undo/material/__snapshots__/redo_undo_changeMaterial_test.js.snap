@@ -21,7 +21,7 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
         <div
           className="select-name"
         >
-          NoName Material
+          Wonder-Default-Light-Material
         </div>
         <div
           className="select-img"
@@ -132,7 +132,7 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
         <div
           className="select-name"
         >
-          NoName Material
+          Wonder-Default-Light-Material
         </div>
         <div
           className="select-img"

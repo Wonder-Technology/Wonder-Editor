@@ -33,20 +33,12 @@ let _ =
       );
 
       describe("test change material", () => {
-        describe("test snapshot", () => {
+        describe("test snapshot", () =>
           test("test show default light material component", () =>
             BuildComponentTool.buildMaterial()
             |> ReactTestTool.createSnapshotAndMatch
-          );
-          test("test change to basic material component", () => {
-            DirectorToolEngine.prepareAndInitAllEnginState();
-
-            MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
-
-            BuildComponentTool.buildMaterial()
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
-        });
+          )
+        );
 
         describe("test logic", () => {
           beforeEach(() => DirectorToolEngine.prepareAndInitAllEnginState());
