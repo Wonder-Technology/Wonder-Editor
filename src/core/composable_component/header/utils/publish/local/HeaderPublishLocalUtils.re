@@ -3,14 +3,28 @@ module LoadData = {
 
   open WonderBsJszip;
 
-  let loadAndWriteIndexJsData = (fetchFunc, zip) =>
+  let loadAndWriteIndexJsData = (useWorker, fetchFunc, zip) =>
     fetchFunc("./publish/wd.min.js")
     |> then_(response =>
          response
          |> Fetch.Response.text
-         |> then_(jsStr =>
-              zip |. Zip.write("wd.min.js", `str(jsStr)) |> resolve
-            )
+         |> then_(jsStr => {
+              zip |. Zip.write("wd.min.js", `str(jsStr));
+
+              useWorker ?
+                fetchFunc("./publish/wd.render.worker.js")
+                |> then_(response =>
+                     response
+                     |> Fetch.Response.text
+                     |> then_(jsStr => {
+                          zip
+                          |. Zip.write("wd.render.worker.js", `str(jsStr));
+
+                          resolve(zip);
+                        })
+                   ) :
+                resolve(zip);
+            })
        );
 
   let _replaceIndexHtml = (indexHtmlStr, sceneGraphArrayBuffer) =>
@@ -22,8 +36,11 @@ module LoadData = {
          |> Js.Int.toString,
        );
 
-  let loadAndWriteIndexHtmlData = (sceneGraphArrayBuffer, fetchFunc, zip) =>
-    fetchFunc("./publish/index.html")
+  let loadAndWriteIndexHtmlData =
+      (useWorker, sceneGraphArrayBuffer, fetchFunc, zip) =>
+    fetchFunc(
+      useWorker ? "./publish/index_worker.html" : "./publish/index.html",
+    )
     |> then_(response =>
          response
          |> Fetch.Response.text
@@ -59,26 +76,26 @@ module LoadData = {
 
   let loadAndWriteResData = (fetchFunc, zip) =>
     WonderBsMost.Most.mergeArray([|
-      fetchFunc({j|./publish/res/loading/Lato-Regular-64.fnt|j})
-      |> then_(response =>
-           response
-           |> Fetch.Response.text
-           |> then_(str =>
-                zip
-                |. Zip.write(
-                     {j|res/loading/Lato-Regular-64.fnt|j},
-                     `str(str),
-                   )
-                |> resolve
-              )
-         )
-      |> WonderBsMost.Most.fromPromise,
-      _loadAndWriteSingleResArrayBufferData(
-        ~name="lato.png",
-        ~fetchFunc,
-        ~zip,
-        (),
-      ),
+      /* fetchFunc({j|./publish/res/loading/Lato-Regular-64.fnt|j})
+         |> then_(response =>
+              response
+              |> Fetch.Response.text
+              |> then_(str =>
+                   zip
+                   |. Zip.write(
+                        {j|res/loading/Lato-Regular-64.fnt|j},
+                        `str(str),
+                      )
+                   |> resolve
+                 )
+            )
+         |> WonderBsMost.Most.fromPromise,
+         _loadAndWriteSingleResArrayBufferData(
+           ~name="lato.png",
+           ~fetchFunc,
+           ~zip,
+           (),
+         ), */
       _loadAndWriteSingleResArrayBufferData(
         ~dirname="./public/logo",
         ~name="logo.png",
@@ -97,22 +114,36 @@ module LoadData = {
     |> WonderBsMost.Most.drain
     |> then_(_ => zip |> resolve);
 
-  let _loadAndWriteSingleConfigData = (fileNamePath, fetchFunc, zip) =>
+  let _loadAndWriteSingleConfigDataWithTargetFileNamePath =
+      (fileNamePath, targetFileNamePath, fetchFunc, zip) =>
     fetchFunc({j|./publish/config/$fileNamePath|j})
     |> then_(response =>
          response
          |> Fetch.Response.text
          |> then_(str =>
               zip
-              |. Zip.write({j|config/$fileNamePath|j}, `str(str))
+              |. Zip.write({j|config/$targetFileNamePath|j}, `str(str))
               |> resolve
             )
        )
     |> WonderBsMost.Most.fromPromise;
 
-  let loadAndWriteConfigData = (fetchFunc, zip) =>
-    WonderBsMost.Most.mergeArray([|
-      _loadAndWriteSingleConfigData("setting.json", fetchFunc, zip),
+  let _loadAndWriteSingleConfigData = (fileNamePath, fetchFunc, zip) =>
+    _loadAndWriteSingleConfigDataWithTargetFileNamePath(
+      fileNamePath,
+      fileNamePath,
+      fetchFunc,
+      zip,
+    );
+
+  let loadAndWriteConfigData = (useWorker, fetchFunc, zip) => {
+    let streamArr = [|
+      _loadAndWriteSingleConfigDataWithTargetFileNamePath(
+        useWorker ? "setting_worker.json" : "setting.json",
+        "setting.json",
+        fetchFunc,
+        zip,
+      ),
       _loadAndWriteSingleConfigData(
         "no_worker/job/init_jobs.json",
         fetchFunc,
@@ -148,9 +179,57 @@ module LoadData = {
         fetchFunc,
         zip,
       ),
-    |])
+    |];
+
+    let streamArr =
+      useWorker ?
+        streamArr
+        |> ArrayService.fastConcat(
+             _,
+             [|
+               _loadAndWriteSingleConfigData(
+                 "worker/job/main/main_init_jobs.json",
+                 fetchFunc,
+                 zip,
+               ),
+               _loadAndWriteSingleConfigData(
+                 "worker/job/main/main_loop_jobs.json",
+                 fetchFunc,
+                 zip,
+               ),
+               _loadAndWriteSingleConfigData(
+                 "worker/job/worker/worker_jobs.json",
+                 fetchFunc,
+                 zip,
+               ),
+               _loadAndWriteSingleConfigData(
+                 "worker/pipeline/main/main_init_pipelines.json",
+                 fetchFunc,
+                 zip,
+               ),
+               _loadAndWriteSingleConfigData(
+                 "worker/pipeline/main/main_loop_pipelines.json",
+                 fetchFunc,
+                 zip,
+               ),
+               _loadAndWriteSingleConfigData(
+                 "worker/pipeline/worker/worker_pipelines.json",
+                 fetchFunc,
+                 zip,
+               ),
+               _loadAndWriteSingleConfigData(
+                 "worker/setting/setting.json",
+                 fetchFunc,
+                 zip,
+               ),
+             |],
+           ) :
+        streamArr;
+
+    WonderBsMost.Most.mergeArray(streamArr)
     |> WonderBsMost.Most.drain
     |> then_(_ => zip |> resolve);
+  };
 };
 
 module Publish = {
@@ -158,7 +237,7 @@ module Publish = {
 
   open WonderBsJszip;
 
-  let publishZip = (createZipFunc, fetchFunc, zipName) => {
+  let publishZip = ((zipName, useWorker), createZipFunc, fetchFunc) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
@@ -185,6 +264,7 @@ module Publish = {
         |> WonderBsMost.Most.flatMap(zip =>
              WonderBsMost.Most.fromPromise(
                LoadData.loadAndWriteIndexHtmlData(
+                 useWorker,
                  sceneGraphArrayBuffer,
                  fetchFunc,
                  zip,
@@ -193,7 +273,7 @@ module Publish = {
            )
         |> WonderBsMost.Most.flatMap(zip =>
              WonderBsMost.Most.fromPromise(
-               LoadData.loadAndWriteIndexJsData(fetchFunc, zip),
+               LoadData.loadAndWriteIndexJsData(useWorker, fetchFunc, zip),
              )
            )
         |> WonderBsMost.Most.flatMap(zip =>
@@ -203,7 +283,7 @@ module Publish = {
            )
         |> WonderBsMost.Most.flatMap(zip =>
              WonderBsMost.Most.fromPromise(
-               LoadData.loadAndWriteConfigData(fetchFunc, zip),
+               LoadData.loadAndWriteConfigData(useWorker, fetchFunc, zip),
              )
            )
         |> WonderBsMost.Most.tap(zip =>

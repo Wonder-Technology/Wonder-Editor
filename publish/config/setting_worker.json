@@ -1,6 +1,5 @@
 {
-    "is_debug": true,
-    "canvas_id": "canvas",
+    "is_debug": false,
     "context": {
         "alpha": true,
         "depth": true,
@@ -10,8 +9,8 @@
         "preserve_drawing_buffer": false
     },
     "buffer": {
-        "geometry_point_count": 20000000,
-        "geometry_count": 1000,
+        "geometry_point_count": 2000000,
+        "geometry_count": 10000,
         "transform_count": 30000,
         "direction_light_count": 10000,
         "point_light_count": 10000,
@@ -27,9 +26,9 @@
         }
     },
     "gpu": {
-        "use_hardware_instance": false
+        "use_hardware_instance": true
     },
     "worker": {
-        "use_worker": false
+        "use_worker": true
     }
 }

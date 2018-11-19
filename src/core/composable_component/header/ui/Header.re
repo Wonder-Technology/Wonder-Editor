@@ -214,16 +214,17 @@ module Method = {
       )
       (
         state.isShowPublishLocalModal ?
-          <SingleInputModal
+          <PublishLocalModal
             title="Local"
-            defaultValue="WonderLocal"
+            defaultName="WonderLocal"
+            defaultUseWorker=false
             closeFunc=(() => send(HidePublishLocalModal))
             submitFunc=(
-              zipName => {
+              (zipName, useWorker) => {
                 HeaderPublishLocalUtils.Publish.publishZip(
+                  (zipName, useWorker),
                   WonderBsJszip.Zip.create,
                   Fetch.fetch,
-                  zipName,
                 );
 
                 send(HidePublishLocalModal);
