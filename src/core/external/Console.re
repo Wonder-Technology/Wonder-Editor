@@ -47,5 +47,5 @@ let tryCatch = [%bs.raw
 
 let rec throwFatal = e => {
   WonderLog.Log._error(e##message);
-  WonderLog.Log._trace(throwFatal);
+  ConsoleUtils.logStack(e##stack);
 };
