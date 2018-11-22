@@ -39,12 +39,10 @@ module Method = {
               className="content-section"
               onClick=(
                 _e =>
-                  OperateStateHistoryService.hasUndoState(
-                    AllStateData.getHistoryState(),
-                  ) ?
-                    AllHistoryService.undoHistoryState(store, dispatchFunc)
-                    |> StateHistoryService.getAndRefreshStateForHistory :
-                    ()
+                  AllHistoryService.handleUndo(
+                    store,
+                    Obj.magic(dispatchFunc),
+                  )
               )>
               <span className="section-header">
                 (DomHelper.textEl("Undo"))

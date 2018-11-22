@@ -12,11 +12,8 @@ let clearComponentTypeMap = inspectorRecord => {
   componentTypeMap: WonderCommonlib.SparseMapService.createEmpty(),
 };
 
-let _getAddedComponentTypeArr = (index, componentType, inspectorRecord) =>
-  switch (
-    inspectorRecord.componentTypeMap
-    |> WonderCommonlib.SparseMapService.get(index)
-  ) {
+let _addComponentType = (index, componentType, componentTypeMap) =>
+  switch (componentTypeMap |> WonderCommonlib.SparseMapService.get(index)) {
   | None => ArrayService.create() |> ArrayService.push(componentType)
   | Some(map) => map |> Js.Array.copy |> ArrayService.push(componentType)
   };
@@ -27,7 +24,11 @@ let addComponentTypeToMap = (index, componentType, inspectorRecord) => {
     inspectorRecord.componentTypeMap
     |> SparseMapService.immutableSet(
          index,
-         _getAddedComponentTypeArr(index, componentType, inspectorRecord),
+         _addComponentType(
+           index,
+           componentType,
+           inspectorRecord.componentTypeMap,
+         ),
        ),
 };
 

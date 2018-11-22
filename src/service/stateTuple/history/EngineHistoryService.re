@@ -1,6 +1,7 @@
 open HistoryType;
 
 open Immutable;
+
 let undo = (historyState, currentState) =>
   OperateStateHistoryService.operateHistory(
     currentState, historyState.engineUndoStack, () =>

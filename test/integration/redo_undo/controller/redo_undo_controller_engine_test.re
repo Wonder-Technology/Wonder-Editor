@@ -97,7 +97,12 @@ let _ =
       });
       describe("test transform", () => {
         beforeEach(() => {
-          MainEditorSceneTool.initState(~sandbox, ());
+          MainEditorSceneTool.initState(
+            ~sandbox,
+            ~buffer=
+              SettingToolEngine.buildBufferConfigStr(~transformCount=10, ()),
+            (),
+          );
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
@@ -123,7 +128,7 @@ let _ =
 
           StateEngineService.unsafeGetState()
           |> TransformEngineService.getLocalPosition(
-               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+               currentGameObjectTransform,
              )
           |> expect == (155., 0., 0.);
         });
@@ -157,7 +162,7 @@ let _ =
 
           StateEngineService.unsafeGetState()
           |> TransformEngineService.getLocalPosition(
-               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+               currentGameObjectTransform,
              )
           |> expect == (150., 200., 0.);
         });

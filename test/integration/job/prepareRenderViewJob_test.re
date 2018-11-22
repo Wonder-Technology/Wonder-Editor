@@ -9,7 +9,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("test prepare render scen view job and game view job", () => {
+  describe("test prepare render scene view job and game view job", () => {
     let sandbox = getSandboxDefaultVal();
 
     let _prepareState = () => {

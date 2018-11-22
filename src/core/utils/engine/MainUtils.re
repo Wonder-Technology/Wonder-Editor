@@ -21,6 +21,10 @@ let _handleEngineState = engineState => {
          InitEventJobUtils.initEventForEditorJob,
        )
     |> JobEngineService.registerNoWorkerLoopJob(
+         "reallocate_cpu_memory",
+         ReallocateCPUMemoryJobUtils.reallocateJob,
+       )
+    |> JobEngineService.registerNoWorkerLoopJob(
          "prepare_render_scene_view",
          PrepareRenderViewJobUtils.prepareRenderSceneViewJob,
        )
