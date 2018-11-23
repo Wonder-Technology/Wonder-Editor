@@ -47,9 +47,9 @@ module Method = {
               <span className="section-header">
                 (DomHelper.textEl("Undo"))
               </span>
-              <span className="section-tail">
+              /* <span className="section-tail">
                 (DomHelper.textEl("Ctrl+Z"))
-              </span>
+              </span> */
             </div>
             <div
               className="content-section"
@@ -65,9 +65,9 @@ module Method = {
               <span className="section-header">
                 (DomHelper.textEl("Redo"))
               </span>
-              <span className="section-tail">
+              /* <span className="section-tail">
                 (DomHelper.textEl("Ctrl+U"))
-              </span>
+              </span> */
             </div>
           </div> :
           ReasonReact.null
