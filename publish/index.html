@@ -63,8 +63,6 @@
 </head>
 
 <body>
-    <h1 id="detect" style="display: none">your browser not support sharedArrayBuffer or offscreenCanvas, can't use worker.</h1>
-
     <div id="stream-loading">
         <img id="logo" class="loading-img" src="./res/loading/logo.png" />
         <br />
@@ -183,15 +181,6 @@
 
 
         window.onload = function () {
-            if (wd.isSupportRenderWorkerAndSharedArrayBuffer() === false) {
-                document.querySelector("#detect").style.display = "block";
-
-                return;
-            }
-            else {
-                document.querySelector("#detect").style.display = "none";
-            }
-
 
             // var loadedIMGUIByteLength = 0;
 
