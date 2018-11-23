@@ -19,7 +19,7 @@ type historyState = {
         Wonderjs.StateDataMainType.state,
       ),
     ),
-  copiedRedoUndoStackRecord,
+  copiedRedoUndoStackRecord: option(copiedRedoUndoStackRecord),
   uiRedoStack: Stack.t(AppStore.appState),
   uiUndoStack: Stack.t(AppStore.appState),
   editorRedoStack: Stack.t(EditorType.editorState),

@@ -6,27 +6,29 @@ let copyHistoryStack = (store, (editorState, engineState), historyState) => {
   let engineState = engineState |> StateEngineService.deepCopyForRestore;
   AllStateData.setHistoryState({
     ...historyState,
-    copiedRedoUndoStackRecord: {
-      ...historyState.copiedRedoUndoStackRecord,
-      uiUndoStack: Stack.addFirst(store, historyState.uiUndoStack),
-      uiRedoStack: historyState.uiRedoStack,
-      editorUndoStack:
-        Stack.addFirst(editorState, historyState.editorUndoStack),
-      editorRedoStack: historyState.editorRedoStack,
-      engineUndoStack:
-        Stack.addFirst(engineState, historyState.engineUndoStack),
-      engineRedoStack: historyState.engineRedoStack,
-    },
+    copiedRedoUndoStackRecord:
+      Some({
+        uiUndoStack: Stack.addFirst(store, historyState.uiUndoStack),
+        uiRedoStack: historyState.uiRedoStack,
+        editorUndoStack:
+          Stack.addFirst(editorState, historyState.editorUndoStack),
+        editorRedoStack: historyState.editorRedoStack,
+        engineUndoStack:
+          Stack.addFirst(engineState, historyState.engineUndoStack),
+        engineRedoStack: historyState.engineRedoStack,
+      }),
   });
 };
 
-/* TODO set to None */
 let restoreHistoryStack =
-    (dispatchFunc, (editorState, engineState, historyState)) =>
+    (dispatchFunc, (editorState, engineState, historyState)) => {
+  let copiedRedoUndoStackRecord =
+    historyState.copiedRedoUndoStackRecord |> OptionService.unsafeGet;
+
   switch (
-    Stack.first(historyState.copiedRedoUndoStackRecord.uiUndoStack),
-    Stack.first(historyState.copiedRedoUndoStackRecord.editorUndoStack),
-    Stack.first(historyState.copiedRedoUndoStackRecord.engineUndoStack),
+    Stack.first(copiedRedoUndoStackRecord.uiUndoStack),
+    Stack.first(copiedRedoUndoStackRecord.editorUndoStack),
+    Stack.first(copiedRedoUndoStackRecord.engineUndoStack),
   ) {
   | (Some(lastUIState), Some(lastEditorState), Some(lastEngineState)) =>
     dispatchFunc(AppStore.ReplaceState(lastUIState));
@@ -41,21 +43,16 @@ let restoreHistoryStack =
     |> StateHistoryService.refreshStateForHistory;
     AllStateData.setHistoryState({
       ...historyState,
+      copiedRedoUndoStackRecord: None,
       uiUndoStack:
-        Stack.removeFirstOrRaise(
-          historyState.copiedRedoUndoStackRecord.uiUndoStack,
-        ),
-      uiRedoStack: historyState.copiedRedoUndoStackRecord.uiRedoStack,
+        Stack.removeFirstOrRaise(copiedRedoUndoStackRecord.uiUndoStack),
+      uiRedoStack: copiedRedoUndoStackRecord.uiRedoStack,
       editorUndoStack:
-        Stack.removeFirstOrRaise(
-          historyState.copiedRedoUndoStackRecord.editorUndoStack,
-        ),
-      editorRedoStack: historyState.copiedRedoUndoStackRecord.editorRedoStack,
+        Stack.removeFirstOrRaise(copiedRedoUndoStackRecord.editorUndoStack),
+      editorRedoStack: copiedRedoUndoStackRecord.editorRedoStack,
       engineUndoStack:
-        Stack.removeFirstOrRaise(
-          historyState.copiedRedoUndoStackRecord.engineUndoStack,
-        ),
-      engineRedoStack: historyState.copiedRedoUndoStackRecord.engineRedoStack,
+        Stack.removeFirstOrRaise(copiedRedoUndoStackRecord.engineUndoStack),
+      engineRedoStack: copiedRedoUndoStackRecord.engineRedoStack,
     });
   | _ =>
     ConsoleUtils.error(
@@ -71,3 +68,4 @@ let restoreHistoryStack =
 
     ();
   };
+};
