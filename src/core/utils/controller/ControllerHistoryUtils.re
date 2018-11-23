@@ -42,7 +42,6 @@ let restoreHistoryStack =
     )
     |> StateHistoryService.refreshStateForHistory;
     AllStateData.setHistoryState({
-      ...historyState,
       copiedRedoUndoStackRecord: None,
       uiUndoStack:
         Stack.removeFirstOrRaise(copiedRedoUndoStackRecord.uiUndoStack),

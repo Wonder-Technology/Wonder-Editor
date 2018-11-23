@@ -5,7 +5,6 @@ open AllStateDataType;
 open Immutable;
 
 let createHistoryState = () => {
-  markRedoUndoStack: Stack.empty(),
   copiedRedoUndoStackRecord: None,
   uiRedoStack: Stack.empty(),
   uiUndoStack: Stack.empty(),

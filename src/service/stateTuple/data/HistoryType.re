@@ -10,15 +10,6 @@ type copiedRedoUndoStackRecord = {
 };
 
 type historyState = {
-  markRedoUndoStack:
-    Stack.t(
-      (
-        AppStore.appState,
-        EditorType.editorState,
-        Wonderjs.StateDataMainType.state,
-        Wonderjs.StateDataMainType.state,
-      ),
-    ),
   copiedRedoUndoStackRecord: option(copiedRedoUndoStackRecord),
   uiRedoStack: Stack.t(AppStore.appState),
   uiUndoStack: Stack.t(AppStore.appState),
