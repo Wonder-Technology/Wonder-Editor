@@ -10,7 +10,8 @@ let _ =
   describe("redo_undo: change light", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
+    let _getFromArray = (array, index) =>
+      ArrayService.unsafeGetNth(index, array);
 
     beforeEach(() => {
       sandbox := createSandbox();
@@ -24,7 +25,7 @@ let _ =
     let _simulateChangeLight = () =>
       MainEditorLightTool.setLightTypeToBePointLight();
 
-    let _beforeEach = () => {
+    let _beforeEach = () =>
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         () => {
@@ -32,14 +33,12 @@ let _ =
           MainEditorSceneTool.setDirectionLightGameObjectToBeCurrentSceneTreeNode();
         },
       );
-
-    };
     let _afterEach = () => ();
 
     RedoUndoTool.testRedoUndoOneStep(
       sandbox,
       "prepare first step: set currentSceneTreeNode",
-      (_simulateChangeLight, _beforeEach,_afterEach),
+      (_simulateChangeLight, _beforeEach, _afterEach),
       BuildComponentForCurryTool.buildLight,
     );
   });

@@ -17,5 +17,12 @@ let convertToRecord = setting => {
              }
            ),
          ),
+    redoUndo:
+      json
+      |> optional(
+           field("redo_undo", json =>
+             {maxStackSize: json |> field("max_stack_size", int)}
+           ),
+         ),
   };
 };

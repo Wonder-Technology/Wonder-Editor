@@ -29,18 +29,21 @@ let redo = (historyState, currentState) =>
   )
   |> StateEngineService.restoreState(currentState);
 
-let storeHasCopyState = (currentState, historyState) => {
+let storeHasCopyState = (maxStackSize, currentState, historyState) => {
   ...historyState,
-  engineUndoStack: Stack.addFirst(currentState, historyState.engineUndoStack),
+  engineUndoStack:
+    Stack.addFirst(currentState, historyState.engineUndoStack)
+    |> OperateStateHistoryService.limitStackMaxSize(maxStackSize),
   engineRedoStack: Stack.empty(),
 };
 
-let storeNoCopyState = (currentState, historyState) => {
+let storeNoCopyState = (maxStackSize, currentState, historyState) => {
   ...historyState,
   engineUndoStack:
     Stack.addFirst(
       currentState |> StateEngineService.deepCopyForRestore,
       historyState.engineUndoStack,
-    ),
+    )
+    |> OperateStateHistoryService.limitStackMaxSize(maxStackSize),
   engineRedoStack: Stack.empty(),
 };

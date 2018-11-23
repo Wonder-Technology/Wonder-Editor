@@ -101,7 +101,9 @@ let initStateWithJob =
 
   SettingToolEngine.setFakeCanvasToEngineState();
 
-  StateEditorService.setState(CreateEditorStateEditorService.create())
+  StateEditorService.setState(
+    CreateEditorStateEditorService.create() |> SettingTool.initSetting,
+  )
   |> ignore;
 };
 

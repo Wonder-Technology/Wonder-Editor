@@ -1,15 +1,23 @@
 let storeCopiedEngineHistoryState =
-    (store, (editorState, engineState), historyState) =>
-  historyState
-  |> UIHistoryService.storeUIState(store)
-  |> EditorHistoryService.storeState(editorState)
-  |> EngineHistoryService.storeHasCopyState(engineState);
+    (store, (editorState, engineState), historyState) => {
+  let maxStackSize =
+    RedoUndoSettingEditorService.unsafeGetMaxStackSize(editorState);
 
-let storeHistoryState = (store, (editorState, engineState), historyState) =>
   historyState
-  |> UIHistoryService.storeUIState(store)
-  |> EditorHistoryService.storeState(editorState)
-  |> EngineHistoryService.storeNoCopyState(engineState);
+  |> UIHistoryService.storeUIState(maxStackSize, store)
+  |> EditorHistoryService.storeState(maxStackSize, editorState)
+  |> EngineHistoryService.storeHasCopyState(maxStackSize, engineState);
+};
+
+let storeHistoryState = (store, (editorState, engineState), historyState) => {
+  let maxStackSize =
+    RedoUndoSettingEditorService.unsafeGetMaxStackSize(editorState);
+
+  historyState
+  |> UIHistoryService.storeUIState(maxStackSize, store)
+  |> EditorHistoryService.storeState(maxStackSize, editorState)
+  |> EngineHistoryService.storeNoCopyState(maxStackSize, engineState);
+};
 
 let undoHistoryState = (store, dispatchFunc, (editorState, engineState)) => {
   dispatchFunc(

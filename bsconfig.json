@@ -20,7 +20,6 @@
   ],
   "bs-dependencies": [
     "reason-react",
-    "immutable-re",
     "bs-fetch",
     "wonder-bs-most",
     "wonder-bs-json",

@@ -3,4 +3,9 @@ type debug = {
   showMessage: bool,
 };
 
-type settingRecord = {debug: option(debug)};
+type redoUndo = {maxStackSize: int};
+
+type settingRecord = {
+  debug: option(debug),
+  redoUndo: option(redoUndo),
+};

@@ -67,3 +67,6 @@ let hasRedoState = historyState => {
 
   historyState.uiRedoStack |> hasHistoryState;
 };
+
+let rec limitStackMaxSize = (maxStackSize, stack) =>
+  Stack.sliceToFirst(maxStackSize, stack);

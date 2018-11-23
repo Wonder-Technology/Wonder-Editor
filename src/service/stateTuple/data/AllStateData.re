@@ -6,12 +6,12 @@ open Immutable;
 
 let createHistoryState = () => {
   copiedRedoUndoStackRecord: None,
-  uiRedoStack: Stack.empty(),
-  uiUndoStack: Stack.empty(),
-  editorRedoStack: Stack.empty(),
-  editorUndoStack: Stack.empty(),
-  engineRedoStack: Stack.empty(),
-  engineUndoStack: Stack.empty(),
+  uiRedoStack: [],
+  uiUndoStack: [],
+  editorRedoStack: [],
+  editorUndoStack: [],
+  engineRedoStack: [],
+  engineUndoStack: [],
 };
 
 let allStateData = {historyState: createHistoryState()};
