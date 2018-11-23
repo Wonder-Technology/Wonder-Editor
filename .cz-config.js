@@ -33,7 +33,8 @@ module.exports = {
       { name: "component" },
       { name: "console" },
       { name: "ui" },
-      { name: "config" }
+      { name: "config" },
+      { name: "job" }
   ],
 
 

@@ -3,26 +3,6 @@ open Wonderjs;
 open StateDataMainType;
 
 let _reallocateGeometryToNewBuffer = ({settingRecord} as engineState) => {
-  let geometryPointCount =
-    BufferSettingService.getGeometryPointCount(settingRecord);
-  let geometryCount = BufferSettingService.getGeometryCount(settingRecord);
-  let (
-    buffer,
-    vertices,
-    texCoords,
-    normals,
-    indices,
-    indices32,
-    verticesInfos,
-    texCoordsInfos,
-    normalsInfos,
-    indicesInfos,
-  ) =
-    RecordGeometryMainService._initBufferData(
-      geometryPointCount,
-      geometryCount,
-    );
-
   let geometryRecord = RecordGeometryMainService.getRecord(engineState);
 
   {
@@ -34,6 +14,27 @@ let _reallocateGeometryToNewBuffer = ({settingRecord} as engineState) => {
               settingRecord,
             )) {
           geometryRecord.disposeCount = 0;
+
+          let geometryPointCount =
+            BufferSettingService.getGeometryPointCount(settingRecord);
+          let geometryCount =
+            BufferSettingService.getGeometryCount(settingRecord);
+          let (
+            buffer,
+            vertices,
+            texCoords,
+            normals,
+            indices,
+            indices32,
+            verticesInfos,
+            texCoordsInfos,
+            normalsInfos,
+            indicesInfos,
+          ) =
+            RecordGeometryMainService._initBufferData(
+              geometryPointCount,
+              geometryCount,
+            );
 
           ReallocateGeometryCPUMemoryService.reAllocateToBuffer(
             (
