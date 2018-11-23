@@ -12,8 +12,7 @@ let undo = (historyState, currentState) =>
           currentState |> StateEngineService.deepCopyForRestore,
           historyState.engineRedoStack,
         ),
-      engineUndoStack:
-        Stack.removeFirstOrRaise(historyState.engineUndoStack),
+      engineUndoStack: Stack.removeFirstOrRaise(historyState.engineUndoStack),
     }
   )
   |> StateEngineService.restoreState(currentState);
@@ -24,20 +23,15 @@ let redo = (historyState, currentState) =>
     {
       ...historyState,
       engineUndoStack:
-        Stack.addFirst(
-          currentState |> StateEngineService.deepCopyForRestore,
-          historyState.engineUndoStack,
-        ),
-      engineRedoStack:
-        Stack.removeFirstOrRaise(historyState.engineRedoStack),
+        Stack.addFirst(currentState, historyState.engineUndoStack),
+      engineRedoStack: Stack.removeFirstOrRaise(historyState.engineRedoStack),
     }
   )
   |> StateEngineService.restoreState(currentState);
 
 let storeHasCopyState = (currentState, historyState) => {
   ...historyState,
-  engineUndoStack:
-    Stack.addFirst(currentState, historyState.engineUndoStack),
+  engineUndoStack: Stack.addFirst(currentState, historyState.engineUndoStack),
   engineRedoStack: Stack.empty(),
 };
 
