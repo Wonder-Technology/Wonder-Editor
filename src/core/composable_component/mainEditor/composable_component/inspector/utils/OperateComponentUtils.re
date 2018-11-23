@@ -40,7 +40,7 @@ let getInspectorComponentType = (type_, editorState) =>
 
 /* let handleAddArcballCameraControllerIfInRunMode =
      (currentSceneTreeNode, runEngineState) =>
-   SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
+   StateEditorService.getIsRun() ?
      _bindArcballCameraEventIfHasActiveCameraGroup(
        currentSceneTreeNode,
        runEngineState,
@@ -48,7 +48,7 @@ let getInspectorComponentType = (type_, editorState) =>
      runEngineState; */
 
 /* let handleAddCameraGroupIfInRunMode = (currentSceneTreeNode, runEngineState) =>
-    SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
+    StateEditorService.getIsRun() ?
       ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponent(
         currentSceneTreeNode,
         runEngineState,

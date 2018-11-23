@@ -47,7 +47,7 @@ let hasCameraGroup = (gameObject, engineState) =>
      );
 
 /* let _bindEventIfInRunMode = (gameObject, lastBasicCameraView, engineState) =>
-   SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
+   StateEditorService.getIsRun() ?
      engineState
      |> ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponent(
           gameObject,

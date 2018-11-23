@@ -12,7 +12,7 @@ let _markLastSceneCameraToBeActive =
     )
   | Some(lastBasicCameraView) =>
     let engineState =
-      SceneEditorService.getIsRun(editorState) ?
+      StateEditorService.getIsRun() ?
         ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponentForGameView(
           lastBasicCameraView
           |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
@@ -45,7 +45,7 @@ let handleForRemoveCameraGroup = (gameObject, editorState, engineState) => {
   ) ?
     {
       let engineState =
-        SceneEditorService.getIsRun(editorState) ?
+        StateEditorService.getIsRun() ?
           ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponentForGameView(
             gameObject,
             engineState,

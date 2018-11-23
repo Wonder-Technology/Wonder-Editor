@@ -18,8 +18,9 @@ let stubCancelAnimationFrame = [%bs.raw
  |}
 ];
 
-let setIsRun = isRun =>
-  SceneEditorService.setIsRun(isRun) |> StateLogicService.getAndSetEditorState;
+let getIsRun = () => StateEditorService.getIsRun();
+
+let setIsRun = isRun => StateEditorService.setIsRun(isRun);
 
 let getColor = () => Controller.Method.getColor();
 

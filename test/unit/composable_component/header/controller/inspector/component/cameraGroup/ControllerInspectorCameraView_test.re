@@ -10,7 +10,11 @@ let _ =
   describe("controller inspector cameraView", () => {
     let sandbox = getSandboxDefaultVal();
 
-    beforeEach(() => sandbox := createSandbox());
+    beforeEach(() => {
+      sandbox := createSandbox();
+
+      ControllerTool.setIsRun(false);
+    });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test camera bind arcballCameraController event", () =>

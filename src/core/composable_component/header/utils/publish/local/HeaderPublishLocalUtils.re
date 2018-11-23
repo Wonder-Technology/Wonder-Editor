@@ -241,7 +241,7 @@ module Publish = {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
-    SceneEditorService.getIsRun(editorState) ?
+    StateEditorService.getIsRun() ?
       {
         ConsoleUtils.warn(
           "should publish local when stop, but now is run!",

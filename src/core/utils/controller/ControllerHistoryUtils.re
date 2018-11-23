@@ -20,6 +20,7 @@ let copyHistoryStack = (store, (editorState, engineState), historyState) => {
   });
 };
 
+/* TODO set to None */
 let restoreHistoryStack =
     (dispatchFunc, (editorState, engineState, historyState)) =>
   switch (
@@ -29,6 +30,7 @@ let restoreHistoryStack =
   ) {
   | (Some(lastUIState), Some(lastEditorState), Some(lastEngineState)) =>
     dispatchFunc(AppStore.ReplaceState(lastUIState));
+    /* TODO after restore */
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))
     |> ignore;
 

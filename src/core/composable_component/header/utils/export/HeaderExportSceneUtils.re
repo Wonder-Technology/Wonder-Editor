@@ -1,7 +1,7 @@
 let exportScene = sceneName => {
   let editorState = StateEditorService.getState();
 
-  SceneEditorService.getIsRun(editorState) ?
+  StateEditorService.getIsRun() ?
     {
       ConsoleUtils.warn(
         "should export scene when stop, but now is run!",

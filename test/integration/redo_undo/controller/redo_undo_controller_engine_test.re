@@ -10,14 +10,8 @@ let _ =
   describe("redo_undo: controller engine", () => {
     let sandbox = getSandboxDefaultVal();
 
-    beforeEach(() => {
-      sandbox := createSandbox();
-      TestTool.closeContractCheck();
-    });
-    afterEach(() => {
-      restoreSandbox(refJsObjToSandbox(sandbox^));
-      TestTool.openContractCheck();
-    });
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test undo operate", () => {
       describe("test add gameObject", () => {

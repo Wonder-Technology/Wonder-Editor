@@ -21,7 +21,7 @@ let _buildImageUint8ArrayMap = editorState =>
   |> Js.Nullable.return;
 
 let generateWDB = (rootGameObject, (editorState, engineState)) => {
-  let isRun = SceneEditorService.getIsRun(StateEditorService.getState());
+  let isRun = StateEditorService.getIsRun();
   let engineState =
     isRun ?
       engineState :

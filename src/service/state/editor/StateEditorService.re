@@ -9,6 +9,14 @@ let setStateIsDebug = isDebug => {
   ();
 };
 
+let getIsRun = () => CreateEditorStateDataEditorService.editorStateData.isRun;
+
+let setIsRun = isRun => {
+  CreateEditorStateDataEditorService.editorStateData.isRun = isRun;
+
+  ();
+};
+
 let getState = () =>
   CreateEditorStateDataEditorService.editorStateData.editorState;
 

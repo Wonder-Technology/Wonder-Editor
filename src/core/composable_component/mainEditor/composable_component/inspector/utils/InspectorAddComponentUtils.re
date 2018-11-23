@@ -84,7 +84,7 @@ let addComponentByType =
       engineState |> ArcballCameraEngineService.create;
 
     let engineState =
-      SceneEditorService.getIsRun(editorState) ?
+      StateEditorService.getIsRun() ?
         engineState
         |> GameObjectComponentEngineService.hasBasicCameraViewComponent(
              currentSceneTreeNode,

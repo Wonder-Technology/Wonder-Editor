@@ -68,14 +68,14 @@ let render =
         className="controller-runAndStop"
         onClick=(
           _e => {
-            SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
+            StateEditorService.getIsRun() ?
               ControllerUtils.stop(dispatchFunc) : ControllerUtils.run(store);
 
             send(Reload);
           }
         )>
         (
-          SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
+          StateEditorService.getIsRun() ?
             <img src="./public/img/stop.png" /> :
             <img src="./public/img/run.png" />
         )

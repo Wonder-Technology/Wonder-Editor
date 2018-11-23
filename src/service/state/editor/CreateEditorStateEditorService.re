@@ -4,7 +4,6 @@ let create = () => {
   settingRecord: RecordSettingService.create(),
   sceneRecord: {
     currentSceneTreeNode: None,
-    isRun: false,
   },
   assetRecord: {
     assetTreeRoot: None,

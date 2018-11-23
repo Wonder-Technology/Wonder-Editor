@@ -10,7 +10,7 @@ module CustomEventHandler = {
     ) {
     | None => engineState
     | Some(currentBasicCameraView) =>
-      SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
+      StateEditorService.getIsRun() ?
         ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponentForGameView(
           currentBasicCameraView
           |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
@@ -24,7 +24,7 @@ module CustomEventHandler = {
 
   let _bindTargetEventIfHasComponentAndInRunMode =
       (targetBasicCameraView, engineState) =>
-    SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
+    StateEditorService.getIsRun() ?
       ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponentForGameView(
         targetBasicCameraView
         |> BasicCameraViewEngineService.getBasicCameraViewGameObject(

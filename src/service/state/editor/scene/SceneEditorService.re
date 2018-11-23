@@ -1,13 +1,5 @@
 open EditorType;
 
-let getIsRun = editorState =>
-  editorState.sceneRecord |> IsRunSceneService.getIsRun;
-
-let setIsRun = (isRun, editorState) => {
-  ...editorState,
-  sceneRecord: editorState.sceneRecord |> IsRunSceneService.setIsRun(isRun),
-};
-
 let unsafeGetCurrentSceneTreeNode = editorState =>
   editorState.sceneRecord
   |> CurrentSceneTreeNodeSceneService.unsafeGetCurrentSceneTreeNode;

@@ -123,7 +123,7 @@ let _import = result => {
 let importPackage = (dispatchFunc, event) => {
   let editorState = StateEditorService.getState();
 
-  SceneEditorService.getIsRun(editorState) ?
+  StateEditorService.getIsRun() ?
     {
       ConsoleUtils.warn(
         "should import package when stop, but now is run!",

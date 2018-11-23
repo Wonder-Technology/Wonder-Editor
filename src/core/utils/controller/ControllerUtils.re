@@ -1,7 +1,6 @@
 let run = store => {
-  SceneEditorService.setIsRun(true)
-  |> StateLogicService.getAndSetEditorState
-  |> ignore;
+  StateEditorService.setIsRun(true);
+
   AllStateData.getHistoryState()
   |> ControllerHistoryUtils.copyHistoryStack(
        store,
@@ -17,6 +16,8 @@ let run = store => {
 };
 
 let stop = dispatchFunc => {
+  StateEditorService.setIsRun(false);
+
   StateEditorService.getState()
   |> LoopEditorService.getLoopId
   |> LoopEngineService.stopLoop;
@@ -33,9 +34,5 @@ let stop = dispatchFunc => {
   StateEngineService.unsafeGetState()
   |> ArcballCameraControllerLogicService.unbindGameViewActiveCameraArcballCameraControllerEvent
   |> StateEngineService.setState
-  |> ignore;
-
-  SceneEditorService.setIsRun(false)
-  |> StateLogicService.getAndSetEditorState
   |> ignore;
 };

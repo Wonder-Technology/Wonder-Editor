@@ -11,11 +11,11 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     let _addGameObjectWithCount = count =>
-      Array.make(count, 0) |> Array.iter(_ => MainEditorSceneTreeHeaderTool.addCube());
+      Array.make(count, 0)
+      |> Array.iter(_ => MainEditorSceneTreeHeaderTool.addCube());
 
     beforeEach(() => {
       sandbox := createSandbox();
-      TestTool.closeContractCheck();
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
         sandbox,
@@ -28,10 +28,7 @@ let _ =
         createEmptyStubWithJsObjSandbox(sandbox),
       );
     });
-    afterEach(() => {
-      restoreSandbox(refJsObjToSandbox(sandbox^));
-      TestTool.openContractCheck();
-    });
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     test("init default scene", () =>
       StateEngineService.unsafeGetState()

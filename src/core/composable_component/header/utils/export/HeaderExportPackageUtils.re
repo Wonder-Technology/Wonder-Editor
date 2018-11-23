@@ -60,7 +60,7 @@ let _export = () => {
 let exportPackage = packageName => {
   let editorState = StateEditorService.getState();
 
-  SceneEditorService.getIsRun(editorState) ?
+  StateEditorService.getIsRun() ?
     {
       ConsoleUtils.warn(
         "should export package when stop, but now is run!",

@@ -1,7 +1,7 @@
 open EventType;
 
 let _loopBodyWhenStop = engineState =>
-  SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
+  StateEditorService.getIsRun() ?
     engineState : engineState |> DirectorEngineService.loopBody(0.);
 
 let _deferExec = [%bs.raw
