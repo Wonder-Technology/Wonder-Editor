@@ -32,15 +32,16 @@ let restoreHistoryStack =
   ) {
   | (Some(lastUIState), Some(lastEditorState), Some(lastEngineState)) =>
     dispatchFunc(AppStore.ReplaceState(lastUIState));
-    /* TODO after restore */
-    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))
-    |> ignore;
 
     (
       lastEditorState,
       lastEngineState |> StateEngineService.restoreState(engineState),
     )
     |> StateHistoryService.refreshStateForHistory;
+
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))
+    |> ignore;
+
     AllStateData.setHistoryState({
       copiedRedoUndoStackRecord: None,
       uiUndoStack:
