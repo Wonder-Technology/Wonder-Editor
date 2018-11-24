@@ -199,9 +199,8 @@ let extractAndRelateAssets =
     );
 
   let textureAssetDataMap =
-    TextureNodeMapAssetEditorService.getValidValues(editorState)
-    |> SparseMapService.map(
-         ({textureComponent}: AssetNodeType.textureResultType) =>
+    TextureNodeMapAssetEditorService.getTextureComponents(editorState)
+    |> SparseMapService.map(textureComponent =>
          (
            textureComponent,
            RelateGameObjectAndAssetUtils.getTextureData(

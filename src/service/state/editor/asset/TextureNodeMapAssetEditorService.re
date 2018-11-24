@@ -55,3 +55,7 @@ let doesAnyTextureUseImage = (targetImage, editorState) =>
   getValidValues(editorState)
   |> Js.Array.filter(({image}) => image === targetImage)
   |> Js.Array.length > 0;
+
+let getTextureComponents = editorState =>
+  getValidValues(editorState)
+  |> SparseMapService.map(({textureComponent}) => textureComponent);

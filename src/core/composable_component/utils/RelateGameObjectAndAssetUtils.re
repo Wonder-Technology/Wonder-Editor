@@ -3,10 +3,60 @@ open Js.Typed_array;
 let isValueEqual = (key1, key2, getFunc, engineState) =>
   getFunc(key1, engineState) == getFunc(key2, engineState);
 
+let _isNameEqual =
+    (name1, component2, (getNameFunc, isDefaultNameFunc), engineState) =>
+  switch (name1, getNameFunc(component2, engineState)) {
+  | (Some(name1), Some(name2)) =>
+    isDefaultNameFunc(name1) && isDefaultNameFunc(name2) ?
+      true : name1 == name2
+  | (None, None) => true
+  | _ => false
+  };
+
+let _isBasicMaterialNameEqual = (name1, material2, engineState) =>
+  _isNameEqual(
+    name1,
+    material2,
+    (
+      BasicMaterialEngineService.getBasicMaterialName,
+      ConverterEngineService.isDefaultBasicMaterialName,
+    ),
+    engineState,
+  );
+
+let _isLightMaterialNameEqual = (name1, material2, engineState) =>
+  _isNameEqual(
+    name1,
+    material2,
+    (
+      LightMaterialEngineService.getLightMaterialName,
+      ConverterEngineService.isDefaultLightMaterialName,
+    ),
+    engineState,
+  );
+
+let _isTextureNameEqual = (name1, texture2, engineState) =>
+  _isNameEqual(
+    name1,
+    texture2,
+    (
+      BasicSourceTextureEngineService.getBasicSourceTextureName,
+      ConverterEngineService.isDefaultTextureName,
+    ),
+    engineState,
+  );
+
+let _isImageNameEqual = (name1, image2) => {
+  let name2 = ImageUtils.getImageName(image2);
+
+  ConverterEngineService.isDefaultImageName(name1)
+  && ConverterEngineService.isDefaultImageName(name2) ?
+    true : name1 == name2;
+};
+
 let isBasicMaterialDataEqual =
     ((name, color), material2, _imageUint8ArrayDataMap, engineState) =>
-  name
-  == BasicMaterialEngineService.getBasicMaterialName(material2, engineState)
+  _isBasicMaterialNameEqual(name, material2, engineState)
   && color == BasicMaterialEngineService.getColor(material2, engineState);
 
 let _isImageValueEqual = (image1, image2, getFunc) =>
@@ -34,7 +84,7 @@ let _isImageNodeDataEqual =
       texture2,
       imageUint8ArrayDataMap,
     ) =>
-  name == ImageUtils.getImageName(image2)
+  _isImageNameEqual(name, image2)
   && width == ImageUtils.getImageWidth(image2)
   && height == ImageUtils.getImageHeight(image2)
   && (
@@ -54,11 +104,7 @@ let isTextureDataEqual =
       imageUint8ArrayDataMap,
       engineState,
     ) =>
-  name
-  == BasicSourceTextureEngineService.getBasicSourceTextureName(
-       texture2,
-       engineState,
-     )
+  _isTextureNameEqual(name, texture2, engineState)
   && wrapS == BasicSourceTextureEngineService.getWrapS(texture2, engineState)
   && wrapT == BasicSourceTextureEngineService.getWrapT(texture2, engineState)
   &&
@@ -85,8 +131,7 @@ let isLightMaterialDataEqual =
       imageUint8ArrayDataMap,
       engineState,
     ) =>
-  name
-  == LightMaterialEngineService.getLightMaterialName(material2, engineState)
+  _isLightMaterialNameEqual(name, material2, engineState)
   &&
   diffuseColor == LightMaterialEngineService.getLightMaterialDiffuseColor(
                     material2,

@@ -105,6 +105,8 @@ let initStateWithJob =
     CreateEditorStateEditorService.create() |> SettingTool.initSetting,
   )
   |> ignore;
+
+  ConsoleTool.notShowMessage();
 };
 
 let initState =

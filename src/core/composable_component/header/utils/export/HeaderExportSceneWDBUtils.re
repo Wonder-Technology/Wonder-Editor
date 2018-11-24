@@ -28,7 +28,6 @@ let generateWDB = (rootGameObject, (editorState, engineState)) => {
       engineState
       |> ArcballCameraControllerLogicService.bindGameViewActiveCameraArcballCameraControllerEvent;
 
-  /* TODO optimize: pass imageUint8ArrayMap?(imageUint8ArrayMap can't work???need fix or not pass?) */
   let (engineState, _, wdbArrayBuffer) =
     GenerateSceneGraphEngineService.generateWDB(
       rootGameObject,
