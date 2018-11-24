@@ -30,55 +30,48 @@ let _writeBuffer =
       (imageBufferViewArr, wdbBufferViewArr),
       imageUint8ArrayArr,
       wdbArrayBufferArr,
-      dataView,
+      arrayBuffer,
     ) => {
-  let dataView =
+  let uint8Array = Uint8Array.fromBuffer(arrayBuffer);
+  let uint8Array =
     imageBufferViewArr
     |> WonderCommonlib.ArrayService.reduceOneParami(
          (.
-           dataView,
+           uint8Array,
            {byteOffset, byteLength}: ExportAssetType.bufferView,
            index,
          ) => {
            let imageUint8Array = Array.unsafe_get(imageUint8ArrayArr, index);
 
-           let (_, _, dataView) =
-             HeaderExportUtils.writeUint8ArrayToArrayBuffer(
-               imageUint8Array,
-               headerAndJsonAlignedByteOffset + byteOffset,
-               byteLength,
-               dataView,
-             );
-
-           dataView;
+           BufferUtils.mergeUint8Array(
+             uint8Array,
+             imageUint8Array,
+             headerAndJsonAlignedByteOffset + byteOffset,
+           );
          },
-         dataView,
+         uint8Array,
        );
 
-  let dataView =
+  let uint8Array =
     wdbBufferViewArr
     |> WonderCommonlib.ArrayService.reduceOneParami(
          (.
-           dataView,
+           uint8Array,
            {byteOffset, byteLength}: ExportAssetType.bufferView,
            index,
          ) => {
            let wdbArrayBuffer = Array.unsafe_get(wdbArrayBufferArr, index);
 
-           let (_, _, dataView) =
-             HeaderExportUtils.writeArrayBufferToArrayBuffer(
-               wdbArrayBuffer,
-               headerAndJsonAlignedByteOffset + byteOffset,
-               byteLength,
-               dataView,
-             );
-
-           dataView;
+           BufferUtils.mergeArrayBuffer(
+             uint8Array,
+             wdbArrayBuffer,
+             headerAndJsonAlignedByteOffset + byteOffset,
+           );
          },
-         dataView,
+         uint8Array,
        );
 
-  dataView;
+  uint8Array |> Uint8Array.buffer;
 };
 
 let generateASB = (editorState, engineState) => {
@@ -127,13 +120,13 @@ let generateASB = (editorState, engineState) => {
       dataView,
     );
 
-  let dataView =
+  let arrayBuffer =
     _writeBuffer(
       byteOffset,
       (imageBufferViewArr, wdbBufferViewArr),
       imageUint8ArrayArr,
       wdbArrayBufferArr,
-      dataView,
+      dataView |> DataView.buffer,
     );
 
   asb;

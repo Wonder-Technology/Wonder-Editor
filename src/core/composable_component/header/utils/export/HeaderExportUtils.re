@@ -1,18 +1,5 @@
 open Js.Typed_array;
 
-let writeUint8ArrayToArrayBuffer =
-    (uint8ArrayArr, byteOffset, byteLength, dataView) => {
-  let byteOffset = ref(byteOffset);
-
-  for (i in 0 to byteLength - 1) {
-    let value = Uint8Array.unsafe_get(uint8ArrayArr, i);
-
-    byteOffset := DataViewUtils.writeUint8_1(. value, byteOffset^, dataView);
-  };
-
-  (byteOffset^, uint8ArrayArr, dataView);
-};
-
 let writeUint8ArrayToArrayBufferWithEmptyData =
     (
       byteOffset,
@@ -36,15 +23,6 @@ let writeUint8ArrayToArrayBufferWithEmptyData =
 
   (resultByteOffset, uint8Array, dataView);
 };
-
-let writeArrayBufferToArrayBuffer =
-    (arrayBuffer, byteOffset, byteLength, dataView) =>
-  writeUint8ArrayToArrayBuffer(
-    Uint8Array.fromBuffer(arrayBuffer),
-    byteOffset,
-    byteLength,
-    dataView,
-  );
 
 let download = [%bs.raw
   (content, filename, mimeType) => {|

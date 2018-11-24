@@ -37,19 +37,31 @@ let _buildImageNodeUint8Array = editorState =>
   |> ImageNodeMapAssetEditorService.setImageNodeMap(_, editorState);
 
 let _export = () => {
+  WonderLog.Console.profile("export");
+  let t1 = Performance.now();
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
   let editorState = editorState |> _buildImageNodeUint8Array;
+  let t2 = Performance.now();
 
   let (engineState, sceneGraphArrayBuffer) =
     HeaderExportSceneWDBUtils.generateSceneWDB(editorState, engineState);
 
+  let t3 = Performance.now();
   let asbArrayBuffer =
     HeaderExportASBUtils.generateASB(editorState, engineState);
 
+  let t4 = Performance.now();
   let wpkArrayBuffer =
     HeaderExportWPKUtils.generateWPK(sceneGraphArrayBuffer, asbArrayBuffer);
+
+
+
+  let t5 = Performance.now();
+
+  Js.logMany([|t2 -. t1, t3 -. t2, t4 -. t3, t5 -. t4|]);
+  WonderLog.Console.profileEnd();
 
   editorState |> StateEditorService.setState |> ignore;
   engineState |> StateEngineService.setState |> ignore;

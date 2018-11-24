@@ -27,3 +27,17 @@ let convertBase64ToUint8Array = [%raw
     return array;
     |}
 ];
+
+let mergeUint8Array = (sourceUint8Array, targetUint8Array, offset) => {
+  sourceUint8Array
+  |> Uint8Array.setArrayOffset(targetUint8Array |> Obj.magic, offset);
+
+  sourceUint8Array;
+};
+
+let mergeArrayBuffer = (sourceUint8Array, targetArrayBuffer, offset) =>
+  mergeUint8Array(
+    sourceUint8Array,
+    Uint8Array.fromBuffer(targetArrayBuffer),
+    offset,
+  );
