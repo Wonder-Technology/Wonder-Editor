@@ -23,7 +23,7 @@ let prepareDefaultComponent = (editorState, engineState) => {
 let prepareSpecificGameObjects = (editorState, engineState) => {
   let (engineState, gridPlane) =
     GeometryEngineService.createGridPlaneGameObject(
-      (30., 1., 0.),
+      (300., 1., 0.),
       [|0.6, 0.6, 0.6|],
       engineState,
     );
