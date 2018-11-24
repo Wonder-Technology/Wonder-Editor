@@ -1,11 +1,18 @@
 open Js.Typed_array;
 
 let _replaceGameObjectMaterialComponentToMaterialAsset =
-    (gameObject, defaultMaterialData, materialDataMapData, engineState) => {
+    (
+      gameObject,
+      defaultMaterialData,
+      materialDataMapData,
+      imageUint8ArrayDataMap,
+      engineState,
+    ) => {
   let (sourceMaterial, targetMaterial, materialType, _) =
     RelateGameObjectAndAssetUtils.getRelatedMaterialDataFromGameObject(
       gameObject,
       WonderCommonlib.SparseMapService.createEmpty(),
+      imageUint8ArrayDataMap,
       defaultMaterialData,
       materialDataMapData,
       engineState,
@@ -82,6 +89,7 @@ let _getGeometryDataArr = (geometryArr, engineState) =>
 let relateSceneWDBGameObjectsAndAssets =
     (
       allWDBGameObjectsArr,
+      imageUint8ArrayDataMap,
       (basicMaterialMap, lightMaterialMap),
       wdbAssetGameObjectGeometryAssetArr,
     ) => {
@@ -97,7 +105,7 @@ let relateSceneWDBGameObjectsAndAssets =
   let lightMaterialDataMap =
     RelateGameObjectAndAssetUtils.getLightMaterialDataMap(
       lightMaterialMap,
-      engineState,
+      (editorState, engineState),
     );
 
   let defaultMaterialData =
@@ -123,6 +131,7 @@ let relateSceneWDBGameObjectsAndAssets =
              gameObject,
              defaultMaterialData,
              (basicMaterialDataMap, lightMaterialDataMap),
+             imageUint8ArrayDataMap,
              engineState,
            )
            |> _replaceGameObjectGeometryComponentToWDBAssetGeometryComponent(
@@ -173,7 +182,11 @@ let relateSceneWDBGameObjectsAndAssets =
 };
 
 let relateWDBAssetGameObjectsAndAssets =
-    (allWDBGameObjectsArr, (basicMaterialMap, lightMaterialMap)) => {
+    (
+      allWDBGameObjectsArr,
+      (basicMaterialMap, lightMaterialMap),
+      imageUint8ArrayDataMap,
+    ) => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
@@ -186,7 +199,7 @@ let relateWDBAssetGameObjectsAndAssets =
   let lightMaterialDataMap =
     RelateGameObjectAndAssetUtils.getLightMaterialDataMap(
       lightMaterialMap,
-      engineState,
+      (editorState, engineState),
     );
 
   let defaultMaterialData =
@@ -209,6 +222,7 @@ let relateWDBAssetGameObjectsAndAssets =
              gameObject,
              defaultMaterialData,
              (basicMaterialDataMap, lightMaterialDataMap),
+             imageUint8ArrayDataMap,
              engineState,
            )
            |> RelateGameObjectAndAssetUtils.replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent(

@@ -74,6 +74,9 @@ let _import = result => {
       WonderCommonlib.SparseMapService.createEmpty(),
     ));
 
+  let imageUint8ArrayDataMapRef =
+    ref(WonderCommonlib.SparseMapService.createEmpty());
+
   let wdbAssetGameObjectGeometryAssetArrRef = ref([||]);
 
   let engineState = StateEngineService.unsafeGetState();
@@ -84,6 +87,7 @@ let _import = result => {
        ImportPackageRelateGameObjectAndAssetUtils.relateWDBAssetGameObjectsAndAssets(
          allWDBGameObjectsArr,
          materialMapTuple,
+         imageUint8ArrayDataMap,
        );
 
        materialMapTupleRef := materialMapTuple;
@@ -92,6 +96,7 @@ let _import = result => {
            allWDBGameObjectsArr,
          )
          |> StateLogicService.getStateToGetData;
+       imageUint8ArrayDataMapRef := imageUint8ArrayDataMap;
 
        ();
      })
@@ -107,6 +112,10 @@ let _import = result => {
                   sceneGameObject,
                   engineState,
                 ),
+                SparseMapService.mergeSparseMaps([|
+                  imageUint8ArrayDataMapRef^,
+                  imageUint8ArrayDataMap,
+                |]),
                 materialMapTupleRef^,
                 wdbAssetGameObjectGeometryAssetArrRef^,
               );
