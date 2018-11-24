@@ -7,7 +7,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("controller header add gameObject", () => {
+  describe("controller leftHeader add gameObject", () => {
     let sandbox = getSandboxDefaultVal();
 
     beforeEach(() => {
@@ -27,7 +27,7 @@ let _ =
 
     describe("test add box", () => {
       test("test add one box", () => {
-        MainEditorSceneTreeHeaderTool.addCube();
+        MainEditorLeftHeaderTool.addCube();
 
         StateEngineService.unsafeGetState()
         |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
@@ -35,8 +35,8 @@ let _ =
         |> expect == 5;
       });
       test("test add two boxes", () => {
-        MainEditorSceneTreeHeaderTool.addCube();
-        MainEditorSceneTreeHeaderTool.addCube();
+        MainEditorLeftHeaderTool.addCube();
+        MainEditorLeftHeaderTool.addCube();
 
         StateEngineService.unsafeGetState()
         |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
@@ -45,7 +45,7 @@ let _ =
       });
       describe("test scene tree snapshot", () =>
         test("test add one box", () => {
-          MainEditorSceneTreeHeaderTool.addCube();
+          MainEditorLeftHeaderTool.addCube();
 
           BuildComponentTool.buildSceneTree(
             TestTool.buildAppStateSceneGraphFromEngine(),
@@ -57,7 +57,7 @@ let _ =
 
     describe("test add emptyGameObject", () => {
       test("test add one emptyGameObject", () => {
-        MainEditorSceneTreeHeaderTool.addEmptyGameObject();
+        MainEditorLeftHeaderTool.addEmptyGameObject();
 
         StateEngineService.unsafeGetState()
         |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
@@ -66,7 +66,7 @@ let _ =
       });
       describe("test scene tree snanpshot", () =>
         test("test add one emptyGameObject", () => {
-          MainEditorSceneTreeHeaderTool.addEmptyGameObject();
+          MainEditorLeftHeaderTool.addEmptyGameObject();
 
           BuildComponentTool.buildSceneTree(
             TestTool.buildAppStateSceneGraphFromEngine(),

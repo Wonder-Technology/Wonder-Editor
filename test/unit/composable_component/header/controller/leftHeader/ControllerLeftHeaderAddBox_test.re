@@ -7,7 +7,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("controller header addCube", () => {
+  describe("controller leftHeader addCube", () => {
     let sandbox = getSandboxDefaultVal();
 
     beforeEach(() => {
@@ -28,7 +28,7 @@ let _ =
     describe("test add box", () =>
       describe("box should be added into engineState", () => {
         test("test add one box", () => {
-          MainEditorSceneTreeHeaderTool.addCube();
+          MainEditorLeftHeaderTool.addCube();
 
           StateEngineService.unsafeGetState()
           |> GameObjectUtils.getChildren(
@@ -38,8 +38,8 @@ let _ =
           |> expect == 5;
         });
         test("test add two boxes", () => {
-          MainEditorSceneTreeHeaderTool.addCube();
-          MainEditorSceneTreeHeaderTool.addCube();
+          MainEditorLeftHeaderTool.addCube();
+          MainEditorLeftHeaderTool.addCube();
 
           StateEngineService.unsafeGetState()
           |> GameObjectUtils.getChildren(
@@ -50,7 +50,7 @@ let _ =
         });
         describe("test scene tree", () =>
           test("test add one box", () => {
-            MainEditorSceneTreeHeaderTool.addCube();
+            MainEditorLeftHeaderTool.addCube();
 
             BuildComponentTool.buildSceneTree(
               TestTool.buildAppStateSceneGraphFromEngine(),

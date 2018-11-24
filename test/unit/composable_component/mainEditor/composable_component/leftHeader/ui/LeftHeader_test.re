@@ -11,7 +11,7 @@ open Header;
 open Js.Promise;
 
 let _ =
-  describe("Header", () => {
+  describe("LeftHeader", () => {
     let sandbox = getSandboxDefaultVal();
 
     beforeEach(() => sandbox := createSandbox());
@@ -57,7 +57,7 @@ let _ =
 
             let newGameObject = GameObjectTool.getNewGameObjectUid();
 
-            MainEditorSceneTreeHeaderTool.addEmptyGameObject();
+            MainEditorLeftHeaderTool.addEmptyGameObject();
 
             MainEditorSceneTreeTool.Select.selectGameObject(
               ~gameObject=newGameObject,
@@ -96,7 +96,7 @@ let _ =
             );
           GameObjectTool.clearCurrentSceneTreeNode();
 
-          MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
+          MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
 
           ConsoleTool.getMessage(error)
           |> expect
@@ -110,7 +110,7 @@ let _ =
                 TestTool.buildAppStateSceneGraphFromEngine(),
               );
 
-            MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
+            MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
 
             GameObjectTool.getCurrentSceneTreeNode()
             |> Js.Option.isNone
@@ -130,7 +130,7 @@ let _ =
 
             let engineState = StateEngineService.unsafeGetState();
 
-            MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
+            MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
 
             (
               engineState |> GameObjectTool.isAlive(box1),

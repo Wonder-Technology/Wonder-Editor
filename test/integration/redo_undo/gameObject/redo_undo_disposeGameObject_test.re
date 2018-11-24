@@ -17,11 +17,11 @@ let _ =
       let _simulateTwiceDisposeGameObject = () => {
         MainEditorSceneTool.setSecondBoxToBeCurrentSceneTreeNode();
 
-        MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
+        MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
 
         MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
 
-        MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
+        MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
       };
 
       beforeEach(() => {

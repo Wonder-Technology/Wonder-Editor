@@ -97,7 +97,7 @@ let _ =
     describe("test still has other camera groups after remove ", () => {
       beforeEach(() => {
         let newGameObject = GameObjectTool.getNewGameObjectUid();
-        MainEditorSceneTreeHeaderTool.addCube();
+        MainEditorLeftHeaderTool.addCube();
 
         MainEditorSceneTreeTool.Select.selectGameObject(
           ~gameObject=newGameObject,

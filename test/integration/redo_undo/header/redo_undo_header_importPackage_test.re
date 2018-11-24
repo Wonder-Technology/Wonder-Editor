@@ -13,7 +13,7 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     let _simulateOnceImportPackage = testFunc => {
-      MainEditorSceneTreeHeaderTool.addCube();
+      MainEditorLeftHeaderTool.addCube();
 
       MainEditorAssetHeaderOperateNodeTool.addMaterial();
 

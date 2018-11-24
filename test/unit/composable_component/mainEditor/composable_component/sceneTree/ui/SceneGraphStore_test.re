@@ -28,7 +28,7 @@ let _ =
         let newGameObject = GameObjectTool.getNewGameObjectUid();
         let store = TestTool.buildAppStateSceneGraphFromEngine();
 
-        MainEditorSceneTreeHeaderTool.addCube(~store, ());
+        MainEditorLeftHeaderTool.addCube(~store, ());
 
         let engineState = StateEngineService.unsafeGetState();
         let store =

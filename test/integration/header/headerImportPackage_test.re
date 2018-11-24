@@ -339,7 +339,7 @@ let _ =
       });
 
       testPromise("should reset scene gameObject", () => {
-        MainEditorSceneTreeHeaderTool.addCube();
+        MainEditorLeftHeaderTool.addCube();
 
         ImportPackageTool.testImportPackage(
           ~testFunc=

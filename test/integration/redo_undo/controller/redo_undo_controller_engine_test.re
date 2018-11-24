@@ -27,8 +27,8 @@ let _ =
           ControllerTool.run();
         });
         test("test undo one step which from second to first", () => {
-          MainEditorSceneTreeHeaderTool.addCube();
-          MainEditorSceneTreeHeaderTool.addCube();
+          MainEditorLeftHeaderTool.addCube();
+          MainEditorLeftHeaderTool.addCube();
 
           RedoUndoTool.undoHistoryState();
 
@@ -75,9 +75,9 @@ let _ =
         });
 
         test("test undo one step which from second to first", () => {
-          MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
+          MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
           MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
-          MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
+          MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
 
           RedoUndoTool.undoHistoryState();
 

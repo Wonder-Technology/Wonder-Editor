@@ -30,7 +30,7 @@ let _ =
             scene tree should has no cube.
             |},
           () => {
-            MainEditorSceneTreeHeaderTool.addCube();
+            MainEditorLeftHeaderTool.addCube();
 
             RedoUndoTool.undoHistoryState();
 

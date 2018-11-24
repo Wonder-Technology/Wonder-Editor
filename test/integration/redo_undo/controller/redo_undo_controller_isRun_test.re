@@ -25,7 +25,7 @@ let _ =
 
     describe("undo to the state before run", () => {
       test("isRun should still be true", () => {
-        MainEditorSceneTreeHeaderTool.addCube();
+        MainEditorLeftHeaderTool.addCube();
 
         ControllerTool.run();
 
@@ -36,7 +36,7 @@ let _ =
 
       describe("test stop", () => {
         test("isRun should be false", () => {
-          MainEditorSceneTreeHeaderTool.addCube();
+          MainEditorLeftHeaderTool.addCube();
 
           ControllerTool.run();
           RedoUndoTool.undoHistoryState();
@@ -47,7 +47,7 @@ let _ =
         test("the cancelAnimationFrame is called", () => {
           let cancel = createEmptyStubWithJsObjSandbox(sandbox);
           ControllerTool.stubCancelAnimationFrame(cancel);
-          MainEditorSceneTreeHeaderTool.addCube();
+          MainEditorLeftHeaderTool.addCube();
 
           ControllerTool.run();
           RedoUndoTool.undoHistoryState();
@@ -59,7 +59,7 @@ let _ =
 
       describe("test redo to the state after run", () =>
         test("isRun should still be true", () => {
-          MainEditorSceneTreeHeaderTool.addCube();
+          MainEditorLeftHeaderTool.addCube();
 
           ControllerTool.run();
 
