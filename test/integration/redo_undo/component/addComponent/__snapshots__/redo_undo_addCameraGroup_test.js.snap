@@ -242,7 +242,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -262,7 +262,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -282,7 +282,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -1108,7 +1108,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -1128,7 +1128,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -1148,7 +1148,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -1974,7 +1974,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -1994,7 +1994,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -2014,7 +2014,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>

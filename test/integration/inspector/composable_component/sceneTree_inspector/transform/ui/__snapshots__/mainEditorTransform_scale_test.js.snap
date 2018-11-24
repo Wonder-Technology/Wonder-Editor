@@ -208,7 +208,7 @@ exports[`MainEditorTransform scale test change scale value changeX should set cu
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="0.1"
+              value="1"
             />
           </div>
         </article>
@@ -228,7 +228,7 @@ exports[`MainEditorTransform scale test change scale value changeX should set cu
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="0.1"
+              value="1"
             />
           </div>
         </article>

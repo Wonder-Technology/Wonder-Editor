@@ -2214,7 +2214,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -2234,7 +2234,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -2254,7 +2254,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -3080,7 +3080,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -3100,7 +3100,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -3120,7 +3120,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>

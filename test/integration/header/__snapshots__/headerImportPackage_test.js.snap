@@ -1071,7 +1071,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -1091,7 +1091,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -1111,7 +1111,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -1732,7 +1732,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -1752,7 +1752,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -1772,7 +1772,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -2396,7 +2396,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -2416,7 +2416,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -2436,7 +2436,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>

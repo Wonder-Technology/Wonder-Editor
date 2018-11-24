@@ -23,7 +23,7 @@ let createCube = ((cubeGeometry, lightMaterial), editorState, engineState) => {
 
   let engineState =
     engineState
-    |> TransformEngineService.setLocalScale((0.1, 0.1, 0.1), transform);
+    |> TransformEngineService.setLocalScale((1., 1., 1.), transform);
 
   let (engineState, meshRenderer) =
     MeshRendererEngineService.create(engineState);

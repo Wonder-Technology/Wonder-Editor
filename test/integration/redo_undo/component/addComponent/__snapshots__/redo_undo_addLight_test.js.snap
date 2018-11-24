@@ -242,7 +242,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -262,7 +262,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -282,7 +282,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -1025,7 +1025,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -1045,7 +1045,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -1065,7 +1065,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -1808,7 +1808,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -1828,7 +1828,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
@@ -1848,7 +1848,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="1"
                   />
                 </div>
               </article>
