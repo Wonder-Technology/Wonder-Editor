@@ -47,10 +47,10 @@ module Method = {
               <span className="section-header">
                 (DomHelper.textEl("Undo"))
               </span>
-              /* <span className="section-tail">
-                (DomHelper.textEl("Ctrl+Z"))
-              </span> */
             </div>
+            /* <span className="section-tail">
+                 (DomHelper.textEl("Ctrl+Z"))
+               </span> */
             <div
               className="content-section"
               onClick=(
@@ -65,11 +65,11 @@ module Method = {
               <span className="section-header">
                 (DomHelper.textEl("Redo"))
               </span>
-              /* <span className="section-tail">
-                (DomHelper.textEl("Ctrl+U"))
-              </span> */
             </div>
           </div> :
+          /* <span className="section-tail">
+               (DomHelper.textEl("Ctrl+U"))
+             </span> */
           ReasonReact.null
       )
     </div>;
@@ -103,16 +103,6 @@ module Method = {
                   e =>
                     importPackage((store, dispatchFunc), (send, BlurNav), e)
                     |> ignore
-                )
-                onFocus=(
-                  e =>
-                    UIEditorService.markFileInputClose
-                    |> StateLogicService.getAndSetEditorState
-                )
-                onClick=(
-                  e =>
-                    UIEditorService.markFileInputOpen
-                    |> StateLogicService.getAndSetEditorState
                 )
               />
               <span className="section-header">
@@ -365,10 +355,10 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
       "click",
       e => {
         let target = ReactEventRe.Form.target(e);
-        let targetArray = DomHelper.getElementsByClassName("item-title");
+        let targetArray =
+          DomHelper.getElementsByClassName("wonder-header-component");
 
-        DomUtils.isSpecificDomChildrenHasTargetDom(target, targetArray)
-        || UIEditorService.isFileInputOpen(StateEditorService.getState()) ?
+        DomUtils.isSpecificDomChildrenHasTargetDom(target, targetArray) ?
           () : send(BlurNav);
       },
     ),

@@ -14,8 +14,6 @@ open IMGUIType;
 
 open InspectorType;
 
-open UIType;
-
 open ConsoleType;
 
 open TransformType;
@@ -33,7 +31,6 @@ type editorState = {
   eventRecord,
   imguiRecord,
   inspectorRecord,
-  uiRecord,
   consoleRecord,
   transformRecord,
   currentDragSource: (option(widgetType), option(int)),

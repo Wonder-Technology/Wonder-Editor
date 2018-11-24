@@ -50,9 +50,6 @@ let create = () => {
   inspectorRecord: {
     componentTypeMap: WonderCommonlib.SparseMapService.createEmpty(),
   },
-  uiRecord: {
-    isFileInputOpen: false,
-  },
   transformRecord: {
     localEulerAngleMapX: WonderCommonlib.SparseMapService.createEmpty(),
     localEulerAngleMapY: WonderCommonlib.SparseMapService.createEmpty(),

@@ -1,1 +1,0 @@
-type uiRecord = {isFileInputOpen: bool};
