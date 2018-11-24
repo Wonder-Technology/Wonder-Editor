@@ -41,16 +41,11 @@ let removeComponentByType =
        );
 
   | CameraGroup =>
-    let (editorState, engineState) =
-      SceneUtils.doesSceneHasRemoveableCamera() ?
-        engineState
-        |> CameraLogicService.handleForRemoveCameraGroup(
-             currentSceneTreeNode,
-             editorState,
-           ) :
-        (editorState, engineState);
-
-    (editorState, engineState)
+    engineState
+    |> CameraLogicService.unbindArcballCameraControllerEventIfHasComponentForGameView(
+         currentSceneTreeNode,
+         editorState,
+       )
     |> GameObjectLogicService.disposeCameraGroup(
          currentSceneTreeNode,
          CameraGroupEngineService.getCameraGroupComponents(
@@ -61,7 +56,7 @@ let removeComponentByType =
            ),
            engineState,
          ),
-       );
+       )
 
   | ArcballCameraController =>
     let arcballCameraController =

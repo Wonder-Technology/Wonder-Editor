@@ -54,36 +54,10 @@ module CustomEventHandler = {
       (sceneGraphArr, None);
 
     | Some(gameObject) =>
-      let engineState = StateEngineService.unsafeGetState();
+      let (newSceneGraphArr, removedTreeNode) =
+        sceneGraphArr |> SceneGraphUtils.removeDragedTreeNode(gameObject);
 
-      engineState |> CameraEngineService.hasCameraGroup(gameObject) ?
-        {
-          SceneUtils.doesSceneHasRemoveableCamera() ?
-            {
-              let (editorState, engineState) =
-                engineState
-                |> CameraLogicService.handleForRemoveCameraGroup(
-                     gameObject,
-                     editorState,
-                   );
-
-              editorState |> StateEditorService.setState |> ignore;
-
-              engineState |> StateEngineService.setState |> ignore;
-            } :
-            ();
-
-          let (newSceneGraphArr, removedTreeNode) =
-            sceneGraphArr |> SceneGraphUtils.removeDragedTreeNode(gameObject);
-
-          (newSceneGraphArr, removedTreeNode |. Some);
-        } :
-        {
-          let (newSceneGraphArr, removedTreeNode) =
-            sceneGraphArr |> SceneGraphUtils.removeDragedTreeNode(gameObject);
-
-          (newSceneGraphArr, removedTreeNode |. Some);
-        };
+      (newSceneGraphArr, removedTreeNode |. Some);
     };
   };
 

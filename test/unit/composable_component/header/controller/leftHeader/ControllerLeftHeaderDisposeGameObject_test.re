@@ -137,7 +137,7 @@ let _ =
                 |> GameObjectTool.isAlive(camera1)
                 |> expect == false;
               });
-              test("should mark last scene camera to be active", () => {
+              /* test("should mark last scene camera to be active", () => {
                 let (camera1, camera2) = _test();
 
                 BasicCameraViewEngineService.isActiveBasicCameraView(
@@ -149,7 +149,7 @@ let _ =
                   StateEngineService.unsafeGetState(),
                 )
                 |> expect == true;
-              });
+              }); */
             });
 
             describe("test has no camera after remove", () => {

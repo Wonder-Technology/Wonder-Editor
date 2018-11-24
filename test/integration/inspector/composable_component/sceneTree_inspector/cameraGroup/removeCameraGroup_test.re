@@ -140,79 +140,80 @@ let _ =
         |> StateLogicService.getEngineStateToGetData
         |> expect == false;
       });
-      test(
-        "test remove current cameraGroup, should mark last scene camera to be active",
-        () => {
-        let lastBasicCameraView =
-          GameObjectTool.unsafeGetCurrentSceneTreeNode()
-          |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-               _,
-               StateEngineService.unsafeGetState(),
-             );
-        MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
+      /* test(
+           "test remove current cameraGroup, should mark last scene camera to be active",
+           () => {
+           let lastBasicCameraView =
+             GameObjectTool.unsafeGetCurrentSceneTreeNode()
+             |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
+                  _,
+                  StateEngineService.unsafeGetState(),
+                );
+           MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
 
-        MainEditorInspectorRemoveComponentTool.removeCameraGroupComponent();
+           MainEditorInspectorRemoveComponentTool.removeCameraGroupComponent();
 
-        GameViewEditorService.getActivedBasicCameraView(
-          StateEditorService.getState(),
-        )
-        |> expect == Some(lastBasicCameraView);
-      });
+           GameViewEditorService.getActivedBasicCameraView(
+             StateEditorService.getState(),
+           )
+           |> expect == Some(lastBasicCameraView);
+         }); */
 
       describe("if is run", () =>
         describe(
           "if basicCameraView is active and gameObject has arcballCameraController",
-          () => {
-          test("unbind arcballCameraController event for game view", () => {
-            MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
-            ControllerTool.setIsRun(true);
-            let (engineState, _, cameraController) =
-              GameObjectTool.unsafeGetCurrentSceneTreeNode()
-              |> ArcballCameraControllerToolEngine.addGameObjectArcballCameraControllerComponentAndBindArcballCameraControllerEventForGameView(
-                   _,
+          () =>
+          test("unbind arcballCameraController event for game view", ()
+            => {
+              MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
+              ControllerTool.setIsRun(true);
+              let (engineState, _, cameraController) =
+                GameObjectTool.unsafeGetCurrentSceneTreeNode()
+                |> ArcballCameraControllerToolEngine.addGameObjectArcballCameraControllerComponentAndBindArcballCameraControllerEventForGameView(
+                     _,
+                     StateEngineService.unsafeGetState(),
+                   );
+              engineState |> StateEngineService.setState |> ignore;
+
+              MainEditorInspectorRemoveComponentTool.removeCameraGroupComponent();
+
+              let engineState = StateEngineService.unsafeGetState();
+              ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+                cameraController,
+                engineState,
+              )
+              |> expect == false;
+            })
+            /* test(
+                 "bind last scene camera -> arcballCameraController event for game view",
+                 () => {
+                 let lastCameraGameObject =
+                   GameObjectTool.unsafeGetCurrentSceneTreeNode();
+                 let (engineState, _, lastArcballCameraController) =
+                   ArcballCameraControllerToolEngine.addGameObjectArcballCameraControllerComponent(
+                     lastCameraGameObject,
+                     StateEngineService.unsafeGetState(),
+                   );
+                 engineState |> StateEngineService.setState |> ignore;
+                 MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
+                 ControllerTool.setIsRun(true);
+                 let (engineState, _, _) =
+                   GameObjectTool.unsafeGetCurrentSceneTreeNode()
+                   |> ArcballCameraControllerToolEngine.addGameObjectArcballCameraControllerComponentAndBindArcballCameraControllerEventForGameView(
+                        _,
+                        StateEngineService.unsafeGetState(),
+                      );
+                 engineState |> StateEngineService.setState |> ignore;
+
+                 MainEditorInspectorRemoveComponentTool.removeCameraGroupComponent();
+
+                 ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+                   lastArcballCameraController,
                    StateEngineService.unsafeGetState(),
-                 );
-            engineState |> StateEngineService.setState |> ignore;
-
-            MainEditorInspectorRemoveComponentTool.removeCameraGroupComponent();
-
-            let engineState = StateEngineService.unsafeGetState();
-            ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
-              cameraController,
-              engineState,
-            )
-            |> expect == false;
-          });
-          test(
-            "bind last scene camera -> arcballCameraController event for game view",
-            () => {
-            let lastCameraGameObject =
-              GameObjectTool.unsafeGetCurrentSceneTreeNode();
-            let (engineState, _, lastArcballCameraController) =
-              ArcballCameraControllerToolEngine.addGameObjectArcballCameraControllerComponent(
-                lastCameraGameObject,
-                StateEngineService.unsafeGetState(),
-              );
-            engineState |> StateEngineService.setState |> ignore;
-            MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
-            ControllerTool.setIsRun(true);
-            let (engineState, _, _) =
-              GameObjectTool.unsafeGetCurrentSceneTreeNode()
-              |> ArcballCameraControllerToolEngine.addGameObjectArcballCameraControllerComponentAndBindArcballCameraControllerEventForGameView(
-                   _,
-                   StateEngineService.unsafeGetState(),
-                 );
-            engineState |> StateEngineService.setState |> ignore;
-
-            MainEditorInspectorRemoveComponentTool.removeCameraGroupComponent();
-
-            ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
-              lastArcballCameraController,
-              StateEngineService.unsafeGetState(),
-            )
-            |> expect == true;
-          });
-        })
+                 )
+                 |> expect == true;
+               }); */
+        )
       );
     });
   });

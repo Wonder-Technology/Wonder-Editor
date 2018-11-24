@@ -78,6 +78,7 @@ let _ =
           })
         );
       });
+
       describe("test dispose gameObject", () => {
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
@@ -105,11 +106,6 @@ let _ =
 
         describe("else", () =>
           test("remove current gameObject from editorState", () => {
-            let component =
-              BuildComponentTool.buildHeader(
-                TestTool.buildAppStateSceneGraphFromEngine(),
-              );
-
             MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
 
             GameObjectTool.getCurrentSceneTreeNode()
@@ -117,6 +113,76 @@ let _ =
             |> expect == true;
           })
         );
+
+        describe("fix bug", () => {
+          let _prepareState = () => {
+            MainEditorSceneTool.initStateWithJob(
+              ~sandbox,
+              ~isBuildFakeDom=false,
+              ~isInitJob=false,
+              ~noWorkerJobRecord=
+                NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                  ~loopPipelines=
+                    {|
+             [
+         {
+           "name": "default",
+           "jobs": [
+{"name": "dispose" },
+{"name": "prepare_render_game_view" }
+           ]
+         }
+       ]
+             |},
+                  ~loopJobs=
+                    {|
+             [
+{"name": "dispose" },
+{"name": "prepare_render_game_view" }
+             ]
+             |},
+                  (),
+                ),
+              (),
+            );
+
+            MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
+          };
+
+          test(
+            "remove actived camera's parent gameObject should dispose camera",
+            () => {
+            PrepareRenderViewJobTool.prepare(_prepareState);
+            let editorState = StateEditorService.getState();
+            let engineState = StateEngineService.unsafeGetState();
+            let activedCamera =
+              MainEditorSceneTool.getCameraInDefaultScene(engineState);
+            MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
+              ~sourceGameObject=activedCamera,
+              ~targetGameObject=MainEditorSceneTool.getFirstBox(engineState),
+              (),
+            );
+
+            let engineState = StateEngineService.unsafeGetState();
+            MainEditorSceneTreeTool.Select.selectGameObject(
+              ~gameObject=MainEditorSceneTool.getFirstBox(engineState),
+              (),
+            );
+            MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
+
+            (
+              activedCamera
+              |> GameObjectToolEngine.isAlive(
+                   _,
+                   StateEngineService.unsafeGetState(),
+                 ),
+              GameViewEditorService.getActivedBasicCameraView(
+                StateEditorService.getState(),
+              ),
+            )
+            |> expect == (false, None);
+          });
+        });
       });
 
       describe("fix bug", () =>
