@@ -28,12 +28,7 @@ let convertBase64ToUint8Array = [%raw
     |}
 ];
 
-let mergeUint8Array = (sourceUint8Array, targetUint8Array, offset) => {
-  sourceUint8Array
-  |> Uint8Array.setArrayOffset(targetUint8Array |> Obj.magic, offset);
-
-  sourceUint8Array;
-};
+let mergeUint8Array = Wonderjs.BufferUtils.mergeUint8Array;
 
 let mergeArrayBuffer = (sourceUint8Array, targetArrayBuffer, offset) =>
   mergeUint8Array(
