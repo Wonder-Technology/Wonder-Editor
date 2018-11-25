@@ -25,11 +25,46 @@ let _replaceGameObjectMaterialComponentToMaterialAsset =
   );
 };
 
+let _isWdbAssetGameObjectGeometry =
+    (geometry, wdbAssetGameObjectGeometryDataArr) =>
+  wdbAssetGameObjectGeometryDataArr
+  |> Js.Array.find(((wdbAssetGameObjectGeometry, _)) =>
+       geometry === wdbAssetGameObjectGeometry
+     )
+  |> Js.Option.isSome;
+
+let _checkGameObjectGeometryComponent =
+    (geometry, wdbAssetGameObjectGeometryDataArr) =>
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect=
+                  {j|gameObject not has wdb asset gameObject->geometry|j},
+                ~actual={j|has|j},
+              ),
+              () =>
+              _isWdbAssetGameObjectGeometry(
+                geometry,
+                wdbAssetGameObjectGeometryDataArr,
+              )
+              |> assertFalse
+            )
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
 let _replaceGameObjectGeometryComponentToWDBAssetGeometryComponent =
     (
       gameObject,
       defaultGeometryData,
       wdbAssetGameObjectGeometryDataArr,
+      editorState,
       engineState,
     ) =>
   switch (
@@ -40,6 +75,11 @@ let _replaceGameObjectGeometryComponentToWDBAssetGeometryComponent =
   ) {
   | None => engineState
   | Some(geometry) =>
+    _checkGameObjectGeometryComponent(
+      geometry,
+      wdbAssetGameObjectGeometryDataArr,
+    );
+
     let geometryData =
       RelateGameObjectAndAssetUtils.getGeometryData(geometry, engineState);
 
@@ -52,6 +92,7 @@ let _replaceGameObjectGeometryComponentToWDBAssetGeometryComponent =
         )
       ) {
       | Some(targetGeometry) => Some(targetGeometry)
+      | Some(targetGeometry) => None
       | None =>
         switch (
           wdbAssetGameObjectGeometryDataArr
@@ -138,6 +179,7 @@ let relateSceneWDBGameObjectsAndAssets =
                 gameObject,
                 defaultGeometryData,
                 wdbAssetGameObjectGeometryDataArr,
+                editorState,
               )
            |> GameObjectEngineService.initGameObject(gameObject),
          engineState,
