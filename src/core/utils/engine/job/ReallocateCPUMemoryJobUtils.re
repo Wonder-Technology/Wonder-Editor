@@ -12,7 +12,11 @@ let _reallocateGeometryToNewBuffer = ({settingRecord} as engineState) => {
         if (QueryCPUMemoryService.isDisposeTooMany(
               geometryRecord.disposeCount,
               settingRecord,
-            )) {
+            )
+            || QueryCPUMemoryService.isGeometryBufferNearlyFull(
+                 0.9,
+                 geometryRecord,
+               )) {
           geometryRecord.disposeCount = 0;
 
           let geometryPointCount =

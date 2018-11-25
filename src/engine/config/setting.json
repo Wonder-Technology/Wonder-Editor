@@ -29,6 +29,11 @@
     "gpu": {
         "use_hardware_instance": false
     },
+    "memory": {
+        "max_dispose_count": 5000,
+        "max_type_array_pool_size": 5000,
+        "max_big_type_array_pool_size": 100
+    },
     "worker": {
         "use_worker": false
     }
