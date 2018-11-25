@@ -39,6 +39,9 @@ let handleDragOver = (dropEffect, event) => {
 let handleDrop = (id, isWidgetFunc, handleRelationErrorFunc, event) => {
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);
   let startId = DragUtils.getDragedId(e);
+
+  DomHelper.preventDefault(e);
+
   DragEventBaseUtils.isTriggerDragDrop(
     id,
     startId,

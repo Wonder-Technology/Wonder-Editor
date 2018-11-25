@@ -51,9 +51,10 @@ module Method = {
     |> DomHelper.preventDefault;
 
   let handleDrop = (isWidgetFunc, isTypeValidFunc, event) => {
-    let startId =
-      ReactEventType.convertReactMouseEventToJsEvent(event)
-      |> DragUtils.getDragedId;
+    let e = ReactEventType.convertReactMouseEventToJsEvent(event);
+    let startId = e |> DragUtils.getDragedId;
+
+    DomHelper.preventDefault(e);
 
     _isTriggerAction(isWidgetFunc, isTypeValidFunc) ?
       DragDrop(startId) : DragLeave;
