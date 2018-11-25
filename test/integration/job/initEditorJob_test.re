@@ -234,7 +234,7 @@ let _ =
               engineState,
             ),
           )
-          |> expect == (0.1, 1000., 60.);
+          |> expect == (0.01, 50000., 60.);
         });
         test("move camera", () => {
           let engineState = StateEngineService.unsafeGetState();
