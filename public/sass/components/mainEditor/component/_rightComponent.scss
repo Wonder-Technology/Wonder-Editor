@@ -1,11 +1,11 @@
-.right-component{
-    height:100%;
-    width:20%;
-    flex:initial;
-    min-width:250px;
-    .inspector-parent{
-        width:100%;
-        height:100%;
+.right-component {
+    height: 100%;
+    width: 20%;
+    flex: initial;
+    min-width: 250px;
+    .inspector-parent {
+        width: 100%;
+        height: 100%;
         background: #666666;
         overflow-y: auto;
         @import "../../../utils/_scrollBarUtils.scss";

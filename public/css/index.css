@@ -282,7 +282,7 @@ html, body {
   flex-direction: column; }
   .wonder-app-component .wonder-header-component {
     width: 100%;
-    height: 22px; }
+    height: 5%; }
     .wonder-app-component .wonder-header-component .header-nav {
       display: flex;
       width: 100%;
@@ -351,7 +351,7 @@ html, body {
           padding-top: 50px; }
   .wonder-app-component .wonder-controller-component {
     width: 100%;
-    height: 45px; }
+    height: 8%; }
     .wonder-app-component .wonder-controller-component .header-controller {
       height: 100%;
       background-color: #444444;
@@ -407,7 +407,7 @@ html, body {
         height: 100%; }
   .wonder-app-component .wonder-mainEditor-component {
     width: 100%;
-    height: 100%;
+    height: 87%;
     display: flex; }
     .wonder-app-component .wonder-mainEditor-component .left-component {
       display: flex;

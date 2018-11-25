@@ -1,48 +1,46 @@
-
-.wonder-controller-component{
-    width:100%;
-    height:45px;
-    .header-controller{
-        height:100%;
+.wonder-controller-component {
+    width: 100%;
+    height: 8%;
+    .header-controller {
+        height: 100%;
         background-color: #444444;
-        display:flex;
-        .controller-transform{
-            flex:initial;
-            width:48%;
-            height:100%;
-            .header-item{
+        display: flex;
+        .controller-transform {
+            flex: initial;
+            width: 48%;
+            height: 100%;
+            .header-item {
                 display: flex;
-                flex:initial;
+                flex: initial;
                 align-items: center;
-                height:100%;
+                height: 100%;
                 flex-direction: row;
-                margin-left:10px;
-                .component-item{
-                    flex:initial;
-                    
-                    .inspector-item{
+                margin-left: 10px;
+                .component-item {
+                    flex: initial;
+                    .inspector-item {
                         display: flex;
-                        .item-header{
-                            height:25px;
+                        .item-header {
+                            height: 25px;
                             line-height: 25px;
                         }
-                        .item-content{
-                            flex:initial;
+                        .item-content {
+                            flex: initial;
                             display: flex;
                             flex-direction: row;
-                            margin-left:10px;
+                            margin-left: 10px;
                             align-items: center;
                             justify-content: center;
-                            .color-hex{
+                            .color-hex {
                                 border-radius: 10px;
-                                width:40px;
-                                height:15px;
+                                width: 40px;
+                                height: 15px;
                             }
-                            .color-select{
-                                margin-left:10px;
-                                img{
-                                    width:15px;
-                                    height:15px;
+                            .color-select {
+                                margin-left: 10px;
+                                img {
+                                    width: 15px;
+                                    height: 15px;
                                 }
                             }
                         }
@@ -50,23 +48,23 @@
                 }
             }
         }
-        .controller-runAndStop{
-            flex:initial;
+        .controller-runAndStop {
+            flex: initial;
             width: 4%;
-            height:100%;
+            height: 100%;
             background-color: #777777;
-            display:flex;
+            display: flex;
             align-items: center;
             justify-content: center;
-            img{
-                width:25px;
-                height:25px;
+            img {
+                width: 25px;
+                height: 25px;
             }
         }
-        .controller-other{
-            flex:initial;
-            width:48%;
-            height:100%;
+        .controller-other {
+            flex: initial;
+            width: 48%;
+            height: 100%;
         }
     }
 }
