@@ -2588,7 +2588,6 @@ html, body {
     overflow-x: auto;
     white-space: nowrap;
     border: 1px solid #333333;
-    padding-top: 30px;
     background: #c1c1c1;
     border-radius: 5px; }
     .select-component-content .select-component-item::-webkit-scrollbar {
@@ -2603,10 +2602,6 @@ html, body {
       background: #cfcccc;
       border-radius: 4px; }
     .select-component-content .select-component-item .item-header {
-      position: fixed;
-      top: 18px;
-      left: 0px;
-      right: 0px;
       width: 100%;
       height: 20px;
       line-height: 20px;
