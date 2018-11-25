@@ -271,6 +271,18 @@ module Method = {
       )
     </div>;
   };
+
+  let isHeaderDom = target =>
+    DomUtils.isSpecificDomChildrenHasTargetDom(
+      target,
+      DomHelper.getElementsByClassName("item-title"),
+    );
+
+  let isImportPackageDom = target =>
+    DomUtils.isSpecificDomChildrenHasTargetDom(
+      target,
+      DomHelper.getElementsByClassName("section-fileLoad"),
+    );
 };
 
 let component = ReasonReact.reducerComponent("Header");
@@ -355,10 +367,8 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
       "click",
       e => {
         let target = ReactEventRe.Form.target(e);
-        let targetArray =
-          DomHelper.getElementsByClassName("wonder-header-component");
 
-        DomUtils.isSpecificDomChildrenHasTargetDom(target, targetArray) ?
+        Method.isHeaderDom(target) || Method.isImportPackageDom(target) ?
           () : send(BlurNav);
       },
     ),
