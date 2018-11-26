@@ -98,6 +98,7 @@ let _ =
                true,
                true,
                true,
+               true,
              )
           |> WonderBsMost.Most.tap(((engineState, _, gameObject)) => {
                isBind :=

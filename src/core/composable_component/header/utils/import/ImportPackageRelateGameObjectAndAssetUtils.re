@@ -1,6 +1,76 @@
 open Js.Typed_array;
 
-let _replaceGameObjectMaterialComponentToMaterialAsset =
+let _isSceneGameObjectImageUint8Array = uint8Array =>
+  GenerateSceneGraphEngineService.isUint8ArrayHasOneUint32Data(uint8Array);
+
+let _isImageDataEqual =
+    (
+      (name, width, height, uint8Array),
+      image2,
+      texture2,
+      imageUint8ArrayDataMap,
+    ) => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect={j|scene gameObject->image to be undefined|j},
+                ~actual={j|not|j},
+              ),
+              () =>
+              image2 |> Obj.magic |> Js.Nullable.isNullable |> assertTrue
+            )
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
+  switch (
+    imageUint8ArrayDataMap |> WonderCommonlib.SparseMapService.get(texture2)
+  ) {
+  | None => true
+  | Some((_, uint8Array2)) =>
+    _isSceneGameObjectImageUint8Array(uint8Array2) ?
+      switch (uint8Array) {
+      | None => true
+      | Some(uint8Array) =>
+        uint8Array
+        |>
+        Uint8Array.length === GenerateSceneGraphEngineService.readUint32DataFromUint8Array(
+                                uint8Array2,
+                              )
+      } :
+      WonderLog.Log.fatal(
+        LogUtils.buildFatalMessage(
+          ~description={j|should be scene gameObject image uint8Array|j},
+          ~reason="",
+          ~solution={j||j},
+          ~params={j||j},
+        ),
+      )
+  };
+};
+
+let _isLightMaterialDataEqualForSceneGameObject =
+    (
+      (name, diffuseColor, shininess, textureData),
+      material2,
+      imageUint8ArrayDataMap,
+      engineState,
+    ) =>
+  RelateGameObjectAndAssetUtils.isLightMaterialDataEqual(
+    (name, diffuseColor, shininess, textureData),
+    material2,
+    imageUint8ArrayDataMap,
+    RelateGameObjectAndAssetUtils.isTextureDataEqual(_isImageDataEqual),
+    engineState,
+  );
+
+let _replaceSceneGameObjectMaterialComponentToMaterialAsset =
     (
       gameObject,
       defaultMaterialData,
@@ -15,6 +85,50 @@ let _replaceGameObjectMaterialComponentToMaterialAsset =
       imageUint8ArrayDataMap,
       defaultMaterialData,
       materialDataMapData,
+      _isLightMaterialDataEqualForSceneGameObject,
+      engineState,
+    );
+
+  RelateGameObjectAndAssetUtils.replaceToMaterialAssetMaterialComponent(
+    gameObject,
+    (sourceMaterial, targetMaterial, materialType),
+    engineState,
+  );
+};
+
+let _isLightMaterialDataEqualForWDBAssetGameObject =
+    (
+      (name, diffuseColor, shininess, textureData),
+      material2,
+      imageUint8ArrayDataMap,
+      engineState,
+    ) =>
+  RelateGameObjectAndAssetUtils.isLightMaterialDataEqual(
+    (name, diffuseColor, shininess, textureData),
+    material2,
+    imageUint8ArrayDataMap,
+    RelateGameObjectAndAssetUtils.isTextureDataEqual(
+      RelateGameObjectAndAssetUtils.isImageDataEqual,
+    ),
+    engineState,
+  );
+
+let _replaceWDBAssetGameObjectMaterialComponentToMaterialAsset =
+    (
+      gameObject,
+      defaultMaterialData,
+      materialDataMapData,
+      imageUint8ArrayDataMap,
+      engineState,
+    ) => {
+  let (sourceMaterial, targetMaterial, materialType, _) =
+    RelateGameObjectAndAssetUtils.getRelatedMaterialDataFromGameObject(
+      gameObject,
+      WonderCommonlib.SparseMapService.createEmpty(),
+      imageUint8ArrayDataMap,
+      defaultMaterialData,
+      materialDataMapData,
+      _isLightMaterialDataEqualForWDBAssetGameObject,
       engineState,
     );
 
@@ -59,7 +173,65 @@ let _checkGameObjectGeometryComponent =
     StateEditorService.getStateIsDebug(),
   );
 
-let _replaceGameObjectGeometryComponentToWDBAssetGeometryComponent =
+let _isGeometryPointDataEqual =
+    (sceneGameObjectGeometryPointsLength, points2, getLengthFunc) =>
+  sceneGameObjectGeometryPointsLength === getLengthFunc(points2);
+
+let _isGeometryDataEqualForSceneGameObjectGeometry =
+    (
+      (name1, vertices1, normals1, texCoords1),
+      (name2, vertices2, normals2, texCoords2),
+      engineState,
+    ) => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          test(
+            Log.buildAssertMessage(
+              ~expect=
+                {j|scene geometry data->points should only has one point data|j},
+              ~actual={j|not|j},
+            ),
+            () =>
+            (
+              vertices1 |> Float32Array.length,
+              normals1 |> Float32Array.length,
+              texCoords1 |> Float32Array.length,
+            )
+            == (3, 3, 2)
+            |> assertTrue
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
+  RelateGameObjectAndAssetUtils.isGeometryNameEqual(name1, name2)
+  && _isGeometryPointDataEqual(
+       vertices1
+       |> Float32Array.unsafe_get(_, 0)
+       |> NumberType.convertFloatToInt,
+       vertices2,
+       Float32Array.length,
+     )
+  && _isGeometryPointDataEqual(
+       normals1
+       |> Float32Array.unsafe_get(_, 0)
+       |> NumberType.convertFloatToInt,
+       normals2,
+       Float32Array.length,
+     )
+  && _isGeometryPointDataEqual(
+       texCoords1
+       |> Float32Array.unsafe_get(_, 0)
+       |> NumberType.convertFloatToInt,
+       texCoords2,
+       Float32Array.length,
+     );
+};
+
+let _replaceSceneGameObjectGeometryComponentToWDBAssetGeometryComponent =
     (
       gameObject,
       defaultGeometryData,
@@ -80,14 +252,15 @@ let _replaceGameObjectGeometryComponentToWDBAssetGeometryComponent =
       wdbAssetGameObjectGeometryDataArr,
     );
 
-    let geometryData =
+    let sceneGameObjectGeometryData =
       RelateGameObjectAndAssetUtils.getGeometryData(geometry, engineState);
 
     let targetGeometry =
       switch (
         RelateGameObjectAndAssetUtils.getTargetGeometryByJudgeDefaultGeometry(
-          geometryData,
+          sceneGameObjectGeometryData,
           defaultGeometryData,
+          RelateGameObjectAndAssetUtils.isGeometryDataEqualForDefaultGeometry,
           engineState,
         )
       ) {
@@ -97,9 +270,9 @@ let _replaceGameObjectGeometryComponentToWDBAssetGeometryComponent =
         switch (
           wdbAssetGameObjectGeometryDataArr
           |> Js.Array.find(((_, wdbAssetGameObjectGeometryData)) =>
-               RelateGameObjectAndAssetUtils.isGeometryDataEqual(
+               _isGeometryDataEqualForSceneGameObjectGeometry(
+                 sceneGameObjectGeometryData,
                  wdbAssetGameObjectGeometryData,
-                 geometryData,
                  engineState,
                )
              )
@@ -168,14 +341,14 @@ let relateSceneWDBGameObjectsAndAssets =
     allWDBGameObjectsArr
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. engineState, gameObject) =>
-           _replaceGameObjectMaterialComponentToMaterialAsset(
+           _replaceSceneGameObjectMaterialComponentToMaterialAsset(
              gameObject,
              defaultMaterialData,
              (basicMaterialDataMap, lightMaterialDataMap),
              imageUint8ArrayDataMap,
              engineState,
            )
-           |> _replaceGameObjectGeometryComponentToWDBAssetGeometryComponent(
+           |> _replaceSceneGameObjectGeometryComponentToWDBAssetGeometryComponent(
                 gameObject,
                 defaultGeometryData,
                 wdbAssetGameObjectGeometryDataArr,
@@ -260,7 +433,7 @@ let relateWDBAssetGameObjectsAndAssets =
     allWDBGameObjectsArr
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. engineState, gameObject) =>
-           _replaceGameObjectMaterialComponentToMaterialAsset(
+           _replaceWDBAssetGameObjectMaterialComponentToMaterialAsset(
              gameObject,
              defaultMaterialData,
              (basicMaterialDataMap, lightMaterialDataMap),

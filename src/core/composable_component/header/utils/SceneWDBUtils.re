@@ -86,6 +86,7 @@ let importSceneWDB = wdbArrayBuffer => {
        false,
        true,
        true,
+       false
      )
   |> WonderBsMost.Most.map(
        (

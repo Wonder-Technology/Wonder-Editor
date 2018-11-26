@@ -4,6 +4,23 @@ let _hasExtractedAsset = (key, hasExtractedAssetMap) =>
   | _ => false
   };
 
+let _isLightMaterialDataEqual =
+    (
+      (name, diffuseColor, shininess, textureData),
+      material2,
+      imageUint8ArrayDataMap,
+      engineState,
+    ) =>
+  RelateGameObjectAndAssetUtils.isLightMaterialDataEqual(
+    (name, diffuseColor, shininess, textureData),
+    material2,
+    imageUint8ArrayDataMap,
+    RelateGameObjectAndAssetUtils.isTextureDataEqual(
+      RelateGameObjectAndAssetUtils.isImageDataEqual,
+    ),
+    engineState,
+  );
+
 let _extractAndRelateMaterialAssets =
     (
       gameObject,
@@ -29,6 +46,7 @@ let _extractAndRelateMaterialAssets =
       imageUint8ArrayDataMap,
       defaultMaterialData,
       materialDataMapData,
+      _isLightMaterialDataEqual,
       engineState,
     );
 

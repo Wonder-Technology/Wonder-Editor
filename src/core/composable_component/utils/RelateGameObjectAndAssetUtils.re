@@ -46,7 +46,17 @@ let _isTextureNameEqual = (name1, texture2, engineState) =>
     engineState,
   );
 
-let _isImageNameEqual = (name1, image2) => {
+let isGeometryNameEqual = (name1, name2) =>
+  switch (name1, name2) {
+  | (Some(name1), Some(name2)) =>
+    ConverterEngineService.isDefaultGeometryName(name1)
+    && ConverterEngineService.isDefaultGeometryName(name2) ?
+      true : name1 == name2
+  | (None, None) => true
+  | _ => false
+  };
+
+let isImageNameEqual = (name1, image2) => {
   let name2 = ImageUtils.getImageName(image2);
 
   ConverterEngineService.isDefaultImageName(name1)
@@ -77,14 +87,14 @@ let _getImageUint8ArrayByTextureComponent = (textureComponent, editorState) =>
     )
   };
 
-let _isImageNodeDataEqual =
+let isImageDataEqual =
     (
       (name, width, height, uint8Array),
       image2,
       texture2,
       imageUint8ArrayDataMap,
     ) =>
-  _isImageNameEqual(name, image2)
+  isImageNameEqual(name, image2)
   && width == ImageUtils.getImageWidth(image2)
   && height == ImageUtils.getImageHeight(image2)
   && (
@@ -99,6 +109,7 @@ let _isImageNodeDataEqual =
 
 let isTextureDataEqual =
     (
+      isImageDataEqualFunc,
       (name, wrapS, wrapT, minFilter, magFilter, imageData),
       texture2,
       imageUint8ArrayDataMap,
@@ -117,7 +128,7 @@ let isTextureDataEqual =
                  texture2,
                  engineState,
                )
-  && _isImageNodeDataEqual(
+  && isImageDataEqualFunc(
        imageData,
        BasicSourceTextureEngineService.unsafeGetSource(texture2, engineState),
        texture2,
@@ -129,6 +140,7 @@ let isLightMaterialDataEqual =
       (name, diffuseColor, shininess, textureData),
       material2,
       imageUint8ArrayDataMap,
+      isTextureDataEqualFunc,
       engineState,
     ) =>
   _isLightMaterialNameEqual(name, material2, engineState)
@@ -152,7 +164,7 @@ let isLightMaterialDataEqual =
     ) {
     | (None, None) => true
     | (Some(textureData), Some(map2)) =>
-      isTextureDataEqual(
+      isTextureDataEqualFunc(
         textureData,
         map2,
         imageUint8ArrayDataMap,
@@ -269,6 +281,7 @@ let getRelatedMaterialDataFromGameObject =
       imageUint8ArrayDataMap,
       (defaultBasicMaterialData, defaultLightMaterialData),
       (basicMaterialDataMap, lightMaterialDataMap),
+      isLightMaterialDataEqualFunc,
       engineState,
     ) =>
   GameObjectComponentEngineService.hasBasicMaterialComponent(
@@ -307,7 +320,7 @@ let getRelatedMaterialDataFromGameObject =
         (
           GameObjectComponentEngineService.unsafeGetLightMaterialComponent,
           isEqualDefaultLightMaterial,
-          isLightMaterialDataEqual,
+          isLightMaterialDataEqualFunc,
         ),
         engineState,
       ) :
@@ -374,6 +387,7 @@ let getRelatedTextureData =
             textureAssetDataMap
             |> SparseMapService.find(((textureComponent, textureAssetData)) =>
                  isTextureDataEqual(
+                   isImageDataEqual,
                    textureAssetData,
                    sourceTexture,
                    imageUint8ArrayDataMap,
@@ -465,36 +479,15 @@ let getGeometryData = (geometry, engineState) => (
   GeometryEngineService.getGeometryVertices(geometry, engineState),
   GeometryEngineService.getGeometryNormals(geometry, engineState),
   GeometryEngineService.getGeometryTexCoords(geometry, engineState),
-  GeometryEngineService.getGeometryIndices(geometry, engineState),
 );
 
-let isGeometryDataEqual =
+let isGeometryDataEqualForDefaultGeometry =
     (
-      (name1, vertices1, normals1, texCoords1, indices1),
-      (name2, vertices2, normals2, texCoords2, indices2),
+      (name1, vertices1, normals1, texCoords1),
+      (name2, vertices2, normals2, texCoords2),
       engineState,
     ) =>
-  name1 === name2
-  && GeometryAssetLogicService.isGeometryPointDataEqual(
-       vertices1,
-       vertices2,
-       Float32Array.length,
-     )
-  && GeometryAssetLogicService.isGeometryPointDataEqual(
-       normals1,
-       normals2,
-       Float32Array.length,
-     )
-  && GeometryAssetLogicService.isGeometryPointDataEqual(
-       texCoords1,
-       texCoords2,
-       Float32Array.length,
-     )
-  && GeometryAssetLogicService.isGeometryPointDataEqual(
-       indices1,
-       indices2,
-       Uint16Array.length,
-     );
+  isGeometryNameEqual(name1, name2);
 
 let isDefaultGeometry = (geometry, (editorState, engineState)) => {
   let (defaultCubeGeometry, defaultCubeGeometryName) = (
@@ -539,11 +532,16 @@ let getTargetGeometryByJudgeDefaultGeometry =
           defaultSphereGeometryData,
         ),
       ),
+      isGeometryDataEqualFunc,
       engineState,
     ) =>
-  isGeometryDataEqual(geometryData, defaultCubeGeometryData, engineState) ?
+  isGeometryDataEqualFunc(geometryData, defaultCubeGeometryData, engineState) ?
     Some(defaultCubeGeometry) :
-    isGeometryDataEqual(geometryData, defaultSphereGeometryData, engineState) ?
+    isGeometryDataEqualFunc(
+      geometryData,
+      defaultSphereGeometryData,
+      engineState,
+    ) ?
       Some(defaultSphereGeometry) : None;
 
 let replaceGeometryComponent =
@@ -602,6 +600,7 @@ let replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent =
             defaultSphereGeometryData,
           ),
         ),
+        isGeometryDataEqualForDefaultGeometry,
         engineState,
       );
 

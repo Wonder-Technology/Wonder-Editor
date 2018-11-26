@@ -17,6 +17,7 @@ let importAssetWDB =
        false,
        false,
        false,
+       true,
      )
   |> WonderBsMost.Most.tap(
        ((engineState, (imageUint8ArrayDataMap, _), gameObject)) => {

@@ -86,14 +86,14 @@ let _ =
       describe("test judge name is equal", () => {
         test(
           "if sourceName and targetName are all default name, return true", () =>
-          RelateGameObjectAndAssetUtils._isImageNameEqual(
+          RelateGameObjectAndAssetUtils.isImageNameEqual(
             "image_1",
             ImageTool.buildImage(~name="image_3", ()),
           )
           |> expect == true
         );
         test("else, judge sourceName == targetName", () =>
-          RelateGameObjectAndAssetUtils._isImageNameEqual(
+          RelateGameObjectAndAssetUtils.isImageNameEqual(
             "image_1",
             ImageTool.buildImage(~name="name2", ()),
           )
