@@ -60,11 +60,11 @@ let removeLightMaterialSpecularMap = LightMaterialAPI.removeLightMaterialSpecula
 
    let setLightMaterialSpecularColor = LightMaterialAPI.setLightMaterialSpecularColor; */
 
-let _reInitMaterials = LightMaterialAPI.reInitMaterials;
+let reInitMaterials = LightMaterialAPI.reInitMaterials;
 
 let reInitAllLightMaterialsAndClearShaderCache = (materials, engineState) =>
   engineState
-  |> _reInitMaterials(materials)
+  |> reInitMaterials(materials)
   |> ShaderEngineService.clearShaderCache;
 
 let getAllLightMaterials = LightMaterialAPI.getAllLightMaterials;

@@ -21,15 +21,15 @@ let _setIMGUIData = (hasWDBIMGUIFunc, editorState, engineState) => {
   );
 };
 
-let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
+let _handleEngineState = (sceneGameObject, hasWDBIMGUIFunc, engineState) => {
   let engineState =
-    engineState |> SceneEngineService.setSceneGameObject(gameObject);
+    engineState |> SceneEngineService.setSceneGameObject(sceneGameObject);
 
   let editorState = StateEditorService.getState();
   let editorState =
     switch (
       GameObjectEngineService.getGameObjectActiveBasicCameraView(
-        gameObject,
+        sceneGameObject,
         engineState,
       )
     ) {
@@ -53,7 +53,7 @@ let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
 
   editorState
   |> GameObjectComponentLogicService.getGameObjectComponentStoreInComponentTypeMap(
-       engineState |> GameObjectUtils.getChildren(gameObject),
+       engineState |> GameObjectUtils.getChildren(sceneGameObject),
        engineState,
      )
   /* |> TreeRootAssetEditorService.setAssetTreeRoot(assetTree) */
@@ -65,12 +65,7 @@ let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
   let engineState =
     engineState |> GameObjectEngineService.setGameObjectName("scene", scene);
 
-  let engineState = engineState |> ShaderEngineService.clearShaderCache;
-
-  /* GameObjectEngineService.initAllGameObjects(gameObject)
-     |> StateLogicService.getAndRefreshEngineStateWithFunc; */
-
-  (gameObject, engineState);
+  (sceneGameObject, engineState);
 };
 
 let importSceneWDB = wdbArrayBuffer => {
@@ -86,17 +81,21 @@ let importSceneWDB = wdbArrayBuffer => {
        false,
        true,
        true,
-       false
+       false,
      )
   |> WonderBsMost.Most.map(
        (
-         (engineState, (imageUint8ArrayDataMap, hasWDBIMGUIFunc), gameObject),
+         (
+           engineState,
+           (imageUint8ArrayDataMap, hasWDBIMGUIFunc),
+           sceneGameObject,
+         ),
        ) => {
-       let (gameObject, engineState) =
-         _handleEngineState(gameObject, hasWDBIMGUIFunc, engineState);
+       let (sceneGameObject, engineState) =
+         _handleEngineState(sceneGameObject, hasWDBIMGUIFunc, engineState);
 
        StateEngineService.setState(engineState) |> ignore;
 
-       (gameObject, imageUint8ArrayDataMap);
+       (sceneGameObject, imageUint8ArrayDataMap);
      });
 };

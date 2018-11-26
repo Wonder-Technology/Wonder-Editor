@@ -3,8 +3,10 @@ open Js.Promise;
 let handleSceneWDB = wdbArrayBuffer =>
   SceneWDBUtils.importSceneWDB(wdbArrayBuffer)
   |> WonderBsMost.Most.tap(((gameObject, _)) =>
-       GameObjectEngineService.initAllGameObjects(gameObject)
-       |> StateLogicService.getAndRefreshEngineStateWithFunc
+       StateEngineService.unsafeGetState()
+       |> ShaderEngineService.clearShaderCache
+       |> GameObjectEngineService.initAllGameObjects(gameObject)
+       |> StateLogicService.refreshEngineState
      );
 
 let _getUploadAssetType = name => {

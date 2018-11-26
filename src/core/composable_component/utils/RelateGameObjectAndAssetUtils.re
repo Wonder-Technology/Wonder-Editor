@@ -176,15 +176,19 @@ let isLightMaterialDataEqual =
 
 let isEqualDefaultBasicMaterial =
     (gameObjectMaterial, (_, (name, _)), engineState) =>
-  engineState
-  |>
-  BasicMaterialEngineService.getBasicMaterialName(gameObjectMaterial) === name;
+  MaterialAssetLogicService.isDefaultBasicMaterial(
+    gameObjectMaterial,
+    name,
+    engineState,
+  );
 
 let isEqualDefaultLightMaterial =
     (gameObjectMaterial, (_, (name, _, _, _)), engineState) =>
-  engineState
-  |>
-  LightMaterialEngineService.getLightMaterialName(gameObjectMaterial) === name;
+  MaterialAssetLogicService.isDefaultLightMaterial(
+    gameObjectMaterial,
+    name,
+    engineState,
+  );
 
 let getRelatedMaterialData =
     (

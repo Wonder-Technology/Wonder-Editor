@@ -353,8 +353,7 @@ let relateSceneWDBGameObjectsAndAssets =
                 defaultGeometryData,
                 wdbAssetGameObjectGeometryDataArr,
                 editorState,
-              )
-           |> GameObjectEngineService.initGameObject(gameObject),
+              ),
          engineState,
        );
 
@@ -443,8 +442,7 @@ let relateWDBAssetGameObjectsAndAssets =
            |> RelateGameObjectAndAssetUtils.replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent(
                 gameObject,
                 defaultGeometryData,
-              )
-           |> GameObjectEngineService.initGameObject(gameObject),
+              ),
          engineState,
        );
 

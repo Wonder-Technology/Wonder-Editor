@@ -55,6 +55,21 @@ let _initAssetTreeRoot = () => {
   ();
 };
 
+let _reInitDefaultMaterials = (editorState, engineState) => {
+  let engineState =
+    [|
+      MaterialDataAssetEditorService.unsafeGetDefaultBasicMaterial(
+        editorState,
+      ),
+    |]
+    |> BasicMaterialEngineService.reInitMaterials(_, engineState);
+
+  [|
+    MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState),
+  |]
+  |> LightMaterialEngineService.reInitMaterials(_, engineState);
+};
+
 let _import = result => {
   _disposeAssets();
 
@@ -77,6 +92,8 @@ let _import = result => {
   let imageUint8ArrayDataMapRef =
     ref(WonderCommonlib.SparseMapService.createEmpty());
 
+  let allWDBGameObjectsArrRef = ref([||]);
+
   let wdbAssetGameObjectGeometryAssetArrRef = ref([||]);
 
   let engineState = StateEngineService.unsafeGetState();
@@ -90,6 +107,7 @@ let _import = result => {
          imageUint8ArrayDataMap,
        );
 
+       allWDBGameObjectsArrRef := allWDBGameObjectsArr;
        materialMapTupleRef := materialMapTuple;
        wdbAssetGameObjectGeometryAssetArrRef :=
          GeometryAssetLogicService.getGeometryAssetsFromWDBGameObjects(
@@ -180,7 +198,31 @@ let _import = result => {
            StateEditorService.getStateIsDebug(),
          );
 
-         StateLogicService.getAndRefreshEngineState();
+         let editorState = StateEditorService.getState();
+         let engineState = StateEngineService.unsafeGetState();
+
+         let engineState = engineState |> ShaderEngineService.clearShaderCache;
+
+         let engineState = _reInitDefaultMaterials(editorState, engineState);
+
+         let engineState =
+           ArrayService.fastConcat(
+             allWDBGameObjectsArrRef^,
+             GameObjectEngineService.getAllGameObjects(
+               SceneEngineService.getSceneGameObject(engineState),
+               engineState,
+             ),
+           )
+           |> WonderCommonlib.ArrayService.reduceOneParam(
+                (. engineState, gameObject) =>
+                  GameObjectEngineService.initGameObject(
+                    gameObject,
+                    engineState,
+                  ),
+                engineState,
+              );
+
+         StateLogicService.refreshEngineState(engineState);
        }),
      );
 };
