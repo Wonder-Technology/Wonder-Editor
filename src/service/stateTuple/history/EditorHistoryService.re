@@ -27,6 +27,6 @@ let storeState = (maxStackSize, currentState, historyState) => {
   ...historyState,
   editorUndoStack:
     Stack.addFirst(currentState, historyState.editorUndoStack)
-    |> OperateStateHistoryService.limitStackMaxSize(maxStackSize),
+    |> StackHistoryService.limitStackMaxSize(maxStackSize),
   editorRedoStack: Stack.empty(),
 };

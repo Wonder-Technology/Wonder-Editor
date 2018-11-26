@@ -9,7 +9,7 @@ let testImportPackageWithoutExport =
       ~fileName="Wpk",
       (),
     ) =>
-  HeaderImportPackageEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+  Header.Method.importPackage(
     (store, dispatchFunc),
     (_ => (), Obj.magic(-1)),
     BaseEventTool.buildPackageFileEvent(fileName, wpkArrayBuffer),

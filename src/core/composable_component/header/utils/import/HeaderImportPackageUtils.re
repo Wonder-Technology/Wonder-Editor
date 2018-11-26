@@ -73,7 +73,11 @@ let _reInitDefaultMaterials = (editorState, engineState) => {
 let _import = result => {
   _disposeAssets();
 
-  JobEngineService.execDisposeJob |> StateLogicService.getAndSetEngineState;
+  StateEngineService.unsafeGetState()
+  |> JobEngineService.execDisposeJob
+  |> ReallocateCPUMemoryJobUtils.reallocate(0.1)
+  |> StateEngineService.setState
+  |> ignore;
 
   _initAssetTreeRoot();
 
@@ -285,6 +289,10 @@ let importPackage = (dispatchFunc, event) => {
            )
         |> WonderBsMost.Most.drain
         |> then_(_ => {
+             StackHistoryService.clearAllStack(
+               AllStateData.getHistoryState(),
+             );
+
              dispatchFunc(
                AppStore.SceneTreeAction(
                  SetSceneGraph(

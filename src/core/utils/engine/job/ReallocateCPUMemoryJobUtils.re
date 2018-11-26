@@ -2,7 +2,8 @@ open Wonderjs;
 
 open StateDataMainType;
 
-let _reallocateGeometryToNewBuffer = ({settingRecord} as engineState) => {
+let _reallocateGeometryToNewBuffer =
+    (percent, {settingRecord} as engineState) => {
   let geometryRecord = RecordGeometryMainService.getRecord(engineState);
 
   {
@@ -14,7 +15,7 @@ let _reallocateGeometryToNewBuffer = ({settingRecord} as engineState) => {
               settingRecord,
             )
             || QueryCPUMemoryService.isGeometryBufferNearlyFull(
-                 0.9,
+                 percent,
                  geometryRecord,
                )) {
           geometryRecord.disposeCount = 0;
@@ -62,7 +63,9 @@ let _reallocateGeometryToNewBuffer = ({settingRecord} as engineState) => {
   };
 };
 
-let reallocateJob = (_, engineState) =>
+let reallocate = (percent, engineState) =>
   engineState
   |> ReallocateCPUMemoryJobUtils._reallocateGameObjectByDisposeCount
-  |> _reallocateGeometryToNewBuffer;
+  |> _reallocateGeometryToNewBuffer(percent);
+
+let reallocateJob = (_, engineState) => reallocate(0.9, engineState);

@@ -1,10 +1,13 @@
-let createGameObjectAndSetPointData = (~state, ~hasTexCoords=true, ()) => {
-  open Js.Typed_array;
-  let (state, geometry) = GeometryEngineService.create(state);
-  let (state, gameObject) = GameObjectEngineService.create(state);
+open Wonderjs.GeometryType;
 
-  let state =
-    state
+let createGameObjectAndSetPointData = (~engineState, ~hasTexCoords=true, ()) => {
+  open Js.Typed_array;
+  let (engineState, geometry) = GeometryEngineService.create(engineState);
+  let (engineState, gameObject) =
+    GameObjectEngineService.create(engineState);
+
+  let engineState =
+    engineState
     |> GameObjectComponentEngineService.addGeometryComponent(
          gameObject,
          geometry,
@@ -13,24 +16,25 @@ let createGameObjectAndSetPointData = (~state, ~hasTexCoords=true, ()) => {
   let texCoords1 = Float32Array.make([|0.5|]);
   let normals1 = Float32Array.make([|1.|]);
   let indices1 = Uint16Array.make([|2|]);
-  let state =
-    state
+  let engineState =
+    engineState
     |> GeometryEngineService.setGeometryVertices(geometry, vertices1)
     |> GeometryEngineService.setGeometryNormals(geometry, normals1)
     |> GeometryEngineService.setGeometryIndices(geometry, indices1);
 
-  let state =
+  let engineState =
     hasTexCoords ?
-      state
+      engineState
       |> GeometryEngineService.setGeometryTexCoords(geometry, texCoords1) :
-      state;
+      engineState;
 
   let name = hasTexCoords ? "geometryWithTexCoord" : "geometryNoTexCoord";
 
-  let state = state |> GeometryEngineService.setGeometryName(geometry, name);
+  let engineState =
+    engineState |> GeometryEngineService.setGeometryName(geometry, name);
 
   (
-    state,
+    engineState,
     gameObject,
     geometry,
     (vertices1, texCoords1, normals1, indices1),
@@ -39,8 +43,6 @@ let createGameObjectAndSetPointData = (~state, ~hasTexCoords=true, ()) => {
 };
 
 let getNewGeometry = (~engineState=StateEngineService.unsafeGetState(), ()) => {
-  open Wonderjs.GeometryType;
-
   let {disposedIndexArray, index} as geometryRecord =
     Wonderjs.RecordGeometryMainService.getRecord(engineState);
 
@@ -50,9 +52,16 @@ let getNewGeometry = (~engineState=StateEngineService.unsafeGetState(), ()) => {
   index;
 };
 
-let isGeometryDisposed = (geometry, state) =>
+let isGeometryDisposed = (geometry, engineState) =>
   !
     Wonderjs.DisposeGeometryMainService.isAlive(
       geometry,
-      state |> Wonderjs.RecordGeometryMainService.getRecord,
+      engineState |> Wonderjs.RecordGeometryMainService.getRecord,
     );
+
+let getVertices = engineState => {
+  let {vertices} as geometryRecord =
+    Wonderjs.RecordGeometryMainService.getRecord(engineState);
+
+  vertices;
+};

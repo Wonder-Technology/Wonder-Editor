@@ -318,6 +318,73 @@ let _ =
       });
     });
 
+    describe("reallocate", () =>
+      describe("reallocate geometry", () => {
+        beforeEach(() => {
+          MainEditorSceneTool.initStateWithJob(
+            ~sandbox,
+            ~isBuildFakeDom=false,
+            ~buffer=
+              SettingToolEngine.buildBufferConfigStr(
+                ~geometryPointCount=5000,
+                ~geometryCount=5,
+                (),
+              ),
+            ~noWorkerJobRecord=
+              NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                ~loopPipelines=
+                  {|
+                   [
+                       {
+                           "name": "default",
+                           "jobs": [
+                               {
+                                   "name": "dispose"
+                               }
+                           ]
+                       }
+                   ]
+               |},
+                (),
+              ),
+            (),
+          );
+
+          MainEditorSceneTool.prepareScene(sandbox);
+        });
+
+        testPromise(
+          "if geometry-buffer-use percent >= 10%, reallocate geometry to new buffer",
+          () =>
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            (),
+          )
+          |> then_(uploadedWDBNodeId => {
+               let engineState = StateEngineService.unsafeGetState();
+
+               let verticesBeforeImport =
+                 GeometryToolEngine.getVertices(engineState);
+
+               ImportPackageTool.testImportPackage(
+                 ~testFunc=
+                   () => {
+                     let engineState = StateEngineService.unsafeGetState();
+
+                     JudgeTool.isSame(
+                       GeometryToolEngine.getVertices(engineState),
+                       verticesBeforeImport,
+                     )
+                     |> expect == false
+                     |> resolve;
+                   },
+                 (),
+               );
+             })
+        );
+      })
+    );
+
     describe("test import scene wdb", () => {
       beforeEach(() => {
         MainEditorSceneTool.initStateWithJob(

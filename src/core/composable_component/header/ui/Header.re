@@ -16,7 +16,34 @@ module Method = {
      let addExtension = text =>
        AppExtensionUtils.setExtension(getStorageParentKey(), text); */
 
-  let importPackage = HeaderImportPackageEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+  let importPackage = ((store, dispatchFunc), (send, blurNav), event) => {
+    StateHistoryService.getStateForHistory()
+    |> StoreHistoryUtils.storeHistoryStateWithNoCopyEngineState(store);
+
+    HeaderImportPackageUtils.importPackage(dispatchFunc, event)
+    |> Js.Promise.then_(_ => send(blurNav) |> Js.Promise.resolve)
+    |> Js.Promise.catch(e => {
+         let e = Obj.magic(e);
+         let editorState = StateEditorService.getState();
+
+         let message = e##message;
+         let stack = e##stack;
+
+         ConsoleUtils.error(
+           LogUtils.buildErrorMessage(
+             ~description={j|$message|j},
+             ~reason="",
+             ~solution={j||j},
+             ~params={j||j},
+           ),
+           editorState,
+         );
+         ConsoleUtils.logStack(stack) |> ignore;
+
+         AllHistoryService.handleUndo(store, Obj.magic(dispatchFunc))
+         |> Js.Promise.resolve;
+       });
+  };
 
   let buildFileComponent = (state, send, store, dispatchFunc) => {
     let className =

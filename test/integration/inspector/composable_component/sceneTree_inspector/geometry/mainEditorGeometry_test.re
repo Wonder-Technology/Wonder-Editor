@@ -39,7 +39,7 @@ let _ =
 
               let (engineState, gameObject, _, _, name) =
                 GeometryToolEngine.createGameObjectAndSetPointData(
-                  ~state=engineState,
+                  ~engineState,
                   ~hasTexCoords=false,
                   (),
                 );

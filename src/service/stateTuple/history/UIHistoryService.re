@@ -25,6 +25,6 @@ let storeUIState = (maxStackSize, currentState, historyState) => {
   ...historyState,
   uiUndoStack:
     Stack.addFirst(currentState, historyState.uiUndoStack)
-    |> OperateStateHistoryService.limitStackMaxSize(maxStackSize),
+    |> StackHistoryService.limitStackMaxSize(maxStackSize),
   uiRedoStack: Stack.empty(),
 };

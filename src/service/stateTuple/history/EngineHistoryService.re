@@ -36,7 +36,7 @@ let storeHasCopyState = (maxStackSize, currentState, historyState) => {
   ...historyState,
   engineUndoStack:
     Stack.addFirst(currentState, historyState.engineUndoStack)
-    |> OperateStateHistoryService.limitStackMaxSize(maxStackSize),
+    |> StackHistoryService.limitStackMaxSize(maxStackSize),
   engineRedoStack: Stack.empty(),
 };
 
@@ -47,6 +47,6 @@ let storeNoCopyState = (maxStackSize, currentState, historyState) => {
       currentState |> StateEngineService.deepCopyForRestore,
       historyState.engineUndoStack,
     )
-    |> OperateStateHistoryService.limitStackMaxSize(maxStackSize),
+    |> StackHistoryService.limitStackMaxSize(maxStackSize),
   engineRedoStack: Stack.empty(),
 };

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`redo_undo: import package test redo operate test redo one step undo step which from second to first, redo step which from first to second should add material asset 1`] = `
+exports[`redo_undo: import package not support redo_undo test redo operate test redo one step undo step which from second to first, redo step which from first to second should add material asset 1`] = `
 <article
   className="wonder-asset-component"
 >
@@ -111,7 +111,7 @@ exports[`redo_undo: import package test redo operate test redo one step undo ste
 </article>
 `;
 
-exports[`redo_undo: import package test undo operate test undo one step step which from second to first shouldn't add material asset 1`] = `
+exports[`redo_undo: import package not support redo_undo test undo operate test undo one step step which from second to first shouldn't add material asset 1`] = `
 <article
   className="wonder-asset-component"
 >
@@ -222,7 +222,7 @@ exports[`redo_undo: import package test undo operate test undo one step step whi
 </article>
 `;
 
-exports[`redo_undo: import package test undo operate test undo two step step which from second to zero shouldn't add box 1`] = `
+exports[`redo_undo: import package not support redo_undo test undo operate test undo two step step which from second to zero shouldn't add box 1`] = `
 <article
   className="wonder-sceneTree-component"
 >
@@ -287,7 +287,7 @@ exports[`redo_undo: import package test undo operate test undo two step step whi
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active"
+            className="draggable-container"
             draggable={true}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
