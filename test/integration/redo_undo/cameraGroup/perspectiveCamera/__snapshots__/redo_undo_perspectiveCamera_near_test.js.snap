@@ -67,7 +67,7 @@ exports[`redo_undo: perspectiveCamera near prepare first step: set currentSceneT
         onBlur={[Function]}
         onChange={[Function]}
         type="text"
-        value="1000"
+        value="50000"
       />
     </div>
   </article>
@@ -161,7 +161,7 @@ exports[`redo_undo: perspectiveCamera near prepare first step: set currentSceneT
         onBlur={[Function]}
         onChange={[Function]}
         type="text"
-        value="1000"
+        value="50000"
       />
     </div>
   </article>
@@ -255,7 +255,7 @@ exports[`redo_undo: perspectiveCamera near prepare first step: set currentSceneT
         onBlur={[Function]}
         onChange={[Function]}
         type="text"
-        value="1000"
+        value="50000"
       />
     </div>
   </article>
@@ -349,7 +349,7 @@ exports[`redo_undo: perspectiveCamera near prepare first step: set currentSceneT
         onBlur={[Function]}
         onChange={[Function]}
         type="text"
-        value="1000"
+        value="50000"
       />
     </div>
   </article>
@@ -443,7 +443,7 @@ exports[`redo_undo: perspectiveCamera near prepare first step: set currentSceneT
         onBlur={[Function]}
         onChange={[Function]}
         type="text"
-        value="1000"
+        value="50000"
       />
     </div>
   </article>

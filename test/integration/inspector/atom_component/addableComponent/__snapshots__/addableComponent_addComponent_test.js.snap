@@ -447,7 +447,7 @@ exports[`AddableComponent add component test camera add component test add arcba
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="0.01"
                   />
                 </div>
               </article>
@@ -467,7 +467,7 @@ exports[`AddableComponent add component test camera add component test add arcba
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1000"
+                    value="50000"
                   />
                 </div>
               </article>
@@ -1035,7 +1035,7 @@ exports[`AddableComponent add component test camera add component test add geome
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="0.01"
                   />
                 </div>
               </article>
@@ -1055,7 +1055,7 @@ exports[`AddableComponent add component test camera add component test add geome
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1000"
+                    value="50000"
                   />
                 </div>
               </article>
@@ -1613,7 +1613,7 @@ exports[`AddableComponent add component test camera add component test add rende
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="0.01"
                   />
                 </div>
               </article>
@@ -1633,7 +1633,7 @@ exports[`AddableComponent add component test camera add component test add rende
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1000"
+                    value="50000"
                   />
                 </div>
               </article>
@@ -2767,7 +2767,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="0.01"
                   />
                 </div>
               </article>
@@ -2787,7 +2787,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1000"
+                    value="50000"
                   />
                 </div>
               </article>

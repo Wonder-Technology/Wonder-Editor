@@ -447,7 +447,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="0.01"
                   />
                 </div>
               </article>
@@ -467,7 +467,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1000"
+                    value="50000"
                   />
                 </div>
               </article>
@@ -1038,7 +1038,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="0.01"
                   />
                 </div>
               </article>
@@ -1058,7 +1058,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1000"
+                    value="50000"
                   />
                 </div>
               </article>
@@ -1629,7 +1629,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="0.01"
                   />
                 </div>
               </article>
@@ -1649,7 +1649,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1000"
+                    value="50000"
                   />
                 </div>
               </article>
@@ -2217,7 +2217,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="0.01"
                   />
                 </div>
               </article>
@@ -2237,7 +2237,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1000"
+                    value="50000"
                   />
                 </div>
               </article>
@@ -2732,7 +2732,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="0.1"
+                    value="0.01"
                   />
                 </div>
               </article>
@@ -2752,7 +2752,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
-                    value="1000"
+                    value="50000"
                   />
                 </div>
               </article>

@@ -213,8 +213,8 @@ let _ =
               PerspectiveCameraProjectionToolEngine.buildPerspective(
                 60.,
                 100. /. 200.,
-                0.1,
-                1000.,
+                0.01,
+                50000.,
               );
 
             _getAllPMatrixs(engineState) |> expect == [|pMatrix, pMatrix|];
