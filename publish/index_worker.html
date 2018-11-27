@@ -32,7 +32,6 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            /* display: flex; */
             display: none;
             justify-content: center;
             align-items: center;
@@ -183,13 +182,7 @@
             }
 
 
-            // var loadedIMGUIByteLength = 0;
-
-            // var totalIMGUIByteLength = (35 + 41 + 95) * 1024;
-            // var totalIMGUIByteLength = 0;
-            // var totalWDBByteLength = 1.28 * 1024 * 1024;
             var totalWDBByteLength = $totalWDBByteLength;
-            // var totalByteLength = totalIMGUIByteLength + totalWDBByteLength;
             var totalByteLength = totalWDBByteLength;
 
             if (
@@ -202,27 +195,9 @@
             }
 
             return AssetTool.loadConfig(["./config/setting.json", "./config/"], null, function () {
-                // return AssetTool.loadIMGUIAsset(
-                //     "./res/loading/Lato-Regular-64.fnt",
-                //     "./res/loading/lato.png",
-                //     [
-                //     ],
-
-                //     function (contentLength, filePath) {
-                //         loadedIMGUIByteLength += contentLength;
-
-                //         AssetTool.showOrCreateLoadingInfo(
-                //             loadedIMGUIByteLength,
-                //             totalByteLength
-                //         );
-                //     },
-                //     function (state) {
-                //     }, wd.unsafeGetState());
-
                 return AssetTool.loadStreamWDB("./Scene.wdb",
                     function (totalLoadedByteLength, contentLength, wdbPath) {
                         AssetTool.showOrCreateLoadingInfo(
-                            // loadedIMGUIByteLength + totalLoadedByteLength,
                             totalLoadedByteLength,
                             totalByteLength
                         );
