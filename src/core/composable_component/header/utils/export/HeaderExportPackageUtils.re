@@ -43,7 +43,10 @@ let _export = () => {
   let editorState = editorState |> _buildImageNodeUint8Array;
 
   let (engineState, sceneGraphArrayBuffer) =
-    HeaderExportSceneWDBUtils.generateSceneWDB(editorState, engineState);
+    HeaderExportSceneWDBUtils.generateSceneWDB(
+      GenerateSceneGraphEngineService.generateWDBForWPK,
+      (editorState, engineState),
+    );
 
   let asbArrayBuffer =
     HeaderExportASBUtils.generateASB(editorState, engineState);

@@ -14,7 +14,10 @@ let exportScene = sceneName => {
       let engineState = StateEngineService.unsafeGetState();
 
       let (engineState, sceneGraphArrayBuffer) =
-        HeaderExportSceneWDBUtils.generateSceneWDB(editorState, engineState);
+        HeaderExportSceneWDBUtils.generateSceneWDB(
+          GenerateSceneGraphEngineService.generateWDB,
+          (editorState, engineState),
+        );
 
       engineState |> StateEngineService.setState |> ignore;
 

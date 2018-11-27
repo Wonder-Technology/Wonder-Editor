@@ -21,7 +21,7 @@ let readUint32DataFromUint8Array = uint8Array =>
 let generateWDBForWPK = (sceneGameObject, imageUint8ArrayMap, engineState) =>
   GenerateWDBSystem.generateWDB(
     sceneGameObject,
-    imageUint8ArrayMap,
+    Js.toOption(imageUint8ArrayMap) |> OptionService.unsafeGet,
     (
       (
         (. geometry, engineState) => {

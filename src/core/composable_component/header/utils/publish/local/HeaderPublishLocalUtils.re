@@ -253,8 +253,8 @@ module Publish = {
       {
         let (engineState, sceneGraphArrayBuffer) =
           HeaderExportSceneWDBUtils.generateSceneWDB(
-            editorState,
-            engineState,
+            GenerateSceneGraphEngineService.generateWDB,
+            (editorState, engineState),
           );
 
         engineState |> StateEngineService.setState;

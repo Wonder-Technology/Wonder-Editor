@@ -114,6 +114,7 @@ let generateWDB = buildWDBGameObjectFunc => {
   let (engineState, wdbArrayBuffer) =
     HeaderExportSceneWDBUtils.generateWDB(
       rootGameObject,
+      GenerateSceneGraphEngineService.generateWDB,
       (editorState, engineState),
     );
 
