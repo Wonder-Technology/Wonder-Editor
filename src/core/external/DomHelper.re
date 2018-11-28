@@ -1,41 +1,61 @@
+open DomHelperType;
 
-[@bs.val] external requestAnimationFrame : (float => unit) => int = "";
+[@bs.val] external document : document = "";
 
-[@bs.val] external cancelAnimationFrame : int => unit = "";
+[@bs.val] [@bs.scope "document"]
+external createElement : string => document = "createElement";
 
-[@bs.send] external toFixed : (float, int) => string = "";
+[@bs.val] [@bs.scope "document"]
+external getElementById : string => Dom.element = "getElementById";
 
-[@bs.val] external makeStringToInt : string => int = "Number";
+[@bs.val] [@bs.scope "document"]
+external getElementsByClassName : string => array(Dom.element) =
+  "getElementsByClassName";
 
-[@bs.val] external makeStringToFloat : string => float = "Number";
+[@bs.val] external alert : string => unit = "alert";
 
-[@bs.val] external makeNumberToString : string => string = "Number";
+let getBody = [%raw () => "
+  return document.body
+"];
 
-[@bs.val] external makeString : string => string = "String";
-
-[@bs.send] external internal_getAttribute : (Js.t('a), string) => Js.null(string) = "getAttribute";
-
-let setTimeout = [%bs.raw {|
-    function (func, time) {
-      setTimeout(func, time)
-    }
-  |}];
-
-let apply = [%bs.raw
-  {| function(dataArray, func) {
-    return func.apply(null, dataArray);
-  }
+let addEventListener = [%raw
+  (element, event, handleFunc) => {|
+   element.addEventListener(event, handleFunc, false)
   |}
 ];
 
-let stopPropagation = (e) : unit => e##stopPropagation() |> ignore;
+let getAttribute = [%raw (dom, prop) => "
+  return dom.getAttribute(prop);
+"];
 
-let preventDefault = (e) : unit => e##preventDefault();
+let onresize = [%raw handleFunc => "
+  window.onresize = handleFunc;
+"];
 
-let getRandomKey = () : string => string_of_float(Js.Date.now() *. Js.Math.random());
+let apply = [%bs.raw
+  {|
+    function(dataArray, func) {
+      return func.apply(null, dataArray);
+    }
+  |}
+];
 
-let getAttribute = (node, name) => Js.Null.to_opt(internal_getAttribute(node, name));
+let deleteKeyInMap = [%raw
+  {|
+    function (key,map) {
+      delete map[key];
+      return map;
+    }
+  |}
+];
 
-let intEl = (n) => ReasonReact.stringToElement(string_of_int(n));
+let stopPropagation = e : unit => e##stopPropagation();
 
-let textEl = (str) => ReasonReact.stringToElement(str);
+let preventDefault = e : unit => e##preventDefault();
+
+let getRandomKey = () : string =>
+  StringService.floatToString(Js.Date.now() *. Js.Math.random());
+
+let intEl = n => ReasonReact.string(string_of_int(n));
+
+let textEl = str => ReasonReact.string(str);

@@ -1,9 +1,14 @@
 open Wonderjs;
 
 let initWithoutBuildFakeDom =
-    (~sandbox, ~isDebug="true", ~buffer=SettingToolEngine.buildBufferConfigStr(), ()) => {
+    (
+      ~sandbox,
+      ~isDebug="true",
+      ~buffer=SettingToolEngine.buildBufferConfigStr(),
+      (),
+    ) => {
   Random.init(1);
-  SettingToolEngine.createStateAndSetToStateData(~isDebug, ())
+  SettingToolEngine.createStateAndSetToStateData(~isDebug, ());
 };
 
 let initWithJobConfigWithoutBuildFakeDom =
@@ -25,23 +30,30 @@ let initWithJobConfigWithoutBuildFakeDom =
       ~buffer=SettingToolEngine.buildBufferConfigStr(),
       ~noWorkerJobRecord=NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
       ~renderConfigRecord=RenderConfigToolEngine.buildRenderConfig(),
-      ()
+      ~isInitJob=true,
+      (),
     ) => {
-  [@bs] SharedArrayBufferToolEngine.setSharedArrayBufferToBeArrayBuffer();
+  SharedArrayBufferToolEngine.setSharedArrayBufferToBeArrayBuffer(.);
   SettingToolEngine.createStateAndSetToStateData(
     ~isDebug,
     ~canvasId,
     ~context,
     ~useHardwareInstance,
     ~buffer,
-    ()
+    (),
   )
   |> NoWorkerJobConfigToolEngine.create(noWorkerJobRecord)
-  |> NoWorkerJobToolEngine.init((
-       NoWorkerJobHandleSystem.createInitJobHandleMap,
-       NoWorkerJobHandleSystem.createLoopJobHandleMap
-     ))
-  |> RenderConfigToolEngine.create(renderConfigRecord)
+  |> (
+    state =>
+      isInitJob ?
+        state
+        |> NoWorkerJobToolEngine.init((
+             NoWorkerJobHandleSystem.createInitJobHandleMap,
+             NoWorkerJobHandleSystem.createLoopJobHandleMap,
+           ))
+        |> RenderConfigToolEngine.create(renderConfigRecord) :
+        state |> RenderConfigToolEngine.create(renderConfigRecord)
+  );
 };
 
 let createAndSetEngineState =
@@ -49,32 +61,42 @@ let createAndSetEngineState =
       ~sandbox,
       ~noWorkerJobRecord=NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(),
       ~buffer=SettingToolEngine.buildBufferConfigStr(),
-      ()
+      ~isBuildFakeDom=true,
+      ~isInitJob=true,
+      (),
     ) => {
-  SettingToolEngine.buildFakeDomForNotPassCanvasId(sandbox) |> ignore;
-  initWithJobConfigWithoutBuildFakeDom(~sandbox, ~noWorkerJobRecord, ~buffer, ())
-  |> StateLogicService.setEditEngineState;
-  initWithJobConfigWithoutBuildFakeDom(~sandbox, ~noWorkerJobRecord, ~buffer, ())
-  |> StateLogicService.setRunEngineState
+  isBuildFakeDom ?
+    SettingToolEngine.buildFakeDomForNotPassCanvasId(sandbox) |> ignore : ();
+
+  initWithJobConfigWithoutBuildFakeDom(
+    ~sandbox,
+    ~noWorkerJobRecord,
+    ~buffer,
+    ~isInitJob,
+    (),
+  )
+  |> StateEngineService.setState
+  |> ignore;
+  /* initWithJobConfigWithoutBuildFakeDom(
+       ~sandbox,
+       ~noWorkerJobRecord,
+       ~buffer,
+       (),
+     )
+     |> StateLogicService.setRunEngineState; */
 };
 
-let initEngineState = () => {
-  StateLogicService.getEditEngineState()
+let initEngineState = () =>
+  StateEngineService.unsafeGetState()
   |> DirectorEngineService.init
-  |> StateLogicService.setEditEngineState;
-  StateLogicService.getRunEngineState()
-  |> DirectorEngineService.init
-  |> StateLogicService.setRunEngineState
-};
+  |> StateEngineService.setState
+  |> ignore;
+/* StateEngineService.unsafeGetState();
+   |> DirectorEngineService.init
+   |> StateLogicService.setRunEngineState; */
 
-let setFakeGl = (sandbox) => {
-  StateLogicService.getEditEngineState()
-  |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
-  |> StateLogicService.setEditEngineState;
-  StateLogicService.getRunEngineState()
-  |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
-  |> StateLogicService.setRunEngineState
-};
+let setFakeGl = (gl, engineState) =>
+  engineState |> FakeGlToolEngine.setFakeGl(gl);
 
 let openContractCheck = () =>
   IsDebugMainService.setIsDebug(StateDataMain.stateData, true) |> ignore;

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test show Scene inspector should show nothing 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  />
+</article>
+`;

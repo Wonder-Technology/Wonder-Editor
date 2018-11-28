@@ -1,0 +1,1 @@
+let buildImage = (~name="", ()) => {"name": name};

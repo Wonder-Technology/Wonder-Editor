@@ -1,34 +1,24 @@
 let gameObject_all_component = {|
    [
        {
-            "type":"camera",
-            "include_component":[
-                "basicCameraView",
-                "perspectiveCameraProjection"
-            ],
-            "exclude_component":[
-                "boxGeometry"
-            ],
-            "all_component":[
-                { "type" : "transform" },
-                { "type" : "basicCameraView" },
-                { "type" : "perspectiveCameraProjection" }
+            "type":"Mesh",
+            "components":[
+                { "type" : "Geometry" }
             ]
        },
        {
-            "type":"primitive",
-            "include_component":[
-                "boxGeometry"
-            ],
-            "exclude_component":[
-                "basicCameraView",
-                "perspectiveCameraProjection"
-            ],
-            "all_component":[
-                { "type" : "transform" },
-                { "type" : "basicMaterial" },
-                { "type" : "sourceInstance" }
+            "type":"Camera",
+            "components":[
+                { "type" : "CameraGroup" },
+                { "type" : "ArcballCameraController" }
             ]
-       }
-   ]
+       },
+       {
+            "type":"Rendering",
+            "components":[
+                { "type" : "RenderGroup" },
+                { "type" : "Light" }
+                ]
+            }
+    ]
 |};

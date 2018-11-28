@@ -1,17 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Swicth test workflow click button to open show closeText 1`] = `
-<article
-  className="wonder-switch"
->
-  <button
-    onClick={[Function]}
-  >
-    stop
-  </button>
-</article>
-`;
-
 exports[`Swicth test workflow test initial:is close show openText 1`] = `
 <article
   className="wonder-switch"
@@ -20,6 +8,18 @@ exports[`Swicth test workflow test initial:is close show openText 1`] = `
     onClick={[Function]}
   >
     run
+  </button>
+</article>
+`;
+
+exports[`Swicth test workflow test initial:is open show openText 1`] = `
+<article
+  className="wonder-switch"
+>
+  <button
+    onClick={[Function]}
+  >
+    stop
   </button>
 </article>
 `;

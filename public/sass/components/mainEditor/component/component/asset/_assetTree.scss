@@ -1,0 +1,10 @@
+.wonder-asset-assetTree {
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    white-space: nowrap;
+    @import "../../../../../utils/scrollBarUtils";
+    @import "../../../../ui/treeNode";
+}

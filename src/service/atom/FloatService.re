@@ -1,4 +1,5 @@
 let truncateFloatValue = (value: float, count: int) => {
-  let res = DomHelper.toFixed(value, count);
-  DomHelper.makeString(DomHelper.makeNumberToString(res))
+  let res = JsTypeHelper.toFixed(value, count);
+
+  JsTypeHelper.convertStringToFloat(res);
 };

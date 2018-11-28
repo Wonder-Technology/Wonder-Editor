@@ -7,117 +7,125 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe(
-    "StringInput",
-    () => {
-      let sandbox = getSandboxDefaultVal();
-      let _triggerChangeInputEvent = (value, domChildren) => {
-        let input = WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
-        BaseEventTool.triggerChangeEvent(input, BaseEventTool.buildFormEvent(value))
-      };
-      let _triggerBlurEvent = (value, domChildren) => {
-        let input = WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
-        BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value))
-      };
-      beforeEach(() => sandbox := createSandbox());
-      afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-      describe(
-        "test component arguments",
-        () => {
-          test(
-            "test StringInput component hasn't argument",
-            () => ReactTestRenderer.create(<StringInput />) |> ReactTestTool.createSnapshotAndMatch
-          );
-          test(
-            "test StringInput component has defaultValue",
-            () =>
-              ReactTestRenderer.create(<StringInput defaultValue="#ffffff" />)
-              |> ReactTestTool.createSnapshotAndMatch
-          );
-          test(
-            "test StringInput component has label",
-            () =>
-              ReactTestRenderer.create(<StringInput label="color" />)
-              |> ReactTestTool.createSnapshotAndMatch
-          );
-          test(
-            "test StringInput component has defaultValue and label",
-            () =>
-              ReactTestRenderer.create(<StringInput defaultValue="#c0c0c0" label="color" />)
-              |> ReactTestTool.createSnapshotAndMatch
+  describe("StringInput", () => {
+    let sandbox = getSandboxDefaultVal();
+
+    let _prepare = () => {
+      open StringInput;
+
+      let state = {inputValue: "", originalName: "origin"};
+
+      let onChangeFunc = createEmptyStubWithJsObjSandbox(sandbox);
+      let onBlurFunc = createEmptyStubWithJsObjSandbox(sandbox);
+
+      (state, onChangeFunc, onBlurFunc);
+    };
+
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
+    describe("test input value", () =>
+      test("component can set any string", () => {
+        open StringInput;
+        let (state, onChangeFunc, onBlurFunc) = _prepare();
+
+        let state =
+          StringInput.reducer(
+            (onChangeFunc, onBlurFunc),
+            Some(false),
+            Change("aaa"),
+            state,
           )
-        }
+          |> ReactTool.getUpdateState;
+
+        let state =
+          StringInput.reducer(
+            (onChangeFunc, onBlurFunc),
+            Some(false),
+            Blur,
+            state,
+          )
+          |> ReactTool.getUpdateState;
+
+        (
+          onChangeFunc |> getCallCount,
+          onBlurFunc |> getCallCount,
+          onChangeFunc |> SinonTool.calledWith(_, "aaa"),
+          onBlurFunc |> SinonTool.calledWith(_, "aaa"),
+          state.inputValue,
+        )
+        |> expect == (1, 1, true, true, "aaa");
+      })
+    );
+
+    describe("deal with specific case", () => {
+      test(
+        "if canBeNull == true, key in '', trigger onBlur, the input value should be ''",
+        () => {
+          open StringInput;
+          let (state, onChangeFunc, onBlurFunc) = _prepare();
+
+          let state =
+            StringInput.reducer(
+              (onChangeFunc, onBlurFunc),
+              Some(true),
+              Change(""),
+              state,
+            )
+            |> ReactTool.getUpdateState;
+
+          let result =
+            StringInput.reducer(
+              (onChangeFunc, onBlurFunc),
+              Some(true),
+              Blur,
+              state,
+            );
+
+          (
+            onChangeFunc |> getCallCount,
+            onBlurFunc |> getCallCount,
+            onChangeFunc |> SinonTool.calledWith(_, ""),
+            onBlurFunc |> SinonTool.calledWith(_, ""),
+            state.inputValue,
+            ReactTool.isNoUpdate(result),
+          )
+          |> expect == (1, 1, true, true, "", true);
+        },
       );
-      describe(
-        "test component set value and trigger event",
+      test(
+        "if canBeNull == false, key in '', trigger onBlur, the input value should be original name and not trigger onBlur func",
         () => {
-          test(
-            "stringInput component can set any symbol",
-            () => {
-              let component =
-                ReactTestRenderer.create(<StringInput defaultValue="2" label="xyz" />);
-              BaseEventTool.triggerComponentEvent(
-                component,
-                _triggerChangeInputEvent("hello world")
-              );
-              BaseEventTool.triggerComponentEvent(
-                component,
-                _triggerChangeInputEvent("351687.5445456654")
-              );
-              component |> ReactTestTool.createSnapshotAndMatch
-            }
-          );
-          test(
-            "trigger onChange method when pass in",
-            () => {
-              let onChange = createEmptyStubWithJsObjSandbox(sandbox);
-              let component =
-                ReactTestRenderer.create(<StringInput defaultValue="22" label="xyz" onChange />);
-              BaseEventTool.triggerComponentEvent(component, _triggerChangeInputEvent("-2313"));
-              onChange |> expect |> toCalled
-            }
-          );
-          test(
-            "trigger onBlur method when pass in",
-            () => {
-              let onBlur = createEmptyStubWithJsObjSandbox(sandbox);
-              let component =
-                ReactTestRenderer.create(<StringInput defaultValue="22" label="xyz" onBlur />);
-              BaseEventTool.triggerComponentEvent(component, _triggerChangeInputEvent("-23"));
-              BaseEventTool.triggerComponentEvent(component, _triggerBlurEvent("-23"));
-              onBlur |> expect |> toCalled
-            }
+          open StringInput;
+          let (state, onChangeFunc, onBlurFunc) = _prepare();
+          let originName = state.originalName;
+
+          let state =
+            StringInput.reducer(
+              (onChangeFunc, onBlurFunc),
+              Some(false),
+              Change(""),
+              state,
+            )
+            |> ReactTool.getUpdateState;
+
+          let state =
+            StringInput.reducer(
+              (onChangeFunc, onBlurFunc),
+              Some(false),
+              Blur,
+              state,
+            )
+            |> ReactTool.getUpdateState;
+
+          (
+            onChangeFunc |> getCallCount,
+            onBlurFunc |> getCallCount,
+            onChangeFunc |> SinonTool.calledWith(_, ""),
+            state.inputValue,
           )
-        }
+          |> expect == (1, 0, true, originName);
+        },
       );
-      describe(
-        "deal with the specific case",
-        () => {
-          let sandbox = getSandboxDefaultVal();
-          beforeEach(() => sandbox := createSandbox());
-          afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-          test(
-            "if onBlur method not pass in, shouldn't handle onBlur method",
-            () => {
-              let onBlur = createEmptyStubWithJsObjSandbox(sandbox);
-              let component =
-                ReactTestRenderer.create(<StringInput defaultValue="22" label="xyz" />);
-              BaseEventTool.triggerComponentEvent(component, _triggerChangeInputEvent("-23"));
-              BaseEventTool.triggerComponentEvent(component, _triggerBlurEvent("-23"));
-              onBlur |> expect |> not_ |> toCalled
-            }
-          );
-          test(
-            "if onChange method not pass in, shouldn't handle onChange method",
-            () => {
-              let onChange = createEmptyStubWithJsObjSandbox(sandbox);
-              let component =
-                ReactTestRenderer.create(<StringInput defaultValue="22" label="xyz" />);
-              BaseEventTool.triggerComponentEvent(component, _triggerChangeInputEvent("-2313"));
-              onChange |> expect |> not_ |> toCalled
-            }
-          )
-        }
-      )
-    }
-  );
+    });
+  });

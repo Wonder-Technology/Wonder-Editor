@@ -7,66 +7,115 @@ open StateDataMainType;
 let createGetContextStub = (fakeGl, sandbox) =>
   createEmptyStub(refJsObjToSandbox(sandbox^)) |> returns(fakeGl);
 
-let buildFakeGl = (sandbox) => {
+let buildFakeGl = sandbox => {
   "VERTEX_SHADER": 0,
   "FRAGMENT_SHADER": 1,
   "HIGH_FLOAT": 2,
   "MEDIUM_FLOAT": 3,
   "viewport": createEmptyStub(refJsObjToSandbox(sandbox^)),
   "getShaderPrecisionFormat":
-    createEmptyStub(refJsObjToSandbox(sandbox^)) |> returns({"precision": 1}),
-  "getExtension": createEmptyStub(refJsObjToSandbox(sandbox^)) |> returns(Obj.magic(0))
+    createEmptyStub(refJsObjToSandbox(sandbox^))
+    |> returns({"precision": 1}),
+  "getExtension":
+    createEmptyStub(refJsObjToSandbox(sandbox^)) |> returns(Obj.magic(0)),
 };
 
 let buildFakeCanvas = (id, gl, sandbox) => {
   "id": id,
   "nodeType": 1,
-  "style": {"left": "", "top": "", "width": "", "height": "", "position": "static"},
+  "style": {
+    "left": "",
+    "top": "",
+    "width": "",
+    "height": "",
+    "position": "static",
+  },
   "width": 0.,
   "height": 0.,
-  "getContext": createGetContextStub(gl, sandbox)
+  "getContext": createGetContextStub(gl, sandbox),
 };
 
-let buildFakeDomForNotPassCanvasId = (sandbox) => {
+let buildFakeCanvasOfSize = (width, height) => {
+  "width": width,
+  "height": height,
+};
+
+let setFakeCanvasToEngineState = (~width=1., ~height=1., ()) => {
+  let canvas = buildFakeCanvasOfSize(width, height);
+
+  StateLogicService.getAndSetEngineState(ViewToolEngine.setCanvas(canvas));
+};
+
+let buildFakeDomForNotPassCanvasId = sandbox => {
   let fakeGl = buildFakeGl(sandbox);
   let canvasDom = buildFakeCanvas("a", fakeGl, sandbox);
   let div = {"innerHTML": "", "firstChild": canvasDom};
-  let body = {"prepend": createEmptyStub(refJsObjToSandbox(sandbox^)), "style": {"cssText": ""}};
-  createMethodStub(refJsObjToSandbox(sandbox^), Dom.document |> Obj.magic, "createElement")
+  let body = {
+    "prepend": createEmptyStub(refJsObjToSandbox(sandbox^)),
+    "style": {
+      "cssText": "",
+    },
+  };
+  createMethodStub(
+    refJsObjToSandbox(sandbox^),
+    DomHelper.document |> Obj.magic,
+    "createElement",
+  )
   |> withOneArg("div")
   |> returns(div)
   |> ignore;
-  createMethodStub(refJsObjToSandbox(sandbox^), Dom.document |> Obj.magic, "querySelectorAll")
+  createMethodStub(
+    refJsObjToSandbox(sandbox^),
+    DomHelper.document |> Obj.magic,
+    "querySelectorAll",
+  )
   |> withOneArg("body")
   |> returns([body])
   |> ignore;
-  (canvasDom, fakeGl, div, body)
+  (canvasDom, fakeGl, div, body);
 };
 
 let buildBufferConfigStr =
     (
-      ~customGeometryPointDataBufferCount=300,
-      ~transformDataBufferCount=50,
-      ~basicMaterialDataBufferCount=50,
-      ~lightMaterialDataBufferCount=50,
+      ~geometryPointCount=30000,
+      ~geometryCount=30,
+      ~transformCount=50,
+      ~basicMaterialCount=50,
+      ~lightMaterialCount=50,
+      ~directionLightCount=50,
+      ~pointLightCount=50,
+      ~meshRendererCount=50,
+      ~textureCountPerMaterial=3,
+      ~basicSourceTextureCount=50,
+      ~arrayBufferViewSourceTextureCount=50,
       ~sourceInstanceCount=2,
       ~objectInstanceCountPerSourceInstance=100,
-      ()
+      (),
     ) => {j|
-       {
-            "custom_geometry_point_data_buffer_count": $customGeometryPointDataBufferCount,
-  "transform_data_buffer_count": $transformDataBufferCount,
-  "basic_material_data_buffer_count": $basicMaterialDataBufferCount,
-  "light_material_data_buffer_count": $lightMaterialDataBufferCount,
-  "instanceBuffer": {
-    "sourceInstanceCount": $sourceInstanceCount,
-"objectInstanceCountPerSourceInstance": $objectInstanceCountPerSourceInstance
-  }
-       }
+      {
+        "geometry_point_count": $geometryPointCount,
+        "geometry_count": $geometryCount,
+"transform_count": $transformCount,
+"basic_material_count": $basicMaterialCount,
+"light_material_count": $lightMaterialCount,
+"direction_light_count": $directionLightCount,
+"point_light_count": $pointLightCount,
+"meshRenderer_count": $meshRendererCount,
+"basic_source_texture_count": $basicSourceTextureCount,
+"arrayBuffer_view_source_texture_count": $arrayBufferViewSourceTextureCount,
+
+"texture_count_per_material": $textureCountPerMaterial,
+
+"instance_buffer": {
+"sourceInstance_count": $sourceInstanceCount,
+"objectInstance_count_per_source_instance": $objectInstanceCountPerSourceInstance
+}
+   }
         |j};
 
-let buildSetting = (isDebug, canvasId, buffer, context, useHardwareInstance, useWorker) =>
-  switch canvasId {
+let buildSetting =
+    (isDebug, canvasId, buffer, context, useHardwareInstance, useWorker) =>
+  switch (canvasId) {
   | None => {j|
  {
     "is_debug": $isDebug,
@@ -113,43 +162,61 @@ let createStateAndSetToStateData =
       ~useHardwareInstance="false",
       ~buffer=buildBufferConfigStr(),
       ~useWorker="false",
-      ()
+      (),
     ) => {
   let stateData = StateToolEngine.getStateData();
   ParseSettingService.convertToRecord(
-    buildSetting(isDebug, canvasId, buffer, context, useHardwareInstance, useWorker)
-    |> Js.Json.parseExn
+    buildSetting(
+      isDebug,
+      canvasId,
+      buffer,
+      context,
+      useHardwareInstance,
+      useWorker,
+    )
+    |> Js.Json.parseExn,
   )
-  |> ConfigDataLoaderSystem._setSetting(stateData, CreateStateMainService.createState())
+  |> ConfigDataLoaderSystem._setSetting(
+       stateData,
+       CreateStateMainService.createState(),
+     )
   |> ConfigDataLoaderSystem._createRecordWithState
-  |> StateToolEngine.setState
+  |> StateToolEngine.setState;
 };
 
-let setMemory = (state: StateDataMainType.state, ~maxDisposeCount=1000, ()) => {
+let setMemory = (~state: StateDataMainType.state, ~maxDisposeCount=1000, ()) => {
   ...state,
   settingRecord: {
     ...state.settingRecord,
-    memory: Some({...OperateSettingService.unsafeGetMemory(state.settingRecord), maxDisposeCount})
-  }
+    memory:
+      Some({
+        ...OperateSettingService.unsafeGetMemory(state.settingRecord),
+        maxDisposeCount,
+      }),
+  },
 };
 
-let setBufferSize = (state: StateDataMainType.state, ~customGeometryPointDataBufferCount=100, ()) => {
+let setBufferSize =
+    (~state: StateDataMainType.state, ~geometryPointCount=100, ()) => {
   ...state,
   settingRecord: {
     ...state.settingRecord,
     buffer:
       Some({
         ...BufferSettingService.unsafeGetBuffer(state.settingRecord),
-        customGeometryPointDataBufferCount
-      })
-  }
+        geometryPointCount,
+      }),
+  },
 };
+/* |> Wonderjs.RecordGeometryMainService.create; */
 
-let unsafeGetGPU = (state) => state.settingRecord |> OperateSettingService.unsafeGetGPU;
+let unsafeGetGPU = state =>
+  state.settingRecord |> OperateSettingService.unsafeGetGPU;
 
 let setGPU = (config, state) => {
   ...state,
-  settingRecord: {...state.settingRecord, gpu: Some(config)}
+  settingRecord: {
+    ...state.settingRecord,
+    gpu: Some(config),
+  },
 };
-
-let buildBufferConfig = (count) => {"geometryPointDataBufferCount": Js.Nullable.return(count)};

@@ -1,0 +1,6 @@
+@import "../../../../../../utils/inspectorItemMixin";
+
+.wonder-inspector-light{
+    @include inspectorItem("wonder-direction-light");
+    @include inspectorItem("wonder-point-light");
+}

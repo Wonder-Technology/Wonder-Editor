@@ -1,13 +1,12 @@
-let loopSetState = (time, engineState) => engineState |> DirectorEngineService.loopBody(time);
-
 let _loopSetLoopId = (id) =>
   LoopEditorService.setLoopId(id) |> StateLogicService.getAndSetEditorState;
 
 let loop = () => {
   let rec _loopRequest = (time) =>
-    DomHelper.requestAnimationFrame(
+    AnimationFrame.requestAnimationFrame(
       (time) => {
-        loopSetState(time) |> StateLogicService.getAndSetEditAndRunEngineState;
+        StateLogicService.getAndRefreshEngineState();
+
         _loopRequest(time)
       }
     )
@@ -15,4 +14,4 @@ let loop = () => {
   _loopRequest(0.) |> ignore
 };
 
-let stopLoop = (loopId) => DomHelper.cancelAnimationFrame(loopId);
+let stopLoop = (loopId) => AnimationFrame.cancelAnimationFrame(loopId);

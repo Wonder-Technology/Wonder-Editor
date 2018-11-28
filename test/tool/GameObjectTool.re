@@ -1,43 +1,127 @@
-let getChildren = (gameObject) =>
-  StateLogicService.getRunEngineState() |> GameObjectUtils.getChildren(gameObject);
+let getChildren = (gameObject, engineState) =>
+  GameObjectUtils.getChildren(gameObject, engineState);
 
-let getEditEngineChildren = (gameObject) =>
-  StateLogicService.getEditEngineState() |> GameObjectUtils.getChildren(gameObject);
+let getChild = (gameObject, index, engineState) =>
+  Array.unsafe_get(getChildren(gameObject, engineState), index);
 
-let unsafeGetCurrentGameObject = () =>
-  SceneEditorService.unsafeGetCurrentGameObject |> StateLogicService.getEditorState;
+let unsafeGetCurrentSceneTreeNode = () =>
+  SceneEditorService.unsafeGetCurrentSceneTreeNode
+  |> StateLogicService.getEditorState;
 
-let clearCurrentGameObject = () =>
-  SceneEditorService.clearCurrentGameObject |> StateLogicService.getAndSetEditorState;
+let clearCurrentSceneTreeNode = () =>
+  SceneEditorService.clearCurrentSceneTreeNode
+  |> StateLogicService.getAndSetEditorState;
 
-let addFakeVboBufferForGameObject = (gameObject) => {
-  StateLogicService.getEditEngineState()
+let addFakeVboBufferForGameObject = gameObject =>
+  StateEngineService.unsafeGetState()
   |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
-       GameObjectComponentEngineService.getGeometryComponent(gameObject)
-       |> StateLogicService.getEngineStateToGetData
+       GameObjectComponentEngineService.unsafeGetGeometryComponent(gameObject)
+       |> StateLogicService.getEngineStateToGetData,
      )
-  |> StateLogicService.setEditEngineState;
-  StateLogicService.getRunEngineState()
-  |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
-       GameObjectComponentEngineService.getGeometryComponent(gameObject)
-       |> StateLogicService.getEngineStateToGetData
-     )
-  |> StateLogicService.setRunEngineState
-  |> ignore
+  |> StateEngineService.setState
+  |> ignore;
+
+let getCurrentSceneTreeNodeTransform = () =>
+  GameObjectComponentEngineService.unsafeGetTransformComponent(
+    unsafeGetCurrentSceneTreeNode(),
+  )
+  |> StateLogicService.getEngineStateToGetData;
+
+let getCurrentGameObjectMaterial = () => {
+  let gameObject = unsafeGetCurrentSceneTreeNode();
+  let engineState = StateEngineService.unsafeGetState();
+
+  GameObjectComponentEngineService.hasBasicMaterialComponent(
+    gameObject,
+    engineState,
+  ) ?
+    GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+      gameObject,
+      engineState,
+    ) :
+    GameObjectComponentEngineService.hasLightMaterialComponent(
+      gameObject,
+      engineState,
+    ) ?
+      GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+        gameObject,
+        engineState,
+      ) :
+      WonderLog.Log.fatal(
+        LogUtils.buildFatalMessage(
+          
+          ~description={j|gameObject should has material, but actual not|j},
+          ~reason="",
+          ~solution={j||j},
+          ~params={j||j},
+        ),
+      );
 };
 
-let getCurrentGameObjectTransform = () =>
-  GameObjectComponentEngineService.getTransformComponent(unsafeGetCurrentGameObject())
+let getCurrentGameObjectBasicMaterial = () =>
+  GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+    unsafeGetCurrentSceneTreeNode(),
+  )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectMaterial = () =>
-  GameObjectComponentEngineService.getBasicMaterialComponent(unsafeGetCurrentGameObject())
+let getCurrentGameObjectLightMaterial = () =>
+  GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+    unsafeGetCurrentSceneTreeNode(),
+  )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObject = () =>
-  SceneEditorService.getCurrentGameObject |> StateLogicService.getEditorState;
+let getCurrentGameObjectDirectionLightComponent = () =>
+  GameObjectComponentEngineService.unsafeGetDirectionLightComponent(
+    unsafeGetCurrentSceneTreeNode(),
+  )
+  |> StateLogicService.getEngineStateToGetData;
 
-let setCurrentGameObject = (gameObject) =>
-  SceneEditorService.setCurrentGameObject(gameObject) |> StateLogicService.getAndSetEditorState;
-/* let hasCurrentGameObject = () =>
-   SceneEditorService.hasCurrentGameObject |> StateLogicService.getEditorState; */
+let getCurrentGameObjectPointLightComponent = () =>
+  GameObjectComponentEngineService.unsafeGetPointLightComponent(
+    unsafeGetCurrentSceneTreeNode(),
+  )
+  |> StateLogicService.getEngineStateToGetData;
+
+let getCurrentGameObjectBasicCameraView = () =>
+  GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
+    unsafeGetCurrentSceneTreeNode(),
+  )
+  |> StateLogicService.getEngineStateToGetData;
+
+let getCurrentGameObjectPerspectiveCamera = () =>
+  GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
+    unsafeGetCurrentSceneTreeNode(),
+  )
+  |> StateLogicService.getEngineStateToGetData;
+
+let getCurrentGameObjectGeometry = () =>
+  GameObjectComponentEngineService.unsafeGetGeometryComponent(
+    unsafeGetCurrentSceneTreeNode(),
+  )
+  |> StateLogicService.getEngineStateToGetData;
+
+let getCurrentGameObjectArcballCamera = () =>
+  GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+    unsafeGetCurrentSceneTreeNode(),
+  )
+  |> StateLogicService.getEngineStateToGetData;
+
+let getCurrentGameObjectMeshRenderer = () =>
+  GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
+    unsafeGetCurrentSceneTreeNode(),
+  )
+  |> StateLogicService.getEngineStateToGetData;
+
+let getCurrentSceneTreeNode = () =>
+  SceneEditorService.getCurrentSceneTreeNode
+  |> StateLogicService.getEditorState;
+
+let setCurrentSceneTreeNode = gameObject =>
+  SceneEditorService.setCurrentSceneTreeNode(gameObject)
+  |> StateLogicService.getAndSetEditorState;
+
+let isAlive = Wonderjs.AliveGameObjectMainService.isAlive;
+
+let getNewGameObjectUid =
+    (~engineState=StateEngineService.unsafeGetState(), ()) =>
+  engineState.gameObjectRecord.uid;

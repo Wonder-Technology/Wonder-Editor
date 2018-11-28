@@ -1,105 +1,160 @@
-let _isAdded = (component) => component !== (-1);
+open InspectorComponentType;
 
-let _getNotAddedComponent = () => (-1);
-
-let _getComponent = (gameObject, hasComponent, getComponent, engineState) =>
-  engineState |> hasComponent(gameObject) ?
-    engineState |> getComponent(gameObject) : _getNotAddedComponent();
-
-let _operateSpecificComponent = (gameObject, componentName, engineState) =>
-  switch componentName {
-  | "basicCameraView" =>
-    engineState
-    |> _getComponent(
-         gameObject,
-         GameObjectComponentEngineService.hasBasicCameraViewComponent,
-         GameObjectComponentEngineService.getBasicCameraViewComponent
-       )
-  | "perspectiveCameraProjection" =>
-    engineState
-    |> _getComponent(
-         gameObject,
-         GameObjectComponentEngineService.hasPerspectiveCameraProjectionComponent,
-         GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent
-       )
-  | "transform" =>
-    engineState
-    |> _getComponent(
-         gameObject,
-         GameObjectComponentEngineService.hasTransformComponent,
-         GameObjectComponentEngineService.getTransformComponent
-       )
-  | "basicMaterial" =>
-    engineState
-    |> _getComponent(
-         gameObject,
-         GameObjectComponentEngineService.hasBasicMaterialComponent,
-         GameObjectComponentEngineService.getBasicMaterialComponent
-       )
-  | "boxGeometry" =>
-    engineState
-    |> _getComponent(
-         gameObject,
-         GameObjectComponentEngineService.hasBoxGeometryComponent,
-         GameObjectComponentEngineService.getGeometryComponent
-       )
-  | "sourceInstance" =>
-    engineState
-    |> _getComponent(
-         gameObject,
-         GameObjectComponentEngineService.hasSourceInstanceComponent,
-         GameObjectComponentEngineService.getSourceInstanceComponent
-       )
-  | _ =>
-    WonderLog.Log.fatal(
-      WonderLog.Log.buildErrorMessage(
-        ~title="_getGameObjectSpecificComponent",
-        ~description={j|specific component:$componentName is error|j},
-        ~reason="",
-        ~solution={j||j},
-        ~params={j|gameObject:$gameObject, component:$componentName|j}
-      )
+let buildComponentBox =
+    (
+      (store, dispatchFunc),
+      (name, type_, gameObject),
+      (isDisposable, isShowComponent),
+      buildComponentFunc,
+    ) =>
+  <ComponentBox
+    key=(DomHelper.getRandomKey())
+    reduxTuple=(store, dispatchFunc)
+    header=name
+    isDisposable
+    isShowComponent
+    type_
+    gameObject
+    gameObjectUIComponent=(
+      buildComponentFunc((store, dispatchFunc), gameObject)
     )
+  />;
+let _buildTransformFunc = ((store, dispatchFunc), gameObject) =>
+  <MainEditorTransform
+    key=(DomHelper.getRandomKey())
+    store
+    dispatchFunc
+    gameObject
+    transformComponent=(
+      GameObjectComponentEngineService.unsafeGetTransformComponent(gameObject)
+      |> StateLogicService.getEngineStateToGetData
+    )
+  />;
+
+let _buildLightFunc = ((store, dispatchFunc), gameObject) =>
+  <MainEditorLight key=(DomHelper.getRandomKey()) store dispatchFunc />;
+
+let _buildSouceInstanceFunc = ((store, dispatchFunc), gameObject) =>
+  <div key=(DomHelper.getRandomKey())>
+    (DomHelper.textEl("simulate source instance"))
+  </div>;
+
+let _buildRenderGroupFunc = ((store, dispatchFunc), gameObject) =>
+  <MainEditorRenderGroup store dispatchFunc currentSceneTreeNode=gameObject />;
+
+let _buildGeometryFunc = ((store, dispatchFunc), gameObject) =>
+  <MainEditorGeometry
+    store
+    dispatchFunc
+    currentSceneTreeNode=gameObject
+    geometryComponent=(
+      GameObjectComponentEngineService.unsafeGetGeometryComponent(gameObject)
+      |> StateLogicService.getEngineStateToGetData
+    )
+    isShowGeometryGroup=false
+  />;
+
+let _buildCameraGroupFunc = ((store, dispatchFunc), gameObject) =>
+  <MainEditorCameraGroup store dispatchFunc />;
+
+let _buildArcballCamera = ((store, dispatchFunc), gameObject) =>
+  <MainEditorArcballCameraController
+    store
+    dispatchFunc
+    arcballCameraController=(
+      GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+        gameObject,
+      )
+      |> StateLogicService.getEngineStateToGetData
+    )
+  />;
+let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
+  switch (type_) {
+  | Transform =>
+    _buildTransformFunc
+    |> buildComponentBox(
+         (store, dispatchFunc),
+         ("Transform", type_, gameObject),
+         (
+           false,
+           StoreUtils.geGameObjectisShowComponentFromStore(
+             store,
+             type_ |> InspectorComponentType.convertComponentTypeToInt,
+           ),
+         ),
+       )
+
+  | Light =>
+    _buildLightFunc
+    |> buildComponentBox(
+         (store, dispatchFunc),
+         ("Light", type_, gameObject),
+         (
+           true,
+           StoreUtils.geGameObjectisShowComponentFromStore(
+             store,
+             type_ |> InspectorComponentType.convertComponentTypeToInt,
+           ),
+         ),
+       )
+
+  | RenderGroup =>
+    _buildRenderGroupFunc
+    |> buildComponentBox(
+         (store, dispatchFunc),
+         ("RenderGroup", type_, gameObject),
+         (
+           true,
+           StoreUtils.geGameObjectisShowComponentFromStore(
+             store,
+             type_ |> InspectorComponentType.convertComponentTypeToInt,
+           ),
+         ),
+       )
+
+  | Geometry =>
+    _buildGeometryFunc
+    |> buildComponentBox(
+         (store, dispatchFunc),
+         ("Geometry", type_, gameObject),
+         (
+           true,
+           StoreUtils.geGameObjectisShowComponentFromStore(
+             store,
+             type_ |> InspectorComponentType.convertComponentTypeToInt,
+           ),
+         ),
+       )
+
+  | SourceInstance => ReasonReact.null
+  /* _buildSouceInstanceFunc
+     |> buildComponentBox((type_, component), (store, dispatchFunc), true) */
+
+  | CameraGroup =>
+    _buildCameraGroupFunc
+    |> buildComponentBox(
+         (store, dispatchFunc),
+         ("Camera Group", type_, gameObject),
+         (
+           true,
+           StoreUtils.geGameObjectisShowComponentFromStore(
+             store,
+             type_ |> InspectorComponentType.convertComponentTypeToInt,
+           ),
+         ),
+       )
+
+  | ArcballCameraController =>
+    _buildArcballCamera
+    |> buildComponentBox(
+         (store, dispatchFunc),
+         ("ArcballCameraController", type_, gameObject),
+         (
+           true,
+           StoreUtils.geGameObjectisShowComponentFromStore(
+             store,
+             type_ |> InspectorComponentType.convertComponentTypeToInt,
+           ),
+         ),
+       )
   };
-
-let _isSpecificComponentExist = (includeComponent, excludeComponent, gameObject, engineState) =>
-  includeComponent
-  |> Js.Array.filter((item) => engineState |> _operateSpecificComponent(gameObject, item) != (-1))
-  |> Js.Array.length
-  |> ((len) => len == (includeComponent |> Js.Array.length))
-  && excludeComponent
-  |> Js.Array.filter((item) => engineState |> _operateSpecificComponent(gameObject, item) != (-1))
-  |> Js.Array.length
-  |> ((len) => len == 0);
-
-let buildCurrentGameObjectShowComponentList = (gameObject, allShowComponentConfig, engineState) =>
-  allShowComponentConfig
-  |> Js.Array.filter(
-       (gameObjectType: GameObjectAllComponentParseType.gameObjectComponent) =>
-         _isSpecificComponentExist(
-           gameObjectType.include_component,
-           gameObjectType.exclude_component,
-           gameObject,
-           engineState
-         )
-     )
-  |> ArrayService.getFirst
-  |> (
-    (gameObjectType: GameObjectAllComponentParseType.gameObjectComponent) =>
-      gameObjectType.all_component
-      |> Js.Array.reduce(
-           (
-             (addedComponentList, addableComponentList),
-             item: GameObjectAllComponentParseType.gameObjectInfo
-           ) =>
-             engineState
-             |> _operateSpecificComponent(gameObject, item.type_)
-             |> (
-               (component) =>
-                 component |> _isAdded ?
-                   (addedComponentList @ [(item.type_, component)], addableComponentList) :
-                   (addedComponentList, addableComponentList @ [item.type_])
-             ),
-           ([], [])
-         )
-  );

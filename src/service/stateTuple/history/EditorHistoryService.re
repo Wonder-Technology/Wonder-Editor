@@ -1,31 +1,32 @@
-open Immutable;
-
 open HistoryType;
 
+open Immutable;
 let undo = (historyState, currentState) =>
   OperateStateHistoryService.operateHistory(
-    currentState,
-    historyState.editorUndoStack,
-    () => {
+    currentState, historyState.editorUndoStack, () =>
+    {
       ...historyState,
-      editorRedoStack: Stack.addFirst(currentState, historyState.editorRedoStack),
-      editorUndoStack: Stack.removeFirstOrRaise(historyState.editorUndoStack)
+      editorRedoStack:
+        Stack.addFirst(currentState, historyState.editorRedoStack),
+      editorUndoStack: Stack.removeFirstOrRaise(historyState.editorUndoStack),
     }
   );
 
 let redo = (historyState, currentState) =>
   OperateStateHistoryService.operateHistory(
-    currentState,
-    historyState.editorRedoStack,
-    () => {
+    currentState, historyState.editorRedoStack, () =>
+    {
       ...historyState,
-      editorUndoStack: Stack.addFirst(currentState, historyState.editorUndoStack),
-      editorRedoStack: Stack.removeFirstOrRaise(historyState.editorRedoStack)
+      editorUndoStack:
+        Stack.addFirst(currentState, historyState.editorUndoStack),
+      editorRedoStack: Stack.removeFirstOrRaise(historyState.editorRedoStack),
     }
   );
 
-let storeState = (currentState, historyState) => {
+let storeState = (maxStackSize, currentState, historyState) => {
   ...historyState,
-  editorUndoStack: Stack.addFirst(currentState, historyState.editorUndoStack),
-  editorRedoStack: Stack.empty()
+  editorUndoStack:
+    Stack.addFirst(currentState, historyState.editorUndoStack)
+    |> StackHistoryService.limitStackMaxSize(maxStackSize),
+  editorRedoStack: Stack.empty(),
 };

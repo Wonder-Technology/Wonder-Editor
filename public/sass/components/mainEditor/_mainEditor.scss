@@ -1,0 +1,7 @@
+.wonder-mainEditor-component {
+    width: 100%;
+    height: 87%;
+    display: flex;
+    @import "component/leftComponent";
+    @import "component/rightComponent";
+}

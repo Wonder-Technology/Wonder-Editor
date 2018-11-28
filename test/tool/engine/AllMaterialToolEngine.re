@@ -4,19 +4,25 @@ open StateDataMainType;
 
 let setPrecision = (precision, state) => {
   ...state,
-  gpuDetectRecord: {...state.gpuDetectRecord, precision: Some(precision)}
+  gpuDetectRecord: {
+    ...state.gpuDetectRecord,
+    precision: Some(precision),
+  },
 };
 
-let preparePrecision = (state) => setPrecision(GPUDetectType.HIGHP, state);
+let preparePrecision = state => setPrecision(GPUDetectType.HIGHP, state);
 
-let pregetGLSLData = (state) =>
+let pregetGLSLData = state =>
   state |> preparePrecision |> PregetGLSLDataJob.execJob(Obj.magic(1));
 
 let prepareForInit = () => {
-  StateLogicService.getEditEngineState()
+  WonderLog.Wonder_Console.makeObjInToWindow();
+
+  StateEngineService.unsafeGetState()
   |> pregetGLSLData
-  |> StateLogicService.setEditEngineState;
-  StateLogicService.getRunEngineState()
-  |> pregetGLSLData
-  |> StateLogicService.setRunEngineState
+  |> StateEngineService.setState
+  |> ignore;
+  /* StateEngineService.unsafeGetState();
+     |> pregetGLSLData
+     |> StateLogicService.setRunEngineState */
 };

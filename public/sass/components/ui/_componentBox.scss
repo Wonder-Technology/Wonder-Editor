@@ -1,0 +1,58 @@
+.componentBox-component{
+    padding-bottom: 6px;
+    width:100%;
+    .header{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height:30px;
+        margin-bottom: 10px;
+        border-bottom:1px solid #fff;
+        .header-triangle{
+            flex:initial;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            .triangle-right{
+                margin-top:10px;
+                display: block;
+                width: 0;
+                height: 0;
+                border-top: 4px solid transparent;
+                border-left: 8px solid #fff;
+                border-bottom: 4px solid transparent;
+            }
+            .triangle-bottom{
+                margin-top:10px;
+                display: block;
+                width: 0;
+                height: 0;
+                border-left: 4px solid transparent;
+                border-right: 4px solid transparent;
+                border-top: 8px solid #fff;
+            }
+        }
+        .header-title{
+            flex:3;
+            height:30px;
+            line-height: 30px;
+            font-size:15px;
+        }
+        .header-close{
+            flex:initial;
+            color:black;
+            width:30px;
+            height:30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img{
+                width: 10px;
+                height:10px;
+                cursor: hand;
+            }
+        }
+    }
+}

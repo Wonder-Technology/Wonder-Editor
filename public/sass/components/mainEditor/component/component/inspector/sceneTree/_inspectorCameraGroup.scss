@@ -1,0 +1,22 @@
+@import "../../../../../../utils/inspectorItemMixin";
+
+.wonder-camera-group{
+    @import "../utils/inspectorComponent";
+    .inspector-component{
+        .component-content{
+            @include inspectorItem("wonder-camera-view");
+
+            @include inspectorItem("wonder-camera-projection");
+            .wonder-camera-projection,.wonder-camera-view{
+                @import "../utils/inspectorComponentChildren";
+            }
+            .wonder-camera-view{
+                input[type=checkbox]{
+                    width:18px;
+                    height:18px;
+                    margin:0px;
+                }
+            }
+        }
+    }
+}

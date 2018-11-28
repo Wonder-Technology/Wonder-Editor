@@ -1,0 +1,21 @@
+@import "../../../../../../utils/inspectorItemMixin";
+
+.wonder-render-group{
+    @import "../utils/inspectorComponent";
+    .inspector-component{
+        .component-content{
+            @include inspectorItem("wonder-mesh-renderer");
+            @include inspectorItem("wonder-inspector-material");
+            @import "./inspectorMaterial";
+
+            .wonder-mesh-renderer,.wonder-inspector-material{
+                @import "../utils/inspectorComponentChildren";
+
+                .wonder-light-material, .wonder-basic-material{
+                    @import "../utils/inspectorComponentChildren";
+                }
+            }
+
+        }
+    }
+}

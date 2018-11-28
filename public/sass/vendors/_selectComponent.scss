@@ -1,0 +1,52 @@
+.select-component-content{
+    position: fixed;
+    z-index: 200;
+    top:0px;
+    left:0px;
+    width:100%;
+    height:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .select-component-item{
+        width:220px;
+        height:305px;
+        position: relative;
+        z-index: 120;
+        overflow-y: auto;
+        overflow-x: auto;
+        white-space: nowrap;
+        border:1px solid #333333;
+        background: #c1c1c1;
+        border-radius: 5px;
+        @import "../utils/scrollBarUtils";
+        .item-header{
+            width:100%;
+            height:20px;
+            line-height: 20px;
+            font-size:14px;
+            text-align: center;
+            padding: 5px 0px;
+            border-bottom: 1px solid #868686;
+            background: #555454;
+        }
+        .item-content{
+            color:#000;
+            height:20px;
+            line-height: 20px;
+            padding: 2px 7px;
+        }
+        .item-active{
+            background: #5C7EA6;
+        }
+    }
+    .select-component-bg{
+        position: absolute;
+        top:0px;
+        left:0px;
+        width:100%;
+        height:100%;
+        background: rgba(10,10,10,0.5);
+        z-index:100;
+    }
+}

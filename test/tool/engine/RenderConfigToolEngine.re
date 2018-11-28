@@ -5,6 +5,8 @@ open ParseRenderConfigService;
 let buildRenderConfig =
     (
       ~shaders={|
+
+
 {
   "static_branchs": [
     {
@@ -22,6 +24,31 @@ let buildRenderConfig =
         "normalMatrix_hardware_instance",
         "normalMatrix_batch_instance"
       ]
+    }
+  ],
+  "dynamic_branchs": [
+    {
+      "name": "basic_map",
+      "condition": "basic_has_map",
+      "pass": "basic_map",
+      "fail": "no_basic_map"
+    },
+    {
+      "name": "common_light_map",
+      "condition": "light_has_map",
+      "pass": "common_light_map"
+    },
+    {
+      "name": "diffuse_map",
+      "condition": "has_diffuse_map",
+      "pass": "diffuse_map",
+      "fail": "no_diffuse_map"
+    },
+    {
+      "name": "specular_map",
+      "condition": "has_specular_map",
+      "pass": "specular_map",
+      "fail": "no_specular_map"
     }
   ],
   "groups": [
@@ -53,6 +80,10 @@ let buildRenderConfig =
         },
         {
           "name": "basic"
+        },
+        {
+          "type": "dynamic_branch",
+          "name": "basic_map"
         },
         {
           "name": "basic_end"
@@ -88,22 +119,28 @@ let buildRenderConfig =
           "name": "light_setWorldPosition"
         },
         {
-          "name": "noDiffuseMap"
+          "type": "dynamic_branch",
+          "name": "common_light_map"
         },
         {
-          "name": "noSpecularMap"
+          "type": "dynamic_branch",
+          "name": "diffuse_map"
         },
         {
-          "name": "noLightMap"
+          "type": "dynamic_branch",
+          "name": "specular_map"
         },
         {
-          "name": "noEmissionMap"
+          "name": "no_light_map"
         },
         {
-          "name": "noNormalMap"
+          "name": "no_emission_map"
         },
         {
-          "name": "noShadowMap"
+          "name": "no_normal_map"
+        },
+        {
+          "name": "no_shadow_map"
         },
         {
           "name": "light"
@@ -128,8 +165,11 @@ let buildRenderConfig =
     }
   ]
 }
+
+
         |},
       ~shaderLibs={|
+
 [
   {
     "name": "common",
@@ -191,22 +231,22 @@ let buildRenderConfig =
       "attributes": [
         {
           "name": "a_mVec4_0",
-          "buffer": "instance_mMatrix",
+          "buffer": 5,
           "type": "vec4"
         },
         {
           "name": "a_mVec4_1",
-          "buffer": "instance_mMatrix",
+          "buffer": 5,
           "type": "vec4"
         },
         {
           "name": "a_mVec4_2",
-          "buffer": "instance_mMatrix",
+          "buffer": 5,
           "type": "vec4"
         },
         {
           "name": "a_mVec4_3",
-          "buffer": "instance_mMatrix",
+          "buffer": 5,
           "type": "vec4"
         }
       ]
@@ -224,7 +264,7 @@ let buildRenderConfig =
       "uniforms": [
         {
           "name": "u_mMatrix",
-          "field": "instance_mMatrix",
+          "field": "mMatrix",
           "type": "mat4",
           "from": "model"
         }
@@ -237,7 +277,7 @@ let buildRenderConfig =
       "attributes": [
         {
           "name": "a_position",
-          "buffer": "vertex",
+          "buffer": 0,
           "type": "vec3"
         }
       ]
@@ -249,10 +289,51 @@ let buildRenderConfig =
       {
         "type": "vs",
         "name": "webgl1_basic_vertex"
+      }
+    ]
+  },
+  {
+    "name": "basic_map",
+    "glsls": [
+      {
+        "type": "vs",
+        "name": "webgl1_basic_map_vertex"
       },
       {
         "type": "fs",
-        "name": "webgl1_basic_fragment"
+        "name": "webgl1_basic_map_fragment"
+      }
+    ],
+    "variables": {
+      "attributes": [
+        {
+          "name": "a_texCoord",
+          "buffer": 2,
+          "type": "vec2"
+        }
+      ],
+      "uniforms": [
+        {
+          "name": "u_color",
+          "field": "color",
+          "type": "float3",
+          "from": "basicMaterial"
+        },
+        {
+          "name": "u_mapSampler",
+          "field": "map",
+          "type": "sampler2D",
+          "from": "basicMaterial"
+        }
+      ]
+    }
+  },
+  {
+    "name": "no_basic_map",
+    "glsls": [
+      {
+        "type": "fs",
+        "name": "webgl1_no_basic_map_fragment"
       }
     ],
     "variables": {
@@ -306,17 +387,17 @@ let buildRenderConfig =
       "attributes": [
         {
           "name": "a_normalVec3_0",
-          "buffer": "instance_normalMatrix",
+          "buffer": 4,
           "type": "vec3"
         },
         {
           "name": "a_normalVec3_1",
-          "buffer": "instance_normalMatrix",
+          "buffer": 4,
           "type": "vec3"
         },
         {
           "name": "a_normalVec3_2",
-          "buffer": "instance_normalMatrix",
+          "buffer": 4,
           "type": "vec3"
         }
       ]
@@ -334,7 +415,7 @@ let buildRenderConfig =
       "uniforms": [
         {
           "name": "u_normalMatrix",
-          "field": "instance_normalMatrix",
+          "field": "normalMatrix",
           "type": "mat3",
           "from": "model"
         }
@@ -347,7 +428,7 @@ let buildRenderConfig =
       "attributes": [
         {
           "name": "a_normal",
-          "buffer": "normal",
+          "buffer": 1,
           "type": "vec3"
         }
       ]
@@ -364,7 +445,17 @@ let buildRenderConfig =
         "type": "fs",
         "name": "webgl1_frontLight_common_fragment"
       }
-    ]
+    ],
+    "variables": {
+      "uniforms": [
+        {
+          "name": "u_specular",
+          "field": "specularColor",
+          "type": "float3",
+          "from": "lightMaterial"
+        }
+      ]
+    }
   },
   {
     "name": "light_setWorldPosition",
@@ -376,11 +467,75 @@ let buildRenderConfig =
     ]
   },
   {
-    "name": "noDiffuseMap",
+    "name": "common_light_map",
+    "variables": {
+      "attributes": [
+        {
+          "name": "a_texCoord",
+          "buffer": 2,
+          "type": "vec2"
+        }
+      ]
+    }
+  },
+  {
+    "name": "diffuse_map",
+    "glsls": [
+      {
+        "type": "vs",
+        "name": "webgl1_diffuse_map_vertex"
+      },
+      {
+        "type": "fs",
+        "name": "webgl1_diffuse_map_fragment"
+      }
+    ],
+    "variables": {
+      "uniforms": [
+        {
+          "name": "u_diffuse",
+          "field": "diffuseColor",
+          "type": "float3",
+          "from": "lightMaterial"
+        },
+        {
+          "name": "u_diffuseMapSampler",
+          "field": "diffuseMap",
+          "type": "sampler2D",
+          "from": "lightMaterial"
+        }
+      ]
+    }
+  },
+  {
+    "name": "specular_map",
+    "glsls": [
+      {
+        "type": "vs",
+        "name": "webgl1_specular_map_vertex"
+      },
+      {
+        "type": "fs",
+        "name": "webgl1_specular_map_fragment"
+      }
+    ],
+    "variables": {
+      "uniforms": [
+        {
+          "name": "u_specularMapSampler",
+          "field": "specularMap",
+          "type": "sampler2D",
+          "from": "lightMaterial"
+        }
+      ]
+    }
+  },
+  {
+    "name": "no_diffuse_map",
     "glsls": [
       {
         "type": "fs",
-        "name": "webgl1_noDiffuseMap_fragment"
+        "name": "webgl1_no_diffuse_map_fragment"
       }
     ],
     "variables": {
@@ -395,61 +550,51 @@ let buildRenderConfig =
     }
   },
   {
-    "name": "noSpecularMap",
+    "name": "no_specular_map",
     "glsls": [
       {
         "type": "fs",
-        "name": "webgl1_noSpecularMap_fragment"
-      }
-    ],
-    "variables": {
-      "uniforms": [
-        {
-          "name": "u_specular",
-          "field": "specularColor",
-          "type": "float3",
-          "from": "lightMaterial"
-        }
-      ]
-    }
-  },
-  {
-    "name": "noLightMap",
-    "glsls": [
-      {
-        "type": "fs",
-        "name": "webgl1_noLightMap_fragment"
+        "name": "webgl1_no_specular_map_fragment"
       }
     ]
   },
   {
-    "name": "noEmissionMap",
+    "name": "no_light_map",
     "glsls": [
       {
         "type": "fs",
-        "name": "webgl1_noEmissionMap_fragment"
+        "name": "webgl1_no_light_map_fragment"
       }
     ]
   },
   {
-    "name": "noNormalMap",
+    "name": "no_emission_map",
+    "glsls": [
+      {
+        "type": "fs",
+        "name": "webgl1_no_emission_map_fragment"
+      }
+    ]
+  },
+  {
+    "name": "no_normal_map",
     "glsls": [
       {
         "type": "vs",
-        "name": "webgl1_noNormalMap_vertex"
+        "name": "webgl1_no_normal_map_vertex"
       },
       {
         "type": "fs",
-        "name": "webgl1_noNormalMap_fragment"
+        "name": "webgl1_no_normal_map_fragment"
       }
     ]
   },
   {
-    "name": "noShadowMap",
+    "name": "no_shadow_map",
     "glsls": [
       {
         "type": "fs",
-        "name": "webgl1_noShadowMap_fragment"
+        "name": "webgl1_no_shadow_map_fragment"
       }
     ]
   },
@@ -549,12 +694,13 @@ let buildRenderConfig =
     "variables": {
       "attributes": [
         {
-          "buffer": "index"
+          "buffer": 3
         }
       ]
     }
   }
 ]
+
         |},
       ()
     ) => (

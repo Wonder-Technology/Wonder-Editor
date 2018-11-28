@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="icon" href="./res/loading/favicon.ico" type="image/x-icon" />
+
+    <title>Wonder</title>
+    <style>
+        #stream-loading {
+            display: none;
+        }
+
+        #stream-loading .loading-img {
+            display: block;
+            width: 250px;
+            height: 250px;
+        }
+
+        #stream-loading .loading-text {
+            color: #e7981f;
+            margin-top: 10px;
+            font-size: 85px;
+            font-weight: bold;
+        }
+
+
+
+
+        #whole-loading {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background: #1d1b22;
+        }
+
+        #whole-loading .loading-content {
+            width: 50%;
+            height: 50%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #whole-loading .loading-content .loading-img {
+            width: 250px;
+            height: 250px;
+        }
+
+        #whole-loading .loading-content .loading-text {
+            color: #e7981f;
+            margin-top: 10px;
+            font-size: 85px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="stream-loading">
+        <img id="logo" class="loading-img" src="./res/loading/logo.png" />
+        <br />
+        <span id="text" class="loading-text"></span>
+    </div>
+
+
+    <div id="whole-loading">
+        <div class="loading-content">
+            <div>
+                <img id="logo" class="loading-img" src="./res/loading/logo.png" />
+            </div>
+            <div>
+                <div id="text" class="loading-text"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script src="./wd.min.js"></script>
+
+    <script>
+        var AssetTool = (function () {
+            function computeLoadingPercent(
+                loadedIMGUIByteLength,
+                totalByteLength
+            ) {
+                return loadedIMGUIByteLength >= totalByteLength ? 100 : Math.ceil(loadedIMGUIByteLength / totalByteLength * 100);
+            }
+
+            function getStreamLoadTextDom() {
+                return document.querySelector("#stream-loading #text");
+            }
+
+            function getWholeLoadTextDom() {
+                return document.querySelector("#whole-loading #text");
+            }
+
+            return {
+                isSupportStreamLoad: function () {
+                    return typeof window.ReadableStream !== "undefined";
+                },
+                showStreamLoading: function () {
+                    var windowWidth = window.innerWidth;
+                    var windowHeight = window.innerHeight;
+
+
+                    document.querySelector("#stream-loading").style.display = "block";
+                    document.querySelector("#whole-loading").style.display = "none";
+
+
+
+                    var dom = document.querySelector("#stream-loading");
+
+                    var totalWidth = 250;
+                    var totalHeight = 360 - 10;
+
+                    var top = (windowHeight - totalHeight) / 2;
+                    var left = (windowWidth - totalWidth) / 2;
+
+
+                    dom.style.cssText = 'display:block;position:absolute;top:' + top + 'px;left:' + left + 'px;color:bisque; text-align: center;';
+                },
+                showWholeLoading: function () {
+                    document.querySelector("#stream-loading").style.display = "none";
+                    document.querySelector("#whole-loading").style.display = "flex";
+                },
+                showOrCreateLoadingInfo: function (
+                    loadedIMGUIByteLength,
+                    totalByteLength,
+                ) {
+                    var loadingPercentStr = String(computeLoadingPercent(
+
+                        loadedIMGUIByteLength,
+                        totalByteLength
+                    )) + '%';
+
+                    getStreamLoadTextDom().innerHTML = loadingPercentStr;
+                    getWholeLoadTextDom().innerHTML = loadingPercentStr;
+
+                },
+                removeLoadingInfo: function () {
+                    document.querySelector("#stream-loading").remove();
+                    document.querySelector("#whole-loading").remove();
+                },
+                loadConfig: function (jsonPathArr, nextFunc, completeFunc) {
+                    return wd.loadConfig(jsonPathArr).forEach(function (state) {
+                        if (!!nextFunc) {
+                            nextFunc(state)
+                        }
+                    }).then(function () {
+                        if (!!completeFunc) {
+                            return completeFunc()
+                        }
+                    })
+                },
+                loadStreamWDB: function (wdbPath, handleWhenLoadingFunc, handleBeforeStartLoopFunc, handleWhenDoneFunc, handleWhenLoadWholeWDBFunc, state) {
+                    return wd.loadStreamWDB(wdbPath, handleWhenLoadingFunc, handleBeforeStartLoopFunc, handleWhenDoneFunc, handleWhenLoadWholeWDBFunc, state).drain()
+                }
+            }
+        })()
+
+
+        window.onload = function () {
+
+            var totalWDBByteLength = $totalWDBByteLength;
+            var totalByteLength = totalWDBByteLength;
+
+            if (
+                AssetTool.isSupportStreamLoad()
+            ) {
+                AssetTool.showStreamLoading();
+            }
+            else {
+                AssetTool.showWholeLoading();
+            }
+
+            return AssetTool.loadConfig(["./config/setting.json", "./config/"], null, function () {
+                return AssetTool.loadStreamWDB("./Scene.wdb",
+                    function (totalLoadedByteLength, contentLength, wdbPath) {
+                        AssetTool.showOrCreateLoadingInfo(
+                            totalLoadedByteLength,
+                            totalByteLength
+                        );
+                    },
+                    function (state, gameObject) {
+                        return state;
+                    },
+                    function (state, gameObject) {
+                        AssetTool.removeLoadingInfo();
+
+                        return state;
+                    },
+                    function (state, _, gameObject) {
+                        AssetTool.removeLoadingInfo();
+
+                        wd.startDirector(state);
+                    }, wd.unsafeGetState());
+            });
+        }
+    </script>
+</body>
+
+</html>

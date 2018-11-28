@@ -2,7 +2,6 @@ open DomHelper;
 
 open ExtensionParseType;
 
-/* [@bs.new] external func : string =>( unit => Js.t({..}) ) = "Function"; */
 let func = [%bs.raw
   {| function(extensionText) {
     return (new Function(extensionText))();
@@ -27,7 +26,7 @@ let _getExtensionName = (extensionRecord) => {
       ),
     StateEditorService.getStateIsDebug()
   );
-  extensionRecord.name |> Js.Nullable.to_opt |> Js.Option.getExn
+  extensionRecord.name |> Js.Nullable.to_opt |> OptionService.unsafeGet
 };
 
 let _getExtensionMethods = (extensionRecord) => {
@@ -52,7 +51,7 @@ let _getExtensionMethods = (extensionRecord) => {
       ),
     StateEditorService.getStateIsDebug()
   );
-  extensionRecord.methodExtension |> Js.Nullable.to_opt |> Js.Option.getExn
+  extensionRecord.methodExtension |> Js.Nullable.to_opt |> OptionService.unsafeGet
 };
 
 let _getExtensionPanels = (extensionRecord) => {
@@ -73,7 +72,7 @@ let _getExtensionPanels = (extensionRecord) => {
       ),
     StateEditorService.getStateIsDebug()
   );
-  extensionRecord.panelExtension |> Js.Nullable.to_opt |> Js.Option.getExn
+  extensionRecord.panelExtension |> Js.Nullable.to_opt |> OptionService.unsafeGet
 };
 
 let createComponentMap = (extensionText) => {

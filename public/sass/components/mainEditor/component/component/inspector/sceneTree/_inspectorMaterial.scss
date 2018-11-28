@@ -1,0 +1,25 @@
+@import "../../../../../../utils/inspectorItemMixin";
+
+.wonder-inspector-material {
+    @import "../../../../../../utils/inspectorSelectUtils";
+    .inspector-item{
+        .item-content{
+            min-width: 120px;
+        }
+    } 
+    .material-value {
+        position: relative;
+        .material-shade {
+            border-radius: 5px;
+            background: rgba(195, 195, 195, 0.5);
+            position: absolute;
+            z-index:100;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    @include inspectorItem("wonder-light-material");
+    @include inspectorItem("wonder-basic-material");
+}

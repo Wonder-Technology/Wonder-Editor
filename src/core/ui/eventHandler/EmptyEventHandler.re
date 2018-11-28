@@ -1,7 +1,8 @@
 module EmptyEventHandler = {
-  let onSelect = ((store, dispatch), prepareTuple, dataTuple) => ();
-  let onClick = ((store, dispatch), prepareTuple, dataTuple) => ();
-  let onDrop = ((store, dispatch), prepareTuple, dataTuple) => ();
-  let onMarkRedoUndoByFirstStack = ((store, dispatch), prepareTuple, dataTuple) => ();
-  let onMarkRedoUndoByLastStack = ((store, dispatch), prepareTuple, dataTuple) => ();
+  let handleSelfLogic = ((store, dispatchFunc), prepareTuple, dataTuple) =>
+    ();
+
+  let setUndoValueToCopiedEngineState =
+      ((store, dispatchFunc), prepareTuple, dataTuple) =>
+    StateEngineService.unsafeGetState();
 };

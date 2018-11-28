@@ -1,4 +1,8 @@
 open Wonderjs;
 
-let load = LoaderManagerAPI.load;
-let loadToData = LoaderManagerAPI.loadToData;
+let loadConfig = (jsonPathArr, stateData) =>
+  LoaderManagerSystem.loadConfig(
+    jsonPathArr,
+    LoaderManagerAPI._fetch,
+    stateData,
+  );

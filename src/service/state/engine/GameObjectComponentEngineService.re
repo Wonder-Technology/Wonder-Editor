@@ -1,40 +1,146 @@
 open Wonderjs;
 
+open StateDataMainType;
+
+/* light material */
+
+let hasLightMaterialComponent = GameObjectAPI.hasGameObjectLightMaterialComponent;
+
+let getLightMaterialComponent = (gameObject, engineState) =>
+  GetComponentGameObjectService.getLightMaterialComponent(.
+    gameObject,
+    engineState.gameObjectRecord,
+  );
+
+let unsafeGetLightMaterialComponent = GameObjectAPI.unsafeGetGameObjectLightMaterialComponent;
+
+let addLightMaterialComponent = GameObjectAPI.addGameObjectLightMaterialComponent;
+
+let disposeLightMaterialComponent = GameObjectAPI.disposeGameObjectLightMaterialComponent;
+
+let removeLightMaterialComponent = GameObjectAPI.removeGameObjectLightMaterialComponent;
+
+/* basic material */
+
 let hasBasicMaterialComponent = GameObjectAPI.hasGameObjectBasicMaterialComponent;
 
-let getBasicMaterialComponent = GameObjectAPI.unsafeGetGameObjectBasicMaterialComponent;
+let getBasicMaterialComponent = (gameObject, engineState) =>
+  GetComponentGameObjectService.getBasicMaterialComponent(.
+    gameObject,
+    engineState.gameObjectRecord,
+  );
 
-let addMeshRendererComponent = GameObjectAPI.addGameObjectMeshRendererComponent;
+let unsafeGetBasicMaterialComponent = GameObjectAPI.unsafeGetGameObjectBasicMaterialComponent;
 
 let addBasicMaterialComponent = GameObjectAPI.addGameObjectBasicMaterialComponent;
 
-let addBoxGeometryComponent = GameObjectAPI.addGameObjectBoxGeometryComponent;
+let disposeBasicMaterialComponent = GameObjectAPI.disposeGameObjectBasicMaterialComponent;
+
+let removeBasicMaterialComponent = GameObjectAPI.removeGameObjectBasicMaterialComponent;
+
+/* mesh renderer */
+
+let addMeshRendererComponent = GameObjectAPI.addGameObjectMeshRendererComponent;
+
+let unsafeGetMeshRendererComponent = GameObjectAPI.unsafeGetGameObjectMeshRendererComponent;
+
+let hasMeshRendererComponent = GameObjectAPI.hasGameObjectMeshRendererComponent;
+
+let disposeMeshRendererComponent = GameObjectAPI.disposeGameObjectMeshRendererComponent;
+
+/* geometry */
+
+let unsafeGetGeometryComponent = (gameObject, engineState) =>
+  engineState
+  |> GameObjectAPI.unsafeGetGameObjectGeometryComponent(gameObject);
+
+let getGeometryComponent = (gameObject, engineState) =>
+  GetComponentGameObjectService.getGeometryComponent(.
+    gameObject,
+    engineState.gameObjectRecord,
+  );
+
+let disposeGeometryComponent = GameObjectAPI.disposeGameObjectGeometryComponent;
+
+let removeGeometryComponent = GameObjectAPI.removeGameObjectGeometryComponent;
+
+let hasGeometryComponent = GameObjectAPI.hasGameObjectGeometryComponent;
+
+let addGeometryComponent = GameObjectAPI.addGameObjectGeometryComponent;
+/* perspective camera projection */
 
 let addPerspectiveCameraProjectionComponent = GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent;
 
 let hasPerspectiveCameraProjectionComponent = GameObjectAPI.hasGameObjectPerspectiveCameraProjectionComponent;
 
-let getPerspectiveCameraProjectionComponent = GameObjectAPI.unsafeGetGameObjectPerspectiveCameraProjectionComponent;
+let unsafeGetPerspectiveCameraProjectionComponent = GameObjectAPI.unsafeGetGameObjectPerspectiveCameraProjectionComponent;
+
+let disposePerspectiveCameraProjectionComponent = GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent;
+/* camera view */
 
 let addBasicCameraViewComponent = GameObjectAPI.addGameObjectBasicCameraViewComponent;
 
 let hasBasicCameraViewComponent = GameObjectAPI.hasGameObjectBasicCameraViewComponent;
 
-let getBasicCameraViewComponent = GameObjectAPI.unsafeGetGameObjectBasicCameraViewComponent;
+let unsafeGetBasicCameraViewComponent = GameObjectAPI.unsafeGetGameObjectBasicCameraViewComponent;
 
-let getTransformComponent = GameObjectAPI.unsafeGetGameObjectTransformComponent;
+let disposeBasicCameraViewComponent = GameObjectAPI.disposeGameObjectBasicCameraViewComponent;
+/* transform */
+
+let unsafeGetTransformComponent = GameObjectAPI.unsafeGetGameObjectTransformComponent;
 
 let hasTransformComponent = GameObjectAPI.hasGameObjectTransformComponent;
 
-let getGeometryComponent = (gameObject, engineState) =>
-  engineState |> GameObjectAPI.unsafeGetGameObjectGeometryComponent(gameObject);
-
-let hasBoxGeometryComponent = GameObjectAPI.hasGameObjectBoxGeometryComponent;
-
-let getSourceInstanceComponent = GameObjectAPI.unsafeGetGameObjectSourceInstanceComponent;
+/* source instance */
+let unsafeGetSourceInstanceComponent = GameObjectAPI.unsafeGetGameObjectSourceInstanceComponent;
 
 let hasSourceInstanceComponent = GameObjectAPI.hasGameObjectSourceInstanceComponent;
 
 let addSourceInstanceComponent = GameObjectAPI.addGameObjectSourceInstanceComponent;
 
-let hasMeshRendererComponent = GameObjectAPI.hasGameObjectMeshRendererComponent;
+/* direction light */
+
+let addDirectionLightComponent = GameObjectAPI.addGameObjectDirectionLightComponent;
+
+let disposeDirectionLightComponent = GameObjectAPI.disposeGameObjectDirectionLightComponent;
+
+let unsafeGetDirectionLightComponent = GameObjectAPI.unsafeGetGameObjectDirectionLightComponent;
+
+let hasDirectionLightComponent = GameObjectAPI.hasGameObjectDirectionLightComponent;
+
+/* point light */
+let addPointLightComponent = GameObjectAPI.addGameObjectPointLightComponent;
+
+let disposePointLightComponent = GameObjectAPI.disposeGameObjectPointLightComponent;
+
+let unsafeGetPointLightComponent = GameObjectAPI.unsafeGetGameObjectPointLightComponent;
+
+let hasPointLightComponent = GameObjectAPI.hasGameObjectPointLightComponent;
+
+let hasLightComponent = (gameObject, engineState) =>
+  hasDirectionLightComponent(gameObject, engineState)
+  || hasPointLightComponent(gameObject, engineState);
+
+/* arcball camera */
+
+let addArcballCameraControllerComponent = GameObjectAPI.addGameObjectArcballCameraControllerComponent;
+
+let disposeArcballCameraControllerComponent = GameObjectAPI.disposeGameObjectArcballCameraControllerComponent;
+
+let unsafeGetArcballCameraControllerComponent = GameObjectAPI.unsafeGetGameObjectArcballCameraControllerComponent;
+
+let hasArcballCameraControllerComponent = GameObjectAPI.hasGameObjectArcballCameraControllerComponent;
+
+/* all components */
+
+let getAllLightMaterialComponents = GameObjectAPI.getAllLightMaterialComponents;
+
+let getAllDirectionLightComponents = GameObjectAPI.getAllDirectionLightComponents;
+
+let getAllBasicCameraViewComponents = GameObjectAPI.getAllBasicCameraViewComponents;
+
+let getAllArcballCameraControllerComponents = GameObjectAPI.getAllArcballCameraControllerComponents;
+
+let getAllPerspectiveCameraProjectionComponents = GameObjectAPI.getAllPerspectiveCameraProjectionComponents;
+
+let getAllGeometryComponents = GameObjectAPI.getAllGeometryComponents;

@@ -14,4 +14,4 @@ let isJobExistInJobList = (targetName, jobList) =>
   jobList |> List.exists(((name, _)) => name === targetName);
 
 let execDisposeJob = () =>
-  Wonderjs.DisposeJob.execJob(None) |> StateLogicService.getAndSetEditAndRunEngineState;
+  Wonderjs.DisposeJob.execJob(None) |> StateLogicService.getAndSetEngineState;

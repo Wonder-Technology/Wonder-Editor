@@ -1,0 +1,17 @@
+.wonder-asset-header{
+    @import "../../../../../utils/navMixin";
+    @include header-nav("asset");
+    height:25px;
+    .item-canBeClick{
+        position: relative;
+        .asset-fileLoad{
+            position: absolute;
+            top:0px;
+            left:0px;
+            opacity: 0;
+            background-color: red;
+            width:100%;
+            height:100%;
+        }
+    }
+}

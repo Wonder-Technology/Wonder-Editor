@@ -15,8 +15,27 @@ module.exports = {
   ],
 
   scopes: [
-    // { name: "exampleScope" },
-    // { name: "changeMe" }
+      { name: "scene-tree" },
+      { name: "left-header" },
+      { name: "redo-undo" },
+      { name: "inspector" },
+      { name: "asset" },
+      { name: "package" },
+      { name: "scene" },
+      { name: "publish" },
+      { name: "light" },
+      { name: "lightMaterial" },
+      { name: "imgui" },
+      { name: "event" },
+      { name: "engine" },
+      { name: "camera" },
+      { name: "transform" },
+      { name: "state" },
+      { name: "component" },
+      { name: "console" },
+      { name: "ui" },
+      { name: "config" },
+      { name: "job" }
   ],
 
 
@@ -26,23 +45,13 @@ module.exports = {
       { name: "contract" },
       { name: "unit-test" },
       { name: "integration-test" },
+      { name: "unit-integration-test" },
       { name: "coverage" }
     ],
-    fix: [
-      { name: "scene-tree" }
-    ],
     refactor: [
-      { name: "scene-tree" },
-      { name: "inspector" },
-      { name: "redo/undo" },
-      { name: "extension" }
-    ],
-    feat: [
-      { name: "scene-tree" },
-      { name: "inspector" },
-      { name: "redo/undo" },
-      { name: "service" },
-      { name: "engine" }
+      { name: "rename" },
+      { name: "duplicate" },
+      { name: "dead-code" }
     ],
     chore: [
       { name: "review" },

@@ -1,0 +1,4 @@
+.wonder-left-components-header{
+    @import "../../../../../utils/navMixin";
+    @include header-nav("sceneTree");
+}

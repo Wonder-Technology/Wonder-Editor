@@ -1,45 +1,146 @@
 external toObject : Js.Dict.t('a) => Js.t({..}) = "%identity";
 
-let triggerComponentEvent = (component, triggerEventFunc) => {
-  let json = ReactTestRenderer.toJSON(component);
-  switch (Js.Json.decodeObject(json)) {
-  | None => ()
-  | Some(dict) => triggerEventFunc(toObject(dict)##children)
-  }
-};
-
-let buildFormEvent = (value) => {"target": {"value": value}} |> Obj.magic;
-
-let dragedUid = ref((-1));
-
-let buildDragEvent = () =>
+let buildFormEvent = value =>
   {
-    "stopPropagation": () => (),
+    "target": {
+      "value": value,
+      "checked": value,
+    },
+  } |> Obj.magic;
+
+let buildWDBFileEvent = (fileName, arrayBuffer) =>
+  {
+    "target": {
+      "files": {
+        "0": {
+          name: fileName ++ ".wdb",
+          file: arrayBuffer,
+        },
+      },
+    },
     "preventDefault": () => (),
-    "dataTransfer": {
-      "effectAllowed": "move",
-      "setData": (key, value) => dragedUid := value,
-      "getData": (key) => dragedUid^
-    }
   }
   |> Obj.magic;
 
-let _getProps = (dom) => dom##props;
+let buildPackageFileEvent = (fileName, wpk) =>
+  {
+    "target": {
+      "files": {
+        "0": {
+          name: fileName ++ ".wpk",
+          file: wpk,
+        },
+      },
+    },
+    "preventDefault": () => (),
+  }
+  |> Obj.magic;
 
-let triggerClickEvent = (dom) => _getProps(dom)##onClick();
+let buildGLBFileEvent = (fileName, arrayBuffer) =>
+  {
+    "target": {
+      "files": {
+        "0": {
+          name: fileName ++ ".glb",
+          file: arrayBuffer,
+        },
+      },
+    },
+    "preventDefault": () => (),
+  }
+  |> Obj.magic;
 
-let triggerChangeEvent = (dom, event) => _getProps(dom)##onChange(event);
+let buildGLTFZipFileEvent = (fileName) =>
+  {
+    "target": {
+      "files": {
+        "0": {
+          name: fileName ++ ".zip",
+          file: Obj.magic(-1),
+        },
+      },
+    },
+    "preventDefault": () => (),
+  }
+  |> Obj.magic;
 
-let triggerBlurEvent = (dom, event) => _getProps(dom)##onBlur(event);
+/* let buildTwoJsonFileEvent =
+     (~jsonName="loadJson", ~jsonResult="loadJson string result", ()) =>
+   {
+     "target": {
+       "files": {
+         "0": {
+           name: jsonName ++ ".json",
+           file: jsonResult,
+         },
+         "1": {
+           name: jsonName ++ ".json",
+           file: jsonResult,
+         },
+       },
+     },
+     "preventDefault": () => (),
+   }
+   |> Obj.magic; */
 
-let triggerDragStartEvent = (dom, event) => _getProps(dom)##onDragStart(event);
+let buildOneTextureFileEvent =
+    (~imgName="loadImg.png", ~imgSrc="newImgBase64", ()) =>
+  {
+    "target": {
+      "files": {
+        "0": {
+          name: imgName,
+          file: imgSrc,
+        },
+      },
+    },
+    "preventDefault": () => (),
+  }
+  |> Obj.magic;
 
-let triggerDragEndEvent = (dom, event) => _getProps(dom)##onDragEnd(event);
+let buildFileEvent =
+    (
+      ~imgName="loadImg.png",
+      ~imgSrc="newImgBase64",
+      ~jsonName="loadJson",
+      ~jsonResult="loadJson string result",
+      (),
+    ) =>
+  {
+    "target": {
+      "files": {
+        "0": {
+          name: imgName,
+          file: imgSrc,
+        },
+        "1": {
+          name: jsonName ++ ".json",
+          file: jsonResult,
+        },
+      },
+    },
+    "preventDefault": () => (),
+  }
+  |> Obj.magic;
 
-let triggerDragEnterEvent = (dom, event) => _getProps(dom)##onDragEnter(event);
+let buildDragEvent = [%bs.raw
+  () => {|
+  var dataMap = {};
 
-let triggerDragLeaveEvent = (dom, event) => _getProps(dom)##onDragLeave(event);
-
-let triggerDragOverEvent = (dom, event) => _getProps(dom)##onDragOver(event);
-
-let triggerDropEvent = (dom, event) => _getProps(dom)##onDrop(event);
+  return {
+stopPropagation: () => undefined,
+preventDefault: () => undefined,
+dataTransfer: {
+  effectAllowed: "move",
+  dropEffect: "move",
+  setDragImage: (image, value1, value2) => undefined,
+  setData: (key, value) => {
+    dataMap[key] = value;
+  },
+  getData: (key) => {
+    return dataMap[key]
+  }
+}
+  }
+  |}
+];

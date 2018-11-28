@@ -1,0 +1,68 @@
+.wonder-addable-component{
+    padding-bottom: 25px;
+    padding-top: 10px;
+    width:100%;
+    display: flex;
+    justify-content: center;
+    .addable-component-content{
+        width: 80%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        .content-btn{
+            width:100%;
+            display: flex;
+            justify-content: center;
+            .addable-btn{
+                width: 70%;
+                height:25px;
+            }
+        }
+        .content-components{
+            width:100%;
+            display: flex;
+            justify-content: center;
+            .component-list {
+                width:70%;
+                overflow-y: auto;
+                overflow-x: hidden;
+                box-sizing: border-box;
+                @import "../../../../../../utils/scrollBarUtils";
+                .wonder-addable-componentBox{
+                    width:99%;
+                    .category-header{
+                        width:100%;
+                        height:25px;
+                        line-height: 25px;
+                        border-top: 0px;
+                        background: #5a5a5a;
+                        color:#ffffff;
+                        &:hover{
+                            background-color: #5C7EA6;
+                        }
+                    }
+                    .category-content{
+                        width:100%;
+                        display: flex;
+                        justify-content: center;
+                        .content-list{
+                            width:100%;
+                            display: flex;
+                            flex-direction: column;
+                            .content-type{
+                                width:100%;
+                                height:20px;
+                                line-height: 20px;
+                                border-bottom: 1px solid #5a5a5a;
+                                background: #777676;
+                                &:hover{
+                                    background-color: #5C7EA6;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

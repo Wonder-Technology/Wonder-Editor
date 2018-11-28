@@ -29,7 +29,7 @@ let _ =
           AppExtensionUtils.getExtension(
             MainEditorDatabaseTool.getExtensionTestKey()
           )
-          |> Js.Option.getExn
+          |> OptionService.unsafeGet
           |> expect == value
         }
       )

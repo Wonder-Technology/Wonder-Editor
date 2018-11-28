@@ -1,0 +1,33 @@
+@import "../../../../../utils/inspectorItemMixin";
+
+.wonder-inspector-component {
+    .wonder-inspector-sceneTree {
+        padding-top: 5px;
+        @include inspectorItem("sceneTree-name");
+
+        @import "../../../../ui/componentBox";
+
+        @include inspectorItem("wonder-inspector-transform");
+        @import "sceneTree/inspectorTransform";
+
+        @import "sceneTree/inspectorCameraGroup";
+
+        @import "sceneTree/inspectorRenderGroup";
+
+        @include inspectorItem("wonder-inspector-geometry");
+        @import "sceneTree/inspectorGeometry";
+
+        @include inspectorItem("wonder-inspector-light");
+        @import "sceneTree/inspectorLight";
+
+        @include inspectorItem("wonder-inspector-arcballCameraController");
+
+        @import "sceneTree/inspectorAddableComponent";
+    }
+    .wonder-inspector-assetTree{
+        @include inspectorItem("inspector-asset-folder");
+        @include inspectorItem("wonder-texture-assetTree");
+        @include inspectorItem("inspector-asset-wdb");
+        @include inspectorItem("wonder-material-inspector");
+    }
+}

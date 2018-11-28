@@ -7,121 +7,56 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe(
-    "FloatInput",
-    () => {
-      let _triggerChangeInputEvent = (value, domChildren) => {
-        let input = WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
-        BaseEventTool.triggerChangeEvent(input, BaseEventTool.buildFormEvent(value))
+  describe("FloatInput", () => {
+    let sandbox = getSandboxDefaultVal();
+
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
+    describe("test FloatInput component set float value", () => {
+      let _test = (value, onChangeValue, onBlurValue) => {
+        open FloatInput;
+        let state = {inputValue: None, originValue: ""};
+
+        let onChangeFunc = createEmptyStubWithJsObjSandbox(sandbox);
+        let onBlurFunc = createEmptyStubWithJsObjSandbox(sandbox);
+
+        let state =
+          FloatInputTool.reducer(
+            ~onChangeFunc=Some(onChangeFunc),
+            ~onBlurFunc=Some(onBlurFunc),
+            ~canBeZero=Some(false),
+            ~action=Change(Some(value)),
+            ~state,
+            (),
+          )
+          |> ReactTool.getUpdateState;
+
+        let state =
+          FloatInputTool.reducer(
+            ~onChangeFunc=Some(onChangeFunc),
+            ~onBlurFunc=Some(onBlurFunc),
+            ~canBeZero=Some(false),
+            ~action=Blur,
+            ~state,
+            (),
+          )
+          |> ReactTool.getUpdateState;
+
+        (
+          onChangeFunc |> getCallCount,
+          onBlurFunc |> getCallCount,
+          onChangeFunc |> SinonTool.calledWith(_, onChangeValue),
+          onBlurFunc |> SinonTool.calledWith(_, onBlurValue),
+        )
+        |> expect == (1, 1, true, true);
       };
-      let _triggerBlurEvent = (value, domChildren) => {
-        let input = WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
-        BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value))
-      };
-      describe(
-        "test FloatInput arguments",
-        () => {
-          test(
-            "test FloatInput component hasn't argument",
-            () => ReactTestRenderer.create(<FloatInput />) |> ReactTestTool.createSnapshotAndMatch
-          );
-          test(
-            "test FloatInput component has defaultValue",
-            () =>
-              ReactTestRenderer.create(<FloatInput defaultValue="12.2" />)
-              |> ReactTestTool.createSnapshotAndMatch
-          );
-          test(
-            "test FloatInput component has label",
-            () =>
-              ReactTestRenderer.create(<FloatInput label="xyz" />)
-              |> ReactTestTool.createSnapshotAndMatch
-          );
-          test(
-            "test FloatInput component has defaultValue and label",
-            () =>
-              ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" />)
-              |> ReactTestTool.createSnapshotAndMatch
-          )
-        }
+
+      test("if float value's decimal digits <= 5, can set the whole value", () =>
+        _test("351687.54654", 351687.54654, 351687.54654)
       );
-      describe(
-        "test FloatInput component set float value",
-        () => {
-          test(
-            "if float value's decimal digits <= 6, can set the whole value",
-            () => {
-              let component =
-                ReactTestRenderer.create(<FloatInput defaultValue="2" label="xyz" />);
-              BaseEventTool.triggerComponentEvent(
-                component,
-                _triggerChangeInputEvent("351687.54654")
-              );
-              component |> ReactTestTool.createSnapshotAndMatch
-            }
-          );
-          test(
-            "else, can't set the value",
-            () => {
-              let component =
-                ReactTestRenderer.create(<FloatInput defaultValue="0" label="xyz" />);
-              BaseEventTool.triggerComponentEvent(
-                component,
-                _triggerChangeInputEvent("3.524584654")
-              );
-              component |> ReactTestTool.createSnapshotAndMatch
-            }
-          )
-        }
+      test("else, still set the whole value", () =>
+        _test("351687.54654111", 351687.54654111, 351687.54654111)
       );
-      describe(
-        "deal with the specific case",
-        () => {
-          let sandbox = getSandboxDefaultVal();
-          beforeEach(() => sandbox := createSandbox());
-          afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-          test(
-            "key in value '', shouldn't handle onChange method",
-            () => {
-              let onChange = createEmptyStubWithJsObjSandbox(sandbox);
-              let component =
-                ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" onChange />);
-              BaseEventTool.triggerComponentEvent(component, _triggerChangeInputEvent(""));
-              onChange |> expect |> not_ |> toCalled
-            }
-          );
-          test(
-            "key in value '-', shouldn't handle onChange method",
-            () => {
-              let onChange = createEmptyStubWithJsObjSandbox(sandbox);
-              let component =
-                ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" onChange />);
-              BaseEventTool.triggerComponentEvent(component, _triggerChangeInputEvent("-"));
-              onChange |> expect |> not_ |> toCalled
-            }
-          );
-          test(
-            "if onBlur method not pass in, shouldn't handle onBlur method",
-            () => {
-              let onBlur = createEmptyStubWithJsObjSandbox(sandbox);
-              let component =
-                ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" />);
-              BaseEventTool.triggerComponentEvent(component, _triggerChangeInputEvent("-23"));
-              BaseEventTool.triggerComponentEvent(component, _triggerBlurEvent("-23"));
-              onBlur |> expect |> not_ |> toCalled
-            }
-          );
-          test(
-            "if onChange method not pass in, shouldn't handle onChange method",
-            () => {
-              let onChange = createEmptyStubWithJsObjSandbox(sandbox);
-              let component =
-                ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" />);
-              BaseEventTool.triggerComponentEvent(component, _triggerChangeInputEvent("-2313"));
-              onChange |> expect |> not_ |> toCalled
-            }
-          )
-        }
-      )
-    }
-  );
+    });
+  });

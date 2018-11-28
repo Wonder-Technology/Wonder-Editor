@@ -5,7 +5,7 @@
   ],
   "testRegex": "lib/es6_global/test/.+test\\.js$",
   "transformIgnorePatterns": [
-    "<rootDir>/node_modules/(?!(.*bs-)|reason-react|immutable-re|wonder-commonlib|wonder.js|wonder-log|wonder-most-animation-frame)"
+    "<rootDir>/node_modules/(?!(.*bs-)|reason-react|immutable-re|wonder-commonlib|wonder.js|wonder-log|wonder-most-animation-frame|wonder-webgl|wonder-imgui)"
   ],
   "setupTestFrameworkScriptFile": "<rootDir>/test/helper/jest/specHelper.js",
   "notify": false,
@@ -14,21 +14,37 @@
   "coverageDirectory": "<rootDir>/coverage/",
   "coveragePathIgnorePatterns": [
     "<rootDir>/lib/es6_global/src/config/",
-    "<rootDir>/lib/es6_global/src/extension/config/data/extension_component/",
+    "<rootDir>/lib/es6_global/src/extension/",
+    "<rootDir>/lib/es6_global/src/core/ui/store/",
+    "<rootDir>/lib/es6_global/src/core/ui/App\\.js",
+    "<rootDir>/lib/es6_global/src/core/composable_component/mainEditor/ui/MainEditor\\.js",
+    "<rootDir>/lib/es6_global/src/core/ui/eventHandler/EmptyEventHandler\\.js",
+    "<rootDir>/lib/es6_global/src/core/.+/ui/",
+    "<rootDir>/lib/es6_global/src/.+/PanelExtension.js",
     "<rootDir>/lib/es6_global/src/core/config/",
     "<rootDir>/lib/es6_global/src/core/.+/.+Type\\.js",
     "<rootDir>/lib/es6_global/src/core/utils/",
     "<rootDir>/lib/es6_global/src/core/external/",
-    "<rootDir>/lib/es6_global/src/core/ui/store/",
     "<rootDir>/lib/es6_global/src/core/redux/",
     "<rootDir>/lib/es6_global/src/service/state/engine/AssetEngineService\\.js",
     "<rootDir>/lib/es6_global/src/service/state/engine/LoopEngineService\\.js",
-    "<rootDir>/lib/es6_global/src/service/atom/ArrayService\\.js",
-    "<rootDir>/lib/es6_global/src/service/atom/FloatService\\.js",
+    "<rootDir>/lib/es6_global/src/service/atom/",
     "<rootDir>/lib/es6_global/src/core/Index\\.js",
-    "<rootDir>/lib/es6_global/src/core/ui/App\\.js",
-    "<rootDir>/lib/es6_global/src/core/composable_component/mainEditor/ui/MainEditor\\.js",
-    "<rootDir>/lib/es6_global/src/core/ui/eventHandler/EmptyEventHandler\\.js"
+    "<rootDir>/lib/es6_global/src/core/atom_component/floatInput/FloatInput\\.js",
+    "<rootDir>/lib/es6_global/src/core/atom_component/fileInput/FileInput\\.js",
+    "<rootDir>/lib/es6_global/src/core/.+/MainEditorMaterialMap.js",
+    "<rootDir>/lib/es6_global/src/core/.+/AssetTreeNode.js",
+    "<rootDir>/lib/es6_global/src/core/.+/SceneTreeNode.js",
+    "<rootDir>/lib/es6_global/src/core/.+/Header.js",
+    "<rootDir>/lib/es6_global/src/core/.+/FolderBox.js",
+    "<rootDir>/lib/es6_global/src/core/.+/MainEditorAssetHeader.js",
+    "<rootDir>/lib/es6_global/src/core/.+/MainEditorLeftHeader.js",
+    "<rootDir>/lib/es6_global/src/core/.+/TransformTemplate.js",
+    "<rootDir>/lib/es6_global/src/core/.+/Modal.js",
+    "<rootDir>/lib/es6_global/src/core/.+/AddableComponentBox.js",
+    "<rootDir>/lib/es6_global/src/core/.+/PublishLocalModal.js",
+    "<rootDir>/lib/es6_global/src/core/.+/Canvas.js",
+    "<rootDir>/lib/es6_global/src/core/.+/SingleInputModal.js"
   ],
   "collectCoverageFrom": [
     "lib/es6_global/src/**/*.{js}",
@@ -37,10 +53,10 @@
   ],
   "coverageThreshold": {
     "global": {
-      "lines": 95,
-      "statements": 95,
-      "branches": 85,
-      "functions": 95
+      "lines": 90,
+      "statements": 90,
+      "branches": 77,
+      "functions": 89
     }
   }
 }
