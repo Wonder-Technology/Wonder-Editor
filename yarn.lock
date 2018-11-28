@@ -1224,10 +1224,6 @@ bs-platform@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-4.0.0.tgz#4190460550414eecff92f1e2bbaf4d9c557b60af"
 
-bs-platform@^2.2.1:
-  version "2.2.3"
-  resolved "http://registry.npmjs.org/bs-platform/-/bs-platform-2.2.3.tgz#d905ae10a5f3621e6a739041dfa0b58483a2174f"
-
 bser@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/bser/-/bser-2.0.0.tgz#9ac78d3ed5d915804fd87acb158bc797147a1719"
@@ -3081,12 +3077,6 @@ ignore-walk@^3.0.1:
 immediate@~3.0.5:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
-
-"immutable-re@https://github.com/facebookincubator/immutable-re.git":
-  version "0.0.15"
-  resolved "https://github.com/facebookincubator/immutable-re.git#d55f65f7fc638ac17cfdd8064a0401d4cde5aad2"
-  dependencies:
-    bs-platform "^2.2.1"
 
 immutable@^3.7.4:
   version "3.8.2"
@@ -7228,9 +7218,9 @@ wonder-imgui@^0.0.28:
     wonder-log "^0.2.2"
     wonder-webgl "^0.0.2"
 
-wonder-log@^0.2.2, wonder-log@^0.2.7, wonder-log@^0.2.9:
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/wonder-log/-/wonder-log-0.2.9.tgz#72b9b21371f9a6f533f379f8437fe37a9b86d981"
+wonder-log@^0.2.10, wonder-log@^0.2.2:
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/wonder-log/-/wonder-log-0.2.10.tgz#46d1cc45f7aed70fa8afb1bf5cc3e2bca342fe3d"
 
 wonder-most-animation-frame@0.0.3:
   version "0.0.3"
@@ -7252,16 +7242,16 @@ wonder-webgl@^0.0.2, wonder-webgl@^0.0.5:
   dependencies:
     wonder-log "^0.2.2"
 
-wonder.js@1.0.0-alpha.23.96:
-  version "1.0.0-alpha.23.96"
-  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.23.96.tgz#fa51515d513e2491629f19dbb515925390f45ec9"
+wonder.js@1.0.0-alpha.24:
+  version "1.0.0-alpha.24"
+  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.24.tgz#e1e4f9096cab46d02eb431b058623e329c5d0b1a"
   dependencies:
     bs-fetch "^0.3.0"
     wonder-bs-json "^0.0.1"
     wonder-bs-most "^0.0.3"
     wonder-commonlib "^0.2.23"
     wonder-imgui "^0.0.28"
-    wonder-log "^0.2.7"
+    wonder-log "^0.2.10"
     wonder-most-animation-frame "0.0.3"
     wonder-webgl "^0.0.5"
 

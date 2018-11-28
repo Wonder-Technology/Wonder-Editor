@@ -54,7 +54,7 @@ let getNewGeometry = (~engineState=StateEngineService.unsafeGetState(), ()) => {
 
 let isGeometryDisposed = (geometry, engineState) =>
   !
-    Wonderjs.DisposeGeometryMainService.isAlive(
+    Wonderjs.DisposeGeometryMainService.isAliveWithRecord(
       geometry,
       engineState |> Wonderjs.RecordGeometryMainService.getRecord,
     );
