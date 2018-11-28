@@ -1,36 +1,55 @@
+let _storeEngineHistoryState =
+    (store, (editorState, engineState), storeEngineStateFunc, historyState) => {
+  let maxStackSize =
+    RedoUndoSettingEditorService.unsafeGetMaxStackSize(editorState);
+
+  historyState
+  |> UIHistoryService.storeUIState(maxStackSize, store)
+  |> EditorHistoryService.storeState(maxStackSize, editorState)
+  |> storeEngineStateFunc(maxStackSize, engineState);
+};
+
 let storeCopiedEngineHistoryState =
-    (store, (editorState, engineState), historyState) => {
-  let maxStackSize =
-    RedoUndoSettingEditorService.unsafeGetMaxStackSize(editorState);
+    (store, (editorState, engineState), historyState) =>
+  _storeEngineHistoryState(
+    store,
+    (editorState, engineState),
+    EngineHistoryService.storeHasCopyState,
+    historyState,
+  );
 
-  historyState
-  |> UIHistoryService.storeUIState(maxStackSize, store)
-  |> EditorHistoryService.storeState(maxStackSize, editorState)
-  |> EngineHistoryService.storeHasCopyState(maxStackSize, engineState);
-};
+let storeHistoryState = (store, (editorState, engineState), historyState) =>
+  _storeEngineHistoryState(
+    store,
+    (editorState, engineState),
+    EngineHistoryService.storeNoCopyState,
+    historyState,
+  );
 
-let storeHistoryState = (store, (editorState, engineState), historyState) => {
-  let maxStackSize =
-    RedoUndoSettingEditorService.unsafeGetMaxStackSize(editorState);
-
-  historyState
-  |> UIHistoryService.storeUIState(maxStackSize, store)
-  |> EditorHistoryService.storeState(maxStackSize, editorState)
-  |> EngineHistoryService.storeNoCopyState(maxStackSize, engineState);
-};
-
-let undoHistoryState = (store, dispatchFunc, (editorState, engineState)) => {
+let _operateHistoryState =
+    (
+      store,
+      dispatchFunc,
+      (
+        operateUIHistoryStateFunc,
+        operateEditorHistoryStateFunc,
+        operateEngineHistoryStateFunc,
+      ),
+      (editorState, engineState),
+    ) => {
   dispatchFunc(
     AppStore.ReplaceState(
-      UIHistoryService.undo(AllStateData.getHistoryState(), store),
+      operateUIHistoryStateFunc(AllStateData.getHistoryState(), store),
     ),
   );
 
   let editorState =
-    editorState |> EditorHistoryService.undo(AllStateData.getHistoryState());
+    editorState
+    |> operateEditorHistoryStateFunc(AllStateData.getHistoryState());
 
   let engineState =
-    engineState |> EngineHistoryService.undo(AllStateData.getHistoryState());
+    engineState
+    |> operateEngineHistoryStateFunc(AllStateData.getHistoryState());
 
   editorState |> StateEditorService.setState |> ignore;
   engineState |> StateEngineService.setState |> ignore;
@@ -40,25 +59,29 @@ let undoHistoryState = (store, dispatchFunc, (editorState, engineState)) => {
   (editorState, engineState);
 };
 
-let redoHistoryState = (store, dispatchFunc, (editorState, engineState)) => {
-  dispatchFunc(
-    AppStore.ReplaceState(
-      UIHistoryService.redo(AllStateData.getHistoryState(), store),
+let undoHistoryState = (store, dispatchFunc, (editorState, engineState)) =>
+  _operateHistoryState(
+    store,
+    dispatchFunc,
+    (
+      UIHistoryService.undo,
+      EditorHistoryService.undo,
+      EngineHistoryService.undo,
     ),
+    (editorState, engineState),
   );
 
-  let editorState =
-    editorState |> EditorHistoryService.redo(AllStateData.getHistoryState());
-  let engineState =
-    engineState |> EngineHistoryService.redo(AllStateData.getHistoryState());
-
-  editorState |> StateEditorService.setState |> ignore;
-  engineState |> StateEngineService.setState |> ignore;
-
-  dispatchFunc(AppStore.UpdateAction(Update([|All|]))) |> ignore;
-
-  (editorState, engineState);
-};
+let redoHistoryState = (store, dispatchFunc, (editorState, engineState)) =>
+  _operateHistoryState(
+    store,
+    dispatchFunc,
+    (
+      UIHistoryService.redo,
+      EditorHistoryService.redo,
+      EngineHistoryService.redo,
+    ),
+    (editorState, engineState),
+  );
 
 let handleUndo = (store, dispatchFunc) =>
   OperateStateHistoryService.hasUndoState(AllStateData.getHistoryState()) ?

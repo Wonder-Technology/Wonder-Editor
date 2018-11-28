@@ -14,21 +14,19 @@ var base = new String(fileName).substring(fileName.lastIndexOf('/') + 1);
   |}
 ];
 
-let getFolderPathAndFileName = filePath =>
-  switch ([%re {|/^(.*[\/])?(\w+\.\w+)$/|}] |> Js.Re.exec(filePath)) {
+let _getPathAndFileName = (filePath, regex) =>
+  switch (regex |> Js.Re.exec(filePath)) {
   | None => (filePath |> Js.Undefined.return, "")
   | Some(result) =>
     let resultArr = Js.Re.matches(result);
     (resultArr[1] |> Js.Undefined.return, resultArr[2]);
   };
 
+let getFolderPathAndFileName = filePath =>
+  _getPathAndFileName(filePath, [%re {|/^(.*[\/])?(\w+\.\w+)$/|}]);
+
 let getTextureFolderPathAndName = filePath =>
-  switch ([%re {|/^(.*[\/])?(\w+)$/|}] |> Js.Re.exec(filePath)) {
-  | None => (filePath |> Js.Undefined.return, "")
-  | Some(result) =>
-    let resultArr = Js.Re.matches(result);
-    (resultArr[1] |> Js.Undefined.return, resultArr[2]);
-  };
+  _getPathAndFileName(filePath, [%re {|/^(.*[\/])?(\w+)$/|}]);
 
 let removePathPostfix = filePath =>
   switch ([%re {|/^(.*)[\/]$/|}] |> Js.Re.exec(filePath)) {

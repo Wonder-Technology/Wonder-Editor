@@ -2,19 +2,33 @@ open AssetTreeNodeType;
 
 open AssetNodeType;
 
-let removeFolderNodeEditorData = (nodeId, editorState) =>
+let _removeNodeEditorData =
+    (nodeId, (getNodeMapFunc, setNodeMapFunc), editorState) =>
   editorState
-  |> FolderNodeMapAssetEditorService.getFolderNodeMap
+  |> getNodeMapFunc
   |> SparseMapService.copy
   |> DomHelper.deleteKeyInMap(nodeId)
-  |. FolderNodeMapAssetEditorService.setFolderNodeMap(editorState);
+  |. setNodeMapFunc(editorState);
+
+let removeFolderNodeEditorData = (nodeId, editorState) =>
+  _removeNodeEditorData(
+    nodeId,
+    (
+      FolderNodeMapAssetEditorService.getFolderNodeMap,
+      FolderNodeMapAssetEditorService.setFolderNodeMap,
+    ),
+    editorState,
+  );
 
 let removeWDBNodeEditorData = (nodeId, editorState) =>
-  editorState
-  |> WDBNodeMapAssetEditorService.getWDBNodeMap
-  |> SparseMapService.copy
-  |> DomHelper.deleteKeyInMap(nodeId)
-  |. WDBNodeMapAssetEditorService.setWDBNodeMap(editorState);
+  _removeNodeEditorData(
+    nodeId,
+    (
+      WDBNodeMapAssetEditorService.getWDBNodeMap,
+      WDBNodeMapAssetEditorService.setWDBNodeMap,
+    ),
+    editorState,
+  );
 
 let removeMaterialNodeEditorData = (nodeId, editorState) => {
   let {materialComponent, type_} =
@@ -42,12 +56,14 @@ let removeTextureNodeEditorData = (nodeId, editorState) => {
     |> TextureNodeMapAssetEditorService.getTextureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
-  let editorState =
-    editorState
-    |> TextureNodeMapAssetEditorService.getTextureNodeMap
-    |> SparseMapService.copy
-    |> DomHelper.deleteKeyInMap(nodeId)
-    |. TextureNodeMapAssetEditorService.setTextureNodeMap(editorState);
+  _removeNodeEditorData(
+    nodeId,
+    (
+      TextureNodeMapAssetEditorService.getTextureNodeMap,
+      TextureNodeMapAssetEditorService.setTextureNodeMap,
+    ),
+    editorState,
+  );
 
   TextureNodeMapAssetEditorService.doesAnyTextureUseImage(image, editorState) ?
     editorState :

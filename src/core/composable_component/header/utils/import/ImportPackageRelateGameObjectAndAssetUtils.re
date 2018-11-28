@@ -70,12 +70,11 @@ let _isLightMaterialDataEqualForSceneGameObject =
     engineState,
   );
 
-let _replaceSceneGameObjectMaterialComponentToMaterialAsset =
+let _replaceGameObjectMaterialComponentToMaterialAsset =
     (
       gameObject,
-      defaultMaterialData,
-      materialDataMapData,
-      imageUint8ArrayDataMap,
+      (defaultMaterialData, materialDataMapData, imageUint8ArrayDataMap),
+      isLightMaterialDataEqualFunc,
       engineState,
     ) => {
   let (sourceMaterial, targetMaterial, materialType, _) =
@@ -85,7 +84,7 @@ let _replaceSceneGameObjectMaterialComponentToMaterialAsset =
       imageUint8ArrayDataMap,
       defaultMaterialData,
       materialDataMapData,
-      _isLightMaterialDataEqualForSceneGameObject,
+      isLightMaterialDataEqualFunc,
       engineState,
     );
 
@@ -95,6 +94,21 @@ let _replaceSceneGameObjectMaterialComponentToMaterialAsset =
     engineState,
   );
 };
+
+let _replaceSceneGameObjectMaterialComponentToMaterialAsset =
+    (
+      gameObject,
+      defaultMaterialData,
+      materialDataMapData,
+      imageUint8ArrayDataMap,
+      engineState,
+    ) =>
+  _replaceGameObjectMaterialComponentToMaterialAsset(
+    gameObject,
+    (defaultMaterialData, materialDataMapData, imageUint8ArrayDataMap),
+    _isLightMaterialDataEqualForSceneGameObject,
+    engineState,
+  );
 
 let _isLightMaterialDataEqualForWDBAssetGameObject =
     (
@@ -120,24 +134,13 @@ let _replaceWDBAssetGameObjectMaterialComponentToMaterialAsset =
       materialDataMapData,
       imageUint8ArrayDataMap,
       engineState,
-    ) => {
-  let (sourceMaterial, targetMaterial, materialType, _) =
-    RelateGameObjectAndAssetUtils.getRelatedMaterialDataFromGameObject(
-      gameObject,
-      WonderCommonlib.SparseMapService.createEmpty(),
-      imageUint8ArrayDataMap,
-      defaultMaterialData,
-      materialDataMapData,
-      _isLightMaterialDataEqualForWDBAssetGameObject,
-      engineState,
-    );
-
-  RelateGameObjectAndAssetUtils.replaceToMaterialAssetMaterialComponent(
+    ) =>
+  _replaceGameObjectMaterialComponentToMaterialAsset(
     gameObject,
-    (sourceMaterial, targetMaterial, materialType),
+    (defaultMaterialData, materialDataMapData, imageUint8ArrayDataMap),
+    _isLightMaterialDataEqualForWDBAssetGameObject,
     engineState,
   );
-};
 
 let _isWdbAssetGameObjectGeometry =
     (geometry, wdbAssetGameObjectGeometryDataArr) =>

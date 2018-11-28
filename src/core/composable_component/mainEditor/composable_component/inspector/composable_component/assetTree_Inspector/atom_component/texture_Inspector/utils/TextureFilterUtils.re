@@ -30,11 +30,11 @@ let getMinFilterOptions = () => [|
   },
 |];
 
-let changeMagFilter = (textureComponent, value) => {
+let _changeFilter = (textureComponent, value, setFilterFunc) => {
   let engineState = StateEngineService.unsafeGetState();
 
   engineState
-  |> BasicSourceTextureEngineService.setMagFilter(
+  |> setFilterFunc(
        value |> TextureTypeUtils.convertIntToFilter,
        textureComponent,
      )
@@ -42,14 +42,16 @@ let changeMagFilter = (textureComponent, value) => {
   |> StateLogicService.refreshEngineState;
 };
 
-let changeMinFilter = (textureComponent, value) => {
-  let engineState = StateEngineService.unsafeGetState();
+let changeMagFilter = (textureComponent, value) =>
+  _changeFilter(
+    textureComponent,
+    value,
+    BasicSourceTextureEngineService.setMagFilter,
+  );
 
-  engineState
-  |> BasicSourceTextureEngineService.setMinFilter(
-       value |> TextureTypeUtils.convertIntToFilter,
-       textureComponent,
-     )
-  |> BasicSourceTextureEngineService.setIsNeedUpdate(true, textureComponent)
-  |> StateLogicService.refreshEngineState;
-};
+let changeMinFilter = (textureComponent, value) =>
+  _changeFilter(
+    textureComponent,
+    value,
+    BasicSourceTextureEngineService.setMinFilter,
+  );

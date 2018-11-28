@@ -1,39 +1,50 @@
-
-
 module Method = {
-  let blurArcballCameraDistance =
-      ((store, dispatchFunc), arcballCameraController, distance) => {
-    ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
-      arcballCameraController,
-    )
-    |> StateLogicService.getEngineStateToGetData
-    |> ValueService.isValueEqual(ValueType.Float, distance) ?
-      () :
-      ArcballCameraDistanceEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
+  let _blurArcballCameraValue =
+      (
         (store, dispatchFunc),
         arcballCameraController,
-        distance,
+        value,
+        (
+          unsafeGetArcballCameraControllerValueFunc,
+          pushUndoStackWithCopiedEngineStateFunc,
+        ),
+      ) => {
+    unsafeGetArcballCameraControllerValueFunc(arcballCameraController)
+    |> StateLogicService.getEngineStateToGetData
+    |> ValueService.isValueEqual(ValueType.Float, value) ?
+      () :
+      pushUndoStackWithCopiedEngineStateFunc(
+        (store, dispatchFunc),
+        arcballCameraController,
+        value,
       );
 
     dispatchFunc(AppStore.UpdateAction(Update([|Inspector|]))) |> ignore;
   };
+
+  let blurArcballCameraDistance =
+      ((store, dispatchFunc), arcballCameraController, distance) =>
+    _blurArcballCameraValue(
+      (store, dispatchFunc),
+      arcballCameraController,
+      distance,
+      (
+        ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance,
+        ArcballCameraDistanceEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState,
+      ),
+    );
 
   let blurArcballCameraMinDistance =
-      ((store, dispatchFunc), arcballCameraController, minDistance) => {
-    ArcballCameraEngineService.unsafeGetArcballCameraControllerMinDistance(
+      ((store, dispatchFunc), arcballCameraController, minDistance) =>
+    _blurArcballCameraValue(
+      (store, dispatchFunc),
       arcballCameraController,
-    )
-    |> StateLogicService.getEngineStateToGetData
-    |> ValueService.isValueEqual(ValueType.Float, minDistance) ?
-      () :
-      ArcballCameraMinDistanceEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
-        (store, dispatchFunc),
-        arcballCameraController,
-        minDistance,
-      );
-
-    dispatchFunc(AppStore.UpdateAction(Update([|Inspector|]))) |> ignore;
-  };
+      minDistance,
+      (
+        ArcballCameraEngineService.unsafeGetArcballCameraControllerMinDistance,
+        ArcballCameraMinDistanceEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState,
+      ),
+    );
 
   let changeDistance = (arcballCameraController, value) =>
     ArcballCameraEngineService.setArcballCameraControllerDistance(
@@ -50,7 +61,8 @@ module Method = {
     |> StateLogicService.getAndRefreshEngineStateWithFunc;
 };
 
-let component = ReasonReact.statelessComponent("MainEditorArcballCameraController");
+let component =
+  ReasonReact.statelessComponent("MainEditorArcballCameraController");
 
 let render = ((store, dispatchFunc), arcballCameraController, _self) =>
   <article className="wonder-inspector-arcballCameraController">
