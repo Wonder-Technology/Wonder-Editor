@@ -91,16 +91,15 @@ let _ =
           })
         );
 
-        /* describe("test change point light constant", () =>
+        describe("test change point light constant", () =>
           test("test change constant should set into engine", () => {
             let currentGameObjectPointLightComponent =
               GameObjectTool.getCurrentGameObjectPointLightComponent();
             let value = 10.1;
 
-            MainEditorPointLightTool.changeConstantAndBlur(
-              ~light=currentGameObjectPointLightComponent,
-              ~value,
-              (),
+            MainEditorPointLightTool.changeConstant(
+              currentGameObjectPointLightComponent,
+              value,
             );
 
             PointLightEngineService.getPointLightConstant(
@@ -117,10 +116,9 @@ let _ =
               GameObjectTool.getCurrentGameObjectPointLightComponent();
             let value = 10.1;
 
-            MainEditorPointLightTool.changeLinearAndBlur(
-              ~light=currentGameObjectPointLightComponent,
-              ~value,
-              (),
+            MainEditorPointLightTool.changeLinear(
+              currentGameObjectPointLightComponent,
+              value,
             );
 
             PointLightEngineService.getPointLightLinear(
@@ -137,10 +135,9 @@ let _ =
               GameObjectTool.getCurrentGameObjectPointLightComponent();
             let value = 10.1;
 
-            MainEditorPointLightTool.changeQuadraticAndBlur(
-              ~light=currentGameObjectPointLightComponent,
-              ~value,
-              (),
+            MainEditorPointLightTool.changeQuadratic(
+              currentGameObjectPointLightComponent,
+              value,
             );
 
             PointLightEngineService.getPointLightQuadratic(
@@ -157,10 +154,9 @@ let _ =
               GameObjectTool.getCurrentGameObjectPointLightComponent();
             let value = 10.1;
 
-            MainEditorPointLightTool.changeRangeAndBlur(
-              ~light=currentGameObjectPointLightComponent,
-              ~value,
-              (),
+            MainEditorPointLightTool.changeRange(
+              currentGameObjectPointLightComponent,
+              value,
             );
 
             PointLightEngineService.getPointLightRange(
@@ -170,7 +166,7 @@ let _ =
             |. FloatService.truncateFloatValue(5)
             |> expect == value;
           })
-        ); */
+        );
       });
     });
   });

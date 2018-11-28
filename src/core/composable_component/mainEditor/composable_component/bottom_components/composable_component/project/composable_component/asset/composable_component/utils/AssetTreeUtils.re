@@ -129,21 +129,21 @@ let createNodeAndAddToTargetNodeChildren =
      )
   |. TreeRootAssetEditorService.setAssetTreeRoot(editorState);
 
-let rec _isRemovedTreeNodeBeTargetParent = (targetNodeId, removedTreeNode) =>
-  TreeAssetEditorService.isIdEqual(targetNodeId, removedTreeNode.nodeId) ?
+let rec _isSourceTreeNodeBeTargetParent = (targetNodeId, sourceTreeNode) =>
+  TreeAssetEditorService.isIdEqual(targetNodeId, sourceTreeNode.nodeId) ?
     true :
-    removedTreeNode.children
+    sourceTreeNode.children
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. result, child) =>
            result ?
-             true : _isRemovedTreeNodeBeTargetParent(targetNodeId, child),
+             true : _isSourceTreeNodeBeTargetParent(targetNodeId, child),
          false,
        );
 
-let _isTargetTreeNodeBeRemovedParent = (targetTreeNode, removedNodeId) =>
+let _isTargetTreeNodeBeSourceParent = (targetTreeNode, sourceNodeId) =>
   targetTreeNode.children
   |> Js.Array.filter(child =>
-       TreeAssetEditorService.isIdEqual(child.nodeId, removedNodeId)
+       TreeAssetEditorService.isIdEqual(child.nodeId, sourceNodeId)
      )
   |> Js.Array.length >= 1 ?
     true : false;
@@ -168,31 +168,31 @@ let checkAssetNodeName =
     successFunc((editorState, engineState));
 
 let _isTargetTreeNodeHasSameNameChild =
-    (isWarn, targetNodeId, removedNodeId, (editorState, engineState)) => {
+    (isWarn, targetNodeId, sourceNodeId, (editorState, engineState)) => {
   let {type_}: assetTreeNodeType =
     editorState
     |> TreeRootAssetEditorService.getAssetTreeRoot
     |> OptionService.unsafeGet
-    |> TreeAssetEditorService.getSpecificTreeNodeById(removedNodeId)
+    |> TreeAssetEditorService.getSpecificTreeNodeById(sourceNodeId)
     |> OptionService.unsafeGet;
 
-  let removedNodeName =
+  let sourceNodeName =
     editorState
     |> AssetNodeUtils.handleSpeficFuncByAssetNodeType(
          type_,
          (
-           FolderNodeMapAssetEditorService.getFolderName(removedNodeId),
-           OperateTextureLogicService.getTextureBaseName(removedNodeId),
+           FolderNodeMapAssetEditorService.getFolderName(sourceNodeId),
+           OperateTextureLogicService.getTextureBaseName(sourceNodeId),
            MaterialNodeMapAssetLogicService.getMaterialBaseName(
-             removedNodeId,
+             sourceNodeId,
              engineState,
            ),
-           WDBNodeMapAssetEditorService.getWDBBaseName(removedNodeId),
+           WDBNodeMapAssetEditorService.getWDBBaseName(sourceNodeId),
          ),
        );
 
   checkAssetNodeName(
-    (removedNodeId, removedNodeName),
+    (sourceNodeId, sourceNodeName),
     targetNodeId,
     type_,
     (
@@ -213,28 +213,28 @@ let _isTargetTreeNodeHasSameNameChild =
 };
 
 let isTreeNodeRelationError =
-    (isWarn, targetNodeId, removedNodeId, (editorState, engineState)) =>
-  TreeAssetEditorService.isIdEqual(targetNodeId, removedNodeId) ?
+    (isWarn, targetNodeId, sourceNodeId, (editorState, engineState)) =>
+  TreeAssetEditorService.isIdEqual(targetNodeId, sourceNodeId) ?
     true :
-    _isRemovedTreeNodeBeTargetParent(
+    _isSourceTreeNodeBeTargetParent(
       targetNodeId,
       editorState
       |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
-      |> TreeAssetEditorService.getSpecificTreeNodeById(removedNodeId)
+      |> TreeAssetEditorService.getSpecificTreeNodeById(sourceNodeId)
       |> OptionService.unsafeGet,
     ) ?
       true :
-      _isTargetTreeNodeBeRemovedParent(
+      _isTargetTreeNodeBeSourceParent(
         editorState
         |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
         |> TreeAssetEditorService.getSpecificTreeNodeById(targetNodeId)
         |> OptionService.unsafeGet,
-        removedNodeId,
+        sourceNodeId,
       )
       || _isTargetTreeNodeHasSameNameChild(
            isWarn,
            targetNodeId,
-           removedNodeId,
+           sourceNodeId,
            (editorState, engineState),
          );
 

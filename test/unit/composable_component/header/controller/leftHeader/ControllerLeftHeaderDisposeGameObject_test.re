@@ -138,18 +138,18 @@ let _ =
                 |> expect == false;
               });
               /* test("should mark last scene camera to be active", () => {
-                let (camera1, camera2) = _test();
+                   let (camera1, camera2) = _test();
 
-                BasicCameraViewEngineService.isActiveBasicCameraView(
-                  camera2
-                  |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-                       _,
-                       StateEngineService.unsafeGetState(),
-                     ),
-                  StateEngineService.unsafeGetState(),
-                )
-                |> expect == true;
-              }); */
+                   BasicCameraViewEngineService.isActiveBasicCameraView(
+                     camera2
+                     |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
+                          _,
+                          StateEngineService.unsafeGetState(),
+                        ),
+                     StateEngineService.unsafeGetState(),
+                   )
+                   |> expect == true;
+                 }); */
             });
 
             describe("test has no camera after remove", () => {
@@ -162,7 +162,7 @@ let _ =
                 MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
 
                 (
-                  SceneEngineService.getSceneAllBasicCameraViews(
+                  SceneToolEngine.getSceneAllBasicCameraViews(
                     StateEngineService.unsafeGetState(),
                   )
                   |> Js.Array.length,

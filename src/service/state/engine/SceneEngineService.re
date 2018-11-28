@@ -2,9 +2,17 @@ open Wonderjs;
 
 let createDefaultSceneGameObjects = (componentData, editorState, engineState) => {
   let (editorState, engineState, box1) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
+    PrimitiveEngineService.createCube(
+      componentData,
+      editorState,
+      engineState,
+    );
   let (editorState, engineState, box2) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
+    PrimitiveEngineService.createCube(
+      componentData,
+      editorState,
+      engineState,
+    );
   let (editorState, engineState, directionLight) =
     PrimitiveEngineService.createDirectionLight(editorState, engineState);
   let (editorState, engineState, camera) =
@@ -41,23 +49,23 @@ let disposeSceneAllChildrenKeepOrderRemoveGeometryRemoveMaterial = engineState =
      );
 };
 
-let getSceneAllBasicCameraViews = engineState =>
-  engineState
-  |> GameObjectEngineService.getAllGameObjects(
-       getSceneGameObject(engineState),
-     )
-  |> Js.Array.filter(gameObject =>
-       GameObjectComponentEngineService.hasBasicCameraViewComponent(
-         gameObject,
-         engineState,
-       )
-     )
-  |> Js.Array.map(gameObject =>
-       GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-         gameObject,
-         engineState,
-       )
-     );
+/* let getSceneAllBasicCameraViews = engineState =>
+   engineState
+   |> GameObjectEngineService.getAllGameObjects(
+        getSceneGameObject(engineState),
+      )
+   |> Js.Array.filter(gameObject =>
+        GameObjectComponentEngineService.hasBasicCameraViewComponent(
+          gameObject,
+          engineState,
+        )
+      )
+   |> Js.Array.map(gameObject =>
+        GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
+          gameObject,
+          engineState,
+        )
+      ); */
 
 let getSceneActiveBasicCameraView = engineState =>
   GameObjectEngineService.getGameObjectActiveBasicCameraView(
@@ -65,14 +73,14 @@ let getSceneActiveBasicCameraView = engineState =>
     engineState,
   );
 
-let getSceneAllBasicMaterials = engineState =>
-  GameObjectEngineService.getAllBasicMaterials(
-    GameObjectEngineService.getAllGameObjects(
-      getSceneGameObject(engineState),
-      engineState,
-    ),
-    engineState,
-  );
+/* let getSceneAllBasicMaterials = engineState =>
+   GameObjectEngineService.getAllBasicMaterials(
+     GameObjectEngineService.getAllGameObjects(
+       getSceneGameObject(engineState),
+       engineState,
+     ),
+     engineState,
+   ); */
 
 let getSceneAllLightMaterials = engineState =>
   GameObjectEngineService.getAllLightMaterials(
@@ -98,20 +106,3 @@ let doesNeedReInitSceneAllLightMaterials = (gameObjects, engineState) =>
        )
      )
   |> Js.Array.length > 0;
-
-let unsafeGetSceneGameObjectsFromGameObjectMaterialComponent =
-    (gameObject, engineState) => {
-  let sceneAllGameObjects =
-    engineState
-    |> GameObjectEngineService.getAllGameObjects(
-         getSceneGameObject(engineState),
-       );
-
-  AllMaterialEngineService.unsafeGetGameObjectsFromGameObjectMaterialComponentAndCopy(
-    gameObject,
-    engineState,
-  )
-  |> Js.Array.filter(gameObject =>
-       sceneAllGameObjects |> Js.Array.includes(gameObject)
-     );
-};

@@ -4,11 +4,11 @@ open WonderBsJszip;
 
 open Js.Promise;
 
-let isZipFile = file =>
+/* let isZipFile = file =>
   switch (LoadAssetUtils.getUploadAssetType(file##name)) {
   | LoadGLTFZip => true
   | _ => false
-  };
+  }; */
 
 /* by makeglb
    https://github.com/sbtron/makeglb

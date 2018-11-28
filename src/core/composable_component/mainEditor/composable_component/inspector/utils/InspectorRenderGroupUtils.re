@@ -108,7 +108,7 @@ module Remove = {
       );
     };
 
-  let replaceMaterialByMaterialType =
+  /* let replaceMaterialByMaterialType =
       (gameObject, sourceMateralType, targetMaterialType, engineState) => {
     let (sourceRenderGroup, removeSourceMaterialFunc) =
       _getOperateSourceRenderGroupData(
@@ -132,7 +132,7 @@ module Remove = {
        );
 
     engineState;
-  };
+  }; */
 
   let replaceMaterialByMaterialData =
       (
