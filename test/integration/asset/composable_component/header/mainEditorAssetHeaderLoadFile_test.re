@@ -60,46 +60,6 @@ let _ =
           })
         )
       );
-      /*
-       TODO open test
-       describe("test load zip file", () => {
-         beforeEach(() => {
-           LoadTool.buildFakeTextDecoder(
-             LoadTool.convertUint8ArrayToBuffer,
-           );
-           LoadTool.buildFakeURL(sandbox^);
-
-           LoadTool.buildFakeLoadImage(.);
-         });
-
-         testPromise(
-           "test load zip file should rebuild asset and sceneTree component",
-           () => {
-           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
-           |> ignore;
-
-           let fileName = "BoxTextured";
-           let newWDBArrayBuffer =
-             NodeToolEngine.getWDBArrayBuffer(fileName);
-
-           let obj =
-             HeaderTool.buildImportFakeJsZipCreateFunc(
-               sandbox^,
-               HeaderTool.buildFakeZipData(newWDBArrayBuffer),
-             );
-
-           HeaderImportUtils.handleZipPackFile(
-             () => obj,
-             TestTool.getDispatch(),
-             "" |> Obj.magic,
-           )
-           |> then_(_ =>
-                BuildComponentTool.buildAssetComponent()
-                |> ReactTestTool.createSnapshotAndMatch
-                |> resolve
-              );
-         });
-       }); */
 
       describe("test logic", () => {
         describe("test should add into root node children", () =>

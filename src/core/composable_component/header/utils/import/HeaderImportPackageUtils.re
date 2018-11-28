@@ -134,7 +134,6 @@ let _import = result => {
                   sceneGameObject,
                   engineState,
                 ),
-                /* TODO use asset->imageUint8ArrayDataMap? */
                 SparseMapService.mergeSparseMaps([|
                   imageUint8ArrayDataMapRef^,
                   imageUint8ArrayDataMap,

@@ -162,7 +162,6 @@ module Method = {
           ReasonReact.null
       )
       (
-        /*TODO not use modal */
         state.isShowEditExportPackageModal ?
           <SingleInputModal
             title="Export Package"

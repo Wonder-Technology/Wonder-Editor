@@ -44,7 +44,6 @@ let buildFakeImage = [%bs.raw
 let _buildImageObj = src =>
   {"src": src, "getAttribute": prop => src} |> Obj.magic;
 
-/* TODO not need init assettree */
 let initAssetTree = () =>
   (
     editorState => {

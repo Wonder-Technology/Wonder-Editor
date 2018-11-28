@@ -40,7 +40,6 @@ let buildImageData =
                 {j|load image error. imageIndex: $imageIndex|j},
               )
               |> WonderBsMost.Most.map(image => {
-                   /* TODO test */
                    ImageUtils.setImageName(image, name);
 
                    image;
