@@ -4662,19 +4662,43 @@
 
 
 	var log$1 = function (msg){
-	    !!window.wonder_console && window.wonder_console.log(msg);
+	    if (typeof window === "undefined" || typeof window.wonder_console === "undefined") {
+	      return;
+	    }
+
+	    window.wonder_console.log(msg);
+	  };
+
+	var debug$1 = function (msg){
+	    if (typeof window === "undefined" || typeof window.wonder_console === "undefined") {
+	      return;
+	    }
+
+	    window.wonder_console.debug(msg);
 	  };
 
 	var error$3 = function (msg){
-	    !!window.wonder_console && window.wonder_console.error(msg);
+	    if (typeof window === "undefined" || typeof window.wonder_console === "undefined") {
+	      return;
+	    }
+
+	    window.wonder_console.error(msg);
 	  };
 
 	var warn$1 = function (msg){
-	    !!window.wonder_console && window.wonder_console.warn(msg);
+	    if (typeof window === "undefined" || typeof window.wonder_console === "undefined") {
+	      return;
+	    }
+
+	    window.wonder_console.warn(msg);
 	  };
 
 	var trace = function (func){
-	    !!window.wonder_console && window.wonder_console.trace(func);
+	    if (typeof window === "undefined" || typeof window.wonder_console === "undefined") {
+	      return;
+	    }
+
+	    window.wonder_console.trace(func);
 	  };
 
 
@@ -4692,6 +4716,11 @@
 	  return warn$1(msg);
 	}
 
+	function _debug(msg) {
+	  console.log(msg);
+	  return debug$1(msg);
+	}
+
 	function _error(msg) {
 	  console.error(msg);
 	  return error$3(msg);
@@ -4707,8 +4736,13 @@
 	  return JSON.stringify(json);
 	}
 
+	function print(value) {
+	  _log(value);
+	  return value;
+	}
+
 	function warn(msg) {
-	  return _warn("Warn: " + (String(msg) + ""));
+	  return _warn("" + (String(msg) + ""));
 	}
 
 	function buildDebugMessage(description, params, _) {
@@ -4725,7 +4759,7 @@
 
 	function debug(buildMessageFunc, isTest) {
 	  if (isTest) {
-	    _log(_1(buildMessageFunc, /* () */0));
+	    _debug(_1(buildMessageFunc, /* () */0));
 	    return _trace(debug);
 	  } else {
 	    return /* () */0;
@@ -4739,7 +4773,7 @@
 
 	function debugJson(buildMessageFunc, isTest) {
 	  if (isTest) {
-	    _log(_1(buildMessageFunc, /* () */0));
+	    _debug(_1(buildMessageFunc, /* () */0));
 	    return _trace(debugJson);
 	  } else {
 	    return /* () */0;
@@ -5766,7 +5800,7 @@
 
 	/* No side effect */
 
-	function handleGetNoneJob(name, jobHandleMap) {
+	function handleGetNoneWorkerJob(name, jobHandleMap) {
 	  return fatal(buildFatalMessage("get no job", "can\'t find job handle function whose job name is " + (String(name) + ""), "", "make sure that the job name defined in config record be correctly", "jobHandleMap:" + (getJsonStr(jobHandleMap) + ("\nname: " + (String(name) + "")))));
 	}
 
@@ -8733,17 +8767,21 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
+	function _getElementIndexUint(gl) {
+	  var match = gl.getExtension("OES_element_index_uint");
+	  if (match == null) {
+	    fatal(buildFatalMessage("_getExtension", "not support OES_element_index_uint extension", "", "", ""));
+	    return false;
+	  } else {
+	    return true;
+	  }
+	}
+
 	function _getExtension(name, gl) {
 	  var tmp;
 	  switch (name) {
 	    case "element_index_uint" : 
-	        var match = gl.getExtension("OES_element_index_uint");
-	        if (match == null) {
-	          fatal(buildFatalMessage("_getExtension", "not support OES_element_index_uint extension", "", "", ""));
-	          tmp = false;
-	        } else {
-	          tmp = true;
-	        }
+	        tmp = _getElementIndexUint(gl);
 	        break;
 	    case "instanced_arrays" : 
 	        tmp = gl.getExtension("ANGLE_instanced_arrays");
@@ -9651,6 +9689,10 @@
 
 	function unsafeGetArrayBufferViewSourceTextureCount(param) {
 	  return unsafeGet$1(param[/* arrayBufferViewSourceTextureCount */4]);
+	}
+
+	function unsafeGetPointLightCount(param) {
+	  return unsafeGet$1(param[/* pointLightCount */6]);
 	}
 
 
@@ -10792,8 +10834,7 @@
 	  }
 	}
 
-	function computeVertexNormalsByIndices(vertices, indices) {
-	  var indicesLen = indices.length;
+	function _computeVertexNormals(vertices, indices, indicesLen, getIndexFunc) {
 	  var _compute = function (_index, _normals) {
 	    while(true) {
 	      var normals = _normals;
@@ -10802,9 +10843,9 @@
 	      if (match) {
 	        return normals;
 	      } else {
-	        var va = imul(indices[index], 3);
-	        var vb = imul(indices[index + 1 | 0], 3);
-	        var vc = imul(indices[index + 2 | 0], 3);
+	        var va = imul(_2(getIndexFunc, indices, index), 3);
+	        var vb = imul(_2(getIndexFunc, indices, index + 1 | 0), 3);
+	        var vc = imul(_2(getIndexFunc, indices, index + 2 | 0), 3);
 	        var pa = _getPosition(vertices, va);
 	        var pb = _getPosition(vertices, vb);
 	        var pc = _getPosition(vertices, vc);
@@ -10820,32 +10861,18 @@
 	  return _normalizeNormals(_compute(0, new Float32Array(vertices.length)));
 	}
 
+	function computeVertexNormalsByIndices(vertices, indices) {
+	  var indicesLen = indices.length;
+	  return _computeVertexNormals(vertices, indices, indicesLen, (function (prim, prim$1) {
+	                return prim[prim$1];
+	              }));
+	}
+
 	function computeVertexNormalsByIndices32(vertices, indices32) {
 	  var indicesLen = indices32.length;
-	  var _compute = function (_index, _normals) {
-	    while(true) {
-	      var normals = _normals;
-	      var index = _index;
-	      var match = index >= indicesLen;
-	      if (match) {
-	        return normals;
-	      } else {
-	        var va = imul(indices32[index], 3);
-	        var vb = imul(indices32[index + 1 | 0], 3);
-	        var vc = imul(indices32[index + 2 | 0], 3);
-	        var pa = _getPosition(vertices, va);
-	        var pb = _getPosition(vertices, vb);
-	        var pc = _getPosition(vertices, vc);
-	        var v0 = sub$1(/* Float */0, pc, pb);
-	        var v1 = sub$1(/* Float */0, pa, pb);
-	        var faceNormalTuple = cross(v0, v1);
-	        _normals = _setNormal(faceNormalTuple, vc, _setNormal(faceNormalTuple, vb, _setNormal(faceNormalTuple, va, normals)));
-	        _index = index + 3 | 0;
-	        continue ;
-	      }
-	    }
-	  };
-	  return _normalizeNormals(_compute(0, new Float32Array(vertices.length)));
+	  return _computeVertexNormals(vertices, indices32, indicesLen, (function (prim, prim$1) {
+	                return prim[prim$1];
+	              }));
 	}
 
 
@@ -13251,8 +13278,8 @@
 
 	/* BufferGeometryService-Wonderjs Not a pure module */
 
-	function _createTypeArrays$1(buffer, geometryPointCount, geometryCount, indicesTypeMap, state) {
-	  var match = createTypeArrays$4(buffer, geometryPointCount, geometryCount);
+	function _createTypeArrays$1(buffer, param, indicesTypeMap, state) {
+	  var match = createTypeArrays$4(buffer, param[0], param[1]);
 	  state[/* geometryRecord */18] = /* record */[
 	    /* vertices */match[0],
 	    /* texCoords */match[1],
@@ -13277,7 +13304,10 @@
 	                var indicesTypeMap = geometryData.indicesTypeMap;
 	                var geometryPointCount = data.bufferData.geometryPointCount;
 	                var geometryCount = data.bufferData.geometryCount;
-	                setState$1(stateData, _createTypeArrays$1(buffer, geometryPointCount, geometryCount, indicesTypeMap, state));
+	                setState$1(stateData, _createTypeArrays$1(buffer, /* tuple */[
+	                          geometryPointCount,
+	                          geometryCount
+	                        ], indicesTypeMap, state));
 	                return e;
 	              }));
 	}
@@ -13410,7 +13440,7 @@
 	}
 
 	function getIntensitiesOffset(count) {
-	  return imul(imul(count, 3), Float32Array.BYTES_PER_ELEMENT);
+	  return 0 + imul(imul(count, 3), Float32Array.BYTES_PER_ELEMENT) | 0;
 	}
 
 	function getIntensitiesLength(count) {
@@ -13418,7 +13448,7 @@
 	}
 
 	function getConstantsOffset(count) {
-	  return imul(imul(count, 3), Float32Array.BYTES_PER_ELEMENT) + imul((count << 0), Float32Array.BYTES_PER_ELEMENT) | 0;
+	  return getIntensitiesOffset(count) + imul((count << 0), Float32Array.BYTES_PER_ELEMENT) | 0;
 	}
 
 	function getConstantsLength(count) {
@@ -13702,7 +13732,7 @@
 	}
 
 	function getIntensitiesOffset$1(count) {
-	  return imul(imul(count, 3), Float32Array.BYTES_PER_ELEMENT);
+	  return 0 + imul(imul(count, 3), Float32Array.BYTES_PER_ELEMENT) | 0;
 	}
 
 	function getIntensitiesLength$1(count) {
@@ -13904,6 +13934,8 @@
 	                  /* textureCountPerMaterial */data.bufferData.textureCountPerMaterial,
 	                  /* basicSourceTextureCount */data.bufferData.basicSourceTextureCount,
 	                  /* arrayBufferViewSourceTextureCount */data.bufferData.arrayBufferViewSourceTextureCount,
+	                  /* directionLightCount */data.bufferData.directionLightCount,
+	                  /* pointLightCount */data.bufferData.pointLightCount,
 	                  /* memory *//* record */[/* maxBigTypeArrayPoolSize */memoryData.maxBigTypeArrayPoolSize]
 	                ];
 	                setState$1(stateData, state);
@@ -13949,10 +13981,11 @@
 	function execJob$38(_, e, stateData) {
 	  return callFunc((function () {
 	                var state = unsafeGetState$1(stateData);
+	                var settingRecord = state[/* settingRecord */1];
 	                var data = getRecord$1(e);
 	                var pointLightData = data.pointLightData;
 	                var buffer = pointLightData.buffer;
-	                var count = getBufferMaxCount(/* () */0);
+	                var count = unsafeGetPointLightCount(settingRecord);
 	                setState$1(stateData, _getData(pointLightData, _createRecordWithCreatedTypeArrays(buffer, count, pointLightData.index, state)));
 	                return e;
 	              }));
@@ -14513,6 +14546,39 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
+	function checkNotExceedMaxCount$1(count, _) {
+	  requireCheck((function () {
+	          var maxCount = getBufferMaxCount$1(/* () */0);
+	          return test(buildAssertMessage("light count: " + (String(count) + (" <= max count: " + (String(maxCount) + ""))), "not"), (function () {
+	                        return assertLte(/* Int */0, count, maxCount);
+	                      }));
+	        }), getIsDebug(stateData));
+	  return count;
+	}
+
+	function getLightCount(renderLightArr) {
+	  return renderLightArr.length;
+	}
+
+
+	/* Log-WonderLog Not a pure module */
+
+	/* CountLightService-Wonderjs Not a pure module */
+
+	/* Log-WonderLog Not a pure module */
+
+	/* No side effect */
+
+	/* Contract-WonderLog Not a pure module */
+
+	/* Log-WonderLog Not a pure module */
+
+	/* CountLightService-Wonderjs Not a pure module */
+
+	/* CreatePointLightService-Wonderjs Not a pure module */
+
+	/* Contract-WonderLog Not a pure module */
+
 	/* ArrayService-Wonderjs Not a pure module */
 
 	function getShaders(param) {
@@ -14566,13 +14632,17 @@
 	                  /* quadratics */pointLightRecord[/* quadratics */7],
 	                  /* ranges */pointLightRecord[/* ranges */8]
 	                ];
+	                print(/* tuple */[
+	                      "worker->intensitys: ",
+	                      pointLightRecord[/* intensities */4].slice(0, 20)
+	                    ]);
 	                setState$1(stateData, state);
 	                return e;
 	              }));
 	}
 
 
-	/* MostUtils-Wonderjs Not a pure module */
+	/* Log-WonderLog Not a pure module */
 
 	function isNotDisposed(disposedIndexArray) {
 	  return disposedIndexArray.length === 0;
@@ -14677,27 +14747,28 @@
 	  return initShader$1(param[0], param[1], gl, registerProgram(shaderIndex, programRecord, gl.createProgram()));
 	}
 
-	function _initNewShader(_, shaderIndex, key, param, param$1, param$2) {
-	  var shaderLibDataArr = param[1];
-	  var gl = param[0];
-	  setShaderIndex$1(key, shaderIndex, useShaderIndex(shaderIndex, param$2[0]));
-	  var match = param$1[0](shaderLibDataArr, param$1[1], /* tuple */[
-	        param$2[2],
-	        param$2[5]
+	function _initNewShader(param, param$1, param$2, param$3) {
+	  var shaderLibDataArr = param$1[1];
+	  var gl = param$1[0];
+	  var shaderIndex = param[1];
+	  setShaderIndex$1(param[2], shaderIndex, useShaderIndex(shaderIndex, param$3[0]));
+	  var match = param$2[0](shaderLibDataArr, param$2[1], /* tuple */[
+	        param$3[2],
+	        param$3[5]
 	      ]);
 	  var program = _createProgramAndInit(gl, shaderIndex, /* tuple */[
 	        match[0],
 	        match[1]
-	      ], param$2[1]);
-	  var recordTuple = param$1[2](/* tuple */[
+	      ], param$3[1]);
+	  var recordTuple = param$2[2](/* tuple */[
 	        gl,
 	        shaderIndex,
 	        program
 	      ], shaderLibDataArr, /* tuple */[
-	        param$2[3],
-	        param$2[4]
+	        param$3[3],
+	        param$3[4]
 	      ]);
-	  param$1[3](gl, /* tuple */[
+	  param$2[3](gl, /* tuple */[
 	        program,
 	        shaderIndex,
 	        shaderLibDataArr
@@ -14717,7 +14788,11 @@
 	  } else {
 	    var shaderIndex$1 = genereateShaderIndex(shaderRecord);
 	    var shaderRecord$1 = addMaterialWithoutDuplicate(shaderIndex$1, materialIndex, shaderRecord);
-	    return _initNewShader(materialIndex, shaderIndex$1, key, /* tuple */[
+	    return _initNewShader(/* tuple */[
+	                materialIndex,
+	                shaderIndex$1,
+	                key
+	              ], /* tuple */[
 	                param[0],
 	                shaderLibDataArr
 	              ], /* tuple */[
@@ -14924,7 +14999,7 @@
 
 	/* Log-WonderLog Not a pure module */
 
-	function getColor$3(material, param) {
+	function getColor$4(material, param) {
 	  return getColor(material, param[/* basicMaterialRecord */7][/* colors */1]);
 	}
 
@@ -14971,7 +15046,7 @@
 	                    name,
 	                    pos,
 	                    type_
-	                  ], sendDataArrTuple, getColor$3);
+	                  ], sendDataArrTuple, getColor$4);
 	    case "map" : 
 	        return addUniformTextureSendDataByType(/* tuple */[
 	                    uniformCacheMap,
@@ -15780,7 +15855,7 @@
 	}
 
 	function unsafeGetMemory$1(param) {
-	  return unsafeGet$1(param[/* memory */5]);
+	  return unsafeGet$1(param[/* memory */7]);
 	}
 
 
@@ -15872,42 +15947,31 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function checkNotExceedMaxCount$1(count, _) {
-	  requireCheck((function () {
-	          var maxCount = getBufferMaxCount$1(/* () */0);
-	          return test(buildAssertMessage("light count: " + (String(count) + (" <= max count: " + (String(maxCount) + ""))), "not"), (function () {
-	                        return assertLte(/* Int */0, count, maxCount);
-	                      }));
-	        }), getIsDebug(stateData));
-	  return count;
-	}
-
-	function getLightCount$1(renderLightArr) {
-	  return renderLightArr.length;
-	}
-
-
-	/* Log-WonderLog Not a pure module */
-
-	function getLightCount(param) {
-	  var __x = getLightCount$1(param[/* renderLightArr */1]);
-	  return checkNotExceedMaxCount$1(__x, getBufferMaxCount(/* () */0));
+	function getLightCount$2(renderLightArr, bufferMaxCount) {
+	  var __x = getLightCount(renderLightArr);
+	  return checkNotExceedMaxCount$1(__x, bufferMaxCount);
 	}
 
 
 	/* CountLightService-Wonderjs Not a pure module */
 
-	function getLightCount$2(param) {
-	  var __x = getLightCount$1(param[/* renderLightArr */1]);
-	  return checkNotExceedMaxCount$1(__x, getBufferMaxCount$1(/* () */0));
+	function getLightCount$1(param) {
+	  return getLightCount$2(param[/* renderLightArr */1], getBufferMaxCount(/* () */0));
 	}
 
 
-	/* CountLightService-Wonderjs Not a pure module */
+	/* BufferPointLightService-Wonderjs Not a pure module */
+
+	function getLightCount$3(param) {
+	  return getLightCount$2(param[/* renderLightArr */1], getBufferMaxCount$1(/* () */0));
+	}
+
+
+	/* BufferDirectionLightService-Wonderjs Not a pure module */
 
 	function execHandle(param) {
-	  var directionLightCount = getLightCount$2(param[0]);
-	  var pointLightCount = getLightCount(param[1]);
+	  var directionLightCount = getLightCount$3(param[0]);
+	  var pointLightCount = getLightCount$1(param[1]);
 	  return /* record */[
 	          /* top */"",
 	          /* define */"#define DIRECTION_LIGHTS_COUNT " + (String(directionLightCount) + ("\n#define POINT_LIGHTS_COUNT " + (String(pointLightCount) + ""))),
@@ -15937,15 +16001,15 @@
 
 	/* No side effect */
 
-	function getColor$4(mappedIndex, param) {
+	function getColor$5(mappedIndex, param) {
 	  return getColor$1(mappedIndex, param[/* colors */1]);
 	}
 
-	function getIntensity$2(mappedIndex, param) {
+	function getIntensity$3(mappedIndex, param) {
 	  return getIntensity(mappedIndex, param[/* intensities */2]);
 	}
 
-	function getConstant$1(mappedIndex, param) {
+	function getConstant$2(mappedIndex, param) {
 	  return getConstant(mappedIndex, param[/* constants */3]);
 	}
 
@@ -15953,11 +16017,11 @@
 	  return getLinear(mappedIndex, param[/* linears */4]);
 	}
 
-	function getQuadratic$1(mappedIndex, param) {
+	function getQuadratic$2(mappedIndex, param) {
 	  return getQuadratic(mappedIndex, param[/* quadratics */5]);
 	}
 
-	function getRange$1(mappedIndex, param) {
+	function getRange$2(mappedIndex, param) {
 	  return getRange(mappedIndex, param[/* ranges */6]);
 	}
 
@@ -16017,7 +16081,7 @@
 	  sendFloat(gl, uniformCacheMap, /* tuple */[
 	        constant,
 	        getUniformLocation(program, constant, uniformLocationMap, gl)
-	      ], getConstant$1(light, pointLightRecord));
+	      ], getConstant$2(light, pointLightRecord));
 	  sendFloat(gl, uniformCacheMap, /* tuple */[
 	        linear,
 	        getUniformLocation(program, linear, uniformLocationMap, gl)
@@ -16025,11 +16089,11 @@
 	  sendFloat(gl, uniformCacheMap, /* tuple */[
 	        quadratic,
 	        getUniformLocation(program, quadratic, uniformLocationMap, gl)
-	      ], getQuadratic$1(light, pointLightRecord));
+	      ], getQuadratic$2(light, pointLightRecord));
 	  sendFloat(gl, uniformCacheMap, /* tuple */[
 	        range$$1,
 	        getUniformLocation(program, range$$1, uniformLocationMap, gl)
-	      ], getRange$1(light, pointLightRecord));
+	      ], getRange$2(light, pointLightRecord));
 	  return pointLightRecord;
 	}
 
@@ -16051,6 +16115,11 @@
 	          var intensity = structureMemberNameData[/* intensity */2];
 	          var color = structureMemberNameData[/* color */1];
 	          var position = structureMemberNameData[/* position */0];
+	          print(/* tuple */[
+	                "light: ",
+	                light,
+	                getIntensity$3(light, pointLightRecord)
+	              ]);
 	          sendVec3(gl, uniformCacheMap, /* tuple */[
 	                position,
 	                getUniformLocation(program, position, uniformLocationMap, gl)
@@ -16058,11 +16127,11 @@
 	          sendFloat3(gl, uniformCacheMap, /* tuple */[
 	                color,
 	                getUniformLocation(program, color, uniformLocationMap, gl)
-	              ], getColor$4(light, pointLightRecord));
+	              ], getColor$5(light, pointLightRecord));
 	          sendFloat(gl, uniformCacheMap, /* tuple */[
 	                intensity,
 	                getUniformLocation(program, intensity, uniformLocationMap, gl)
-	              ], getIntensity$2(light, pointLightRecord));
+	              ], getIntensity$3(light, pointLightRecord));
 	          return _sendAttenuation(light, /* tuple */[
 	                      gl,
 	                      program,
@@ -16076,7 +16145,7 @@
 
 	/* Log-WonderLog Not a pure module */
 
-	function getColor$5(param) {
+	function getColor$6(param) {
 	  return param[/* ambientLight */0][/* color */0];
 	}
 
@@ -16088,7 +16157,7 @@
 	  return sendFloat3(gl, param[1], /* tuple */[
 	              name,
 	              getUniformLocation(param[0], name, param[2], gl)
-	            ], getColor$5(param$1[/* sceneRecord */0]));
+	            ], getColor$6(param$1[/* sceneRecord */0]));
 	}
 
 
@@ -16099,11 +16168,11 @@
 
 	/* No side effect */
 
-	function getColor$6(mappedIndex, param) {
+	function getColor$7(mappedIndex, param) {
 	  return getColor$2(mappedIndex, param[/* colors */1]);
 	}
 
-	function getIntensity$3(mappedIndex, param) {
+	function getIntensity$4(mappedIndex, param) {
 	  return getIntensity$1(mappedIndex, param[/* intensities */2]);
 	}
 
@@ -16156,11 +16225,11 @@
 	          sendFloat3(gl, uniformCacheMap, /* tuple */[
 	                color,
 	                getUniformLocation(program, color, uniformLocationMap, gl)
-	              ], getColor$6(light, directionLightRecord));
+	              ], getColor$7(light, directionLightRecord));
 	          sendFloat(gl, uniformCacheMap, /* tuple */[
 	                intensity,
 	                getUniformLocation(program, intensity, uniformLocationMap, gl)
-	              ], getIntensity$3(light, directionLightRecord));
+	              ], getIntensity$4(light, directionLightRecord));
 	          return directionLightRecord;
 	        }), directionLightRecord, directionLightRecord[/* renderLightArr */3]);
 	  return /* () */0;
@@ -16584,11 +16653,17 @@
 
 	/* MemorySettingService-Wonderjs Not a pure module */
 
-	/* No side effect */
+	/* GameObjectsMapService-Wonderjs Not a pure module */
 
-	/* No side effect */
+	/* GroupService-Wonderjs Not a pure module */
+
+	/* GameObjectsMapService-Wonderjs Not a pure module */
 
 	/* Log-WonderLog Not a pure module */
+
+	/* Log-WonderLog Not a pure module */
+
+	/* No side effect */
 
 	/* ArrayService-WonderCommonlib Not a pure module */
 
@@ -16629,10 +16704,11 @@
 	function execJob$56(_, e, stateData) {
 	  return callFunc((function () {
 	                var state = unsafeGetState$1(stateData);
+	                var settingRecord = state[/* settingRecord */1];
 	                var data = getRecord$1(e);
 	                var directionLightData = data.directionLightData;
 	                var buffer = directionLightData.buffer;
-	                var count = getBufferMaxCount$1(/* () */0);
+	                var count = unsafeGetPointLightCount(settingRecord);
 	                setState$1(stateData, _getData$1(directionLightData, _createRecordWithCreatedTypeArrays$1(buffer, count, directionLightData.index, state)));
 	                return e;
 	              }));
@@ -16655,7 +16731,7 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function create$27(param) {
+	function create$29(param) {
 	  return /* record */[
 	          /* shaders */param[0],
 	          /* shaderLibs */param[1]
@@ -16670,7 +16746,7 @@
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var renderConfigData = data.renderConfigData;
-	                state[/* renderConfigRecord */2] = create$27(/* tuple */[
+	                state[/* renderConfigRecord */2] = create$29(/* tuple */[
 	                      JSON.parse(renderConfigData.shaders),
 	                      JSON.parse(renderConfigData.shaderLibs)
 	                    ]);
@@ -17033,10 +17109,6 @@
 
 	/* ArrayService-WonderCommonlib Not a pure module */
 
-	/* GameObjectsMapService-Wonderjs Not a pure module */
-
-	/* GroupService-Wonderjs Not a pure module */
-
 	/* ArrayService-WonderCommonlib Not a pure module */
 
 	/* GroupService-Wonderjs Not a pure module */
@@ -17048,14 +17120,6 @@
 	/* ArrayService-WonderCommonlib Not a pure module */
 
 	/* ComponentMapService-Wonderjs Not a pure module */
-
-	/* No side effect */
-
-	/* Contract-WonderLog Not a pure module */
-
-	/* GameObjectsMapService-Wonderjs Not a pure module */
-
-	/* Log-WonderLog Not a pure module */
 
 	/* Contract-WonderLog Not a pure module */
 
@@ -17485,7 +17549,7 @@
 	  if (match !== undefined) {
 	    return valFromOption(match);
 	  } else {
-	    return handleGetNoneJob(name, jobHandleMap);
+	    return handleGetNoneWorkerJob(name, jobHandleMap);
 	  }
 	}
 
@@ -17494,14 +17558,14 @@
 
 	/* JobService-Wonderjs Not a pure module */
 
-	function create$28() {
+	function create$30() {
 	  return /* record */[/* precision */undefined];
 	}
 
 
 	/* No side effect */
 
-	function create$29() {
+	function create$31() {
 	  return /* record */[
 	          /* index */0,
 	          /* shaderIndexMap */createEmpty(/* () */0),
@@ -17513,7 +17577,7 @@
 
 	/* HashMapService-Wonderjs Not a pure module */
 
-	function create$30() {
+	function create$32() {
 	  return /* record */[
 	          /* programMap */createEmpty$2(/* () */0),
 	          /* lastUsedProgram */undefined
@@ -17523,7 +17587,7 @@
 
 	/* No side effect */
 
-	function create$31() {
+	function create$33() {
 	  return /* record */[
 	          /* geometryVertexBufferMap */createEmpty$2(/* () */0),
 	          /* geometryTexCoordBufferMap */createEmpty$2(/* () */0),
@@ -17539,7 +17603,7 @@
 
 	/* ArrayService-WonderCommonlib Not a pure module */
 
-	function create$32() {
+	function create$34() {
 	  return /* record */[
 	          /* float16Array1 */new Float32Array(/* array */[
 	                1,
@@ -17576,7 +17640,7 @@
 
 	/* No side effect */
 
-	function create$33() {
+	function create$35() {
 	  return /* record */[
 	          /* attributeLocationMap */createEmpty$2(/* () */0),
 	          /* uniformLocationMap */createEmpty$2(/* () */0)
@@ -17586,7 +17650,7 @@
 
 	/* No side effect */
 
-	function create$34() {
+	function create$36() {
 	  return /* record */[
 	          /* gl */undefined,
 	          /* colorWrite */undefined,
@@ -17602,7 +17666,7 @@
 
 	/* No side effect */
 
-	function create$35() {
+	function create$37() {
 	  return /* record */[
 	          /* attributeSendDataMap */createEmpty$2(/* () */0),
 	          /* instanceAttributeSendDataMap */createEmpty$2(/* () */0),
@@ -17621,7 +17685,7 @@
 
 	/* ArrayService-WonderCommonlib Not a pure module */
 
-	function create$36() {
+	function create$38() {
 	  return /* record */[
 	          /* float32ArrayPoolMap */createEmpty$2(/* () */0),
 	          /* uint16ArrayPoolMap */createEmpty$2(/* () */0)
@@ -17631,14 +17695,14 @@
 
 	/* No side effect */
 
-	function create$37() {
+	function create$39() {
 	  return /* record */[/* ambientLight : record */[/* color */getDefaultColor$1(/* () */0)]];
 	}
 
 
 	/* No side effect */
 
-	function create$38() {
+	function create$40() {
 	  return /* record */[
 	          /* customDataInRenderWorker */-1,
 	          /* customDataFromRenderWorkerToMainWorker */-1,
@@ -17649,7 +17713,7 @@
 
 	/* No side effect */
 
-	function create$39() {
+	function create$41() {
 	  return /* record */[
 	          /* basicRenderObjectRecord */undefined,
 	          /* lightRenderObjectRecord */undefined,
@@ -17660,13 +17724,15 @@
 
 	/* No side effect */
 
-	function create$40() {
+	function create$42() {
 	  return /* record */[
 	          /* gpu */undefined,
 	          /* instanceBuffer */undefined,
 	          /* textureCountPerMaterial */undefined,
 	          /* basicSourceTextureCount */undefined,
 	          /* arrayBufferViewSourceTextureCount */undefined,
+	          /* directionLightCount */undefined,
+	          /* pointLightCount */undefined,
 	          /* memory */undefined
 	        ];
 	}
@@ -17676,8 +17742,8 @@
 
 	function createState() {
 	  return /* record */[
-	          /* sceneRecord */create$37(/* () */0),
-	          /* settingRecord */create$40(/* () */0),
+	          /* sceneRecord */create$39(/* () */0),
+	          /* settingRecord */create$42(/* () */0),
 	          /* renderConfigRecord */undefined,
 	          /* gpuDetectRecord : record */[
 	            /* extensionInstancedArrays */undefined,
@@ -17685,12 +17751,12 @@
 	            /* precision */undefined,
 	            /* maxTextureUnit */undefined
 	          ],
-	          /* deviceManagerRecord */create$34(/* () */0),
-	          /* shaderRecord */create$29(/* () */0),
-	          /* programRecord */create$30(/* () */0),
-	          /* glslRecord */create$28(/* () */0),
-	          /* glslSenderRecord */create$35(/* () */0),
-	          /* glslLocationRecord */create$33(/* () */0),
+	          /* deviceManagerRecord */create$36(/* () */0),
+	          /* shaderRecord */create$31(/* () */0),
+	          /* programRecord */create$32(/* () */0),
+	          /* glslRecord */create$30(/* () */0),
+	          /* glslSenderRecord */create$37(/* () */0),
+	          /* glslLocationRecord */create$35(/* () */0),
 	          /* glslChunkRecord */create$26(/* () */0),
 	          /* sourceInstanceRecord */create$10(/* () */0),
 	          /* basicMaterialRecord */undefined,
@@ -17702,15 +17768,15 @@
 	          /* geometryRecord */undefined,
 	          /* directionLightRecord */undefined,
 	          /* pointLightRecord */undefined,
-	          /* renderRecord */create$39(/* () */0),
-	          /* typeArrayPoolRecord */create$36(/* () */0),
-	          /* vboBufferRecord */create$31(/* () */0),
-	          /* globalTempRecord */create$32(/* () */0),
+	          /* renderRecord */create$41(/* () */0),
+	          /* typeArrayPoolRecord */create$38(/* () */0),
+	          /* vboBufferRecord */create$33(/* () */0),
+	          /* globalTempRecord */create$34(/* () */0),
 	          /* workerDetectRecord */undefined,
 	          /* browserDetectRecord */undefined,
 	          /* imguiRecord */createRecord$1(/* () */0),
 	          /* apiRecord */create$11(/* () */0),
-	          /* customRecord */create$38(/* () */0)
+	          /* customRecord */create$40(/* () */0)
 	        ];
 	}
 
