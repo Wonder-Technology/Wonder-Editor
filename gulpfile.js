@@ -17,8 +17,30 @@ var _safeExec = (commandStr, done) => exec(commandStr, { maxBuffer: 1024 * 500 }
     done();
 });
 
+
+gulp.task("updateVersion", function (done) {
+    const packageJsonFilePath = path.join(__dirname, "package.json");
+    const copyrightFilePath = path.join(__dirname, "src/Copyright.re");
+
+    var packageJson = JSON.parse(fs.readFileSync(packageJsonFilePath, "utf8"));
+
+
+
+    var data = fs.readFileSync(copyrightFilePath, "utf8");
+
+    var result = data.replace(/(let\sgetVersion\s=\s\(\)\s=>\s")(.+)"/img, function (match, p1, p2) {
+        return p1 + packageJson.version + "\"";
+    });
+
+    fs.writeFileSync(
+        copyrightFilePath, result, "utf8"
+    );
+
+    done();
+});
+
 function replaceSnapshotPath(filePath) {
-    fs.readFile(filePath, 'utf8', function (err, data) {
+    fs.readFile(filePath, "utf8", function (err, data) {
         if (err) {
             return console.log(err);
         }
@@ -32,7 +54,7 @@ function replaceSnapshotPath(filePath) {
             }); `
         );
 
-        fs.writeFile(filePath, result, 'utf8', function (err) {
+        fs.writeFile(filePath, result, "utf8", function (err) {
             if (err) return console.log(err);
         });
     });
