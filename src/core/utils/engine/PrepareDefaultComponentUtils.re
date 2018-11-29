@@ -20,7 +20,7 @@ let _buildDefaultCubeGeometryComponent = engineState => {
 
 let _buildDefaultSphereGeometryComponent = engineState => {
   let (engineState, sphereGeometry) =
-    GeometryEngineService.createSphereGeometry(5., 28, engineState);
+    GeometryEngineService.createSphereGeometry(0.5, 28, engineState);
 
   (
     engineState
