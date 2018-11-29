@@ -19,7 +19,6 @@
     "<rootDir>/lib/es6_global/src/core/ui/App\\.js",
     "<rootDir>/lib/es6_global/src/core/composable_component/mainEditor/ui/MainEditor\\.js",
     "<rootDir>/lib/es6_global/src/core/ui/eventHandler/EmptyEventHandler\\.js",
-    "<rootDir>/lib/es6_global/src/core/.+/ui/",
     "<rootDir>/lib/es6_global/src/.+/PanelExtension.js",
     "<rootDir>/lib/es6_global/src/core/config/",
     "<rootDir>/lib/es6_global/src/core/.+/.+Type\\.js",
@@ -53,10 +52,10 @@
   ],
   "coverageThreshold": {
     "global": {
-      "lines": 90,
-      "statements": 90,
-      "branches": 77,
-      "functions": 89
+      "lines": 86,
+      "statements": 96,
+      "branches": 74,
+      "functions": 83
     }
   }
 }
