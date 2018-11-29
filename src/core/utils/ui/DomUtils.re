@@ -1,31 +1,16 @@
-let rec _iterateArrayDom = (targetDom, domArray, isIncludeTarget) => {
-  let domLen = domArray |> Js.Array.length;
+let rec _iterateArrayDom = (targetDom, domArray, isIncludeTarget) =>
+  domArray
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. isIncludeTarget, dom) =>
+         isIncludeTarget || targetDom === dom === true ?
+           true :
+           {
+             let children = (dom |> DomHelperType.convertDomElementToJsObj)##children;
 
-  domArray |> Js.Array.length === 0 ?
-    isIncludeTarget :
-    {
-      for (x in 0 to domLen - 1) {
-        targetDom === domArray[x] ?
-          {
-            isIncludeTarget := true;
+             _iterateArrayDom(targetDom, children, isIncludeTarget);
+           },
+       isIncludeTarget,
+     );
 
-            isIncludeTarget;
-          } :
-          {
-            let children = (
-                             domArray[x]
-                             |> DomHelperType.convertDomElementToJsObj
-                           )##children;
-
-            _iterateArrayDom(targetDom, children, isIncludeTarget);
-          };
-      };
-      isIncludeTarget;
-    };
-};
-
-let isSpecificDomChildrenHasTargetDom = (targetDom, domArray) => {
-  let isIncludeTarget = ref(false);
-
-  (_iterateArrayDom(targetDom, domArray, isIncludeTarget))^;
-};
+let isSpecificDomChildrenHasTargetDom = (targetDom, domArray) =>
+  _iterateArrayDom(targetDom, domArray, false);

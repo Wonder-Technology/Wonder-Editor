@@ -71,25 +71,20 @@ let _addArcballCameraController =
     engineState |> ArcballCameraEngineService.create;
 
   let engineState =
-    StateEditorService.getIsRun() ?
-      engineState
-      |> GameObjectComponentEngineService.hasBasicCameraViewComponent(
-           currentSceneTreeNode,
-         ) ?
-        engineState
-        |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-             currentSceneTreeNode,
-           )
-        |> BasicCameraViewEngineService.isActiveBasicCameraView(
-             _,
-             engineState,
-           ) ?
-          ArcballCameraEngineService.bindArcballCameraControllerEventForGameView(
-            cameraController,
-            engineState,
-          ) :
-          engineState :
-        engineState :
+    StateEditorService.getIsRun()
+    && engineState
+    |> GameObjectComponentEngineService.hasBasicCameraViewComponent(
+         currentSceneTreeNode,
+       )
+    && engineState
+    |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
+         currentSceneTreeNode,
+       )
+    |> BasicCameraViewEngineService.isActiveBasicCameraView(_, engineState) ?
+      ArcballCameraEngineService.bindArcballCameraControllerEventForGameView(
+        cameraController,
+        engineState,
+      ) :
       engineState;
 
   (editorState, engineState)
