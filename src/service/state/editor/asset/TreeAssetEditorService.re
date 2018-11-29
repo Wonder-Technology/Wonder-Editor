@@ -31,3 +31,10 @@ let rec getSpecificTreeNodeById = (nodeId, targetTreeNode) =>
            );
       resultNode;
     };
+
+let getAssetNodeFromRoot = (nodeId, editorState) =>
+  editorState
+  |> TreeRootAssetEditorService.getAssetTreeRoot
+  |> OptionService.unsafeGet
+  |> getSpecificTreeNodeById(nodeId)
+  |> OptionService.unsafeGet;

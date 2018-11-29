@@ -73,13 +73,6 @@ module CustomEventHandler = {
       ),
     );
 
-  let _getAssetNode = (nodeId, editorState) =>
-    editorState
-    |> TreeRootAssetEditorService.getAssetTreeRoot
-    |> OptionService.unsafeGet
-    |> TreeAssetEditorService.getSpecificTreeNodeById(nodeId)
-    |> OptionService.unsafeGet;
-
   let handleSelfLogic =
       ((store, dispatchFunc), (), (targetNodeId, sourceNodeId)) => {
     let editorState = StateEditorService.getState();
@@ -95,7 +88,10 @@ module CustomEventHandler = {
              );
 
         let {type_}: AssetTreeNodeType.assetTreeNodeType =
-          _getAssetNode(sourceNodeId, editorState);
+          TreeAssetEditorService.getAssetNodeFromRoot(
+            sourceNodeId,
+            editorState,
+          );
 
         let (newAssetTreeRoot, removedTreeNode) =
           editorState

@@ -167,17 +167,10 @@ let checkAssetNodeName =
     failFunc((editorState, engineState)) :
     successFunc((editorState, engineState));
 
-let _getAssetNode = (nodeId, editorState) =>
-  editorState
-  |> TreeRootAssetEditorService.getAssetTreeRoot
-  |> OptionService.unsafeGet
-  |> TreeAssetEditorService.getSpecificTreeNodeById(nodeId)
-  |> OptionService.unsafeGet;
-
 let _isTargetTreeNodeHasSameNameChild =
     (isWarn, targetNodeId, sourceNodeId, (editorState, engineState)) => {
   let {type_}: AssetTreeNodeType.assetTreeNodeType =
-    _getAssetNode(sourceNodeId, editorState);
+    TreeAssetEditorService.getAssetNodeFromRoot(sourceNodeId, editorState);
 
   let sourceNodeName =
     editorState
