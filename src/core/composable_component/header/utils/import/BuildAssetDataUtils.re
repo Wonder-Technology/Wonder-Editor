@@ -213,6 +213,101 @@ let _buildMaterialEditorData =
      );
 };
 
+let _buildBasicMaterialData = (basicMaterials, (editorState, engineState)) =>
+  basicMaterials
+  |> WonderCommonlib.ArrayService.reduceOneParami(
+       (.
+         (basicMaterialMap, (editorState, engineState)),
+         {name, path, color}: ExportAssetType.basicMaterial,
+         materialIndex,
+       ) => {
+         let (engineState, material) =
+           BasicMaterialEngineService.create(engineState);
+
+         let engineState =
+           engineState
+           |> BasicMaterialEngineService.setBasicMaterialName(material, name)
+           |> BasicMaterialEngineService.setColor(color, material);
+
+         let editorState =
+           _buildMaterialEditorData(
+             material,
+             path,
+             AssetMaterialDataType.BasicMaterial,
+             (editorState, engineState),
+           );
+
+         (
+           basicMaterialMap
+           |> WonderCommonlib.SparseMapService.set(materialIndex, material),
+           (editorState, engineState),
+         );
+       },
+       (
+         WonderCommonlib.SparseMapService.createEmpty(),
+         (editorState, engineState),
+       ),
+     );
+
+let _buildLightMaterialData =
+    (lightMaterials, textureMap, (editorState, engineState)) =>
+  lightMaterials
+  |> WonderCommonlib.ArrayService.reduceOneParami(
+       (.
+         (lightMaterialMap, (editorState, engineState)),
+         {name, diffuseColor, diffuseMap, shininess, path}: ExportAssetType.lightMaterial,
+         materialIndex,
+       ) => {
+         let (engineState, material) =
+           LightMaterialEngineService.create(engineState);
+
+         let engineState =
+           engineState
+           |> LightMaterialEngineService.setLightMaterialName(material, name)
+           |> LightMaterialEngineService.setLightMaterialDiffuseColor(
+                diffuseColor,
+                material,
+              )
+           |> LightMaterialEngineService.setLightMaterialShininess(
+                shininess,
+                material,
+              );
+
+         let engineState =
+           OptionService.isJsonSerializedValueNone(diffuseMap) ?
+             engineState :
+             {
+               let diffuseMap =
+                 diffuseMap |> OptionService.unsafeGetJsonSerializedValue;
+
+               engineState
+               |> LightMaterialEngineService.setLightMaterialDiffuseMap(
+                    textureMap
+                    |> WonderCommonlib.SparseMapService.unsafeGet(diffuseMap),
+                    material,
+                  );
+             };
+
+         let editorState =
+           _buildMaterialEditorData(
+             material,
+             path,
+             AssetMaterialDataType.LightMaterial,
+             (editorState, engineState),
+           );
+
+         (
+           lightMaterialMap
+           |> WonderCommonlib.SparseMapService.set(materialIndex, material),
+           (editorState, engineState),
+         );
+       },
+       (
+         WonderCommonlib.SparseMapService.createEmpty(),
+         (editorState, engineState),
+       ),
+     );
+
 let buildMaterialData =
     (
       {basicMaterials, lightMaterials}: ExportAssetType.assets,
@@ -220,106 +315,13 @@ let buildMaterialData =
       (editorState, engineState),
     ) => {
   let (basicMaterialMap, (editorState, engineState)) =
-    basicMaterials
-    |> WonderCommonlib.ArrayService.reduceOneParami(
-         (.
-           (basicMaterialMap, (editorState, engineState)),
-           {name, path, color}: ExportAssetType.basicMaterial,
-           materialIndex,
-         ) => {
-           let (engineState, material) =
-             BasicMaterialEngineService.create(engineState);
-
-           let engineState =
-             engineState
-             |> BasicMaterialEngineService.setBasicMaterialName(
-                  material,
-                  name,
-                )
-             |> BasicMaterialEngineService.setColor(color, material);
-
-           let editorState =
-             _buildMaterialEditorData(
-               material,
-               path,
-               AssetMaterialDataType.BasicMaterial,
-               (editorState, engineState),
-             );
-
-           (
-             basicMaterialMap
-             |> WonderCommonlib.SparseMapService.set(materialIndex, material),
-             (editorState, engineState),
-           );
-         },
-         (
-           WonderCommonlib.SparseMapService.createEmpty(),
-           (editorState, engineState),
-         ),
-       );
-
+    _buildBasicMaterialData(basicMaterials, (editorState, engineState));
   let (lightMaterialMap, (editorState, engineState)) =
-    lightMaterials
-    |> WonderCommonlib.ArrayService.reduceOneParami(
-         (.
-           (lightMaterialMap, (editorState, engineState)),
-           {name, diffuseColor, diffuseMap, shininess, path}: ExportAssetType.lightMaterial,
-           materialIndex,
-         ) => {
-           let (engineState, material) =
-             LightMaterialEngineService.create(engineState);
-
-           let engineState =
-             engineState
-             |> LightMaterialEngineService.setLightMaterialName(
-                  material,
-                  name,
-                )
-             |> LightMaterialEngineService.setLightMaterialDiffuseColor(
-                  diffuseColor,
-                  material,
-                )
-             |> LightMaterialEngineService.setLightMaterialShininess(
-                  shininess,
-                  material,
-                );
-
-           let engineState =
-             OptionService.isJsonSerializedValueNone(diffuseMap) ?
-               engineState :
-               {
-                 let diffuseMap =
-                   diffuseMap |> OptionService.unsafeGetJsonSerializedValue;
-
-                 engineState
-                 |> LightMaterialEngineService.setLightMaterialDiffuseMap(
-                      textureMap
-                      |> WonderCommonlib.SparseMapService.unsafeGet(
-                           diffuseMap,
-                         ),
-                      material,
-                    );
-               };
-
-           let editorState =
-             _buildMaterialEditorData(
-               material,
-               path,
-               AssetMaterialDataType.LightMaterial,
-               (editorState, engineState),
-             );
-
-           (
-             lightMaterialMap
-             |> WonderCommonlib.SparseMapService.set(materialIndex, material),
-             (editorState, engineState),
-           );
-         },
-         (
-           WonderCommonlib.SparseMapService.createEmpty(),
-           (editorState, engineState),
-         ),
-       );
+    _buildLightMaterialData(
+      lightMaterials,
+      textureMap,
+      (editorState, engineState),
+    );
 
   (basicMaterialMap, lightMaterialMap, (editorState, engineState));
 };

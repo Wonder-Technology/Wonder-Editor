@@ -74,6 +74,19 @@ let _writeBuffer =
   uint8Array |> Uint8Array.buffer;
 };
 
+let _computeByteLength = (bufferTotalAlignedByteLength, jsonUint8Array) => {
+  let jsonByteLength = jsonUint8Array |> Uint8Array.byteLength;
+
+  let jsonAlignedByteLength = jsonByteLength |> BufferUtils.alignedLength;
+
+  let totalByteLength =
+    ASBUtils.getHeaderTotalByteLength()
+    + jsonAlignedByteLength
+    + bufferTotalAlignedByteLength;
+
+  (jsonByteLength, jsonAlignedByteLength, totalByteLength);
+};
+
 let generateASB = (editorState, engineState) => {
   let (
     (imageArr, textureArr, basicMaterialArr, lightMaterialArr, wdbArr),
@@ -96,14 +109,8 @@ let generateASB = (editorState, engineState) => {
       ),
     );
 
-  let jsonByteLength = jsonUint8Array |> Uint8Array.byteLength;
-
-  let jsonAlignedByteLength = jsonByteLength |> BufferUtils.alignedLength;
-
-  let totalByteLength =
-    ASBUtils.getHeaderTotalByteLength()
-    + jsonAlignedByteLength
-    + bufferTotalAlignedByteLength;
+  let (jsonByteLength, jsonAlignedByteLength, totalByteLength) =
+    _computeByteLength(bufferTotalAlignedByteLength, jsonUint8Array);
 
   let asb = ArrayBuffer.make(totalByteLength);
   let dataView = DataViewUtils.create(asb);

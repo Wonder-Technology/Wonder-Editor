@@ -8,7 +8,7 @@ type uploadFileType =
   | LoadWDB
   | LoadGLB
   | LoadGLTFZip
-  | LoadImage
+  | LoadTexture
   | LoadWPK
   | LoadError;
 

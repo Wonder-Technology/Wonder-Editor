@@ -38,7 +38,7 @@ let _ =
               engineState,
             );
 
-          RelateGameObjectAndAssetUtils._isLightMaterialNameEqual(
+          RelateGameObjectAndMaterialAssetUtils._isLightMaterialNameEqual(
             Some(name1),
             material,
             engineState,
@@ -50,7 +50,7 @@ let _ =
           let (engineState, _, material) =
             LightMaterialToolEngine.createGameObject(engineState);
 
-          RelateGameObjectAndAssetUtils._isLightMaterialNameEqual(
+          RelateGameObjectAndMaterialAssetUtils._isLightMaterialNameEqual(
             None,
             material,
             engineState,
@@ -72,7 +72,7 @@ let _ =
               engineState,
             );
 
-          RelateGameObjectAndAssetUtils._isLightMaterialNameEqual(
+          RelateGameObjectAndMaterialAssetUtils._isLightMaterialNameEqual(
             Some(name1),
             material,
             engineState,
@@ -86,14 +86,14 @@ let _ =
       describe("test judge name is equal", () => {
         test(
           "if sourceName and targetName are all default name, return true", () =>
-          RelateGameObjectAndAssetUtils.isImageNameEqual(
+          RelateGameObjectAndTextureAssetUtils.isImageNameEqual(
             "image_1",
             ImageTool.buildImage(~name="image_3", ()),
           )
           |> expect == true
         );
         test("else, judge sourceName == targetName", () =>
-          RelateGameObjectAndAssetUtils.isImageNameEqual(
+          RelateGameObjectAndTextureAssetUtils.isImageNameEqual(
             "image_1",
             ImageTool.buildImage(~name="name2", ()),
           )

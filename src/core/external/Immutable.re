@@ -13,22 +13,21 @@ module Stack = {
 
   let removeFirstOrRaise = state => state |> List.tl;
 
-  let sliceToFirst = (countToFirst, stack) => {
-    let rec _slice = (count, stack, resultStack) =>
-      count <= 0 ?
-        resultStack :
-        (
-          switch (first(stack)) {
-          | None => resultStack
-          | Some(firstValue) =>
-            _slice(
-              count |> pred,
-              removeFirstOrRaise(stack),
-              addLast(firstValue, resultStack),
-            )
-          }
-        );
+  let rec _slice = (count, stack, resultStack) =>
+    count <= 0 ?
+      resultStack :
+      (
+        switch (first(stack)) {
+        | None => resultStack
+        | Some(firstValue) =>
+          _slice(
+            count |> pred,
+            removeFirstOrRaise(stack),
+            addLast(firstValue, resultStack),
+          )
+        }
+      );
 
+  let sliceToFirst = (countToFirst, stack) =>
     count(stack) <= countToFirst ? stack : _slice(countToFirst, stack, []);
-  };
 };

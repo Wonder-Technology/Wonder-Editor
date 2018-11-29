@@ -74,6 +74,27 @@ let getEngineStateIMGUIFunc = () =>
         engineState,
       );
 
+    let _convertPosition =
+        (
+          (x, y, z, viewWidth, viewHeight),
+          (imageWidth, imageHeight),
+          editCamera,
+          engineState,
+        ) =>
+      convertWorldToScreen(.
+        unsafeGetGameObjectBasicCameraViewComponent(.
+          editCamera,
+          engineState,
+        ),
+        unsafeGetGameObjectPerspectiveCameraProjectionComponent(.
+          editCamera,
+          engineState,
+        ),
+        (x, y, z, viewWidth, viewHeight),
+        engineState,
+      )
+      |> _convertAnchorFromTopLeftToCenter((imageWidth, imageHeight));
+
     let _drawLight =
         (
           (maxDistance, scene, allGameObjects),
@@ -103,19 +124,12 @@ let getEngineStateIMGUIFunc = () =>
                );
 
           let (x, y) =
-            convertWorldToScreen(.
-              unsafeGetGameObjectBasicCameraViewComponent(.
-                editCamera,
-                engineState,
-              ),
-              unsafeGetGameObjectPerspectiveCameraProjectionComponent(.
-                editCamera,
-                engineState,
-              ),
+            _convertPosition(
               (x, y, z, viewWidth, viewHeight),
+              (imageWidth, imageHeight),
+              editCamera,
               engineState,
-            )
-            |> _convertAnchorFromTopLeftToCenter((imageWidth, imageHeight));
+            );
 
           imageFunc(.
             (x, y, imageWidth, imageHeight),
@@ -168,19 +182,12 @@ let getEngineStateIMGUIFunc = () =>
                );
 
           let (x, y) =
-            convertWorldToScreen(.
-              unsafeGetGameObjectBasicCameraViewComponent(.
-                editCamera,
-                engineState,
-              ),
-              unsafeGetGameObjectPerspectiveCameraProjectionComponent(.
-                editCamera,
-                engineState,
-              ),
+            _convertPosition(
               (x, y, z, viewWidth, viewHeight),
+              (imageWidth, imageHeight),
+              editCamera,
               engineState,
-            )
-            |> _convertAnchorFromTopLeftToCenter((imageWidth, imageHeight));
+            );
 
           imageFunc(.
             (x, y, imageWidth, imageHeight),

@@ -1,5 +1,16 @@
 let component = ReasonReact.statelessComponent("Modal");
 
+let _renderFooter = submitFunc =>
+  switch (submitFunc) {
+  | None => ReasonReact.null
+  | Some(submitFunc) =>
+    <div className="modal-item-footer">
+      <button className="footer-submit" onClick=(_e => submitFunc())>
+        (DomHelper.textEl("Submit"))
+      </button>
+    </div>
+  };
+
 let render = (title, content, (closeFunc, submitFunc), _self) =>
   <article className="wonder-modal">
     <div className="modal-item">
@@ -8,18 +19,7 @@ let render = (title, content, (closeFunc, submitFunc), _self) =>
         <img src="./public/img/close.png" onClick=(_e => closeFunc()) />
       </div>
       <div className="modal-item-content"> content </div>
-      (
-        switch ( submitFunc ){
-        | None => ReasonReact.null
-        | Some(submitFunc) => 
-        <div className="modal-item-footer">
-          <button className="footer-submit" onClick=(_e => submitFunc())>
-            (DomHelper.textEl("Submit"))
-          </button>
-        </div>
-        }
-      )
-
+      (_renderFooter(submitFunc))
     </div>
   </article>;
 

@@ -188,58 +188,62 @@ let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
     ReasonReact.Update({...state, isShowMaterialGroup: false})
   };
 
+let _renderSelectMaterial = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
+  <div className="inspector-item">
+    <div className="item-header"> (DomHelper.textEl("Material")) </div>
+    <div className="item-content">
+      <div className="inspector-select">
+        <div className="select-name">
+          (
+            DomHelper.textEl(
+              MainEditorMaterialUtils.getName(
+                state.currentMaterial,
+                state.materialType,
+              )
+              |> StateLogicService.getEngineStateToGetData,
+            )
+          )
+        </div>
+        <div className="select-img" onClick=(_e => send(ShowMaterialGroup))>
+          <img src="./public/img/select.png" />
+        </div>
+      </div>
+    </div>
+  </div>;
+
+let _renderMaterialGroup =
+    (currentSceneTreeNode, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+  <div className="select-component-content">
+    <div className="select-component-item">
+      <div className="item-header"> (DomHelper.textEl("Material")) </div>
+      (
+        ReasonReact.array(
+          Method.showMaterialAssets(
+            send,
+            currentSceneTreeNode,
+            state.currentMaterial,
+            state.materialType,
+          ),
+        )
+      )
+    </div>
+    <div
+      className="select-component-bg"
+      onClick=(_e => send(HideMaterialGroup))
+    />
+  </div>;
+
 let render =
     (
       (store, dispatchFunc),
       currentSceneTreeNode,
-      {state, send}: ReasonReact.self('a, 'b, 'c),
+      ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) =>
   <article key="MainEditorMaterial" className="wonder-inspector-material">
-    <div className="inspector-item">
-      <div className="item-header"> (DomHelper.textEl("Material")) </div>
-      <div className="item-content">
-        <div className="inspector-select">
-          <div className="select-name">
-            (
-              DomHelper.textEl(
-                MainEditorMaterialUtils.getName(
-                  state.currentMaterial,
-                  state.materialType,
-                )
-                |> StateLogicService.getEngineStateToGetData,
-              )
-            )
-          </div>
-          <div className="select-img" onClick=(_e => send(ShowMaterialGroup))>
-            <img src="./public/img/select.png" />
-          </div>
-        </div>
-      </div>
-    </div>
+    (_renderSelectMaterial(self))
     (
       state.isShowMaterialGroup ?
-        <div className="select-component-content">
-          <div className="select-component-item">
-            <div className="item-header">
-              (DomHelper.textEl("Material"))
-            </div>
-            (
-              ReasonReact.array(
-                Method.showMaterialAssets(
-                  send,
-                  currentSceneTreeNode,
-                  state.currentMaterial,
-                  state.materialType,
-                ),
-              )
-            )
-          </div>
-          <div
-            className="select-component-bg"
-            onClick=(_e => send(HideMaterialGroup))
-          />
-        </div> :
-        ReasonReact.null
+        _renderMaterialGroup(currentSceneTreeNode, self) : ReasonReact.null
     )
     <div className="material-value">
       <Select

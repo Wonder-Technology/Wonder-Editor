@@ -109,49 +109,49 @@ let reducer =
 
   | Nothing => ReasonReact.NoUpdate
   };
+
+let _renderDragableImage =
+    (
+      store,
+      materialComponent,
+      getMapFunc,
+      {state, send}: ReasonReact.self('a, 'b, 'c),
+    ) =>
+  <div className="texture-img" style=state.style>
+    <div
+      className="img-dragBg"
+      onDragEnter=(
+        _e =>
+          send(
+            Method.handleDragEnter(Method.isWidget, Method.isTypeValid, _e),
+          )
+      )
+      onDragLeave=(
+        _e =>
+          send(
+            Method.handleDragLeave(Method.isWidget, Method.isTypeValid, _e),
+          )
+      )
+      onDragOver=Method.handleDragOver
+      onDrop=(
+        _e =>
+          send(Method.handleDrop(Method.isWidget, Method.isTypeValid, _e))
+      )
+    />
+    (Method.showMapComponent(materialComponent, getMapFunc))
+  </div>;
+
 let render =
     (
       (store, dispatchFunc),
       (materialComponent, label),
       (getMapFunc, removeTextureFunc),
-      {state, send}: ReasonReact.self('a, 'b, 'c),
+      ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) =>
   <article className="inspector-item">
     <div className="item-header"> (DomHelper.textEl(label)) </div>
     <div className="item-content item-texture">
-      <div className="texture-img" style=state.style>
-        <div
-          className="img-dragBg"
-          onDragEnter=(
-            _e =>
-              send(
-                Method.handleDragEnter(
-                  Method.isWidget,
-                  Method.isTypeValid,
-                  _e,
-                ),
-              )
-          )
-          onDragLeave=(
-            _e =>
-              send(
-                Method.handleDragLeave(
-                  Method.isWidget,
-                  Method.isTypeValid,
-                  _e,
-                ),
-              )
-          )
-          onDragOver=Method.handleDragOver
-          onDrop=(
-            _e =>
-              send(
-                Method.handleDrop(Method.isWidget, Method.isTypeValid, _e),
-              )
-          )
-        />
-        (Method.showMapComponent(materialComponent, getMapFunc))
-      </div>
+      (_renderDragableImage(store, materialComponent, getMapFunc, self))
       <button
         className="texture-remove"
         onClick=(

@@ -15,6 +15,23 @@ module Method = {
      GeometryEngineService.getGeometryVertices(geometry, engineState)
      |> Js.Typed_array.Float32Array.length > 0; */
 
+  let _isGameObjectLightMaterialComponentHasMap = (gameObject, engineState) => {
+    let material =
+      GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+        gameObject,
+        engineState,
+      );
+
+    LightMaterialEngineService.hasLightMaterialDiffuseMap(
+      material,
+      engineState,
+    )
+    || LightMaterialEngineService.hasLightMaterialSpecularMap(
+         material,
+         engineState,
+       );
+  };
+
   let _isGameObjectMaterialComponentHasMap = (gameObject, engineState) =>
     GameObjectComponentEngineService.hasBasicMaterialComponent(
       gameObject,
@@ -30,22 +47,7 @@ module Method = {
         gameObject,
         engineState,
       ) ?
-        {
-          let material =
-            GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-              gameObject,
-              engineState,
-            );
-
-          LightMaterialEngineService.hasLightMaterialDiffuseMap(
-            material,
-            engineState,
-          )
-          || LightMaterialEngineService.hasLightMaterialSpecularMap(
-               material,
-               engineState,
-             );
-        } :
+        _isGameObjectLightMaterialComponentHasMap(gameObject, engineState) :
         false;
 
   let _sortByName = (allGeometryAssets, engineState) =>
@@ -127,11 +129,36 @@ let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
     ReasonReact.Update({...state, isShowGeometryGroup: false})
   };
 
+let _renderGeometryGroup =
+    (
+      store,
+      currentSceneTreeNode,
+      {state, send}: ReasonReact.self('a, 'b, 'c),
+    ) =>
+  <div className="select-component-content">
+    <div className="select-component-item">
+      <div className="item-header"> (DomHelper.textEl("Geometry")) </div>
+      (
+        ReasonReact.array(
+          Method.showGeometryAssets(
+            send,
+            currentSceneTreeNode,
+            state.currentGeometry,
+          ),
+        )
+      )
+    </div>
+    <div
+      className="select-component-bg"
+      onClick=(_e => send(HideGeometryGroup))
+    />
+  </div>;
+
 let render =
     (
       (store, dispatchFunc),
       currentSceneTreeNode,
-      {state, send}: ReasonReact.self('a, 'b, 'c),
+      ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) =>
   <article key="MainEditorGeometry" className="wonder-inspector-geometry">
     <div className="inspector-item">
@@ -154,26 +181,7 @@ let render =
     </div>
     (
       state.isShowGeometryGroup ?
-        <div className="select-component-content">
-          <div className="select-component-item">
-            <div className="item-header">
-              (DomHelper.textEl("Geometry"))
-            </div>
-            (
-              ReasonReact.array(
-                Method.showGeometryAssets(
-                  send,
-                  currentSceneTreeNode,
-                  state.currentGeometry,
-                ),
-              )
-            )
-          </div>
-          <div
-            className="select-component-bg"
-            onClick=(_e => send(HideGeometryGroup))
-          />
-        </div> :
+        _renderGeometryGroup(store, currentSceneTreeNode, self) :
         ReasonReact.null
     )
   </article>;

@@ -48,22 +48,51 @@ let reducer = (action, state) =>
     ReasonReact.Update({...state, currentSelectItem: selectNav})
   };
 
-let render =
+let _renderSelectNav =
     (
       store: AppStore.appState,
       dispatchFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
-  <article
-    key="mainEditorScenetreeHeader" className="wonder-left-components-header">
+  <div className="item-content">
     <div
-      className="sceneTree-header-item" onClick=(_e => send(ToggleShowNav))>
-      <div className="item-canBeClick">
-        <img src="./public/img/add.png" />
+      className="content-section"
+      onClick=(
+        _e =>
+          Method.addGameObjectByType(
+            (store, dispatchFunc),
+            AddGameObjectType.EmptyGameObject,
+            (),
+          )
+      )>
+      <span className="section-header">
+        (DomHelper.textEl("Create Empty"))
+      </span>
+    </div>
+    <div
+      className="content-section"
+      onMouseOver=(e => send(HoverItem(GameObject)))>
+      <div className="section-header">
+        (DomHelper.textEl("3D GameObject"))
       </div>
+      <div className="section-tail"> <div className="tail-triangle" /> </div>
       (
-        state.isSelectNav ?
-          <div className="item-content">
+        state.currentSelectItem === GameObject ?
+          <div className="section-childLayer">
+            <div
+              className="content-section"
+              onClick=(
+                _e =>
+                  Method.addGameObjectByType(
+                    (store, dispatchFunc),
+                    AddGameObjectType.Box,
+                    (),
+                  )
+              )>
+              <span className="section-header">
+                (DomHelper.textEl("Cube"))
+              </span>
+            </div>
             <div
               className="content-section"
               onClick=(
@@ -75,55 +104,31 @@ let render =
                   )
               )>
               <span className="section-header">
-                (DomHelper.textEl("Create Empty"))
+                (DomHelper.textEl("Sphere"))
               </span>
-            </div>
-            <div
-              className="content-section"
-              onMouseOver=(e => send(HoverItem(GameObject)))>
-              <div className="section-header">
-                (DomHelper.textEl("3D GameObject"))
-              </div>
-              <div className="section-tail">
-                <div className="tail-triangle" />
-              </div>
-              (
-                state.currentSelectItem === GameObject ?
-                  <div className="section-childLayer">
-                    <div
-                      className="content-section"
-                      onClick=(
-                        _e =>
-                          Method.addGameObjectByType(
-                            (store, dispatchFunc),
-                            AddGameObjectType.Box,
-                            (),
-                          )
-                      )>
-                      <span className="section-header">
-                        (DomHelper.textEl("Cube"))
-                      </span>
-                    </div>
-                    <div
-                      className="content-section"
-                      onClick=(
-                        _e =>
-                          Method.addGameObjectByType(
-                            (store, dispatchFunc),
-                            AddGameObjectType.EmptyGameObject,
-                            (),
-                          )
-                      )>
-                      <span className="section-header">
-                        (DomHelper.textEl("Sphere"))
-                      </span>
-                    </div>
-                  </div> :
-                  ReasonReact.null
-              )
             </div>
           </div> :
           ReasonReact.null
+      )
+    </div>
+  </div>;
+
+let render =
+    (
+      store: AppStore.appState,
+      dispatchFunc,
+      ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
+    ) =>
+  <article
+    key="mainEditorScenetreeHeader" className="wonder-left-components-header">
+    <div
+      className="sceneTree-header-item" onClick=(_e => send(ToggleShowNav))>
+      <div className="item-canBeClick">
+        <img src="./public/img/add.png" />
+      </div>
+      (
+        state.isSelectNav ?
+          _renderSelectNav(store, dispatchFunc, self) : ReasonReact.null
       )
     </div>
     <div

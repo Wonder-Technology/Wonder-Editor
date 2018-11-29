@@ -6,18 +6,19 @@ let isWidget = startWidget =>
   | Some(startWidget) => startWidget === getWidget()
   };
 
+let rec _judgeAllParents = (targetTransform, dragedTransform, engineState) =>
+  switch (
+    TransformEngineService.getParent(targetTransform, engineState)
+    |> Js.Undefined.to_opt
+  ) {
+  | None => false
+  | Some(transformParent) =>
+    transformParent === dragedTransform ?
+      true : _judgeAllParents(transformParent, dragedTransform, engineState)
+  };
+
 let _isDragedGameObjectBeTargetGameObjectParent =
-    (targetGameObject, dragedGameObject, engineState) => {
-  let rec _judgeAllParents = (targetTransform, dragedTransform, engineState) =>
-    switch (
-      TransformEngineService.getParent(targetTransform, engineState)
-      |> Js.Undefined.to_opt
-    ) {
-    | None => false
-    | Some(transformParent) =>
-      transformParent === dragedTransform ?
-        true : _judgeAllParents(transformParent, dragedTransform, engineState)
-    };
+    (targetGameObject, dragedGameObject, engineState) =>
   _judgeAllParents(
     GameObjectComponentEngineService.unsafeGetTransformComponent(
       targetGameObject,
@@ -29,7 +30,6 @@ let _isDragedGameObjectBeTargetGameObjectParent =
     ),
     engineState,
   );
-};
 
 let _isTargetGameObjectBeRemovedGameObjectParent =
     (dragedGameObject, targetGameObject, engineState) =>

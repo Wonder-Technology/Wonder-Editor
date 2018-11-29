@@ -4,7 +4,7 @@ open AssetNodeType;
 
 open Js.Promise;
 
-let _handleImageType =
+let _handleImage =
     (
       (mimeType, fileName, imgBase64),
       (textureNodeId, parentFolderNodeId, textureComponent),
@@ -48,12 +48,10 @@ let _handleAssetWDBType =
       (fileName, wdbArrayBuffer),
       (wdbNodeId, parentFolderNodeId),
       (editorState, engineState),
-    ) => {
-  let baseName = FileNameService.getBaseName(fileName);
-
+    ) =>
   AssetWDBUtils.importAssetWDB(
     (
-      baseName
+      FileNameService.getBaseName(fileName)
       |. IterateAssetTreeAssetEditorService.getUniqueTreeNodeName(
            WDB,
            parentFolderNodeId |. Some,
@@ -75,14 +73,14 @@ let _handleAssetWDBType =
          (extractedMaterialAssetDataArr, extractedTextureAssetDataArr),
          (editorState, engineState),
        ) =
-         ExtractAndRelateAssetsUtils.extractAndRelateAssets(
+         ExtractAndRelateAssetsUtils.Extract.extractAndRelateAssets(
            allGameObjects,
            imageUint8ArrayDataMap,
            (editorState, engineState),
          );
 
        let defaultGeometryData =
-         RelateGameObjectAndAssetUtils.getDefaultGeometryData(
+         RelateGameObjectAndGeometryAssetUtils.getDefaultGeometryData(
            editorState,
            engineState,
          );
@@ -92,7 +90,7 @@ let _handleAssetWDBType =
          |> WonderCommonlib.ArrayService.reduceOneParam(
               (. engineState, gameObject) =>
                 engineState
-                |> RelateGameObjectAndAssetUtils.replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent(
+                |> RelateGameObjectAndGeometryAssetUtils.replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent(
                      gameObject,
                      defaultGeometryData,
                    )
@@ -102,7 +100,7 @@ let _handleAssetWDBType =
          |> DirectorEngineService.loopBody(0.);
 
        let (editorState, engineState) =
-         ExtractAndRelateAssetsUtils.addNodeToAssetTree(
+         ExtractAndRelateAssetsUtils.AssetTree.addNodeToAssetTree(
            extractedMaterialAssetDataArr,
            extractedTextureAssetDataArr,
            (editorState, engineState),
@@ -110,7 +108,6 @@ let _handleAssetWDBType =
 
        (editorState, engineState) |> resolve;
      });
-};
 
 let _handleGLBType =
     (
@@ -143,16 +140,47 @@ let _handleGLTFZipType =
 let _handleSpecificFuncByTypeAsync =
     (
       type_,
-      (handleImageFunc, handleWDBFunc, handleGLBFunc, handleGLTFZipFuncc),
+      (handleTextureFunc, handleWDBFunc, handleGLBFunc, handleGLTFZipFuncc),
     ) =>
   switch (type_) {
-  | LoadImage => handleImageFunc()
+  | LoadTexture => handleTextureFunc()
   | LoadWDB => handleWDBFunc()
   | LoadGLB => handleGLBFunc()
   | LoadGLTFZip => handleGLTFZipFuncc()
   | LoadError =>
     make((~resolve, ~reject) => reject(. LoadException("load asset error")))
   };
+
+let _handleTextureType =
+    (
+      fileResult: nodeResultType,
+      (targetTreeNodeId, assetNodeId),
+      (editorState, engineState),
+    ) => {
+  let baseName = FileNameService.getBaseName(fileResult.name);
+  let extName = FileNameService.getExtName(fileResult.name);
+
+  let (textureComponent, engineState) =
+    TextureUtils.createAndInitTexture(
+      baseName
+      |. IterateAssetTreeAssetEditorService.getUniqueTreeNodeName(
+           Texture,
+           targetTreeNodeId |. Some,
+           (editorState, engineState),
+         ),
+      StateEngineService.unsafeGetState(),
+    );
+
+  _handleImage(
+    (
+      ImageUtils.getImageMimeType(extName, editorState),
+      fileResult.name,
+      fileResult.result |> FileReader.convertResultToString,
+    ),
+    (assetNodeId, targetTreeNodeId, textureComponent),
+    (editorState, engineState),
+  );
+};
 
 let handleFileByTypeAsync = (fileResult: nodeResultType, createJsZipFunc) => {
   let (editorState, assetNodeId) =
@@ -164,31 +192,12 @@ let handleFileByTypeAsync = (fileResult: nodeResultType, createJsZipFunc) => {
   _handleSpecificFuncByTypeAsync(
     fileResult.type_,
     (
-      () => {
-        let baseName = FileNameService.getBaseName(fileResult.name);
-        let extName = FileNameService.getExtName(fileResult.name);
-
-        let (textureComponent, engineState) =
-          TextureUtils.createAndInitTexture(
-            baseName
-            |. IterateAssetTreeAssetEditorService.getUniqueTreeNodeName(
-                 Texture,
-                 targetTreeNodeId |. Some,
-                 (editorState, engineState),
-               ),
-            StateEngineService.unsafeGetState(),
-          );
-
-        _handleImageType(
-          (
-            ImageUtils.getImageMimeType(extName, editorState),
-            fileResult.name,
-            fileResult.result |> FileReader.convertResultToString,
-          ),
-          (assetNodeId, targetTreeNodeId, textureComponent),
+      () =>
+        _handleTextureType(
+          fileResult,
+          (targetTreeNodeId, assetNodeId),
           (editorState, engineState),
-        );
-      },
+        ),
       () =>
         _handleAssetWDBType(
           (

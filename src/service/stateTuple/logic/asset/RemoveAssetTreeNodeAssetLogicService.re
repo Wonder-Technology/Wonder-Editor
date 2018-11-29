@@ -192,47 +192,46 @@ let removeSpecificTreeNode = (targetNodeId, assetTreeRoot) => {
   |> _checkRemovedTreeNodeAndGetVal;
 };
 
-let deepRemoveTreeNode = (removedTreeNode, (editorState, engineState)) => {
-  let rec _iterateRemovedTreeNode =
-          (nodeArr, removedAssetIdArr, (editorState, engineState)) =>
-    nodeArr
-    |> WonderCommonlib.ArrayService.reduceOneParam(
-         (.
-           ((editorState, engineState), removedAssetIdArr),
-           {nodeId, type_, children},
-         ) => {
-           let (editorState, engineState) =
-             switch (type_) {
-             | Folder => (
-                 RemoveNodeAssetEditorService.removeFolderNodeEditorData(
-                   nodeId,
-                   editorState,
-                 ),
-                 engineState,
-               )
-             | Texture =>
-               _removeTextureTreeNode(nodeId, (editorState, engineState))
-             | Material =>
-               _removeMaterialTreeNode(nodeId, (editorState, engineState))
-             | WDB => _removeWDBTreeNode(nodeId, (editorState, engineState))
-             | _ => (editorState, engineState)
-             };
-
-           _iterateRemovedTreeNode(
-             children,
-             removedAssetIdArr |> ArrayService.push(nodeId),
-             (editorState, engineState),
-           );
-         },
+let rec _iterateRemovedTreeNode =
+        (nodeArr, removedAssetIdArr, (editorState, engineState)) =>
+  nodeArr
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (.
          ((editorState, engineState), removedAssetIdArr),
-       );
+         {nodeId, type_, children},
+       ) => {
+         let (editorState, engineState) =
+           switch (type_) {
+           | Folder => (
+               RemoveNodeAssetEditorService.removeFolderNodeEditorData(
+                 nodeId,
+                 editorState,
+               ),
+               engineState,
+             )
+           | Texture =>
+             _removeTextureTreeNode(nodeId, (editorState, engineState))
+           | Material =>
+             _removeMaterialTreeNode(nodeId, (editorState, engineState))
+           | WDB => _removeWDBTreeNode(nodeId, (editorState, engineState))
+           | _ => (editorState, engineState)
+           };
 
+         _iterateRemovedTreeNode(
+           children,
+           removedAssetIdArr |> ArrayService.push(nodeId),
+           (editorState, engineState),
+         );
+       },
+       ((editorState, engineState), removedAssetIdArr),
+     );
+
+let deepRemoveTreeNode = (removedTreeNode, (editorState, engineState)) =>
   _iterateRemovedTreeNode(
     [|removedTreeNode|],
     [||],
     (editorState, engineState),
   );
-};
 
 let deepDisposeAssetTreeRoot = ((editorState, engineState)) => {
   let removedTreeNode =

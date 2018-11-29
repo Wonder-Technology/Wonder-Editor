@@ -237,6 +237,35 @@ module Publish = {
 
   open WonderBsJszip;
 
+  let _loadData =
+      (useWorker, sceneGraphArrayBuffer, fetchFunc, createZipStream) =>
+    createZipStream
+    |> WonderBsMost.Most.flatMap(zip =>
+         WonderBsMost.Most.fromPromise(
+           LoadData.loadAndWriteIndexHtmlData(
+             useWorker,
+             sceneGraphArrayBuffer,
+             fetchFunc,
+             zip,
+           ),
+         )
+       )
+    |> WonderBsMost.Most.flatMap(zip =>
+         WonderBsMost.Most.fromPromise(
+           LoadData.loadAndWriteIndexJsData(useWorker, fetchFunc, zip),
+         )
+       )
+    |> WonderBsMost.Most.flatMap(zip =>
+         WonderBsMost.Most.fromPromise(
+           LoadData.loadAndWriteResData(fetchFunc, zip),
+         )
+       )
+    |> WonderBsMost.Most.flatMap(zip =>
+         WonderBsMost.Most.fromPromise(
+           LoadData.loadAndWriteConfigData(useWorker, fetchFunc, zip),
+         )
+       );
+
   let publishZip = ((zipName, useWorker), createZipFunc, fetchFunc) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
@@ -261,31 +290,7 @@ module Publish = {
 
         createZipFunc()
         |> WonderBsMost.Most.just
-        |> WonderBsMost.Most.flatMap(zip =>
-             WonderBsMost.Most.fromPromise(
-               LoadData.loadAndWriteIndexHtmlData(
-                 useWorker,
-                 sceneGraphArrayBuffer,
-                 fetchFunc,
-                 zip,
-               ),
-             )
-           )
-        |> WonderBsMost.Most.flatMap(zip =>
-             WonderBsMost.Most.fromPromise(
-               LoadData.loadAndWriteIndexJsData(useWorker, fetchFunc, zip),
-             )
-           )
-        |> WonderBsMost.Most.flatMap(zip =>
-             WonderBsMost.Most.fromPromise(
-               LoadData.loadAndWriteResData(fetchFunc, zip),
-             )
-           )
-        |> WonderBsMost.Most.flatMap(zip =>
-             WonderBsMost.Most.fromPromise(
-               LoadData.loadAndWriteConfigData(useWorker, fetchFunc, zip),
-             )
-           )
+        |> _loadData(useWorker, sceneGraphArrayBuffer, fetchFunc)
         |> WonderBsMost.Most.tap(zip =>
              zip
              |. Zip.write(

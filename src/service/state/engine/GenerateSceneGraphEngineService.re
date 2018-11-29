@@ -18,6 +18,11 @@ let readUint32DataFromUint8Array = uint8Array =>
   Uint32Array.fromBuffer(uint8Array |> Uint8Array.buffer)
   |> Uint32Array.unsafe_get(_, 0);
 
+let _gePointstLength = (geometry, engineState, getPointsFunc) =>
+  getPointsFunc(. geometry, engineState)
+  |> Float32Array.length
+  |> NumberType.intToFloat;
+
 let generateWDBForWPK = (sceneGameObject, imageUint8ArrayMap, engineState) =>
   GenerateWDBSystem.generateWDB(
     sceneGameObject,
@@ -26,25 +31,31 @@ let generateWDBForWPK = (sceneGameObject, imageUint8ArrayMap, engineState) =>
       (
         (. geometry, engineState) => {
           let length =
-            VerticesGeometryMainService.getVertices(. geometry, engineState)
-            |> Float32Array.length
-            |> NumberType.intToFloat;
+            _gePointstLength(
+              geometry,
+              engineState,
+              VerticesGeometryMainService.getVertices,
+            );
 
           Float32Array.make([|length, length, length|]);
         },
         (. geometry, engineState) => {
           let length =
-            NormalsGeometryMainService.getNormals(. geometry, engineState)
-            |> Float32Array.length
-            |> NumberType.intToFloat;
+            _gePointstLength(
+              geometry,
+              engineState,
+              NormalsGeometryMainService.getNormals,
+            );
 
           Float32Array.make([|length, length, length|]);
         },
         (. geometry, engineState) => {
           let length =
-            TexCoordsGeometryMainService.getTexCoords(. geometry, engineState)
-            |> Float32Array.length
-            |> NumberType.intToFloat;
+            _gePointstLength(
+              geometry,
+              engineState,
+              TexCoordsGeometryMainService.getTexCoords,
+            );
 
           Float32Array.make([|length, length|]);
         },

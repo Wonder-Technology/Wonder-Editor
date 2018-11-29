@@ -34,6 +34,31 @@ let reducer = (action, state) =>
     ReasonReact.Update({...state, useWorker: value})
   };
 
+let _renderContent = (state, send) =>
+  <div className="modal-item-content">
+    <div className="content-field">
+      <div className="field-title"> (DomHelper.textEl("name:")) </div>
+      <div className="field-content">
+        <input
+          className="input-component"
+          _type="text"
+          value=state.name
+          onChange=(_e => send(Method.changeName(_e)))
+        />
+      </div>
+    </div>
+    <div className="content-field">
+      <div className="field-title"> (DomHelper.textEl("useWorker:")) </div>
+      <div className="field-content">
+        <input
+          _type="checkbox"
+          defaultChecked=state.useWorker
+          onClick=(_e => send(Method.changeUseWorker(_e)))
+        />
+      </div>
+    </div>
+  </div>;
+
 let render =
     (
       title,
@@ -46,31 +71,7 @@ let render =
         (DomHelper.textEl(title))
         <img src="./public/img/close.png" onClick=(_e => closeFunc()) />
       </div>
-      <div className="modal-item-content">
-        <div className="content-field">
-          <div className="field-title"> (DomHelper.textEl("name:")) </div>
-          <div className="field-content">
-            <input
-              className="input-component"
-              _type="text"
-              value=state.name
-              onChange=(_e => send(Method.changeName(_e)))
-            />
-          </div>
-        </div>
-        <div className="content-field">
-          <div className="field-title">
-            (DomHelper.textEl("useWorker:"))
-          </div>
-          <div className="field-content">
-            <input
-              _type="checkbox"
-              defaultChecked=state.useWorker
-              onClick=(_e => send(Method.changeUseWorker(_e)))
-            />
-          </div>
-        </div>
-      </div>
+      (_renderContent(state, send))
       <div className="modal-item-footer">
         <button
           className="footer-submit"

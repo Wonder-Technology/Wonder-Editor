@@ -4,6 +4,39 @@ open Wonderjs;
 
 open CameraGroupType;
 
+let _removeCameraGroup = (currentSceneTreeNode, (editorState, engineState)) =>
+  engineState
+  |> CameraLogicService.unbindArcballCameraControllerEventIfHasComponentForGameView(
+       currentSceneTreeNode,
+       editorState,
+     )
+  |> GameObjectLogicService.disposeCameraGroup(
+       currentSceneTreeNode,
+       CameraGroupEngineService.getCameraGroupComponents(
+         currentSceneTreeNode,
+         (
+           GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent,
+           GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent,
+         ),
+         engineState,
+       ),
+     );
+
+let _removeArcballCameraControllerGroup =
+    (currentSceneTreeNode, (editorState, engineState)) => {
+  let arcballCameraController =
+    engineState
+    |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+         currentSceneTreeNode,
+       );
+
+  (editorState, engineState)
+  |> GameObjectLogicService.disposeArcballCameraController(
+       currentSceneTreeNode,
+       arcballCameraController,
+     );
+};
+
 let removeComponentByType =
     (type_, currentSceneTreeNode, (editorState, engineState)) =>
   switch (type_) {
@@ -41,41 +74,12 @@ let removeComponentByType =
        );
 
   | CameraGroup =>
-    engineState
-    |> CameraLogicService.unbindArcballCameraControllerEventIfHasComponentForGameView(
-         currentSceneTreeNode,
-         editorState,
-       )
-    |> GameObjectLogicService.disposeCameraGroup(
-         currentSceneTreeNode,
-         CameraGroupEngineService.getCameraGroupComponents(
-           currentSceneTreeNode,
-           (
-             GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent,
-             GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent,
-           ),
-           engineState,
-         ),
-       )
-
+    _removeCameraGroup(currentSceneTreeNode, (editorState, engineState))
   | ArcballCameraController =>
-    let arcballCameraController =
-      engineState
-      |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-           currentSceneTreeNode,
-         );
-
-    /* let engineState =
-       engineState
-       |> ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponent(
-            currentSceneTreeNode,
-          ); */
-
-    (editorState, engineState)
-    |> GameObjectLogicService.disposeArcballCameraController(
-         currentSceneTreeNode,
-         arcballCameraController,
-       );
+    _removeArcballCameraControllerGroup(
+      currentSceneTreeNode,
+      (editorState, engineState),
+    )
   | _ =>
     ConsoleUtils.error(
       LogUtils.buildErrorMessage(

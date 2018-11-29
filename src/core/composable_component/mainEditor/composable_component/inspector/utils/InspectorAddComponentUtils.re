@@ -2,73 +2,111 @@ open Wonderjs;
 
 open InspectorComponentType;
 
+let _addRenderGroup = (currentSceneTreeNode, (editorState, engineState)) => {
+  let defaultLightMaterial =
+    MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
+  let (engineState, meshRenderer) =
+    MeshRendererEngineService.create(engineState);
+  let renderGroup =
+    RenderGroupEngineService.buildRenderGroup(
+      meshRenderer,
+      defaultLightMaterial,
+    );
+
+  (editorState, engineState)
+  |> GameObjectLogicService.addRenderGroup(
+       currentSceneTreeNode,
+       renderGroup,
+       (
+         GameObjectAPI.addGameObjectMeshRendererComponent,
+         GameObjectAPI.addGameObjectLightMaterialComponent,
+       ),
+     );
+};
+
+let _addGeometry = (currentSceneTreeNode, (editorState, engineState)) => {
+  let defaultCubeGeometry =
+    GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
+      editorState,
+    );
+
+  (editorState, engineState)
+  |> GameObjectLogicService.addGeometry(
+       currentSceneTreeNode,
+       defaultCubeGeometry,
+     );
+};
+
+let _addLight = (currentSceneTreeNode, (editorState, engineState)) =>
+  engineState |> DirectionLightEngineService.isMaxCount ?
+    {
+      ConsoleUtils.warn(
+        "the direction light count is exceed max count !",
+        editorState,
+      );
+
+      (editorState, engineState);
+    } :
+    {
+      let (engineState, directionLightComponent) =
+        engineState |> DirectionLightEngineService.create;
+
+      (editorState, engineState)
+      |> GameObjectLogicService.addDirectionLight(
+           currentSceneTreeNode,
+           directionLightComponent,
+         )
+      |> (
+        ((editorState, engineState)) => (
+          editorState,
+          engineState
+          |> SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials,
+        )
+      );
+    };
+
+let _addArcballCameraController =
+    (currentSceneTreeNode, (editorState, engineState)) => {
+  let (engineState, cameraController) =
+    engineState |> ArcballCameraEngineService.create;
+
+  let engineState =
+    StateEditorService.getIsRun() ?
+      engineState
+      |> GameObjectComponentEngineService.hasBasicCameraViewComponent(
+           currentSceneTreeNode,
+         ) ?
+        engineState
+        |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
+             currentSceneTreeNode,
+           )
+        |> BasicCameraViewEngineService.isActiveBasicCameraView(
+             _,
+             engineState,
+           ) ?
+          ArcballCameraEngineService.bindArcballCameraControllerEventForGameView(
+            cameraController,
+            engineState,
+          ) :
+          engineState :
+        engineState :
+      engineState;
+
+  (editorState, engineState)
+  |> GameObjectLogicService.addArcballCameraController(
+       currentSceneTreeNode,
+       cameraController,
+     );
+};
+
 let addComponentByType =
     (type_, currentSceneTreeNode, (editorState, engineState)) =>
   switch (type_) {
   | RenderGroup =>
-    let defaultLightMaterial =
-      MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(
-        editorState,
-      );
-    let (engineState, meshRenderer) =
-      MeshRendererEngineService.create(engineState);
-    let renderGroup =
-      RenderGroupEngineService.buildRenderGroup(
-        meshRenderer,
-        defaultLightMaterial,
-      );
-
-    (editorState, engineState)
-    |> GameObjectLogicService.addRenderGroup(
-         currentSceneTreeNode,
-         renderGroup,
-         (
-           GameObjectAPI.addGameObjectMeshRendererComponent,
-           GameObjectAPI.addGameObjectLightMaterialComponent,
-         ),
-       );
+    _addRenderGroup(currentSceneTreeNode, (editorState, engineState))
   | Geometry =>
-    /* let editorState = StateEditorService.getState(); */
-
-    let defaultCubeGeometry =
-      GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
-        editorState,
-      );
-
-    (editorState, engineState)
-    |> GameObjectLogicService.addGeometry(
-         currentSceneTreeNode,
-         defaultCubeGeometry,
-       );
-
-  | Light =>
-    engineState |> DirectionLightEngineService.isMaxCount ?
-      {
-        ConsoleUtils.warn(
-          "the direction light count is exceed max count !",
-          editorState,
-        );
-
-        (editorState, engineState);
-      } :
-      {
-        let (engineState, directionLightComponent) =
-          engineState |> DirectionLightEngineService.create;
-
-        (editorState, engineState)
-        |> GameObjectLogicService.addDirectionLight(
-             currentSceneTreeNode,
-             directionLightComponent,
-           )
-        |> (
-          ((editorState, engineState)) => (
-            editorState,
-            engineState
-            |> SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials,
-          )
-        );
-      }
-
+    _addGeometry(currentSceneTreeNode, (editorState, engineState))
+  | Light => _addLight(currentSceneTreeNode, (editorState, engineState))
   | CameraGroup =>
     let (engineState, cameraComponentRecord) =
       CameraEngineService.createCameraGroup(engineState);
@@ -80,36 +118,10 @@ let addComponentByType =
        );
 
   | ArcballCameraController =>
-    let (engineState, cameraController) =
-      engineState |> ArcballCameraEngineService.create;
-
-    let engineState =
-      StateEditorService.getIsRun() ?
-        engineState
-        |> GameObjectComponentEngineService.hasBasicCameraViewComponent(
-             currentSceneTreeNode,
-           ) ?
-          engineState
-          |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-               currentSceneTreeNode,
-             )
-          |> BasicCameraViewEngineService.isActiveBasicCameraView(
-               _,
-               engineState,
-             ) ?
-            ArcballCameraEngineService.bindArcballCameraControllerEventForGameView(
-              cameraController,
-              engineState,
-            ) :
-            engineState :
-          engineState :
-        engineState;
-
-    (editorState, engineState)
-    |> GameObjectLogicService.addArcballCameraController(
-         currentSceneTreeNode,
-         cameraController,
-       );
+    _addArcballCameraController(
+      currentSceneTreeNode,
+      (editorState, engineState),
+    )
   | _ =>
     ConsoleUtils.error(
       LogUtils.buildErrorMessage(

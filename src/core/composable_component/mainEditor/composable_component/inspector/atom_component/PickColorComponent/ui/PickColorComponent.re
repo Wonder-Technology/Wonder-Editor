@@ -26,8 +26,24 @@ let reducer = ((closeColorPickFunc, getColorFunc), action, state) =>
     });
   };
 
+let _renderColorPick =
+    (changeColorFunc, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+  <div className="color-pick-content">
+    <div className="color-pick-item">
+      <ReactColor.Sketch
+        color=state.colorHex
+        onChange=((value, e) => changeColorFunc(value))
+      />
+    </div>
+    <div className="color-pick-bg" onClick=(_e => send(HideColorPick)) />
+  </div>;
+
 let render =
-    (label, changeColorFunc, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    (
+      label,
+      changeColorFunc,
+      ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
+    ) =>
   <article className="inspector-item">
     <div className="item-header"> (DomHelper.textEl(label)) </div>
     <div className="item-content item-color">
@@ -42,19 +58,7 @@ let render =
     </div>
     (
       state.isShowColorPick ?
-        <div className="color-pick-content">
-          <div className="color-pick-item">
-            <ReactColor.Sketch
-              color=state.colorHex
-              onChange=((value, e) => changeColorFunc(value))
-            />
-          </div>
-          <div
-            className="color-pick-bg"
-            onClick=(_e => send(HideColorPick))
-          />
-        </div> :
-        ReasonReact.null
+        _renderColorPick(changeColorFunc, self) : ReasonReact.null
     )
   </article>;
 

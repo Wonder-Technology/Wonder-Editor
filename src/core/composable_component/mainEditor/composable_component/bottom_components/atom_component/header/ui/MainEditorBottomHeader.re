@@ -39,11 +39,39 @@ module Method = {
 let component =
   ReasonReact.statelessComponentWithRetainedProps("MainEditorBottomHeader");
 
-let render = (store, dispatchFunc, _self) => {
-  let currentComponentType = store |> StoreUtils.getBottomCurrentComponentType;
+let _renderConsole = (currentComponentType, dispatchFunc) => {
   let unreadCount =
     Method.getConsoleMessageUnReadCount(currentComponentType)
     |> StateLogicService.getEditorState;
+
+  <div
+    className=(
+      "category-name"
+      ++ (
+        MainEditorBottomComponentUtils.isTypeEqualConsole(
+          currentComponentType,
+        ) ?
+          " category-active" : ""
+      )
+    )
+    onClick=(
+      _e =>
+        MainEditorBottomComponentUtils.isTypeEqualConsole(
+          currentComponentType,
+        ) ?
+          () : Method.showConsole(dispatchFunc)
+    )>
+    <div className="name-header"> (DomHelper.textEl("Console")) </div>
+    (
+      unreadCount !== "0" ?
+        <div className="name-tail"> (DomHelper.textEl(unreadCount)) </div> :
+        ReasonReact.null
+    )
+  </div>;
+};
+
+let render = (store, dispatchFunc, _self) => {
+  let currentComponentType = store |> StoreUtils.getBottomCurrentComponentType;
 
   <article className="bottom-header" key="MainEditorBottomHeader">
     <div className="bottom-widget-category">
@@ -66,32 +94,7 @@ let render = (store, dispatchFunc, _self) => {
         )>
         <div className="name-header"> (DomHelper.textEl("Project")) </div>
       </div>
-      <div
-        className=(
-          "category-name"
-          ++ (
-            MainEditorBottomComponentUtils.isTypeEqualConsole(
-              currentComponentType,
-            ) ?
-              " category-active" : ""
-          )
-        )
-        onClick=(
-          _e =>
-            MainEditorBottomComponentUtils.isTypeEqualConsole(
-              currentComponentType,
-            ) ?
-              () : Method.showConsole(dispatchFunc)
-        )>
-        <div className="name-header"> (DomHelper.textEl("Console")) </div>
-        (
-          unreadCount !== "0" ?
-            <div className="name-tail">
-              (DomHelper.textEl(unreadCount))
-            </div> :
-            ReasonReact.null
-        )
-      </div>
+      (_renderConsole(currentComponentType, dispatchFunc))
       <span className="category-name" />
     </div>
   </article>;

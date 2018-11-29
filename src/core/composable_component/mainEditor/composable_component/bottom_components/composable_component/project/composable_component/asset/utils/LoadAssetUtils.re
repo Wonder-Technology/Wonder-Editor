@@ -9,7 +9,7 @@ let getUploadAssetType = name => {
   | ".wdb" => LoadWDB
   | ".glb" => LoadGLB
   | ".jpg"
-  | ".png" => LoadImage
+  | ".png" => LoadTexture
   | ".zip" => LoadGLTFZip
   | _ =>
     ConsoleUtils.error(
@@ -55,10 +55,10 @@ let _handlePackageSpecificFuncByTypeSync = (type_, handleWPKFunc) =>
 let _handleAssetSpecificFuncByTypeSync =
     (
       type_,
-      (handleImageFunc, handleWDBFunc, handleGLBFunc, handleGLTFZipFunc),
+      (handleTextureFunc, handleWDBFunc, handleGLBFunc, handleGLTFZipFunc),
     ) =>
   switch (type_) {
-  | LoadImage => handleImageFunc()
+  | LoadTexture => handleTextureFunc()
   | LoadWDB => handleWDBFunc()
   | LoadGLB => handleGLBFunc()
   | LoadGLTFZip => handleGLTFZipFunc()

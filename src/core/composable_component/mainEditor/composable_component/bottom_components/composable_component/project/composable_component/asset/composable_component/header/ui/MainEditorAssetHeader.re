@@ -31,8 +31,54 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("MainEditorAssetHeader");
 
+let _renderSelectNav =
+    (
+      store: AppStore.appState,
+      dispatchFunc,
+      {state, send}: ReasonReact.self('a, 'b, 'c),
+    ) =>
+  <div className="item-content">
+    <div
+      className="content-section"
+      onClick=(_e => Method.addFolder((store, dispatchFunc), (), ()))>
+      <span className="section-header"> (DomHelper.textEl("Folder")) </span>
+    </div>
+    <div
+      className="content-section"
+      onClick=(_e => Method.addMaterial((store, dispatchFunc), (), ()))>
+      <div className="section-header"> (DomHelper.textEl("Material")) </div>
+    </div>
+  </div>;
+
+let _renderRemoveItem =
+    (
+      store: AppStore.appState,
+      dispatchFunc,
+      {state, send}: ReasonReact.self('a, 'b, 'c),
+    ) =>
+  <div
+    className="asset-header-item"
+    onClick=(
+      _e =>
+        Method.isCurrentNodeIdEqualRootId |> StateLogicService.getEditorState ?
+          () : Method.removeAssetNode((store, dispatchFunc), (), ())
+    )>
+    (
+      Method.isCurrentNodeIdEqualRootId |> StateLogicService.getEditorState ?
+        <div className="item-notBeClick">
+          <img src="./public/img/notRemove.png" />
+        </div> :
+        <div className="item-canBeClick">
+          <img src="./public/img/remove.png" />
+        </div>
+    )
+  </div>;
+
 let render =
-    ((store, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    (
+      (store, dispatchFunc),
+      ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
+    ) =>
   <article key="assetHeader" className="wonder-asset-header">
     <div className="asset-header-item" onClick=(_e => send(ToggleShowNav))>
       <div className="item-canBeClick">
@@ -40,44 +86,10 @@ let render =
       </div>
       (
         state.isSelectNav ?
-          <div className="item-content">
-            <div
-              className="content-section"
-              onClick=(_e => Method.addFolder((store, dispatchFunc), (), ()))>
-              <span className="section-header">
-                (DomHelper.textEl("Folder"))
-              </span>
-            </div>
-            <div
-              className="content-section"
-              onClick=(
-                _e => Method.addMaterial((store, dispatchFunc), (), ())
-              )>
-              <div className="section-header">
-                (DomHelper.textEl("Material"))
-              </div>
-            </div>
-          </div> :
-          ReasonReact.null
+          _renderSelectNav(store, dispatchFunc, self) : ReasonReact.null
       )
     </div>
-    <div
-      className="asset-header-item"
-      onClick=(
-        _e =>
-          Method.isCurrentNodeIdEqualRootId |> StateLogicService.getEditorState ?
-            () : Method.removeAssetNode((store, dispatchFunc), (), ())
-      )>
-      (
-        Method.isCurrentNodeIdEqualRootId |> StateLogicService.getEditorState ?
-          <div className="item-notBeClick">
-            <img src="./public/img/notRemove.png" />
-          </div> :
-          <div className="item-canBeClick">
-            <img src="./public/img/remove.png" />
-          </div>
-      )
-    </div>
+    (_renderRemoveItem(store, dispatchFunc, self))
     <div className="asset-header-item">
       <div className="item-canBeClick">
         <img src="./public/img/load.png" />

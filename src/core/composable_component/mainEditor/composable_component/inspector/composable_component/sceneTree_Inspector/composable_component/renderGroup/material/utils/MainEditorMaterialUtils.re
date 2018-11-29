@@ -25,7 +25,6 @@ let getMaterialTypeByGameObject = (gameObject, engineState) =>
   | _ =>
     WonderLog.Log.fatal(
       LogUtils.buildFatalMessage(
-        
         ~description=
           {j|gameObject:$gameObject should has material component|j},
         ~reason="",
@@ -54,22 +53,26 @@ let getNewMaterilaName = () => "New Material";
 
 let getNoNameMaterialName = () => "NoName Material";
 
+let _getName = (material, engineState, getMaterialNameFunc) =>
+  switch (getMaterialNameFunc(material, engineState)) {
+  | None => getNoNameMaterialName()
+  | Some(name) => name
+  };
+
 let getName = (material, type_, engineState) =>
   switch (type_) {
   | BasicMaterial =>
-    switch (
-      BasicMaterialEngineService.getBasicMaterialName(material, engineState)
-    ) {
-    | None => getNoNameMaterialName()
-    | Some(name) => name
-    }
+    _getName(
+      material,
+      engineState,
+      BasicMaterialEngineService.getBasicMaterialName,
+    )
   | LightMaterial =>
-    switch (
-      LightMaterialEngineService.getLightMaterialName(material, engineState)
-    ) {
-    | None => getNoNameMaterialName()
-    | Some(name) => name
-    }
+    _getName(
+      material,
+      engineState,
+      LightMaterialEngineService.getLightMaterialName,
+    )
   };
 
 let setName = (material, type_, name, engineState) =>

@@ -86,7 +86,57 @@ module Method = {
 
   let buildNotDragableUl = TreeNodeUtils.buildNotDragableUl;
 
-  let getContent =
+  let _renderDragableText =
+      (
+        (state, send),
+        (id, widget, dragImg, name, isShowChildren, isSelected, isActive),
+        (
+          onSelectFunc,
+          handleWidgetFunc,
+          handleRelationErrorFunc,
+          isAssetWDBFileFunc,
+        ),
+      ) =>
+    <div
+      className=(
+        "draggable-container"
+        ++ (
+          isSelected ? isActive ? " select-active" : " select-not-active" : ""
+        )
+      )
+      style=state.style
+      draggable=true
+      onMouseDown=(_event => onSelectFunc(id))
+      onDragStart=(
+        _e => send(handleDragStart(id, widget, dragImg, "move", _e))
+      )
+      onDragEnd=(_e => send(handleDrageEnd(_e)))
+      onDragEnter=(
+        _e =>
+          send(
+            handleDragEnter(
+              id,
+              (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFileFunc),
+              _e,
+            ),
+          )
+      )
+      onDragLeave=(_e => send(handleDragLeave(id, _e)))
+      onDragOver=(e => DragEventUtils.handleDragOver("move", e))
+      onDrop=(
+        _e =>
+          send(
+            handleDrop(
+              id,
+              (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFileFunc),
+              _e,
+            ),
+          )
+      )>
+      (DomHelper.textEl(name))
+    </div>;
+
+  let _renderContent =
       (
         (state, send),
         (
@@ -95,7 +145,6 @@ module Method = {
           widget,
           dragImg,
           name,
-          treeChildren,
           isShowChildren,
           isHasChildren,
           isSelected,
@@ -111,23 +160,12 @@ module Method = {
     <li>
       (
         isHasChildren ?
-          <div
-            className="item-triangle"
-            onMouseDown=(
-              event => {
-                DomHelper.stopPropagation(
-                  ReactEventType.convertReactMouseEventToJsEvent(event),
-                );
-
-                send(TogggleChildren(id));
-              }
-            )>
-            (
-              isShowChildren ?
-                <img src="./public/img/down.png" /> :
-                <img src="./public/img/right.png" />
-            )
-          </div> :
+          TreeNodeUtils.renderChildren(
+            id,
+            isShowChildren,
+            send,
+            TogggleChildren(id),
+          ) :
           <div className="item-triangle" />
       )
       (
@@ -136,53 +174,18 @@ module Method = {
         | Some(icon) => <img src=icon className="treeNode-icon" />
         }
       )
-      <div
-        className=(
-          "draggable-container"
-          ++ (
-            isSelected ?
-              isActive ? " select-active" : " select-not-active" : ""
-          )
+      (
+        _renderDragableText(
+          (state, send),
+          (id, widget, dragImg, name, isShowChildren, isSelected, isActive),
+          (
+            onSelectFunc,
+            handleWidgetFunc,
+            handleRelationErrorFunc,
+            isAssetWDBFileFunc,
+          ),
         )
-        style=state.style
-        draggable=true
-        onMouseDown=(_event => onSelectFunc(id))
-        onDragStart=(
-          _e => send(handleDragStart(id, widget, dragImg, "move", _e))
-        )
-        onDragEnd=(_e => send(handleDrageEnd(_e)))
-        onDragEnter=(
-          _e =>
-            send(
-              handleDragEnter(
-                id,
-                (
-                  handleWidgetFunc,
-                  handleRelationErrorFunc,
-                  isAssetWDBFileFunc,
-                ),
-                _e,
-              ),
-            )
-        )
-        onDragLeave=(_e => send(handleDragLeave(id, _e)))
-        onDragOver=(e => DragEventUtils.handleDragOver("move", e))
-        onDrop=(
-          _e =>
-            send(
-              handleDrop(
-                id,
-                (
-                  handleWidgetFunc,
-                  handleRelationErrorFunc,
-                  isAssetWDBFileFunc,
-                ),
-                _e,
-              ),
-            )
-        )>
-        (DomHelper.textEl(name))
-      </div>
+      )
     </li>;
 };
 
@@ -278,7 +281,7 @@ let render =
   Method.buildNotDragableUl(
     treeChildren,
     isShowChildren,
-    Method.getContent(
+    Method._renderContent(
       (state, send),
       (
         id,
@@ -286,7 +289,6 @@ let render =
         widget,
         dragImg,
         name,
-        treeChildren,
         isShowChildren,
         isHasChildren,
         isSelected,

@@ -103,6 +103,30 @@ let fatal = () =>
     e => Console.throwFatal(e),
   );
 
+let _renderHeader = dispatchFunc =>
+  <div className="console-header">
+    <button
+      className=""
+      onClick=(_e => Method.clearAllConsoleMessage(dispatchFunc))>
+      (DomHelper.textEl("clear"))
+    </button>
+    <button className="" onClick=(_e => log11())>
+      (DomHelper.textEl("add log"))
+    </button>
+    <button className="" onClick=(_e => info())>
+      (DomHelper.textEl("add info"))
+    </button>
+    <button className="" onClick=(_e => warn11())>
+      (DomHelper.textEl("add warn"))
+    </button>
+    <button className="" onClick=(_e => debug())>
+      (DomHelper.textEl("add debug"))
+    </button>
+    <button className="" onClick=(_e => fatal())>
+      (DomHelper.textEl("add fatal"))
+    </button>
+  </div>;
+
 let render = (store, dispatchFunc, _self) => {
   let consoleMessageArray =
     StateEditorService.getState()
@@ -116,28 +140,7 @@ let render = (store, dispatchFunc, _self) => {
 
   <article key="console" className="wonder-bottom-console">
     <article className="wonder-console-component">
-      <div className="console-header">
-        <button
-          className=""
-          onClick=(_e => Method.clearAllConsoleMessage(dispatchFunc))>
-          (DomHelper.textEl("clear"))
-        </button>
-        <button className="" onClick=(_e => log11())>
-          (DomHelper.textEl("add log"))
-        </button>
-        <button className="" onClick=(_e => info())>
-          (DomHelper.textEl("add info"))
-        </button>
-        <button className="" onClick=(_e => warn11())>
-          (DomHelper.textEl("add warn"))
-        </button>
-        <button className="" onClick=(_e => debug())>
-          (DomHelper.textEl("add debug"))
-        </button>
-        <button className="" onClick=(_e => fatal())>
-          (DomHelper.textEl("add fatal"))
-        </button>
-      </div>
+      (_renderHeader(dispatchFunc))
       <div className="console-content">
         (
           consoleMessageArray |> ArrayService.hasItem ?

@@ -45,6 +45,36 @@ module Method = {
        });
   };
 
+  let _buildFileComponentSelectNav = (send, store, dispatchFunc) =>
+    <div className="item-content">
+      <div
+        className="content-section"
+        onClick=(
+          _e => AllHistoryService.handleUndo(store, Obj.magic(dispatchFunc))
+        )>
+        <span className="section-header"> (DomHelper.textEl("Undo")) </span>
+      </div>
+      /* <span className="section-tail">
+           (DomHelper.textEl("Ctrl+Z"))
+         </span> */
+      <div
+        className="content-section"
+        onClick=(
+          _e =>
+            OperateStateHistoryService.hasRedoState(
+              AllStateData.getHistoryState(),
+            ) ?
+              AllHistoryService.redoHistoryState(store, dispatchFunc)
+              |> StateHistoryService.getAndRefreshStateForHistory :
+              ()
+        )>
+        <span className="section-header"> (DomHelper.textEl("Redo")) </span>
+      </div>
+    </div>;
+  /* <span className="section-tail">
+       (DomHelper.textEl("Ctrl+U"))
+     </span> */
+
   let buildFileComponent = (state, send, store, dispatchFunc) => {
     let className =
       state.currentSelectNav === File ?
@@ -61,46 +91,44 @@ module Method = {
       </div>
       (
         state.currentSelectNav === File ?
-          <div className="item-content">
-            <div
-              className="content-section"
-              onClick=(
-                _e =>
-                  AllHistoryService.handleUndo(
-                    store,
-                    Obj.magic(dispatchFunc),
-                  )
-              )>
-              <span className="section-header">
-                (DomHelper.textEl("Undo"))
-              </span>
-            </div>
-            /* <span className="section-tail">
-                 (DomHelper.textEl("Ctrl+Z"))
-               </span> */
-            <div
-              className="content-section"
-              onClick=(
-                _e =>
-                  OperateStateHistoryService.hasRedoState(
-                    AllStateData.getHistoryState(),
-                  ) ?
-                    AllHistoryService.redoHistoryState(store, dispatchFunc)
-                    |> StateHistoryService.getAndRefreshStateForHistory :
-                    ()
-              )>
-              <span className="section-header">
-                (DomHelper.textEl("Redo"))
-              </span>
-            </div>
-          </div> :
-          /* <span className="section-tail">
-               (DomHelper.textEl("Ctrl+U"))
-             </span> */
+          _buildFileComponentSelectNav(send, store, dispatchFunc) :
           ReasonReact.null
       )
     </div>;
   };
+
+  let _buildEditComponentSelectNav = (send, store, dispatchFunc) =>
+    <div className="item-content item-edit">
+      <div className="content-section">
+        <input
+          className="section-fileLoad"
+          _type="file"
+          multiple=false
+          onChange=(
+            e =>
+              importPackage((store, dispatchFunc), (send, BlurNav), e)
+              |> ignore
+          )
+        />
+        <span className="section-header">
+          (DomHelper.textEl("Import Package"))
+        </span>
+      </div>
+      <div
+        className="content-section"
+        onClick=(_e => send(ShowEditExportPackageModal))>
+        <span className="section-header">
+          (DomHelper.textEl("Export Package"))
+        </span>
+      </div>
+      <div
+        className="content-section"
+        onClick=(_e => send(ShowEditExportSceneModal))>
+        <span className="section-header">
+          (DomHelper.textEl("Export Scene"))
+        </span>
+      </div>
+    </div>;
 
   let buildEditComponent = (state, send, store, dispatchFunc) => {
     let className =
@@ -120,45 +148,7 @@ module Method = {
       </div>
       (
         state.currentSelectNav === Edit ?
-          <div className="item-content item-edit">
-            <div className="content-section">
-              <input
-                className="section-fileLoad"
-                _type="file"
-                multiple=false
-                onChange=(
-                  e =>
-                    importPackage((store, dispatchFunc), (send, BlurNav), e)
-                    |> ignore
-                )
-              />
-              <span className="section-header">
-                (DomHelper.textEl("Import Package"))
-              </span>
-            </div>
-            <div
-              className="content-section"
-              onClick=(
-                _e =>
-                  send(ShowEditExportPackageModal)
-                  /* HeaderExportUtils.exportPackage(
-                       WonderBsJszip.Zip.create,
-                       Fetch.fetch,
-                     )
-                     |> ignore */
-              )>
-              <span className="section-header">
-                (DomHelper.textEl("Export Package"))
-              </span>
-            </div>
-            <div
-              className="content-section"
-              onClick=(_e => send(ShowEditExportSceneModal))>
-              <span className="section-header">
-                (DomHelper.textEl("Export Scene"))
-              </span>
-            </div>
-          </div> :
+          _buildEditComponentSelectNav(send, store, dispatchFunc) :
           ReasonReact.null
       )
       (
@@ -196,6 +186,15 @@ module Method = {
     </div>;
   };
 
+  let _buildPublishComponentSelectNav = send =>
+    <div className="item-content">
+      <div
+        className="content-section"
+        onClick=(_e => send(ShowPublishLocalModal))>
+        <span className="section-header"> (DomHelper.textEl("Local")) </span>
+      </div>
+    </div>;
+
   let buildPublishComponent = (state, send, store, dispatchFunc) => {
     let className =
       state.currentSelectNav === Publish ?
@@ -215,16 +214,7 @@ module Method = {
       </div>
       (
         state.currentSelectNav === Publish ?
-          <div className="item-content">
-            <div
-              className="content-section"
-              onClick=(_e => send(ShowPublishLocalModal))>
-              <span className="section-header">
-                (DomHelper.textEl("Local"))
-              </span>
-            </div>
-          </div> :
-          ReasonReact.null
+          _buildPublishComponentSelectNav(send) : ReasonReact.null
       )
       (
         state.isShowPublishLocalModal ?
@@ -250,6 +240,17 @@ module Method = {
     </div>;
   };
 
+  let _buildHelpComponentSelectNav = send =>
+    <div className="item-content item-help">
+      <div
+        className="content-section"
+        onClick=(_e => send(ShowHelpVersionModal))>
+        <span className="section-header">
+          (DomHelper.textEl("Version"))
+        </span>
+      </div>
+    </div>;
+
   let buildHelpComponent = (state, send, store, dispatchFunc) => {
     let className =
       state.currentSelectNav === Help ?
@@ -266,16 +267,7 @@ module Method = {
       </div>
       (
         state.currentSelectNav === Help ?
-          <div className="item-content item-help">
-            <div
-              className="content-section"
-              onClick=(_e => send(ShowHelpVersionModal))>
-              <span className="section-header">
-                (DomHelper.textEl("Version"))
-              </span>
-            </div>
-          </div> :
-          ReasonReact.null
+          _buildHelpComponentSelectNav(send) : ReasonReact.null
       )
       (
         state.isShowHelpVersionModal ?
