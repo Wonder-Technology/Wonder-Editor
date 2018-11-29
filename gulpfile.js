@@ -2,11 +2,8 @@ var fs = require('fs')
 var gulp = require("gulp");
 var gulpSync = require("gulp-sync")(gulp);
 var path = require("path");
-var wonderPackage = require("wonder-package");
 var exec = require('child_process').exec;
 var sass = require("gulp-sass");
-
-var package = wonderPackage.package;
 
 
 var _safeExec = (commandStr, done) => exec(commandStr, { maxBuffer: 1024 * 500 }, function (err, stdout, stderr) {
@@ -70,10 +67,6 @@ gulp.task("changeSnapshotPath", function (done) {
 
     replaceSnapshotPath(filePath)
 });
-
-// gulp.task("rollupProject", function (done) {
-//     package.rollup(path.join(process.cwd(), "./rollup.config.js"), done);
-// });
 
 gulp.task("webpack", function (done) {
     _safeExec("npm run webpack", done);

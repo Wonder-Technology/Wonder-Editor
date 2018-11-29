@@ -52,8 +52,7 @@
     "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0",
     "wonder-bs-jest": "^0.2.18",
-    "wonder-bs-sinon": "^0.1.7",
-    "wonder-package": "latest"
+    "wonder-bs-sinon": "^0.1.7"
   },
   "dependencies": {
     "antd": "2.13.11",
