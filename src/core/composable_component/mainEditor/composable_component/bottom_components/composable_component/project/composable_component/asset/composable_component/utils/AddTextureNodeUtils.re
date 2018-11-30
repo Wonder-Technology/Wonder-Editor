@@ -1,11 +1,17 @@
 let addTextureNodeToAssetTree =
-    (texture, (targetTreeNodeId, newNodeId, imageNodeId), editorState) =>
+    (
+      texture,
+      isInWDB,
+      (targetTreeNodeId, newNodeId, imageNodeId),
+      editorState,
+    ) =>
   editorState
   |> FolderNodeUtils.addTextureIntoNodeMap(
        newNodeId,
        targetTreeNodeId |. Some,
        texture,
        imageNodeId,
+       isInWDB,
      )
   |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
        targetTreeNodeId,
@@ -44,7 +50,7 @@ let _getImageNodeIdByUint8Array = (imageUint8Array, editorState) =>
   | Some((imageNodeId, _)) => Some(imageNodeId)
   };
 
-let addImageNodeByBase64 = (base64, fileName, mimeType, editorState) =>
+let addImageNodeByBase64 = (base64, fileName, mimeType, isInWDB, editorState) =>
   switch (_getImageNodeIdByBase64(base64, editorState)) {
   | None =>
     let (editorState, imageNodeId) =
@@ -56,17 +62,20 @@ let addImageNodeByBase64 = (base64, fileName, mimeType, editorState) =>
       |> ImageNodeMapAssetEditorService.setResult(
            imageNodeId,
            ImageNodeMapAssetEditorService.buildImageNodeResult(
-             Some(base64),
-             None,
-             fileName,
-             mimeType,
+             ~base64=Some(base64),
+             ~uint8Array=None,
+             ~name=fileName,
+             ~mimeType,
+             ~isInWDB,
+             (),
            ),
          ),
     );
   | Some(imageNodeId) => (imageNodeId, editorState)
   };
 
-let addImageNodeByUint8Array = (uint8Array, name, mimeType, editorState) =>
+let addImageNodeByUint8Array =
+    (uint8Array, name, mimeType, isInWDB, editorState) =>
   switch (_getImageNodeIdByUint8Array(uint8Array, editorState)) {
   | None =>
     let (editorState, imageNodeId) =
@@ -78,10 +87,12 @@ let addImageNodeByUint8Array = (uint8Array, name, mimeType, editorState) =>
       |> ImageNodeMapAssetEditorService.setResult(
            imageNodeId,
            ImageNodeMapAssetEditorService.buildImageNodeResult(
-             None,
-             Some(uint8Array),
-             name,
-             mimeType,
+             ~base64=None,
+             ~uint8Array=Some(uint8Array),
+             ~name,
+             ~mimeType,
+             ~isInWDB,
+             (),
            ),
          ),
     );

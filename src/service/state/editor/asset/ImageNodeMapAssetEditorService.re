@@ -25,10 +25,20 @@ let setResult = (nodeId, imageResult, editorState) => {
     |> ImageNodeMapAssetService.setResult(nodeId, imageResult),
 };
 
-let buildImageNodeResult = (base64, uint8Array, name, mimeType) => {
+let buildImageNodeResult =
+    (
+      ~base64,
+      ~uint8Array,
+      ~name,
+      ~mimeType,
+      ~blobObjectURL=None,
+      ~isInWDB=false,
+      (),
+    ) => {
   base64,
   uint8Array,
-  blobObjectURL: None,
+  blobObjectURL,
+  isInWDB,
   name,
   mimeType,
 };

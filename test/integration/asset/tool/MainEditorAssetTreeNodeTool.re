@@ -37,18 +37,22 @@ let addTextureIntoNodeMap =
   |> ImageNodeMapAssetEditorService.setResult(
        textureComponent,
        ImageNodeMapAssetEditorService.buildImageNodeResult(
-         Some(imageSrc),
-         None,
-         textureName ++ extName,
-         ImageUtils.getImageMimeType(extName, editorState),
+         ~base64=Some(imageSrc),
+         ~uint8Array=None,
+         ~name=textureName ++ extName,
+         ~mimeType=ImageUtils.getImageMimeType(extName, editorState),
+         ~isInWDB=false,
+         (),
        ),
      )
   |> TextureNodeMapAssetEditorService.setResult(
        index,
        TextureNodeMapAssetEditorService.buildTextureNodeResult(
-         textureComponent,
-         parentFolderNodeId |. Some,
-         textureComponent,
+         ~textureComponent,
+         ~parentFolderNodeId=parentFolderNodeId |. Some,
+         ~image=textureComponent,
+         ~isInWDB=false,
+         (),
        ),
      );
 };

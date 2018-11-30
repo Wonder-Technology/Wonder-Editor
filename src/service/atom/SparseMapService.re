@@ -20,6 +20,11 @@ let length = Js.Array.length;
 
 let copy = Js.Array.copy;
 
+let push = (item, arr) => {
+  arr |> Js.Array.push(item) |> ignore;
+  arr;
+};
+
 let getValidValues = map =>
   map |> Js.Array.filter(value => value |> Obj.magic !== Js.Undefined.empty);
 
@@ -47,6 +52,16 @@ let getValidDataArr = map =>
            arr;
          },
        [||],
+     );
+
+let filterValid = (func, map) =>
+  map
+  |> Js.Array.filter(value =>
+       if (value |> Obj.magic === Js.Undefined.empty) {
+         false;
+       } else {
+         func(. value);
+       }
      );
 
 let filteriValid = (func, map) =>

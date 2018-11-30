@@ -27,6 +27,7 @@ module CustomEventHandler = {
     let editorState =
       AddMaterialNodeUtils.addMaterialNodeToAssetTree(
         newMaterial,
+        false,
         (targetTreeNodeId, newIndex),
         editorState,
       );

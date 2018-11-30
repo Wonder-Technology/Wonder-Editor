@@ -10,6 +10,7 @@ let importAssetWDB =
   let imageUint8ArrayDataMapRef =
     ref(WonderCommonlib.SparseMapService.createEmpty());
 
+    WonderLog.Log.print("assemble wdb") |> ignore;
   engineState
   |> AssembleWDBEngineService.assembleWDB(
        wdbArrayBuffer,
@@ -23,6 +24,10 @@ let importAssetWDB =
        ((engineState, (imageUint8ArrayDataMap, _), gameObject)) => {
        let allGameObjects =
          GameObjectEngineService.getAllGameObjects(gameObject, engineState);
+
+         /* WonderLog.Log.print(
+imageUint8ArrayDataMap
+         ) |> ignore; */
 
        editorState
        |> WDBNodeMapAssetEditorService.setResult(

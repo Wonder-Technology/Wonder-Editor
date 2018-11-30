@@ -23,7 +23,17 @@ let _getArrayBuffer =
 
 let buildImageData =
     ({images, bufferViews}: ExportAssetType.assets, buffer, editorState) =>
+  /* let (
+       (extractedMaterialAssetDataArr, extractedTextureAssetDataArr),
+       (editorState, engineState),
+     ) =
+       ExtractAndRelateAssetsUtils.Extract.extractAndRelateAssets(
+         allGameObjectsArr,
+         imageUint8ArrayDataMap,
+         (editorState, engineState),
+       ); */
   images
+  /* |> WonderLog.Log.print */
   |> WonderCommonlib.ArrayService.reduceOneParami(
        (.
          streamArr,
@@ -75,10 +85,12 @@ let buildImageData =
            |> ImageNodeMapAssetEditorService.setResult(
                 assetNodeId,
                 ImageNodeMapAssetEditorService.buildImageNodeResult(
-                  None,
-                  Some(uint8Array),
-                  name,
-                  mimeType,
+                  ~base64=None,
+                  ~uint8Array=Some(uint8Array),
+                  ~name,
+                  ~mimeType,
+                  ~isInWDB=false,
+                  (),
                 ),
               ),
          );
@@ -97,6 +109,7 @@ let buildTextureData =
       (editorState, engineState),
     ) =>
   textures
+  |> WonderLog.Log.print
   |> WonderCommonlib.ArrayService.reduceOneParami(
        (.
          (textureMap, (editorState, engineState)),
@@ -166,10 +179,13 @@ let buildTextureData =
            |> TextureNodeMapAssetEditorService.setResult(
                 assetNodeId,
                 TextureNodeMapAssetEditorService.buildTextureNodeResult(
-                  texture,
-                  parentFolderNodeId,
-                  imageNodeIdMap
-                  |> WonderCommonlib.SparseMapService.unsafeGet(source),
+                  ~textureComponent=texture,
+                  ~parentFolderNodeId,
+                  ~image=
+                    imageNodeIdMap
+                    |> WonderCommonlib.SparseMapService.unsafeGet(source),
+                  ~isInWDB=false,
+                  (),
                 ),
               )
            |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
@@ -191,7 +207,7 @@ let buildTextureData =
      );
 
 let _buildMaterialEditorData =
-    (material, path, type_, (editorState, engineState)) => {
+    (material, path, type_, isInWDB, (editorState, engineState)) => {
   let (editorState, assetNodeId) = AssetIdUtils.generateAssetId(editorState);
 
   let (parentFolderNodeId, editorState) =
@@ -201,9 +217,11 @@ let _buildMaterialEditorData =
   |> MaterialNodeMapAssetEditorService.setResult(
        assetNodeId,
        MaterialNodeMapAssetEditorService.buildMaterialNodeResult(
-         parentFolderNodeId,
-         type_,
-         material,
+         ~parentFolderNodeId,
+         ~type_,
+         ~materialComponent=material,
+         ~isInWDB,
+         (),
        ),
      )
   |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
@@ -234,6 +252,7 @@ let _buildBasicMaterialData = (basicMaterials, (editorState, engineState)) =>
              material,
              path,
              AssetMaterialDataType.BasicMaterial,
+             false,
              (editorState, engineState),
            );
 
@@ -293,6 +312,7 @@ let _buildLightMaterialData =
              material,
              path,
              AssetMaterialDataType.LightMaterial,
+             false,
              (editorState, engineState),
            );
 
@@ -325,6 +345,27 @@ let buildMaterialData =
 
   (basicMaterialMap, lightMaterialMap, (editorState, engineState));
 };
+
+let addExtractedMateriialAssetDataToMaterialData =
+    (extractedMaterialAssetDataArr, (basicMaterialMap, lightMaterialMap)) =>
+  extractedMaterialAssetDataArr
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (.
+         (basicMaterialMap, lightMaterialMap),
+         ((material, materialType), _),
+       ) =>
+         switch (materialType) {
+         | AssetMaterialDataType.BasicMaterial => (
+             basicMaterialMap |> SparseMapService.push(material),
+             lightMaterialMap,
+           )
+         | AssetMaterialDataType.LightMaterial => (
+             basicMaterialMap,
+             lightMaterialMap |> SparseMapService.push(material),
+           )
+         },
+       (basicMaterialMap, lightMaterialMap),
+     );
 
 let _mergeImageUint8ArrayDataMap =
     (totalImageUint8ArrayDataMap, targetImageUint8ArrayDataMap) => {

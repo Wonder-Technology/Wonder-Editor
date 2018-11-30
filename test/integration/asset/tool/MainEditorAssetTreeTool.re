@@ -178,6 +178,7 @@ module BuildAssetTree = {
            id1,
            rootId |. Some,
            newMaterial,
+           false,
          )
       |> TreeRootAssetEditorService.setAssetTreeRoot({
            nodeId: rootId,
@@ -561,11 +562,13 @@ module BuildAssetTree = {
              id6,
              id1 |. Some,
              newMaterial1,
+             false,
            )
         |> MainEditorAssetTreeNodeTool.addMaterialIntoNodeMap(
              id7,
              id2 |. Some,
              newMaterial2,
+             false,
            )
         |> TreeRootAssetEditorService.setAssetTreeRoot({
              nodeId: rootId,

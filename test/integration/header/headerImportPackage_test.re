@@ -1584,14 +1584,14 @@ let _ =
                             let blobData = LoadTool.getBlobData(.);
 
                             let (arrayBuffer, param) =
-                              Array.unsafe_get(blobData, 1);
+                              Array.unsafe_get(blobData, 0);
 
                             (
                               blobData |> Js.Array.length,
                               arrayBuffer |> ArrayBuffer.byteLength,
                               param,
                             )
-                            |> expect == (3, 3, {"type": "image/png"})
+                            |> expect == (2, 3, {"type": "image/png"})
                             |> resolve;
                           },
                         (),
