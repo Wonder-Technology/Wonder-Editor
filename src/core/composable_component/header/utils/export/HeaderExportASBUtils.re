@@ -87,14 +87,18 @@ let _computeByteLength = (bufferTotalAlignedByteLength, jsonUint8Array) => {
   (jsonByteLength, jsonAlignedByteLength, totalByteLength);
 };
 
-let generateASB = (editorState, engineState) => {
+let generateASB = (imageUint8ArrayMap, (editorState, engineState)) => {
   let (
+    engineState,
     (imageArr, textureArr, basicMaterialArr, lightMaterialArr, wdbArr),
     (imageBufferViewArr, wdbBufferViewArr),
     (imageUint8ArrayArr, wdbArrayBufferArr),
     bufferTotalAlignedByteLength,
   ) =
-    BuildJsonDataUtils.buildJsonData(editorState, engineState);
+    BuildJsonDataUtils.buildJsonData(
+      imageUint8ArrayMap,
+      (editorState, engineState),
+    );
 
   let jsonUint8Array =
     BuildJsonDataUtils.buildJsonUint8Array(
@@ -136,5 +140,5 @@ let generateASB = (editorState, engineState) => {
       dataView |> DataView.buffer,
     );
 
-  asb;
+  (engineState, asb);
 };

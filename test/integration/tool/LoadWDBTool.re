@@ -19,6 +19,20 @@ let getBoxTexturedMeshGameObjects = engineState =>
 let getBoxTexturedMeshGameObject = engineState =>
   engineState |> getBoxTexturedMeshGameObjects |> ArrayService.unsafeGetFirst;
 
+let unsafeGetBoxTexturedMeshLightMaterial = engineState =>
+  getBoxTexturedMeshGameObject(engineState)
+  |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+       _,
+       engineState,
+     );
+
+let unsafeGetBoxTexturedMeshDiffuseMap = engineState =>
+  unsafeGetBoxTexturedMeshLightMaterial(engineState)
+  |> LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
+       _,
+       engineState,
+     );
+
 let getBoxTexturedMeshGameObjectFromAssetNode =
     (wdbNodeId, (editorState, engineState)) => {
   let wdbGameObject =
@@ -1145,3 +1159,52 @@ module Truck = {
        );
   };
 };
+
+open EditorType;
+
+open AssetNodeType;
+
+let getResult = (nodeId, editorState) =>
+  editorState.assetRecord |> TextureNodeMapAssetService.getResult(nodeId);
+
+let getTextureComponent = (nodeId, editorState) =>
+  (getResult(nodeId, editorState) |> OptionService.unsafeGet).
+    textureComponent;
+
+let setTextureName = (nodeId, name, editorState) => {
+  let textureComponent = getTextureComponent(nodeId, editorState);
+
+  editorState
+  |> ImageNodeMapAssetEditorService.setResult(
+       textureComponent,
+       {
+         ...
+           ImageNodeMapAssetEditorService.unsafeGetResult(
+             textureComponent,
+             editorState,
+           ),
+         name,
+       },
+     );
+};
+
+let hasTextureComponent = (material, editorState) =>
+  TextureNodeMapAssetEditorService.getValidValues(editorState)
+  |> Js.Array.find(({textureComponent}: AssetNodeType.textureResultType) =>
+       JudgeTool.isEqual(textureComponent, material)
+     )
+  |> Js.Option.isSome;
+
+let getTextureNodeId = (texture, editorState) =>
+  switch (
+    editorState
+    |> TextureNodeMapAssetEditorService.getTextureNodeMap
+    |> SparseMapService.getValidDataArr
+    |> Js.Array.find(
+         ((_, {textureComponent}: AssetNodeType.textureResultType)) =>
+         textureComponent === texture
+       )
+  ) {
+  | None => None
+  | Some((textureNodeId, _)) => Some(textureNodeId)
+  };

@@ -41,7 +41,6 @@ let addTextureIntoNodeMap =
          ~uint8Array=None,
          ~name=textureName ++ extName,
          ~mimeType=ImageUtils.getImageMimeType(extName, editorState),
-         ~isInWDB=false,
          (),
        ),
      )
@@ -51,7 +50,6 @@ let addTextureIntoNodeMap =
          ~textureComponent,
          ~parentFolderNodeId=parentFolderNodeId |. Some,
          ~image=textureComponent,
-         ~isInWDB=false,
          (),
        ),
      );

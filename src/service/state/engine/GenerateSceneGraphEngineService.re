@@ -26,7 +26,7 @@ let _gePointstLength = (geometry, engineState, getPointsFunc) =>
 let generateWDBForWPK = (sceneGameObject, imageUint8ArrayMap, engineState) =>
   GenerateWDBSystem.generateWDB(
     sceneGameObject,
-    Js.toOption(imageUint8ArrayMap) |> OptionService.unsafeGet,
+    imageUint8ArrayMap |> Js.Nullable.toOption |> OptionService.unsafeGet,
     (
       (
         (. geometry, engineState) => {
@@ -69,6 +69,24 @@ let generateWDBForWPK = (sceneGameObject, imageUint8ArrayMap, engineState) =>
             IndicesGeometryMainService.getIndices32(. geometry, engineState)
             |> Uint32Array.length,
           |]),
+      ),
+      imageUint8Array =>
+        _writeUint32DataToUint8Array(imageUint8Array |> Uint8Array.length),
+    ),
+    engineState,
+  );
+
+let generateWDBForASB = (sceneGameObject, imageUint8ArrayMap, engineState) =>
+  GenerateWDBSystem.generateWDB(
+    sceneGameObject,
+    imageUint8ArrayMap |> Js.Nullable.toOption |> OptionService.unsafeGet,
+    (
+      (
+        VerticesGeometryMainService.getVertices,
+        NormalsGeometryMainService.getNormals,
+        TexCoordsGeometryMainService.getTexCoords,
+        IndicesGeometryMainService.getIndices,
+        IndicesGeometryMainService.getIndices32,
       ),
       imageUint8Array =>
         _writeUint32DataToUint8Array(imageUint8Array |> Uint8Array.length),

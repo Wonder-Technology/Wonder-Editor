@@ -70,11 +70,20 @@ let importASB = asb => {
          buffer,
          (editorState, engineState),
        )
-       |> then_(((wdbData, (editorState, engineState))) => {
+       |> then_(((allWDBGameObjectArr, (editorState, engineState))) => {
             editorState |> StateEditorService.setState |> ignore;
             engineState |> StateEngineService.setState |> ignore;
 
-            (wdbData, (basicMaterialMap, lightMaterialMap)) |> resolve;
+            (
+              (
+                allWDBGameObjectArr,
+                Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(
+                  editorState,
+                ),
+              ),
+              (basicMaterialMap, lightMaterialMap),
+            )
+            |> resolve;
           })
        |> WonderBsMost.Most.fromPromise
      );

@@ -114,8 +114,11 @@ let generateWDB = buildWDBGameObjectFunc => {
   let (engineState, wdbArrayBuffer) =
     HeaderExportSceneWDBUtils.generateWDB(
       rootGameObject,
+      Js.Nullable.return(
+        Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(editorState),
+      ),
       GenerateSceneGraphEngineService.generateWDB,
-      (editorState, engineState),
+      engineState,
     );
 
   restoreSandbox(refJsObjToSandbox(sandbox^));

@@ -28,14 +28,12 @@ let _handleImage =
             imgBase64,
             fileName,
             mimeType,
-            false,
             editorState,
           );
 
         let editorState =
           AddTextureNodeUtils.addTextureNodeToAssetTree(
             textureComponent,
-            false,
             (parentFolderNodeId, textureNodeId, imageNodeId),
             editorState,
           );
@@ -62,6 +60,7 @@ let _handleAssetWDBType =
       wdbArrayBuffer,
     ),
     (wdbNodeId, parentFolderNodeId),
+    true,
     (editorState, engineState),
   )
   |> then_(

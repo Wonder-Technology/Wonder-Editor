@@ -26,19 +26,10 @@ let setResult = (nodeId, imageResult, editorState) => {
 };
 
 let buildImageNodeResult =
-    (
-      ~base64,
-      ~uint8Array,
-      ~name,
-      ~mimeType,
-      ~blobObjectURL=None,
-      ~isInWDB=false,
-      (),
-    ) => {
+    (~base64, ~uint8Array, ~name, ~mimeType, ~blobObjectURL=None, ()) => {
   base64,
   uint8Array,
   blobObjectURL,
-  isInWDB,
   name,
   mimeType,
 };

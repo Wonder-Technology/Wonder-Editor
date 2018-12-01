@@ -86,10 +86,12 @@ let _ =
           let (engineState, wdb) =
             HeaderExportSceneWDBUtils.generateSceneWDB(
               GenerateSceneGraphEngineService.generateWDB,
-              (
-                StateEditorService.getState(),
-                StateEngineService.unsafeGetState(),
+              Js.Nullable.return(
+                Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(
+                  StateEditorService.getState(),
+                ),
               ),
+              StateEngineService.unsafeGetState(),
             );
 
           let isBind = ref(false);
@@ -138,10 +140,12 @@ let _ =
             let (engineState, wdb) =
               HeaderExportSceneWDBUtils.generateSceneWDB(
                 GenerateSceneGraphEngineService.generateWDB,
-                (
-                  StateEditorService.getState(),
-                  StateEngineService.unsafeGetState(),
+                Js.Nullable.return(
+                  Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(
+                    StateEditorService.getState(),
+                  ),
                 ),
+                StateEngineService.unsafeGetState(),
               );
 
             _getIsBindLength(

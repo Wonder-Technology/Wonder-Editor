@@ -1,26 +1,5 @@
-let _buildImageUint8ArrayMap = editorState =>
-  editorState
-  |> TextureNodeMapAssetEditorService.getValidValues
-  |> SparseMapService.reduce(
-       (. map, {textureComponent, image}: AssetNodeType.textureResultType) => {
-         let {mimeType, uint8Array}: AssetNodeType.imageResultType =
-           ImageNodeMapAssetEditorService.unsafeGetResult(image, editorState);
-
-         switch (uint8Array) {
-         | Some(uint8Array) =>
-           map
-           |> WonderCommonlib.SparseMapService.set(
-                textureComponent,
-                (mimeType, uint8Array),
-              )
-         | None => map
-         };
-       },
-       WonderCommonlib.SparseMapService.createEmpty(),
-     );
-
 let generateWDB =
-    (rootGameObject, generateWDBFunc, (editorState, engineState)) => {
+    (rootGameObject, imageUint8ArrayMap, generateWDBFunc, engineState) => {
   let isRun = StateEditorService.getIsRun();
   let engineState =
     isRun ?
@@ -29,11 +8,7 @@ let generateWDB =
       |> ArcballCameraControllerLogicService.bindGameViewActiveCameraArcballCameraControllerEvent;
 
   let (engineState, _, wdbArrayBuffer) =
-    generateWDBFunc(
-      rootGameObject,
-      Js.Nullable.return(_buildImageUint8ArrayMap(editorState)),
-      engineState,
-    );
+    generateWDBFunc(rootGameObject, imageUint8ArrayMap, engineState);
 
   let engineState =
     isRun ?
@@ -44,9 +19,10 @@ let generateWDB =
   (engineState, wdbArrayBuffer);
 };
 
-let generateSceneWDB = (generateWDBFunc, (editorState, engineState)) =>
+let generateSceneWDB = (generateWDBFunc, imageUint8ArrayMap, engineState) =>
   generateWDB(
     SceneEngineService.getSceneGameObject(engineState),
+    imageUint8ArrayMap,
     generateWDBFunc,
-    (editorState, engineState),
+    engineState,
   );

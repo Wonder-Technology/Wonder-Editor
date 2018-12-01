@@ -1,16 +1,17 @@
 open Js.Typed_array;
 
-let _isSceneGameObjectImageUint8Array = uint8Array =>
+let _isImageUint8ArrayWhichHasLengthData = uint8Array =>
   GenerateSceneGraphEngineService.isUint8ArrayHasOneUint32Data(uint8Array);
 
-let _isSceneImageDataEqual = (sceneImageUint8Array, uint8Array) =>
+let _isImageUint8ArrayWhichHasLengthDataEqual =
+    (imageUint8ArrayWhichHasLengthData, uint8Array) =>
   switch (uint8Array) {
   | None => true
   | Some(uint8Array) =>
     uint8Array
     |>
     Uint8Array.length === GenerateSceneGraphEngineService.readUint32DataFromUint8Array(
-                            sceneImageUint8Array,
+                            imageUint8ArrayWhichHasLengthData,
                           )
   };
 
@@ -28,7 +29,7 @@ let _isImageDataEqual =
           Operators.(
             test(
               Log.buildAssertMessage(
-                ~expect={j|scene gameObject->image to be undefined|j},
+                ~expect={j|gameObject->image to be nullable|j},
                 ~actual={j|not|j},
               ),
               () =>
@@ -45,11 +46,11 @@ let _isImageDataEqual =
   ) {
   | None => true
   | Some((_, uint8Array2)) =>
-    _isSceneGameObjectImageUint8Array(uint8Array2) ?
-      _isSceneImageDataEqual(uint8Array2, uint8Array) :
+    _isImageUint8ArrayWhichHasLengthData(uint8Array2) ?
+      _isImageUint8ArrayWhichHasLengthDataEqual(uint8Array2, uint8Array) :
       WonderLog.Log.fatal(
         LogUtils.buildFatalMessage(
-          ~description={j|should be scene gameObject image uint8Array|j},
+          ~description={j|should be image uint8Array which has length data|j},
           ~reason="",
           ~solution={j||j},
           ~params={j||j},
@@ -122,12 +123,21 @@ let _isLightMaterialDataEqualForWDBAssetGameObject =
       imageUint8ArrayDataMap,
       engineState,
     ) =>
+  /* RelateGameObjectAndMaterialAssetUtils.isLightMaterialDataEqual(
+       (name, diffuseColor, shininess, textureData),
+       material2,
+       imageUint8ArrayDataMap,
+       RelateGameObjectAndTextureAssetUtils.isTextureDataEqual(
+         RelateGameObjectAndTextureAssetUtils.isImageDataEqual,
+       ),
+       engineState,
+     ); */
   RelateGameObjectAndMaterialAssetUtils.isLightMaterialDataEqual(
     (name, diffuseColor, shininess, textureData),
     material2,
     imageUint8ArrayDataMap,
     RelateGameObjectAndTextureAssetUtils.isTextureDataEqual(
-      RelateGameObjectAndTextureAssetUtils.isImageDataEqual,
+      _isImageDataEqual,
     ),
     engineState,
   );
@@ -387,8 +397,6 @@ let relateSceneWDBGameObjectsAndAssets =
          open WonderLog;
          open Contract;
          open Operators;
-
-         /* TODO add material asset check? */
 
          let sceneGeometryAssets =
            GeometryAssetLogicService.getGeometryAssetsFromWDBGameObjects(

@@ -97,3 +97,39 @@ let disposeAssets = () => {
 
   JobEngineService.execDisposeJob |> StateLogicService.getAndSetEngineState;
 };
+
+let buildFakeCanvas = (sandbox, base64, callIndex) => {
+  open Sinon;
+
+  let toDataURLStub = createEmptyStubWithJsObjSandbox(sandbox);
+  toDataURLStub |> returns(base64);
+
+  let canvasDom = {
+    "width": 0,
+    "height": 0,
+    "getContext": () => {
+      "drawImage": createEmptyStubWithJsObjSandbox(sandbox),
+    },
+    "toDataURL": toDataURLStub,
+  };
+
+  canvasDom;
+};
+
+let buildBase64_1 = () => "data:image/png;base64,aaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaacccccccccccccccccccccccaacccccccccccccccccccccccaaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaccccccccccccccccccccccc";
+
+let buildBase64_2 = () => "data:image/jpeg;base64,bbb";
+
+let prepareFakeCanvas = sandbox => {
+  open Sinon;
+
+  let canvas = buildFakeCanvas(sandbox, buildBase64_2(), 0);
+
+  let createElementStub = BuildCanvasTool.documentToJsObj(
+                            BuildCanvasTool.document,
+                          )##createElement;
+
+  createElementStub |> withOneArg("canvas") |> returns(canvas) |> ignore;
+
+  ();
+};

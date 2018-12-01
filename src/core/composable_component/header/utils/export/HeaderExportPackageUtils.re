@@ -42,14 +42,21 @@ let _export = () => {
 
   let editorState = editorState |> _buildImageNodeUint8Array;
 
+  let imageUint8ArrayMap =
+    Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(editorState);
+
   let (engineState, sceneGraphArrayBuffer) =
     HeaderExportSceneWDBUtils.generateSceneWDB(
       GenerateSceneGraphEngineService.generateWDBForWPK,
-      (editorState, engineState),
+      Js.Nullable.return(imageUint8ArrayMap),
+      engineState,
     );
 
-  let asbArrayBuffer =
-    HeaderExportASBUtils.generateASB(editorState, engineState);
+  let (engineState, asbArrayBuffer) =
+    HeaderExportASBUtils.generateASB(
+      imageUint8ArrayMap,
+      (editorState, engineState),
+    );
 
   let wpkArrayBuffer =
     HeaderExportWPKUtils.generateWPK(sceneGraphArrayBuffer, asbArrayBuffer);

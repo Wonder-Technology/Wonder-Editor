@@ -19,42 +19,8 @@ let _ =
     let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
     let directionPointLightsAndBoxWDBArrayBuffer = ref(Obj.magic(1));
 
-    let _buildFakeCanvas = (sandbox, base64, callIndex) => {
-      let toDataURLStub = createEmptyStubWithJsObjSandbox(sandbox);
-      toDataURLStub |> returns(base64);
-
-      let canvasDom = {
-        "width": 0,
-        "height": 0,
-        "getContext": () => {
-          "drawImage": createEmptyStubWithJsObjSandbox(sandbox),
-        },
-        "toDataURL": toDataURLStub,
-      };
-
-      canvasDom;
-    };
-
-    let _prepareFakeCanvas = () => {
-      let base64_1 = "data:image/png;base64,aaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaacccccccccccccccccccccccaacccccccccccccccccccccccaaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaacccccccccccccccccccccccaaccccccccccccccccccccccc";
-      let base64_2 = "data:image/jpeg;base64,bbb";
-      let canvas1 = _buildFakeCanvas(sandbox, base64_1, 0);
-      let canvas2 = _buildFakeCanvas(sandbox, base64_2, 1);
-
-      let createElementStub = BuildCanvasTool.documentToJsObj(
-                                BuildCanvasTool.document,
-                              )##createElement;
-
-      createElementStub
-      |> withOneArg("canvas")
-      |> onCall(0)
-      |> returns(canvas1)
-      |> onCall(1)
-      |> returns(canvas2)
-      |> ignore;
-
-      (base64_1, base64_2);
-    };
+    let _prepareFakeCanvas = () =>
+      ImportPackageTool.prepareFakeCanvas(sandbox);
 
     beforeAll(() => {
       boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
@@ -120,46 +86,49 @@ let _ =
 
           g1->geometry->select geometry group widget should have only one wdb geometry and be using it
           |},
-            () =>
-            MainEditorAssetUploadTool.loadOneWDB(
-              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
-              (),
-            )
-            |> then_(uploadedWDBNodeId => {
-                 MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
-                   ~wdbNodeId=uploadedWDBNodeId,
-                   (),
-                 );
+            () => {
+              _prepareFakeCanvas() |> ignore;
 
-                 ImportPackageTool.testImportPackage(
-                   ~testFunc=
-                     () => {
-                       let engineState = StateEngineService.unsafeGetState();
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId => {
+                   MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     (),
+                   );
 
-                       LoadWDBTool.getBoxTexturedMeshGameObject(engineState)
-                       |> GameObjectTool.setCurrentSceneTreeNode;
+                   ImportPackageTool.testImportPackage(
+                     ~testFunc=
+                       () => {
+                         let engineState = StateEngineService.unsafeGetState();
 
-                       MainEditorSceneTreeTool.Select.selectGameObject(
-                         ~gameObject=
-                           GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-                         (),
-                       );
+                         LoadWDBTool.getBoxTexturedMeshGameObject(engineState)
+                         |> GameObjectTool.setCurrentSceneTreeNode;
 
-                       let component =
-                         BuildComponentTool.buildGeometry(
-                           ~geometryComponent=
-                             GameObjectTool.getCurrentGameObjectGeometry(),
-                           ~isShowGeometryGroup=true,
+                         MainEditorSceneTreeTool.Select.selectGameObject(
+                           ~gameObject=
+                             GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                            (),
                          );
 
-                       component
-                       |> ReactTestTool.createSnapshotAndMatch
-                       |> resolve;
-                     },
-                   (),
-                 );
-               })
+                         let component =
+                           BuildComponentTool.buildGeometry(
+                             ~geometryComponent=
+                               GameObjectTool.getCurrentGameObjectGeometry(),
+                             ~isShowGeometryGroup=true,
+                             (),
+                           );
+
+                         component
+                         |> ReactTestTool.createSnapshotAndMatch
+                         |> resolve;
+                       },
+                     (),
+                   );
+                 });
+            },
           );
           testPromise("should dispose geometry engine data", () =>
             MainEditorAssetUploadTool.loadOneWDB(
@@ -272,7 +241,11 @@ let _ =
       });
 
       describe("dispose material assets", () => {
-        beforeEach(() => MainEditorSceneTool.prepareScene(sandbox));
+        beforeEach(() => {
+          MainEditorSceneTool.prepareScene(sandbox);
+
+          _prepareFakeCanvas() |> ignore;
+        });
 
         testPromise(
           {|
@@ -351,6 +324,8 @@ let _ =
           );
 
           MainEditorSceneTool.prepareScene(sandbox);
+
+          _prepareFakeCanvas() |> ignore;
         });
 
         testPromise(
@@ -580,6 +555,29 @@ let _ =
           });
 
           describe("test with material and texture assets", () => {
+            let _prepareFakeCanvas = () => {
+              let base64_1 = ImportPackageTool.buildBase64_1();
+              let base64_2 = ImportPackageTool.buildBase64_2();
+              let canvas1 =
+                ImportPackageTool.buildFakeCanvas(sandbox, base64_1, 0);
+              let canvas2 =
+                ImportPackageTool.buildFakeCanvas(sandbox, base64_2, 1);
+
+              let createElementStub = BuildCanvasTool.documentToJsObj(
+                                        BuildCanvasTool.document,
+                                      )##createElement;
+
+              createElementStub
+              |> withOneArg("canvas")
+              |> onCall(0)
+              |> returns(canvas1)
+              |> onCall(1)
+              |> returns(canvas2)
+              |> ignore;
+
+              (base64_1, base64_2);
+            };
+
             testPromise(
               {|
           1.add material asset m1;
@@ -1584,7 +1582,7 @@ let _ =
                             let blobData = LoadTool.getBlobData(.);
 
                             let (arrayBuffer, param) =
-                              Array.unsafe_get(blobData, 0);
+                              Array.unsafe_get(blobData, 1);
 
                             (
                               blobData |> Js.Array.length,
@@ -1717,6 +1715,8 @@ let _ =
         stoveWDBArrayBuffer := WDBTool.convertGLBToWDB("SuperLowPolyStove")
       );
 
+      beforeEach(() => _prepareFakeCanvas() |> ignore);
+
       testPromise(
         {|
             1.import package p1(error);
@@ -1791,6 +1791,303 @@ let _ =
                     );
                   });
              });
+        },
+      );
+
+      describe(
+        "test use extracted assets from wdb assets to scene gameObject before export package",
+        () => {
+          let error = ref(Obj.magic(-1));
+
+          beforeEach(() => {
+            error :=
+              createMethodStubWithJsObjSandbox(
+                sandbox,
+                ConsoleTool.console,
+                "error",
+              );
+
+            MainEditorSceneTool.createDefaultScene(
+              sandbox,
+              MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+            );
+          });
+
+          testPromise(
+            {|
+          add gameObject g1 to scene tree;
+          add material asset m1;
+          load BoxTextured wdb asset w1;
+          drag w1 to scene tree to be gameObject g2;
+          drag w1->extracted texture t1 to be m1->diffuseMap;
+          set g1->material to be m1;
+          export;
+          import;
+
+          g1->material should be m1;
+          g1->material->diffuseMap should be t1;
+          |},
+            () => {
+              let firstBox = GameObjectTool.unsafeGetCurrentSceneTreeNode();
+              let firstBoxName = "firstBox";
+              GameObjectEngineService.setGameObjectName(
+                firstBoxName,
+                firstBox,
+              )
+              |> StateLogicService.getAndSetEngineState;
+
+              let addedMaterialNodeId1 = MainEditorAssetIdTool.getNewAssetId();
+
+              MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+              let materialComponent1 =
+                MainEditorAssetMaterialNodeTool.getMaterialComponent(
+                  ~nodeId=addedMaterialNodeId1,
+                  (),
+                );
+
+              let materialComponent1Name =
+                LightMaterialEngineService.unsafeGetLightMaterialName(
+                  materialComponent1,
+                )
+                |> StateLogicService.getEngineStateToGetData;
+
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId => {
+                   MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     (),
+                   );
+
+                   let editorState = StateEditorService.getState();
+                   let engineState = StateEngineService.unsafeGetState();
+
+                   let boxTexturedMeshDiffuseMap =
+                     LoadWDBTool.unsafeGetBoxTexturedMeshDiffuseMap(
+                       engineState,
+                     );
+                   let boxTexturedMeshDiffuseMapName =
+                     boxTexturedMeshDiffuseMap
+                     |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
+                          _,
+                          engineState,
+                        );
+
+                   MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                     ~textureNodeId=
+                       boxTexturedMeshDiffuseMap
+                       |> MainEditorAssetTextureNodeTool.findTextureNodeIdByTextureComponent(
+                            _,
+                            editorState,
+                          )
+                       |> OptionService.unsafeGet,
+                     ~material=materialComponent1,
+                     (),
+                   );
+
+                   editorState |> StateEditorService.setState |> ignore;
+                   engineState |> StateEngineService.setState |> ignore;
+
+                   MainEditorMaterialTool.changeMaterial(
+                     ~sourceMaterial=
+                       GameObjectTool.getCurrentGameObjectLightMaterial(),
+                     ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                     ~targetMaterial=materialComponent1,
+                     ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                     ~gameObject=
+                       GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+                     ~materialNodeId=Some(addedMaterialNodeId1),
+                     (),
+                   );
+
+                   let wpkArrayBuffer = ExportPackageTool.exportWPK();
+
+                   ImportPackageTool.testImportPackageWithoutExport(
+                     ~wpkArrayBuffer,
+                     ~testFunc=
+                       () => {
+                         let engineState = StateEngineService.unsafeGetState();
+
+                         let firstBox =
+                           SceneToolEngine.findGameObjectByName(
+                             firstBoxName,
+                             engineState,
+                           )
+                           |> ArrayService.unsafeGetFirst;
+
+                         let firstBoxMaterial =
+                           firstBox
+                           |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                                _,
+                                engineState,
+                              );
+
+                         (
+                           error^ |> getCallCount,
+                           firstBoxMaterial
+                           |> LightMaterialEngineService.unsafeGetLightMaterialName(
+                                _,
+                                engineState,
+                              ),
+                           firstBoxMaterial
+                           |> LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
+                                _,
+                                engineState,
+                              )
+                           |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
+                                _,
+                                engineState,
+                              ),
+                         )
+                         |>
+                         expect == (
+                                     0,
+                                     materialComponent1Name,
+                                     boxTexturedMeshDiffuseMapName,
+                                   )
+                         |> resolve;
+                       },
+                     (),
+                   );
+                 });
+            },
+          );
+          testPromise(
+            {|
+          add gameObject g1 to scene tree;
+          load texture asset t1;
+          load BoxTextured wdb asset w1;
+          drag w1 to scene tree to be gameObject g2;
+          drag t1 to be w1->extracted material m1->diffuseMap;
+          set g1->material to be m1;
+          export;
+          import;
+
+          g1->material should be m1;
+          g1->material->diffuseMap should be t1;
+          |},
+            () => {
+              let firstBox = GameObjectTool.unsafeGetCurrentSceneTreeNode();
+              let firstBoxName = "firstBox";
+              GameObjectEngineService.setGameObjectName(
+                firstBoxName,
+                firstBox,
+              )
+              |> StateLogicService.getAndSetEngineState;
+
+              let imgName1 = "image1.png";
+              MainEditorAssetUploadTool.loadOneTexture(~imgName=imgName1, ())
+              |> then_(uploadedTextureNodeId1 =>
+                   MainEditorAssetUploadTool.loadOneWDB(
+                     ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                     (),
+                   )
+                   |> then_(uploadedWDBNodeId => {
+                        MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                          ~wdbNodeId=uploadedWDBNodeId,
+                          (),
+                        );
+
+                        let editorState = StateEditorService.getState();
+                        let engineState = StateEngineService.unsafeGetState();
+
+                        let wdbMaterial =
+                          LoadWDBTool.unsafeGetBoxTexturedMeshLightMaterial(
+                            engineState,
+                          );
+                        let wdbMaterialName =
+                          LightMaterialEngineService.unsafeGetLightMaterialName(
+                            wdbMaterial,
+                            engineState,
+                          );
+                        let wdbMaterialNodeId =
+                          MainEditorAssetMaterialNodeTool.findNodeIdByMaterialComponent(
+                            wdbMaterial,
+                            AssetMaterialDataType.LightMaterial,
+                            editorState,
+                          );
+
+                        MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                          ~textureNodeId=uploadedTextureNodeId1,
+                          ~material=wdbMaterial,
+                          (),
+                        );
+
+                        editorState |> StateEditorService.setState |> ignore;
+                        engineState |> StateEngineService.setState |> ignore;
+
+                        MainEditorMaterialTool.changeMaterial(
+                          ~sourceMaterial=
+                            GameObjectTool.getCurrentGameObjectLightMaterial(),
+                          ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                          ~targetMaterial=wdbMaterial,
+                          ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                          ~gameObject=
+                            GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+                          ~materialNodeId=wdbMaterialNodeId,
+                          (),
+                        );
+
+                        let boxTexturedWPKArrayBuffer =
+                          ExportPackageTool.exportWPK();
+
+                        ImportPackageTool.testImportPackageWithoutExport(
+                          ~wpkArrayBuffer=boxTexturedWPKArrayBuffer,
+                          ~testFunc=
+                            () => {
+                              let engineState =
+                                StateEngineService.unsafeGetState();
+
+                              let firstBox =
+                                SceneToolEngine.findGameObjectByName(
+                                  firstBoxName,
+                                  engineState,
+                                )
+                                |> ArrayService.unsafeGetFirst;
+
+                              let firstBoxMaterial =
+                                firstBox
+                                |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                                     _,
+                                     engineState,
+                                   );
+
+                              (
+                                error^ |> getCallCount,
+                                firstBoxMaterial
+                                |> LightMaterialEngineService.unsafeGetLightMaterialName(
+                                     _,
+                                     engineState,
+                                   ),
+                                firstBoxMaterial
+                                |> LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
+                                     _,
+                                     engineState,
+                                   )
+                                |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
+                                     _,
+                                     engineState,
+                                   ),
+                              )
+                              |>
+                              expect == (
+                                          0,
+                                          wdbMaterialName,
+                                          MainEditorAssetTextureNodeTool.buildTextureAssetName(
+                                            imgName1,
+                                          ),
+                                        )
+                              |> resolve;
+                            },
+                          (),
+                        );
+                      })
+                 );
+            },
+          );
         },
       );
     });

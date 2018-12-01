@@ -223,8 +223,7 @@ let _ =
               LoadTool.buildFakeLoadImage(.);
             });
 
-            testPromise(
-              "add name, wdbGameObject, wdbArrayBuffer to wdbNodeMap", () => {
+            testPromise("add name, wdbGameObject to wdbNodeMap", () => {
               MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
               |> ignore;
               let fileName = "BoxTextured";
@@ -237,20 +236,15 @@ let _ =
                 (),
               )
               |> then_(uploadedWDBNodeId => {
-                   let {name, wdbGameObject, wdbArrayBuffer}: AssetNodeType.wdbResultType =
+                   let {name, wdbGameObject}: AssetNodeType.wdbResultType =
                      StateEditorService.getState()
                      |> WDBNodeMapAssetEditorService.getWDBNodeMap
                      |> WonderCommonlib.SparseMapService.unsafeGet(
                           uploadedWDBNodeId,
                         );
 
-                   (name, wdbGameObject, wdbArrayBuffer)
-                   |>
-                   expect == (
-                               fileName,
-                               defaultSceneNewGameObjectUid,
-                               boxTexturedWDBArrayBuffer^,
-                             )
+                   (name, wdbGameObject)
+                   |> expect == (fileName, defaultSceneNewGameObjectUid)
                    |> resolve;
                  });
             });

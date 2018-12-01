@@ -454,7 +454,6 @@ module AssetTree = {
                let editorState =
                  AddMaterialNodeUtils.addMaterialNodeToAssetTree(
                    material,
-                   true,
                    (folderNodeId, materialNodeId),
                    editorState,
                  );
@@ -512,7 +511,6 @@ module AssetTree = {
                    imageUint8Array,
                    imageName,
                    mimeType,
-                   true,
                    editorState,
                  );
 
@@ -522,7 +520,6 @@ module AssetTree = {
                let editorState =
                  AddTextureNodeUtils.addTextureNodeToAssetTree(
                    texture,
-                   true,
                    (folderNodeId, textureNodeId, imageNodeId),
                    editorState,
                  );

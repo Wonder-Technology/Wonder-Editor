@@ -21,7 +21,6 @@ let _ =
 
       MainEditorSceneTool.initStateWithJob(
         ~sandbox,
-        ~isBuildFakeDom=false,
         ~noWorkerJobRecord=
           NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
             ~loopPipelines=
@@ -466,9 +465,10 @@ let _ =
         4.import package;
         4.remove w1;
 
-        c1's all geometrys shouldn be disposed
+        c1's all geometrys should be disposed
         |},
           () => {
+            ImportPackageTool.prepareFakeCanvas(sandbox) |> ignore;
             let wdbName = "TruckWDB";
 
             MainEditorAssetUploadTool.loadOneWDB(

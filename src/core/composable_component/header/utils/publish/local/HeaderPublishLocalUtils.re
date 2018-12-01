@@ -283,7 +283,12 @@ module Publish = {
         let (engineState, sceneGraphArrayBuffer) =
           HeaderExportSceneWDBUtils.generateSceneWDB(
             GenerateSceneGraphEngineService.generateWDB,
-            (editorState, engineState),
+            Js.Nullable.return(
+              Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(
+                editorState,
+              ),
+            ),
+            engineState,
           );
 
         engineState |> StateEngineService.setState;

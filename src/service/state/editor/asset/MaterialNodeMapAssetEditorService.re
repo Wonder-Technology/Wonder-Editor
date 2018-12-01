@@ -34,11 +34,10 @@ let getType = (nodeId, materialNodeMap) =>
   |> (({type_}: materialResultType) => type_);
 
 let buildMaterialNodeResult =
-    (~parentFolderNodeId, ~type_, ~materialComponent, ~isInWDB=false, ()) => {
+    (~type_, ~materialComponent, ~parentFolderNodeId=None, ()) => {
   parentFolderNodeId,
   type_,
   materialComponent,
-  isInWDB,
 };
 
 let setMaterialNodeResultParent =
@@ -58,3 +57,8 @@ let remove = (nodeId, editorState) => {
   assetRecord:
     editorState.assetRecord |> MaterialNodeMapAssetService.remove(nodeId),
 };
+
+let getMaterialComponentsByType = (materialType, editorState) =>
+  getValidValues(editorState)
+  |> SparseMapService.filter(({type_}) => type_ === materialType)
+  |> SparseMapService.map(({materialComponent}) => materialComponent);

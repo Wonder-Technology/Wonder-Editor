@@ -34,9 +34,6 @@ let _computeBufferViewDataByteLength = bufferViewArr =>
 let _buildImageData = editorState => {
   let (imageIndexMap, imageArr, bufferViewArr, uint8ArrayArr, byteOffset) =
     ImageNodeMapAssetEditorService.getImageNodeMap(editorState)
-    /* |> SparseMapService.filter(({isInWDB}: AssetNodeType.imageResultType) =>
-         ! isInWDB
-       ) */
     |> SparseMapService.reduceiValid(
          (.
            (
@@ -46,45 +43,35 @@ let _buildImageData = editorState => {
              uint8ArrayArr,
              byteOffset,
            ),
-           {name, mimeType, uint8Array, base64, isInWDB}: AssetNodeType.imageResultType,
+           {name, mimeType, uint8Array, base64}: AssetNodeType.imageResultType,
            imageNodeId,
-         ) =>
-           isInWDB ?
-             (
-               imageIndexMap,
-               imageArr,
-               bufferViewArr,
-               uint8ArrayArr,
-               byteOffset,
-             ) :
-             {
-               let uint8Array =
-                 _getUint8Array(uint8Array, base64, editorState);
-               let byteLength = uint8Array |> Uint8Array.length;
-               let alignedByteLength = BufferUtils.alignedLength(byteLength);
+         ) => {
+           let uint8Array = _getUint8Array(uint8Array, base64, editorState);
+           let byteLength = uint8Array |> Uint8Array.length;
+           let alignedByteLength = BufferUtils.alignedLength(byteLength);
 
-               (
-                 imageIndexMap
-                 |> WonderCommonlib.SparseMapService.set(
-                      imageNodeId,
-                      imageArr |> Js.Array.length,
-                    ),
-                 imageArr
-                 |> ArrayService.push(
-                      {
-                        name,
-                        mimeType,
-                        bufferView: bufferViewArr |> Js.Array.length,
-                      }: ExportAssetType.image,
-                    ),
-                 bufferViewArr
-                 |> ArrayService.push(
-                      {byteOffset, byteLength}: ExportAssetType.bufferView,
-                    ),
-                 uint8ArrayArr |> ArrayService.push(uint8Array),
-                 byteOffset + alignedByteLength,
-               );
-             },
+           (
+             imageIndexMap
+             |> WonderCommonlib.SparseMapService.set(
+                  imageNodeId,
+                  imageArr |> Js.Array.length,
+                ),
+             imageArr
+             |> ArrayService.push(
+                  {
+                    name,
+                    mimeType,
+                    bufferView: bufferViewArr |> Js.Array.length,
+                  }: ExportAssetType.image,
+                ),
+             bufferViewArr
+             |> ArrayService.push(
+                  {byteOffset, byteLength}: ExportAssetType.bufferView,
+                ),
+             uint8ArrayArr |> ArrayService.push(uint8Array),
+             byteOffset + alignedByteLength,
+           );
+         },
          (
            WonderCommonlib.SparseMapService.createEmpty(),
            [||],
@@ -132,78 +119,75 @@ let _buildTextureData = (imageIndexMap, (editorState, engineState)) =>
   |> SparseMapService.reduceiValid(
        (.
          (textureIndexMap, textureArr),
-         {textureComponent, image, parentFolderNodeId, isInWDB}: AssetNodeType.textureResultType,
+         {textureComponent, image, parentFolderNodeId}: AssetNodeType.textureResultType,
          textureNodeId,
-       ) =>
-         isInWDB ?
-           (textureIndexMap, textureArr) :
-           (
-             textureIndexMap
-             |> WonderCommonlib.SparseMapService.set(
-                  textureComponent,
-                  textureArr |> Js.Array.length,
-                ),
-             textureArr
-             |> ArrayService.push(
-                  {
-                    path:
-                      _getAssetNodePathFromAssets(
-                        parentFolderNodeId,
-                        [||],
-                        (editorState, engineState),
-                      ),
-                    name:
-                      AssetNodeUtils.getAssetNodeTotalName(
-                        Texture,
-                        textureNodeId,
-                        (editorState, engineState),
-                      ),
-                    source:
-                      imageIndexMap
-                      |> WonderCommonlib.SparseMapService.unsafeGet(image),
-                    wrapS:
-                      BasicSourceTextureEngineService.getWrapS(
-                        textureComponent,
-                        engineState,
-                      )
-                      |> TextureTypeUtils.convertWrapToInt,
-                    wrapT:
-                      BasicSourceTextureEngineService.getWrapT(
-                        textureComponent,
-                        engineState,
-                      )
-                      |> TextureTypeUtils.convertWrapToInt,
-                    minFilter:
-                      BasicSourceTextureEngineService.getMinFilter(
-                        textureComponent,
-                        engineState,
-                      )
-                      |> TextureTypeUtils.convertFilterToInt,
-                    magFilter:
-                      BasicSourceTextureEngineService.getMagFilter(
-                        textureComponent,
-                        engineState,
-                      )
-                      |> TextureTypeUtils.convertFilterToInt,
-                    format:
-                      BasicSourceTextureEngineService.getFormat(
-                        textureComponent,
-                        engineState,
-                      )
-                      |> TextureTypeUtils.convertFormatToInt,
-                    type_:
-                      BasicSourceTextureEngineService.getType(
-                        textureComponent,
-                        engineState,
-                      ),
-                    flipY:
-                      BasicSourceTextureEngineService.getFlipY(
-                        textureComponent,
-                        engineState,
-                      ),
-                  }: ExportAssetType.texture,
-                ),
-           ),
+       ) => (
+         textureIndexMap
+         |> WonderCommonlib.SparseMapService.set(
+              textureComponent,
+              textureArr |> Js.Array.length,
+            ),
+         textureArr
+         |> ArrayService.push(
+              {
+                path:
+                  _getAssetNodePathFromAssets(
+                    parentFolderNodeId,
+                    [||],
+                    (editorState, engineState),
+                  ),
+                name:
+                  AssetNodeUtils.getAssetNodeTotalName(
+                    Texture,
+                    textureNodeId,
+                    (editorState, engineState),
+                  ),
+                source:
+                  imageIndexMap
+                  |> WonderCommonlib.SparseMapService.unsafeGet(image),
+                wrapS:
+                  BasicSourceTextureEngineService.getWrapS(
+                    textureComponent,
+                    engineState,
+                  )
+                  |> TextureTypeUtils.convertWrapToInt,
+                wrapT:
+                  BasicSourceTextureEngineService.getWrapT(
+                    textureComponent,
+                    engineState,
+                  )
+                  |> TextureTypeUtils.convertWrapToInt,
+                minFilter:
+                  BasicSourceTextureEngineService.getMinFilter(
+                    textureComponent,
+                    engineState,
+                  )
+                  |> TextureTypeUtils.convertFilterToInt,
+                magFilter:
+                  BasicSourceTextureEngineService.getMagFilter(
+                    textureComponent,
+                    engineState,
+                  )
+                  |> TextureTypeUtils.convertFilterToInt,
+                format:
+                  BasicSourceTextureEngineService.getFormat(
+                    textureComponent,
+                    engineState,
+                  )
+                  |> TextureTypeUtils.convertFormatToInt,
+                type_:
+                  BasicSourceTextureEngineService.getType(
+                    textureComponent,
+                    engineState,
+                  ),
+                flipY:
+                  BasicSourceTextureEngineService.getFlipY(
+                    textureComponent,
+                    engineState,
+                  ),
+              }: ExportAssetType.texture,
+            ),
+       ),
        (WonderCommonlib.SparseMapService.createEmpty(), [||]),
      );
 
@@ -218,99 +202,105 @@ let _getTextureIndexFromMap = (textureComponent, textureIndexMap) =>
 
 let _buildMaterialData = (textureIndexMap, (editorState, engineState)) =>
   MaterialNodeMapAssetEditorService.getMaterialNodeMap(editorState)
-  /* |> SparseMapService.filter(({isInWDB}: AssetNodeType.materialResultType) =>
-       ! isInWDB
-     ) */
   |> SparseMapService.reduceiValid(
        (.
          (basicMaterialArr, lightMaterialArr),
-         {materialComponent, type_, parentFolderNodeId, isInWDB}: AssetNodeType.materialResultType,
+         {materialComponent, type_, parentFolderNodeId}: AssetNodeType.materialResultType,
          materialNodeId,
-       ) =>
-         isInWDB ?
-           (basicMaterialArr, lightMaterialArr) :
-           {
-             let name =
-               AssetNodeUtils.getAssetNodeTotalName(
-                 Material,
-                 materialNodeId,
-                 (editorState, engineState),
-               );
+       ) => {
+         let name =
+           AssetNodeUtils.getAssetNodeTotalName(
+             Material,
+             materialNodeId,
+             (editorState, engineState),
+           );
 
-             switch (type_) {
-             | BasicMaterial => (
-                 basicMaterialArr
-                 |> ArrayService.push(
-                      {
-                        name,
-                        path:
-                          _getAssetNodePathFromAssets(
-                            parentFolderNodeId,
-                            [||],
-                            (editorState, engineState),
-                          ),
-                        color:
-                          BasicMaterialEngineService.getColor(
-                            materialComponent,
-                            engineState,
-                          ),
-                      }: ExportAssetType.basicMaterial,
-                    ),
-                 lightMaterialArr,
-               )
-             | LightMaterial => (
-                 basicMaterialArr,
-                 lightMaterialArr
-                 |> ArrayService.push(
-                      {
-                        name,
-                        path:
-                          _getAssetNodePathFromAssets(
-                            parentFolderNodeId,
-                            [||],
-                            (editorState, engineState),
-                          ),
-                        diffuseColor:
-                          LightMaterialEngineService.getLightMaterialDiffuseColor(
-                            materialComponent,
-                            engineState,
-                          ),
-                        diffuseMap:
-                          _getTextureIndexFromMap(
-                            LightMaterialEngineService.getLightMaterialDiffuseMap(
-                              materialComponent,
-                              engineState,
-                            ),
-                            textureIndexMap,
-                          ),
-                        shininess:
-                          LightMaterialEngineService.getLightMaterialShininess(
-                            materialComponent,
-                            engineState,
-                          ),
-                      }: ExportAssetType.lightMaterial,
-                    ),
-               )
-             };
-           },
+         switch (type_) {
+         | BasicMaterial => (
+             basicMaterialArr
+             |> ArrayService.push(
+                  {
+                    name,
+                    path:
+                      _getAssetNodePathFromAssets(
+                        parentFolderNodeId,
+                        [||],
+                        (editorState, engineState),
+                      ),
+                    color:
+                      BasicMaterialEngineService.getColor(
+                        materialComponent,
+                        engineState,
+                      ),
+                  }: ExportAssetType.basicMaterial,
+                ),
+             lightMaterialArr,
+           )
+         | LightMaterial => (
+             basicMaterialArr,
+             lightMaterialArr
+             |> ArrayService.push(
+                  {
+                    name,
+                    path:
+                      _getAssetNodePathFromAssets(
+                        parentFolderNodeId,
+                        [||],
+                        (editorState, engineState),
+                      ),
+                    diffuseColor:
+                      LightMaterialEngineService.getLightMaterialDiffuseColor(
+                        materialComponent,
+                        engineState,
+                      ),
+                    diffuseMap:
+                      _getTextureIndexFromMap(
+                        LightMaterialEngineService.getLightMaterialDiffuseMap(
+                          materialComponent,
+                          engineState,
+                        ),
+                        textureIndexMap,
+                      ),
+                    shininess:
+                      LightMaterialEngineService.getLightMaterialShininess(
+                        materialComponent,
+                        engineState,
+                      ),
+                  }: ExportAssetType.lightMaterial,
+                ),
+           )
+         };
+       },
        ([||], [||]),
      );
 
 let _buildWDBData =
-    (imageAlignedByteLength, imageBufferViewArr, (editorState, engineState)) => {
+    (
+      imageUint8ArrayMap,
+      imageAlignedByteLength,
+      imageBufferViewArr,
+      (editorState, engineState),
+    ) => {
   let imageBufferViewIndex = imageBufferViewArr |> Js.Array.length;
 
-  let (wdbArr, arrayBufferArr, bufferViewArr, byteOffset) =
+  let (engineState, wdbArr, arrayBufferArr, bufferViewArr, byteOffset) =
     WDBNodeMapAssetEditorService.getWDBNodeMap(editorState)
     |> SparseMapService.reduceValid(
          (.
-           (wdbArr, arrayBufferArr, bufferViewArr, byteOffset),
-           {name, parentFolderNodeId, wdbArrayBuffer}: AssetNodeType.wdbResultType,
+           (engineState, wdbArr, arrayBufferArr, bufferViewArr, byteOffset),
+           {name, parentFolderNodeId, wdbGameObject}: AssetNodeType.wdbResultType,
          ) => {
+           let (engineState, wdbArrayBuffer) =
+             HeaderExportAssetWDBUtils.generate(
+               wdbGameObject,
+               imageUint8ArrayMap,
+               engineState,
+             );
            let byteLength = wdbArrayBuffer |> ArrayBuffer.byteLength;
            let alignedByteLength = BufferUtils.alignedLength(byteLength);
 
            (
+             engineState,
              wdbArr
              |> ArrayService.push(
                   {
@@ -333,10 +323,11 @@ let _buildWDBData =
              byteOffset + alignedByteLength,
            );
          },
-         ([||], [||], [||], imageAlignedByteLength),
+         (engineState, [||], [||], [||], imageAlignedByteLength),
        );
 
   (
+    engineState,
     wdbArr,
     arrayBufferArr,
     bufferViewArr,
@@ -345,7 +336,7 @@ let _buildWDBData =
   );
 };
 
-let buildJsonData = (editorState, engineState) => {
+let buildJsonData = (imageUint8ArrayMap, (editorState, engineState)) => {
   let (
     imageIndexMap,
     imageArr,
@@ -355,40 +346,26 @@ let buildJsonData = (editorState, engineState) => {
   ) =
     _buildImageData(editorState);
 
-  WonderLog.Log.print((
-    "aaa:",
-    imageIndexMap,
-    imageArr,
-    imageBufferViewArr,
-    imageUint8ArrayArr,
-    imageAlignedByteLength,
-  ))
-  |> ignore;
   let (textureIndexMap, textureArr) =
     _buildTextureData(imageIndexMap, (editorState, engineState));
   let (basicMaterialArr, lightMaterialArr) =
     _buildMaterialData(textureIndexMap, (editorState, engineState));
   let (
+    engineState,
     wdbArr,
     wdbArrayBufferArr,
     wdbBufferViewArr,
     bufferTotalAlignedByteLength,
   ) =
     _buildWDBData(
+      imageUint8ArrayMap,
       imageAlignedByteLength,
       imageBufferViewArr,
       (editorState, engineState),
     );
-  WonderLog.Log.print((
-    "aaa:",
-    wdbArr,
-    wdbArrayBufferArr,
-    wdbBufferViewArr,
-    bufferTotalAlignedByteLength,
-  ))
-  |> ignore;
 
   (
+    engineState,
     (imageArr, textureArr, basicMaterialArr, lightMaterialArr, wdbArr),
     (imageBufferViewArr, wdbBufferViewArr),
     (imageUint8ArrayArr, wdbArrayBufferArr),

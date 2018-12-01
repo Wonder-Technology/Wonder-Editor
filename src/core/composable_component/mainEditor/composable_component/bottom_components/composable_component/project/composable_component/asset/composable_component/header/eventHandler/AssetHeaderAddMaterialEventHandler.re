@@ -27,16 +27,13 @@ module CustomEventHandler = {
     let editorState =
       AddMaterialNodeUtils.addMaterialNodeToAssetTree(
         newMaterial,
-        false,
         (targetTreeNodeId, newIndex),
         editorState,
       );
 
     editorState |> StateEditorService.setState |> ignore;
 
-    dispatchFunc(
-      AppStore.UpdateAction(Update([|UpdateStore.Project|])),
-    )
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])))
     |> ignore;
   };
 };

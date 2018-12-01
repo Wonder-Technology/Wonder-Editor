@@ -32,3 +32,21 @@ let hasTextureComponent = (material, editorState) =>
        JudgeTool.isEqual(textureComponent, material)
      )
   |> Js.Option.isSome;
+
+let findTextureNodeIdByTextureComponent = (texture, editorState) =>
+  switch (
+    editorState
+    |> TextureNodeMapAssetEditorService.getTextureNodeMap
+    |> SparseMapService.getValidDataArr
+    |> Js.Array.find(
+         ((_, {textureComponent}: AssetNodeType.textureResultType)) =>
+         textureComponent === texture
+       )
+  ) {
+  | None => None
+  | Some((textureNodeId, _)) => Some(textureNodeId)
+  };
+
+  let buildTextureAssetName= (imageName) => FileNameService.getBaseName(
+                                            imageName,
+                                          )

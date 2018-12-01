@@ -4,13 +4,13 @@ let importAssetWDB =
     (
       (name, wdbArrayBuffer),
       (wdbNodeId, parentFolderNodeId),
+      isLoadImage,
       (editorState, engineState),
     ) => {
   let allGameObjectsRef = ref([||]);
   let imageUint8ArrayDataMapRef =
     ref(WonderCommonlib.SparseMapService.createEmpty());
 
-    WonderLog.Log.print("assemble wdb") |> ignore;
   engineState
   |> AssembleWDBEngineService.assembleWDB(
        wdbArrayBuffer,
@@ -18,16 +18,12 @@ let importAssetWDB =
        false,
        false,
        false,
-       true,
+       isLoadImage,
      )
   |> WonderBsMost.Most.tap(
        ((engineState, (imageUint8ArrayDataMap, _), gameObject)) => {
        let allGameObjects =
          GameObjectEngineService.getAllGameObjects(gameObject, engineState);
-
-         /* WonderLog.Log.print(
-imageUint8ArrayDataMap
-         ) |> ignore; */
 
        editorState
        |> WDBNodeMapAssetEditorService.setResult(
@@ -36,7 +32,6 @@ imageUint8ArrayDataMap
               name,
               parentFolderNodeId |. Some,
               gameObject,
-              wdbArrayBuffer,
             ),
           )
        |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(

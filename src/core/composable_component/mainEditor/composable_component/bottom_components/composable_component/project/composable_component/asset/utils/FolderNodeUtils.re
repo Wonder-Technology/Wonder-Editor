@@ -28,7 +28,7 @@ let addFolderIntoNodeMap =
   |> FolderNodeMapAssetEditorService.setResult(nodeId, _, editorState);
 
 let addMaterialIntoNodeMap =
-    (nodeId, parentFolderNodeId, material, isInWDB, editorState) =>
+    (nodeId, parentFolderNodeId, material, editorState) =>
   editorState
   |> MaterialNodeMapAssetEditorService.setResult(
        nodeId,
@@ -36,13 +36,12 @@ let addMaterialIntoNodeMap =
          ~parentFolderNodeId,
          ~type_=AssetMaterialDataType.LightMaterial,
          ~materialComponent=material,
-         ~isInWDB,
          (),
        ),
      );
 
 let addTextureIntoNodeMap =
-    (nodeId, parentFolderNodeId, texture, imageNodeId, isInWDB, editorState) =>
+    (nodeId, parentFolderNodeId, texture, imageNodeId, editorState) =>
   editorState
   |> TextureNodeMapAssetEditorService.setResult(
        nodeId,
@@ -50,7 +49,6 @@ let addTextureIntoNodeMap =
          ~textureComponent=texture,
          ~parentFolderNodeId,
          ~image=imageNodeId,
-         ~isInWDB,
          (),
        ),
      );

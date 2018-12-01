@@ -30,11 +30,10 @@ let getParentFolderNodeId = (nodeId, textureNodeMap) =>
   |> (({parentFolderNodeId}: textureResultType) => parentFolderNodeId);
 
 let buildTextureNodeResult =
-    (~textureComponent, ~parentFolderNodeId, ~image, ~isInWDB=false, ()) => {
+    (~textureComponent, ~image, ~parentFolderNodeId=None, ()) => {
   textureComponent,
   parentFolderNodeId,
   image,
-  isInWDB,
 };
 
 let setTextureNodeResultParent =

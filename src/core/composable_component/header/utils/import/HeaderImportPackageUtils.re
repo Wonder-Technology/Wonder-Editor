@@ -70,26 +70,94 @@ let _reInitDefaultMaterials = (editorState, engineState) => {
   |> LightMaterialEngineService.reInitMaterials(_, engineState);
 };
 
-let _checkSceneTextures = () =>
+let _checkMaterial = (gameObjectMaterials, type_, (editorState, engineState)) => {
+  gameObjectMaterials |> Js.Array.sortInPlace;
+
+  let materialAssets =
+    MaterialNodeMapAssetEditorService.getMaterialComponentsByType(
+      type_,
+      editorState,
+    );
+  materialAssets |> Js.Array.sortInPlace;
+
+  gameObjectMaterials
+  |> Js.Array.filter(gameObjectMaterial =>
+       materialAssets
+       |> Js.Array.includes(gameObjectMaterial)
+       || MaterialAssetLogicService.isDefaultMaterial(
+            gameObjectMaterial,
+            type_,
+            (editorState, engineState),
+          )
+     )
+  |> Js.Array.length === (gameObjectMaterials |> Js.Array.length);
+};
+
+let _checkMaterials = (where, gameObjects) =>
   WonderLog.(
     Contract.(
       Operators.(
         test(
           Log.buildAssertMessage(
             ~expect=
-              {j|all scene gameObjects->textures should be texture assets|j},
+              {j|all $where->materials should be material assets or default materials|j},
             ~actual={j|not|j},
           ),
           () => {
-            let sceneTextures =
-              GameObjectEngineService.getAllLightMaterials(
-                SceneEngineService.getSceneGameObject(
-                  StateEngineService.unsafeGetState(),
-                )
-                |> GameObjectEngineService.getAllGameObjects(
-                     _,
-                     StateEngineService.unsafeGetState(),
+            let editorState = StateEditorService.getState();
+            let engineState = StateEngineService.unsafeGetState();
+
+            (
+              _checkMaterial(
+                GameObjectEngineService.getAllLightMaterials(
+                  gameObjects,
+                  engineState,
+                ),
+                AssetMaterialDataType.LightMaterial,
+                (editorState, engineState),
+              )
+              && _checkMaterial(
+                   GameObjectEngineService.getAllBasicMaterials(
+                     gameObjects,
+                     engineState,
                    ),
+                   AssetMaterialDataType.BasicMaterial,
+                   (editorState, engineState),
+                 )
+            )
+            |> assertTrue;
+          },
+        )
+      )
+    )
+  );
+
+let _checkSceneMaterials = () =>
+  _checkMaterials(
+    "scene gameObjects",
+    SceneEngineService.getSceneGameObject(StateEngineService.unsafeGetState())
+    |> GameObjectEngineService.getAllGameObjects(
+         _,
+         StateEngineService.unsafeGetState(),
+       ),
+  );
+
+let _checkWDBGameObjectMaterials = allWDBGameObjectArr =>
+  _checkMaterials("wdb gameObjects", allWDBGameObjectArr);
+
+let _checkTextures = (where, gameObjects) =>
+  WonderLog.(
+    Contract.(
+      Operators.(
+        test(
+          Log.buildAssertMessage(
+            ~expect={j|all $where->textures should be texture assets|j},
+            ~actual={j|not|j},
+          ),
+          () => {
+            let gameObjectTextures =
+              GameObjectEngineService.getAllLightMaterials(
+                gameObjects,
                 StateEngineService.unsafeGetState(),
               )
               |> Js.Array.map(material =>
@@ -103,7 +171,7 @@ let _checkSceneTextures = () =>
                    diffuseMap |> OptionService.unsafeGet
                  );
 
-            sceneTextures |> Js.Array.sortInPlace;
+            gameObjectTextures |> Js.Array.sortInPlace;
 
             let textureAssets =
               TextureNodeMapAssetEditorService.getTextureComponents(
@@ -112,12 +180,26 @@ let _checkSceneTextures = () =>
 
             textureAssets |> Js.Array.sortInPlace;
 
-            ArrayService.isInclude(textureAssets, sceneTextures) |> assertTrue;
+            ArrayService.isInclude(textureAssets, gameObjectTextures)
+            |> assertTrue;
           },
         )
       )
     )
   );
+
+let _checkSceneTextures = () =>
+  _checkTextures(
+    "scene gameObjects",
+    SceneEngineService.getSceneGameObject(StateEngineService.unsafeGetState())
+    |> GameObjectEngineService.getAllGameObjects(
+         _,
+         StateEngineService.unsafeGetState(),
+       ),
+  );
+
+let _checkWDBGameObjectTextures = allWDBGameObjectArr =>
+  _checkTextures("wdb gameObjects", allWDBGameObjectArr);
 
 let _init = allWDBGameObjectArrRef => {
   let editorState = StateEditorService.getState();
@@ -164,7 +246,7 @@ let _import = result => {
       WonderCommonlib.SparseMapService.createEmpty(),
     ));
 
-  let wdbGameObjectImageUint8ArrayDataMapRef =
+  let asbImageUint8ArrayDataMapRef =
     ref(WonderCommonlib.SparseMapService.createEmpty());
 
   let allWDBGameObjectArrRef = ref([||]);
@@ -173,94 +255,19 @@ let _import = result => {
 
   let engineState = StateEngineService.unsafeGetState();
 
-  WonderLog.Log.print("import package...") |> ignore;
-
   HeaderImportASBUtils.importASB(asb)
   |> WonderBsMost.Most.map(
        (
-         (
-           (allWDBGameObjectArr, wdbGameObjectImageUint8ArrayDataMap),
-           materialMapTuple,
-         ),
+         ((allWDBGameObjectArr, asbImageUint8ArrayDataMap), materialMapTuple),
        ) => {
-       /* TODO extract and relate */
-       /* ImportPackageRelateGameObjectAndAssetUtils.relateWDBAssetGameObjectsAndAssets(
-            allWDBGameObjectArr,
-            materialMapTuple,
-            imageUint8ArrayDataMap,
-          ); */
-
        let editorState = StateEditorService.getState();
        let engineState = StateEngineService.unsafeGetState();
 
-       WonderLog.Log.print((
-         "
-wdb->              sources:
-
-              ",
-         allWDBGameObjectArr
-         |> GameObjectEngineService.getAllLightMaterials(_, engineState)
-         |> Js.Array.map(material =>
-              switch (
-                LightMaterialEngineService.getLightMaterialDiffuseMap(
-                  material,
-                  engineState,
-                )
-              ) {
-              | Some(map) => (
-                  map,
-                  BasicSourceTextureEngineService.unsafeGetSource(
-                    map,
-                    engineState,
-                  ),
-                )
-              | None => (material, Obj.magic(-1))
-              }
-            ),
-       ))
-       |> ignore;
-
-       /* WonderLog.Log.print(
-          imageUint8ArrayDataMap
-                 ) |> ignore; */
-       let (
-         (extractedMaterialAssetDataArr, extractedTextureAssetDataArr),
-         (editorState, engineState),
-       ) =
-         ExtractAndRelateAssetsUtils.Extract.extractAndRelateAssets(
-           allWDBGameObjectArr,
-           wdbGameObjectImageUint8ArrayDataMap,
-           (editorState, engineState),
-         );
-
-       /* WonderLog.Log.printJson((
-         "extracted data arr:",
-         extractedMaterialAssetDataArr,
-         extractedTextureAssetDataArr,
-       ))
-       |> ignore; */
-
-       let (editorState, engineState) =
-         ExtractAndRelateAssetsUtils.AssetTree.addNodeToAssetTree(
-           extractedMaterialAssetDataArr,
-           extractedTextureAssetDataArr,
-           (editorState, engineState),
-         );
-
-       let materialMapTuple =
-         BuildAssetDataUtils.addExtractedMateriialAssetDataToMaterialData(
-           extractedMaterialAssetDataArr,
-           materialMapTuple,
-         );
-
-       editorState |> StateEditorService.setState |> ignore;
-       engineState |> StateEngineService.setState |> ignore;
-
-       /* ImportPackageRelateGameObjectAndAssetUtils.relateWDBAssetGameObjectsAndAssets(
-            allWDBGameObjectArr,
-            materialMapTuple,
-            imageUint8ArrayDataMap,
-          ); */
+       ImportPackageRelateGameObjectAndAssetUtils.relateWDBAssetGameObjectsAndAssets(
+         allWDBGameObjectArr,
+         materialMapTuple,
+         asbImageUint8ArrayDataMap,
+       );
 
        allWDBGameObjectArrRef := allWDBGameObjectArr;
        materialMapTupleRef := materialMapTuple;
@@ -269,16 +276,46 @@ wdb->              sources:
            allWDBGameObjectArr,
            (editorState, engineState),
          );
-       wdbGameObjectImageUint8ArrayDataMapRef :=
-         wdbGameObjectImageUint8ArrayDataMap;
+       asbImageUint8ArrayDataMapRef := asbImageUint8ArrayDataMap;
 
-       ();
+       editorState |> StateEditorService.setState |> ignore;
+       engineState |> StateEngineService.setState |> ignore;
+
+       ()
+       |> WonderLog.Contract.ensureCheck(
+            r => {
+              _checkWDBGameObjectTextures(allWDBGameObjectArr);
+              _checkWDBGameObjectMaterials(allWDBGameObjectArr);
+            },
+            StateEditorService.getStateIsDebug(),
+          );
      })
   |> WonderBsMost.Most.concat(
        MostUtils.callStreamFunc(() =>
          SceneWDBUtils.importSceneWDB(sceneWDB)
          |> WonderBsMost.Most.map(
-              ((sceneGameObject, sceneGameObjectImageUint8ArrayDataMap)) => {
+              ((sceneGameObject, _sceneGameObjectImageUint8ArrayDataMap)) => {
+              WonderLog.Contract.requireCheck(
+                () =>
+                  WonderLog.(
+                    Contract.(
+                      Operators.(
+                        test(
+                          Log.buildAssertMessage(
+                            ~expect=
+                              {j|sceneGameObjectImageUint8ArrayDataMap be empty|j},
+                            ~actual={j|not|j},
+                          ),
+                          () =>
+                          _sceneGameObjectImageUint8ArrayDataMap
+                          |> SparseMapService.length == 0
+                        )
+                      )
+                    )
+                  ),
+                StateEditorService.getStateIsDebug(),
+              );
+
               let engineState = StateEngineService.unsafeGetState();
 
               ImportPackageRelateGameObjectAndAssetUtils.relateSceneWDBGameObjectsAndAssets(
@@ -286,10 +323,7 @@ wdb->              sources:
                   sceneGameObject,
                   engineState,
                 ),
-                SparseMapService.mergeSparseMaps([|
-                  wdbGameObjectImageUint8ArrayDataMapRef^,
-                  sceneGameObjectImageUint8ArrayDataMap,
-                |]),
+                asbImageUint8ArrayDataMapRef^,
                 materialMapTupleRef^,
                 wdbAssetGameObjectGeometryAssetArrRef^,
               );
@@ -301,7 +335,10 @@ wdb->              sources:
   |> WonderBsMost.Most.concat(
        MostUtils.callFunc(() => {
          WonderLog.Contract.requireCheck(
-           () => WonderLog.(Contract.(_checkSceneTextures())),
+           () => {
+             _checkSceneTextures();
+             _checkSceneMaterials();
+           },
            StateEditorService.getStateIsDebug(),
          );
 

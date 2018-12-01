@@ -20,12 +20,7 @@ let addWDBNode =
     ) => {
   let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
 
-  WDBNodeMapAssetEditorService.buildWDBNodeResult(
-    name,
-    None,
-    gameObject,
-    Js.Typed_array.ArrayBuffer.make(0),
-  )
+  WDBNodeMapAssetEditorService.buildWDBNodeResult(name, None, gameObject)
   |> WDBNodeMapAssetEditorService.setResult(addedNodeId, _)
   |> StateLogicService.getAndSetEditorState;
 

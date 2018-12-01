@@ -1,17 +1,11 @@
 let addTextureNodeToAssetTree =
-    (
-      texture,
-      isInWDB,
-      (targetTreeNodeId, newNodeId, imageNodeId),
-      editorState,
-    ) =>
+    (texture, (targetTreeNodeId, newNodeId, imageNodeId), editorState) =>
   editorState
   |> FolderNodeUtils.addTextureIntoNodeMap(
        newNodeId,
        targetTreeNodeId |. Some,
        texture,
        imageNodeId,
-       isInWDB,
      )
   |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
        targetTreeNodeId,
@@ -50,7 +44,7 @@ let _getImageNodeIdByUint8Array = (imageUint8Array, editorState) =>
   | Some((imageNodeId, _)) => Some(imageNodeId)
   };
 
-let addImageNodeByBase64 = (base64, fileName, mimeType, isInWDB, editorState) =>
+let addImageNodeByBase64 = (base64, fileName, mimeType, editorState) =>
   switch (_getImageNodeIdByBase64(base64, editorState)) {
   | None =>
     let (editorState, imageNodeId) =
@@ -66,7 +60,6 @@ let addImageNodeByBase64 = (base64, fileName, mimeType, isInWDB, editorState) =>
              ~uint8Array=None,
              ~name=fileName,
              ~mimeType,
-             ~isInWDB,
              (),
            ),
          ),
@@ -74,8 +67,7 @@ let addImageNodeByBase64 = (base64, fileName, mimeType, isInWDB, editorState) =>
   | Some(imageNodeId) => (imageNodeId, editorState)
   };
 
-let addImageNodeByUint8Array =
-    (uint8Array, name, mimeType, isInWDB, editorState) =>
+let addImageNodeByUint8Array = (uint8Array, name, mimeType, editorState) =>
   switch (_getImageNodeIdByUint8Array(uint8Array, editorState)) {
   | None =>
     let (editorState, imageNodeId) =
@@ -91,7 +83,6 @@ let addImageNodeByUint8Array =
              ~uint8Array=Some(uint8Array),
              ~name,
              ~mimeType,
-             ~isInWDB,
              (),
            ),
          ),

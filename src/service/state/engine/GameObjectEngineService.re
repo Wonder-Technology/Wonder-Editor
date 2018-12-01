@@ -47,7 +47,7 @@ let _getAllComponents =
        unsafeGetComponentFunc(gameObject, engineState)
      );
 
-/* let getAllBasicMaterials = (allGameObjects, engineState) =>
+let getAllBasicMaterials = (allGameObjects, engineState) =>
   _getAllComponents(
     allGameObjects,
     (
@@ -55,7 +55,7 @@ let _getAllComponents =
       GameObjectComponentEngineService.unsafeGetBasicMaterialComponent,
     ),
     engineState,
-  ); */
+  );
 
 let getAllLightMaterials = (allGameObjects, engineState) =>
   _getAllComponents(
@@ -78,14 +78,14 @@ let getAllArcballCameraControllers = (allGameObjects, engineState) =>
   );
 
 /* let getAllGeometrys = (allGameObjects, engineState) =>
-  _getAllComponents(
-    allGameObjects,
-    (
-      GameObjectComponentEngineService.hasGeometryComponent,
-      GameObjectComponentEngineService.unsafeGetGeometryComponent,
-    ),
-    engineState,
-  ); */
+   _getAllComponents(
+     allGameObjects,
+     (
+       GameObjectComponentEngineService.hasGeometryComponent,
+       GameObjectComponentEngineService.unsafeGetGeometryComponent,
+     ),
+     engineState,
+   ); */
 
 let getAllDirectionLights = (allGameObjects, engineState) =>
   _getAllComponents(
@@ -108,13 +108,13 @@ let getAllPointLights = (allGameObjects, engineState) =>
   );
 
 /* let disposeGameObjectArrKeepOrder = (gameObjectArr, engineState) =>
-  gameObjectArr
-  |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. engineState, gameObject) =>
-         engineState |> isGameObjectAlive(gameObject) ?
-           disposeGameObjectKeepOrder(gameObject, engineState) : engineState,
-       engineState,
-     ); */
+   gameObjectArr
+   |> WonderCommonlib.ArrayService.reduceOneParam(
+        (. engineState, gameObject) =>
+          engineState |> isGameObjectAlive(gameObject) ?
+            disposeGameObjectKeepOrder(gameObject, engineState) : engineState,
+        engineState,
+      ); */
 
 let initAllGameObjects = (gameObject, engineState) =>
   getAllGameObjects(gameObject, engineState)

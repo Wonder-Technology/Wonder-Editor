@@ -1,11 +1,10 @@
 let addMaterialNodeToAssetTree =
-    (material, isInWDB, (targetTreeNodeId, newNodeId), editorState) =>
+    (material, (targetTreeNodeId, newNodeId), editorState) =>
   editorState
   |> FolderNodeUtils.addMaterialIntoNodeMap(
        newNodeId,
        targetTreeNodeId |. Some,
        material,
-       isInWDB,
      )
   |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
        targetTreeNodeId,

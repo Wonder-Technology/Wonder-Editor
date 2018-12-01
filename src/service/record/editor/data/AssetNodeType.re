@@ -35,20 +35,17 @@ type imageResultType = {
   blobObjectURL: option(string),
   name: string,
   mimeType: string,
-  isInWDB: bool,
 };
 
 type textureResultType = {
   textureComponent: int,
   image: imageIndex,
   parentFolderNodeId: option(nodeId),
-  isInWDB: bool,
 };
 
 type wdbResultType = {
   name: string,
   parentFolderNodeId: option(nodeId),
-  wdbArrayBuffer: Js.Typed_array.ArrayBuffer.t,
   wdbGameObject: int,
 };
 
@@ -56,5 +53,4 @@ type materialResultType = {
   parentFolderNodeId: option(nodeId),
   type_: AssetMaterialDataType.materialType,
   materialComponent: int,
-  isInWDB: bool,
 };
