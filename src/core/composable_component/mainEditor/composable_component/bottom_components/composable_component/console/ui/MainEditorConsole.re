@@ -140,7 +140,10 @@ let render = (store, dispatchFunc, _self) => {
 
   <article key="console" className="wonder-bottom-console">
     <article className="wonder-console-component">
-      (_renderHeader(dispatchFunc))
+      (
+        StateEditorService.getStateIsDebug() ?
+          _renderHeader(dispatchFunc) : ReasonReact.null
+      )
       <div className="console-content">
         (
           consoleMessageArray |> ArrayService.hasItem ?
