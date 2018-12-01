@@ -1,3 +1,19 @@
+<a name="0.13.1"></a>
+## [0.13.1](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.13.0...v0.13.1) (2018-12-01)
+
+
+### Features
+
+* **ui:** console: remove header ui when not debug ([0932a74](https://github.com/Wonder-Technology/Wonder-Editor/commit/0932a74))
+
+
+### Performance Improvements
+
+* **package:** optimize wpk: reduce to half size ([c51e78b](https://github.com/Wonder-Technology/Wonder-Editor/commit/c51e78b))
+* **package:** optimize wpk: reduce to half size(fix #c51e78) ([a345592](https://github.com/Wonder-Technology/Wonder-Editor/commit/a345592)), closes [#c51e78](https://github.com/Wonder-Technology/Wonder-Editor/issues/c51e78)
+
+
+
 <a name="0.13.0"></a>
 # [0.13.0](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.12.0...v0.13.0) (2018-11-29)
 

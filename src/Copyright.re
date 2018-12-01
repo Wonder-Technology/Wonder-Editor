@@ -1,4 +1,4 @@
-let getVersion = () => "0.13.0";
+let getVersion = () => "0.13.1";
 
 let getAuthor = () => "Wonder";
 
