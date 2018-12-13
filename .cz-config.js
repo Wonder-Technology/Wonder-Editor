@@ -51,7 +51,8 @@ module.exports = {
     refactor: [
       { name: "rename" },
       { name: "duplicate" },
-      { name: "dead-code" }
+      { name: "dead-code" },
+      { name: "rewrite" }
     ],
     chore: [
       { name: "review" },
