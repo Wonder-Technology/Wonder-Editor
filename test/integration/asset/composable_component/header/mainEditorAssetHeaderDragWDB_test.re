@@ -254,7 +254,7 @@ let _ =
 
                     (editorState, engineState);
                   },
-                  warn => warn |> expect |> noT_ |> toCalled |> resolve,
+                  warn => warn |> expect |> not_ |> toCalled |> resolve,
                 )
               );
               testPromise("test exceed", () =>
@@ -313,7 +313,7 @@ let _ =
 
                     (editorState, engineState);
                   },
-                  warn => warn |> expect |> noT_ |> toCalled |> resolve,
+                  warn => warn |> expect |> not_ |> toCalled |> resolve,
                 )
               );
               testPromise("test exceed", () =>

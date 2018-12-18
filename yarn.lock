@@ -1484,10 +1484,10 @@ bs-moment@^0.3.1:
   resolved "https://registry.yarnpkg.com/bs-moment/-/bs-moment-0.3.2.tgz#3a1e3a6a49400fb65b84ab9fb9e86dce142cbd52"
   integrity sha512-GQKUio4qUHk0e+pGjQXDxMU2tejT0r5GvuY1MzsH1Sh5RyOzpjNWsDq4llAa8i8iiRTjtsEE7G5Wtn4U5nkyGg==
 
-bs-platform@^4.0.5:
-  version "4.0.14"
-  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-4.0.14.tgz#1d9e9622d59ebf4d39408d07b41997201c5f9750"
-  integrity sha512-bxeMwZPnJ90r48SavF60pkzGn7heaoHn7IF7fpPdh5L8WZfCzf76AikH2zWJii4QahUeInvRN1tNPWQt3ckKJQ==
+bs-platform@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-4.0.0.tgz#4190460550414eecff92f1e2bbaf4d9c557b60af"
+  integrity sha1-QZBGBVBBTuz/kvHiu69NnFV7YK8=
 
 bser@^2.0.0:
   version "2.0.0"
@@ -4470,9 +4470,9 @@ jest@^23.5.0:
     jest-cli "^23.6.0"
 
 js-base64@^2.1.8:
-  version "2.4.9"
-  resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.9.tgz#748911fb04f48a60c4771b375cac45a80df11c03"
-  integrity sha512-xcinL3AuDJk7VSzsHgb9DvvIXayBbadtMZ4HFPx8rUszbW1MuNMlwYVC4zzCZ6e1sqZpnNS5ZFYOhXqA39T7LQ==
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.5.0.tgz#42255ba183ab67ce59a0dee640afdc00ab5ae93e"
+  integrity sha512-wlEBIZ5LP8usDylWbDNhKPEFVFdI5hCHpnVoT/Ysvoi/PRhJENm/Rlh9TvjYB38HFfKZN7OzEbRjmjvLkFw11g==
 
 js-cookie@^2.2.0:
   version "2.2.0"
@@ -6828,10 +6828,10 @@ realpath-native@^1.0.0:
   dependencies:
     util.promisify "^1.0.0"
 
-reason-apollo@0.14.1:
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/reason-apollo/-/reason-apollo-0.14.1.tgz#9e6962e43e7cb89a17b522b3ef6cfe65451ac37a"
-  integrity sha512-Rnr4NrqHcTiQjeS0uGhRg7EDMP683eu0rIMaHlH0vyERlN6ei05rvMnD0Cu+sDByk2oiGr6/swVUJ48Md2P4wg==
+reason-apollo@0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/reason-apollo/-/reason-apollo-0.13.0.tgz#5727831dc6d49271a318dfb36724186b81d9890c"
+  integrity sha512-PeJltFH53Z0mhyoKdADeLg/7CBALOlXg1L+n6SbvNmUgKYzIm5nXfPxd9YD0SuH3nxEPszFAmA/kEWStguCj4Q==
 
 reason-react@0.4.2:
   version "0.4.2"

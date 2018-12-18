@@ -193,7 +193,7 @@ let _ =
         );
         test("if eventTarget is game view, not request canvas pointerLock", () =>
           _test(sandbox, (60, 20), requestPointerLockStub =>
-            requestPointerLockStub |> expect |> noT_ |> toCalled
+            requestPointerLockStub |> expect |> not_ |> toCalled
           )
         );
       });
@@ -254,7 +254,7 @@ let _ =
         test(
           "if eventTarget is scene view, not request canvas pointerLock", () =>
           _test(sandbox, (10, 20), requestPointerLockStub =>
-            requestPointerLockStub |> expect |> noT_ |> toCalled
+            requestPointerLockStub |> expect |> not_ |> toCalled
           )
         );
         test("if eventTarget is game view, request canvas pointerLock", () =>

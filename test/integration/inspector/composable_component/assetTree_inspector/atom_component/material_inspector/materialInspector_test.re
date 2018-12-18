@@ -100,7 +100,7 @@ let _ =
             (),
           );
 
-          warn |> expect |> noT_ |> toCalled;
+          warn |> expect |> not_ |> toCalled;
         })
       );
     });
