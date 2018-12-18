@@ -232,7 +232,7 @@ let _ =
                 let _ = _prepareAndExec(10, 20, EventTool.buildBodyTarget());
 
                 let gl = FakeGlToolEngine.getEngineStateGl();
-                gl##clearColor |> expect |> not_ |> toCalled;
+                gl##clearColor |> expect |> noT_ |> toCalled;
               })
             );
           });
@@ -257,7 +257,7 @@ let _ =
                   _prepareAndExec(10, 20, EventTool.buildCanvasTarget());
 
                 let gl = FakeGlToolEngine.getEngineStateGl();
-                gl##clearColor |> expect |> not_ |> toCalled;
+                gl##clearColor |> expect |> noT_ |> toCalled;
               });
             });
 
@@ -303,7 +303,7 @@ let _ =
                   _prepareAndExec(60, 20, EventTool.buildCanvasTarget());
 
                 let gl = FakeGlToolEngine.getEngineStateGl();
-                gl##clearColor |> expect |> not_ |> toCalled;
+                gl##clearColor |> expect |> noT_ |> toCalled;
               });
               test("else, not loopBody", () => {
                 _prepareMouseEvent(~sandbox, ());
@@ -313,7 +313,7 @@ let _ =
                   _prepareAndExec(60, 20, EventTool.buildCanvasTarget());
 
                 let gl = FakeGlToolEngine.getEngineStateGl();
-                gl##clearColor |> expect |> not_ |> toCalled;
+                gl##clearColor |> expect |> noT_ |> toCalled;
               });
             });
 
@@ -611,7 +611,7 @@ let _ =
                     );
 
                   let gl = FakeGlToolEngine.getEngineStateGl();
-                  gl##clearColor |> expect |> not_ |> toCalled;
+                  gl##clearColor |> expect |> noT_ |> toCalled;
                 })
               );
 
@@ -665,7 +665,7 @@ let _ =
                   );
 
                 let gl = FakeGlToolEngine.getEngineStateGl();
-                gl##clearColor |> expect |> not_ |> toCalled;
+                gl##clearColor |> expect |> noT_ |> toCalled;
               });
             });
 
@@ -690,7 +690,7 @@ let _ =
                   );
 
                 let gl = FakeGlToolEngine.getEngineStateGl();
-                gl##clearColor |> expect |> not_ |> toCalled;
+                gl##clearColor |> expect |> noT_ |> toCalled;
               });
               test("else, not loopBody", () => {
                 _prepareMouseEvent(~sandbox, ());
@@ -704,7 +704,7 @@ let _ =
                   );
 
                 let gl = FakeGlToolEngine.getEngineStateGl();
-                gl##clearColor |> expect |> not_ |> toCalled;
+                gl##clearColor |> expect |> noT_ |> toCalled;
               });
             });
 
@@ -797,7 +797,7 @@ let _ =
                 );
 
               let gl = FakeGlToolEngine.getEngineStateGl();
-              gl##clearColor |> expect |> not_ |> toCalled;
+              gl##clearColor |> expect |> noT_ |> toCalled;
             })
           );
 
@@ -853,7 +853,7 @@ let _ =
 
         describe("test eventTarget is game view", () => {
           describe("test loopBody", () =>
-            test("if is stop, not_ loopBody", () => {
+            test("if is stop, noT_ loopBody", () => {
               _prepareMouseEvent(~sandbox, ());
               ControllerTool.setIsRun(false);
 
@@ -864,7 +864,7 @@ let _ =
                 );
 
               let gl = FakeGlToolEngine.getEngineStateGl();
-              gl##clearColor |> expect |> not_ |> toCalled;
+              gl##clearColor |> expect |> noT_ |> toCalled;
             })
           );
 

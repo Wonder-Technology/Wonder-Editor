@@ -19,6 +19,11 @@
     "-bs-super-errors"
   ],
   "bs-dependencies": [
+    "reason-apollo",
+    "bs-moment",
+    "@justgage/reason-cookie",
+    "wonder-bs-graphql",
+    "wonder-reroute",
     "reason-react",
     "bs-fetch",
     "wonder-bs-most",

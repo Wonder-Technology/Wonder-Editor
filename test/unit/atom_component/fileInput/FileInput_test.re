@@ -78,7 +78,7 @@ let _ =
         FileInput.reducer(Some(onSubmitFunc), FileInput.Submit, state)
         |> ignore;
 
-        onSubmitFunc |> expect |> not_ |> toCalled;
+        onSubmitFunc |> expect |> noT_ |> toCalled;
       })
     );
   });

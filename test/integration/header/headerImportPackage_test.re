@@ -1700,7 +1700,7 @@ let _ =
                      editorState |> StateEditorService.setState |> ignore;
                      engineState |> StateEngineService.setState |> ignore;
                    },
-                 ~testFunc=() => warn |> expect |> not_ |> toCalled |> resolve,
+                 ~testFunc=() => warn |> expect |> noT_ |> toCalled |> resolve,
                  (),
                )
              );
@@ -1783,7 +1783,7 @@ let _ =
                             ~wpkArrayBuffer=boxTexturedWPKArrayBuffer,
                             ~testFunc=
                               () =>
-                                error |> expect |> not_ |> toCalled |> resolve,
+                                error |> expect |> noT_ |> toCalled |> resolve,
                             (),
                           );
                         },

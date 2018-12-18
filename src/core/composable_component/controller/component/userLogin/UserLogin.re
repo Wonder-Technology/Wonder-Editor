@@ -157,16 +157,21 @@ let reducer = (action, state) =>
     ReasonReact.Update({...state, isShowRetrievePassword: false})
   };
 
-let render = (hideUserLoginFunc,showUserRegisterFunc,{state, send}: ReasonReact.self('a, 'b, 'c)) =>
+let render =
+    (
+      hideUserLoginFunc,
+      showUserRegisterFunc,
+      {state, send}: ReasonReact.self('a, 'b, 'c),
+    ) =>
   state.isShowRetrievePassword ?
     <div className="header-retrievePsw">
       <div className="retrieve-title">
         <div className="title-text">
           ({j|找回密码|j} |> DomHelper.textEl)
         </div>
-        <div className="title-close"> <img src="/img/close.png" 
-        onClick=(_e => hideUserLoginFunc() )
-        /> </div>
+        <div className="title-close">
+          <img src="/img/close.png" onClick=(_e => hideUserLoginFunc()) />
+        </div>
       </div>
       <div className="retrieve-content">
         (
@@ -192,9 +197,9 @@ let render = (hideUserLoginFunc,showUserRegisterFunc,{state, send}: ReasonReact.
     <div className="header-login">
       <div className="login-title">
         <div className="title-text"> ({j|登录|j} |> DomHelper.textEl) </div>
-        <div className="title-close"> <img src="/img/close.png" 
-        onClick=(_e => hideUserLoginFunc() )
-        /> </div>
+        <div className="title-close">
+          <img src="/img/close.png" onClick=(_e => hideUserLoginFunc()) />
+        </div>
       </div>
       <div className="login-content">
         (
@@ -234,9 +239,9 @@ let render = (hideUserLoginFunc,showUserRegisterFunc,{state, send}: ReasonReact.
       </button>
     </div>;
 
-let make = (~hideUserLoginFunc,~showUserRegisterFunc, _children) => {
+let make = (~hideUserLoginFunc, ~showUserRegisterFunc, _children) => {
   ...component,
-  render: self => render(hideUserLoginFunc,showUserRegisterFunc, self),
+  render: self => render(hideUserLoginFunc, showUserRegisterFunc, self),
   initialState: () => {
     username: "",
     password: "",

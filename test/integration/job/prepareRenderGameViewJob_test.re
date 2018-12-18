@@ -246,7 +246,7 @@ let _ =
           DirectorToolEngine.runWithDefaultTime,
         );
 
-        drawElements |> withOneArg(lines) |> expect |> not_ |> toCalled;
+        drawElements |> withOneArg(lines) |> expect |> noT_ |> toCalled;
       });
     });
   });

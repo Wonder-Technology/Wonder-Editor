@@ -981,7 +981,7 @@ let _ =
                 (),
               )
               |> then_(uploadedWDBNodeId =>
-                   warn |> expect |> not_ |> toCalled |> resolve
+                   warn |> expect |> noT_ |> toCalled |> resolve
                  );
             });
           },
@@ -1062,7 +1062,7 @@ let _ =
                      (),
                    )
                    |> then_(uploadedWDBNodeId =>
-                        error |> expect |> not_ |> toCalled |> resolve
+                        error |> expect |> noT_ |> toCalled |> resolve
                       );
                  });
             },

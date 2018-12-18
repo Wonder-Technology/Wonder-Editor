@@ -297,7 +297,7 @@ let _ =
             |> Obj.magic,
           )
         )
-        |> not_
+        |> noT_
         |> toThrow
       );
 
