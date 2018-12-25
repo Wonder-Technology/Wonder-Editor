@@ -3,11 +3,10 @@ open Js.Typed_array;
 let _buildEmptyUint8Array = () => Uint8Array.make([||]);
 
 let _buildImageNodeUint8Array = editorState =>
-  ImageNodeMapAssetEditorService.getImageNodeMap(editorState)
-  |> Js.Array.map(
-       (({uint8Array, base64}: AssetNodeType.imageResultType) as imageNode) =>
+  ImageDataMapAssetEditorService.getMap(editorState)
+  |> Js.Array.map((({uint8Array, base64}: ImageDataType.imageData) as data) =>
        {
-         ...imageNode,
+         ...data,
          uint8Array:
            (
              switch (uint8Array) {
@@ -34,7 +33,7 @@ let _buildImageNodeUint8Array = editorState =>
            |. Some,
        }
      )
-  |> ImageNodeMapAssetEditorService.setImageNodeMap(_, editorState);
+  |> ImageDataMapAssetEditorService.setMap(_, editorState);
 
 let _export = () => {
   let editorState = StateEditorService.getState();

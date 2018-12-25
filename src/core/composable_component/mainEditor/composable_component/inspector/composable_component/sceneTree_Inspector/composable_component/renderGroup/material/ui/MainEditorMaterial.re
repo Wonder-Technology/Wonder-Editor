@@ -1,5 +1,5 @@
 type state = {
-  materialType: AssetMaterialDataType.materialType,
+  materialType: MaterialDataAssetType.materialType,
   isShowMaterialGroup: bool,
   currentMaterial: int,
 };
@@ -7,8 +7,8 @@ type state = {
 type action =
   | ChangeMaterialType(int)
   | ChangeMaterial(
-      option(AssetNodeType.nodeId),
-      (int, AssetMaterialDataType.materialType),
+      option(NodeAssetType.nodeId),
+      (int, MaterialDataAssetType.materialType),
     )
   | ShowMaterialGroup
   | HideMaterialGroup;
@@ -60,16 +60,16 @@ module Method = {
            (_, (materialComponent2, materialType2)),
          ) =>
          Js.String.localeCompare(
-           MainEditorMaterialUtils.getName(
-             materialComponent2,
-             materialType2,
-             engineState,
+           NodeNameAssetLogicService.getMaterialNodeName(
+             ~material=materialComponent2,
+             ~type_=materialType2,
+             ~engineState,
            )
            |> Js.String.charAt(0),
-           MainEditorMaterialUtils.getName(
-             materialComponent1,
-             materialType1,
-             engineState,
+           NodeNameAssetLogicService.getMaterialNodeName(
+             ~material=materialComponent1,
+             ~type_=materialType1,
+             ~engineState,
            )
            |> Js.String.charAt(0),
          )
@@ -77,12 +77,18 @@ module Method = {
        );
 
   let _getAllMaterialAssetData = (editorState, engineState) =>
-    AssetNodeType.(
+    NodeAssetType.(
       ArrayService.fastConcat(
-        MaterialNodeMapAssetEditorService.getResults(editorState)
-        |> Js.Array.map(((materialNodeId, {materialComponent, type_})) =>
-             (Some(materialNodeId), (materialComponent, type_))
-           ),
+        MaterialNodeAssetEditorService.findAllMaterialNodes(editorState)
+        |> Js.Array.map(materialNode => {
+             let {materialComponent, type_}: NodeAssetType.materialNodeData =
+               MaterialNodeAssetService.getNodeData(materialNode);
+
+             (
+               Some(NodeAssetService.getNodeId(~node=materialNode)),
+               (materialComponent, type_),
+             );
+           }),
         MaterialDataAssetEditorService.getAllDefaultMaterialData(editorState)
         |> Js.Array.map(materialData => (None, materialData)),
       )
@@ -111,10 +117,10 @@ module Method = {
            )>
            (
              DomHelper.textEl(
-               MainEditorMaterialUtils.getName(
-                 material,
-                 materialType,
-                 engineState,
+               NodeNameAssetLogicService.getMaterialNodeName(
+                 ~material,
+                 ~type_=materialType,
+                 ~engineState,
                ),
              )
            )
@@ -124,7 +130,7 @@ module Method = {
 
   let _isEqualDefaultMaterial = (material, materialType, editorState) => {
     let (defaultMaterial, _) =
-      MaterialDataAssetEditorService.unsafeGetMaterialDataByType(
+      MaterialDataAssetEditorService.unsafeGetDefaultMaterialDataByType(
         materialType,
         editorState,
       );
@@ -196,11 +202,11 @@ let _renderSelectMaterial = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
         <div className="select-name">
           (
             DomHelper.textEl(
-              MainEditorMaterialUtils.getName(
-                state.currentMaterial,
-                state.materialType,
-              )
-              |> StateLogicService.getEngineStateToGetData,
+              NodeNameAssetLogicService.getMaterialNodeName(
+                ~material=state.currentMaterial,
+                ~type_=state.materialType,
+                ~engineState=StateEngineService.unsafeGetState(),
+              ),
             )
           )
         </div>

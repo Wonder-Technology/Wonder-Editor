@@ -1,4 +1,4 @@
-open AssetNodeType;
+open NodeAssetType;
 
 let getWrapRepeatType = () =>
   Wonderjs.SourceTextureType.Repeat |> TextureTypeUtils.convertWrapToInt;
@@ -20,14 +20,11 @@ let getFilterNearestMipmapLinearType = () =>
 
 let getTextureComponentFromCurrentNodeData = () => {
   let editorState = StateEditorService.getState();
-  let {textureComponent} =
-    editorState
-    |> TextureNodeMapAssetEditorService.getTextureNodeMap
-    |> WonderCommonlib.SparseMapService.unsafeGet(
-         editorState
-         |> CurrentNodeDataAssetEditorService.unsafeGetCurrentNodeData
-         |> (({currentNodeId, nodeType}) => currentNodeId),
-       );
+
+  let {textureComponent}: NodeAssetType.textureNodeData =
+    CurrentNodeAssetEditorService.unsafeGetCurrentNode(editorState)
+    |> TextureNodeAssetService.getNodeData;
+
   textureComponent;
 };
 

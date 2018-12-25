@@ -60,19 +60,18 @@ module Drag = {
         ~material=GameObjectTool.getCurrentGameObjectMaterial(),
         ~textureNodeId,
         (),
-      ) => {
-    DragEventUtils.handleDragStart(
-      textureNodeId,
-      widget,
-      dragImg,
-      effectAllowd,
-      event,
-    );
+      ) =>
+    /* DragEventUtils.handleDragStart(
+         textureNodeId,
+         widget,
+         dragImg,
+         effectAllowd,
+         event,
+       ); */
     MainEditorLightMaterial.Method.onDrop(
       (store, dispatchFunc),
       material,
       textureNodeId,
+      /* DragEventUtils.handleDragEnd(event); */
     );
-    DragEventUtils.handleDrageEnd(event);
-  };
 };

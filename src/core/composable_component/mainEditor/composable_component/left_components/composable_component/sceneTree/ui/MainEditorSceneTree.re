@@ -87,7 +87,7 @@ module Method = {
            handleToggleShowTreeChildren=(
              handleToggleShowTreeChildren(store, dispatchFunc)
            )
-           handleRelationError=SceneTreeUtils.isGameObjectRelationError
+           checkNodeRelation=SceneTreeUtils.isGameObjectRelationError
            treeChildren=(
              buildSceneTreeArray(
                (store, dispatchFunc, dragImg),

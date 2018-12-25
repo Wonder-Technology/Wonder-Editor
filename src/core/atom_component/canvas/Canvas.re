@@ -25,9 +25,8 @@ module Method = {
       {
         let wdbGameObjectUid =
           StateEditorService.getState()
-          |> WDBNodeMapAssetEditorService.getWDBNodeMap
-          |> WonderCommonlib.SparseMapService.unsafeGet(startId)
-          |> (({wdbGameObject}) => wdbGameObject);
+          |> WDBNodeAssetEditorService.unsafeGetNodeData(startId)
+          |> (({wdbGameObject}: NodeAssetType.wdbNodeData) => wdbGameObject);
 
         dragWDBFunc(wdbGameObjectUid);
       } :

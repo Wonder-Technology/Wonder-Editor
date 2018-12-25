@@ -3,14 +3,14 @@ open Wonderjs;
 open InspectorComponentType;
 
 let _addRenderGroup = (currentSceneTreeNode, (editorState, engineState)) => {
-  let defaultLightMaterial =
+  let defaultLightMaterialData =
     MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
   let (engineState, meshRenderer) =
     MeshRendererEngineService.create(engineState);
   let renderGroup =
     RenderGroupEngineService.buildRenderGroup(
       meshRenderer,
-      defaultLightMaterial,
+      defaultLightMaterialData,
     );
 
   (editorState, engineState)

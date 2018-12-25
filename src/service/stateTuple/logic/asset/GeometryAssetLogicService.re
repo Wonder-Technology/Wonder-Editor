@@ -36,13 +36,13 @@ let isDefaultGeometry = (geometry, (editorState, engineState)) => {
     GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
       editorState,
     ),
-    PrepareDefaultComponentUtils.getDefaultCubeGeometryName(),
+    PrepareDefaultComponentLogicService.getDefaultCubeGeometryName(),
   );
   let (defaultSphereGeometry, defaultSphereGeometryName) = (
     GeometryDataAssetEditorService.unsafeGetDefaultSphereGeometryComponent(
       editorState,
     ),
-    PrepareDefaultComponentUtils.getDefaultSphereGeometryName(),
+    PrepareDefaultComponentLogicService.getDefaultSphereGeometryName(),
   );
 
   isGeometryEqualDefaultGeometryData(
@@ -64,13 +64,13 @@ let isGeometryAsset = (geometry, (editorState, engineState)) =>
 
 let getAllWDBGameObjects = (editorState, engineState) =>
   editorState
-  |> WDBNodeMapAssetEditorService.getWDBNodeMap
-  |> SparseMapService.reduceValid(
-       (. allWDBGameObjects, {wdbGameObject}: AssetNodeType.wdbResultType) =>
+  |> WDBNodeAssetEditorService.findAllWDBNodes
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. allWDBGameObjects, wdbNode) =>
          ArrayService.fastConcat(
            allWDBGameObjects,
            GameObjectEngineService.getAllGameObjects(
-             wdbGameObject,
+             WDBNodeAssetService.getWDBGameObject(wdbNode),
              engineState,
            ),
          ),

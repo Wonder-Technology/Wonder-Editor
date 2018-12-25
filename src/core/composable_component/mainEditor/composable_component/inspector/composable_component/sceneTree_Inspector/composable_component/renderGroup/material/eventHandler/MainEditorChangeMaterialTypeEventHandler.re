@@ -1,4 +1,4 @@
-open AssetMaterialDataType;
+open MaterialDataAssetType;
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
@@ -7,17 +7,24 @@ module CustomEventHandler = {
   type return = unit;
 
   let _updateMaterialNodeData =
-      (sourceMaterial, targetMaterial, targetMaterialType, editorState) =>
-    switch (
-      MaterialNodeIdMapAssetEditorService.getNodeId(
+      (
         sourceMaterial,
+        sourceMaterialType,
+        targetMaterial,
+        targetMaterialType,
+        editorState,
+      ) =>
+    switch (
+      OperateTreeAssetEditorService.findMaterialNode(
+        sourceMaterial,
+        sourceMaterialType,
         editorState,
       )
     ) {
     | None => editorState
-    | Some(materialNodeId) =>
-      MaterialUpdateNodeAssetEditorService.updateMaterialNodeData(
-        materialNodeId,
+    | Some(materialNode) =>
+      MaterialNodeAssetEditorService.updateMaterialNodeData(
+        NodeAssetService.getNodeId(~node=materialNode),
         targetMaterial,
         targetMaterialType,
         editorState,
@@ -77,21 +84,23 @@ module CustomEventHandler = {
       );
 
     let engineState =
-      MainEditorMaterialUtils.setName(
-        targetMaterial,
-        targetMaterialType,
-        MainEditorMaterialUtils.getName(
-          sourceMaterial,
-          sourceMaterialType,
-          engineState,
-        ),
-        engineState,
+      OperateMaterialLogicService.setName(
+        ~material=targetMaterial,
+        ~type_=targetMaterialType,
+        ~name=
+          NodeNameAssetLogicService.getMaterialNodeName(
+            ~material=sourceMaterial,
+            ~type_=sourceMaterialType,
+            ~engineState,
+          ),
+        ~engineState,
       );
 
     engineState |> StateLogicService.refreshEngineState;
 
     _updateMaterialNodeData(
       sourceMaterial,
+      sourceMaterialType,
       targetMaterial,
       targetMaterialType,
       editorState,

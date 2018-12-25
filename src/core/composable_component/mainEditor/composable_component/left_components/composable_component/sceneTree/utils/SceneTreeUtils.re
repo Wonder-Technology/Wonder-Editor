@@ -32,7 +32,8 @@ let _isDragedGameObjectBeTargetGameObjectParent =
   );
 
 let _isTargetGameObjectBeRemovedGameObjectParent =
-    (dragedGameObject, targetGameObject, engineState) =>
+    (dragedGameObject, targetGameObject, engineState)
+    : Result.RelationResult.t =>
   switch (
     engineState
     |> TransformEngineService.getParent(
@@ -43,26 +44,27 @@ let _isTargetGameObjectBeRemovedGameObjectParent =
        )
     |> Js.Undefined.to_opt
   ) {
-  | None => false
+  | None => Fail(None)
   | Some(transformParent) =>
     transformParent
     === GameObjectComponentEngineService.unsafeGetTransformComponent(
           targetGameObject,
           engineState,
         ) ?
-      true : false
+      Success() : Fail(None)
   };
 
 let isGameObjectRelationError =
-    (targetGameObject, dragedGameObject, (_editorState, engineState)) =>
+    (targetGameObject, dragedGameObject, (_editorState, engineState))
+    : Result.RelationResult.t =>
   targetGameObject === dragedGameObject ?
-    true :
+    Success() :
     _isDragedGameObjectBeTargetGameObjectParent(
       targetGameObject,
       dragedGameObject,
       engineState,
     ) ?
-      true :
+      Success() :
       _isTargetGameObjectBeRemovedGameObjectParent(
         dragedGameObject,
         targetGameObject,

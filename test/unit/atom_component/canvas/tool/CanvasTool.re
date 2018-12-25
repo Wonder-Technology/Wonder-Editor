@@ -10,21 +10,20 @@ module Drag = {
         ~event=BaseEventTool.buildDragEvent(.),
         (),
       ) => {
-    DragEventUtils.handleDragStart(
-      wdbNodeId,
-      widget,
-      dragImg,
-      effectEffectAllowd,
-      event,
-    );
+    /* DragEventUtils.handleDragStart(
+         wdbNodeId,
+         widget,
+         dragImg,
+         effectEffectAllowd,
+         event,
+       ); */
 
     let wdbGameObjectUid =
       StateEditorService.getState()
-      |> WDBNodeMapAssetEditorService.getWDBNodeMap
-      |> WonderCommonlib.SparseMapService.unsafeGet(wdbNodeId)
-      |> (({wdbGameObject}) => wdbGameObject);
-    MainEditor.Method.dragWDB((store, dispatchFunc), (), wdbGameObjectUid);
+      |> OperateTreeAssetEditorService.unsafeFindNodeById(wdbNodeId)
+      |> WDBNodeAssetService.getWDBGameObject;
 
-    DragEventUtils.handleDrageEnd(event);
+    MainEditor.Method.dragWDB((store, dispatchFunc), (), wdbGameObjectUid);
+    /* DragEventUtils.handleDragEnd(event); */
   };
 };

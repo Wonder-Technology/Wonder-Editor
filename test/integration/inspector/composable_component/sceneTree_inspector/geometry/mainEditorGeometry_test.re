@@ -35,6 +35,7 @@ let _ =
         describe("test snapshot", () => {
           describe("test show select geometry group widget", () => {
             let _addNoTexCoordGeometryWDBGameObject = () => {
+              let editorState = StateEditorService.getState();
               let engineState = StateEngineService.unsafeGetState();
 
               let (engineState, gameObject, _, _, name) =
@@ -44,9 +45,18 @@ let _ =
                   (),
                 );
 
-              MainEditorAssetWDBNodeTool.addWDBNode(~name, ~gameObject, ())
-              |> ignore;
+              let (editorState, id1) =
+                IdAssetEditorService.generateNodeId(editorState);
+              let editorState =
+                MainEditorAssetWDBNodeTool.addWDBNodeToRoot(
+                  ~editorState,
+                  ~nodeId=id1,
+                  ~name,
+                  ~gameObject,
+                  (),
+                );
 
+              editorState |> StateEditorService.setState |> ignore;
               engineState |> StateEngineService.setState |> ignore;
             };
 

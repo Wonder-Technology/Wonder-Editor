@@ -7,25 +7,24 @@ module CustomEventHandler = {
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
     (
       editorState => {
-        let (editorState, newIndex) =
-          AssetIdUtils.generateAssetId(editorState);
-        let engineState = StateEngineService.unsafeGetState();
+        let (editorState, nodeId) =
+          IdAssetEditorService.generateNodeId(editorState);
 
-        let targetTreeNodeId =
-          editorState |> AssetTreeUtils.getTargetTreeNodeId;
-
-        AddFolderNodeUtils.addFolderNodeToAssetTree(
-          FolderNodeUtils.getNewFolderName(),
-          (targetTreeNodeId, newIndex),
-          (editorState, engineState),
+        FolderNodeAssetEditorService.addFolderNodeToAssetTree(
+          editorState
+          |> TreeAssetEditorService.getSelectedFolderNodeInAssetTree,
+          FolderNodeAssetService.buildNode(
+            ~nodeId,
+            ~name=FolderNodeAssetService.getNewFolderName(),
+            (),
+          ),
+          editorState,
         );
       }
     )
     |> StateLogicService.getAndSetEditorState;
 
-    dispatchFunc(
-      AppStore.UpdateAction(Update([|UpdateStore.Project|])),
-    )
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])))
     |> ignore;
   };
 };

@@ -1,55 +1,36 @@
-open CurrentNodeDataType;
-
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
   type dataTuple = unit;
   type return = unit;
 
-  let _isRemoveAssetTreeNode = (currentNodeId, currentNodeParentId) =>
-    TreeAssetEditorService.isIdEqual(currentNodeParentId, currentNodeId);
+  let _isRemoveAssetTreeNode = (currentNode, selectedFolderNodeInAssetTree) =>
+    NodeAssetService.isIdEqual(currentNode, selectedFolderNodeInAssetTree);
 
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
-    let {currentNodeId} =
-      editorState |> CurrentNodeDataAssetEditorService.unsafeGetCurrentNodeData;
-    let (newAssetTreeRoot, removedTreeNode) =
-      editorState
-      |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
-      |> RemoveAssetTreeNodeAssetLogicService.removeSpecificTreeNode(
-           currentNodeId,
-         );
+    let currentNode =
+      editorState |> CurrentNodeAssetEditorService.unsafeGetCurrentNode;
 
-    let ((editorState, engineState), removedAssetIdArr) =
-      (editorState, engineState)
-      |> RemoveAssetTreeNodeAssetLogicService.deepRemoveTreeNode(
-           removedTreeNode,
-         );
+    let (editorState, engineState) =
+      DisposeTreeAssetLogicService.disposeNode(
+        currentNode,
+        (editorState, engineState),
+      );
 
     StateLogicService.refreshEngineState(engineState);
 
     let editorState =
-      editorState
-      |> RemovedAssetIdArrayAssetEditorService.getRemovedAssetIdArray
-      |> Js.Array.concat(removedAssetIdArr)
-      |. RemovedAssetIdArrayAssetEditorService.setRemovedAssetIdArray(
-           editorState,
-         );
-
-    let editorState =
       _isRemoveAssetTreeNode(
-        currentNodeId,
-        AssetTreeUtils.getTargetTreeNodeId(editorState),
+        currentNode,
+        TreeAssetEditorService.getSelectedFolderNodeInAssetTree(editorState),
       ) ?
         editorState
-        |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
-        |> TreeRootAssetEditorService.setAssetTreeRoot(newAssetTreeRoot)
-        |> CurrentNodeDataAssetEditorService.clearCurrentNodeData :
-        editorState
-        |> TreeRootAssetEditorService.setAssetTreeRoot(newAssetTreeRoot)
-        |> CurrentNodeDataAssetEditorService.clearCurrentNodeData;
+        |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeInAssetTree
+        |> CurrentNodeAssetEditorService.clearCurrentNode :
+        editorState |> CurrentNodeAssetEditorService.clearCurrentNode;
 
     editorState |> StateEditorService.setState |> ignore;
 

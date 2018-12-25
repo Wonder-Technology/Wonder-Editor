@@ -1,7 +1,5 @@
 open EditorType;
 
-open CurrentNodeDataType;
-
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
 module Method = {
@@ -9,7 +7,7 @@ module Method = {
       (
         (store, dispatchFunc),
         addableComponentConfig,
-        (currentSelectSource, currentSceneTreeNode, currentNodeData),
+        (currentSelectSource, currentSceneTreeNode, currentNode),
       ) =>
     switch (currentSelectSource) {
     | None => ReasonReact.null
@@ -21,15 +19,14 @@ module Method = {
         currentSceneTreeNode
       />
     | Some(Asset) =>
-      switch (currentNodeData) {
+      switch (currentNode) {
       | None => ReasonReact.null
-      | Some({currentNodeId, nodeType}) =>
+      | Some(currentNode) =>
         <AssetTreeInspector
           key=(DomHelper.getRandomKey())
           store
           dispatchFunc
-          currentNodeId
-          nodeType
+          currentNode
         />
       }
     };
@@ -48,7 +45,7 @@ let render = ((store, dispatchFunc), addableComponentConfig, _self) => {
         (
           CurrentSelectSourceEditorService.getCurrentSelectSource(editorState),
           SceneEditorService.getCurrentSceneTreeNode(editorState),
-          CurrentNodeDataAssetEditorService.getCurrentNodeData
+          CurrentNodeAssetEditorService.getCurrentNode
           |> StateLogicService.getEditorState,
         ),
       )

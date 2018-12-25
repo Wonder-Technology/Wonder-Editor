@@ -6,7 +6,7 @@ open Expect.Operators;
 
 open Sinon;
 
-open AssetMaterialDataType;
+open MaterialDataAssetType;
 
 let _ =
   describe("MainEditorMaterial", () => {
@@ -52,7 +52,7 @@ let _ =
               )
               |> StateLogicService.getEngineStateToGetData;
 
-            materialType |> expect == AssetMaterialDataType.LightMaterial;
+            materialType |> expect == MaterialDataAssetType.LightMaterial;
           });
 
           describe(

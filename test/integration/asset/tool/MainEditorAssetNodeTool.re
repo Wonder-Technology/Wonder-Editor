@@ -1,35 +1,42 @@
-let getTextureNode = nodeId =>
-  StateEditorService.getState()
-  |> TextureNodeMapAssetEditorService.getTextureNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+let unsafeGetTextureNode = nodeId =>
+  OperateTreeAssetEditorService.unsafeFindNodeById(
+    nodeId,
+    StateEditorService.getState(),
+  );
 
-let getCurrentNodeId = () => {
-  let {currentNodeId}: CurrentNodeDataType.currentNodeDataType =
-    CurrentNodeDataAssetEditorService.unsafeGetCurrentNodeData
-    |> StateLogicService.getEditorState;
+let unsafeGetSelectedFolderNodeInAssetTree = editorState =>
+  SelectedFolderNodeInAssetTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree(
+    editorState,
+  );
 
-  currentNodeId;
-};
+let unsafeGetCurrentNode = editorState =>
+  CurrentNodeAssetEditorService.unsafeGetCurrentNode(editorState);
+
+let unsafeGetCurrentNodeId = editorState =>
+  unsafeGetCurrentNode(editorState) |> NodeAssetService.getNodeId(~node=_);
 
 let getTextureComponentFromNodeId = nodeId => {
-  let {textureComponent}: AssetNodeType.textureResultType =
-    getTextureNode(nodeId);
+  let {textureComponent}: NodeAssetType.textureNodeData =
+    unsafeGetTextureNode(nodeId) |> TextureNodeAssetService.getNodeData;
 
   textureComponent;
 };
 
 let getTextureComponentFromCurrentNodeId = () =>
-  getTextureComponentFromNodeId(getCurrentNodeId());
+  getTextureComponentFromNodeId(
+    unsafeGetCurrentNodeId(StateEditorService.getState()),
+  );
 
-let setCurrentNodeData = (nodeId, nodeType) =>
-  CurrentNodeDataAssetEditorService.setCurrentNodeData({
-    currentNodeId: nodeId,
-    nodeType,
-  })
-  |> StateLogicService.getAndSetEditorState;
+let setCurrentNode = nodeId => {
+  let editorState = StateEditorService.getState();
 
-let setCurrentTextureNodeData = nodeId =>
-  setCurrentNodeData(nodeId, AssetNodeType.Texture);
+  editorState
+  |> CurrentNodeAssetEditorService.setCurrentNode(
+       OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState),
+     )
+  |> StateEditorService.setState
+  |> ignore;
+};
 
 module OperateTwoLayer = {
   open AssetTreeTwoLayerTypeTool;

@@ -10,7 +10,7 @@ let handleSceneWDB = wdbArrayBuffer =>
      );
 
 let _getUploadAssetType = name => {
-  open AssetNodeType;
+  open NodeAssetType;
 
   let extname = FileNameService.getExtName(name);
 
@@ -35,7 +35,7 @@ let _readWDBByTypeSync = (reader, fileInfo: FileType.fileInfoType) =>
   FileReader.readAsArrayBuffer(reader, fileInfo.file);
 
 let load = (dispatchFunc, event) => {
-  open AssetNodeType;
+  open NodeAssetType;
   open FileType;
 
   let e = ReactEventType.convertReactFormEventToJsEvent(event);

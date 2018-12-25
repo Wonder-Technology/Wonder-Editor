@@ -1,40 +1,31 @@
-open AssetNodeType;
+open NodeAssetType;
 
-let getWDBGameObject = (nodeId, editorState) => {
-  let {wdbGameObject} =
-    WDBNodeMapAssetEditorService.getWDBNodeMap(editorState)
-    |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
-
-  wdbGameObject;
-};
+let getWDBGameObject = (nodeId, editorState) =>
+  OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
+  |> WDBNodeAssetService.getWDBGameObject;
 
 let getAllWDBGameObjects = (editorState, engineState) =>
   GeometryAssetLogicService.getAllWDBGameObjects(editorState, engineState);
 
-let addWDBNode =
+let addWDBNodeToRoot =
     (
       ~gameObject,
+      ~nodeId,
+      ~editorState,
       ~name="",
       ~arrayBuffer=Js.Typed_array.ArrayBuffer.make(0),
       (),
-    ) => {
-  let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
+    ) =>
+  WDBNodeAssetEditorService.addWDBNodeToAssetTree(
+    RootTreeAssetEditorService.getRootNode(editorState),
+    WDBNodeAssetService.buildNode(~nodeId, ~name, ~wdbGameObject=gameObject),
+    editorState,
+  );
 
-  WDBNodeMapAssetEditorService.buildWDBNodeResult(name, None, gameObject)
-  |> WDBNodeMapAssetEditorService.setResult(addedNodeId, _)
-  |> StateLogicService.getAndSetEditorState;
-
-  addedNodeId;
-};
-
-let getWDBNodeIdByName = (wdbGameObjectName, editorState) =>
-  WDBNodeMapAssetEditorService.getWDBNodeMap(editorState)
-  |> SparseMapService.reduceiValid(
-       (. resultNodeId, {name}: AssetNodeType.wdbResultType, nodeId) =>
-         switch (resultNodeId) {
-         | Some(_) => resultNodeId
-         | None => name === wdbGameObjectName ? Some(nodeId) : resultNodeId
-         },
-       None,
-     )
-  |> OptionService.unsafeGet;
+let getWDBNodeIdByName = (wdbGameObjectName, (editorState, engineState)) =>
+  MainEditorAssetTreeTool.findNodeByName(
+    wdbGameObjectName,
+    (editorState, engineState),
+  )
+  |> OptionService.unsafeGet
+  |> NodeAssetService.getNodeId(~node=_);

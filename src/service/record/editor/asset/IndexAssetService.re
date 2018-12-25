@@ -1,8 +1,14 @@
 open AssetType;
 
-let getIndex = assetRecord => assetRecord.index;
+let getNodeIndex = assetRecord => assetRecord.nodeIndex;
 
-let increaseIndex = ({index} as record) => {
-  ...record,
-  index: index |> succ,
+let setNodeIndex = (nodeIndex, assetRecord) => {...assetRecord, nodeIndex};
+
+let getImageDataMapIndex = assetRecord => assetRecord.imageDataMapIndex;
+
+let setImageDataMapIndex = (imageDataMapIndex, assetRecord) => {
+  ...assetRecord,
+  imageDataMapIndex,
 };
+
+let generateImageDataMapIndex = index => (index |> succ, index |> succ);

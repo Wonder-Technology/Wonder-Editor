@@ -3,10 +3,9 @@ let removeNode =
       ~dispatchFunc=TestTool.getDispatch(),
       ~store=TestTool.buildEmptyAppState(),
       ~nodeId,
-      ~nodeType,
       (),
     ) => {
-  MainEditorAssetNodeTool.setCurrentNodeData(nodeId, nodeType);
+  MainEditorAssetNodeTool.setCurrentNode(nodeId);
 
   MainEditorAssetHeader.Method.removeAssetNode(
     (store, dispatchFunc),
@@ -22,13 +21,7 @@ let removeTextureNode =
       ~textureNodeId,
       (),
     ) =>
-  removeNode(
-    ~dispatchFunc,
-    ~store,
-    ~nodeId=textureNodeId,
-    ~nodeType=AssetNodeType.Texture,
-    (),
-  );
+  removeNode(~dispatchFunc, ~store, ~nodeId=textureNodeId, ());
 
 let removeMaterialNode =
     (
@@ -37,13 +30,7 @@ let removeMaterialNode =
       ~materialNodeId,
       (),
     ) =>
-  removeNode(
-    ~dispatchFunc,
-    ~store,
-    ~nodeId=materialNodeId,
-    ~nodeType=AssetNodeType.Material,
-    (),
-  );
+  removeNode(~dispatchFunc, ~store, ~nodeId=materialNodeId, ());
 
 let removeFolderNode =
     (
@@ -52,13 +39,7 @@ let removeFolderNode =
       ~folderNodeId,
       (),
     ) =>
-  removeNode(
-    ~dispatchFunc,
-    ~store,
-    ~nodeId=folderNodeId,
-    ~nodeType=AssetNodeType.Folder,
-    (),
-  );
+  removeNode(~dispatchFunc, ~store, ~nodeId=folderNodeId, ());
 
 let removeWDBNode =
     (
@@ -67,13 +48,7 @@ let removeWDBNode =
       ~wdbNodeId,
       (),
     ) =>
-  removeNode(
-    ~dispatchFunc,
-    ~store,
-    ~nodeId=wdbNodeId,
-    ~nodeType=AssetNodeType.WDB,
-    (),
-  );
+  removeNode(~dispatchFunc, ~store, ~nodeId=wdbNodeId, ());
 
 let addFolder =
     (

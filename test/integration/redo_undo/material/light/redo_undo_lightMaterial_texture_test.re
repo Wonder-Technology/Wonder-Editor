@@ -58,8 +58,8 @@ let _ =
       StateHistoryToolEditor.clearAllState();
 
       StateEditorService.getState()
-      |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
-      |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
+      |> CurrentNodeAssetEditorService.clearCurrentNode
+      |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeInAssetTree
       |> StateEditorService.setState
       |> ignore;
     };

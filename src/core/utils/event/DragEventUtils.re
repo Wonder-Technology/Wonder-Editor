@@ -1,31 +1,33 @@
-type action =
-  | TogggleChildren(int)
-  | Nothing
-  | DragEnter
-  | DragLeave
-  | DragEnd
-  | DragStart
-  | DragDrop(int, int);
-
-let handleDragStart = (id, widget, dragImg, effectAllowd, event) => {
+let handleDragStart =
+    (id, dragStartAction, widget, dragImg, effectAllowd, event) => {
   DragEventBaseUtils.dragStart(id, widget, dragImg, effectAllowd, event);
-  DragStart;
+  dragStartAction;
 };
 
-let handleDragEnter = (id, isWidgetFunc, handleRelationErrorFunc, _event) =>
-  DragEventBaseUtils.isTriggerDragEnter(
-    id,
-    isWidgetFunc,
-    handleRelationErrorFunc,
-  ) ?
-    DragEnter : Nothing;
+let handleDragEnter =
+    (
+      id,
+      (dragEnterAction, nothingAction),
+      isWidgetFunc,
+      checkNodeRelationFunc,
+      _event,
+    ) => {
+  let (isTrigger, _) =
+    DragEventBaseUtils.checkDragEnter(
+      id,
+      isWidgetFunc,
+      checkNodeRelationFunc,
+    );
 
-let handleDragLeave = (id, event) => {
+  isTrigger ? dragEnterAction : nothingAction;
+};
+
+let handleDragLeave = (id, dragLeaveAction, event) => {
   DomHelper.stopPropagation(
     ReactEventType.convertReactMouseEventToJsEvent(event),
   );
 
-  DragLeave;
+  dragLeaveAction;
 };
 
 let handleDragOver = (dropEffect, event) => {
@@ -36,23 +38,44 @@ let handleDragOver = (dropEffect, event) => {
   DomHelper.preventDefault(e);
 };
 
-let handleDrop = (id, isWidgetFunc, handleRelationErrorFunc, event) => {
+let handleDrop =
+    (
+      id,
+      (dragDropActionFunc, dragLeaveAction),
+      isWidgetFunc,
+      checkNodeRelationFunc,
+      event,
+    ) => {
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);
   let startId = DragUtils.getDragedId(e);
 
   DomHelper.preventDefault(e);
 
-  DragEventBaseUtils.isTriggerDragDrop(
-    id,
-    startId,
-    isWidgetFunc,
-    handleRelationErrorFunc,
-  ) ?
-    DragDrop(id, startId) : DragLeave;
+  let (isTrigger, relationResult) =
+    DragEventBaseUtils.checkDragDrop(
+      id,
+      startId,
+      isWidgetFunc,
+      checkNodeRelationFunc,
+    );
+
+  relationResult
+  |> OptionService.handleSomeAndIgnore(relationResult =>
+       relationResult
+       |> Result.RelationResult.handleError(msgOpt =>
+            OptionService.handleSomeAndIgnore(
+              msg => ConsoleUtils.error(msg, StateEditorService.getState()),
+              msgOpt,
+            )
+          )
+     );
+
+  isTrigger ? dragDropActionFunc(id, startId) : dragLeaveAction;
 };
 
-let handleDrageEnd = _event => {
+let handleDragEnd = (dragEndAction, _event) => {
   CurrentDragSourceEditorService.clearCurrentDragSource
   |> StateLogicService.getAndSetEditorState;
-  DragEnd;
+
+  dragEndAction;
 };

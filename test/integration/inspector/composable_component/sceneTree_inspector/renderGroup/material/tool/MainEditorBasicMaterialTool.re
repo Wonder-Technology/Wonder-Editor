@@ -1,6 +1,6 @@
 open MainEditorMaterialType;
 
-open AssetMaterialDataType;
+open MaterialDataAssetType;
 
 let changeMaterialTypeToBeBasicMaterial =
     (

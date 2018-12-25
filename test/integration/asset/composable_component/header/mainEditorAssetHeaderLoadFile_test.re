@@ -8,7 +8,7 @@ open Expect.Operators;
 
 open Sinon;
 
-open AssetTreeNodeType;
+open NodeAssetType;
 
 open Js.Promise;
 
@@ -33,8 +33,8 @@ let _ =
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
       StateEditorService.getState()
-      |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
-      |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
+      |> CurrentNodeAssetEditorService.clearCurrentNode
+      |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeInAssetTree
       |> StateEditorService.setState
       |> ignore;
     });
@@ -69,15 +69,15 @@ let _ =
             let uploadFileLength = 1;
             let originChildrenLen =
               StateEditorService.getState()
-              |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
-              |> (root => root.children)
+              |> RootTreeAssetEditorService.getRootNode
+              |> FolderNodeAssetService.getChildrenNodes
               |> Js.Array.length;
 
             MainEditorAssetUploadTool.loadOneTexture()
             |> then_(_ =>
                  StateEditorService.getState()
-                 |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
-                 |> (root => root.children)
+                 |> RootTreeAssetEditorService.getRootNode
+                 |> FolderNodeAssetService.getChildrenNodes
                  |> Js.Array.length
                  |> (lastLen => lastLen - originChildrenLen)
                  |> expect == uploadFileLength
@@ -100,17 +100,17 @@ let _ =
                      (),
                    );
 
-                   let {image}: AssetNodeType.textureResultType =
-                     StateEditorService.getState()
-                     |> TextureNodeMapAssetEditorService.getTextureNodeMap
-                     |> WonderCommonlib.SparseMapService.unsafeGet(
-                          MainEditorAssetNodeTool.getCurrentNodeId(),
-                        );
+                   let editorState = StateEditorService.getState();
+                   let {base64}: ImageDataType.imageData =
+                     ImageDataMapTool.getDataByTextureNode(
+                       MainEditorAssetNodeTool.unsafeGetCurrentNode(
+                         editorState,
+                       ),
+                       editorState,
+                     );
 
-                   StateEditorService.getState()
-                   |> ImageNodeMapAssetEditorService.getImageNodeMap
-                   |> WonderCommonlib.SparseMapService.unsafeGet(image)
-                   |> (({base64}) => base64 |> OptionService.unsafeGet)
+                   base64
+                   |> OptionService.unsafeGet
                    |> expect == imgBase64
                    |> resolve;
                  });
@@ -165,7 +165,7 @@ let _ =
                       |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedSecondNodeDomIndex
                       |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
-                      let {name, jsonResult}: AssetNodeType.jsonResultType =
+                      let {name, jsonResult}: NodeAssetType.jsonResultType =
                         StateEditorService.getState()
                         |> AssetJsonNodeMapEditorService.getJsonNodeMap
                         |> WonderCommonlib.SparseMapService.unsafeGet(
@@ -198,7 +198,7 @@ let _ =
                         |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedSecondNodeDomIndex
                         |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
-                        let {name, jsonResult}: AssetNodeType.jsonResultType =
+                        let {name, jsonResult}: NodeAssetType.jsonResultType =
                           StateEditorService.getState()
                           |> AssetJsonNodeMapEditorService.getJsonNodeMap
                           |> WonderCommonlib.SparseMapService.unsafeGet(
@@ -236,12 +236,14 @@ let _ =
                 (),
               )
               |> then_(uploadedWDBNodeId => {
-                   let {name, wdbGameObject}: AssetNodeType.wdbResultType =
-                     StateEditorService.getState()
-                     |> WDBNodeMapAssetEditorService.getWDBNodeMap
-                     |> WonderCommonlib.SparseMapService.unsafeGet(
-                          uploadedWDBNodeId,
-                        );
+                   let editorState = StateEditorService.getState();
+
+                   let {name, wdbGameObject}: NodeAssetType.wdbNodeData =
+                     OperateTreeAssetEditorService.unsafeFindNodeById(
+                       uploadedWDBNodeId,
+                       editorState,
+                     )
+                     |> WDBNodeAssetService.getNodeData;
 
                    (name, wdbGameObject)
                    |> expect == (fileName, defaultSceneNewGameObjectUid)

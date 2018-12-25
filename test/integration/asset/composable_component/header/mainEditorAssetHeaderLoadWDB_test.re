@@ -8,7 +8,7 @@ open Expect.Operators;
 
 open Sinon;
 
-open AssetTreeNodeType;
+open NodeAssetType;
 
 open Js.Promise;
 
@@ -152,7 +152,7 @@ let _ =
 
                  MainEditorAssetTreeTool.Select.selectFolderNode(
                    ~nodeId=
-                     TreeRootAssetEditorService.getRootTreeNodeId
+                     MainEditorAssetTreeTool.getRootNodeId
                      |> StateLogicService.getEditorState,
                    (),
                  );
@@ -176,12 +176,13 @@ let _ =
                 )
                 |> then_(uploadedWDBNodeId => {
                      let editorState = StateEditorService.getState();
+                     let engineState = StateEngineService.unsafeGetState();
 
                      MainEditorAssetTreeTool.Select.selectFolderNode(
                        ~nodeId=
-                         MainEditorAssetFolderNodeTool.getNodeIdByName(
+                         MainEditorAssetTreeTool.findNodeIdByName(
                            "Materials",
-                           editorState,
+                           (editorState, engineState),
                          )
                          |> OptionService.unsafeGet,
                        (),
@@ -204,12 +205,14 @@ let _ =
                      )
                      |> then_(uploadedWDBNodeId2 => {
                           let editorState = StateEditorService.getState();
+                          let engineState =
+                            StateEngineService.unsafeGetState();
 
                           MainEditorAssetTreeTool.Select.selectFolderNode(
                             ~nodeId=
-                              MainEditorAssetFolderNodeTool.getNodeIdByName(
+                              MainEditorAssetTreeTool.findNodeIdByName(
                                 "Materials",
-                                editorState,
+                                (editorState, engineState),
                               )
                               |> OptionService.unsafeGet,
                             (),
@@ -355,10 +358,10 @@ let _ =
                             LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
                             editorState,
                           ),
-                          MaterialNodeMapAssetEditorService.getValidValues(
+                          MaterialNodeAssetEditorService.findAllMaterialNodes(
                             editorState,
                           )
-                          |> SparseMapService.length,
+                          |> Js.Array.length,
                         )
                         |> expect == (true, true, 1)
                         |> resolve;
@@ -413,12 +416,13 @@ let _ =
               )
               |> then_(uploadedWDBNodeId => {
                    let editorState = StateEditorService.getState();
+                   let engineState = StateEngineService.unsafeGetState();
 
                    MainEditorAssetTreeTool.Select.selectFolderNode(
                      ~nodeId=
-                       MainEditorAssetFolderNodeTool.getNodeIdByName(
+                       MainEditorAssetTreeTool.findNodeIdByName(
                          "Materials",
-                         editorState,
+                         (editorState, engineState),
                        )
                        |> OptionService.unsafeGet,
                      (),
@@ -444,12 +448,13 @@ let _ =
                 )
                 |> then_(uploadedWDBNodeId => {
                      let editorState = StateEditorService.getState();
+                     let engineState = StateEngineService.unsafeGetState();
 
                      MainEditorAssetTreeTool.Select.selectFolderNode(
                        ~nodeId=
-                         MainEditorAssetFolderNodeTool.getNodeIdByName(
+                         MainEditorAssetTreeTool.findNodeIdByName(
                            "Textures",
-                           editorState,
+                           (editorState, engineState),
                          )
                          |> OptionService.unsafeGet,
                        (),
@@ -472,12 +477,14 @@ let _ =
                      )
                      |> then_(uploadedWDBNodeId2 => {
                           let editorState = StateEditorService.getState();
+                          let engineState =
+                            StateEngineService.unsafeGetState();
 
                           MainEditorAssetTreeTool.Select.selectFolderNode(
                             ~nodeId=
-                              MainEditorAssetFolderNodeTool.getNodeIdByName(
+                              MainEditorAssetTreeTool.findNodeIdByName(
                                 "Textures",
-                                editorState,
+                                (editorState, engineState),
                               )
                               |> OptionService.unsafeGet,
                             (),
@@ -527,7 +534,7 @@ let _ =
 
               MainEditorAssetTreeTool.Select.selectFolderNode(
                 ~nodeId=
-                  TreeRootAssetEditorService.getRootTreeNodeId
+                  MainEditorAssetTreeTool.getRootNodeId
                   |> StateLogicService.getEditorState,
                 (),
               );
@@ -615,7 +622,7 @@ let _ =
 
                    MainEditorAssetHeaderOperateNodeTool.removeMaterialNode(
                      ~materialNodeId=
-                       MainEditorAssetMaterialNodeTool.findNodeIdByMaterialComponent(
+                       MainEditorAssetMaterialNodeTool.findNodeIdByMaterialComponentAndType(
                          material1,
                          LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
                          editorState,
@@ -653,11 +660,11 @@ let _ =
                             diffuseMap2,
                             editorState,
                           ),
-                          TextureNodeMapAssetEditorService.getValidValues(
+                          TextureNodeAssetEditorService.findAllTextureNodes(
                             editorState,
                           )
-                          |> SparseMapService.length,
-                          ImageNodeMapAssetEditorService.getValidValues(
+                          |> Js.Array.length,
+                          ImageDataMapAssetEditorService.getValidValues(
                             editorState,
                           )
                           |> SparseMapService.length,
@@ -773,10 +780,12 @@ let _ =
                  let editorState = StateEditorService.getState();
 
                  (
-                   TextureNodeMapAssetEditorService.getValidValues(editorState)
+                   TextureNodeAssetEditorService.findAllTextureNodes(
+                     editorState,
+                   )
                    |> Js.Array.length,
-                   ImageNodeMapAssetEditorService.getValidValues(editorState)
-                   |> Js.Array.length,
+                   ImageDataMapAssetEditorService.getValidValues(editorState)
+                   |> SparseMapService.length,
                  )
                  |> expect == (2, 1)
                  |> resolve;
@@ -890,17 +899,19 @@ let _ =
                )
                |> then_(uploadedWDBNodeId2 => {
                     let editorState = StateEditorService.getState();
-                    let wdbNodeMap =
-                      WDBNodeMapAssetEditorService.getWDBNodeMap(editorState);
 
                     (
-                      WDBNodeMapAssetEditorService.getWDBBaseName(
-                        uploadedWDBNodeId1,
-                        wdbNodeMap,
+                      NodeNameAssetLogicService.getWDBNodeName(
+                        OperateTreeAssetEditorService.unsafeFindNodeById(
+                          uploadedWDBNodeId1,
+                          editorState,
+                        ),
                       ),
-                      WDBNodeMapAssetEditorService.getWDBBaseName(
-                        uploadedWDBNodeId2,
-                        wdbNodeMap,
+                      NodeNameAssetLogicService.getWDBNodeName(
+                        OperateTreeAssetEditorService.unsafeFindNodeById(
+                          uploadedWDBNodeId2,
+                          editorState,
+                        ),
                       ),
                     )
                     |> expect == (fileName, fileName ++ " 1")

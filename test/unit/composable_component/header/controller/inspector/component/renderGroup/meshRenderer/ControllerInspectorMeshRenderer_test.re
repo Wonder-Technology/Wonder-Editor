@@ -4,7 +4,7 @@ open Expect;
 
 open Expect.Operators;
 
-open AssetNodeType;
+open NodeAssetType;
 
 open Sinon;
 
@@ -21,8 +21,8 @@ let _ =
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
       StateEditorService.getState()
-      |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
-      |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
+      |> CurrentNodeAssetEditorService.clearCurrentNode
+      |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeInAssetTree
       |> StateEditorService.setState
       |> ignore;
     });

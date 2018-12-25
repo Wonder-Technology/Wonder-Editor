@@ -1,8 +1,8 @@
 module Rename = {
-  let _renameAssetNode = ((store, dispatchFunc), (nodeId, nodeType), name) =>
+  let _renameAssetNode = ((store, dispatchFunc), nodeId, name) =>
     AssetTreeInspector.Method.renameAssetTreeNode(
       (store, dispatchFunc),
-      (nodeId, nodeType),
+      nodeId,
       name,
     );
 
@@ -14,11 +14,7 @@ module Rename = {
         ~name,
         (),
       ) =>
-    _renameAssetNode(
-      (store, dispatchFunc),
-      (nodeId, AssetNodeType.Texture),
-      name,
-    );
+    _renameAssetNode((store, dispatchFunc), nodeId, name);
 
   let renameAssetMaterialNode =
       (
@@ -28,11 +24,7 @@ module Rename = {
         ~name,
         (),
       ) =>
-    _renameAssetNode(
-      (store, dispatchFunc),
-      (nodeId, AssetNodeType.Material),
-      name,
-    );
+    _renameAssetNode((store, dispatchFunc), nodeId, name);
 
   let renameAssetFolderNode =
       (
@@ -42,14 +34,13 @@ module Rename = {
         ~name,
         (),
       ) =>
-    _renameAssetNode(
-      (store, dispatchFunc),
-      (nodeId, AssetNodeType.Folder),
-      name,
-    );
+    _renameAssetNode((store, dispatchFunc), nodeId, name);
 
   let isFolderNameDisabled = nodeId =>
-    AssetTreeInspector.Method._isFolderNameDisabled(nodeId);
+    NodeAssetService.isIdEqual(
+      MainEditorAssetTreeTool.getRootNodeId(StateEditorService.getState()),
+      nodeId,
+    );
 };
 
 let reducer =
@@ -57,15 +48,8 @@ let reducer =
       ~store=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~nodeId,
-      ~nodeType,
       ~action,
       ~state,
       (),
     ) =>
-  AssetTreeInspector.reducer(
-    (store, dispatchFunc),
-    nodeId,
-    nodeType,
-    action,
-    state,
-  );
+  AssetTreeInspector.reducer((store, dispatchFunc), nodeId, action, state);

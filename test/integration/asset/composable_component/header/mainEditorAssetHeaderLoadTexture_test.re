@@ -6,7 +6,7 @@ open Expect.Operators;
 
 open Sinon;
 
-open AssetTreeNodeType;
+open NodeAssetType;
 
 open Js.Promise;
 
@@ -23,22 +23,19 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test load texture", () => {
-      let _getUploadedTextureNodeId = editorState => {
-        let root =
-          editorState |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot;
-
-        let {nodeId} as textureNode = root.children[0];
-
-        nodeId;
-      };
+      let _getUploadedTextureNodeId = editorState =>
+        Array.unsafe_get(
+          RootTreeAssetEditorService.getRootNode(editorState)
+          |> FolderNodeAssetService.getChildrenNodes,
+          0,
+        )
+        |> NodeAssetService.getNodeId(~node=_);
 
       beforeEach(() => {
         MainEditorAssetTool.buildFakeFileReader();
         MainEditorAssetTool.buildFakeImage();
 
-        LoadTool.buildFakeTextDecoder(
-          LoadTool.convertUint8ArrayToBuffer,
-        );
+        LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
         LoadTool.buildFakeURL(sandbox^);
 
         LoadTool.buildFakeLoadImage(.);

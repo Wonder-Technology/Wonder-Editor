@@ -1,4 +1,4 @@
-open AssetNodeType;
+open NodeAssetType;
 
 type state = {style: ReactDOMRe.Style.t};
 
@@ -21,10 +21,7 @@ module Method = {
     switch (startId) {
     | None => false
     | Some(id) =>
-      editorState
-      |> TextureNodeMapAssetEditorService.getTextureNodeMap
-      |> WonderCommonlib.SparseMapService.get(id)
-      |> Js.Option.isSome
+      OperateTreeAssetEditorService.isNodeExistById(id, editorState)
     };
 
   let _isTriggerAction = (isWidgetFunc, isTypeValidFunc) => {

@@ -59,8 +59,9 @@ let _ =
           |> then_(uploadedWDBNodeId => {
                MainEditorAssetTreeTool.Select.selectFolderNode(
                  ~nodeId=
-                   TreeRootAssetEditorService.getRootTreeNodeId
-                   |> StateLogicService.getEditorState,
+                   MainEditorAssetTreeTool.getRootNodeId(
+                     StateEditorService.getState(),
+                   ),
                  (),
                );
 

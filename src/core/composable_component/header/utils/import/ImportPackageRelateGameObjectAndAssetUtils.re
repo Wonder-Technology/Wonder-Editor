@@ -101,6 +101,7 @@ let _replaceGameObjectMaterialComponentToMaterialAsset =
   );
 };
 
+
 let _replaceSceneGameObjectMaterialComponentToMaterialAsset =
     (
       gameObject,
@@ -376,6 +377,7 @@ let relateSceneWDBGameObjectsAndAssets =
            _replaceSceneGameObjectMaterialComponentToMaterialAsset(
              gameObject,
              defaultMaterialData,
+             
              (basicMaterialDataMap, lightMaterialDataMap),
              imageUint8ArrayDataMap,
              engineState,

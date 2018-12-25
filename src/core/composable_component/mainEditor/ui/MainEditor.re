@@ -162,16 +162,10 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
       MainUtils.start()
       |> then_(_ => {
            (
-             editorState => {
-               let (assetTree, editorState) =
-                 AssetTreeUtils.initRootAssetTree(
-                   editorState,
-                   StateEngineService.unsafeGetState(),
-                 );
-
+             editorState =>
                editorState
-               |> TreeRootAssetEditorService.setAssetTreeRoot(assetTree);
-             }
+               |> TreeAssetEditorService.createTree
+               |> StateEditorService.setState
            )
            |> StateLogicService.getAndSetEditorState;
            dispatchFunc(

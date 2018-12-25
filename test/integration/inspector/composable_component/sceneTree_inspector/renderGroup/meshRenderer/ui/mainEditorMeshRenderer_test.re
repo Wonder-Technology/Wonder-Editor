@@ -4,7 +4,7 @@ open Expect;
 
 open Expect.Operators;
 
-open AssetNodeType;
+open NodeAssetType;
 
 open Sinon;
 

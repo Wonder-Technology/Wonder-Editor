@@ -24,20 +24,17 @@ module Method = {
   };
 
   let handleDragEnter =
-      (
-        id,
-        (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFileFunc),
-        event,
-      ) => {
+      (id, (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc), event) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
 
-    DragEventBaseUtils.isTriggerDragEnter(
-      id,
-      handleWidgetFunc,
-      handleRelationErrorFunc,
-    )
-    || isAssetWDBFileFunc() ?
-      DragEnter : Nothing;
+    let (isTrigger, _) =
+      DragEventBaseUtils.checkDragEnter(
+        id,
+        isWidgetFunc,
+        checkNodeRelationFunc,
+      );
+
+    isTrigger || isAssetWDBFileFunc() ? DragEnter : Nothing;
   };
 
   let handleDragLeave = (id, event) => {
@@ -46,7 +43,7 @@ module Method = {
     DragLeave;
   };
 
-  let handleDrageEnd = _event => {
+  let handleDragEnd = _event => {
     CurrentDragSourceEditorService.clearCurrentDragSource
     |> StateLogicService.getAndSetEditorState;
 
@@ -54,30 +51,55 @@ module Method = {
   };
 
   let handleDrop =
-      (
-        id,
-        (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFileFunc),
-        event,
-      ) => {
+      (id, (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc), event) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     let startId = DragUtils.getDragedId(e);
 
     DomHelper.preventDefault(e);
 
-    DragEventBaseUtils.isTriggerDragDrop(
-      id,
-      startId,
-      handleWidgetFunc,
-      handleRelationErrorFunc,
-    ) ?
+    /* DragEventBaseUtils.checkDragDrop(
+         id,
+         startId,
+         isWidgetFunc,
+         checkNodeRelationFunc,
+       ) ?
+         DragGameObject(id, startId) :
+         isAssetWDBFileFunc() ?
+           {
+             let wdbGameObjectUid =
+               StateEditorService.getState()
+               |> WDBNodeMapAssetEditorService.getWDBNodeMap
+               |> WonderCommonlib.SparseMapService.unsafeGet(startId)
+               |> (({wdbGameObject}) => wdbGameObject);
+
+             DragWDB(id, wdbGameObjectUid);
+           } :
+           DragLeave; */
+
+    let (isTrigger, relationResult) =
+      DragEventBaseUtils.checkDragDrop(
+        id,
+        startId,
+        isWidgetFunc,
+        checkNodeRelationFunc,
+      );
+
+    relationResult
+    |> OptionService.handleSomeAndIgnore(relationResult =>
+         relationResult
+         |> Result.RelationResult.handleError(msg =>
+              ConsoleUtils.error(msg, StateEditorService.getState())
+            )
+       );
+
+    isTrigger ?
       DragGameObject(id, startId) :
       isAssetWDBFileFunc() ?
         {
           let wdbGameObjectUid =
             StateEditorService.getState()
-            |> WDBNodeMapAssetEditorService.getWDBNodeMap
-            |> WonderCommonlib.SparseMapService.unsafeGet(startId)
-            |> (({wdbGameObject}) => wdbGameObject);
+            |> OperateTreeAssetEditorService.unsafeFindNodeById(startId)
+            |> WDBNodeAssetService.getWDBGameObject;
 
           DragWDB(id, wdbGameObjectUid);
         } :
@@ -92,8 +114,8 @@ module Method = {
         (id, widget, dragImg, name, isShowChildren, isSelected, isActive),
         (
           onSelectFunc,
-          handleWidgetFunc,
-          handleRelationErrorFunc,
+          isWidgetFunc,
+          checkNodeRelationFunc,
           isAssetWDBFileFunc,
         ),
       ) =>
@@ -110,13 +132,13 @@ module Method = {
       onDragStart=(
         _e => send(handleDragStart(id, widget, dragImg, "move", _e))
       )
-      onDragEnd=(_e => send(handleDrageEnd(_e)))
+      onDragEnd=(_e => send(handleDragEnd(_e)))
       onDragEnter=(
         _e =>
           send(
             handleDragEnter(
               id,
-              (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFileFunc),
+              (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc),
               _e,
             ),
           )
@@ -128,7 +150,7 @@ module Method = {
           send(
             handleDrop(
               id,
-              (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFileFunc),
+              (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc),
               _e,
             ),
           )
@@ -152,8 +174,8 @@ module Method = {
         ),
         (
           onSelectFunc,
-          handleWidgetFunc,
-          handleRelationErrorFunc,
+          isWidgetFunc,
+          checkNodeRelationFunc,
           isAssetWDBFileFunc,
         ),
       ) =>
@@ -180,8 +202,8 @@ module Method = {
           (id, widget, dragImg, name, isShowChildren, isSelected, isActive),
           (
             onSelectFunc,
-            handleWidgetFunc,
-            handleRelationErrorFunc,
+            isWidgetFunc,
+            checkNodeRelationFunc,
             isAssetWDBFileFunc,
           ),
         )
@@ -269,12 +291,7 @@ let render =
         isSelected,
         isActive,
       ),
-      (
-        onSelectFunc,
-        isWidgetFunc,
-        handleRelationErrorFunc,
-        isAssetWDBFileFunc,
-      ),
+      (onSelectFunc, isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc),
       treeChildren,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
@@ -294,12 +311,7 @@ let render =
         isSelected,
         isActive,
       ),
-      (
-        onSelectFunc,
-        isWidgetFunc,
-        handleRelationErrorFunc,
-        isAssetWDBFileFunc,
-      ),
+      (onSelectFunc, isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc),
     ),
   );
 
@@ -318,7 +330,7 @@ let make =
       ~isWidget,
       ~isShowChildren,
       ~isHasChildren,
-      ~handleRelationError,
+      ~checkNodeRelation,
       ~handleToggleShowTreeChildren,
       ~isAssetWDBFile,
       ~treeChildren,
@@ -344,7 +356,7 @@ let make =
         isSelected,
         isActive,
       ),
-      (onSelect, isWidget, handleRelationError, isAssetWDBFile),
+      (onSelect, isWidget, checkNodeRelation, isAssetWDBFile),
       treeChildren,
       self,
     ),

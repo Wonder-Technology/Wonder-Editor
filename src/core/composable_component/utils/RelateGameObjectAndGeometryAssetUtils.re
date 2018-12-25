@@ -23,13 +23,13 @@ let isDefaultGeometry = (geometry, (editorState, engineState)) => {
     GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
       editorState,
     ),
-    PrepareDefaultComponentUtils.getDefaultCubeGeometryName(),
+    PrepareDefaultComponentLogicService.getDefaultCubeGeometryName(),
   );
   let (defaultSphereGeometry, defaultSphereGeometryName) = (
     GeometryDataAssetEditorService.unsafeGetDefaultSphereGeometryComponent(
       editorState,
     ),
-    PrepareDefaultComponentUtils.getDefaultSphereGeometryName(),
+    PrepareDefaultComponentLogicService.getDefaultSphereGeometryName(),
   );
 
   GeometryAssetLogicService.isGeometryEqualDefaultGeometryData(
@@ -155,7 +155,7 @@ let getDefaultGeometryData = (editorState, engineState) => {
     );
   let defaultCubeGeometryData = (
     defaultGeometry,
-    PrepareDefaultComponentUtils.getDefaultCubeGeometryName(),
+    PrepareDefaultComponentLogicService.getDefaultCubeGeometryName(),
     getGeometryData(defaultGeometry, engineState),
   );
 
@@ -165,7 +165,7 @@ let getDefaultGeometryData = (editorState, engineState) => {
     );
   let defaultSphereGeometryData = (
     defaultGeometry,
-    PrepareDefaultComponentUtils.getDefaultSphereGeometryName(),
+    PrepareDefaultComponentLogicService.getDefaultSphereGeometryName(),
     getGeometryData(defaultGeometry, engineState),
   );
 

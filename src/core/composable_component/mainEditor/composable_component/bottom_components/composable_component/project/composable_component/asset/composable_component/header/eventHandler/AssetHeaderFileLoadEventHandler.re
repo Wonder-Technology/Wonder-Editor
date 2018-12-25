@@ -13,7 +13,7 @@ module CustomEventHandler = {
          let editorState = StateEditorService.getState();
 
          switch (e) {
-         | AssetNodeType.LoadException(message) =>
+         | NodeAssetType.LoadException(message) =>
            ConsoleUtils.error(
              LogUtils.buildErrorMessage(
                ~description={j|$message|j},

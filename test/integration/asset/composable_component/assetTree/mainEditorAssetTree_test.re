@@ -6,8 +6,6 @@ open Expect.Operators;
 
 open Sinon;
 
-open CurrentNodeDataType;
-
 let _ =
   describe("MainEditorAssetTree", () => {
     let sandbox = getSandboxDefaultVal();
@@ -29,15 +27,16 @@ let _ =
       restoreSandbox(refJsObjToSandbox(sandbox^));
 
       StateEditorService.getState()
-      |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
-      |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
+      |> CurrentNodeAssetEditorService.clearCurrentNode
+      |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeInAssetTree
       |> StateEditorService.setState
       |> ignore;
     });
 
-    describe("test set currentNode and currentNodeParent", () =>
+    describe("test set currentNode and selectedFolderNodeInAssetTree", () =>
       describe("click assetTree node", () =>
-        test("currentNodeId and currentNodeParentId should be same", () => {
+        test(
+          "currentNode and selectedFolderNodeInAssetTree should be same", () => {
           let assetTreeData =
             MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
 
@@ -50,15 +49,16 @@ let _ =
           );
 
           let editorState = StateEditorService.getState();
-          let {currentNodeId} =
-            editorState
-            |> CurrentNodeDataAssetEditorService.unsafeGetCurrentNodeData;
 
-          let currentNodeParentId =
-            editorState
-            |> CurrentNodeParentIdAssetEditorService.unsafeGetCurrentNodeParentId;
-
-          expect(currentNodeId) == currentNodeParentId;
+          NodeAssetService.isNodeEqualById(
+            ~sourceNode=
+              MainEditorAssetNodeTool.unsafeGetCurrentNode(editorState),
+            ~targetNode=
+              MainEditorAssetNodeTool.unsafeGetSelectedFolderNodeInAssetTree(
+                editorState,
+              ),
+          )
+          |> expect == true;
         })
       )
     );
@@ -293,7 +293,7 @@ let _ =
 
         MainEditorAssetTreeTool.Select.selectFolderNode(
           ~nodeId=
-            TreeRootAssetEditorService.getRootTreeNodeId
+            MainEditorAssetTreeTool.getRootNodeId
             |> StateLogicService.getEditorState,
           (),
         );
@@ -320,7 +320,7 @@ let _ =
 
           MainEditorAssetHeaderOperateNodeTool.addFolder();
 
-          AssetTreeUtils.setSpecificAssetTreeNodeIsShowChildrenFromEditorState(
+          OperateTreeAssetEditorService.setNodeIsShowChildren(
             addedFolderNodeId1,
             false,
           )
@@ -338,7 +338,7 @@ let _ =
 
           MainEditorAssetTreeTool.Select.selectFolderNode(
             ~nodeId=
-              TreeRootAssetEditorService.getRootTreeNodeId
+              MainEditorAssetTreeTool.getRootNodeId
               |> StateLogicService.getEditorState,
             (),
           );
@@ -368,7 +368,7 @@ let _ =
 
           MainEditorAssetTreeTool.Select.selectFolderNode(
             ~nodeId=
-              TreeRootAssetEditorService.getRootTreeNodeId
+              MainEditorAssetTreeTool.getRootNodeId
               |> StateLogicService.getEditorState,
             (),
           );
@@ -406,7 +406,7 @@ let _ =
           (),
         );
 
-        AssetTreeUtils.setSpecificAssetTreeNodeIsShowChildrenFromEditorState(
+        OperateTreeAssetEditorService.setNodeIsShowChildren(
           addedFolderNodeId2,
           true,
         )

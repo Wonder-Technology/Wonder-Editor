@@ -217,12 +217,13 @@ let _ =
                    );
 
                    let editorState = StateEditorService.getState();
+                   let engineState = StateEngineService.unsafeGetState();
 
                    MainEditorAssetTreeTool.Select.selectFolderNode(
                      ~nodeId=
-                       MainEditorAssetFolderNodeTool.getNodeIdByName(
+                       MainEditorAssetTreeTool.findNodeIdByName(
                          "Materials",
-                         editorState,
+                         (editorState, engineState),
                        )
                        |> OptionService.unsafeGet,
                      (),
@@ -496,7 +497,7 @@ let _ =
                                ~wdbNodeId=
                                  MainEditorAssetWDBNodeTool.getWDBNodeIdByName(
                                    wdbName,
-                                   editorState,
+                                   (editorState, engineState),
                                  ),
                                (),
                              );

@@ -1,33 +1,40 @@
 let getMaterialComponent =
     (~nodeId, ~editorState=StateEditorService.getState(), ()) => {
-  let {materialComponent}: AssetNodeType.materialResultType =
-    StateEditorService.getState()
-    |> MaterialNodeMapAssetEditorService.unsafeGetResult(nodeId);
+  let {materialComponent}: NodeAssetType.materialNodeData =
+    OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
+    |> MaterialNodeAssetService.getNodeData;
 
   materialComponent;
 };
 
+let getMaterialType =
+    (~nodeId, ~editorState=StateEditorService.getState(), ()) => {
+  let {type_}: NodeAssetType.materialNodeData =
+    OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
+    |> MaterialNodeAssetService.getNodeData;
+
+  type_;
+};
+
+let _findNodeByMaterialComponentAndType =
+    (material, materialType, editorState) =>
+  IterateTreeAssetService.findOne(
+    ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
+    ~predMaterialNodeFunc=
+      node => {
+        let {materialComponent, type_}: NodeAssetType.materialNodeData =
+          MaterialNodeAssetService.getNodeData(node);
+
+        materialComponent === material && materialType === type_;
+      },
+    (),
+  );
+
 let hasMaterialComponent = (material, materialType, editorState) =>
-  MaterialNodeMapAssetEditorService.getValidValues(editorState)
-  |> Js.Array.find(
-       ({materialComponent, type_}: AssetNodeType.materialResultType) =>
-       materialComponent === material && materialType === type_
-     )
+  _findNodeByMaterialComponentAndType(material, materialType, editorState)
   |> Js.Option.isSome;
 
-let findNodeIdByMaterialComponent = (material, materialType, editorState) =>
-  switch (
-    MaterialNodeMapAssetEditorService.getResults(editorState)
-    |> Js.Array.find(
-         (
-           (
-             nodeId,
-             {materialComponent, type_}: AssetNodeType.materialResultType,
-           ),
-         ) =>
-         materialComponent === material && materialType === type_
-       )
-  ) {
-  | None => None
-  | Some((nodeId, _)) => Some(nodeId)
-  };
+let findNodeIdByMaterialComponentAndType =
+    (material, materialType, editorState) =>
+  _findNodeByMaterialComponentAndType(material, materialType, editorState)
+  |> Js.Option.map((. node) => NodeAssetService.getNodeId(~node));

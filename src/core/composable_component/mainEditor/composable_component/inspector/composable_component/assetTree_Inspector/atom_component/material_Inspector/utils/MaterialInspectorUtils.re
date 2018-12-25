@@ -1,4 +1,4 @@
-open AssetMaterialDataType;
+open MaterialDataAssetType;
 
 let replaceMaterialByMaterialType =
     ((nodeId, sourceMaterial), sourceMaterialType, targetMaterialType) => {
@@ -21,7 +21,7 @@ let replaceMaterialByMaterialType =
     );
 
   let editorState =
-    MaterialUpdateNodeAssetEditorService.updateMaterialNodeData(
+    MaterialNodeAssetEditorService.updateMaterialNodeData(
       nodeId,
       targetMaterial,
       targetMaterialType,
@@ -29,15 +29,16 @@ let replaceMaterialByMaterialType =
     );
 
   let engineState =
-    MainEditorMaterialUtils.setName(
-      targetMaterial,
-      targetMaterialType,
-      MainEditorMaterialUtils.getName(
-        sourceMaterial,
-        sourceMaterialType,
-        engineState,
-      ),
-      engineState,
+    OperateMaterialLogicService.setName(
+      ~material=targetMaterial,
+      ~type_=targetMaterialType,
+      ~name=
+        NodeNameAssetLogicService.getMaterialNodeName(
+          ~material=sourceMaterial,
+          ~type_=sourceMaterialType,
+          ~engineState,
+        ),
+      ~engineState,
     );
 
   editorState |> StateEditorService.setState |> ignore;

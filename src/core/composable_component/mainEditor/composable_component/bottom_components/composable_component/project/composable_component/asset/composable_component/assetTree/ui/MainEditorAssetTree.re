@@ -1,76 +1,57 @@
-open AssetNodeType;
-
-open AssetTreeNodeType;
+open NodeAssetType;
 
 module Method = {
-  let _isSelected = nodeId =>
-    AssetTreeUtils.getTargetTreeNodeId
-    |> StateLogicService.getEditorState === nodeId;
+  let _isSelected = (selectedFolderNodeInAssetTree, nodeId) =>
+    NodeAssetService.isIdEqual(
+      nodeId,
+      NodeAssetService.getNodeId(~node=selectedFolderNodeInAssetTree),
+    );
 
-  let _isActive = () => {
-    let editorState = StateEditorService.getState();
-
-    switch (CurrentNodeDataAssetEditorService.getCurrentNodeData(editorState)) {
-    | None => false
-    | Some({currentNodeId}) =>
-      TreeAssetEditorService.isIdEqual(
-        AssetTreeUtils.getTargetTreeNodeId(editorState),
-        currentNodeId,
-      )
-    };
-  };
-
-  let _isNotRoot = nodeId =>
-    StateEditorService.getState()
-    |> TreeRootAssetEditorService.getRootTreeNodeId != nodeId;
+  let _isActive = (selectedFolderNodeInAssetTree, currentNode, editorState) =>
+    currentNode
+    |> OptionService.andThenWithDefault(
+         currentNode =>
+           NodeAssetService.isNodeEqualById(
+             ~sourceNode=selectedFolderNodeInAssetTree,
+             ~targetNode=currentNode,
+           ),
+         false,
+       );
 
   let handleToggleShowTreeChildren =
       (store, dispatchFunc, targetId, isShowChildren) => {
     let editorState = StateEditorService.getState();
 
-    AssetTreeUtils.setSpecificAssetTreeNodeIsShowChildren(
+    OperateTreeAssetEditorService.setNodeIsShowChildren(
       targetId,
       isShowChildren,
-      [|editorState |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot|],
+      editorState,
     )
-    |> ArrayService.unsafeGetFirst
-    |. TreeRootAssetEditorService.setAssetTreeRoot(editorState)
+    /* AssetTreeUtils.setSpecificAssetTreeNodeIsShowChildren(
+         targetId,
+         isShowChildren,
+         [|editorState |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot|],
+       )
+       |> ArrayService.unsafeGetFirst
+       |. TreeRootAssetEditorService.setAssetTreeRoot(editorState) */
     |> StateEditorService.setState;
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])))
     |> ignore;
   };
 
-  let _getNodeNameByType = ({nodeId, type_}, editorState) =>
-    switch (type_) {
-    | Folder =>
-      let {name}: folderResultType =
-        editorState
-        |> FolderNodeMapAssetEditorService.getFolderNodeMap
-        |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
-
-      name;
-    | type_ =>
-      ConsoleUtils.error(
-        LogUtils.buildErrorMessage(
-          ~description={j|unknown type: $type_|j},
-          ~reason="",
-          ~solution={j||j},
-          ~params={j||j},
-        ),
-        editorState,
-      );
-
-      "";
-    };
-
-  let _sortByName = (assetTreeArray, editorState) =>
-    assetTreeArray
-    |> Js.Array.filter(({type_}) => type_ === Folder)
+  let _sortByName = folderNodes =>
+    folderNodes
     |> Js.Array.sortInPlaceWith((node1, node2) =>
          Js.String.localeCompare(
-           _getNodeNameByType(node2, editorState) |> Js.String.charAt(0),
-           _getNodeNameByType(node1, editorState) |> Js.String.charAt(0),
+           FolderNodeAssetService.getNodeName(
+             FolderNodeAssetService.getNodeData(node2),
+           )
+           |> Js.String.charAt(0),
+           FolderNodeAssetService.getNodeName(
+             FolderNodeAssetService.getNodeData(node1),
+           )
+           |> Js.String.charAt(0),
          )
          |> NumberType.convertFloatToInt
        );
@@ -79,50 +60,75 @@ module Method = {
       (
         (store, dispatchFunc, dragImg),
         (onSelectFunc, onDropFunc),
-        assetTreeArray,
         editorState,
       ) => {
-    let rec _iterateAssetTreeArray = (assetTreeArray, editorState) =>
-      assetTreeArray
-      |> _sortByName(_, editorState)
-      |> Js.Array.map(({nodeId, type_, isShowChildren, children}) =>
-           switch (type_) {
-           | Folder =>
-             let {name}: folderResultType =
-               StateEditorService.getState()
-               |> FolderNodeMapAssetEditorService.getFolderNodeMap
-               |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+    let selectedFolderNodeInAssetTree =
+      TreeAssetEditorService.getSelectedFolderNodeInAssetTree(editorState);
+    let currentNode =
+      CurrentNodeAssetEditorService.getCurrentNode(editorState);
 
-             <AssetTreeNode
-               key=(StringService.intToString(nodeId))
-               id=nodeId
-               name
-               isSelected=(_isSelected(nodeId))
-               isActive=(_isActive())
-               dragImg
-               widget=(AssetUtils.getWidget())
-               icon="./public/img/package.png"
-               onSelect=(onSelectFunc(type_))
-               onDrop=onDropFunc
-               isWidget=AssetUtils.isWidget
-               isShowChildren
-               isHasChildren=(
-                 children
-                 |> Js.Array.filter(({type_}) => type_ === Folder)
-                 |> Js.Array.length >= 1
+    let rec _build =
+            (
+              (selectedFolderNodeInAssetTree, currentNode),
+              allFolderNodes,
+              (store, dispatchFunc, dragImg),
+              (onSelectFunc, onDropFunc),
+              editorState,
+            ) =>
+      allFolderNodes
+      |> _sortByName
+      |> Js.Array.map(folderNode => {
+           let nodeId = NodeAssetService.getNodeId(~node=folderNode);
+           let name =
+             FolderNodeAssetService.getNodeName(
+               FolderNodeAssetService.getNodeData(folderNode),
+             );
+
+           <AssetTreeNode
+             key=(StringService.intToString(nodeId))
+             id=nodeId
+             name
+             isSelected=(_isSelected(selectedFolderNodeInAssetTree, nodeId))
+             isActive=(
+               _isActive(
+                 selectedFolderNodeInAssetTree,
+                 currentNode,
+                 editorState,
                )
-               handleToggleShowTreeChildren=(
-                 handleToggleShowTreeChildren(store, dispatchFunc)
+             )
+             dragImg
+             widget=(AssetUtils.getWidget())
+             icon="./public/img/package.png"
+             onSelect=onSelectFunc
+             onDrop=onDropFunc
+             isWidget=AssetUtils.isWidget
+             isShowChildren=(
+               FolderNodeAssetService.getIsShowChildren(folderNode)
+             )
+             isHasChildren=(FolderNodeAssetService.hasChildren(folderNode))
+             handleToggleShowTreeChildren=(
+               handleToggleShowTreeChildren(store, dispatchFunc)
+             )
+             checkNodeRelation=OperateTreeAssetLogicService.checkNodeRelation
+             treeChildren=(
+               _build(
+                 (selectedFolderNodeInAssetTree, currentNode),
+                 FolderNodeAssetService.getChildrenNodes(folderNode),
+                 (store, dispatchFunc, dragImg),
+                 (onSelectFunc, onDropFunc),
+                 editorState,
                )
-               handleRelationError=AssetTreeUtils.isTreeNodeRelationError
-               treeChildren=(_iterateAssetTreeArray(children, editorState))
-             />;
+             )
+           />;
+         });
 
-           | _ => ReasonReact.null
-           }
-         );
-
-    _iterateAssetTreeArray(assetTreeArray, editorState);
+    _build(
+      (selectedFolderNodeInAssetTree, currentNode),
+      FolderNodeAssetEditorService.findAllFolderNodes(editorState),
+      (store, dispatchFunc, dragImg),
+      (onSelectFunc, onDropFunc),
+      editorState,
+    );
   };
 };
 
@@ -135,18 +141,15 @@ let render = ((store, dispatchFunc), dragImg, _self) => {
     (
       ReasonReact.array(
         editorState
-        |> AssetTreeUtils.buildAssetTreeArray
         |> Method.buildAssetTreeArray(
              (store, dispatchFunc, dragImg),
              (
-               AssetTreeUtils.enterFolder(dispatchFunc),
+               FolderNodeUtils.enterFolder(dispatchFunc),
                AssetDragNodeToFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
                  (store, dispatchFunc),
                  (),
                ),
              ),
-             _,
-             editorState,
            ),
       )
     )

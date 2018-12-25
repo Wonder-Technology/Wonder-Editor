@@ -4,7 +4,7 @@ open Js.Typed_array;
 
 let _disposeAssets = () =>
   StateLogicService.getAndSetStateToGetData(
-    RemoveWholeAssetTreeAssetLogicService.deepDisposeAssetTreeRoot,
+    DisposeTreeAssetLogicService.disposeTree,
   );
 
 let _readHeader = dataView => {
@@ -42,12 +42,15 @@ let _initAssetTreeRoot = () => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
-  let (assetTree, editorState) =
-    editorState |> AssetTreeUtils.initRootAssetTree(_, engineState);
+  /* let (assetTree, editorState) =
+     editorState |> AssetTreeUtils.initRootAssetTree(_, engineState); */
 
   editorState
-  |> TreeRootAssetEditorService.setAssetTreeRoot(assetTree)
+  |> TreeAssetEditorService.createTree
   |> StateEditorService.setState
+  /* editorState
+     |> TreeRootAssetEditorService.setAssetTreeRoot(assetTree)
+     |> StateEditorService.setState */
   |> ignore;
 
   engineState |> StateEngineService.setState |> ignore;
@@ -74,7 +77,7 @@ let _checkMaterial = (gameObjectMaterials, type_, (editorState, engineState)) =>
   gameObjectMaterials |> Js.Array.sortInPlace;
 
   let materialAssets =
-    MaterialNodeMapAssetEditorService.getMaterialComponentsByType(
+    MaterialNodeAssetEditorService.getMaterialComponentsByType(
       type_,
       editorState,
     );
@@ -113,7 +116,7 @@ let _checkMaterials = (where, gameObjects) =>
                   gameObjects,
                   engineState,
                 ),
-                AssetMaterialDataType.LightMaterial,
+                MaterialDataAssetType.LightMaterial,
                 (editorState, engineState),
               )
               && _checkMaterial(
@@ -121,7 +124,7 @@ let _checkMaterials = (where, gameObjects) =>
                      gameObjects,
                      engineState,
                    ),
-                   AssetMaterialDataType.BasicMaterial,
+                   MaterialDataAssetType.BasicMaterial,
                    (editorState, engineState),
                  )
             )
@@ -174,7 +177,7 @@ let _checkTextures = (where, gameObjects) =>
             gameObjectTextures |> Js.Array.sortInPlace;
 
             let textureAssets =
-              TextureNodeMapAssetEditorService.getTextureComponents(
+              TextureNodeAssetEditorService.getTextureComponents(
                 StateEditorService.getState(),
               );
 
@@ -369,7 +372,7 @@ let _readFile = (fileInfo: FileType.fileInfoType, resolve) => {
         name: fileInfo.name,
         type_: LoadAssetUtils.getUploadPackageType(fileInfo.name),
         result,
-      }: AssetNodeType.nodeResultType,
+      }: NodeAssetType.nodeResultType,
     )
   );
 
@@ -418,7 +421,7 @@ let importPackage = (dispatchFunc, event) => {
           ),
         )
         |> WonderBsMost.Most.flatMap(
-             (fileResult: AssetNodeType.nodeResultType) =>
+             (fileResult: NodeAssetType.nodeResultType) =>
              _import(fileResult.result)
            )
         |> WonderBsMost.Most.drain

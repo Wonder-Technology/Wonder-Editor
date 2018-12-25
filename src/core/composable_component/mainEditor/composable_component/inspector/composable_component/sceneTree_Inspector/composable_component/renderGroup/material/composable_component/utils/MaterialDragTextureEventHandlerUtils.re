@@ -32,14 +32,17 @@ let handleSelfLogic =
       handleSetMapFunc,
     ) => {
   StateEditorService.getState()
-  |> TextureNodeMapAssetEditorService.getTextureNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(dragedNodeId)
+  |> OperateTreeAssetEditorService.unsafeFindNodeById(dragedNodeId)
   |> (
-    ({textureComponent}) => {
+    /* ({textureComponent}: NodeAssetType.textureNodeData) => { */
+    textureNode => {
       let editorState = StateEditorService.getState();
       let gameObject =
         SceneEditorService.getCurrentSceneTreeNode(editorState);
       let engineState = StateEngineService.unsafeGetState();
+
+      let {textureComponent}: NodeAssetType.textureNodeData =
+        TextureNodeAssetService.getNodeData(textureNode);
 
       let engineState =
         switch (gameObject) {

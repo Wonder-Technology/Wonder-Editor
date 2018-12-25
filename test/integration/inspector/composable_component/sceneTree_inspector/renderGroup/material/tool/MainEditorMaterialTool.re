@@ -20,6 +20,6 @@ let changeMaterial =
     ),
   );
 
-let getDefaultBasicMaterialName = PrepareDefaultComponentUtils.getDefaultBasicMaterialName;
+let getDefaultBasicMaterialName = PrepareDefaultComponentLogicService.getDefaultBasicMaterialName;
 
-let getDefaultLightMaterialName = PrepareDefaultComponentUtils.getDefaultLightMaterialName;
+let getDefaultLightMaterialName = PrepareDefaultComponentLogicService.getDefaultLightMaterialName;

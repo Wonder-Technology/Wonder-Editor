@@ -40,8 +40,8 @@ module Extract = {
             |> ArrayService.push((
                  (sourceMaterial, materialType),
                  (
-                   MainEditorMaterialUtils.getName,
-                   MainEditorMaterialUtils.setName,
+                   NodeNameAssetLogicService.getMaterialNodeName,
+                   OperateMaterialLogicService.setName,
                  ),
                )),
             hasExtractedMaterialAssetMap
@@ -143,7 +143,11 @@ module Extract = {
                  )
                  |> ImageUtils.getImageName,
                  (
-                   OperateTextureLogicService.getTextureBaseNameByTextureComponent,
+                   (texture, engineState) =>
+                     OperateTextureLogicService.getName(
+                       ~texture,
+                       ~engineState,
+                     ),
                    BasicSourceTextureEngineService.setBasicSourceTextureName,
                  ),
                )),
@@ -211,14 +215,18 @@ module Extract = {
   };
 
   let _buildMaterialMap = (materialType, editorState) =>
-    MaterialNodeMapAssetEditorService.getValidValues(editorState)
-    |> SparseMapService.filter(({type_}: AssetNodeType.materialResultType) =>
-         type_ === materialType
-       )
-    |> SparseMapService.map(
-         ({materialComponent}: AssetNodeType.materialResultType) =>
-         materialComponent
-       );
+    MaterialNodeAssetEditorService.getMaterialComponentsByType(
+      materialType,
+      editorState,
+    );
+  /* MaterialNodeMapAssetEditorService.getValidValues(editorState)
+     |> SparseMapService.filter(({type_}: NodeAssetType.materialResultType) =>
+          type_ === materialType
+        )
+     |> SparseMapService.map(
+          ({materialComponent}: NodeAssetType.materialResultType) =>
+          materialComponent
+        ); */
 
   let _prepareData = (editorState, engineState) => {
     let defaultMaterialData =
@@ -228,9 +236,9 @@ module Extract = {
       );
 
     let basicMaterialMap =
-      _buildMaterialMap(AssetMaterialDataType.BasicMaterial, editorState);
+      _buildMaterialMap(MaterialDataAssetType.BasicMaterial, editorState);
     let lightMaterialMap =
-      _buildMaterialMap(AssetMaterialDataType.LightMaterial, editorState);
+      _buildMaterialMap(MaterialDataAssetType.LightMaterial, editorState);
 
     let basicMaterialDataMap =
       RelateGameObjectAndMaterialAssetUtils.getBasicMaterialDataMap(
@@ -245,7 +253,7 @@ module Extract = {
       );
 
     let textureAssetDataMap =
-      TextureNodeMapAssetEditorService.getTextureComponents(editorState)
+      TextureNodeAssetEditorService.getTextureComponents(editorState)
       |> SparseMapService.map(textureComponent =>
            (
              textureComponent,
@@ -380,37 +388,50 @@ module Extract = {
 };
 
 module AssetTree = {
-  let _buildFolderNode =
-      (
-        siblingFolderDataArr,
-        folderName,
-        parentFolderNodeId,
-        (editorState, engineState),
-      ) =>
-    switch (
-      siblingFolderDataArr
-      |> Js.Array.find(((name, nodeId)) => name === folderName)
-    ) {
-    | Some((_, nodeId)) => (editorState, nodeId)
-    | None =>
-      let (editorState, newIndex) =
-        AssetIdUtils.generateAssetId(editorState);
+  let _findTargetFolderChildNodeByName =
+      (folderNode, targetFolderChildNodeName) =>
+    FolderNodeAssetService.getChildren(folderNode)
+    |> UIStateAssetService.get
+    |> Js.Array.find(child =>
+         FolderNodeAssetService.getNodeName(
+           FolderNodeAssetService.getNodeData(child),
+         )
+         === targetFolderChildNodeName
+       );
 
-      let editorState =
-        AddFolderNodeUtils.addFolderNodeToAssetTree(
-          folderName,
-          (parentFolderNodeId, newIndex),
-          (editorState, engineState),
+  let _buildFolderNode =
+      (folderName, selectedFolderNodeInAssetTree, editorState) =>
+    switch (
+      _findTargetFolderChildNodeByName(
+        selectedFolderNodeInAssetTree,
+        folderName,
+      )
+    ) {
+    | Some(node) => (editorState, node)
+    | None =>
+      let (editorState, newNodeId) =
+        IdAssetEditorService.generateNodeId(editorState);
+      let newNode =
+        FolderNodeAssetService.buildNode(
+          ~nodeId=newNodeId,
+          ~name=folderName,
+          (),
         );
 
-      (editorState, newIndex);
+      let editorState =
+        FolderNodeAssetEditorService.addFolderNodeToAssetTree(
+          selectedFolderNodeInAssetTree,
+          newNode,
+          editorState,
+        );
+
+      (editorState, newNode);
     };
 
   let _addMaterialNodeToAssetTree =
       (
         extractedMaterialAssetDataArr,
-        siblingFolderDataArr,
-        parentFolderNodeId,
+        selectedFolderNodeInAssetTree,
         (editorState, engineState),
       ) =>
     extractedMaterialAssetDataArr |> Js.Array.length === 0 ?
@@ -418,12 +439,11 @@ module AssetTree = {
       {
         let folderName = "Materials";
 
-        let (editorState, folderNodeId) =
+        let (editorState, folderNode) =
           _buildFolderNode(
-            siblingFolderDataArr,
             folderName,
-            parentFolderNodeId,
-            (editorState, engineState),
+            selectedFolderNodeInAssetTree,
+            editorState,
           );
 
         extractedMaterialAssetDataArr
@@ -433,28 +453,31 @@ module AssetTree = {
                ((material, materialType), (getNameFunc, setNameFunc)),
              ) => {
                let materialName =
-                 getNameFunc(material, materialType, engineState)
-                 |. IterateAssetTreeAssetEditorService.getUniqueTreeNodeName(
-                      AssetNodeType.Material,
-                      folderNodeId |. Some,
-                      (editorState, engineState),
+                 getNameFunc(~material, ~type_=materialType, ~engineState)
+                 |. OperateTreeAssetLogicService.getUniqueNodeName(
+                      folderNode,
+                      engineState,
                     );
 
                let engineState =
                  setNameFunc(
-                   material,
-                   materialType,
-                   materialName,
-                   engineState,
+                   ~material,
+                   ~type_=materialType,
+                   ~name=materialName,
+                   ~engineState,
                  );
 
-               let (editorState, materialNodeId) =
-                 AssetIdUtils.generateAssetId(editorState);
+               let (editorState, newNodeId) =
+                 IdAssetEditorService.generateNodeId(editorState);
 
                let editorState =
-                 AddMaterialNodeUtils.addMaterialNodeToAssetTree(
-                   material,
-                   (folderNodeId, materialNodeId),
+                 MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
+                   folderNode,
+                   MaterialNodeAssetService.buildNode(
+                     ~nodeId=newNodeId,
+                     ~type_=MaterialDataAssetType.LightMaterial,
+                     ~materialComponent=material,
+                   ),
                    editorState,
                  );
 
@@ -467,8 +490,7 @@ module AssetTree = {
   let _addTextureNodeToAssetTree =
       (
         extractedTextureAssetDataArr,
-        siblingFolderDataArr,
-        parentFolderNodeId,
+        selectedFolderNodeInAssetTree,
         (editorState, engineState),
       ) =>
     extractedTextureAssetDataArr |> Js.Array.length === 0 ?
@@ -476,12 +498,11 @@ module AssetTree = {
       {
         let folderName = "Textures";
 
-        let (editorState, folderNodeId) =
+        let (editorState, folderNode) =
           _buildFolderNode(
-            siblingFolderDataArr,
             folderName,
-            parentFolderNodeId,
-            (editorState, engineState),
+            selectedFolderNodeInAssetTree,
+            editorState,
           );
 
         extractedTextureAssetDataArr
@@ -497,17 +518,16 @@ module AssetTree = {
              ) => {
                let textureName =
                  getTextureNameFunc(texture, engineState)
-                 |. IterateAssetTreeAssetEditorService.getUniqueTreeNodeName(
-                      AssetNodeType.Texture,
-                      folderNodeId |. Some,
-                      (editorState, engineState),
+                 |. OperateTreeAssetLogicService.getUniqueNodeName(
+                      folderNode,
+                      engineState,
                     );
 
                let engineState =
                  setTextureNameFunc(textureName, texture, engineState);
 
-               let (imageNodeId, editorState) =
-                 AddTextureNodeUtils.addImageNodeByUint8Array(
+               let (editorState, imageDataIndex) =
+                 ImageDataMapAssetEditorService.addImageNodeByUint8Array(
                    imageUint8Array,
                    imageName,
                    mimeType,
@@ -515,12 +535,16 @@ module AssetTree = {
                  );
 
                let (editorState, textureNodeId) =
-                 AssetIdUtils.generateAssetId(editorState);
+                 IdAssetEditorService.generateNodeId(editorState);
 
                let editorState =
-                 AddTextureNodeUtils.addTextureNodeToAssetTree(
-                   texture,
-                   (folderNodeId, textureNodeId, imageNodeId),
+                 TextureNodeAssetEditorService.addTextureNodeToAssetTree(
+                   folderNode,
+                   TextureNodeAssetService.buildNode(
+                     ~nodeId=textureNodeId,
+                     ~textureComponent=texture,
+                     ~imageDataIndex,
+                   ),
                    editorState,
                  );
 
@@ -536,25 +560,17 @@ module AssetTree = {
         extractedTextureAssetDataArr,
         (editorState, engineState),
       ) => {
-    let targetTreeNodeId = editorState |> AssetTreeUtils.getTargetTreeNodeId;
-
-    let siblingFolderDataArr =
-      IterateAssetTreeAssetEditorService.getChildrenNameAndIdArr(
-        targetTreeNodeId,
-        AssetNodeType.Folder,
-        (editorState, engineState),
-      );
+    let selectedFolderNodeInAssetTree =
+      editorState |> TreeAssetEditorService.getSelectedFolderNodeInAssetTree;
 
     (editorState, engineState)
     |> _addMaterialNodeToAssetTree(
          extractedMaterialAssetDataArr,
-         siblingFolderDataArr,
-         targetTreeNodeId,
+         selectedFolderNodeInAssetTree,
        )
     |> _addTextureNodeToAssetTree(
          extractedTextureAssetDataArr,
-         siblingFolderDataArr,
-         targetTreeNodeId,
+         selectedFolderNodeInAssetTree,
        );
   };
 };

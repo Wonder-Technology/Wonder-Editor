@@ -413,16 +413,17 @@ let _ =
                 engineState,
               );
 
-            let {materialComponent}: AssetNodeType.materialResultType =
-              StateEditorService.getState()
-              |> MaterialNodeMapAssetEditorService.unsafeGetResult(
-                   addedMaterialNodeId,
-                 );
+            let materialComponent =
+              MainEditorAssetMaterialNodeTool.getMaterialComponent(
+                ~nodeId=addedMaterialNodeId,
+                (),
+              );
+
             MainEditorMaterialTool.changeMaterial(
               ~sourceMaterial,
-              ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+              ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
               ~targetMaterial=materialComponent,
-              ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+              ~targetMaterialType=MaterialDataAssetType.LightMaterial,
               ~gameObject,
               ~materialNodeId=Some(addedMaterialNodeId),
               (),
@@ -495,17 +496,17 @@ let _ =
                 engineState,
               );
 
-            let {materialComponent}: AssetNodeType.materialResultType =
-              StateEditorService.getState()
-              |> MaterialNodeMapAssetEditorService.unsafeGetResult(
-                   addedMaterialNodeId,
-                 );
+            let materialComponent =
+              MainEditorAssetMaterialNodeTool.getMaterialComponent(
+                ~nodeId=addedMaterialNodeId,
+                (),
+              );
 
             MainEditorMaterialTool.changeMaterial(
               ~sourceMaterial,
-              ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+              ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
               ~targetMaterial=materialComponent,
-              ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+              ~targetMaterialType=MaterialDataAssetType.LightMaterial,
               ~gameObject,
               ~materialNodeId=Some(addedMaterialNodeId),
               (),
@@ -530,9 +531,9 @@ let _ =
 
                   MainEditorMaterialTool.changeMaterial(
                     ~sourceMaterial,
-                    ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                    ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                     ~targetMaterial=materialComponent,
-                    ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                    ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                     ~gameObject,
                     ~materialNodeId=Some(materialNodeId),
                     (),
@@ -627,9 +628,9 @@ let _ =
 
                      MainEditorMaterialTool.changeMaterial(
                        ~sourceMaterial=sourceMaterial1,
-                       ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                       ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                        ~targetMaterial=material1,
-                       ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                       ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                        ~gameObject=gameObject1,
                        ~materialNodeId=Some(addedMaterialNodeId1),
                        (),
@@ -733,9 +734,9 @@ let _ =
 
                           MainEditorMaterialTool.changeMaterial(
                             ~sourceMaterial=sourceMaterial1,
-                            ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                            ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                             ~targetMaterial=material1,
-                            ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                            ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                             ~gameObject=gameObject1,
                             ~materialNodeId=Some(addedMaterialNodeId1),
                             (),
@@ -752,9 +753,9 @@ let _ =
 
                           MainEditorMaterialTool.changeMaterial(
                             ~sourceMaterial=sourceMaterial2,
-                            ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                            ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                             ~targetMaterial=material2,
-                            ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                            ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                             ~gameObject=gameObject2,
                             ~materialNodeId=Some(addedMaterialNodeId2),
                             (),
@@ -835,8 +836,8 @@ let _ =
 
                 MaterialInspectorTool.changeMaterialType(
                   ~material=material2,
-                  ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
-                  ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
+                  ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
+                  ~targetMaterialType=MaterialDataAssetType.BasicMaterial,
                   ~materialNodeId=addedMaterialNodeId2,
                   (),
                 );
@@ -872,9 +873,9 @@ let _ =
 
                      MainEditorMaterialTool.changeMaterial(
                        ~sourceMaterial=sourceMaterial1,
-                       ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                       ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                        ~targetMaterial=material1,
-                       ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                       ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                        ~gameObject=gameObject1,
                        ~materialNodeId=Some(addedMaterialNodeId1),
                        (),
@@ -891,9 +892,9 @@ let _ =
 
                      MainEditorMaterialTool.changeMaterial(
                        ~sourceMaterial=sourceMaterial2,
-                       ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                       ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                        ~targetMaterial=material2,
-                       ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
+                       ~targetMaterialType=MaterialDataAssetType.BasicMaterial,
                        ~gameObject=gameObject2,
                        ~materialNodeId=Some(addedMaterialNodeId2),
                        (),
@@ -1064,8 +1065,8 @@ let _ =
                  ImportPackageTool.testImportPackage(
                    ~testFunc=
                      () => {
-                       let (wdbNodeId, _) =
-                         ImportPackageTool.getImportedWDBAssetData()
+                       let wdbNodeId =
+                         ImportPackageTool.getImportedWDBAssetNodeId()
                          |> ArrayService.unsafeGetFirst;
 
                        MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
@@ -1125,12 +1126,12 @@ let _ =
                           ImportPackageTool.testImportPackage(
                             ~testFunc=
                               () => {
-                                let (wdbNodeId1, _) =
-                                  ImportPackageTool.getImportedWDBAssetData()
+                                let wdbNodeId1 =
+                                  ImportPackageTool.getImportedWDBAssetNodeId()
                                   |> ArrayService.unsafeGetFirst;
 
-                                let (wdbNodeId2, _) =
-                                  ImportPackageTool.getImportedWDBAssetData()
+                                let wdbNodeId2 =
+                                  ImportPackageTool.getImportedWDBAssetNodeId()
                                   |> ArrayService.unsafeGetNth(1);
 
                                 MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
@@ -1337,9 +1338,9 @@ let _ =
 
                     MainEditorMaterialTool.changeMaterial(
                       ~sourceMaterial,
-                      ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                      ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                       ~targetMaterial=materialComponent,
-                      ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                      ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                       ~gameObject,
                       ~materialNodeId=Some(materialNodeId),
                       (),
@@ -1352,16 +1353,16 @@ let _ =
 
                     MaterialInspectorTool.changeMaterialType(
                       ~material=materialComponent,
-                      ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
-                      ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
+                      ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
+                      ~targetMaterialType=MaterialDataAssetType.BasicMaterial,
                       ~materialNodeId,
                       (),
                     );
 
                     MaterialInspectorTool.changeMaterialType(
                       ~material=materialComponent,
-                      ~sourceMaterialType=AssetMaterialDataType.BasicMaterial,
-                      ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                      ~sourceMaterialType=MaterialDataAssetType.BasicMaterial,
+                      ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                       ~materialNodeId,
                       (),
                     );
@@ -1538,10 +1539,10 @@ let _ =
                            LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
                            editorState,
                          ),
-                         MaterialNodeMapAssetEditorService.getValidValues(
+                         MaterialNodeAssetEditorService.findAllMaterialNodes(
                            editorState,
                          )
-                         |> SparseMapService.length,
+                         |> Js.Array.length,
                        )
                        |> expect == (true, 1)
                        |> resolve;
@@ -1894,9 +1895,9 @@ let _ =
                    MainEditorMaterialTool.changeMaterial(
                      ~sourceMaterial=
                        GameObjectTool.getCurrentGameObjectLightMaterial(),
-                     ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                     ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                      ~targetMaterial=materialComponent1,
-                     ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                     ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                      ~gameObject=
                        GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                      ~materialNodeId=Some(addedMaterialNodeId1),
@@ -2004,9 +2005,9 @@ let _ =
                             engineState,
                           );
                         let wdbMaterialNodeId =
-                          MainEditorAssetMaterialNodeTool.findNodeIdByMaterialComponent(
+                          MainEditorAssetMaterialNodeTool.findNodeIdByMaterialComponentAndType(
                             wdbMaterial,
-                            AssetMaterialDataType.LightMaterial,
+                            MaterialDataAssetType.LightMaterial,
                             editorState,
                           );
 
@@ -2022,9 +2023,9 @@ let _ =
                         MainEditorMaterialTool.changeMaterial(
                           ~sourceMaterial=
                             GameObjectTool.getCurrentGameObjectLightMaterial(),
-                          ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                          ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                           ~targetMaterial=wdbMaterial,
-                          ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                          ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                           ~gameObject=
                             GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                           ~materialNodeId=wdbMaterialNodeId,

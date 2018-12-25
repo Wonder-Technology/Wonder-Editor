@@ -68,16 +68,17 @@ let _ =
 
           MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
-          let {materialComponent}: AssetNodeType.materialResultType =
-            StateEditorService.getState()
-            |> MaterialNodeMapAssetEditorService.unsafeGetResult(
-                 addedMaterialNodeId,
-               );
+          let materialComponent =
+            MainEditorAssetMaterialNodeTool.getMaterialComponent(
+              ~nodeId=addedMaterialNodeId,
+              (),
+            );
+
           MainEditorMaterialTool.changeMaterial(
             ~sourceMaterial=sourceMaterial1,
-            ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+            ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
             ~targetMaterial=materialComponent,
-            ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+            ~targetMaterialType=MaterialDataAssetType.LightMaterial,
             ~gameObject=gameObject1,
             ~materialNodeId=Some(addedMaterialNodeId),
             (),
@@ -113,16 +114,17 @@ let _ =
 
             MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
-            let {materialComponent}: AssetNodeType.materialResultType =
-              StateEditorService.getState()
-              |> MaterialNodeMapAssetEditorService.unsafeGetResult(
-                   addedMaterialNodeId,
-                 );
+            let materialComponent =
+              MainEditorAssetMaterialNodeTool.getMaterialComponent(
+                ~nodeId=addedMaterialNodeId,
+                (),
+              );
+
             MainEditorMaterialTool.changeMaterial(
               ~sourceMaterial=sourceMaterial1,
-              ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+              ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
               ~targetMaterial=materialComponent,
-              ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+              ~targetMaterialType=MaterialDataAssetType.LightMaterial,
               ~gameObject=gameObject1,
               ~materialNodeId=Some(addedMaterialNodeId),
               (),
@@ -156,16 +158,17 @@ let _ =
 
             MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
-            let {materialComponent}: AssetNodeType.materialResultType =
-              StateEditorService.getState()
-              |> MaterialNodeMapAssetEditorService.unsafeGetResult(
-                   addedMaterialNodeId,
-                 );
+            let materialComponent =
+              MainEditorAssetMaterialNodeTool.getMaterialComponent(
+                ~nodeId=addedMaterialNodeId,
+                (),
+              );
+
             MainEditorMaterialTool.changeMaterial(
               ~sourceMaterial=sourceMaterial1,
-              ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+              ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
               ~targetMaterial=materialComponent,
-              ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+              ~targetMaterialType=MaterialDataAssetType.LightMaterial,
               ~gameObject=gameObject1,
               ~materialNodeId=Some(addedMaterialNodeId),
               (),

@@ -26,6 +26,7 @@ let _ =
       test("if draged and target gameObject is the same one, return true ", () =>
         SceneTreeUtils.isGameObjectRelationError(1, 1)
         |> StateLogicService.getStateToGetData
+        |> Result.RelationResult.isSuccess
         |> expect == true
       );
 
@@ -47,6 +48,7 @@ let _ =
             gameObject1,
             (editorState, engineState),
           )
+          |> Result.RelationResult.isSuccess
           |> expect == true;
         });
 
@@ -69,6 +71,7 @@ let _ =
               gameObject2,
               (editorState, engineState),
             )
+            |> Result.RelationResult.isSuccess
             |> expect == true;
           })
         );

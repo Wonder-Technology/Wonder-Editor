@@ -1,32 +1,60 @@
-let _increaseIndex = editorState => {
-  let editorState = IndexAssetEditorService.increaseIndex(editorState);
-  let index = editorState |> IndexAssetEditorService.getIndex;
-  (index, editorState);
+let findNodeByName = (targetNodeName, (editorState, engineState)) => {
+  let predNodeFunc = node =>
+    NodeNameAssetLogicService.isTargetNameNode(
+      ~node,
+      ~name=targetNodeName,
+      ~engineState,
+    );
+
+  IterateTreeAssetService.findOne(
+    ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
+    ~predTextureNodeFunc=predNodeFunc,
+    ~predMaterialNodeFunc=predNodeFunc,
+    ~predWDBNodeFunc=predNodeFunc,
+    ~predFolderNodeFunc=predNodeFunc,
+    (),
+  );
 };
 
+let findNodeIdByName = (targetNodeName, (editorState, engineState)) =>
+  findNodeByName(targetNodeName, (editorState, engineState))
+  |> Js.Option.map((. node) => NodeAssetService.getNodeId(~node));
+
+let findNodeParent = (targetNode, editorState) =>
+  IterateTreeAssetService.findOne(
+    ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
+    ~predFolderNodeFunc=
+      node =>
+        MainEditorAssetFolderNodeTool.findChild(node, targetNode)
+        |> Js.Option.isSome,
+    (),
+  );
+
+let findNodeParentId = (targetNode, editorState) =>
+  findNodeParent(targetNode, editorState)
+  |> Js.Option.map((. node) => NodeAssetService.getNodeId(~node));
+
+let getRootNodeId = editorState =>
+  RootTreeAssetEditorService.getRootNode(editorState)
+  |> NodeAssetService.getNodeId(~node=_);
+
 module BuildAssetTree = {
+  let _buildRootNode = rootNodeId =>
+    FolderNodeAssetService.buildNode(
+      ~nodeId=rootNodeId,
+      ~name=RootTreeAssetService.getAssetTreeRootName(),
+      (),
+    );
+
   let buildEmptyAssetTree = () => {
-    let (rootId, editorState) =
-      StateEditorService.getState() |> _increaseIndex;
-    let engineState = StateEngineService.unsafeGetState();
+    let editorState = StateEditorService.getState();
 
-    editorState
-    |> TreeRootAssetEditorService.setAssetTreeRoot({
-         nodeId: rootId,
-         type_: Folder,
-         children: [||],
-         isShowChildren: true,
-       })
-    |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
-         rootId,
-         None,
-         _,
-         engineState,
-       )
-    |> StateEditorService.setState
-    |> ignore;
+    let editorState = TreeAssetEditorService.createTree(editorState);
 
-    rootId;
+    editorState |> StateEditorService.setState |> ignore;
+
+    RootTreeAssetEditorService.getRootNode(editorState)
+    |> NodeAssetService.getNodeId(~node=_);
   };
 
   module Texture = {
@@ -36,101 +64,48 @@ module BuildAssetTree = {
     };
 
     let buildOneTextureAssetTree = () => {
-      let (rootId, editorState) =
-        StateEditorService.getState() |> _increaseIndex;
+      let rootId = buildEmptyAssetTree();
+
+      let editorState = StateEditorService.getState();
       let engineState = StateEngineService.unsafeGetState();
 
-      let (id1, editorState) = editorState |> _increaseIndex;
+      let (editorState, id1) =
+        IdAssetEditorService.generateNodeId(editorState);
 
-      editorState
-      |> TreeRootAssetEditorService.setAssetTreeRoot({
-           nodeId: rootId,
-           type_: Folder,
-           isShowChildren: true,
-           children: [||],
-         })
-      |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
-           rootId,
-           None,
-           _,
-           engineState,
-         )
-      |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
-           id1,
-           rootId |. Some,
-           _,
-           engineState,
-         )
-      |> MainEditorAssetTreeNodeTool.addTextureIntoNodeMap(
+      (editorState, engineState)
+      |> MainEditorAssetTreeNodeTool.insertTextureNode(
            id1,
            rootId,
            "texture1",
          )
-      |> TreeRootAssetEditorService.setAssetTreeRoot({
-           nodeId: rootId,
-           type_: Folder,
-           isShowChildren: true,
-           children: [|
-             {
-               nodeId: id1,
-               type_: Texture,
-               isShowChildren: true,
-               children: [||],
-             },
-           |],
-         })
-      |> StateEditorService.setState
-      |> ignore;
+      |> StateLogicService.setState;
 
       {root: rootId, textureNodeIdArr: [|id1|]};
     };
 
     let buildTwoTextureAssetTree = () => {
-      let (rootId, editorState) =
-        StateEditorService.getState() |> _increaseIndex;
+      let rootId = buildEmptyAssetTree();
+
+      let editorState = StateEditorService.getState();
       let engineState = StateEngineService.unsafeGetState();
 
-      let (id1, editorState) = editorState |> _increaseIndex;
-      let (id2, editorState) = editorState |> _increaseIndex;
+      let (editorState, id1) =
+        IdAssetEditorService.generateNodeId(editorState);
+      let (editorState, id2) =
+        IdAssetEditorService.generateNodeId(editorState);
 
-      editorState
-      |> TreeRootAssetEditorService.setAssetTreeRoot({
-           nodeId: rootId,
-           type_: Folder,
-           isShowChildren: true,
-           children: [||],
-         })
-      |> MainEditorAssetTreeNodeTool.addTextureIntoNodeMap(
+      (editorState, engineState)
+      |> MainEditorAssetTreeNodeTool.insertTextureNode(
            id1,
            rootId,
            "texture1",
          )
-      |> MainEditorAssetTreeNodeTool.addTextureIntoNodeMap(
+      |> MainEditorAssetTreeNodeTool.insertTextureNode(
            id2,
            rootId,
            "texture2",
          )
-      |> TreeRootAssetEditorService.setAssetTreeRoot({
-           nodeId: rootId,
-           type_: Folder,
-           isShowChildren: true,
-           children: [|
-             {
-               nodeId: id1,
-               type_: Texture,
-               isShowChildren: true,
-               children: [||],
-             },
-             {
-               nodeId: id2,
-               type_: Texture,
-               isShowChildren: true,
-               children: [||],
-             },
-           |],
-         })
-      |> StateEditorService.setState
-      |> ignore;
+      |> StateLogicService.setState;
 
       {root: rootId, textureNodeIdArr: [|id1, id2|]};
     };
@@ -149,11 +124,13 @@ module BuildAssetTree = {
     };
 
     let buildOneMaterialAssetTree = () => {
-      let (rootId, editorState) =
-        StateEditorService.getState() |> _increaseIndex;
+      let rootId = buildEmptyAssetTree();
+
+      let editorState = StateEditorService.getState();
       let engineState = StateEngineService.unsafeGetState();
 
-      let (id1, editorState) = editorState |> _increaseIndex;
+      let (editorState, id1) =
+        IdAssetEditorService.generateNodeId(editorState);
 
       let (newMaterial, engineState) =
         OperateLightMaterialLogicService.createLightMaterialAndSetName(
@@ -161,39 +138,13 @@ module BuildAssetTree = {
           engineState,
         );
 
-      editorState
-      |> TreeRootAssetEditorService.setAssetTreeRoot({
-           nodeId: rootId,
-           type_: Folder,
-           isShowChildren: true,
-           children: [||],
-         })
-      |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
-           rootId,
-           None,
-           _,
-           engineState,
-         )
-      |> MainEditorAssetTreeNodeTool.addMaterialIntoNodeMap(
+      (editorState, engineState)
+      |> MainEditorAssetTreeNodeTool.insertMaterialNode(
            id1,
-           rootId |. Some,
+           rootId,
            newMaterial,
          )
-      |> TreeRootAssetEditorService.setAssetTreeRoot({
-           nodeId: rootId,
-           type_: Folder,
-           isShowChildren: true,
-           children: [|
-             {
-               nodeId: id1,
-               type_: Material,
-               isShowChildren: true,
-               children: [||],
-             },
-           |],
-         })
-      |> StateEditorService.setState
-      |> ignore;
+      |> StateLogicService.setState;
 
       {root: rootId, materialNodeIdArr: [|id1|]};
     };
@@ -216,104 +167,36 @@ module BuildAssetTree = {
       };
 
       let buildOneFolderAssetTree = () => {
-        let (rootId, editorState) =
-          StateEditorService.getState() |> _increaseIndex;
+        let rootId = buildEmptyAssetTree();
+
+        let editorState = StateEditorService.getState();
         let engineState = StateEngineService.unsafeGetState();
 
-        let (id1, editorState) = editorState |> _increaseIndex;
+        let (editorState, id1) =
+          IdAssetEditorService.generateNodeId(editorState);
 
-        editorState
-        |> TreeRootAssetEditorService.setAssetTreeRoot({
-             nodeId: rootId,
-             type_: Folder,
-             isShowChildren: true,
-             children: [||],
-           })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
-             rootId,
-             None,
-             _,
-             engineState,
-           )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
-             id1,
-             rootId |. Some,
-             _,
-             engineState,
-           )
-        |> TreeRootAssetEditorService.setAssetTreeRoot({
-             nodeId: rootId,
-             type_: Folder,
-             isShowChildren: true,
-             children: [|
-               {
-                 nodeId: id1,
-                 type_: Folder,
-                 isShowChildren: true,
-                 children: [||],
-               },
-             |],
-           })
-        |> StateEditorService.setState
-        |> ignore;
+        (editorState, engineState)
+        |> MainEditorAssetTreeNodeTool.insertFolderNode(id1, rootId)
+        |> StateLogicService.setState;
 
         {root: rootId, folderNodeIdArr: [|id1|]};
       };
 
       let buildTwoFolderAssetTree = () => {
-        let (rootId, editorState) =
-          StateEditorService.getState() |> _increaseIndex;
+        let rootId = buildEmptyAssetTree();
+
+        let editorState = StateEditorService.getState();
         let engineState = StateEngineService.unsafeGetState();
 
-        let (id1, editorState) = editorState |> _increaseIndex;
-        let (id2, editorState) = editorState |> _increaseIndex;
+        let (editorState, id1) =
+          IdAssetEditorService.generateNodeId(editorState);
+        let (editorState, id2) =
+          IdAssetEditorService.generateNodeId(editorState);
 
-        editorState
-        |> TreeRootAssetEditorService.setAssetTreeRoot({
-             nodeId: rootId,
-             type_: Folder,
-             isShowChildren: true,
-             children: [||],
-           })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
-             rootId,
-             None,
-             _,
-             engineState,
-           )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
-             id1,
-             rootId |. Some,
-             _,
-             engineState,
-           )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
-             id2,
-             rootId |. Some,
-             _,
-             engineState,
-           )
-        |> TreeRootAssetEditorService.setAssetTreeRoot({
-             nodeId: rootId,
-             type_: Folder,
-             isShowChildren: true,
-             children: [|
-               {
-                 nodeId: id1,
-                 type_: Folder,
-                 isShowChildren: true,
-                 children: [||],
-               },
-               {
-                 nodeId: id2,
-                 type_: Folder,
-                 isShowChildren: true,
-                 children: [||],
-               },
-             |],
-           })
-        |> StateEditorService.setState
-        |> ignore;
+        (editorState, engineState)
+        |> MainEditorAssetTreeNodeTool.insertFolderNode(id1, rootId)
+        |> MainEditorAssetTreeNodeTool.insertFolderNode(id2, rootId)
+        |> StateLogicService.setState;
 
         {root: rootId, folderNodeIdArr: [|id1, id2|]};
       };
@@ -335,105 +218,26 @@ module BuildAssetTree = {
       };
 
       let buildFourFolderAssetTree = () => {
-        let (rootId, editorState) =
-          StateEditorService.getState() |> _increaseIndex;
+        let rootId = buildEmptyAssetTree();
+
+        let editorState = StateEditorService.getState();
         let engineState = StateEngineService.unsafeGetState();
 
-        let (id1, editorState) = editorState |> _increaseIndex;
-        let (id2, editorState) = editorState |> _increaseIndex;
-        let (id3, editorState) = editorState |> _increaseIndex;
-        let (id4, editorState) = editorState |> _increaseIndex;
+        let (editorState, id1) =
+          IdAssetEditorService.generateNodeId(editorState);
+        let (editorState, id2) =
+          IdAssetEditorService.generateNodeId(editorState);
+        let (editorState, id3) =
+          IdAssetEditorService.generateNodeId(editorState);
+        let (editorState, id4) =
+          IdAssetEditorService.generateNodeId(editorState);
 
-        editorState
-        |> TreeRootAssetEditorService.setAssetTreeRoot({
-             nodeId: rootId,
-             type_: Folder,
-             isShowChildren: true,
-             children: [||],
-           })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
-             rootId,
-             None,
-             _,
-             engineState,
-           )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
-             id1,
-             rootId |. Some,
-             _,
-             engineState,
-           )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
-             id2,
-             rootId |. Some,
-             _,
-             engineState,
-           )
-        |> TreeRootAssetEditorService.setAssetTreeRoot({
-             nodeId: rootId,
-             type_: Folder,
-             isShowChildren: true,
-             children: [|
-               {
-                 nodeId: id1,
-                 type_: Folder,
-                 isShowChildren: true,
-                 children: [||],
-               },
-               {
-                 nodeId: id2,
-                 type_: Folder,
-                 isShowChildren: true,
-                 children: [||],
-               },
-             |],
-           })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
-             id3,
-             id2 |. Some,
-             _,
-             engineState,
-           )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
-             id4,
-             id2 |. Some,
-             _,
-             engineState,
-           )
-        |> TreeRootAssetEditorService.setAssetTreeRoot({
-             nodeId: rootId,
-             type_: Folder,
-             isShowChildren: true,
-             children: [|
-               {
-                 nodeId: id1,
-                 type_: Folder,
-                 isShowChildren: true,
-                 children: [||],
-               },
-               {
-                 nodeId: id2,
-                 type_: Folder,
-                 isShowChildren: true,
-                 children: [|
-                   {
-                     nodeId: id3,
-                     type_: Folder,
-                     isShowChildren: true,
-                     children: [||],
-                   },
-                   {
-                     nodeId: id4,
-                     type_: Folder,
-                     isShowChildren: true,
-                     children: [||],
-                   },
-                 |],
-               },
-             |],
-           })
-        |> StateEditorService.setState
-        |> ignore;
+        (editorState, engineState)
+        |> MainEditorAssetTreeNodeTool.insertFolderNode(id1, rootId)
+        |> MainEditorAssetTreeNodeTool.insertFolderNode(id2, rootId)
+        |> MainEditorAssetTreeNodeTool.insertFolderNode(id3, id2)
+        |> MainEditorAssetTreeNodeTool.insertFolderNode(id4, id2)
+        |> StateLogicService.setState;
 
         {
           root: rootId,
@@ -473,17 +277,25 @@ module BuildAssetTree = {
       };
 
       let buildFolderAndTextureAndMaterialAssetTree = () => {
-        let (rootId, editorState) =
-          StateEditorService.getState() |> _increaseIndex;
+        let rootId = buildEmptyAssetTree();
+
+        let editorState = StateEditorService.getState();
         let engineState = StateEngineService.unsafeGetState();
 
-        let (id1, editorState) = editorState |> _increaseIndex;
-        let (id2, editorState) = editorState |> _increaseIndex;
-        let (id3, editorState) = editorState |> _increaseIndex;
-        let (id4, editorState) = editorState |> _increaseIndex;
-        let (id5, editorState) = editorState |> _increaseIndex;
-        let (id6, editorState) = editorState |> _increaseIndex;
-        let (id7, editorState) = editorState |> _increaseIndex;
+        let (editorState, id1) =
+          IdAssetEditorService.generateNodeId(editorState);
+        let (editorState, id2) =
+          IdAssetEditorService.generateNodeId(editorState);
+        let (editorState, id3) =
+          IdAssetEditorService.generateNodeId(editorState);
+        let (editorState, id4) =
+          IdAssetEditorService.generateNodeId(editorState);
+        let (editorState, id5) =
+          IdAssetEditorService.generateNodeId(editorState);
+        let (editorState, id6) =
+          IdAssetEditorService.generateNodeId(editorState);
+        let (editorState, id7) =
+          IdAssetEditorService.generateNodeId(editorState);
 
         let (newMaterial1, engineState) =
           OperateLightMaterialLogicService.createLightMaterialAndSetName(
@@ -496,130 +308,27 @@ module BuildAssetTree = {
             engineState,
           );
 
-        editorState
-        |> TreeRootAssetEditorService.setAssetTreeRoot({
-             nodeId: rootId,
-             type_: Folder,
-             isShowChildren: true,
-             children: [||],
-           })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
-             rootId,
-             None,
-             _,
-             engineState,
-           )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
+        (editorState, engineState)
+        |> MainEditorAssetTreeNodeTool.insertFolderNode(id1, rootId)
+        |> MainEditorAssetTreeNodeTool.insertFolderNode(id2, rootId)
+        |> MainEditorAssetTreeNodeTool.insertMaterialNode(
+             id6,
              id1,
-             rootId |. Some,
-             _,
-             engineState,
+             newMaterial1,
            )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
+        |> MainEditorAssetTreeNodeTool.insertMaterialNode(
+             id7,
              id2,
-             rootId |. Some,
-             _,
-             engineState,
+             newMaterial2,
            )
-        |> TreeRootAssetEditorService.setAssetTreeRoot({
-             nodeId: rootId,
-             type_: Folder,
-             isShowChildren: true,
-             children: [|
-               {
-                 nodeId: id1,
-                 type_: Folder,
-                 isShowChildren: true,
-                 children: [||],
-               },
-               {
-                 nodeId: id2,
-                 type_: Folder,
-                 isShowChildren: true,
-                 children: [||],
-               },
-             |],
-           })
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
-             id3,
-             id2 |. Some,
-             _,
-             engineState,
-           )
-        |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMapWithNoNameName(
-             id4,
-             id2 |. Some,
-             _,
-             engineState,
-           )
-        |> MainEditorAssetTreeNodeTool.addTextureIntoNodeMap(
+        |> MainEditorAssetTreeNodeTool.insertTextureNode(
              id5,
              id2,
              "texture5",
            )
-        |> MainEditorAssetTreeNodeTool.addMaterialIntoNodeMap(
-             id6,
-             id1 |. Some,
-             newMaterial1,
-           )
-        |> MainEditorAssetTreeNodeTool.addMaterialIntoNodeMap(
-             id7,
-             id2 |. Some,
-             newMaterial2,
-           )
-        |> TreeRootAssetEditorService.setAssetTreeRoot({
-             nodeId: rootId,
-             type_: Folder,
-             isShowChildren: true,
-             children: [|
-               {
-                 nodeId: id1,
-                 type_: Folder,
-                 isShowChildren: true,
-                 children: [|
-                   {
-                     nodeId: id6,
-                     type_: Material,
-                     isShowChildren: true,
-                     children: [||],
-                   },
-                 |],
-               },
-               {
-                 nodeId: id2,
-                 type_: Folder,
-                 isShowChildren: true,
-                 children: [|
-                   {
-                     nodeId: id3,
-                     type_: Folder,
-                     isShowChildren: true,
-                     children: [||],
-                   },
-                   {
-                     nodeId: id4,
-                     type_: Folder,
-                     isShowChildren: true,
-                     children: [||],
-                   },
-                   {
-                     nodeId: id5,
-                     type_: Texture,
-                     isShowChildren: true,
-                     children: [||],
-                   },
-                   {
-                     nodeId: id7,
-                     type_: Material,
-                     isShowChildren: true,
-                     children: [||],
-                   },
-                 |],
-               },
-             |],
-           })
-        |> StateEditorService.setState
-        |> ignore;
+        |> MainEditorAssetTreeNodeTool.insertFolderNode(id3, id2)
+        |> MainEditorAssetTreeNodeTool.insertFolderNode(id4, id2)
+        |> StateLogicService.setState;
 
         {
           root: rootId,
@@ -652,18 +361,11 @@ module BuildAssetTree = {
 };
 
 module Select = {
-  let selectNode =
-      (~nodeType, ~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
-    AssetTreeUtils.enterFolder(dispatchFunc, nodeType, nodeId);
-
-  /* let selectTextureNode = (~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
-       selectNode(~nodeType=AssetNodeType.Texture, ~nodeId, ~dispatchFunc, ());
-
-     let selectMaterialNode = (~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
-       selectNode(~nodeType=AssetNodeType.Material, ~nodeId, ~dispatchFunc, ()); */
+  let selectNode = (~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
+    FolderNodeUtils.enterFolder(dispatchFunc, nodeId);
 
   let selectFolderNode = (~nodeId, ~dispatchFunc=TestTool.getDispatch(), ()) =>
-    selectNode(~nodeType=AssetNodeType.Folder, ~nodeId, ~dispatchFunc, ());
+    selectNode(~nodeId, ~dispatchFunc, ());
 };
 
 module Drag = {

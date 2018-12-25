@@ -57,24 +57,23 @@ let buildImageData =
        },
        [||],
      )
-  /* |> WonderBsMost.Most.from */
   |> WonderBsMost.Most.mergeArray
   |> WonderBsMost.Most.reduce(
        (
-         (imageMap, imageNodeIdMap, editorState),
+         (imageMap, imageDataIndexMap, editorState),
          (image, uint8Array, imageIndex, name, mimeType),
        ) => {
-         let (editorState, assetNodeId) =
-           AssetIdUtils.generateAssetId(editorState);
+         let (editorState, imageDataIndex) =
+           IndexAssetEditorService.generateImageDataMapIndex(editorState);
 
          (
            imageMap |> WonderCommonlib.SparseMapService.set(imageIndex, image),
-           imageNodeIdMap
-           |> WonderCommonlib.SparseMapService.set(imageIndex, assetNodeId),
+           imageDataIndexMap
+           |> WonderCommonlib.SparseMapService.set(imageIndex, imageDataIndex),
            editorState
-           |> ImageNodeMapAssetEditorService.setResult(
-                assetNodeId,
-                ImageNodeMapAssetEditorService.buildImageNodeResult(
+           |> ImageDataMapAssetEditorService.setData(
+                imageDataIndex,
+                ImageDataMapAssetService.buildData(
                   ~base64=None,
                   ~uint8Array=Some(uint8Array),
                   ~name,
@@ -94,7 +93,7 @@ let buildImageData =
 let buildTextureData =
     (
       {textures}: ExportAssetType.assets,
-      (imageMap, imageNodeIdMap),
+      (imageMap, imageDataIndexMap),
       (editorState, engineState),
     ) =>
   textures
@@ -154,32 +153,57 @@ let buildTextureData =
               );
 
          let (editorState, assetNodeId) =
-           AssetIdUtils.generateAssetId(editorState);
+           IdAssetEditorService.generateNodeId(editorState);
 
-         let (parentFolderNodeId, editorState) =
-           HeaderImportFolderUtils.buildFolder(
+         let (editorState, parentFolderNode) =
+           OperateTreeAssetLogicService.addFolderNodesToTreeByPath(
              path,
              (editorState, engineState),
            );
 
          let editorState =
            editorState
-           |> TextureNodeMapAssetEditorService.setResult(
-                assetNodeId,
-                TextureNodeMapAssetEditorService.buildTextureNodeResult(
+           |> TextureNodeAssetEditorService.addTextureNodeToAssetTree(
+                parentFolderNode,
+                TextureNodeAssetService.buildNode(
+                  ~nodeId=assetNodeId,
                   ~textureComponent=texture,
-                  ~parentFolderNodeId,
-                  ~image=
-                    imageNodeIdMap
+                  ~imageDataIndex=
+                    imageDataIndexMap
                     |> WonderCommonlib.SparseMapService.unsafeGet(source),
-                  (),
                 ),
-              )
-           |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
-                parentFolderNodeId |> OptionService.unsafeGet,
-                assetNodeId,
-                AssetNodeType.Texture,
               );
+
+         /* OperateTreeAssetLogicService.addFolderNodesToTreeByPath(
+              path,
+              (editorState, engineState),
+            )
+            |> TextureNodeAssetEditorService.setNodeData(
+                 assetNodeId,
+                 TextureNodeAssetService.buildNodeData(
+                   ~textureComponent=texture,
+                   ~imageNodeId=
+                     imageDataIndexMap
+                     |> WonderCommonlib.SparseMapService.unsafeGet(source),
+                 ),
+               ); */
+         /* editorState
+            |> TextureNodeMapAssetEditorService.setResult(
+                 assetNodeId,
+                 TextureNodeMapAssetEditorService.buildTextureNodeResult(
+                   ~textureComponent=texture,
+                   ~parentFolderNodeId,
+                   ~image=
+                     imageDataIndexMap
+                     |> WonderCommonlib.SparseMapService.unsafeGet(source),
+                   (),
+                 ),
+               ) */
+         /* |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
+              parentFolderNodeId |> OptionService.unsafeGet,
+              assetNodeId,
+              NodeAssetType.Texture,
+            ); */
 
          (
            textureMap
@@ -195,25 +219,38 @@ let buildTextureData =
 
 let _buildMaterialEditorData =
     (material, path, type_, (editorState, engineState)) => {
-  let (editorState, assetNodeId) = AssetIdUtils.generateAssetId(editorState);
+  let (editorState, assetNodeId) =
+    IdAssetEditorService.generateNodeId(editorState);
 
-  let (parentFolderNodeId, editorState) =
-    HeaderImportFolderUtils.buildFolder(path, (editorState, engineState));
+  /* let (parentFolderNodeId, editorState) =
+     HeaderImportFolderUtils.buildFolder(path, (editorState, engineState)); */
+
+  /* OperateTreeAssetLogicService.addFolderNodesToTreeByPath(
+       path,
+       (editorState, engineState),
+     )
+     |> MaterialNodeAssetEditorService.setNodeData(
+          assetNodeId,
+          MaterialNodeAssetService.buildNodeData(
+            ~type_,
+            ~materialComponent=material,
+          ),
+        ); */
+
+  let (editorState, parentFolderNode) =
+    OperateTreeAssetLogicService.addFolderNodesToTreeByPath(
+      path,
+      (editorState, engineState),
+    );
 
   editorState
-  |> MaterialNodeMapAssetEditorService.setResult(
-       assetNodeId,
-       MaterialNodeMapAssetEditorService.buildMaterialNodeResult(
-         ~parentFolderNodeId,
+  |> MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
+       parentFolderNode,
+       MaterialNodeAssetService.buildNode(
+         ~nodeId=assetNodeId,
          ~type_,
          ~materialComponent=material,
-         (),
        ),
-     )
-  |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
-       parentFolderNodeId |> OptionService.unsafeGet,
-       assetNodeId,
-       AssetNodeType.Material,
      );
 };
 
@@ -237,7 +274,7 @@ let _buildBasicMaterialData = (basicMaterials, (editorState, engineState)) =>
            _buildMaterialEditorData(
              material,
              path,
-             AssetMaterialDataType.BasicMaterial,
+             MaterialDataAssetType.BasicMaterial,
              (editorState, engineState),
            );
 
@@ -296,7 +333,7 @@ let _buildLightMaterialData =
            _buildMaterialEditorData(
              material,
              path,
-             AssetMaterialDataType.LightMaterial,
+             MaterialDataAssetType.LightMaterial,
              (editorState, engineState),
            );
 
@@ -339,11 +376,11 @@ let addExtractedMateriialAssetDataToMaterialData =
          ((material, materialType), _),
        ) =>
          switch (materialType) {
-         | AssetMaterialDataType.BasicMaterial => (
+         | MaterialDataAssetType.BasicMaterial => (
              basicMaterialMap |> SparseMapService.push(material),
              lightMaterialMap,
            )
-         | AssetMaterialDataType.LightMaterial => (
+         | MaterialDataAssetType.LightMaterial => (
              basicMaterialMap,
              lightMaterialMap |> SparseMapService.push(material),
            )
@@ -407,17 +444,17 @@ let buildWDBData =
        let arrayBuffer = _getArrayBuffer(buffer, bufferView, bufferViews);
 
        let (editorState, assetNodeId) =
-         AssetIdUtils.generateAssetId(editorState);
+         IdAssetEditorService.generateNodeId(editorState);
 
-       let (parentFolderNodeId, editorState) =
-         HeaderImportFolderUtils.buildFolder(
+       let (editorState, parentFolderNode) =
+         OperateTreeAssetLogicService.addFolderNodesToTreeByPath(
            path,
            (editorState, engineState),
          );
 
        HeaderImportASBWDBUtils.importWDB(
          (name, arrayBuffer),
-         (assetNodeId, parentFolderNodeId |> OptionService.unsafeGet),
+         (assetNodeId, parentFolderNode),
          (editorState, engineState),
        )
        |> then_(

@@ -1,24 +1,44 @@
-open AssetNodeType;
+open NodeAssetType;
 
-let getNoNameTextureName = () => "NoName Texture";
+let getDefaultName = () => "NoName Texture";
 
-let getTextureBaseNameByTextureComponent = (texture, engineState) =>
+let getName = (~texture, ~engineState) =>
   switch (
     BasicSourceTextureEngineService.getBasicSourceTextureName(
       texture,
       engineState,
     )
   ) {
-  | None => getNoNameTextureName()
+  | None => getDefaultName()
   | Some(name) => name
   };
 
-let getTextureBaseName = (currentNodeId, textureNodeMap) =>
-  textureNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
-  |> (({textureComponent}) => textureComponent)
-  |> getTextureBaseNameByTextureComponent(_)
-  |> StateLogicService.getEngineStateToGetData;
+let setName = (~texture, ~name, ~engineState) =>
+  BasicSourceTextureEngineService.setBasicSourceTextureName(
+    name,
+    texture,
+    engineState,
+  );
+
+/* let getNoNameTextureName = () => "NoName Texture"; */
+
+/* let getTextureBaseNameByTextureComponent = (texture, engineState) =>
+     switch (
+       BasicSourceTextureEngineService.getBasicSourceTextureName(
+         texture,
+         engineState,
+       )
+     ) {
+     | None => getNoNameTextureName()
+     | Some(name) => name
+     };
+
+   let getTextureBaseName = (currentNodeId, textureNodeMap) =>
+     textureNodeMap
+     |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+     |> (({textureComponent}) => textureComponent)
+     |> getTextureBaseNameByTextureComponent(_)
+     |> StateLogicService.getEngineStateToGetData; */
 
 let changeTextureMapAndRefreshEngineState =
     (material, textureComponent, setMapFunc, engineState) => {

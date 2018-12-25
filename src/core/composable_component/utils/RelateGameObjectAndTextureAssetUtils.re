@@ -176,7 +176,7 @@ let replaceToTextureAssetTextureComponent =
   switch (targetTexture, setMapFunc) {
   | (Some(targetTexture), Some(setMapFunc)) =>
     switch (
-      AllMaterialEngineService.getMaterialComponent(
+      MaterialEngineService.getMaterialComponent(
         gameObject,
         (editorState, engineState),
       )
@@ -190,19 +190,17 @@ let replaceToTextureAssetTextureComponent =
   };
 
 let _getImageUint8ArrayByTextureComponent = (textureComponent, editorState) =>
-  switch (
-    TextureNodeMapAssetEditorService.getResultByTextureComponent(
-      textureComponent,
-      editorState,
-    )
-  ) {
-  | None => None
-  | Some(({image}: AssetNodeType.textureResultType)) =>
-    ImageNodeMapAssetEditorService.getUint8Array(
-      image,
-      ImageNodeMapAssetEditorService.getImageNodeMap(editorState),
-    )
-  };
+  TextureNodeAssetEditorService.getDataByTextureComponent(
+    textureComponent,
+    editorState,
+  )
+  |> Js.Option.map((. {imageDataIndex}: NodeAssetType.textureNodeData) =>
+       ImageDataMapAssetEditorService.unsafeGetUint8Array(
+         imageDataIndex,
+         editorState,
+       )
+     )
+  |> OptionService.join;
 
 let _getImageData = (image, texture, editorState) => (
   ImageUtils.getImageName(image),

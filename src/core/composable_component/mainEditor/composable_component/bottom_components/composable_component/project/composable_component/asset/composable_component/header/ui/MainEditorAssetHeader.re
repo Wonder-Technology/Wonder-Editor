@@ -9,15 +9,13 @@ type action =
   | BlurNav;
 
 module Method = {
-  let isCurrentNodeIdEqualRootId = editorState =>
-    switch (
-      editorState |> CurrentNodeDataAssetEditorService.getCurrentNodeData
-    ) {
+  let isCurrentNodeEqualRootNode = editorState =>
+    switch (editorState |> CurrentNodeAssetEditorService.getCurrentNode) {
     | None => true
-    | Some({currentNodeId}) =>
-      TreeAssetEditorService.isIdEqual(
-        currentNodeId,
-        editorState |> TreeRootAssetEditorService.getRootTreeNodeId,
+    | Some(currentNode) =>
+      NodeAssetService.isNodeEqualById(
+        ~sourceNode=currentNode,
+        ~targetNode=RootTreeAssetEditorService.getRootNode(editorState),
       )
     };
   let addFolder = AssetHeaderAddFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
@@ -60,11 +58,11 @@ let _renderRemoveItem =
     className="asset-header-item"
     onClick=(
       _e =>
-        Method.isCurrentNodeIdEqualRootId |> StateLogicService.getEditorState ?
+        Method.isCurrentNodeEqualRootNode |> StateLogicService.getEditorState ?
           () : Method.removeAssetNode((store, dispatchFunc), (), ())
     )>
     (
-      Method.isCurrentNodeIdEqualRootId |> StateLogicService.getEditorState ?
+      Method.isCurrentNodeEqualRootNode |> StateLogicService.getEditorState ?
         <div className="item-notBeClick">
           <img src="./public/img/notRemove.png" />
         </div> :

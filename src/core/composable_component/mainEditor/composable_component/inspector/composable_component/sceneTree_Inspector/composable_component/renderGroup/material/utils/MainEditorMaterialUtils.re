@@ -2,7 +2,7 @@ open SelectType;
 
 open MainEditorMaterialType;
 
-open AssetMaterialDataType;
+open MaterialDataAssetType;
 
 let getMaterialOptions = () => [|
   {key: BasicMaterial |> convertMaterialTypeToInt, value: "basic_material"},
@@ -47,48 +47,6 @@ let createMaterialByType = (type_, engineState) =>
   | BasicMaterial => BasicMaterialEngineService.create(engineState)
 
   | LightMaterial => LightMaterialEngineService.create(engineState)
-  };
-
-let getNewMaterilaName = () => "New Material";
-
-let getNoNameMaterialName = () => "NoName Material";
-
-let _getName = (material, engineState, getMaterialNameFunc) =>
-  switch (getMaterialNameFunc(material, engineState)) {
-  | None => getNoNameMaterialName()
-  | Some(name) => name
-  };
-
-let getName = (material, type_, engineState) =>
-  switch (type_) {
-  | BasicMaterial =>
-    _getName(
-      material,
-      engineState,
-      BasicMaterialEngineService.getBasicMaterialName,
-    )
-  | LightMaterial =>
-    _getName(
-      material,
-      engineState,
-      LightMaterialEngineService.getLightMaterialName,
-    )
-  };
-
-let setName = (material, type_, name, engineState) =>
-  switch (type_) {
-  | BasicMaterial =>
-    BasicMaterialEngineService.setBasicMaterialName(
-      material,
-      name,
-      engineState,
-    )
-  | LightMaterial =>
-    LightMaterialEngineService.setLightMaterialName(
-      material,
-      name,
-      engineState,
-    )
   };
 
 let getMaterialComponentByType = (gameObject, type_, engineState) =>

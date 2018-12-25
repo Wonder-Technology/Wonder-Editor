@@ -1,4 +1,4 @@
-open AssetNodeType;
+open NodeAssetType;
 
 open FileType;
 

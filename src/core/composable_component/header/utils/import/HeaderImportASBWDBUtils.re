@@ -1,12 +1,12 @@
 let importWDB =
     (
       (name, wdbArrayBuffer),
-      (wdbNodeId, parentFolderNodeId),
+      (wdbNodeId, parentFolderNode),
       (editorState, engineState),
     ) =>
-  AssetWDBUtils.importAssetWDB(
+  WDBAssetLogicService.importAssetWDB(
     (name, wdbArrayBuffer),
-    (wdbNodeId, parentFolderNodeId),
+    (wdbNodeId, parentFolderNode),
     false,
     (editorState, engineState),
   );

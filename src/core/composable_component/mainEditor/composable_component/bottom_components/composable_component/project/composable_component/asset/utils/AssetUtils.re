@@ -9,9 +9,7 @@ let isWDBAssetFile = () => {
   | (Some(widget), Some(nodeId)) =>
     widget === getWidget()
     && StateEditorService.getState()
-    |> WDBNodeMapAssetEditorService.getWDBNodeMap
-    |> WonderCommonlib.SparseMapService.get(nodeId)
-    |> Js.Option.isSome
+    |> OperateTreeAssetEditorService.isNodeExistById(nodeId)
   | _ => false
   };
 };

@@ -30,8 +30,8 @@ let _ =
       });
       afterEach(() =>
         StateEditorService.getState()
-        |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
-        |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
+        |> CurrentNodeAssetEditorService.clearCurrentNode
+        |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeInAssetTree
         |> StateEditorService.setState
         |> ignore
       );
@@ -199,7 +199,6 @@ let _ =
             let reasonStateUpdate =
               AssetTreeInspectorTool.reducer(
                 ~nodeId,
-                ~nodeType=AssetNodeType.Folder,
                 ~action=AssetTreeInspector.Blur,
                 ~state,
                 (),
@@ -222,7 +221,7 @@ let _ =
                   assetTreeData,
                 );
 
-              MainEditorAssetTextureNodeTool.setTextureName(
+              MainEditorAssetTextureNodeTool.setTextureImageName(
                 nodeId,
                 "texture1.png",
               )

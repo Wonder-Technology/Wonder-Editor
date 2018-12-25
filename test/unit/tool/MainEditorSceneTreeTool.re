@@ -68,18 +68,23 @@ let getThreeLayerSceneTree = () => [|
 |];
 
 module Drag = {
-  let isTriggerDragCurrentSceneTreeNode = targetGameObject =>
-    /* DragEventBaseUtils.isTriggerDragDrop(
+  let isTriggerDragCurrentSceneTreeNode = targetGameObject => {
+    /* DragEventBaseUtils.checkDragDrop(
          targetGameObject,
          sourceGameObject,
          SceneTreeUtils.isWidget,
          SceneTreeUtils.isGameObjectRelationError,
        ); */
-    DragEventBaseUtils.isTriggerDragEnter(
-      targetGameObject,
-      SceneTreeUtils.isWidget,
-      SceneTreeUtils.isGameObjectRelationError,
-    );
+
+    let (isTrigger, _) =
+      DragEventBaseUtils.checkDragEnter(
+        targetGameObject,
+        SceneTreeUtils.isWidget,
+        SceneTreeUtils.isGameObjectRelationError,
+      );
+
+    isTrigger;
+  };
 
   let dragWDBAssetToSceneTree =
       (
@@ -95,26 +100,25 @@ module Drag = {
         ~event=BaseEventTool.buildDragEvent(.),
         (),
       ) => {
-    DragEventUtils.handleDragStart(
-      wdbNodeId,
-      widget,
-      dragImg,
-      effectEffectAllowd,
-      event,
-    );
+    /* DragEventUtils.handleDragStart(
+         wdbNodeId,
+         widget,
+         dragImg,
+         effectEffectAllowd,
+         event,
+       ); */
 
     let wdbGameObjectUid =
       StateEditorService.getState()
-      |> WDBNodeMapAssetEditorService.getWDBNodeMap
-      |> WonderCommonlib.SparseMapService.unsafeGet(wdbNodeId)
-      |> (({wdbGameObject}) => wdbGameObject);
+      |> OperateTreeAssetEditorService.unsafeFindNodeById(wdbNodeId)
+      |> WDBNodeAssetService.getWDBGameObject;
+
     MainEditorSceneTree.Method.dragWDBIntoScene(
       (store, dispatchFunc),
       (),
       (targetGameObject, wdbGameObjectUid),
     );
-
-    DragEventUtils.handleDrageEnd(event);
+    /* DragEventUtils.handleDragEnd(event); */
   };
 
   let dragGameObjectIntoGameObject =

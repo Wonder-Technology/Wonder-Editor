@@ -1,4 +1,11 @@
-open DragEventUtils;
+type action =
+  | TogggleChildren(int)
+  | Nothing
+  | DragEnter
+  | DragLeave
+  | DragEnd
+  | DragStart
+  | DragDrop(int, int);
 
 type state = {style: ReactDOMRe.Style.t};
 
@@ -16,12 +23,7 @@ module Method = {
       (
         (state, send),
         (id, widget, dragImg, name, isShowChildren, isSelected, isActive),
-        (
-          onSelectFunc,
-          handleWidgetFunc,
-          handleRelationErrorFunc,
-          isAssetWDBFileFunc,
-        ),
+        (onSelectFunc, isWidgetFunc, checkNodeRelationFunc),
       ) =>
     <div
       className=(
@@ -34,29 +36,46 @@ module Method = {
       draggable=true
       onMouseDown=(_event => onSelectFunc(id))
       onDragStart=(
-        _e => send(handleDragStart(id, widget, dragImg, "move", _e))
+        _e =>
+          send(
+            DragEventUtils.handleDragStart(
+              id,
+              DragStart,
+              widget,
+              dragImg,
+              "move",
+              _e,
+            ),
+          )
       )
-      onDragEnd=(_e => send(handleDrageEnd(_e)))
+      onDragEnd=(_e => send(DragEventUtils.handleDragEnd(DragEnd, _e)))
       onDragEnter=(
         _e =>
           send(
             DragEventUtils.handleDragEnter(
               id,
-              handleWidgetFunc,
-              handleRelationErrorFunc(false),
+              (DragEnter, Nothing),
+              isWidgetFunc,
+              checkNodeRelationFunc,
               _e,
             ),
           )
       )
-      onDragLeave=(_e => send(DragEventUtils.handleDragLeave(id, _e)))
+      onDragLeave=(
+        _e => send(DragEventUtils.handleDragLeave(id, DragLeave, _e))
+      )
       onDragOver=(e => DragEventUtils.handleDragOver("move", e))
       onDrop=(
         _e =>
           send(
             DragEventUtils.handleDrop(
               id,
-              handleWidgetFunc,
-              handleRelationErrorFunc(true),
+              (
+                (targetId, removedId) => DragDrop(targetId, removedId),
+                DragLeave,
+              ),
+              isWidgetFunc,
+              checkNodeRelationFunc,
               _e,
             ),
           )
@@ -78,12 +97,7 @@ module Method = {
           isSelected,
           isActive,
         ),
-        (
-          onSelectFunc,
-          handleWidgetFunc,
-          handleRelationErrorFunc,
-          isAssetWDBFileFunc,
-        ),
+        (onSelectFunc, isWidgetFunc, checkNodeRelationFunc),
       ) =>
     <li>
       (
@@ -106,12 +120,7 @@ module Method = {
         _renderDragableText(
           (state, send),
           (id, widget, dragImg, name, isShowChildren, isSelected, isActive),
-          (
-            onSelectFunc,
-            handleWidgetFunc,
-            handleRelationErrorFunc,
-            isAssetWDBFileFunc,
-          ),
+          (onSelectFunc, isWidgetFunc, checkNodeRelationFunc),
         )
       )
     </li>;
@@ -185,7 +194,7 @@ let render =
         isSelected,
         isActive,
       ),
-      (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
+      (onSelectFunc, isWidgetFunc, checkNodeRelationFunc),
       treeChildren,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
@@ -205,12 +214,7 @@ let render =
         isSelected,
         isActive,
       ),
-      (
-        onSelectFunc,
-        handleWidgetFunc,
-        handleRelationErrorFunc,
-        handleRelationErrorFunc,
-      ),
+      (onSelectFunc, isWidgetFunc, checkNodeRelationFunc),
     ),
   );
 
@@ -228,7 +232,7 @@ let make =
       ~isWidget,
       ~isShowChildren,
       ~isHasChildren,
-      ~handleRelationError,
+      ~checkNodeRelation,
       ~handleToggleShowTreeChildren,
       ~treeChildren,
       _children,
@@ -249,7 +253,7 @@ let make =
         isSelected,
         isActive,
       ),
-      (onSelect, isWidget, handleRelationError),
+      (onSelect, isWidget, checkNodeRelation),
       treeChildren,
       self,
     ),

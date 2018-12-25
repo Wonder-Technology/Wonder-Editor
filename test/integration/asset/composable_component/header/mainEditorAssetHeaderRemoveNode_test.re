@@ -8,7 +8,7 @@ open Expect.Operators;
 
 open Sinon;
 
-open AssetTreeNodeType;
+open NodeAssetType;
 
 let _ =
   describe("MainEditorAssetHeader->remove node", () => {
@@ -25,8 +25,8 @@ let _ =
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
       StateEditorService.getState()
-      |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
-      |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
+      |> CurrentNodeAssetEditorService.clearCurrentNode
+      |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeInAssetTree
       |> StateEditorService.setState
       |> ignore;
     });
@@ -264,7 +264,7 @@ let _ =
             );
           });
 
-          describe(
+          /* describe(
             "test removed asset node, the id should be added into removedAssetIdArray",
             () =>
             describe("test remove first folder", () => {
@@ -339,7 +339,7 @@ let _ =
                 expect == [|removedFolderNodeId, removedFolderNodeId |> succ|];
               });
             })
-          );
+          ); */
         });
       });
     });

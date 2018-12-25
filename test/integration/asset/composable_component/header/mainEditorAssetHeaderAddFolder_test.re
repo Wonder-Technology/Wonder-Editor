@@ -8,7 +8,7 @@ open Expect.Operators;
 
 open Sinon;
 
-open AssetTreeNodeType;
+open NodeAssetType;
 
 let _ =
   describe("MainEditorAssetHeader->add folder", () => {
@@ -44,13 +44,15 @@ let _ =
 
           MainEditorAssetHeaderOperateNodeTool.addFolder();
 
-          let {parentFolderNodeId}: AssetNodeType.folderResultType =
-            StateEditorService.getState()
-            |> FolderNodeMapAssetEditorService.unsafeGetResult(
-                 addedFolderNodeId,
-               );
+          let editorState = StateEditorService.getState();
 
-          parentFolderNodeId
+          MainEditorAssetTreeTool.findNodeParentId(
+            OperateTreeAssetEditorService.unsafeFindNodeById(
+              addedFolderNodeId,
+              editorState,
+            ),
+            editorState,
+          )
           |> OptionService.unsafeGet
           |>
           expect == MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getRootNodeId(

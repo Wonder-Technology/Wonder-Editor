@@ -17,7 +17,7 @@ module CustomEventHandler = {
             editorState,
           );
 
-        let defaultLightMaterial =
+        let defaultLightMaterialData =
           MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(
             editorState,
           );
@@ -25,7 +25,7 @@ module CustomEventHandler = {
         SceneUtils.addGameObject(
           PrimitiveEngineService.createCube((
             defaultCubeGeometry,
-            defaultLightMaterial,
+            defaultLightMaterialData,
           )),
         );
       | EmptyGameObject =>

@@ -20,7 +20,7 @@ let _ =
       (
         assetTreeData,
         StateEditorService.getState()
-        |> MaterialNodeMapAssetEditorService.unsafeGetResult(
+        |> OperateTreeAssetEditorService.unsafeFindNodeById(
              addedMaterialNodeId,
            ),
       );
@@ -46,13 +46,12 @@ let _ =
           |> ReactTestTool.createSnapshotAndMatch;
         });
         test("the added material parent node should be root", () => {
-          let (
-            assetTreeData,
-            {parentFolderNodeId}: AssetNodeType.materialResultType,
-          ) =
-            _prepareAndExecAndGetMaterialNode();
+          let (assetTreeData, node) = _prepareAndExecAndGetMaterialNode();
 
-          parentFolderNodeId
+          MainEditorAssetTreeTool.findNodeParentId(
+            node,
+            StateEditorService.getState(),
+          )
           |> OptionService.unsafeGet
           |>
           expect == MainEditorAssetTreeTool.BuildAssetTree.Material.getRootNodeId(
@@ -91,20 +90,20 @@ let _ =
 
       MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
-      let {materialComponent}: AssetNodeType.materialResultType =
-        StateEditorService.getState()
-        |> MaterialNodeMapAssetEditorService.unsafeGetResult(
-             addedMaterialNodeId,
-           );
+      let materialComponent =
+        MainEditorAssetMaterialNodeTool.getMaterialComponent(
+          ~nodeId=addedMaterialNodeId,
+          (),
+        );
 
       materialComponent |> expect == newLightMaterial;
     });
 
     test("material type should be LightMaterial", () => {
-      let (assetTreeData, {type_}: AssetNodeType.materialResultType) =
-        _prepareAndExecAndGetMaterialNode();
+      let (assetTreeData, node) = _prepareAndExecAndGetMaterialNode();
 
-      type_ |> expect == AssetMaterialDataType.LightMaterial;
+      MaterialNodeAssetService.getNodeData(node).type_
+      |> expect == MaterialDataAssetType.LightMaterial;
     });
 
     describe("test name", () => {
@@ -132,7 +131,7 @@ let _ =
             );
           AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
             ~nodeId,
-            ~name=MainEditorMaterialUtils.getNoNameMaterialName(),
+            ~name=OperateMaterialLogicService.getDefaultName(),
             (),
           );
 

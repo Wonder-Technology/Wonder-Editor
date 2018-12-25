@@ -68,13 +68,13 @@ let buildTwoCameraSceneGraphToEngine = sandbox => {
   let (editorState, engineState, cubeGeometry) =
     DefaultSceneUtils.prepareDefaultComponent(editorState, engineState);
 
-  let defaultLightMaterial =
+  let defaultLightMaterialData =
     MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
 
   let (camera1, camera2, box1, editorState, engineState) =
     engineState
     |> _buildTwoCameraSceneGraph(
-         (cubeGeometry, defaultLightMaterial),
+         (cubeGeometry, defaultLightMaterialData),
          editorState,
        );
 
@@ -122,13 +122,13 @@ let buildThreeLayerSceneGraphToEngine = sandbox => {
   let (editorState, engineState, cubeGeometry) =
     DefaultSceneUtils.prepareDefaultComponent(editorState, engineState);
 
-  let defaultLightMaterial =
+  let defaultLightMaterialData =
     MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
 
   let (editorState, engineState, layerGameObjectData) =
     engineState
     |> _buildThreeLayerSceneGraph(
-         (cubeGeometry, defaultLightMaterial),
+         (cubeGeometry, defaultLightMaterialData),
          editorState,
        );
 
@@ -171,13 +171,13 @@ let buildFourLayerSceneGraphToEngine = sandbox => {
   let (editorState, engineState, cubeGeometry) =
     DefaultSceneUtils.prepareDefaultComponent(editorState, engineState);
 
-  let defaultLightMaterial =
+  let defaultLightMaterialData =
     MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
 
   let (editorState, engineState, layerGameObjectData) =
     engineState
     |> _buildFourLayerSceneGraph(
-         (cubeGeometry, defaultLightMaterial),
+         (cubeGeometry, defaultLightMaterialData),
          editorState,
        );
 

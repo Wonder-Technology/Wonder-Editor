@@ -6,16 +6,16 @@ module CustomEventHandler = {
 
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
     let engineState = StateEngineService.unsafeGetState();
-    let (editorState, newIndex) =
-      AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
-    let targetTreeNodeId = editorState |> AssetTreeUtils.getTargetTreeNodeId;
+    let (editorState, newNodeId) =
+      IdAssetEditorService.generateNodeId |> StateLogicService.getEditorState;
+    let targetTreeNode =
+      editorState |> TreeAssetEditorService.getSelectedFolderNodeInAssetTree;
 
     let materialName =
-      MainEditorMaterialUtils.getNewMaterilaName()
-      |. IterateAssetTreeAssetEditorService.getUniqueTreeNodeName(
-           Material,
-           targetTreeNodeId |. Some,
-           (editorState, engineState),
+      OperateMaterialLogicService.getNewMaterilaName()
+      |. OperateTreeAssetLogicService.getUniqueNodeName(
+           targetTreeNode,
+           engineState,
          );
 
     let (newMaterial, engineState) =
@@ -25,9 +25,13 @@ module CustomEventHandler = {
       );
 
     let editorState =
-      AddMaterialNodeUtils.addMaterialNodeToAssetTree(
-        newMaterial,
-        (targetTreeNodeId, newIndex),
+      MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
+        targetTreeNode,
+        MaterialNodeAssetService.buildNode(
+          ~nodeId=newNodeId,
+          ~type_=MaterialDataAssetType.LightMaterial,
+          ~materialComponent=newMaterial,
+        ),
         editorState,
       );
 

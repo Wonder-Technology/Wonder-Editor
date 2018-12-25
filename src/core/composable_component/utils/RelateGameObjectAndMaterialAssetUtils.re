@@ -201,7 +201,7 @@ let getRelatedMaterialDataFromGameObject =
       replacedTargetMaterialMap,
       imageUint8ArrayDataMap,
       (
-        AssetMaterialDataType.BasicMaterial,
+        MaterialDataAssetType.BasicMaterial,
         basicMaterialDataMap,
         defaultBasicMaterialData,
       ),
@@ -221,7 +221,7 @@ let getRelatedMaterialDataFromGameObject =
         replacedTargetMaterialMap,
         imageUint8ArrayDataMap,
         (
-          AssetMaterialDataType.LightMaterial,
+          MaterialDataAssetType.LightMaterial,
           lightMaterialDataMap,
           defaultLightMaterialData,
         ),
@@ -246,7 +246,7 @@ let replaceToMaterialAssetMaterialComponent =
   switch (sourceMaterial, targetMaterial, materialType) {
   | (Some(sourceMaterial), Some(targetMaterial), Some(materialType)) =>
     switch (materialType) {
-    | AssetMaterialDataType.BasicMaterial =>
+    | MaterialDataAssetType.BasicMaterial =>
       engineState
       |> GameObjectComponentEngineService.disposeBasicMaterialComponent(
            gameObject,
@@ -256,7 +256,7 @@ let replaceToMaterialAssetMaterialComponent =
            gameObject,
            targetMaterial,
          )
-    | AssetMaterialDataType.LightMaterial =>
+    | MaterialDataAssetType.LightMaterial =>
       engineState
       |> GameObjectComponentEngineService.disposeLightMaterialComponent(
            gameObject,
@@ -295,18 +295,18 @@ let getLightMaterialData = (material, (editorState, engineState)) => (
 );
 
 let getDefaultMaterialData = (editorState, engineState) => {
-  let defaultBasicMaterial =
+  let defaultBasicMaterialData =
     MaterialDataAssetEditorService.unsafeGetDefaultBasicMaterial(editorState);
   let defaultBasicMaterialData = (
-    defaultBasicMaterial,
-    getBasicMaterialData(defaultBasicMaterial, engineState),
+    defaultBasicMaterialData,
+    getBasicMaterialData(defaultBasicMaterialData, engineState),
   );
 
-  let defaultLightMaterial =
+  let defaultLightMaterialData =
     MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
   let defaultLightMaterialData = (
-    defaultLightMaterial,
-    getLightMaterialData(defaultLightMaterial, (editorState, engineState)),
+    defaultLightMaterialData,
+    getLightMaterialData(defaultLightMaterialData, (editorState, engineState)),
   );
 
   (defaultBasicMaterialData, defaultLightMaterialData);
