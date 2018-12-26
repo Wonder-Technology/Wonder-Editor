@@ -40,7 +40,7 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
       CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
+        SceneTreeWidgetService.getWidget(),
       )
       |> StateLogicService.getAndSetEditorState;
 

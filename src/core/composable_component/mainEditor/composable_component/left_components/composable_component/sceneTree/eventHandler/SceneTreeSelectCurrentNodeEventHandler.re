@@ -8,22 +8,20 @@ module CustomEventHandler = {
 
   let handleSelfLogic = ((store, dispatchFunc), (), uid) => {
     StateEditorService.getState()
-    |> CurrentNodeAssetEditorService.clearCurrentNodeId
+    |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
     |> StateEditorService.setState
     |> ignore;
 
     StateEditorService.getState()
     |> SceneEditorService.setCurrentSceneTreeNode(uid)
     |> CurrentSelectSourceEditorService.setCurrentSelectSource(
-         EditorType.SceneTree,
+         SceneTreeWidgetService.getWidget(),
        )
     |> StateEditorService.setState
     |> ignore;
 
     dispatchFunc(
-      AppStore.UpdateAction(
-        Update([|SceneTree, Inspector, Project|]),
-      ),
+      AppStore.UpdateAction(Update([|SceneTree, Inspector, Project|])),
     )
     |> ignore;
   };

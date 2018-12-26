@@ -1,11 +1,3 @@
-let getWidget = () => EditorType.SceneTree;
-
-let isWidget = startWidget =>
-  switch (startWidget) {
-  | None => false
-  | Some(startWidget) => startWidget === getWidget()
-  };
-
 let rec _judgeAllParents = (targetTransform, dragedTransform, engineState) =>
   switch (
     TransformEngineService.getParent(targetTransform, engineState)

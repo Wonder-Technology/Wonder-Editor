@@ -50,7 +50,7 @@ let _ =
       );
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
+        SceneTreeWidgetService.getWidget(),
       )
       |> StateLogicService.getAndSetEditorState;
 
@@ -59,8 +59,8 @@ let _ =
 
     let _afterEach = () =>
       StateEditorService.getState()
-      |> CurrentNodeAssetEditorService.clearCurrentNodeId
-      |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
+      |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
+      |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
       |> StateEditorService.setState
       |> ignore;
 

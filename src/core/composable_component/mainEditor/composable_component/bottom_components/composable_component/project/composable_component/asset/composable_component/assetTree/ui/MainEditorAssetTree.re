@@ -63,7 +63,7 @@ module Method = {
     let selectedFolderNodeIdInAssetTree =
       TreeAssetEditorService.getSelectedFolderNodeIdInAssetTree(editorState);
     let currentNodeId =
-      CurrentNodeAssetEditorService.getCurrentNodeId(editorState);
+      CurrentNodeIdAssetEditorService.getCurrentNodeId(editorState);
 
     let rec _build =
             (
@@ -95,11 +95,11 @@ module Method = {
                )
              )
              dragImg
-             widget=(AssetUtils.getWidget())
+             widget=(AssetWidgetService.getWidget())
              icon="./public/img/package.png"
              onSelect=onSelectFunc
              onDrop=onDropFunc
-             isWidget=AssetUtils.isWidget
+             isWidget=AssetWidgetService.isWidget
              isShowChildren=(
                FolderNodeAssetService.getIsShowChildren(folderNode)
              )

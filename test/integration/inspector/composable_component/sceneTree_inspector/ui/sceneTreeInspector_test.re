@@ -19,7 +19,7 @@ let _ =
     describe("prepare currentSelectSource is SceneTree", () => {
       beforeEach(() =>
         CurrentSelectSourceEditorService.setCurrentSelectSource(
-          EditorType.SceneTree,
+          SceneTreeWidgetService.getWidget(),
         )
         |> StateLogicService.getAndSetEditorState
       );

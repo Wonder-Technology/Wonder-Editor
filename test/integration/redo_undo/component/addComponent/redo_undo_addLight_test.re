@@ -18,7 +18,7 @@ let _ =
       MainEditorSceneTool.createDefaultScene(sandbox, () => ());
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
+        SceneTreeWidgetService.getWidget(),
       )
       |> StateLogicService.getAndSetEditorState;
 

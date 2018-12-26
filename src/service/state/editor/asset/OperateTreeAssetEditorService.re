@@ -97,7 +97,7 @@ let findNodeParentId = (targetNode, editorState) =>
   |> Js.Option.map((. node) => NodeAssetService.getNodeId(~node));
 
 let getCurrentNode = editorState =>
-  CurrentNodeAssetEditorService.getCurrentNodeId(editorState)
+  CurrentNodeIdAssetEditorService.getCurrentNodeId(editorState)
   |> Js.Option.map((. nodeId) => unsafeFindNodeById(nodeId, editorState));
 
 let unsafeGetSelectedFolderNodeInAssetTree = editorState =>

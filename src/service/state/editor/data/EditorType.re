@@ -18,9 +18,7 @@ open ConsoleType;
 
 open TransformType;
 
-type widgetType =
-  | SceneTree
-  | Asset;
+open WidgetType;
 
 type editorState = {
   settingRecord,

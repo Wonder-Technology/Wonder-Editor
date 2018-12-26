@@ -24,7 +24,7 @@ let _ =
       LoadTool.buildFakeLoadImage(.);
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
+        SceneTreeWidgetService.getWidget(),
       )
       |> StateLogicService.getAndSetEditorState;
     };

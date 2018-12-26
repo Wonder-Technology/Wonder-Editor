@@ -5,10 +5,10 @@ module Method = {
     let editorState = StateEditorService.getState();
 
     editorState
-    |> CurrentNodeAssetEditorService.setCurrentNodeId(nodeId)
+    |> CurrentNodeIdAssetEditorService.setCurrentNodeId(nodeId)
     |> SceneEditorService.clearCurrentSceneTreeNode
     |> CurrentSelectSourceEditorService.setCurrentSelectSource(
-         EditorType.Asset,
+         AssetWidgetService.getWidget(),
        )
     |> StateEditorService.setState
     |> ignore;

@@ -14,7 +14,7 @@ let unsafeGetCurrentNode = editorState =>
   |> OptionService.unsafeGet;
 
 let unsafeGetCurrentNodeId = editorState =>
-  CurrentNodeAssetEditorService.unsafeGetCurrentNodeId(editorState);
+  CurrentNodeIdAssetEditorService.unsafeGetCurrentNodeId(editorState);
 
 let getTextureComponentFromNodeId = nodeId => {
   let {textureComponent}: NodeAssetType.textureNodeData =
@@ -32,7 +32,7 @@ let setCurrentNodeId = nodeId => {
   let editorState = StateEditorService.getState();
 
   editorState
-  |> CurrentNodeAssetEditorService.setCurrentNodeId(nodeId)
+  |> CurrentNodeIdAssetEditorService.setCurrentNodeId(nodeId)
   |> StateEditorService.setState
   |> ignore;
 };

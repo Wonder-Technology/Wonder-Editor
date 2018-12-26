@@ -82,7 +82,7 @@ module CustomEventHandler = {
       engineState |> StateEngineService.setState |> ignore;
 
       removedTreeNode
-      |> CurrentSceneTreeNodeLogicService.disposeCurrentSceneTreeNode;
+      |> CurrentNodeSceneTreeLogicService.disposeCurrentSceneTreeNode;
 
       StateLogicService.getAndRefreshEngineState();
 

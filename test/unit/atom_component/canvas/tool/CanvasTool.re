@@ -4,7 +4,7 @@ module Drag = {
         ~wdbNodeId,
         ~dispatchFunc=TestTool.getDispatch(),
         ~store=TestTool.buildEmptyAppState(),
-        ~widget=AssetUtils.getWidget(),
+        ~widget=AssetWidgetService.getWidget(),
         ~effectEffectAllowd="move",
         ~dragImg=DomHelper.createElement("img"),
         ~event=BaseEventTool.buildDragEvent(.),

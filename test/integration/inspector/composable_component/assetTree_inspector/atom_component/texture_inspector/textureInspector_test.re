@@ -27,7 +27,7 @@ let _ =
           MainEditorAssetTool.initAssetTree,
         );
         CurrentSelectSourceEditorService.setCurrentSelectSource(
-          EditorType.Asset,
+          AssetWidgetService.getWidget(),
         )
         |> StateLogicService.getAndSetEditorState;
       });

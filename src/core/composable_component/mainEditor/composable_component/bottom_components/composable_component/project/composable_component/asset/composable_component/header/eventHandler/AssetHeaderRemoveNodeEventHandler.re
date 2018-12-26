@@ -16,7 +16,7 @@ module CustomEventHandler = {
     let engineState = StateEngineService.unsafeGetState();
 
     let currentNodeId =
-      editorState |> CurrentNodeAssetEditorService.unsafeGetCurrentNodeId;
+      editorState |> CurrentNodeIdAssetEditorService.unsafeGetCurrentNodeId;
 
     let (editorState, engineState) =
       DisposeTreeAssetLogicService.disposeNode(
@@ -37,9 +37,9 @@ module CustomEventHandler = {
         ),
       ) ?
         editorState
-        |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
-        |> CurrentNodeAssetEditorService.clearCurrentNodeId :
-        editorState |> CurrentNodeAssetEditorService.clearCurrentNodeId;
+        |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
+        |> CurrentNodeIdAssetEditorService.clearCurrentNodeId :
+        editorState |> CurrentNodeIdAssetEditorService.clearCurrentNodeId;
 
     editorState |> StateEditorService.setState |> ignore;
 

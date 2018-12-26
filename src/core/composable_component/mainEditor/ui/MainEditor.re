@@ -101,7 +101,7 @@ let _buildNotStartElement = (store, dispatchFunc) =>
             key="webgl"
             domId="canvas"
             dragWDB=(Method.dragWDB((store, dispatchFunc), ()))
-            isWDBAssetFile=AssetUtils.isWDBAssetFile
+            isWDBAssetFile=WDBNodeAssetEditorService.isWDBAssetFile
           />
         </div>
       </div>
@@ -121,7 +121,7 @@ let _buildStartedElement = (store, dispatchFunc) =>
             key="webgl"
             domId="canvas"
             dragWDB=(Method.dragWDB((store, dispatchFunc), ()))
-            isWDBAssetFile=AssetUtils.isWDBAssetFile
+            isWDBAssetFile=WDBNodeAssetEditorService.isWDBAssetFile
           />
         </div>
       </div>

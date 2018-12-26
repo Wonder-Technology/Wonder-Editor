@@ -182,8 +182,8 @@ let disposeTree = ((editorState, engineState)) => {
   (
     editorState
     |> TreeAssetEditorService.clearTree
-    |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
-    |> CurrentNodeAssetEditorService.clearCurrentNodeId,
+    |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
+    |> CurrentNodeIdAssetEditorService.clearCurrentNodeId,
     engineState,
   );
 };

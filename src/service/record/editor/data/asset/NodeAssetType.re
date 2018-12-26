@@ -1,6 +1,5 @@
 exception LoadException(string);
 
-/* TODO refactor */
 type uploadFileType =
   | LoadWDB
   | LoadGLB

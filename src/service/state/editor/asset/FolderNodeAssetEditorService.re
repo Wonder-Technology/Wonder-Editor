@@ -1,11 +1,13 @@
 let enterFolder = (nodeId, editorState) =>
   editorState
-  |> CurrentNodeAssetEditorService.setCurrentNodeId(nodeId)
-  |> SelectedFolderNodeInAssetTreeAssetEditorService.setSelectedFolderNodeIdInAssetTree(
+  |> CurrentNodeIdAssetEditorService.setCurrentNodeId(nodeId)
+  |> SelectedFolderNodeIdInAssetTreeAssetEditorService.setSelectedFolderNodeIdInAssetTree(
        nodeId,
      )
   |> SceneEditorService.clearCurrentSceneTreeNode
-  |> CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.Asset);
+  |> CurrentSelectSourceEditorService.setCurrentSelectSource(
+       AssetWidgetService.getWidget(),
+     );
 
 let addFolderNodeToAssetTree = (targetTreeNode, newNode, editorState) =>
   NodeAssetEditorService.addNodeToAssetTree(

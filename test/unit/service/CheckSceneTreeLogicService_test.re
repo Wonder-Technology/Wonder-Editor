@@ -4,7 +4,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("SceneTreeUtils", () => {
+  describe("CheckSceneTreeLogicService", () => {
     let sandbox = getSandboxDefaultVal();
 
     beforeEach(() => sandbox := createSandbox());
@@ -24,7 +24,7 @@ let _ =
       });
 
       test("if draged and target gameObject is the same one, return true ", () =>
-        SceneTreeUtils.isGameObjectRelationError(1, 1)
+        CheckSceneTreeLogicService.isGameObjectRelationError(1, 1)
         |> StateLogicService.getStateToGetData
         |> Result.RelationResult.isSuccess
         |> expect == true
@@ -43,7 +43,7 @@ let _ =
           let engineState =
             GameObjectUtils.addChild(gameObject1, gameObject2, engineState);
 
-          SceneTreeUtils.isGameObjectRelationError(
+          CheckSceneTreeLogicService.isGameObjectRelationError(
             gameObject2,
             gameObject1,
             (editorState, engineState),
@@ -66,7 +66,7 @@ let _ =
             let engineState =
               GameObjectUtils.addChild(gameObject1, gameObject2, engineState);
 
-            SceneTreeUtils.isGameObjectRelationError(
+            CheckSceneTreeLogicService.isGameObjectRelationError(
               gameObject1,
               gameObject2,
               (editorState, engineState),

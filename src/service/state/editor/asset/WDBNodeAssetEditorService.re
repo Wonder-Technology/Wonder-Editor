@@ -25,3 +25,17 @@ let findAllWDBNodes = editorState =>
     ~predWDBNodeFunc=node => true,
     (),
   );
+
+let isWDBAssetFile = () => {
+  let (widget, startNodeId) =
+    StateEditorService.getState()
+    |> CurrentDragSourceEditorService.getCurrentDragSource;
+
+  switch (widget, startNodeId) {
+  | (Some(widget), Some(nodeId)) =>
+    widget === AssetWidgetService.getWidget()
+    && StateEditorService.getState()
+    |> OperateTreeAssetEditorService.isNodeExistById(nodeId)
+  | _ => false
+  };
+};

@@ -10,7 +10,7 @@ type action =
 
 module Method = {
   let isCurrentNodeEqualRootNode = editorState =>
-    switch (editorState |> CurrentNodeAssetEditorService.getCurrentNodeId) {
+    switch (editorState |> CurrentNodeIdAssetEditorService.getCurrentNodeId) {
     | None => true
     | Some(currentNodeId) =>
       NodeAssetService.isIdEqual(

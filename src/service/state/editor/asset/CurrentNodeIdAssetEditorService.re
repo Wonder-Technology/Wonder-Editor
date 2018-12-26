@@ -1,20 +1,20 @@
 open EditorType;
 
 let getCurrentNodeId = editorState =>
-  editorState.assetRecord |> CurrentNodeAssetService.getCurrentNodeId;
+  editorState.assetRecord |> CurrentNodeIdAssetService.getCurrentNodeId;
 
 let unsafeGetCurrentNodeId = editorState =>
-  editorState.assetRecord |> CurrentNodeAssetService.unsafeGetCurrentNodeId;
+  editorState.assetRecord |> CurrentNodeIdAssetService.unsafeGetCurrentNodeId;
 
 let clearCurrentNodeId = editorState => {
   ...editorState,
   assetRecord:
-    editorState.assetRecord |> CurrentNodeAssetService.clearCurrentNodeId,
+    editorState.assetRecord |> CurrentNodeIdAssetService.clearCurrentNodeId,
 };
 
 let setCurrentNodeId = (currentNodeId, editorState) => {
   ...editorState,
   assetRecord:
     editorState.assetRecord
-    |> CurrentNodeAssetService.setCurrentNodeId(currentNodeId),
+    |> CurrentNodeIdAssetService.setCurrentNodeId(currentNodeId),
 };

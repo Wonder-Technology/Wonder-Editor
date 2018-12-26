@@ -72,15 +72,15 @@ module Drag = {
     /* DragEventBaseUtils.checkDragDrop(
          targetGameObject,
          sourceGameObject,
-         SceneTreeUtils.isWidget,
-         SceneTreeUtils.isGameObjectRelationError,
+         SceneTreeWidgetService.isWidget,
+         CheckSceneTreeLogicService.isGameObjectRelationError,
        ); */
 
     let (isTrigger, _) =
       DragEventBaseUtils.checkDragEnter(
         targetGameObject,
-        SceneTreeUtils.isWidget,
-        SceneTreeUtils.isGameObjectRelationError,
+        SceneTreeWidgetService.isWidget,
+        CheckSceneTreeLogicService.isGameObjectRelationError,
       );
 
     isTrigger;
@@ -94,7 +94,7 @@ module Drag = {
                           ),
         ~dispatchFunc=TestTool.getDispatch(),
         ~store=TestTool.buildEmptyAppState(),
-        ~widget=AssetUtils.getWidget(),
+        ~widget=AssetWidgetService.getWidget(),
         ~effectEffectAllowd="move",
         ~dragImg=DomHelper.createElement("img"),
         ~event=BaseEventTool.buildDragEvent(.),

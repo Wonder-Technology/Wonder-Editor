@@ -20,7 +20,7 @@ let _ =
       );
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
+        SceneTreeWidgetService.getWidget(),
       )
       |> StateLogicService.getAndSetEditorState;
     };

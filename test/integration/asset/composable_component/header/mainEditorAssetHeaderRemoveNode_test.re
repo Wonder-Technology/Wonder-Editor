@@ -25,8 +25,8 @@ let _ =
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
       StateEditorService.getState()
-      |> CurrentNodeAssetEditorService.clearCurrentNodeId
-      |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
+      |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
+      |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
       |> StateEditorService.setState
       |> ignore;
     });
@@ -138,7 +138,7 @@ let _ =
               describe("should remove it from engineState", () => {
                 beforeEach(() => {
                   CurrentSelectSourceEditorService.setCurrentSelectSource(
-                    EditorType.SceneTree,
+                    SceneTreeWidgetService.getWidget(),
                   )
                   |> StateLogicService.getAndSetEditorState;
                   MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();

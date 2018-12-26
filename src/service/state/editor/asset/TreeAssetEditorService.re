@@ -35,7 +35,7 @@ let createTree = editorState => {
 
 /* let getSelectedFolderNodeIdInAssetTree = editorState =>
    switch (
-     SelectedFolderNodeInAssetTreeAssetEditorService.getSelectedFolderNodeIdInAssetTree(
+     SelectedFolderNodeIdInAssetTreeAssetEditorService.getSelectedFolderNodeIdInAssetTree(
        editorState,
      )
    ) {
@@ -47,7 +47,7 @@ let createTree = editorState => {
 
 let getSelectedFolderNodeIdInAssetTree = editorState =>
   switch (
-    SelectedFolderNodeInAssetTreeAssetEditorService.getSelectedFolderNodeIdInAssetTree(
+    SelectedFolderNodeIdInAssetTreeAssetEditorService.getSelectedFolderNodeIdInAssetTree(
       editorState,
     )
   ) {

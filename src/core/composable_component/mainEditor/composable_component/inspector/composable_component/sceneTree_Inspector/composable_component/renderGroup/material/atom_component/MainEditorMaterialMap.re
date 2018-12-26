@@ -14,7 +14,7 @@ module Method = {
   let isWidget = startWidget =>
     switch (startWidget) {
     | None => false
-    | Some(widget) => widget == AssetUtils.getWidget()
+    | Some(widget) => widget == AssetWidgetService.getWidget()
     };
 
   let isTypeValid = (startId, editorState) =>

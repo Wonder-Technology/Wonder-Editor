@@ -139,7 +139,7 @@ module Method = {
         engineState,
         editorState,
       ) => {
-    let widget = AssetUtils.getWidget();
+    let widget = AssetWidgetService.getWidget();
 
     let result =
       editorState
@@ -242,7 +242,7 @@ module Method = {
                        (),
                      )
                    )
-                   isWidget=AssetUtils.isWidget
+                   isWidget=AssetWidgetService.isWidget
                    checkNodeRelation=OperateTreeAssetLogicService.checkNodeRelation
                  />
                  |> Result.SameDataResult.success;
@@ -283,7 +283,7 @@ module Method = {
            (
              dragImg,
              debounceTime,
-             editorState |> CurrentNodeAssetEditorService.getCurrentNodeId,
+             editorState |> CurrentNodeIdAssetEditorService.getCurrentNodeId,
            ),
            engineState,
          ),

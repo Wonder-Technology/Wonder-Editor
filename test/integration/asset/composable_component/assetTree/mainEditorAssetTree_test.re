@@ -27,8 +27,8 @@ let _ =
       restoreSandbox(refJsObjToSandbox(sandbox^));
 
       StateEditorService.getState()
-      |> CurrentNodeAssetEditorService.clearCurrentNodeId
-      |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
+      |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
+      |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
       |> StateEditorService.setState
       |> ignore;
     });

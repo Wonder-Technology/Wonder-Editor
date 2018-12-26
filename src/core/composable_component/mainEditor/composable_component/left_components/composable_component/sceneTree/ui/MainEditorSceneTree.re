@@ -76,18 +76,18 @@ module Method = {
            isSelected=(_isSelected(uid, currentSceneTreeNode))
            isActive=true
            dragImg
-           widget=(SceneTreeUtils.getWidget())
+           widget=(SceneTreeWidgetService.getWidget())
            onSelect=onSelectFunc
            dragGameObject=dragGameObjectFunc
            dragWDB=dragWDBFunc
-           isWidget=SceneTreeUtils.isWidget
+           isWidget=SceneTreeWidgetService.isWidget
            isShowChildren
-           isAssetWDBFile=AssetUtils.isWDBAssetFile
+           isAssetWDBFile=WDBNodeAssetEditorService.isWDBAssetFile
            isHasChildren=(children |> Js.Array.length >= 1)
            handleToggleShowTreeChildren=(
              handleToggleShowTreeChildren(store, dispatchFunc)
            )
-           checkNodeRelation=SceneTreeUtils.isGameObjectRelationError
+           checkNodeRelation=CheckSceneTreeLogicService.isGameObjectRelationError
            treeChildren=(
              buildSceneTreeArray(
                (store, dispatchFunc, dragImg),

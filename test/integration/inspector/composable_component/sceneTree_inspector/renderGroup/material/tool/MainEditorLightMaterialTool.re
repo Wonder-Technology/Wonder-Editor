@@ -53,7 +53,7 @@ module Drag = {
       (
         ~dispatchFunc=_ => (),
         ~store=TestTool.buildEmptyAppState(),
-        ~widget=AssetUtils.getWidget(),
+        ~widget=AssetWidgetService.getWidget(),
         ~effectAllowd="move",
         ~dragImg=DomHelper.createElement("img"),
         ~event=BaseEventTool.buildDragEvent(.),

@@ -63,7 +63,7 @@ let _ =
           MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
 
           CurrentSelectSourceEditorService.setCurrentSelectSource(
-            EditorType.SceneTree,
+            SceneTreeWidgetService.getWidget(),
           )
           |> StateLogicService.getAndSetEditorState;
         });
@@ -78,7 +78,7 @@ let _ =
       describe("else set currentSelectSource is Asset", () => {
         beforeEach(() =>
           CurrentSelectSourceEditorService.setCurrentSelectSource(
-            EditorType.Asset,
+            AssetWidgetService.getWidget(),
           )
           |> StateLogicService.getAndSetEditorState
         );

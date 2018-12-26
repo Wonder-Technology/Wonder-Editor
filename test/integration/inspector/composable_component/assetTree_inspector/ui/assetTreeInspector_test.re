@@ -24,14 +24,14 @@ let _ =
           MainEditorAssetTool.initAssetTree,
         );
         CurrentSelectSourceEditorService.setCurrentSelectSource(
-          EditorType.Asset,
+          AssetWidgetService.getWidget(),
         )
         |> StateLogicService.getAndSetEditorState;
       });
       afterEach(() =>
         StateEditorService.getState()
-        |> CurrentNodeAssetEditorService.clearCurrentNodeId
-        |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
+        |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
+        |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
         |> StateEditorService.setState
         |> ignore
       );

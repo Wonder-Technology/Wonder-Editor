@@ -1,4 +1,4 @@
-open EditorType;
+open WidgetType;
 
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
