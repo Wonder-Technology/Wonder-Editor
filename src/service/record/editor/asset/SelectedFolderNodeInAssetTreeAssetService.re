@@ -1,16 +1,17 @@
 open AssetType;
 
-let getSelectedFolderNodeInAssetTree = ({selectedFolderNodeInAssetTree}) => selectedFolderNodeInAssetTree;
+let getSelectedFolderNodeIdInAssetTree = ({selectedFolderNodeIdInAssetTree}) => selectedFolderNodeIdInAssetTree;
 
-let unsafeGetSelectedFolderNodeInAssetTree = record =>
-  getSelectedFolderNodeInAssetTree(record) |> OptionService.unsafeGet;
+let unsafeGetSelectedFolderNodeIdInAssetTree = record =>
+  getSelectedFolderNodeIdInAssetTree(record) |> OptionService.unsafeGet;
 
-let clearSelectedFolderNodeInAssetTree = record => {
+let clearSelectedFolderNodeIdInAssetTree = record => {
   ...record,
-  selectedFolderNodeInAssetTree: None,
+  selectedFolderNodeIdInAssetTree: None,
 };
 
-let setSelectedFolderNodeInAssetTree = (selectedFolderNodeInAssetTree, record) => {
+let setSelectedFolderNodeIdInAssetTree =
+    (selectedFolderNodeInAssetTree, record) => {
   ...record,
-  selectedFolderNodeInAssetTree: Some(selectedFolderNodeInAssetTree),
+  selectedFolderNodeIdInAssetTree: Some(selectedFolderNodeInAssetTree),
 };

@@ -27,8 +27,8 @@ let _ =
       restoreSandbox(refJsObjToSandbox(sandbox^));
 
       StateEditorService.getState()
-      |> CurrentNodeAssetEditorService.clearCurrentNode
-      |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeInAssetTree
+      |> CurrentNodeAssetEditorService.clearCurrentNodeId
+      |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
       |> StateEditorService.setState
       |> ignore;
     });
@@ -311,11 +311,6 @@ let _ =
 
           MainEditorAssetHeaderOperateNodeTool.addFolder();
 
-          MainEditorAssetTreeTool.Select.selectFolderNode(
-            ~nodeId=addedFolderNodeId1,
-            (),
-          );
-
           let addedFolderNodeId2 = addedFolderNodeId1 |> succ;
 
           MainEditorAssetHeaderOperateNodeTool.addFolder();
@@ -326,12 +321,8 @@ let _ =
           )
           |> StateLogicService.getAndSetEditorState;
 
-          let addedFolderNodeId3 = addedFolderNodeId2 |> succ;
-
-          MainEditorAssetHeaderOperateNodeTool.addFolder();
-
           MainEditorAssetTreeTool.Drag.dragAssetTreeNode(
-            ~startNodeId=addedFolderNodeId3,
+            ~startNodeId=addedFolderNodeId2,
             ~targetNodeId=addedFolderNodeId1,
             (),
           );
@@ -343,8 +334,9 @@ let _ =
             (),
           );
 
-          BuildComponentTool.buildAssetTree()
-          |> ReactTestTool.createSnapshotAndMatch;
+          MainEditorAssetFolderNodeTool.getIsShowChildren(addedFolderNodeId1)
+          |> StateLogicService.getEditorState
+          |> expect == true;
         })
       );
 

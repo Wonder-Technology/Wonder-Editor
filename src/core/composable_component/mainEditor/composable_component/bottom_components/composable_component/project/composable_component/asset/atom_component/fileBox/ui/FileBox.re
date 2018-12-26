@@ -5,12 +5,7 @@ module Method = {
     let editorState = StateEditorService.getState();
 
     editorState
-    |> CurrentNodeAssetEditorService.setCurrentNode(
-         OperateTreeAssetEditorService.unsafeFindNodeById(
-           nodeId,
-           editorState,
-         ),
-       )
+    |> CurrentNodeAssetEditorService.setCurrentNodeId(nodeId)
     |> SceneEditorService.clearCurrentSceneTreeNode
     |> CurrentSelectSourceEditorService.setCurrentSelectSource(
          EditorType.Asset,

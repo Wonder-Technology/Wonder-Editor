@@ -8,7 +8,7 @@ module CustomEventHandler = {
 
   let handleSelfLogic = ((store, dispatchFunc), (), uid) => {
     StateEditorService.getState()
-    |> CurrentNodeAssetEditorService.clearCurrentNode
+    |> CurrentNodeAssetEditorService.clearCurrentNodeId
     |> StateEditorService.setState
     |> ignore;
 

@@ -9,7 +9,8 @@ module CustomEventHandler = {
     let (editorState, newNodeId) =
       IdAssetEditorService.generateNodeId |> StateLogicService.getEditorState;
     let targetTreeNode =
-      editorState |> TreeAssetEditorService.getSelectedFolderNodeInAssetTree;
+      editorState
+      |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree;
 
     let materialName =
       OperateMaterialLogicService.getNewMaterilaName()
@@ -34,6 +35,10 @@ module CustomEventHandler = {
         ),
         editorState,
       );
+
+    let targetTreeNode =
+      editorState
+      |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree;
 
     editorState |> StateEditorService.setState |> ignore;
 

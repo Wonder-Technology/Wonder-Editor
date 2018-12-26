@@ -33,7 +33,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
 >
   <article
     className="wonder-asset-folderBox"
-    id="folder-6"
+    id="folder-7"
     style={
       Object {
         "border": "0px",
@@ -67,7 +67,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
   </article>
   <article
     className="wonder-asset-folderBox"
-    id="folder-8"
+    id="folder-9"
     style={
       Object {
         "border": "0px",

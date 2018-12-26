@@ -102,7 +102,9 @@ let initStateWithJob =
   SettingToolEngine.setFakeCanvasToEngineState();
 
   StateEditorService.setState(
-    CreateEditorStateEditorService.create() |> SettingTool.initSetting,
+    CreateEditorStateEditorService.create()
+    |> SettingTool.initSetting
+    |> TreeAssetEditorService.createTree,
   )
   |> ignore;
 

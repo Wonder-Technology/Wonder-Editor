@@ -1,9 +1,6 @@
-let findChild = (folderNode, targetNode) =>
-  folderNode
-  |> FolderNodeAssetService.getChildren
-  |> UIStateAssetService.find(Js.Array.find, childNode =>
-       NodeAssetService.isNodeEqualById(~sourceNode=childNode, ~targetNode)
-     );
+let getNoNameFolderName = () => "NoName Folder";
+
+let findChild = FolderNodeAssetService.findChild;
 
 let _setNodeData = (nodeId, nodeData, editorState) =>
   NodeAssetEditorService.setNodeData(
@@ -41,4 +38,7 @@ let setFolderName = (nodeId, name, editorState) =>
        ),
      );
 
-let getNoNameFolderName = () => FolderNodeAssetService.getNoNameFolderName();
+let getIsShowChildren = (nodeId, editorState) =>
+  FolderNodeAssetService.getIsShowChildren(
+    OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState),
+  );

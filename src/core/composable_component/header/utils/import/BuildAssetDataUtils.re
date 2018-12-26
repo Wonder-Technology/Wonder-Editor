@@ -222,21 +222,6 @@ let _buildMaterialEditorData =
   let (editorState, assetNodeId) =
     IdAssetEditorService.generateNodeId(editorState);
 
-  /* let (parentFolderNodeId, editorState) =
-     HeaderImportFolderUtils.buildFolder(path, (editorState, engineState)); */
-
-  /* OperateTreeAssetLogicService.addFolderNodesToTreeByPath(
-       path,
-       (editorState, engineState),
-     )
-     |> MaterialNodeAssetEditorService.setNodeData(
-          assetNodeId,
-          MaterialNodeAssetService.buildNodeData(
-            ~type_,
-            ~materialComponent=material,
-          ),
-        ); */
-
   let (editorState, parentFolderNode) =
     OperateTreeAssetLogicService.addFolderNodesToTreeByPath(
       path,

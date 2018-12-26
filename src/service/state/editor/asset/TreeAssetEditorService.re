@@ -33,12 +33,26 @@ let createTree = editorState => {
   |> IndexAssetEditorService.setNodeIndex(newIndex);
 };
 
-let getSelectedFolderNodeInAssetTree = editorState =>
+/* let getSelectedFolderNodeIdInAssetTree = editorState =>
+   switch (
+     SelectedFolderNodeInAssetTreeAssetEditorService.getSelectedFolderNodeIdInAssetTree(
+       editorState,
+     )
+   ) {
+   | None =>
+     RootTreeAssetService.getRootNode(unsafeGetTree(editorState))
+     |> NodeAssetService.getNodeId(~node=_)
+   | Some(nodeId) => nodeId
+   }; */
+
+let getSelectedFolderNodeIdInAssetTree = editorState =>
   switch (
-    SelectedFolderNodeInAssetTreeAssetEditorService.getSelectedFolderNodeInAssetTree(
+    SelectedFolderNodeInAssetTreeAssetEditorService.getSelectedFolderNodeIdInAssetTree(
       editorState,
     )
   ) {
-  | None => RootTreeAssetService.getRootNode(unsafeGetTree(editorState))
-  | Some(node) => node
+  | None =>
+    RootTreeAssetService.getRootNode(unsafeGetTree(editorState))
+    |> NodeAssetService.getNodeId(~node=_)
+  | Some(nodeId) => nodeId
   };

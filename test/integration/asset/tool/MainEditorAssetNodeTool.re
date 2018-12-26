@@ -5,15 +5,16 @@ let unsafeGetTextureNode = nodeId =>
   );
 
 let unsafeGetSelectedFolderNodeInAssetTree = editorState =>
-  SelectedFolderNodeInAssetTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree(
+  OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree(
     editorState,
   );
 
 let unsafeGetCurrentNode = editorState =>
-  CurrentNodeAssetEditorService.unsafeGetCurrentNode(editorState);
+  OperateTreeAssetEditorService.getCurrentNode(editorState)
+  |> OptionService.unsafeGet;
 
 let unsafeGetCurrentNodeId = editorState =>
-  unsafeGetCurrentNode(editorState) |> NodeAssetService.getNodeId(~node=_);
+  CurrentNodeAssetEditorService.unsafeGetCurrentNodeId(editorState);
 
 let getTextureComponentFromNodeId = nodeId => {
   let {textureComponent}: NodeAssetType.textureNodeData =
@@ -27,13 +28,11 @@ let getTextureComponentFromCurrentNodeId = () =>
     unsafeGetCurrentNodeId(StateEditorService.getState()),
   );
 
-let setCurrentNode = nodeId => {
+let setCurrentNodeId = nodeId => {
   let editorState = StateEditorService.getState();
 
   editorState
-  |> CurrentNodeAssetEditorService.setCurrentNode(
-       OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState),
-     )
+  |> CurrentNodeAssetEditorService.setCurrentNodeId(nodeId)
   |> StateEditorService.setState
   |> ignore;
 };

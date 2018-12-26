@@ -184,6 +184,7 @@ let _buildMaterialData = (textureIndexMap, (editorState, engineState)) =>
              node,
              (editorState, engineState),
            );
+
          let {materialComponent, type_}: NodeAssetType.materialNodeData =
            MaterialNodeAssetService.getNodeData(node);
 

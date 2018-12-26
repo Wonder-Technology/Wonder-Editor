@@ -1,15 +1,11 @@
-let enterFolder = (nodeId, editorState) => {
-  let node =
-    OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState);
-
+let enterFolder = (nodeId, editorState) =>
   editorState
-  |> CurrentNodeAssetEditorService.setCurrentNode(node)
-  |> SelectedFolderNodeInAssetTreeAssetEditorService.setSelectedFolderNodeInAssetTree(
-       node,
+  |> CurrentNodeAssetEditorService.setCurrentNodeId(nodeId)
+  |> SelectedFolderNodeInAssetTreeAssetEditorService.setSelectedFolderNodeIdInAssetTree(
+       nodeId,
      )
   |> SceneEditorService.clearCurrentSceneTreeNode
   |> CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.Asset);
-};
 
 let addFolderNodeToAssetTree = (targetTreeNode, newNode, editorState) =>
   NodeAssetEditorService.addNodeToAssetTree(

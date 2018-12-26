@@ -7,19 +7,32 @@ module CustomEventHandler = {
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
     (
       editorState => {
+        let engineState = StateEngineService.unsafeGetState();
+
         let (editorState, nodeId) =
           IdAssetEditorService.generateNodeId(editorState);
 
-        FolderNodeAssetEditorService.addFolderNodeToAssetTree(
+        let parentFolderNode =
           editorState
-          |> TreeAssetEditorService.getSelectedFolderNodeInAssetTree,
-          FolderNodeAssetService.buildNode(
-            ~nodeId,
-            ~name=FolderNodeAssetService.getNewFolderName(),
-            (),
-          ),
-          editorState,
-        );
+          |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree;
+
+        let editorState =
+          FolderNodeAssetEditorService.addFolderNodeToAssetTree(
+            parentFolderNode,
+            FolderNodeAssetService.buildNode(
+              ~nodeId,
+              ~name=
+                FolderNodeAssetService.getNewFolderName()
+                |. OperateTreeAssetLogicService.getUniqueNodeName(
+                     parentFolderNode,
+                     engineState,
+                   ),
+              (),
+            ),
+            editorState,
+          );
+
+        editorState;
       }
     )
     |> StateLogicService.getAndSetEditorState;

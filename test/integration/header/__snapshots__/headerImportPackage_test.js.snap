@@ -363,13 +363,13 @@ exports[`header import package test geometry
 `;
 
 exports[`header import package test geometry test with wdb assets relate wdb asset gameObjects with default geometrys 
-               1.load box wdb asset w1(with default cube geometry);
-               1.load box wdb asset w2(with default cube geometry);
-               2.export;
-               3.import;
-               4.drag w1 to scene tree to be gameObject g1;
-               5.drag w2 to scene tree to be gameObject g2;
-                g1->geometry->select geometry group widget should only have default geometrys and be using default cube geometry 1`] = `
+                  1.load box wdb asset w1(with default cube geometry);
+                  1.load box wdb asset w2(with default cube geometry);
+                  2.export;
+                  3.import;
+                  4.drag w1 to scene tree to be gameObject g1;
+                  5.drag w2 to scene tree to be gameObject g2;
+                   g1->geometry->select geometry group widget should only have default geometrys and be using default cube geometry 1`] = `
 <article
   className="wonder-inspector-geometry"
 >
@@ -436,13 +436,13 @@ exports[`header import package test geometry test with wdb assets relate wdb ass
 `;
 
 exports[`header import package test geometry test with wdb assets relate wdb asset gameObjects with default geometrys 
-               1.load box wdb asset w1(with default cube geometry);
-               1.load box wdb asset w2(with default cube geometry);
-               2.export;
-               3.import;
-               4.drag w1 to scene tree to be gameObject g1;
-               5.drag w2 to scene tree to be gameObject g2;
-                g2->geometry->select geometry group widget should only have default geometrys and be using default cube geometry 1`] = `
+                  1.load box wdb asset w1(with default cube geometry);
+                  1.load box wdb asset w2(with default cube geometry);
+                  2.export;
+                  3.import;
+                  4.drag w1 to scene tree to be gameObject g1;
+                  5.drag w2 to scene tree to be gameObject g2;
+                   g2->geometry->select geometry group widget should only have default geometrys and be using default cube geometry 1`] = `
 <article
   className="wonder-inspector-geometry"
 >

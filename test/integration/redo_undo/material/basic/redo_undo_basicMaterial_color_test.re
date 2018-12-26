@@ -59,8 +59,8 @@ let _ =
 
     let _afterEach = () =>
       StateEditorService.getState()
-      |> CurrentNodeAssetEditorService.clearCurrentNode
-      |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeInAssetTree
+      |> CurrentNodeAssetEditorService.clearCurrentNodeId
+      |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
       |> StateEditorService.setState
       |> ignore;
 

@@ -132,8 +132,6 @@ let _buildUniqueName = name =>
     resultArr[1] ++ " " ++ postfix;
   };
 
-/* let getUniqueTreeNodeName =
-   (name, nodeType, nodeId, (editorState, engineState)) => */
 let rec getUniqueNodeName = (name, parentFolderNode, engineState) =>
   isNodeChildHasTargetName(name, parentFolderNode, engineState) ?
     getUniqueNodeName(

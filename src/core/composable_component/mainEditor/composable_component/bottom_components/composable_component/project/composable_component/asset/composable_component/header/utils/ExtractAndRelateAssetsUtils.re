@@ -389,22 +389,21 @@ module Extract = {
 
 module AssetTree = {
   let _findTargetFolderChildNodeByName =
-      (folderNode, targetFolderChildNodeName) =>
+      (folderNode, targetFolderChildNodeName, engineState) =>
     FolderNodeAssetService.getChildren(folderNode)
     |> UIStateAssetService.get
     |> Js.Array.find(child =>
-         FolderNodeAssetService.getNodeName(
-           FolderNodeAssetService.getNodeData(child),
-         )
+         NodeNameAssetLogicService.getNodeName(child, engineState)
          === targetFolderChildNodeName
        );
 
   let _buildFolderNode =
-      (folderName, selectedFolderNodeInAssetTree, editorState) =>
+      (folderName, selectedFolderNodeInAssetTree, (editorState, engineState)) =>
     switch (
       _findTargetFolderChildNodeByName(
         selectedFolderNodeInAssetTree,
         folderName,
+        engineState,
       )
     ) {
     | Some(node) => (editorState, node)
@@ -443,7 +442,7 @@ module AssetTree = {
           _buildFolderNode(
             folderName,
             selectedFolderNodeInAssetTree,
-            editorState,
+            (editorState, engineState),
           );
 
         extractedMaterialAssetDataArr
@@ -502,7 +501,7 @@ module AssetTree = {
           _buildFolderNode(
             folderName,
             selectedFolderNodeInAssetTree,
-            editorState,
+            (editorState, engineState),
           );
 
         extractedTextureAssetDataArr
@@ -561,7 +560,8 @@ module AssetTree = {
         (editorState, engineState),
       ) => {
     let selectedFolderNodeInAssetTree =
-      editorState |> TreeAssetEditorService.getSelectedFolderNodeInAssetTree;
+      editorState
+      |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree;
 
     (editorState, engineState)
     |> _addMaterialNodeToAssetTree(

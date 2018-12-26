@@ -1,15 +1,19 @@
-/* TODO test */
 let getNodePath = (targetNode, (editorState, engineState)) => {
   let targetNodeId = NodeAssetService.getNodeId(~node=targetNode);
 
-  let _handleNodeFunc = ((isFindNode, pathArr), nodeId, node) =>
+  let _handleLeafNodeFunc = ((isFindNode, pathArr), nodeId, node) =>
+    isFindNode ?
+      (true, pathArr) :
+      NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
+        (true, pathArr) : (false, pathArr);
+  let _handleFolderNodeFunc = ((isFindNode, pathArr), nodeId, node) =>
     isFindNode ?
       (true, pathArr) :
       NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
         (true, pathArr |> ArrayService.push(node)) : (false, pathArr);
   let _textureNodeFunc =
       (acc, nodeId, {textureComponent}: NodeAssetType.textureNodeData) =>
-    _handleNodeFunc(
+    _handleLeafNodeFunc(
       acc,
       nodeId,
       NodeNameAssetLogicService.getTextureNodeName(
@@ -23,7 +27,7 @@ let getNodePath = (targetNode, (editorState, engineState)) => {
         nodeId,
         {materialComponent, type_}: NodeAssetType.materialNodeData,
       ) =>
-    _handleNodeFunc(
+    _handleLeafNodeFunc(
       acc,
       nodeId,
       NodeNameAssetLogicService.getMaterialNodeName(
@@ -33,7 +37,7 @@ let getNodePath = (targetNode, (editorState, engineState)) => {
       ),
     );
   let _wdbNodeFunc = (acc, nodeId, nodeData) =>
-    _handleNodeFunc(
+    _handleLeafNodeFunc(
       acc,
       nodeId,
       NodeNameAssetLogicService.getWDBNodeName(
@@ -41,7 +45,7 @@ let getNodePath = (targetNode, (editorState, engineState)) => {
       ),
     );
   let _folderNodeFunc = (acc, nodeId, nodeData, children) =>
-    _handleNodeFunc(
+    _handleFolderNodeFunc(
       acc,
       nodeId,
       NodeNameAssetLogicService.getFolderNodeName(
@@ -84,5 +88,5 @@ let getNodePath = (targetNode, (editorState, engineState)) => {
       (),
     );
 
-  pathArr |> Js.Array.joinWith("/");
+  pathArr |> Js.Array.reverseInPlace |> Js.Array.joinWith("/");
 };

@@ -5,16 +5,17 @@ module CustomEventHandler = {
   type return = unit;
 
   let handleSelfLogic =
-      ((store, dispatchFunc), (), (targetNodeId, sourceNodeId)) => {
-    let editorState = StateEditorService.getState();
-
-    NodeAssetService.isIdEqual(targetNodeId, sourceNodeId) ?
+      ((store, dispatchFunc), (), (targetFolderNodeId, sourceNodeId)) =>
+    NodeAssetService.isIdEqual(targetFolderNodeId, sourceNodeId) ?
       dispatchFunc(AppStore.UpdateAction(Update([|Project|]))) |> ignore :
       {
+        let editorState = StateEditorService.getState();
+        let engineState = StateEngineService.unsafeGetState();
+
         let editorState =
           editorState
           |> OperateTreeAssetEditorService.setNodeIsShowChildren(
-               targetNodeId,
+               targetFolderNodeId,
                true,
              );
 
@@ -24,21 +25,35 @@ module CustomEventHandler = {
             editorState,
           );
 
+        let (engineState, sourceNode) =
+          NodeNameAssetLogicService.updateNodeName(
+            sourceNode,
+            NodeNameAssetLogicService.getNodeName(sourceNode, engineState)
+            |. OperateTreeAssetLogicService.getUniqueNodeName(
+                 OperateTreeAssetEditorService.unsafeFindNodeById(
+                   targetFolderNodeId,
+                   editorState,
+                 ),
+                 engineState,
+               ),
+            engineState,
+          );
+
         let editorState =
           OperateTreeAssetEditorService.removeNode(sourceNode, editorState);
 
         let editorState =
           OperateTreeAssetEditorService.insertNode(
-            targetNodeId,
+            targetFolderNodeId,
             sourceNode,
             editorState,
           );
 
         editorState |> StateEditorService.setState |> ignore;
+        engineState |> StateEngineService.setState |> ignore;
 
         dispatchFunc(AppStore.UpdateAction(Update([|Project|]))) |> ignore;
       };
-  };
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);

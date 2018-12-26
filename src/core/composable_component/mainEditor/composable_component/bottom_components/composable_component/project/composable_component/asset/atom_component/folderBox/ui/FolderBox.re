@@ -13,11 +13,23 @@ module Method = {
     let editorState = StateEditorService.getState();
 
     let editorState =
-      OperateTreeAssetEditorService.setNodeIsShowChildren(
-        nodeId,
-        true,
-        editorState,
-      );
+      switch (
+        OperateTreeAssetEditorService.findNodeParentId(
+          OperateTreeAssetEditorService.unsafeFindNodeById(
+            nodeId,
+            editorState,
+          ),
+          editorState,
+        )
+      ) {
+      | None => editorState
+      | Some(parentFolderNodeId) =>
+        OperateTreeAssetEditorService.setNodeIsShowChildren(
+          parentFolderNodeId,
+          true,
+          editorState,
+        )
+      };
 
     editorState |> StateEditorService.setState |> ignore;
 

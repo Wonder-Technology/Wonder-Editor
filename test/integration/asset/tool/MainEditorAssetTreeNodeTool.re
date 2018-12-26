@@ -80,7 +80,7 @@ let insertFolderNode =
        FolderNodeAssetService.buildNode(
          ~nodeId=folderNodeId,
          ~name=
-           FolderNodeAssetService.getNoNameFolderName()
+           MainEditorAssetFolderNodeTool.getNoNameFolderName()
            |. OperateTreeAssetLogicService.getUniqueNodeName(
                 OperateTreeAssetEditorService.unsafeFindNodeById(
                   parentFolderNodeId,
@@ -88,6 +88,7 @@ let insertFolderNode =
                 ),
                 engineState,
               ),
+         ~children=UIStateAssetService.build(~isShowChildren=true, ()),
          (),
        ),
      ),

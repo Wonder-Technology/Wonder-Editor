@@ -1,25 +1,37 @@
 open EditorType;
 
-let getSelectedFolderNodeInAssetTree = editorState =>
+let getSelectedFolderNodeIdInAssetTree = editorState =>
   editorState.assetRecord
-  |> SelectedFolderNodeInAssetTreeAssetService.getSelectedFolderNodeInAssetTree;
+  |> SelectedFolderNodeInAssetTreeAssetService.getSelectedFolderNodeIdInAssetTree;
 
-let unsafeGetSelectedFolderNodeInAssetTree = editorState =>
+let unsafeGetSelectedFolderNodeIdInAssetTree = editorState =>
   editorState.assetRecord
-  |> SelectedFolderNodeInAssetTreeAssetService.unsafeGetSelectedFolderNodeInAssetTree;
+  |> SelectedFolderNodeInAssetTreeAssetService.unsafeGetSelectedFolderNodeIdInAssetTree;
 
-let clearSelectedFolderNodeInAssetTree = editorState => {
+/* let getSelectedFolderNodeInAssetTree = editorState =>
+     getSelectedFolderNodeIdInAssetTree(editorState)
+     |> Js.Option.map((. selectedFolderNodeIdInAssetTree) =>
+          OperateTreeAssetEditorService.unsafeFindNodeById(
+            selectedFolderNodeIdInAssetTree,
+          )
+        );
+
+   let unsafeGetSelectedFolderNodeInAssetTree = editorState =>
+     getSelectedFolderNodeInAssetTree(editorState) |> OptionService.unsafeGet; */
+
+let clearSelectedFolderNodeIdInAssetTree = editorState => {
   ...editorState,
   assetRecord:
     editorState.assetRecord
-    |> SelectedFolderNodeInAssetTreeAssetService.clearSelectedFolderNodeInAssetTree,
+    |> SelectedFolderNodeInAssetTreeAssetService.clearSelectedFolderNodeIdInAssetTree,
 };
 
-let setSelectedFolderNodeInAssetTree = (selectedFolderNodeInAssetTree, editorState) => {
+let setSelectedFolderNodeIdInAssetTree =
+    (selectedFolderNodeIdInAssetTree, editorState) => {
   ...editorState,
   assetRecord:
     editorState.assetRecord
-    |> SelectedFolderNodeInAssetTreeAssetService.setSelectedFolderNodeInAssetTree(
-         selectedFolderNodeInAssetTree,
+    |> SelectedFolderNodeInAssetTreeAssetService.setSelectedFolderNodeIdInAssetTree(
+         selectedFolderNodeIdInAssetTree,
        ),
 };

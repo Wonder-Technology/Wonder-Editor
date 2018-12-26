@@ -5,7 +5,7 @@ let removeNode =
       ~nodeId,
       (),
     ) => {
-  MainEditorAssetNodeTool.setCurrentNode(nodeId);
+  MainEditorAssetNodeTool.setCurrentNodeId(nodeId);
 
   MainEditorAssetHeader.Method.removeAssetNode(
     (store, dispatchFunc),

@@ -871,7 +871,12 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
           <li>
             <div
               className="item-triangle"
-            />
+              onMouseDown={[Function]}
+            >
+              <img
+                src="./public/img/right.png"
+              />
+            </div>
             <img
               className="treeNode-icon"
               src="./public/img/package.png"
@@ -898,7 +903,12 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
           <li>
             <div
               className="item-triangle"
-            />
+              onMouseDown={[Function]}
+            >
+              <img
+                src="./public/img/right.png"
+              />
+            </div>
             <img
               className="treeNode-icon"
               src="./public/img/package.png"
@@ -927,7 +937,7 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-4"
+      id="folder-5"
       style={
         Object {
           "border": "0px",
@@ -961,7 +971,7 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-6"
+      id="folder-7"
       style={
         Object {
           "border": "0px",

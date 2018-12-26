@@ -82,3 +82,24 @@ let removeNodeById = (targetNodeId, editorState) => {
 
   (newTree |> TreeAssetEditorService.setTree, removedNode);
 };
+
+let findNodeParent = (targetNode, editorState) =>
+  IterateTreeAssetService.findOne(
+    ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
+    ~predFolderNodeFunc=
+      node =>
+        FolderNodeAssetService.findChild(node, targetNode) |> Js.Option.isSome,
+    (),
+  );
+
+let findNodeParentId = (targetNode, editorState) =>
+  findNodeParent(targetNode, editorState)
+  |> Js.Option.map((. node) => NodeAssetService.getNodeId(~node));
+
+let getCurrentNode = editorState =>
+  CurrentNodeAssetEditorService.getCurrentNodeId(editorState)
+  |> Js.Option.map((. nodeId) => unsafeFindNodeById(nodeId, editorState));
+
+let unsafeGetSelectedFolderNodeInAssetTree = editorState =>
+  TreeAssetEditorService.getSelectedFolderNodeIdInAssetTree(editorState)
+  |> unsafeFindNodeById(_, editorState);

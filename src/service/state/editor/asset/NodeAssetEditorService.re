@@ -1,8 +1,9 @@
 let setNodeData = (nodeId, nodeData, buildNodeByNodeDataFunc, editorState) =>
   TreeAssetEditorService.unsafeGetTree(editorState)
-  |> OperateTreeAssetService.replaceNode(
+  |> OperateTreeAssetService.updateNode(
        nodeId,
-       buildNodeByNodeDataFunc(~nodeId, ~nodeData),
+       nodeData,
+       buildNodeByNodeDataFunc,
      )
   |> TreeAssetEditorService.setTree(_, editorState);
 

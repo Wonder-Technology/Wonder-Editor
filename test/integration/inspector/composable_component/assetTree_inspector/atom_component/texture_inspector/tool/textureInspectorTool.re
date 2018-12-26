@@ -22,7 +22,8 @@ let getTextureComponentFromCurrentNodeData = () => {
   let editorState = StateEditorService.getState();
 
   let {textureComponent}: NodeAssetType.textureNodeData =
-    CurrentNodeAssetEditorService.unsafeGetCurrentNode(editorState)
+    OperateTreeAssetEditorService.getCurrentNode(editorState)
+    |> OptionService.unsafeGet
     |> TextureNodeAssetService.getNodeData;
 
   textureComponent;

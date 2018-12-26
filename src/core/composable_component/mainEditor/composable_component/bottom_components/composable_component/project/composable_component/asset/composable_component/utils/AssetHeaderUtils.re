@@ -39,7 +39,7 @@ let _handleImage =
               ~textureComponent,
               ~imageDataIndex,
             ),
-            editorState
+            editorState,
           );
 
         resolve(. (editorState, engineState));
@@ -191,7 +191,8 @@ let handleFileByTypeAsync = (fileResult: nodeResultType, createJsZipFunc) => {
   let engineState = StateEngineService.unsafeGetState();
 
   let selectedFolderNodeInAssetTree =
-    editorState |> TreeAssetEditorService.getSelectedFolderNodeInAssetTree;
+    editorState
+    |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree;
 
   _handleSpecificFuncByTypeAsync(
     fileResult.type_,

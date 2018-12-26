@@ -140,10 +140,8 @@ let replaceNode = (targetNodeId, newTreeNode, tree) => {
   );
 };
 
-/* let getAssetNodeTotalName = (nodeId, tree) => */
-/* let getNodeName = (nodeId, tree) =>
-   findNodeById(nodeId, tree)
-   |> Js.Option.map((. node) => _getNodeName(node)); */
+let updateNode = (nodeId, nodeData, buildNodeByNodeDataFunc, tree) =>
+  tree |> replaceNode(nodeId, buildNodeByNodeDataFunc(~nodeId, ~nodeData));
 
 let _getFolderPathArr = folderPath =>
   folderPath

@@ -104,7 +104,7 @@ let getImportedTextureAssetTextureComponents = () =>
 let getImportedWDBAssetNodeId = () =>
   WDBNodeAssetEditorService.findAllWDBNodes
   |> StateLogicService.getEditorState
-  |> Js.Array.map(node => NodeAssetService.getNodeId(~node=_));
+  |> Js.Array.map(node => NodeAssetService.getNodeId(~node));
 
 let disposeAssets = () => {
   HeaderImportPackageUtils._disposeAssets();

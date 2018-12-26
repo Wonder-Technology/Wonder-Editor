@@ -80,8 +80,8 @@ open NodeAssetType;
           editorState,
         )
      |> TreeRootAssetEditorService.clearAssetTreeRoot
-     |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeInAssetTree
-     |> CurrentNodeAssetEditorService.clearCurrentNode; */
+     |> SelectedFolderNodeInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
+     |> CurrentNodeAssetEditorService.clearCurrentNodeId; */
 
 /* _iterateRemovedTreeNode(
      [|removedTreeNode|],

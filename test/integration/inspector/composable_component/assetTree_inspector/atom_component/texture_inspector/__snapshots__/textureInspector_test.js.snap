@@ -274,7 +274,12 @@ exports[`texture inspector prepare currentSelectSource test texture rename test 
         <li>
           <div
             className="item-triangle"
-          />
+            onMouseDown={[Function]}
+          >
+            <img
+              src="./public/img/down.png"
+            />
+          </div>
           <img
             className="treeNode-icon"
             src="./public/img/package.png"

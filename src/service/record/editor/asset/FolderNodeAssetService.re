@@ -4,8 +4,6 @@ open NodeAssetType;
 
 let getNewFolderName = () => "New Folder";
 
-let getNoNameFolderName = () => "NoName Folder";
-
 let buildNode = (~nodeId, ~name, ~children=UIStateAssetService.build(), ()) =>
   FolderNode(nodeId, {name: name}, children);
 
@@ -56,11 +54,12 @@ let getIsShowChildren = folderNode =>
 
 let clearChildren = folderNode =>
   switch (folderNode) {
-  | FolderNode(nodeId, nodeData, _) =>
+  | FolderNode(nodeId, nodeData, children) =>
     buildNodeByNodeData(
       ~nodeId,
       ~nodeData,
-      ~children=UIStateAssetService.build(~children=[||], ()),
+      /* ~children=UIStateAssetService.build(~children=[||], ()), */
+      ~children=children |> UIStateAssetService.map(_ => [||]),
     )
   | _ => _fatalShouldBeFolderNode()
   };
@@ -76,4 +75,11 @@ let filterChildrenById = (targetNodeId, children) =>
            NodeAssetService.getNodeId(~node=child),
            targetNodeId,
          )
+     );
+
+let findChild = (folderNode, targetNode) =>
+  folderNode
+  |> getChildren
+  |> UIStateAssetService.find(Js.Array.find, childNode =>
+       NodeAssetService.isNodeEqualById(~sourceNode=childNode, ~targetNode)
      );

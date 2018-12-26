@@ -95,6 +95,28 @@ let _ =
         BuildComponentTool.buildAssetTree()
         |> ReactTestTool.createSnapshotAndMatch;
       });
+      test(
+        "test select folder and add the same name folder, the name should add postfix",
+        () => {
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
+
+        let rootNodeId =
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getRootNodeId(
+            assetTreeData,
+          );
+
+        MainEditorAssetTreeTool.Select.selectFolderNode(
+          ~nodeId=rootNodeId,
+          (),
+        );
+
+        MainEditorAssetHeaderOperateNodeTool.addFolder();
+        MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+        BuildComponentTool.buildAssetTree()
+        |> ReactTestTool.createSnapshotAndMatch;
+      });
 
       test(
         {|remove first folder which use default name;

@@ -9,8 +9,8 @@ let create = () => {
     nodeIndex: 0,
     imageDataMapIndex: 0,
     tree: None,
-    currentNode: None,
-    selectedFolderNodeInAssetTree: None,
+    currentNodeId: None,
+    selectedFolderNodeIdInAssetTree: None,
     imageDataMap: WonderCommonlib.SparseMapService.createEmpty(),
     geometryData: {
       defaultCubeGeometryComponent: (-1),

@@ -1,19 +1,17 @@
 open NodeAssetType;
 
 module Method = {
-  let _isSelected = (selectedFolderNodeInAssetTree, nodeId) =>
-    NodeAssetService.isIdEqual(
-      nodeId,
-      NodeAssetService.getNodeId(~node=selectedFolderNodeInAssetTree),
-    );
+  let _isSelected = (selectedFolderNodeIdInAssetTree, nodeId) =>
+    NodeAssetService.isIdEqual(nodeId, selectedFolderNodeIdInAssetTree);
 
-  let _isActive = (selectedFolderNodeInAssetTree, currentNode, editorState) =>
-    currentNode
+  let _isActive =
+      (selectedFolderNodeIdInAssetTree, currentNodeId, editorState) =>
+    currentNodeId
     |> OptionService.andThenWithDefault(
-         currentNode =>
-           NodeAssetService.isNodeEqualById(
-             ~sourceNode=selectedFolderNodeInAssetTree,
-             ~targetNode=currentNode,
+         currentNodeId =>
+           NodeAssetService.isIdEqual(
+             currentNodeId,
+             selectedFolderNodeIdInAssetTree,
            ),
          false,
        );
@@ -62,14 +60,14 @@ module Method = {
         (onSelectFunc, onDropFunc),
         editorState,
       ) => {
-    let selectedFolderNodeInAssetTree =
-      TreeAssetEditorService.getSelectedFolderNodeInAssetTree(editorState);
-    let currentNode =
-      CurrentNodeAssetEditorService.getCurrentNode(editorState);
+    let selectedFolderNodeIdInAssetTree =
+      TreeAssetEditorService.getSelectedFolderNodeIdInAssetTree(editorState);
+    let currentNodeId =
+      CurrentNodeAssetEditorService.getCurrentNodeId(editorState);
 
     let rec _build =
             (
-              (selectedFolderNodeInAssetTree, currentNode),
+              (selectedFolderNodeIdInAssetTree, currentNodeId),
               allFolderNodes,
               (store, dispatchFunc, dragImg),
               (onSelectFunc, onDropFunc),
@@ -88,11 +86,11 @@ module Method = {
              key=(StringService.intToString(nodeId))
              id=nodeId
              name
-             isSelected=(_isSelected(selectedFolderNodeInAssetTree, nodeId))
+             isSelected=(_isSelected(selectedFolderNodeIdInAssetTree, nodeId))
              isActive=(
                _isActive(
-                 selectedFolderNodeInAssetTree,
-                 currentNode,
+                 selectedFolderNodeIdInAssetTree,
+                 currentNodeId,
                  editorState,
                )
              )
@@ -112,8 +110,11 @@ module Method = {
              checkNodeRelation=OperateTreeAssetLogicService.checkNodeRelation
              treeChildren=(
                _build(
-                 (selectedFolderNodeInAssetTree, currentNode),
-                 FolderNodeAssetService.getChildrenNodes(folderNode),
+                 (selectedFolderNodeIdInAssetTree, currentNodeId),
+                 FolderNodeAssetService.getChildrenNodes(folderNode)
+                 |> Js.Array.filter(node =>
+                      FolderNodeAssetService.isFolderNode(node)
+                    ),
                  (store, dispatchFunc, dragImg),
                  (onSelectFunc, onDropFunc),
                  editorState,
@@ -123,8 +124,8 @@ module Method = {
          });
 
     _build(
-      (selectedFolderNodeInAssetTree, currentNode),
-      FolderNodeAssetEditorService.findAllFolderNodes(editorState),
+      (selectedFolderNodeIdInAssetTree, currentNodeId),
+      [|RootTreeAssetEditorService.getRootNode(editorState)|],
       (store, dispatchFunc, dragImg),
       (onSelectFunc, onDropFunc),
       editorState,

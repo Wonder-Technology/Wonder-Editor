@@ -15,7 +15,7 @@ let map = (func, uiState) =>
 let mapChildren = (seqMapFunc, func, uiState) =>
   map(seqMapFunc(func), uiState);
 
-let build = (~children=[||], ~isShowChildren=true, ()) =>
+let build = (~children=[||], ~isShowChildren=false, ()) =>
   isShowChildren ? Show(children) : Hide(children);
 
 let buildByChangeStateType = (changeStateType, children) =>

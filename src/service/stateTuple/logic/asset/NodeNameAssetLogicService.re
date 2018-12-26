@@ -34,3 +34,44 @@ let isTargetNameNode = (~node, ~name, ~engineState) =>
     ~getTextureNameFunc=getTextureNodeName(~engineState),
     ~getMaterialNameFunc=getMaterialNodeName(~engineState),
   );
+
+let updateNodeName = (node, name, engineState) =>
+  NodeAssetService.handleNode(
+    ~node,
+    ~textureNodeFunc=
+      (nodeId, {textureComponent}: NodeAssetType.textureNodeData) => (
+        OperateTextureLogicService.setName(
+          ~texture=textureComponent,
+          ~name,
+          ~engineState,
+        ),
+        node,
+      ),
+    ~materialNodeFunc=
+      (nodeId, {materialComponent, type_}: NodeAssetType.materialNodeData) => (
+        OperateMaterialLogicService.setName(
+          ~material=materialComponent,
+          ~type_,
+          ~name,
+          ~engineState,
+        ),
+        node,
+      ),
+    ~wdbNodeFunc=
+      (nodeId, nodeData) => (
+        engineState,
+        WDBNodeAssetService.buildNodeByNodeData(
+          ~nodeId,
+          ~nodeData=WDBNodeAssetService.rename(~name, ~nodeData),
+        ),
+      ),
+    ~folderNodeFunc=
+      (nodeId, nodeData, children) => (
+        engineState,
+        FolderNodeAssetService.buildNodeByNodeData(
+          ~nodeId,
+          ~nodeData=FolderNodeAssetService.rename(~name, ~nodeData),
+          ~children,
+        ),
+      ),
+  );

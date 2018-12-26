@@ -38,7 +38,8 @@ let buildRootNode = (name, index) => {
     FolderNodeAssetService.buildNode(
       ~nodeId=id,
       ~name,
-      ()
+      ~children=UIStateAssetService.build(~isShowChildren=true, ()),
+      (),
     ),
     newIndex,
   );

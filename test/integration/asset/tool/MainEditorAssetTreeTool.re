@@ -20,19 +20,9 @@ let findNodeIdByName = (targetNodeName, (editorState, engineState)) =>
   findNodeByName(targetNodeName, (editorState, engineState))
   |> Js.Option.map((. node) => NodeAssetService.getNodeId(~node));
 
-let findNodeParent = (targetNode, editorState) =>
-  IterateTreeAssetService.findOne(
-    ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
-    ~predFolderNodeFunc=
-      node =>
-        MainEditorAssetFolderNodeTool.findChild(node, targetNode)
-        |> Js.Option.isSome,
-    (),
-  );
+let findNodeParent = OperateTreeAssetEditorService.findNodeParent;
 
-let findNodeParentId = (targetNode, editorState) =>
-  findNodeParent(targetNode, editorState)
-  |> Js.Option.map((. node) => NodeAssetService.getNodeId(~node));
+let findNodeParentId = OperateTreeAssetEditorService.findNodeParentId;
 
 let getRootNodeId = editorState =>
   RootTreeAssetEditorService.getRootNode(editorState)

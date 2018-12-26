@@ -138,22 +138,25 @@ let filter =
       (),
     )
     : 'r => {
-  let _nodeFunc = (acc, node) =>
-    predWDBNodeFunc(node) ? pushNodeFunc(node, acc) : acc;
+  let _nodeFunc = (acc, node, predNodeFunc) =>
+    predNodeFunc(node) ? pushNodeFunc(node, acc) : acc;
   let _textureNodeFunc = (acc, nodeId, nodeData) =>
     _nodeFunc(
       acc,
       TextureNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData),
+      predTextureNodeFunc,
     );
   let _materialNodeFunc = (acc, nodeId, nodeData) =>
     _nodeFunc(
       acc,
       MaterialNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData),
+      predMaterialNodeFunc,
     );
   let _wdbNodeFunc = (acc, nodeId, nodeData) =>
     _nodeFunc(
       acc,
       WDBNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData),
+      predWDBNodeFunc,
     );
   let _folderNodeFunc = (acc, nodeId, nodeData, children) =>
     _nodeFunc(
@@ -163,6 +166,7 @@ let filter =
         ~nodeData,
         ~children,
       ),
+      predFolderNodeFunc,
     );
 
   fold(
@@ -214,10 +218,10 @@ let findOne =
     : 'r =>
   find(
     ~tree,
-    ~predTextureNodeFunc=node => true,
-    ~predMaterialNodeFunc=node => true,
-    ~predWDBNodeFunc=node => true,
-    ~predFolderNodeFunc=node => true,
+    ~predTextureNodeFunc,
+    ~predMaterialNodeFunc,
+    ~predWDBNodeFunc,
+    ~predFolderNodeFunc,
     (),
   )
   |> Js.Option.map((. list) => list |> List.hd);

@@ -61,17 +61,6 @@ let _checkParentNode =
       Result.RelationResult.success()
   };
 
-let _buildNewTree = (parentNode, node, tree) =>
-  switch (parentNode) {
-  | None => tree
-  | Some(parentNode) =>
-    tree
-    |> OperateTreeAssetService.insertNode(
-         NodeAssetService.getNodeId(~node=parentNode),
-         node,
-       )
-  };
-
 let _textureNodeFunc =
     (
       (targetNodeId, name),
@@ -85,27 +74,9 @@ let _textureNodeFunc =
     {
       let engineState = _renameTextureNode(name, nodeData, engineState);
 
-      let node =
-        TextureNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData);
-
-      (
-        Result.RelationResult.success(),
-        parentNode,
-        _buildNewTree(parentNode, node, tree),
-        engineState,
-      );
+      (Result.RelationResult.success(), parentNode, tree, engineState);
     } :
-    {
-      let node =
-        TextureNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData);
-
-      (
-        result,
-        parentNode,
-        _buildNewTree(parentNode, node, tree),
-        engineState,
-      );
-    };
+    (result, parentNode, tree, engineState);
 
 let _materialNodeFunc =
     (
@@ -121,27 +92,9 @@ let _materialNodeFunc =
       let (result, engineState) =
         _renameMaterialNode(name, nodeData, engineState);
 
-      let node =
-        MaterialNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData);
-
-      (
-        result,
-        parentNode,
-        _buildNewTree(parentNode, node, tree),
-        engineState,
-      );
+      (result, parentNode, tree, engineState);
     } :
-    {
-      let node =
-        MaterialNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData);
-
-      (
-        result,
-        parentNode,
-        _buildNewTree(parentNode, node, tree),
-        engineState,
-      );
-    };
+    (result, parentNode, tree, engineState);
 
 let _wdbNodeFunc =
     (
@@ -154,36 +107,26 @@ let _wdbNodeFunc =
   |> Result.RelationResult.isSuccess
   && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
     {
-      let updatedData = WDBNodeAssetService.rename(~name, ~nodeData);
-
-      let node =
-        WDBNodeAssetService.buildNodeByNodeData(
-          ~nodeId,
-          ~nodeData=updatedData,
-        );
+      let updatedNodeData = WDBNodeAssetService.rename(~name, ~nodeData);
 
       (
         _checkParentNode(
           parentNode,
-          updatedData,
+          updatedNodeData,
           engineState,
           WDBNodeAssetService.getNodeName,
         ),
         parentNode,
-        _buildNewTree(parentNode, node, tree),
+        OperateTreeAssetService.updateNode(
+          nodeId,
+          updatedNodeData,
+          WDBNodeAssetService.buildNodeByNodeData,
+          tree,
+        ),
         engineState,
       );
     } :
-    {
-      let node = WDBNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData);
-
-      (
-        result,
-        parentNode,
-        _buildNewTree(parentNode, node, tree),
-        engineState,
-      );
-    };
+    (result, parentNode, tree, engineState);
 
 let _folderNodeFunc =
     (
@@ -197,24 +140,29 @@ let _folderNodeFunc =
   |> Result.RelationResult.isSuccess
   && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
     {
-      let updatedData = FolderNodeAssetService.rename(~name, ~nodeData);
+      let updatedNodeData = FolderNodeAssetService.rename(~name, ~nodeData);
 
       let node =
         FolderNodeAssetService.buildNodeByNodeData(
           ~nodeId,
-          ~nodeData=updatedData,
+          ~nodeData=updatedNodeData,
           ~children,
         );
 
       (
         _checkParentNode(
           parentNode,
-          updatedData,
+          updatedNodeData,
           engineState,
           FolderNodeAssetService.getNodeName,
         ),
         node |. Some,
-        _buildNewTree(parentNode, node, tree),
+        OperateTreeAssetService.updateNode(
+          nodeId,
+          updatedNodeData,
+          FolderNodeAssetService.buildNodeByNodeData(~children),
+          tree,
+        ),
         engineState,
       );
     } :
@@ -226,33 +174,20 @@ let _folderNodeFunc =
           ~children,
         );
 
-      (
-        result,
-        node |. Some,
-        _buildNewTree(parentNode, node, tree),
-        engineState,
-      );
+      (result, node |. Some, tree, engineState);
     };
 
-/* TODO test */
 let renameNode =
     (targetNodeId, name, (editorState, engineState))
     : Result.SameDataResult.t(
         (EditorType.editorState, Wonderjs.StateDataMainType.state),
       ) => {
   let tree = TreeAssetEditorService.unsafeGetTree(editorState);
-  let newTree =
-    RootTreeAssetService.getRootNode(tree)
-    |> FolderNodeAssetService.clearChildren;
   let parentNode = None;
+
   let (result, _, updatedTree, engineState) =
     IterateTreeAssetService.fold(
-      ~acc=(
-        Result.RelationResult.success(),
-        parentNode,
-        newTree,
-        engineState,
-      ),
+      ~acc=(Result.RelationResult.success(), parentNode, tree, engineState),
       ~textureNodeFunc=_textureNodeFunc((targetNodeId, name)),
       ~materialNodeFunc=_materialNodeFunc((targetNodeId, name)),
       ~wdbNodeFunc=_wdbNodeFunc((targetNodeId, name)),

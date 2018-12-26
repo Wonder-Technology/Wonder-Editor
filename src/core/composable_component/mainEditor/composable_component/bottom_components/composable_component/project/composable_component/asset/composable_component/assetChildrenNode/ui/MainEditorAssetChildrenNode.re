@@ -3,14 +3,10 @@ open NodeAssetType;
 open ImageDataType;
 
 module Method = {
-  let _isSelected = (currentNode, nodeId) =>
-    currentNode
+  let _isSelected = (currentNodeId, nodeId) =>
+    currentNodeId
     |> OptionService.andThenWithDefault(
-         currentNode =>
-           NodeAssetService.isIdEqual(
-             nodeId,
-             NodeAssetService.getNodeId(~node=currentNode),
-           ),
+         currentNodeId => NodeAssetService.isIdEqual(nodeId, currentNodeId),
          false,
        );
 
@@ -20,34 +16,6 @@ module Method = {
         imageDataIndex,
         editorState,
       );
-
-    /* switch (blobObjectURL) {
-       | Some(_) => editorState |> Result.SameDataResult.success
-       | None =>
-         switch (base64) {
-         | Some(_) => editorState |> Result.SameDataResult.success
-         | None =>
-           switch (uint8Array) {
-           | None =>
-             ("image->uint8Array should exist", editorState)
-             |> Result.SameDataResult.fail
-           | Some(uint8Array) =>
-             ImageDataMapAssetEditorService.setResult(
-               image,
-               {
-                 ...result,
-                 blobObjectURL:
-                   Some(
-                     Blob.newBlobFromArrayBuffer(uint8Array, mimeType)
-                     |> Blob.createObjectURL,
-                   ),
-               },
-               editorState,
-             )
-             |> Result.SameDataResult.success
-           }
-         }
-       }; */
 
     blobObjectURL
     |> OptionService.either(
@@ -167,7 +135,7 @@ module Method = {
   let showSpecificTreeNodeChildren =
       (
         (store, dispatchFunc),
-        (dragImg, debounceTime, currentNode),
+        (dragImg, debounceTime, currentNodeId),
         engineState,
         editorState,
       ) => {
@@ -175,13 +143,13 @@ module Method = {
 
     let result =
       editorState
-      |> TreeAssetEditorService.getSelectedFolderNodeInAssetTree
+      |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree
       |> FolderNodeAssetService.getChildrenNodes
       |> sortAssetTreeChildrenNode(_, engineState)
       |> ArrayService.traverseSameDataResultAndCollectByApply(node => {
            let nodeId = NodeAssetService.getNodeId(~node);
            let key = StringService.intToString(nodeId);
-           let isSelected = _isSelected(currentNode, nodeId);
+           let isSelected = _isSelected(currentNodeId, nodeId);
 
            NodeAssetService.handleNode(
              ~node,
@@ -315,7 +283,7 @@ module Method = {
            (
              dragImg,
              debounceTime,
-             editorState |> CurrentNodeAssetEditorService.getCurrentNode,
+             editorState |> CurrentNodeAssetEditorService.getCurrentNodeId,
            ),
            engineState,
          ),

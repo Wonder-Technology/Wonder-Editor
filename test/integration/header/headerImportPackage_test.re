@@ -1104,13 +1104,13 @@ let _ =
 
           describe(
             {|
-               1.load box wdb asset w1(with default cube geometry);
-               1.load box wdb asset w2(with default cube geometry);
-               2.export;
-               3.import;
-               4.drag w1 to scene tree to be gameObject g1;
-               5.drag w2 to scene tree to be gameObject g2;
-               |},
+                  1.load box wdb asset w1(with default cube geometry);
+                  1.load box wdb asset w2(with default cube geometry);
+                  2.export;
+                  3.import;
+                  4.drag w1 to scene tree to be gameObject g1;
+                  5.drag w2 to scene tree to be gameObject g2;
+                  |},
             () => {
               let _prepare = testFunc =>
                 MainEditorAssetUploadTool.loadOneWDB(
@@ -1263,12 +1263,15 @@ let _ =
 
     describe("test import assets", () => {
       describe("test import material assets", () => {
-        beforeEach(() =>
+        beforeEach(() => {
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
-          )
-        );
+          );
+
+          EventListenerTool.buildFakeDom()
+          |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+        });
 
         testPromise("should add material assets to asset tree", () => {
           MainEditorAssetHeaderOperateNodeTool.addMaterial();

@@ -1,13 +1,13 @@
 open AssetType;
 
-let getCurrentNode = ({currentNode}) => currentNode;
+let getCurrentNodeId = ({currentNodeId}) => currentNodeId;
 
-let unsafeGetCurrentNode = record =>
-  getCurrentNode(record) |> OptionService.unsafeGet;
+let unsafeGetCurrentNodeId = record =>
+  getCurrentNodeId(record) |> OptionService.unsafeGet;
 
-let clearCurrentNode = record => {...record, currentNode: None};
+let clearCurrentNodeId = record => {...record, currentNodeId: None};
 
-let setCurrentNode = (currentNode, record) => {
+let setCurrentNodeId = (currentNodeId, record) => {
   ...record,
-  currentNode: Some(currentNode),
+  currentNodeId: Some(currentNodeId),
 };
