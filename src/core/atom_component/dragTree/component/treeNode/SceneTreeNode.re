@@ -238,11 +238,11 @@ let reducer =
 
   | DragEnd => (state => ReasonReact.Update(Method.buildDragEndState(state)))
 
-  | DragGameObject(targetUid, dragedUid) => (
+  | DragGameObject(targetUid, draggedUid) => (
       state =>
         ReasonReactUtils.updateWithSideEffects(
           Method.buildDragEndState(state), _state =>
-          dragGameObject((targetUid, dragedUid))
+          dragGameObject((targetUid, draggedUid))
         )
     )
 

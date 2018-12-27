@@ -8,12 +8,12 @@ module CustomEventHandler = {
   );
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), (), (targetUid, dragedUid)) => {
+  let handleSelfLogic = ((store, dispatchFunc), (), (targetUid, draggedUid)) => {
     let isShowChildrenMap =
       SceneGraphUtils.buildIsShowChildrenMapFromStore(store)
       |> WonderCommonlib.SparseMapService.set(targetUid, true);
 
-    GameObjectUtils.setParentKeepOrder(targetUid, dragedUid)
+    GameObjectUtils.setParentKeepOrder(targetUid, draggedUid)
     |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
     let editorState = StateEditorService.getState();

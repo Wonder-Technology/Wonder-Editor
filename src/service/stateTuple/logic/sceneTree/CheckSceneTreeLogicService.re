@@ -1,37 +1,37 @@
-let rec _judgeAllParents = (targetTransform, dragedTransform, engineState) =>
+let rec _judgeAllParents = (targetTransform, draggedTransform, engineState) =>
   switch (
     TransformEngineService.getParent(targetTransform, engineState)
     |> Js.Undefined.to_opt
   ) {
   | None => false
   | Some(transformParent) =>
-    transformParent === dragedTransform ?
-      true : _judgeAllParents(transformParent, dragedTransform, engineState)
+    transformParent === draggedTransform ?
+      true : _judgeAllParents(transformParent, draggedTransform, engineState)
   };
 
 let _isDragedGameObjectBeTargetGameObjectParent =
-    (targetGameObject, dragedGameObject, engineState) =>
+    (targetGameObject, draggedGameObject, engineState) =>
   _judgeAllParents(
     GameObjectComponentEngineService.unsafeGetTransformComponent(
       targetGameObject,
       engineState,
     ),
     GameObjectComponentEngineService.unsafeGetTransformComponent(
-      dragedGameObject,
+      draggedGameObject,
       engineState,
     ),
     engineState,
   );
 
 let _checkTargetGameObjectBeDragedGameObjectParent =
-    (dragedGameObject, targetGameObject, engineState)
+    (draggedGameObject, targetGameObject, engineState)
     : Result.RelationResult.t =>
   switch (
     engineState
     |> TransformEngineService.getParent(
          engineState
          |> GameObjectComponentEngineService.unsafeGetTransformComponent(
-              dragedGameObject,
+              draggedGameObject,
             ),
        )
     |> Js.Undefined.to_opt
@@ -52,13 +52,13 @@ let _checkTargetGameObjectBeDragedGameObjectParent =
   };
 
 let checkGameObjectRelation =
-    (dragedGameObject, targetGameObject, (_editorState, engineState))
+    (draggedGameObject, targetGameObject, (_editorState, engineState))
     : Result.RelationResult.t =>
-  targetGameObject === dragedGameObject ?
+  targetGameObject === draggedGameObject ?
     Fail(Some("source and target gameObject shouldn't be the same")) :
     _isDragedGameObjectBeTargetGameObjectParent(
       targetGameObject,
-      dragedGameObject,
+      draggedGameObject,
       engineState,
     ) ?
       Fail(
@@ -67,7 +67,7 @@ let checkGameObjectRelation =
         ),
       ) :
       _checkTargetGameObjectBeDragedGameObjectParent(
-        dragedGameObject,
+        draggedGameObject,
         targetGameObject,
         engineState,
       );

@@ -97,7 +97,7 @@ let _ =
                   BaseEventTool.buildDragEventWithDataMap(
                     WonderCommonlib.HashMapService.createEmpty()
                     |> WonderCommonlib.HashMapService.set(
-                         "dragedId",
+                         "draggedId",
                          sourceGameObject,
                        ),
                   ),

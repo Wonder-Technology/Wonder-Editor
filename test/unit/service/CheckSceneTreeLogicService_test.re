@@ -23,7 +23,7 @@ let _ =
         |> ignore;
       });
 
-      test("if draged and target gameObject is the same one, return fail", () =>
+      test("if dragged and target gameObject is the same one, return fail", () =>
         CheckSceneTreeLogicService.checkGameObjectRelation(1, 1)
         |> StateLogicService.getStateToGetData
         |> Result.RelationResult.isSuccess
@@ -32,7 +32,7 @@ let _ =
 
       describe("else", () => {
         test(
-          "if draged gameObject is target gameObject's parent, return fail", () => {
+          "if dragged gameObject is target gameObject's parent, return fail", () => {
           let editorState = StateEditorService.getState();
           let engineState = StateEngineService.unsafeGetState();
           let (engineState, gameObject1, transform1) =
@@ -54,7 +54,7 @@ let _ =
 
         describe("else", () =>
           test(
-            "if target gameObject is draged gameObject's parent, return fail",
+            "if target gameObject is dragged gameObject's parent, return fail",
             () => {
             let editorState = StateEditorService.getState();
             let engineState = StateEngineService.unsafeGetState();

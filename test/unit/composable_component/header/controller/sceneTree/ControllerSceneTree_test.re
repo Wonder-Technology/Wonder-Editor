@@ -33,23 +33,23 @@ let _ =
         |> ReactTestTool.createSnapshotAndMatch
       );
       test(
-        "drag treeNode into target treeNode, set draged gameObject's parent to be target gameObject",
+        "drag treeNode into target treeNode, set dragged gameObject's parent to be target gameObject",
         () => {
           let targetGameObject =
             StateEngineService.unsafeGetState()
             |> MainEditorSceneTool.getBoxByIndex(0);
-          let dragedGameObject =
+          let draggedGameObject =
             StateEngineService.unsafeGetState()
             |> MainEditorSceneTool.getBoxByIndex(1);
 
           MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
-            ~sourceGameObject=dragedGameObject,
+            ~sourceGameObject=draggedGameObject,
             ~targetGameObject,
             (),
           );
 
           GameObjectUtils.getParent(
-            dragedGameObject,
+            draggedGameObject,
             StateEngineService.unsafeGetState(),
           )
           |> expect == targetGameObject;

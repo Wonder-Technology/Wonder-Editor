@@ -136,45 +136,45 @@ let buildIsShowChildrenMapFromStore = store =>
   )
   |> buildIsShowChildrenMap;
 
-let _checkDragedTreeNodeShouldExist = ((newSceneGraphArr, dragedTreeNode)) => {
+let _checkDragedTreeNodeShouldExist = ((newSceneGraphArr, draggedTreeNode)) => {
   WonderLog.Contract.requireCheck(
     () =>
       WonderLog.(
         Contract.(
           test(
             Log.buildAssertMessage(
-              ~expect={j|dragedTreeNode should exist|j},
+              ~expect={j|draggedTreeNode should exist|j},
               ~actual={j|not|j},
             ),
             () =>
-            dragedTreeNode |> Js.Option.isSome |> assertTrue
+            draggedTreeNode |> Js.Option.isSome |> assertTrue
           )
         )
       ),
     StateEditorService.getStateIsDebug(),
   );
 
-  (newSceneGraphArr, dragedTreeNode |> OptionService.unsafeGet);
+  (newSceneGraphArr, draggedTreeNode |> OptionService.unsafeGet);
 };
 
-let removeDragedTreeNode = (dragedUid, sceneGraphArray) => {
+let removeDragedTreeNode = (draggedUid, sceneGraphArray) => {
   let rec _iterateSceneGraph =
-          (dragedUid, sceneGraphArray, newSceneGraphArray, dragedTreeNode) =>
+          (draggedUid, sceneGraphArray, newSceneGraphArray, draggedTreeNode) =>
     sceneGraphArray
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (.
-           (newSceneGraphArray, dragedTreeNode),
+           (newSceneGraphArray, draggedTreeNode),
            {uid, children} as treeNode,
          ) =>
-           uid === dragedUid ?
+           uid === draggedUid ?
              (newSceneGraphArray, Some(treeNode)) :
              {
-               let (newChildrenSceneGraphArray, dragedTreeNode) =
+               let (newChildrenSceneGraphArray, draggedTreeNode) =
                  _iterateSceneGraph(
-                   dragedUid,
+                   draggedUid,
                    children,
                    [||],
-                   dragedTreeNode,
+                   draggedTreeNode,
                  );
                (
                  newSceneGraphArray
@@ -182,12 +182,12 @@ let removeDragedTreeNode = (dragedUid, sceneGraphArray) => {
                       ...treeNode,
                       children: newChildrenSceneGraphArray,
                     }),
-                 dragedTreeNode,
+                 draggedTreeNode,
                );
              },
-         (newSceneGraphArray, dragedTreeNode),
+         (newSceneGraphArray, draggedTreeNode),
        );
-  _iterateSceneGraph(dragedUid, sceneGraphArray, [||], None)
+  _iterateSceneGraph(draggedUid, sceneGraphArray, [||], None)
   |> _checkDragedTreeNodeShouldExist;
 };
 

@@ -28,11 +28,11 @@ let handleSelfLogic =
     (
       (store, dispatchFunc),
       materialComponent,
-      dragedNodeId,
+      draggedNodeId,
       handleSetMapFunc,
     ) => {
   StateEditorService.getState()
-  |> OperateTreeAssetEditorService.unsafeFindNodeById(dragedNodeId)
+  |> OperateTreeAssetEditorService.unsafeFindNodeById(draggedNodeId)
   |> (
     /* ({textureComponent}: NodeAssetType.textureNodeData) => { */
     textureNode => {
