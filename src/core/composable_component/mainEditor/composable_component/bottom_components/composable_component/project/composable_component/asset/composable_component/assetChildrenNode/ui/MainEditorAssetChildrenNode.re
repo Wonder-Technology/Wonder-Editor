@@ -57,20 +57,14 @@ module Method = {
   };
 
   let _buildImageDataObjectURLIfNoBase64 = editorState =>
-    OperateTreeAssetEditorService.findAllTextureNodes(editorState)
-    |> OptionService.andThenWithDefault(
-         textureNodes =>
-           textureNodes
-           |> List.map(textureNode =>
-                TextureNodeAssetService.getNodeData(textureNode).
-                  imageDataIndex
-              )
-           |> List.fold_left(
-                (editorState, imageDataIndex) =>
-                  editorState
-                  |> Result.SameDataResult.either(_build(imageDataIndex)),
-                editorState |> Result.SameDataResult.success,
-              ),
+    TextureNodeAssetEditorService.findAllTextureNodes(editorState)
+    |> Js.Array.map(textureNode =>
+         TextureNodeAssetService.getNodeData(textureNode).imageDataIndex
+       )
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. editorState, imageDataIndex) =>
+           editorState
+           |> Result.SameDataResult.either(_build(imageDataIndex)),
          editorState |> Result.SameDataResult.success,
        );
 

@@ -40,18 +40,6 @@ let findMaterialNode = (targetMaterialComponent, targetType_, editorState) => {
      );
 };
 
-let findAllTextureNodes = editorState =>
-  editorState
-  |> _getTreeWithLabel(
-       IterateTreeAssetService.find(
-         ~predTextureNodeFunc=node => true,
-         ~predMaterialNodeFunc=node => false,
-         ~predWDBNodeFunc=node => false,
-         ~predFolderNodeFunc=node => false,
-         (),
-       ),
-     );
-
 let insertNode = (targetNodeId, newTreeNode, editorState) =>
   _getAndSetTree(
     OperateTreeAssetService.insertNode(targetNodeId, newTreeNode),
