@@ -19,7 +19,7 @@ let _isTreeNodeRelationValid = (targetId, startId, checkNodeRelationFunc) =>
   | None => (false, None)
   | Some(startId) =>
     let relationResult =
-      checkNodeRelationFunc(targetId, startId)
+      checkNodeRelationFunc(startId, targetId)
       |> StateLogicService.getStateToGetData;
 
     (
