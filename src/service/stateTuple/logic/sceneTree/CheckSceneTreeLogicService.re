@@ -23,7 +23,7 @@ let _isDragedGameObjectBeTargetGameObjectParent =
     engineState,
   );
 
-let _isTargetGameObjectBeRemovedGameObjectParent =
+let _checkTargetGameObjectBeDragedGameObjectParent =
     (dragedGameObject, targetGameObject, engineState)
     : Result.RelationResult.t =>
   switch (
@@ -36,28 +36,37 @@ let _isTargetGameObjectBeRemovedGameObjectParent =
        )
     |> Js.Undefined.to_opt
   ) {
-  | None => Fail(None)
+  | None => Success()
   | Some(transformParent) =>
     transformParent
     === GameObjectComponentEngineService.unsafeGetTransformComponent(
           targetGameObject,
           engineState,
         ) ?
-      Success() : Fail(None)
+      Fail(
+        Some(
+          "target gameObject shouldn't be the parent of source gameObject",
+        ),
+      ) :
+      Success()
   };
 
-let isGameObjectRelationError =
-    (targetGameObject, dragedGameObject, (_editorState, engineState))
+let checkGameObjectRelation =
+    (dragedGameObject, targetGameObject, (_editorState, engineState))
     : Result.RelationResult.t =>
   targetGameObject === dragedGameObject ?
-    Success() :
+    Fail(Some("source and target gameObject shouldn't be the same")) :
     _isDragedGameObjectBeTargetGameObjectParent(
       targetGameObject,
       dragedGameObject,
       engineState,
     ) ?
-      Success() :
-      _isTargetGameObjectBeRemovedGameObjectParent(
+      Fail(
+        Some(
+          "source gameObject shouldn't be the parent of the target gameObject",
+        ),
+      ) :
+      _checkTargetGameObjectBeDragedGameObjectParent(
         dragedGameObject,
         targetGameObject,
         engineState,

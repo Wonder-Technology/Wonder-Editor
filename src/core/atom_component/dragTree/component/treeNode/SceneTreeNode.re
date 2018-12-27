@@ -25,8 +25,6 @@ module Method = {
 
   let handleDragEnter =
       (id, (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc), event) => {
-    let e = ReactEventType.convertReactMouseEventToJsEvent(event);
-
     let (isTrigger, _) =
       DragEventBaseUtils.checkDragEnter(
         id,
@@ -56,25 +54,6 @@ module Method = {
     let startId = DragUtils.getDragedId(e);
 
     DomHelper.preventDefault(e);
-
-    /* DragEventBaseUtils.checkDragDrop(
-         id,
-         startId,
-         isWidgetFunc,
-         checkNodeRelationFunc,
-       ) ?
-         DragGameObject(id, startId) :
-         isAssetWDBFileFunc() ?
-           {
-             let wdbGameObjectUid =
-               StateEditorService.getState()
-               |> WDBNodeMapAssetEditorService.getWDBNodeMap
-               |> WonderCommonlib.SparseMapService.unsafeGet(startId)
-               |> (({wdbGameObject}) => wdbGameObject);
-
-             DragWDB(id, wdbGameObjectUid);
-           } :
-           DragLeave; */
 
     let (isTrigger, relationResult) =
       DragEventBaseUtils.checkDragDrop(
@@ -259,11 +238,11 @@ let reducer =
 
   | DragEnd => (state => ReasonReact.Update(Method.buildDragEndState(state)))
 
-  | DragGameObject(targetUid, removedUid) => (
+  | DragGameObject(targetUid, dragedUid) => (
       state =>
         ReasonReactUtils.updateWithSideEffects(
           Method.buildDragEndState(state), _state =>
-          dragGameObject((targetUid, removedUid))
+          dragGameObject((targetUid, dragedUid))
         )
     )
 

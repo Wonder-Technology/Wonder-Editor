@@ -27,6 +27,94 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
+    describe("test drag", () => {
+      beforeEach(() =>
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        )
+      );
+      afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
+
+      describe("handleDragEnter", () =>
+        test(
+          "if is scene tree widget and pass check relation, return DragEnter",
+          () => {
+          CurrentDragSourceEditorService.setCurrentDragSource((
+            SceneTreeWidgetService.getWidget(),
+            MainEditorSceneTool.getSecondBox(
+              StateEngineService.unsafeGetState(),
+            ),
+          ))
+          |> StateLogicService.getAndSetEditorState;
+
+          let result =
+            SceneTreeNode.Method.handleDragEnter(
+              MainEditorSceneTool.getFirstBox(
+                StateEngineService.unsafeGetState(),
+              ),
+              (
+                SceneTreeWidgetService.isWidget,
+                CheckSceneTreeLogicService.checkGameObjectRelation,
+                WDBNodeAssetEditorService.isWDBAssetFile,
+              ),
+              BaseEventTool.buildDragEvent(.),
+            );
+
+          result |> expect == SceneTreeNode.DragEnter;
+        })
+      );
+
+      describe("handleDragDrop", () =>
+        describe("test drag gameObject", () =>
+          test(
+            "if is scene tree widget and pass check relation, return DragGameObject(targetGameObject, sourceGameObject)",
+            () => {
+              let sourceGameObject =
+                MainEditorSceneTool.getSecondBox(
+                  StateEngineService.unsafeGetState(),
+                );
+
+              let targetGameObject =
+                MainEditorSceneTool.getFirstBox(
+                  StateEngineService.unsafeGetState(),
+                );
+
+              CurrentDragSourceEditorService.setCurrentDragSource((
+                SceneTreeWidgetService.getWidget(),
+                sourceGameObject,
+              ))
+              |> StateLogicService.getAndSetEditorState;
+
+              let result =
+                SceneTreeNode.Method.handleDrop(
+                  targetGameObject,
+                  (
+                    SceneTreeWidgetService.isWidget,
+                    CheckSceneTreeLogicService.checkGameObjectRelation,
+                    WDBNodeAssetEditorService.isWDBAssetFile,
+                  ),
+                  BaseEventTool.buildDragEventWithDataMap(
+                    WonderCommonlib.HashMapService.createEmpty()
+                    |> WonderCommonlib.HashMapService.set(
+                         "dragedId",
+                         sourceGameObject,
+                       ),
+                  ),
+                );
+
+              result
+              |>
+              expect == SceneTreeNode.DragGameObject(
+                          targetGameObject,
+                          sourceGameObject,
+                        );
+            },
+          )
+        )
+      );
+    });
+
     describe("get sceneTree from engine", () => {
       describe("test should update", () => {
         test("if reatinedProps updateTypeArr include All, should update", () =>
@@ -51,8 +139,7 @@ let _ =
           shouldUpdate(
             OldNewSelfTool.buildNewSelf({
               updateTypeArr:
-                [|UpdateStore.Project, UpdateStore.Inspector|]
-                |> Obj.magic,
+                [|UpdateStore.Project, UpdateStore.Inspector|] |> Obj.magic,
             }),
           )
           |> expect == false

@@ -50,7 +50,7 @@ let buildGLBFileEvent = (fileName, arrayBuffer) =>
   }
   |> Obj.magic;
 
-let buildGLTFZipFileEvent = (fileName) =>
+let buildGLTFZipFileEvent = fileName =>
   {
     "target": {
       "files": {
@@ -123,10 +123,8 @@ let buildFileEvent =
   }
   |> Obj.magic;
 
-let buildDragEvent = [%bs.raw
-  () => {|
-  var dataMap = {};
-
+let buildDragEventWithDataMap = [%bs.raw
+  dataMap => {|
   return {
 stopPropagation: () => undefined,
 preventDefault: () => undefined,
@@ -144,3 +142,7 @@ dataTransfer: {
   }
   |}
 ];
+
+let buildDragEvent =
+  (.) =>
+    buildDragEventWithDataMap(WonderCommonlib.HashMapService.createEmpty());

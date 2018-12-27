@@ -73,14 +73,14 @@ module Drag = {
          targetGameObject,
          sourceGameObject,
          SceneTreeWidgetService.isWidget,
-         CheckSceneTreeLogicService.isGameObjectRelationError,
+         CheckSceneTreeLogicService.checkGameObjectRelation,
        ); */
 
     let (isTrigger, _) =
       DragEventBaseUtils.checkDragEnter(
         targetGameObject,
         SceneTreeWidgetService.isWidget,
-        CheckSceneTreeLogicService.isGameObjectRelationError,
+        CheckSceneTreeLogicService.checkGameObjectRelation,
       );
 
     isTrigger;

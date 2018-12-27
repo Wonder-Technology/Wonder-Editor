@@ -148,90 +148,122 @@ let _ =
         |> ReactTestTool.createSnapshotAndMatch;
       });
 
-      test("test drag folder into it's parent's brother folder", () => {
-        let assetTreeData =
-          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.buildFourFolderAssetTree();
-        let secondLayerFirstFolderNodeId =
-          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getSecondLayerFirstFolderNodeId(
-            assetTreeData,
-          );
-        let secondLayerSecondFolderNodeId =
-          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getSecondLayerSecondFolderNodeId(
-            assetTreeData,
-          );
-        let thirdLayerFirstFolderNodeId =
-          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getThirdLayerFirstFolderNodeId(
-            assetTreeData,
-          );
+      describe("test drag folder", () =>
+        test("test drag folder into it's parent's brother folder", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.buildFourFolderAssetTree();
+          let secondLayerFirstFolderNodeId =
+            MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getSecondLayerFirstFolderNodeId(
+              assetTreeData,
+            );
+          let secondLayerSecondFolderNodeId =
+            MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getSecondLayerSecondFolderNodeId(
+              assetTreeData,
+            );
+          let thirdLayerFirstFolderNodeId =
+            MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getThirdLayerFirstFolderNodeId(
+              assetTreeData,
+            );
 
-        /* MainEditorAssetTreeTool.Select.selectFolderNode(
-             ~nodeId=secondLayerSecondFolderNodeId,
-             (),
-           ); */
-        MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
-          ~startNodeId=thirdLayerFirstFolderNodeId,
-          ~targetNodeId=secondLayerFirstFolderNodeId,
-          (),
-        );
-        MainEditorAssetTreeTool.Select.selectFolderNode(
-          ~nodeId=secondLayerFirstFolderNodeId,
-          (),
-        );
-
-        BuildComponentTool.buildAssetComponent()
-        |> ReactTestTool.createSnapshotAndMatch;
-      });
-
-      test("test drag texture file into it's parent's brother folder", () => {
-        let assetTreeData =
-          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAndMaterialAssetTree();
-        let secondLayerFirstFolderNodeId =
-          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getSecondLayerFirstFolderNodeId(
-            assetTreeData,
+          /* MainEditorAssetTreeTool.Select.selectFolderNode(
+               ~nodeId=secondLayerSecondFolderNodeId,
+               (),
+             ); */
+          MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
+            ~startNodeId=thirdLayerFirstFolderNodeId,
+            ~targetNodeId=secondLayerFirstFolderNodeId,
+            (),
           );
-        let thirdLayerFirstTextureNodeId =
-          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstTextureNodeId(
-            assetTreeData,
+          MainEditorAssetTreeTool.Select.selectFolderNode(
+            ~nodeId=secondLayerFirstFolderNodeId,
+            (),
           );
 
-        MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
-          ~startNodeId=thirdLayerFirstTextureNodeId,
-          ~targetNodeId=secondLayerFirstFolderNodeId,
-          (),
-        );
-        MainEditorAssetTreeTool.Select.selectFolderNode(
-          ~nodeId=secondLayerFirstFolderNodeId,
-          (),
-        );
+          BuildComponentTool.buildAssetComponent()
+          |> ReactTestTool.createSnapshotAndMatch;
+        })
+      );
 
-        BuildComponentTool.buildAssetChildrenNode()
-        |> ReactTestTool.createSnapshotAndMatch;
-      });
-
-      test("test drag texture file into it's brother folder", () => {
-        let assetTreeData =
-          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAndMaterialAssetTree();
-        let thirdLayerFirstFolderNodeId =
-          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstFolderNodeId(
-            assetTreeData,
-          );
-
-        MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
-          ~startNodeId=
+      describe("test drag texture", () => {
+        test("test drag texture file into it's parent's brother folder", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAndMaterialAssetTree();
+          let secondLayerFirstFolderNodeId =
+            MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getSecondLayerFirstFolderNodeId(
+              assetTreeData,
+            );
+          let thirdLayerFirstTextureNodeId =
             MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstTextureNodeId(
               assetTreeData,
-            ),
-          ~targetNodeId=thirdLayerFirstFolderNodeId,
-          (),
-        );
-        MainEditorAssetTreeTool.Select.selectFolderNode(
-          ~nodeId=thirdLayerFirstFolderNodeId,
-          (),
-        );
+            );
 
-        BuildComponentTool.buildAssetComponent()
-        |> ReactTestTool.createSnapshotAndMatch;
+          MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
+            ~startNodeId=thirdLayerFirstTextureNodeId,
+            ~targetNodeId=secondLayerFirstFolderNodeId,
+            (),
+          );
+          MainEditorAssetTreeTool.Select.selectFolderNode(
+            ~nodeId=secondLayerFirstFolderNodeId,
+            (),
+          );
+
+          BuildComponentTool.buildAssetChildrenNode()
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
+
+        test("test drag texture file into it's brother folder", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAndMaterialAssetTree();
+          let thirdLayerFirstFolderNodeId =
+            MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstFolderNodeId(
+              assetTreeData,
+            );
+
+          MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
+            ~startNodeId=
+              MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstTextureNodeId(
+                assetTreeData,
+              ),
+            ~targetNodeId=thirdLayerFirstFolderNodeId,
+            (),
+          );
+          MainEditorAssetTreeTool.Select.selectFolderNode(
+            ~nodeId=thirdLayerFirstFolderNodeId,
+            (),
+          );
+
+          BuildComponentTool.buildAssetComponent()
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
       });
+
+      describe("test drag material", () =>
+        test("test drag material file into it's parent's brother folder", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAndMaterialAssetTree();
+          let secondLayerFirstFolderNodeId =
+            MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getSecondLayerFirstFolderNodeId(
+              assetTreeData,
+            );
+          let thirdLayerFirstTextureNodeId =
+            MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstTextureNodeId(
+              assetTreeData,
+            );
+
+          MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
+            ~startNodeId=thirdLayerFirstTextureNodeId,
+            ~targetNodeId=secondLayerFirstFolderNodeId,
+            (),
+          );
+          MainEditorAssetTreeTool.Select.selectFolderNode(
+            ~nodeId=secondLayerFirstFolderNodeId,
+            (),
+          );
+
+          BuildComponentTool.buildAssetChildrenNode()
+          |> ReactTestTool.createSnapshotAndMatch;
+        })
+      );
     });
 
     describe("deal with the specific case", () => {

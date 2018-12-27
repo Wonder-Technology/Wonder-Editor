@@ -10,7 +10,7 @@ let _ =
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("isGameObjectRelationError", () => {
+    describe("checkGameObjectRelation", () => {
       beforeEach(() => {
         MainEditorSceneTool.initState(~sandbox, ());
 
@@ -23,16 +23,16 @@ let _ =
         |> ignore;
       });
 
-      test("if draged and target gameObject is the same one, return true ", () =>
-        CheckSceneTreeLogicService.isGameObjectRelationError(1, 1)
+      test("if draged and target gameObject is the same one, return fail", () =>
+        CheckSceneTreeLogicService.checkGameObjectRelation(1, 1)
         |> StateLogicService.getStateToGetData
         |> Result.RelationResult.isSuccess
-        |> expect == true
+        |> expect == false
       );
 
       describe("else", () => {
         test(
-          "if draged gameObject is target gameObject's parent, return true", () => {
+          "if draged gameObject is target gameObject's parent, return fail", () => {
           let editorState = StateEditorService.getState();
           let engineState = StateEngineService.unsafeGetState();
           let (engineState, gameObject1, transform1) =
@@ -43,18 +43,18 @@ let _ =
           let engineState =
             GameObjectUtils.addChild(gameObject1, gameObject2, engineState);
 
-          CheckSceneTreeLogicService.isGameObjectRelationError(
+          CheckSceneTreeLogicService.checkGameObjectRelation(
             gameObject2,
             gameObject1,
             (editorState, engineState),
           )
           |> Result.RelationResult.isSuccess
-          |> expect == true;
+          |> expect == false;
         });
 
         describe("else", () =>
           test(
-            "if target gameObject is draged gameObject's parent, return true",
+            "if target gameObject is draged gameObject's parent, return fail",
             () => {
             let editorState = StateEditorService.getState();
             let engineState = StateEngineService.unsafeGetState();
@@ -66,13 +66,13 @@ let _ =
             let engineState =
               GameObjectUtils.addChild(gameObject1, gameObject2, engineState);
 
-            CheckSceneTreeLogicService.isGameObjectRelationError(
+            CheckSceneTreeLogicService.checkGameObjectRelation(
               gameObject1,
               gameObject2,
               (editorState, engineState),
             )
             |> Result.RelationResult.isSuccess
-            |> expect == true;
+            |> expect == false;
           })
         );
       });
