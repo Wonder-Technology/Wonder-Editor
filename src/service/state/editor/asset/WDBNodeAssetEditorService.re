@@ -35,7 +35,11 @@ let isWDBAssetFile = () => {
   | (Some(widget), Some(nodeId)) =>
     widget === AssetWidgetService.getWidget()
     && StateEditorService.getState()
-    |> OperateTreeAssetEditorService.isNodeExistById(nodeId)
+    |> OperateTreeAssetEditorService.findNodeById(nodeId)
+    |> OptionService.eitherWithNoData(
+         node => WDBNodeAssetService.isWDBNode(node),
+         () => false,
+       )
   | _ => false
   };
 };

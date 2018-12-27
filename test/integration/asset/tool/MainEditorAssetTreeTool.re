@@ -147,6 +147,43 @@ module BuildAssetTree = {
        materialNodeIdArr |> ArrayService.unsafeGetNth(1); */
   };
 
+  module WDB = {
+    type assetTreeData = {
+      root: int,
+      wdbNodeIdArr: array(int),
+    };
+
+    let buildOneWDBAssetTree = () => {
+      let rootId = buildEmptyAssetTree();
+
+      let editorState = StateEditorService.getState();
+      let engineState = StateEngineService.unsafeGetState();
+
+      let (editorState, id1) =
+        IdAssetEditorService.generateNodeId(editorState);
+
+      let (engineState, gameObject) =
+        GameObjectEngineService.create(engineState);
+      let name = "gameObject1";
+
+      (editorState, engineState)
+      |> MainEditorAssetTreeNodeTool.insertWDBNode(
+           id1,
+           rootId,
+           gameObject,
+           name,
+         )
+      |> StateLogicService.setState;
+
+      {root: rootId, wdbNodeIdArr: [|id1|]};
+    };
+
+    let getRootNodeId = ({root}) => root;
+
+    let getFirstWDBNodeId = ({root, wdbNodeIdArr}) =>
+      wdbNodeIdArr |> ArrayService.unsafeGetFirst;
+  };
+
   module Folder = {
     type layerData = {folderNodeIdArr: array(int)};
 

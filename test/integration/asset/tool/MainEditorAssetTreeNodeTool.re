@@ -26,6 +26,28 @@ let insertMaterialNode =
   engineState,
 );
 
+
+let insertWDBNode =
+    (
+      wdbNodeId,
+      parentFolderNodeId,
+      gameObject,
+      name,
+      (editorState, engineState),
+    ) => (
+  editorState
+  |> OperateTreeAssetEditorService.insertNode(
+       parentFolderNodeId,
+       WDBNodeAssetService.buildNode(
+         ~nodeId=wdbNodeId,
+         ~wdbGameObject=gameObject,
+         ~name
+       ),
+     ),
+  engineState,
+);
+
+
 let insertTextureNode =
     (
       textureNodeId,
