@@ -24,6 +24,9 @@
         "name": "init_event_for_editor"
       },
       {
+        "name": "init_picking"
+      },
+      {
         "name": "init_camera"
       },
       {

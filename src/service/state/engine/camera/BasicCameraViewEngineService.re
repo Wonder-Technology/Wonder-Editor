@@ -11,3 +11,5 @@ let activeBasicCameraView = BasicCameraViewAPI.activeBasicCameraView;
 let unactiveBasicCameraView = BasicCameraViewAPI.unactiveBasicCameraView;
 
 let getActiveBasicCameraView = BasicCameraViewAPI.getActiveBasicCameraView;
+
+let getBasicCameraViewWorldToCameraMatrix = BasicCameraViewAPI.getBasicCameraViewWorldToCameraMatrix;

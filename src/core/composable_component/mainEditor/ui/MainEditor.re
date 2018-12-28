@@ -87,6 +87,26 @@ module Method = {
     |> StateEngineService.setState
     |> ignore;
 
+  let bindRefreshSceneTreeAndInspectorEvent = dispatchFunc =>
+    ManageEventEngineService.onCustomGlobalEvent(
+      ~eventName=EventEditorService.getRefreshSceneTreeAndInspectorEventName(),
+      ~handleFunc=
+        (. event, engineState) => {
+          dispatchFunc(
+            AppStore.UpdateAction(
+              Update([|UpdateStore.SceneTree, UpdateStore.Inspector|]),
+            ),
+          )
+          |> ignore;
+
+          (engineState, event);
+        },
+      ~state=StateEngineService.unsafeGetState(),
+      (),
+    )
+    |> StateEngineService.setState
+    |> ignore;
+
   let dragWDB = MainEditorDragWDBEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 };
 
@@ -184,6 +204,7 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
     );
 
     Method.bindRefreshInspectorEvent(dispatchFunc);
+    Method.bindRefreshSceneTreeAndInspectorEvent(dispatchFunc);
 
     DomHelper.onresize(Method.resizeCanvasAndViewPort);
   },

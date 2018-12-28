@@ -65,3 +65,13 @@ let setLocalScale = (value, component, engineState) =>
 let getScale = TransformAPI.getTransformScale;
 
 let setScale = TransformAPI.setTransformScale;
+
+let getLocalToWorldMatrixTypeArray = (transform, engineState) => {
+  let {localToWorldMatrices, localToWorldMatrixCacheMap} =
+    RecordTransformMainService.getRecord(engineState);
+  ModelMatrixTransformService.getLocalToWorldMatrixTypeArray(.
+    transform,
+    localToWorldMatrices,
+    localToWorldMatrixCacheMap,
+  );
+};
