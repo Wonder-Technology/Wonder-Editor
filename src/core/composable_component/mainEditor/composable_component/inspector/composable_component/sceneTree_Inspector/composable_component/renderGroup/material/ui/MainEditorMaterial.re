@@ -149,7 +149,13 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("MainEditorMaterial");
 
-let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
+let reducer =
+    (
+      (store, dispatchFunc) as reduxTuple,
+      currentSceneTreeNode,
+      action,
+      state,
+    ) =>
   switch (action) {
   | ChangeMaterialType(value) =>
     let sourceMaterialType = state.materialType;
@@ -190,8 +196,13 @@ let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
       );
   | ShowMaterialGroup =>
     ReasonReact.Update({...state, isShowMaterialGroup: true})
+
   | HideMaterialGroup =>
-    ReasonReact.Update({...state, isShowMaterialGroup: false})
+    ReasonReactUtils.updateWithSideEffects(
+      {...state, isShowMaterialGroup: false}, _state =>
+      dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
+      |> ignore
+    )
   };
 
 let _renderSelectMaterial = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
