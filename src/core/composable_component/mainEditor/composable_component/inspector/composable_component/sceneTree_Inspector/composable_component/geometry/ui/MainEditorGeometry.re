@@ -140,15 +140,17 @@ let _renderGeometryGroup =
       <div className="select-item-header">
         (DomHelper.textEl("Geometry"))
       </div>
-      (
-        ReasonReact.array(
-          Method.showGeometryAssets(
-            send,
-            currentSceneTreeNode,
-            state.currentGeometry,
-          ),
+      <div className="select-item-body">
+        (
+          ReasonReact.array(
+            Method.showGeometryAssets(
+              send,
+              currentSceneTreeNode,
+              state.currentGeometry,
+            ),
+          )
         )
-      )
+      </div>
     </div>
     <div
       className="select-component-bg"

@@ -2584,23 +2584,9 @@ html, body {
     height: 305px;
     position: relative;
     z-index: 120;
-    overflow-y: auto;
-    overflow-x: auto;
-    white-space: nowrap;
     border: 1px solid #333333;
     background: #c1c1c1;
     border-radius: 5px; }
-    .select-component-content .select-component-item::-webkit-scrollbar {
-      width: 4px;
-      height: 4px; }
-    .select-component-content .select-component-item::-webkit-scrollbar-button {
-      display: none; }
-    .select-component-content .select-component-item::-webkit-scrollbar-track {
-      background: rgba(1, 1, 1, 0.6);
-      width: 2px; }
-    .select-component-content .select-component-item::-webkit-scrollbar-thumb {
-      background: #cfcccc;
-      border-radius: 4px; }
     .select-component-content .select-component-item .select-item-header {
       width: 100%;
       height: 20px;
@@ -2610,11 +2596,67 @@ html, body {
       padding: 5px 0px;
       border-bottom: 1px solid #868686;
       background: #555454; }
-    .select-component-content .select-component-item .select-item-content {
-      color: #000;
-      height: 20px;
-      line-height: 20px;
-      padding: 2px 7px; }
+    .select-component-content .select-component-item .select-item-body {
+      width: 100%;
+      height: 275px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      white-space: nowrap; }
+      .select-component-content .select-component-item .select-item-body::-webkit-scrollbar {
+        width: 4px;
+        height: 4px; }
+      .select-component-content .select-component-item .select-item-body::-webkit-scrollbar-button {
+        display: none; }
+      .select-component-content .select-component-item .select-item-body::-webkit-scrollbar-track {
+        background: rgba(1, 1, 1, 0.6);
+        width: 2px; }
+      .select-component-content .select-component-item .select-item-body::-webkit-scrollbar-thumb {
+        background: #cfcccc;
+        border-radius: 4px; }
+      .select-component-content .select-component-item .select-item-body .select-item-content {
+        color: #000;
+        height: 20px;
+        line-height: 20px;
+        padding: 2px 7px; }
+    .select-component-content .select-component-item .select-item-imgBody {
+      width: 100%;
+      height: 270px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      white-space: nowrap;
+      padding: 2px; }
+      .select-component-content .select-component-item .select-item-imgBody::-webkit-scrollbar {
+        width: 4px;
+        height: 4px; }
+      .select-component-content .select-component-item .select-item-imgBody::-webkit-scrollbar-button {
+        display: none; }
+      .select-component-content .select-component-item .select-item-imgBody::-webkit-scrollbar-track {
+        background: rgba(1, 1, 1, 0.6);
+        width: 2px; }
+      .select-component-content .select-component-item .select-item-imgBody::-webkit-scrollbar-thumb {
+        background: #cfcccc;
+        border-radius: 4px; }
+      .select-component-content .select-component-item .select-item-imgBody .imgBody-content {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row; }
+        .select-component-content .select-component-item .select-item-imgBody .imgBody-content .select-item-imgContent {
+          color: #000;
+          width: 40%;
+          height: 80px;
+          padding: 5px 7px;
+          text-align: center; }
+          .select-component-content .select-component-item .select-item-imgBody .imgBody-content .select-item-imgContent .imgContent-img {
+            margin-top: 5px;
+            width: 60px;
+            height: 60px; }
+          .select-component-content .select-component-item .select-item-imgBody .imgBody-content .select-item-imgContent .imgContent-text {
+            font-size: 13px;
+            margin-top: 5px;
+            width: 100%;
+            height: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis; }
     .select-component-content .select-component-item .select-item-active {
       background: #5C7EA6; }
   .select-component-content .select-component-bg {

@@ -79,6 +79,39 @@ module Method = {
       />;
     };
 
+  let handleError =
+      (result: Result.SameDataResult.t(array(ReasonReact.reactElement))) =>
+    Result.SameDataResult.handleError(
+      result => result,
+      (msg, result) => {
+        let editorState = StateEditorService.getState();
+
+        ConsoleUtils.error(msg, editorState);
+
+        result;
+      },
+      result,
+    );
+
+  let _getImgSrc = (imageDataIndex, editorState) =>
+    editorState
+    |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
+    |> (
+      ({blobObjectURL, base64, mimeType}: ImageDataType.imageData) =>
+        switch (blobObjectURL, base64) {
+        | (Some(blobObjectURL), Some(_))
+        | (Some(blobObjectURL), None) =>
+          blobObjectURL |> Obj.magic |> Result.SameDataResult.success
+        | (None, Some(base64)) => base64 |> Result.SameDataResult.success
+        | (None, None) =>
+          (
+            "texture->source should has base64 or blobObjectURL data, but acutally not has",
+            ImageUtils.getNullImageSrc(),
+          )
+          |> Result.SameDataResult.fail
+        }
+    );
+
   let showTextureAssets = (state, send) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
@@ -93,45 +126,61 @@ module Method = {
            (textureComponent, imageDataIndex),
          );
        })
-    |> Js.Array.map(((nodeId, (textureComponent, imageDataIndex))) =>
+    |> ArrayService.traverseSameDataResultAndCollectByApply(
+         ((nodeId, (textureComponent, imageDataIndex))) =>
          switch (state.currentTextureComponent) {
          | None =>
-           <div
-             className="select-item-content"
-             key=(DomHelper.getRandomKey())
-             onClick=(
-               _e => send(SetTextureToEngine(nodeId, textureComponent))
-             )>
-             (
-               DomHelper.textEl(
-                 NodeNameAssetLogicService.getTextureNodeName(
-                   ~texture=textureComponent,
-                   ~engineState,
-                 ),
-               )
-             )
-           </div>
+           _getImgSrc(imageDataIndex, editorState)
+           |> Result.SameDataResult.either(imgSrc =>
+                <div
+                  className="select-item-imgContent"
+                  key=(DomHelper.getRandomKey())
+                  onClick=(
+                    _e => send(SetTextureToEngine(nodeId, textureComponent))
+                  )>
+                  <img src=imgSrc className="imgContent-img" />
+                  <div className="imgContent-text">
+                    (
+                      DomHelper.textEl(
+                        NodeNameAssetLogicService.getTextureNodeName(
+                          ~texture=textureComponent,
+                          ~engineState,
+                        ),
+                      )
+                    )
+                  </div>
+                </div>
+                |> Result.SameDataResult.success
+              )
 
          | Some(map) =>
            let className =
              NodeAssetService.isEqual(map, textureComponent) ?
-               "select-item-content select-item-active" : "select-item-content";
+               "select-item-imgContent select-item-active" :
+               "select-item-imgContent";
 
-           <div
-             className
-             key=(DomHelper.getRandomKey())
-             onClick=(
-               _e => send(SetTextureToEngine(nodeId, textureComponent))
-             )>
-             (
-               DomHelper.textEl(
-                 NodeNameAssetLogicService.getTextureNodeName(
-                   ~texture=textureComponent,
-                   ~engineState,
-                 ),
-               )
-             )
-           </div>;
+           _getImgSrc(imageDataIndex, editorState)
+           |> Result.SameDataResult.either(imgSrc =>
+                <div
+                  className
+                  key=(DomHelper.getRandomKey())
+                  onClick=(
+                    _e => send(SetTextureToEngine(nodeId, textureComponent))
+                  )>
+                  <img src=imgSrc className="imgContent-img" />
+                  <div className="imgContent-text">
+                    (
+                      DomHelper.textEl(
+                        NodeNameAssetLogicService.getTextureNodeName(
+                          ~texture=textureComponent,
+                          ~engineState,
+                        ),
+                      )
+                    )
+                  </div>
+                </div>
+                |> Result.SameDataResult.success
+              );
          }
        );
   };
@@ -231,7 +280,15 @@ let _renderTextureGroup = (state, send) =>
       <div className="select-item-header">
         (DomHelper.textEl("Texture"))
       </div>
-      (ReasonReact.array(Method.showTextureAssets(state, send)))
+      <div className="select-item-imgBody">
+        <div className="imgBody-content">
+          (
+            ReasonReact.array(
+              Method.showTextureAssets(state, send) |> Method.handleError,
+            )
+          )
+        </div>
+      </div>
     </div>
     <div
       className="select-component-bg"
