@@ -28,8 +28,9 @@ let _forEachIndices = (indices16, indices32, indicesCount, isIntersectFunc) => {
 };
 
 let _isIntersect =
+    /* (isBackSide, isDoubleSide), */
     (
-      (isBackSide, isDoubleSide),
+      cullType,
       localToWorldMatrix,
       (rayCasterNear, rayCasterFar),
       {origin} as ray,
@@ -68,31 +69,36 @@ let _isIntersect =
      /* va,vb,vc */
      )) |> ignore; */
 
-  let result =
-    isBackSide ?
-      RayUtils.checkIntersectTriangle(false, vc, vb, va, ray) :
-      RayUtils.checkIntersectTriangle(! isDoubleSide, va, vb, vc, ray);
+  /* let result =
+       isBackSide ?
+         RayUtils.checkIntersectTriangle(false, vc, vb, va, ray) :
+         RayUtils.checkIntersectTriangle(! isDoubleSide, va, vb, vc, ray);
 
-  switch (result) {
-  | None => false
-  | Some(point) =>
-    let intersectionPointWorld =
-      Wonderjs.Vector3Service.transformMat4Tuple(point, localToWorldMatrix);
+     switch (result) {
+     | None => false
+     | Some(point) =>
+       let intersectionPointWorld =
+         Wonderjs.Vector3Service.transformMat4Tuple(point, localToWorldMatrix);
 
-    let distance = Vector3Service.distanceTo(origin, intersectionPointWorld);
+       let distance = Vector3Service.distanceTo(origin, intersectionPointWorld);
 
-    distance >= rayCasterNear && distance <= rayCasterFar;
-  };
+       distance >= rayCasterNear && distance <= rayCasterFar;
+     }; */
 
-  /* let result = RayUtils._check(ray.origin, ray.direction, [|va, vb, vc|]); */
+  /* let result = RayUtils.isIntersectTriangle(true, va, vb, vc, ray); */
 
-  /* result; */
+  let isBackSide = true;
+  let isDoubleSide = false;
+
+  let result = RayUtils.isIntersectTriangle(cullType, va, vb, vc, ray);
+
+  result;
 };
 
 let isIntersectMesh =
     (
       localToWorldMatrix,
-      (isBackSide, isDoubleSide),
+      cullType,
       (vertices, indices16, indices32, indicesCount),
       {origin, direction} as ray,
     ) => {
@@ -124,17 +130,10 @@ let isIntersectMesh =
 
   let ray = RayUtils.applyMatrix4(ray, inverseMatrix);
 
-  WonderLog.Log.print(("ray: ", ray)) |> ignore;
-
   _forEachIndices(
-    indices16, indices32, indicesCount, (index1, index2, index3) =>{
-
-      WonderLog.Log.print(("index: ", 
-     index1, index2, index3 
-      )) |> ignore;
-
+    indices16, indices32, indicesCount, (index1, index2, index3) =>
     _isIntersect(
-      (isBackSide, isDoubleSide),
+cullType,
       localToWorldMatrix,
       (0., infinity),
       ray,
@@ -142,6 +141,5 @@ let isIntersectMesh =
       Vector3Service.fromBufferAttribute(vertices, index2),
       Vector3Service.fromBufferAttribute(vertices, index3),
     )
-    }
   );
 };

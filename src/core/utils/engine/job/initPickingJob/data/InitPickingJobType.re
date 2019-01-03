@@ -1,3 +1,8 @@
+type cull =
+  | Back
+  | Front
+  | None;
+
 type mouseData = {
   x: float,
   y: float,
@@ -15,11 +20,10 @@ type ray = {
   direction: floatVec3,
 };
 
-
 /* type sphereShape = {
-  radius: float,
-  center: floatVec3,
-}; */
+     radius: float,
+     center: floatVec3,
+   }; */
 
 external userDataToPointEvent : EventType.userData => EventType.pointEvent =
   "%identity";

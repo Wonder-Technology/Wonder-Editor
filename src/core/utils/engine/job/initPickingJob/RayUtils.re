@@ -266,133 +266,162 @@ let isIntersectSphere = ({center, radius}, {origin, direction} as ray) => {
       };
     }; */
 
-let checkIntersectTriangle =
-    (isBackfaceCulling, va, vb, vc, {origin, direction} as ray) => {
-  let edge1 = Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, vb, va);
+/* let checkIntersectTriangle =
+       (isBackfaceCulling, va, vb, vc, {origin, direction} as ray) => {
+     let edge1 = Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, vb, va);
 
-  let edge2 = Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, vc, va);
+     let edge2 = Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, vc, va);
 
-  let normal = Wonderjs.Vector3Service.cross(edge1, edge2);
+     let normal = Wonderjs.Vector3Service.cross(edge1, edge2);
 
-  /* Solve Q + t*D = b1*E1 + b2*E2 (Q = kDiff, D = ray direction,
-     E1 = kEdge1, E2 = kEdge2, N = Cross(E1,E2)) by
-       |Dot(D,N)|*b1 = sign(Dot(D,N))*Dot(D,Cross(Q,E2))
-       |Dot(D,N)|*b2 = sign(Dot(D,N))*Dot(D,Cross(E1,Q))
-          |Dot(D,N)|*t = -sign(Dot(D,N))*Dot(Q,N) */
+     /* Solve Q + t*D = b1*E1 + b2*E2 (Q = kDiff, D = ray direction,
+        E1 = kEdge1, E2 = kEdge2, N = Cross(E1,E2)) by
+          |Dot(D,N)|*b1 = sign(Dot(D,N))*Dot(D,Cross(Q,E2))
+          |Dot(D,N)|*b2 = sign(Dot(D,N))*Dot(D,Cross(E1,Q))
+             |Dot(D,N)|*t = -sign(Dot(D,N))*Dot(Q,N) */
 
-  let ddn = Vector3Service.dot(direction, normal);
-  let sign = 0.;
+     let ddn = Vector3Service.dot(direction, normal);
+     let sign = 0.;
 
-  let (isEndCheck, sign, ddn) =
-    if (ddn > 0.) {
-      isBackfaceCulling ? (Some(false), sign, ddn) : (None, 1., ddn);
-    } else if (ddn < 0.) {
-      (None, (-1.), -. ddn);
-    } else {
-      (Some(false), sign, ddn);
+     let (isEndCheck, sign, ddn) =
+       if (ddn > 0.) {
+         isBackfaceCulling ? (Some(false), sign, ddn) : (None, 1., ddn);
+       } else if (ddn < 0.) {
+         (None, (-1.), -. ddn);
+       } else {
+         (Some(false), sign, ddn);
+       };
+
+     switch (isEndCheck) {
+     | Some(isIntersect) => None
+     | None =>
+       let diff =
+         Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, origin, va);
+
+       let edge2 = Wonderjs.Vector3Service.cross(diff, edge2);
+
+       let ddqxe2 =
+         sign
+         *. Vector3Service.dot(
+              direction,
+              /* Wonderjs.Vector3Service.cross(diff, edge2), */
+              edge2,
+            );
+
+       /* b1 < 0, no intersection */
+       if (ddqxe2 < 0.) {
+         None;
+       } else {
+         let dde1xq =
+           sign
+           *. Vector3Service.dot(
+                direction,
+                Wonderjs.Vector3Service.cross(edge1, diff),
+              );
+
+         /* b2 < 0, no intersection */
+         if (dde1xq < 0.) {
+           None;
+         } else if
+           /* b1+b2 > 1, no intersection */
+           (ddqxe2 +. dde1xq > ddn) {
+           None;
+         } else {
+           WonderLog.Log.print("aaaaa") |> ignore;
+           /* Line intersects triangle, check if ray does. */
+           let qdn = -. sign *. Vector3Service.dot(diff, normal);
+
+           qdn < 0. ? None : Some(_at(qdn /. ddn, ray));
+         };
+       };
+     };
+   }; */
+
+let _isIntersectTriangleForFrontAndNoneCull =
+    ((det, edge1, edge2, pvec), v0, v1, v2, {origin, direction}) => {
+  let inv_det = 1. /. det;
+
+  let tvec =
+    Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, origin, v0);
+
+  let u = Vector3Service.dot(tvec, pvec) *. inv_det;
+
+  u < 0. || u > 1. ?
+    false :
+    {
+      let qvec = Wonderjs.Vector3Service.cross(tvec, edge1);
+
+      let v = Vector3Service.dot(direction, qvec) *. inv_det;
+
+      v < 0. || u +. v > 1. ?
+        false :
+        /* var t = dot(edge2, qvec) *. inv_det;
+           out[0] = origin[0] + t * direction[0];
+           out[1] = origin[1] + t * direction[1];
+           out[2] = origin[2] + t * direction[2];
+           return out; */
+        true;
     };
-
-  switch (isEndCheck) {
-  | Some(isIntersect) => None
-  | None =>
-    let diff =
-      Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, origin, va);
-
-    let edge2 = Wonderjs.Vector3Service.cross(diff, edge2);
-
-    let ddqxe2 =
-      sign
-      *. Vector3Service.dot(
-           direction,
-           /* Wonderjs.Vector3Service.cross(diff, edge2), */
-           edge2,
-         );
-
-    /* b1 < 0, no intersection */
-    if (ddqxe2 < 0.) {
-      None;
-    } else {
-      let dde1xq =
-        sign
-        *. Vector3Service.dot(
-             direction,
-             Wonderjs.Vector3Service.cross(edge1, diff),
-           );
-
-      /* b2 < 0, no intersection */
-      if (dde1xq < 0.) {
-        None;
-      } else if
-        /* b1+b2 > 1, no intersection */
-        (ddqxe2 +. dde1xq > ddn) {
-        None;
-      } else {
-        WonderLog.Log.print("aaaaa") |> ignore;
-        /* Line intersects triangle, check if ray does. */
-        let qdn = -. sign *. Vector3Service.dot(diff, normal);
-
-        qdn < 0. ? None : Some(_at(qdn /. ddn, ray));
-      };
-    };
-  };
 };
 
-/* let _check = [%bs.raw
-     (pt, dir, tri) => {|
+let isIntersectTriangle =
+    (cullType: InitPickingJobType.cull, v0, v1, v2, {origin, direction}) => {
+  let epsilon = 0.000001;
 
-       function cross(out, a, b) {
-         var ax = a[0], ay = a[1], az = a[2],
-             bx = b[0], by = b[1], bz = b[2]
+  let edge1 = Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, v1, v0);
 
-         out[0] = ay * bz - az * by
-         out[1] = az * bx - ax * bz
-         out[2] = ax * by - ay * bx
-         return out
-     }
+  let edge2 = Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, v2, v0);
 
-     function dot(a, b) {
-       return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
-   }
+  let pvec = Wonderjs.Vector3Service.cross(direction, edge2);
 
-   function sub(out, a, b) {
-     out[0] = a[0] - b[0]
-     out[1] = a[1] - b[1]
-     out[2] = a[2] - b[2]
-     return out
-   }
+  let det = Vector3Service.dot(edge1, pvec);
 
+  switch (cullType) {
+  | Back =>
+    det < epsilon ?
+      false :
+      {
+        let tvec =
+          Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, origin, v0);
 
+        let u = Vector3Service.dot(tvec, pvec);
 
-     var EPSILON = 0.000001;
-     var edge1 = [0,0,0];
-     var edge2 = [0,0,0];
-     var tvec = [0,0,0];
-     var pvec = [0,0,0];
-     var qvec = [0,0,0];
+        u < 0. || u > det ?
+          false :
+          {
+            let qvec = Wonderjs.Vector3Service.cross(tvec, edge1);
 
+            let v = Vector3Service.dot(direction, qvec);
 
-     var out = [];
-
-         sub(edge1, tri[1], tri[0]);
-         sub(edge2, tri[2], tri[0]);
-
-         cross(pvec, dir, edge2);
-         var det = dot(edge1, pvec);
-
-         if (det < EPSILON) return false;
-         sub(tvec, pt, tri[0]);
-         var u = dot(tvec, pvec);
-         if (u < 0 || u > det) return false;
-         cross(qvec, tvec, edge1);
-         var v = dot(dir, qvec);
-         if (v < 0 || u + v > det) return false;
-
-         var t = dot(edge2, qvec) / det;
-         out[0] = pt[0] + t * dir[0];
-         out[1] = pt[1] + t * dir[1];
-         out[2] = pt[2] + t * dir[2];
-         /* return out; */
-         return true;
-
-     |}
-   ]; */
+            v < 0. || u +. v > det ?
+              false :
+              /* var t = dot(edge2, qvec) / det;
+                 out[0] = origin[0] + t * direction[0];
+                 out[1] = origin[1] + t * direction[1];
+                 out[2] = origin[2] + t * direction[2];
+                 return out; */
+              true;
+          };
+      }
+  | Front =>
+    det > epsilon ?
+      false :
+      _isIntersectTriangleForFrontAndNoneCull(
+        (det, edge1, edge2, pvec),
+        v0,
+        v1,
+        v2,
+        {origin, direction},
+      )
+  | None =>
+    det > -. epsilon && det < epsilon ?
+      false :
+      _isIntersectTriangleForFrontAndNoneCull(
+        (det, edge1, edge2, pvec),
+        v0,
+        v1,
+        v2,
+        {origin, direction},
+      )
+  };
+};

@@ -1,22 +1,11 @@
 open InitPickingJobType;
 
-let _isIntersectMesh = (ray, gameObject, engineState) => {
-  let geometry =
-    GameObjectComponentEngineService.unsafeGetGeometryComponent(
-      gameObject,
-      engineState,
-    );
-
+let _isIntersectMesh =
+    (ray, (_, _, geometry, localToWorldMatrixTypeArray), engineState) =>
   MeshUtils.isIntersectMesh(
-    TransformEngineService.getLocalToWorldMatrixTypeArray(
-      GameObjectComponentEngineService.unsafeGetTransformComponent(
-        gameObject,
-        engineState,
-      ),
-      engineState,
-    ),
-    /* TODO add material->side logic */
-    (false, true),
+    localToWorldMatrixTypeArray,
+    /* TODO judge material->side */
+    Back,
     (
       GeometryEngineService.getGeometryVertices(geometry, engineState),
       GeometryEngineService.getGeometryIndices(geometry, engineState),
@@ -25,7 +14,6 @@ let _isIntersectMesh = (ray, gameObject, engineState) => {
     ),
     ray,
   );
-};
 
 /* let _isIntersectAABB = (ray, gameObject, engineState) =>
    /* ////TODO perf:cache aabbShapeMap in editorState */
@@ -360,12 +348,10 @@ let _findPickedOne =
      ); */
 
   allGameObjectData
-  |> Js.Array.filter(data =>
+  /* |> Js.Array.filter(data =>
        _isIntersectSphere(ray, data, (editorState, engineState))
-     )
-  /* |> Js.Array.filter(gameObject =>
-       _isIntersectMesh(ray, gameObject, engineState)
      ) */
+  |> Js.Array.filter(data => _isIntersectMesh(ray, data, engineState))
   |> WonderLog.Log.print
   |> _getTopOne(cameraGameObject, engineState);
 };
@@ -387,6 +373,17 @@ let _selectSceneTreeNode = (gameObject, (editorState, engineState)) => {
 };
 
 let _handlePicking = (event: EventType.customEvent, engineState) => {
+  /* open Wonderjs.StateDataMainType;
+
+  let deviceManagerRecord = engineState.deviceManagerRecord;
+
+  let deviceManagerRecord =
+    Wonderjs.DeviceManagerService.setSide(
+      Wonderjs.DeviceManagerService.unsafeGetGl(. deviceManagerRecord),
+      BACK,
+      deviceManagerRecord,
+    ); */
+
   let editorState = StateEditorService.getState();
 
   let allGameObjectData = _getAllGameObjectData(engineState);

@@ -15,11 +15,15 @@ let multiplyScalar = ((x, y, z), scalar) => (
   z *. scalar,
 );
 
-let fromBufferAttribute = (vertices, index) => (
-  Js.Typed_array.Float32Array.unsafe_get(vertices, index),
-  Js.Typed_array.Float32Array.unsafe_get(vertices, index + 1),
-  Js.Typed_array.Float32Array.unsafe_get(vertices, index + 2),
-);
+let fromBufferAttribute = (vertices, index) => {
+  let vIndex = index * 3;
+
+  (
+    Js.Typed_array.Float32Array.unsafe_get(vertices, vIndex),
+    Js.Typed_array.Float32Array.unsafe_get(vertices, vIndex + 1),
+    Js.Typed_array.Float32Array.unsafe_get(vertices, vIndex + 2),
+  );
+};
 
 let distanceToSquared = ((x, y, z), (vx, vy, vz)) => {
   let dx = x -. vx;
