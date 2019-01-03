@@ -20,6 +20,8 @@ open TransformType;
 
 open WidgetType;
 
+open PickingType;
+
 type editorState = {
   settingRecord,
   sceneRecord,
@@ -31,6 +33,7 @@ type editorState = {
   inspectorRecord,
   consoleRecord,
   transformRecord,
+  pickingRecord,
   currentDragSource: (option(widgetType), option(int)),
   currentSelectSource: option(widgetType),
   loopId: int,

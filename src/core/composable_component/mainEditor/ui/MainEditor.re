@@ -6,10 +6,10 @@ module Method = {
     parent##offsetHeight,
   );
 
-  let _setAllAspectsWhoseAspectBasedOnCanvasSize = engineState =>
+  /* let _setAllAspectsWhoseAspectBasedOnCanvasSize = engineState =>
     GameObjectComponentEngineService.getAllPerspectiveCameraProjectionComponents(
       engineState,
-    );
+    ); */
 
   let _updateViewRect = (canvasWidth, canvasHeight) =>
     StateEditorService.setState(

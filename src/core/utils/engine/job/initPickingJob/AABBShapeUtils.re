@@ -1,3 +1,5 @@
+open ShapeType;
+
 open InitPickingJobType;
 
 let _forEachVertices = (vertices, verticesCount, func) => {
@@ -49,6 +51,8 @@ let setFromGameObject = (gameObject, engineState) => {
   let vertices =
     GeometryEngineService.getGeometryVertices(geometry, engineState);
 
+  /* WonderLog.Log.print(("vertices: ", vertices)) |> ignore; */
+
   _forEachVertices(
     vertices,
     Js.Typed_array.Float32Array.length(vertices),
@@ -60,3 +64,19 @@ let setFromGameObject = (gameObject, engineState) => {
     |> _expandByVertex(min, max)
   );
 };
+
+let setFromPoints = vertices =>
+  _forEachVertices(
+    vertices,
+    Js.Typed_array.Float32Array.length(vertices),
+    (vertex, min, max) =>
+    _expandByVertex(min, max, vertex)
+  );
+
+let getCenter = ({min, max}) =>
+  Wonderjs.Vector3Service.add(Wonderjs.Vector3Type.Float, max, min)
+  |> Wonderjs.Vector3Service.scale(Wonderjs.Vector3Type.Float, 0.5);
+
+let getHalfExtends = ({min, max}) =>
+  Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, max, min)
+  |> Wonderjs.Vector3Service.scale(Wonderjs.Vector3Type.Float, 0.5);

@@ -15,10 +15,11 @@ type ray = {
   direction: floatVec3,
 };
 
-type aabbShape = {
-  min: floatVec3,
-  max: floatVec3,
-};
+
+/* type sphereShape = {
+  radius: float,
+  center: floatVec3,
+}; */
 
 external userDataToPointEvent : EventType.userData => EventType.pointEvent =
   "%identity";

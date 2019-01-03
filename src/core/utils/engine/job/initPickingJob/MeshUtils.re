@@ -27,10 +27,67 @@ let _forEachIndices = (indices16, indices32, indicesCount, isIntersectFunc) => {
   isIntersect^;
 };
 
-let _checkIntersect = ((isBackSide, isDoubleSide), ray, va, vb, vc) =>
-  isBackSide ?
-    RayUtils.isIntersectTriangle(true, vc, vb, va, ray) :
-    RayUtils.isIntersectTriangle(! isDoubleSide, va, vb, vc, ray);
+let _isIntersect =
+    (
+      (isBackSide, isDoubleSide),
+      localToWorldMatrix,
+      (rayCasterNear, rayCasterFar),
+      {origin} as ray,
+      va,
+      vb,
+      vc,
+    ) => {
+  /* let ray = {
+       origin: ((-1.7738624811172485), 3.755427862065978, (-1.7321008658612196)),
+       direction: (
+         0.2890584075902329,
+         (-0.8859624926336089),
+         0.36265093223076283,
+       ),
+     }; */
+  /* direction: Vector3
+     x: 0.2890584075902329
+     y: -0.8859624926336089
+     z: 0.36265093223076283
+     __proto__: Object
+     origin: Vector3 {x: -1.7738624811172485, y: 3.755427862065978, z: -1.7321008658612196}
+     __proto__: Object */
+
+  /* let result2 =
+       RayUtils.checkIntersectTriangle(
+         true,
+         /* false, */
+         ((-0.5), (-0.5), (-0.5)),
+         ((-0.5), (-0.5), 0.5),
+         ((-0.5), 0.5, 0.5),
+         ray,
+       );
+
+     WonderLog.Log.print(("result2: ", result2,
+
+     /* va,vb,vc */
+     )) |> ignore; */
+
+  let result =
+    isBackSide ?
+      RayUtils.checkIntersectTriangle(false, vc, vb, va, ray) :
+      RayUtils.checkIntersectTriangle(! isDoubleSide, va, vb, vc, ray);
+
+  switch (result) {
+  | None => false
+  | Some(point) =>
+    let intersectionPointWorld =
+      Wonderjs.Vector3Service.transformMat4Tuple(point, localToWorldMatrix);
+
+    let distance = Vector3Service.distanceTo(origin, intersectionPointWorld);
+
+    distance >= rayCasterNear && distance <= rayCasterFar;
+  };
+
+  /* let result = RayUtils._check(ray.origin, ray.direction, [|va, vb, vc|]); */
+
+  /* result; */
+};
 
 let isIntersectMesh =
     (
@@ -39,6 +96,26 @@ let isIntersectMesh =
       (vertices, indices16, indices32, indicesCount),
       {origin, direction} as ray,
     ) => {
+  /* let localToWorldMatrix =
+     Js.Typed_array.Float32Array.make([|
+       1.,
+       0.,
+       0.,
+       0.,
+       0.,
+       0.5253219888177296,
+       0.8509035245341184,
+       0.,
+       0.,
+       (-0.8509035245341184),
+       0.5253219888177296,
+       0.,
+       0.,
+       0.,
+       0.,
+       1.,
+     |]); */
+
   let inverseMatrix =
     Wonderjs.Matrix4Service.invert(
       localToWorldMatrix,
@@ -47,14 +124,24 @@ let isIntersectMesh =
 
   let ray = RayUtils.applyMatrix4(ray, inverseMatrix);
 
+  WonderLog.Log.print(("ray: ", ray)) |> ignore;
+
   _forEachIndices(
-    indices16, indices32, indicesCount, (index1, index2, index3) =>
-    _checkIntersect(
+    indices16, indices32, indicesCount, (index1, index2, index3) =>{
+
+      WonderLog.Log.print(("index: ", 
+     index1, index2, index3 
+      )) |> ignore;
+
+    _isIntersect(
       (isBackSide, isDoubleSide),
+      localToWorldMatrix,
+      (0., infinity),
       ray,
       Vector3Service.fromBufferAttribute(vertices, index1),
       Vector3Service.fromBufferAttribute(vertices, index2),
       Vector3Service.fromBufferAttribute(vertices, index3),
     )
+    }
   );
 };

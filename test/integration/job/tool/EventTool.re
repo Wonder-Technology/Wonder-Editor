@@ -121,8 +121,8 @@ let triggerDomEvent = [%raw
     |}
 ];
 
-let buildFakeCanvas = [%raw
-  (. offsetData) => {|
+let buildFakeCanvasWithSize = [%raw
+  (. width, height, offsetData) => {|
 var [ offsetLeft, offsetTop, offsetParent ] = offsetData;
 
     function _getOrCreateEventQueue(type){
@@ -141,12 +141,12 @@ return {
      style: {
        "left": "",
        "top": "",
-       "width": "",
-       "height": "",
+       "width": String(width) + "px",
+       "height": String(height) + "px",
        "position": "static",
      },
-     width: 0.,
-     height: 0.,
+     width: width,
+     height: height,
      offsetLeft: offsetLeft,
      offsetTop: offsetTop,
      offsetParent: offsetParent,

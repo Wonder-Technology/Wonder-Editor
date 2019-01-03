@@ -20,7 +20,6 @@ let _handleEngineState = engineState => {
          "init_event_for_editor",
          InitEventJobUtils.initEventForEditorJob,
        )
-    /* TODO test */
     |> JobEngineService.registerNoWorkerInitJob(
          "init_picking",
          InitPickingJobUtil.initJob,

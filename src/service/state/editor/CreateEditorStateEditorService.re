@@ -49,6 +49,9 @@ let create = () => {
     localEulerAngleMapY: WonderCommonlib.SparseMapService.createEmpty(),
     localEulerAngleMapZ: WonderCommonlib.SparseMapService.createEmpty(),
   },
+  pickingRecord: {
+    sphereShapeMap: WonderCommonlib.SparseMapService.createEmpty(),
+  },
   currentDragSource: (None, None),
   currentSelectSource: None,
   loopId: (-1),

@@ -110,7 +110,8 @@ let _ =
         (),
       );
 
-      let canvasDom = EventTool.buildFakeCanvas((0, 0, Js.Nullable.null));
+      let canvasDom =
+        EventTool.buildFakeCanvasWithSize(0, 0, (0, 0, Js.Nullable.null));
 
       let engineState =
         ViewToolEngine.setCanvas(
@@ -749,7 +750,9 @@ let _ =
       describe("bind mouse event to trigger point event", () => {
         let _prepareAndExec = (pointEventName, (pageX, pageY)) => {
           PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
-          StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
+          StateLogicService.getAndSetEngineState(
+            MainUtils._handleEngineState,
+          );
 
           let value = ref(0);
 
