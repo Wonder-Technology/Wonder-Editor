@@ -22,3 +22,15 @@ let setSphereShape = (geometry, sphereShape, {pickingRecord} as editorState) => 
       ),
   },
 };
+
+let removeSphereShape = (geometry, {pickingRecord} as editorState) => {
+  ...editorState,
+  pickingRecord: {
+    sphereShapeMap:
+      WonderCommonlib.SparseMapService.deleteVal(
+        geometry,
+        pickingRecord.sphereShapeMap |> Obj.magic,
+      )
+      |> Obj.magic,
+  },
+};
