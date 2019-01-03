@@ -89,7 +89,7 @@ module Method = {
     |> Js.Array.map(geometry => {
          let className =
            geometry === currentGeometry ?
-             "item-content item-active" : "item-content";
+             "select-item-content select-item-active" : "select-item-content";
 
          <div
            className
@@ -137,7 +137,9 @@ let _renderGeometryGroup =
     ) =>
   <div className="select-component-content">
     <div className="select-component-item">
-      <div className="item-header"> (DomHelper.textEl("Geometry")) </div>
+      <div className="select-item-header">
+        (DomHelper.textEl("Geometry"))
+      </div>
       (
         ReasonReact.array(
           Method.showGeometryAssets(

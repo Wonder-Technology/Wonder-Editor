@@ -949,7 +949,7 @@ html, body {
               .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-header button {
                 height: 100%; }
             .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content {
-              height: 80%;
+              height: 100%;
               overflow-y: auto;
               user-select: text; }
               .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-console-component .console-content::-webkit-scrollbar {
@@ -2601,7 +2601,7 @@ html, body {
     .select-component-content .select-component-item::-webkit-scrollbar-thumb {
       background: #cfcccc;
       border-radius: 4px; }
-    .select-component-content .select-component-item .item-header {
+    .select-component-content .select-component-item .select-item-header {
       width: 100%;
       height: 20px;
       line-height: 20px;
@@ -2610,12 +2610,12 @@ html, body {
       padding: 5px 0px;
       border-bottom: 1px solid #868686;
       background: #555454; }
-    .select-component-content .select-component-item .item-content {
+    .select-component-content .select-component-item .select-item-content {
       color: #000;
       height: 20px;
       line-height: 20px;
       padding: 2px 7px; }
-    .select-component-content .select-component-item .item-active {
+    .select-component-content .select-component-item .select-item-active {
       background: #5C7EA6; }
   .select-component-content .select-component-bg {
     position: absolute;

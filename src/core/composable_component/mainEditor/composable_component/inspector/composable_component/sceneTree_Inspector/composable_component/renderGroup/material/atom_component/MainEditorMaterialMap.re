@@ -1,6 +1,10 @@
 open NodeAssetType;
 
-type state = {style: ReactDOMRe.Style.t};
+type state = {
+  style: ReactDOMRe.Style.t,
+  isShowTextureGroup: bool,
+  currentTextureComponent: option(int),
+};
 
 type retainedProps = {map: option(int)};
 
@@ -8,7 +12,10 @@ type action =
   | Nothing
   | DragEnter
   | DragLeave
-  | DragDrop(int);
+  | DragDrop(int)
+  | SetTextureToEngine(int, int)
+  | ShowTextureGroup
+  | HideTextureGroup;
 
 module Method = {
   let isWidget = startWidget =>
@@ -17,20 +24,20 @@ module Method = {
     | Some(widget) => widget == AssetWidgetService.getWidget()
     };
 
-  let isTypeValid = (startId, editorState) =>
-    switch (startId) {
+  let isTypeValid = (startNodeId, editorState) =>
+    switch (startNodeId) {
     | None => false
     | Some(id) =>
       OperateTreeAssetEditorService.isNodeExistById(id, editorState)
     };
 
   let _isTriggerAction = (isWidgetFunc, isTypeValidFunc) => {
-    let (widget, startId) =
+    let (widget, startNodeId) =
       StateEditorService.getState()
       |> CurrentDragSourceEditorService.getCurrentDragSource;
 
     isWidgetFunc(widget)
-    && isTypeValidFunc(startId, StateEditorService.getState());
+    && isTypeValidFunc(startNodeId, StateEditorService.getState());
   };
 
   let handleDragEnter = (isWidgetFunc, isTypeValidFunc, _event) =>
@@ -47,21 +54,18 @@ module Method = {
     ReactEventType.convertReactMouseEventToJsEvent(event)
     |> DomHelper.preventDefault;
 
-  let handleDrop = (isWidgetFunc, isTypeValidFunc, event) => {
+  let handleSetTextureToEngine = (isWidgetFunc, isTypeValidFunc, event) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
-    let startId = e |> DragUtils.getDragedId;
+    let startNodeId = e |> DragUtils.getDragedId;
 
     DomHelper.preventDefault(e);
 
     _isTriggerAction(isWidgetFunc, isTypeValidFunc) ?
-      DragDrop(startId) : DragLeave;
+      DragDrop(startNodeId) : DragLeave;
   };
 
-  let showMapComponent = (materialComponent, getMapFunc) =>
-    switch (
-      getMapFunc(materialComponent)
-      |> StateLogicService.getEngineStateToGetData
-    ) {
+  let showMapComponent = currentTextureComponent =>
+    switch (currentTextureComponent) {
     | None => ReasonReact.null
     | Some(map) =>
       let source =
@@ -74,6 +78,63 @@ module Method = {
         src=ImageType.convertImageElementToSrcImageElements(source)##src
       />;
     };
+
+  let showTextureAssets = (state, send) => {
+    let editorState = StateEditorService.getState();
+    let engineState = StateEngineService.unsafeGetState();
+
+    TextureNodeAssetEditorService.findAllTextureNodes(editorState)
+    |> Js.Array.map(textureNode => {
+         let {textureComponent, imageDataIndex} =
+           TextureNodeAssetService.getNodeData(textureNode);
+
+         (
+           NodeAssetService.getNodeId(~node=textureNode),
+           (textureComponent, imageDataIndex),
+         );
+       })
+    |> Js.Array.map(((nodeId, (textureComponent, imageDataIndex))) =>
+         switch (state.currentTextureComponent) {
+         | None =>
+           <div
+             className="select-item-content"
+             key=(DomHelper.getRandomKey())
+             onClick=(
+               _e => send(SetTextureToEngine(nodeId, textureComponent))
+             )>
+             (
+               DomHelper.textEl(
+                 NodeNameAssetLogicService.getTextureNodeName(
+                   ~texture=textureComponent,
+                   ~engineState,
+                 ),
+               )
+             )
+           </div>
+
+         | Some(map) =>
+           let className =
+             NodeAssetService.isEqual(map, textureComponent) ?
+               "select-item-content select-item-active" : "select-item-content";
+
+           <div
+             className
+             key=(DomHelper.getRandomKey())
+             onClick=(
+               _e => send(SetTextureToEngine(nodeId, textureComponent))
+             )>
+             (
+               DomHelper.textEl(
+                 NodeNameAssetLogicService.getTextureNodeName(
+                   ~texture=textureComponent,
+                   ~engineState,
+                 ),
+               )
+             )
+           </div>;
+         }
+       );
+  };
 };
 
 let component = ReasonReact.reducerComponent("MainEditorMaterialMap");
@@ -99,22 +160,42 @@ let reducer =
         ),
     })
 
-  | DragDrop(startId) =>
+  | DragDrop(startNodeId) =>
     ReasonReactUtils.sideEffects(() =>
-      onDropFunc((store, dispatchFunc), materialComponent, startId)
+      onDropFunc((store, dispatchFunc), materialComponent, startNodeId)
     )
 
+  | SetTextureToEngine(textureNodeId, textureComponent) =>
+    switch (state.currentTextureComponent) {
+    | None =>
+      ReasonReactUtils.updateWithSideEffects(
+        {...state, currentTextureComponent: Some(textureComponent)}, _state =>
+        onDropFunc((store, dispatchFunc), materialComponent, textureNodeId)
+      )
+    | Some(sourceTextureComponent) =>
+      sourceTextureComponent === textureComponent ?
+        ReasonReact.NoUpdate :
+        ReasonReactUtils.updateWithSideEffects(
+          {...state, currentTextureComponent: Some(textureComponent)}, _state =>
+          onDropFunc((store, dispatchFunc), materialComponent, textureNodeId)
+        )
+    }
+
   | Nothing => ReasonReact.NoUpdate
+
+  | ShowTextureGroup =>
+    ReasonReact.Update({...state, isShowTextureGroup: true})
+
+  | HideTextureGroup =>
+    ReasonReact.Update({...state, isShowTextureGroup: false})
   };
 
 let _renderDragableImage =
-    (
-      store,
-      materialComponent,
-      getMapFunc,
-      {state, send}: ReasonReact.self('a, 'b, 'c),
-    ) =>
-  <div className="texture-img" style=state.style>
+    (store, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+  <div
+    className="texture-img"
+    onClick=(_e => send(ShowTextureGroup))
+    style=state.style>
     <div
       className="img-dragBg"
       onDragEnter=(
@@ -132,10 +213,30 @@ let _renderDragableImage =
       onDragOver=Method.handleDragOver
       onDrop=(
         _e =>
-          send(Method.handleDrop(Method.isWidget, Method.isTypeValid, _e))
+          send(
+            Method.handleSetTextureToEngine(
+              Method.isWidget,
+              Method.isTypeValid,
+              _e,
+            ),
+          )
       )
     />
-    (Method.showMapComponent(materialComponent, getMapFunc))
+    (Method.showMapComponent(state.currentTextureComponent))
+  </div>;
+
+let _renderTextureGroup = (state, send) =>
+  <div className="select-component-content">
+    <div className="select-component-item">
+      <div className="select-item-header">
+        (DomHelper.textEl("Texture"))
+      </div>
+      (ReasonReact.array(Method.showTextureAssets(state, send)))
+    </div>
+    <div
+      className="select-component-bg"
+      onClick=(_e => send(HideTextureGroup))
+    />
   </div>;
 
 let render =
@@ -148,7 +249,7 @@ let render =
   <article className="inspector-item">
     <div className="item-header"> (DomHelper.textEl(label)) </div>
     <div className="item-content item-texture">
-      (_renderDragableImage(store, materialComponent, getMapFunc, self))
+      (_renderDragableImage(store, self))
       <button
         className="texture-remove"
         onClick=(
@@ -158,6 +259,10 @@ let render =
         (DomHelper.textEl("Remove"))
       </button>
     </div>
+    (
+      state.isShowTextureGroup ?
+        _renderTextureGroup(state, send) : ReasonReact.null
+    )
   </article>;
 
 let make =
@@ -172,7 +277,13 @@ let make =
       _children,
     ) => {
   ...component,
-  initialState: () => {style: ReactDOMRe.Style.make(~opacity="1", ())},
+  initialState: () => {
+    style: ReactDOMRe.Style.make(~opacity="1", ()),
+    isShowTextureGroup: false,
+    currentTextureComponent:
+      getMapFunc(materialComponent)
+      |> StateLogicService.getEngineStateToGetData,
+  },
   reducer: reducer((store, dispatchFunc), (materialComponent, onDropFunc)),
   render: self =>
     render(

@@ -20,7 +20,7 @@
         background: #c1c1c1;
         border-radius: 5px;
         @import "../utils/scrollBarUtils";
-        .item-header{
+        .select-item-header{
             width:100%;
             height:20px;
             line-height: 20px;
@@ -30,13 +30,13 @@
             border-bottom: 1px solid #868686;
             background: #555454;
         }
-        .item-content{
+        .select-item-content{
             color:#000;
             height:20px;
             line-height: 20px;
             padding: 2px 7px;
         }
-        .item-active{
+        .select-item-active{
             background: #5C7EA6;
         }
     }

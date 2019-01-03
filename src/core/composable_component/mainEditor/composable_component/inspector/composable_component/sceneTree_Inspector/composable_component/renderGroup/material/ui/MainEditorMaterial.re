@@ -104,7 +104,7 @@ module Method = {
     |> Js.Array.map(((materialNodeId, (material, materialType))) => {
          let className =
            (material, materialType) == (currentMaterial, currentMaterialType) ?
-             "item-content item-active" : "item-content";
+             "select-item-content select-item-active" : "select-item-content";
 
          <div
            className
@@ -221,7 +221,7 @@ let _renderMaterialGroup =
     (currentSceneTreeNode, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <div className="select-component-content">
     <div className="select-component-item">
-      <div className="item-header"> (DomHelper.textEl("Material")) </div>
+      <div className="select-item-header"> (DomHelper.textEl("Material")) </div>
       (
         ReasonReact.array(
           Method.showMaterialAssets(
