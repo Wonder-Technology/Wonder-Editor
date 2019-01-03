@@ -29,15 +29,7 @@ let _forEachIndices = (indices16, indices32, indicesCount, isIntersectFunc) => {
 
 let _isIntersect =
     /* (isBackSide, isDoubleSide), */
-    (
-      cullType,
-      localToWorldMatrix,
-      (rayCasterNear, rayCasterFar),
-      {origin} as ray,
-      va,
-      vb,
-      vc,
-    ) => {
+    (cullType, (rayCasterNear, rayCasterFar), {origin} as ray, va, vb, vc) => {
   /* let ray = {
        origin: ((-1.7738624811172485), 3.755427862065978, (-1.7321008658612196)),
        direction: (
@@ -133,8 +125,7 @@ let isIntersectMesh =
   _forEachIndices(
     indices16, indices32, indicesCount, (index1, index2, index3) =>
     _isIntersect(
-cullType,
-      localToWorldMatrix,
+      cullType,
       (0., infinity),
       ray,
       Vector3Service.fromBufferAttribute(vertices, index1),

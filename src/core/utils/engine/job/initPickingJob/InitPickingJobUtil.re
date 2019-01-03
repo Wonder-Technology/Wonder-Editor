@@ -15,14 +15,6 @@ let _isIntersectMesh =
     ray,
   );
 
-/* let _isIntersectAABB = (ray, gameObject, engineState) =>
-   /* ////TODO perf:cache aabbShapeMap in editorState */
-   /* TODO perf:if not transform and geometry not change, not compute aabb */
-   RayUtils.isIntersectAABB(
-     AABBShapeUtils.setFromGameObject(gameObject, engineState),
-     ray,
-   ); */
-
 let _isIntersectSphere =
     (
       ray,
@@ -30,7 +22,7 @@ let _isIntersectSphere =
       (editorState, engineState),
     ) =>
   RayUtils.isIntersectSphere(
-    SphereShapeUtils.setFromTranslationAndScale(
+    SphereShapeUtils.applyMatrix4(
       PickingEditorService.unsafeGetSphereShape(geometry, editorState),
       localToWorldMatrixTypeArray,
     ),
@@ -70,14 +62,6 @@ let _getSceneViewSize = editorState => {
   let (_, _, width, height) =
     SceneViewEditorService.unsafeGetViewRect(editorState);
 
-  /* let canvas = ViewEngineService.unsafeGetCanvas(engineState) |> Obj.magic;
-
-     (canvas##width, canvas##height); */
-
-  /* (
-       width |> NumberType.convertIntToFloat,
-       height |> NumberType.convertIntToFloat,
-     ); */
   (width, height);
 };
 
@@ -96,38 +80,6 @@ let _convertMouselocationInViewToNDC = ((x, y), (canvasWidth, canvasHeight)) => 
 
 let _getPerspectiveCameraData =
     (cameraGameObject, (editorState, engineState)) => {
-  /* let perspectiveCameraProjection =
-       GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
-         cameraGameObject,
-         engineState,
-       );
-
-     (
-       GameObjectComponentEngineService.unsafeGetTransformComponent(
-         cameraGameObject,
-         engineState,
-       )
-       |> TransformEngineService.getPosition(_, engineState),
-       BasicCameraViewEngineService.getBasicCameraViewWorldToCameraMatrix(
-         GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-           cameraGameObject,
-           engineState,
-         ),
-         engineState,
-       ),
-       PerspectiveCameraProjectionEngineService.unsafeGetPerspectiveCameraProjectionPMatrix(
-         perspectiveCameraProjection,
-         engineState,
-       ),
-       PerspectiveCameraProjectionEngineService.getPerspectiveCameraNear(
-         perspectiveCameraProjection,
-         engineState,
-       ),
-       PerspectiveCameraProjectionEngineService.getPerspectiveCameraFar(
-         perspectiveCameraProjection,
-         engineState,
-       ),
-     ); */
   cameraToWorldMatrix:
     BasicCameraViewEngineService.getBasicCameraViewWorldToCameraMatrix(
       GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
@@ -174,24 +126,6 @@ let _getAllGameObjectData = engineState =>
        (
          gameObject,
          transform,
-         /* let geometry = GameObjectComponentEngineService.unsafeGetGeometryComponent(
-                      gameObject,
-                      engineState,
-                    );
-
-
-            let localToWorldMatrixTypeArray =        TransformEngineService.getLocalToWorldMatrixTypeArray(
-                      GameObjectComponentEngineService.unsafeGetTransformComponent(
-                        gameObject,
-                        engineState,
-                      ),
-                      engineState,
-                    ); */
-         /* PickingEditorService.getSphereShape(editorState)
-
-            SphereShapeUtils.setFromPoints(
-              GeometryEngineService.getGeometryVertices(geometry, engineState)
-            ); */
          GameObjectComponentEngineService.unsafeGetGeometryComponent(
            gameObject,
            engineState,
@@ -204,89 +138,6 @@ let _getAllGameObjectData = engineState =>
      });
 
 let _computeSphereShapeData = (allGameObjectData, (editorState, engineState)) =>
-  /* let {locationInView}: EventType.pointEvent =
-       userDataToPointEvent(userData |> OptionService.unsafeGet);
-
-     let cameraGameObject =
-       SceneViewEditorService.unsafeGetEditCamera(editorState);
-
-     let (locationInViewX, locationInViewY) = locationInView; */
-  /* let ray =
-     RayUtils.createPerspectiveCameraRay(
-       _convertMouselocationInViewToNDC(
-         locationInView,
-         _getSceneViewSize(editorState),
-       ),
-       _getPerspectiveCameraData(
-         cameraGameObject,
-         (editorState, engineState),
-       ),
-     ); */
-  /* let ray =
-     RayUtils.createPerspectiveCameraRay(
-       (
-         locationInViewX |> NumberType.convertIntToFloat,
-         locationInViewY |> NumberType.convertIntToFloat,
-       ),
-       _getSceneViewSize(editorState),
-       _getPerspectiveCameraData(
-         cameraGameObject,
-         (editorState, engineState),
-       ),
-     ); */
-  /* let (localToWorldMatrixTypeArray, geometry) = */
-  /* GameObjectEngineService.getAllGameObjects(
-       SceneEngineService.getSceneGameObject(engineState),
-       engineState,
-     )
-     |> Js.Array.filter(gameObject =>
-          GameObjectComponentEngineService.hasGeometryComponent(
-            gameObject,
-            engineState,
-          )
-          && InspectorRenderGroupUtils.hasRenderGroupComponents(
-               gameObject,
-               engineState,
-             )
-        ) */
-  /* |> WonderCommonlib.ArrayService.reduceOneParam((. )) */
-  /* allGameObjects
-     |> Js.Array.map(gameObject => {
-          let geometry =
-            GameObjectComponentEngineService.unsafeGetGeometryComponent(
-              gameObject,
-              engineState,
-            );
-
-          let localToWorldMatrixTypeArray =
-            TransformEngineService.getLocalToWorldMatrixTypeArray(
-              GameObjectComponentEngineService.unsafeGetTransformComponent(
-                gameObject,
-                engineState,
-              ),
-              engineState,
-            );
-
-          /* PickingEditorService.getSphereShape(editorState)
-
-             SphereShapeUtils.setFromPoints(
-               GeometryEngineService.getGeometryVertices(geometry, engineState)
-             ); */
-
-          (
-            GameObjectComponentEngineService.unsafeGetGeometryComponent(
-              gameObject,
-              engineState,
-            ),
-            TransformEngineService.getLocalToWorldMatrixTypeArray(
-              GameObjectComponentEngineService.unsafeGetTransformComponent(
-                gameObject,
-                engineState,
-              ),
-              engineState,
-            ),
-          );
-        }) */
   allGameObjectData
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. editorState, (_, _, geometry, localToWorldMatrixTypeArray)) =>
@@ -306,7 +157,6 @@ let _computeSphereShapeData = (allGameObjectData, (editorState, engineState)) =>
          },
        editorState,
      );
-/* _computeSphereShapeData((editorState, engineState )) */
 
 let _findPickedOne =
     (
@@ -334,23 +184,10 @@ let _findPickedOne =
       ),
     );
 
-  /* let ray =
-     RayUtils.createPerspectiveCameraRay(
-       (
-         locationInViewX |> NumberType.convertIntToFloat,
-         locationInViewY |> NumberType.convertIntToFloat,
-       ),
-       _getSceneViewSize(editorState),
-       _getPerspectiveCameraData(
-         cameraGameObject,
-         (editorState, engineState),
-       ),
-     ); */
-
   allGameObjectData
-  /* |> Js.Array.filter(data =>
+  |> Js.Array.filter(data =>
        _isIntersectSphere(ray, data, (editorState, engineState))
-     ) */
+     )
   |> Js.Array.filter(data => _isIntersectMesh(ray, data, engineState))
   |> WonderLog.Log.print
   |> _getTopOne(cameraGameObject, engineState);
@@ -375,14 +212,14 @@ let _selectSceneTreeNode = (gameObject, (editorState, engineState)) => {
 let _handlePicking = (event: EventType.customEvent, engineState) => {
   /* open Wonderjs.StateDataMainType;
 
-  let deviceManagerRecord = engineState.deviceManagerRecord;
+     let deviceManagerRecord = engineState.deviceManagerRecord;
 
-  let deviceManagerRecord =
-    Wonderjs.DeviceManagerService.setSide(
-      Wonderjs.DeviceManagerService.unsafeGetGl(. deviceManagerRecord),
-      BACK,
-      deviceManagerRecord,
-    ); */
+     let deviceManagerRecord =
+       Wonderjs.DeviceManagerService.setSide(
+         Wonderjs.DeviceManagerService.unsafeGetGl(. deviceManagerRecord),
+         BACK,
+         deviceManagerRecord,
+       ); */
 
   let editorState = StateEditorService.getState();
 

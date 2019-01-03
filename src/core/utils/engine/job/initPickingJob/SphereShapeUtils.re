@@ -46,21 +46,34 @@ let setFromPoints = vertices => {
   };
 };
 
-let setFromTranslationAndScale =
-    /* ({center, radius}, translation, (scaleX, scaleY, scaleZ)) => { */
-    ({center, radius}, localToWorldMatrixTypeArray) => {
-  let translation =
-    Wonderjs.Matrix4Service.getTranslationTuple(localToWorldMatrixTypeArray);
-  let (scaleX, scaleY, scaleZ) =
-    Wonderjs.Matrix4Service.getScaleTuple(localToWorldMatrixTypeArray);
+/* let setFromTranslationAndScale =
+       /* ({center, radius}, translation, (scaleX, scaleY, scaleZ)) => { */
+       ({center, radius}, transform, engineState) => {
+     let position = TransformEngineService.getPosition(transform, engineState);
+     let (scaleX, scaleY, scaleZ) =
+       TransformEngineService.getScale(transform, engineState);
+     /* let translation =
+          Wonderjs.Matrix4Service.getTranslationTuple(localToWorldMatrixTypeArray);
+        let (scaleX, scaleY, scaleZ) =
+          Wonderjs.Matrix4Service.getScaleTuple(localToWorldMatrixTypeArray); */
 
-  {
-    center:
-      Wonderjs.Vector3Service.add(
-        Wonderjs.Vector3Type.Float,
-        center,
-        translation,
-      ),
-    radius: radius *. Js.Math.maxMany_float([|scaleX, scaleY, scaleZ|]),
-  };
+     {
+       center:
+         Wonderjs.Vector3Service.add(
+           Wonderjs.Vector3Type.Float,
+           center,
+           position,
+         ),
+       radius: radius *. Js.Math.maxMany_float([|scaleX, scaleY, scaleZ|]),
+     };
+   }; */
+
+let applyMatrix4 = ({center, radius}, localToWorldMatrixTypeArray) => {
+  center:
+    Wonderjs.Vector3Service.transformMat4Tuple(
+      center,
+      localToWorldMatrixTypeArray,
+    ),
+  radius:
+    radius *. Matrix4Service.getMaxScaleOnAxis(localToWorldMatrixTypeArray),
 };
