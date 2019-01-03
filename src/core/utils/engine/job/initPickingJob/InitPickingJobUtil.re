@@ -210,17 +210,6 @@ let _selectSceneTreeNode = (gameObject, (editorState, engineState)) => {
 };
 
 let _handlePicking = (event: EventType.customEvent, engineState) => {
-  /* open Wonderjs.StateDataMainType;
-
-     let deviceManagerRecord = engineState.deviceManagerRecord;
-
-     let deviceManagerRecord =
-       Wonderjs.DeviceManagerService.setSide(
-         Wonderjs.DeviceManagerService.unsafeGetGl(. deviceManagerRecord),
-         BACK,
-         deviceManagerRecord,
-       ); */
-
   let editorState = StateEditorService.getState();
 
   let allGameObjectData = _getAllGameObjectData(engineState);
@@ -243,29 +232,6 @@ let _handlePicking = (event: EventType.customEvent, engineState) => {
 };
 
 let initJob = (_, engineState) => {
-  /* let eu =
-     Wonderjs.Matrix4Service.getEulerAngles(
-       Js.Typed_array.Float32Array.make([|
-         1.,
-         0.,
-         0.,
-         0.,
-         0.,
-         0.5253219888177296,
-         0.8509035245341184,
-         0.,
-         0.,
-         (-0.8509035245341184),
-         0.5253219888177296,
-         0.,
-         0.,
-         0.,
-         0.,
-         1.,
-       |]),
-     );
-     WonderLog.Log.print(("eu: ", eu)) |> ignore; */
-
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
       ~eventName=EventEditorService.getPointDownEventName(),

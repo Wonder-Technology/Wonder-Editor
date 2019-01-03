@@ -11,72 +11,18 @@ let createPerspectiveCameraRay =
   let origin =
     cameraToWorldMatrix |> Wonderjs.Matrix4Service.getTranslationTuple;
 
-  /* let x = -0.09176470588235297;
-     let y = -0.03664921465968596; */
-
-  WonderLog.Log.print((x, y, cameraToWorldMatrix, projectionMatrix)) |> ignore;
-
   {
     origin,
     direction:
       Vector3Service.unproject(
-        /* (x, y, 0.5), */
         (x, y, (-1.0)),
         cameraToWorldMatrix,
         projectionMatrix,
       )
-      /* |> WonderLog.Log.print */
       |> Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, _, origin)
       |> Wonderjs.Vector3Service.normalize,
   };
-  /* {
-       origin: ((-1.7738624811172485), 3.446659564971924, 2.2855961322784424),
-       direction: (
-         0.2890584075902329,
-         (-0.7739965350589404),
-         (-0.5633600986209027),
-       ),
-     }; */
 };
-
-/* let createPerspectiveCameraRay =
-       (
-         (locationInViewX, locationInViewY),
-         (viewWidth, viewHeight),
-         (position, worldToCameraMatrix, projectionMatrix, near, far),
-       ) => {
-     WonderLog.Log.print((
-       (locationInViewX, locationInViewY),
-       (viewWidth, viewHeight),
-       (position, worldToCameraMatrix, projectionMatrix, near, far),
-     ))
-     |> ignore;
-
-     let from =
-       PerspectiveCameraUtils.convertScreenToWorld(
-         (locationInViewX, locationInViewY),
-         (viewWidth, viewHeight),
-         (position, worldToCameraMatrix, projectionMatrix, far),
-         near,
-       );
-     let to_ =
-       PerspectiveCameraUtils.convertScreenToWorld(
-         (locationInViewX, locationInViewY),
-         (viewWidth, viewHeight),
-         (position, worldToCameraMatrix, projectionMatrix, far),
-         far,
-       );
-
-     WonderLog.Log.print(("from, to: ", from, to_)) |> ignore;
-
-     {
-       origin: from,
-       direction:
-         /* Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, to_, from), */
-         Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, to_, from)
-         |> Wonderjs.Vector3Service.normalize,
-     };
-   }; */
 
 let applyMatrix4 = ({origin, direction}, mat4) => {
   let direction =
