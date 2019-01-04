@@ -387,7 +387,7 @@ let _ =
           ~testFunc=
             () =>
               BuildComponentTool.buildSceneTree(
-                TestTool.buildAppStateSceneGraphFromEngine(),
+                TestTool.buildEmptyAppState(),
               )
               |> ReactTestTool.createSnapshotAndMatch
               |> resolve,

@@ -80,21 +80,10 @@ let load = (dispatchFunc, event) => {
          |> handleSceneWDB
        )
     |> WonderBsMost.Most.drain
-    |> then_(_ => {
-         dispatchFunc(
-           AppStore.SceneTreeAction(
-             SetSceneGraph(
-               Some(
-                 SceneGraphUtils.getSceneGraphDataFromEngine
-                 |> StateLogicService.getStateToGetData,
-               ),
-             ),
-           ),
-         );
-
+    |> then_(_ =>
          dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))
-         |> resolve;
-       })
+         |> resolve
+       )
   };
 };
 

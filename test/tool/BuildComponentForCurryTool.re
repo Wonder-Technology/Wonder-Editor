@@ -10,7 +10,7 @@ let buildInspectorComponent = (store, addableComponentConfig, ()) =>
 let buildCameraView = () =>
   ReactTestRenderer.create(
     <MainEditorCameraView
-      store=(TestTool.buildAppStateSceneGraphFromEngine())
+      store=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
     />,
   );
@@ -18,7 +18,7 @@ let buildCameraView = () =>
 let buildSceneTree = () =>
   ReactTestRenderer.create(
     <MainEditorSceneTree
-      store=(TestTool.buildAppStateSceneGraphFromEngine())
+      store=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
     />,
   );
@@ -77,7 +77,7 @@ let buildLightMaterial = () =>
 let buildInspectorComponent = () =>
   ReactTestRenderer.create(
     <MainEditorInspector
-      store=(TestTool.buildAppStateSceneGraphFromEngine())
+      store=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
       addableComponentConfig=(InspectorTool.buildFakeAllShowComponentConfig())
     />,
@@ -123,7 +123,7 @@ let buildPointLight = () =>
 let buildHeader = () =>
   ReactTestRenderer.create(
     <Header
-      store=(TestTool.buildAppStateSceneGraphFromEngine())
+      store=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
     />,
   );

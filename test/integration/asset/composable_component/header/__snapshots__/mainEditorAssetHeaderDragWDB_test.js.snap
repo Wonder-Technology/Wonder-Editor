@@ -100,7 +100,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onMouseDown={[Function]}
           >
             <img
-              src="./public/img/right.png"
+              src="./public/img/down.png"
             />
           </div>
           <div
@@ -118,6 +118,34 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             Cube
           </div>
         </li>
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
+            <div
+              className="item-triangle"
+              onMouseDown={[Function]}
+            >
+              <img
+                src="./public/img/right.png"
+              />
+            </div>
+            <div
+              className="draggable-container"
+              draggable={true}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              onMouseDown={[Function]}
+              style={Object {}}
+            >
+              Wdb
+            </div>
+          </li>
+        </ul>
       </ul>
       <ul
         className="wonder-tree-node"

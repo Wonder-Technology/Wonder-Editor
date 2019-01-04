@@ -1,6 +1,6 @@
 let addCube =
     (
-      ~store=TestTool.buildAppStateSceneGraphFromEngine(),
+      ~store=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
@@ -12,7 +12,7 @@ let addCube =
 
 let addEmptyGameObject =
     (
-      ~store=TestTool.buildAppStateSceneGraphFromEngine(),
+      ~store=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
@@ -24,7 +24,7 @@ let addEmptyGameObject =
 
 let disposeCurrentSceneTreeNode =
     (
-      ~store=TestTool.buildAppStateSceneGraphFromEngine(),
+      ~store=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>

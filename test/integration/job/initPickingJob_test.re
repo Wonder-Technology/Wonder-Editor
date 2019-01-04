@@ -118,6 +118,7 @@ let _ =
 
         let engineState =
           engineState
+          |> GameObjectEngineService.setGameObjectName("gameObject", obj)
           |> GameObjectComponentEngineService.addGeometryComponent(
                obj,
                geometry,
@@ -560,13 +561,12 @@ let _ =
           |> expect == Some(SceneTreeWidgetService.getWidget());
         });
 
-        describe("trigger refreshSceneTreeAndInspector event", () => {
+        describe("trigger pickSuccess event", () => {
           test("test trigger", () => {
             let _ = _prepare();
             let a = ref(0);
             ManageEventEngineService.onCustomGlobalEvent(
-              ~eventName=
-                EventEditorService.getRefreshSceneTreeAndInspectorEventName(),
+              ~eventName=EventEditorService.getPickSuccessEventName(),
               ~handleFunc=
                 (. event, engineState) => {
                   a := 1;
@@ -587,8 +587,7 @@ let _ =
             let gameObject = _prepare();
             let pickedGameObject = ref(0);
             ManageEventEngineService.onCustomGlobalEvent(
-              ~eventName=
-                EventEditorService.getRefreshSceneTreeAndInspectorEventName(),
+              ~eventName=EventEditorService.getPickSuccessEventName(),
               ~handleFunc=
                 (. event, engineState) => {
                   let editorState = StateEditorService.getState();
@@ -609,6 +608,49 @@ let _ =
             _triggerPicking();
 
             pickedGameObject^ |> expect == gameObject;
+          });
+          test("the picked gameObject's all parents should show children", () => {
+            let _createParentGameObject = engineState => {
+              let (engineState, parent) =
+                engineState |> GameObjectEngineService.create;
+              let engineState =
+                engineState
+                |> GameObjectEngineService.setGameObjectName("parent", parent);
+
+              (engineState, parent);
+            };
+
+            let gameObject = _prepare();
+            let engineState = StateEngineService.unsafeGetState();
+            let (engineState, parent1) =
+              _createParentGameObject(engineState);
+            let (engineState, parent2) =
+              _createParentGameObject(engineState);
+            let engineState =
+              engineState
+              |> SceneEngineService.addSceneChild(parent1)
+              |> GameObjectUtils.addChild(parent1, parent2)
+              |> GameObjectUtils.addChild(parent2, gameObject);
+
+            _triggerPicking();
+
+            let editorState = StateEditorService.getState();
+            let engineState = StateEngineService.unsafeGetState();
+            let sceneGameObject =
+              SceneEngineService.getSceneGameObject(engineState);
+            (
+              SceneEditorService.getIsShowChildern(
+                parent1,
+                sceneGameObject,
+                editorState,
+              ),
+              SceneEditorService.getIsShowChildern(
+                parent2,
+                sceneGameObject,
+                editorState,
+              ),
+            )
+            |> expect == (true, true);
           });
         });
       });

@@ -2,24 +2,10 @@ let getDispatch = () => Reductive.Store.dispatch(IndexStore.store);
 
 let buildEmptyAppState = () => AppStore.state;
 
-let _buildSceneTreeAppState = sceneGraphData => {
+let _buildInspectorAppState = () => {
   let state = buildEmptyAppState();
   {
     ...state,
-    sceneTreeState: {
-      ...state.sceneTreeState,
-      sceneGraphData: Some(sceneGraphData),
-    },
-  };
-};
-let _buildSceneTreeAppStateWithInspectorState = sceneGraphData => {
-  let state = buildEmptyAppState();
-  {
-    ...state,
-    sceneTreeState: {
-      ...state.sceneTreeState,
-      sceneGraphData: Some(sceneGraphData),
-    },
     inspectorState: {
       ...state.inspectorState,
       showComponentMap:
@@ -33,22 +19,8 @@ let _buildSceneTreeAppStateWithInspectorState = sceneGraphData => {
   };
 };
 
-let buildAppStateSceneGraphFromEngine = () =>
-  (
-    stateTuple =>
-      stateTuple
-      |> SceneGraphUtils.getSceneGraphDataFromEngine
-      |> _buildSceneTreeAppState
-  )
-  |> StateLogicService.getStateToGetData;
-
-let buildAppStateSceneGraphAndInspectorState = () =>
-  (
-    stateTuple =>
-      stateTuple
-      |> SceneGraphUtils.getSceneGraphDataFromEngine
-      |> _buildSceneTreeAppStateWithInspectorState
-  )
+let buildAppStateInspectorState = () =>
+  (stateTuple => _buildInspectorAppState())
   |> StateLogicService.getStateToGetData;
 
 let initScene = () => {

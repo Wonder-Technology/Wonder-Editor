@@ -1,71 +1,58 @@
 open SceneGraphType;
 
-let getSimpleSceneTree = () => [|
+/* let getSimpleSceneTree = () => [|
   {
     uid: 0,
     name: "root",
-    isShowChildren: true,
     children: [|
-      {uid: 1, name: "gameObject1", isShowChildren: true, children: [||]},
-      {uid: 2, name: "gameObject2", isShowChildren: true, children: [||]},
-      {uid: 3, name: "gameObject3", isShowChildren: true, children: [||]},
+      {uid: 1, name: "gameObject1", children: [||]},
+      {uid: 2, name: "gameObject2", children: [||]},
+      {uid: 3, name: "gameObject3", children: [||]},
     |],
   },
-|];
+|]; */
 
-let getTwoLayerSceneTree = () => [|
+/* let getTwoLayerSceneTree = () => [|
   {
     uid: 0,
     name: "root",
-    isShowChildren: true,
     children: [|
-      {uid: 1, name: "gameObject1", isShowChildren: true, children: [||]},
-      {uid: 2, name: "gameObject2", isShowChildren: true, children: [||]},
+      {uid: 1, name: "gameObject1", children: [||]},
+      {uid: 2, name: "gameObject2", children: [||]},
       {
         uid: 3,
         name: "gameObject3",
-        isShowChildren: true,
         children: [|
-          {uid: 4, name: "gameObject4", isShowChildren: true, children: [||]},
-          {uid: 5, name: "gameObject5", isShowChildren: true, children: [||]},
+          {uid: 4, name: "gameObject4", children: [||]},
+          {uid: 5, name: "gameObject5", children: [||]},
         |],
       },
     |],
   },
-|];
+|]; */
 
-let getThreeLayerSceneTree = () => [|
+/* let getThreeLayerSceneTree = () => [|
   {
     uid: 0,
     name: "root",
-    isShowChildren: true,
     children: [|
-      {uid: 1, name: "gameObject1", isShowChildren: true, children: [||]},
-      {uid: 2, name: "gameObject2", isShowChildren: true, children: [||]},
+      {uid: 1, name: "gameObject1", children: [||]},
+      {uid: 2, name: "gameObject2", children: [||]},
       {
         uid: 3,
         name: "gameObject3",
-        isShowChildren: true,
         children: [|
-          {uid: 4, name: "gameObject4", isShowChildren: true, children: [||]},
+          {uid: 4, name: "gameObject4", children: [||]},
           {
             uid: 5,
             name: "gameObject5",
-            isShowChildren: true,
-            children: [|
-              {
-                uid: 6,
-                name: "gameObject6",
-                isShowChildren: true,
-                children: [||],
-              },
-            |],
+            children: [|{uid: 6, name: "gameObject6", children: [||]}|],
           },
         |],
       },
     |],
   },
-|];
+|]; */
 
 module Drag = {
   let isTriggerDragCurrentSceneTreeNode = targetGameObject => {
@@ -126,7 +113,7 @@ module Drag = {
         ~sourceGameObject,
         ~targetGameObject,
         ~dispatchFunc=TestTool.getDispatch(),
-        ~store=TestTool.buildAppStateSceneGraphFromEngine(),
+        ~store=TestTool.buildEmptyAppState(),
         (),
       ) =>
     MainEditorSceneTree.Method.dragGameObjectIntoGameObject(

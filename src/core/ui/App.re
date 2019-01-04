@@ -1,7 +1,5 @@
 open DomHelper;
 
-open MainEditorSceneTreeStore;
-
 module Method = {
   let getStorageParentKey = () => "userExtension";
   let addExtension = text =>

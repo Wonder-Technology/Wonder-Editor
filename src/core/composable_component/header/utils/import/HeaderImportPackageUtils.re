@@ -379,19 +379,8 @@ let _readFile = (fileInfo: FileType.fileInfoType, resolve) => {
   LoadAssetUtils.readPakckageByTypeSync(reader, fileInfo);
 };
 
-let _dispatch = dispatchFunc => {
-  dispatchFunc(
-    AppStore.SceneTreeAction(
-      SetSceneGraph(
-        Some(
-          SceneGraphUtils.getSceneGraphDataFromEngine
-          |> StateLogicService.getStateToGetData,
-        ),
-      ),
-    ),
-  );
+let _dispatch = dispatchFunc =>
   dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])));
-};
 
 let importPackage = (dispatchFunc, event) => {
   let editorState = StateEditorService.getState();

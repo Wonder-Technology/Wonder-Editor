@@ -43,7 +43,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onMouseDown={[Function]}
           >
             <img
-              src="./public/img/right.png"
+              src="./public/img/down.png"
             />
           </div>
           <div
@@ -61,6 +61,29 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             Camera
           </div>
         </li>
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
+            <div
+              className="item-triangle"
+            />
+            <div
+              className="draggable-container"
+              draggable={true}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              onMouseDown={[Function]}
+              style={Object {}}
+            >
+              Cube
+            </div>
+          </li>
+        </ul>
       </ul>
       <ul
         className="wonder-tree-node"
@@ -156,7 +179,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onMouseDown={[Function]}
           >
             <img
-              src="./public/img/right.png"
+              src="./public/img/down.png"
             />
           </div>
           <div
@@ -174,6 +197,52 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             Camera
           </div>
         </li>
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
+            <div
+              className="item-triangle"
+            />
+            <div
+              className="draggable-container"
+              draggable={true}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              onMouseDown={[Function]}
+              style={Object {}}
+            >
+              Cube
+            </div>
+          </li>
+        </ul>
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
+            <div
+              className="item-triangle"
+            />
+            <div
+              className="draggable-container select-active"
+              draggable={true}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              onMouseDown={[Function]}
+              style={Object {}}
+            >
+              Cube
+            </div>
+          </li>
+        </ul>
       </ul>
       <ul
         className="wonder-tree-node"
@@ -246,7 +315,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onMouseDown={[Function]}
           >
             <img
-              src="./public/img/right.png"
+              src="./public/img/down.png"
             />
           </div>
           <div
@@ -264,6 +333,52 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             Camera
           </div>
         </li>
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
+            <div
+              className="item-triangle"
+            />
+            <div
+              className="draggable-container"
+              draggable={true}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              onMouseDown={[Function]}
+              style={Object {}}
+            >
+              Cube
+            </div>
+          </li>
+        </ul>
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
+            <div
+              className="item-triangle"
+            />
+            <div
+              className="draggable-container select-active"
+              draggable={true}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              onMouseDown={[Function]}
+              style={Object {}}
+            >
+              Cube
+            </div>
+          </li>
+        </ul>
       </ul>
       <ul
         className="wonder-tree-node"
@@ -336,7 +451,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onMouseDown={[Function]}
           >
             <img
-              src="./public/img/right.png"
+              src="./public/img/down.png"
             />
           </div>
           <div
@@ -354,6 +469,29 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             Camera
           </div>
         </li>
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
+            <div
+              className="item-triangle"
+            />
+            <div
+              className="draggable-container"
+              draggable={true}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              onMouseDown={[Function]}
+              style={Object {}}
+            >
+              Cube
+            </div>
+          </li>
+        </ul>
       </ul>
       <ul
         className="wonder-tree-node"

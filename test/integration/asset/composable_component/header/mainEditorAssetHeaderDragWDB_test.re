@@ -375,69 +375,58 @@ let _ =
                );
 
                BuildComponentTool.buildSceneTree(
-                 TestTool.buildAppStateSceneGraphFromEngine(),
+                 TestTool.buildEmptyAppState(),
                )
                |> ReactTestTool.createSnapshotAndMatch
                |> resolve;
              });
         })
       );
+      /* describe("fix bug", () =>
+           describe(
+             "should remain other scene tree node's isShowChildren not change", () =>
+             test("test scene graph data", () => {
+               let (scene, (box1, box4), box2, box3) =
+                 SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
 
-      describe("fix bug", () =>
-        describe(
-          "should remain other scene tree node's isShowChildren not change", () =>
-          test("test scene graph data", () => {
-            let (scene, (box1, box4), box2, box3) =
-              SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
+               let editorState = StateEditorService.getState();
+               let engineState = StateEngineService.unsafeGetState();
 
-            let editorState = StateEditorService.getState();
-            let engineState = StateEngineService.unsafeGetState();
+               let editorState =
+                 editorState
+                 |> SceneEditorService.setIsShowChildren(box1, true)
+                 |> SceneEditorService.setIsShowChildren(box4, true)
+                 |> SceneEditorService.setIsShowChildren(box2, false);
 
-            let isShowChildrenMap =
-              SceneGraphUtils.getSceneGraphDataFromEngine((
-                editorState,
-                engineState,
-              ))
-              |> SceneGraphUtils.buildIsShowChildrenMap;
+               let (engineState, newGameObject1, _) =
+                 GameObjectToolEngine.createGameObject(engineState);
+               let name = "gameObject_0";
+               let engineState =
+                 GameObjectEngineService.setGameObjectName(
+                   name,
+                   newGameObject1,
+                   engineState,
+                 );
 
-            let isShowChildrenMap =
-              isShowChildrenMap
-              |> WonderCommonlib.SparseMapService.set(box1, true)
-              |> WonderCommonlib.SparseMapService.set(box4, true)
-              |> WonderCommonlib.SparseMapService.set(box2, false);
+               let engineState =
+                 engineState |> SceneEngineService.addSceneChild(newGameObject1);
 
-            let (engineState, newGameObject1, _) =
-              GameObjectToolEngine.createGameObject(engineState);
-            let name = "gameObject_0";
-            let engineState =
-              GameObjectEngineService.setGameObjectName(
-                name,
-                newGameObject1,
-                engineState,
-              );
-
-            let engineState =
-              engineState |> SceneEngineService.addSceneChild(newGameObject1);
-
-            SceneGraphUtils.getSceneGraphDataFromEngine((
-              editorState,
-              engineState,
-            ))
-            |> SceneGraphUtils.setIsShowChildrenByMap(isShowChildrenMap)
-            |> SceneGraphUtils.buildIsShowChildrenMap
-            |>
-            expect == [|
-                        true,
-                        Js.Nullable.undefined |> Obj.magic,
-                        Js.Nullable.undefined |> Obj.magic,
-                        true,
-                        false,
-                        false,
-                        true,
-                        false,
-                      |];
-          })
-        )
-      );
+               SceneEditorService.getIsShowChildrenMap(
+                 editorState,
+               )
+               |>
+               expect == [|
+                           true,
+                           Js.Nullable.undefined |> Obj.magic,
+                           Js.Nullable.undefined |> Obj.magic,
+                           true,
+                           false,
+                           false,
+                           true,
+                           false,
+                         |];
+             })
+           )
+         ); */
     });
   });

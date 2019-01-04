@@ -25,4 +25,4 @@ let getPointDragEventName = () => "wd_editor_pointdrag";
 
 let getRefreshInspectorEventName = () => "wd_editor_refresh_inspector";
 
-let getRefreshSceneTreeAndInspectorEventName = () => "wd_editor_refresh_sceneTree_inspector";
+let getPickSuccessEventName = () => "wd_editor_pick_success";

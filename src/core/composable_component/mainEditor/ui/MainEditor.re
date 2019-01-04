@@ -89,11 +89,11 @@ module Method = {
     |> StateEngineService.setState
     |> ignore;
 
-  let bindRefreshSceneTreeAndInspectorEvent = dispatchFunc =>
+  let bindPickSuccessEvent = dispatchFunc =>
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=EventEditorService.getRefreshSceneTreeAndInspectorEventName(),
+      ~eventName=EventEditorService.getPickSuccessEventName(),
       ~handleFunc=
-        (. event, engineState) => {
+        (. ({userData}: EventType.customEvent) as event, engineState) => {
           engineState |> StateEngineService.setState |> ignore;
 
           dispatchFunc(
@@ -192,23 +192,14 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
                |> StateEditorService.setState
            )
            |> StateLogicService.getAndSetEditorState;
-           dispatchFunc(
-             AppStore.SceneTreeAction(
-               SetSceneGraph(
-                 Some(
-                   SceneGraphUtils.getSceneGraphDataFromEngine
-                   |> StateLogicService.getStateToGetData,
-                 ),
-               ),
-             ),
-           );
+
            dispatchFunc(AppStore.StartEngineAction) |> resolve;
          })
       |> ignore
     );
 
     Method.bindRefreshInspectorEvent(dispatchFunc);
-    Method.bindRefreshSceneTreeAndInspectorEvent(dispatchFunc);
+    Method.bindPickSuccessEvent(dispatchFunc);
 
     DomHelper.onresize(Method.resizeCanvasAndViewPort);
   },

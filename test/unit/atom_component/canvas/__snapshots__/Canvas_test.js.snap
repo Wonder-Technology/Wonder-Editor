@@ -66,7 +66,7 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
             onMouseDown={[Function]}
           >
             <img
-              src="./public/img/right.png"
+              src="./public/img/down.png"
             />
           </div>
           <div
@@ -84,6 +84,34 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
             Cube
           </div>
         </li>
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
+            <div
+              className="item-triangle"
+              onMouseDown={[Function]}
+            >
+              <img
+                src="./public/img/right.png"
+              />
+            </div>
+            <div
+              className="draggable-container"
+              draggable={true}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              onMouseDown={[Function]}
+              style={Object {}}
+            >
+              Wdb
+            </div>
+          </li>
+        </ul>
       </ul>
       <ul
         className="wonder-tree-node"

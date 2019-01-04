@@ -2,8 +2,6 @@ open MapStore;
 
 open UpdateStore;
 
-open MainEditorSceneTreeStore;
-
 open MainEditorInspectorStore;
 
 open BottomShowComponentStore;
@@ -12,7 +10,6 @@ type appState = {
   isEditorAndEngineStart: bool,
   isDidMounted: bool,
   mapState,
-  sceneTreeState,
   updateState,
   inspectorState,
   showComponentState,
@@ -24,7 +21,6 @@ type ReduxThunk.thunk('a) +=
 type ReduxThunk.thunk(_) +=
   | IsDidMounted
   | StartEngineAction
-  | SceneTreeAction(sceneTreeAction(sceneTreeDataType))
   | MapAction(mapAction(componentsMap))
   | InspectorAction(inspectorAction(int, bool))
   | UpdateAction(updateAction(updateComponentTypeArr))
@@ -36,9 +32,6 @@ let state: appState = {
   mapState: {
     componentsMap: None,
   },
-  sceneTreeState: {
-    sceneGraphData: None,
-  },
   updateState: {
     componentTypeArr: [|All|],
   },
@@ -46,7 +39,7 @@ let state: appState = {
     showComponentMap: WonderCommonlib.SparseMapService.createEmpty(),
   },
   showComponentState: {
-    currentComponentType: Project
+    currentComponentType: Project,
   },
 };
 
@@ -54,10 +47,6 @@ let appReducter = (state: appState, action) =>
   switch (action) {
   | IsDidMounted => {...state, isDidMounted: true}
   | StartEngineAction => {...state, isEditorAndEngineStart: true}
-  | SceneTreeAction(action) => {
-      ...state,
-      sceneTreeState: sceneTreeReducer(state.sceneTreeState, action),
-    }
   | MapAction(action) => {
       ...state,
       mapState: mapReducer(state.mapState, action),

@@ -34,23 +34,6 @@ module CustomEventHandler = {
 
     let engineState = StateEngineService.unsafeGetState();
 
-    dispatchFunc(
-      AppStore.SceneTreeAction(
-        SetSceneGraph(
-          Some(
-            SceneGraphUtils.buildTreeNode(newGameObject, engineState)
-            |> SceneGraphUtils.addTreeNodeSceneGraphData(
-                 _,
-                 SceneEngineService.getSceneGameObject(engineState),
-                 store |> StoreUtils.unsafeGetSceneGraphDataFromStore,
-                 engineState,
-               ),
-          ),
-        ),
-      ),
-    )
-    |> ignore;
-
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))
     |> ignore;
   };

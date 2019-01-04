@@ -4,6 +4,7 @@ let create = () => {
   settingRecord: RecordSettingService.create(),
   sceneRecord: {
     currentSceneTreeNode: None,
+    isShowChildrenMap: WonderCommonlib.SparseMapService.createEmpty(),
   },
   assetRecord: {
     nodeIndex: 0,

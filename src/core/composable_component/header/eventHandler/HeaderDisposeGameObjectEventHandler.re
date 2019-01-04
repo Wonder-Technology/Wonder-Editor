@@ -6,37 +6,7 @@ module CustomEventHandler = {
   type dataTuple = unit;
   type return = unit;
 
-  let _checkSceneGraphDataAndDispatch = (dispatchFunc, newSceneGraphArr) => {
-    /* WonderLog.Contract.requireCheck(
-         () =>
-           WonderLog.(
-             Contract.(
-               test(
-                 Log.buildAssertMessage(
-                   ~expect=
-                     {j|the newSceneGraphArr should equal the sceneGraph from engine|j},
-                   ~actual={j|not|j},
-                 ),
-                 () =>
-                 SceneGraphUtils.getSceneGraphDataFromEngine
-                 |> StateLogicService.getStateToGetData == newSceneGraphArr
-                 |> assertTrue
-               )
-             )
-           ),
-         StateEditorService.getStateIsDebug(),
-       ); */
-
-    dispatchFunc(
-      AppStore.SceneTreeAction(SetSceneGraph(Some(newSceneGraphArr))),
-    )
-    |> ignore;
-
-    dispatchFunc(AppStore.UpdateAction(Update([|Inspector, SceneTree|])))
-    |> ignore;
-  };
-
-  let _getRemovedSceneGraphData = sceneGraphArr => {
+  let _getRemovedGameObject = () => {
     let editorState = StateEditorService.getState();
 
     switch (SceneEditorService.getCurrentSceneTreeNode(editorState)) {
@@ -51,37 +21,27 @@ module CustomEventHandler = {
         ),
         editorState,
       );
-      (sceneGraphArr, None);
-
-    | Some(gameObject) =>
-      let (newSceneGraphArr, removedTreeNode) =
-        sceneGraphArr |> SceneGraphUtils.removeDragedTreeNode(gameObject);
-
-      (newSceneGraphArr, removedTreeNode |. Some);
+      None;
+    | Some(gameObject) => Some(gameObject)
     };
   };
 
-  let _hasLightComponent = (removedTreeNode, engineState) =>
-    SceneGraphUtils.getAllGameObjects(removedTreeNode)
+  let _hasLightComponent = (removedGameObject, engineState) =>
+    GameObjectEngineService.getAllGameObjects(removedGameObject, engineState)
     |> SceneEngineService.doesNeedReInitSceneAllLightMaterials(_, engineState);
 
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
-    let sceneGraphArr = store |> StoreUtils.unsafeGetSceneGraphDataFromStore;
-
-    let (newSceneGraphArr, removedTreeNode) =
-      _getRemovedSceneGraphData(sceneGraphArr);
-
-    switch (removedTreeNode) {
+    switch (_getRemovedGameObject()) {
     | None => ()
-    | Some(removedTreeNode) =>
+    | Some(removedGameObject) =>
       let engineState = StateEngineService.unsafeGetState();
 
       let hasLightComponent =
-        _hasLightComponent(removedTreeNode, engineState);
+        _hasLightComponent(removedGameObject, engineState);
 
       engineState |> StateEngineService.setState |> ignore;
 
-      removedTreeNode
+      removedGameObject
       |> CurrentNodeSceneTreeLogicService.disposeCurrentSceneTreeNode;
 
       StateLogicService.getAndRefreshEngineState();
@@ -94,7 +54,8 @@ module CustomEventHandler = {
       StateLogicService.getAndRefreshEngineState();
     };
 
-    _checkSceneGraphDataAndDispatch(dispatchFunc, newSceneGraphArr);
+    dispatchFunc(AppStore.UpdateAction(Update([|Inspector, SceneTree|])))
+    |> ignore;
   };
 };
 

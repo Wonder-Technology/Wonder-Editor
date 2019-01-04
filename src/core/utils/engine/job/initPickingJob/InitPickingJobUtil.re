@@ -207,19 +207,32 @@ let _findPickedOne =
   |> _getTopOne(cameraGameObject, engineState);
 };
 
+let rec _setAllParentsShowChildren = (gameObject, engineState, editorState) =>
+  switch (GameObjectUtils.getParentGameObject(gameObject, engineState)) {
+  | None => editorState
+  | Some(parentGameObject) =>
+    _setAllParentsShowChildren(
+      parentGameObject,
+      engineState,
+      editorState
+      |> SceneEditorService.setIsShowChildren(parentGameObject, true),
+    )
+  };
+
 let _selectSceneTreeNode = (gameObject, (editorState, engineState)) => {
   let editorState =
     SceneEditorService.setCurrentSceneTreeNode(gameObject, editorState)
     |> CurrentSelectSourceEditorService.setCurrentSelectSource(
          SceneTreeWidgetService.getWidget(),
-       );
+       )
+    |> _setAllParentsShowChildren(gameObject, engineState);
 
   editorState |> StateEditorService.setState |> ignore;
 
   let (engineState, _) =
     ManageEventEngineService.triggerCustomGlobalEvent(
       CreateCustomEventEngineService.create(
-        EventEditorService.getRefreshSceneTreeAndInspectorEventName(),
+        EventEditorService.getPickSuccessEventName(),
         None,
       ),
       engineState,

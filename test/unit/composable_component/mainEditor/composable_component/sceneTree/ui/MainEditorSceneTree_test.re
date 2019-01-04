@@ -156,7 +156,7 @@ let _ =
         afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
         test("no drag", () =>
           BuildComponentTool.buildSceneTree(
-            TestTool.buildAppStateSceneGraphFromEngine(),
+            TestTool.buildEmptyAppState(),
           )
           |> ReactTestTool.createSnapshotAndMatch
         );
@@ -174,7 +174,7 @@ let _ =
           );
 
           BuildComponentTool.buildSceneTree(
-            TestTool.buildAppStateSceneGraphFromEngine(),
+            TestTool.buildEmptyAppState(),
           )
           |> ReactTestTool.createSnapshotAndMatch;
         });
