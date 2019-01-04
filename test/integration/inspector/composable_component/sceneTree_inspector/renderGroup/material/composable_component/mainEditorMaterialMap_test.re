@@ -112,10 +112,7 @@ let _ =
             (),
           );
 
-          BuildComponentTool.buildMaterialMap(
-            ~isShowTextureGroup=true,
-            (),
-          )
+          BuildComponentTool.buildMaterialMap(~isShowTextureGroup=true, ())
           |> ReactTestTool.createSnapshotAndMatch;
         },
       );

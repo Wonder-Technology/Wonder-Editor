@@ -35,3 +35,9 @@ let getNodeData = node =>
       ),
     )
   };
+
+let getTextureComponent = node => {
+  let {textureComponent} = getNodeData(node);
+
+  textureComponent;
+};

@@ -79,57 +79,25 @@ module Method = {
       />;
     };
 
-  let _sortByName = (allTextureAssetData, engineState) =>
-    allTextureAssetData
-    |> Js.Array.sortInPlaceWith(
-         ((_, (textureComponent1, _)), (_, (textureComponent2, _))) =>
+  let _sortByName = (engineState, allTextureNodes) =>
+    allTextureNodes
+    |> Js.Array.sortInPlaceWith((textureNode1, textureNode2) =>
          Js.String.localeCompare(
            NodeNameAssetLogicService.getTextureNodeName(
-             ~texture=textureComponent2,
+             ~texture=
+               TextureNodeAssetService.getTextureComponent(textureNode1),
              ~engineState,
            )
            |> Js.String.charAt(0),
            NodeNameAssetLogicService.getTextureNodeName(
-             ~texture=textureComponent1,
+             ~texture=
+               TextureNodeAssetService.getTextureComponent(textureNode2),
              ~engineState,
            )
            |> Js.String.charAt(0),
          )
          |> NumberType.convertFloatToInt
        );
-
-  let handleError =
-      (result: Result.SameDataResult.t(array(ReasonReact.reactElement))) =>
-    Result.SameDataResult.handleError(
-      result => result,
-      (msg, result) => {
-        let editorState = StateEditorService.getState();
-
-        ConsoleUtils.error(msg, editorState);
-
-        result;
-      },
-      result,
-    );
-
-  let _getImgSrc = (imageDataIndex, editorState) =>
-    editorState
-    |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
-    |> (
-      ({blobObjectURL, base64, mimeType}: ImageDataType.imageData) =>
-        switch (blobObjectURL, base64) {
-        | (Some(blobObjectURL), Some(_))
-        | (Some(blobObjectURL), None) =>
-          blobObjectURL |> Obj.magic |> Result.SameDataResult.success
-        | (None, Some(base64)) => base64 |> Result.SameDataResult.success
-        | (None, None) =>
-          (
-            "texture->source should has base64 or blobObjectURL data, but acutally not has",
-            ImageUtils.getNullImageSrc(),
-          )
-          |> Result.SameDataResult.fail
-        }
-    );
 
   let _buildTextureUIComponent =
       ((className, nodeId, textureComponent, imgSrc), send, engineState) =>
@@ -150,57 +118,39 @@ module Method = {
       </div>
     </div>;
 
+  let _buildTextureUIComponentResult = ((nodeId, textureComponent, imageDataIndex),send,(editorState, engineState)) =>
+    ImageDataMapUtils.getImgSrc(imageDataIndex, editorState)
+    |> Result.SameDataResult.either(imgSrc =>
+         _buildTextureUIComponent(
+           ("select-item-imgContent", nodeId, textureComponent, imgSrc),
+           send,
+           engineState,
+         )
+         |> Result.SameDataResult.success
+       );
+
   let showTextureAssets = (state, send) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
     TextureNodeAssetEditorService.findAllTextureNodes(editorState)
-    |> Js.Array.map(textureNode => {
+    |> _sortByName(engineState)
+    |> ArrayService.traverseSameDataResultAndCollectByApply(textureNode => {
          let {textureComponent, imageDataIndex} =
            TextureNodeAssetService.getNodeData(textureNode);
+         let nodeId = NodeAssetService.getNodeId(~node=textureNode);
 
-         (
-           NodeAssetService.getNodeId(~node=textureNode),
-           (textureComponent, imageDataIndex),
-         );
-       })
-    |> _sortByName(_, engineState)
-    |> ArrayService.traverseSameDataResultAndCollectByApply(
-         ((nodeId, (textureComponent, imageDataIndex))) =>
          switch (state.currentTextureComponent) {
-         | None =>
-           _getImgSrc(imageDataIndex, editorState)
-           |> Result.SameDataResult.either(imgSrc =>
-                _buildTextureUIComponent(
-                  (
-                    "select-item-imgContent",
-                    nodeId,
-                    textureComponent,
-                    imgSrc,
-                  ),
-                  send,
-                  engineState,
-                )
-                |> Result.SameDataResult.success
-              )
-
+         | None => _buildTextureUIComponentResult((nodeId, textureComponent, imageDataIndex),send,(editorState, engineState))
          | Some(map) =>
            let className =
-             NodeAssetService.isEqual(map, textureComponent) ?
+             map === textureComponent ?
                "select-item-imgContent select-item-active" :
                "select-item-imgContent";
 
-           _getImgSrc(imageDataIndex, editorState)
-           |> Result.SameDataResult.either(imgSrc =>
-                _buildTextureUIComponent(
-                  (className, nodeId, textureComponent, imgSrc),
-                  send,
-                  engineState,
-                )
-                |> Result.SameDataResult.success
-              );
-         }
-       );
+           _buildTextureUIComponentResult((nodeId, textureComponent, imageDataIndex),send,(editorState, engineState));
+         };
+       });
   };
 };
 
@@ -302,7 +252,7 @@ let _renderTextureGroup = (state, send) =>
         <div className="imgBody-content">
           (
             ReasonReact.array(
-              Method.showTextureAssets(state, send) |> Method.handleError,
+              Method.showTextureAssets(state, send) |> ResultUtils.handleError,
             )
           )
         </div>

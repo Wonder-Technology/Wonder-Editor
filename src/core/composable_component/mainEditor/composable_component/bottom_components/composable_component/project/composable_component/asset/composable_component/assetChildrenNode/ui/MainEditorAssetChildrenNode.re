@@ -107,25 +107,6 @@ module Method = {
     |]);
   };
 
-  let _getImgSrc = (imageDataIndex, editorState) =>
-    editorState
-    |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
-    |> (
-      ({blobObjectURL, base64, mimeType}: ImageDataType.imageData) =>
-        switch (blobObjectURL, base64) {
-        | (Some(blobObjectURL), Some(_))
-        | (Some(blobObjectURL), None) =>
-          blobObjectURL |> Obj.magic |> Result.SameDataResult.success
-        | (None, Some(base64)) => base64 |> Result.SameDataResult.success
-        | (None, None) =>
-          (
-            "texture->source should has base64 or blobObjectURL data, but acutally not has",
-            ImageUtils.getNullImageSrc(),
-          )
-          |> Result.SameDataResult.fail
-        }
-    );
-
   let showSpecificTreeNodeChildren =
       (
         (store, dispatchFunc),
@@ -156,7 +137,7 @@ module Method = {
                      ~engineState,
                    );
 
-                 _getImgSrc(imageDataIndex, editorState)
+                 ImageDataMapUtils.getImgSrc(imageDataIndex, editorState)
                  |> Result.SameDataResult.either(imgSrc =>
                       <FileBox
                         key
@@ -250,20 +231,6 @@ module Method = {
     result;
   };
 
-  let _handleError =
-      (result: Result.SameDataResult.t(array(ReasonReact.reactElement))) =>
-    Result.SameDataResult.handleError(
-      result => result,
-      (msg, result) => {
-        let editorState = StateEditorService.getState();
-
-        ConsoleUtils.error(msg, editorState);
-
-        result;
-      },
-      result,
-    );
-
   let buildCurrentTreeNodeChildrenComponent =
       ((store, dispatchFunc), dragImg, debounceTime) => {
     let editorState = StateEditorService.getState();
@@ -282,7 +249,7 @@ module Method = {
            engineState,
          ),
        )
-    |> _handleError;
+    |> ResultUtils.handleError;
   };
 };
 

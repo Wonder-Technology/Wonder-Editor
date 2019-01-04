@@ -50,7 +50,7 @@ module Method = {
         _isGameObjectLightMaterialComponentHasMap(gameObject, engineState) :
         false;
 
-  let _sortByName = (allGeometryAssets, engineState) =>
+  let _sortByName = (engineState, allGeometryAssets) =>
     allGeometryAssets
     |> Js.Array.sortInPlaceWith((geometry1, geometry2) =>
          Js.String.localeCompare(
@@ -65,7 +65,7 @@ module Method = {
   let _getAllGeometryAssetsAndDefaultGeometrys = (editorState, engineState) =>
     ArrayService.fastConcat(
       GeometryAssetLogicService.getGeometryAssets(editorState, engineState)
-      |> _sortByName(_, engineState),
+      |> _sortByName(engineState),
       GeometryDataAssetEditorService.unsafeGetDefaultGeometryComponents(
         editorState,
       ),

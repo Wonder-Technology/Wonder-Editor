@@ -52,7 +52,7 @@ module Method = {
     />;
   };
 
-  let _sortByName = (allMaterialAssetData, engineState) =>
+  let _sortByName = (engineState, allMaterialAssetData) =>
     allMaterialAssetData
     |> Js.Array.sortInPlaceWith(
          (
@@ -92,7 +92,7 @@ module Method = {
         MaterialDataAssetEditorService.getAllDefaultMaterialData(editorState)
         |> Js.Array.map(materialData => (None, materialData)),
       )
-      |> _sortByName(_, engineState)
+      |> _sortByName(engineState)
     );
 
   let showMaterialAssets =
