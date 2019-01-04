@@ -209,7 +209,12 @@ let _findPickedOne =
 
 let _selectSceneTreeNode = (gameObject, (editorState, engineState)) => {
   let editorState =
-    SceneEditorService.setCurrentSceneTreeNode(gameObject, editorState);
+    SceneEditorService.setCurrentSceneTreeNode(gameObject, editorState)
+    |> CurrentSelectSourceEditorService.setCurrentSelectSource(
+         SceneTreeWidgetService.getWidget(),
+       );
+
+  editorState |> StateEditorService.setState |> ignore;
 
   let (engineState, _) =
     ManageEventEngineService.triggerCustomGlobalEvent(
@@ -220,7 +225,7 @@ let _selectSceneTreeNode = (gameObject, (editorState, engineState)) => {
       engineState,
     );
 
-  (editorState, engineState);
+  engineState;
 };
 
 let _handlePicking = (event: EventType.customEvent, engineState) => {
@@ -231,16 +236,14 @@ let _handlePicking = (event: EventType.customEvent, engineState) => {
   let editorState =
     _computeSphereShapeData(allGameObjectData, (editorState, engineState));
 
-  let (editorState, engineState) =
+  let engineState =
     (editorState, engineState)
     |> _findPickedOne(event, allGameObjectData)
     |> OptionService.andThenWithDefault(
          gameObject =>
            _selectSceneTreeNode(gameObject, (editorState, engineState)),
-         (editorState, engineState),
+         engineState,
        );
-
-  editorState |> StateEditorService.setState |> ignore;
 
   (engineState, event);
 };

@@ -529,6 +529,60 @@ let _ =
         });
       });
 
+      describe("if find one", () => {
+        let _prepare = () =>
+          _prepareOneGameObject(
+            ~viewWidth=500,
+            ~viewHeight=200,
+            ~offsetLeft=10,
+            ~offsetTop=20,
+            ~cameraPos=(0., 0., 0.),
+            ~gameObjectPos=(0., 0., 0.),
+            ~gameObjectEulerAngles=(0., 0., 0.),
+            ~createGameObjectFunc=_createCube,
+            (),
+          );
+
+        let _triggerPicking = () =>
+          _triggerPickingAndRestore(250 + 10, 100 + 20);
+
+        test("set current select source to scene tree", () => {
+          let _ = _prepare();
+
+          CurrentSelectSourceEditorService.clearCurrentSelectSource
+          |> StateLogicService.getAndSetEditorState;
+
+          _triggerPicking();
+
+          let editorState = StateEditorService.getState();
+
+          CurrentSelectSourceEditorService.getCurrentSelectSource(editorState)
+          |> expect == Some(SceneTreeWidgetService.getWidget());
+        });
+        test("trigger refreshSceneTreeAndInspector event", () => {
+          let _ = _prepare();
+          let a = ref(0);
+          ManageEventEngineService.onCustomGlobalEvent(
+            ~eventName=
+              EventEditorService.getRefreshSceneTreeAndInspectorEventName(),
+            ~handleFunc=
+              (. event, engineState) => {
+                a := 1;
+
+                (engineState, event);
+              },
+            ~state=StateEngineService.unsafeGetState(),
+            (),
+          )
+          |> StateEngineService.setState
+          |> ignore;
+
+          _triggerPicking();
+
+          a^ |> expect == 1;
+        });
+      });
+
       describe("isIntersectTriangle", () =>
         describe("test cull", () => {
           let _isIntersectTriangle =
