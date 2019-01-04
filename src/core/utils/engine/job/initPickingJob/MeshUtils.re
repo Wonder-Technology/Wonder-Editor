@@ -28,11 +28,8 @@ let _forEachIndices = (indices16, indices32, indicesCount, isIntersectFunc) => {
 };
 
 let _isIntersect =
-    (cullType, (rayCasterNear, rayCasterFar), {origin} as ray, va, vb, vc) => {
-  let result = RayUtils.isIntersectTriangle(cullType, va, vb, vc, ray);
-
-  result;
-};
+    (cullType, (rayCasterNear, rayCasterFar), {origin} as ray, va, vb, vc) =>
+  RayUtils.isIntersectTriangle(cullType, va, vb, vc, ray);
 
 let isIntersectMesh =
     (

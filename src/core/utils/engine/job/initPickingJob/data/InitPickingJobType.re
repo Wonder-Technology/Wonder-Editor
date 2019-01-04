@@ -1,7 +1,8 @@
 type cull =
   | Back
   | Front
-  | None;
+  | None
+  | Both;
 
 type mouseData = {
   x: float,

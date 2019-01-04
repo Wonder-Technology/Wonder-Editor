@@ -65,16 +65,16 @@ let _getSceneViewSize = editorState => {
   (width, height);
 };
 
-let _convertMouselocationInViewToNDC = ((x, y), (canvasWidth, canvasHeight)) => {
+let _convertMouselocationInViewToNDC = ((x, y), (viewWidth, viewHeight)) => {
   x:
     (x |> NumberType.convertIntToFloat)
-    /. (canvasWidth |> NumberType.convertIntToFloat)
+    /. (viewWidth |> NumberType.convertIntToFloat)
     *. 2.
     -. 1.,
   y:
     1.
     -. (y |> NumberType.convertIntToFloat)
-    /. (canvasHeight |> NumberType.convertIntToFloat)
+    /. (viewHeight |> NumberType.convertIntToFloat)
     *. 2.,
 };
 
@@ -171,6 +171,20 @@ let _findPickedOne =
     SceneViewEditorService.unsafeGetEditCamera(editorState);
 
   let (locationInViewX, locationInViewY) = locationInView;
+
+  WonderLog.Log.print(("locationInView:", locationInViewX, locationInViewY))
+  |> ignore;
+  WonderLog.Log.print((
+    "cameraPos:",
+    TransformEngineService.getPosition(
+      GameObjectComponentEngineService.unsafeGetTransformComponent(
+        cameraGameObject,
+        engineState,
+      ),
+      engineState,
+    ),
+  ))
+  |> ignore;
 
   let ray =
     RayUtils.createPerspectiveCameraRay(

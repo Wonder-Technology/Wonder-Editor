@@ -75,3 +75,5 @@ let getLocalToWorldMatrixTypeArray = (transform, engineState) => {
     localToWorldMatrixCacheMap,
   );
 };
+
+let lookAt = TransformAPI.lookAt;
