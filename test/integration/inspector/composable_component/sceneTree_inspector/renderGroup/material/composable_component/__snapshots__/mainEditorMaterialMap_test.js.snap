@@ -668,3 +668,98 @@ exports[`test MainEditorMaterialMap load asset wdb;
   </article>
 </article>
 `;
+
+exports[`test MainEditorMaterialMap test select texture group -> show order 
+        order should be:
+        sort texture assets by firstname alphabetically
+         1`] = `
+<article
+  className="inspector-item"
+>
+  <div
+    className="item-header"
+  >
+    Diffuse map
+  </div>
+  <div
+    className="item-content item-texture"
+  >
+    <div
+      className="texture-img"
+      onClick={[Function]}
+      style={
+        Object {
+          "opacity": "1",
+        }
+      }
+    >
+      <div
+        className="img-dragBg"
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+      />
+    </div>
+    <button
+      className="texture-remove"
+      onClick={[Function]}
+    >
+      Remove
+    </button>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="select-item-header"
+      >
+        Texture
+      </div>
+      <div
+        className="select-item-imgBody"
+      >
+        <div
+          className="imgBody-content"
+        >
+          <div
+            className="select-item-imgContent"
+            onClick={[Function]}
+          >
+            <img
+              className="imgContent-img"
+              src="texture2img"
+            />
+            <div
+              className="imgContent-text"
+            >
+              ATexture
+            </div>
+          </div>
+          <div
+            className="select-item-imgContent"
+            onClick={[Function]}
+          >
+            <img
+              className="imgContent-img"
+              src="texture1img"
+            />
+            <div
+              className="imgContent-text"
+            >
+              BTexture
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;

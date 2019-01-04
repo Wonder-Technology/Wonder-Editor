@@ -104,6 +104,27 @@ let buildMaterial =
     />,
   );
 
+let buildMaterialMap =
+    (
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~isShowTextureGroup=false,
+      ~materialComponent=GameObjectTool.getCurrentGameObjectMaterial(),
+      (),
+    ) =>
+  ReactTestRenderer.create(
+    <MainEditorMaterialMap
+      store
+      dispatchFunc
+      materialComponent
+      label="Diffuse map"
+      getMapFunc=LightMaterialEngineService.getLightMaterialDiffuseMap
+      removeTextureFunc=MainEditorLightMaterial.Method.removeTexture
+      onDropFunc=MainEditorLightMaterial.Method.onDrop
+      isShowTextureGroup
+    />,
+  );
+
 let buildBasicMaterial = materialComponent =>
   ReactTestRenderer.create(
     <MainEditorBasicMaterial

@@ -66,4 +66,58 @@ let _ =
         );
       },
     );
+
+    describe("test select texture group -> show order", () => {
+      beforeEach(() => {
+        sandbox := createSandbox();
+        MainEditorSceneTool.initStateWithJob(
+          ~sandbox,
+          ~noWorkerJobRecord=
+            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
+          (),
+        );
+        EventListenerTool.buildFakeDom()
+        |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        );
+      });
+      afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
+      test(
+        {|
+        order should be:
+        sort texture assets by firstname alphabetically
+        |},
+        () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.Texture.buildTwoTextureAssetTree();
+
+          AssetTreeInspectorTool.Rename.renameAssetTextureNode(
+            ~nodeId=
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                assetTreeData,
+              ),
+            ~name="BTexture",
+            (),
+          );
+          AssetTreeInspectorTool.Rename.renameAssetTextureNode(
+            ~nodeId=
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.getSecondTextureNodeId(
+                assetTreeData,
+              ),
+            ~name="ATexture",
+            (),
+          );
+
+          BuildComponentTool.buildMaterialMap(
+            ~isShowTextureGroup=true,
+            (),
+          )
+          |> ReactTestTool.createSnapshotAndMatch;
+        },
+      );
+    });
   });

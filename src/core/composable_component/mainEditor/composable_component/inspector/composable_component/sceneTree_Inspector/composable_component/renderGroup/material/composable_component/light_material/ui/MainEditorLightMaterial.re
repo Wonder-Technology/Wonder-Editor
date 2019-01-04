@@ -76,6 +76,7 @@ let render = ((store, dispatchFunc), materialComponent, _self) =>
       getMapFunc=LightMaterialEngineService.getLightMaterialDiffuseMap
       removeTextureFunc=Method.removeTexture
       onDropFunc=Method.onDrop
+      isShowTextureGroup=false
     />
     <MainEditorFloatInputBaseComponent
       label="Shininess"

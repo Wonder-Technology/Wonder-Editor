@@ -79,6 +79,25 @@ module Method = {
       />;
     };
 
+  let _sortByName = (allTextureAssetData, engineState) =>
+    allTextureAssetData
+    |> Js.Array.sortInPlaceWith(
+         ((_, (textureComponent1, _)), (_, (textureComponent2, _))) =>
+         Js.String.localeCompare(
+           NodeNameAssetLogicService.getTextureNodeName(
+             ~texture=textureComponent2,
+             ~engineState,
+           )
+           |> Js.String.charAt(0),
+           NodeNameAssetLogicService.getTextureNodeName(
+             ~texture=textureComponent1,
+             ~engineState,
+           )
+           |> Js.String.charAt(0),
+         )
+         |> NumberType.convertFloatToInt
+       );
+
   let handleError =
       (result: Result.SameDataResult.t(array(ReasonReact.reactElement))) =>
     Result.SameDataResult.handleError(
@@ -145,6 +164,7 @@ module Method = {
            (textureComponent, imageDataIndex),
          );
        })
+    |> _sortByName(_, engineState)
     |> ArrayService.traverseSameDataResultAndCollectByApply(
          ((nodeId, (textureComponent, imageDataIndex))) =>
          switch (state.currentTextureComponent) {
@@ -329,12 +349,13 @@ let make =
       ~getMapFunc,
       ~onDropFunc,
       ~removeTextureFunc,
+      ~isShowTextureGroup,
       _children,
     ) => {
   ...component,
   initialState: () => {
     style: ReactDOMRe.Style.make(~opacity="1", ()),
-    isShowTextureGroup: false,
+    isShowTextureGroup,
     currentTextureComponent:
       getMapFunc(materialComponent)
       |> StateLogicService.getEngineStateToGetData,
