@@ -728,6 +728,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
@@ -1531,6 +1532,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",

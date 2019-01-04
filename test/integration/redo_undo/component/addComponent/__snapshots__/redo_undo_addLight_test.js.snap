@@ -589,6 +589,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
@@ -1372,6 +1373,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
@@ -2155,6 +2157,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",

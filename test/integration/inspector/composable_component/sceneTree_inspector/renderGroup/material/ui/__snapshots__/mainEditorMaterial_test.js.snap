@@ -45,33 +45,37 @@ exports[`MainEditorMaterial test select material group->show order
       className="select-component-item"
     >
       <div
-        className="item-header"
+        className="select-item-header"
       >
         Material
       </div>
       <div
-        className="item-content"
-        onClick={[Function]}
+        className="select-item-body"
       >
-        AMaterial
-      </div>
-      <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        BMaterial
-      </div>
-      <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Basic-Material
-      </div>
-      <div
-        className="item-content item-active"
-        onClick={[Function]}
-      >
-        Wonder-Default-Light-Material
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          AMaterial
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          BMaterial
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Basic-Material
+        </div>
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Light-Material
+        </div>
       </div>
     </div>
     <div
@@ -163,6 +167,7 @@ exports[`MainEditorMaterial test select material group->show order
           >
             <div
               className="texture-img"
+              onClick={[Function]}
               style={
                 Object {
                   "opacity": "1",
@@ -332,6 +337,7 @@ exports[`MainEditorMaterial test set currentSceneTreeNode test change material t
           >
             <div
               className="texture-img"
+              onClick={[Function]}
               style={
                 Object {
                   "opacity": "1",

@@ -46,21 +46,25 @@ exports[`MainEditorAssetHeader->remove material
       className="select-component-item"
     >
       <div
-        className="item-header"
+        className="select-item-header"
       >
         Material
       </div>
       <div
-        className="item-content"
-        onClick={[Function]}
+        className="select-item-body"
       >
-        Wonder-Default-Basic-Material
-      </div>
-      <div
-        className="item-content item-active"
-        onClick={[Function]}
-      >
-        Wonder-Default-Light-Material
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Basic-Material
+        </div>
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Light-Material
+        </div>
       </div>
     </div>
     <div
@@ -152,6 +156,7 @@ exports[`MainEditorAssetHeader->remove material
           >
             <div
               className="texture-img"
+              onClick={[Function]}
               style={
                 Object {
                   "opacity": "1",
@@ -249,21 +254,25 @@ exports[`MainEditorAssetHeader->remove material
       className="select-component-item"
     >
       <div
-        className="item-header"
+        className="select-item-header"
       >
         Material
       </div>
       <div
-        className="item-content"
-        onClick={[Function]}
+        className="select-item-body"
       >
-        Wonder-Default-Basic-Material
-      </div>
-      <div
-        className="item-content item-active"
-        onClick={[Function]}
-      >
-        Wonder-Default-Light-Material
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Basic-Material
+        </div>
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Light-Material
+        </div>
       </div>
     </div>
     <div
@@ -355,6 +364,7 @@ exports[`MainEditorAssetHeader->remove material
           >
             <div
               className="texture-img"
+              onClick={[Function]}
               style={
                 Object {
                   "opacity": "1",

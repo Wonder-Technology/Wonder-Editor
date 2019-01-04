@@ -526,6 +526,7 @@ exports[`AddableComponent remove component test remove box gameObject component 
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",

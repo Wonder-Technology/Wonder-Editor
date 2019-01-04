@@ -526,6 +526,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
@@ -1127,6 +1128,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
@@ -1791,6 +1793,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",

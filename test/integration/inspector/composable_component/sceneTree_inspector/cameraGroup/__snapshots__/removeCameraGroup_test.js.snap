@@ -902,6 +902,7 @@ exports[`test remove camera group test still has other camera groups after remov
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",

@@ -1897,6 +1897,7 @@ exports[`AddableComponent add component test camera add component test add rende
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
@@ -2561,6 +2562,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
@@ -3427,6 +3429,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",

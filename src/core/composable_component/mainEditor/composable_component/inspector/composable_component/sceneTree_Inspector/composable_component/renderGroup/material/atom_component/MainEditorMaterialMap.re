@@ -112,6 +112,25 @@ module Method = {
         }
     );
 
+  let _buildTextureUIComponent =
+      ((className, nodeId, textureComponent, imgSrc), send, engineState) =>
+    <div
+      className
+      key=(DomHelper.getRandomKey())
+      onClick=(_e => send(SetTextureToEngine(nodeId, textureComponent)))>
+      <img src=imgSrc className="imgContent-img" />
+      <div className="imgContent-text">
+        (
+          DomHelper.textEl(
+            NodeNameAssetLogicService.getTextureNodeName(
+              ~texture=textureComponent,
+              ~engineState,
+            ),
+          )
+        )
+      </div>
+    </div>;
+
   let showTextureAssets = (state, send) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
@@ -132,24 +151,16 @@ module Method = {
          | None =>
            _getImgSrc(imageDataIndex, editorState)
            |> Result.SameDataResult.either(imgSrc =>
-                <div
-                  className="select-item-imgContent"
-                  key=(DomHelper.getRandomKey())
-                  onClick=(
-                    _e => send(SetTextureToEngine(nodeId, textureComponent))
-                  )>
-                  <img src=imgSrc className="imgContent-img" />
-                  <div className="imgContent-text">
-                    (
-                      DomHelper.textEl(
-                        NodeNameAssetLogicService.getTextureNodeName(
-                          ~texture=textureComponent,
-                          ~engineState,
-                        ),
-                      )
-                    )
-                  </div>
-                </div>
+                _buildTextureUIComponent(
+                  (
+                    "select-item-imgContent",
+                    nodeId,
+                    textureComponent,
+                    imgSrc,
+                  ),
+                  send,
+                  engineState,
+                )
                 |> Result.SameDataResult.success
               )
 
@@ -161,24 +172,11 @@ module Method = {
 
            _getImgSrc(imageDataIndex, editorState)
            |> Result.SameDataResult.either(imgSrc =>
-                <div
-                  className
-                  key=(DomHelper.getRandomKey())
-                  onClick=(
-                    _e => send(SetTextureToEngine(nodeId, textureComponent))
-                  )>
-                  <img src=imgSrc className="imgContent-img" />
-                  <div className="imgContent-text">
-                    (
-                      DomHelper.textEl(
-                        NodeNameAssetLogicService.getTextureNodeName(
-                          ~texture=textureComponent,
-                          ~engineState,
-                        ),
-                      )
-                    )
-                  </div>
-                </div>
+                _buildTextureUIComponent(
+                  (className, nodeId, textureComponent, imgSrc),
+                  send,
+                  engineState,
+                )
                 |> Result.SameDataResult.success
               );
          }

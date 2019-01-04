@@ -1341,6 +1341,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",

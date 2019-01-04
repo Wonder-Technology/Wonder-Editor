@@ -47,6 +47,7 @@ exports[`redo_undo: lightMaterial shininess prepare first step: set currentScene
     >
       <div
         className="texture-img"
+        onClick={[Function]}
         style={
           Object {
             "opacity": "1",
@@ -139,6 +140,7 @@ exports[`redo_undo: lightMaterial shininess prepare first step: set currentScene
     >
       <div
         className="texture-img"
+        onClick={[Function]}
         style={
           Object {
             "opacity": "1",
@@ -231,6 +233,7 @@ exports[`redo_undo: lightMaterial shininess prepare first step: set currentScene
     >
       <div
         className="texture-img"
+        onClick={[Function]}
         style={
           Object {
             "opacity": "1",
@@ -323,6 +326,7 @@ exports[`redo_undo: lightMaterial shininess prepare first step: set currentScene
     >
       <div
         className="texture-img"
+        onClick={[Function]}
         style={
           Object {
             "opacity": "1",
@@ -415,6 +419,7 @@ exports[`redo_undo: lightMaterial shininess prepare first step: set currentScene
     >
       <div
         className="texture-img"
+        onClick={[Function]}
         style={
           Object {
             "opacity": "1",

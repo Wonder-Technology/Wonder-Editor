@@ -530,6 +530,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",

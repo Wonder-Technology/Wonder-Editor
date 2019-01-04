@@ -121,6 +121,7 @@ exports[`fix material asset bug fix bug
           >
             <div
               className="texture-img"
+              onClick={[Function]}
               style={
                 Object {
                   "opacity": "1",
@@ -520,6 +521,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
           >
             <div
               className="texture-img"
+              onClick={[Function]}
               style={
                 Object {
                   "opacity": "1",

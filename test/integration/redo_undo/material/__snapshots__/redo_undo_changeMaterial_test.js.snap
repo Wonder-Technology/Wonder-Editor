@@ -340,6 +340,7 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
           >
             <div
               className="texture-img"
+              onClick={[Function]}
               style={
                 Object {
                   "opacity": "1",

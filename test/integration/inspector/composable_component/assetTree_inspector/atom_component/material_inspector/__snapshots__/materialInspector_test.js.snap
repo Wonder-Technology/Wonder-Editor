@@ -225,6 +225,7 @@ exports[`material inspector test rename material if type is lightMaterial, renam
           >
             <div
               className="texture-img"
+              onClick={[Function]}
               style={
                 Object {
                   "opacity": "1",

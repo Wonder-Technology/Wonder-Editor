@@ -589,6 +589,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
@@ -1256,6 +1257,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
@@ -1920,6 +1922,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
@@ -2587,6 +2590,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
@@ -3251,6 +3255,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
