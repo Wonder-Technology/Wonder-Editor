@@ -559,27 +559,57 @@ let _ =
           CurrentSelectSourceEditorService.getCurrentSelectSource(editorState)
           |> expect == Some(SceneTreeWidgetService.getWidget());
         });
-        test("trigger refreshSceneTreeAndInspector event", () => {
-          let _ = _prepare();
-          let a = ref(0);
-          ManageEventEngineService.onCustomGlobalEvent(
-            ~eventName=
-              EventEditorService.getRefreshSceneTreeAndInspectorEventName(),
-            ~handleFunc=
-              (. event, engineState) => {
-                a := 1;
 
-                (engineState, event);
-              },
-            ~state=StateEngineService.unsafeGetState(),
-            (),
-          )
-          |> StateEngineService.setState
-          |> ignore;
+        describe("trigger refreshSceneTreeAndInspector event", () => {
+          test("test trigger", () => {
+            let _ = _prepare();
+            let a = ref(0);
+            ManageEventEngineService.onCustomGlobalEvent(
+              ~eventName=
+                EventEditorService.getRefreshSceneTreeAndInspectorEventName(),
+              ~handleFunc=
+                (. event, engineState) => {
+                  a := 1;
 
-          _triggerPicking();
+                  (engineState, event);
+                },
+              ~state=StateEngineService.unsafeGetState(),
+              (),
+            )
+            |> StateEngineService.setState
+            |> ignore;
 
-          a^ |> expect == 1;
+            _triggerPicking();
+
+            a^ |> expect == 1;
+          });
+          test("can get picked gameObject in event handle func", () => {
+            let gameObject = _prepare();
+            let pickedGameObject = ref(0);
+            ManageEventEngineService.onCustomGlobalEvent(
+              ~eventName=
+                EventEditorService.getRefreshSceneTreeAndInspectorEventName(),
+              ~handleFunc=
+                (. event, engineState) => {
+                  let editorState = StateEditorService.getState();
+
+                  pickedGameObject :=
+                    SceneEditorService.unsafeGetCurrentSceneTreeNode(
+                      editorState,
+                    );
+
+                  (engineState, event);
+                },
+              ~state=StateEngineService.unsafeGetState(),
+              (),
+            )
+            |> StateEngineService.setState
+            |> ignore;
+
+            _triggerPicking();
+
+            pickedGameObject^ |> expect == gameObject;
+          });
         });
       });
 
