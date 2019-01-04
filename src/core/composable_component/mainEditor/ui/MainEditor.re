@@ -7,9 +7,9 @@ module Method = {
   );
 
   /* let _setAllAspectsWhoseAspectBasedOnCanvasSize = engineState =>
-    GameObjectComponentEngineService.getAllPerspectiveCameraProjectionComponents(
-      engineState,
-    ); */
+     GameObjectComponentEngineService.getAllPerspectiveCameraProjectionComponents(
+       engineState,
+     ); */
 
   let _updateViewRect = (canvasWidth, canvasHeight) =>
     StateEditorService.setState(
@@ -74,12 +74,14 @@ module Method = {
       ~eventName=EventEditorService.getRefreshInspectorEventName(),
       ~handleFunc=
         (. event, engineState) => {
+          engineState |> StateEngineService.setState |> ignore;
+
           dispatchFunc(
             AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
           )
           |> ignore;
 
-          (engineState, event);
+          (StateEngineService.unsafeGetState(), event);
         },
       ~state=StateEngineService.unsafeGetState(),
       (),
@@ -92,6 +94,8 @@ module Method = {
       ~eventName=EventEditorService.getRefreshSceneTreeAndInspectorEventName(),
       ~handleFunc=
         (. event, engineState) => {
+          engineState |> StateEngineService.setState |> ignore;
+
           dispatchFunc(
             AppStore.UpdateAction(
               Update([|UpdateStore.SceneTree, UpdateStore.Inspector|]),
@@ -99,7 +103,7 @@ module Method = {
           )
           |> ignore;
 
-          (engineState, event);
+          (StateEngineService.unsafeGetState(), event);
         },
       ~state=StateEngineService.unsafeGetState(),
       (),
