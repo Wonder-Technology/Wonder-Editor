@@ -11,8 +11,6 @@ let createPerspectiveCameraRay =
   let origin =
     cameraToWorldMatrix |> Wonderjs.Matrix4Service.getTranslationTuple;
 
-  WonderLog.Log.print((cameraToWorldMatrix, projectionMatrix)) |> ignore;
-
   {
     origin,
     direction:
@@ -146,10 +144,8 @@ let isIntersectSphere = ({center, radius}, {origin, direction} as ray) => {
       let (halfExtendsX, halfExtendsY, halfExtendsZ) as halfExtends =
         _getHalfExtends(min, max);
 
-        WonderLog.Log.print(("inn")) |> ignore;
 
 
-        WonderLog.Log.print((min, max, center, halfExtends)) |> ignore;
 
       let (diffX, diffY, diffZ) as diff =
         Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, origin, center);
@@ -167,10 +163,6 @@ let isIntersectSphere = ({center, radius}, {origin, direction} as ray) => {
           direction,
         );
 
-        WonderLog.Log.print(("inter: ",
-
-        absDiff, halfExtends, prod
-        )) |> ignore;
 
       if (absDiffX > halfExtendsX
           && prodX >= 0.
@@ -275,7 +267,6 @@ let isIntersectSphere = ({center, radius}, {origin, direction} as ray) => {
            (ddqxe2 +. dde1xq > ddn) {
            None;
          } else {
-           WonderLog.Log.print("aaaaa") |> ignore;
            /* Line intersects triangle, check if ray does. */
            let qdn = -. sign *. Vector3Service.dot(diff, normal);
 

@@ -172,20 +172,6 @@ let _findPickedOne =
 
   let (locationInViewX, locationInViewY) = locationInView;
 
-  WonderLog.Log.print(("locationInView:", locationInViewX, locationInViewY))
-  |> ignore;
-  WonderLog.Log.print((
-    "cameraPos:",
-    TransformEngineService.getPosition(
-      GameObjectComponentEngineService.unsafeGetTransformComponent(
-        cameraGameObject,
-        engineState,
-      ),
-      engineState,
-    ),
-  ))
-  |> ignore;
-
   let ray =
     RayUtils.createPerspectiveCameraRay(
       _convertMouselocationInViewToNDC(
@@ -203,7 +189,6 @@ let _findPickedOne =
        _isIntersectSphere(ray, data, (editorState, engineState))
      )
   |> Js.Array.filter(data => _isIntersectMesh(ray, data, engineState))
-  |> WonderLog.Log.print
   |> _getTopOne(cameraGameObject, engineState);
 };
 

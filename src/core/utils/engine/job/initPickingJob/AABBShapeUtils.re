@@ -51,8 +51,6 @@ let setFromGameObject = (gameObject, engineState) => {
   let vertices =
     GeometryEngineService.getGeometryVertices(geometry, engineState);
 
-  /* WonderLog.Log.print(("vertices: ", vertices)) |> ignore; */
-
   _forEachVertices(
     vertices,
     Js.Typed_array.Float32Array.length(vertices),
