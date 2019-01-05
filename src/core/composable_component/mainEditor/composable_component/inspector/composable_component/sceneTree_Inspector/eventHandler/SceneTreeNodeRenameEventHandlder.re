@@ -10,18 +10,6 @@ module CustomEventHandler = {
     GameObjectEngineService.setGameObjectName(newName, gameObject)
     |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
-    dispatchFunc(
-      AppStore.SceneTreeAction(
-        SetSceneGraph(
-          store
-          |> StoreUtils.unsafeGetSceneGraphDataFromStore
-          |> SceneGraphUtils.renameSceneGraphData(gameObject, newName)
-          |. Some,
-        ),
-      ),
-    )
-    |> ignore;
-
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))
     |> ignore;
   };

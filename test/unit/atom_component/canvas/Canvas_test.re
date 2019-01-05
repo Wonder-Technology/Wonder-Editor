@@ -54,7 +54,7 @@ let _ =
                CanvasTool.Drag.dragWDBAsset(~wdbNodeId=uploadedWDBNodeId, ());
 
                BuildComponentTool.buildSceneTree(
-                 TestTool.buildAppStateSceneGraphFromEngine(),
+                 TestTool.buildEmptyAppState(),
                )
                |> ReactTestTool.createSnapshotAndMatch
                |> resolve;
@@ -74,7 +74,7 @@ let _ =
                CanvasTool.Drag.dragWDBAsset(~wdbNodeId=uploadedWDBNodeId, ());
 
                BuildComponentTool.buildSceneTree(
-                 TestTool.buildAppStateSceneGraphFromEngine(),
+                 TestTool.buildEmptyAppState(),
                )
                |> ReactTestTool.createSnapshotAndMatch
                |> resolve;

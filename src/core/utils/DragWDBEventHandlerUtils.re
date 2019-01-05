@@ -3,9 +3,9 @@ let handleSelfLogic =
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
-  let isShowChildrenMap =
-    SceneGraphUtils.buildIsShowChildrenMapFromStore(store)
-    |> WonderCommonlib.SparseMapService.set(targetGameObjectUid, true);
+  let editorState =
+    editorState
+    |> SceneEditorService.setIsShowChildren(targetGameObjectUid, true);
 
   let (isSuccess, (editorState, engineState)) =
     DragWDBUtils.dragWDB(
@@ -16,21 +16,6 @@ let handleSelfLogic =
 
   isSuccess ?
     {
-      dispatchFunc(
-        AppStore.SceneTreeAction(
-          SetSceneGraph(
-            Some(
-              SceneGraphUtils.getSceneGraphDataFromEngine((
-                editorState,
-                engineState,
-              ))
-              |> SceneGraphUtils.setIsShowChildrenByMap(isShowChildrenMap),
-            ),
-          ),
-        ),
-      )
-      |> ignore;
-
       dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))
       |> ignore;
 

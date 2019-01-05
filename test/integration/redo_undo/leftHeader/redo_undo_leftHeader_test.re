@@ -35,7 +35,7 @@ let _ =
             RedoUndoTool.undoHistoryState();
 
             BuildComponentTool.buildSceneTree(
-              TestTool.buildAppStateSceneGraphFromEngine(),
+              TestTool.buildEmptyAppState(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
           },

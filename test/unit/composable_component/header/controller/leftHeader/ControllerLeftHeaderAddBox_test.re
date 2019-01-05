@@ -53,7 +53,7 @@ let _ =
             MainEditorLeftHeaderTool.addCube();
 
             BuildComponentTool.buildSceneTree(
-              TestTool.buildAppStateSceneGraphFromEngine(),
+              TestTool.buildEmptyAppState(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
           })

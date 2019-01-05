@@ -4,6 +4,10 @@ type pointEvent = Wonderjs.EventType.pointEvent;
 
 type pointDomEvent = Wonderjs.EventType.pointDomEvent;
 
+type customEvent = Wonderjs.EventType.customEvent;
+
+type userData = Wonderjs.EventType.userData;
+
 type pointEventName =
   | PointTap
   | PointDown

@@ -123,3 +123,23 @@ let createGridPlaneGameObject = ((size, step, y), color, engineState) => {
 let getGeometryTexCoords = GeometryAPI.getGeometryTexCoords;
 
 let batchDisposeGeometry = GeometryAPI.batchDisposeGeometry;
+
+let getIndicesCount = (geometry, engineState) => {
+  open StateDataMainType;
+  open GeometryType;
+
+  /* let {geometryRecord} = engineState; */
+
+  let {indicesInfos} = RecordGeometryMainService.getRecord(engineState);
+  let (startIndex, endIndex) =
+    ReallocatedPointsGeometryService.getInfo(
+      BufferGeometryService.getInfoIndex(geometry),
+      indicesInfos,
+    );
+  endIndex - startIndex;
+};
+
+let hasIndices = indices => Js.Typed_array.Uint16Array.length(indices) > 0;
+
+let hasIndices32 = indices32 =>
+  Js.Typed_array.Uint32Array.length(indices32) > 0;

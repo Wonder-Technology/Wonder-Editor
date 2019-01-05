@@ -48,7 +48,7 @@ let _ =
           MainEditorLeftHeaderTool.addCube();
 
           BuildComponentTool.buildSceneTree(
-            TestTool.buildAppStateSceneGraphFromEngine(),
+            TestTool.buildEmptyAppState(),
           )
           |> ReactTestTool.createSnapshotAndMatch;
         })
@@ -69,7 +69,7 @@ let _ =
           MainEditorLeftHeaderTool.addEmptyGameObject();
 
           BuildComponentTool.buildSceneTree(
-            TestTool.buildAppStateSceneGraphFromEngine(),
+            TestTool.buildEmptyAppState(),
           )
           |> ReactTestTool.createSnapshotAndMatch;
         })

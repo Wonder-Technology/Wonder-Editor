@@ -1,17 +1,18 @@
 open SceneGraphType;
 
-let disposeCurrentSceneTreeNode = currentTreeNode => {
-  let rec _iterateSceneGraphRemove = removedTreeNodeArr =>
-    removedTreeNodeArr
-    |> Js.Array.forEach(({uid, children}) => {
+let disposeCurrentSceneTreeNode = currentGameObject => {
+  let rec _iterateSceneGraphRemove = removedGameObjectArr =>
+    removedGameObjectArr
+    |> Js.Array.forEach(removedGameObject => {
          let editorState = StateEditorService.getState();
          let engineState = StateEngineService.unsafeGetState();
 
          let (editorState, engineState) =
-           engineState |> CameraEngineService.hasCameraGroup(uid) ?
+           engineState
+           |> CameraEngineService.hasCameraGroup(removedGameObject) ?
              engineState
              |> CameraLogicService.unbindArcballCameraControllerEventIfHasComponentForGameView(
-                  uid,
+                  removedGameObject,
                   editorState,
                 ) :
              (editorState, engineState);
@@ -19,16 +20,18 @@ let disposeCurrentSceneTreeNode = currentTreeNode => {
          let engineState =
            engineState
            |> GameObjectEngineService.disposeGameObjectKeepOrderRemoveGeometry(
-                uid,
+                removedGameObject,
               );
 
          editorState |> StateEditorService.setState |> ignore;
          engineState |> StateEngineService.setState |> ignore;
 
-         _iterateSceneGraphRemove(children);
+         _iterateSceneGraphRemove(
+           GameObjectUtils.getChildren(removedGameObject, engineState),
+         );
        });
 
-  _iterateSceneGraphRemove([|currentTreeNode|]);
+  _iterateSceneGraphRemove([|currentGameObject|]);
 
   StateLogicService.getAndRefreshEngineState();
 

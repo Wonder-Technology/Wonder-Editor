@@ -48,6 +48,8 @@ let prepareWithState =
     (
       ~sandbox,
       ~engineState,
+      ~canvasWidth=0,
+      ~canvasHeight=0,
       ~offsetLeft=1,
       ~offsetTop=2,
       ~offsetParent=Js.Nullable.undefined,
@@ -55,7 +57,11 @@ let prepareWithState =
       (),
     ) => {
   let canvasDom =
-    EventTool.buildFakeCanvas((offsetLeft, offsetTop, offsetParent));
+    EventTool.buildFakeCanvasWithSize(
+      canvasWidth,
+      canvasHeight,
+      (offsetLeft, offsetTop, offsetParent),
+    );
 
   let engineState =
     ViewToolEngine.setCanvas(

@@ -4,6 +4,7 @@ let create = () => {
   settingRecord: RecordSettingService.create(),
   sceneRecord: {
     currentSceneTreeNode: None,
+    isShowChildrenMap: WonderCommonlib.SparseMapService.createEmpty(),
   },
   assetRecord: {
     nodeIndex: 0,
@@ -48,6 +49,9 @@ let create = () => {
     localEulerAngleMapX: WonderCommonlib.SparseMapService.createEmpty(),
     localEulerAngleMapY: WonderCommonlib.SparseMapService.createEmpty(),
     localEulerAngleMapZ: WonderCommonlib.SparseMapService.createEmpty(),
+  },
+  pickingRecord: {
+    sphereShapeMap: WonderCommonlib.SparseMapService.createEmpty(),
   },
   currentDragSource: (None, None),
   currentSelectSource: None,

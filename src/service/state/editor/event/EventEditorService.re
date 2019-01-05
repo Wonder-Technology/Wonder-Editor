@@ -24,3 +24,5 @@ let getPointScaleEventName = () => "wd_editor_pointscale";
 let getPointDragEventName = () => "wd_editor_pointdrag";
 
 let getRefreshInspectorEventName = () => "wd_editor_refresh_inspector";
+
+let getPickSuccessEventName = () => "wd_editor_pick_success";

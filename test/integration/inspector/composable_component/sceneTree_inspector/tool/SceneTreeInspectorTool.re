@@ -2,7 +2,7 @@ let renameGameObject =
     (
       ~name,
       ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-      ~store=TestTool.buildAppStateSceneGraphFromEngine(),
+      ~store=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>

@@ -24,20 +24,9 @@ module Method = {
     };
   };
 
-  let handleToggleShowTreeChildren =
-      (store, dispatchFunc, targetId, isShowChildren) => {
-    let newSceneGraphData =
-      store
-      |> StoreUtils.unsafeGetSceneGraphDataFromStore
-      |> SceneGraphUtils.setSpecificSceneTreeNodeIsShowChildren(
-           targetId,
-           isShowChildren,
-         );
-
-    dispatchFunc(
-      AppStore.SceneTreeAction(SetSceneGraph(Some(newSceneGraphData))),
-    )
-    |> ignore;
+  let handleToggleShowTreeChildren = (dispatchFunc, targetId, isShowChildren) => {
+    SceneEditorService.setIsShowChildren(targetId, isShowChildren)
+    |> StateLogicService.getAndSetEditorState;
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))
     |> ignore;
@@ -50,7 +39,7 @@ module Method = {
   let buildSceneNode = (children, engineState) => {
     uid: SceneEngineService.getSceneGameObject(engineState),
     name: "Scene",
-    isShowChildren: SceneGraphUtils.getSceneTreeNodeIsShowChildren(),
+    /* isShowChildren: SceneGraphUtils.getSceneTreeNodeIsShowChildren(), */
     children,
   };
 
@@ -65,10 +54,11 @@ module Method = {
             (store, dispatchFunc, dragImg),
             currentSceneTreeNode,
             (onSelectFunc, dragGameObjectFunc, dragWDBFunc),
+            (sceneGameObject, editorState),
             sceneGraphArr,
           ) =>
     sceneGraphArr
-    |> Js.Array.map(({uid, name, isShowChildren, children}) =>
+    |> Js.Array.map(({uid, name, children}) =>
          <SceneTreeNode
            key=(StringService.intToString(uid))
            id=uid
@@ -81,11 +71,17 @@ module Method = {
            dragGameObject=dragGameObjectFunc
            dragWDB=dragWDBFunc
            isWidget=SceneTreeWidgetService.isWidget
-           isShowChildren
+           isShowChildren=(
+             SceneEditorService.getIsShowChildern(
+               uid,
+               sceneGameObject,
+               editorState,
+             )
+           )
            isAssetWDBFile=WDBNodeAssetEditorService.isWDBAssetFile
            isHasChildren=(children |> Js.Array.length >= 1)
            handleToggleShowTreeChildren=(
-             handleToggleShowTreeChildren(store, dispatchFunc)
+             handleToggleShowTreeChildren(dispatchFunc)
            )
            checkNodeRelation=CheckSceneTreeLogicService.checkGameObjectRelation
            treeChildren=(
@@ -93,6 +89,7 @@ module Method = {
                (store, dispatchFunc, dragImg),
                currentSceneTreeNode,
                (onSelectFunc, dragGameObjectFunc, dragWDBFunc),
+               (sceneGameObject, editorState),
                children,
              )
            )
@@ -105,13 +102,18 @@ let component =
 
 let render = (store, dispatchFunc, _self) => {
   let editorState = StateEditorService.getState();
+  let engineState = StateEngineService.unsafeGetState();
 
   <article key="sceneTree" className="wonder-sceneTree-component">
     <article className="wonder-tree">
       (
         ReasonReact.array(
-          store
-          |> StoreUtils.unsafeGetSceneGraphDataFromStore
+          /* store
+             |> StoreUtils.unsafeGetSceneGraphDataFromStore */
+          SceneGraphUtils.getSceneGraphDataFromEngine((
+            editorState,
+            engineState,
+          ))
           |> ArrayService.unsafeGetFirst
           |> (scene => scene.children)
           |> (
@@ -132,6 +134,10 @@ let render = (store, dispatchFunc, _self) => {
                        (),
                      ),
                      Method.dragWDBIntoScene((store, dispatchFunc), ()),
+                   ),
+                   (
+                     SceneEngineService.getSceneGameObject(engineState),
+                     editorState,
                    ),
                  )
           ),

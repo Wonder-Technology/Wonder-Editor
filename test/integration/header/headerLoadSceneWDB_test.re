@@ -82,7 +82,7 @@ let _ =
         )
         |> then_(_ =>
              BuildComponentTool.buildSceneTree(
-               TestTool.buildAppStateSceneGraphFromEngine(),
+               TestTool.buildEmptyAppState(),
              )
              |> ReactTestTool.createSnapshotAndMatch
              |> resolve

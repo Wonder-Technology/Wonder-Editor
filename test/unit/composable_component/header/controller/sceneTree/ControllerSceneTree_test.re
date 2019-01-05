@@ -28,7 +28,7 @@ let _ =
     describe("test set parent in engine", () => {
       test("no drag", () =>
         BuildComponentTool.buildSceneTree(
-          TestTool.buildAppStateSceneGraphFromEngine(),
+          TestTool.buildEmptyAppState(),
         )
         |> ReactTestTool.createSnapshotAndMatch
       );

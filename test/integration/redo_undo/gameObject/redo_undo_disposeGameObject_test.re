@@ -61,7 +61,7 @@ let _ =
               _simulateTwiceDisposeGameObject();
 
               BuildComponentTool.buildSceneTree(
-                TestTool.buildAppStateSceneGraphFromEngine(),
+                TestTool.buildEmptyAppState(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
             });
@@ -72,7 +72,7 @@ let _ =
                 RedoUndoTool.undoHistoryState();
 
                 BuildComponentTool.buildSceneTree(
-                  TestTool.buildAppStateSceneGraphFromEngine(),
+                  TestTool.buildEmptyAppState(),
                 )
                 |> ReactTestTool.createSnapshotAndMatch;
               });
@@ -84,7 +84,7 @@ let _ =
                   RedoUndoTool.undoHistoryState();
 
                   BuildComponentTool.buildSceneTree(
-                    TestTool.buildAppStateSceneGraphFromEngine(),
+                    TestTool.buildEmptyAppState(),
                   )
                   |> ReactTestTool.createSnapshotAndMatch;
                 })
@@ -103,7 +103,7 @@ let _ =
                 RedoUndoTool.redoHistoryState();
 
                 BuildComponentTool.buildSceneTree(
-                  TestTool.buildAppStateSceneGraphFromEngine(),
+                  TestTool.buildEmptyAppState(),
                 )
                 |> ReactTestTool.createSnapshotAndMatch;
               })
@@ -118,7 +118,7 @@ let _ =
                 RedoUndoTool.redoHistoryState();
                 RedoUndoTool.redoHistoryState();
                 BuildComponentTool.buildSceneTree(
-                  TestTool.buildAppStateSceneGraphFromEngine(),
+                  TestTool.buildEmptyAppState(),
                 )
                 |> ReactTestTool.createSnapshotAndMatch;
               })

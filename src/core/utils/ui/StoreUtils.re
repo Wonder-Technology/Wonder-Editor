@@ -2,12 +2,6 @@ open AppStore;
 
 open UpdateStore;
 
-let getSceneGraphDataFromStore = (store: AppStore.appState) =>
-  store.sceneTreeState.sceneGraphData;
-
-let unsafeGetSceneGraphDataFromStore = (store: AppStore.appState) =>
-  getSceneGraphDataFromStore(store) |> OptionService.unsafeGet;
-
 let getUpdateComponentTypeArr = store => store.updateState.componentTypeArr;
 
 let getBottomCurrentComponentType = store =>

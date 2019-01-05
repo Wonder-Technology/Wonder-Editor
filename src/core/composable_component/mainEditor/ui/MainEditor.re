@@ -6,10 +6,10 @@ module Method = {
     parent##offsetHeight,
   );
 
-  let _setAllAspectsWhoseAspectBasedOnCanvasSize = engineState =>
-    GameObjectComponentEngineService.getAllPerspectiveCameraProjectionComponents(
-      engineState,
-    );
+  /* let _setAllAspectsWhoseAspectBasedOnCanvasSize = engineState =>
+     GameObjectComponentEngineService.getAllPerspectiveCameraProjectionComponents(
+       engineState,
+     ); */
 
   let _updateViewRect = (canvasWidth, canvasHeight) =>
     StateEditorService.setState(
@@ -74,12 +74,36 @@ module Method = {
       ~eventName=EventEditorService.getRefreshInspectorEventName(),
       ~handleFunc=
         (. event, engineState) => {
+          engineState |> StateEngineService.setState |> ignore;
+
           dispatchFunc(
             AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
           )
           |> ignore;
 
-          (engineState, event);
+          (StateEngineService.unsafeGetState(), event);
+        },
+      ~state=StateEngineService.unsafeGetState(),
+      (),
+    )
+    |> StateEngineService.setState
+    |> ignore;
+
+  let bindPickSuccessEvent = dispatchFunc =>
+    ManageEventEngineService.onCustomGlobalEvent(
+      ~eventName=EventEditorService.getPickSuccessEventName(),
+      ~handleFunc=
+        (. ({userData}: EventType.customEvent) as event, engineState) => {
+          engineState |> StateEngineService.setState |> ignore;
+
+          dispatchFunc(
+            AppStore.UpdateAction(
+              Update([|UpdateStore.SceneTree, UpdateStore.Inspector|]),
+            ),
+          )
+          |> ignore;
+
+          (StateEngineService.unsafeGetState(), event);
         },
       ~state=StateEngineService.unsafeGetState(),
       (),
@@ -168,22 +192,14 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
                |> StateEditorService.setState
            )
            |> StateLogicService.getAndSetEditorState;
-           dispatchFunc(
-             AppStore.SceneTreeAction(
-               SetSceneGraph(
-                 Some(
-                   SceneGraphUtils.getSceneGraphDataFromEngine
-                   |> StateLogicService.getStateToGetData,
-                 ),
-               ),
-             ),
-           );
+
            dispatchFunc(AppStore.StartEngineAction) |> resolve;
          })
       |> ignore
     );
 
     Method.bindRefreshInspectorEvent(dispatchFunc);
+    Method.bindPickSuccessEvent(dispatchFunc);
 
     DomHelper.onresize(Method.resizeCanvasAndViewPort);
   },

@@ -20,6 +20,10 @@ let _handleEngineState = engineState => {
          "init_event_for_editor",
          InitEventJobUtils.initEventForEditorJob,
        )
+    |> JobEngineService.registerNoWorkerInitJob(
+         "init_picking",
+         InitPickingJobUtil.initJob,
+       )
     |> JobEngineService.registerNoWorkerLoopJob(
          "reallocate_cpu_memory",
          ReallocateCPUMemoryJobUtils.reallocateJob,

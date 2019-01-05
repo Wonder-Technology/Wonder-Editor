@@ -15,6 +15,7 @@ module.exports = {
   ],
 
   scopes: [
+      { name: "picking" },
       { name: "scene-tree" },
       { name: "left-header" },
       { name: "redo-undo" },

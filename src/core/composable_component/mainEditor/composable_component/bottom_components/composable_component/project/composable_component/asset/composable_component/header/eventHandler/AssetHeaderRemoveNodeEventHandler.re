@@ -43,18 +43,6 @@ module CustomEventHandler = {
 
     editorState |> StateEditorService.setState |> ignore;
 
-    dispatchFunc(
-      AppStore.SceneTreeAction(
-        SetSceneGraph(
-          Some(
-            SceneGraphUtils.getSceneGraphDataFromEngine
-            |> StateLogicService.getStateToGetData,
-          ),
-        ),
-      ),
-    )
-    |> ignore;
-
     dispatchFunc(AppStore.UpdateAction(Update([|All|]))) |> ignore;
   };
 };

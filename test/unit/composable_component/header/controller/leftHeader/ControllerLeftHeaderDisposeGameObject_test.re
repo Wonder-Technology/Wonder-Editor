@@ -244,7 +244,7 @@ let _ =
           |> StateLogicService.getAndSetEditorState;
 
           BuildComponentTool.buildHeader(
-            TestTool.buildAppStateSceneGraphFromEngine(),
+            TestTool.buildEmptyAppState(),
           )
           |> ReactTestTool.createSnapshotAndMatch;
         },
@@ -257,7 +257,7 @@ let _ =
             MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
           );
           BuildComponentTool.buildHeader(
-            TestTool.buildAppStateSceneGraphFromEngine(),
+            TestTool.buildEmptyAppState(),
           )
           |> ReactTestTool.createSnapshotAndMatch;
         },
@@ -271,7 +271,7 @@ let _ =
         MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
 
         BuildComponentTool.buildSceneTree(
-          TestTool.buildAppStateSceneGraphFromEngine(),
+          TestTool.buildEmptyAppState(),
         )
         |> ReactTestTool.createSnapshotAndMatch;
       });
