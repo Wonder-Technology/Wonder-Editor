@@ -44,12 +44,13 @@ module CustomEventHandler = {
       removedGameObject
       |> CurrentNodeSceneTreeLogicService.disposeCurrentSceneTreeNode;
 
-      StateLogicService.getAndRefreshEngineState();
-
       hasLightComponent ?
         SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials
         |> StateLogicService.getAndSetEngineState :
         ();
+
+      SceneTreeEditorService.removeIsShowChildren(removedGameObject)
+      |> StateLogicService.getAndSetEditorState;
 
       StateLogicService.getAndRefreshEngineState();
     };

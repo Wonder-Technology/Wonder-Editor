@@ -52,3 +52,15 @@ let setIsShowChildren =
       |> WonderCommonlib.SparseMapService.set(gameObject, isShowChildren),
   },
 };
+
+let removeIsShowChildren = (gameObject, {sceneTreeRecord} as editorState) => {
+  ...editorState,
+  sceneTreeRecord: {
+    ...sceneTreeRecord,
+    isShowChildrenMap:
+      IsShowChildrenSceneTreeService.getIsShowChildrenMap(sceneTreeRecord)
+      |> Obj.magic
+      |> SparseMapService.immutableDeleteVal(gameObject)
+      |> Obj.magic,
+  },
+};

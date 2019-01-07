@@ -32,6 +32,12 @@ module CustomEventHandler = {
         SceneUtils.addGameObject(PrimitiveEngineService.createEmptyGameObject)
       };
 
+    SceneTreeEditorService.setIsShowChildren(
+      newGameObject,
+      SceneTreeEditorService.getDefaultIsShowChildren(),
+    )
+    |> StateLogicService.getAndSetEditorState;
+
     let engineState = StateEngineService.unsafeGetState();
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))
