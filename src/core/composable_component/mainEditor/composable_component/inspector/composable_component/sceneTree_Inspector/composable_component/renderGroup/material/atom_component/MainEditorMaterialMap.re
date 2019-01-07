@@ -85,13 +85,13 @@ module Method = {
          Js.String.localeCompare(
            NodeNameAssetLogicService.getTextureNodeName(
              ~texture=
-               TextureNodeAssetService.getTextureComponent(textureNode1),
+               TextureNodeAssetService.getTextureComponent(textureNode2),
              ~engineState,
            )
            |> Js.String.charAt(0),
            NodeNameAssetLogicService.getTextureNodeName(
              ~texture=
-               TextureNodeAssetService.getTextureComponent(textureNode2),
+               TextureNodeAssetService.getTextureComponent(textureNode1),
              ~engineState,
            )
            |> Js.String.charAt(0),
