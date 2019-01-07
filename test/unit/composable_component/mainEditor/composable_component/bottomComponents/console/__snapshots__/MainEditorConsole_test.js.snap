@@ -1,0 +1,367 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorConsole test stub console console.debug should add the message into content 1`] = `
+<article
+  className="wonder-bottom-console"
+>
+  <article
+    className="wonder-console-component"
+  >
+    <div
+      className="console-header"
+    >
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        clear
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add log
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add info
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add warn
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add debug
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add fatal
+      </button>
+    </div>
+    <div
+      className="console-content"
+    >
+      <article
+        className="console-debug"
+      >
+        <div
+          className="console-header"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/debug.png"
+          />
+          <img
+            src="./public/img/more.png"
+          />
+          <div
+            className="header-message"
+          >
+            debug
+          </div>
+        </div>
+      </article>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorConsole test stub console console.error should add the message into content 1`] = `
+<article
+  className="wonder-bottom-console"
+>
+  <article
+    className="wonder-console-component"
+  >
+    <div
+      className="console-header"
+    >
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        clear
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add log
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add info
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add warn
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add debug
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add fatal
+      </button>
+    </div>
+    <div
+      className="console-content"
+    >
+      <article
+        className="console-error"
+      >
+        <div
+          className="console-header"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/error.png"
+          />
+          <img
+            src="./public/img/more.png"
+          />
+          <div
+            className="header-message"
+          >
+            message
+          </div>
+        </div>
+      </article>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorConsole test stub console console.info should add the message into content 1`] = `
+<article
+  className="wonder-bottom-console"
+>
+  <article
+    className="wonder-console-component"
+  >
+    <div
+      className="console-header"
+    >
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        clear
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add log
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add info
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add warn
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add debug
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add fatal
+      </button>
+    </div>
+    <div
+      className="console-content"
+    >
+      <article
+        className="console-info"
+      >
+        <div
+          className="console-header"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/info.png"
+          />
+          <div
+            className="header-message"
+          >
+            message
+          </div>
+        </div>
+      </article>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorConsole test stub console console.log should add the message into content 1`] = `
+<article
+  className="wonder-bottom-console"
+>
+  <article
+    className="wonder-console-component"
+  >
+    <div
+      className="console-header"
+    >
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        clear
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add log
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add info
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add warn
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add debug
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add fatal
+      </button>
+    </div>
+    <div
+      className="console-content"
+    >
+      <article
+        className="console-log"
+      >
+        <div
+          className="console-header"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/log.png"
+          />
+          <div
+            className="header-message"
+          >
+            message
+          </div>
+        </div>
+      </article>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorConsole test stub console console.warn should add the message into content 1`] = `
+<article
+  className="wonder-bottom-console"
+>
+  <article
+    className="wonder-console-component"
+  >
+    <div
+      className="console-header"
+    >
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        clear
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add log
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add info
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add warn
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add debug
+      </button>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        add fatal
+      </button>
+    </div>
+    <div
+      className="console-content"
+    >
+      <article
+        className="console-warn"
+      >
+        <div
+          className="console-header"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/warn.png"
+          />
+          <div
+            className="header-message"
+          >
+            message
+          </div>
+        </div>
+      </article>
+    </div>
+  </article>
+</article>
+`;

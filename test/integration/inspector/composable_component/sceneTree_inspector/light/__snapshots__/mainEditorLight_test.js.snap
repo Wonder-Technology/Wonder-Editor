@@ -1,0 +1,360 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorLight component test set currentSceneTreeNode test change light type test change type to be direction light, should show direction light component 1`] = `
+<article
+  className="wonder-inspector-light"
+>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      <span
+        className=""
+      >
+        Type
+      </span>
+    </div>
+    <div
+      className="item-content"
+    >
+      <select
+        onChange={[Function]}
+        value="0"
+      >
+        <option
+          value="0"
+        >
+          direction_light
+        </option>
+        <option
+          value="1"
+        >
+          point_light
+        </option>
+      </select>
+    </div>
+  </article>
+  <article
+    className="wonder-direction-light"
+  >
+    <article
+      className="inspector-item"
+    >
+      <div
+        className="item-header"
+      >
+        Color
+      </div>
+      <div
+        className="item-content item-color"
+      >
+        <div
+          className="color-hex"
+          onClick={[Function]}
+          style={
+            Object {
+              "background": "#ffffff",
+            }
+          }
+        />
+        <div
+          className="color-select"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/color.png"
+          />
+        </div>
+      </div>
+    </article>
+    <article
+      className="inspector-item"
+    >
+      <div
+        className="item-header"
+      >
+        Intensity
+      </div>
+      <div
+        className="item-content"
+      >
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="1"
+        />
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorLight component test set currentSceneTreeNode test change light type test change type to be point light, should show point light component 1`] = `
+<article
+  className="wonder-inspector-light"
+>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      <span
+        className=""
+      >
+        Type
+      </span>
+    </div>
+    <div
+      className="item-content"
+    >
+      <select
+        onChange={[Function]}
+        value="1"
+      >
+        <option
+          value="0"
+        >
+          direction_light
+        </option>
+        <option
+          value="1"
+        >
+          point_light
+        </option>
+      </select>
+    </div>
+  </article>
+  <article
+    className="wonder-point-light"
+  >
+    <article
+      className="inspector-item"
+    >
+      <div
+        className="item-header"
+      >
+        Color
+      </div>
+      <div
+        className="item-content item-color"
+      >
+        <div
+          className="color-hex"
+          onClick={[Function]}
+          style={
+            Object {
+              "background": "#ffffff",
+            }
+          }
+        />
+        <div
+          className="color-select"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/color.png"
+          />
+        </div>
+      </div>
+    </article>
+    <article
+      className="inspector-item"
+    >
+      <div
+        className="item-header"
+      >
+        Intensity
+      </div>
+      <div
+        className="item-content"
+      >
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="1"
+        />
+      </div>
+    </article>
+    <article
+      className="inspector-item"
+    >
+      <div
+        className="item-header"
+      >
+        Constant
+      </div>
+      <div
+        className="item-content"
+      >
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="1"
+        />
+      </div>
+    </article>
+    <article
+      className="inspector-item"
+    >
+      <div
+        className="item-header"
+      >
+        Linear
+      </div>
+      <div
+        className="item-content"
+      >
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0.07"
+        />
+      </div>
+    </article>
+    <article
+      className="inspector-item"
+    >
+      <div
+        className="item-header"
+      >
+        Quadratic
+      </div>
+      <div
+        className="item-content"
+      >
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0.017"
+        />
+      </div>
+    </article>
+    <article
+      className="inspector-item"
+    >
+      <div
+        className="item-header"
+      >
+        Range
+      </div>
+      <div
+        className="item-content"
+      >
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="65"
+        />
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorLight component test set currentSceneTreeNode test change light type test the original type is direction light, should show direction light component  1`] = `
+<article
+  className="wonder-inspector-light"
+>
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      <span
+        className=""
+      >
+        Type
+      </span>
+    </div>
+    <div
+      className="item-content"
+    >
+      <select
+        onChange={[Function]}
+        value="0"
+      >
+        <option
+          value="0"
+        >
+          direction_light
+        </option>
+        <option
+          value="1"
+        >
+          point_light
+        </option>
+      </select>
+    </div>
+  </article>
+  <article
+    className="wonder-direction-light"
+  >
+    <article
+      className="inspector-item"
+    >
+      <div
+        className="item-header"
+      >
+        Color
+      </div>
+      <div
+        className="item-content item-color"
+      >
+        <div
+          className="color-hex"
+          onClick={[Function]}
+          style={
+            Object {
+              "background": "#ffffff",
+            }
+          }
+        />
+        <div
+          className="color-select"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/color.png"
+          />
+        </div>
+      </div>
+    </article>
+    <article
+      className="inspector-item"
+    >
+      <div
+        className="item-header"
+      >
+        Intensity
+      </div>
+      <div
+        className="item-content"
+      >
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="1"
+        />
+      </div>
+    </article>
+  </article>
+</article>
+`;
