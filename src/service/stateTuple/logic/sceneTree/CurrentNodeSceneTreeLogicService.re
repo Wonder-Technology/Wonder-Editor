@@ -1,40 +1,44 @@
 open SceneGraphType;
 
-let disposeCurrentSceneTreeNode = currentGameObject => {
-  let rec _iterateSceneGraphRemove = removedGameObjectArr =>
+let disposeCurrentSceneTreeNode =
+    (currentGameObject, (editorState, engineState)) => {
+  let rec _iterateSceneGraphRemove =
+          (removedGameObjectArr, (editorState, engineState)) =>
     removedGameObjectArr
-    |> Js.Array.forEach(removedGameObject => {
-         let editorState = StateEditorService.getState();
-         let engineState = StateEngineService.unsafeGetState();
-
-         let (editorState, engineState) =
-           engineState
-           |> CameraEngineService.hasCameraGroup(removedGameObject) ?
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. (editorState, engineState), removedGameObject) => {
+           let (editorState, engineState) =
              engineState
-             |> CameraLogicService.unbindArcballCameraControllerEventIfHasComponentForGameView(
+             |> CameraEngineService.hasCameraGroup(removedGameObject) ?
+               engineState
+               |> CameraLogicService.unbindArcballCameraControllerEventIfHasComponentForGameView(
+                    removedGameObject,
+                    editorState,
+                  ) :
+               (editorState, engineState);
+
+           let engineState =
+             engineState
+             |> GameObjectEngineService.disposeGameObjectKeepOrderRemoveGeometry(
                   removedGameObject,
-                  editorState,
-                ) :
-             (editorState, engineState);
+                );
 
-         let engineState =
-           engineState
-           |> GameObjectEngineService.disposeGameObjectKeepOrderRemoveGeometry(
-                removedGameObject,
-              );
+           _iterateSceneGraphRemove(
+             GameObjectUtils.getChildren(removedGameObject, engineState),
+             (editorState, engineState),
+           );
+         },
+         (editorState, engineState),
+       );
 
-         editorState |> StateEditorService.setState |> ignore;
-         engineState |> StateEngineService.setState |> ignore;
+  let (editorState, engineState) =
+    _iterateSceneGraphRemove(
+      [|currentGameObject|],
+      (editorState, engineState),
+    );
 
-         _iterateSceneGraphRemove(
-           GameObjectUtils.getChildren(removedGameObject, engineState),
-         );
-       });
+  let editorState =
+    SceneTreeEditorService.clearCurrentSceneTreeNode(editorState);
 
-  _iterateSceneGraphRemove([|currentGameObject|]);
-
-  StateLogicService.getAndRefreshEngineState();
-
-  SceneTreeEditorService.clearCurrentSceneTreeNode
-  |> StateLogicService.getAndSetEditorState;
+  (editorState, engineState);
 };

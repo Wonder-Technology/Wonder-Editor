@@ -6,12 +6,10 @@ module CustomEventHandler = {
   type dataTuple = unit;
   type return = unit;
 
-  let _getRemovedGameObject = () => {
-    let editorState = StateEditorService.getState();
-
+  let _getRemovedGameObject = editorState =>
     switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
     | None =>
-      ConsoleUtils.error(
+      Result.Result.fail(
         LogUtils.buildErrorMessage(
           ~description=
             {j|current gameObject should exist, but actual is None|j},
@@ -19,41 +17,65 @@ module CustomEventHandler = {
           ~solution={j|set current gameObject|j},
           ~params={j||j},
         ),
-        editorState,
-      );
-      None;
-    | Some(gameObject) => Some(gameObject)
+      )
+    | Some(gameObject) => Result.Result.success(gameObject)
     };
-  };
-
-  let _hasLightComponent = (removedGameObject, engineState) =>
-    GameObjectEngineService.getAllGameObjects(removedGameObject, engineState)
-    |> SceneEngineService.doesNeedReInitSceneAllLightMaterials(_, engineState);
 
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
-    switch (_getRemovedGameObject()) {
-    | None => ()
-    | Some(removedGameObject) =>
-      let engineState = StateEngineService.unsafeGetState();
+    let editorState = StateEditorService.getState();
+    let engineState = StateEngineService.unsafeGetState();
 
-      let hasLightComponent =
-        _hasLightComponent(removedGameObject, engineState);
+    let (editorState, engineState) =
+      _getRemovedGameObject(editorState)
+      |> Result.Result.either(
+           removedGameObject => {
+             let (editorState, engineState) =
+               CurrentNodeSceneTreeLogicService.disposeCurrentSceneTreeNode(
+                 removedGameObject,
+                 (editorState, engineState),
+               );
 
-      engineState |> StateEngineService.setState |> ignore;
+             let doesNeedReInitSceneAllLightMaterials =
+               GameObjectEngineService.getAllGameObjects(
+                 removedGameObject,
+                 engineState,
+               )
+               |> SceneEngineService.doesNeedReInitSceneAllLightMaterials(
+                    _,
+                    engineState,
+                  );
 
-      removedGameObject
-      |> CurrentNodeSceneTreeLogicService.disposeCurrentSceneTreeNode;
+             let engineState = engineState |> JobEngineService.execDisposeJob;
 
-      hasLightComponent ?
-        SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials
-        |> StateLogicService.getAndSetEngineState :
-        ();
+             let engineState =
+               doesNeedReInitSceneAllLightMaterials ?
+                 SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials(
+                   engineState,
+                 ) :
+                 engineState;
 
-      SceneTreeEditorService.removeIsShowChildren(removedGameObject)
-      |> StateLogicService.getAndSetEditorState;
+             let editorState =
+               SceneTreeEditorService.removeIsShowChildren(
+                 removedGameObject,
+                 editorState,
+               );
 
-      StateLogicService.getAndRefreshEngineState();
-    };
+             let engineState =
+               StateLogicService.refreshEngineStateAndReturnEngineState(
+                 engineState,
+               );
+
+             (editorState, engineState);
+           },
+           errorMsg => {
+             ConsoleUtils.error(errorMsg, editorState);
+
+             (editorState, engineState);
+           },
+         );
+
+    editorState |> StateEditorService.setState |> ignore;
+    engineState |> StateEngineService.setState |> ignore;
 
     dispatchFunc(AppStore.UpdateAction(Update([|Inspector, SceneTree|])))
     |> ignore;
