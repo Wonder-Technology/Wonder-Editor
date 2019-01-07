@@ -246,7 +246,7 @@ let _ =
 
         StateLogicService.getAndRefreshEngineState();
 
-        SceneEditorService.clearCurrentSceneTreeNode
+        SceneTreeEditorService.clearCurrentSceneTreeNode
         |> StateLogicService.getAndSetEditorState;
       };
 
@@ -269,14 +269,14 @@ let _ =
       let _pickOne = gameObject1 => {
         let editorState = StateEditorService.getState();
 
-        SceneEditorService.unsafeGetCurrentSceneTreeNode(editorState)
+        SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState)
         |> expect == gameObject1;
       };
 
       let _notPick = () => {
         let editorState = StateEditorService.getState();
 
-        SceneEditorService.getCurrentSceneTreeNode(editorState)
+        SceneTreeEditorService.getCurrentSceneTreeNode(editorState)
         |> Js.Option.isNone
         |> expect == true;
       };
@@ -518,7 +518,7 @@ let _ =
 
             _triggerPickingAndNotRestore(255 + 10, 100 + 20);
 
-            SceneEditorService.clearCurrentSceneTreeNode
+            SceneTreeEditorService.clearCurrentSceneTreeNode
             |> StateLogicService.getAndSetEditorState;
 
             _changePoints(gameObject);
@@ -593,7 +593,7 @@ let _ =
                   let editorState = StateEditorService.getState();
 
                   pickedGameObject :=
-                    SceneEditorService.unsafeGetCurrentSceneTreeNode(
+                    SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(
                       editorState,
                     );
 
@@ -639,12 +639,12 @@ let _ =
             let sceneGameObject =
               SceneEngineService.getSceneGameObject(engineState);
             (
-              SceneEditorService.getIsShowChildern(
+              SceneTreeEditorService.getIsShowChildern(
                 parent1,
                 sceneGameObject,
                 editorState,
               ),
-              SceneEditorService.getIsShowChildern(
+              SceneTreeEditorService.getIsShowChildern(
                 parent2,
                 sceneGameObject,
                 editorState,

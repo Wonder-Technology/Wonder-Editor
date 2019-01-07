@@ -5,11 +5,11 @@ let getChild = (gameObject, index, engineState) =>
   Array.unsafe_get(getChildren(gameObject, engineState), index);
 
 let unsafeGetCurrentSceneTreeNode = () =>
-  SceneEditorService.unsafeGetCurrentSceneTreeNode
+  SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
   |> StateLogicService.getEditorState;
 
 let clearCurrentSceneTreeNode = () =>
-  SceneEditorService.clearCurrentSceneTreeNode
+  SceneTreeEditorService.clearCurrentSceneTreeNode
   |> StateLogicService.getAndSetEditorState;
 
 let addFakeVboBufferForGameObject = gameObject =>
@@ -113,11 +113,11 @@ let getCurrentGameObjectMeshRenderer = () =>
   |> StateLogicService.getEngineStateToGetData;
 
 let getCurrentSceneTreeNode = () =>
-  SceneEditorService.getCurrentSceneTreeNode
+  SceneTreeEditorService.getCurrentSceneTreeNode
   |> StateLogicService.getEditorState;
 
 let setCurrentSceneTreeNode = gameObject =>
-  SceneEditorService.setCurrentSceneTreeNode(gameObject)
+  SceneTreeEditorService.setCurrentSceneTreeNode(gameObject)
   |> StateLogicService.getAndSetEditorState;
 
 let isAlive = Wonderjs.AliveGameObjectMainService.isAlive;

@@ -34,7 +34,7 @@ let getLightTypeByGameObject = (gameObject, engineState) =>
 let handleSpecificFuncByLightType =
     (lightType, (handleDirectionLightFunc, handlePointLightFunc)) => {
   let currentSceneTreeNode =
-    SceneEditorService.unsafeGetCurrentSceneTreeNode
+    SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
     |> StateLogicService.getEditorState;
 
   switch (lightType) {
@@ -92,7 +92,7 @@ let _getOperateTargetLightFunc = (lightType, engineState) =>
 
 let replaceLightByType = (sourceLightType, targetLightType) => {
   let gameObject =
-    SceneEditorService.unsafeGetCurrentSceneTreeNode
+    SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
     |> StateLogicService.getEditorState;
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();

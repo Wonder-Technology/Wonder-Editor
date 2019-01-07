@@ -186,7 +186,7 @@ let _ =
                 let _hasMap = () => {
                   let engineState = StateEngineService.unsafeGetState();
                   let currentGameObject =
-                    SceneEditorService.unsafeGetCurrentSceneTreeNode
+                    SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
                     |> StateLogicService.getEditorState;
 
                   engineState
@@ -234,7 +234,7 @@ let _ =
                         "warn",
                       );
                     let currentGameObject =
-                      SceneEditorService.unsafeGetCurrentSceneTreeNode
+                      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
                       |> StateLogicService.getEditorState;
 
                     let engineState = StateEngineService.unsafeGetState();
@@ -402,7 +402,7 @@ let _ =
               );
 
               let currentGameObject =
-                SceneEditorService.unsafeGetCurrentSceneTreeNode
+                SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
                 |> StateLogicService.getEditorState;
 
               let engineMaterialMap =

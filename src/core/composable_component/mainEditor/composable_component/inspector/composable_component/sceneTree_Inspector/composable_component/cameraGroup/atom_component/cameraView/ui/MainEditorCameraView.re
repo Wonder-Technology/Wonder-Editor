@@ -20,7 +20,7 @@ let render = ((store, dispatchFunc), _self) => {
   let currentGameObjectBasicCameraViewComponent =
     engineState
     |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-         SceneEditorService.unsafeGetCurrentSceneTreeNode
+         SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
          |> StateLogicService.getEditorState,
        );
   let isCurrentCamera =

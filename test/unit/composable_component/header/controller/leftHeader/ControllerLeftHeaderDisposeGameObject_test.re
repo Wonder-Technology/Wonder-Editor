@@ -240,7 +240,7 @@ let _ =
         "if not set currentSceneTreeNode, disposed button's disabled props should == true",
         () => {
           MainEditorSceneTool.createDefaultScene(sandbox, () => ());
-          SceneEditorService.clearCurrentSceneTreeNode
+          SceneTreeEditorService.clearCurrentSceneTreeNode
           |> StateLogicService.getAndSetEditorState;
 
           BuildComponentTool.buildHeader(

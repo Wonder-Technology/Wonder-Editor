@@ -9,7 +9,7 @@ module CustomEventHandler = {
   type return = unit;
 
   let handleSelfLogic = ((store, dispatchFunc), (), (targetUid, draggedUid)) => {
-    SceneEditorService.setIsShowChildren(targetUid, true)
+    SceneTreeEditorService.setIsShowChildren(targetUid, true)
     |> StateLogicService.getAndSetEditorState;
 
     GameObjectUtils.setParentKeepOrder(targetUid, draggedUid)

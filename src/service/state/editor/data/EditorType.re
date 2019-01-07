@@ -1,6 +1,6 @@
 open SettingType;
 
-open SceneType;
+open SceneTreeType;
 
 open AssetType;
 
@@ -24,7 +24,7 @@ open PickingType;
 
 type editorState = {
   settingRecord,
-  sceneRecord,
+  sceneTreeRecord,
   assetRecord,
   sceneViewRecord,
   gameViewRecord,

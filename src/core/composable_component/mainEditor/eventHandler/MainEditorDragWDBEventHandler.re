@@ -13,7 +13,7 @@ module CustomEventHandler = {
       (store, dispatchFunc),
       (),
       (
-        switch (editorState |> SceneEditorService.getCurrentSceneTreeNode) {
+        switch (editorState |> SceneTreeEditorService.getCurrentSceneTreeNode) {
         | None => SceneEngineService.getSceneGameObject(engineState)
         | Some(gameObject) => gameObject
         },

@@ -13,7 +13,7 @@ module CustomEventHandler = {
     |> ignore;
 
     StateEditorService.getState()
-    |> SceneEditorService.setCurrentSceneTreeNode(uid)
+    |> SceneTreeEditorService.setCurrentSceneTreeNode(uid)
     |> CurrentSelectSourceEditorService.setCurrentSelectSource(
          SceneTreeWidgetService.getWidget(),
        )

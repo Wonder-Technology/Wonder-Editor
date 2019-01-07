@@ -38,7 +38,7 @@ let handleSelfLogic =
     textureNode => {
       let editorState = StateEditorService.getState();
       let gameObject =
-        SceneEditorService.getCurrentSceneTreeNode(editorState);
+        SceneTreeEditorService.getCurrentSceneTreeNode(editorState);
       let engineState = StateEngineService.unsafeGetState();
 
       let {textureComponent}: NodeAssetType.textureNodeData =

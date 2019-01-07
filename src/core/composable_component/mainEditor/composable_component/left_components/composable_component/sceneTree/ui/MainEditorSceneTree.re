@@ -6,7 +6,7 @@ module Method = {
   let onSelect = ((store, dispatchFunc), uid) => {
     let editorState = StateEditorService.getState();
 
-    switch (SceneEditorService.getCurrentSceneTreeNode(editorState)) {
+    switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
     | None =>
       SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
         (store, dispatchFunc),
@@ -25,7 +25,7 @@ module Method = {
   };
 
   let handleToggleShowTreeChildren = (dispatchFunc, targetId, isShowChildren) => {
-    SceneEditorService.setIsShowChildren(targetId, isShowChildren)
+    SceneTreeEditorService.setIsShowChildren(targetId, isShowChildren)
     |> StateLogicService.getAndSetEditorState;
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))
@@ -72,7 +72,7 @@ module Method = {
            dragWDB=dragWDBFunc
            isWidget=SceneTreeWidgetService.isWidget
            isShowChildren=(
-             SceneEditorService.getIsShowChildern(
+             SceneTreeEditorService.getIsShowChildern(
                uid,
                sceneGameObject,
                editorState,
@@ -126,7 +126,7 @@ let render = (store, dispatchFunc, _self) => {
               |]
               |> Method.buildSceneTreeArray(
                    (store, dispatchFunc, DomHelper.createElement("img")),
-                   editorState |> SceneEditorService.getCurrentSceneTreeNode,
+                   editorState |> SceneTreeEditorService.getCurrentSceneTreeNode,
                    (
                      Method.onSelect((store, dispatchFunc)),
                      Method.dragGameObjectIntoGameObject(

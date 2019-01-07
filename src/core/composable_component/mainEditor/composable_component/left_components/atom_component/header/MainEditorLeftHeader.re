@@ -135,14 +135,14 @@ let render =
       className="sceneTree-header-item"
       onClick=(
         _e =>
-          SceneEditorService.getCurrentSceneTreeNode
+          SceneTreeEditorService.getCurrentSceneTreeNode
           |> StateLogicService.getEditorState
           |> Js.Option.isNone ?
             () :
             Method.disposeCurrentSceneTreeNode((store, dispatchFunc), (), ())
       )>
       (
-        SceneEditorService.getCurrentSceneTreeNode
+        SceneTreeEditorService.getCurrentSceneTreeNode
         |> StateLogicService.getEditorState
         |> Js.Option.isNone ?
           <div className="item-notBeClick">

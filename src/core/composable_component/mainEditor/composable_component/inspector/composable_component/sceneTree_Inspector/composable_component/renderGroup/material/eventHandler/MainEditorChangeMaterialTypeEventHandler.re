@@ -50,7 +50,7 @@ module CustomEventHandler = {
     let engineState = StateEngineService.unsafeGetState();
 
     let gameObject =
-      SceneEditorService.unsafeGetCurrentSceneTreeNode(editorState);
+      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState);
 
     let sourceMaterial =
       MainEditorMaterialUtils.getMaterialComponentByType(

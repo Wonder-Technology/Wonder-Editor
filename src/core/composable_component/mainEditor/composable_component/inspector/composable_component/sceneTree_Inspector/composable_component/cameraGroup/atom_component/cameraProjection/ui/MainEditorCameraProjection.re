@@ -150,7 +150,7 @@ let render = ((store, dispatchFunc), _self) => {
   let currentGameObjectPerspectiveCamera =
     engineState
     |> GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
-         SceneEditorService.unsafeGetCurrentSceneTreeNode
+         SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
          |> StateLogicService.getEditorState,
        );
 

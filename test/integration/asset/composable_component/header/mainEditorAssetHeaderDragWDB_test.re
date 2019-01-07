@@ -394,9 +394,9 @@ let _ =
 
                let editorState =
                  editorState
-                 |> SceneEditorService.setIsShowChildren(box1, true)
-                 |> SceneEditorService.setIsShowChildren(box4, true)
-                 |> SceneEditorService.setIsShowChildren(box2, false);
+                 |> SceneTreeEditorService.setIsShowChildren(box1, true)
+                 |> SceneTreeEditorService.setIsShowChildren(box4, true)
+                 |> SceneTreeEditorService.setIsShowChildren(box2, false);
 
                let (engineState, newGameObject1, _) =
                  GameObjectToolEngine.createGameObject(engineState);
@@ -411,7 +411,7 @@ let _ =
                let engineState =
                  engineState |> SceneEngineService.addSceneChild(newGameObject1);
 
-               SceneEditorService.getIsShowChildrenMap(
+               SceneTreeEditorService.getIsShowChildrenMap(
                  editorState,
                )
                |>

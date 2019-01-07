@@ -6,7 +6,7 @@ module Method = {
 
     editorState
     |> CurrentNodeIdAssetEditorService.setCurrentNodeId(nodeId)
-    |> SceneEditorService.clearCurrentSceneTreeNode
+    |> SceneTreeEditorService.clearCurrentSceneTreeNode
     |> CurrentSelectSourceEditorService.setCurrentSelectSource(
          AssetWidgetService.getWidget(),
        )

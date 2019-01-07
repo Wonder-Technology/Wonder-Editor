@@ -36,7 +36,7 @@ let _ =
           describe("test engine", () => {
             let _getName = () =>
               GameObjectEngineService.unsafeGetGameObjectName(
-                SceneEditorService.unsafeGetCurrentSceneTreeNode
+                SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
                 |> StateLogicService.getEditorState,
               )
               |> StateLogicService.getEngineStateToGetData;

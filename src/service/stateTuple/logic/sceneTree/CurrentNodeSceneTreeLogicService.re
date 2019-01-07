@@ -35,6 +35,6 @@ let disposeCurrentSceneTreeNode = currentGameObject => {
 
   StateLogicService.getAndRefreshEngineState();
 
-  SceneEditorService.clearCurrentSceneTreeNode
+  SceneTreeEditorService.clearCurrentSceneTreeNode
   |> StateLogicService.getAndSetEditorState;
 };

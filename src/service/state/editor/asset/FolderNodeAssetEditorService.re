@@ -4,7 +4,7 @@ let enterFolder = (nodeId, editorState) =>
   |> SelectedFolderNodeIdInAssetTreeAssetEditorService.setSelectedFolderNodeIdInAssetTree(
        nodeId,
      )
-  |> SceneEditorService.clearCurrentSceneTreeNode
+  |> SceneTreeEditorService.clearCurrentSceneTreeNode
   |> CurrentSelectSourceEditorService.setCurrentSelectSource(
        AssetWidgetService.getWidget(),
      );

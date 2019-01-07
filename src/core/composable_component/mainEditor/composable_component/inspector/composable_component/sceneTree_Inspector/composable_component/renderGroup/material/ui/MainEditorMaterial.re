@@ -20,7 +20,7 @@ module Method = {
 
   let renderBasicMaterial = ((store, dispatchFunc), ()) => {
     let gameObject =
-      SceneEditorService.unsafeGetCurrentSceneTreeNode
+      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
       |> StateLogicService.getEditorState;
 
     <MainEditorBasicMaterial
@@ -37,7 +37,7 @@ module Method = {
 
   let renderLightMaterial = ((store, dispatchFunc), ()) => {
     let gameObject =
-      SceneEditorService.unsafeGetCurrentSceneTreeNode
+      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
       |> StateLogicService.getEditorState;
 
     <MainEditorLightMaterial

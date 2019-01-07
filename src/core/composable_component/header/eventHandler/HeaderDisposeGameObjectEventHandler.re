@@ -9,7 +9,7 @@ module CustomEventHandler = {
   let _getRemovedGameObject = () => {
     let editorState = StateEditorService.getState();
 
-    switch (SceneEditorService.getCurrentSceneTreeNode(editorState)) {
+    switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
     | None =>
       ConsoleUtils.error(
         LogUtils.buildErrorMessage(

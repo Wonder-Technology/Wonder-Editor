@@ -2,7 +2,7 @@ open EditorType;
 
 let create = () => {
   settingRecord: RecordSettingService.create(),
-  sceneRecord: {
+  sceneTreeRecord: {
     currentSceneTreeNode: None,
     isShowChildrenMap: WonderCommonlib.SparseMapService.createEmpty(),
   },

@@ -200,13 +200,13 @@ let rec _setAllParentsShowChildren = (gameObject, engineState, editorState) =>
       parentGameObject,
       engineState,
       editorState
-      |> SceneEditorService.setIsShowChildren(parentGameObject, true),
+      |> SceneTreeEditorService.setIsShowChildren(parentGameObject, true),
     )
   };
 
 let _selectSceneTreeNode = (gameObject, (editorState, engineState)) => {
   let editorState =
-    SceneEditorService.setCurrentSceneTreeNode(gameObject, editorState)
+    SceneTreeEditorService.setCurrentSceneTreeNode(gameObject, editorState)
     |> CurrentSelectSourceEditorService.setCurrentSelectSource(
          SceneTreeWidgetService.getWidget(),
        )

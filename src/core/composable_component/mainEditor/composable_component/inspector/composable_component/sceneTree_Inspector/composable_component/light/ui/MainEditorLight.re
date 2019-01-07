@@ -85,7 +85,7 @@ let make = (~store, ~dispatchFunc, _children) => {
     lightType:
       MainEditorLightUtils.getLightTypeByGameObject(
         StateEditorService.getState()
-        |> SceneEditorService.unsafeGetCurrentSceneTreeNode,
+        |> SceneTreeEditorService.unsafeGetCurrentSceneTreeNode,
       )
       |> StateLogicService.getEngineStateToGetData,
   },

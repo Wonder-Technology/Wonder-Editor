@@ -5,7 +5,7 @@ let handleSelfLogic =
 
   let editorState =
     editorState
-    |> SceneEditorService.setIsShowChildren(targetGameObjectUid, true);
+    |> SceneTreeEditorService.setIsShowChildren(targetGameObjectUid, true);
 
   let (isSuccess, (editorState, engineState)) =
     DragWDBUtils.dragWDB(
