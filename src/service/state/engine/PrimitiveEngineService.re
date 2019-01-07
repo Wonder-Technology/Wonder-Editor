@@ -35,15 +35,15 @@ let createCube = ((cubeGeometry, lightMaterial), editorState, engineState) => {
 
   let (editorState, engineState) =
     (editorState, engineState)
-    |> GameObjectLogicService.addGeometry(obj, cubeGeometry)
     |> GameObjectLogicService.addRenderGroup(
-         obj,
-         renderGroup,
-         (
-           GameObjectAPI.addGameObjectMeshRendererComponent,
-           GameObjectAPI.addGameObjectLightMaterialComponent,
-         ),
-       );
+      obj,
+      renderGroup,
+      (
+        GameObjectAPI.addGameObjectMeshRendererComponent,
+        GameObjectAPI.addGameObjectLightMaterialComponent,
+        ),
+        )
+        |> GameObjectLogicService.addGeometry(obj, cubeGeometry);
 
   (editorState, engineState, obj);
 };

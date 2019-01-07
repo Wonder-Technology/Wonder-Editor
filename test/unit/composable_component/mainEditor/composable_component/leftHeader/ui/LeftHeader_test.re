@@ -207,6 +207,78 @@ let _ =
           },
         )
       );
+
+      describe("test clone gameObject", () => {
+        test(
+          "test clone one gameObject, the cloned gameObject should add into its parent children",
+          () => {
+            let (scene, (box1, box4), box2, box3) =
+              SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
+
+            box4 |> GameObjectTool.setCurrentSceneTreeNode;
+
+            MainEditorLeftHeaderTool.cloneCurrentSceneTreeNode();
+
+            let clonedGameObject = box4 |> succ;
+
+            GameObjectTool.getChildren(box1)
+            |> StateLogicService.getEngineStateToGetData
+            |> Js.Array.includes(clonedGameObject)
+            |> expect == true;
+          },
+        );
+
+        describe("test clone gameObject componentMap", () => {
+          test(
+            "test cloned gameObject rebuild components should add into componentMap",
+            () => {
+            let (scene, (box1, box4), box2, box3) =
+              SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
+
+            box4 |> GameObjectTool.setCurrentSceneTreeNode;
+
+            MainEditorLeftHeaderTool.cloneCurrentSceneTreeNode();
+
+            let clonedGameObject = box4 |> succ;
+
+            StateEditorService.getState()
+            |> InspectorEditorService.getComponentTypeMap
+            |> WonderCommonlib.SparseMapService.get(clonedGameObject)
+            |> Js.Option.isSome
+            |> expect == true;
+          });
+
+          test(
+            "test cloned gameObject components should === target gameObject components ",
+            () => {
+            let (scene, (box1, box4), box2, box3) =
+              SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
+
+            box4 |> GameObjectTool.setCurrentSceneTreeNode;
+
+            MainEditorLeftHeaderTool.cloneCurrentSceneTreeNode();
+
+            let editorState = StateEditorService.getState();
+            let targetGameObjectComponentArray =
+              editorState
+              |> InspectorEditorService.getComponentTypeMap
+              |> WonderCommonlib.SparseMapService.unsafeGet(box4);
+
+            let clonedGameObject = box4 |> succ;
+
+            let clonedGameObjectComponentArray =
+              editorState
+              |> InspectorEditorService.getComponentTypeMap
+              |> WonderCommonlib.SparseMapService.unsafeGet(clonedGameObject);
+
+
+            targetGameObjectComponentArray
+            |> Js.Array.toString
+            |> expect == (clonedGameObjectComponentArray
+            |> Js.Array.toString);
+          });
+        });
+      });
     });
 
     describe("test ambient light", () => {

@@ -33,3 +33,15 @@ let disposeCurrentSceneTreeNode =
     (),
     (),
   );
+
+let cloneCurrentSceneTreeNode =
+    (
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorLeftHeader.Method.cloneCurrentSceneTreeNode(
+    (store, dispatchFunc |> Obj.magic),
+    (),
+    (),
+  );

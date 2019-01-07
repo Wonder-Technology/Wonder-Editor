@@ -45,6 +45,7 @@ module Method = {
           === SceneEngineService.getSceneGameObject(
                 StateEngineService.unsafeGetState(),
               ) => [||]
+
     | Some(gameObject) =>
       [|_buildNameFunc((store, dispatchFunc), gameObject)|]
       |> Js.Array.concat(
@@ -63,7 +64,7 @@ module Method = {
              currentSceneTreeNode=gameObject
              addableComponentList=addableComponentConfig
            />,
-         )
+         );
     };
 };
 

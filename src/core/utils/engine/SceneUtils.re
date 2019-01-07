@@ -1,15 +1,17 @@
+let addGameObjectToScene = (gameObject, engineState) =>
+  engineState
+  |> GameObjectEngineService.initGameObject(gameObject)
+  |> SceneEngineService.addSceneChild(gameObject)
+  |> DirectorEngineService.loopBody(0.);
+
 let addGameObject = createGameObjectFunc => {
   let (editorState, engineState, gameObject) =
     StateEngineService.unsafeGetState()
     |> createGameObjectFunc(StateEditorService.getState());
 
-  engineState
-  |> GameObjectEngineService.initGameObject(gameObject)
-  |> SceneEngineService.addSceneChild(gameObject)
-  |> DirectorEngineService.loopBody(0.)
-  |> StateEngineService.setState;
+  let engineState = addGameObjectToScene(gameObject, engineState);
 
-  editorState |> StateEditorService.setState |> ignore;
+  StateLogicService.setState((editorState, engineState));
 
   gameObject;
 };

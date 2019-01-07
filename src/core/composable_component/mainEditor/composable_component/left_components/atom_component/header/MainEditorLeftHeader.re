@@ -18,6 +18,8 @@ module Method = {
   let addGameObjectByType = LeftHeaderAddGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let disposeCurrentSceneTreeNode = LeftHeaderDisposeGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let cloneCurrentSceneTreeNode = HeaderCloneGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 };
 
 let component = ReasonReact.reducerComponent("MainEditorLeftHeader");
@@ -38,22 +40,19 @@ let reducer = (action, state) =>
         isSelectNav: true,
         currentSelectItem: None,
       })
+
   | BlurNav =>
     ReasonReact.Update({
       ...state,
       isSelectNav: false,
       currentSelectItem: None,
     })
+
   | HoverItem(selectNav) =>
     ReasonReact.Update({...state, currentSelectItem: selectNav})
   };
 
-let _renderSelectNav =
-    (
-      store: AppStore.appState,
-      dispatchFunc,
-      {state, send}: ReasonReact.self('a, 'b, 'c),
-    ) =>
+let _renderSelectNav = ((store, dispatchFunc), state, send) =>
   <div className="item-content">
     <div
       className="content-section"
@@ -113,47 +112,88 @@ let _renderSelectNav =
     </div>
   </div>;
 
-let render =
+let _renderAddGameObjectComponent = ((store, dispatchFunc), state, send) =>
+  <div className="sceneTree-header-item" onClick=(_e => send(ToggleShowNav))>
+    <div className="item-canBeClick"> <img src="./public/img/add.png" /> </div>
     (
-      store: AppStore.appState,
-      dispatchFunc,
-      ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
-    ) =>
+      state.isSelectNav ?
+        _renderSelectNav((store, dispatchFunc), state, send) :
+        ReasonReact.null
+    )
+  </div>;
+
+let _renderRemoveGameObjectComponent =
+    (reduxTuple, isCurrentSceneTreeNodeCanBeOperate) =>
+  <div
+    className="sceneTree-header-item"
+    title="remove"
+    onClick=(
+      _e =>
+        isCurrentSceneTreeNodeCanBeOperate ?
+          Method.disposeCurrentSceneTreeNode(reduxTuple, (), ()) : ()
+    )>
+    (
+      isCurrentSceneTreeNodeCanBeOperate ?
+        <div className="item-notBeClick">
+          <img src="./public/img/remove.png" />
+        </div> :
+        <div className="item-canBeClick">
+          <img src="./public/img/notRemove.png" />
+        </div>
+    )
+  </div>;
+
+let _renderCloneGameObjectComponent =
+    (reduxTuple, isCurrentSceneTreeNodeCanBeOperate) =>
+  <div
+    className="sceneTree-header-item"
+    title="clone"
+    onClick=(
+      _e =>
+        isCurrentSceneTreeNodeCanBeOperate ?
+          Method.cloneCurrentSceneTreeNode(reduxTuple, (), ()) : ()
+    )>
+    (
+      isCurrentSceneTreeNodeCanBeOperate ?
+        <div className="item-notBeClick">
+          <img src="./public/img/clone.png" />
+        </div> :
+        <div className="item-canBeClick">
+          <img src="./public/img/notClone.png" />
+        </div>
+    )
+  </div>;
+
+let render =
+    (reduxTuple, ({state, send}: ReasonReact.self('a, 'b, 'c)) as self) => {
+  let _isCurrentSceneTreeNodeCanBeOperate =
+    switch (
+      SceneEditorService.getCurrentSceneTreeNode
+      |> StateLogicService.getEditorState
+    ) {
+    | None => false
+    | Some(gameObject) =>
+      SceneEngineService.getSceneGameObject
+      |> StateLogicService.getEngineStateToGetData !== gameObject
+    };
+
   <article
     key="mainEditorScenetreeHeader" className="wonder-left-components-header">
-    <div
-      className="sceneTree-header-item" onClick=(_e => send(ToggleShowNav))>
-      <div className="item-canBeClick">
-        <img src="./public/img/add.png" />
-      </div>
-      (
-        state.isSelectNav ?
-          _renderSelectNav(store, dispatchFunc, self) : ReasonReact.null
+    (_renderAddGameObjectComponent(reduxTuple, state, send))
+    (
+      _renderRemoveGameObjectComponent(
+        reduxTuple,
+        _isCurrentSceneTreeNodeCanBeOperate,
       )
-    </div>
-    <div
-      className="sceneTree-header-item"
-      onClick=(
-        _e =>
-          SceneTreeEditorService.getCurrentSceneTreeNode
-          |> StateLogicService.getEditorState
-          |> Js.Option.isNone ?
-            () :
-            Method.disposeCurrentSceneTreeNode((store, dispatchFunc), (), ())
-      )>
-      (
-        SceneTreeEditorService.getCurrentSceneTreeNode
-        |> StateLogicService.getEditorState
-        |> Js.Option.isNone ?
-          <div className="item-notBeClick">
-            <img src="./public/img/notRemove.png" />
-          </div> :
-          <div className="item-canBeClick">
-            <img src="./public/img/remove.png" />
-          </div>
+    )
+    (
+      _renderCloneGameObjectComponent(
+        reduxTuple,
+        _isCurrentSceneTreeNodeCanBeOperate,
       )
-    </div>
+    )
   </article>;
+};
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
@@ -175,7 +215,7 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
       },
       subscription => send(SetSubscription(subscription)),
     ),
-  render: self => render(store, dispatchFunc, self),
+  render: self => render((store, dispatchFunc), self),
   willUnmount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
     EventUtils.unmountStreamSubscription(state.streamSubscription),
 };
