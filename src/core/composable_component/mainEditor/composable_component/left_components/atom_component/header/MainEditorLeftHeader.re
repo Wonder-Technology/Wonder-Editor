@@ -15,9 +15,9 @@ type action =
   | BlurNav;
 
 module Method = {
-  let addGameObjectByType = HeaderAddGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+  let addGameObjectByType = LeftHeaderAddGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let disposeCurrentSceneTreeNode = HeaderDisposeGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+  let disposeCurrentSceneTreeNode = LeftHeaderDisposeGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 };
 
 let component = ReasonReact.reducerComponent("MainEditorLeftHeader");

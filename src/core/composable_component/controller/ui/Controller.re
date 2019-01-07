@@ -30,7 +30,7 @@ module Method = {
     |> StateLogicService.getEngineStateToGetData
     |> getHexString;
 
-  let closeColorPick = HeaderAmbientLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+  let closeColorPick = ControllerAmbientLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 
   let buildAmbientLightComponent = (store, dispatchFunc) =>
     <div className="header-item">
