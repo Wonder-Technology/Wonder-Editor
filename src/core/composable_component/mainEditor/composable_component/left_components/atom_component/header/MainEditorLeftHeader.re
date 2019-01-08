@@ -19,7 +19,7 @@ module Method = {
 
   let disposeCurrentSceneTreeNode = LeftHeaderDisposeGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let cloneCurrentSceneTreeNode = HeaderCloneGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+  let cloneCurrentSceneTreeNode = LeftHeaderCloneGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 };
 
 let component = ReasonReact.reducerComponent("MainEditorLeftHeader");
@@ -168,7 +168,7 @@ let render =
     (reduxTuple, ({state, send}: ReasonReact.self('a, 'b, 'c)) as self) => {
   let _isCurrentSceneTreeNodeCanBeOperate =
     switch (
-      SceneEditorService.getCurrentSceneTreeNode
+      SceneTreeEditorService.getCurrentSceneTreeNode
       |> StateLogicService.getEditorState
     ) {
     | None => false
