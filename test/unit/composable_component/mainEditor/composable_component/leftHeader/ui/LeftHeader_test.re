@@ -227,6 +227,20 @@ let _ =
             |> expect == true;
           },
         );
+        test("test the cloned gameObject should be currentSceneTreeNode", () => {
+          let (scene, (box1, box4), box2, box3) =
+            SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
+
+          box4 |> GameObjectTool.setCurrentSceneTreeNode;
+
+          MainEditorLeftHeaderTool.cloneCurrentSceneTreeNode();
+
+          let clonedGameObject = box4 |> succ;
+
+          StateEditorService.getState()
+          |> SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
+          |> expect == clonedGameObject;
+        });
 
         describe("test clone gameObject componentMap", () => {
           test(
@@ -271,11 +285,9 @@ let _ =
               |> InspectorEditorService.getComponentTypeMap
               |> WonderCommonlib.SparseMapService.unsafeGet(clonedGameObject);
 
-
             targetGameObjectComponentArray
             |> Js.Array.toString
-            |> expect == (clonedGameObjectComponentArray
-            |> Js.Array.toString);
+            |> expect == (clonedGameObjectComponentArray |> Js.Array.toString);
           });
         });
       });

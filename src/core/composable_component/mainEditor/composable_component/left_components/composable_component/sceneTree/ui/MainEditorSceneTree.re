@@ -108,8 +108,6 @@ let render = (store, dispatchFunc, _self) => {
     <article className="wonder-tree">
       (
         ReasonReact.array(
-          /* store
-             |> StoreUtils.unsafeGetSceneGraphDataFromStore */
           SceneGraphUtils.getSceneGraphDataFromEngine((
             editorState,
             engineState,
@@ -126,7 +124,8 @@ let render = (store, dispatchFunc, _self) => {
               |]
               |> Method.buildSceneTreeArray(
                    (store, dispatchFunc, DomHelper.createElement("img")),
-                   editorState |> SceneTreeEditorService.getCurrentSceneTreeNode,
+                   editorState
+                   |> SceneTreeEditorService.getCurrentSceneTreeNode,
                    (
                      Method.onSelect((store, dispatchFunc)),
                      Method.dragGameObjectIntoGameObject(

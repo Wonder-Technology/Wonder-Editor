@@ -48,7 +48,9 @@ module CustomEventHandler = {
                   )
                |> (
                  ((clonedGameObjects, engineState)) => (
-                   clonedGameObjects |> ArrayService.unsafeGetFirst,
+                   clonedGameObjects
+                   |> OperateGameObjectLogicService.getFlattenClonedGameObjectArr
+                   |> ArrayService.unsafeGetFirst,
                    engineState,
                  )
                );
@@ -67,6 +69,9 @@ module CustomEventHandler = {
                |> GameObjectComponentLogicService.getGameObjectComponentStoreInComponentTypeMap(
                     [|clonedGameObject|],
                     engineState,
+                  )
+               |> SceneTreeEditorService.setCurrentSceneTreeNode(
+                    clonedGameObject,
                   );
 
              let engineState =
@@ -91,7 +96,8 @@ module CustomEventHandler = {
 
     StateLogicService.setState((editorState, engineState));
 
-    dispatchFunc(AppStore.UpdateAction(Update([|SceneTree|]))) |> ignore;
+    dispatchFunc(AppStore.UpdateAction(Update([|Inspector, SceneTree|])))
+    |> ignore;
   };
 };
 
