@@ -52,8 +52,9 @@ let _handleEngineState = (sceneGameObject, hasWDBIMGUIFunc, engineState) => {
   /* |> AssetTreeUtils.initRootAssetTree(_, engineState); */
 
   editorState
-  |> GameObjectComponentLogicService.getGameObjectComponentStoreInComponentTypeMap(
+  |> GameObjectComponentLogicService.setGameObjectArrComponentTypeMap(
        engineState |> GameObjectUtils.getChildren(sceneGameObject),
+       GameObjectComponentLogicService.buildAllComponentArray(),
        engineState,
      )
   /* |> TreeRootAssetEditorService.setAssetTreeRoot(assetTree) */

@@ -6,27 +6,12 @@ module CustomEventHandler = {
   type dataTuple = unit;
   type return = unit;
 
-  let _getRemovedGameObject = editorState =>
-    switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
-    | None =>
-      Result.Result.fail(
-        LogUtils.buildErrorMessage(
-          ~description=
-            {j|current gameObject should exist, but actual is None|j},
-          ~reason="",
-          ~solution={j|set current gameObject|j},
-          ~params={j||j},
-        ),
-      )
-    | Some(gameObject) => Result.Result.success(gameObject)
-    };
-
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
     let (editorState, engineState) =
-      _getRemovedGameObject(editorState)
+      LeftHeaderGameObjectResultUtils.getTargetGameObject()
       |> Result.Result.either(
            removedGameObject => {
              let (editorState, engineState) =
@@ -35,12 +20,12 @@ module CustomEventHandler = {
                  (editorState, engineState),
                );
 
-             let doesNeedReInitSceneAllLightMaterials =
+             let isNeedReInitSceneAllLightMaterials =
                GameObjectEngineService.getAllGameObjects(
                  removedGameObject,
                  engineState,
                )
-               |> SceneEngineService.doesNeedReInitSceneAllLightMaterials(
+               |> SceneEngineService.isNeedReInitSceneAllLightMaterials(
                     _,
                     engineState,
                   );
@@ -48,7 +33,7 @@ module CustomEventHandler = {
              let engineState = engineState |> JobEngineService.execDisposeJob;
 
              let engineState =
-               doesNeedReInitSceneAllLightMaterials ?
+               isNeedReInitSceneAllLightMaterials ?
                  SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials(
                    engineState,
                  ) :

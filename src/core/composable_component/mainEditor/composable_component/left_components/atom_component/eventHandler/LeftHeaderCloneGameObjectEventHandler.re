@@ -6,53 +6,35 @@ module CustomEventHandler = {
   type dataTuple = unit;
   type return = unit;
 
-  let _getTargetGameObject = () => {
-    let editorState = StateEditorService.getState();
-
-    switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
-    | None =>
-      Result.Result.fail(
-        LogUtils.buildErrorMessage(
-          ~description=
-            {j|current gameObject should exist, but actual is None|j},
-          ~reason="",
-          ~solution={j|set current gameObject|j},
-          ~params={j||j},
-        ),
-      )
-    | Some(gameObject) => Result.Result.success(gameObject)
-    };
-  };
-
-  let _hasLightComponent = (targetGameObject, engineState) =>
-    GameObjectEngineService.getAllGameObjects(targetGameObject, engineState)
-    |> SceneEngineService.doesNeedReInitSceneAllLightMaterials(_, engineState);
-
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
     let (editorState, engineState) =
-      _getTargetGameObject()
+      LeftHeaderGameObjectResultUtils.getTargetGameObject()
       |> Result.Result.either(
            targetGameObject => {
-             let hasLightComponent =
-               _hasLightComponent(targetGameObject, engineState);
+             let isNeedReInitSceneAllLightMaterials =
+               GameObjectEngineService.getAllGameObjects(
+                 targetGameObject,
+                 engineState,
+               )
+               |> SceneEngineService.isNeedReInitSceneAllLightMaterials(
+                    _,
+                    engineState,
+                  );
 
-             let (clonedGameObject, engineState) =
+             let (clonedGameObjectArr, engineState) =
                engineState
-               |> OperateGameObjectLogicService.cloneGameObject(
+               |> GameObjectEngineService.cloneGameObject(
                     targetGameObject,
                     1,
                     true,
-                  )
-               |> (
-                 ((clonedGameObjects, engineState)) => (
-                   clonedGameObjects
-                   |> OperateGameObjectLogicService.getFlattenClonedGameObjectArr
-                   |> ArrayService.unsafeGetFirst,
-                   engineState,
-                 )
+                  );
+
+             let clonedGameObject =
+               CloneGameObjectLogicService.getClonedGameObject(
+                 clonedGameObjectArr,
                );
 
              let engineState =
@@ -66,8 +48,9 @@ module CustomEventHandler = {
 
              let editorState =
                editorState
-               |> GameObjectComponentLogicService.getGameObjectComponentStoreInComponentTypeMap(
+               |> GameObjectComponentLogicService.setGameObjectArrComponentTypeMap(
                     [|clonedGameObject|],
+                    GameObjectComponentLogicService.buildAllComponentArray(),
                     engineState,
                   )
                |> SceneTreeEditorService.setCurrentSceneTreeNode(
@@ -75,7 +58,7 @@ module CustomEventHandler = {
                   );
 
              let engineState =
-               hasLightComponent ?
+               isNeedReInitSceneAllLightMaterials ?
                  engineState
                  |> SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials :
                  engineState;

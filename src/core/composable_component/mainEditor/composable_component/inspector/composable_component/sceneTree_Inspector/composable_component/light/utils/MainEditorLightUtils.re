@@ -96,6 +96,7 @@ let replaceLightByType = (sourceLightType, targetLightType) => {
     |> StateLogicService.getEditorState;
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
+  Js.log2(sourceLightType,targetLightType);
 
   let (message, isMaxCount) =
     isLightExceedMaxCountByType(targetLightType, engineState);

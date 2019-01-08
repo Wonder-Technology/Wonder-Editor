@@ -21,7 +21,7 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test undo operate", () =>
-      describe("test undo one step", () =>
+      describe("test undo one step", () => {
         test(
           {|
             1.add cube;
@@ -34,12 +34,30 @@ let _ =
 
             RedoUndoTool.undoHistoryState();
 
-            BuildComponentTool.buildSceneTree(
-              TestTool.buildEmptyAppState(),
-            )
+            BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
             |> ReactTestTool.createSnapshotAndMatch;
           },
-        )
-      )
+        );
+
+        test(
+          {|
+            1.add cube;
+            2.clone cube;
+            3.undo;
+
+            scene tree should has one cube.
+            |},
+          () => {
+            MainEditorLeftHeaderTool.addCube();
+
+            MainEditorLeftHeaderTool.cloneCurrentSceneTreeNode();
+
+            RedoUndoTool.undoHistoryState();
+
+            BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
+            |> ReactTestTool.createSnapshotAndMatch;
+          },
+        );
+      })
     );
   });

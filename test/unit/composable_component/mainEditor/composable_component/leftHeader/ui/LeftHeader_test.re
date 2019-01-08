@@ -261,7 +261,6 @@ let _ =
             |> Js.Option.isSome
             |> expect == true;
           });
-
           test(
             "test cloned gameObject components should === target gameObject components ",
             () => {
@@ -286,10 +285,76 @@ let _ =
               |> WonderCommonlib.SparseMapService.unsafeGet(clonedGameObject);
 
             targetGameObjectComponentArray
-            |> Js.Array.toString
-            |> expect == (clonedGameObjectComponentArray |> Js.Array.toString);
+            |> expect == clonedGameObjectComponentArray;
           });
         });
+
+        describe(
+          "test if clone gameObject or its children has light component", () => {
+          beforeEach(() =>
+            MainEditorSceneTool.createDefaultScene(
+              sandbox,
+              MainEditorSceneTool.setDirectionLightGameObjectToBeCurrentSceneTreeNode,
+            )
+          );
+          describe("test has direction light component", () =>
+            describe(
+              "should re-init all light material components in the scene", () => {
+              let _prepare = () => {
+                let gl = FakeGlToolEngine.getEngineStateGl();
+                let glShaderSource = gl##shaderSource;
+
+                glShaderSource;
+              };
+
+              test("test shaderSource should be called", () => {
+                let glShaderSource = _prepare();
+
+                MainEditorLeftHeaderTool.cloneCurrentSceneTreeNode();
+
+                glShaderSource |> getCallCount |> expect == 2;
+              });
+              test("glsl->DIRECTION_LIGHTS_COUNT should == 2", () => {
+                let glShaderSource = _prepare();
+
+                MainEditorLeftHeaderTool.cloneCurrentSceneTreeNode();
+
+                GLSLToolEngine.contain(
+                  GLSLToolEngine.getVsSource(glShaderSource),
+                  {|#define DIRECTION_LIGHTS_COUNT 2|},
+                )
+                |> expect == true;
+              });
+            })
+          );
+          /* TODO need pass this test */
+          /* describe("test has point light component", () =>
+               describe(
+                 "should re-init all light material components in the scene", () => {
+                 let _prepare = () => {
+                   let gl = FakeGlToolEngine.getEngineStateGl();
+                   let glShaderSource = gl##shaderSource;
+
+                   glShaderSource;
+                 };
+
+                 test("glsl->POINT_LIGHTS_COUNT should == 2", () => {
+                   MainEditorLightTool.setLightTypeToBePointLight();
+
+                   let glShaderSource = _prepare();
+
+                   MainEditorLeftHeaderTool.cloneCurrentSceneTreeNode();
+
+                   GLSLToolEngine.contain(
+                     GLSLToolEngine.getVsSource(glShaderSource),
+                     {|#define POINT_LIGHTS_COUNT 2|},
+                   )
+                   |> expect == true;
+                 });
+               })
+             ); */
+        });
+        /* TODO test redo-undo */
       });
     });
 

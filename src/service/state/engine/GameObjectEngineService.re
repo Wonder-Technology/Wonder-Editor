@@ -8,7 +8,15 @@ let isGameObjectAlive = GameObjectAPI.isGameObjectAlive;
 
 let disposeGameObject = GameObjectAPI.disposeGameObject;
 
-let cloneGameObject = GameObjectAPI.cloneGameObject;
+let cloneGameObject =
+    (gameObject, count, isShareMaterial, engineState)
+    : (array(array('a)), Wonderjs.StateDataMainType.state) => {
+  let (engineState, cloneGameObjects) =
+    engineState
+    |> GameObjectAPI.cloneGameObject(gameObject, count, isShareMaterial);
+
+  (cloneGameObjects, engineState);
+};
 
 let disposeGameObjectKeepOrder = GameObjectAPI.disposeGameObjectKeepOrder;
 

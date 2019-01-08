@@ -46,25 +46,22 @@ let dragWDB =
   | (engineState, true) =>
     let (cloneGameObjectArr, engineState) =
       engineState
-      |> OperateGameObjectLogicService.cloneGameObject(
-           wdbGameObjectUid,
-           1,
-           true,
-         );
-    let flatCloneGameObjectArr =
+      |> GameObjectEngineService.cloneGameObject(wdbGameObjectUid, 1, true);
+
+    let allClonedGameObjectArr =
       cloneGameObjectArr
-      |> OperateGameObjectLogicService.getFlattenClonedGameObjectArr;
+      |> CloneGameObjectLogicService.getAllClonedGameObjectArr;
 
     let clonedWDBGameObject =
-      flatCloneGameObjectArr |> ArrayService.unsafeGetFirst;
+      cloneGameObjectArr |> CloneGameObjectLogicService.getClonedGameObject;
 
     let engineState =
       engineState
       |> GameObjectUtils.addChild(targetGameObjectUid, clonedWDBGameObject);
 
     let engineState =
-      SceneEngineService.doesNeedReInitSceneAllLightMaterials(
-        flatCloneGameObjectArr,
+      SceneEngineService.isNeedReInitSceneAllLightMaterials(
+        allClonedGameObjectArr,
         engineState,
       ) ?
         engineState
@@ -73,8 +70,9 @@ let dragWDB =
 
     let editorState =
       editorState
-      |> GameObjectComponentLogicService.getGameObjectComponentStoreInComponentTypeMap(
+      |> GameObjectComponentLogicService.setGameObjectArrComponentTypeMap(
            [|clonedWDBGameObject|],
+           GameObjectComponentLogicService.buildAllComponentArray(),
            engineState,
          );
 

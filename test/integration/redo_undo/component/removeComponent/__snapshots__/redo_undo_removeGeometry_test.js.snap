@@ -1512,69 +1512,6 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
         <div
           className="header-title"
         >
-          Geometry
-        </div>
-        <div
-          className="header-close"
-        >
-          <img
-            onClick={[Function]}
-            src="./public/img/close.png"
-          />
-        </div>
-      </div>
-      <article
-        className="wonder-inspector-geometry"
-      >
-        <div
-          className="inspector-item"
-        >
-          <div
-            className="item-header"
-          >
-            Geometry
-          </div>
-          <div
-            className="item-content"
-          >
-            <div
-              className="inspector-select"
-            >
-              <div
-                className="select-name"
-              >
-                Wonder-Default-Cube
-              </div>
-              <div
-                className="select-img"
-                onClick={[Function]}
-              >
-                <img
-                  src="./public/img/select.png"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
           RenderGroup
         </div>
         <div
@@ -1843,6 +1780,69 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 />
               </div>
             </article>
+          </div>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Geometry
+        </div>
+        <div
+          className="header-close"
+        >
+          <img
+            onClick={[Function]}
+            src="./public/img/close.png"
+          />
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-geometry"
+      >
+        <div
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Geometry
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="inspector-select"
+            >
+              <div
+                className="select-name"
+              >
+                Wonder-Default-Cube
+              </div>
+              <div
+                className="select-img"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/select.png"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </article>
