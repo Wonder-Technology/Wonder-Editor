@@ -84,7 +84,7 @@ let _renderSelectNav = ((store, dispatchFunc), state, send) =>
                 _e =>
                   Method.addGameObjectByType(
                     (store, dispatchFunc),
-                    AddGameObjectType.Box,
+                    AddGameObjectType.Cude,
                     (),
                   )
               )>
@@ -98,7 +98,7 @@ let _renderSelectNav = ((store, dispatchFunc), state, send) =>
                 _e =>
                   Method.addGameObjectByType(
                     (store, dispatchFunc),
-                    AddGameObjectType.EmptyGameObject,
+                    AddGameObjectType.Sphere,
                     (),
                   )
               )>

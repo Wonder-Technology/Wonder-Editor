@@ -6,7 +6,7 @@ let addCube =
     ) =>
   MainEditorLeftHeader.Method.addGameObjectByType(
     (store, dispatchFunc),
-    AddGameObjectType.Box,
+    AddGameObjectType.Cude,
     (),
   );
 
