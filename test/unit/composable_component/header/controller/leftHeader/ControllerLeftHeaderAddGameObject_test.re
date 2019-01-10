@@ -47,9 +47,7 @@ let _ =
         test("test add one box", () => {
           MainEditorLeftHeaderTool.addCube();
 
-          BuildComponentTool.buildSceneTree(
-            TestTool.buildEmptyAppState(),
-          )
+          BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
           |> ReactTestTool.createSnapshotAndMatch;
         })
       );
@@ -68,9 +66,36 @@ let _ =
         test("test add one emptyGameObject", () => {
           MainEditorLeftHeaderTool.addEmptyGameObject();
 
-          BuildComponentTool.buildSceneTree(
-            TestTool.buildEmptyAppState(),
-          )
+          BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
+          |> ReactTestTool.createSnapshotAndMatch;
+        })
+      );
+    });
+
+    describe("test add sphere", () => {
+      test("test add one sphere", () => {
+        MainEditorLeftHeaderTool.addSphere();
+
+        StateEngineService.unsafeGetState()
+        |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> Js.Array.length
+        |> expect == 5;
+      });
+      test("test add two spheres", () => {
+        MainEditorLeftHeaderTool.addSphere();
+        MainEditorLeftHeaderTool.addSphere();
+
+        StateEngineService.unsafeGetState()
+        |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> Js.Array.length
+        |> expect == 6;
+      });
+
+      describe("test scene tree snapshot", () =>
+        test("test add one sphere", () => {
+          MainEditorLeftHeaderTool.addSphere();
+
+          BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
           |> ReactTestTool.createSnapshotAndMatch;
         })
       );

@@ -10,9 +10,13 @@ let _ =
   describe("redo_undo:leftHeader add gameObject", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let _simulateTwiceAddGameObject = () => {
+    let _simulateTwiceAddCubeAndEmptyGameObject = () => {
       MainEditorLeftHeaderTool.addCube();
       MainEditorLeftHeaderTool.addEmptyGameObject();
+    };
+    let _simulateTwiceAddSphere = () => {
+      MainEditorLeftHeaderTool.addSphere();
+      MainEditorLeftHeaderTool.addSphere();
     };
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());
@@ -27,8 +31,17 @@ let _ =
 
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,
-      "prepare first step: set currentSceneTreeNode",
-      (_simulateTwiceAddGameObject, _beforeEach, () => ()),
+      "add cube and empty gameObject;
+      prepare first step: set currentSceneTreeNode",
+      (_simulateTwiceAddCubeAndEmptyGameObject, _beforeEach, () => ()),
+      BuildComponentForCurryTool.buildSceneTree,
+    );
+
+    RedoUndoTool.testRedoUndoTwoStep(
+      sandbox,
+      "add two sphere;
+      prepare first step: set currentSceneTreeNode",
+      (_simulateTwiceAddSphere, _beforeEach, () => ()),
       BuildComponentForCurryTool.buildSceneTree,
     );
   });
