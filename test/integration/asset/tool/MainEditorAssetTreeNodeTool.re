@@ -26,7 +26,6 @@ let insertMaterialNode =
   engineState,
 );
 
-
 let insertWDBNode =
     (
       wdbNodeId,
@@ -41,12 +40,11 @@ let insertWDBNode =
        WDBNodeAssetService.buildNode(
          ~nodeId=wdbNodeId,
          ~wdbGameObject=gameObject,
-         ~name
+         ~name,
        ),
      ),
   engineState,
 );
-
 
 let insertTextureNode =
     (

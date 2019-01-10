@@ -6,6 +6,8 @@ open Expect.Operators;
 
 open Sinon;
 
+open NodeAssetType;
+
 let _ =
   describe("test MainEditorMaterialMap", () => {
     let sandbox = getSandboxDefaultVal();
@@ -113,6 +115,58 @@ let _ =
           );
 
           BuildComponentTool.buildMaterialMap(~isShowTextureGroup=true, ())
+          |> ReactTestTool.createSnapshotAndMatch;
+        },
+      );
+    });
+
+    describe("fix bug", () => {
+      beforeEach(() => {
+        sandbox := createSandbox();
+        MainEditorSceneTool.initStateWithJob(
+          ~sandbox,
+          ~noWorkerJobRecord=
+            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
+          (),
+        );
+        EventListenerTool.buildFakeDom()
+        |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        );
+      });
+      afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+      test(
+        "test if has current texture component;
+         show texture group;
+        the current texture dom className should be select-item-active
+      ",
+        () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.Texture.buildTwoTextureAssetTree();
+
+          let firstTextureNodeId =
+            MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+              assetTreeData,
+            );
+          let {textureComponent, imageDataIndex} =
+            TextureNodeAssetEditorService.unsafeGetNodeData(
+              firstTextureNodeId,
+            )
+            |> StateLogicService.getEditorState;
+
+          ReactTestRenderer.create(
+            MainEditorMaterialMapTool.renderTextureGroup(
+              {
+                style: ReactDOMRe.Style.make(~opacity="1", ()),
+                isShowTextureGroup: true,
+                currentTextureComponent: Some(textureComponent),
+              },
+              (() => ()) |> Obj.magic,
+            ),
+          )
           |> ReactTestTool.createSnapshotAndMatch;
         },
       );

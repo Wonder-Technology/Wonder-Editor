@@ -228,7 +228,7 @@ let _ =
               |> ignore;
               let fileName = "BoxTextured";
               let defaultSceneNewGameObjectUid =
-                SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectUid();
+                SceneTreeNodeTool.OperateDefaultScene.getNewGameObjectUid();
 
               MainEditorAssetUploadTool.loadOneWDB(
                 ~fileName,
