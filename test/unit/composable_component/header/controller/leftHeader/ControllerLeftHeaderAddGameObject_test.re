@@ -43,6 +43,23 @@ let _ =
         |> Js.Array.length
         |> expect == 6;
       });
+      test(
+        "test add the box which geometry name should is Wonder-Default-Cube",
+        () => {
+        MainEditorLeftHeaderTool.addCube();
+
+        let addedBoxUid =
+          SceneTreeNodeTool.OperateDefaultScene.getNewGameObjectUid();
+        let engineState = StateEngineService.unsafeGetState();
+
+        engineState
+        |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
+             addedBoxUid,
+           )
+        |. GeometryEngineService.unsafeGetGeometryName(engineState)
+        |> expect == "Wonder-Default-Cube";
+      });
+
       describe("test scene tree snapshot", () =>
         test("test add one box", () => {
           MainEditorLeftHeaderTool.addCube();
@@ -89,6 +106,22 @@ let _ =
         |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
         |> Js.Array.length
         |> expect == 6;
+      });
+      test(
+        "test add the sphere which geometry name should is Wonder-Default-Sphere",
+        () => {
+        MainEditorLeftHeaderTool.addSphere();
+
+        let addedBoxUid =
+          SceneTreeNodeTool.OperateDefaultScene.getNewGameObjectUid();
+        let engineState = StateEngineService.unsafeGetState();
+
+        engineState
+        |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
+             addedBoxUid,
+           )
+        |. GeometryEngineService.unsafeGetGeometryName(engineState)
+        |> expect == "Wonder-Default-Sphere";
       });
 
       describe("test scene tree snapshot", () =>

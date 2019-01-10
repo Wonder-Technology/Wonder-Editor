@@ -1,0 +1,1 @@
+let renderTextureGroup = MainEditorMaterialMap._renderTextureGroup;
