@@ -6,10 +6,10 @@ module CustomEventHandler = {
   type dataTuple = unit;
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), type_, ()) => {
+  let handleSelfLogic = ((store, dispatchFunc), gameObjectType, ()) => {
     let newGameObject =
-      switch (type_) {
-      | Box =>
+      switch (gameObjectType) {
+      | Cude =>
         let editorState = StateEditorService.getState();
 
         let defaultCubeGeometry =
@@ -28,6 +28,27 @@ module CustomEventHandler = {
             defaultLightMaterialData,
           )),
         );
+
+      | Sphere =>
+        let editorState = StateEditorService.getState();
+
+        let defaultSphereGeometry =
+          GeometryDataAssetEditorService.unsafeGetDefaultSphereGeometryComponent(
+            editorState,
+          );
+
+        let defaultLightMaterialData =
+          MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(
+            editorState,
+          );
+
+        SceneUtils.addGameObject(
+          PrimitiveEngineService.createSphere((
+            defaultSphereGeometry,
+            defaultLightMaterialData,
+          )),
+        );
+
       | EmptyGameObject =>
         SceneUtils.addGameObject(PrimitiveEngineService.createEmptyGameObject)
       };

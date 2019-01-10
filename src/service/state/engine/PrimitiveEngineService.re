@@ -11,7 +11,8 @@ let createEmptyGameObject = (editorState, engineState) => {
   (editorState, engineState, obj);
 };
 
-let createCube = ((cubeGeometry, lightMaterial), editorState, engineState) => {
+let _create3DGameObject =
+    ((name, geometry, lightMaterial), (editorState, engineState)) => {
   let (editorState, (engineState, obj)) =
     GameObjectLogicService.createGameObject((editorState, engineState));
 
@@ -31,22 +32,35 @@ let createCube = ((cubeGeometry, lightMaterial), editorState, engineState) => {
     RenderGroupEngineService.buildRenderGroup(meshRenderer, lightMaterial);
 
   let engineState =
-    engineState |> GameObjectEngineService.setGameObjectName("Cube", obj);
+    engineState |> GameObjectEngineService.setGameObjectName(name, obj);
 
   let (editorState, engineState) =
     (editorState, engineState)
     |> GameObjectLogicService.addRenderGroup(
-      obj,
-      renderGroup,
-      (
-        GameObjectAPI.addGameObjectMeshRendererComponent,
-        GameObjectAPI.addGameObjectLightMaterialComponent,
-        ),
-        )
-        |> GameObjectLogicService.addGeometry(obj, cubeGeometry);
+         obj,
+         renderGroup,
+         (
+           GameObjectAPI.addGameObjectMeshRendererComponent,
+           GameObjectAPI.addGameObjectLightMaterialComponent,
+         ),
+       )
+    |> GameObjectLogicService.addGeometry(obj, geometry);
 
   (editorState, engineState, obj);
 };
+
+let createCube = ((cubeGeometry, lightMaterial), editorState, engineState) =>
+  _create3DGameObject(
+    ("Cube", cubeGeometry, lightMaterial),
+    (editorState, engineState),
+  );
+
+let createSphere =
+    ((sphereGeometry, lightMaterial), editorState, engineState) =>
+  _create3DGameObject(
+    ("Sphere", sphereGeometry, lightMaterial),
+    (editorState, engineState),
+  );
 
 let createDirectionLight = (editorState, engineState) => {
   let (editorState, (engineState, obj)) =
