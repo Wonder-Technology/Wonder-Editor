@@ -10,6 +10,18 @@ let addCube =
     (),
   );
 
+let addSphere =
+    (
+      ~store=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorLeftHeader.Method.addGameObjectByType(
+    (store, dispatchFunc),
+    AddGameObjectType.Sphere,
+    (),
+  );
+
 let addEmptyGameObject =
     (
       ~store=TestTool.buildEmptyAppState(),
