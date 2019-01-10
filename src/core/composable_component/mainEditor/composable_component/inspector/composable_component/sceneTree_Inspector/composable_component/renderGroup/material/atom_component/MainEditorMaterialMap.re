@@ -118,11 +118,16 @@ module Method = {
       </div>
     </div>;
 
-  let _buildTextureUIComponentResult = ((nodeId, textureComponent, imageDataIndex),send,(editorState, engineState)) =>
+  let _buildTextureUIComponentResult =
+      (
+        (nodeId, textureComponent, imageDataIndex, className),
+        send,
+        (editorState, engineState),
+      ) =>
     ImageDataMapUtils.getImgSrc(imageDataIndex, editorState)
     |> Result.SameDataResult.either(imgSrc =>
          _buildTextureUIComponent(
-           ("select-item-imgContent", nodeId, textureComponent, imgSrc),
+           (className, nodeId, textureComponent, imgSrc),
            send,
            engineState,
          )
@@ -141,14 +146,28 @@ module Method = {
          let nodeId = NodeAssetService.getNodeId(~node=textureNode);
 
          switch (state.currentTextureComponent) {
-         | None => _buildTextureUIComponentResult((nodeId, textureComponent, imageDataIndex),send,(editorState, engineState))
+         | None =>
+           _buildTextureUIComponentResult(
+             (
+               nodeId,
+               textureComponent,
+               imageDataIndex,
+               "select-item-imgContent",
+             ),
+             send,
+             (editorState, engineState),
+           )
          | Some(map) =>
            let className =
              map === textureComponent ?
                "select-item-imgContent select-item-active" :
                "select-item-imgContent";
 
-           _buildTextureUIComponentResult((nodeId, textureComponent, imageDataIndex),send,(editorState, engineState));
+           _buildTextureUIComponentResult(
+             (nodeId, textureComponent, imageDataIndex, className),
+             send,
+             (editorState, engineState),
+           );
          };
        });
   };
