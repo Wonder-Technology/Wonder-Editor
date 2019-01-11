@@ -44,7 +44,7 @@ let _ =
         |> expect == 6;
       });
       test(
-        "the added cube's geometry's name should is Wonder-Default-Cube", () => {
+        "the added cube's geometry's name should be Wonder-Default-Cube", () => {
         let addedCubeUid = GameObjectTool.getNewGameObjectUid();
         let engineState = StateEngineService.unsafeGetState();
 
