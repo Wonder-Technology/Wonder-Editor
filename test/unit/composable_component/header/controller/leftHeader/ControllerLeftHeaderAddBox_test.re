@@ -15,7 +15,7 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
 
       ControllerTool.stubRequestAnimationFrame(
@@ -25,9 +25,9 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test add box", () =>
-      describe("box should be added into engineState", () => {
-        test("test add one box", () => {
+    describe("test add cube", () =>
+      describe("cube should be added into engineState", () => {
+        test("test add one cube", () => {
           MainEditorLeftHeaderTool.addCube();
 
           StateEngineService.unsafeGetState()
@@ -37,7 +37,7 @@ let _ =
           |> Js.Array.length
           |> expect == 5;
         });
-        test("test add two boxes", () => {
+        test("test add two cubees", () => {
           MainEditorLeftHeaderTool.addCube();
           MainEditorLeftHeaderTool.addCube();
 
@@ -49,7 +49,7 @@ let _ =
           |> expect == 6;
         });
         describe("test scene tree", () =>
-          test("test add one box", () => {
+          test("test add one cube", () => {
             MainEditorLeftHeaderTool.addCube();
 
             BuildComponentTool.buildSceneTree(

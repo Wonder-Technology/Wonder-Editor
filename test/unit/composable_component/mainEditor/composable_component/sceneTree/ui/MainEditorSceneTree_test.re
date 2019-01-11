@@ -31,7 +31,7 @@ let _ =
       beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         )
       );
       afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
@@ -42,7 +42,7 @@ let _ =
           () => {
           CurrentDragSourceEditorService.setCurrentDragSource((
             SceneTreeWidgetService.getWidget(),
-            MainEditorSceneTool.getSecondBox(
+            MainEditorSceneTool.getSecondCube(
               StateEngineService.unsafeGetState(),
             ),
           ))
@@ -50,7 +50,7 @@ let _ =
 
           let result =
             SceneTreeNode.Method.handleDragEnter(
-              MainEditorSceneTool.getFirstBox(
+              MainEditorSceneTool.getFirstCube(
                 StateEngineService.unsafeGetState(),
               ),
               (
@@ -71,12 +71,12 @@ let _ =
             "if is scene tree widget and pass check relation, return DragGameObject(targetGameObject, sourceGameObject)",
             () => {
               let sourceGameObject =
-                MainEditorSceneTool.getSecondBox(
+                MainEditorSceneTool.getSecondCube(
                   StateEngineService.unsafeGetState(),
                 );
 
               let targetGameObject =
-                MainEditorSceneTool.getFirstBox(
+                MainEditorSceneTool.getFirstCube(
                   StateEngineService.unsafeGetState(),
                 );
 
@@ -150,7 +150,7 @@ let _ =
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           )
         );
         afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
@@ -163,11 +163,11 @@ let _ =
         test("drag treeNode into target treeNode", () => {
           MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
             ~sourceGameObject=
-              MainEditorSceneTool.getFirstBox(
+              MainEditorSceneTool.getFirstCube(
                 StateEngineService.unsafeGetState(),
               ),
             ~targetGameObject=
-              MainEditorSceneTool.getSecondBox(
+              MainEditorSceneTool.getSecondCube(
                 StateEngineService.unsafeGetState(),
               ),
             (),
@@ -187,7 +187,7 @@ let _ =
         test("click treeNode to set it to be currentSceneTreeNode", () => {
           MainEditorSceneTreeTool.Select.selectGameObject(
             ~gameObject=
-              MainEditorSceneTool.getFirstBox(
+              MainEditorSceneTool.getFirstCube(
                 StateEngineService.unsafeGetState(),
               ),
             (),
@@ -195,7 +195,7 @@ let _ =
 
           GameObjectTool.unsafeGetCurrentSceneTreeNode()
           |>
-          expect == MainEditorSceneTool.getFirstBox(
+          expect == MainEditorSceneTool.getFirstCube(
                       StateEngineService.unsafeGetState(),
                     );
         });
@@ -205,7 +205,7 @@ let _ =
         test("if drag treeNode into itself, keep not change", () => {
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           );
 
           MainEditorSceneTreeTool.Drag.isTriggerDragCurrentSceneTreeNode(
@@ -216,25 +216,25 @@ let _ =
         test(
           "if drag treeNode into it's first layer chidlren, keep not change",
           () => {
-          let (scene, (box1, box4), box2, box3) =
+          let (scene, (cube1, cube4), cube2, cube3) =
             SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
 
-          box1 |> GameObjectTool.setCurrentSceneTreeNode;
+          cube1 |> GameObjectTool.setCurrentSceneTreeNode;
 
-          MainEditorSceneTreeTool.Drag.isTriggerDragCurrentSceneTreeNode(box4)
+          MainEditorSceneTreeTool.Drag.isTriggerDragCurrentSceneTreeNode(cube4)
           |> expect == false;
         });
         describe("if drag treeNode into it's second layer chidlren", () =>
           test(
             "if drag treeNode into it's second layer chidlren, keep not change",
             () => {
-            let (scene, (box1, box3, box4), box2) =
+            let (scene, (cube1, cube3, cube4), cube2) =
               SceneTreeTool.buildFourLayerSceneGraphToEngine(sandbox);
 
-            box1 |> GameObjectTool.setCurrentSceneTreeNode;
+            cube1 |> GameObjectTool.setCurrentSceneTreeNode;
 
             MainEditorSceneTreeTool.Drag.isTriggerDragCurrentSceneTreeNode(
-              box4,
+              cube4,
             )
             |> expect == false;
           })

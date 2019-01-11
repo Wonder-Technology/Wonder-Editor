@@ -58,14 +58,14 @@ let _ =
       let _buildFakeZipData = [%bs.raw
         getArrayBufferFunc => {|
   return [
-    ["BoxTextured0.bin",{
+    ["CubeTextured0.bin",{
       async: function(){
           return new Promise((resolve, _) => resolve(
-new Uint8Array(getArrayBufferFunc("BoxTextured/BoxTextured0.bin"))
+new Uint8Array(getArrayBufferFunc("CubeTextured/CubeTextured0.bin"))
           ))
       },
     }],
-    ["BoxTextured.gltf",{
+    ["CubeTextured.gltf",{
       async: function(){
           return new Promise((resolve, _) => resolve(JSON.stringify(
             {
@@ -245,7 +245,7 @@ new Uint8Array(getArrayBufferFunc("BoxTextured/BoxTextured0.bin"))
               "buffers": [
                   {
                       "byteLength": 840,
-                      "uri": "BoxTextured0.bin"
+                      "uri": "CubeTextured0.bin"
                   }
               ]
           }
@@ -255,7 +255,7 @@ new Uint8Array(getArrayBufferFunc("BoxTextured/BoxTextured0.bin"))
     ["textures/CesiumLogoFlat.png",{
       async: function(){
           return new Promise((resolve, _) => resolve(
-new Uint8Array(getArrayBufferFunc("BoxTextured/CesiumLogoFlat.png"))
+new Uint8Array(getArrayBufferFunc("CubeTextured/CesiumLogoFlat.png"))
           ))
       },
     }],
@@ -292,7 +292,7 @@ new Uint8Array(getArrayBufferFunc("BoxTextured/CesiumLogoFlat.png"))
                  editorState,
                );
 
-             LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
+             LoadWDBTool.getCubeTexturedMeshGameObjectFromAssetNode(
                uploadedWDBNodeId,
                (editorState, engineState),
              )

@@ -12,7 +12,7 @@ let unsafeGetGeometryName = GeometryAPI.unsafeGetGeometryName;
 
 let setGeometryName = GeometryAPI.setGeometryName;
 
-let createBoxGeometry = engineState =>
+let createCubeGeometry = engineState =>
   CreateDefaultGeometryGeometryMainService.create(
     ComputeBoxPointsGeometryService.generateAllFaces((
       0.5,

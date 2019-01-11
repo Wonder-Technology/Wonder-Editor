@@ -12,11 +12,11 @@ let _ =
   describe("header load scene wdb", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
+    let cubeTexturedWDBArrayBuffer = ref(Obj.magic(1));
     let sceneWDBArrayBuffer = ref(Obj.magic(1));
 
     beforeAll(() => {
-      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
+      cubeTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("CubeTextured");
       sceneWDBArrayBuffer := WDBTool.generateSceneWDB();
     });
 
@@ -91,7 +91,7 @@ let _ =
 
       describe("test load no light scene wdb to scene which has light", () => {
         let _prepare = testFunc => {
-          let fileName = "BoxTextured";
+          let fileName = "CubeTextured";
 
           let gl = FakeGlToolEngine.getEngineStateGl();
           let glShaderSource = gl##shaderSource;
@@ -100,7 +100,7 @@ let _ =
 
           LoadSceneWDBTool.loadSceneWDB(
             ~fileName,
-            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
             (),
           )
           |> then_(_ =>
@@ -108,7 +108,7 @@ let _ =
              );
         };
 
-        testPromise("new scene->box->glsl should has no light count", () =>
+        testPromise("new scene->cube->glsl should has no light count", () =>
           _prepare((shaderSourceCountBeforeLoadSceneWDB, glShaderSource) =>
             (
               GLSLToolEngine.contain(
@@ -214,11 +214,11 @@ let _ =
                 (),
               )
               |> then_(_ => {
-                   let fileName = "BoxTextured";
+                   let fileName = "CubeTextured";
 
                    LoadSceneWDBTool.loadSceneWDB(
                      ~fileName,
-                     ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                     ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
                      (),
                    )
                    |> then_(_ => {
@@ -326,11 +326,11 @@ let _ =
              });
         });
         testPromise("test wdb not has one", () => {
-          let fileName = "BoxTextured";
+          let fileName = "CubeTextured";
 
           LoadSceneWDBTool.loadSceneWDB(
             ~fileName,
-            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
             (),
           )
           |> then_(_ => {

@@ -49,16 +49,16 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test redo-undo after reallocate", () => {
-      let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
+      let cubeTexturedWDBArrayBuffer = ref(Obj.magic(1));
       let truckWDBArrayBuffer = ref(Obj.magic(1));
 
       let _judge = uploadedWDBNodeId => {
         let editorState = StateEditorService.getState();
         let engineState = StateEngineService.unsafeGetState();
 
-        let (vertices, _, _, _, _) = LoadWDBTool.getBoxTexturedGeometryData();
+        let (vertices, _, _, _, _) = LoadWDBTool.getCubeTexturedGeometryData();
 
-        LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
+        LoadWDBTool.getCubeTexturedMeshGameObjectFromAssetNode(
           uploadedWDBNodeId,
           (editorState, engineState),
         )
@@ -72,7 +72,7 @@ let _ =
       };
 
       beforeAll(() => {
-        boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
+        cubeTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("CubeTextured");
 
         truckWDBArrayBuffer := WDBTool.convertGLBToWDB("CesiumMilkTruck");
       });
@@ -109,7 +109,7 @@ let _ =
         |},
         () =>
         MainEditorAssetUploadTool.loadOneWDB(
-          ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+          ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
           (),
         )
         |> then_(uploadedWDBNodeId => {
@@ -135,7 +135,7 @@ let _ =
         |},
         () =>
         MainEditorAssetUploadTool.loadOneWDB(
-          ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+          ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
           (),
         )
         |> then_(uploadedWDBNodeId1 => {
@@ -182,7 +182,7 @@ let _ =
              );
 
              MainEditorAssetUploadTool.loadOneWDB(
-               ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+               ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
                (),
              )
              |> then_(uploadedWDBNodeId2 => {

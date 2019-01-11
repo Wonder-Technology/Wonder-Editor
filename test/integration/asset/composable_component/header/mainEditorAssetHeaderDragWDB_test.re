@@ -12,11 +12,11 @@ let _ =
   describe("MainEditorAssetHeader->drag wdb", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let directionPointLightsAndBoxWDBArrayBuffer = ref(Obj.magic(1));
+    let directionPointLightsAndCubeWDBArrayBuffer = ref(Obj.magic(1));
 
     beforeAll(() =>
-      directionPointLightsAndBoxWDBArrayBuffer :=
-        WDBTool.generateDirectionPointLightsAndBoxWDB()
+      directionPointLightsAndCubeWDBArrayBuffer :=
+        WDBTool.generateDirectionPointLightsAndCubeWDB()
     );
 
     beforeEach(() => {
@@ -53,7 +53,7 @@ let _ =
           |> ignore;
 
           MainEditorAssetUploadTool.loadOneWDB(
-            ~arrayBuffer=directionPointLightsAndBoxWDBArrayBuffer^,
+            ~arrayBuffer=directionPointLightsAndCubeWDBArrayBuffer^,
             (),
           )
           |> then_(uploadedWDBNodeId => {
@@ -93,8 +93,8 @@ let _ =
           DragWDBTool.testDragWDB(
             sandbox,
             (
-              "DirectionPointLightsAndBox",
-              directionPointLightsAndBoxWDBArrayBuffer^,
+              "DirectionPointLightsAndCube",
+              directionPointLightsAndCubeWDBArrayBuffer^,
             ),
             testFunc,
           );
@@ -221,7 +221,7 @@ let _ =
               engineState |> StateEngineService.setState |> ignore;
 
               MainEditorAssetUploadTool.loadOneWDB(
-                ~arrayBuffer=directionPointLightsAndBoxWDBArrayBuffer^,
+                ~arrayBuffer=directionPointLightsAndCubeWDBArrayBuffer^,
                 (),
               )
               |> then_(uploadedWDBNodeId => {
@@ -361,7 +361,7 @@ let _ =
           );
 
           MainEditorAssetUploadTool.loadOneWDB(
-            ~arrayBuffer=directionPointLightsAndBoxWDBArrayBuffer^,
+            ~arrayBuffer=directionPointLightsAndCubeWDBArrayBuffer^,
             (),
           )
           |> then_(uploadedWDBNodeId => {
@@ -370,7 +370,7 @@ let _ =
                MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
                  ~wdbNodeId=uploadedWDBNodeId,
                  ~targetGameObject=
-                   MainEditorSceneTool.getFirstBox(engineState),
+                   MainEditorSceneTool.getFirstCube(engineState),
                  (),
                );
 
@@ -386,7 +386,7 @@ let _ =
            describe(
              "should remain other scene tree node's isShowChildren not change", () =>
              test("test scene graph data", () => {
-               let (scene, (box1, box4), box2, box3) =
+               let (scene, (cube1, cube4), cube2, cube3) =
                  SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
 
                let editorState = StateEditorService.getState();
@@ -394,9 +394,9 @@ let _ =
 
                let editorState =
                  editorState
-                 |> SceneTreeEditorService.setIsShowChildren(box1, true)
-                 |> SceneTreeEditorService.setIsShowChildren(box4, true)
-                 |> SceneTreeEditorService.setIsShowChildren(box2, false);
+                 |> SceneTreeEditorService.setIsShowChildren(cube1, true)
+                 |> SceneTreeEditorService.setIsShowChildren(cube4, true)
+                 |> SceneTreeEditorService.setIsShowChildren(cube2, false);
 
                let (engineState, newGameObject1, _) =
                  GameObjectToolEngine.createGameObject(engineState);

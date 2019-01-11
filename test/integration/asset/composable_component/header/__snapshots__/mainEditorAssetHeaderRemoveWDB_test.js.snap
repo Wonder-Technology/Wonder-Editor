@@ -778,12 +778,12 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
 </article>
 `;
 
-exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
-              remove BoxTextured.wdb;
+exports[`MainEditorAssetHeader->remove wdb load CubeTextured.wdb;
+              remove CubeTextured.wdb;
               load Scene.wdb;
-              load BoxTextured.wdb;
+              load CubeTextured.wdb;
 
-              the MainEditorAssetChildrenNode panel should show "Scene","Boxtextured"
+              the MainEditorAssetChildrenNode panel should show "Scene","Cubetextured"
                  1`] = `
 <article
   className="wonder-asset-component"

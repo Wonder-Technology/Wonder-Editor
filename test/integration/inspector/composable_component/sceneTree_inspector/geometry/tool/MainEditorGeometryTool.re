@@ -2,7 +2,7 @@ let getDefaultCubeGeometryName = PrepareDefaultComponentLogicService.getDefaultC
 
 let getDefaultSphereGeometryName = PrepareDefaultComponentLogicService.getDefaultSphereGeometryName;
 
-let getBoxTexturedGeometryName = () => "Mesh";
+let getCubeTexturedGeometryName = () => "Mesh";
 
 let getDefaultCubeGeometryComponent =
     (~editorState=StateEditorService.getState(), ()) =>

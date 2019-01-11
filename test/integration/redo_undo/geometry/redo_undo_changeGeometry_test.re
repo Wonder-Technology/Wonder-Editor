@@ -24,7 +24,7 @@ let _ =
     let _beforeEach = () =>
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
     let _afterEach = () => ();
 

@@ -24,7 +24,7 @@ let _ =
 
       MainEditorSceneTreeTool.Select.selectGameObject(
         ~gameObject=
-          MainEditorSceneTool.getFirstBox(
+          MainEditorSceneTool.getFirstCube(
             StateEngineService.unsafeGetState(),
           ),
         (),

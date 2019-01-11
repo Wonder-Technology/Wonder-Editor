@@ -15,11 +15,11 @@ let _ =
 
     describe("prepare first step: set currentSceneTreeNode", () => {
       let _simulateTwiceDisposeGameObject = () => {
-        MainEditorSceneTool.setSecondBoxToBeCurrentSceneTreeNode();
+        MainEditorSceneTool.setSecondCubeToBeCurrentSceneTreeNode();
 
         MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
 
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
 
         MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
       };
@@ -49,7 +49,7 @@ let _ =
 
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
       });
 

@@ -12,11 +12,11 @@ let _ =
   describe("redo_undo: drag wdb to canvas", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
+    let cubeTexturedWDBArrayBuffer = ref(Obj.magic(1));
 
     let _simulateTwiceDragEvent = testFunc =>
       MainEditorAssetUploadTool.loadOneWDB(
-        ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+        ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
         (),
       )
       |> then_(uploadedWDBNodeId => {
@@ -24,7 +24,7 @@ let _ =
 
            CanvasTool.Drag.dragWDBAsset(~wdbNodeId=uploadedWDBNodeId, ());
 
-           MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+           MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
 
            CanvasTool.Drag.dragWDBAsset(~wdbNodeId=uploadedWDBNodeId, ());
 
@@ -32,7 +32,7 @@ let _ =
          });
 
     beforeAll(() =>
-      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
+      cubeTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("CubeTextured")
     );
 
     beforeEach(() => {

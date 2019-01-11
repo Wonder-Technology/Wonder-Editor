@@ -73,7 +73,7 @@ let prepareSpecificGameObjects = (editorState, engineState) => {
   (editorState, engineState, camera);
 };
 
-let _prepareEngineState = ((camera, directionLight, box1, box2), engineState) =>
+let _prepareEngineState = ((camera, directionLight, cube1, cube2), engineState) =>
   engineState
   |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
        camera,
@@ -101,15 +101,15 @@ let _prepareEngineState = ((camera, directionLight, box1, box2), engineState) =>
        ),
      )
   |> SceneEngineService.addSceneChild(camera)
-  |> SceneEngineService.addSceneChild(box1)
-  |> SceneEngineService.addSceneChild(box2)
+  |> SceneEngineService.addSceneChild(cube1)
+  |> SceneEngineService.addSceneChild(cube2)
   |> SceneEngineService.addSceneChild(directionLight);
 
 let createDefaultScene = (cubeGeometry, editorState, engineState) => {
   let defaultLightMaterialData =
     MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
 
-  let (editorState, engineState, camera, box1, box2, directionLight) =
+  let (editorState, engineState, camera, cube1, cube2, directionLight) =
     SceneEngineService.createDefaultSceneGameObjects(
       (cubeGeometry, defaultLightMaterialData),
       editorState,
@@ -118,7 +118,7 @@ let createDefaultScene = (cubeGeometry, editorState, engineState) => {
 
   (
     editorState,
-    engineState |> _prepareEngineState((camera, directionLight, box1, box2)),
+    engineState |> _prepareEngineState((camera, directionLight, cube1, cube2)),
     camera,
   );
 };

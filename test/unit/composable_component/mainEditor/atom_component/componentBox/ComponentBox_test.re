@@ -35,7 +35,7 @@ let _ =
 
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(
@@ -50,7 +50,7 @@ let _ =
         "build componentBox component which can't be disposed should has no 'x'",
         () =>
         _buildComponentBoxComponent(
-          "newBox",
+          "newCube",
           InspectorComponentType.Transform,
           false,
           GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -59,7 +59,7 @@ let _ =
       );
       test("build disposable componentBox component should has 'x'", () =>
         _buildComponentBoxComponent(
-          "newBox",
+          "newCube",
           InspectorComponentType.Transform,
           true,
           GameObjectTool.unsafeGetCurrentSceneTreeNode(),

@@ -6,7 +6,7 @@ let getDefaultSphereGeometryName = () => "Wonder-Default-Sphere";
 
 let _buildDefaultCubeGeometryComponent = engineState => {
   let (engineState, cubeGeometry) =
-    GeometryEngineService.createBoxGeometry(engineState);
+    GeometryEngineService.createCubeGeometry(engineState);
 
   (
     engineState

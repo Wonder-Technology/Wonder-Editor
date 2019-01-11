@@ -20,7 +20,7 @@ let _ =
 
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(
@@ -213,10 +213,10 @@ let _ =
       });
 
       describe("test load asset wdb", () => {
-        let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
+        let cubeTexturedWDBArrayBuffer = ref(Obj.magic(1));
 
         beforeAll(() =>
-          boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
+          cubeTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("CubeTextured")
         );
         beforeEach(() => {
           MainEditorAssetTool.buildFakeFileReader();
@@ -232,11 +232,11 @@ let _ =
           "test select geometry group widget should show all geometry", () => {
           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
           |> ignore;
-          let fileName = "BoxTextured";
+          let fileName = "CubeTextured";
 
           MainEditorAssetUploadTool.loadOneWDB(
             ~fileName,
-            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
             (),
           )
           |> then_(uploadedWDBNodeId => {
@@ -254,12 +254,12 @@ let _ =
         testPromise("test set new geometry should set into engineState", () => {
           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
           |> ignore;
-          let fileName = "BoxTextured";
+          let fileName = "CubeTextured";
           let newGeometry = GeometryToolEngine.getNewGeometry();
 
           MainEditorAssetUploadTool.loadOneWDB(
             ~fileName,
-            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
             (),
           )
           |> then_(uploadedWDBNodeId => {
@@ -279,7 +279,7 @@ let _ =
                  newGameObjectGeometry,
                )
                |> StateLogicService.getEngineStateToGetData
-               |> expect == MainEditorGeometryTool.getBoxTexturedGeometryName()
+               |> expect == MainEditorGeometryTool.getCubeTexturedGeometryName()
                |> resolve;
              });
         });

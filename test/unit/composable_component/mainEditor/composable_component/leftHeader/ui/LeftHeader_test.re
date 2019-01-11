@@ -46,7 +46,7 @@ let _ =
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           )
         );
 
@@ -83,7 +83,7 @@ let _ =
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           )
         );
         test(
@@ -159,13 +159,13 @@ let _ =
               MainEditorSceneTool.getCameraInDefaultScene(engineState);
             MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
               ~sourceGameObject=activedCamera,
-              ~targetGameObject=MainEditorSceneTool.getFirstBox(engineState),
+              ~targetGameObject=MainEditorSceneTool.getFirstCube(engineState),
               (),
             );
 
             let engineState = StateEngineService.unsafeGetState();
             MainEditorSceneTreeTool.Select.selectGameObject(
-              ~gameObject=MainEditorSceneTool.getFirstBox(engineState),
+              ~gameObject=MainEditorSceneTool.getFirstCube(engineState),
               (),
             );
             MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
@@ -190,18 +190,18 @@ let _ =
           "remove gameObject has children;
             the children should be removed together;",
           () => {
-            let (scene, (box1, box3, box4), box2) =
+            let (scene, (cube1, cube3, cube4), cube2) =
               SceneTreeTool.buildFourLayerSceneGraphToEngine(sandbox);
-            GameObjectTool.setCurrentSceneTreeNode(box1);
+            GameObjectTool.setCurrentSceneTreeNode(cube1);
 
             let engineState = StateEngineService.unsafeGetState();
 
             MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
 
             (
-              engineState |> GameObjectTool.isAlive(box1),
-              engineState |> GameObjectTool.isAlive(box3),
-              engineState |> GameObjectTool.isAlive(box4),
+              engineState |> GameObjectTool.isAlive(cube1),
+              engineState |> GameObjectTool.isAlive(cube3),
+              engineState |> GameObjectTool.isAlive(cube4),
             )
             |> expect == (false, false, false);
           },
@@ -212,30 +212,30 @@ let _ =
         test(
           "test clone one gameObject, the cloned gameObject should add into its parent children",
           () => {
-            let (scene, (box1, box4), box2, box3) =
+            let (scene, (cube1, cube4), cube2, cube3) =
               SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
 
-            box4 |> GameObjectTool.setCurrentSceneTreeNode;
+            cube4 |> GameObjectTool.setCurrentSceneTreeNode;
 
             MainEditorLeftHeaderTool.cloneCurrentSceneTreeNode();
 
-            let clonedGameObject = box4 |> succ;
+            let clonedGameObject = cube4 |> succ;
 
-            GameObjectTool.getChildren(box1)
+            GameObjectTool.getChildren(cube1)
             |> StateLogicService.getEngineStateToGetData
             |> Js.Array.includes(clonedGameObject)
             |> expect == true;
           },
         );
         test("test the cloned gameObject should be currentSceneTreeNode", () => {
-          let (scene, (box1, box4), box2, box3) =
+          let (scene, (cube1, cube4), cube2, cube3) =
             SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
 
-          box4 |> GameObjectTool.setCurrentSceneTreeNode;
+          cube4 |> GameObjectTool.setCurrentSceneTreeNode;
 
           MainEditorLeftHeaderTool.cloneCurrentSceneTreeNode();
 
-          let clonedGameObject = box4 |> succ;
+          let clonedGameObject = cube4 |> succ;
 
           StateEditorService.getState()
           |> SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
@@ -246,14 +246,14 @@ let _ =
           test(
             "test cloned gameObject rebuild components should add into componentMap",
             () => {
-            let (scene, (box1, box4), box2, box3) =
+            let (scene, (cube1, cube4), cube2, cube3) =
               SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
 
-            box4 |> GameObjectTool.setCurrentSceneTreeNode;
+            cube4 |> GameObjectTool.setCurrentSceneTreeNode;
 
             MainEditorLeftHeaderTool.cloneCurrentSceneTreeNode();
 
-            let clonedGameObject = box4 |> succ;
+            let clonedGameObject = cube4 |> succ;
 
             StateEditorService.getState()
             |> InspectorEditorService.getComponentTypeMap
@@ -264,10 +264,10 @@ let _ =
           test(
             "test cloned gameObject components should === target gameObject components ",
             () => {
-            let (scene, (box1, box4), box2, box3) =
+            let (scene, (cube1, cube4), cube2, cube3) =
               SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
 
-            box4 |> GameObjectTool.setCurrentSceneTreeNode;
+            cube4 |> GameObjectTool.setCurrentSceneTreeNode;
 
             MainEditorLeftHeaderTool.cloneCurrentSceneTreeNode();
 
@@ -275,9 +275,9 @@ let _ =
             let targetGameObjectComponentArray =
               editorState
               |> InspectorEditorService.getComponentTypeMap
-              |> WonderCommonlib.SparseMapService.unsafeGet(box4);
+              |> WonderCommonlib.SparseMapService.unsafeGet(cube4);
 
-            let clonedGameObject = box4 |> succ;
+            let clonedGameObject = cube4 |> succ;
 
             let clonedGameObjectComponentArray =
               editorState
@@ -364,7 +364,7 @@ let _ =
 
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
       });
 

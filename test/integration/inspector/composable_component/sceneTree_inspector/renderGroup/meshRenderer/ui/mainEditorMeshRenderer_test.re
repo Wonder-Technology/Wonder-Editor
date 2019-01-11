@@ -21,7 +21,7 @@ let _ =
       beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         )
       );
       describe("test set drawMode to Lines", () => {

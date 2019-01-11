@@ -36,7 +36,7 @@ let _ =
 
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
         DirectorToolEngine.prepareAndInitAllEnginState();
       });
