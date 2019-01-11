@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`controller leftHeader add gameObject test add box test scene tree snapshot test add one box 1`] = `
+exports[`controller leftHeader add gameObject test add cube test scene tree snapshot test add one cube 1`] = `
 <article
   className="wonder-sceneTree-component"
 >

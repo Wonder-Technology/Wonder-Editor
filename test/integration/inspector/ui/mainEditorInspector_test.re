@@ -60,7 +60,7 @@ let _ =
       );
       describe("else set currentSelectSource is SceneTree", () => {
         beforeEach(() => {
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
 
           CurrentSelectSourceEditorService.setCurrentSelectSource(
             SceneTreeWidgetService.getWidget(),

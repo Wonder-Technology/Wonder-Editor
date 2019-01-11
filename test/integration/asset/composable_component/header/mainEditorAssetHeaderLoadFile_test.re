@@ -16,10 +16,10 @@ let _ =
   describe("MainEditorAssetHeader->load file", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
+    let cubeTexturedWDBArrayBuffer = ref(Obj.magic(1));
 
     beforeAll(() =>
-      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
+      cubeTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("CubeTextured")
     );
     beforeEach(() => {
       sandbox := createSandbox();
@@ -226,13 +226,12 @@ let _ =
             testPromise("add name, wdbGameObject to wdbNodeMap", () => {
               MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
               |> ignore;
-              let fileName = "BoxTextured";
-              let defaultSceneNewGameObjectUid =
-                SceneTreeNodeTool.OperateDefaultScene.getNewGameObjectUid();
+              let fileName = "CubeTextured";
+              let newGameObjectUid = GameObjectTool.getNewGameObjectUid();
 
               MainEditorAssetUploadTool.loadOneWDB(
                 ~fileName,
-                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
                 (),
               )
               |> then_(uploadedWDBNodeId => {
@@ -246,7 +245,7 @@ let _ =
                      |> WDBNodeAssetService.getNodeData;
 
                    (name, wdbGameObject)
-                   |> expect == (fileName, defaultSceneNewGameObjectUid)
+                   |> expect == (fileName, newGameObjectUid)
                    |> resolve;
                  });
             });

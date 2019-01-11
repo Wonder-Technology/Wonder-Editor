@@ -144,7 +144,7 @@ let _ =
 
       let _createCube = engineState => {
         let (engineState, geometry) =
-          GeometryEngineService.createBoxGeometry(engineState);
+          GeometryEngineService.createCubeGeometry(engineState);
 
         _createGameObject(geometry, engineState);
       };

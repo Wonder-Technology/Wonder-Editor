@@ -16,12 +16,12 @@ let _ =
   describe("MainEditorAssetHeader->load glb", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let boxTexturedGLBArrayBuffer = ref(Obj.magic(1));
+    let cubeTexturedGLBArrayBuffer = ref(Obj.magic(1));
     /* let truckWDBArrayBuffer = ref(Obj.magic(1));
        let sceneWDBArrayBuffer = ref(Obj.magic(1)); */
 
     beforeAll(() =>
-      boxTexturedGLBArrayBuffer := GLBTool.getGLBArrayBuffer("BoxTextured")
+      cubeTexturedGLBArrayBuffer := GLBTool.getGLBArrayBuffer("CubeTextured")
     );
 
     beforeEach(() => {
@@ -47,7 +47,7 @@ let _ =
 
       testPromise("convert glb to wdb and load", () =>
         MainEditorAssetUploadTool.loadOneGLB(
-          ~arrayBuffer=boxTexturedGLBArrayBuffer^,
+          ~arrayBuffer=cubeTexturedGLBArrayBuffer^,
           (),
         )
         |> then_(uploadedWDBNodeId => {
@@ -59,7 +59,7 @@ let _ =
                  editorState,
                );
 
-             LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
+             LoadWDBTool.getCubeTexturedMeshGameObjectFromAssetNode(
                uploadedWDBNodeId,
                (editorState, engineState),
              )

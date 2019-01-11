@@ -15,7 +15,7 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
 
       ControllerTool.stubRequestAnimationFrame(
@@ -25,8 +25,8 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test add box", () => {
-      test("test add one box", () => {
+    describe("test add cube", () => {
+      test("test add one cube", () => {
         MainEditorLeftHeaderTool.addCube();
 
         StateEngineService.unsafeGetState()
@@ -34,7 +34,7 @@ let _ =
         |> Js.Array.length
         |> expect == 5;
       });
-      test("test add two boxes", () => {
+      test("test add two cubees", () => {
         MainEditorLeftHeaderTool.addCube();
         MainEditorLeftHeaderTool.addCube();
 
@@ -44,24 +44,22 @@ let _ =
         |> expect == 6;
       });
       test(
-        "test add the box which geometry name should is Wonder-Default-Cube",
-        () => {
-        MainEditorLeftHeaderTool.addCube();
-
-        let addedBoxUid =
-          SceneTreeNodeTool.OperateDefaultScene.getNewGameObjectUid();
+        "the added cube's geometry's name should is Wonder-Default-Cube", () => {
+        let addedCubeUid = GameObjectTool.getNewGameObjectUid();
         let engineState = StateEngineService.unsafeGetState();
+
+        MainEditorLeftHeaderTool.addCube();
 
         engineState
         |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
-             addedBoxUid,
+             addedCubeUid,
            )
         |. GeometryEngineService.unsafeGetGeometryName(engineState)
         |> expect == "Wonder-Default-Cube";
       });
 
       describe("test scene tree snapshot", () =>
-        test("test add one box", () => {
+        test("test add one cube", () => {
           MainEditorLeftHeaderTool.addCube();
 
           BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
@@ -108,17 +106,16 @@ let _ =
         |> expect == 6;
       });
       test(
-        "test add the sphere which geometry name should is Wonder-Default-Sphere",
+        "the added sphere's geometry's name should is Wonder-Default-Sphere",
         () => {
-        MainEditorLeftHeaderTool.addSphere();
-
-        let addedBoxUid =
-          SceneTreeNodeTool.OperateDefaultScene.getNewGameObjectUid();
+        let addedSphereUid = GameObjectTool.getNewGameObjectUid();
         let engineState = StateEngineService.unsafeGetState();
+
+        MainEditorLeftHeaderTool.addSphere();
 
         engineState
         |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
-             addedBoxUid,
+             addedSphereUid,
            )
         |. GeometryEngineService.unsafeGetGeometryName(engineState)
         |> expect == "Wonder-Default-Sphere";

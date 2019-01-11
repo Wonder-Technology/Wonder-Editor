@@ -129,14 +129,14 @@ let generateWDB = buildWDBGameObjectFunc => {
 let buildSource = (~width=1, ~height=2, ~name="image.png", ()) =>
   {"width": width, "height": height, "name": name} |> Obj.magic;
 
-let generateDirectionPointLightsAndBoxWDB = () =>
+let generateDirectionPointLightsAndCubeWDB = () =>
   generateWDB((editorState, engineState) => {
     let (engineState, geometry) =
-      GeometryEngineService.createBoxGeometry(engineState);
+      GeometryEngineService.createCubeGeometry(engineState);
     let (engineState, lightMaterial) =
       LightMaterialEngineService.create(engineState);
 
-    let (editorState, engineState, box1) =
+    let (editorState, engineState, cube1) =
       PrimitiveEngineService.createCube(
         (geometry, lightMaterial),
         editorState,
@@ -154,7 +154,7 @@ let generateDirectionPointLightsAndBoxWDB = () =>
 
     let engineState =
       engineState
-      |> GameObjectUtils.addChild(rootGameObject, box1)
+      |> GameObjectUtils.addChild(rootGameObject, cube1)
       |> GameObjectUtils.addChild(rootGameObject, directionLight)
       |> GameObjectUtils.addChild(rootGameObject, pointLight);
 
@@ -177,11 +177,11 @@ let generateSceneWDB = () =>
       );
 
     let (engineState, geometry) =
-      GeometryEngineService.createBoxGeometry(engineState);
+      GeometryEngineService.createCubeGeometry(engineState);
     let (engineState, lightMaterial) =
       LightMaterialEngineService.create(engineState);
 
-    let (editorState, engineState, box1) =
+    let (editorState, engineState, cube1) =
       PrimitiveEngineService.createCube(
         (geometry, lightMaterial),
         editorState,
@@ -245,7 +245,7 @@ let generateSceneWDB = () =>
 
     let engineState =
       engineState
-      |> GameObjectUtils.addChild(rootGameObject, box1)
+      |> GameObjectUtils.addChild(rootGameObject, cube1)
       |> GameObjectUtils.addChild(rootGameObject, camera)
       |> GameObjectUtils.addChild(rootGameObject, directionLight);
     /* |> GameObjectUtils.addChild(rootGameObject, pointLight); */

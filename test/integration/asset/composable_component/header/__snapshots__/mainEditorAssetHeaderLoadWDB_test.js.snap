@@ -425,7 +425,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb fix bug fix geometry bug
 
 exports[`MainEditorAssetHeader->load wdb test load wdb relate wdb asset gameObjects with default geometrys 
         1.create gameObject g1 with default cube geometry in scene;
-        2.load wdb asset w1(has one box gameObject with default cube geometry);
+        2.load wdb asset w1(has one cube gameObject with default cube geometry);
 
         g1->geometry->select geometry group widget should only have not-duplicate-default-geometrys and be using default cube geometry
          1`] = `

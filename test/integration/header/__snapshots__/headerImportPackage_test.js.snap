@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`header import package dispose assets dispose material assets 
-          1.load BoxTextured wdb asset w1;
+          1.load CubeTextured wdb asset w1;
           2.drag w1 to scene tree to be gameObject g1;
           3.export;
           4.import;
@@ -217,7 +217,7 @@ exports[`header import package dispose assets dispose material assets
 `;
 
 exports[`header import package dispose assets dispose wdb assets dispose geometry assets 
-          1.load BoxTextured wdb asset w1;
+          1.load CubeTextured wdb asset w1;
           2.drag w1 to scene tree to be gameObject g1;
           3.export;
           4.import;
@@ -376,8 +376,8 @@ exports[`header import package test geometry
 `;
 
 exports[`header import package test geometry test with wdb assets relate wdb asset gameObjects with default geometrys 
-                  1.load box wdb asset w1(with default cube geometry);
-                  1.load box wdb asset w2(with default cube geometry);
+                  1.load cube wdb asset w1(with default cube geometry);
+                  1.load cube wdb asset w2(with default cube geometry);
                   2.export;
                   3.import;
                   4.drag w1 to scene tree to be gameObject g1;
@@ -453,8 +453,8 @@ exports[`header import package test geometry test with wdb assets relate wdb ass
 `;
 
 exports[`header import package test geometry test with wdb assets relate wdb asset gameObjects with default geometrys 
-                  1.load box wdb asset w1(with default cube geometry);
-                  1.load box wdb asset w2(with default cube geometry);
+                  1.load cube wdb asset w1(with default cube geometry);
+                  1.load cube wdb asset w2(with default cube geometry);
                   2.export;
                   3.import;
                   4.drag w1 to scene tree to be gameObject g1;
@@ -530,7 +530,7 @@ exports[`header import package test geometry test with wdb assets relate wdb ass
 `;
 
 exports[`header import package test geometry test with wdb assets relate wdb asset gameObjects with default geometrys 
-               1.load box wdb asset w1(with default cube geometry);
+               1.load cube wdb asset w1(with default cube geometry);
                2.export;
                3.import;
                4.drag w1 to scene tree to be gameObject g1;

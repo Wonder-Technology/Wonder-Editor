@@ -18,7 +18,7 @@ let _ =
 
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -30,8 +30,8 @@ let _ =
             MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
           let addedMaterialNodeId = MainEditorAssetIdTool.getNewAssetId();
           let engineState = StateEngineService.unsafeGetState();
-          let gameObject1 = MainEditorSceneTool.getFirstBox(engineState);
-          let gameObject2 = MainEditorSceneTool.getSecondBox(engineState);
+          let gameObject1 = MainEditorSceneTool.getFirstCube(engineState);
+          let gameObject2 = MainEditorSceneTool.getSecondCube(engineState);
           let sourceMaterial1 =
             GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
               gameObject1,
@@ -415,7 +415,7 @@ let _ =
                 );
                 MainEditorSceneTool.createDefaultScene(
                   sandbox,
-                  MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+                  MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
                 );
 
                 let ((gameObject1, gameObject2), sourceMaterialAsset, _) =

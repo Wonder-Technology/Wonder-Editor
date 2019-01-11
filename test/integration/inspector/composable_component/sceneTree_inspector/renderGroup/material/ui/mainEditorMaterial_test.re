@@ -28,7 +28,7 @@ let _ =
       beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         )
       );
 
@@ -136,7 +136,7 @@ let _ =
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
 
         MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;

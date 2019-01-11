@@ -19,7 +19,7 @@ let _ =
           MainEditorSceneTool.initState(~sandbox, ());
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           );
           ControllerTool.stubRequestAnimationFrame(
             createEmptyStubWithJsObjSandbox(sandbox),
@@ -66,7 +66,7 @@ let _ =
 
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           );
           ControllerTool.stubRequestAnimationFrame(
             createEmptyStubWithJsObjSandbox(sandbox),
@@ -76,7 +76,7 @@ let _ =
 
         test("test undo one step which from second to first", () => {
           MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
           MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
 
           RedoUndoTool.undoHistoryState();
@@ -99,7 +99,7 @@ let _ =
           );
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           );
           ControllerTool.stubRequestAnimationFrame(
             createEmptyStubWithJsObjSandbox(sandbox),
@@ -133,7 +133,7 @@ let _ =
 
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           );
           ControllerTool.stubRequestAnimationFrame(
             createEmptyStubWithJsObjSandbox(sandbox),

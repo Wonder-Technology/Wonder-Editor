@@ -55,7 +55,7 @@ let addArcballCameraControllerComponent =
   );
 
 let buildTwoAddedArcballCameraControllerCamera = sandbox => {
-  let (camera1, camera2, box) =
+  let (camera1, camera2, cube) =
     SceneTreeTool.buildTwoCameraSceneGraphToEngine(sandbox);
 
   camera1 |> GameObjectTool.setCurrentSceneTreeNode;

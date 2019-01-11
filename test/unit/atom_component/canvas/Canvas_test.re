@@ -20,10 +20,10 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test drag wdb", () => {
-      let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
+      let cubeTexturedWDBArrayBuffer = ref(Obj.magic(1));
 
       beforeAll(() =>
-        boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
+        cubeTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("CubeTextured")
       );
 
       beforeEach(() => {
@@ -45,7 +45,7 @@ let _ =
       describe("test drag wdb to scene", () =>
         testPromise("if current sceneTree node is None, add to scene", () =>
           MainEditorAssetUploadTool.loadOneWDB(
-            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
             (),
           )
           |> then_(uploadedWDBNodeId => {
@@ -65,11 +65,11 @@ let _ =
       describe("test drag wdb to gameObject", () =>
         testPromise("should add to current sceneTree node's children", () =>
           MainEditorAssetUploadTool.loadOneWDB(
-            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
             (),
           )
           |> then_(uploadedWDBNodeId => {
-               MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+               MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
 
                CanvasTool.Drag.dragWDBAsset(~wdbNodeId=uploadedWDBNodeId, ());
 

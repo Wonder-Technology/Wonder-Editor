@@ -44,7 +44,7 @@ let _ =
             beforeEach(() =>
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
-                MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+                MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
               )
             );
             test("test scene children shouldn't include it", () => {
@@ -100,18 +100,18 @@ let _ =
 
           describe("test should remove current gameObject children", () =>
             test("test engineState should remove it's children", () => {
-              let (scene, (box1, box3, box4), box2) =
+              let (scene, (cube1, cube3, cube4), cube2) =
                 SceneTreeTool.buildFourLayerSceneGraphToEngine(sandbox);
-              GameObjectTool.setCurrentSceneTreeNode(box1);
+              GameObjectTool.setCurrentSceneTreeNode(cube1);
 
               let engineState = StateEngineService.unsafeGetState();
 
               MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
 
               (
-                engineState |> GameObjectTool.isAlive(box1),
-                engineState |> GameObjectTool.isAlive(box3),
-                engineState |> GameObjectTool.isAlive(box4),
+                engineState |> GameObjectTool.isAlive(cube1),
+                engineState |> GameObjectTool.isAlive(cube3),
+                engineState |> GameObjectTool.isAlive(cube4),
               )
               |> expect == (false, false, false);
             })
@@ -120,7 +120,7 @@ let _ =
           describe("test if current gameObject is Camera", () => {
             describe("test has other cameras after remove", () => {
               let _test = () => {
-                let (camera1, camera2, _box1) =
+                let (camera1, camera2, _cube1) =
                   SceneTreeTool.buildTwoCameraSceneGraphToEngine(sandbox);
 
                 MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
@@ -254,7 +254,7 @@ let _ =
         () => {
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           );
           BuildComponentTool.buildHeader(
             TestTool.buildEmptyAppState(),
@@ -265,7 +265,7 @@ let _ =
       test("dispose current gameObject", () => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
 
         MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
@@ -306,7 +306,7 @@ let _ =
         );
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
         let gl = FakeGlToolEngine.getGl(StateEngineService.unsafeGetState());
 

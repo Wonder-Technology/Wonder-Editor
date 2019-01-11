@@ -29,7 +29,7 @@ let setSceneFirstCameraToBeCurrentSceneTreeNode = () =>
 let setSceneSecondCameraToBeCurrentSceneTreeNode = () =>
   getSceneSecondCamera() |> GameObjectTool.setCurrentSceneTreeNode;
 
-let _isBox = (gameObject, engineState) =>
+let _isCube = (gameObject, engineState) =>
   GameObjectComponentEngineService.hasGeometryComponent(
     gameObject,
     engineState,
@@ -43,10 +43,10 @@ let _isBox = (gameObject, engineState) =>
      )
   |> Js.Typed_array.Float32Array.length === 72;
 
-let getBoxByIndex = (index, engineState) =>
+let getCubeByIndex = (index, engineState) =>
   engineState
   |> GameObjectUtils.getChildren(unsafeGetScene())
-  |> Js.Array.filter(gameObject => _isBox(gameObject, engineState))
+  |> Js.Array.filter(gameObject => _isCube(gameObject, engineState))
   |> ArrayService.unsafeGetNth(index);
 
 let getDirectionLightGameObjectByIndex = (index, engineState) =>
@@ -60,16 +60,16 @@ let getDirectionLightGameObjectByIndex = (index, engineState) =>
      )
   |> ArrayService.unsafeGetNth(index);
 
-let getFirstBox = engineState => getBoxByIndex(0, engineState);
+let getFirstCube = engineState => getCubeByIndex(0, engineState);
 
-let getSecondBox = engineState => getBoxByIndex(1, engineState);
+let getSecondCube = engineState => getCubeByIndex(1, engineState);
 
-let setFirstBoxToBeCurrentSceneTreeNode = () =>
-  getFirstBox(StateEngineService.unsafeGetState())
+let setFirstCubeToBeCurrentSceneTreeNode = () =>
+  getFirstCube(StateEngineService.unsafeGetState())
   |> GameObjectTool.setCurrentSceneTreeNode;
 
-let setSecondBoxToBeCurrentSceneTreeNode = () =>
-  getSecondBox(StateEngineService.unsafeGetState())
+let setSecondCubeToBeCurrentSceneTreeNode = () =>
+  getSecondCube(StateEngineService.unsafeGetState())
   |> GameObjectTool.setCurrentSceneTreeNode;
 
 let setDirectionLightGameObjectToBeCurrentSceneTreeNode = () =>
@@ -182,9 +182,9 @@ let getCameraInDefaultScene = engineState =>
 let _isDirectionLight = (gameObject, engineState) =>
   LightEngineService.hasLightComponent(gameObject, engineState);
 
-let getBoxInDefaultScene = engineState =>
+let getCubeInDefaultScene = engineState =>
   GameObjectUtils.getChildren(unsafeGetScene(), engineState)
-  |> Js.Array.filter(gameObject => _isBox(gameObject, engineState))
+  |> Js.Array.filter(gameObject => _isCube(gameObject, engineState))
   |> WonderCommonlib.ArrayService.unsafePop;
 
 let getDirectionLightInDefaultScene = engineState =>

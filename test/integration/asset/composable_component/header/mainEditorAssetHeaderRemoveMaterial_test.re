@@ -59,7 +59,7 @@ let _ =
             MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
           let addedMaterialNodeId = MainEditorAssetIdTool.getNewAssetId();
           let engineState = StateEngineService.unsafeGetState();
-          let gameObject1 = MainEditorSceneTool.getFirstBox(engineState);
+          let gameObject1 = MainEditorSceneTool.getFirstCube(engineState);
           let sourceMaterial1 =
             GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
               gameObject1,
@@ -105,7 +105,7 @@ let _ =
               MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
             let addedMaterialNodeId = MainEditorAssetIdTool.getNewAssetId();
             let engineState = StateEngineService.unsafeGetState();
-            let gameObject1 = MainEditorSceneTool.getFirstBox(engineState);
+            let gameObject1 = MainEditorSceneTool.getFirstCube(engineState);
             let sourceMaterial1 =
               GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                 gameObject1,
@@ -149,7 +149,7 @@ let _ =
               MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
             let addedMaterialNodeId = MainEditorAssetIdTool.getNewAssetId();
             let engineState = StateEngineService.unsafeGetState();
-            let gameObject1 = MainEditorSceneTool.getFirstBox(engineState);
+            let gameObject1 = MainEditorSceneTool.getFirstCube(engineState);
             let sourceMaterial1 =
               GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                 gameObject1,

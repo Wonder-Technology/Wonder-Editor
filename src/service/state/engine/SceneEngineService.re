@@ -1,13 +1,13 @@
 open Wonderjs;
 
 let createDefaultSceneGameObjects = (componentData, editorState, engineState) => {
-  let (editorState, engineState, box1) =
+  let (editorState, engineState, cube1) =
     PrimitiveEngineService.createCube(
       componentData,
       editorState,
       engineState,
     );
-  let (editorState, engineState, box2) =
+  let (editorState, engineState, cube2) =
     PrimitiveEngineService.createCube(
       componentData,
       editorState,
@@ -18,7 +18,7 @@ let createDefaultSceneGameObjects = (componentData, editorState, engineState) =>
   let (editorState, engineState, camera) =
     CameraEngineService.createCamera(editorState, engineState);
 
-  (editorState, engineState, camera, box1, box2, directionLight);
+  (editorState, engineState, camera, cube1, cube2, directionLight);
 };
 
 let getAmbientLightColor = SceneAPI.getAmbientLightColor;

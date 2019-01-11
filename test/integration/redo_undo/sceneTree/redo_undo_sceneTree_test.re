@@ -13,7 +13,7 @@ let _ =
     let _simulateTwiceDragEvent = () => {
       MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
         ~sourceGameObject=
-          MainEditorSceneTool.getSecondBox(
+          MainEditorSceneTool.getSecondCube(
             StateEngineService.unsafeGetState(),
           ),
         ~targetGameObject=MainEditorSceneTool.getSceneFirstCamera(),
@@ -22,7 +22,7 @@ let _ =
 
       MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
         ~sourceGameObject=
-          MainEditorSceneTool.getFirstBox(
+          MainEditorSceneTool.getFirstCube(
             StateEngineService.unsafeGetState(),
           ),
         ~targetGameObject=MainEditorSceneTool.getSceneFirstCamera(),
@@ -34,7 +34,7 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
     };
 
@@ -62,7 +62,7 @@ let _ =
         MainEditorSceneTool.initState(~sandbox, ());
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
       });
       test(

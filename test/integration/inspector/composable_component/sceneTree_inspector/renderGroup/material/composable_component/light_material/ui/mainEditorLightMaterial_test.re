@@ -18,7 +18,7 @@ let _ =
     let _prepareDefaultSceneAndInit = () => {
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
       DirectorToolEngine.prepareAndInitAllEnginState();
     };
@@ -72,7 +72,7 @@ let _ =
             sandbox,
             () => {
               MainEditorAssetTool.initAssetTree();
-              MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+              MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
             },
           );
 
@@ -212,7 +212,7 @@ let _ =
                 );
                 testPromise("if gameObject has no geometry, still can set", () =>
                   _prepare((uploadedTextureNodeId, assetTreeData) => {
-                    /* SceneTreeNodeDomTool.OperateDefaultScene.getGeometryComponentFromBox()
+                    /* SceneTreeNodeDomTool.OperateDefaultScene.getGeometryComponentFromCube()
                        |> OperateComponentEventTool.removeComponentFromCurrentGameObject; */
 
                     MainEditorInspectorRemoveComponentTool.removeGeometryComponent();
@@ -423,7 +423,7 @@ let _ =
 
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           );
         });
 

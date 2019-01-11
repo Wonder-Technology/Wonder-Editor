@@ -141,7 +141,7 @@ let _ =
                     SceneTreeWidgetService.getWidget(),
                   )
                   |> StateLogicService.getAndSetEditorState;
-                  MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+                  MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
                 });
 
                 describe("should remove it from scene->materials", ()
@@ -155,7 +155,7 @@ let _ =
 
                        _exec();
 
-                       MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+                       MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
                        let basicMaterial =
                          GameObjectTool.getCurrentGameObjectBasicMaterial();
                        let engineState = StateEngineService.unsafeGetState();
@@ -192,7 +192,7 @@ let _ =
                         _drag(assetTreeData);
                         _remove(assetTreeData);
 
-                        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+                        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
                         let lightMaterial =
                           GameObjectTool.getCurrentGameObjectLightMaterial();
                         let engineState = StateEngineService.unsafeGetState();
@@ -214,13 +214,13 @@ let _ =
                             |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                                  currentGameObject,
                                );
-                          let secondBoxGameObject =
+                          let secondCubeGameObject =
                             engineState
-                            |> MainEditorSceneTool.getBoxByIndex(1);
+                            |> MainEditorSceneTool.getCubeByIndex(1);
                           let engineState =
                             engineState
                             |> LightMaterialToolEngine.replaceGameObjectLightMaterial(
-                                 secondBoxGameObject,
+                                 secondCubeGameObject,
                                  oldMaterial,
                                );
                           engineState |> StateEngineService.setState |> ignore;
@@ -228,7 +228,7 @@ let _ =
                           let assetTreeData =
                             MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
                           _drag(assetTreeData);
-                          MainEditorSceneTool.setSecondBoxToBeCurrentSceneTreeNode();
+                          MainEditorSceneTool.setSecondCubeToBeCurrentSceneTreeNode();
                           _drag(assetTreeData);
                           _remove(assetTreeData);
 
@@ -242,7 +242,7 @@ let _ =
                           let newMaterial2 =
                             engineState
                             |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-                                 secondBoxGameObject,
+                                 secondCubeGameObject,
                                );
 
                           (

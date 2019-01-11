@@ -47,13 +47,13 @@ let _ =
 
         DragWDBTool.testDragWDB(
           sandbox,
-          ("BoxTextured", WDBTool.convertGLBToWDB("BoxTextured")),
+          ("CubeTextured", WDBTool.convertGLBToWDB("CubeTextured")),
           (
             shaderSourceCountBeforeDrag,
             shaderSourceCountAfterDrag,
             glShaderSource,
           ) => {
-            LoadWDBTool.getBoxTexturedMeshGameObject(
+            LoadWDBTool.getCubeTexturedMeshGameObject(
               StateEngineService.unsafeGetState(),
             )
             |> GameObjectTool.setCurrentSceneTreeNode;
@@ -83,7 +83,7 @@ let _ =
 
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
       });
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -134,7 +134,7 @@ let _ =
 
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
       });
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));

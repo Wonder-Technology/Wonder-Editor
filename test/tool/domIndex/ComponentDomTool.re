@@ -1,6 +1,6 @@
 let getCameraComponentCount = () => 3;
 
-let getBoxComponentCount = () => 4;
+let getCubeComponentCount = () => 4;
 /* Mesh category */
 let getMeshCategoryDomIndex = () => 0;
 

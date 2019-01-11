@@ -15,7 +15,7 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
 
       ControllerTool.stubRequestAnimationFrame(
@@ -37,10 +37,10 @@ let _ =
         () => {
           let targetGameObject =
             StateEngineService.unsafeGetState()
-            |> MainEditorSceneTool.getBoxByIndex(0);
+            |> MainEditorSceneTool.getCubeByIndex(0);
           let draggedGameObject =
             StateEngineService.unsafeGetState()
-            |> MainEditorSceneTool.getBoxByIndex(1);
+            |> MainEditorSceneTool.getCubeByIndex(1);
 
           MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
             ~sourceGameObject=draggedGameObject,
