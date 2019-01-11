@@ -106,7 +106,7 @@ let _ =
         |> expect == 6;
       });
       test(
-        "the added sphere's geometry's name should is Wonder-Default-Sphere",
+        "the added sphere's geometry's name should be Wonder-Default-Sphere",
         () => {
         let addedSphereUid = GameObjectTool.getNewGameObjectUid();
         let engineState = StateEngineService.unsafeGetState();
