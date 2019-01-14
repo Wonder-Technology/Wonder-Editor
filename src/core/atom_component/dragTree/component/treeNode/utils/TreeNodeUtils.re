@@ -11,7 +11,7 @@ let renderChildren = (id, isShowChildren, send, togggleChildren) =>
     className="item-triangle"
     onMouseDown=(
       event => {
-        DomHelper.stopPropagation(
+        EventHelper.stopPropagation(
           ReactEventType.convertReactMouseEventToJsEvent(event),
         );
 

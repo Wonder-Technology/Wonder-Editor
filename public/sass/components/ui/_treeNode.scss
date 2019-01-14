@@ -12,7 +12,7 @@
         padding-top: 3px;
         display: flex;
         align-items: center;
-        box-sizing: border-box;
+        
         &:hover {
             color: rgb(252, 155, 0);
         }
@@ -35,11 +35,24 @@
         .draggable-container {
             width: 100%;
             height: 22px;
-            line-height: 22px;
-            border: 3px solid rgba(0, 0, 0, 0);
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
             * {
                 pointer-events: none
             }
+        }
+        .drag-gap-top{
+            border-top: 3px solid coral;
+        }
+        .drag-gap-center{
+            border: 3px solid coral;
+        }
+        .drag-gap-bottom{
+            border-bottom: 3px solid coral;
+        }
+        .no-drag{
+            border:3px solid rgba(0,0,0,0) 
         }
         .select-active {
             background-color: #5C7EA6;

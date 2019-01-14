@@ -39,7 +39,7 @@ let load = (dispatchFunc, event) => {
   open FileType;
 
   let e = ReactEventType.convertReactFormEventToJsEvent(event);
-  DomHelper.preventDefault(e);
+  EventHelper.preventDefault(e);
 
   switch (
     e##target##files

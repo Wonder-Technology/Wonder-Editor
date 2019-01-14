@@ -1,7 +1,7 @@
 let dragStart = (id, widget, dragImg, effectAllowd, event) => {
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);
 
-  DomHelper.stopPropagation(e);
+  EventHelper.stopPropagation(e);
   e##dataTransfer##setDragImage(
     dragImg |> DomHelperType.convertDomToJsObj,
     0,

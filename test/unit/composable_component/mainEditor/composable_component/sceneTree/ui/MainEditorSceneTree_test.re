@@ -61,7 +61,7 @@ let _ =
               BaseEventTool.buildDragEvent(.),
             );
 
-          result |> expect == SceneTreeNode.DragEnter;
+          result |> expect == SceneTreeNode.DragEnter(DragToGapCenter);
         })
       );
 
