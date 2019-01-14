@@ -18,18 +18,8 @@ let getBody = [%raw () => "
   return document.body
 "];
 
-let addEventListener = [%raw
-  (element, event, handleFunc) => {|
-   element.addEventListener(event, handleFunc, false)
-  |}
-];
-
 let getAttribute = [%raw (dom, prop) => "
   return dom.getAttribute(prop);
-"];
-
-let onresize = [%raw handleFunc => "
-  window.onresize = handleFunc;
 "];
 
 let apply = [%bs.raw
@@ -49,9 +39,31 @@ let deleteKeyInMap = [%raw
   |}
 ];
 
-let stopPropagation = e : unit => e##stopPropagation();
+let getDomClientRect = [%bs.raw
+  {|
+  function(ele){
+    if (!ele.getClientRects().length) {
+      return { top: 0, left: 0 };
+    }
 
-let preventDefault = e : unit => e##preventDefault();
+    let rect = ele.getBoundingClientRect();
+    if (rect.width || rect.height) {
+        let doc = ele.ownerDocument;
+        let win = doc.defaultView;
+        let docElem = doc.documentElement;
+
+        return {
+            top: (rect.top + win.pageYOffset) - docElem.clientTop,
+            left: (rect.left + win.pageXOffset) - docElem.clientLeft,
+            height: rect.height,
+            width: rect.width,
+        }
+    }
+
+    return rect;
+  }
+  |}
+];
 
 let getRandomKey = () : string =>
   StringService.floatToString(Js.Date.now() *. Js.Math.random());

@@ -389,7 +389,7 @@ let importPackage = (dispatchFunc, event) => {
     _handleIsRun(dispatchFunc, editorState) :
     {
       let e = ReactEventType.convertReactFormEventToJsEvent(event);
-      DomHelper.preventDefault(e);
+      EventHelper.preventDefault(e);
 
       switch (e##target##files |> Js.Dict.values |> ArrayService.getFirst) {
       | None =>

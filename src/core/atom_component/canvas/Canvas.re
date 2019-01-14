@@ -19,7 +19,7 @@ module Method = {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     let startId = DragUtils.getDragedId(e);
 
-    DomHelper.preventDefault(e);
+    EventHelper.preventDefault(e);
 
     isWDBAssetFileFunc() ?
       {

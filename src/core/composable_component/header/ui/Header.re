@@ -380,7 +380,7 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   },
   reducer,
   didMount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
-    DomHelper.addEventListener(
+    EventHelper.addEventListener(
       DomHelper.document,
       "click",
       e => {

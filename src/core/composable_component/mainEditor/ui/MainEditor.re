@@ -201,7 +201,7 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
     Method.bindRefreshInspectorEvent(dispatchFunc);
     Method.bindPickSuccessEvent(dispatchFunc);
 
-    DomHelper.onresize(Method.resizeCanvasAndViewPort);
+    EventHelper.onresize(Method.resizeCanvasAndViewPort);
   },
   render: self => render(store, dispatchFunc, self),
 };

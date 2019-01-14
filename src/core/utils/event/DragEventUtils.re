@@ -23,7 +23,7 @@ let handleDragEnter =
 };
 
 let handleDragLeave = (id, dragLeaveAction, event) => {
-  DomHelper.stopPropagation(
+  EventHelper.stopPropagation(
     ReactEventType.convertReactMouseEventToJsEvent(event),
   );
 
@@ -35,7 +35,7 @@ let handleDragOver = (dropEffect, event) => {
 
   DragUtils.setDataTransferDropEffect(dropEffect, e);
 
-  DomHelper.preventDefault(e);
+  EventHelper.preventDefault(e);
 };
 
 let handleDrop =
@@ -49,7 +49,7 @@ let handleDrop =
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);
   let startId = DragUtils.getDragedId(e);
 
-  DomHelper.preventDefault(e);
+  EventHelper.preventDefault(e);
 
   let (isTrigger, relationResult) =
     DragEventBaseUtils.checkDragDrop(
