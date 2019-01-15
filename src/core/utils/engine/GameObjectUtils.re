@@ -11,7 +11,7 @@ let setParentKeepOrder = (parent, child, engineState) =>
        ),
      );
 
-let getParent = (child, engineState) =>
+let getParentTransform = (child, engineState) =>
   TransformEngineService.getParent(
     GameObjectComponentEngineService.unsafeGetTransformComponent(
       child,
@@ -21,7 +21,7 @@ let getParent = (child, engineState) =>
   );
 
 let getParentGameObject = (child, engineState) =>
-  getParent(child, engineState)
+  getParentTransform(child, engineState)
   |> Js.Option.map((. parentTransform) =>
        TransformEngineService.getGameObjectByTransform(
          parentTransform,

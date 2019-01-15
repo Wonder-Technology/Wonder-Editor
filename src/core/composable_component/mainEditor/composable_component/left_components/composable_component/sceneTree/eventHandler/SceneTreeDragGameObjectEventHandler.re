@@ -20,12 +20,17 @@ module CustomEventHandler = {
     let engineState =
       switch (dragPosition) {
       | DragBeforeTarget =>
-        GameObjectEngineService.changeGameObjectChildOrder(
-          draggedUid,
-          targetUid,
-          WonderEditor.TransformType.Before,
-          engineState,
-        )
+        engineState
+        |> GameObjectUtils.setParentKeepOrder(
+             GameObjectUtils.getParentGameObject(targetUid, engineState)
+             |> OptionService.unsafeGet,
+             draggedUid,
+           )
+        |> GameObjectEngineService.changeGameObjectChildOrder(
+             draggedUid,
+             targetUid,
+             WonderEditor.TransformType.Before,
+           )
 
       | DragIntoTarget =>
         SceneTreeEditorService.setIsShowChildren(targetUid, true)
@@ -35,12 +40,17 @@ module CustomEventHandler = {
         |> GameObjectUtils.setParentKeepOrder(targetUid, draggedUid);
 
       | DragAfterTarget =>
-        GameObjectEngineService.changeGameObjectChildOrder(
-          draggedUid,
-          targetUid,
-          WonderEditor.TransformType.After,
-          engineState,
-        )
+        engineState
+        |> GameObjectUtils.setParentKeepOrder(
+             GameObjectUtils.getParentGameObject(targetUid, engineState)
+             |> OptionService.unsafeGet,
+             draggedUid,
+           )
+        |> GameObjectEngineService.changeGameObjectChildOrder(
+             draggedUid,
+             targetUid,
+             WonderEditor.TransformType.After,
+           )
       };
 
     engineState |> StateEngineService.setState |> ignore;

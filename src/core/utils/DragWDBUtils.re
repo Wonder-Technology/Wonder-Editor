@@ -61,19 +61,21 @@ let dragWDB =
 
     let clonedWDBGameObject =
       cloneGameObjectArr |> CloneGameObjectLogicService.getClonedGameObject;
-    Js.log(clonedWDBGameObject);
 
     let engineState =
       switch (dragPosition) {
       | DragBeforeTarget =>
         engineState
         |> GameObjectUtils.addChild(
-             GameObjectUtils.getParent(targetGameObjectUid, engineState)
+             GameObjectUtils.getParentGameObject(
+               targetGameObjectUid,
+               engineState,
+             )
              |> OptionService.unsafeGet,
              clonedWDBGameObject,
            )
         |> GameObjectEngineService.changeGameObjectChildOrder(
-             wdbGameObjectUid,
+             clonedWDBGameObject,
              targetGameObjectUid,
              WonderEditor.TransformType.Before,
            )
@@ -81,15 +83,19 @@ let dragWDB =
       | DragIntoTarget =>
         engineState
         |> GameObjectUtils.addChild(targetGameObjectUid, clonedWDBGameObject)
+
       | DragAfterTarget =>
         engineState
         |> GameObjectUtils.addChild(
-             GameObjectUtils.getParent(targetGameObjectUid, engineState)
+             GameObjectUtils.getParentGameObject(
+               targetGameObjectUid,
+               engineState,
+             )
              |> OptionService.unsafeGet,
              clonedWDBGameObject,
            )
         |> GameObjectEngineService.changeGameObjectChildOrder(
-             wdbGameObjectUid,
+             clonedWDBGameObject,
              targetGameObjectUid,
              WonderEditor.TransformType.After,
            )

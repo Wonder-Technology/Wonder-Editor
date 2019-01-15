@@ -100,7 +100,7 @@ let changeChildOrder =
             test(
               Log.buildAssertMessage(
                 ~expect={j|parent should be the parent of source and target|j},
-                ~actual={j||j},
+                ~actual={j|not|j},
               ),
               () =>
               switch (
@@ -109,7 +109,7 @@ let changeChildOrder =
               ) {
               | (Some(sourceParent), Some(targetParent)) =>
                 sourceParent == targetParent;
-                parentTransform == targetParent;
+                targetParentTransform == targetParent;
               | _ => assertFail()
               }
             )

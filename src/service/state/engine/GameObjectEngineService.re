@@ -182,31 +182,6 @@ let getGameObjectActiveBasicCameraView = (gameObject, engineState) => {
 
 let changeGameObjectChildOrder =
     (sourceGameObject, targetGameObject, transformType, engineState) => {
-  WonderLog.Contract.requireCheck(
-    () =>
-      WonderLog.(
-        Contract.(
-          Operators.(
-            test(
-              Log.buildAssertMessage(
-                ~expect={j|the target gameObject parent should exist|j},
-                ~actual={j|not|j},
-              ),
-              () =>
-              engineState
-              |> GameObjectComponentEngineService.unsafeGetTransformComponent(
-                   targetGameObject,
-                 )
-              |. TransformEngineService.getParent(engineState)
-              |> Js.Option.isSome
-              |> assertTrue
-            )
-          )
-        )
-      ),
-    StateEditorService.getStateIsDebug(),
-  );
-
   let sourceTransform =
     GameObjectComponentEngineService.unsafeGetTransformComponent(
       sourceGameObject,
