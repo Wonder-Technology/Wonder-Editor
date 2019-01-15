@@ -179,3 +179,53 @@ let getGameObjectActiveBasicCameraView = (gameObject, engineState) => {
   activeBasicCameraViews |> Js.Array.length === 0 ?
     None : Array.unsafe_get(activeBasicCameraViews, 0) |. Some;
 };
+
+let changeGameObjectChildOrder =
+    (sourceGameObject, targetGameObject, transformType, engineState) => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect={j|the target gameObject parent should exist|j},
+                ~actual={j|not|j},
+              ),
+              () =>
+              engineState
+              |> GameObjectComponentEngineService.unsafeGetTransformComponent(
+                   targetGameObject,
+                 )
+              |. TransformEngineService.getParent(engineState)
+              |> Js.Option.isSome
+              |> assertTrue
+            )
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
+  let sourceTransform =
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      sourceGameObject,
+      engineState,
+    );
+  let targetTransform =
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      targetGameObject,
+      engineState,
+    );
+  let targetParentTransform =
+    TransformEngineService.getParent(targetTransform, engineState)
+    |> OptionService.unsafeGet;
+
+  TransformEngineService.changeChildOrder(
+    sourceTransform,
+    targetTransform,
+    targetParentTransform,
+    transformType,
+    engineState,
+  );
+};

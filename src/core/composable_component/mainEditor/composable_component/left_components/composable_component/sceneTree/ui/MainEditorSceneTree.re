@@ -34,7 +34,7 @@ module Method = {
 
   let dragGameObjectIntoGameObject = SceneTreeDragGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let dragWDBIntoScene = SceneTreeDragWDBEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+  let dragWDBIntoGameObject = SceneTreeDragWDBEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let buildSceneNode = (children, engineState) => {
     uid: SceneEngineService.getSceneGameObject(engineState),
@@ -132,7 +132,7 @@ let render = (store, dispatchFunc, _self) => {
                        (store, dispatchFunc),
                        (),
                      ),
-                     Method.dragWDBIntoScene((store, dispatchFunc), ()),
+                     Method.dragWDBIntoGameObject((store, dispatchFunc), ()),
                    ),
                    (
                      SceneEngineService.getSceneGameObject(engineState),

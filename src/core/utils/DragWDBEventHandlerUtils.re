@@ -1,5 +1,9 @@
 let handleSelfLogic =
-    ((store, dispatchFunc), (), (targetGameObjectUid, wdbGameObjectUid)) => {
+    (
+      (store, dispatchFunc),
+      (),
+      (targetGameObjectUid, wdbGameObjectUid, dragPosition),
+    ) => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
@@ -11,6 +15,7 @@ let handleSelfLogic =
     DragWDBUtils.dragWDB(
       wdbGameObjectUid,
       targetGameObjectUid,
+      dragPosition,
       (editorState, engineState),
     );
 

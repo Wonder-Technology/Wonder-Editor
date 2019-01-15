@@ -1,30 +1,27 @@
-type dragMoveType =
-  | NoDrag
-  | DragToGapTop
-  | DragToGapCenter
-  | DragToGapBottom;
+open SceneTreeNodeType;
 
 type state = {
   dragGapClass: string,
   style: ReactDOMRe.Style.t,
-  dragPosition: dragMoveType,
+  dragPosition: sceneTreeDragMoveType,
 };
 
 type action =
-  | TogggleChildren(int)
   | Nothing
-  | DragEnter(dragMoveType)
+  | TogggleChildren(int)
+  | DragEnter(sceneTreeDragMoveType)
   | DragLeave
   | DragEnd
   | DragStart
-  | DragOver(dragMoveType)
-  | DragGameObject(int, int)
-  | DragWDB(int, int);
+  | DragOver(sceneTreeDragMoveType)
+  | DragGameObject(int, int, sceneTreeDragMoveType)
+  | DragWDB(int, int, sceneTreeDragMoveType);
 
 module Method = {
   let buildDragEndState = state => {
     ...state,
     dragGapClass: "no-drag",
+    style: ReactUtils.addStyleProp("opacity", "1", state.style),
   };
 
   let handleDragStart = (id, widget, dragImg, effectAllowd, event) => {
@@ -40,9 +37,9 @@ module Method = {
 
     switch (event |> ReactEventRe.Mouse.pageY) {
     | pageY when pageY > domOffsetHeight + domOffsetTop - gapHeight =>
-      DragToGapBottom
-    | pageY when pageY < domOffsetTop + gapHeight => DragToGapTop
-    | pageY => DragToGapCenter
+      DragAfterTarget
+    | pageY when pageY < domOffsetTop + gapHeight => DragBeforeTarget
+    | pageY => DragIntoTarget
     };
   };
 
@@ -95,7 +92,7 @@ module Method = {
     isTrigger || isAssetWDBFileFunc() ?
       DragOver(
         isSceneGameObject ?
-          DragToGapCenter :
+          DragIntoTarget :
           ReactDOMRe.domElementToObj(ReactEventRe.Mouse.target(event))
           |> _calcDragPosition(event),
       ) :
@@ -103,7 +100,12 @@ module Method = {
   };
 
   let handleDrop =
-      (id, (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc), event) => {
+      (
+        id,
+        (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc),
+        dragPosition,
+        event,
+      ) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     let startId = DragUtils.getDragedId(e);
 
@@ -126,7 +128,7 @@ module Method = {
        );
 
     isTrigger ?
-      DragGameObject(id, startId) :
+      DragGameObject(id, startId, dragPosition) :
       isAssetWDBFileFunc() ?
         {
           let wdbGameObjectUid =
@@ -134,7 +136,7 @@ module Method = {
             |> OperateTreeAssetEditorService.unsafeFindNodeById(startId)
             |> WDBNodeAssetService.getWDBGameObject;
 
-          DragWDB(id, wdbGameObjectUid);
+          DragWDB(id, wdbGameObjectUid, dragPosition);
         } :
         DragLeave;
   };
@@ -195,6 +197,7 @@ module Method = {
             handleDrop(
               id,
               (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc),
+              state.dragPosition,
               _e,
             ),
           )
@@ -280,19 +283,19 @@ let reducer =
 
   | DragOver(dragPosition) =>
     switch (dragPosition) {
-    | DragToGapTop =>
+    | DragBeforeTarget =>
       ReasonReact.Update({
         ...state,
         dragGapClass: "drag-gap-top",
         dragPosition,
       })
-    | DragToGapCenter =>
+    | DragIntoTarget =>
       ReasonReact.Update({
         ...state,
         dragGapClass: "drag-gap-center",
         dragPosition,
       })
-    | DragToGapBottom =>
+    | DragAfterTarget =>
       ReasonReact.Update({
         ...state,
         dragGapClass: "drag-gap-bottom",
@@ -304,16 +307,16 @@ let reducer =
 
   | DragEnd => ReasonReact.Update(Method.buildDragEndState(state))
 
-  | DragGameObject(targetUid, draggedUid) =>
+  | DragGameObject(targetUid, draggedUid, dragPosition) =>
     ReasonReactUtils.updateWithSideEffects(
       Method.buildDragEndState(state), _state =>
-      dragGameObject((targetUid, draggedUid))
+      dragGameObject((targetUid, draggedUid, dragPosition))
     )
 
-  | DragWDB(targetUid, wdbGameObjectUid) =>
+  | DragWDB(targetUid, wdbGameObjectUid, dragPosition) =>
     ReasonReactUtils.updateWithSideEffects(
       Method.buildDragEndState(state), _state =>
-      dragWDB((targetUid, wdbGameObjectUid))
+      dragWDB((targetUid, wdbGameObjectUid, dragPosition))
     )
 
   | Nothing => ReasonReact.NoUpdate

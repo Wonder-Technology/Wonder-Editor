@@ -87,7 +87,7 @@ let changeChildOrder =
     (
       sourceTransfrom,
       targetTransform,
-      parentTransform,
+      targetParentTransform,
       action: TransformType.changeChildOrder,
       state,
     )
@@ -126,13 +126,13 @@ let changeChildOrder =
         _changeChildOrder(
           sourceTransfrom,
           targetTransform,
-          getChildren(parentTransform, state),
+          getChildren(targetParentTransform, state),
           action,
         )
         /* TODO move to engine */
         |> Wonderjs.HierachyTransformService._setChildren(
              Wonderjs.RecordTransformMainService.getRecord(state),
-             parentTransform,
+             targetParentTransform,
            ),
       ),
   };

@@ -1,58 +1,58 @@
 open SceneGraphType;
 
 /* let getSimpleSceneTree = () => [|
-  {
-    uid: 0,
-    name: "root",
-    children: [|
-      {uid: 1, name: "gameObject1", children: [||]},
-      {uid: 2, name: "gameObject2", children: [||]},
-      {uid: 3, name: "gameObject3", children: [||]},
-    |],
-  },
-|]; */
+     {
+       uid: 0,
+       name: "root",
+       children: [|
+         {uid: 1, name: "gameObject1", children: [||]},
+         {uid: 2, name: "gameObject2", children: [||]},
+         {uid: 3, name: "gameObject3", children: [||]},
+       |],
+     },
+   |]; */
 
 /* let getTwoLayerSceneTree = () => [|
-  {
-    uid: 0,
-    name: "root",
-    children: [|
-      {uid: 1, name: "gameObject1", children: [||]},
-      {uid: 2, name: "gameObject2", children: [||]},
-      {
-        uid: 3,
-        name: "gameObject3",
-        children: [|
-          {uid: 4, name: "gameObject4", children: [||]},
-          {uid: 5, name: "gameObject5", children: [||]},
-        |],
-      },
-    |],
-  },
-|]; */
+     {
+       uid: 0,
+       name: "root",
+       children: [|
+         {uid: 1, name: "gameObject1", children: [||]},
+         {uid: 2, name: "gameObject2", children: [||]},
+         {
+           uid: 3,
+           name: "gameObject3",
+           children: [|
+             {uid: 4, name: "gameObject4", children: [||]},
+             {uid: 5, name: "gameObject5", children: [||]},
+           |],
+         },
+       |],
+     },
+   |]; */
 
 /* let getThreeLayerSceneTree = () => [|
-  {
-    uid: 0,
-    name: "root",
-    children: [|
-      {uid: 1, name: "gameObject1", children: [||]},
-      {uid: 2, name: "gameObject2", children: [||]},
-      {
-        uid: 3,
-        name: "gameObject3",
-        children: [|
-          {uid: 4, name: "gameObject4", children: [||]},
-          {
-            uid: 5,
-            name: "gameObject5",
-            children: [|{uid: 6, name: "gameObject6", children: [||]}|],
-          },
-        |],
-      },
-    |],
-  },
-|]; */
+     {
+       uid: 0,
+       name: "root",
+       children: [|
+         {uid: 1, name: "gameObject1", children: [||]},
+         {uid: 2, name: "gameObject2", children: [||]},
+         {
+           uid: 3,
+           name: "gameObject3",
+           children: [|
+             {uid: 4, name: "gameObject4", children: [||]},
+             {
+               uid: 5,
+               name: "gameObject5",
+               children: [|{uid: 6, name: "gameObject6", children: [||]}|],
+             },
+           |],
+         },
+       |],
+     },
+   |]; */
 
 module Drag = {
   let isTriggerDragCurrentSceneTreeNode = targetGameObject => {
@@ -100,10 +100,10 @@ module Drag = {
       |> OperateTreeAssetEditorService.unsafeFindNodeById(wdbNodeId)
       |> WDBNodeAssetService.getWDBGameObject;
 
-    MainEditorSceneTree.Method.dragWDBIntoScene(
+    MainEditorSceneTree.Method.dragWDBIntoGameObject(
       (store, dispatchFunc),
       (),
-      (targetGameObject, wdbGameObjectUid),
+      (targetGameObject, wdbGameObjectUid, SceneTreeNodeType.DragIntoTarget),
     );
     /* DragEventUtils.handleDragEnd(event); */
   };
@@ -119,7 +119,7 @@ module Drag = {
     MainEditorSceneTree.Method.dragGameObjectIntoGameObject(
       (store, dispatchFunc),
       (),
-      (targetGameObject, sourceGameObject),
+      (targetGameObject, sourceGameObject, SceneTreeNodeType.DragIntoTarget),
     );
 };
 

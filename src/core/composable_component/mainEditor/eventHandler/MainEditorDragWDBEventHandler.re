@@ -18,6 +18,7 @@ module CustomEventHandler = {
         | Some(gameObject) => gameObject
         },
         wdbGameObjectUid,
+        SceneTreeNodeType.DragIntoTarget,
       ),
     );
   };

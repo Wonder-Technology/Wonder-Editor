@@ -1,3 +1,5 @@
+open SceneTreeNodeType;
+
 let _checkLightCount = (gameObject, (editorState, engineState)) => {
   let result =
     (
@@ -40,7 +42,12 @@ let _checkLightCount = (gameObject, (editorState, engineState)) => {
 };
 
 let dragWDB =
-    (wdbGameObjectUid, targetGameObjectUid, (editorState, engineState)) =>
+    (
+      wdbGameObjectUid,
+      targetGameObjectUid,
+      dragPosition,
+      (editorState, engineState),
+    ) =>
   switch (_checkLightCount(wdbGameObjectUid, (editorState, engineState))) {
   | (engineState, false) => (false, (editorState, engineState))
   | (engineState, true) =>
@@ -54,10 +61,39 @@ let dragWDB =
 
     let clonedWDBGameObject =
       cloneGameObjectArr |> CloneGameObjectLogicService.getClonedGameObject;
+    Js.log(clonedWDBGameObject);
 
     let engineState =
-      engineState
-      |> GameObjectUtils.addChild(targetGameObjectUid, clonedWDBGameObject);
+      switch (dragPosition) {
+      | DragBeforeTarget =>
+        engineState
+        |> GameObjectUtils.addChild(
+             GameObjectUtils.getParent(targetGameObjectUid, engineState)
+             |> OptionService.unsafeGet,
+             clonedWDBGameObject,
+           )
+        |> GameObjectEngineService.changeGameObjectChildOrder(
+             wdbGameObjectUid,
+             targetGameObjectUid,
+             WonderEditor.TransformType.Before,
+           )
+
+      | DragIntoTarget =>
+        engineState
+        |> GameObjectUtils.addChild(targetGameObjectUid, clonedWDBGameObject)
+      | DragAfterTarget =>
+        engineState
+        |> GameObjectUtils.addChild(
+             GameObjectUtils.getParent(targetGameObjectUid, engineState)
+             |> OptionService.unsafeGet,
+             clonedWDBGameObject,
+           )
+        |> GameObjectEngineService.changeGameObjectChildOrder(
+             wdbGameObjectUid,
+             targetGameObjectUid,
+             WonderEditor.TransformType.After,
+           )
+      };
 
     let engineState =
       SceneEngineService.isNeedReInitSceneAllLightMaterials(

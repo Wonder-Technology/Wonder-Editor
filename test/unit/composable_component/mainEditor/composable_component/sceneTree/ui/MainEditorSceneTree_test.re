@@ -61,7 +61,7 @@ let _ =
               BaseEventTool.buildDragEvent(.),
             );
 
-          result |> expect == SceneTreeNode.DragEnter(DragToGapCenter);
+          result |> expect == SceneTreeNode.DragEnter(DragIntoTarget);
         })
       );
 
@@ -94,6 +94,7 @@ let _ =
                     CheckSceneTreeLogicService.checkGameObjectRelation,
                     WDBNodeAssetEditorService.isWDBAssetFile,
                   ),
+                  SceneTreeNodeType.DragIntoTarget,
                   BaseEventTool.buildDragEventWithDataMap(
                     WonderCommonlib.HashMapService.createEmpty()
                     |> WonderCommonlib.HashMapService.set(
@@ -108,6 +109,7 @@ let _ =
               expect == SceneTreeNode.DragGameObject(
                           targetGameObject,
                           sourceGameObject,
+                          SceneTreeNodeType.DragIntoTarget,
                         );
             },
           )

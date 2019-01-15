@@ -1,19 +1,49 @@
+open SceneTreeNodeType;
+
+open Wonderjs;
+
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
 
   type prepareTuple = unit;
   type dataTuple = (
-    Wonderjs.GameObjectType.gameObject,
-    Wonderjs.GameObjectType.gameObject,
+    GameObjectType.gameObject,
+    GameObjectType.gameObject,
+    sceneTreeDragMoveType,
   );
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), (), (targetUid, draggedUid)) => {
-    SceneTreeEditorService.setIsShowChildren(targetUid, true)
-    |> StateLogicService.getAndSetEditorState;
+  let handleSelfLogic =
+      ((store, dispatchFunc), (), (targetUid, draggedUid, dragPosition)) => {
+    let engineState = StateEngineService.unsafeGetState();
 
-    GameObjectUtils.setParentKeepOrder(targetUid, draggedUid)
-    |> StateLogicService.getAndRefreshEngineStateWithFunc;
+    let engineState =
+      switch (dragPosition) {
+      | DragBeforeTarget =>
+        GameObjectEngineService.changeGameObjectChildOrder(
+          draggedUid,
+          targetUid,
+          WonderEditor.TransformType.Before,
+          engineState,
+        )
+
+      | DragIntoTarget =>
+        SceneTreeEditorService.setIsShowChildren(targetUid, true)
+        |> StateLogicService.getAndSetEditorState;
+
+        engineState
+        |> GameObjectUtils.setParentKeepOrder(targetUid, draggedUid);
+
+      | DragAfterTarget =>
+        GameObjectEngineService.changeGameObjectChildOrder(
+          draggedUid,
+          targetUid,
+          WonderEditor.TransformType.After,
+          engineState,
+        )
+      };
+
+    engineState |> StateEngineService.setState |> ignore;
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))
     |> ignore;
