@@ -92,7 +92,6 @@ let changeChildOrder =
       state,
     )
     : Wonderjs.StateDataMainType.state => {
-<<<<<<< HEAD
   let state = setParentKeepOrder(parentTransform, sourceTransfrom, state);
 
   {
@@ -112,23 +111,6 @@ let changeChildOrder =
            ),
       ),
   };
-=======
-  ...state,
-  transformRecord:
-    Some(
-      _changeChildOrder(
-        sourceTransfrom,
-        targetTransform,
-        getChildren(parentTransform, state),
-        action,
-      )
-      /* TODO move to engine */
-      |> Wonderjs.HierachyTransformService._setChildren(
-           Wonderjs.RecordTransformMainService.getRecord(state),
-           parentTransform,
-         ),
-    ),
->>>>>>> 362905dee90efe648e3439ad3507bf8aa5292f55
 };
 
 let getGameObjectByTransform = Wonderjs.TransformAPI.unsafeGetTransformGameObject;
