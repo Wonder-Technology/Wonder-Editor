@@ -1,8 +1,5 @@
 let rec _judgeAllParents = (targetTransform, draggedTransform, engineState) =>
-  switch (
-    TransformEngineService.getParent(targetTransform, engineState)
-    |> Js.Undefined.to_opt
-  ) {
+  switch (TransformEngineService.getParent(targetTransform, engineState)) {
   | None => false
   | Some(transformParent) =>
     transformParent === draggedTransform ?
@@ -34,7 +31,6 @@ let _checkTargetGameObjectBeDragedGameObjectParent =
               draggedGameObject,
             ),
        )
-    |> Js.Undefined.to_opt
   ) {
   | None => Success()
   | Some(transformParent) =>

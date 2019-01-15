@@ -22,7 +22,6 @@ let getParent = (child, engineState) =>
 
 let getParentGameObject = (child, engineState) =>
   getParent(child, engineState)
-  |> Js.Undefined.toOption
   |> Js.Option.map((. parentTransform) =>
        TransformEngineService.getGameObjectByTransform(
          parentTransform,

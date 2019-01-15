@@ -23,7 +23,8 @@ let setTransformLocalEulerAngles = (localEulerAngles, transform, engineState) =>
   );
 
 let getParent = (child: Wonderjs.TransformType.transform, state) =>
-  Wonderjs.TransformAPI.unsafeGetTransformParent(child, state);
+  Wonderjs.TransformAPI.unsafeGetTransformParent(child, state)
+  |> Js.Undefined.toOption;
 
 let setParent =
     (
@@ -91,21 +92,25 @@ let changeChildOrder =
       state,
     )
     : Wonderjs.StateDataMainType.state => {
-  ...state,
-  transformRecord:
-    Some(
-      _changeChildOrder(
-        sourceTransfrom,
-        targetTransform,
-        getChildren(parentTransform, state),
-        action,
-      )
-      /* TODO move to engine */
-      |> Wonderjs.HierachyTransformService._setChildren(
-           Wonderjs.RecordTransformMainService.getRecord(state),
-           parentTransform,
-         ),
-    ),
+  let state = setParentKeepOrder(parentTransform, sourceTransfrom, state);
+
+  {
+    ...state,
+    transformRecord:
+      Some(
+        _changeChildOrder(
+          sourceTransfrom,
+          targetTransform,
+          getChildren(parentTransform, state),
+          action,
+        )
+        /* TODO move to engine */
+        |> Wonderjs.HierachyTransformService._setChildren(
+             Wonderjs.RecordTransformMainService.getRecord(state),
+             parentTransform,
+           ),
+      ),
+  };
 };
 
 let getGameObjectByTransform = Wonderjs.TransformAPI.unsafeGetTransformGameObject;
