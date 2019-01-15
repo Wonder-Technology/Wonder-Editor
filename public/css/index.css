@@ -595,7 +595,8 @@ html, body {
                     height: 22px;
                     box-sizing: border-box;
                     display: flex;
-                    align-items: center; }
+                    align-items: center;
+                    border: 3px solid rgba(0, 0, 0, 0); }
                     .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .wonder-left-components .wonder-sceneTree-component .wonder-tree .wonder-tree-node li .draggable-container * {
                       pointer-events: none; }
                   .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .wonder-left-components .wonder-sceneTree-component .wonder-tree .wonder-tree-node li .drag-gap-top {
@@ -867,7 +868,8 @@ html, body {
                       height: 22px;
                       box-sizing: border-box;
                       display: flex;
-                      align-items: center; }
+                      align-items: center;
+                      border: 3px solid rgba(0, 0, 0, 0); }
                       .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .asset-tree .wonder-asset-assetTree .wonder-tree-node li .draggable-container * {
                         pointer-events: none; }
                     .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .asset-tree .wonder-asset-assetTree .wonder-tree-node li .drag-gap-top {

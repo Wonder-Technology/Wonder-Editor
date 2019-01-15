@@ -38,6 +38,7 @@
             box-sizing: border-box;
             display: flex;
             align-items: center;
+            border:3px solid rgba(0,0,0,0);
             * {
                 pointer-events: none
             }
@@ -52,7 +53,7 @@
             border-bottom: 3px solid coral;
         }
         .no-drag{
-            border:3px solid rgba(0,0,0,0) 
+            border:3px solid rgba(0,0,0,0);
         }
         .select-active {
             background-color: #5C7EA6;
