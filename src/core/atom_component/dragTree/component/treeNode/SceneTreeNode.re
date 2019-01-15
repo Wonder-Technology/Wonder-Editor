@@ -17,7 +17,11 @@ type action =
   | DragLeave
   | DragEnd
   | DragStart
+<<<<<<< HEAD
   | DragOver(dragMoveType)
+=======
+  | DragOver( dragMoveType)
+>>>>>>> 362905dee90efe648e3439ad3507bf8aa5292f55
   | DragGameObject(int, int)
   | DragWDB(int, int);
 
@@ -25,7 +29,12 @@ module Method = {
   let buildDragEndState = state => {
     ...state,
     dragGapClass: "no-drag",
+<<<<<<< HEAD
     style: ReactUtils.addStyleProp("opacity", "1", state.style),
+=======
+    style: ReactUtils.addStyleProp("opacity", "1", state.style) 
+
+>>>>>>> 362905dee90efe648e3439ad3507bf8aa5292f55
   };
 
   let handleDragStart = (id, widget, dragImg, effectAllowd, event) => {
@@ -56,6 +65,10 @@ module Method = {
         checkNodeRelationFunc,
       );
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 362905dee90efe648e3439ad3507bf8aa5292f55
     isTrigger || isAssetWDBFileFunc() ?
       DragEnter(
         ReactDOMRe.domElementToObj(ReactEventRe.Mouse.target(event))
@@ -277,6 +290,7 @@ let reducer =
       style: ReactUtils.addStyleProp("opacity", "0.2", state.style),
     })
 
+<<<<<<< HEAD
   | DragEnter(dragPosition) => ReasonReact.Update({...state, dragPosition})
 
   | DragOver(dragPosition) =>
@@ -303,6 +317,37 @@ let reducer =
 
   | DragLeave => ReasonReact.Update({...state, dragGapClass: "no-drag"})
 
+=======
+  | DragEnter(dragPosition) =>
+  ReasonReact.Update({...state, dragPosition})
+
+  | DragOver( dragPosition) => 
+
+    switch (dragPosition) {
+    | DragToGapTop =>
+      ReasonReact.Update({
+        ...state,
+        dragGapClass: "drag-gap-top",
+        dragPosition,
+      })
+    | DragToGapCenter =>
+      ReasonReact.Update({
+        ...state,
+        dragGapClass: "drag-gap-center",
+        dragPosition,
+      })
+    | DragToGapBottom =>
+      ReasonReact.Update({
+        ...state,
+        dragGapClass: "drag-gap-bottom",
+        dragPosition,
+      })
+    }
+
+  | DragLeave => ReasonReact.Update({...state, dragGapClass: "no-drag", 
+ })
+
+>>>>>>> 362905dee90efe648e3439ad3507bf8aa5292f55
   | DragEnd => ReasonReact.Update(Method.buildDragEndState(state))
 
   | DragGameObject(targetUid, draggedUid) =>
