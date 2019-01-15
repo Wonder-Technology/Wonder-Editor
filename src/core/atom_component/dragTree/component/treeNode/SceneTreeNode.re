@@ -17,7 +17,7 @@ type action =
   | DragLeave
   | DragEnd
   | DragStart
-  | DragOver(dragMoveType)
+  | DragOver( dragMoveType)
   | DragGameObject(int, int)
   | DragWDB(int, int);
 
@@ -25,7 +25,8 @@ module Method = {
   let buildDragEndState = state => {
     ...state,
     dragGapClass: "no-drag",
-    style: ReactUtils.addStyleProp("opacity", "1", state.style),
+    style: ReactUtils.addStyleProp("opacity", "1", state.style) 
+
   };
 
   let handleDragStart = (id, widget, dragImg, effectAllowd, event) => {
@@ -55,6 +56,7 @@ module Method = {
         isWidgetFunc,
         checkNodeRelationFunc,
       );
+
 
     isTrigger || isAssetWDBFileFunc() ?
       DragEnter(
@@ -89,8 +91,15 @@ module Method = {
         checkNodeRelationFunc,
       );
 
+    let isSceneGameObject =
+      SceneEngineService.getSceneGameObject
+      |> StateLogicService.getEngineStateToGetData === id;
+
     isTrigger || isAssetWDBFileFunc() ?
-      DragOver(
+      DragOver( 
+        isSceneGameObject ? 
+        DragToGapCenter:
+
         ReactDOMRe.domElementToObj(ReactEventRe.Mouse.target(event))
         |> _calcDragPosition(event),
       ) :
@@ -271,9 +280,11 @@ let reducer =
       style: ReactUtils.addStyleProp("opacity", "0.2", state.style),
     })
 
-  | DragEnter(dragPosition) => ReasonReact.Update({...state, dragPosition})
+  | DragEnter(dragPosition) =>
+  ReasonReact.Update({...state, dragPosition})
 
-  | DragOver(dragPosition) =>
+  | DragOver( dragPosition) => 
+
     switch (dragPosition) {
     | DragToGapTop =>
       ReasonReact.Update({
@@ -295,7 +306,8 @@ let reducer =
       })
     }
 
-  | DragLeave => ReasonReact.Update({...state, dragGapClass: "no-drag"})
+  | DragLeave => ReasonReact.Update({...state, dragGapClass: "no-drag", 
+ })
 
   | DragEnd => ReasonReact.Update(Method.buildDragEndState(state))
 
@@ -374,8 +386,8 @@ let make =
     ) => {
   ...component,
   initialState: () => {
-    dragGapClass: "no-drag",
     style: ReactDOMRe.Style.make(),
+    dragGapClass: "no-drag",
     dragPosition: NoDrag,
   },
   reducer:
