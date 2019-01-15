@@ -92,7 +92,32 @@ let changeChildOrder =
       state,
     )
     : Wonderjs.StateDataMainType.state => {
-  let state = setParentKeepOrder(parentTransform, sourceTransfrom, state);
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect={j|parent should be the parent of source and target|j},
+                ~actual={j||j},
+              ),
+              () =>
+              switch (
+                getParent(sourceTransfrom, state),
+                getParent(targetTransform, state),
+              ) {
+              | (Some(sourceParent), Some(targetParent)) =>
+                sourceParent == targetParent;
+                parentTransform == targetParent;
+              | _ => assertFail()
+              }
+            )
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
 
   {
     ...state,

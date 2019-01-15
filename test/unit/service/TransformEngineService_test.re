@@ -120,24 +120,22 @@ let _ =
             (state, (parent1, parent2), (child1, child2, child3));
           };
 
-          test("test before", () => {
+          test("should contract error", () => {
             let (state, (parent1, parent2), (child1, child2, child3)) =
               _prepare(state^);
 
-            let state =
-              TransformEngineService.changeChildOrder(
-                child3,
-                child1,
-                parent1,
-                TransformType.Before,
-                state,
-              );
-
-            (
-              TransformEngineService.getChildren(parent1, state),
-              TransformEngineService.getChildren(parent2, state),
-            )
-            |> expect == ([|child3, child1, child2|], [||]);
+            expect(() => {
+              let state =
+                TransformEngineService.changeChildOrder(
+                  child3,
+                  child1,
+                  parent1,
+                  TransformType.Before,
+                  state,
+                );
+              ();
+            })
+            |> toThrow;
           });
         });
 
@@ -172,30 +170,22 @@ let _ =
             (state, parent1, (child1, child2, child3));
           };
 
-          test("test before", () => {
+          test("should contract error", () => {
             let (state, parent1, (child1, child2, child3)) =
               _prepare(state^);
 
-            let state =
-              TransformEngineService.changeChildOrder(
-                child3,
-                child1,
-                parent1,
-                TransformType.Before,
-                state,
-              );
-
-            (
-              TransformEngineService.getChildren(parent1, state),
-              TransformEngineService.getParent(child1, state),
-              TransformEngineService.getParent(child3, state),
-            )
-            |>
-            expect == (
-                        [|child3, child1, child2|],
-                        Some(parent1),
-                        Some(parent1),
-                      );
+            expect(() => {
+              let state =
+                TransformEngineService.changeChildOrder(
+                  child3,
+                  child1,
+                  parent1,
+                  TransformType.Before,
+                  state,
+                );
+              ();
+            })
+            |> toThrow;
           });
         });
       })
