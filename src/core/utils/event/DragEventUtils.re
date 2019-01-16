@@ -12,14 +12,14 @@ let handleDragEnter =
       checkNodeRelationFunc,
       _event,
     ) => {
-  let (isTrigger, _) =
-    DragEventBaseUtils.checkDragEnter(
+  let (isValid, _) =
+    DragEventBaseUtils.isValidForDragEnter(
       id,
       isWidgetFunc,
       checkNodeRelationFunc,
     );
 
-  isTrigger ? dragEnterAction : nothingAction;
+  isValid ? dragEnterAction : nothingAction;
 };
 
 let handleDragLeave = (id, dragLeaveAction, event) => {
@@ -51,8 +51,8 @@ let handleDrop =
 
   EventHelper.preventDefault(e);
 
-  let (isTrigger, relationResult) =
-    DragEventBaseUtils.checkDragDrop(
+  let (isValid, relationResult) =
+    DragEventBaseUtils.isValidForDragDrop(
       id,
       startId,
       isWidgetFunc,
@@ -70,7 +70,7 @@ let handleDrop =
           )
      );
 
-  isTrigger ? dragDropActionFunc(id, startId) : dragLeaveAction;
+  isValid ? dragDropActionFunc(id, startId) : dragLeaveAction;
 };
 
 let handleDragEnd = (dragEndAction, _event) => {

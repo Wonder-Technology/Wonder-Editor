@@ -61,7 +61,7 @@ module Method = {
     |> Js.Array.map(({uid, name, children}) =>
          <SceneTreeNode
            key=(StringService.intToString(uid))
-           id=uid
+           gameObject=uid
            name
            isSelected=(_isSelected(uid, currentSceneTreeNode))
            isActive=true

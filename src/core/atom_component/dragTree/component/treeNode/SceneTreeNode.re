@@ -9,7 +9,6 @@ type state = {
 type action =
   | Nothing
   | TogggleChildren(int)
-  | DragEnter(sceneTreeDragMoveType)
   | DragLeave
   | DragEnd
   | DragStart
@@ -21,11 +20,18 @@ module Method = {
   let buildDragEndState = state => {
     ...state,
     dragGapClass: "no-drag",
+    dragPosition: NoDrag,
     style: ReactUtils.addStyleProp("opacity", "1", state.style),
   };
 
-  let handleDragStart = (id, widget, dragImg, effectAllowd, event) => {
-    DragEventBaseUtils.dragStart(id, widget, dragImg, effectAllowd, event);
+  let handleDragStart = (gameObject, widget, dragImg, effectAllowd, event) => {
+    DragEventBaseUtils.dragStart(
+      gameObject,
+      widget,
+      dragImg,
+      effectAllowd,
+      event,
+    );
     DragStart;
   };
 
@@ -43,24 +49,7 @@ module Method = {
     };
   };
 
-  let handleDragEnter =
-      (id, (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc), event) => {
-    let (isTrigger, _) =
-      DragEventBaseUtils.checkDragEnter(
-        id,
-        isWidgetFunc,
-        checkNodeRelationFunc,
-      );
-
-    isTrigger || isAssetWDBFileFunc() ?
-      DragEnter(
-        ReactDOMRe.domElementToObj(ReactEventRe.Mouse.target(event))
-        |> _calcDragPosition(event),
-      ) :
-      Nothing;
-  };
-
-  let handleDragLeave = (id, event) => {
+  let handleDragLeave = (gameObject, event) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
 
     DragLeave;
@@ -74,22 +63,26 @@ module Method = {
   };
 
   let handleDragOver =
-      (id, (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc), event) => {
+      (
+        gameObject,
+        (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc),
+        event,
+      ) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     EventHelper.preventDefault(e);
+    let _isValidForDragOver = DragEventBaseUtils.isValidForDragEnter;
 
-    let (isTrigger, _) =
-      DragEventBaseUtils.checkDragEnter(
-        id,
-        isWidgetFunc,
-        checkNodeRelationFunc,
-      );
+    let (isValid, _) =
+      _isValidForDragOver(gameObject, isWidgetFunc, checkNodeRelationFunc);
 
     let isSceneGameObject =
-      SceneEngineService.getSceneGameObject
-      |> StateLogicService.getEngineStateToGetData === id;
+      gameObject
+      === (
+            SceneEngineService.getSceneGameObject
+            |> StateLogicService.getEngineStateToGetData
+          );
 
-    isTrigger || isAssetWDBFileFunc() ?
+    isValid || isAssetWDBFileFunc() ?
       DragOver(
         isSceneGameObject ?
           DragIntoTarget :
@@ -101,7 +94,7 @@ module Method = {
 
   let handleDrop =
       (
-        id,
+        gameObject,
         (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc),
         dragPosition,
         event,
@@ -111,9 +104,9 @@ module Method = {
 
     EventHelper.preventDefault(e);
 
-    let (isTrigger, relationResult) =
-      DragEventBaseUtils.checkDragDrop(
-        id,
+    let (isValid, relationResult) =
+      DragEventBaseUtils.isValidForDragDrop(
+        gameObject,
         startId,
         isWidgetFunc,
         checkNodeRelationFunc,
@@ -127,8 +120,8 @@ module Method = {
             )
        );
 
-    isTrigger ?
-      DragGameObject(id, startId, dragPosition) :
+    isValid ?
+      DragGameObject(gameObject, startId, dragPosition) :
       isAssetWDBFileFunc() ?
         {
           let wdbGameObjectUid =
@@ -136,17 +129,32 @@ module Method = {
             |> OperateTreeAssetEditorService.unsafeFindNodeById(startId)
             |> WDBNodeAssetService.getWDBGameObject;
 
-          DragWDB(id, wdbGameObjectUid, dragPosition);
+          DragWDB(gameObject, wdbGameObjectUid, dragPosition);
         } :
         DragLeave;
   };
 
   let buildNotDragableUl = TreeNodeUtils.buildNotDragableUl;
 
+  let _buildMultipleClassName = (isSelected, isActive, dragGapClass) =>
+    "draggable-container"
+    ++ (
+      isSelected ? isActive ? " select-active " : " select-not-active " : " "
+    )
+    ++ dragGapClass;
+
   let _renderDragableText =
       (
         (state, send),
-        (id, widget, dragImg, name, isShowChildren, isSelected, isActive),
+        (
+          gameObject,
+          widget,
+          dragImg,
+          name,
+          isShowChildren,
+          isSelected,
+          isActive,
+        ),
         (
           onSelectFunc,
           isWidgetFunc,
@@ -156,36 +164,21 @@ module Method = {
       ) =>
     <div
       className=(
-        "draggable-container"
-        ++ (
-          isSelected ?
-            isActive ? " select-active " : " select-not-active " : " "
-        )
-        ++ state.dragGapClass
+        _buildMultipleClassName(isSelected, isActive, state.dragGapClass)
       )
       style=state.style
       draggable=true
-      onMouseDown=(_event => onSelectFunc(id))
+      onMouseDown=(_event => onSelectFunc(gameObject))
       onDragStart=(
-        e => send(handleDragStart(id, widget, dragImg, "move", e))
+        e => send(handleDragStart(gameObject, widget, dragImg, "move", e))
       )
       onDragEnd=(_e => send(handleDragEnd(_e)))
-      onDragEnter=(
-        e =>
-          send(
-            handleDragEnter(
-              id,
-              (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc),
-              e,
-            ),
-          )
-      )
-      onDragLeave=(_e => send(handleDragLeave(id, _e)))
+      onDragLeave=(_e => send(handleDragLeave(gameObject, _e)))
       onDragOver=(
         e =>
           send(
             handleDragOver(
-              id,
+              gameObject,
               (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc),
               e,
             ),
@@ -195,7 +188,7 @@ module Method = {
         _e =>
           send(
             handleDrop(
-              id,
+              gameObject,
               (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc),
               state.dragPosition,
               _e,
@@ -209,7 +202,7 @@ module Method = {
       (
         (state, send),
         (
-          id,
+          gameObject,
           icon,
           widget,
           dragImg,
@@ -230,10 +223,10 @@ module Method = {
       (
         isHasChildren ?
           TreeNodeUtils.renderChildren(
-            id,
+            gameObject,
             isShowChildren,
             send,
-            TogggleChildren(id),
+            TogggleChildren(gameObject),
           ) :
           <div className="item-triangle" />
       )
@@ -246,7 +239,15 @@ module Method = {
       (
         _renderDragableText(
           (state, send),
-          (id, widget, dragImg, name, isShowChildren, isSelected, isActive),
+          (
+            gameObject,
+            widget,
+            dragImg,
+            name,
+            isShowChildren,
+            isSelected,
+            isActive,
+          ),
           (
             onSelectFunc,
             isWidgetFunc,
@@ -278,8 +279,6 @@ let reducer =
       ...state,
       style: ReactUtils.addStyleProp("opacity", "0.2", state.style),
     })
-
-  | DragEnter(dragPosition) => ReasonReact.Update({...state, dragPosition})
 
   | DragOver(dragPosition) =>
     switch (dragPosition) {
@@ -325,7 +324,7 @@ let reducer =
 let render =
     (
       (
-        id,
+        gameObject,
         name,
         widget,
         dragImg,
@@ -345,7 +344,7 @@ let render =
     Method._renderContent(
       (state, send),
       (
-        id,
+        gameObject,
         icon,
         widget,
         dragImg,
@@ -361,7 +360,7 @@ let render =
 
 let make =
     (
-      ~id,
+      ~gameObject,
       ~name,
       ~isSelected,
       ~isActive,
@@ -394,7 +393,7 @@ let make =
   render: (({state}: ReasonReact.self('a, 'b, 'c)) as self) =>
     render(
       (
-        id,
+        gameObject,
         name,
         widget,
         dragImg,

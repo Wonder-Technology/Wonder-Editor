@@ -56,21 +56,21 @@ open SceneGraphType;
 
 module Drag = {
   let isTriggerDragCurrentSceneTreeNode = targetGameObject => {
-    /* DragEventBaseUtils.checkDragDrop(
+    /* DragEventBaseUtils.isValidForDragDrop(
          targetGameObject,
          sourceGameObject,
          SceneTreeWidgetService.isWidget,
          CheckSceneTreeLogicService.checkGameObjectRelation,
        ); */
 
-    let (isTrigger, _) =
-      DragEventBaseUtils.checkDragEnter(
+    let (isValid, _) =
+      DragEventBaseUtils.isValidForDragEnter(
         targetGameObject,
         SceneTreeWidgetService.isWidget,
         CheckSceneTreeLogicService.checkGameObjectRelation,
       );
 
-    isTrigger;
+    isValid;
   };
 
   let dragWDBAssetToSceneTree =

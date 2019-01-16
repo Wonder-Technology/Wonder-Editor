@@ -36,10 +36,10 @@ let _ =
       );
       afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
 
-      describe("handleDragEnter", () => {
-        let _buildDragEnterResult =
+      describe("handleDragOver", () => {
+        let _buildDragOverResult =
             (~pageY, ~offsetTop=10, ~offsetHeight=8, ()) =>
-          SceneTreeNode.Method.handleDragEnter(
+          SceneTreeNode.Method.handleDragOver(
             MainEditorSceneTool.getFirstCube(
               StateEngineService.unsafeGetState(),
             ),
@@ -65,20 +65,20 @@ let _ =
           |> StateLogicService.getAndSetEditorState
         );
         test(
-          "if pageY < offsetTop + gapHeight, return DragEnter(DragBeforeTarget) ",
+          "if pageY < offsetTop + gapHeight, return DragOver(DragBeforeTarget) ",
           () =>
-          _buildDragEnterResult(~pageY=12, ())
-          |> expect == SceneTreeNode.DragEnter(DragBeforeTarget)
+          _buildDragOverResult(~pageY=12, ())
+          |> expect == SceneTreeNode.DragOver(DragBeforeTarget)
         );
         test(
-          "if pageY > offsetTop + offsetHeight - gapHeight, return DragEnter(DragAfterTarget)",
+          "if pageY > offsetTop + offsetHeight - gapHeight, return DragOver(DragAfterTarget)",
           () =>
-          _buildDragEnterResult(~pageY=25, ())
-          |> expect == SceneTreeNode.DragEnter(DragAfterTarget)
+          _buildDragOverResult(~pageY=25, ())
+          |> expect == SceneTreeNode.DragOver(DragAfterTarget)
         );
-        test("else, return DragEnter(DragIntoTarget)", () =>
-          _buildDragEnterResult(~pageY=20, ())
-          |> expect == SceneTreeNode.DragEnter(DragIntoTarget)
+        test("else, return DragOver(DragIntoTarget)", () =>
+          _buildDragOverResult(~pageY=20, ())
+          |> expect == SceneTreeNode.DragOver(DragIntoTarget)
         );
       });
 
@@ -143,7 +143,7 @@ let _ =
       );
       afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
 
-      describe("test snap shot", () => {
+      describe("test snapshot", () => {
         test("no drag", () =>
           BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
           |> ReactTestTool.createSnapshotAndMatch
