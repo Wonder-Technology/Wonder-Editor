@@ -167,7 +167,13 @@ module Method = {
         _buildMultipleClassName(isSelected, isActive, state.dragGapClass)
       )
       style=state.style
-      draggable=true
+      draggable=(
+        gameObject
+        !== (
+              SceneEngineService.getSceneGameObject
+              |> StateLogicService.getEngineStateToGetData
+            )
+      )
       onMouseDown=(_event => onSelectFunc(gameObject))
       onDragStart=(
         e => send(handleDragStart(gameObject, widget, dragImg, "move", e))

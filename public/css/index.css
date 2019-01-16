@@ -531,10 +531,6 @@ html, body {
                         height: 0;
                         border: 5px solid transparent;
                         border-left-color: #ffffff; }
-          .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .wonder-left-components [draggable] {
-            user-select: none;
-            -khtml-user-drag: element;
-            -webkit-user-drag: element; }
           .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .wonder-left-components .wonder-sceneTree-component {
             width: 100%;
             height: 100%;
