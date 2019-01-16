@@ -42,7 +42,7 @@ let _ =
             StateEngineService.unsafeGetState()
             |> MainEditorSceneTool.getCubeByIndex(1);
 
-          MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
+          MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
             ~sourceGameObject=draggedGameObject,
             ~targetGameObject,
             (),

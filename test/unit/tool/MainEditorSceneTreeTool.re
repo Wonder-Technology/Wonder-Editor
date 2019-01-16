@@ -85,6 +85,7 @@ module Drag = {
         ~effectEffectAllowd="move",
         ~dragImg=DomHelper.createElement("img"),
         ~event=BaseEventTool.buildDragEvent(.),
+        ~dragPosition=SceneTreeNodeType.DragIntoTarget,
         (),
       ) => {
     /* DragEventUtils.handleDragStart(
@@ -100,26 +101,27 @@ module Drag = {
       |> OperateTreeAssetEditorService.unsafeFindNodeById(wdbNodeId)
       |> WDBNodeAssetService.getWDBGameObject;
 
-    MainEditorSceneTree.Method.dragWDBIntoGameObject(
+    MainEditorSceneTree.Method.dragWDBToBeTargetSib(
       (store, dispatchFunc),
       (),
-      (targetGameObject, wdbGameObjectUid, SceneTreeNodeType.DragIntoTarget),
+      (targetGameObject, wdbGameObjectUid, dragPosition),
     );
     /* DragEventUtils.handleDragEnd(event); */
   };
 
-  let dragGameObjectIntoGameObject =
+  let dragGameObjectToBeTargetSib =
       (
         ~sourceGameObject,
         ~targetGameObject,
+        ~dragPosition=SceneTreeNodeType.DragIntoTarget,
         ~dispatchFunc=TestTool.getDispatch(),
         ~store=TestTool.buildEmptyAppState(),
         (),
       ) =>
-    MainEditorSceneTree.Method.dragGameObjectIntoGameObject(
+    MainEditorSceneTree.Method.dragGameObjectToBeTargetSib(
       (store, dispatchFunc),
       (),
-      (targetGameObject, sourceGameObject, SceneTreeNodeType.DragIntoTarget),
+      (targetGameObject, sourceGameObject, dragPosition),
     );
 };
 

@@ -1,3 +1,5 @@
+let getGapHeight = () => 4;
+
 let buildNotDragableUl = (treeChildren, isShowChildren, content) =>
   <ul className="wonder-tree-node">
     content

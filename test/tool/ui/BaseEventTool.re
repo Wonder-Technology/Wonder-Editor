@@ -143,6 +143,31 @@ dataTransfer: {
   |}
 ];
 
+let buildDragEventWithMouse = (~offsetTop=11, ~offsetHeight=12, ~pageY=12, ()) =>
+  {
+    "target": {
+      "getClientRects": () => {"length": 4},
+      "getBoundingClientRect": () => {
+        "top": offsetTop,
+        "left": offsetHeight,
+        "width": 13,
+        "height": 14,
+      },
+      "ownerDocument": {
+        "documentElement": {
+          "clientTop": 0,
+          "clientLeft": 0,
+        },
+        "defaultView": {
+          "pageYOffset": 0,
+          "pageXOffset": 0,
+        },
+      },
+    },
+    "pageY": pageY,
+  }
+  |> Obj.magic;
+
 let buildDragEvent =
   (.) =>
     buildDragEventWithDataMap(WonderCommonlib.HashMapService.createEmpty());

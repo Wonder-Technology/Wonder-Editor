@@ -33,7 +33,7 @@ module Method = {
     let domClientRect = DomHelper.getDomClientRect(domElement);
     let domOffsetTop = domClientRect##top;
     let domOffsetHeight = domClientRect##height;
-    let gapHeight = 4;
+    let gapHeight = TreeNodeUtils.getGapHeight();
 
     switch (event |> ReactEventRe.Mouse.pageY) {
     | pageY when pageY > domOffsetHeight + domOffsetTop - gapHeight =>

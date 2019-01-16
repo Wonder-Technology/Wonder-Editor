@@ -193,3 +193,16 @@ let getDirectionLightInDefaultScene = engineState =>
        _isDirectionLight(gameObject, engineState)
      )
   |> ArrayService.unsafeGetFirst;
+
+let getDefaultGameObjects = engineState => {
+  let scene = unsafeGetScene();
+  (
+    scene,
+    (
+      getCameraInDefaultScene(engineState),
+      getFirstCube(engineState),
+      getSecondCube(engineState),
+      getDirectionLightInDefaultScene(engineState),
+    ),
+  );
+};

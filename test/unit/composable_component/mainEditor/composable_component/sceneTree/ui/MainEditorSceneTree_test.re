@@ -36,34 +36,51 @@ let _ =
       );
       afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
 
-      describe("handleDragEnter", () =>
-        test(
-          "if is scene tree widget and pass check relation, return DragEnter",
-          () => {
+      describe("handleDragEnter", () => {
+        let _buildDragEnterResult =
+            (~pageY, ~offsetTop=10, ~offsetHeight=8, ()) =>
+          SceneTreeNode.Method.handleDragEnter(
+            MainEditorSceneTool.getFirstCube(
+              StateEngineService.unsafeGetState(),
+            ),
+            (
+              SceneTreeWidgetService.isWidget,
+              CheckSceneTreeLogicService.checkGameObjectRelation,
+              WDBNodeAssetEditorService.isWDBAssetFile,
+            ),
+            BaseEventTool.buildDragEventWithMouse(
+              ~pageY,
+              ~offsetTop,
+              ~offsetHeight,
+              (),
+            ),
+          );
+        beforeEach(() =>
           CurrentDragSourceEditorService.setCurrentDragSource((
             SceneTreeWidgetService.getWidget(),
             MainEditorSceneTool.getSecondCube(
               StateEngineService.unsafeGetState(),
             ),
           ))
-          |> StateLogicService.getAndSetEditorState;
-
-          let result =
-            SceneTreeNode.Method.handleDragEnter(
-              MainEditorSceneTool.getFirstCube(
-                StateEngineService.unsafeGetState(),
-              ),
-              (
-                SceneTreeWidgetService.isWidget,
-                CheckSceneTreeLogicService.checkGameObjectRelation,
-                WDBNodeAssetEditorService.isWDBAssetFile,
-              ),
-              BaseEventTool.buildDragEvent(.),
-            );
-
-          result |> expect == SceneTreeNode.DragEnter(DragIntoTarget);
-        })
-      );
+          |> StateLogicService.getAndSetEditorState
+        );
+        test(
+          "if pageY < offsetTop + gapHeight, return DragEnter(DragBeforeTarget) ",
+          () =>
+          _buildDragEnterResult(~pageY=12, ())
+          |> expect == SceneTreeNode.DragEnter(DragBeforeTarget)
+        );
+        test(
+          "if pageY > offsetTop + offsetHeight - gapHeight, return DragEnter(DragAfterTarget)",
+          () =>
+          _buildDragEnterResult(~pageY=25, ())
+          |> expect == SceneTreeNode.DragEnter(DragAfterTarget)
+        );
+        test("else, return DragEnter(DragIntoTarget)", () =>
+          _buildDragEnterResult(~pageY=20, ())
+          |> expect == SceneTreeNode.DragEnter(DragIntoTarget)
+        );
+      });
 
       describe("handleDragDrop", () =>
         describe("test drag gameObject", () =>
@@ -117,6 +134,119 @@ let _ =
       );
     });
 
+    describe("test drag gameObject to be target gameObject sib", () => {
+      beforeEach(() =>
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
+        )
+      );
+      afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
+
+      describe("test snap shot", () => {
+        test("no drag", () =>
+          BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
+          |> ReactTestTool.createSnapshotAndMatch
+        );
+
+        test("test drag gameObject before target gameObject", () => {
+          MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+            ~sourceGameObject=
+              MainEditorSceneTool.getDirectionLightInDefaultScene(
+                StateEngineService.unsafeGetState(),
+              ),
+            ~targetGameObject=
+              MainEditorSceneTool.getFirstCube(
+                StateEngineService.unsafeGetState(),
+              ),
+            ~dragPosition=SceneTreeNodeType.DragBeforeTarget,
+            (),
+          );
+
+          BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
+
+        test("test drag gameObject into target gameObject", () => {
+          MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+            ~sourceGameObject=
+              MainEditorSceneTool.getDirectionLightInDefaultScene(
+                StateEngineService.unsafeGetState(),
+              ),
+            ~targetGameObject=
+              MainEditorSceneTool.getFirstCube(
+                StateEngineService.unsafeGetState(),
+              ),
+            ~dragPosition=SceneTreeNodeType.DragIntoTarget,
+            (),
+          );
+
+          BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
+
+        test("test drag gameObject after target gameObject", () => {
+          MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+            ~sourceGameObject=
+              MainEditorSceneTool.getDirectionLightInDefaultScene(
+                StateEngineService.unsafeGetState(),
+              ),
+            ~targetGameObject=
+              MainEditorSceneTool.getFirstCube(
+                StateEngineService.unsafeGetState(),
+              ),
+            ~dragPosition=SceneTreeNodeType.DragAfterTarget,
+            (),
+          );
+
+          BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
+      });
+      describe("test logic", () => {
+        describe("test not change child", () =>
+          test("test no drag", () => {
+            let engineState = StateEngineService.unsafeGetState();
+            let (scene, (camera, cube1, cube2, directionLight)) =
+              MainEditorSceneTool.getDefaultGameObjects(engineState);
+
+            GameObjectUtils.getChildren(scene, engineState)
+            |> expect == [|camera, cube1, cube2, directionLight|];
+          })
+        );
+
+        describe("test change child", () =>
+          test("test drag gameObject after target gameObject", () => {
+            let engineState = StateEngineService.unsafeGetState();
+            let (scene, (camera, cube1, cube2, directionLight)) =
+              MainEditorSceneTool.getDefaultGameObjects(engineState);
+
+            MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+              ~sourceGameObject=camera,
+              ~targetGameObject=directionLight,
+              ~dragPosition=SceneTreeNodeType.DragAfterTarget,
+              (),
+            );
+
+            (
+              GameObjectUtils.getChildren(scene, engineState),
+              GameObjectUtils.getParentGameObject(camera, engineState),
+              GameObjectUtils.getParentGameObject(
+                directionLight,
+                engineState,
+              ),
+            )
+            |>
+            expect == (
+                        [|cube1, cube2, directionLight, camera|],
+                        Some(scene),
+                        Some(scene),
+                      );
+          })
+        );
+      });
+    });
+
     describe("get sceneTree from engine", () => {
       describe("test should update", () => {
         test("if reatinedProps updateTypeArr include All, should update", () =>
@@ -161,7 +291,7 @@ let _ =
           |> ReactTestTool.createSnapshotAndMatch
         );
         test("drag treeNode into target treeNode", () => {
-          MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
+          MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
             ~sourceGameObject=
               MainEditorSceneTool.getFirstCube(
                 StateEngineService.unsafeGetState(),
