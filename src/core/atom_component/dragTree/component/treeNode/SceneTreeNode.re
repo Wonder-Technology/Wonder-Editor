@@ -136,12 +136,8 @@ module Method = {
 
   let buildNotDragableUl = TreeNodeUtils.buildNotDragableUl;
 
-  let _buildMultipleClassName = (isSelected, isActive, dragGapClass) =>
-    "draggable-container"
-    ++ (
-      isSelected ? isActive ? " select-active " : " select-not-active " : " "
-    )
-    ++ dragGapClass;
+  let _buildMultipleClassName = classNameArr =>
+    classNameArr |> Js.Array.joinWith(" ");
 
   let _renderDragableText =
       (
@@ -164,7 +160,11 @@ module Method = {
       ) =>
     <div
       className=(
-        _buildMultipleClassName(isSelected, isActive, state.dragGapClass)
+        _buildMultipleClassName([|
+          "draggable-container",
+          isSelected ? isActive ? "select-active" : "select-not-active" : "",
+          state.dragGapClass,
+        |])
       )
       style=state.style
       draggable=(
