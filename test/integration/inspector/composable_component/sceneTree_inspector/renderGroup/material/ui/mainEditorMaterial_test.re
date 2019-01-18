@@ -70,7 +70,7 @@ let _ =
               |> expect == true;
             });
             test(
-              "test gameObject should move from lightMaterialRenderArray to basicMaterialRenderArray",
+              "test gameObject should move from lightMaterialRenderGameObjectArray to basicMaterialRenderGameObjectArray",
               () => {
                 let (basicMaterialRenderCount, lightMaterialRenderCount) =
                   MeshRendererToolEngine.getAllRenderArrayCount();

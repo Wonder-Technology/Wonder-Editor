@@ -61,33 +61,6 @@
   dependencies:
     array-from "^2.1.1"
 
-"@types/detect-indent@0.1.30":
-  version "0.1.30"
-  resolved "http://registry.npmjs.org/@types/detect-indent/-/detect-indent-0.1.30.tgz#dc682bb412b4e65ba098e70edad73b4833fb910d"
-
-"@types/glob@5.0.30":
-  version "5.0.30"
-  resolved "http://registry.npmjs.org/@types/glob/-/glob-5.0.30.tgz#1026409c5625a8689074602808d082b2867b8a51"
-  dependencies:
-    "@types/minimatch" "*"
-    "@types/node" "*"
-
-"@types/minimatch@*":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
-
-"@types/mkdirp@0.3.29":
-  version "0.3.29"
-  resolved "http://registry.npmjs.org/@types/mkdirp/-/mkdirp-0.3.29.tgz#7f2ad7ec55f914482fc9b1ec4bb1ae6028d46066"
-
-"@types/node@*":
-  version "10.12.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.2.tgz#d77f9faa027cadad9c912cd47f4f8b07b0fb0864"
-
-"@types/node@8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.0.tgz#acaa89247afddc7967e9902fd11761dadea1a555"
-
 "@webassemblyjs/ast@1.7.11":
   version "1.7.11"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.7.11.tgz#b988582cafbb2b095e8b556526f30c90d057cace"
@@ -1511,7 +1484,7 @@ combined-stream@~0.0.4:
   dependencies:
     delayed-stream "0.0.5"
 
-commander@^2.11.0, commander@^2.9.0:
+commander@^2.11.0:
   version "2.19.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.19.0.tgz#f6198aa84e5b83c46054b94ddedbfed5ee9ff12a"
 
@@ -1886,13 +1859,6 @@ detect-file@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/detect-file/-/detect-file-1.0.0.tgz#f0d66d03672a825cb1b73bdb3fe62310c8e552b7"
 
-detect-indent@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/detect-indent/-/detect-indent-0.2.0.tgz#042914498979ac2d9f3c73e4ff3e6877d3bc92b6"
-  dependencies:
-    get-stdin "^0.1.0"
-    minimist "^0.1.0"
-
 detect-indent@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/detect-indent/-/detect-indent-4.0.0.tgz#f76d064352cdf43a1cb6ce619c4ee3a9475de208"
@@ -1960,19 +1926,6 @@ draft-js@^0.10.0, draft-js@~0.10.0:
     fbjs "^0.8.15"
     immutable "~3.7.4"
     object-assign "^4.1.0"
-
-dts-bundle@^0.7.2:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/dts-bundle/-/dts-bundle-0.7.3.tgz#372b7bb69c820782e6382f400739a69dced3d59a"
-  dependencies:
-    "@types/detect-indent" "0.1.30"
-    "@types/glob" "5.0.30"
-    "@types/mkdirp" "0.3.29"
-    "@types/node" "8.0.0"
-    commander "^2.9.0"
-    detect-indent "^0.2.0"
-    glob "^6.0.4"
-    mkdirp "^0.5.0"
 
 duplexer2@0.0.2:
   version "0.0.2"
@@ -2562,13 +2515,6 @@ from2@^2.1.0:
     inherits "^2.0.1"
     readable-stream "^2.0.0"
 
-fs-extra@^2.0.0:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-2.1.2.tgz#046c70163cef9aad46b0e4a7fa467fb22d71de35"
-  dependencies:
-    graceful-fs "^4.1.2"
-    jsonfile "^2.1.0"
-
 fs-minipass@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/fs-minipass/-/fs-minipass-1.2.5.tgz#06c277218454ec288df77ada54a03b8702aacb9d"
@@ -2641,10 +2587,6 @@ get-caller-file@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.3.tgz#f978fa4c90d1dfe7ff2d6beda2a515e713bdcf4a"
 
-get-stdin@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-0.1.0.tgz#5998af24aafc802d15c82c685657eeb8b10d4a91"
-
 get-stdin@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-4.0.1.tgz#b968c6b0a04384324902e8bf1a5df32579a450fe"
@@ -2714,16 +2656,6 @@ glob@^4.3.1:
     inherits "2"
     minimatch "^2.0.1"
     once "^1.3.0"
-
-glob@^6.0.4:
-  version "6.0.4"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-6.0.4.tgz#0f08860f6a155127b2fadd4f9ce24b1aab6e4d22"
-  dependencies:
-    inflight "^1.0.4"
-    inherits "2"
-    minimatch "2 || 3"
-    once "^1.3.0"
-    path-is-absolute "^1.0.0"
 
 glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2, glob@~7.1.1:
   version "7.1.3"
@@ -2798,7 +2730,7 @@ graceful-fs@^3.0.0:
   dependencies:
     natives "^1.1.0"
 
-graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.4, graceful-fs@^4.1.6:
+graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.4:
   version "4.1.15"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
 
@@ -3888,12 +3820,6 @@ json5@^0.5.0, json5@^0.5.1:
   version "0.5.1"
   resolved "http://registry.npmjs.org/json5/-/json5-0.5.1.tgz#1eade7acc012034ad84e2396767ead9fa5495821"
 
-jsonfile@^2.1.0:
-  version "2.4.0"
-  resolved "http://registry.npmjs.org/jsonfile/-/jsonfile-2.4.0.tgz#3736a2b428b87bbda0cc83b53fa3d633a35c2ae8"
-  optionalDependencies:
-    graceful-fs "^4.1.6"
-
 jsonify@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
@@ -4363,17 +4289,17 @@ minimalistic-crypto-utils@^1.0.0, minimalistic-crypto-utils@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/minimalistic-crypto-utils/-/minimalistic-crypto-utils-1.0.1.tgz#f6c00c1c0b082246e5c4d99dfb8c7c083b2b582a"
 
-"minimatch@2 || 3", minimatch@^3.0.3, minimatch@^3.0.4, minimatch@~3.0.2:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
-  dependencies:
-    brace-expansion "^1.1.7"
-
 minimatch@^2.0.1:
   version "2.0.10"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-2.0.10.tgz#8d087c39c6b38c001b97fca7ce6d0e1e80afbac7"
   dependencies:
     brace-expansion "^1.0.0"
+
+minimatch@^3.0.3, minimatch@^3.0.4, minimatch@~3.0.2:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
+  dependencies:
+    brace-expansion "^1.1.7"
 
 minimatch@~0.2.11:
   version "0.2.14"
@@ -4385,10 +4311,6 @@ minimatch@~0.2.11:
 minimist@0.0.8:
   version "0.0.8"
   resolved "http://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
-
-minimist@^0.1.0:
-  version "0.1.0"
-  resolved "http://registry.npmjs.org/minimist/-/minimist-0.1.0.tgz#99df657a52574c21c9057497df742790b2b4c0de"
 
 minimist@^1.1.0, minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0:
   version "1.2.0"
@@ -7228,23 +7150,15 @@ wonder-most-animation-frame@0.0.3:
   dependencies:
     "@most/disposable" "^1.1.0"
 
-wonder-package@latest:
-  version "0.1.31"
-  resolved "https://registry.yarnpkg.com/wonder-package/-/wonder-package-0.1.31.tgz#b02757be5eb5ffe252c04484e9951c5669c45de4"
-  dependencies:
-    dts-bundle "^0.7.2"
-    fs-extra "^2.0.0"
-    glob "^7.1.1"
-
-wonder-webgl@^0.0.2, wonder-webgl@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/wonder-webgl/-/wonder-webgl-0.0.5.tgz#e31fe338ae6293174199387d6b7232d4c1972674"
+wonder-webgl@^0.0.2, wonder-webgl@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/wonder-webgl/-/wonder-webgl-0.0.6.tgz#47d10a560e451dfb74b7837ac0654d16fde6b10f"
   dependencies:
     wonder-log "^0.2.2"
 
-wonder.js@1.0.0-alpha.24:
-  version "1.0.0-alpha.24"
-  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.24.tgz#e1e4f9096cab46d02eb431b058623e329c5d0b1a"
+wonder.js@1.0.0-alpha.24.2:
+  version "1.0.0-alpha.24.2"
+  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.24.2.tgz#5d5eeda242548f23863834beaf500e2a0e43232d"
   dependencies:
     bs-fetch "^0.3.0"
     wonder-bs-json "^0.0.1"
@@ -7253,7 +7167,7 @@ wonder.js@1.0.0-alpha.24:
     wonder-imgui "^0.0.28"
     wonder-log "^0.2.10"
     wonder-most-animation-frame "0.0.3"
-    wonder-webgl "^0.0.5"
+    wonder-webgl "^0.0.6"
 
 word-wrap@1.1.0:
   version "1.1.0"

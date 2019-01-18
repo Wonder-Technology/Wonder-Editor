@@ -2,7 +2,7 @@ open InspectorComponentType;
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
-  type prepareTuple = Wonderjs.GameObjectType.gameObject;
+  type prepareTuple = Wonderjs.GameObjectPrimitiveType.gameObject;
   type dataTuple = componentType;
   type return = unit;
 

@@ -2,6 +2,6 @@ open Wonderjs;
 
 open StateDataMainType;
 
-let isShaderCacheClear = engineState =>
-  engineState.shaderRecord.shaderIndexMap
+let isInitShaderCacheClear = engineState =>
+  engineState.shaderRecord.shaderLibShaderIndexMap
   |> WonderCommonlib.HashMapService.length === 0;

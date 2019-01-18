@@ -1,4 +1,4 @@
 type sceneTreeRecord = {
-  currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject),
+  currentSceneTreeNode: option(Wonderjs.GameObjectPrimitiveType.gameObject),
   isShowChildrenMap: WonderCommonlib.SparseMapService.t(bool),
 };

@@ -1,6 +1,6 @@
 type rect = (int, int, int, int);
 
-type gameObject = Wonderjs.GameObjectType.gameObject;
+type gameObject = Wonderjs.GameObjectPrimitiveType.gameObject;
 
 type sceneViewRecord = {
   viewRect: option(rect),

@@ -208,7 +208,7 @@ let _init = allWDBGameObjectArrRef => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
-  let engineState = engineState |> ShaderEngineService.clearShaderCache;
+  let engineState = engineState |> ShaderEngineService.clearInitShaderCache;
 
   let engineState = _reInitDefaultMaterials(editorState, engineState);
 

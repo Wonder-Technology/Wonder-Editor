@@ -2,7 +2,7 @@ open AppStore;
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
-  type prepareTuple = Wonderjs.GameObjectType.gameObject;
+  type prepareTuple = Wonderjs.GameObjectPrimitiveType.gameObject;
   type dataTuple = string;
   type return = unit;
 

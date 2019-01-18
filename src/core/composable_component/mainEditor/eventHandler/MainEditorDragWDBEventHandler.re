@@ -2,7 +2,7 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
 
   type prepareTuple = unit;
-  type dataTuple = Wonderjs.GameObjectType.gameObject;
+  type dataTuple = Wonderjs.GameObjectPrimitiveType.gameObject;
   type return = unit;
 
   let handleSelfLogic = ((store, dispatchFunc), (), wdbGameObjectUid) => {

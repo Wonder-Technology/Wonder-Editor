@@ -3,8 +3,8 @@ module CustomEventHandler = {
 
   type prepareTuple = unit;
   type dataTuple = (
-    Wonderjs.GameObjectType.gameObject,
-    Wonderjs.GameObjectType.gameObject,
+    Wonderjs.GameObjectPrimitiveType.gameObject,
+    Wonderjs.GameObjectPrimitiveType.gameObject,
   );
   type return = unit;
 
