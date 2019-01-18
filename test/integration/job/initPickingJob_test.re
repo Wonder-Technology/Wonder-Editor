@@ -822,5 +822,53 @@ let _ =
           });
         })
       );
+
+      describe("fix bug", () =>
+        describe("can pick the geometry which has indices32 data", () => {
+          let _createIndices32Triangle = engineState => {
+            open Js.Typed_array;
+
+            let (engineState, geometry) =
+              GeometryEngineService.create(engineState);
+
+            let vertices1 =
+              Float32Array.make([|1., 0., 0., 0., 1., 0., (-1.), 0., 0.|]);
+            let indices1 = Uint32Array.make([|0, 1, 2|]);
+
+            let engineState =
+              engineState
+              |> GeometryEngineService.setGeometryVertices(
+                   geometry,
+                   vertices1,
+                 )
+              |> GeometryEngineService.setGeometryIndices32(
+                   geometry,
+                   indices1,
+                 );
+
+            _createGameObject(geometry, engineState);
+          };
+          let _prepare = () =>
+            _prepareOneGameObject(
+              ~viewWidth=500,
+              ~viewHeight=200,
+              ~offsetLeft=0,
+              ~offsetTop=0,
+              ~cameraPos=(0., 0., 3.),
+              ~gameObjectPos=(0., 0., 0.),
+              ~gameObjectEulerAngles=(0., 0., 0.),
+              ~createGameObjectFunc=_createIndices32Triangle,
+              (),
+            );
+
+          test("test pick", () => {
+            let gameObject1 = _prepare();
+
+            _triggerPickingAndRestore(250, 100);
+
+            _pickOne(gameObject1);
+          });
+        })
+      );
     });
   });

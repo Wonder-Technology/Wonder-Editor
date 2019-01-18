@@ -1,15 +1,22 @@
 open InitPickingJobType;
 
-let _forEachIndices = (indices16, indices32, indicesCount, isIntersectFunc) => {
+let _forEachIndices =
+    (
+      (geometry, engineState),
+      indices16,
+      indices32,
+      indicesCount,
+      isIntersectFunc,
+    ) => {
   let index = ref(0);
   let isIntersect = ref(false);
 
   let indices =
-    GeometryEngineService.hasIndices(indices16) ?
+    GeometryEngineService.hasIndices16(geometry, engineState) ?
       indices16 : indices32 |> Obj.magic;
 
   let unsafeGetIndexFunc =
-    GeometryEngineService.hasIndices(indices16) ?
+    GeometryEngineService.hasIndices16(geometry, engineState) ?
       Js.Typed_array.Uint16Array.unsafe_get :
       Js.Typed_array.Uint32Array.unsafe_get |> Obj.magic;
 
@@ -33,6 +40,7 @@ let _isIntersect =
 
 let isIntersectMesh =
     (
+      (geometry, engineState),
       localToWorldMatrix,
       cullType,
       (vertices, indices16, indices32, indicesCount),
@@ -47,7 +55,11 @@ let isIntersectMesh =
   let ray = RayUtils.applyMatrix4(ray, inverseMatrix);
 
   _forEachIndices(
-    indices16, indices32, indicesCount, (index1, index2, index3) =>
+    (geometry, engineState),
+    indices16,
+    indices32,
+    indicesCount,
+    (index1, index2, index3) =>
     _isIntersect(
       cullType,
       (0., infinity),

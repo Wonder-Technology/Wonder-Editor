@@ -3,6 +3,7 @@ open InitPickingJobType;
 let _isIntersectMesh =
     (ray, (_, _, geometry, localToWorldMatrixTypeArray), engineState) =>
   MeshUtils.isIntersectMesh(
+    (geometry, engineState),
     localToWorldMatrixTypeArray,
     /* TODO judge material->side */
     Back,
