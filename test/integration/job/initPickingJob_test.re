@@ -366,7 +366,8 @@ let _ =
         describe("test pick multi ones", () => {
           let _prepare =
               (
-                ~createGameObjectFunc=_createSphere,
+                ~createGameObjectFunc1=_createSphere,
+                ~createGameObjectFunc2=_createSphere,
                 ~viewWidth,
                 ~viewHeight,
                 ~offsetLeft,
@@ -402,7 +403,7 @@ let _ =
               _prepareGameObject(
                 gameObject1Pos,
                 gameObject1EulerAngles,
-                createGameObjectFunc,
+                createGameObjectFunc1,
                 engineState,
               );
 
@@ -410,7 +411,7 @@ let _ =
               _prepareGameObject(
                 gameObject2Pos,
                 gameObject2EulerAngles,
-                createGameObjectFunc,
+                createGameObjectFunc2,
                 engineState,
               );
 
@@ -419,48 +420,123 @@ let _ =
             (gameObject1, gameObject2);
           };
 
-          describe("find the top one which nearest the camera position", () => {
-            let _prepare = () =>
-              _prepare(
-                ~viewWidth=510,
-                ~viewHeight=200,
-                ~offsetLeft=10,
-                ~offsetTop=20,
-                ~cameraPos=(
-                  2.2987656593322754,
-                  8.099184036254883,
-                  1.1699984073638916,
-                ),
-                ~gameObject1Pos=(0., 0., 0.),
-                ~gameObject1EulerAngles=(0., 0., 0.),
-                ~gameObject2Pos=(1., 2., 0.),
-                ~gameObject2EulerAngles=(0., 0., 0.),
-                ~createGameObjectFunc=_createCube,
-                (),
-              );
+          describe(
+            "find the top one whose distance between intersected point and the camera position is nearest",
+            () => {
+              describe("test cube", () => {
+                let _prepare = () =>
+                  _prepare(
+                    ~viewWidth=510,
+                    ~viewHeight=200,
+                    ~offsetLeft=10,
+                    ~offsetTop=20,
+                    ~cameraPos=(
+                      2.2987656593322754,
+                      8.099184036254883,
+                      1.1699984073638916,
+                    ),
+                    ~gameObject1Pos=(0., 0., 0.),
+                    ~gameObject1EulerAngles=(0., 0., 0.),
+                    ~gameObject2Pos=(1., 2., 0.),
+                    ~gameObject2EulerAngles=(0., 0., 0.),
+                    ~createGameObjectFunc1=_createCube,
+                    ~createGameObjectFunc2=_createCube,
+                    (),
+                  );
 
-            test("test find gameObject1", () => {
-              let (gameObject1, gameObject2) = _prepare();
+                test("test find gameObject1", () => {
+                  let (gameObject1, gameObject2) = _prepare();
 
-              _triggerPickingAndRestore(251 + 10, 91 + 20);
+                  _triggerPickingAndRestore(251 + 10, 91 + 20);
 
-              _pickOne(gameObject1);
-            });
-            test("test find gameObject2", () => {
-              let (gameObject1, gameObject2) = _prepare();
+                  _pickOne(gameObject1);
+                });
+                test("test find gameObject2", () => {
+                  let (gameObject1, gameObject2) = _prepare();
 
-              _triggerPickingAndRestore(257 + 10, 100 + 20);
+                  _triggerPickingAndRestore(257 + 10, 100 + 20);
 
-              _pickOne(gameObject2);
-            });
-            test("test not find", () => {
-              let (gameObject1, gameObject2) = _prepare();
+                  _pickOne(gameObject2);
+                });
+                test("test not find", () => {
+                  let (gameObject1, gameObject2) = _prepare();
 
-              _triggerPickingAndRestore(241 + 10, 120 + 20);
+                  _triggerPickingAndRestore(241 + 10, 120 + 20);
 
-              _notPick();
-            });
-          });
+                  _notPick();
+                });
+              });
+
+              describe("test triangle", () => {
+                let _createTriangleInPositiveYAxis = engineState => {
+                  open Js.Typed_array;
+
+                  let (engineState, geometry) =
+                    GeometryEngineService.create(engineState);
+
+                  let vertices1 =
+                    Float32Array.make([|
+                      1.,
+                      0.,
+                      3.,
+                      0.,
+                      1.,
+                      3.,
+                      (-1.),
+                      0.,
+                      3.,
+                    |]);
+                  let indices1 = Uint16Array.make([|0, 1, 2|]);
+
+                  let engineState =
+                    engineState
+                    |> GeometryEngineService.setGeometryVertices(
+                         geometry,
+                         vertices1,
+                       )
+                    |> GeometryEngineService.setGeometryIndices(
+                         geometry,
+                         indices1,
+                       );
+
+                  _createGameObject(geometry, engineState);
+                };
+
+                let _prepare = (gameObject1Pos, gameObject2Pos) =>
+                  _prepare(
+                    ~viewWidth=500,
+                    ~viewHeight=200,
+                    ~offsetLeft=0,
+                    ~offsetTop=0,
+                    ~cameraPos=(0., 0., 5.),
+                    ~gameObject1Pos,
+                    ~gameObject1EulerAngles=(0., 0., 0.),
+                    ~gameObject2Pos,
+                    ~gameObject2EulerAngles=(0., 0., 0.),
+                    ~createGameObjectFunc1=_createCube,
+                    ~createGameObjectFunc2=_createTriangleInPositiveYAxis,
+                    (),
+                  );
+
+                test("test find", () => {
+                  let (gameObject1, gameObject2) =
+                    _prepare((0., 0., 3.), (0., 0., 1.));
+
+                  _triggerPickingAndRestore(250, 100);
+
+                  _pickOne(gameObject2);
+                });
+                test("test not find", () => {
+                  let (gameObject1, gameObject2) =
+                    _prepare((0., 0., 4.1), (0., 0., 1.));
+
+                  _triggerPickingAndRestore(250, 100);
+
+                  _pickOne(gameObject1);
+                });
+              });
+            },
+          );
         });
 
         describe("test sphere shape cache", () => {
@@ -696,7 +772,8 @@ let _ =
                 ),
               );
 
-            RayUtils.isIntersectTriangle(cullType, va, vb, vc, ray);
+            RayUtils.checkIntersectTriangle(cullType, va, vb, vc, ray)
+            |> Js.Option.isSome;
           };
 
           describe("test back cull", () => {
@@ -710,7 +787,7 @@ let _ =
                 ~vb=(0., 1., 0.),
                 ~vc=((-1.), 0., 0.),
                 ~locationInView=(250, 100),
-                ~cameraPos=(0., 0., 0.),
+                ~cameraPos=(0., 0., 2.),
               )
               |> expect == true
             );
@@ -724,7 +801,7 @@ let _ =
                 ~vb=(0., 1., 0.),
                 ~vc=(1., 0., 0.),
                 ~locationInView=(250, 100),
-                ~cameraPos=(0., 0., 0.),
+                ~cameraPos=(0., 0., 2.),
               )
               |> expect == false
             );
@@ -741,7 +818,7 @@ let _ =
                 ~vb=(0., 1., 0.),
                 ~vc=(1., 0., 0.),
                 ~locationInView=(250, 100),
-                ~cameraPos=(0., 0., 0.),
+                ~cameraPos=(0., 0., 2.),
               )
               |> expect == true
             );
@@ -755,7 +832,7 @@ let _ =
                 ~vb=(0., 1., 0.),
                 ~vc=((-1.), 0., 0.),
                 ~locationInView=(250, 100),
-                ~cameraPos=(0., 0., 0.),
+                ~cameraPos=(0., 0., 2.),
               )
               |> expect == false
             );
@@ -771,7 +848,7 @@ let _ =
                 ~vb=(0., 1., 0.),
                 ~vc=(1., 0., 0.),
                 ~locationInView=(250, 100),
-                ~cameraPos=(0., 0., 0.),
+                ~cameraPos=(0., 0., 2.),
               )
               |> expect == true
             );
@@ -785,7 +862,7 @@ let _ =
                 ~vb=(0., 1., 0.),
                 ~vc=((-1.), 0., 0.),
                 ~locationInView=(250, 100),
-                ~cameraPos=(0., 0., 0.),
+                ~cameraPos=(0., 0., 2.),
               )
               |> expect == true
             );
@@ -801,7 +878,7 @@ let _ =
                 ~vb=(0., 1., 0.),
                 ~vc=(1., 0., 0.),
                 ~locationInView=(250, 100),
-                ~cameraPos=(0., 0., 0.),
+                ~cameraPos=(0., 0., 2.),
               )
               |> expect == false
             );
@@ -815,7 +892,7 @@ let _ =
                 ~vb=(0., 1., 0.),
                 ~vc=((-1.), 0., 0.),
                 ~locationInView=(250, 100),
-                ~cameraPos=(0., 0., 0.),
+                ~cameraPos=(0., 0., 2.),
               )
               |> expect == false
             );

@@ -1,8 +1,8 @@
 open InitPickingJobType;
 
-let _isIntersectMesh =
+let _checkIntersectMesh =
     (ray, (_, _, geometry, localToWorldMatrixTypeArray), engineState) =>
-  MeshUtils.isIntersectMesh(
+  MeshUtils.checkIntersectMesh(
     (geometry, engineState),
     localToWorldMatrixTypeArray,
     /* TODO judge material->side */
@@ -14,7 +14,14 @@ let _isIntersectMesh =
       GeometryEngineService.getIndicesCount(geometry, engineState),
     ),
     ray,
-  );
+  )
+  |> Js.Option.andThen((. intersectedPoint) =>
+       Wonderjs.Vector3Service.transformMat4Tuple(
+         intersectedPoint,
+         localToWorldMatrixTypeArray,
+       )
+       |. Some
+     );
 
 let _isIntersectSphere =
     (
@@ -30,15 +37,15 @@ let _isIntersectSphere =
     ray,
   );
 
-let _getDistanceToCamera = (transform, cameraPos, engineState) =>
+let _getDistanceToCamera = (intersectedPoint, cameraPos, engineState) =>
   Wonderjs.Vector3Service.sub(
     Wonderjs.Vector3Type.Float,
-    TransformEngineService.getPosition(transform, engineState),
+    intersectedPoint,
     cameraPos,
   )
   |> Vector3Service.length;
 
-let _getTopOne = (cameraGameObject, engineState, intersectedGameObjects) => {
+let _getTopOne = (cameraGameObject, engineState, intersectedDatas) => {
   let cameraPos =
     TransformEngineService.getPosition(
       GameObjectComponentEngineService.unsafeGetTransformComponent(
@@ -48,15 +55,15 @@ let _getTopOne = (cameraGameObject, engineState, intersectedGameObjects) => {
       engineState,
     );
 
-  intersectedGameObjects
+  intersectedDatas
   |> Js.Array.sortInPlaceWith(
-       ((_, transform1, _, _), (_, transform2, _, _)) =>
-       _getDistanceToCamera(transform1, cameraPos, engineState)
-       -. _getDistanceToCamera(transform2, cameraPos, engineState)
+       ((_, intersectedPoint1), (_, intersectedPoint2)) =>
+       _getDistanceToCamera(intersectedPoint1, cameraPos, engineState)
+       -. _getDistanceToCamera(intersectedPoint2, cameraPos, engineState)
        |> NumberType.convertFloatToInt
      )
   |> ArrayService.getFirst
-  |> Js.Option.map((. (gameObject, _, _, _)) => gameObject);
+  |> Js.Option.map((. (gameObject, _)) => gameObject);
 };
 
 let _getSceneViewSize = editorState => {
@@ -189,7 +196,13 @@ let _findPickedOne =
   |> Js.Array.filter(data =>
        _isIntersectSphere(ray, data, (editorState, engineState))
      )
-  |> Js.Array.filter(data => _isIntersectMesh(ray, data, engineState))
+  |> Js.Array.map(((gameObject, _, _, _) as data) =>
+       (gameObject, _checkIntersectMesh(ray, data, engineState))
+     )
+  |> Js.Array.filter(((_, checkData)) => Js.Option.isSome(checkData))
+  |> Js.Array.map(((gameObject, checkData)) =>
+       (gameObject, OptionService.unsafeGet(checkData))
+     )
   |> _getTopOne(cameraGameObject, engineState);
 };
 
