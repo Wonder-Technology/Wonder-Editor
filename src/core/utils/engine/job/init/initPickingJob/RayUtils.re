@@ -213,7 +213,7 @@ let isIntersectSphere =
       };
     }; */
 
-let _checkIntersectTriangleForFrontAndNoneCull =
+let _checkIntersectTriangleForFrontCull =
     (
       (det, edge1, edge2, pvec),
       v0,
@@ -281,7 +281,7 @@ let checkIntersectTriangle =
 
     det > epsilon ?
       None :
-      _checkIntersectTriangleForFrontAndNoneCull(
+      _checkIntersectTriangleForFrontCull(
         (det, edge1, edge2, pvec),
         va,
         vb,
@@ -368,92 +368,95 @@ let checkIntersectTriangle =
     };
   };
 
-/* 
-need fix bug: when ray->origin is in the model, sometimes the intersected point is the opposite point of the two intersected points!
+/*
+ need fix bug: when ray->origin is in the model, sometimes the intersected point is the opposite point of the two intersected points!
 
-let checkIntersectTriangle =
-     (
-       cullType: InitPickingJobType.cull,
-       v0,
-       v1,
-       v2,
-       {origin, direction}: InitPickingJobType.ray,
-     ) =>
-   switch (cullType) {
-   | Both => None
-   | _ =>
-     let epsilon = 0.000001;
 
-     let edge1 =
-       Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, v1, v0);
+ let _checkIntersectTriangleForFrontAndNoneCull =_checkIntersectTriangleForFrontCull;
 
-     let edge2 =
-       Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, v2, v0);
+ let checkIntersectTriangle =
+      (
+        cullType: InitPickingJobType.cull,
+        v0,
+        v1,
+        v2,
+        {origin, direction}: InitPickingJobType.ray,
+      ) =>
+    switch (cullType) {
+    | Both => None
+    | _ =>
+      let epsilon = 0.000001;
 
-     let pvec = Wonderjs.Vector3Service.cross(direction, edge2);
+      let edge1 =
+        Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, v1, v0);
 
-     let det = Vector3Service.dot(edge1, pvec);
+      let edge2 =
+        Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, v2, v0);
 
-     switch (cullType) {
-     | Back =>
-       det < epsilon ?
-         None :
-         {
-           let tvec =
-             Wonderjs.Vector3Service.sub(
-               Wonderjs.Vector3Type.Float,
-               origin,
-               v0,
-             );
+      let pvec = Wonderjs.Vector3Service.cross(direction, edge2);
 
-           let u = Vector3Service.dot(tvec, pvec);
+      let det = Vector3Service.dot(edge1, pvec);
 
-           u < 0. || u > det ?
-             None :
-             {
-               let qvec = Wonderjs.Vector3Service.cross(tvec, edge1);
+      switch (cullType) {
+      | Back =>
+        det < epsilon ?
+          None :
+          {
+            let tvec =
+              Wonderjs.Vector3Service.sub(
+                Wonderjs.Vector3Type.Float,
+                origin,
+                v0,
+              );
 
-               let v = Vector3Service.dot(direction, qvec);
+            let u = Vector3Service.dot(tvec, pvec);
 
-               v < 0. || u +. v > det ?
-                 None :
-                 {
-                   let t = Vector3Service.dot(edge2, qvec) /. det;
+            u < 0. || u > det ?
+              None :
+              {
+                let qvec = Wonderjs.Vector3Service.cross(tvec, edge1);
 
-                   /* var t = dot(edge2, qvec) / det;
-                      out[0] = origin[0] + t * direction[0];
-                      out[1] = origin[1] + t * direction[1];
-                      out[2] = origin[2] + t * direction[2];
-                      return out; */
-                   Some(
-                     Wonderjs.Vector3Service.add(
-                       Wonderjs.Vector3Type.Float,
-                       origin,
-                       Vector3Service.multiplyScalar(direction, t),
-                     ),
-                   );
-                 };
-             };
-         }
-     | Front =>
-       det > epsilon ?
-         None :
-         _checkIntersectTriangleForFrontAndNoneCull(
-           (det, edge1, edge2, pvec),
-           v0,
-           v1,
-           v2,
-           {origin, direction},
-         )
-     | None =>
-       det > -. epsilon && det < epsilon ?
-         None :
-         _checkIntersectTriangleForFrontAndNoneCull(
-           (det, edge1, edge2, pvec),
-           v0,
-           v1,
-           v2,
-           {origin, direction},
-         )
-     };
-   }; */
+                let v = Vector3Service.dot(direction, qvec);
+
+                v < 0. || u +. v > det ?
+                  None :
+                  {
+                    let t = Vector3Service.dot(edge2, qvec) /. det;
+
+                    /* var t = dot(edge2, qvec) / det;
+                       out[0] = origin[0] + t * direction[0];
+                       out[1] = origin[1] + t * direction[1];
+                       out[2] = origin[2] + t * direction[2];
+                       return out; */
+                    Some(
+                      Wonderjs.Vector3Service.add(
+                        Wonderjs.Vector3Type.Float,
+                        origin,
+                        Vector3Service.multiplyScalar(direction, t),
+                      ),
+                    );
+                  };
+              };
+          }
+      | Front =>
+        det > epsilon ?
+          None :
+          _checkIntersectTriangleForFrontAndNoneCull(
+            (det, edge1, edge2, pvec),
+            v0,
+            v1,
+            v2,
+            {origin, direction},
+          )
+      | None =>
+        det > -. epsilon && det < epsilon ?
+          None :
+          _checkIntersectTriangleForFrontAndNoneCull(
+            (det, edge1, edge2, pvec),
+            v0,
+            v1,
+            v2,
+            {origin, direction},
+          )
+      };
+    }; */
