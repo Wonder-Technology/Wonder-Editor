@@ -63,5 +63,8 @@
     },
     {
         "name": "restore"
+    },
+    {
+        "name": "set_outline_data"
     }
 ]

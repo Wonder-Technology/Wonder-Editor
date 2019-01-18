@@ -37,6 +37,10 @@ let _handleEngineState = engineState => {
          PrepareRenderViewJobUtils.prepareRenderGameViewJob,
        )
     |> JobEngineService.registerNoWorkerLoopJob(
+         "set_outline_data",
+         SetOutlineDataJobUtils.setOutlineDataJob,
+       )
+    |> JobEngineService.registerNoWorkerLoopJob(
          "restore",
          RestoreJobUtils.restoreJob,
        );

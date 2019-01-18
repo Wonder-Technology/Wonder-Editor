@@ -48,6 +48,12 @@
                 "name": "front_render_light"
             },
             {
+                "name": "set_outline_data"
+            },
+            {
+                "name": "draw_outline"
+            },
+            {
                 "name": "render_imgui"
             },
             {
@@ -73,9 +79,6 @@
             },
             {
                 "name": "front_render_light"
-            },
-            {
-                "name": "draw_outline"
             },
             {
                 "name": "render_imgui"

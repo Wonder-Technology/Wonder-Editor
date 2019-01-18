@@ -20,6 +20,8 @@ module CustomEventHandler = {
     |> StateEditorService.setState
     |> ignore;
 
+    StateLogicService.getAndRefreshEngineState();
+
     dispatchFunc(
       AppStore.UpdateAction(Update([|SceneTree, Inspector, Project|])),
     )
