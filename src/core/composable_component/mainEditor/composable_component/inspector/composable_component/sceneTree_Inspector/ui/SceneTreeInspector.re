@@ -41,10 +41,10 @@ module Method = {
     | None => [||]
     | Some(gameObject)
         when
-          SceneEngineService.isSceneGameObject(
-            gameObject,
-            StateEngineService.unsafeGetState(),
-          ) => [||]
+          gameObject
+          === SceneEngineService.getSceneGameObject(
+                StateEngineService.unsafeGetState(),
+              ) => [||]
 
     | Some(gameObject) =>
       [|_buildNameFunc((store, dispatchFunc), gameObject)|]
@@ -64,7 +64,7 @@ module Method = {
              currentSceneTreeNode=gameObject
              addableComponentList=addableComponentConfig
            />,
-         )
+         );
     };
 };
 

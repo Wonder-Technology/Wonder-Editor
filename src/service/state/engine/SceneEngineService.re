@@ -27,9 +27,6 @@ let setAmbientLightColor = SceneAPI.setAmbientLightColor;
 
 let getSceneGameObject = SceneAPI.getSceneGameObject;
 
-let isSceneGameObject = (gameObject, engineState) =>
-  gameObject === getSceneGameObject(engineState);
-
 let addSceneChild = SceneAPI.addSceneChild;
 
 let addSceneChildren = SceneAPI.addSceneChildren;
