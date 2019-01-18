@@ -1,3 +1,5 @@
+let addChild = GameObjectUtils.addChild;
+
 let getChildren = (gameObject, engineState) =>
   GameObjectUtils.getChildren(gameObject, engineState);
 
@@ -49,7 +51,6 @@ let getCurrentGameObjectMaterial = () => {
       ) :
       WonderLog.Log.fatal(
         LogUtils.buildFatalMessage(
-          
           ~description={j|gameObject should has material, but actual not|j},
           ~reason="",
           ~solution={j||j},

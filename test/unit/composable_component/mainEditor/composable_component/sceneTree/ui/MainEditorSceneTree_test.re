@@ -155,9 +155,7 @@ let _ =
         );
         afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
         test("no drag", () =>
-          BuildComponentTool.buildSceneTree(
-            TestTool.buildEmptyAppState(),
-          )
+          BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
           |> ReactTestTool.createSnapshotAndMatch
         );
         test("drag treeNode into target treeNode", () => {
@@ -173,9 +171,7 @@ let _ =
             (),
           );
 
-          BuildComponentTool.buildSceneTree(
-            TestTool.buildEmptyAppState(),
-          )
+          BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
           |> ReactTestTool.createSnapshotAndMatch;
         });
       });
@@ -200,6 +196,17 @@ let _ =
                     );
         });
       });
+      test("should refresh engine state", () =>
+        RefreshEngineStateTool.testRefreshEngineState(sandbox, () =>
+          MainEditorSceneTreeTool.Select.selectGameObject(
+            ~gameObject=
+              MainEditorSceneTool.getFirstCube(
+                StateEngineService.unsafeGetState(),
+              ),
+            (),
+          )
+        )
+      );
 
       describe("deal with the specific case", () => {
         test("if drag treeNode into itself, keep not change", () => {
@@ -221,7 +228,9 @@ let _ =
 
           cube1 |> GameObjectTool.setCurrentSceneTreeNode;
 
-          MainEditorSceneTreeTool.Drag.isTriggerDragCurrentSceneTreeNode(cube4)
+          MainEditorSceneTreeTool.Drag.isTriggerDragCurrentSceneTreeNode(
+            cube4,
+          )
           |> expect == false;
         });
         describe("if drag treeNode into it's second layer chidlren", () =>

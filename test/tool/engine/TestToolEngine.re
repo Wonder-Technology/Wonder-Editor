@@ -1,5 +1,16 @@
 open Wonderjs;
 
+let getDefaultContext = () => {|
+        {
+        "alpha": true,
+        "depth": true,
+        "stencil": false,
+        "antialias": true,
+        "premultiplied_alpha": true,
+        "preserve_drawing_buffer": false
+        }
+               |};
+
 let initWithoutBuildFakeDom =
     (
       ~sandbox,
@@ -16,16 +27,7 @@ let initWithJobConfigWithoutBuildFakeDom =
       ~sandbox,
       ~isDebug="true",
       ~canvasId=None,
-      ~context={|
-        {
-        "alpha": true,
-        "depth": true,
-        "stencil": false,
-        "antialias": true,
-        "premultiplied_alpha": true,
-        "preserve_drawing_buffer": false
-        }
-               |},
+      ~context=getDefaultContext(),
       ~useHardwareInstance="true",
       ~buffer=SettingToolEngine.buildBufferConfigStr(),
       ~noWorkerJobRecord=NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
@@ -63,6 +65,7 @@ let createAndSetEngineState =
       ~buffer=SettingToolEngine.buildBufferConfigStr(),
       ~isBuildFakeDom=true,
       ~isInitJob=true,
+      ~context=getDefaultContext(),
       (),
     ) => {
   isBuildFakeDom ?
@@ -73,6 +76,7 @@ let createAndSetEngineState =
     ~noWorkerJobRecord,
     ~buffer,
     ~isInitJob,
+    ~context,
     (),
   )
   |> StateEngineService.setState
