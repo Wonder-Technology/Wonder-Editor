@@ -266,11 +266,11 @@ let _ =
         EventTool.restore();
       };
 
-      let _pickOne = gameObject1 => {
+      let _pickOne = gameObject => {
         let editorState = StateEditorService.getState();
 
         SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState)
-        |> expect == gameObject1;
+        |> expect == gameObject;
       };
 
       let _notPick = () => {
@@ -281,18 +281,8 @@ let _ =
         |> expect == true;
       };
 
-      let _prepareOneGameObject =
-          (
-            ~createGameObjectFunc=_createSphere,
-            ~viewWidth,
-            ~viewHeight,
-            ~offsetLeft,
-            ~offsetTop,
-            ~cameraPos,
-            ~gameObjectPos,
-            ~gameObjectEulerAngles,
-            (),
-          ) => {
+      let _prepareEventAndCamera =
+          (~viewWidth, ~viewHeight, ~offsetLeft, ~offsetTop, ~cameraPos, ()) => {
         let ((viewWidth, viewHeight), (offsetLeft, offsetTop)) =
           _prepareMouseEvent(
             ~sandbox,
@@ -313,6 +303,42 @@ let _ =
             (editorState, engineState),
           );
 
+        /* let (gameObject1, engineState) =
+             _prepareGameObject(
+               gameObjectPos,
+               gameObjectEulerAngles,
+               createGameObjectFunc,
+               engineState,
+             );
+
+           _prepareState(editorState, engineState);
+
+           gameObject1; */
+        (editorState, engineState);
+      };
+
+      let _prepareOneGameObject =
+          (
+            ~createGameObjectFunc=_createSphere,
+            ~viewWidth,
+            ~viewHeight,
+            ~offsetLeft,
+            ~offsetTop,
+            ~cameraPos,
+            ~gameObjectPos,
+            ~gameObjectEulerAngles,
+            (),
+          ) => {
+        let (editorState, engineState) =
+          _prepareEventAndCamera(
+            ~viewWidth,
+            ~viewHeight,
+            ~offsetLeft,
+            ~offsetTop,
+            ~cameraPos,
+            (),
+          );
+
         let (gameObject1, engineState) =
           _prepareGameObject(
             gameObjectPos,
@@ -326,7 +352,7 @@ let _ =
         gameObject1;
       };
 
-      describe("should set finded one to current scene tree node", () => {
+      describe("test pick", () => {
         describe("test only pick one", () =>
           describe("test cube", () => {
             let _prepare = () =>
@@ -379,24 +405,14 @@ let _ =
                 ~gameObject2EulerAngles,
                 (),
               ) => {
-            let ((viewWidth, viewHeight), (offsetLeft, offsetTop)) =
-              _prepareMouseEvent(
-                ~sandbox,
+            let (editorState, engineState) =
+              _prepareEventAndCamera(
                 ~viewWidth,
                 ~viewHeight,
                 ~offsetLeft,
                 ~offsetTop,
+                ~cameraPos,
                 (),
-              );
-
-            let editorState = StateEditorService.getState();
-            let engineState = StateEngineService.unsafeGetState();
-
-            let (editCamera, (editorState, engineState)) =
-              _prepareCamera(
-                cameraPos,
-                (viewWidth, viewHeight),
-                (editorState, engineState),
               );
 
             let (gameObject1, engineState) =
@@ -606,7 +622,169 @@ let _ =
         });
       });
 
-      describe("if find one", () => {
+      describe(
+        "should set the whole one of the finded one to current scene tree node",
+        () => {
+        let _createParentGameObject = engineState => {
+          let (engineState, parent) =
+            engineState |> GameObjectEngineService.create;
+          let engineState =
+            engineState
+            |> GameObjectEngineService.setGameObjectName("parent", parent);
+
+          (engineState, parent);
+        };
+
+        let _prepare = () => {
+          let viewWidth = 500;
+          let viewHeight = 200;
+          let offsetLeft = 10;
+          let offsetTop = 20;
+          let cameraPos = (0., 0., 2.);
+
+          let (editorState, engineState) =
+            _prepareEventAndCamera(
+              ~viewWidth,
+              ~viewHeight,
+              ~offsetLeft,
+              ~offsetTop,
+              ~cameraPos,
+              (),
+            );
+
+          (editorState, engineState);
+        };
+
+        let _triggerPicking = () =>
+          _triggerPickingAndRestore(250 + 10, 100 + 20);
+
+        test(
+          "else if the finded one's parent is scene, set it to current scene tree node",
+          () => {
+          let _prepare = () => {
+            let gameObjectEulerAngles = (0., 0., 0.);
+
+            let (editorState, engineState) = _prepare();
+
+            let (gameObject1, engineState) =
+              _prepareGameObject(
+                (0., 0., 0.),
+                gameObjectEulerAngles,
+                _createCube,
+                engineState,
+              );
+
+            let engineState =
+              engineState |> SceneEngineService.addSceneChild(gameObject1);
+
+            _prepareState(editorState, engineState);
+
+            gameObject1;
+          };
+
+          let gameObject1 = _prepare();
+
+          _triggerPicking();
+
+          _pickOne(gameObject1);
+        });
+
+        test(
+          "else if the finded one's parent has no siblings, recursively judge the parent of the parent",
+          () => {
+            let _prepare = () => {
+              let gameObjectEulerAngles = (0., 0., 0.);
+
+              let (editorState, engineState) = _prepare();
+
+              let (gameObject1, engineState) =
+                _prepareGameObject(
+                  (0., 0., 0.),
+                  gameObjectEulerAngles,
+                  _createCube,
+                  engineState,
+                );
+
+              let (gameObject2, engineState) =
+                _prepareGameObject(
+                  ((-200.), 0., (-2.)),
+                  gameObjectEulerAngles,
+                  _createCube,
+                  engineState,
+                );
+
+              let (engineState, parent1) =
+                _createParentGameObject(engineState);
+              let (engineState, parent2) =
+                _createParentGameObject(engineState);
+              let engineState =
+                engineState
+                |> SceneEngineService.addSceneChild(parent1)
+                |> GameObjectUtils.addChild(parent1, parent2)
+                |> GameObjectUtils.addChild(parent2, gameObject1)
+                |> GameObjectUtils.addChild(parent2, gameObject2);
+
+              _prepareState(editorState, engineState);
+
+              ((parent1, parent2), (gameObject1, gameObject2));
+            };
+
+            let ((parent1, parent2), (gameObject1, gameObject2)) =
+              _prepare();
+
+            _triggerPicking();
+
+            _pickOne(parent1);
+          },
+        );
+        test(
+          "else, set the finded one's parent to current scene tree node", () => {
+          let _prepare = () => {
+            let gameObjectEulerAngles = (0., 0., 0.);
+
+            let (editorState, engineState) = _prepare();
+
+            let (gameObject1, engineState) =
+              _prepareGameObject(
+                (0., 0., 0.),
+                gameObjectEulerAngles,
+                _createCube,
+                engineState,
+              );
+
+            let (gameObject2, engineState) =
+              _prepareGameObject(
+                ((-200.), 0., (-2.)),
+                gameObjectEulerAngles,
+                _createCube,
+                engineState,
+              );
+
+            let (engineState, parent1) =
+              _createParentGameObject(engineState);
+            let (engineState, parent2) =
+              _createParentGameObject(engineState);
+            let engineState =
+              engineState
+              |> SceneEngineService.addSceneChild(parent1)
+              |> GameObjectUtils.addChild(parent1, parent2)
+              |> GameObjectUtils.addChild(parent1, gameObject2)
+              |> GameObjectUtils.addChild(parent2, gameObject1);
+
+            _prepareState(editorState, engineState);
+
+            ((parent1, parent2), (gameObject1, gameObject2));
+          };
+
+          let ((parent1, parent2), (gameObject1, gameObject2)) = _prepare();
+
+          _triggerPicking();
+
+          _pickOne(parent2);
+        });
+      });
+
+      describe("test if find one", () => {
         let _prepare = () =>
           _prepareOneGameObject(
             ~viewWidth=500,
@@ -696,17 +874,71 @@ let _ =
               (engineState, parent);
             };
 
-            let gameObject = _prepare();
-            let engineState = StateEngineService.unsafeGetState();
-            let (engineState, parent1) =
-              _createParentGameObject(engineState);
-            let (engineState, parent2) =
-              _createParentGameObject(engineState);
-            let engineState =
-              engineState
-              |> SceneEngineService.addSceneChild(parent1)
-              |> GameObjectUtils.addChild(parent1, parent2)
-              |> GameObjectUtils.addChild(parent2, gameObject);
+            let _prepare = () => {
+              let viewWidth = 500;
+              let viewHeight = 200;
+              let offsetLeft = 10;
+              let offsetTop = 20;
+              let cameraPos = (0., 0., 2.);
+              let gameObject1Pos = (0., 0., 0.);
+              let gameObjectEulerAngles = (0., 0., 0.);
+
+              let (editorState, engineState) =
+                _prepareEventAndCamera(
+                  ~viewWidth,
+                  ~viewHeight,
+                  ~offsetLeft,
+                  ~offsetTop,
+                  ~cameraPos,
+                  (),
+                );
+
+              let (gameObject1, engineState) =
+                _prepareGameObject(
+                  (0., 0., 0.),
+                  gameObjectEulerAngles,
+                  _createCube,
+                  engineState,
+                );
+
+              let (gameObject2, engineState) =
+                _prepareGameObject(
+                  ((-200.), 0., (-2.)),
+                  gameObjectEulerAngles,
+                  _createCube,
+                  engineState,
+                );
+
+              let (gameObject3, engineState) =
+                _prepareGameObject(
+                  ((-10.), 0., 0.),
+                  gameObjectEulerAngles,
+                  _createCube,
+                  engineState,
+                );
+
+              let (engineState, parent1) =
+                _createParentGameObject(engineState);
+              let (engineState, parent2) =
+                _createParentGameObject(engineState);
+              let engineState =
+                engineState
+                |> SceneEngineService.addSceneChild(parent1)
+                |> GameObjectUtils.addChild(parent1, parent2)
+                |> GameObjectUtils.addChild(parent1, gameObject2)
+                |> GameObjectUtils.addChild(parent2, gameObject1)
+                |> GameObjectUtils.addChild(parent2, gameObject3);
+
+              _prepareState(editorState, engineState);
+
+              ((parent1, parent2), (gameObject1, gameObject2, gameObject3));
+            };
+
+            let (
+              (parent1, parent2),
+              (gameObject1, gameObject2, gameObject3),
+            ) =
+              _prepare();
 
             _triggerPicking();
 

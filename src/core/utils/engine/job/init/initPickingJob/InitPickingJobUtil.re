@@ -240,6 +240,27 @@ let _selectSceneTreeNode = (gameObject, (editorState, engineState)) => {
   engineState;
 };
 
+let _findWholeGameObject = (pickedGameObject, engineState) => {
+  let rec _find = (gameObject, engineState, isFirstPickedGameObject) =>
+    switch (GameObjectUtils.getParentGameObject(gameObject, engineState)) {
+    | None => gameObject
+    | Some(parentGameObject) =>
+      SceneEngineService.isSceneGameObject(parentGameObject, engineState) ?
+        gameObject :
+        (
+          switch (
+            GameObjectUtils.getChildren(parentGameObject, engineState)
+            |> Js.Array.length
+          ) {
+          | len when len > 1 && ! isFirstPickedGameObject => gameObject
+          | _ => _find(parentGameObject, engineState, false)
+          }
+        )
+    };
+
+  _find(pickedGameObject, engineState, true);
+};
+
 let _handlePicking = (event: EventType.customEvent, engineState) => {
   let editorState = StateEditorService.getState();
 
@@ -253,7 +274,10 @@ let _handlePicking = (event: EventType.customEvent, engineState) => {
     |> _findPickedOne(event, allGameObjectData)
     |> OptionService.andThenWithDefault(
          gameObject =>
-           _selectSceneTreeNode(gameObject, (editorState, engineState)),
+           _selectSceneTreeNode(
+             _findWholeGameObject(gameObject, engineState),
+             (editorState, engineState),
+           ),
          engineState,
        );
 
