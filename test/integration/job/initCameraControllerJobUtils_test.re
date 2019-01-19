@@ -43,7 +43,8 @@ let _ =
         value;
       };
 
-      describe("test bind point drag event", () => {
+      describe(
+        "if current scene tree node has arcballCameraController component", () => {
         let _prepareMouseEvent = (~sandbox, ()) => {
           MainEditorSceneTool.initStateWithJob(
             ~sandbox,
@@ -91,39 +92,80 @@ let _ =
           MouseEventTool.setPointerLocked(.);
         };
 
-        describe(
-          "if current scene tree node has arcballCameraController component",
-          () => {
-          let _prepareAndExec = (pointEventName, (pageX, pageY)) => {
-            let value = _prepare(pointEventName);
+        let _prepareAndExec = (pointEventName, (pageX, pageY), triggerFunc) => {
+          let value = _prepare(pointEventName);
 
-            EventTool.triggerDomEvent(
-              "mousedown",
-              EventTool.getBody(),
-              MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
-            );
-            EventTool.triggerDomEvent(
-              "mousemove",
-              EventTool.getBody(),
-              MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
-            );
-            EventTool.triggerDomEvent(
-              "mouseup",
-              EventTool.getBody(),
-              MouseEventTool.buildMouseEvent(),
-            );
-            EventTool.restore();
+          triggerFunc(pageX, pageY);
+          /* EventTool.triggerDomEvent(
+               "mousedown",
+               EventTool.getBody(),
+               MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+             );
+             EventTool.triggerDomEvent(
+               "mousemove",
+               EventTool.getBody(),
+               MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+             );
+             EventTool.triggerDomEvent(
+               "mouseup",
+               EventTool.getBody(),
+               MouseEventTool.buildMouseEvent(),
+             );
+             EventTool.restore(); */
 
-            value;
-          };
+          value;
+        };
 
-          test("trigger refresh_inspector event", () => {
+        describe("trigger refresh_inspector event", () => {
+          test("test bind point drag event", () => {
             _prepareMouseEvent(~sandbox, ());
 
             let value =
               _prepareAndExec(
                 EventEditorService.getRefreshInspectorEventName(),
                 (60, 20),
+                (pageX, pageY) => {
+                  EventTool.triggerDomEvent(
+                    "mousedown",
+                    EventTool.getBody(),
+                    MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+                  );
+                  EventTool.triggerDomEvent(
+                    "mousemove",
+                    EventTool.getBody(),
+                    MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+                  );
+                  EventTool.triggerDomEvent(
+                    "mouseup",
+                    EventTool.getBody(),
+                    MouseEventTool.buildMouseEvent(),
+                  );
+                  EventTool.restore();
+                },
+              );
+
+            value^ |> expect == 1;
+          });
+          test("test bind point scale event", () => {
+            _prepareMouseEvent(~sandbox, ());
+
+            let value =
+              _prepareAndExec(
+                EventEditorService.getRefreshInspectorEventName(),
+                (60, 20),
+                (pageX, pageY) => {
+                  EventTool.triggerDomEvent(
+                    "mousedown",
+                    EventTool.getBody(),
+                    MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+                  );
+                  EventTool.triggerDomEvent(
+                    "mousewheel",
+                    EventTool.getBody(),
+                    MouseEventTool.buildMouseEvent(),
+                  );
+                  EventTool.restore();
+                },
               );
 
             value^ |> expect == 1;

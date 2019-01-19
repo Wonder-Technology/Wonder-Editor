@@ -42,6 +42,18 @@ let initJob = (_, engineState) => {
     );
 
   let engineState =
+    ManageEventEngineService.onCustomGlobalEvent(
+      ~eventName=NameEventEngineService.getPointScaleEventName(),
+      ~handleFunc=
+        (. event, engineState) => (
+          _judgeWhetherTriggerRefreshInspectorEvent(engineState),
+          event,
+        ),
+      ~state=engineState,
+      (),
+    );
+
+  let engineState =
     ManageEventEngineService.onKeyboardEvent(
       ~eventName=EventType.KeyDown |> Obj.magic,
       ~handleFunc=
