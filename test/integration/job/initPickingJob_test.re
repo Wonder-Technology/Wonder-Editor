@@ -327,6 +327,55 @@ let _ =
       };
 
       describe("should set finded one to current scene tree node", () => {
+        describe("if pointdown->mouse button isn't left button", () => {
+          let _triggerPickingAndNotRestore = (pageX, pageY) => {
+            let target = EventTool.buildCanvasTarget();
+
+            EventTool.triggerDomEvent(
+              "mousedown",
+              EventTool.getBody(),
+              MouseEventTool.buildMouseEvent(
+                ~pageX,
+                ~pageY,
+                ~target,
+                ~which=3,
+                (),
+              ),
+            );
+          };
+
+          let _triggerPickingAndRestore = (pageX, pageY) => {
+            _triggerPickingAndNotRestore(pageX, pageY);
+
+            EventTool.restore();
+          };
+
+          let _prepare = () =>
+            _prepareOneGameObject(
+              ~viewWidth=510,
+              ~viewHeight=200,
+              ~offsetLeft=10,
+              ~offsetTop=20,
+              ~cameraPos=(
+                6.986046314239502,
+                0.43706008791923523,
+                (-0.06429910659790039),
+              ),
+              ~gameObjectPos=(3., 0., 0.),
+              ~gameObjectEulerAngles=(45., 0., 0.),
+              ~createGameObjectFunc=_createCube,
+              (),
+            );
+
+          test("not trigger pick", () => {
+            let gameObject1 = _prepare();
+
+            _triggerPickingAndRestore(233 + 10, 119 + 20);
+
+            _notPick();
+          });
+        });
+
         describe("test only pick one", () =>
           describe("test cube", () => {
             let _prepare = () =>

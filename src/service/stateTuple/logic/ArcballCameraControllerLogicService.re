@@ -16,7 +16,10 @@ let bindArcballCameraControllerEventForSceneView =
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
       ~eventName=EventEditorService.getPointDownEventName(),
-      ~handleFunc=pointDownHandleFunc,
+      ~handleFunc=
+        (. event, engineState) =>
+          MouseEventService.isRightMouseButton(event) ?
+            pointDownHandleFunc(. event, engineState) : (engineState, event),
       ~state=engineState,
       (),
     );
@@ -24,7 +27,10 @@ let bindArcballCameraControllerEventForSceneView =
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
       ~eventName=EventEditorService.getPointUpEventName(),
-      ~handleFunc=pointUpHandleFunc,
+      ~handleFunc=
+        (. event, engineState) =>
+          MouseEventService.isRightMouseButton(event) ?
+            pointUpHandleFunc(. event, engineState) : (engineState, event),
       ~state=engineState,
       (),
     );
@@ -32,7 +38,10 @@ let bindArcballCameraControllerEventForSceneView =
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
       ~eventName=EventEditorService.getPointDragEventName(),
-      ~handleFunc=pointDragHandleFunc,
+      ~handleFunc=
+        (. event, engineState) =>
+          MouseEventService.isRightMouseButton(event) ?
+            pointDragHandleFunc(. event, engineState) : (engineState, event),
       ~state=engineState,
       (),
     );
@@ -40,7 +49,8 @@ let bindArcballCameraControllerEventForSceneView =
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
       ~eventName=EventEditorService.getPointScaleEventName(),
-      ~handleFunc=pointScaleHandleFunc,
+      ~handleFunc=
+        (. event, engineState) => pointScaleHandleFunc(. event, engineState),
       ~state=engineState,
       (),
     );
