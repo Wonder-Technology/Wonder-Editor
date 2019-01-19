@@ -206,33 +206,12 @@ let _findPickedOne =
   |> _getTopOne(cameraGameObject, engineState);
 };
 
-let rec _setAllParentsShowChildren = (gameObject, engineState, editorState) =>
-  switch (GameObjectUtils.getParentGameObject(gameObject, engineState)) {
-  | None => editorState
-  | Some(parentGameObject) =>
-    _setAllParentsShowChildren(
-      parentGameObject,
-      engineState,
-      editorState
-      |> SceneTreeEditorService.setIsShowChildren(parentGameObject, true),
-    )
-  };
-
-let _selectSceneTreeNode = (gameObject, (editorState, engineState)) => {
-  let editorState =
-    SceneTreeEditorService.setCurrentSceneTreeNode(gameObject, editorState)
-    |> CurrentSelectSourceEditorService.setCurrentSelectSource(
-         SceneTreeWidgetService.getWidget(),
-       )
-    |> _setAllParentsShowChildren(gameObject, engineState);
-
-  editorState |> StateEditorService.setState |> ignore;
-
+let _triggerPickSuccessEvent = (gameObject, (editorState, engineState)) => {
   let (engineState, _) =
     ManageEventEngineService.triggerCustomGlobalEvent(
       CreateCustomEventEngineService.create(
         EventEditorService.getPickSuccessEventName(),
-        None,
+        Some(gameObject),
       ),
       engineState,
     );
@@ -253,7 +232,7 @@ let _handlePicking = (event: EventType.customEvent, engineState) => {
     |> _findPickedOne(event, allGameObjectData)
     |> OptionService.andThenWithDefault(
          gameObject =>
-           _selectSceneTreeNode(gameObject, (editorState, engineState)),
+           _triggerPickSuccessEvent(gameObject, (editorState, engineState)),
          engineState,
        );
 

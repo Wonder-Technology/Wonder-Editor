@@ -23,3 +23,7 @@ type ray = {
 
 external userDataToPointEvent : EventType.userData => EventType.pointEvent =
   "%identity";
+
+external userDataToGameObject :
+  EventType.userData => Wonderjs.GameObjectPrimitiveType.gameObject =
+  "%identity";

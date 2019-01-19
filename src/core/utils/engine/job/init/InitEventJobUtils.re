@@ -1,9 +1,5 @@
 open EventType;
 
-let _loopBodyWhenStop = engineState =>
-  StateEditorService.getIsRun() ?
-    engineState : engineState |> DirectorEngineService.loopBody(0.);
-
 let _isTriggerGameViewEvent = () =>
   EventEditorService.getEventTarget(StateEditorService.getState()) === Game;
 
@@ -62,7 +58,7 @@ module PointEvent = {
                 );
 
               switch (eventTarget) {
-              | Scene => _loopBodyWhenStop(engineState)
+              | Scene => StateLogicService.loopBodyWhenStop(engineState)
               | _ => engineState
               };
             } :
@@ -370,15 +366,13 @@ module DomEvent = {
       (sceneViewEventName, gameViewEventName, event) =>
     _isTriggerGameViewEvent() ?
       /* _triggerRefreshInspectorEvent |> StateLogicService.getAndSetEngineState; */
-      _execKeyboardEventHandle(
-        gameViewEventName,
-        event,
-      ) :
+      _execKeyboardEventHandle(gameViewEventName, event) :
       _isTriggerSceneViewEvent() ?
         {
           _execKeyboardEventHandle(sceneViewEventName |> Obj.magic, event);
 
-          _loopBodyWhenStop |> StateLogicService.getAndSetEngineState;
+          StateLogicService.loopBodyWhenStop
+          |> StateLogicService.getAndSetEngineState;
         } :
         ();
 

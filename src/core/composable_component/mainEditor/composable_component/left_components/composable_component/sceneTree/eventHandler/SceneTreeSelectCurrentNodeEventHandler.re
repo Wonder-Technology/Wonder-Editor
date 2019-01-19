@@ -6,27 +6,8 @@ module CustomEventHandler = {
   type dataTuple = Wonderjs.GameObjectPrimitiveType.gameObject;
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), (), uid) => {
-    StateEditorService.getState()
-    |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
-    |> StateEditorService.setState
-    |> ignore;
-
-    StateEditorService.getState()
-    |> SceneTreeEditorService.setCurrentSceneTreeNode(uid)
-    |> CurrentSelectSourceEditorService.setCurrentSelectSource(
-         SceneTreeWidgetService.getWidget(),
-       )
-    |> StateEditorService.setState
-    |> ignore;
-
-    StateLogicService.getAndRefreshEngineState();
-
-    dispatchFunc(
-      AppStore.UpdateAction(Update([|SceneTree, Inspector, Project|])),
-    )
-    |> ignore;
-  };
+  let handleSelfLogic = ((store, dispatchFunc), (), uid) =>
+    SceneTreeSelectCurrentNodeUtils.select(dispatchFunc, uid);
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);

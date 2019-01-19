@@ -28,3 +28,6 @@ let storeUIState = (maxStackSize, currentState, historyState) => {
     |> StackHistoryService.limitStackMaxSize(maxStackSize),
   uiRedoStack: Stack.empty(),
 };
+
+let getLastStoreInStack = historyState =>
+  historyState.uiUndoStack |> Stack.first;

@@ -94,14 +94,30 @@ module Method = {
       ~eventName=EventEditorService.getPickSuccessEventName(),
       ~handleFunc=
         (. ({userData}: EventType.customEvent) as event, engineState) => {
+          let pickedGameObject =
+            userData
+            |> OptionService.unsafeGet
+            |> InitPickingJobType.userDataToGameObject;
+
           engineState |> StateEngineService.setState |> ignore;
 
-          dispatchFunc(
-            AppStore.UpdateAction(
-              Update([|UpdateStore.SceneTree, UpdateStore.Inspector|]),
-            ),
-          )
-          |> ignore;
+          switch (
+            UIHistoryService.getLastStoreInStack(
+              AllStateData.getHistoryState(),
+            )
+          ) {
+          | None =>
+            SceneTreeSelectCurrentNodeUtils.select(
+              dispatchFunc,
+              pickedGameObject,
+            )
+          | Some(lastStore) =>
+            SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+              (lastStore, dispatchFunc),
+              (),
+              pickedGameObject,
+            )
+          };
 
           (StateEngineService.unsafeGetState(), event);
         },
