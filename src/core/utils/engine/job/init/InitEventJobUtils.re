@@ -4,32 +4,6 @@ let _loopBodyWhenStop = engineState =>
   StateEditorService.getIsRun() ?
     engineState : engineState |> DirectorEngineService.loopBody(0.);
 
-let _deferExec = [%bs.raw
-  func => {|
-      setTimeout(() => {
-        func();
-      }, 0)
-      |}
-];
-
-let _triggerRefreshInspectorEvent = engineState => {
-  _deferExec(() => {
-    let engineState = StateEngineService.unsafeGetState();
-    let (engineState, _) =
-      ManageEventEngineService.triggerCustomGlobalEvent(
-        CreateCustomEventEngineService.create(
-          EventEditorService.getRefreshInspectorEventName(),
-          None,
-        ),
-        engineState,
-      );
-
-    engineState |> StateEngineService.setState |> ignore;
-  });
-
-  engineState;
-};
-
 let _isTriggerGameViewEvent = () =>
   EventEditorService.getEventTarget(StateEditorService.getState()) === Game;
 
@@ -71,7 +45,7 @@ module PointEvent = {
         (. mouseEvent, engineState) =>
           isTriggerCustomGlobalEventFunc() ?
             {
-              let engineState = _triggerRefreshInspectorEvent(engineState);
+              /* let engineState = _triggerRefreshInspectorEvent(engineState); */
 
               let (engineState, _) =
                 ManageEventEngineService.triggerCustomGlobalEvent(
@@ -395,10 +369,11 @@ module DomEvent = {
   let _execViewKeyboardEventHandle =
       (sceneViewEventName, gameViewEventName, event) =>
     _isTriggerGameViewEvent() ?
-      {
-        _triggerRefreshInspectorEvent |> StateLogicService.getAndSetEngineState;
-        _execKeyboardEventHandle(gameViewEventName, event);
-      } :
+      /* _triggerRefreshInspectorEvent |> StateLogicService.getAndSetEngineState; */
+      _execKeyboardEventHandle(
+        gameViewEventName,
+        event,
+      ) :
       _isTriggerSceneViewEvent() ?
         {
           _execKeyboardEventHandle(sceneViewEventName |> Obj.magic, event);

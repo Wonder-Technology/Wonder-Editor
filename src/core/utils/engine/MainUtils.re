@@ -24,6 +24,10 @@ let _handleEngineState = engineState => {
          "init_picking",
          InitPickingJobUtil.initJob,
        )
+    |> JobEngineService.registerNoWorkerInitJob(
+         "init_camera_controller",
+         InitCameraControllerJobUtils.initJob,
+       )
     |> JobEngineService.registerNoWorkerLoopJob(
          "reallocate_cpu_memory",
          ReallocateCPUMemoryJobUtils.reallocateJob,

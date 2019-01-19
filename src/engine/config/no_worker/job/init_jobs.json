@@ -24,6 +24,9 @@
         "name": "init_picking"
     },
     {
+        "name": "init_camera_controller"
+    },
+    {
         "name": "init_camera"
     },
     {
