@@ -13,12 +13,12 @@ module CustomEventHandler = {
       (
         (store, dispatchFunc),
         (),
-        (targetGameObjectUid, wdbGameObjectUid, dragPosition),
+        (targetGameObject, wdbGameObject, dragPosition),
       ) =>
     DragWDBEventHandlerUtils.handleSelfLogic(
       (store, dispatchFunc),
       (),
-      (targetGameObjectUid, wdbGameObjectUid, dragPosition),
+      (targetGameObject, wdbGameObject, dragPosition),
     );
 };
 

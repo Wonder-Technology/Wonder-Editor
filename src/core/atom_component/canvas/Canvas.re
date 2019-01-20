@@ -23,12 +23,12 @@ module Method = {
 
     isWDBAssetFileFunc() ?
       {
-        let wdbGameObjectUid =
+        let wdbGameObject =
           StateEditorService.getState()
           |> WDBNodeAssetEditorService.unsafeGetNodeData(startId)
           |> (({wdbGameObject}: NodeAssetType.wdbNodeData) => wdbGameObject);
 
-        dragWDBFunc(wdbGameObjectUid);
+        dragWDBFunc(wdbGameObject);
       } :
       ();
   };
@@ -42,8 +42,8 @@ let component = ReasonReact.statelessComponent("Canvas");
 
    | DragLeave => ReasonReact.NoUpdate
 
-   | DragWDB(wdbGameObjectUid) =>
-     ReasonReactUtils.sideEffects(() => dragWDB(wdbGameObjectUid))
+   | DragWDB(wdbGameObject) =>
+     ReasonReactUtils.sideEffects(() => dragWDB(wdbGameObject))
 
    | Nothing => ReasonReact.NoUpdate
    }; */

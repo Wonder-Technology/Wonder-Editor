@@ -96,7 +96,7 @@ module Drag = {
          event,
        ); */
 
-    let wdbGameObjectUid =
+    let wdbGameObject =
       StateEditorService.getState()
       |> OperateTreeAssetEditorService.unsafeFindNodeById(wdbNodeId)
       |> WDBNodeAssetService.getWDBGameObject;
@@ -104,7 +104,7 @@ module Drag = {
     MainEditorSceneTree.Method.dragWDBToBeTargetSib(
       (store, dispatchFunc),
       (),
-      (targetGameObject, wdbGameObjectUid, dragPosition),
+      (targetGameObject, wdbGameObject, dragPosition),
     );
     /* DragEventUtils.handleDragEnd(event); */
   };

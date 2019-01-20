@@ -33,6 +33,9 @@ let addSceneChildren = SceneAPI.addSceneChildren;
 
 let setSceneGameObject = SceneAPI.setSceneGameObject;
 
+let isSceneGameObject = (gameObject, engineState) =>
+  gameObject === getSceneGameObject(engineState);
+
 let disposeSceneAllChildrenKeepOrderRemoveGeometryRemoveMaterial = engineState => {
   let scene = engineState |> getSceneGameObject;
 

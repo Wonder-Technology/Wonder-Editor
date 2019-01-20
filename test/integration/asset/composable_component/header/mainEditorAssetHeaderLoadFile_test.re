@@ -227,7 +227,7 @@ let _ =
               MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
               |> ignore;
               let fileName = "CubeTextured";
-              let newGameObjectUid = GameObjectTool.getNewGameObjectUid();
+              let newGameObject = GameObjectTool.getNewGameObject();
 
               MainEditorAssetUploadTool.loadOneWDB(
                 ~fileName,
@@ -245,7 +245,7 @@ let _ =
                      |> WDBNodeAssetService.getNodeData;
 
                    (name, wdbGameObject)
-                   |> expect == (fileName, newGameObjectUid)
+                   |> expect == (fileName, newGameObject)
                    |> resolve;
                  });
             });

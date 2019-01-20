@@ -123,6 +123,6 @@ let setCurrentSceneTreeNode = gameObject =>
 
 let isAlive = Wonderjs.AliveGameObjectMainService.isAlive;
 
-let getNewGameObjectUid =
+let getNewGameObject =
     (~engineState=StateEngineService.unsafeGetState(), ()) =>
   engineState.gameObjectRecord.uid;

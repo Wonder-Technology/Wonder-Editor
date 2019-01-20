@@ -14,24 +14,24 @@ module CustomEventHandler = {
   type return = unit;
 
   let _handleDragIntoTarget =
-      (targetGameObjectUid, draggedGameObjectUid, engineState) => {
-    SceneTreeEditorService.setIsShowChildren(targetGameObjectUid, true)
+      (targetGameObject, draggedGameObject, engineState) => {
+    SceneTreeEditorService.setIsShowChildren(targetGameObject, true)
     |> StateLogicService.getAndSetEditorState;
 
     engineState
     |> HierarchyGameObjectEngineService.setParentKeepOrder(
-         targetGameObjectUid,
-         draggedGameObjectUid,
+         targetGameObject,
+         draggedGameObject,
        );
   };
 
   let _handleDragToBeSceneGameObjectHierarchy =
-      (dragPosition, sceneGameObject, draggedGameObjectUid, engineState) =>
+      (dragPosition, sceneGameObject, draggedGameObject, engineState) =>
     switch (dragPosition) {
     | DragIntoTarget =>
       _handleDragIntoTarget(
         sceneGameObject,
-        draggedGameObjectUid,
+        draggedGameObject,
         engineState,
       )
 
@@ -48,38 +48,38 @@ module CustomEventHandler = {
              engineState,
            )
            |> OptionService.unsafeGet,
-           draggedGameObjectUid,
+           draggedGameObject,
          )
       |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
-           draggedGameObjectUid,
+           draggedGameObject,
            targetGameObject,
            WonderEditor.TransformType.Before,
          );
     };
 
   let _handleDragToBeTargetGameObjectHierarchy =
-      (dragPosition, targetGameObjectUid, draggedGameObjectUid, engineState) =>
+      (dragPosition, targetGameObject, draggedGameObject, engineState) =>
     switch (dragPosition) {
     | DragBeforeTarget =>
       engineState
       |> HierarchyGameObjectEngineService.setParentKeepOrder(
            HierarchyGameObjectEngineService.getParentGameObject(
-             targetGameObjectUid,
+             targetGameObject,
              engineState,
            )
            |> OptionService.unsafeGet,
-           draggedGameObjectUid,
+           draggedGameObject,
          )
       |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
-           draggedGameObjectUid,
-           targetGameObjectUid,
+           draggedGameObject,
+           targetGameObject,
            WonderEditor.TransformType.Before,
          )
 
     | DragIntoTarget =>
       _handleDragIntoTarget(
-        targetGameObjectUid,
-        draggedGameObjectUid,
+        targetGameObject,
+        draggedGameObject,
         engineState,
       )
 
@@ -87,15 +87,15 @@ module CustomEventHandler = {
       engineState
       |> HierarchyGameObjectEngineService.setParentKeepOrder(
            HierarchyGameObjectEngineService.getParentGameObject(
-             targetGameObjectUid,
+             targetGameObject,
              engineState,
            )
            |> OptionService.unsafeGet,
-           draggedGameObjectUid,
+           draggedGameObject,
          )
       |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
-           draggedGameObjectUid,
-           targetGameObjectUid,
+           draggedGameObject,
+           targetGameObject,
            WonderEditor.TransformType.After,
          )
     };
@@ -104,33 +104,23 @@ module CustomEventHandler = {
       (
         (store, dispatchFunc),
         (),
-        (targetGameObjectUid, draggedGameObjectUid, dragPosition),
+        (targetGameObject, draggedGameObject, dragPosition),
       ) => {
     let engineState = StateEngineService.unsafeGetState();
 
-    let isSceneGameObject =
-      targetGameObjectUid
-      === (
-            SceneEngineService.getSceneGameObject
-            |> StateLogicService.getEngineStateToGetData
-          );
-
     let engineState =
-      targetGameObjectUid
-      === (
-            SceneEngineService.getSceneGameObject
-            |> StateLogicService.getEngineStateToGetData
-          ) ?
+      SceneEngineService.isSceneGameObject(targetGameObject)
+      |> StateLogicService.getEngineStateToGetData ?
         _handleDragToBeSceneGameObjectHierarchy(
           dragPosition,
-          targetGameObjectUid,
-          draggedGameObjectUid,
+          targetGameObject,
+          draggedGameObject,
           engineState,
         ) :
         _handleDragToBeTargetGameObjectHierarchy(
           dragPosition,
-          targetGameObjectUid,
-          draggedGameObjectUid,
+          targetGameObject,
+          draggedGameObject,
           engineState,
         );
 

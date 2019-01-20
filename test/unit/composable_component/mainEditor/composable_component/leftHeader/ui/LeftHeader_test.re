@@ -55,7 +55,7 @@ let _ =
             "the added emptyGameObject should only has transform component", () => {
             let engineState = StateEngineService.unsafeGetState();
 
-            let newGameObject = GameObjectTool.getNewGameObjectUid();
+            let newGameObject = GameObjectTool.getNewGameObject();
 
             MainEditorLeftHeaderTool.addEmptyGameObject();
 

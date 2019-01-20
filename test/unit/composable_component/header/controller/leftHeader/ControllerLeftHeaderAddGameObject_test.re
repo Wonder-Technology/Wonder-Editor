@@ -45,7 +45,7 @@ let _ =
       });
       test(
         "the added cube's geometry's name should be Wonder-Default-Cube", () => {
-        let addedCubeUid = GameObjectTool.getNewGameObjectUid();
+        let addedCubeUid = GameObjectTool.getNewGameObject();
         let engineState = StateEngineService.unsafeGetState();
 
         MainEditorLeftHeaderTool.addCube();
@@ -108,7 +108,7 @@ let _ =
       test(
         "the added sphere's geometry's name should be Wonder-Default-Sphere",
         () => {
-        let addedSphereUid = GameObjectTool.getNewGameObjectUid();
+        let addedSphereUid = GameObjectTool.getNewGameObject();
         let engineState = StateEngineService.unsafeGetState();
 
         MainEditorLeftHeaderTool.addSphere();

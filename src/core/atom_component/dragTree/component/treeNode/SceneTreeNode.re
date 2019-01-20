@@ -116,12 +116,12 @@ module Method = {
       DragGameObject(gameObject, startId, dragPosition) :
       isAssetWDBFileFunc() ?
         {
-          let wdbGameObjectUid =
+          let wdbGameObject =
             StateEditorService.getState()
             |> OperateTreeAssetEditorService.unsafeFindNodeById(startId)
             |> WDBNodeAssetService.getWDBGameObject;
 
-          DragWDB(gameObject, wdbGameObjectUid, dragPosition);
+          DragWDB(gameObject, wdbGameObject, dragPosition);
         } :
         DragLeave;
   };
@@ -307,10 +307,10 @@ let reducer =
       dragGameObject((targetUid, draggedUid, dragPosition))
     )
 
-  | DragWDB(targetUid, wdbGameObjectUid, dragPosition) =>
+  | DragWDB(targetUid, wdbGameObject, dragPosition) =>
     ReasonReactUtils.updateWithSideEffects(
       Method.buildDragEndState(state), _state =>
-      dragWDB((targetUid, wdbGameObjectUid, dragPosition))
+      dragWDB((targetUid, wdbGameObject, dragPosition))
     )
 
   | Nothing => ReasonReact.NoUpdate
