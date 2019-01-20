@@ -69,7 +69,7 @@ let getAllWDBGameObjects = (editorState, engineState) =>
        (. allWDBGameObjects, wdbNode) =>
          ArrayService.fastConcat(
            allWDBGameObjects,
-           GameObjectEngineService.getAllGameObjects(
+           HierarchyGameObjectEngineService.getAllGameObjects(
              WDBNodeAssetService.getWDBGameObject(wdbNode),
              engineState,
            ),

@@ -6,7 +6,7 @@ let getSceneCameras = () => {
   let engineState = StateEngineService.unsafeGetState();
 
   engineState
-  |> GameObjectEngineService.getAllGameObjects(
+  |> HierarchyGameObjectEngineService.getAllGameObjects(
        engineState |> SceneEngineService.getSceneGameObject,
      )
   |> Js.Array.filter(gameObject =>
@@ -45,13 +45,13 @@ let _isCube = (gameObject, engineState) =>
 
 let getCubeByIndex = (index, engineState) =>
   engineState
-  |> GameObjectUtils.getChildren(unsafeGetScene())
+  |> HierarchyGameObjectEngineService.getChildren(unsafeGetScene())
   |> Js.Array.filter(gameObject => _isCube(gameObject, engineState))
   |> ArrayService.unsafeGetNth(index);
 
 let getDirectionLightGameObjectByIndex = (index, engineState) =>
   engineState
-  |> GameObjectUtils.getChildren(unsafeGetScene())
+  |> HierarchyGameObjectEngineService.getChildren(unsafeGetScene())
   |> Js.Array.filter(gameObject =>
        GameObjectComponentEngineService.hasDirectionLightComponent(
          gameObject,
@@ -170,7 +170,7 @@ let prepareScene = sandbox => {
 };
 
 let getCameraInDefaultScene = engineState =>
-  GameObjectUtils.getChildren(unsafeGetScene(), engineState)
+  HierarchyGameObjectEngineService.getChildren(unsafeGetScene(), engineState)
   |> Js.Array.filter(gameObject =>
        GameObjectComponentEngineService.hasBasicCameraViewComponent(
          gameObject,
@@ -183,12 +183,12 @@ let _isDirectionLight = (gameObject, engineState) =>
   LightEngineService.hasLightComponent(gameObject, engineState);
 
 let getCubeInDefaultScene = engineState =>
-  GameObjectUtils.getChildren(unsafeGetScene(), engineState)
+  HierarchyGameObjectEngineService.getChildren(unsafeGetScene(), engineState)
   |> Js.Array.filter(gameObject => _isCube(gameObject, engineState))
   |> WonderCommonlib.ArrayService.unsafePop;
 
 let getDirectionLightInDefaultScene = engineState =>
-  GameObjectUtils.getChildren(unsafeGetScene(), engineState)
+  HierarchyGameObjectEngineService.getChildren(unsafeGetScene(), engineState)
   |> Js.Array.filter(gameObject =>
        _isDirectionLight(gameObject, engineState)
      )

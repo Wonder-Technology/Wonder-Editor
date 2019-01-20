@@ -4,7 +4,7 @@ let _checkLightCount = (gameObject, (editorState, engineState)) => {
   let result =
     (
       GameObjectEngineService.getAllDirectionLights(
-        GameObjectEngineService.getAllGameObjects(gameObject, engineState),
+        HierarchyGameObjectEngineService.getAllGameObjects(gameObject, engineState),
         engineState,
       )
       |> Js.Array.length
@@ -21,7 +21,7 @@ let _checkLightCount = (gameObject, (editorState, engineState)) => {
       } :
       (
         GameObjectEngineService.getAllPointLights(
-          GameObjectEngineService.getAllGameObjects(gameObject, engineState),
+          HierarchyGameObjectEngineService.getAllGameObjects(gameObject, engineState),
           engineState,
         )
         |> Js.Array.length
@@ -66,15 +66,15 @@ let dragWDB =
       switch (dragPosition) {
       | DragBeforeTarget =>
         engineState
-        |> GameObjectUtils.addChild(
-             GameObjectUtils.getParentGameObject(
+        |> HierarchyGameObjectEngineService.addChild(
+             HierarchyGameObjectEngineService.getParentGameObject(
                targetGameObjectUid,
                engineState,
              )
              |> OptionService.unsafeGet,
              clonedWDBGameObject,
            )
-        |> GameObjectEngineService.changeGameObjectChildOrder(
+        |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
              clonedWDBGameObject,
              targetGameObjectUid,
              WonderEditor.TransformType.Before,
@@ -82,19 +82,19 @@ let dragWDB =
 
       | DragIntoTarget =>
         engineState
-        |> GameObjectUtils.addChild(targetGameObjectUid, clonedWDBGameObject)
+        |> HierarchyGameObjectEngineService.addChild(targetGameObjectUid, clonedWDBGameObject)
 
       | DragAfterTarget =>
         engineState
-        |> GameObjectUtils.addChild(
-             GameObjectUtils.getParentGameObject(
+        |> HierarchyGameObjectEngineService.addChild(
+             HierarchyGameObjectEngineService.getParentGameObject(
                targetGameObjectUid,
                engineState,
              )
              |> OptionService.unsafeGet,
              clonedWDBGameObject,
            )
-        |> GameObjectEngineService.changeGameObjectChildOrder(
+        |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
              clonedWDBGameObject,
              targetGameObjectUid,
              WonderEditor.TransformType.After,

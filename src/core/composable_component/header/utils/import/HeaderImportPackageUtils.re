@@ -139,7 +139,7 @@ let _checkSceneMaterials = () =>
   _checkMaterials(
     "scene gameObjects",
     SceneEngineService.getSceneGameObject(StateEngineService.unsafeGetState())
-    |> GameObjectEngineService.getAllGameObjects(
+    |> HierarchyGameObjectEngineService.getAllGameObjects(
          _,
          StateEngineService.unsafeGetState(),
        ),
@@ -195,7 +195,7 @@ let _checkSceneTextures = () =>
   _checkTextures(
     "scene gameObjects",
     SceneEngineService.getSceneGameObject(StateEngineService.unsafeGetState())
-    |> GameObjectEngineService.getAllGameObjects(
+    |> HierarchyGameObjectEngineService.getAllGameObjects(
          _,
          StateEngineService.unsafeGetState(),
        ),
@@ -214,7 +214,7 @@ let _init = allWDBGameObjectArrRef => {
 
   ArrayService.fastConcat(
     allWDBGameObjectArrRef^,
-    GameObjectEngineService.getAllGameObjects(
+    HierarchyGameObjectEngineService.getAllGameObjects(
       SceneEngineService.getSceneGameObject(engineState),
       engineState,
     ),
@@ -322,7 +322,7 @@ let _import = result => {
               let engineState = StateEngineService.unsafeGetState();
 
               ImportPackageRelateGameObjectAndAssetUtils.relateSceneWDBGameObjectsAndAssets(
-                GameObjectEngineService.getAllGameObjects(
+                HierarchyGameObjectEngineService.getAllGameObjects(
                   sceneGameObject,
                   engineState,
                 ),

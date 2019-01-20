@@ -54,7 +54,7 @@ let _ =
               MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
 
               StateEngineService.unsafeGetState()
-              |> GameObjectUtils.getChildren(
+              |> HierarchyGameObjectEngineService.getChildren(
                    MainEditorSceneTool.unsafeGetScene(),
                  )
               |> Js.Array.includes(currentSceneTreeNode)

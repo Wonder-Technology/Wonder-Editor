@@ -1,5 +1,5 @@
 let getChildren = (gameObject, engineState) =>
-  GameObjectUtils.getChildren(gameObject, engineState);
+  HierarchyGameObjectEngineService.getChildren(gameObject, engineState);
 
 let getChild = (gameObject, index, engineState) =>
   Array.unsafe_get(getChildren(gameObject, engineState), index);

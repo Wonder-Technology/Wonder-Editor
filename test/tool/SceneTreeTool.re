@@ -29,8 +29,8 @@ let _prepareSpecificGameObjects = engineState => {
   editorState |> StateEditorService.setState |> ignore;
 
   engineState;
-  /* |> GameObjectUtils.addChild(scene, gridPlane)
-     |> GameObjectUtils.addChild(scene, camera); */
+  /* |> HierarchyGameObjectEngineService.addChild(scene, gridPlane)
+     |> HierarchyGameObjectEngineService.addChild(scene, camera); */
 };
 
 let _buildTwoCameraSceneGraph = (componentData, editorState, engineState) => {
@@ -48,9 +48,9 @@ let _buildTwoCameraSceneGraph = (componentData, editorState, engineState) => {
     cube1,
     editorState,
     engineState
-    |> GameObjectUtils.addChild(scene, camera1)
-    |> GameObjectUtils.addChild(scene, camera2)
-    |> GameObjectUtils.addChild(scene, cube1),
+    |> HierarchyGameObjectEngineService.addChild(scene, camera1)
+    |> HierarchyGameObjectEngineService.addChild(scene, camera2)
+    |> HierarchyGameObjectEngineService.addChild(scene, cube1),
   );
 };
 
@@ -105,10 +105,10 @@ let _buildThreeLayerSceneGraph = (componentData, editorState, engineState) => {
   (
     editorState,
     engineState
-    |> GameObjectUtils.addChild(scene, cube1)
-    |> GameObjectUtils.addChild(cube1, cube4)
-    |> GameObjectUtils.addChild(scene, cube2)
-    |> GameObjectUtils.addChild(scene, cube3),
+    |> HierarchyGameObjectEngineService.addChild(scene, cube1)
+    |> HierarchyGameObjectEngineService.addChild(cube1, cube4)
+    |> HierarchyGameObjectEngineService.addChild(scene, cube2)
+    |> HierarchyGameObjectEngineService.addChild(scene, cube3),
     (scene, (cube1, cube4), cube2, cube3),
   );
 };
@@ -154,10 +154,10 @@ let _buildFourLayerSceneGraph = (componentData, editorState, engineState) => {
   (
     editorState,
     engineState
-    |> GameObjectUtils.addChild(scene, cube1)
-    |> GameObjectUtils.addChild(cube1, cube3)
-    |> GameObjectUtils.addChild(cube3, cube4)
-    |> GameObjectUtils.addChild(scene, cube2),
+    |> HierarchyGameObjectEngineService.addChild(scene, cube1)
+    |> HierarchyGameObjectEngineService.addChild(cube1, cube3)
+    |> HierarchyGameObjectEngineService.addChild(cube3, cube4)
+    |> HierarchyGameObjectEngineService.addChild(scene, cube2),
     (scene, (cube1, cube3, cube4), cube2),
   );
 };

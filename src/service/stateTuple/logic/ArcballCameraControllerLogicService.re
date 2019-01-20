@@ -67,7 +67,7 @@ let _checkSceneAllArcballCameraControllersNotBindEvent = engineState =>
             ~actual={j|bind|j},
           ),
           () =>
-          GameObjectEngineService.getAllGameObjects(
+          HierarchyGameObjectEngineService.getAllGameObjects(
             SceneEngineService.getSceneGameObject(engineState),
             engineState,
           )

@@ -27,6 +27,36 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
+    describe("test should update", () => {
+      test("if reatinedProps updateTypeArr include All, should update", () =>
+        shouldUpdate(
+          OldNewSelfTool.buildNewSelf({
+            updateTypeArr: [|UpdateStore.All|] |> Obj.magic,
+          }),
+        )
+        |> expect == true
+      );
+      test(
+        "else if reatinedProps updateTypeArr include SceneTree, should update",
+        () =>
+        shouldUpdate(
+          OldNewSelfTool.buildNewSelf({
+            updateTypeArr: [|UpdateStore.SceneTree|] |> Obj.magic,
+          }),
+        )
+        |> expect == true
+      );
+      test("else, should not update", () =>
+        shouldUpdate(
+          OldNewSelfTool.buildNewSelf({
+            updateTypeArr:
+              [|UpdateStore.Project, UpdateStore.Inspector|] |> Obj.magic,
+          }),
+        )
+        |> expect == false
+      );
+    });
+
     describe("test drag", () => {
       beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
@@ -132,152 +162,267 @@ let _ =
           )
         )
       );
-    });
 
-    describe("test drag gameObject to be target gameObject sib", () => {
-      beforeEach(() =>
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
-        )
-      );
-      afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
-
-      describe("test snapshot", () => {
-        test("no drag", () =>
-          BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
-          |> ReactTestTool.createSnapshotAndMatch
-        );
-
-        test("test drag gameObject before target gameObject", () => {
-          MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
-            ~sourceGameObject=
-              MainEditorSceneTool.getDirectionLightInDefaultScene(
-                StateEngineService.unsafeGetState(),
-              ),
-            ~targetGameObject=
-              MainEditorSceneTool.getFirstCube(
-                StateEngineService.unsafeGetState(),
-              ),
-            ~dragPosition=SceneTreeNodeType.DragBeforeTarget,
-            (),
-          );
-
-          BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
-          |> ReactTestTool.createSnapshotAndMatch;
-        });
-
-        test("test drag gameObject into target gameObject", () => {
-          MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
-            ~sourceGameObject=
-              MainEditorSceneTool.getDirectionLightInDefaultScene(
-                StateEngineService.unsafeGetState(),
-              ),
-            ~targetGameObject=
-              MainEditorSceneTool.getFirstCube(
-                StateEngineService.unsafeGetState(),
-              ),
-            ~dragPosition=SceneTreeNodeType.DragIntoTarget,
-            (),
-          );
-
-          BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
-          |> ReactTestTool.createSnapshotAndMatch;
-        });
-
-        test("test drag gameObject after target gameObject", () => {
-          MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
-            ~sourceGameObject=
-              MainEditorSceneTool.getDirectionLightInDefaultScene(
-                StateEngineService.unsafeGetState(),
-              ),
-            ~targetGameObject=
-              MainEditorSceneTool.getFirstCube(
-                StateEngineService.unsafeGetState(),
-              ),
-            ~dragPosition=SceneTreeNodeType.DragAfterTarget,
-            (),
-          );
-
-          BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
-          |> ReactTestTool.createSnapshotAndMatch;
-        });
-      });
-      describe("test logic", () => {
-        describe("test not change child", () =>
-          test("test no drag", () => {
-            let engineState = StateEngineService.unsafeGetState();
-            let (scene, (camera, cube1, cube2, directionLight)) =
-              MainEditorSceneTool.getDefaultGameObjects(engineState);
-
-            GameObjectUtils.getChildren(scene, engineState)
-            |> expect == [|camera, cube1, cube2, directionLight|];
-          })
-        );
-
-        describe("test change child", () =>
-          test("test drag gameObject after target gameObject", () => {
-            let engineState = StateEngineService.unsafeGetState();
-            let (scene, (camera, cube1, cube2, directionLight)) =
-              MainEditorSceneTool.getDefaultGameObjects(engineState);
-
-            MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
-              ~sourceGameObject=camera,
-              ~targetGameObject=directionLight,
-              ~dragPosition=SceneTreeNodeType.DragAfterTarget,
-              (),
-            );
-
-            (
-              GameObjectUtils.getChildren(scene, engineState),
-              GameObjectUtils.getParentGameObject(camera, engineState),
-              GameObjectUtils.getParentGameObject(
-                directionLight,
-                engineState,
-              ),
+      describe("test drag gameObject to be target gameObject sib", () => {
+        describe("test drag gameObject before target gameObject", () => {
+          beforeEach(() =>
+            MainEditorSceneTool.createDefaultScene(
+              sandbox,
+              MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
             )
-            |>
-            expect == (
-                        [|cube1, cube2, directionLight, camera|],
-                        Some(scene),
-                        Some(scene),
-                      );
-          })
-        );
+          );
+          afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
+          describe("test target gameObject isn't scene gameObject", () => {
+            test("test snapshot", () => {
+              MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+                ~sourceGameObject=
+                  MainEditorSceneTool.getDirectionLightInDefaultScene(
+                    StateEngineService.unsafeGetState(),
+                  ),
+                ~targetGameObject=
+                  MainEditorSceneTool.getFirstCube(
+                    StateEngineService.unsafeGetState(),
+                  ),
+                ~dragPosition=SceneTreeNodeType.DragBeforeTarget,
+                (),
+              );
+
+              BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
+              |> ReactTestTool.createSnapshotAndMatch;
+            });
+            test("test scene children", () => {
+              let engineState = StateEngineService.unsafeGetState();
+              let (scene, (camera, cube1, cube2, directionLight)) =
+                MainEditorSceneTool.getDefaultGameObjects(engineState);
+
+              MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+                ~sourceGameObject=camera,
+                ~targetGameObject=directionLight,
+                ~dragPosition=SceneTreeNodeType.DragBeforeTarget,
+                (),
+              );
+
+              (
+                HierarchyGameObjectEngineService.getChildren(
+                  scene,
+                  engineState,
+                ),
+                HierarchyGameObjectEngineService.getParentGameObject(
+                  camera,
+                  engineState,
+                ),
+                HierarchyGameObjectEngineService.getParentGameObject(
+                  directionLight,
+                  engineState,
+                ),
+              )
+              |>
+              expect == (
+                          [|cube1, cube2, camera, directionLight|],
+                          Some(scene),
+                          Some(scene),
+                        );
+            });
+          });
+
+          describe("test target gameObject is scene gameObject", () =>
+            describe("set dragged gameobject to be scene first child", () => {
+              test("test snapshot", () => {
+                MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+                  ~sourceGameObject=
+                    MainEditorSceneTool.getFirstCube(
+                      StateEngineService.unsafeGetState(),
+                    ),
+                  ~targetGameObject=
+                    SceneEngineService.getSceneGameObject
+                    |> StateLogicService.getEngineStateToGetData,
+                  ~dragPosition=SceneTreeNodeType.DragBeforeTarget,
+                  (),
+                );
+
+                BuildComponentTool.buildSceneTree(
+                  TestTool.buildEmptyAppState(),
+                )
+                |> ReactTestTool.createSnapshotAndMatch;
+              });
+              test("test scene children", () => {
+                let engineState = StateEngineService.unsafeGetState();
+                let (scene, (camera, cube1, cube2, directionLight)) =
+                  MainEditorSceneTool.getDefaultGameObjects(engineState);
+
+                MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+                  ~sourceGameObject=directionLight,
+                  ~targetGameObject=scene,
+                  ~dragPosition=SceneTreeNodeType.DragBeforeTarget,
+                  (),
+                );
+
+                HierarchyGameObjectEngineService.getChildren(
+                  scene,
+                  engineState,
+                )
+                |> expect == [|directionLight, camera, cube1, cube2|];
+              });
+            })
+          );
+        });
+
+        describe("test drag gameObject into target gameObject", () => {
+          describe("test target gameObject isn't scene gameObject", () => {
+            beforeEach(() =>
+              MainEditorSceneTool.createDefaultScene(
+                sandbox,
+                MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
+              )
+            );
+            afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
+            test("test snapshot", () => {
+              MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+                ~sourceGameObject=
+                  MainEditorSceneTool.getDirectionLightInDefaultScene(
+                    StateEngineService.unsafeGetState(),
+                  ),
+                ~targetGameObject=
+                  MainEditorSceneTool.getFirstCube(
+                    StateEngineService.unsafeGetState(),
+                  ),
+                ~dragPosition=SceneTreeNodeType.DragIntoTarget,
+                (),
+              );
+
+              BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
+              |> ReactTestTool.createSnapshotAndMatch;
+            });
+          });
+
+          describe("test target gameObject is scene gameObject", () =>
+            describe("set dragged gameobject to be scene last child", () => {
+              test("test snapshot", () => {
+                let (scene, (cube1, cube4), cube2, cube3) =
+                  SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
+
+                MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+                  ~sourceGameObject=cube4,
+                  ~targetGameObject=scene,
+                  ~dragPosition=SceneTreeNodeType.DragIntoTarget,
+                  (),
+                );
+
+                BuildComponentTool.buildSceneTree(
+                  TestTool.buildEmptyAppState(),
+                )
+                |> ReactTestTool.createSnapshotAndMatch;
+              });
+              test("test scene children", () => {
+                let engineState = StateEngineService.unsafeGetState();
+                let (scene, (cube1, cube4), cube2, cube3) =
+                  SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
+
+                MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+                  ~sourceGameObject=cube4,
+                  ~targetGameObject=scene,
+                  ~dragPosition=SceneTreeNodeType.DragIntoTarget,
+                  (),
+                );
+
+                HierarchyGameObjectEngineService.getChildren(
+                  scene,
+                  engineState,
+                )
+                |> expect == [|cube1, cube2, cube3, cube4|];
+              });
+            })
+          );
+        });
+
+        describe("test drag gameObject after target gameObject", () => {
+          beforeEach(() =>
+            MainEditorSceneTool.createDefaultScene(
+              sandbox,
+              MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
+            )
+          );
+          afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
+          describe("test target gameObject isn't scene gameObject", () => {
+            test("test snapshot", () => {
+              MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+                ~sourceGameObject=
+                  MainEditorSceneTool.getDirectionLightInDefaultScene(
+                    StateEngineService.unsafeGetState(),
+                  ),
+                ~targetGameObject=
+                  MainEditorSceneTool.getFirstCube(
+                    StateEngineService.unsafeGetState(),
+                  ),
+                ~dragPosition=SceneTreeNodeType.DragAfterTarget,
+                (),
+              );
+
+              BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
+              |> ReactTestTool.createSnapshotAndMatch;
+            });
+            test("test scene children", () => {
+              let engineState = StateEngineService.unsafeGetState();
+              let (scene, (camera, cube1, cube2, directionLight)) =
+                MainEditorSceneTool.getDefaultGameObjects(engineState);
+
+              MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+                ~sourceGameObject=camera,
+                ~targetGameObject=directionLight,
+                ~dragPosition=SceneTreeNodeType.DragAfterTarget,
+                (),
+              );
+
+              HierarchyGameObjectEngineService.getChildren(scene, engineState)
+              |> expect == [|cube1, cube2, directionLight, camera|];
+            });
+          });
+
+          describe("test target gameObject is scene gameObject", () =>
+            describe("set dragged gameobject to be scene first child", () => {
+              test("test snapshot", () => {
+                MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+                  ~sourceGameObject=
+                    MainEditorSceneTool.getFirstCube(
+                      StateEngineService.unsafeGetState(),
+                    ),
+                  ~targetGameObject=
+                    SceneEngineService.getSceneGameObject
+                    |> StateLogicService.getEngineStateToGetData,
+                  ~dragPosition=SceneTreeNodeType.DragAfterTarget,
+                  (),
+                );
+
+                BuildComponentTool.buildSceneTree(
+                  TestTool.buildEmptyAppState(),
+                )
+                |> ReactTestTool.createSnapshotAndMatch;
+              });
+              test("test scene children", () => {
+                let engineState = StateEngineService.unsafeGetState();
+                let (scene, (camera, cube1, cube2, directionLight)) =
+                  MainEditorSceneTool.getDefaultGameObjects(engineState);
+
+                MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+                  ~sourceGameObject=directionLight,
+                  ~targetGameObject=scene,
+                  ~dragPosition=SceneTreeNodeType.DragAfterTarget,
+                  (),
+                );
+
+                HierarchyGameObjectEngineService.getChildren(
+                  scene,
+                  engineState,
+                )
+                |> expect == [|directionLight, camera, cube1, cube2|];
+              });
+            })
+          );
+        });
       });
     });
 
     describe("get sceneTree from engine", () => {
-      describe("test should update", () => {
-        test("if reatinedProps updateTypeArr include All, should update", () =>
-          shouldUpdate(
-            OldNewSelfTool.buildNewSelf({
-              updateTypeArr: [|UpdateStore.All|] |> Obj.magic,
-            }),
-          )
-          |> expect == true
-        );
-        test(
-          "else if reatinedProps updateTypeArr include SceneTree, should update",
-          () =>
-          shouldUpdate(
-            OldNewSelfTool.buildNewSelf({
-              updateTypeArr: [|UpdateStore.SceneTree|] |> Obj.magic,
-            }),
-          )
-          |> expect == true
-        );
-        test("else, should not update", () =>
-          shouldUpdate(
-            OldNewSelfTool.buildNewSelf({
-              updateTypeArr:
-                [|UpdateStore.Project, UpdateStore.Inspector|] |> Obj.magic,
-            }),
-          )
-          |> expect == false
-        );
-      });
-
       describe("test simple scene graph data which haven't children case", () => {
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
@@ -286,11 +431,11 @@ let _ =
           )
         );
         afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
-        test("no drag", () =>
+        test("test no drag", () =>
           BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
           |> ReactTestTool.createSnapshotAndMatch
         );
-        test("drag treeNode into target treeNode", () => {
+        test("test drag treeNode into target treeNode", () => {
           MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
             ~sourceGameObject=
               MainEditorSceneTool.getFirstCube(
@@ -312,7 +457,7 @@ let _ =
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(sandbox, () => ())
         );
-        test("click treeNode to set it to be currentSceneTreeNode", () => {
+        test("test click treeNode to set it to be currentSceneTreeNode", () => {
           MainEditorSceneTreeTool.Select.selectGameObject(
             ~gameObject=
               MainEditorSceneTool.getFirstCube(

@@ -222,7 +222,7 @@ let _ =
           SceneEngineService.getSceneGameObject(engineState);
 
         let engineState =
-          engineState |> GameObjectUtils.addChild(sceneGameObject, gameObject);
+          engineState |> HierarchyGameObjectEngineService.addChild(sceneGameObject, gameObject);
 
         let engineState =
           engineState
@@ -629,8 +629,8 @@ let _ =
             let engineState =
               engineState
               |> SceneEngineService.addSceneChild(parent1)
-              |> GameObjectUtils.addChild(parent1, parent2)
-              |> GameObjectUtils.addChild(parent2, gameObject);
+              |> HierarchyGameObjectEngineService.addChild(parent1, parent2)
+              |> HierarchyGameObjectEngineService.addChild(parent2, gameObject);
 
             _triggerPicking();
 

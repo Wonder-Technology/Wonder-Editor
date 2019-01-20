@@ -2864,10 +2864,9 @@ exports[`header import package test import scene wdb should reset scene gameObje
           />
         </div>
         <div
-          className="draggable-container no-drag"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -2886,10 +2885,9 @@ exports[`header import package test import scene wdb should reset scene gameObje
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -2909,10 +2907,9 @@ exports[`header import package test import scene wdb should reset scene gameObje
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -2932,10 +2929,9 @@ exports[`header import package test import scene wdb should reset scene gameObje
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -2955,10 +2951,9 @@ exports[`header import package test import scene wdb should reset scene gameObje
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -2978,10 +2973,9 @@ exports[`header import package test import scene wdb should reset scene gameObje
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}

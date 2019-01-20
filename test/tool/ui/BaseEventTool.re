@@ -126,19 +126,19 @@ let buildFileEvent =
 let buildDragEventWithDataMap = [%bs.raw
   dataMap => {|
   return {
-stopPropagation: () => undefined,
-preventDefault: () => undefined,
-dataTransfer: {
-  effectAllowed: "move",
-  dropEffect: "move",
-  setDragImage: (image, value1, value2) => undefined,
-  setData: (key, value) => {
-    dataMap[key] = value;
-  },
-  getData: (key) => {
-    return dataMap[key]
-  }
-}
+    stopPropagation: () => undefined,
+    preventDefault: () => undefined,
+    dataTransfer: {
+      effectAllowed: "move",
+      dropEffect: "move",
+      setDragImage: (image, value1, value2) => undefined,
+      setData: (key, value) => {
+        dataMap[key] = value;
+      },
+      getData: (key) => {
+        return dataMap[key]
+      }
+    }
   }
   |}
 ];
@@ -165,6 +165,8 @@ let buildDragEventWithMouse = (~offsetTop=11, ~offsetHeight=12, ~pageY=12, ()) =
       },
     },
     "pageY": pageY,
+    "stopPropagation": () => (),
+    "preventDefault": () => (),
   }
   |> Obj.magic;
 

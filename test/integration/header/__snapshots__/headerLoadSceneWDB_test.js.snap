@@ -20,10 +20,9 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
           />
         </div>
         <div
-          className="draggable-container no-drag"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -42,10 +41,9 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -65,10 +63,9 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -88,10 +85,9 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}

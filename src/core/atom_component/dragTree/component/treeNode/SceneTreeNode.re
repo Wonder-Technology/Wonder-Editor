@@ -75,19 +75,11 @@ module Method = {
     let (isValid, _) =
       _isValidForDragOver(gameObject, isWidgetFunc, checkNodeRelationFunc);
 
-    let isSceneGameObject =
-      gameObject
-      === (
-            SceneEngineService.getSceneGameObject
-            |> StateLogicService.getEngineStateToGetData
-          );
 
     isValid || isAssetWDBFileFunc() ?
       DragOver(
-        isSceneGameObject ?
-          DragIntoTarget :
-          ReactDOMRe.domElementToObj(ReactEventRe.Mouse.target(event))
-          |> _calcDragPosition(event),
+        ReactDOMRe.domElementToObj(ReactEventRe.Mouse.target(event))
+        |> _calcDragPosition(event),
       ) :
       Nothing;
   };
@@ -136,9 +128,6 @@ module Method = {
 
   let buildNotDragableUl = TreeNodeUtils.buildNotDragableUl;
 
-  let _buildMultipleClassName = classNameArr =>
-    classNameArr |> Js.Array.joinWith(" ");
-
   let _renderDragableText =
       (
         (state, send),
@@ -160,7 +149,7 @@ module Method = {
       ) =>
     <div
       className=(
-        _buildMultipleClassName([|
+        ClassNameService.buildMultipleClassName([|
           "draggable-container",
           isSelected ? isActive ? "select-active" : "select-not-active" : "",
           state.dragGapClass,

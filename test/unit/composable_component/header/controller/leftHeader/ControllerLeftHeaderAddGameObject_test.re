@@ -30,7 +30,7 @@ let _ =
         MainEditorLeftHeaderTool.addCube();
 
         StateEngineService.unsafeGetState()
-        |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
         |> Js.Array.length
         |> expect == 5;
       });
@@ -39,7 +39,7 @@ let _ =
         MainEditorLeftHeaderTool.addCube();
 
         StateEngineService.unsafeGetState()
-        |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
         |> Js.Array.length
         |> expect == 6;
       });
@@ -73,7 +73,7 @@ let _ =
         MainEditorLeftHeaderTool.addEmptyGameObject();
 
         StateEngineService.unsafeGetState()
-        |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
         |> Js.Array.length
         |> expect == 5;
       });
@@ -92,7 +92,7 @@ let _ =
         MainEditorLeftHeaderTool.addSphere();
 
         StateEngineService.unsafeGetState()
-        |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
         |> Js.Array.length
         |> expect == 5;
       });
@@ -101,7 +101,7 @@ let _ =
         MainEditorLeftHeaderTool.addSphere();
 
         StateEngineService.unsafeGetState()
-        |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
         |> Js.Array.length
         |> expect == 6;
       });

@@ -103,7 +103,7 @@ let _getPerspectiveCameraData =
 };
 
 let _getAllGameObjectData = engineState =>
-  GameObjectEngineService.getAllGameObjects(
+  HierarchyGameObjectEngineService.getAllGameObjects(
     SceneEngineService.getSceneGameObject(engineState),
     engineState,
   )
@@ -193,7 +193,7 @@ let _findPickedOne =
 };
 
 let rec _setAllParentsShowChildren = (gameObject, engineState, editorState) =>
-  switch (GameObjectUtils.getParentGameObject(gameObject, engineState)) {
+  switch (HierarchyGameObjectEngineService.getParentGameObject(gameObject, engineState)) {
   | None => editorState
   | Some(parentGameObject) =>
     _setAllParentsShowChildren(

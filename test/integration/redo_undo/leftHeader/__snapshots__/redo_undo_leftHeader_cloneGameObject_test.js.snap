@@ -20,10 +20,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
           />
         </div>
         <div
-          className="draggable-container no-drag"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -42,10 +41,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -65,10 +63,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -88,10 +85,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -111,10 +107,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -137,7 +132,6 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="draggable-container select-active no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -174,10 +168,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
           />
         </div>
         <div
-          className="draggable-container no-drag"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -196,10 +189,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -219,10 +211,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -242,10 +233,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -265,10 +255,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -288,10 +277,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -314,7 +302,6 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="draggable-container select-active no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -351,10 +338,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
           />
         </div>
         <div
-          className="draggable-container no-drag"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -373,10 +359,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -396,10 +381,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -419,10 +403,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -442,10 +425,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -465,10 +447,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -491,7 +472,6 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="draggable-container select-active no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -528,10 +508,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
           />
         </div>
         <div
-          className="draggable-container no-drag"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -550,10 +529,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -573,10 +551,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -596,10 +573,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -619,10 +595,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -645,7 +620,6 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="draggable-container select-active no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -682,10 +656,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
           />
         </div>
         <div
-          className="draggable-container no-drag"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -704,10 +677,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -730,7 +702,6 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="draggable-container select-active no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -750,10 +721,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -773,10 +743,9 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}

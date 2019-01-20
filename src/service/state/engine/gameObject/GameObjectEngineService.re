@@ -41,12 +41,6 @@ let unsafeGetGameObjectName = GameObjectAPI.unsafeGetGameObjectName;
 let setGameObjectName = (name, gameObject, engineState) =>
   GameObjectAPI.setGameObjectName(gameObject, name, engineState);
 
-let getAllChildrenTransform = (rootGameObject, engineState) =>
-  GameObjectAPI.getAllChildrenTransform(rootGameObject, engineState);
-
-let getAllGameObjects = (rootGameObject, engineState) =>
-  GameObjectAPI.getAllGameObjects(rootGameObject, engineState);
-
 let _getAllComponents =
     (allGameObjects, (hasComponentFunc, unsafeGetComponentFunc), engineState) =>
   allGameObjects
@@ -125,7 +119,7 @@ let getAllPointLights = (allGameObjects, engineState) =>
       ); */
 
 let initAllGameObjects = (gameObject, engineState) =>
-  getAllGameObjects(gameObject, engineState)
+  HierarchyGameObjectEngineService.getAllGameObjects(gameObject, engineState)
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. engineState, gameObject) =>
          initGameObject(gameObject, engineState),
@@ -134,7 +128,7 @@ let initAllGameObjects = (gameObject, engineState) =>
 
 let _getGameObjectActiveBasicCameraViews = (gameObject, engineState) =>
   engineState
-  |> getAllGameObjects(gameObject)
+  |> HierarchyGameObjectEngineService.getAllGameObjects(gameObject)
   |> Js.Array.filter(gameObject =>
        GameObjectComponentEngineService.hasBasicCameraViewComponent(
          gameObject,
@@ -180,27 +174,35 @@ let getGameObjectActiveBasicCameraView = (gameObject, engineState) => {
     None : Array.unsafe_get(activeBasicCameraViews, 0) |. Some;
 };
 
-let changeGameObjectChildOrder =
-    (sourceGameObject, targetGameObject, transformType, engineState) => {
-  let sourceTransform =
-    GameObjectComponentEngineService.unsafeGetTransformComponent(
-      sourceGameObject,
-      engineState,
-    );
-  let targetTransform =
-    GameObjectComponentEngineService.unsafeGetTransformComponent(
-      targetGameObject,
-      engineState,
-    );
-  let targetParentTransform =
-    TransformEngineService.getParent(targetTransform, engineState)
-    |> OptionService.unsafeGet;
+let setAllGameObjectsIsRenderIfHasMeshRenderer =
+    (isRender, gameObject, engineState) => {
+  let rec _iterateGameObjectArr = (gameObjectArr, engineState) =>
+    gameObjectArr
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. engineState, gameObject) => {
+           let engineState =
+             engineState
+             |> GameObjectComponentEngineService.hasMeshRendererComponent(
+                  gameObject,
+                ) ?
+               engineState
+               |> GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
+                    gameObject,
+                  )
+               |. MeshRendererEngineService.setMeshRendererIsRender(
+                    isRender,
+                    engineState,
+                  ) :
+               engineState;
 
-  TransformEngineService.changeChildOrder(
-    sourceTransform,
-    targetTransform,
-    targetParentTransform,
-    transformType,
-    engineState,
-  );
+           _iterateGameObjectArr(
+             engineState
+             |> HierarchyGameObjectEngineService.getChildren(gameObject),
+             engineState,
+           );
+         },
+         engineState,
+       );
+
+  _iterateGameObjectArr([|gameObject|], engineState);
 };

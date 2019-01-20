@@ -15,7 +15,7 @@ module CustomEventHandler = {
       |> Result.Result.either(
            targetGameObject => {
              let isNeedReInitSceneAllLightMaterials =
-               GameObjectEngineService.getAllGameObjects(
+               HierarchyGameObjectEngineService.getAllGameObjects(
                  targetGameObject,
                  engineState,
                )
@@ -39,9 +39,9 @@ module CustomEventHandler = {
 
              let engineState =
                engineState
-               |> GameObjectUtils.addChild(
+               |> HierarchyGameObjectEngineService.addChild(
                     engineState
-                    |> GameObjectUtils.getParentGameObject(targetGameObject)
+                    |> HierarchyGameObjectEngineService.getParentGameObject(targetGameObject)
                     |> OptionService.unsafeGet,
                     clonedGameObject,
                   );

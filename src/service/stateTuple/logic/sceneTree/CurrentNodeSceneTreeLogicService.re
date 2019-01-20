@@ -24,7 +24,7 @@ let disposeCurrentSceneTreeNode =
                 );
 
            _iterateSceneGraphRemove(
-             GameObjectUtils.getChildren(removedGameObject, engineState),
+             HierarchyGameObjectEngineService.getChildren(removedGameObject, engineState),
              (editorState, engineState),
            );
          },

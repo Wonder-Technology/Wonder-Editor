@@ -48,7 +48,7 @@ let _ =
             (),
           );
 
-          GameObjectUtils.getParentTransform(
+          HierarchyGameObjectEngineService.getParentTransform(
             draggedGameObject,
             StateEngineService.unsafeGetState(),
           )

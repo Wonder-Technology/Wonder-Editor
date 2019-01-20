@@ -32,7 +32,7 @@ let _ =
 
     test("init default scene", () =>
       StateEngineService.unsafeGetState()
-      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+      |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
       |> expect == 4
     );
@@ -40,7 +40,7 @@ let _ =
       _addGameObjectWithCount(2);
 
       StateEngineService.unsafeGetState()
-      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+      |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
       |> expect == 6;
     });
@@ -50,7 +50,7 @@ let _ =
       RedoUndoTool.undoHistoryState();
 
       StateEngineService.unsafeGetState()
-      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+      |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
       |> expect == 5;
     });
@@ -64,7 +64,7 @@ let _ =
       _addGameObjectWithCount(3);
 
       StateEngineService.unsafeGetState()
-      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+      |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
       |> expect == 8;
     });
@@ -80,7 +80,7 @@ let _ =
       RedoUndoTool.undoHistoryState();
 
       StateEngineService.unsafeGetState()
-      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+      |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
       |> expect == 7;
     });
@@ -92,7 +92,7 @@ let _ =
       RedoUndoTool.undoHistoryState();
       RedoUndoTool.redoHistoryState();
       StateEngineService.unsafeGetState()
-      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+      |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
       |> expect == 8;
     });
@@ -110,7 +110,7 @@ let _ =
 
       ControllerTool.stop();
       StateEngineService.unsafeGetState()
-      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+      |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
       |> expect == 5;
     });
@@ -124,7 +124,7 @@ let _ =
       ControllerTool.stop();
       RedoUndoTool.undoHistoryState();
       StateEngineService.unsafeGetState()
-      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+      |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
       |> expect == 4;
     });
@@ -139,7 +139,7 @@ let _ =
       RedoUndoTool.redoHistoryState();
       RedoUndoTool.redoHistoryState();
       StateEngineService.unsafeGetState()
-      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+      |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
       |> expect == 6;
     });

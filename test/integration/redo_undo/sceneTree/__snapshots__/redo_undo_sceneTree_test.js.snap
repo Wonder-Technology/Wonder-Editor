@@ -20,10 +20,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
           />
         </div>
         <div
-          className="draggable-container no-drag"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -47,10 +46,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             />
           </div>
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -69,10 +67,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
               className="item-triangle"
             />
             <div
-              className="draggable-container no-drag"
+              className="draggable-container  no-drag"
               draggable={true}
               onDragEnd={[Function]}
-              onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
@@ -96,7 +93,6 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             className="draggable-container select-active no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -116,10 +112,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -156,10 +151,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
           />
         </div>
         <div
-          className="draggable-container no-drag"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -183,10 +177,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             />
           </div>
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -205,10 +198,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
               className="item-triangle"
             />
             <div
-              className="draggable-container no-drag"
+              className="draggable-container  no-drag"
               draggable={true}
               onDragEnd={[Function]}
-              onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
@@ -231,7 +223,6 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
               className="draggable-container select-active no-drag"
               draggable={true}
               onDragEnd={[Function]}
-              onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
@@ -252,10 +243,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -292,10 +282,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           />
         </div>
         <div
-          className="draggable-container no-drag"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -319,10 +308,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             />
           </div>
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -341,10 +329,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
               className="item-triangle"
             />
             <div
-              className="draggable-container no-drag"
+              className="draggable-container  no-drag"
               draggable={true}
               onDragEnd={[Function]}
-              onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
@@ -367,7 +354,6 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
               className="draggable-container select-active no-drag"
               draggable={true}
               onDragEnd={[Function]}
-              onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
@@ -388,10 +374,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -428,10 +413,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           />
         </div>
         <div
-          className="draggable-container no-drag"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -455,10 +439,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             />
           </div>
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -477,10 +460,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
               className="item-triangle"
             />
             <div
-              className="draggable-container no-drag"
+              className="draggable-container  no-drag"
               draggable={true}
               onDragEnd={[Function]}
-              onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
@@ -504,7 +486,6 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             className="draggable-container select-active no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -524,10 +505,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -564,10 +544,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           />
         </div>
         <div
-          className="draggable-container no-drag"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -586,10 +565,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -612,7 +590,6 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             className="draggable-container select-active no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -632,10 +609,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -655,10 +631,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             className="item-triangle"
           />
           <div
-            className="draggable-container no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
