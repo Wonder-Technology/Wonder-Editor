@@ -9,7 +9,7 @@ let importAssetWDB =
     ) => {
   let allGameObjectsRef = ref([||]);
   let imageUint8ArrayDataMapRef =
-    ref(WonderCommonlib.SparseMapService.createEmpty());
+    ref(WonderCommonlib.ImmutableSparseMapService.createEmpty());
 
   engineState
   |> AssembleWDBEngineService.assembleWDB(

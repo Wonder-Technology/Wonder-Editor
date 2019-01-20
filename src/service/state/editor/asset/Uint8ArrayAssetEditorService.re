@@ -15,12 +15,12 @@ let buildImageUint8ArrayMap = editorState =>
          |> OptionService.andThenWithDefault(
               uint8Array =>
                 map
-                |> WonderCommonlib.SparseMapService.set(
+                |> WonderCommonlib.ImmutableSparseMapService.set(
                      textureComponent,
                      (mimeType, uint8Array),
                    ),
               map,
             );
        },
-       WonderCommonlib.SparseMapService.createEmpty(),
+       WonderCommonlib.ImmutableSparseMapService.createEmpty(),
      );

@@ -6,4 +6,4 @@ type imageData = {
   mimeType: string,
 };
 
-type imageDataMap = WonderCommonlib.SparseMapService.t(imageData);
+type imageDataMap = WonderCommonlib.ImmutableSparseMapService.t(imageData);

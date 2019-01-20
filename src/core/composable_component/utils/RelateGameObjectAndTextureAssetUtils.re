@@ -32,7 +32,8 @@ let isImageDataEqual =
   && height == ImageUtils.getImageHeight(image2)
   && (
     switch (
-      imageUint8ArrayDataMap |> WonderCommonlib.SparseMapService.get(texture2)
+      imageUint8ArrayDataMap
+      |> WonderCommonlib.ImmutableSparseMapService.get(texture2)
     ) {
     | None => true
     | Some((_, uint8Array2)) =>
@@ -72,7 +73,7 @@ let _findTextureAsset =
     (textureAssetDataMap, sourceTexture, imageUint8ArrayDataMap, engineState) =>
   switch (
     textureAssetDataMap
-    |> SparseMapService.find(((textureComponent, textureAssetData)) =>
+    |> ImmutableSparseMapService.find(((textureComponent, textureAssetData)) =>
          isTextureDataEqual(
            isImageDataEqual,
            textureAssetData,
@@ -103,7 +104,7 @@ let getRelatedTextureData =
     let (targetTexture, replacedTargetTextureMap) =
       switch (
         replacedTargetTextureMap
-        |> WonderCommonlib.SparseMapService.get(sourceTexture)
+        |> WonderCommonlib.ImmutableSparseMapService.get(sourceTexture)
       ) {
       | None =>
         let targetTexture =
@@ -117,7 +118,7 @@ let getRelatedTextureData =
         (
           targetTexture,
           replacedTargetTextureMap
-          |> WonderCommonlib.SparseMapService.set(
+          |> WonderCommonlib.ImmutableSparseMapService.set(
                sourceTexture,
                targetTexture,
              ),

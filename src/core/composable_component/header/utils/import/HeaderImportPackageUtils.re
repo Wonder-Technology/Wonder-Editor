@@ -245,12 +245,12 @@ let _import = result => {
 
   let materialMapTupleRef =
     ref((
-      WonderCommonlib.SparseMapService.createEmpty(),
-      WonderCommonlib.SparseMapService.createEmpty(),
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
     ));
 
   let asbImageUint8ArrayDataMapRef =
-    ref(WonderCommonlib.SparseMapService.createEmpty());
+    ref(WonderCommonlib.ImmutableSparseMapService.createEmpty());
 
   let allWDBGameObjectArrRef = ref([||]);
 
@@ -311,7 +311,7 @@ let _import = result => {
                           ),
                           () =>
                           _sceneGameObjectImageUint8ArrayDataMap
-                          |> SparseMapService.length == 0
+                          |> WonderCommonlib.ImmutableSparseMapService.length == 0
                         )
                       )
                     )

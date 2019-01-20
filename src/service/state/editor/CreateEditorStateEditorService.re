@@ -4,7 +4,7 @@ let create = () => {
   settingRecord: RecordSettingService.create(),
   sceneTreeRecord: {
     currentSceneTreeNode: None,
-    isShowChildrenMap: WonderCommonlib.SparseMapService.createEmpty(),
+    isShowChildrenMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
   },
   assetRecord: {
     nodeIndex: 0,
@@ -12,7 +12,7 @@ let create = () => {
     tree: None,
     currentNodeId: None,
     selectedFolderNodeIdInAssetTree: None,
-    imageDataMap: WonderCommonlib.SparseMapService.createEmpty(),
+    imageDataMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
     geometryData: {
       defaultCubeGeometryComponent: (-1),
       defaultSphereGeometryComponent: (-1),
@@ -43,15 +43,15 @@ let create = () => {
     gameViewCustomData: None,
   },
   inspectorRecord: {
-    componentTypeMap: WonderCommonlib.SparseMapService.createEmpty(),
+    componentTypeMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
   },
   transformRecord: {
-    localEulerAngleMapX: WonderCommonlib.SparseMapService.createEmpty(),
-    localEulerAngleMapY: WonderCommonlib.SparseMapService.createEmpty(),
-    localEulerAngleMapZ: WonderCommonlib.SparseMapService.createEmpty(),
+    localEulerAngleMapX: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+    localEulerAngleMapY: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+    localEulerAngleMapZ: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
   },
   pickingRecord: {
-    sphereShapeMap: WonderCommonlib.SparseMapService.createEmpty(),
+    sphereShapeMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
   },
   currentDragSource: (None, None),
   currentSelectSource: None,

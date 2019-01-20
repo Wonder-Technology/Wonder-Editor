@@ -2,7 +2,8 @@ open AppStore;
 
 open UpdateStore;
 
-let getUpdateComponentTypeArr = uiState => uiState.updateState.componentTypeArr;
+let getUpdateComponentTypeArr = uiState =>
+  uiState.updateState.componentTypeArr;
 
 let getBottomCurrentComponentType = uiState =>
   uiState.showComponentState.currentComponentType;
@@ -10,7 +11,7 @@ let getBottomCurrentComponentType = uiState =>
 let geGameObjectisShowComponentFromStore = (uiState, componentType) =>
   switch (
     uiState.inspectorState.showComponentMap
-    |> WonderCommonlib.SparseMapService.get(componentType)
+    |> WonderCommonlib.ImmutableSparseMapService.get(componentType)
   ) {
   | None => true
   | Some(isShowComponent) => isShowComponent

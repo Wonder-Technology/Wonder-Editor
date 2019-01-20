@@ -1,7 +1,7 @@
 type inspectorAction('a, 'b) =
   | SetShowComponent('a, 'b);
 
-type showComponentMapType = WonderCommonlib.SparseMapService.t(bool);
+type showComponentMapType = WonderCommonlib.ImmutableSparseMapService.t(bool);
 
 type inspectorState = {showComponentMap: showComponentMapType};
 
@@ -12,6 +12,6 @@ let inspectorReducer =
       ...state,
       showComponentMap:
         state.showComponentMap
-        |> SparseMapService.immutableSet(index, isShowComponent),
+        |> WonderCommonlib.ImmutableSparseMapService.set(index, isShowComponent),
     }
   };

@@ -93,7 +93,7 @@ let _findMaterialAsset =
     ) =>
   switch (
     materialAssetDataMap
-    |> SparseMapService.find(((_, materialAssetData)) =>
+    |> ImmutableSparseMapService.find(((_, materialAssetData)) =>
          isMaterialDataEqualFunc(
            materialAssetData,
            material,
@@ -150,7 +150,7 @@ let getRelatedMaterialData =
   let (targetMaterial, replacedTargetMaterialMap) =
     switch (
       replacedTargetMaterialMap
-      |> WonderCommonlib.SparseMapService.get(material)
+      |> WonderCommonlib.ImmutableSparseMapService.get(material)
     ) {
     | None =>
       let targetMaterial =
@@ -169,7 +169,10 @@ let getRelatedMaterialData =
       (
         targetMaterial,
         replacedTargetMaterialMap
-        |> WonderCommonlib.SparseMapService.set(material, targetMaterial),
+        |> WonderCommonlib.ImmutableSparseMapService.set(
+             material,
+             targetMaterial,
+           ),
       );
     | Some(targetMaterial) => (targetMaterial, replacedTargetMaterialMap)
     };
@@ -306,7 +309,10 @@ let getDefaultMaterialData = (editorState, engineState) => {
     MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
   let defaultLightMaterialData = (
     defaultLightMaterialData,
-    getLightMaterialData(defaultLightMaterialData, (editorState, engineState)),
+    getLightMaterialData(
+      defaultLightMaterialData,
+      (editorState, engineState),
+    ),
   );
 
   (defaultBasicMaterialData, defaultLightMaterialData);
@@ -314,15 +320,15 @@ let getDefaultMaterialData = (editorState, engineState) => {
 
 let getBasicMaterialDataMap = (basicMaterialMap, engineState) =>
   basicMaterialMap
-  |> SparseMapService.getValidValues
-  |> Js.Array.map(material =>
+  /* |> WonderCommonlib.ImmutableSparseMapService.getValidValues */
+  |> WonderCommonlib.ImmutableSparseMapService.mapValid((. material) =>
        (material, getBasicMaterialData(material, engineState))
      );
 
 let getLightMaterialDataMap = (lightMaterialMap, (editorState, engineState)) =>
   lightMaterialMap
-  |> SparseMapService.getValidValues
-  |> Js.Array.map(material =>
+  /* |> WonderCommonlib.ImmutableSparseMapService.getValidValues */
+  |> WonderCommonlib.ImmutableSparseMapService.mapValid((. material) =>
        (
          material,
          getLightMaterialData(material, (editorState, engineState)),

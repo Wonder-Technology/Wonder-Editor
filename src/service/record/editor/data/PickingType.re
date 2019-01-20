@@ -1,6 +1,6 @@
 open ShapeType;
 
 type pickingRecord = {
-  sphereShapeMap: WonderCommonlib.SparseMapService.t(sphereShape),
+  sphereShapeMap: WonderCommonlib.ImmutableSparseMapService.t(sphereShape),
 
 };

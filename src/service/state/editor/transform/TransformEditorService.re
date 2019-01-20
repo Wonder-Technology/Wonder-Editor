@@ -12,7 +12,7 @@ let setLocalEulerAngleX =
       ...transformRecord,
       localEulerAngleMapX:
         localEulerAngleMapX
-        |> WonderCommonlib.SparseMapService.set(transformComponent, value),
+        |> WonderCommonlib.ImmutableSparseMapService.set(transformComponent, value),
     },
   };
 };
@@ -27,7 +27,7 @@ let setLocalEulerAngleY =
       ...transformRecord,
       localEulerAngleMapY:
         localEulerAngleMapY
-        |> WonderCommonlib.SparseMapService.set(transformComponent, value),
+        |> WonderCommonlib.ImmutableSparseMapService.set(transformComponent, value),
     },
   };
 };
@@ -42,7 +42,7 @@ let setLocalEulerAngleZ =
       ...transformRecord,
       localEulerAngleMapZ:
         localEulerAngleMapZ
-        |> WonderCommonlib.SparseMapService.set(transformComponent, value),
+        |> WonderCommonlib.ImmutableSparseMapService.set(transformComponent, value),
     },
   };
 };
@@ -53,11 +53,11 @@ let getLocalEulerAngleAndInit =
 
   switch (
     localEulerAngleMapX
-    |> WonderCommonlib.SparseMapService.get(transformComponent),
+    |> WonderCommonlib.ImmutableSparseMapService.get(transformComponent),
     localEulerAngleMapY
-    |> WonderCommonlib.SparseMapService.get(transformComponent),
+    |> WonderCommonlib.ImmutableSparseMapService.get(transformComponent),
     localEulerAngleMapZ
-    |> WonderCommonlib.SparseMapService.get(transformComponent),
+    |> WonderCommonlib.ImmutableSparseMapService.get(transformComponent),
   ) {
   | (Some(x), Some(y), Some(z)) => ((x, y, z), editorState)
   | (valueX, valueY, valueZ) =>

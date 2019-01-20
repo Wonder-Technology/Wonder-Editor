@@ -667,7 +667,7 @@ let _ =
                           ImageDataMapAssetEditorService.getValidValues(
                             editorState,
                           )
-                          |> SparseMapService.length,
+                          |> WonderCommonlib.ImmutableSparseMapService.length,
                         )
                         |> expect == (true, 1, 1)
                         |> resolve;
@@ -785,7 +785,7 @@ let _ =
                    )
                    |> Js.Array.length,
                    ImageDataMapAssetEditorService.getValidValues(editorState)
-                   |> SparseMapService.length,
+                   |> WonderCommonlib.ImmutableSparseMapService.length,
                  )
                  |> expect == (2, 1)
                  |> resolve;

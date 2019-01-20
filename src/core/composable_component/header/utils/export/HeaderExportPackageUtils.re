@@ -4,34 +4,37 @@ let _buildEmptyUint8Array = () => Uint8Array.make([||]);
 
 let _buildImageNodeUint8Array = editorState =>
   ImageDataMapAssetEditorService.getMap(editorState)
-  |> Js.Array.map((({uint8Array, base64}: ImageDataType.imageData) as data) =>
-       {
-         ...data,
-         uint8Array:
-           (
-             switch (uint8Array) {
-             | Some(uint8Array) => uint8Array
-             | None =>
-               switch (base64) {
-               | Some(base64) =>
-                 BufferUtils.convertBase64ToUint8Array(base64)
+  |> WonderCommonlib.ImmutableSparseMapService.map((. data) =>
+       Js.Nullable.bind(
+         data, (. ({uint8Array, base64}: ImageDataType.imageData) as data) =>
+         {
+           ...data,
+           uint8Array:
+             (
+               switch (uint8Array) {
+               | Some(uint8Array) => uint8Array
                | None =>
-                 ConsoleUtils.error(
-                   LogUtils.buildErrorMessage(
-                     ~description={j|image->base64 should exist|j},
-                     ~reason="",
-                     ~solution={j||j},
-                     ~params={j||j},
-                   ),
-                   editorState,
-                 );
+                 switch (base64) {
+                 | Some(base64) =>
+                   BufferUtils.convertBase64ToUint8Array(base64)
+                 | None =>
+                   ConsoleUtils.error(
+                     LogUtils.buildErrorMessage(
+                       ~description={j|image->base64 should exist|j},
+                       ~reason="",
+                       ~solution={j||j},
+                       ~params={j||j},
+                     ),
+                     editorState,
+                   );
 
-                 _buildEmptyUint8Array();
+                   _buildEmptyUint8Array();
+                 }
                }
-             }
-           )
-           |. Some,
-       }
+             )
+             |. Some,
+         }
+       )
      )
   |> ImageDataMapAssetEditorService.setMap(_, editorState);
 

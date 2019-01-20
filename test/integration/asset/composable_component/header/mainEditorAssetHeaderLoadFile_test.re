@@ -168,7 +168,7 @@ let _ =
                       let {name, jsonResult}: NodeAssetType.jsonResultType =
                         StateEditorService.getState()
                         |> AssetJsonNodeMapEditorService.getJsonNodeMap
-                        |> WonderCommonlib.SparseMapService.unsafeGet(
+                        |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
                              MainEditorAssetNodeTool.getCurrentNodeId(),
                            );
 
@@ -201,7 +201,7 @@ let _ =
                         let {name, jsonResult}: NodeAssetType.jsonResultType =
                           StateEditorService.getState()
                           |> AssetJsonNodeMapEditorService.getJsonNodeMap
-                          |> WonderCommonlib.SparseMapService.unsafeGet(
+                          |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
                                MainEditorAssetNodeTool.getCurrentNodeId(),
                              );
 

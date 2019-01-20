@@ -10,7 +10,7 @@ let _buildInspectorAppState = () => {
       ...state.inspectorState,
       showComponentMap:
         state.inspectorState.showComponentMap
-        |> SparseMapService.immutableSet(
+        |> WonderCommonlib.ImmutableSparseMapService.set(
              InspectorComponentType.Transform
              |> InspectorComponentType.convertComponentTypeToInt,
              false,

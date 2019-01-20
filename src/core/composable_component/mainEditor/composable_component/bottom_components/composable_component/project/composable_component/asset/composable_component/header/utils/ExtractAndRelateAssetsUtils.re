@@ -1,6 +1,9 @@
 module Extract = {
   let _hasExtractedAsset = (key, hasExtractedAssetMap) =>
-    switch (hasExtractedAssetMap |> WonderCommonlib.SparseMapService.get(key)) {
+    switch (
+      hasExtractedAssetMap
+      |> WonderCommonlib.ImmutableSparseMapService.get(key)
+    ) {
     | Some(true) => true
     | _ => false
     };
@@ -45,7 +48,10 @@ module Extract = {
                  ),
                )),
             hasExtractedMaterialAssetMap
-            |> WonderCommonlib.SparseMapService.set(sourceMaterial, true),
+            |> WonderCommonlib.ImmutableSparseMapService.set(
+                 sourceMaterial,
+                 true,
+               ),
           )
       | _ => (extractedMaterialAssetDataArr, hasExtractedMaterialAssetMap)
       };
@@ -136,7 +142,9 @@ module Extract = {
             |> ArrayService.push((
                  sourceTexture,
                  imageUint8ArrayDataMap
-                 |> WonderCommonlib.SparseMapService.unsafeGet(sourceTexture),
+                 |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
+                      sourceTexture,
+                    ),
                  BasicSourceTextureEngineService.unsafeGetSource(
                    sourceTexture,
                    engineState,
@@ -152,7 +160,10 @@ module Extract = {
                  ),
                )),
             hasExtractedTextureAssetMap
-            |> WonderCommonlib.SparseMapService.set(sourceTexture, true),
+            |> WonderCommonlib.ImmutableSparseMapService.set(
+                 sourceTexture,
+                 true,
+               ),
           )
       | None => (extractedTextureAssetDataArr, hasExtractedTextureAssetMap)
       };
@@ -218,12 +229,14 @@ module Extract = {
     MaterialNodeAssetEditorService.getMaterialComponentsByType(
       materialType,
       editorState,
-    );
+    )
+    |> ImmutableSparseMapType.arrayToImmutableSparseMap;
+
   /* MaterialNodeMapAssetEditorService.getValidValues(editorState)
-     |> SparseMapService.filter(({type_}: NodeAssetType.materialResultType) =>
+     |> WonderCommonlib.ImmutableSparseMapService.filter(({type_}: NodeAssetType.materialResultType) =>
           type_ === materialType
         )
-     |> SparseMapService.map(
+     |> WonderCommonlib.ImmutableSparseMapService.map(
           ({materialComponent}: NodeAssetType.materialResultType) =>
           materialComponent
         ); */
@@ -254,7 +267,9 @@ module Extract = {
 
     let textureAssetDataMap =
       TextureNodeAssetEditorService.getTextureComponents(editorState)
-      |> SparseMapService.map(textureComponent =>
+      |> ImmutableSparseMapType.arrayToImmutableSparseMap
+      |> WonderCommonlib.ImmutableSparseMapService.mapValid(
+           (. textureComponent) =>
            (
              textureComponent,
              RelateGameObjectAndTextureAssetUtils.getTextureData(
@@ -368,12 +383,12 @@ module Extract = {
            },
            (
              (
-               WonderCommonlib.SparseMapService.createEmpty(),
-               WonderCommonlib.SparseMapService.createEmpty(),
+               WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+               WonderCommonlib.ImmutableSparseMapService.createEmpty(),
              ),
              (
-               WonderCommonlib.SparseMapService.createEmpty(),
-               WonderCommonlib.SparseMapService.createEmpty(),
+               WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+               WonderCommonlib.ImmutableSparseMapService.createEmpty(),
              ),
              ([||], [||]),
              (editorState, engineState),

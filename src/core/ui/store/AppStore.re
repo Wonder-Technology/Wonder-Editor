@@ -36,7 +36,7 @@ let state: appState = {
     componentTypeArr: [|All|],
   },
   inspectorState: {
-    showComponentMap: WonderCommonlib.SparseMapService.createEmpty(),
+    showComponentMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
   },
   showComponentState: {
     currentComponentType: Project,

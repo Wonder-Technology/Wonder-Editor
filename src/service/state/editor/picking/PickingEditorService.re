@@ -3,7 +3,7 @@ open EditorType;
 open PickingType;
 
 let getSphereShape = (geometry, {pickingRecord}) =>
-  WonderCommonlib.SparseMapService.get(
+  WonderCommonlib.ImmutableSparseMapService.get(
     geometry,
     pickingRecord.sphereShapeMap,
   );
@@ -15,7 +15,7 @@ let setSphereShape = (geometry, sphereShape, {pickingRecord} as editorState) => 
   ...editorState,
   pickingRecord: {
     sphereShapeMap:
-      WonderCommonlib.SparseMapService.set(
+      WonderCommonlib.ImmutableSparseMapService.set(
         geometry,
         sphereShape,
         pickingRecord.sphereShapeMap,
@@ -27,7 +27,7 @@ let removeSphereShape = (geometry, {pickingRecord} as editorState) => {
   ...editorState,
   pickingRecord: {
     sphereShapeMap:
-      WonderCommonlib.SparseMapService.deleteVal(
+      WonderCommonlib.ImmutableSparseMapService.deleteVal(
         geometry,
         pickingRecord.sphereShapeMap |> Obj.magic,
       )

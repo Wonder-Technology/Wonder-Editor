@@ -3,7 +3,7 @@ type changeChildOrder =
   | After;
 
 type transformRecord = {
-  localEulerAngleMapX: WonderCommonlib.SparseMapService.t(float),
-  localEulerAngleMapY: WonderCommonlib.SparseMapService.t(float),
-  localEulerAngleMapZ: WonderCommonlib.SparseMapService.t(float),
+  localEulerAngleMapX: WonderCommonlib.ImmutableSparseMapService.t(float),
+  localEulerAngleMapY: WonderCommonlib.ImmutableSparseMapService.t(float),
+  localEulerAngleMapZ: WonderCommonlib.ImmutableSparseMapService.t(float),
 };

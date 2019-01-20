@@ -49,7 +49,7 @@ module Method = {
       |> Js.Array.concat(
            StateEditorService.getState()
            |> InspectorEditorService.getComponentTypeMap
-           |> WonderCommonlib.SparseMapService.unsafeGet(gameObject)
+           |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(gameObject)
            |> _buildGameObjectAllShowComponent(
                 (uiState, dispatchFunc),
                 gameObject,

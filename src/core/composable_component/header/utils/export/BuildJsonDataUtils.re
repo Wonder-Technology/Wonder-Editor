@@ -34,7 +34,7 @@ let _computeBufferViewDataByteLength = bufferViewArr =>
 let _buildImageData = editorState => {
   let (imageIndexMap, imageArr, bufferViewArr, uint8ArrayArr, byteOffset) =
     ImageDataMapAssetEditorService.getMap(editorState)
-    |> SparseMapService.reduceiValid(
+    |> WonderCommonlib.ImmutableSparseMapService.reduceiValid(
          (.
            (
              imageIndexMap,
@@ -52,7 +52,7 @@ let _buildImageData = editorState => {
 
            (
              imageIndexMap
-             |> WonderCommonlib.SparseMapService.set(
+             |> WonderCommonlib.ImmutableSparseMapService.set(
                   imageDataIndex,
                   imageArr |> Js.Array.length,
                 ),
@@ -73,7 +73,7 @@ let _buildImageData = editorState => {
            );
          },
          (
-           WonderCommonlib.SparseMapService.createEmpty(),
+           WonderCommonlib.ImmutableSparseMapService.createEmpty(),
            [||],
            [||],
            [||],
@@ -99,7 +99,7 @@ let _buildTextureData = (imageIndexMap, (editorState, engineState)) =>
 
          (
            textureIndexMap
-           |> WonderCommonlib.SparseMapService.set(
+           |> WonderCommonlib.ImmutableSparseMapService.set(
                 textureComponent,
                 textureArr |> Js.Array.length,
               ),
@@ -115,7 +115,7 @@ let _buildTextureData = (imageIndexMap, (editorState, engineState)) =>
                     NodeNameAssetLogicService.getNodeName(node, engineState),
                   source:
                     imageIndexMap
-                    |> WonderCommonlib.SparseMapService.unsafeGet(
+                    |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
                          imageDataIndex,
                        ),
                   wrapS:
@@ -162,7 +162,7 @@ let _buildTextureData = (imageIndexMap, (editorState, engineState)) =>
               ),
          );
        },
-       (WonderCommonlib.SparseMapService.createEmpty(), [||]),
+       (WonderCommonlib.ImmutableSparseMapService.createEmpty(), [||]),
      );
 
 let _getTextureIndexFromMap = (textureComponent, textureIndexMap) =>
@@ -170,7 +170,7 @@ let _getTextureIndexFromMap = (textureComponent, textureIndexMap) =>
   | None => None
   | Some(textureComponent) =>
     textureIndexMap
-    |> WonderCommonlib.SparseMapService.unsafeGet(textureComponent)
+    |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(textureComponent)
     |. Some
   };
 

@@ -35,7 +35,7 @@ let getIsShowChildern = (gameObject, sceneGameObject, {sceneTreeRecord}) =>
     (
       switch (
         IsShowChildrenSceneTreeService.getIsShowChildrenMap(sceneTreeRecord)
-        |> WonderCommonlib.SparseMapService.get(gameObject)
+        |> WonderCommonlib.ImmutableSparseMapService.get(gameObject)
       ) {
       | None => getDefaultIsShowChildren()
       | Some(isShowChildren) => isShowChildren
@@ -49,7 +49,10 @@ let setIsShowChildren =
     ...sceneTreeRecord,
     isShowChildrenMap:
       IsShowChildrenSceneTreeService.getIsShowChildrenMap(sceneTreeRecord)
-      |> WonderCommonlib.SparseMapService.set(gameObject, isShowChildren),
+      |> WonderCommonlib.ImmutableSparseMapService.set(
+           gameObject,
+           isShowChildren,
+         ),
   },
 };
 
@@ -60,7 +63,7 @@ let removeIsShowChildren = (gameObject, {sceneTreeRecord} as editorState) => {
     isShowChildrenMap:
       IsShowChildrenSceneTreeService.getIsShowChildrenMap(sceneTreeRecord)
       |> Obj.magic
-      |> SparseMapService.immutableDeleteVal(gameObject)
+      |> WonderCommonlib.ImmutableSparseMapService.deleteVal(gameObject)
       |> Obj.magic,
   },
 };

@@ -23,9 +23,8 @@ let _getImageNodeIdByBase64 = (imageBase64, editorState) =>
   switch (
     editorState
     |> getMap
-    |> SparseMapService.getValidDataArr
-    |> SparseMapService.find(
-         ((imageNodeId, {base64}: ImageDataType.imageData)) =>
+    |> ImmutableSparseMapService.getValidDataArr
+    |> Js.Array.find(((imageNodeId, {base64}: ImageDataType.imageData)) =>
          Base64Service.isBase64Equal(Some(imageBase64), base64)
        )
   ) {
@@ -60,9 +59,8 @@ let _getImageNodeIdByUint8Array = (imageUint8Array, editorState) =>
   switch (
     editorState
     |> getMap
-    |> SparseMapService.getValidDataArr
-    |> SparseMapService.find(
-         ((imageNodeId, {uint8Array}: ImageDataType.imageData)) =>
+    |> ImmutableSparseMapService.getValidDataArr
+    |> Js.Array.find(((imageNodeId, {uint8Array}: ImageDataType.imageData)) =>
          Uint8ArrayService.isUint8ArrayEqual(
            Some(imageUint8Array),
            uint8Array,
@@ -106,4 +104,5 @@ let unsafeGetUint8Array = (index, editorState) =>
   unsafeGetData(index, editorState).uint8Array;
 
 let getValidValues = editorState =>
-  getMap(editorState) |> SparseMapService.getValidValues;
+  getMap(editorState)
+  |> WonderCommonlib.ImmutableSparseMapService.getValidValues;

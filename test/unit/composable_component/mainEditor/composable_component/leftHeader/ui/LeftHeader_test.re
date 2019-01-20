@@ -257,7 +257,7 @@ let _ =
 
             StateEditorService.getState()
             |> InspectorEditorService.getComponentTypeMap
-            |> WonderCommonlib.SparseMapService.get(clonedGameObject)
+            |> WonderCommonlib.ImmutableSparseMapService.get(clonedGameObject)
             |> Js.Option.isSome
             |> expect == true;
           });
@@ -275,14 +275,14 @@ let _ =
             let targetGameObjectComponentArray =
               editorState
               |> InspectorEditorService.getComponentTypeMap
-              |> WonderCommonlib.SparseMapService.unsafeGet(cube4);
+              |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(cube4);
 
             let clonedGameObject = cube4 |> succ;
 
             let clonedGameObjectComponentArray =
               editorState
               |> InspectorEditorService.getComponentTypeMap
-              |> WonderCommonlib.SparseMapService.unsafeGet(clonedGameObject);
+              |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(clonedGameObject);
 
             targetGameObjectComponentArray
             |> expect == clonedGameObjectComponentArray;

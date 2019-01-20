@@ -4,7 +4,7 @@ open NodeAssetType;
        (nodeId, (getNodeMapFunc, setNodeMapFunc), editorState) =>
      editorState
      |> getNodeMapFunc
-     |> SparseMapService.copy
+     |> WonderCommonlib.ImmutableSparseMapService.copy
      |> DomHelper.deleteKeyInMap(nodeId)
      |. setNodeMapFunc(editorState);
 
@@ -52,7 +52,7 @@ open NodeAssetType;
      let {textureComponent, image} =
        editorState
        |> TextureNodeMapAssetEditorService.getTextureNodeMap
-       |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+       |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(nodeId);
 
      _removeNodeEditorData(
        nodeId,
