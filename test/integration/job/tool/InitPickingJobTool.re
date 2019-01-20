@@ -239,6 +239,17 @@ let triggerPicking = (sandbox, pageX, pageY, eventButton) => {
       (),
     ),
   );
+  EventTool.triggerDomEvent(
+    "click",
+    EventTool.getBody(),
+    MouseEventTool.buildMouseEvent(
+      ~pageX,
+      ~pageY,
+      ~target,
+      ~which=eventButton,
+      (),
+    ),
+  );
 };
 
 let triggerPickingAndRestore = (~eventButton=1, ~sandbox, ~pageX, ~pageY, ()) => {

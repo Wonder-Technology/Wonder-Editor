@@ -15,7 +15,7 @@ let _ =
 
     describe("test find picked one", () => {
       describe("should set finded one to current scene tree node", () => {
-        describe("if pointdown->mouse button isn't left button", () => {
+        describe("if pointtap->mouse button isn't left button", () => {
           let _prepare = () =>
             InitPickingJobTool.prepareOneGameObject(
               ~sandbox,

@@ -254,7 +254,7 @@ let _handlePicking = (event: EventType.customEvent, engineState) => {
 let initJob = (_, engineState) => {
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=EventEditorService.getPointDownEventName(),
+      ~eventName=EventEditorService.getPointTapEventName(),
       ~handleFunc=
         (. event, engineState) =>
           MouseEventService.isLeftMouseButton(event) ?
