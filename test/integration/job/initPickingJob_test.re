@@ -297,7 +297,7 @@ let _ =
                 (),
               );
 
-            InitPickingJobTool.triggerPickingAndNotRestore(
+            InitPickingJobTool.triggerPicking(
               sandbox,
               255 + 10,
               100 + 20,

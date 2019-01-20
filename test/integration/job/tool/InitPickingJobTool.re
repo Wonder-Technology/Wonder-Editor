@@ -225,7 +225,7 @@ let prepareState = (sandbox, editorState, engineState) => {
   );
 };
 
-let triggerPickingAndNotRestore = (sandbox, pageX, pageY, eventButton) => {
+let triggerPicking = (sandbox, pageX, pageY, eventButton) => {
   let target = EventTool.buildCanvasTarget();
 
   EventTool.triggerDomEvent(
@@ -242,7 +242,7 @@ let triggerPickingAndNotRestore = (sandbox, pageX, pageY, eventButton) => {
 };
 
 let triggerPickingAndRestore = (~eventButton=1, ~sandbox, ~pageX, ~pageY, ()) => {
-  triggerPickingAndNotRestore(sandbox, pageX, pageY, eventButton);
+  triggerPicking(sandbox, pageX, pageY, eventButton);
 
   EventTool.restore();
 };

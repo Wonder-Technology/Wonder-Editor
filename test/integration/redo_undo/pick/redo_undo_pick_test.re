@@ -67,7 +67,7 @@ let _ =
               let (gameObject1, gameObject2) =
                 _prepareTwoGameObjects(sandbox);
 
-              InitPickingJobTool.triggerPickingAndNotRestore(
+              InitPickingJobTool.triggerPicking(
                 sandbox,
                 251 + 10,
                 91 + 20,
@@ -110,7 +110,7 @@ let _ =
               let (gameObject1, gameObject2) =
                 _prepareTwoGameObjects(sandbox);
 
-              InitPickingJobTool.triggerPickingAndNotRestore(
+              InitPickingJobTool.triggerPicking(
                 sandbox,
                 251 + 10,
                 91 + 20,
@@ -139,7 +139,7 @@ let _ =
           () => {
           let (gameObject1, gameObject2) = _prepareTwoGameObjects(sandbox);
 
-          InitPickingJobTool.triggerPickingAndNotRestore(
+          InitPickingJobTool.triggerPicking(
             sandbox,
             251 + 10,
             91 + 20,
