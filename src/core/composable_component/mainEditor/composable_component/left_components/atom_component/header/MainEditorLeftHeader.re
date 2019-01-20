@@ -173,11 +173,8 @@ let render =
     ) {
     | None => false
     | Some(gameObject) =>
-      gameObject
-      !== (
-            SceneEngineService.getSceneGameObject
-            |> StateLogicService.getEngineStateToGetData
-          )
+      SceneEngineService.isSceneGameObject(gameObject)
+      |> StateLogicService.getEngineStateToGetData
     };
 
   <article

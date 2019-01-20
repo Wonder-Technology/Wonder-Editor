@@ -25,7 +25,7 @@ module CustomEventHandler = {
        );
   };
 
-  let _handleDragToBeSceneGameObjectHierarchy =
+  let _handleDragToBeSceneGameObjectChild =
       (dragPosition, sceneGameObject, draggedGameObject, engineState) =>
     switch (dragPosition) {
     | DragIntoTarget =>
@@ -57,7 +57,7 @@ module CustomEventHandler = {
          );
     };
 
-  let _handleDragToBeTargetGameObjectHierarchy =
+  let _handleDragToBeTargetGameObjectSib =
       (dragPosition, targetGameObject, draggedGameObject, engineState) =>
     switch (dragPosition) {
     | DragBeforeTarget =>
@@ -111,13 +111,13 @@ module CustomEventHandler = {
     let engineState =
       SceneEngineService.isSceneGameObject(targetGameObject)
       |> StateLogicService.getEngineStateToGetData ?
-        _handleDragToBeSceneGameObjectHierarchy(
+        _handleDragToBeSceneGameObjectChild(
           dragPosition,
           targetGameObject,
           draggedGameObject,
           engineState,
         ) :
-        _handleDragToBeTargetGameObjectHierarchy(
+        _handleDragToBeTargetGameObjectSib(
           dragPosition,
           targetGameObject,
           draggedGameObject,

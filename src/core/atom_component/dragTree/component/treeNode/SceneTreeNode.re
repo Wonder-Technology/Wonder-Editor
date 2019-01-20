@@ -75,7 +75,6 @@ module Method = {
     let (isValid, _) =
       _isValidForDragOver(gameObject, isWidgetFunc, checkNodeRelationFunc);
 
-
     isValid || isAssetWDBFileFunc() ?
       DragOver(
         ReactDOMRe.domElementToObj(ReactEventRe.Mouse.target(event))
@@ -157,11 +156,8 @@ module Method = {
       )
       style=state.style
       draggable=(
-        gameObject
-        !== (
-              SceneEngineService.getSceneGameObject
-              |> StateLogicService.getEngineStateToGetData
-            )
+        SceneEngineService.isSceneGameObject(gameObject)
+        |> StateLogicService.getEngineStateToGetData
       )
       onMouseDown=(_event => onSelectFunc(gameObject))
       onDragStart=(
