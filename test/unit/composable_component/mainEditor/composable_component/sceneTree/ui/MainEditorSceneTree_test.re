@@ -473,6 +473,17 @@ let _ =
                     );
         });
       });
+      test("should refresh engine state", () =>
+        RefreshEngineStateTool.testRefreshEngineState(sandbox, () =>
+          MainEditorSceneTreeTool.Select.selectGameObject(
+            ~gameObject=
+              MainEditorSceneTool.getFirstCube(
+                StateEngineService.unsafeGetState(),
+              ),
+            (),
+          )
+        )
+      );
 
       describe("deal with the specific case", () => {
         test("if drag treeNode into itself, keep not change", () => {

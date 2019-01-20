@@ -243,9 +243,7 @@ let _ =
           SceneTreeEditorService.clearCurrentSceneTreeNode
           |> StateLogicService.getAndSetEditorState;
 
-          BuildComponentTool.buildHeader(
-            TestTool.buildEmptyAppState(),
-          )
+          BuildComponentTool.buildHeader(TestTool.buildEmptyAppState())
           |> ReactTestTool.createSnapshotAndMatch;
         },
       );
@@ -256,9 +254,7 @@ let _ =
             sandbox,
             MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           );
-          BuildComponentTool.buildHeader(
-            TestTool.buildEmptyAppState(),
-          )
+          BuildComponentTool.buildHeader(TestTool.buildEmptyAppState())
           |> ReactTestTool.createSnapshotAndMatch;
         },
       );
@@ -270,49 +266,21 @@ let _ =
 
         MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
 
-        BuildComponentTool.buildSceneTree(
-          TestTool.buildEmptyAppState(),
-        )
+        BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
         |> ReactTestTool.createSnapshotAndMatch;
       });
     });
 
     describe("fix bug", () =>
-      test(
-        "dispose gameObject should re-render edit canvas and run canvas", () => {
-        MainEditorSceneTool.initStateWithJob(
-          ~sandbox,
-          ~noWorkerJobRecord=
-            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-              ~loopPipelines=
-                {|
-                [
-                    {
-                        "name": "default",
-                        "jobs": [
-                            {
-                                "name": "dispose"
-                            },
-                            {
-                                "name": "clear_color"
-                            }
-                        ]
-                    }
-                ]
-            |},
-              (),
-            ),
-          (),
-        );
-        MainEditorSceneTool.createDefaultScene(
+      test("dispose gameObject should refresh engine state", () =>
+        RefreshEngineStateTool.testRefreshEngineState(
           sandbox,
-          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
-        );
-        let gl = FakeGlToolEngine.getGl(StateEngineService.unsafeGetState());
+          () => {
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
 
-        MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
-
-        gl##clearColor |> getCallCount |> expect == 1;
-      })
+            MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
+          },
+        )
+      )
     );
   });

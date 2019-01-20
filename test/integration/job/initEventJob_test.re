@@ -467,7 +467,7 @@ let _ =
             let (valueX, valueY) = (ref(0), ref(0));
 
             EventTool.onMouseEvent(
-              MouseMove,
+              MouseDrag,
               0,
               (. event: mouseEvent, state) => {
                 let (x, y) = event.locationInView;
@@ -715,7 +715,7 @@ let _ =
               _test(KeyUp, "keyup", (60, 20));
             });
 
-            describe("trigger refresh_inspector event", () =>
+            /* describe("trigger refresh_inspector event", () =>
               test("defer 0 ms to exec", () => {
                 TimeoutTool.buildFakeSetTimeoutFunc();
                 _prepareKeyboardEvent(~sandbox, ());
@@ -740,7 +740,7 @@ let _ =
                 (funcArr |> Js.Array.length, value, time)
                 |> expect == (2, [|1|], 0);
               })
-            );
+            ); */
           });
         })
       );
@@ -877,7 +877,7 @@ let _ =
             _test(NameEventEngineService.getPointScaleEventName(), (60, 20));
           });
 
-          describe("trigger refresh_inspector event", () =>
+          /* describe("trigger refresh_inspector event", () =>
             test("defer 0 ms to exec", () => {
               TimeoutTool.buildFakeSetTimeoutFunc();
               _prepareMouseEvent(~sandbox, ());
@@ -905,7 +905,7 @@ let _ =
               (funcArr |> Js.Array.length, value, time)
               |> expect == (2, [|1|], 0);
             })
-          );
+          ); */
         });
       })
     );

@@ -54,6 +54,7 @@ let initEditorAndEngineStateAndInitSceneWithJob =
       ~noWorkerJobRecord,
       ~isBuildFakeDom=true,
       ~isInitJob=true,
+      ~context= TestToolEngine. getDefaultContext(),
       (),
     ) => {
   TestToolEngine.createAndSetEngineState(
@@ -62,6 +63,7 @@ let initEditorAndEngineStateAndInitSceneWithJob =
     ~noWorkerJobRecord,
     ~isBuildFakeDom,
     ~isInitJob,
+    ~context,
     (),
   );
   initScene();

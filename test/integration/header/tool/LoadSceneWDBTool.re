@@ -4,7 +4,7 @@ let handleSceneWDB = wdbArrayBuffer =>
   SceneWDBUtils.importSceneWDB(wdbArrayBuffer)
   |> WonderBsMost.Most.tap(((gameObject, _)) =>
        StateEngineService.unsafeGetState()
-       |> ShaderEngineService.clearShaderCache
+       |> ShaderEngineService.clearInitShaderCache
        |> GameObjectEngineService.initAllGameObjects(gameObject)
        |> StateLogicService.refreshEngineState
      );

@@ -108,7 +108,7 @@ let _ =
       MouseEventTool.prepareForPointerLock(sandbox);
 
     let _testPointDownEvent =
-        (sandbox, (pageX, pageY), (judgeFunc, bindEventFunc)) => {
+        (sandbox, (pageX, pageY, eventButton), (judgeFunc, bindEventFunc)) => {
       _prepareMouseEvent(~sandbox, ());
 
       let requestPointerLockStub = _prepareForPointerLock(sandbox);
@@ -131,7 +131,12 @@ let _ =
       EventTool.triggerDomEvent(
         "mousedown",
         EventTool.getBody(),
-        MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+        MouseEventTool.buildMouseEvent(
+          ~pageX,
+          ~pageY,
+          ~which=eventButton,
+          (),
+        ),
       );
       EventTool.restore();
 
@@ -176,26 +181,35 @@ let _ =
 
     describe("test bind for scene view", () => {
       describe("test bind point down event", () => {
-        let _test = (sandbox, (pageX, pageY), judgeFunc) =>
+        let _test = (sandbox, (pageX, pageY, eventButton), judgeFunc) =>
           _testPointDownEvent(
             sandbox,
-            (pageX, pageY),
+            (pageX, pageY, eventButton),
             (
               judgeFunc,
               ArcballCameraControllerLogicService.bindArcballCameraControllerEventForSceneView,
             ),
           );
 
-        test("if eventTarget is scene view, request canvas pointerLock", () =>
-          _test(sandbox, (10, 20), requestPointerLockStub =>
-            requestPointerLockStub |> expect |> toCalledOnce
-          )
-        );
-        test("if eventTarget is game view, not request canvas pointerLock", () =>
-          _test(sandbox, (60, 20), requestPointerLockStub =>
+        test("if mouse button isn't right button, not trigger", () =>
+          _test(sandbox, (10, 20, 1), requestPointerLockStub =>
             requestPointerLockStub |> expect |> not_ |> toCalled
           )
         );
+
+        describe("else", () => {
+          test("if eventTarget is scene view, request canvas pointerLock", () =>
+            _test(sandbox, (10, 20, 3), requestPointerLockStub =>
+              requestPointerLockStub |> expect |> toCalledOnce
+            )
+          );
+          test(
+            "if eventTarget is game view, not request canvas pointerLock", () =>
+            _test(sandbox, (60, 20, 3), requestPointerLockStub =>
+              requestPointerLockStub |> expect |> not_ |> toCalled
+            )
+          );
+        });
       });
 
       describe("test bind keydown event", () =>
@@ -241,10 +255,10 @@ let _ =
 
     describe("test bind for game view", () => {
       describe("test bind point down event", () => {
-        let _test = (sandbox, (pageX, pageY), judgeFunc) =>
+        let _test = (sandbox, (pageX, pageY, eventButton), judgeFunc) =>
           _testPointDownEvent(
             sandbox,
-            (pageX, pageY),
+            (pageX, pageY, eventButton),
             (
               judgeFunc,
               ArcballCameraEngineService.bindArcballCameraControllerEventForGameView,
@@ -253,15 +267,23 @@ let _ =
 
         test(
           "if eventTarget is scene view, not request canvas pointerLock", () =>
-          _test(sandbox, (10, 20), requestPointerLockStub =>
+          _test(sandbox, (10, 20, 3), requestPointerLockStub =>
             requestPointerLockStub |> expect |> not_ |> toCalled
           )
         );
-        test("if eventTarget is game view, request canvas pointerLock", () =>
-          _test(sandbox, (60, 20), requestPointerLockStub =>
-            requestPointerLockStub |> expect |> toCalledOnce
-          )
-        );
+
+        describe("if eventTarget is game view", () => {
+          test("if mouse button isn't right button, still trigger", () =>
+            _test(sandbox, (60, 20, 1), requestPointerLockStub =>
+              requestPointerLockStub |> expect |> toCalledOnce
+            )
+          );
+          test("if eventTarget is game view, request canvas pointerLock", () =>
+            _test(sandbox, (60, 20, 3), requestPointerLockStub =>
+              requestPointerLockStub |> expect |> toCalledOnce
+            )
+          );
+        });
       });
 
       describe("test bind keydown event", () =>

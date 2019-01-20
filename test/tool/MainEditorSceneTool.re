@@ -83,6 +83,7 @@ let initStateWithJob =
       ~buffer=SettingToolEngine.buildBufferConfigStr(),
       ~isBuildFakeDom=true,
       ~isInitJob=true,
+      ~context=TestToolEngine.getDefaultContext(),
       (),
     ) => {
   TestTool.initEditorAndEngineStateAndInitSceneWithJob(
@@ -91,6 +92,7 @@ let initStateWithJob =
     ~noWorkerJobRecord,
     ~isBuildFakeDom,
     ~isInitJob,
+    ~context,
     (),
   );
 

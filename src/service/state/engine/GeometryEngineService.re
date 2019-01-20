@@ -139,7 +139,22 @@ let getIndicesCount = (geometry, engineState) => {
   endIndex - startIndex;
 };
 
-let hasIndices = indices => Js.Typed_array.Uint16Array.length(indices) > 0;
+let hasIndices16 = (geometry, engineState) =>
+  GeometryType.(
+    switch (
+      IndicesGeometryMainService.unsafeGetIndicesType(geometry, engineState)
+    ) {
+    | Short => true
+    | _ => false
+    }
+  );
 
-let hasIndices32 = indices32 =>
-  Js.Typed_array.Uint32Array.length(indices32) > 0;
+let hasIndices32 = (geometry, engineState) =>
+  GeometryType.(
+    switch (
+      IndicesGeometryMainService.unsafeGetIndicesType(geometry, engineState)
+    ) {
+    | Int => true
+    | _ => false
+    }
+  );

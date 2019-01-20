@@ -26,6 +26,6 @@ let reInitMaterials = BasicMaterialAPI.reInitMaterials;
 let reInitAllBasicMaterialsAndClearShaderCache = (materials, engineState) =>
   engineState
   |> reInitMaterials(materials)
-  |> ShaderEngineService.clearShaderCache;
+  |> ShaderEngineService.clearInitShaderCache;
 
 /* let getAllBasicMaterials = BasicMaterialAPI.getAllBasicMaterials; */

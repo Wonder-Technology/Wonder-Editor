@@ -89,19 +89,36 @@ module Method = {
     |> StateEngineService.setState
     |> ignore;
 
-  let bindPickSuccessEvent = dispatchFunc =>
+  let _bindPickEvent = (dispatchFunc, eventName) =>
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=EventEditorService.getPickSuccessEventName(),
+      ~eventName,
       ~handleFunc=
         (. ({userData}: EventType.customEvent) as event, engineState) => {
+          let pickedGameObjectOpt =
+            userData
+            |> Js.Option.map((. userData) =>
+                 userData |> InitPickingJobType.userDataToGameObject
+               );
+
           engineState |> StateEngineService.setState |> ignore;
 
-          dispatchFunc(
-            AppStore.UpdateAction(
-              Update([|UpdateStore.SceneTree, UpdateStore.Inspector|]),
-            ),
-          )
-          |> ignore;
+          switch (
+            UIHistoryService.getLastStoreInStack(
+              AllStateData.getHistoryState(),
+            )
+          ) {
+          | None =>
+            SceneTreeSelectCurrentNodeUtils.select(
+              dispatchFunc,
+              pickedGameObjectOpt,
+            )
+          | Some(lastStore) =>
+            SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+              (lastStore, dispatchFunc),
+              (),
+              pickedGameObjectOpt,
+            )
+          };
 
           (StateEngineService.unsafeGetState(), event);
         },
@@ -110,6 +127,15 @@ module Method = {
     )
     |> StateEngineService.setState
     |> ignore;
+
+  let bindPickSuccessEvent = dispatchFunc =>
+    _bindPickEvent(
+      dispatchFunc,
+      EventEditorService.getPickSuccessEventName(),
+    );
+
+  let bindPickFailEvent = dispatchFunc =>
+    _bindPickEvent(dispatchFunc, EventEditorService.getPickFailEventName());
 
   let dragWDB = MainEditorDragWDBEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 };
@@ -200,6 +226,7 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
 
     Method.bindRefreshInspectorEvent(dispatchFunc);
     Method.bindPickSuccessEvent(dispatchFunc);
+    Method.bindPickFailEvent(dispatchFunc);
 
     EventHelper.onresize(Method.resizeCanvasAndViewPort);
   },

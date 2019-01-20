@@ -5,8 +5,6 @@ open ParseRenderConfigService;
 let buildRenderConfig =
     (
       ~shaders={|
-
-
 {
   "static_branchs": [
     {
@@ -163,13 +161,53 @@ let buildRenderConfig =
         }
       ]
     }
+  ],
+  "no_material_shaders": [
+    {
+      "name": "outline_draw_origin_gameObjects",
+      "shader_libs": [
+        {
+          "type": "group",
+          "name": "top"
+        },
+        {
+          "name": "modelMatrix_noInstance"
+        },
+        {
+          "name": "outline_origin"
+        },
+        {
+          "type": "group",
+          "name": "end"
+        }
+      ]
+    },
+    {
+      "name": "outline_draw_expand_gameObjects",
+      "shader_libs": [
+        {
+          "type": "group",
+          "name": "top"
+        },
+        {
+          "name": "normal"
+        },
+        {
+          "name": "outline_scaled_modelMatrix"
+        },
+        {
+          "name": "outline_expand"
+        },
+        {
+          "type": "group",
+          "name": "end"
+        }
+      ]
+    }
   ]
 }
-
-
         |},
       ~shaderLibs={|
-
 [
   {
     "name": "common",
@@ -690,6 +728,61 @@ let buildRenderConfig =
     ]
   },
   {
+    "name": "outline_expand",
+    "glsls": [
+      {
+        "type": "vs",
+        "name": "webgl1_outline_expand_vertex"
+      },
+      {
+        "type": "fs",
+        "name": "webgl1_outline_expand_fragment"
+      }
+    ],
+    "variables": {
+      "uniforms": [
+        {
+          "name": "u_outlineColor",
+          "from": "no_material_shader",
+          "field": "outlineExpand",
+          "type": "float3"
+        }
+      ]
+    }
+  },
+  {
+    "name": "outline_scaled_modelMatrix",
+    "glsls": [
+      {
+        "type": "vs",
+        "name": "modelMatrix_noInstance_vertex"
+      }
+    ],
+    "variables": {
+      "uniforms": [
+        {
+          "name": "u_mMatrix",
+          "field": "mMatrix",
+          "type": "mat4",
+          "from": "expand_model"
+        }
+      ]
+    }
+  },
+  {
+    "name": "outline_origin",
+    "glsls": [
+      {
+        "type": "vs",
+        "name": "webgl1_outline_origin_vertex"
+      },
+      {
+        "type": "fs",
+        "name": "webgl1_outline_origin_fragment"
+      }
+    ]
+  },
+  {
     "name": "end",
     "variables": {
       "attributes": [
@@ -700,7 +793,6 @@ let buildRenderConfig =
     }
   }
 ]
-
         |},
       ()
     ) => (

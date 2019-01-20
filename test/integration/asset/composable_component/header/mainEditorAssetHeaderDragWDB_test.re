@@ -184,7 +184,7 @@ let _ =
               shaderSourceCountAfterDrag,
               glShaderSource,
             ) =>
-            ShaderToolEngine.isShaderCacheClear(
+            ShaderToolEngine.isInitShaderCacheClear(
               StateEngineService.unsafeGetState(),
             )
             |> expect == true

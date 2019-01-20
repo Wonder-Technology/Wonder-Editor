@@ -5,7 +5,7 @@ let unsafeGetCurrentSceneTreeNode = (sceneTreeRecord) =>
 
 let getCurrentSceneTreeNode = (sceneTreeRecord) => sceneTreeRecord.currentSceneTreeNode;
 
-let setCurrentSceneTreeNode = (gameObject: Wonderjs.GameObjectType.gameObject, sceneTreeRecord) => {
+let setCurrentSceneTreeNode = (gameObject: Wonderjs.GameObjectPrimitiveType.gameObject, sceneTreeRecord) => {
   ...sceneTreeRecord,
   currentSceneTreeNode: Some(gameObject)
 };

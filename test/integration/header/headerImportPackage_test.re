@@ -104,7 +104,9 @@ let _ =
                        () => {
                          let engineState = StateEngineService.unsafeGetState();
 
-                         LoadWDBTool.getCubeTexturedMeshGameObject(engineState)
+                         LoadWDBTool.getCubeTexturedMeshGameObject(
+                           engineState,
+                         )
                          |> GameObjectTool.setCurrentSceneTreeNode;
 
                          MainEditorSceneTreeTool.Select.selectGameObject(
@@ -366,7 +368,7 @@ let _ =
           ~sandbox,
           ~isBuildFakeDom=false,
           ~noWorkerJobRecord=
-            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
+            NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(),
           (),
         );
 
@@ -386,9 +388,7 @@ let _ =
         ImportPackageTool.testImportPackage(
           ~testFunc=
             () =>
-              BuildComponentTool.buildSceneTree(
-                TestTool.buildEmptyAppState(),
-              )
+              BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
               |> ReactTestTool.createSnapshotAndMatch
               |> resolve,
           (),
@@ -463,7 +463,8 @@ let _ =
                   let engineState = StateEngineService.unsafeGetState();
 
                   MainEditorSceneTreeTool.Select.selectGameObject(
-                    ~gameObject=MainEditorSceneTool.getSecondCube(engineState),
+                    ~gameObject=
+                      MainEditorSceneTool.getSecondCube(engineState),
                     (),
                   );
 
@@ -1531,7 +1532,9 @@ let _ =
                        let engineState = StateEngineService.unsafeGetState();
 
                        let material =
-                         LoadWDBTool.getCubeTexturedMeshGameObject(engineState)
+                         LoadWDBTool.getCubeTexturedMeshGameObject(
+                           engineState,
+                         )
                          |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                               _,
                               engineState,

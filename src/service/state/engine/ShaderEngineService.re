@@ -1,3 +1,3 @@
 open Wonderjs;
 
-let clearShaderCache = ShaderAPI.clearShaderCache;
+let clearInitShaderCache = ShaderAPI.clearInitShaderCache;

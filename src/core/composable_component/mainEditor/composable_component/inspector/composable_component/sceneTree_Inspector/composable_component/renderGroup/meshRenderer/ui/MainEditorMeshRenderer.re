@@ -2,7 +2,7 @@ open Wonderjs;
 
 type state = {
   drawMode: Js.Typed_array.Uint8Array.elt,
-  meshRenderer: GameObjectType.gameObject,
+  meshRenderer: GameObjectPrimitiveType.gameObject,
 };
 
 type action =

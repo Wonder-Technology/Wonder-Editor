@@ -24,6 +24,9 @@
         "name": "init_picking"
     },
     {
+        "name": "init_camera_controller"
+    },
+    {
         "name": "init_camera"
     },
     {
@@ -34,6 +37,9 @@
     },
     {
         "name": "init_state"
+    },
+    {
+        "name": "init_no_material_shader"
     },
     {
         "name": "init_basic_material"

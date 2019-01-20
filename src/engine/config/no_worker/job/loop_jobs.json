@@ -53,6 +53,9 @@
         "name": "render_imgui"
     },
     {
+        "name": "draw_outline"
+    },
+    {
         "name": "prepare_render_scene_view"
     },
     {
@@ -60,5 +63,8 @@
     },
     {
         "name": "restore"
+    },
+    {
+        "name": "set_outline_data"
     }
 ]

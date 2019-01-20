@@ -1,8 +1,9 @@
 open InitPickingJobType;
 
-let _isIntersectMesh =
+let _checkIntersectMesh =
     (ray, (_, _, geometry, localToWorldMatrixTypeArray), engineState) =>
-  MeshUtils.isIntersectMesh(
+  MeshUtils.checkIntersectMesh(
+    (geometry, engineState),
     localToWorldMatrixTypeArray,
     /* TODO judge material->side */
     Back,
@@ -13,7 +14,14 @@ let _isIntersectMesh =
       GeometryEngineService.getIndicesCount(geometry, engineState),
     ),
     ray,
-  );
+  )
+  |> Js.Option.andThen((. intersectedPoint) =>
+       Wonderjs.Vector3Service.transformMat4Tuple(
+         intersectedPoint,
+         localToWorldMatrixTypeArray,
+       )
+       |. Some
+     );
 
 let _isIntersectSphere =
     (
@@ -29,15 +37,15 @@ let _isIntersectSphere =
     ray,
   );
 
-let _getDistanceToCamera = (transform, cameraPos, engineState) =>
+let _getDistanceToCamera = (intersectedPoint, cameraPos, engineState) =>
   Wonderjs.Vector3Service.sub(
     Wonderjs.Vector3Type.Float,
-    TransformEngineService.getPosition(transform, engineState),
+    intersectedPoint,
     cameraPos,
   )
   |> Vector3Service.length;
 
-let _getTopOne = (cameraGameObject, engineState, intersectedGameObjects) => {
+let _getTopOne = (cameraGameObject, engineState, intersectedDatas) => {
   let cameraPos =
     TransformEngineService.getPosition(
       GameObjectComponentEngineService.unsafeGetTransformComponent(
@@ -47,15 +55,15 @@ let _getTopOne = (cameraGameObject, engineState, intersectedGameObjects) => {
       engineState,
     );
 
-  intersectedGameObjects
+  intersectedDatas
   |> Js.Array.sortInPlaceWith(
-       ((_, transform1, _, _), (_, transform2, _, _)) =>
-       _getDistanceToCamera(transform1, cameraPos, engineState)
-       -. _getDistanceToCamera(transform2, cameraPos, engineState)
+       ((_, intersectedPoint1), (_, intersectedPoint2)) =>
+       _getDistanceToCamera(intersectedPoint1, cameraPos, engineState)
+       -. _getDistanceToCamera(intersectedPoint2, cameraPos, engineState)
        |> NumberType.convertFloatToInt
      )
   |> ArrayService.getFirst
-  |> Js.Option.map((. (gameObject, _, _, _)) => gameObject);
+  |> Js.Option.map((. (gameObject, _)) => gameObject);
 };
 
 let _getSceneViewSize = editorState => {
@@ -188,36 +196,34 @@ let _findPickedOne =
   |> Js.Array.filter(data =>
        _isIntersectSphere(ray, data, (editorState, engineState))
      )
-  |> Js.Array.filter(data => _isIntersectMesh(ray, data, engineState))
+  |> Js.Array.map(((gameObject, _, _, _) as data) =>
+       (gameObject, _checkIntersectMesh(ray, data, engineState))
+     )
+  |> Js.Array.filter(((_, checkData)) => Js.Option.isSome(checkData))
+  |> Js.Array.map(((gameObject, checkData)) =>
+       (gameObject, OptionService.unsafeGet(checkData))
+     )
   |> _getTopOne(cameraGameObject, engineState);
 };
 
-let rec _setAllParentsShowChildren = (gameObject, engineState, editorState) =>
-  switch (HierarchyGameObjectEngineService.getParentGameObject(gameObject, engineState)) {
-  | None => editorState
-  | Some(parentGameObject) =>
-    _setAllParentsShowChildren(
-      parentGameObject,
-      engineState,
-      editorState
-      |> SceneTreeEditorService.setIsShowChildren(parentGameObject, true),
-    )
-  };
-
-let _selectSceneTreeNode = (gameObject, (editorState, engineState)) => {
-  let editorState =
-    SceneTreeEditorService.setCurrentSceneTreeNode(gameObject, editorState)
-    |> CurrentSelectSourceEditorService.setCurrentSelectSource(
-         SceneTreeWidgetService.getWidget(),
-       )
-    |> _setAllParentsShowChildren(gameObject, engineState);
-
-  editorState |> StateEditorService.setState |> ignore;
-
+let _triggerPickSuccessEvent = (gameObject, engineState) => {
   let (engineState, _) =
     ManageEventEngineService.triggerCustomGlobalEvent(
       CreateCustomEventEngineService.create(
         EventEditorService.getPickSuccessEventName(),
+        Some(gameObject),
+      ),
+      engineState,
+    );
+
+  engineState;
+};
+
+let _triggerPickFailEvent = engineState => {
+  let (engineState, _) =
+    ManageEventEngineService.triggerCustomGlobalEvent(
+      CreateCustomEventEngineService.create(
+        EventEditorService.getPickFailEventName(),
         None,
       ),
       engineState,
@@ -235,13 +241,12 @@ let _handlePicking = (event: EventType.customEvent, engineState) => {
     _computeSphereShapeData(allGameObjectData, (editorState, engineState));
 
   let engineState =
-    (editorState, engineState)
-    |> _findPickedOne(event, allGameObjectData)
-    |> OptionService.andThenWithDefault(
-         gameObject =>
-           _selectSceneTreeNode(gameObject, (editorState, engineState)),
-         engineState,
-       );
+    switch (
+      (editorState, engineState) |> _findPickedOne(event, allGameObjectData)
+    ) {
+    | None => _triggerPickFailEvent(engineState)
+    | Some(gameObject) => _triggerPickSuccessEvent(gameObject, engineState)
+    };
 
   (engineState, event);
 };
@@ -249,9 +254,11 @@ let _handlePicking = (event: EventType.customEvent, engineState) => {
 let initJob = (_, engineState) => {
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=EventEditorService.getPointDownEventName(),
+      ~eventName=EventEditorService.getPointTapEventName(),
       ~handleFunc=
-        (. event, engineState) => _handlePicking(event, engineState),
+        (. event, engineState) =>
+          MouseEventService.isLeftMouseButton(event) ?
+            _handlePicking(event, engineState) : (engineState, event),
       ~state=engineState,
       (),
     );

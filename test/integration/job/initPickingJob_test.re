@@ -14,323 +14,46 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test find picked one", () => {
-      let _prepareStateAndView = (~sandbox, ~viewWidth, ~viewHeight) => {
-        MainEditorSceneTool.initStateWithJob(
-          ~sandbox,
-          ~isInitJob=false,
-          ~noWorkerJobRecord=
-            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-              ~initPipelines=
-                {|
-            [
-        {
-          "name": "default",
-          "jobs": [
-            {
-              "name": "init_event_for_editor"
-            },
-            {
-              "name": "init_camera"
-            },
-            {
-              "name": "init_picking"
-            }
-          ]
-        }
-      ]
-            |},
-              ~initJobs=
-                {j|
-    [
-
-        {
-              "name": "init_event_for_editor"
-        },
-            {
-              "name": "init_camera"
-            },
-            {
-              "name": "init_picking"
-            }
-    ]
-            |j},
-              (),
-            ),
-          (),
-        );
-
-        PrepareRenderViewJobTool.setViewRect(
-          ~width=viewWidth * 2,
-          ~height=viewHeight,
-          (),
-        );
-      };
-
-      let _prepareMouseEvent =
-          (
-            ~sandbox,
-            ~viewWidth,
-            ~viewHeight,
-            ~offsetLeft,
-            ~offsetTop,
-            ~offsetParent=Js.Nullable.undefined,
-            (),
-          ) => {
-        _prepareStateAndView(~sandbox, ~viewWidth, ~viewHeight);
-
-        MouseEventTool.prepareWithState(
-          ~sandbox,
-          ~canvasWidth=viewWidth,
-          ~canvasHeight=viewHeight,
-          ~offsetLeft,
-          ~offsetTop,
-          ~offsetParent,
-          ~engineState=StateEngineService.unsafeGetState(),
-          (),
-        );
-        MouseEventTool.prepareForPointerLock(sandbox);
-
-        MouseEventTool.setPointerLocked(.);
-
-        ((viewWidth, viewHeight), (offsetLeft, offsetTop));
-      };
-
-      let _createGameObject = (geometry, engineState) => {
-        let (engineState, lightMaterial) =
-          LightMaterialEngineService.create(engineState);
-
-        let (engineState, obj) =
-          engineState |> GameObjectEngineService.create;
-
-        let transform =
-          GameObjectComponentEngineService.unsafeGetTransformComponent(
-            obj,
-            engineState,
-          );
-
-        let (engineState, meshRenderer) =
-          MeshRendererEngineService.create(engineState);
-        let renderGroup =
-          RenderGroupEngineService.buildRenderGroup(
-            meshRenderer,
-            lightMaterial,
-          );
-
-        let engineState =
-          engineState
-          |> GameObjectEngineService.setGameObjectName("gameObject", obj)
-          |> GameObjectComponentEngineService.addGeometryComponent(
-               obj,
-               geometry,
-             )
-          |> RenderGroupEngineService.addRenderGroupComponents(
-               obj,
-               renderGroup,
-               (
-                 GameObjectComponentEngineService.addMeshRendererComponent,
-                 GameObjectComponentEngineService.addLightMaterialComponent,
-               ),
-             );
-
-        (engineState, obj);
-      };
-
-      let _createSphere = engineState => {
-        let (engineState, geometry) =
-          GeometryEngineService.createSphereGeometry(1., 10, engineState);
-
-        _createGameObject(geometry, engineState);
-      };
-
-      let _createCube = engineState => {
-        let (engineState, geometry) =
-          GeometryEngineService.createCubeGeometry(engineState);
-
-        _createGameObject(geometry, engineState);
-      };
-
-      let _prepareCamera =
-          (cameraPos, (viewWidth, viewHeight), (editorState, engineState)) => {
-        let (editorState, engineState, editCamera) =
-          CameraEngineService.createCamera(editorState, engineState);
-
-        let editCameraPerspectiveCameraProjection =
-          GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
-            editCamera,
-            engineState,
-          );
-
-        let engineState =
-          engineState
-          |> PerspectiveCameraProjectionEngineService.setPerspectiveCameraAspect(
-               (viewWidth |> NumberType.convertIntToFloat)
-               /. (viewHeight |> NumberType.convertIntToFloat),
-               editCameraPerspectiveCameraProjection,
-             )
-          |> PerspectiveCameraProjectionEngineService.setPerspectiveCameraFovy(
-               60.,
-               editCameraPerspectiveCameraProjection,
-             )
-          |> PerspectiveCameraProjectionEngineService.setPerspectiveCameraNear(
-               0.1,
-               editCameraPerspectiveCameraProjection,
-             )
-          |> PerspectiveCameraProjectionEngineService.setPerspectiveCameraFar(
-               50000.,
-               editCameraPerspectiveCameraProjection,
-             );
-
-        let editorState =
-          editorState |> SceneViewEditorService.setEditCamera(editCamera);
-
-        let editCameraTransform =
-          GameObjectComponentEngineService.unsafeGetTransformComponent(
-            editCamera,
-            engineState,
-          );
-
-        let engineState =
-          engineState
-          |> TransformEngineService.setLocalPosition(
-               cameraPos,
-               editCameraTransform,
-             );
-
-        let engineState =
-          engineState
-          |> TransformEngineService.lookAt(editCameraTransform, (0., 0., 0.));
-
-        (editCamera, (editorState, engineState));
-      };
-
-      let _prepareGameObject =
-          (
-            gameObjectPos,
-            gameObjectEulerAngles,
-            createGameObjectFunc,
-            engineState,
-          ) => {
-        let (engineState, gameObject) = createGameObjectFunc(engineState);
-
-        let gameObjectTransform =
-          GameObjectComponentEngineService.unsafeGetTransformComponent(
-            gameObject,
-            engineState,
-          );
-
-        let sceneGameObject =
-          SceneEngineService.getSceneGameObject(engineState);
-
-        let engineState =
-          engineState |> HierarchyGameObjectEngineService.addChild(sceneGameObject, gameObject);
-
-        let engineState =
-          engineState
-          |> TransformEngineService.setLocalPosition(
-               gameObjectPos,
-               gameObjectTransform,
-             )
-          |> TransformEngineService.setLocalEulerAngles(
-               gameObjectEulerAngles,
-               gameObjectTransform,
-             );
-
-        (gameObject, engineState);
-      };
-
-      let _prepareState = (editorState, engineState) => {
-        editorState |> StateEditorService.setState |> ignore;
-        engineState |> StateEngineService.setState |> ignore;
-
-        StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
-
-        StateLogicService.getAndRefreshEngineState();
-
-        SceneTreeEditorService.clearCurrentSceneTreeNode
-        |> StateLogicService.getAndSetEditorState;
-      };
-
-      let _triggerPickingAndNotRestore = (pageX, pageY) => {
-        let target = EventTool.buildCanvasTarget();
-
-        EventTool.triggerDomEvent(
-          "mousedown",
-          EventTool.getBody(),
-          MouseEventTool.buildMouseEvent(~pageX, ~pageY, ~target, ()),
-        );
-      };
-
-      let _triggerPickingAndRestore = (pageX, pageY) => {
-        _triggerPickingAndNotRestore(pageX, pageY);
-
-        EventTool.restore();
-      };
-
-      let _pickOne = gameObject1 => {
-        let editorState = StateEditorService.getState();
-
-        SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState)
-        |> expect == gameObject1;
-      };
-
-      let _notPick = () => {
-        let editorState = StateEditorService.getState();
-
-        SceneTreeEditorService.getCurrentSceneTreeNode(editorState)
-        |> Js.Option.isNone
-        |> expect == true;
-      };
-
-      let _prepareOneGameObject =
-          (
-            ~createGameObjectFunc=_createSphere,
-            ~viewWidth,
-            ~viewHeight,
-            ~offsetLeft,
-            ~offsetTop,
-            ~cameraPos,
-            ~gameObjectPos,
-            ~gameObjectEulerAngles,
-            (),
-          ) => {
-        let ((viewWidth, viewHeight), (offsetLeft, offsetTop)) =
-          _prepareMouseEvent(
-            ~sandbox,
-            ~viewWidth,
-            ~viewHeight,
-            ~offsetLeft,
-            ~offsetTop,
-            (),
-          );
-
-        let editorState = StateEditorService.getState();
-        let engineState = StateEngineService.unsafeGetState();
-
-        let (editCamera, (editorState, engineState)) =
-          _prepareCamera(
-            cameraPos,
-            (viewWidth, viewHeight),
-            (editorState, engineState),
-          );
-
-        let (gameObject1, engineState) =
-          _prepareGameObject(
-            gameObjectPos,
-            gameObjectEulerAngles,
-            createGameObjectFunc,
-            engineState,
-          );
-
-        _prepareState(editorState, engineState);
-
-        gameObject1;
-      };
-
       describe("should set finded one to current scene tree node", () => {
+        describe("if pointtap->mouse button isn't left button", () => {
+          let _prepare = () =>
+            InitPickingJobTool.prepareOneGameObject(
+              ~sandbox,
+              ~viewWidth=510,
+              ~viewHeight=200,
+              ~offsetLeft=10,
+              ~offsetTop=20,
+              ~cameraPos=(
+                6.986046314239502,
+                0.43706008791923523,
+                (-0.06429910659790039),
+              ),
+              ~gameObjectPos=(3., 0., 0.),
+              ~gameObjectEulerAngles=(45., 0., 0.),
+              ~createGameObjectFunc=InitPickingJobTool.createCube,
+              (),
+            );
+
+          test("not trigger pick", () => {
+            let gameObject1 = _prepare();
+
+            InitPickingJobTool.triggerPickingAndRestore(
+              ~sandbox,
+              ~pageX=233 + 10,
+              ~pageY=119 + 20,
+              ~eventButton=3,
+              (),
+            );
+
+            InitPickingJobTool.notPick();
+          });
+        });
+
         describe("test only pick one", () =>
           describe("test cube", () => {
             let _prepare = () =>
-              _prepareOneGameObject(
+              InitPickingJobTool.prepareOneGameObject(
+                ~sandbox,
                 ~viewWidth=510,
                 ~viewHeight=200,
                 ~offsetLeft=10,
@@ -342,126 +65,183 @@ let _ =
                 ),
                 ~gameObjectPos=(3., 0., 0.),
                 ~gameObjectEulerAngles=(45., 0., 0.),
-                ~createGameObjectFunc=_createCube,
+                ~createGameObjectFunc=InitPickingJobTool.createCube,
                 (),
               );
 
             test("test find", () => {
               let gameObject1 = _prepare();
 
-              _triggerPickingAndRestore(233 + 10, 119 + 20);
+              InitPickingJobTool.triggerPickingAndRestore(
+                ~sandbox,
+                ~pageX=233 + 10,
+                ~pageY=119 + 20,
+                (),
+              );
 
-              _pickOne(gameObject1);
+              InitPickingJobTool.pickOne(gameObject1);
             });
             test("test not find", () => {
               let gameObject1 = _prepare();
 
-              _triggerPickingAndRestore(225 + 10, 124 + 20);
+              InitPickingJobTool.triggerPickingAndRestore(
+                ~sandbox,
+                ~pageX=225 + 10,
+                ~pageY=124 + 20,
+                (),
+              );
 
-              _notPick();
+              InitPickingJobTool.notPick();
             });
           })
         );
 
-        describe("test pick multi ones", () => {
-          let _prepare =
-              (
-                ~createGameObjectFunc=_createSphere,
-                ~viewWidth,
-                ~viewHeight,
-                ~offsetLeft,
-                ~offsetTop,
-                ~cameraPos,
-                ~gameObject1Pos,
-                ~gameObject1EulerAngles,
-                ~gameObject2Pos,
-                ~gameObject2EulerAngles,
-                (),
-              ) => {
-            let ((viewWidth, viewHeight), (offsetLeft, offsetTop)) =
-              _prepareMouseEvent(
-                ~sandbox,
-                ~viewWidth,
-                ~viewHeight,
-                ~offsetLeft,
-                ~offsetTop,
-                (),
-              );
+        describe("test pick multi ones", () =>
+          describe(
+            "find the top one whose distance between intersected point and the camera position is nearest",
+            () => {
+              describe("test cube", () => {
+                let _prepare = () =>
+                  InitPickingJobTool.prepareTwoGameObjects(
+                    ~sandbox,
+                    ~viewWidth=510,
+                    ~viewHeight=200,
+                    ~offsetLeft=10,
+                    ~offsetTop=20,
+                    ~cameraPos=(
+                      2.2987656593322754,
+                      8.099184036254883,
+                      1.1699984073638916,
+                    ),
+                    ~gameObject1Pos=(0., 0., 0.),
+                    ~gameObject1EulerAngles=(0., 0., 0.),
+                    ~gameObject2Pos=(1., 2., 0.),
+                    ~gameObject2EulerAngles=(0., 0., 0.),
+                    ~createGameObjectFunc1=InitPickingJobTool.createCube,
+                    ~createGameObjectFunc2=InitPickingJobTool.createCube,
+                    (),
+                  );
 
-            let editorState = StateEditorService.getState();
-            let engineState = StateEngineService.unsafeGetState();
+                test("test find gameObject1", () => {
+                  let (gameObject1, gameObject2) = _prepare();
 
-            let (editCamera, (editorState, engineState)) =
-              _prepareCamera(
-                cameraPos,
-                (viewWidth, viewHeight),
-                (editorState, engineState),
-              );
+                  InitPickingJobTool.triggerPickingAndRestore(
+                    ~sandbox,
+                    ~pageX=251 + 10,
+                    ~pageY=91 + 20,
+                    (),
+                  );
 
-            let (gameObject1, engineState) =
-              _prepareGameObject(
-                gameObject1Pos,
-                gameObject1EulerAngles,
-                createGameObjectFunc,
-                engineState,
-              );
+                  InitPickingJobTool.pickOne(gameObject1);
+                });
+                test("test find gameObject2", () => {
+                  let (gameObject1, gameObject2) = _prepare();
 
-            let (gameObject2, engineState) =
-              _prepareGameObject(
-                gameObject2Pos,
-                gameObject2EulerAngles,
-                createGameObjectFunc,
-                engineState,
-              );
+                  InitPickingJobTool.triggerPickingAndRestore(
+                    ~sandbox,
+                    ~pageX=257 + 10,
+                    ~pageY=100 + 20,
+                    (),
+                  );
 
-            _prepareState(editorState, engineState);
+                  InitPickingJobTool.pickOne(gameObject2);
+                });
+                test("test not find", () => {
+                  let (gameObject1, gameObject2) = _prepare();
 
-            (gameObject1, gameObject2);
-          };
+                  InitPickingJobTool.triggerPickingAndRestore(
+                    ~sandbox,
+                    ~pageX=241 + 10,
+                    ~pageY=120 + 20,
+                    (),
+                  );
 
-          describe("find the top one which nearest the camera position", () => {
-            let _prepare = () =>
-              _prepare(
-                ~viewWidth=510,
-                ~viewHeight=200,
-                ~offsetLeft=10,
-                ~offsetTop=20,
-                ~cameraPos=(
-                  2.2987656593322754,
-                  8.099184036254883,
-                  1.1699984073638916,
-                ),
-                ~gameObject1Pos=(0., 0., 0.),
-                ~gameObject1EulerAngles=(0., 0., 0.),
-                ~gameObject2Pos=(1., 2., 0.),
-                ~gameObject2EulerAngles=(0., 0., 0.),
-                ~createGameObjectFunc=_createCube,
-                (),
-              );
+                  InitPickingJobTool.notPick();
+                });
+              });
 
-            test("test find gameObject1", () => {
-              let (gameObject1, gameObject2) = _prepare();
+              describe("test triangle", () => {
+                let _createTriangleInPositiveYAxis = engineState => {
+                  open Js.Typed_array;
 
-              _triggerPickingAndRestore(251 + 10, 91 + 20);
+                  let (engineState, geometry) =
+                    GeometryEngineService.create(engineState);
 
-              _pickOne(gameObject1);
-            });
-            test("test find gameObject2", () => {
-              let (gameObject1, gameObject2) = _prepare();
+                  let vertices1 =
+                    Float32Array.make([|
+                      1.,
+                      0.,
+                      3.,
+                      0.,
+                      1.,
+                      3.,
+                      (-1.),
+                      0.,
+                      3.,
+                    |]);
+                  let indices1 = Uint16Array.make([|0, 1, 2|]);
 
-              _triggerPickingAndRestore(257 + 10, 100 + 20);
+                  let engineState =
+                    engineState
+                    |> GeometryEngineService.setGeometryVertices(
+                         geometry,
+                         vertices1,
+                       )
+                    |> GeometryEngineService.setGeometryIndices(
+                         geometry,
+                         indices1,
+                       );
 
-              _pickOne(gameObject2);
-            });
-            test("test not find", () => {
-              let (gameObject1, gameObject2) = _prepare();
+                  InitPickingJobTool.createGameObject(geometry, engineState);
+                };
 
-              _triggerPickingAndRestore(241 + 10, 120 + 20);
+                let _prepare = (gameObject1Pos, gameObject2Pos) =>
+                  InitPickingJobTool.prepareTwoGameObjects(
+                    ~sandbox,
+                    ~viewWidth=500,
+                    ~viewHeight=200,
+                    ~offsetLeft=0,
+                    ~offsetTop=0,
+                    ~cameraPos=(0., 0., 5.),
+                    ~gameObject1Pos,
+                    ~gameObject1EulerAngles=(0., 0., 0.),
+                    ~gameObject2Pos,
+                    ~gameObject2EulerAngles=(0., 0., 0.),
+                    ~createGameObjectFunc1=InitPickingJobTool.createCube,
+                    ~createGameObjectFunc2=_createTriangleInPositiveYAxis,
+                    (),
+                  );
 
-              _notPick();
-            });
-          });
-        });
+                test("test find", () => {
+                  let (gameObject1, gameObject2) =
+                    _prepare((0., 0., 3.), (0., 0., 1.));
+
+                  InitPickingJobTool.triggerPickingAndRestore(
+                    ~sandbox,
+                    ~pageX=250,
+                    ~pageY=100,
+                    (),
+                  );
+
+                  InitPickingJobTool.pickOne(gameObject2);
+                });
+                test("test not find", () => {
+                  let (gameObject1, gameObject2) =
+                    _prepare((0., 0., 4.1), (0., 0., 1.));
+
+                  InitPickingJobTool.triggerPickingAndRestore(
+                    ~sandbox,
+                    ~pageX=250,
+                    ~pageY=100,
+                    (),
+                  );
+
+                  InitPickingJobTool.pickOne(gameObject1);
+                });
+              });
+            },
+          )
+        );
 
         describe("test sphere shape cache", () => {
           let _changePoints = gameObject => {
@@ -504,7 +284,8 @@ let _ =
           test(
             "if change geometry points, the intersect should be correct", () => {
             let gameObject =
-              _prepareOneGameObject(
+              InitPickingJobTool.prepareOneGameObject(
+                ~sandbox,
                 ~viewWidth=510,
                 ~viewHeight=200,
                 ~offsetLeft=10,
@@ -512,40 +293,56 @@ let _ =
                 ~cameraPos=(0., 0., 2.5),
                 ~gameObjectPos=(0., 0., 0.),
                 ~gameObjectEulerAngles=(0., 0., 0.),
-                ~createGameObjectFunc=_createCube,
+                ~createGameObjectFunc=InitPickingJobTool.createCube,
                 (),
               );
 
-            _triggerPickingAndNotRestore(255 + 10, 100 + 20);
+            InitPickingJobTool.triggerPicking(
+              sandbox,
+              255 + 10,
+              100 + 20,
+              1,
+            );
 
             SceneTreeEditorService.clearCurrentSceneTreeNode
             |> StateLogicService.getAndSetEditorState;
 
             _changePoints(gameObject);
 
-            _triggerPickingAndRestore(255 + 10, 100 + 20);
+            InitPickingJobTool.triggerPickingAndRestore(
+              ~sandbox,
+              ~pageX=255 + 10,
+              ~pageY=100 + 20,
+              (),
+            );
 
-            _notPick();
+            InitPickingJobTool.notPick();
           });
         });
       });
 
       describe("if find one", () => {
         let _prepare = () =>
-          _prepareOneGameObject(
+          InitPickingJobTool.prepareOneGameObject(
+            ~sandbox,
             ~viewWidth=500,
             ~viewHeight=200,
             ~offsetLeft=10,
             ~offsetTop=20,
-            ~cameraPos=(0., 0., 0.),
+            ~cameraPos=(0., 0., 2.),
             ~gameObjectPos=(0., 0., 0.),
             ~gameObjectEulerAngles=(0., 0., 0.),
-            ~createGameObjectFunc=_createCube,
+            ~createGameObjectFunc=InitPickingJobTool.createCube,
             (),
           );
 
         let _triggerPicking = () =>
-          _triggerPickingAndRestore(250 + 10, 100 + 20);
+          InitPickingJobTool.triggerPickingAndRestore(
+            ~sandbox,
+            ~pageX=250 + 10,
+            ~pageY=100 + 20,
+            (),
+          );
 
         test("set current select source to scene tree", () => {
           let _ = _prepare();
@@ -583,32 +380,32 @@ let _ =
 
             a^ |> expect == 1;
           });
-          test("can get picked gameObject in event handle func", () => {
-            let gameObject = _prepare();
-            let pickedGameObject = ref(0);
-            ManageEventEngineService.onCustomGlobalEvent(
-              ~eventName=EventEditorService.getPickSuccessEventName(),
-              ~handleFunc=
-                (. event, engineState) => {
-                  let editorState = StateEditorService.getState();
+          /* test("can get picked gameObject in event handle func", () => {
+               let gameObject = _prepare();
+               let pickedGameObject = ref(0);
+               ManageEventEngineService.onCustomGlobalEvent(
+                 ~eventName=EventEditorService.getPickSuccessEventName(),
+                 ~handleFunc=
+                   (. event, engineState) => {
+                     let editorState = StateEditorService.getState();
 
-                  pickedGameObject :=
-                    SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(
-                      editorState,
-                    );
+                     pickedGameObject :=
+                       SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(
+                         editorState,
+                       );
 
-                  (engineState, event);
-                },
-              ~state=StateEngineService.unsafeGetState(),
-              (),
-            )
-            |> StateEngineService.setState
-            |> ignore;
+                     (engineState, event);
+                   },
+                 ~state=StateEngineService.unsafeGetState(),
+                 (),
+               )
+               |> StateEngineService.setState
+               |> ignore;
 
-            _triggerPicking();
+               _triggerPicking();
 
-            pickedGameObject^ |> expect == gameObject;
-          });
+               pickedGameObject^ |> expect == gameObject;
+             }); */
           test("the picked gameObject's all parents should show children", () => {
             let _createParentGameObject = engineState => {
               let (engineState, parent) =
@@ -655,6 +452,66 @@ let _ =
         });
       });
 
+      describe("if not find", () =>
+        describe("trigger pick fail event", () => {
+          let _prepare = () =>
+            InitPickingJobTool.prepareOneGameObject(
+              ~sandbox,
+              ~viewWidth=500,
+              ~viewHeight=200,
+              ~offsetLeft=10,
+              ~offsetTop=20,
+              ~cameraPos=(0., 0., 20.),
+              ~gameObjectPos=(0., 0., 0.),
+              ~gameObjectEulerAngles=(0., 0., 0.),
+              ~createGameObjectFunc=InitPickingJobTool.createCube,
+              (),
+            );
+
+          let _triggerPicking = () =>
+            InitPickingJobTool.triggerPickingAndRestore(
+              ~sandbox,
+              ~pageX=400 + 10,
+              ~pageY=100 + 20,
+              (),
+            );
+
+          test("clear curent scene tree node", () => {
+            let _ = _prepare();
+            let gameObject = 500;
+            GameObjectTool.setCurrentSceneTreeNode(gameObject);
+
+            _triggerPicking();
+
+            InitPickingJobTool.notPick();
+          });
+          test("clear curent asset node id", () => {
+            let _ = _prepare();
+            let nodeId = 500;
+            MainEditorAssetNodeTool.setCurrentNodeId(nodeId);
+
+            _triggerPicking();
+
+            MainEditorAssetNodeTool.getCurrentNodeId
+            |> StateLogicService.getEditorState
+            |> expect == None;
+          });
+          test("clear curent select source", () => {
+            let _ = _prepare();
+            CurrentSelectSourceEditorService.setCurrentSelectSource(
+              WidgetType.Asset,
+            )
+            |> StateLogicService.getAndSetEditorState;
+
+            _triggerPicking();
+
+            CurrentSelectSourceEditorService.getCurrentSelectSource
+            |> StateLogicService.getEditorState
+            |> expect == None;
+          });
+        })
+      );
+
       describe("isIntersectTriangle", () =>
         describe("test cull", () => {
           let _isIntersectTriangle =
@@ -669,13 +526,17 @@ let _ =
                 ~viewHeight,
                 ~cameraPos,
               ) => {
-            _prepareStateAndView(~sandbox, ~viewWidth, ~viewHeight);
+            InitPickingJobTool.prepareStateAndView(
+              ~sandbox,
+              ~viewWidth,
+              ~viewHeight,
+            );
 
             let editorState = StateEditorService.getState();
             let engineState = StateEngineService.unsafeGetState();
 
             let (editCamera, (editorState, engineState)) =
-              _prepareCamera(
+              InitPickingJobTool.prepareCamera(
                 cameraPos,
                 (viewWidth, viewHeight),
                 (editorState, engineState),
@@ -696,7 +557,8 @@ let _ =
                 ),
               );
 
-            RayUtils.isIntersectTriangle(cullType, va, vb, vc, ray);
+            RayUtils.checkIntersectTriangle(cullType, va, vb, vc, ray)
+            |> Js.Option.isSome;
           };
 
           describe("test back cull", () => {
@@ -710,7 +572,7 @@ let _ =
                 ~vb=(0., 1., 0.),
                 ~vc=((-1.), 0., 0.),
                 ~locationInView=(250, 100),
-                ~cameraPos=(0., 0., 0.),
+                ~cameraPos=(0., 0., 2.),
               )
               |> expect == true
             );
@@ -724,7 +586,7 @@ let _ =
                 ~vb=(0., 1., 0.),
                 ~vc=(1., 0., 0.),
                 ~locationInView=(250, 100),
-                ~cameraPos=(0., 0., 0.),
+                ~cameraPos=(0., 0., 2.),
               )
               |> expect == false
             );
@@ -741,7 +603,7 @@ let _ =
                 ~vb=(0., 1., 0.),
                 ~vc=(1., 0., 0.),
                 ~locationInView=(250, 100),
-                ~cameraPos=(0., 0., 0.),
+                ~cameraPos=(0., 0., 2.),
               )
               |> expect == true
             );
@@ -755,7 +617,7 @@ let _ =
                 ~vb=(0., 1., 0.),
                 ~vc=((-1.), 0., 0.),
                 ~locationInView=(250, 100),
-                ~cameraPos=(0., 0., 0.),
+                ~cameraPos=(0., 0., 2.),
               )
               |> expect == false
             );
@@ -771,7 +633,7 @@ let _ =
                 ~vb=(0., 1., 0.),
                 ~vc=(1., 0., 0.),
                 ~locationInView=(250, 100),
-                ~cameraPos=(0., 0., 0.),
+                ~cameraPos=(0., 0., 2.),
               )
               |> expect == true
             );
@@ -785,7 +647,7 @@ let _ =
                 ~vb=(0., 1., 0.),
                 ~vc=((-1.), 0., 0.),
                 ~locationInView=(250, 100),
-                ~cameraPos=(0., 0., 0.),
+                ~cameraPos=(0., 0., 2.),
               )
               |> expect == true
             );
@@ -801,7 +663,7 @@ let _ =
                 ~vb=(0., 1., 0.),
                 ~vc=(1., 0., 0.),
                 ~locationInView=(250, 100),
-                ~cameraPos=(0., 0., 0.),
+                ~cameraPos=(0., 0., 2.),
               )
               |> expect == false
             );
@@ -815,10 +677,64 @@ let _ =
                 ~vb=(0., 1., 0.),
                 ~vc=((-1.), 0., 0.),
                 ~locationInView=(250, 100),
-                ~cameraPos=(0., 0., 0.),
+                ~cameraPos=(0., 0., 2.),
               )
               |> expect == false
             );
+          });
+        })
+      );
+
+      describe("fix bug", () =>
+        describe("can pick the geometry which has indices32 data", () => {
+          let _createIndices32Triangle = engineState => {
+            open Js.Typed_array;
+
+            let (engineState, geometry) =
+              GeometryEngineService.create(engineState);
+
+            let vertices1 =
+              Float32Array.make([|1., 0., 0., 0., 1., 0., (-1.), 0., 0.|]);
+            let indices1 = Uint32Array.make([|0, 1, 2|]);
+
+            let engineState =
+              engineState
+              |> GeometryEngineService.setGeometryVertices(
+                   geometry,
+                   vertices1,
+                 )
+              |> GeometryEngineService.setGeometryIndices32(
+                   geometry,
+                   indices1,
+                 );
+
+            InitPickingJobTool.createGameObject(geometry, engineState);
+          };
+          let _prepare = () =>
+            InitPickingJobTool.prepareOneGameObject(
+              ~sandbox,
+              ~viewWidth=500,
+              ~viewHeight=200,
+              ~offsetLeft=0,
+              ~offsetTop=0,
+              ~cameraPos=(0., 0., 3.),
+              ~gameObjectPos=(0., 0., 0.),
+              ~gameObjectEulerAngles=(0., 0., 0.),
+              ~createGameObjectFunc=_createIndices32Triangle,
+              (),
+            );
+
+          test("test pick", () => {
+            let gameObject1 = _prepare();
+
+            InitPickingJobTool.triggerPickingAndRestore(
+              ~sandbox,
+              ~pageX=250,
+              ~pageY=100,
+              (),
+            );
+
+            InitPickingJobTool.pickOne(gameObject1);
           });
         })
       );
