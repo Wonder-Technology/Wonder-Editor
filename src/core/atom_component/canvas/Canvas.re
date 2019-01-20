@@ -19,16 +19,16 @@ module Method = {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     let startId = DragUtils.getDragedId(e);
 
-    DomHelper.preventDefault(e);
+    EventHelper.preventDefault(e);
 
     isWDBAssetFileFunc() ?
       {
-        let wdbGameObjectUid =
+        let wdbGameObject =
           StateEditorService.getState()
           |> WDBNodeAssetEditorService.unsafeGetNodeData(startId)
           |> (({wdbGameObject}: NodeAssetType.wdbNodeData) => wdbGameObject);
 
-        dragWDBFunc(wdbGameObjectUid);
+        dragWDBFunc(wdbGameObject);
       } :
       ();
   };
@@ -42,8 +42,8 @@ let component = ReasonReact.statelessComponent("Canvas");
 
    | DragLeave => ReasonReact.NoUpdate
 
-   | DragWDB(wdbGameObjectUid) =>
-     ReasonReactUtils.sideEffects(() => dragWDB(wdbGameObjectUid))
+   | DragWDB(wdbGameObject) =>
+     ReasonReactUtils.sideEffects(() => dragWDB(wdbGameObject))
 
    | Nothing => ReasonReact.NoUpdate
    }; */

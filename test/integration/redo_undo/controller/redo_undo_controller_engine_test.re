@@ -33,7 +33,7 @@ let _ =
           RedoUndoTool.undoHistoryState();
 
           StateEngineService.unsafeGetState()
-          |> GameObjectUtils.getChildren(
+          |> HierarchyGameObjectEngineService.getChildren(
                MainEditorSceneTool.unsafeGetScene(),
              )
           |> Js.Array.length
@@ -82,7 +82,7 @@ let _ =
           RedoUndoTool.undoHistoryState();
 
           StateEngineService.unsafeGetState()
-          |> GameObjectUtils.getChildren(
+          |> HierarchyGameObjectEngineService.getChildren(
                MainEditorSceneTool.unsafeGetScene(),
              )
           |> Js.Array.length

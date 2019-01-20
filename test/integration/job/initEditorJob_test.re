@@ -159,7 +159,7 @@ let _ =
 
       test("not add to scene", () => {
         let sceneAllGameObjects =
-          GameObjectEngineService.getAllGameObjects(
+          HierarchyGameObjectEngineService.getAllGameObjects(
             SceneEngineService.getSceneGameObject(
               StateEngineService.unsafeGetState(),
             ),

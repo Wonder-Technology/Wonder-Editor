@@ -35,7 +35,7 @@ let _disposeTextureNodeEditorData = ({imageDataIndex}, editorState) =>
 let _disposeWDBNodeEditorData =
     ({wdbGameObject}, (editorState, engineState)) => {
   let wdbGameObjects =
-    GameObjectEngineService.getAllGameObjects(wdbGameObject, engineState);
+    HierarchyGameObjectEngineService.getAllGameObjects(wdbGameObject, engineState);
 
   editorState
   |> _disposeClonedGameObjectsComponentType(
@@ -111,7 +111,7 @@ let _disposeMaterialNodeEngineData =
 let _disposeWDBNodeEngineData =
     ({wdbGameObject}, (editorState, engineState)) => {
   let wdbGameObjects =
-    GameObjectEngineService.getAllGameObjects(wdbGameObject, engineState);
+    HierarchyGameObjectEngineService.getAllGameObjects(wdbGameObject, engineState);
 
   let engineState =
     _disposeGeometryAssets(wdbGameObjects, (editorState, engineState));

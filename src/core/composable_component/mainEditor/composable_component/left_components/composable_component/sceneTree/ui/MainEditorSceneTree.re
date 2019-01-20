@@ -32,9 +32,9 @@ module Method = {
     |> ignore;
   };
 
-  let dragGameObjectIntoGameObject = SceneTreeDragGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+  let dragGameObjectToBeTargetSib = SceneTreeDragGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let dragWDBIntoScene = SceneTreeDragWDBEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+  let dragWDBToBeTargetSib = SceneTreeDragWDBEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let buildSceneNode = (children, engineState) => {
     uid: SceneEngineService.getSceneGameObject(engineState),
@@ -61,7 +61,7 @@ module Method = {
     |> Js.Array.map(({uid, name, children}) =>
          <SceneTreeNode
            key=(StringService.intToString(uid))
-           id=uid
+           gameObject=uid
            name
            isSelected=(_isSelected(uid, currentSceneTreeNode))
            isActive=true
@@ -128,11 +128,11 @@ let render = (store, dispatchFunc, _self) => {
                    |> SceneTreeEditorService.getCurrentSceneTreeNode,
                    (
                      Method.onSelect((store, dispatchFunc)),
-                     Method.dragGameObjectIntoGameObject(
+                     Method.dragGameObjectToBeTargetSib(
                        (store, dispatchFunc),
                        (),
                      ),
-                     Method.dragWDBIntoScene((store, dispatchFunc), ()),
+                     Method.dragWDBToBeTargetSib((store, dispatchFunc), ()),
                    ),
                    (
                      SceneEngineService.getSceneGameObject(engineState),

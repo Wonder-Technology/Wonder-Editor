@@ -35,7 +35,7 @@ let _ =
         MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
       );
 
-      let newGameObject = GameObjectTool.getNewGameObjectUid();
+      let newGameObject = GameObjectTool.getNewGameObject();
 
       MainEditorLeftHeaderTool.addCube();
 

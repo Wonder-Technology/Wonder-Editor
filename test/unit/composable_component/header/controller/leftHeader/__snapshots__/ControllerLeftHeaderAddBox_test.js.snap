@@ -20,10 +20,9 @@ exports[`controller leftHeader addCube test add cube cube should be added into e
           />
         </div>
         <div
-          className="draggable-container"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -42,10 +41,9 @@ exports[`controller leftHeader addCube test add cube cube should be added into e
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -65,10 +63,9 @@ exports[`controller leftHeader addCube test add cube cube should be added into e
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active"
+            className="draggable-container select-active no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -88,10 +85,9 @@ exports[`controller leftHeader addCube test add cube cube should be added into e
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -111,10 +107,9 @@ exports[`controller leftHeader addCube test add cube cube should be added into e
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -134,10 +129,9 @@ exports[`controller leftHeader addCube test add cube cube should be added into e
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}

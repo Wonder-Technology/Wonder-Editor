@@ -190,7 +190,7 @@ let prepareGameObject =
   let sceneGameObject = SceneEngineService.getSceneGameObject(engineState);
 
   let engineState =
-    engineState |> GameObjectUtils.addChild(sceneGameObject, gameObject);
+    engineState |> HierarchyGameObjectEngineService.addChild(sceneGameObject, gameObject);
 
   let engineState =
     engineState

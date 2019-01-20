@@ -2,7 +2,7 @@ open Js.Typed_array;
 
 let findGameObjectsByName = (name, engineState) =>
   engineState
-  |> GameObjectEngineService.getAllGameObjects(
+  |> HierarchyGameObjectEngineService.getAllGameObjects(
        SceneEngineService.getSceneGameObject(engineState),
      )
   |> Js.Array.filter(gameObject =>

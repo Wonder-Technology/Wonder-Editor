@@ -126,22 +126,49 @@ let buildFileEvent =
 let buildDragEventWithDataMap = [%bs.raw
   dataMap => {|
   return {
-stopPropagation: () => undefined,
-preventDefault: () => undefined,
-dataTransfer: {
-  effectAllowed: "move",
-  dropEffect: "move",
-  setDragImage: (image, value1, value2) => undefined,
-  setData: (key, value) => {
-    dataMap[key] = value;
-  },
-  getData: (key) => {
-    return dataMap[key]
-  }
-}
+    stopPropagation: () => undefined,
+    preventDefault: () => undefined,
+    dataTransfer: {
+      effectAllowed: "move",
+      dropEffect: "move",
+      setDragImage: (image, value1, value2) => undefined,
+      setData: (key, value) => {
+        dataMap[key] = value;
+      },
+      getData: (key) => {
+        return dataMap[key]
+      }
+    }
   }
   |}
 ];
+
+let buildDragEventWithMouse = (~offsetTop=11, ~offsetHeight=12, ~pageY=12, ()) =>
+  {
+    "target": {
+      "getClientRects": () => {"length": 4},
+      "getBoundingClientRect": () => {
+        "top": offsetTop,
+        "left": offsetHeight,
+        "width": 13,
+        "height": 14,
+      },
+      "ownerDocument": {
+        "documentElement": {
+          "clientTop": 0,
+          "clientLeft": 0,
+        },
+        "defaultView": {
+          "pageYOffset": 0,
+          "pageXOffset": 0,
+        },
+      },
+    },
+    "pageY": pageY,
+    "stopPropagation": () => (),
+    "preventDefault": () => (),
+  }
+  |> Obj.magic;
 
 let buildDragEvent =
   (.) =>

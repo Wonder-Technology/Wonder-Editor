@@ -53,7 +53,7 @@ let _handleEngineState = (sceneGameObject, hasWDBIMGUIFunc, engineState) => {
 
   editorState
   |> GameObjectComponentLogicService.setGameObjectArrComponentTypeMap(
-       engineState |> GameObjectUtils.getChildren(sceneGameObject),
+       engineState |> HierarchyGameObjectEngineService.getChildren(sceneGameObject),
        GameObjectComponentLogicService.buildAllComponentArray(),
        engineState,
      )

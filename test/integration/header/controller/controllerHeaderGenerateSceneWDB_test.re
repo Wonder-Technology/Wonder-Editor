@@ -56,7 +56,7 @@ let _ =
       "fix bind arcballCameraController event bug: package should bind event if any basicCameraView is active",
       () => {
         let _getIsBindLength = (gameObject, engineState) =>
-          GameObjectEngineService.getAllGameObjects(gameObject, engineState)
+          HierarchyGameObjectEngineService.getAllGameObjects(gameObject, engineState)
           |> GameObjectEngineService.getAllArcballCameraControllers(
                _,
                engineState,

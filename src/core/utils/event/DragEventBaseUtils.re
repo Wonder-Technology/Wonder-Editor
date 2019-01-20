@@ -1,7 +1,7 @@
 let dragStart = (id, widget, dragImg, effectAllowd, event) => {
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);
 
-  DomHelper.stopPropagation(e);
+  EventHelper.stopPropagation(e);
   e##dataTransfer##setDragImage(
     dragImg |> DomHelperType.convertDomToJsObj,
     0,
@@ -28,7 +28,7 @@ let _isTreeNodeRelationValid = (targetId, startId, checkNodeRelationFunc) =>
     );
   };
 
-let checkDragEnter = (id, isWidgetFunc, checkNodeRelationFunc) => {
+let isValidForDragEnter = (id, isWidgetFunc, checkNodeRelationFunc) => {
   let (widget, startId) =
     StateEditorService.getState()
     |> CurrentDragSourceEditorService.getCurrentDragSource;
@@ -38,7 +38,7 @@ let checkDragEnter = (id, isWidgetFunc, checkNodeRelationFunc) => {
     _isTreeNodeRelationValid(id, startId, checkNodeRelationFunc);
 };
 
-let checkDragDrop = (id, startId, isWidgetFunc, checkNodeRelationFunc) => {
+let isValidForDragDrop = (id, startId, isWidgetFunc, checkNodeRelationFunc) => {
   let (widget, _startId) =
     StateEditorService.getState()
     |> CurrentDragSourceEditorService.getCurrentDragSource;

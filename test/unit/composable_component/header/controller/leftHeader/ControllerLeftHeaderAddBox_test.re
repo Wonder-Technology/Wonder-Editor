@@ -31,7 +31,7 @@ let _ =
           MainEditorLeftHeaderTool.addCube();
 
           StateEngineService.unsafeGetState()
-          |> GameObjectUtils.getChildren(
+          |> HierarchyGameObjectEngineService.getChildren(
                MainEditorSceneTool.unsafeGetScene(),
              )
           |> Js.Array.length
@@ -42,7 +42,7 @@ let _ =
           MainEditorLeftHeaderTool.addCube();
 
           StateEngineService.unsafeGetState()
-          |> GameObjectUtils.getChildren(
+          |> HierarchyGameObjectEngineService.getChildren(
                MainEditorSceneTool.unsafeGetScene(),
              )
           |> Js.Array.length

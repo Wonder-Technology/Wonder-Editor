@@ -41,7 +41,7 @@ let _ =
             GameObjectToolEngine.createGameObject(engineState);
 
           let engineState =
-            GameObjectUtils.addChild(gameObject1, gameObject2, engineState);
+            HierarchyGameObjectEngineService.addChild(gameObject1, gameObject2, engineState);
 
           CheckSceneTreeLogicService.checkGameObjectRelation(
             gameObject2,
@@ -64,7 +64,7 @@ let _ =
               GameObjectToolEngine.createGameObject(engineState);
 
             let engineState =
-              GameObjectUtils.addChild(gameObject1, gameObject2, engineState);
+              HierarchyGameObjectEngineService.addChild(gameObject1, gameObject2, engineState);
 
             CheckSceneTreeLogicService.checkGameObjectRelation(
               gameObject1,

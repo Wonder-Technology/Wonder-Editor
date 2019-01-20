@@ -154,9 +154,9 @@ let generateDirectionPointLightsAndCubeWDB = () =>
 
     let engineState =
       engineState
-      |> GameObjectUtils.addChild(rootGameObject, cube1)
-      |> GameObjectUtils.addChild(rootGameObject, directionLight)
-      |> GameObjectUtils.addChild(rootGameObject, pointLight);
+      |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1)
+      |> HierarchyGameObjectEngineService.addChild(rootGameObject, directionLight)
+      |> HierarchyGameObjectEngineService.addChild(rootGameObject, pointLight);
 
     (rootGameObject, (editorState, engineState));
   });
@@ -245,10 +245,10 @@ let generateSceneWDB = () =>
 
     let engineState =
       engineState
-      |> GameObjectUtils.addChild(rootGameObject, cube1)
-      |> GameObjectUtils.addChild(rootGameObject, camera)
-      |> GameObjectUtils.addChild(rootGameObject, directionLight);
-    /* |> GameObjectUtils.addChild(rootGameObject, pointLight); */
+      |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1)
+      |> HierarchyGameObjectEngineService.addChild(rootGameObject, camera)
+      |> HierarchyGameObjectEngineService.addChild(rootGameObject, directionLight);
+    /* |> HierarchyGameObjectEngineService.addChild(rootGameObject, pointLight); */
 
     (rootGameObject, (editorState, engineState));
   });

@@ -23,7 +23,7 @@ let importAssetWDB =
   |> WonderBsMost.Most.tap(
        ((engineState, (imageUint8ArrayDataMap, _), gameObject)) => {
        let allGameObjects =
-         GameObjectEngineService.getAllGameObjects(gameObject, engineState);
+         HierarchyGameObjectEngineService.getAllGameObjects(gameObject, engineState);
 
        editorState
        /* |> WDBNodeMapAssetEditorService.setResult(
@@ -52,7 +52,7 @@ let importAssetWDB =
 
        let engineState =
          engineState
-         |> GameObjectUtils.setAllGameObjectsIsRenderIfHasMeshRenderer(
+         |> GameObjectEngineService.setAllGameObjectsIsRenderIfHasMeshRenderer(
               false,
               gameObject,
             )

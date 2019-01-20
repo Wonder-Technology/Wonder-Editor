@@ -55,7 +55,7 @@ let _ =
             "the added emptyGameObject should only has transform component", () => {
             let engineState = StateEngineService.unsafeGetState();
 
-            let newGameObject = GameObjectTool.getNewGameObjectUid();
+            let newGameObject = GameObjectTool.getNewGameObject();
 
             MainEditorLeftHeaderTool.addEmptyGameObject();
 
@@ -157,7 +157,7 @@ let _ =
             let engineState = StateEngineService.unsafeGetState();
             let activedCamera =
               MainEditorSceneTool.getCameraInDefaultScene(engineState);
-            MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
+            MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
               ~sourceGameObject=activedCamera,
               ~targetGameObject=MainEditorSceneTool.getFirstCube(engineState),
               (),

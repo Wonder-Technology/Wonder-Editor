@@ -20,10 +20,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           />
         </div>
         <div
-          className="draggable-container"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -42,10 +41,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -65,10 +63,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active"
+            className="draggable-container select-active no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -88,10 +85,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -128,10 +124,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           />
         </div>
         <div
-          className="draggable-container"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -150,10 +145,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -173,10 +167,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -213,10 +206,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           />
         </div>
         <div
-          className="draggable-container"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -235,10 +227,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -258,10 +249,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -298,10 +288,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           />
         </div>
         <div
-          className="draggable-container"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -320,10 +309,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -343,10 +331,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -366,10 +353,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active"
+            className="draggable-container select-active no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -389,10 +375,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -429,10 +414,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           />
         </div>
         <div
-          className="draggable-container"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -451,10 +435,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -474,10 +457,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active"
+            className="draggable-container select-active no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -497,10 +479,9 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}

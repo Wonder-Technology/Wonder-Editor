@@ -11,7 +11,7 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     let _simulateTwiceDragEvent = () => {
-      MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
+      MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
         ~sourceGameObject=
           MainEditorSceneTool.getSecondCube(
             StateEngineService.unsafeGetState(),
@@ -20,7 +20,7 @@ let _ =
         (),
       );
 
-      MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
+      MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
         ~sourceGameObject=
           MainEditorSceneTool.getFirstCube(
             StateEngineService.unsafeGetState(),

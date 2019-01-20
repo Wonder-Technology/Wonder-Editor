@@ -18,7 +18,7 @@ let getAllGameObjectMeshRendererComponent = (gameObject, engineState) => {
                resultArr;
 
            _iterateGameObjectArr(
-             engineState |> GameObjectUtils.getChildren(gameObject),
+             engineState |> HierarchyGameObjectEngineService.getChildren(gameObject),
              resultArr,
            );
          },

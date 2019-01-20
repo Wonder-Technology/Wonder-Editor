@@ -111,7 +111,7 @@ let _getPerspectiveCameraData =
 };
 
 let _getAllGameObjectData = engineState =>
-  GameObjectEngineService.getAllGameObjects(
+  HierarchyGameObjectEngineService.getAllGameObjects(
     SceneEngineService.getSceneGameObject(engineState),
     engineState,
   )

@@ -12,18 +12,18 @@ let handleDragEnter =
       checkNodeRelationFunc,
       _event,
     ) => {
-  let (isTrigger, _) =
-    DragEventBaseUtils.checkDragEnter(
+  let (isValid, _) =
+    DragEventBaseUtils.isValidForDragEnter(
       id,
       isWidgetFunc,
       checkNodeRelationFunc,
     );
 
-  isTrigger ? dragEnterAction : nothingAction;
+  isValid ? dragEnterAction : nothingAction;
 };
 
 let handleDragLeave = (id, dragLeaveAction, event) => {
-  DomHelper.stopPropagation(
+  EventHelper.stopPropagation(
     ReactEventType.convertReactMouseEventToJsEvent(event),
   );
 
@@ -35,7 +35,7 @@ let handleDragOver = (dropEffect, event) => {
 
   DragUtils.setDataTransferDropEffect(dropEffect, e);
 
-  DomHelper.preventDefault(e);
+  EventHelper.preventDefault(e);
 };
 
 let handleDrop =
@@ -49,10 +49,10 @@ let handleDrop =
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);
   let startId = DragUtils.getDragedId(e);
 
-  DomHelper.preventDefault(e);
+  EventHelper.preventDefault(e);
 
-  let (isTrigger, relationResult) =
-    DragEventBaseUtils.checkDragDrop(
+  let (isValid, relationResult) =
+    DragEventBaseUtils.isValidForDragDrop(
       id,
       startId,
       isWidgetFunc,
@@ -70,7 +70,7 @@ let handleDrop =
           )
      );
 
-  isTrigger ? dragDropActionFunc(id, startId) : dragLeaveAction;
+  isValid ? dragDropActionFunc(id, startId) : dragLeaveAction;
 };
 
 let handleDragEnd = (dragEndAction, _event) => {

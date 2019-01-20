@@ -87,7 +87,7 @@ let changeChildOrder =
     (
       sourceTransfrom,
       targetTransform,
-      parentTransform,
+      targetParentTransform,
       action: TransformType.changeChildOrder,
       state,
     )
@@ -100,7 +100,7 @@ let changeChildOrder =
             test(
               Log.buildAssertMessage(
                 ~expect={j|parent should be the parent of source and target|j},
-                ~actual={j||j},
+                ~actual={j|not|j},
               ),
               () =>
               switch (
@@ -109,7 +109,7 @@ let changeChildOrder =
               ) {
               | (Some(sourceParent), Some(targetParent)) =>
                 sourceParent == targetParent;
-                parentTransform == targetParent;
+                targetParentTransform == targetParent;
               | _ => assertFail()
               }
             )
@@ -126,13 +126,13 @@ let changeChildOrder =
         _changeChildOrder(
           sourceTransfrom,
           targetTransform,
-          getChildren(parentTransform, state),
+          getChildren(targetParentTransform, state),
           action,
         )
         /* TODO move to engine */
         |> Wonderjs.HierachyTransformService._setChildren(
              Wonderjs.RecordTransformMainService.getRecord(state),
-             parentTransform,
+             targetParentTransform,
            ),
       ),
   };

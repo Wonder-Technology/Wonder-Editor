@@ -21,7 +21,7 @@ module CustomEventHandler = {
                );
 
              let isNeedReInitSceneAllLightMaterials =
-               GameObjectEngineService.getAllGameObjects(
+               HierarchyGameObjectEngineService.getAllGameObjects(
                  removedGameObject,
                  engineState,
                )

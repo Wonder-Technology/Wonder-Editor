@@ -126,10 +126,9 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
           />
         </div>
         <div
-          className="draggable-container"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -153,10 +152,9 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
             />
           </div>
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}

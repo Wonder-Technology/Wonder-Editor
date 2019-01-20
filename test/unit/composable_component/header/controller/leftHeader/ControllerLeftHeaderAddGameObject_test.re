@@ -30,7 +30,7 @@ let _ =
         MainEditorLeftHeaderTool.addCube();
 
         StateEngineService.unsafeGetState()
-        |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
         |> Js.Array.length
         |> expect == 5;
       });
@@ -39,13 +39,13 @@ let _ =
         MainEditorLeftHeaderTool.addCube();
 
         StateEngineService.unsafeGetState()
-        |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
         |> Js.Array.length
         |> expect == 6;
       });
       test(
         "the added cube's geometry's name should be Wonder-Default-Cube", () => {
-        let addedCubeUid = GameObjectTool.getNewGameObjectUid();
+        let addedCubeUid = GameObjectTool.getNewGameObject();
         let engineState = StateEngineService.unsafeGetState();
 
         MainEditorLeftHeaderTool.addCube();
@@ -73,7 +73,7 @@ let _ =
         MainEditorLeftHeaderTool.addEmptyGameObject();
 
         StateEngineService.unsafeGetState()
-        |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
         |> Js.Array.length
         |> expect == 5;
       });
@@ -92,7 +92,7 @@ let _ =
         MainEditorLeftHeaderTool.addSphere();
 
         StateEngineService.unsafeGetState()
-        |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
         |> Js.Array.length
         |> expect == 5;
       });
@@ -101,14 +101,14 @@ let _ =
         MainEditorLeftHeaderTool.addSphere();
 
         StateEngineService.unsafeGetState()
-        |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
         |> Js.Array.length
         |> expect == 6;
       });
       test(
         "the added sphere's geometry's name should be Wonder-Default-Sphere",
         () => {
-        let addedSphereUid = GameObjectTool.getNewGameObjectUid();
+        let addedSphereUid = GameObjectTool.getNewGameObject();
         let engineState = StateEngineService.unsafeGetState();
 
         MainEditorLeftHeaderTool.addSphere();

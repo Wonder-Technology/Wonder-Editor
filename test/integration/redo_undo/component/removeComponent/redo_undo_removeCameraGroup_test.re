@@ -25,7 +25,7 @@ let _ =
       )
       |> StateLogicService.getAndSetEditorState;
 
-      let newGameObject = GameObjectTool.getNewGameObjectUid();
+      let newGameObject = GameObjectTool.getNewGameObject();
 
       MainEditorLeftHeaderTool.addCube();
 

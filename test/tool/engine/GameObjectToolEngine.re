@@ -10,7 +10,7 @@ let createGameObject = state => {
 };
 
 let getAllArcballCameraControllers = (gameObject, engineState) =>
-  GameObjectEngineService.getAllGameObjects(gameObject, engineState)
+  HierarchyGameObjectEngineService.getAllGameObjects(gameObject, engineState)
   |> Js.Array.filter(gameObject =>
        GameObjectComponentEngineService.hasArcballCameraControllerComponent(
          gameObject,
@@ -25,7 +25,7 @@ let getAllArcballCameraControllers = (gameObject, engineState) =>
      );
 
 let getAllPointLightGameObjects = (gameObject, engineState) =>
-  GameObjectEngineService.getAllGameObjects(gameObject, engineState)
+  HierarchyGameObjectEngineService.getAllGameObjects(gameObject, engineState)
   |> Js.Array.filter(gameObject =>
        GameObjectComponentEngineService.hasPointLightComponent(
          gameObject,
@@ -40,7 +40,7 @@ let getAllPointLightGameObjects = (gameObject, engineState) =>
    ); */
 
 let disposeAllGameObjects = (gameObject, engineState) =>
-  GameObjectEngineService.getAllGameObjects(gameObject, engineState)
+  HierarchyGameObjectEngineService.getAllGameObjects(gameObject, engineState)
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. engineState, gameObject) =>
          engineState |> GameObjectEngineService.disposeGameObject(gameObject),

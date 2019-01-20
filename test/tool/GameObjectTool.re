@@ -1,7 +1,7 @@
-let addChild = GameObjectUtils.addChild;
+let addChild = HierarchyGameObjectEngineService.addChild;
 
 let getChildren = (gameObject, engineState) =>
-  GameObjectUtils.getChildren(gameObject, engineState);
+  HierarchyGameObjectEngineService.getChildren(gameObject, engineState);
 
 let getChild = (gameObject, index, engineState) =>
   Array.unsafe_get(getChildren(gameObject, engineState), index);
@@ -123,6 +123,6 @@ let setCurrentSceneTreeNode = gameObject =>
 
 let isAlive = Wonderjs.AliveGameObjectMainService.isAlive;
 
-let getNewGameObjectUid =
+let getNewGameObject =
     (~engineState=StateEngineService.unsafeGetState(), ()) =>
   engineState.gameObjectRecord.uid;

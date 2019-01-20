@@ -63,7 +63,7 @@ let _ =
         let gl = FakeGlToolEngine.getEngineStateGl();
         let glShaderSource = gl##shaderSource;
 
-        let newGameObject = GameObjectTool.getNewGameObjectUid();
+        let newGameObject = GameObjectTool.getNewGameObject();
         MainEditorLeftHeaderTool.addCube();
 
         GameObjectTool.setCurrentSceneTreeNode(newGameObject);

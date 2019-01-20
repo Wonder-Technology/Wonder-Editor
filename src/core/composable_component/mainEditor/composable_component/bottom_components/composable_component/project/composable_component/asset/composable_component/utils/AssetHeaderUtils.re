@@ -243,7 +243,7 @@ let handleFileByTypeAsync = (fileResult: nodeResultType, createJsZipFunc) => {
 
 let fileLoad = ((store, dispatchFunc), createJsZipFunc, event) => {
   let e = ReactEventType.convertReactFormEventToJsEvent(event);
-  DomHelper.preventDefault(e);
+  EventHelper.preventDefault(e);
 
   let target = e##target;
 

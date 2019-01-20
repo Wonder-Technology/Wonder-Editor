@@ -33,11 +33,14 @@ let addSceneChildren = SceneAPI.addSceneChildren;
 
 let setSceneGameObject = SceneAPI.setSceneGameObject;
 
+let isSceneGameObject = (gameObject, engineState) =>
+  gameObject === getSceneGameObject(engineState);
+
 let disposeSceneAllChildrenKeepOrderRemoveGeometryRemoveMaterial = engineState => {
   let scene = engineState |> getSceneGameObject;
 
   engineState
-  |> GameObjectEngineService.getAllGameObjects(scene)
+  |> HierarchyGameObjectEngineService.getAllGameObjects(scene)
   |> Js.Array.sliceFrom(1)
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. engineState, gameObject) =>
@@ -51,7 +54,7 @@ let disposeSceneAllChildrenKeepOrderRemoveGeometryRemoveMaterial = engineState =
 
 /* let getSceneAllBasicCameraViews = engineState =>
    engineState
-   |> GameObjectEngineService.getAllGameObjects(
+   |> HierarchyGameObjectEngineService.getAllGameObjects(
         getSceneGameObject(engineState),
       )
    |> Js.Array.filter(gameObject =>
@@ -75,7 +78,7 @@ let getSceneActiveBasicCameraView = engineState =>
 
 /* let getSceneAllBasicMaterials = engineState =>
    GameObjectEngineService.getAllBasicMaterials(
-     GameObjectEngineService.getAllGameObjects(
+     HierarchyGameObjectEngineService.getAllGameObjects(
        getSceneGameObject(engineState),
        engineState,
      ),
@@ -84,7 +87,7 @@ let getSceneActiveBasicCameraView = engineState =>
 
 let getSceneAllLightMaterials = engineState =>
   GameObjectEngineService.getAllLightMaterials(
-    GameObjectEngineService.getAllGameObjects(
+    HierarchyGameObjectEngineService.getAllGameObjects(
       getSceneGameObject(engineState),
       engineState,
     ),

@@ -1,16 +1,21 @@
 let handleSelfLogic =
-    ((store, dispatchFunc), (), (targetGameObjectUid, wdbGameObjectUid)) => {
+    (
+      (store, dispatchFunc),
+      (),
+      (targetGameObject, wdbGameObject, dragPosition),
+    ) => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
   let editorState =
     editorState
-    |> SceneTreeEditorService.setIsShowChildren(targetGameObjectUid, true);
+    |> SceneTreeEditorService.setIsShowChildren(targetGameObject, true);
 
   let (isSuccess, (editorState, engineState)) =
     DragWDBUtils.dragWDB(
-      wdbGameObjectUid,
-      targetGameObjectUid,
+      wdbGameObject,
+      targetGameObject,
+      dragPosition,
       (editorState, engineState),
     );
 

@@ -18,12 +18,12 @@ module Drag = {
          event,
        ); */
 
-    let wdbGameObjectUid =
+    let wdbGameObject =
       StateEditorService.getState()
       |> OperateTreeAssetEditorService.unsafeFindNodeById(wdbNodeId)
       |> WDBNodeAssetService.getWDBGameObject;
 
-    MainEditor.Method.dragWDB((store, dispatchFunc), (), wdbGameObjectUid);
+    MainEditor.Method.dragWDB((store, dispatchFunc), (), wdbGameObject);
     /* DragEventUtils.handleDragEnd(event); */
   };
 };

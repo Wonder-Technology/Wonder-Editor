@@ -45,20 +45,20 @@ module Method = {
 
   let handleDragLeave = (isWidgetFunc, isTypeValidFunc, event) => {
     ReactEventType.convertReactMouseEventToJsEvent(event)
-    |> DomHelper.stopPropagation;
+    |> EventHelper.stopPropagation;
 
     _isTriggerAction(isWidgetFunc, isTypeValidFunc) ? DragLeave : Nothing;
   };
 
   let handleDragOver = event =>
     ReactEventType.convertReactMouseEventToJsEvent(event)
-    |> DomHelper.preventDefault;
+    |> EventHelper.preventDefault;
 
   let handleSetTextureToEngine = (isWidgetFunc, isTypeValidFunc, event) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     let startNodeId = e |> DragUtils.getDragedId;
 
-    DomHelper.preventDefault(e);
+    EventHelper.preventDefault(e);
 
     _isTriggerAction(isWidgetFunc, isTypeValidFunc) ?
       DragDrop(startNodeId) : DragLeave;

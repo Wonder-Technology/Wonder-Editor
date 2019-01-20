@@ -9,9 +9,9 @@ let _buildTreeNode = (gameObject, engineState) => {
 
 let _buildSceneGraphData = (gameObject, engineState) => {
   let rec _buildSceneGraphDataRec = (gameObject, treeNode, engineState) =>
-    GameObjectUtils.hasChildren(gameObject, engineState) ?
+    HierarchyGameObjectEngineService.hasChildren(gameObject, engineState) ?
       engineState
-      |> GameObjectUtils.getChildren(gameObject)
+      |> HierarchyGameObjectEngineService.getChildren(gameObject)
       |> WonderCommonlib.ArrayService.reduceOneParam(
            (. {children} as treeNode, child) => {
              ...treeNode,

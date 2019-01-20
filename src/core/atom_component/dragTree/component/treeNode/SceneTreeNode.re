@@ -1,41 +1,55 @@
+open SceneTreeNodeType;
+
+type state = {
+  dragGapClass: string,
+  style: ReactDOMRe.Style.t,
+  dragPosition: sceneTreeDragType,
+};
+
 type action =
-  | TogggleChildren(int)
   | Nothing
-  | DragEnter
+  | TogggleChildren(int)
   | DragLeave
   | DragEnd
   | DragStart
-  | DragGameObject(int, int)
-  | DragWDB(int, int);
-
-type state = {style: ReactDOMRe.Style.t};
+  | DragOver(sceneTreeDragType)
+  | DragGameObject(int, int, sceneTreeDragType)
+  | DragWDB(int, int, sceneTreeDragType);
 
 module Method = {
   let buildDragEndState = state => {
     ...state,
-    style:
-      ReactUtils.addStyleProp("opacity", "1", state.style)
-      |> ReactUtils.addStyleProp("border", TreeNodeUtils.getNoBorderCss()),
+    dragGapClass: "no-drag",
+    dragPosition: NoDrag,
+    style: ReactUtils.addStyleProp("opacity", "1", state.style),
   };
 
-  let handleDragStart = (id, widget, dragImg, effectAllowd, event) => {
-    DragEventBaseUtils.dragStart(id, widget, dragImg, effectAllowd, event);
+  let handleDragStart = (gameObject, widget, dragImg, effectAllowd, event) => {
+    DragEventBaseUtils.dragStart(
+      gameObject,
+      widget,
+      dragImg,
+      effectAllowd,
+      event,
+    );
     DragStart;
   };
 
-  let handleDragEnter =
-      (id, (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc), event) => {
-    let (isTrigger, _) =
-      DragEventBaseUtils.checkDragEnter(
-        id,
-        isWidgetFunc,
-        checkNodeRelationFunc,
-      );
+  let _calcDragPosition = (event, domElement) => {
+    let domClientRect = DomHelper.getDomClientRect(domElement);
+    let domOffsetTop = domClientRect##top;
+    let domOffsetHeight = domClientRect##height;
+    let gapHeight = TreeNodeUtils.getGapHeight();
 
-    isTrigger || isAssetWDBFileFunc() ? DragEnter : Nothing;
+    switch (event |> ReactEventRe.Mouse.pageY) {
+    | pageY when pageY > domOffsetHeight + domOffsetTop - gapHeight =>
+      DragAfterTarget
+    | pageY when pageY < domOffsetTop + gapHeight => DragBeforeTarget
+    | pageY => DragIntoTarget
+    };
   };
 
-  let handleDragLeave = (id, event) => {
+  let handleDragLeave = (gameObject, event) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
 
     DragLeave;
@@ -48,16 +62,42 @@ module Method = {
     DragEnd;
   };
 
+  let handleDragOver =
+      (
+        gameObject,
+        (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc),
+        event,
+      ) => {
+    let e = ReactEventType.convertReactMouseEventToJsEvent(event);
+    EventHelper.preventDefault(e);
+    let _isValidForDragOver = DragEventBaseUtils.isValidForDragEnter;
+
+    let (isValid, _) =
+      _isValidForDragOver(gameObject, isWidgetFunc, checkNodeRelationFunc);
+
+    isValid || isAssetWDBFileFunc() ?
+      DragOver(
+        ReactDOMRe.domElementToObj(ReactEventRe.Mouse.target(event))
+        |> _calcDragPosition(event),
+      ) :
+      Nothing;
+  };
+
   let handleDrop =
-      (id, (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc), event) => {
+      (
+        gameObject,
+        (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc),
+        dragPosition,
+        event,
+      ) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     let startId = DragUtils.getDragedId(e);
 
-    DomHelper.preventDefault(e);
+    EventHelper.preventDefault(e);
 
-    let (isTrigger, relationResult) =
-      DragEventBaseUtils.checkDragDrop(
-        id,
+    let (isValid, relationResult) =
+      DragEventBaseUtils.isValidForDragDrop(
+        gameObject,
         startId,
         isWidgetFunc,
         checkNodeRelationFunc,
@@ -71,16 +111,16 @@ module Method = {
             )
        );
 
-    isTrigger ?
-      DragGameObject(id, startId) :
+    isValid ?
+      DragGameObject(gameObject, startId, dragPosition) :
       isAssetWDBFileFunc() ?
         {
-          let wdbGameObjectUid =
+          let wdbGameObject =
             StateEditorService.getState()
             |> OperateTreeAssetEditorService.unsafeFindNodeById(startId)
             |> WDBNodeAssetService.getWDBGameObject;
 
-          DragWDB(id, wdbGameObjectUid);
+          DragWDB(gameObject, wdbGameObject, dragPosition);
         } :
         DragLeave;
   };
@@ -90,7 +130,15 @@ module Method = {
   let _renderDragableText =
       (
         (state, send),
-        (id, widget, dragImg, name, isShowChildren, isSelected, isActive),
+        (
+          gameObject,
+          widget,
+          dragImg,
+          name,
+          isShowChildren,
+          isSelected,
+          isActive,
+        ),
         (
           onSelectFunc,
           isWidgetFunc,
@@ -100,36 +148,40 @@ module Method = {
       ) =>
     <div
       className=(
-        "draggable-container"
-        ++ (
-          isSelected ? isActive ? " select-active" : " select-not-active" : ""
-        )
+        ClassNameService.buildMultipleClassName([|
+          "draggable-container",
+          isSelected ? isActive ? "select-active" : "select-not-active" : "",
+          state.dragGapClass,
+        |])
       )
       style=state.style
-      draggable=true
-      onMouseDown=(_event => onSelectFunc(id))
+      draggable=(
+        SceneEngineService.isSceneGameObject(gameObject)
+        |> StateLogicService.getEngineStateToGetData
+      )
+      onMouseDown=(_event => onSelectFunc(gameObject))
       onDragStart=(
-        _e => send(handleDragStart(id, widget, dragImg, "move", _e))
+        e => send(handleDragStart(gameObject, widget, dragImg, "move", e))
       )
       onDragEnd=(_e => send(handleDragEnd(_e)))
-      onDragEnter=(
-        _e =>
+      onDragLeave=(_e => send(handleDragLeave(gameObject, _e)))
+      onDragOver=(
+        e =>
           send(
-            handleDragEnter(
-              id,
+            handleDragOver(
+              gameObject,
               (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc),
-              _e,
+              e,
             ),
           )
       )
-      onDragLeave=(_e => send(handleDragLeave(id, _e)))
-      onDragOver=(e => DragEventUtils.handleDragOver("move", e))
       onDrop=(
         _e =>
           send(
             handleDrop(
-              id,
+              gameObject,
               (isWidgetFunc, checkNodeRelationFunc, isAssetWDBFileFunc),
+              state.dragPosition,
               _e,
             ),
           )
@@ -141,7 +193,7 @@ module Method = {
       (
         (state, send),
         (
-          id,
+          gameObject,
           icon,
           widget,
           dragImg,
@@ -162,10 +214,10 @@ module Method = {
       (
         isHasChildren ?
           TreeNodeUtils.renderChildren(
-            id,
+            gameObject,
             isShowChildren,
             send,
-            TogggleChildren(id),
+            TogggleChildren(gameObject),
           ) :
           <div className="item-triangle" />
       )
@@ -178,7 +230,15 @@ module Method = {
       (
         _renderDragableText(
           (state, send),
-          (id, widget, dragImg, name, isShowChildren, isSelected, isActive),
+          (
+            gameObject,
+            widget,
+            dragImg,
+            name,
+            isShowChildren,
+            isSelected,
+            isActive,
+          ),
           (
             onSelectFunc,
             isWidgetFunc,
@@ -197,70 +257,65 @@ let reducer =
       isShowChildren,
       (dragGameObject, dragWDB, handleToggleShowTreeChildren),
       action,
+      state,
     ) =>
   switch (action) {
-  | TogggleChildren(targetUid) => (
-      state =>
-        ReasonReactUtils.sideEffects(() =>
-          handleToggleShowTreeChildren(targetUid, ! isShowChildren)
-        )
+  | TogggleChildren(targetUid) =>
+    ReasonReactUtils.sideEffects(() =>
+      handleToggleShowTreeChildren(targetUid, ! isShowChildren)
     )
 
-  | DragStart => (
-      state =>
-        ReasonReact.Update({
-          ...state,
-          style: ReactUtils.addStyleProp("opacity", "0.2", state.style),
-        })
+  | DragStart =>
+    ReasonReact.Update({
+      ...state,
+      style: ReactUtils.addStyleProp("opacity", "0.2", state.style),
+    })
+
+  | DragOver(dragPosition) =>
+    switch (dragPosition) {
+    | DragBeforeTarget =>
+      ReasonReact.Update({
+        ...state,
+        dragGapClass: "drag-gap-top",
+        dragPosition,
+      })
+    | DragIntoTarget =>
+      ReasonReact.Update({
+        ...state,
+        dragGapClass: "drag-gap-center",
+        dragPosition,
+      })
+    | DragAfterTarget =>
+      ReasonReact.Update({
+        ...state,
+        dragGapClass: "drag-gap-bottom",
+        dragPosition,
+      })
+    }
+
+  | DragLeave => ReasonReact.Update({...state, dragGapClass: "no-drag"})
+
+  | DragEnd => ReasonReact.Update(Method.buildDragEndState(state))
+
+  | DragGameObject(targetUid, draggedUid, dragPosition) =>
+    ReasonReactUtils.updateWithSideEffects(
+      Method.buildDragEndState(state), _state =>
+      dragGameObject((targetUid, draggedUid, dragPosition))
     )
 
-  | DragEnter => (
-      state =>
-        ReasonReact.Update({
-          ...state,
-          style:
-            ReactUtils.addStyleProp("border", "3px solid coral", state.style),
-        })
+  | DragWDB(targetUid, wdbGameObject, dragPosition) =>
+    ReasonReactUtils.updateWithSideEffects(
+      Method.buildDragEndState(state), _state =>
+      dragWDB((targetUid, wdbGameObject, dragPosition))
     )
 
-  | DragLeave => (
-      state =>
-        ReasonReact.Update({
-          ...state,
-          style:
-            ReactUtils.addStyleProp(
-              "border",
-              TreeNodeUtils.getNoBorderCss(),
-              state.style,
-            ),
-        })
-    )
-
-  | DragEnd => (state => ReasonReact.Update(Method.buildDragEndState(state)))
-
-  | DragGameObject(targetUid, draggedUid) => (
-      state =>
-        ReasonReactUtils.updateWithSideEffects(
-          Method.buildDragEndState(state), _state =>
-          dragGameObject((targetUid, draggedUid))
-        )
-    )
-
-  | DragWDB(targetUid, wdbGameObjectUid) => (
-      state =>
-        ReasonReactUtils.updateWithSideEffects(
-          Method.buildDragEndState(state), _state =>
-          dragWDB((targetUid, wdbGameObjectUid))
-        )
-    )
-
-  | Nothing => (_state => ReasonReact.NoUpdate)
+  | Nothing => ReasonReact.NoUpdate
   };
 
 let render =
     (
       (
-        id,
+        gameObject,
         name,
         widget,
         dragImg,
@@ -280,7 +335,7 @@ let render =
     Method._renderContent(
       (state, send),
       (
-        id,
+        gameObject,
         icon,
         widget,
         dragImg,
@@ -296,7 +351,7 @@ let render =
 
 let make =
     (
-      ~id,
+      ~gameObject,
       ~name,
       ~isSelected,
       ~isActive,
@@ -316,7 +371,11 @@ let make =
       _children,
     ) => {
   ...component,
-  initialState: () => {style: ReactDOMRe.Style.make()},
+  initialState: () => {
+    style: ReactDOMRe.Style.make(),
+    dragGapClass: "no-drag",
+    dragPosition: NoDrag,
+  },
   reducer:
     reducer(
       isShowChildren,
@@ -325,7 +384,7 @@ let make =
   render: (({state}: ReasonReact.self('a, 'b, 'c)) as self) =>
     render(
       (
-        id,
+        gameObject,
         name,
         widget,
         dragImg,

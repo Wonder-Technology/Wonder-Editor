@@ -57,7 +57,7 @@ let setGameObjectArrComponentTypeMap =
              );
 
            _iterateGameObject(
-             engineState |> GameObjectUtils.getChildren(gameObject),
+             engineState |> HierarchyGameObjectEngineService.getChildren(gameObject),
              engineState,
              editorState,
            );

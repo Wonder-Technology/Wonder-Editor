@@ -20,10 +20,9 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
           />
         </div>
         <div
-          className="draggable-container"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -42,10 +41,9 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -70,10 +68,9 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
             />
           </div>
           <div
-            className="draggable-container select-active"
+            className="draggable-container select-active no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -97,10 +94,9 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
               />
             </div>
             <div
-              className="draggable-container"
+              className="draggable-container  no-drag"
               draggable={true}
               onDragEnd={[Function]}
-              onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
@@ -121,10 +117,9 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -144,10 +139,9 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -184,10 +178,9 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
           />
         </div>
         <div
-          className="draggable-container"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -206,10 +199,9 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -229,10 +221,9 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -252,10 +243,9 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -275,10 +265,9 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -303,10 +292,9 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
             />
           </div>
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}

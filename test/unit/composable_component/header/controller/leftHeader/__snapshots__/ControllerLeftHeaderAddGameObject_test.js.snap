@@ -20,10 +20,9 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
           />
         </div>
         <div
-          className="draggable-container"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -42,10 +41,9 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -65,10 +63,9 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active"
+            className="draggable-container select-active no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -88,10 +85,9 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -111,10 +107,9 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -134,10 +129,9 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -174,10 +168,9 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
           />
         </div>
         <div
-          className="draggable-container"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -196,10 +189,9 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -219,10 +211,9 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active"
+            className="draggable-container select-active no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -242,10 +233,9 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -265,10 +255,9 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -288,10 +277,9 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -328,10 +316,9 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
           />
         </div>
         <div
-          className="draggable-container"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -350,10 +337,9 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -373,10 +359,9 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active"
+            className="draggable-container select-active no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -396,10 +381,9 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -419,10 +403,9 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -442,10 +425,9 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
             className="item-triangle"
           />
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}

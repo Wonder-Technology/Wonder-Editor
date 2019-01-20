@@ -2,7 +2,7 @@ open SceneEngineService;
 
 let getSceneAllBasicCameraViews = engineState =>
   engineState
-  |> GameObjectEngineService.getAllGameObjects(
+  |> HierarchyGameObjectEngineService.getAllGameObjects(
        getSceneGameObject(engineState),
      )
   |> Js.Array.filter(gameObject =>
@@ -20,7 +20,7 @@ let getSceneAllBasicCameraViews = engineState =>
 
 let findGameObjectByName = (name, engineState) =>
   engineState
-  |> GameObjectEngineService.getAllGameObjects(
+  |> HierarchyGameObjectEngineService.getAllGameObjects(
        getSceneGameObject(engineState),
      )
   |> Js.Array.filter(gameObject =>
