@@ -206,12 +206,25 @@ let _findPickedOne =
   |> _getTopOne(cameraGameObject, engineState);
 };
 
-let _triggerPickSuccessEvent = (gameObject, (editorState, engineState)) => {
+let _triggerPickSuccessEvent = (gameObject, engineState) => {
   let (engineState, _) =
     ManageEventEngineService.triggerCustomGlobalEvent(
       CreateCustomEventEngineService.create(
         EventEditorService.getPickSuccessEventName(),
         Some(gameObject),
+      ),
+      engineState,
+    );
+
+  engineState;
+};
+
+let _triggerPickFailEvent = engineState => {
+  let (engineState, _) =
+    ManageEventEngineService.triggerCustomGlobalEvent(
+      CreateCustomEventEngineService.create(
+        EventEditorService.getPickFailEventName(),
+        None,
       ),
       engineState,
     );
@@ -228,13 +241,12 @@ let _handlePicking = (event: EventType.customEvent, engineState) => {
     _computeSphereShapeData(allGameObjectData, (editorState, engineState));
 
   let engineState =
-    (editorState, engineState)
-    |> _findPickedOne(event, allGameObjectData)
-    |> OptionService.andThenWithDefault(
-         gameObject =>
-           _triggerPickSuccessEvent(gameObject, (editorState, engineState)),
-         engineState,
-       );
+    switch (
+      (editorState, engineState) |> _findPickedOne(event, allGameObjectData)
+    ) {
+    | None => _triggerPickFailEvent(engineState)
+    | Some(gameObject) => _triggerPickSuccessEvent(gameObject, engineState)
+    };
 
   (engineState, event);
 };

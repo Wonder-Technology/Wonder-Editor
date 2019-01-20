@@ -452,6 +452,66 @@ let _ =
         });
       });
 
+      describe("if not find", () =>
+        describe("trigger pick fail event", () => {
+          let _prepare = () =>
+            InitPickingJobTool.prepareOneGameObject(
+              ~sandbox,
+              ~viewWidth=500,
+              ~viewHeight=200,
+              ~offsetLeft=10,
+              ~offsetTop=20,
+              ~cameraPos=(0., 0., 20.),
+              ~gameObjectPos=(0., 0., 0.),
+              ~gameObjectEulerAngles=(0., 0., 0.),
+              ~createGameObjectFunc=InitPickingJobTool.createCube,
+              (),
+            );
+
+          let _triggerPicking = () =>
+            InitPickingJobTool.triggerPickingAndRestore(
+              ~sandbox,
+              ~pageX=400 + 10,
+              ~pageY=100 + 20,
+              (),
+            );
+
+          test("clear curent scene tree node", () => {
+            let _ = _prepare();
+            let gameObject = 500;
+            GameObjectTool.setCurrentSceneTreeNode(gameObject);
+
+            _triggerPicking();
+
+            InitPickingJobTool.notPick();
+          });
+          test("clear curent asset node id", () => {
+            let _ = _prepare();
+            let nodeId = 500;
+            MainEditorAssetNodeTool.setCurrentNodeId(nodeId);
+
+            _triggerPicking();
+
+            MainEditorAssetNodeTool.getCurrentNodeId
+            |> StateLogicService.getEditorState
+            |> expect == None;
+          });
+          test("clear curent select source", () => {
+            let _ = _prepare();
+            CurrentSelectSourceEditorService.setCurrentSelectSource(
+              WidgetType.Asset,
+            )
+            |> StateLogicService.getAndSetEditorState;
+
+            _triggerPicking();
+
+            CurrentSelectSourceEditorService.getCurrentSelectSource
+            |> StateLogicService.getEditorState
+            |> expect == None;
+          });
+        })
+      );
+
       describe("isIntersectTriangle", () =>
         describe("test cull", () => {
           let _isIntersectTriangle =

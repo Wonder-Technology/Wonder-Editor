@@ -3,11 +3,11 @@ open UpdateStore;
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
-  type dataTuple = Wonderjs.GameObjectPrimitiveType.gameObject;
+  type dataTuple = option(Wonderjs.GameObjectPrimitiveType.gameObject);
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), (), uid) =>
-    SceneTreeSelectCurrentNodeUtils.select(dispatchFunc, uid);
+  let handleSelfLogic = ((store, dispatchFunc), (), gameObjectOpt) =>
+    SceneTreeSelectCurrentNodeUtils.select(dispatchFunc, gameObjectOpt);
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);

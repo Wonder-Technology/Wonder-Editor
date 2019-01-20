@@ -10,22 +10,39 @@ let rec _setAllParentsShowChildren = (gameObject, engineState, editorState) =>
     )
   };
 
-let select = (dispatchFunc, uid) => {
-  StateEditorService.getState()
+let _clearCurrentData = editorState =>
+  editorState
   |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
-  |> StateEditorService.setState
-  |> ignore;
+  |> CurrentSelectSourceEditorService.clearCurrentSelectSource
+  |> SceneTreeEditorService.clearCurrentSceneTreeNode;
 
-  StateEditorService.getState()
-  |> SceneTreeEditorService.setCurrentSceneTreeNode(uid)
-  |> CurrentSelectSourceEditorService.setCurrentSelectSource(
-       SceneTreeWidgetService.getWidget(),
-     )
-  |> _setAllParentsShowChildren(uid, StateEngineService.unsafeGetState())
-  |> StateEditorService.setState
-  |> ignore;
+let select = (dispatchFunc, gameObjectOpt) => {
+  switch (gameObjectOpt) {
+  | None =>
+    StateEditorService.getState()
+    |> _clearCurrentData
+    |> StateEditorService.setState
+    |> ignore
+  | Some(gameObject) =>
+    StateEditorService.getState()
+    |> _clearCurrentData
+    |> StateEditorService.setState
+    |> ignore;
 
-  StateLogicService.getAndRefreshEngineStateWhenStop();
+    StateEditorService.getState()
+    |> SceneTreeEditorService.setCurrentSceneTreeNode(gameObject)
+    |> CurrentSelectSourceEditorService.setCurrentSelectSource(
+         SceneTreeWidgetService.getWidget(),
+       )
+    |> _setAllParentsShowChildren(
+         gameObject,
+         StateEngineService.unsafeGetState(),
+       )
+    |> StateEditorService.setState
+    |> ignore;
+
+    StateLogicService.getAndRefreshEngineStateWhenStop();
+  };
 
   dispatchFunc(
     AppStore.UpdateAction(Update([|SceneTree, Inspector, Project|])),

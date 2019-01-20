@@ -220,6 +220,9 @@ let prepareState = (sandbox, editorState, engineState) => {
   MainEditor.Method.bindPickSuccessEvent(
     Sinon.createEmptyStubWithJsObjSandbox(sandbox),
   );
+  MainEditor.Method.bindPickFailEvent(
+    Sinon.createEmptyStubWithJsObjSandbox(sandbox),
+  );
 };
 
 let triggerPickingAndNotRestore = (sandbox, pageX, pageY, eventButton) => {

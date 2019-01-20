@@ -11,7 +11,7 @@ module Method = {
       SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
         (store, dispatchFunc),
         (),
-        uid,
+        Some(uid),
       )
     | Some(gameObject) =>
       gameObject === uid ?
@@ -19,7 +19,7 @@ module Method = {
         SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
           (store, dispatchFunc),
           (),
-          uid,
+          Some(uid),
         )
     };
   };

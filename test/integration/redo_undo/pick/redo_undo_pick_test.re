@@ -10,7 +10,7 @@ let _ =
   describe("redo_undo: pick", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let _prepareTwoGameObjects = () =>
+    let _prepareTwoGameObjects = sandbox =>
       InitPickingJobTool.prepareTwoGameObjects(
         ~sandbox,
         ~viewWidth=510,
@@ -31,44 +31,103 @@ let _ =
         (),
       );
 
+    let _undoOneUiState = () =>
+      UIHistoryService.storeUIState(
+        100,
+        Obj.magic(-1),
+        AllStateData.getHistoryState(),
+      )
+      |> AllStateData.setHistoryState;
+
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test undo operate", () =>
       describe("test undo one step", () => {
-        test("step which from one to one(not undo)", () => {
-          let (gameObject1, gameObject2) = _prepareTwoGameObjects();
+        describe({j|test undo "pick one" operation|j}, () => {
+          test("if not undo any ui state before, undo not work", () => {
+            let (gameObject1, gameObject2) = _prepareTwoGameObjects(sandbox);
 
-          InitPickingJobTool.triggerPickingAndRestore(
-            ~sandbox,
-            ~pageX=251 + 10,
-            ~pageY=91 + 20,
-            (),
-          );
+            InitPickingJobTool.triggerPickingAndRestore(
+              ~sandbox,
+              ~pageX=251 + 10,
+              ~pageY=91 + 20,
+              (),
+            );
 
-          RedoUndoTool.undoHistoryState();
+            RedoUndoTool.undoHistoryState();
 
-          InitPickingJobTool.pickOne(gameObject1);
+            InitPickingJobTool.pickOne(gameObject1);
+          });
+
+          describe("else, undo work", () => {
+            beforeEach(() => _undoOneUiState());
+
+            test("step which from second to first", () => {
+              let (gameObject1, gameObject2) =
+                _prepareTwoGameObjects(sandbox);
+
+              InitPickingJobTool.triggerPickingAndNotRestore(
+                sandbox,
+                251 + 10,
+                91 + 20,
+                1,
+              );
+              InitPickingJobTool.triggerPickingAndRestore(
+                ~sandbox,
+                ~pageX=257 + 10,
+                ~pageY=100 + 20,
+                (),
+              );
+
+              RedoUndoTool.undoHistoryState();
+
+              InitPickingJobTool.pickOne(gameObject1);
+            });
+          });
         });
-        test("step which from second to first", () => {
-          let (gameObject1, gameObject2) = _prepareTwoGameObjects();
 
-          InitPickingJobTool.triggerPickingAndRestore(
-            ~sandbox,
-            ~pageX=251 + 10,
-            ~pageY=91 + 20,
-            (),
-          );
-          InitPickingJobTool.triggerPickingAndRestore(
-            ~sandbox,
-            ~pageX=257 + 10,
-            ~pageY=100 + 20,
-            (),
-          );
+        describe({j|test undo "not pick" operation|j}, () => {
+          test("if not undo any ui state before, undo not work", () => {
+            let (gameObject1, gameObject2) = _prepareTwoGameObjects(sandbox);
 
-          RedoUndoTool.undoHistoryState();
+            InitPickingJobTool.triggerPickingAndRestore(
+              ~sandbox,
+              ~pageX=451 + 10,
+              ~pageY=91 + 20,
+              (),
+            );
 
-          InitPickingJobTool.pickOne(gameObject1);
+            RedoUndoTool.undoHistoryState();
+
+            InitPickingJobTool.notPick();
+          });
+
+          describe("else, undo work", () => {
+            beforeEach(() => _undoOneUiState());
+
+            test("step which from second to first", () => {
+              let (gameObject1, gameObject2) =
+                _prepareTwoGameObjects(sandbox);
+
+              InitPickingJobTool.triggerPickingAndNotRestore(
+                sandbox,
+                251 + 10,
+                91 + 20,
+                1,
+              );
+              InitPickingJobTool.triggerPickingAndRestore(
+                ~sandbox,
+                ~pageX=451 + 10,
+                ~pageY=91 + 20,
+                (),
+              );
+
+              RedoUndoTool.undoHistoryState();
+
+              InitPickingJobTool.pickOne(gameObject1);
+            });
+          });
         });
       })
     );
@@ -78,7 +137,7 @@ let _ =
         test(
           "undo step which from second to first, redo step which from first to second",
           () => {
-          let (gameObject1, gameObject2) = _prepareTwoGameObjects();
+          let (gameObject1, gameObject2) = _prepareTwoGameObjects(sandbox);
 
           InitPickingJobTool.triggerPickingAndNotRestore(
             sandbox,

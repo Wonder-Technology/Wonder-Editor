@@ -13,6 +13,9 @@ let unsafeGetCurrentNode = editorState =>
   OperateTreeAssetEditorService.getCurrentNode(editorState)
   |> OptionService.unsafeGet;
 
+let getCurrentNodeId = editorState =>
+  CurrentNodeIdAssetEditorService.getCurrentNodeId(editorState);
+
 let unsafeGetCurrentNodeId = editorState =>
   CurrentNodeIdAssetEditorService.unsafeGetCurrentNodeId(editorState);
 
