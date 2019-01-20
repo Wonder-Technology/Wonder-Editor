@@ -1,4 +1,4 @@
-let addChild = GameObjectUtils.addChild;
+let addChild = HierarchyGameObjectEngineService.addChild;
 
 let getChildren = (gameObject, engineState) =>
   HierarchyGameObjectEngineService.getChildren(gameObject, engineState);

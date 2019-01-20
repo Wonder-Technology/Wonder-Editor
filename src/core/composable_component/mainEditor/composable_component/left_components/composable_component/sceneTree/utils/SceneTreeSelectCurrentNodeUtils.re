@@ -1,5 +1,5 @@
 let rec _setAllParentsShowChildren = (gameObject, engineState, editorState) =>
-  switch (GameObjectUtils.getParentGameObject(gameObject, engineState)) {
+  switch (HierarchyGameObjectEngineService.getParentGameObject(gameObject, engineState)) {
   | None => editorState
   | Some(parentGameObject) =>
     _setAllParentsShowChildren(

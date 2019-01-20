@@ -3,9 +3,9 @@ module CustomEventHandler = {
 
   type prepareTuple = unit;
   type dataTuple = (
-    Wonderjs.GameObjectType.gameObject,
-    Wonderjs.GameObjectType.gameObject,
-    SceneTreeNodeType.sceneTreeDragMoveType,
+    Wonderjs.GameObjectPrimitiveType.gameObject,
+    Wonderjs.GameObjectPrimitiveType.gameObject,
+    SceneTreeNodeType.sceneTreeDragType,
   );
   type return = unit;
 

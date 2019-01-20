@@ -1,3 +1,5 @@
+open SceneTreeNodeType;
+
 open Wonderjs;
 
 module CustomEventHandler = {
@@ -5,9 +7,9 @@ module CustomEventHandler = {
 
   type prepareTuple = unit;
   type dataTuple = (
-    GameObjectType.gameObject,
-    GameObjectType.gameObject,
-    SceneTreeNodeType.sceneTreeDragMoveType,
+    GameObjectPrimitiveType.gameObject,
+    GameObjectPrimitiveType.gameObject,
+    sceneTreeDragType,
   );
   type return = unit;
 

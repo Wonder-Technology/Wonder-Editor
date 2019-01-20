@@ -3,7 +3,7 @@ open SceneTreeNodeType;
 type state = {
   dragGapClass: string,
   style: ReactDOMRe.Style.t,
-  dragPosition: sceneTreeDragMoveType,
+  dragPosition: sceneTreeDragType,
 };
 
 type action =
@@ -12,9 +12,9 @@ type action =
   | DragLeave
   | DragEnd
   | DragStart
-  | DragOver(sceneTreeDragMoveType)
-  | DragGameObject(int, int, sceneTreeDragMoveType)
-  | DragWDB(int, int, sceneTreeDragMoveType);
+  | DragOver(sceneTreeDragType)
+  | DragGameObject(int, int, sceneTreeDragType)
+  | DragWDB(int, int, sceneTreeDragType);
 
 module Method = {
   let buildDragEndState = state => {

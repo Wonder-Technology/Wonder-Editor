@@ -1,4 +1,4 @@
-type sceneTreeDragMoveType =
+type sceneTreeDragType =
   | NoDrag
   | DragBeforeTarget
   | DragIntoTarget

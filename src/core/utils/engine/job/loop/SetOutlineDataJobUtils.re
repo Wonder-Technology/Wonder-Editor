@@ -10,7 +10,7 @@ let setOutlineDataJob = (_, engineState) => {
     engineState
     |> JobDataEngineService.setOutlineColor(_getOutlineColor())
     |> JobDataEngineService.setGameObjectsNeedDrawOutline(
-         GameObjectEngineService.getAllGameObjects(
+         HierarchyGameObjectEngineService.getAllGameObjects(
            currentGameObject,
            engineState,
          ),
