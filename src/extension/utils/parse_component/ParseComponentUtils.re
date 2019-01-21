@@ -62,7 +62,7 @@ let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =
       ),
     )
   | Some(maps) =>
-    switch (maps |> WonderCommonlib.HashMapService.get(uiComponentName)) {
+    switch (maps |> WonderCommonlib.MutableHashMapService.get(uiComponentName)) {
     | None =>
       /* TODO use error instead of fatal */
       WonderLog.Log.fatal(
@@ -93,7 +93,7 @@ let _createArgumentArray =
         switch (
           uiComponentName
           |> _getUniqueMapByComponentName(state)
-          |> WonderCommonlib.HashMapService.get(value)
+          |> WonderCommonlib.MutableHashMapService.get(value)
         ) {
         | None =>
           WonderLog.Log.error(

@@ -172,4 +172,4 @@ let buildDragEventWithMouse = (~offsetTop=11, ~offsetHeight=12, ~pageY=12, ()) =
 
 let buildDragEvent =
   (.) =>
-    buildDragEventWithDataMap(WonderCommonlib.HashMapService.createEmpty());
+    buildDragEventWithDataMap(WonderCommonlib.MutableHashMapService.createEmpty());

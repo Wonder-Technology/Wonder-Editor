@@ -149,8 +149,8 @@ let _ =
                   ),
                   SceneTreeNodeType.DragIntoTarget,
                   BaseEventTool.buildDragEventWithDataMap(
-                    WonderCommonlib.HashMapService.createEmpty()
-                    |> WonderCommonlib.HashMapService.set(
+                    WonderCommonlib.MutableHashMapService.createEmpty()
+                    |> WonderCommonlib.MutableHashMapService.set(
                          "draggedId",
                          sourceGameObject,
                        ),

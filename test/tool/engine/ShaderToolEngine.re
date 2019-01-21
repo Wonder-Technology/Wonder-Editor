@@ -4,4 +4,4 @@ open StateDataMainType;
 
 let isInitShaderCacheClear = engineState =>
   engineState.shaderRecord.shaderLibShaderIndexMap
-  |> WonderCommonlib.HashMapService.length === 0;
+  |> WonderCommonlib.MutableHashMapService.length === 0;

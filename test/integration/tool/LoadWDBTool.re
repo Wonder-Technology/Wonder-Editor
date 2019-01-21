@@ -296,10 +296,10 @@ module Truck = {
   let getTruck1GameObjectName = () => "Cesium_Milk_Truck_1";
 
   let getTruckGeometryData = () => {
-    let map = WonderCommonlib.HashMapService.createEmpty();
+    let map = WonderCommonlib.MutableHashMapService.createEmpty();
 
     map
-    |> WonderCommonlib.HashMapService.set(
+    |> WonderCommonlib.MutableHashMapService.set(
          "Cesium_Milk_Truck_0",
          (
            Float32Array.make([|
@@ -534,7 +534,7 @@ module Truck = {
            None,
          ),
        )
-    |> WonderCommonlib.HashMapService.set(
+    |> WonderCommonlib.MutableHashMapService.set(
          "Cesium_Milk_Truck_1",
          (
            Float32Array.make([|
@@ -728,7 +728,7 @@ module Truck = {
            None,
          ),
        )
-    |> WonderCommonlib.HashMapService.set(
+    |> WonderCommonlib.MutableHashMapService.set(
          "Cesium_Milk_Truck_2",
          (
            Float32Array.make([|
@@ -922,7 +922,7 @@ module Truck = {
            None,
          ),
        )
-    |> WonderCommonlib.HashMapService.set(
+    |> WonderCommonlib.MutableHashMapService.set(
          "Wheels",
          (
            Float32Array.make([|
