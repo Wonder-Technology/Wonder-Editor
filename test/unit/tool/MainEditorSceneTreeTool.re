@@ -80,7 +80,7 @@ module Drag = {
                             StateEngineService.unsafeGetState(),
                           ),
         ~dispatchFunc=TestTool.getDispatch(),
-        ~store=TestTool.buildEmptyAppState(),
+        ~uiState=TestTool.buildEmptyAppState(),
         ~widget=AssetWidgetService.getWidget(),
         ~effectEffectAllowd="move",
         ~dragImg=DomHelper.createElement("img"),
@@ -102,7 +102,7 @@ module Drag = {
       |> WDBNodeAssetService.getWDBGameObject;
 
     MainEditorSceneTree.Method.dragWDBToBeTargetSib(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (),
       (targetGameObject, wdbGameObject, dragPosition),
     );
@@ -115,11 +115,11 @@ module Drag = {
         ~targetGameObject,
         ~dragPosition=SceneTreeNodeType.DragIntoTarget,
         ~dispatchFunc=TestTool.getDispatch(),
-        ~store=TestTool.buildEmptyAppState(),
+        ~uiState=TestTool.buildEmptyAppState(),
         (),
       ) =>
     MainEditorSceneTree.Method.dragGameObjectToBeTargetSib(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (),
       (targetGameObject, sourceGameObject, dragPosition),
     );
@@ -129,9 +129,9 @@ module Select = {
   let selectGameObject =
       (
         ~dispatchFunc=TestTool.getDispatch(),
-        ~store=TestTool.buildEmptyAppState(),
+        ~uiState=TestTool.buildEmptyAppState(),
         ~gameObject,
         (),
       ) =>
-    MainEditorSceneTree.Method.onSelect((store, dispatchFunc), gameObject);
+    MainEditorSceneTree.Method.onSelect((uiState, dispatchFunc), gameObject);
 };

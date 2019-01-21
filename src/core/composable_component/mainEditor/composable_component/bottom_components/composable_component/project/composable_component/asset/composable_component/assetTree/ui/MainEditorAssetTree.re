@@ -17,7 +17,7 @@ module Method = {
        );
 
   let handleToggleShowTreeChildren =
-      (store, dispatchFunc, targetId, isShowChildren) => {
+      (uiState, dispatchFunc, targetId, isShowChildren) => {
     let editorState = StateEditorService.getState();
 
     OperateTreeAssetEditorService.setNodeIsShowChildren(
@@ -56,7 +56,7 @@ module Method = {
 
   let buildAssetTreeArray =
       (
-        (store, dispatchFunc, dragImg),
+        (uiState, dispatchFunc, dragImg),
         (onSelectFunc, onDropFunc),
         editorState,
       ) => {
@@ -69,7 +69,7 @@ module Method = {
             (
               (selectedFolderNodeIdInAssetTree, currentNodeId),
               allFolderNodes,
-              (store, dispatchFunc, dragImg),
+              (uiState, dispatchFunc, dragImg),
               (onSelectFunc, onDropFunc),
               editorState,
             ) =>
@@ -105,7 +105,7 @@ module Method = {
              )
              isHasChildren=(FolderNodeAssetService.hasChildren(folderNode))
              handleToggleShowTreeChildren=(
-               handleToggleShowTreeChildren(store, dispatchFunc)
+               handleToggleShowTreeChildren(uiState, dispatchFunc)
              )
              checkNodeRelation=OperateTreeAssetLogicService.checkNodeRelation
              treeChildren=(
@@ -115,7 +115,7 @@ module Method = {
                  |> Js.Array.filter(node =>
                       FolderNodeAssetService.isFolderNode(node)
                     ),
-                 (store, dispatchFunc, dragImg),
+                 (uiState, dispatchFunc, dragImg),
                  (onSelectFunc, onDropFunc),
                  editorState,
                )
@@ -126,7 +126,7 @@ module Method = {
     _build(
       (selectedFolderNodeIdInAssetTree, currentNodeId),
       [|RootTreeAssetEditorService.getRootNode(editorState)|],
-      (store, dispatchFunc, dragImg),
+      (uiState, dispatchFunc, dragImg),
       (onSelectFunc, onDropFunc),
       editorState,
     );
@@ -135,7 +135,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("AssetTree");
 
-let render = ((store, dispatchFunc), dragImg, _self) => {
+let render = ((uiState, dispatchFunc), dragImg, _self) => {
   let editorState = StateEditorService.getState();
 
   <article key="assetTreeRoot" className="wonder-asset-assetTree">
@@ -143,11 +143,11 @@ let render = ((store, dispatchFunc), dragImg, _self) => {
       ReasonReact.array(
         editorState
         |> Method.buildAssetTreeArray(
-             (store, dispatchFunc, dragImg),
+             (uiState, dispatchFunc, dragImg),
              (
                FolderNodeUtils.enterFolder(dispatchFunc),
                AssetDragNodeToFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-                 (store, dispatchFunc),
+                 (uiState, dispatchFunc),
                  (),
                ),
              ),
@@ -157,7 +157,7 @@ let render = ((store, dispatchFunc), dragImg, _self) => {
   </article>;
 };
 
-let make = (~store, ~dispatchFunc, ~dragImg, _children) => {
+let make = (~uiState, ~dispatchFunc, ~dragImg, _children) => {
   ...component,
-  render: self => render((store, dispatchFunc), dragImg, self),
+  render: self => render((uiState, dispatchFunc), dragImg, self),
 };

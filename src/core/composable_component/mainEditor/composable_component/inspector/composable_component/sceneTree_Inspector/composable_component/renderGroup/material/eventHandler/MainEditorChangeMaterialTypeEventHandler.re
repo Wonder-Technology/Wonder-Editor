@@ -45,7 +45,7 @@ module CustomEventHandler = {
        );
 
   let handleSelfLogic =
-      ((store, dispatchFunc), (), (sourceMaterialType, targetMaterialType)) => {
+      ((uiState, dispatchFunc), (), (sourceMaterialType, targetMaterialType)) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 

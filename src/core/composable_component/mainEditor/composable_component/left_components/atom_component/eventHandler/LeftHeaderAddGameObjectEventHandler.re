@@ -6,7 +6,7 @@ module CustomEventHandler = {
   type dataTuple = unit;
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), gameObjectType, ()) => {
+  let handleSelfLogic = ((uiState, dispatchFunc), gameObjectType, ()) => {
     let newGameObject =
       switch (gameObjectType) {
       | Cude =>

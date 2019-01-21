@@ -400,12 +400,12 @@ module Drag = {
       (
         ~startNodeId,
         ~targetNodeId,
-        ~store=TestTool.buildEmptyAppState(),
+        ~uiState=TestTool.buildEmptyAppState(),
         ~dispatchFunc=TestTool.getDispatch(),
         (),
       ) =>
     AssetDragNodeToFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (),
       (targetNodeId, startNodeId),
     );
@@ -414,12 +414,12 @@ module Drag = {
       (
         ~startNodeId,
         ~targetNodeId,
-        ~store=TestTool.buildEmptyAppState(),
+        ~uiState=TestTool.buildEmptyAppState(),
         ~dispatchFunc=TestTool.getDispatch(),
         (),
       ) =>
     AssetDragNodeToFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (),
       (targetNodeId, startNodeId),
     );

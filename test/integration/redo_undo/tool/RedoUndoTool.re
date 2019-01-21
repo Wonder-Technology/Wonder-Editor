@@ -1,13 +1,13 @@
 let undoHistoryState =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~editorState=StateEditorService.getState(),
       ~engineState=StateEngineService.unsafeGetState(),
       (),
     ) =>
   AllHistoryService.undoHistoryState(
-    store,
+    uiState,
     dispatchFunc,
     (editorState, engineState),
   )
@@ -15,14 +15,14 @@ let undoHistoryState =
 
 let redoHistoryState =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~editorState=StateEditorService.getState(),
       ~engineState=StateEngineService.unsafeGetState(),
       (),
     ) =>
   AllHistoryService.redoHistoryState(
-    store,
+    uiState,
     dispatchFunc,
     (editorState, engineState),
   )

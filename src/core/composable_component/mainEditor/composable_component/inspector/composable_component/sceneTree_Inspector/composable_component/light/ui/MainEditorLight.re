@@ -8,9 +8,9 @@ type action =
 module Method = {
   let changeLight = MainEditorChangeLightEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let renderDirectionLight = ((store, dispatchFunc), gameObject) =>
+  let renderDirectionLight = ((uiState, dispatchFunc), gameObject) =>
     <MainEditorDirectionLight
-      store
+      uiState
       dispatchFunc
       lightComponent=(
         GameObjectComponentEngineService.unsafeGetDirectionLightComponent(
@@ -20,9 +20,9 @@ module Method = {
       )
     />;
 
-  let renderPointLight = ((store, dispatchFunc), gameObject) =>
+  let renderPointLight = ((uiState, dispatchFunc), gameObject) =>
     <MainEditorPointLight
-      store
+      uiState
       dispatchFunc
       lightComponent=(
         GameObjectComponentEngineService.unsafeGetPointLightComponent(
@@ -35,14 +35,14 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("MainEditorLight");
 
-let reducer = ((store, dispatchFunc), action, state) =>
+let reducer = ((uiState, dispatchFunc), action, state) =>
   switch (action) {
   | ChangeLight(value) =>
     let sourceLightType = state.lightType;
     let targetLightType = value |> convertIntToLightType;
 
     Method.changeLight(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (),
       (sourceLightType, targetLightType),
     );
@@ -60,7 +60,7 @@ let reducer = ((store, dispatchFunc), action, state) =>
   };
 
 let render =
-    ((store, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    ((uiState, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article key="MainEditorLight" className="wonder-inspector-light">
     <Select
       label="Type"
@@ -72,14 +72,14 @@ let render =
       MainEditorLightUtils.handleSpecificFuncByLightType(
         state.lightType,
         (
-          Method.renderDirectionLight((store, dispatchFunc)),
-          Method.renderPointLight((store, dispatchFunc)),
+          Method.renderDirectionLight((uiState, dispatchFunc)),
+          Method.renderPointLight((uiState, dispatchFunc)),
         ),
       )
     )
   </article>;
 
-let make = (~store, ~dispatchFunc, _children) => {
+let make = (~uiState, ~dispatchFunc, _children) => {
   ...component,
   initialState: () => {
     lightType:
@@ -89,6 +89,6 @@ let make = (~store, ~dispatchFunc, _children) => {
       )
       |> StateLogicService.getEngineStateToGetData,
   },
-  reducer: reducer((store, dispatchFunc)),
-  render: self => render((store, dispatchFunc), self),
+  reducer: reducer((uiState, dispatchFunc)),
+  render: self => render((uiState, dispatchFunc), self),
 };

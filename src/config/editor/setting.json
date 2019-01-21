@@ -1,0 +1,17 @@
+{
+    "debug": {
+        "is_debug": true,
+        "show_message": true
+    },
+    "redo_undo": {
+        "max_stack_size": 50
+    },
+    "hotkeys": {
+        "redo": [
+            "ctrl+r"
+        ],
+        "undo": [
+            "ctrl+z"
+        ]
+    }
+}

@@ -4,12 +4,12 @@ let changeLightType =
     (
       ~sourceLightType,
       ~targetLightType,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorLight.Method.changeLight(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     (),
     (sourceLightType, targetLightType),
   );

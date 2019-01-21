@@ -5,7 +5,7 @@ module CustomEventHandler = {
   type return = unit;
 
   let handleSelfLogic =
-      ((store, dispatchFunc), (), (targetFolderNodeId, sourceNodeId)) =>
+      ((uiState, dispatchFunc), (), (targetFolderNodeId, sourceNodeId)) =>
     NodeAssetService.isIdEqual(targetFolderNodeId, sourceNodeId) ?
       dispatchFunc(AppStore.UpdateAction(Update([|Project|]))) |> ignore :
       {

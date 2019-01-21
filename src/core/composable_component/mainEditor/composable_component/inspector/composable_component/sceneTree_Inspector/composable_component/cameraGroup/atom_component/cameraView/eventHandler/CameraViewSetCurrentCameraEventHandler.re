@@ -35,7 +35,7 @@ module CustomEventHandler = {
       ) :
       engineState;
 
-  let handleSelfLogic = ((store, dispatchFunc), (), targetBasicCameraView) => {
+  let handleSelfLogic = ((uiState, dispatchFunc), (), targetBasicCameraView) => {
     StateEditorService.getState()
     |> GameViewEditorService.setActivedBasicCameraView(targetBasicCameraView)
     |> StateEditorService.setState;

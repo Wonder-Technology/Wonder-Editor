@@ -2,13 +2,13 @@ open HistoryType;
 
 open Immutable;
 
-let copyHistoryStack = (store, (editorState, engineState), historyState) => {
+let copyHistoryStack = (uiState, (editorState, engineState), historyState) => {
   let engineState = engineState |> StateEngineService.deepCopyForRestore;
   AllStateData.setHistoryState({
     ...historyState,
     copiedRedoUndoStackRecord:
       Some({
-        uiUndoStack: Stack.addFirst(store, historyState.uiUndoStack),
+        uiUndoStack: Stack.addFirst(uiState, historyState.uiUndoStack),
         uiRedoStack: historyState.uiRedoStack,
         editorUndoStack:
           Stack.addFirst(editorState, historyState.editorUndoStack),

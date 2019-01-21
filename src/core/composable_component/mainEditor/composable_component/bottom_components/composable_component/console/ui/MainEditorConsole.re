@@ -127,12 +127,12 @@ let _renderHeader = dispatchFunc =>
     </button>
   </div>;
 
-let render = (store, dispatchFunc, _self) => {
+let render = (uiState, dispatchFunc, _self) => {
   let consoleMessageArray =
     StateEditorService.getState()
     |> MessageArrayConsoleEditorService.getConsoleMessageArray;
 
-  store
+  uiState
   |> StoreUtils.getBottomCurrentComponentType
   |> MainEditorBottomComponentUtils.isTypeEqualConsole ?
     Method.setCheckedMessageCount |> StateLogicService.getAndSetEditorState :
@@ -162,11 +162,11 @@ let shouldUpdate =
   newSelf.retainedProps.updateTypeArr
   |> StoreUtils.shouldComponentUpdate(UpdateStore.Console);
 
-let make = (~store, ~dispatchFunc, _children) => {
+let make = (~uiState, ~dispatchFunc, _children) => {
   ...component,
   retainedProps: {
-    updateTypeArr: StoreUtils.getUpdateComponentTypeArr(store),
+    updateTypeArr: StoreUtils.getUpdateComponentTypeArr(uiState),
   },
   shouldUpdate,
-  render: render(store, dispatchFunc),
+  render: render(uiState, dispatchFunc),
 };

@@ -11,12 +11,12 @@ module CustomEventHandler = {
 
   let handleSelfLogic =
       (
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         (),
         (targetGameObject, wdbGameObject, dragPosition),
       ) =>
     DragWDBEventHandlerUtils.handleSelfLogic(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (),
       (targetGameObject, wdbGameObject, dragPosition),
     );

@@ -16,9 +16,9 @@ module Method = {
      let addExtension = text =>
        AppExtensionUtils.setExtension(getStorageParentKey(), text); */
 
-  let importPackage = ((store, dispatchFunc), (send, blurNav), event) => {
+  let importPackage = ((uiState, dispatchFunc), (send, blurNav), event) => {
     StateHistoryService.getStateForHistory()
-    |> StoreHistoryUtils.storeHistoryStateWithNoCopyEngineState(store);
+    |> StoreHistoryUtils.storeHistoryStateWithNoCopyEngineState(uiState);
 
     HeaderImportPackageUtils.importPackage(dispatchFunc, event)
     |> Js.Promise.then_(_ => send(blurNav) |> Js.Promise.resolve)
@@ -40,18 +40,16 @@ module Method = {
          );
          ConsoleUtils.logStack(stack) |> ignore;
 
-         AllHistoryService.handleUndo(store, Obj.magic(dispatchFunc))
+         AllHistoryService.handleUndo(uiState, dispatchFunc)
          |> Js.Promise.resolve;
        });
   };
 
-  let _buildFileComponentSelectNav = (send, store, dispatchFunc) =>
+  let _buildFileComponentSelectNav = (send, uiState, dispatchFunc) =>
     <div className="item-content">
       <div
         className="content-section"
-        onClick=(
-          _e => AllHistoryService.handleUndo(store, Obj.magic(dispatchFunc))
-        )>
+        onClick=(_e => AllHistoryService.handleUndo(uiState, dispatchFunc))>
         <span className="section-header"> (DomHelper.textEl("Undo")) </span>
       </div>
       /* <span className="section-tail">
@@ -64,7 +62,7 @@ module Method = {
             OperateStateHistoryService.hasRedoState(
               AllStateData.getHistoryState(),
             ) ?
-              AllHistoryService.redoHistoryState(store, dispatchFunc)
+              AllHistoryService.redoHistoryState(uiState, dispatchFunc)
               |> StateHistoryService.getAndRefreshStateForHistory :
               ()
         )>
@@ -75,7 +73,7 @@ module Method = {
        (DomHelper.textEl("Ctrl+U"))
      </span> */
 
-  let buildFileComponent = (state, send, store, dispatchFunc) => {
+  let buildFileComponent = (state, send, uiState, dispatchFunc) => {
     let className =
       state.currentSelectNav === File ?
         "item-title item-active" : "item-title";
@@ -91,13 +89,13 @@ module Method = {
       </div>
       (
         state.currentSelectNav === File ?
-          _buildFileComponentSelectNav(send, store, dispatchFunc) :
+          _buildFileComponentSelectNav(send, uiState, dispatchFunc) :
           ReasonReact.null
       )
     </div>;
   };
 
-  let _buildEditComponentSelectNav = (send, store, dispatchFunc) =>
+  let _buildEditComponentSelectNav = (send, uiState, dispatchFunc) =>
     <div className="item-content item-edit">
       <div className="content-section">
         <input
@@ -106,7 +104,7 @@ module Method = {
           multiple=false
           onChange=(
             e =>
-              importPackage((store, dispatchFunc), (send, BlurNav), e)
+              importPackage((uiState, dispatchFunc), (send, BlurNav), e)
               |> ignore
           )
         />
@@ -130,7 +128,7 @@ module Method = {
       </div>
     </div>;
 
-  let buildEditComponent = (state, send, store, dispatchFunc) => {
+  let buildEditComponent = (state, send, uiState, dispatchFunc) => {
     let className =
       state.currentSelectNav === Edit ?
         "item-title item-active" : "item-title";
@@ -148,7 +146,7 @@ module Method = {
       </div>
       (
         state.currentSelectNav === Edit ?
-          _buildEditComponentSelectNav(send, store, dispatchFunc) :
+          _buildEditComponentSelectNav(send, uiState, dispatchFunc) :
           ReasonReact.null
       )
       (
@@ -195,7 +193,7 @@ module Method = {
       </div>
     </div>;
 
-  let buildPublishComponent = (state, send, store, dispatchFunc) => {
+  let buildPublishComponent = (state, send, uiState, dispatchFunc) => {
     let className =
       state.currentSelectNav === Publish ?
         "item-title item-active" : "item-title";
@@ -251,12 +249,13 @@ module Method = {
       </div>
     </div>;
 
-  let buildHelpComponent = (state, send, store, dispatchFunc) => {
+  let buildHelpComponent = (state, send, uiState, dispatchFunc) => {
     let className =
       state.currentSelectNav === Help ?
         "item-title item-active" : "item-title";
 
     <div className="header-item">
+      
       <div className="component-item">
         <span
           className
@@ -355,20 +354,20 @@ let reducer = (action, state) =>
 
 let render =
     (
-      store: AppStore.appState,
+      uiState: AppStore.appState,
       dispatchFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article key="header" className="wonder-header-component">
     <div className="header-nav">
-      (Method.buildFileComponent(state, send, store, dispatchFunc))
-      (Method.buildEditComponent(state, send, store, dispatchFunc))
-      (Method.buildPublishComponent(state, send, store, dispatchFunc))
-      (Method.buildHelpComponent(state, send, store, dispatchFunc))
+      (Method.buildFileComponent(state, send, uiState, dispatchFunc))
+      (Method.buildEditComponent(state, send, uiState, dispatchFunc))
+      (Method.buildPublishComponent(state, send, uiState, dispatchFunc))
+      (Method.buildHelpComponent(state, send, uiState, dispatchFunc))
     </div>
   </article>;
 
-let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
+let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
   initialState: () => {
     isSelectNav: false,
@@ -390,5 +389,5 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
           () : send(BlurNav);
       },
     ),
-  render: self => render(store, dispatchFunc, self),
+  render: self => render(uiState, dispatchFunc, self),
 };

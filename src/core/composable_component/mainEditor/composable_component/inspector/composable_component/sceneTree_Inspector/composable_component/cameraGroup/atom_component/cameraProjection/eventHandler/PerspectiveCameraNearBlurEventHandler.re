@@ -5,7 +5,7 @@ module CustomEventHandler = {
   type return = unit;
 
   let setUndoValueToCopiedEngineState =
-      ((store, dispatchFunc), perspectiveComponent, value) =>
+      ((uiState, dispatchFunc), perspectiveComponent, value) =>
     StateEngineService.unsafeGetState()
     |> StateEngineService.deepCopyForRestore
     |> PerspectiveCameraProjectionEngineService.setPerspectiveCameraNear(

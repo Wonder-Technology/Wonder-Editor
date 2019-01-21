@@ -50,7 +50,7 @@ let render =
 
 let make =
     (
-      ~store,
+      ~uiState,
       ~dispatchFunc,
       ~effectAllowd,
       ~dragImg,
@@ -64,7 +64,7 @@ let make =
   ...component,
   render: self =>
     render(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (dragImg, effectAllowd, imgSrc, nodeId, fileName, widget, isSelected),
       self,
     ),

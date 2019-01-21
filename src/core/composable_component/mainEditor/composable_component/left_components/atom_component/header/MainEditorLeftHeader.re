@@ -52,14 +52,14 @@ let reducer = (action, state) =>
     ReasonReact.Update({...state, currentSelectItem: selectNav})
   };
 
-let _renderSelectNav = ((store, dispatchFunc), state, send) =>
+let _renderSelectNav = ((uiState, dispatchFunc), state, send) =>
   <div className="item-content">
     <div
       className="content-section"
       onClick=(
         _e =>
           Method.addGameObjectByType(
-            (store, dispatchFunc),
+            (uiState, dispatchFunc),
             AddGameObjectType.EmptyGameObject,
             (),
           )
@@ -83,7 +83,7 @@ let _renderSelectNav = ((store, dispatchFunc), state, send) =>
               onClick=(
                 _e =>
                   Method.addGameObjectByType(
-                    (store, dispatchFunc),
+                    (uiState, dispatchFunc),
                     AddGameObjectType.Cude,
                     (),
                   )
@@ -97,7 +97,7 @@ let _renderSelectNav = ((store, dispatchFunc), state, send) =>
               onClick=(
                 _e =>
                   Method.addGameObjectByType(
-                    (store, dispatchFunc),
+                    (uiState, dispatchFunc),
                     AddGameObjectType.Sphere,
                     (),
                   )
@@ -112,12 +112,12 @@ let _renderSelectNav = ((store, dispatchFunc), state, send) =>
     </div>
   </div>;
 
-let _renderAddGameObjectComponent = ((store, dispatchFunc), state, send) =>
+let _renderAddGameObjectComponent = ((uiState, dispatchFunc), state, send) =>
   <div className="sceneTree-header-item" onClick=(_e => send(ToggleShowNav))>
     <div className="item-canBeClick"> <img src="./public/img/add.png" /> </div>
     (
       state.isSelectNav ?
-        _renderSelectNav((store, dispatchFunc), state, send) :
+        _renderSelectNav((uiState, dispatchFunc), state, send) :
         ReasonReact.null
     )
   </div>;
@@ -195,7 +195,7 @@ let render =
   </article>;
 };
 
-let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
+let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
   initialState: () => {
     isSelectNav: false,
@@ -215,7 +215,7 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
       },
       subscription => send(SetSubscription(subscription)),
     ),
-  render: self => render((store, dispatchFunc), self),
+  render: self => render((uiState, dispatchFunc), self),
   willUnmount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
     EventUtils.unmountStreamSubscription(state.streamSubscription),
 };

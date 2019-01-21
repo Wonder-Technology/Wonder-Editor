@@ -7,7 +7,7 @@ module CustomEventHandler = {
   type return = unit;
 
   let handleSelfLogic =
-      ((store, dispatchFunc), (), (sourceLightType, targetLightType)) =>
+      ((uiState, dispatchFunc), (), (sourceLightType, targetLightType)) =>
     MainEditorLightUtils.replaceLightByType(sourceLightType, targetLightType);
 };
 

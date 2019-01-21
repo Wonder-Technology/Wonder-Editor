@@ -7,7 +7,10 @@ module type EventHandler = {
 
   let handleSelfLogic:
     (
-      (AppStore.appState, WonderEditor.ReduxThunk.thunk('b) => 'c),
+      (
+        AppStore.appState,
+        WonderEditor.ReduxThunk.thunk(AppStore.appState) => 'a,
+      ),
       prepareTuple,
       dataTuple
     ) =>
@@ -15,7 +18,10 @@ module type EventHandler = {
 
   let setUndoValueToCopiedEngineState:
     (
-      (AppStore.appState, WonderEditor.ReduxThunk.thunk('b) => 'c),
+      (
+        AppStore.appState,
+        WonderEditor.ReduxThunk.thunk(AppStore.appState) => 'a,
+      ),
       prepareTuple,
       dataTuple
     ) =>
@@ -24,15 +30,15 @@ module type EventHandler = {
 
 module MakeEventHandler = (EventItem: EventHandler) => {
   let pushUndoStackWithNoCopyEngineState =
-      ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
+      ((uiState, dispatchFunc) as reduxTuple, prepareTuple, dataTuple) => {
     StateHistoryService.getStateForHistory()
-    |> StoreHistoryUtils.storeHistoryStateWithNoCopyEngineState(store);
+    |> StoreHistoryUtils.storeHistoryStateWithNoCopyEngineState(uiState);
 
     EventItem.handleSelfLogic(reduxTuple, prepareTuple, dataTuple);
   };
 
   let pushUndoStackWithCopiedEngineState =
-      ((store, dispatchFunc) as reduxTuple, prepareTuple, dataTuple) => {
+      ((uiState, dispatchFunc) as reduxTuple, prepareTuple, dataTuple) => {
     let engineState =
       EventItem.setUndoValueToCopiedEngineState(
         reduxTuple,
@@ -41,6 +47,6 @@ module MakeEventHandler = (EventItem: EventHandler) => {
       );
 
     (StateEditorService.getState(), engineState)
-    |> StoreHistoryUtils.storeHistoryStateWithCopiedEngineState(store);
+    |> StoreHistoryUtils.storeHistoryStateWithCopiedEngineState(uiState);
   };
 };

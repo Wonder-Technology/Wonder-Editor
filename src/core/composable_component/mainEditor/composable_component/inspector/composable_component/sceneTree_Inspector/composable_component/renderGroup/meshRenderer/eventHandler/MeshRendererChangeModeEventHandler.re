@@ -4,7 +4,7 @@ module CustomEventHandler = {
   type dataTuple = int;
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), meshRenderer, drawMode) =>
+  let handleSelfLogic = ((uiState, dispatchFunc), meshRenderer, drawMode) =>
     MeshRendererEngineService.setDrawMode(drawMode, meshRenderer)
     |> StateLogicService.getAndRefreshEngineStateWithFunc;
 };

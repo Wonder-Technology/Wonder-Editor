@@ -6,12 +6,12 @@ let changeMaterial =
       ~targetMaterialType,
       ~materialNodeId,
       ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorMaterial.Method.changeMaterial(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     gameObject,
     (
       materialNodeId,

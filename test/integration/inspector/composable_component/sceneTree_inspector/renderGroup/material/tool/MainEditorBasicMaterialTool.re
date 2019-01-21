@@ -4,12 +4,12 @@ open MaterialDataAssetType;
 
 let changeMaterialTypeToBeBasicMaterial =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorMaterial.Method.changeMaterialType(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     (),
     (LightMaterial, BasicMaterial),
   );
@@ -25,11 +25,11 @@ let closeColorPicker =
       ~material,
       ~color,
       ~dispatchFunc=_ => (),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       (),
     ) =>
   MainEditorBasicMaterial.Method.closeColorPick(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     material,
     color,
   );

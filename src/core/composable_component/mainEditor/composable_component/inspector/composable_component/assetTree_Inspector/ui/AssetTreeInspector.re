@@ -53,34 +53,34 @@ module Method = {
 
   let buildTextureComponent =
       (
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         state,
         currentNodeId,
         {textureComponent}: NodeAssetType.textureNodeData,
       ) =>
     <TextureInspector
-      store
+      uiState
       dispatchFunc
       name=state.inputValue
       textureComponent
-      renameFunc=(renameAssetTreeNode((store, dispatchFunc), currentNodeId))
+      renameFunc=(renameAssetTreeNode((uiState, dispatchFunc), currentNodeId))
     />;
 
   let buildMaterialComponent =
       (
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         state,
         currentNodeId,
         {type_, materialComponent}: NodeAssetType.materialNodeData,
       ) =>
     <MaterialInspector
-      store
+      uiState
       dispatchFunc
       currentNodeId
       name=state.inputValue
       type_
       materialComponent
-      renameFunc=(renameAssetTreeNode((store, dispatchFunc), currentNodeId))
+      renameFunc=(renameAssetTreeNode((uiState, dispatchFunc), currentNodeId))
     />;
 
   let buildWDBComponent = (state, send, _, _) =>
@@ -154,7 +154,7 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("AssetTreeInspector");
 
-let reducer = ((store, dispatchFunc), currentNode, action) =>
+let reducer = ((uiState, dispatchFunc), currentNode, action) =>
   switch (action) {
   | Change(value) => (
       state => ReasonReact.Update({...state, inputValue: value})
@@ -170,7 +170,7 @@ let reducer = ((store, dispatchFunc), currentNode, action) =>
             ReasonReactUtils.updateWithSideEffects(
               {...state, originalName: value}, _state =>
               Method.renameAssetTreeNode(
-                (store, dispatchFunc),
+                (uiState, dispatchFunc),
                 NodeAssetService.getNodeId(~node=currentNode),
                 value,
               )
@@ -179,12 +179,12 @@ let reducer = ((store, dispatchFunc), currentNode, action) =>
     )
   };
 
-let render = ((store, dispatchFunc), currentNode, self) =>
+let render = ((uiState, dispatchFunc), currentNode, self) =>
   <article key="AssetTreeInspector" className="wonder-inspector-assetTree">
-    (Method.showAssetNodeComponent((store, dispatchFunc), currentNode, self))
+    (Method.showAssetNodeComponent((uiState, dispatchFunc), currentNode, self))
   </article>;
 
-let make = (~store: AppStore.appState, ~dispatchFunc, ~currentNode, _children) => {
+let make = (~uiState: AppStore.appState, ~dispatchFunc, ~currentNode, _children) => {
   ...component,
   initialState: () => {
     let editorState = StateEditorService.getState();
@@ -198,6 +198,6 @@ let make = (~store: AppStore.appState, ~dispatchFunc, ~currentNode, _children) =
       ~folderNodeFunc=Method.initFolderName,
     );
   },
-  reducer: reducer((store, dispatchFunc), currentNode),
-  render: self => render((store, dispatchFunc), currentNode, self),
+  reducer: reducer((uiState, dispatchFunc), currentNode),
+  render: self => render((uiState, dispatchFunc), currentNode, self),
 };

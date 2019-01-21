@@ -1,9 +1,9 @@
-let run = store => {
+let run = uiState => {
   StateEditorService.setIsRun(true);
 
   AllStateData.getHistoryState()
   |> ControllerHistoryUtils.copyHistoryStack(
-       store,
+       uiState,
        StateHistoryService.getStateForHistory(),
      );
 

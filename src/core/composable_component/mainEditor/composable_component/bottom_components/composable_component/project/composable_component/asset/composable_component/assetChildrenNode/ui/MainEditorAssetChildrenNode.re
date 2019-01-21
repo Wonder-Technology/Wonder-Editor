@@ -109,7 +109,7 @@ module Method = {
 
   let showSpecificTreeNodeChildren =
       (
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         (dragImg, debounceTime, currentNodeId),
         engineState,
         editorState,
@@ -141,7 +141,7 @@ module Method = {
                  |> Result.SameDataResult.either(imgSrc =>
                       <FileBox
                         key
-                        store
+                        uiState
                         dispatchFunc
                         dragImg
                         effectAllowd
@@ -165,7 +165,7 @@ module Method = {
 
                  <FileBox
                    key
-                   store
+                   uiState
                    dispatchFunc
                    dragImg
                    effectAllowd="move"
@@ -183,7 +183,7 @@ module Method = {
 
                  <FileBox
                    key
-                   store
+                   uiState
                    dispatchFunc
                    effectAllowd="copyMove"
                    dragImg
@@ -201,7 +201,7 @@ module Method = {
 
                  <FolderBox
                    key
-                   store
+                   uiState
                    dispatchFunc
                    dragImg
                    effectAllowd="move"
@@ -213,7 +213,7 @@ module Method = {
                    debounceTime
                    onDrop=(
                      AssetDragNodeToFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-                       (store, dispatchFunc),
+                       (uiState, dispatchFunc),
                        (),
                      )
                    )
@@ -232,7 +232,7 @@ module Method = {
   };
 
   let buildCurrentTreeNodeChildrenComponent =
-      ((store, dispatchFunc), dragImg, debounceTime) => {
+      ((uiState, dispatchFunc), dragImg, debounceTime) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
@@ -240,7 +240,7 @@ module Method = {
     |> _buildImageDataObjectURLIfNoBase64
     |> Result.SameDataResult.either(
          showSpecificTreeNodeChildren(
-           (store, dispatchFunc),
+           (uiState, dispatchFunc),
            (
              dragImg,
              debounceTime,
@@ -255,12 +255,12 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
-let render = ((store, dispatchFunc), dragImg, debounceTime, _self) =>
+let render = ((uiState, dispatchFunc), dragImg, debounceTime, _self) =>
   <article key="assetChildrenNode" className="wonder-asset-assetChildren">
     (
       ReasonReact.array(
         Method.buildCurrentTreeNodeChildrenComponent(
-          (store, dispatchFunc),
+          (uiState, dispatchFunc),
           dragImg,
           debounceTime,
         ),
@@ -268,7 +268,7 @@ let render = ((store, dispatchFunc), dragImg, debounceTime, _self) =>
     )
   </article>;
 
-let make = (~store, ~dispatchFunc, ~dragImg, ~debounceTime, _children) => {
+let make = (~uiState, ~dispatchFunc, ~dragImg, ~debounceTime, _children) => {
   ...component,
-  render: self => render((store, dispatchFunc), dragImg, debounceTime, self),
+  render: self => render((uiState, dispatchFunc), dragImg, debounceTime, self),
 };

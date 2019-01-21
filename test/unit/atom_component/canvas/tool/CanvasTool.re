@@ -3,7 +3,7 @@ module Drag = {
       (
         ~wdbNodeId,
         ~dispatchFunc=TestTool.getDispatch(),
-        ~store=TestTool.buildEmptyAppState(),
+        ~uiState=TestTool.buildEmptyAppState(),
         ~widget=AssetWidgetService.getWidget(),
         ~effectEffectAllowd="move",
         ~dragImg=DomHelper.createElement("img"),
@@ -23,7 +23,7 @@ module Drag = {
       |> OperateTreeAssetEditorService.unsafeFindNodeById(wdbNodeId)
       |> WDBNodeAssetService.getWDBGameObject;
 
-    MainEditor.Method.dragWDB((store, dispatchFunc), (), wdbGameObject);
+    MainEditor.Method.dragWDB((uiState, dispatchFunc), (), wdbGameObject);
     /* DragEventUtils.handleDragEnd(event); */
   };
 };

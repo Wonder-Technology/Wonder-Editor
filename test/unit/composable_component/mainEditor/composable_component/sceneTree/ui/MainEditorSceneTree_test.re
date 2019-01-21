@@ -58,14 +58,6 @@ let _ =
     });
 
     describe("test drag", () => {
-      beforeEach(() =>
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
-        )
-      );
-      afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
-
       describe("handleDragOver", () => {
         let _buildDragOverResult =
             (~pageY, ~offsetTop=10, ~offsetHeight=8, ()) =>
@@ -85,15 +77,21 @@ let _ =
               (),
             ),
           );
-        beforeEach(() =>
+        beforeEach(() => {
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
+          );
+
           CurrentDragSourceEditorService.setCurrentDragSource((
             SceneTreeWidgetService.getWidget(),
             MainEditorSceneTool.getSecondCube(
               StateEngineService.unsafeGetState(),
             ),
           ))
-          |> StateLogicService.getAndSetEditorState
-        );
+          |> StateLogicService.getAndSetEditorState;
+        });
+        afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
         test(
           "if pageY < offsetTop + gapHeight, return DragOver(DragBeforeTarget) ",
           () =>
@@ -112,7 +110,15 @@ let _ =
         );
       });
 
-      describe("handleDragDrop", () =>
+      describe("handleDragDrop", () => {
+        beforeEach(() =>
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
+          )
+        );
+        afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
+
         describe("test drag gameObject", () =>
           test(
             "if is scene tree widget and pass check relation, return DragGameObject(targetGameObject, sourceGameObject)",
@@ -160,8 +166,8 @@ let _ =
                         );
             },
           )
-        )
-      );
+        );
+      });
 
       describe("test drag gameObject to be target gameObject sib", () => {
         describe("test drag gameObject before target gameObject", () => {

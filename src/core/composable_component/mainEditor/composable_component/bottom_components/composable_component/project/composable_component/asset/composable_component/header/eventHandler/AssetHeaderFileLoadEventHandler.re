@@ -4,10 +4,10 @@ module CustomEventHandler = {
   type dataTuple = ReactEventRe.Form.t;
   type return = Js.Promise.t(unit);
 
-  let handleSelfLogic = ((store, dispatchFunc), createJsZipFunc, event) =>
-    AssetHeaderUtils.fileLoad((store, dispatchFunc), createJsZipFunc, event)
+  let handleSelfLogic = ((uiState, dispatchFunc), createJsZipFunc, event) =>
+    AssetHeaderUtils.fileLoad((uiState, dispatchFunc), createJsZipFunc, event)
     |> Js.Promise.catch(e => {
-         AllHistoryService.handleUndo(store, Obj.magic(dispatchFunc));
+         AllHistoryService.handleUndo(uiState, dispatchFunc);
 
          let e = Obj.magic(e);
          let editorState = StateEditorService.getState();

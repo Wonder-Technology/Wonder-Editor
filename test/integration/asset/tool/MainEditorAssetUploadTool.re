@@ -2,7 +2,7 @@ open Js.Promise;
 
 let loadOneTexture =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~imgName="loadImg.png",
       ~imgSrc="newImgBase64",
@@ -11,7 +11,7 @@ let loadOneTexture =
   let uploadedTextureNodeId = MainEditorAssetIdTool.getNewAssetId();
 
   AssetHeaderFileLoadEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     WonderBsJszip.Zip.create,
     BaseEventTool.buildOneTextureFileEvent(~imgName, ~imgSrc, ()),
   )
@@ -21,7 +21,7 @@ let loadOneTexture =
 let loadOneWDB =
     (
       ~arrayBuffer,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~fileName="Wdb",
       (),
@@ -29,7 +29,7 @@ let loadOneWDB =
   let uploadedWDBNodeId = MainEditorAssetIdTool.getNewAssetId();
 
   AssetHeaderFileLoadEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     WonderBsJszip.Zip.create,
     BaseEventTool.buildWDBFileEvent(fileName, arrayBuffer),
   )
@@ -39,7 +39,7 @@ let loadOneWDB =
 let loadOneGLB =
     (
       ~arrayBuffer,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~fileName="Glb",
       (),
@@ -47,7 +47,7 @@ let loadOneGLB =
   let uploadedWDBNodeId = MainEditorAssetIdTool.getNewAssetId();
 
   AssetHeaderFileLoadEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     WonderBsJszip.Zip.create,
     BaseEventTool.buildGLBFileEvent(fileName, arrayBuffer),
   )
@@ -59,7 +59,7 @@ let loadOneGLTFZip =
       ~sandbox,
       /* ~arrayBuffer, */
       ~createJsZipFunc,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~fileName="GltfZip",
       (),
@@ -69,7 +69,7 @@ let loadOneGLTFZip =
   let uploadedWDBNodeId = MainEditorAssetIdTool.getNewAssetId();
 
   AssetHeaderFileLoadEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     /* WonderBsJszip.Zip.create, */
     /* () => obj, */
     createJsZipFunc,

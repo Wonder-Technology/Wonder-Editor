@@ -4,13 +4,13 @@ let testImportPackageWithoutExport =
     (
       ~testFunc,
       ~wpkArrayBuffer,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~fileName="Wpk",
       (),
     ) =>
   Header.Method.importPackage(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     (_ => (), Obj.magic(-1)),
     BaseEventTool.buildPackageFileEvent(fileName, wpkArrayBuffer),
   )
@@ -19,7 +19,7 @@ let testImportPackageWithoutExport =
 let testImportPackage =
     (
       ~testFunc,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~execBeforeImportFunc=wpkArrayBuffer => (),
       ~fileName="Wpk",
@@ -32,7 +32,7 @@ let testImportPackage =
   testImportPackageWithoutExport(
     ~testFunc,
     ~wpkArrayBuffer,
-    ~store,
+    ~uiState,
     ~dispatchFunc,
     ~fileName,
     (),

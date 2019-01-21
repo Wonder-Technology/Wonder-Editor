@@ -8,7 +8,7 @@ module CustomEventHandler = {
   type dataTuple = string;
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), nodeId, value) => {
+  let handleSelfLogic = ((uiState, dispatchFunc), nodeId, value) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 

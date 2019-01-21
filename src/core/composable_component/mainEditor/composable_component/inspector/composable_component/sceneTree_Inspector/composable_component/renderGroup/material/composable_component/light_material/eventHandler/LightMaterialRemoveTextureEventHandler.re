@@ -4,7 +4,7 @@ module CustomEventHandler = {
   type dataTuple = Wonderjs.MaterialType.material;
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), (), materialComponent) => {
+  let handleSelfLogic = ((uiState, dispatchFunc), (), materialComponent) => {
     let engineState = StateEngineService.unsafeGetState();
 
     OperateTextureLogicService.handleLightMaterialComponentFromHasDiffuseMapToNoMap(

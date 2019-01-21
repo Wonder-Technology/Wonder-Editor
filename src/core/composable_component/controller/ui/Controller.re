@@ -32,7 +32,7 @@ module Method = {
 
   let closeColorPick = ControllerAmbientLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 
-  let buildAmbientLightComponent = (store, dispatchFunc) =>
+  let buildAmbientLightComponent = (uiState, dispatchFunc) =>
     <div className="header-item">
       <div className="component-item">
         <PickColorComponent
@@ -40,7 +40,7 @@ module Method = {
           label="Ambient Color : "
           getColorFunc=getColor
           changeColorFunc=changeColor
-          closeColorPickFunc=(closeColorPick((store, dispatchFunc), ()))
+          closeColorPickFunc=(closeColorPick((uiState, dispatchFunc), ()))
         />
       </div>
     </div>;
@@ -55,21 +55,21 @@ let reducer = (action, state) =>
 
 let render =
     (
-      store: AppStore.appState,
+      uiState: AppStore.appState,
       dispatchFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article key="header" className="wonder-controller-component">
     <div className="header-controller">
       <div className="controller-transform">
-        (Method.buildAmbientLightComponent(store, dispatchFunc))
+        (Method.buildAmbientLightComponent(uiState, dispatchFunc))
       </div>
       <div
         className="controller-runAndStop"
         onClick=(
           _e => {
             StateEditorService.getIsRun() ?
-              ControllerUtils.stop(dispatchFunc) : ControllerUtils.run(store);
+              ControllerUtils.stop(dispatchFunc) : ControllerUtils.run(uiState);
 
             send(Reload);
           }
@@ -84,9 +84,9 @@ let render =
     </div>
   </article>;
 
-let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
+let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
   initialState: () => {isReload: false},
   reducer,
-  render: self => render(store, dispatchFunc, self),
+  render: self => render(uiState, dispatchFunc, self),
 };

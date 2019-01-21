@@ -2,27 +2,27 @@ open InspectorComponentType;
 
 let buildComponentBox =
     (
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (name, type_, gameObject),
       (isDisposable, isShowComponent),
       buildComponentFunc,
     ) =>
   <ComponentBox
     key=(DomHelper.getRandomKey())
-    reduxTuple=(store, dispatchFunc)
+    reduxTuple=(uiState, dispatchFunc)
     header=name
     isDisposable
     isShowComponent
     type_
     gameObject
     gameObjectUIComponent=(
-      buildComponentFunc((store, dispatchFunc), gameObject)
+      buildComponentFunc((uiState, dispatchFunc), gameObject)
     )
   />;
-let _buildTransformFunc = ((store, dispatchFunc), gameObject) =>
+let _buildTransformFunc = ((uiState, dispatchFunc), gameObject) =>
   <MainEditorTransform
     key=(DomHelper.getRandomKey())
-    store
+    uiState
     dispatchFunc
     gameObject
     transformComponent=(
@@ -31,20 +31,20 @@ let _buildTransformFunc = ((store, dispatchFunc), gameObject) =>
     )
   />;
 
-let _buildLightFunc = ((store, dispatchFunc), gameObject) =>
-  <MainEditorLight key=(DomHelper.getRandomKey()) store dispatchFunc />;
+let _buildLightFunc = ((uiState, dispatchFunc), gameObject) =>
+  <MainEditorLight key=(DomHelper.getRandomKey()) uiState dispatchFunc />;
 
-let _buildSouceInstanceFunc = ((store, dispatchFunc), gameObject) =>
+let _buildSouceInstanceFunc = ((uiState, dispatchFunc), gameObject) =>
   <div key=(DomHelper.getRandomKey())>
     (DomHelper.textEl("simulate source instance"))
   </div>;
 
-let _buildRenderGroupFunc = ((store, dispatchFunc), gameObject) =>
-  <MainEditorRenderGroup store dispatchFunc currentSceneTreeNode=gameObject />;
+let _buildRenderGroupFunc = ((uiState, dispatchFunc), gameObject) =>
+  <MainEditorRenderGroup uiState dispatchFunc currentSceneTreeNode=gameObject />;
 
-let _buildGeometryFunc = ((store, dispatchFunc), gameObject) =>
+let _buildGeometryFunc = ((uiState, dispatchFunc), gameObject) =>
   <MainEditorGeometry
-    store
+    uiState
     dispatchFunc
     currentSceneTreeNode=gameObject
     geometryComponent=(
@@ -54,12 +54,12 @@ let _buildGeometryFunc = ((store, dispatchFunc), gameObject) =>
     isShowGeometryGroup=false
   />;
 
-let _buildCameraGroupFunc = ((store, dispatchFunc), gameObject) =>
-  <MainEditorCameraGroup store dispatchFunc />;
+let _buildCameraGroupFunc = ((uiState, dispatchFunc), gameObject) =>
+  <MainEditorCameraGroup uiState dispatchFunc />;
 
-let _buildArcballCamera = ((store, dispatchFunc), gameObject) =>
+let _buildArcballCamera = ((uiState, dispatchFunc), gameObject) =>
   <MainEditorArcballCameraController
-    store
+    uiState
     dispatchFunc
     arcballCameraController=(
       GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
@@ -68,17 +68,17 @@ let _buildArcballCamera = ((store, dispatchFunc), gameObject) =>
       |> StateLogicService.getEngineStateToGetData
     )
   />;
-let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
+let buildComponentUIComponent = ((uiState, dispatchFunc), type_, gameObject) =>
   switch (type_) {
   | Transform =>
     _buildTransformFunc
     |> buildComponentBox(
-         (store, dispatchFunc),
+         (uiState, dispatchFunc),
          ("Transform", type_, gameObject),
          (
            false,
            StoreUtils.geGameObjectisShowComponentFromStore(
-             store,
+             uiState,
              type_ |> InspectorComponentType.convertComponentTypeToInt,
            ),
          ),
@@ -87,12 +87,12 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
   | Light =>
     _buildLightFunc
     |> buildComponentBox(
-         (store, dispatchFunc),
+         (uiState, dispatchFunc),
          ("Light", type_, gameObject),
          (
            true,
            StoreUtils.geGameObjectisShowComponentFromStore(
-             store,
+             uiState,
              type_ |> InspectorComponentType.convertComponentTypeToInt,
            ),
          ),
@@ -101,12 +101,12 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
   | RenderGroup =>
     _buildRenderGroupFunc
     |> buildComponentBox(
-         (store, dispatchFunc),
+         (uiState, dispatchFunc),
          ("RenderGroup", type_, gameObject),
          (
            true,
            StoreUtils.geGameObjectisShowComponentFromStore(
-             store,
+             uiState,
              type_ |> InspectorComponentType.convertComponentTypeToInt,
            ),
          ),
@@ -115,12 +115,12 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
   | Geometry =>
     _buildGeometryFunc
     |> buildComponentBox(
-         (store, dispatchFunc),
+         (uiState, dispatchFunc),
          ("Geometry", type_, gameObject),
          (
            true,
            StoreUtils.geGameObjectisShowComponentFromStore(
-             store,
+             uiState,
              type_ |> InspectorComponentType.convertComponentTypeToInt,
            ),
          ),
@@ -128,17 +128,17 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
 
   | SourceInstance => ReasonReact.null
   /* _buildSouceInstanceFunc
-     |> buildComponentBox((type_, component), (store, dispatchFunc), true) */
+     |> buildComponentBox((type_, component), (uiState, dispatchFunc), true) */
 
   | CameraGroup =>
     _buildCameraGroupFunc
     |> buildComponentBox(
-         (store, dispatchFunc),
+         (uiState, dispatchFunc),
          ("Camera Group", type_, gameObject),
          (
            true,
            StoreUtils.geGameObjectisShowComponentFromStore(
-             store,
+             uiState,
              type_ |> InspectorComponentType.convertComponentTypeToInt,
            ),
          ),
@@ -147,12 +147,12 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
   | ArcballCameraController =>
     _buildArcballCamera
     |> buildComponentBox(
-         (store, dispatchFunc),
+         (uiState, dispatchFunc),
          ("ArcballCameraController", type_, gameObject),
          (
            true,
            StoreUtils.geGameObjectisShowComponentFromStore(
-             store,
+             uiState,
              type_ |> InspectorComponentType.convertComponentTypeToInt,
            ),
          ),

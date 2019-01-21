@@ -2,19 +2,19 @@ open NodeAssetType;
 
 let component = ReasonReact.statelessComponent("MainEditorAsset");
 
-let render = ((store, dispatchFunc), _self) => {
+let render = ((uiState, dispatchFunc), _self) => {
   let dragImg = DomHelper.createElement("img");
 
   <article key="asset" className="wonder-asset-component">
     <div className="asset-tree">
-      <MainEditorAssetHeader store dispatchFunc />
-      <MainEditorAssetTree store dispatchFunc dragImg />
+      <MainEditorAssetHeader uiState dispatchFunc />
+      <MainEditorAssetTree uiState dispatchFunc dragImg />
     </div>
-    <MainEditorAssetChildrenNode store dispatchFunc dragImg debounceTime=200 />
+    <MainEditorAssetChildrenNode uiState dispatchFunc dragImg debounceTime=200 />
   </article>;
 };
 
-let make = (~store, ~dispatchFunc, _children) => {
+let make = (~uiState, ~dispatchFunc, _children) => {
   ...component,
-  render: self => render((store, dispatchFunc), self),
+  render: self => render((uiState, dispatchFunc), self),
 };

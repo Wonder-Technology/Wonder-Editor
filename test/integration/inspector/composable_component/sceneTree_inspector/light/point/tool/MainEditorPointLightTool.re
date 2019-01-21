@@ -8,11 +8,11 @@ let closeColorPicker =
       ~light,
       ~color,
       ~dispatchFunc=_ => (),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       (),
     ) =>
   MainEditorPointLight.Method.closeColorPick(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     light,
     color,
   );
@@ -24,12 +24,12 @@ let blurIntensity =
     (
       ~light,
       ~value,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorPointLightUtils.blurIntensityEvent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     light,
     value,
   );
@@ -39,12 +39,12 @@ let changeIntensityAndBlur =
       ~light,
       ~sourceValue,
       ~targetValue,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
   changeIntensity(light, targetValue);
-  blurIntensity(~store, ~dispatchFunc, ~light, ~value=sourceValue, ());
+  blurIntensity(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
 };
 
 let changeConstant = (light, value) =>
@@ -54,12 +54,12 @@ let blurConstant =
     (
       ~light,
       ~value,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorPointLightUtils.blurConstantEvent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     light,
     value,
   );
@@ -68,12 +68,12 @@ let blurConstant =
        (
          ~light,
          ~value,
-         ~store=TestTool.buildEmptyAppState(),
+         ~uiState=TestTool.buildEmptyAppState(),
          ~dispatchFunc=TestTool.getDispatch(),
          (),
        ) => {
      changeConstant(light, value);
-     blurConstant(~store, ~dispatchFunc, ~light, ~value, ());
+     blurConstant(~uiState, ~dispatchFunc, ~light, ~value, ());
    }; */
 
 let changeLinear = (light, value) =>
@@ -83,12 +83,12 @@ let blurLinear =
     (
       ~light,
       ~value,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorPointLightUtils.blurLinearEvent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     light,
     value,
   );
@@ -97,12 +97,12 @@ let blurLinear =
        (
          ~light,
          ~value,
-         ~store=TestTool.buildEmptyAppState(),
+         ~uiState=TestTool.buildEmptyAppState(),
          ~dispatchFunc=TestTool.getDispatch(),
          (),
        ) => {
      changeLinear(light, value);
-     blurLinear(~store, ~dispatchFunc, ~light, ~value, ());
+     blurLinear(~uiState, ~dispatchFunc, ~light, ~value, ());
    }; */
 
 let changeQuadratic = (light, value) =>
@@ -112,12 +112,12 @@ let blurQuadratic =
     (
       ~light,
       ~value,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorPointLightUtils.blurQuadraticEvent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     light,
     value,
   );
@@ -126,12 +126,12 @@ let blurQuadratic =
        (
          ~light,
          ~value,
-         ~store=TestTool.buildEmptyAppState(),
+         ~uiState=TestTool.buildEmptyAppState(),
          ~dispatchFunc=TestTool.getDispatch(),
          (),
        ) => {
      changeQuadratic(light, value);
-     blurQuadratic(~store, ~dispatchFunc, ~light, ~value, ());
+     blurQuadratic(~uiState, ~dispatchFunc, ~light, ~value, ());
    }; */
 
 let changeRange = (light, value) =>
@@ -141,12 +141,12 @@ let blurRange =
     (
       ~light,
       ~value,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorPointLightUtils.blurRangeEvent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     light,
     value,
   );
@@ -155,12 +155,12 @@ let blurRange =
        (
          ~light,
          ~value,
-         ~store=TestTool.buildEmptyAppState(),
+         ~uiState=TestTool.buildEmptyAppState(),
          ~dispatchFunc=TestTool.getDispatch(),
          (),
        ) => {
      changeRange(light, value);
-     blurRange(~store, ~dispatchFunc, ~light, ~value, ());
+     blurRange(~uiState, ~dispatchFunc, ~light, ~value, ());
    }; */
 
 let createPointLight = (editorState, engineState) => {

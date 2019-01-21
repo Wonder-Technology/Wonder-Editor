@@ -13,7 +13,7 @@ let component = ReasonReact.reducerComponent("TransformTemplate");
 
 let reducer =
     (
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (transformComponent, blurEventFunc),
       action,
       state,
@@ -21,7 +21,7 @@ let reducer =
   switch (action) {
   | TransformBlurX(xValue) =>
     blurEventFunc(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       transformComponent,
       (state.x, state.y, state.z),
     );
@@ -30,7 +30,7 @@ let reducer =
 
   | TransformBlurY(yValue) =>
     blurEventFunc(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       transformComponent,
       (state.x, state.y, state.z),
     );
@@ -39,7 +39,7 @@ let reducer =
 
   | TransformBlurZ(zValue) =>
     blurEventFunc(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       transformComponent,
       (state.x, state.y, state.z),
     );
@@ -49,7 +49,7 @@ let reducer =
 
 let render =
     (
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (transformComponent, canBeZero),
       (changeXFunc, changeYFunc, changeZFunc),
       {state, send}: ReasonReact.self('a, 'b, 'c),
@@ -80,7 +80,7 @@ let render =
 
 let make =
     (
-      ~store,
+      ~uiState,
       ~dispatchFunc,
       ~transformComponent,
       ~changeXFunc,
@@ -98,10 +98,10 @@ let make =
     {x, y, z};
   },
   reducer:
-    reducer((store, dispatchFunc), (transformComponent, blurEventFunc)),
+    reducer((uiState, dispatchFunc), (transformComponent, blurEventFunc)),
   render: self =>
     render(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (transformComponent, canBeZero),
       (changeXFunc, changeYFunc, changeZFunc),
       self,

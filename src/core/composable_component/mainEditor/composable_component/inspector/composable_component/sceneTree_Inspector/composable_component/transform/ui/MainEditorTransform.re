@@ -1,41 +1,41 @@
 module Method = {
   let blurPositionEvent =
-      ((store, dispatchFunc), transformComponent, (x, y, z)) => {
+      ((uiState, dispatchFunc), transformComponent, (x, y, z)) => {
     let (newX, newY, newZ) =
       TransformUtils.getTransformPositionData(transformComponent);
 
     TransformUtils.isTransformVec3Equal((x, y, z), (newX, newY, newZ)) ?
       () :
       PositionBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         transformComponent,
         (x, y, z),
       );
   };
 
   let blurRotationEvent =
-      ((store, dispatchFunc), transformComponent, (x, y, z)) => {
+      ((uiState, dispatchFunc), transformComponent, (x, y, z)) => {
     let (newX, newY, newZ) =
       TransformUtils.getTransformRotationData(transformComponent);
 
     TransformUtils.isTransformVec3Equal((x, y, z), (newX, newY, newZ)) ?
       () :
       RotationBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         transformComponent,
         (x, y, z),
       );
   };
 
   let blurScaleEvent =
-      ((store, dispatchFunc), transformComponent, (x, y, z)) => {
+      ((uiState, dispatchFunc), transformComponent, (x, y, z)) => {
     let (newX, newY, newZ) =
       TransformUtils.getTransformScaleData(transformComponent);
 
     TransformUtils.isTransformVec3Equal((x, y, z), (newX, newY, newZ)) ?
       () :
       ScaleBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         transformComponent,
         (x, y, z),
       );
@@ -142,13 +142,13 @@ module Method = {
 let component = ReasonReact.statelessComponent("MainEditorTransform");
 
 let render =
-    ((store, dispatchFunc), (transformComponent, gameObject), _self) =>
+    ((uiState, dispatchFunc), (transformComponent, gameObject), _self) =>
   <article className="wonder-inspector-transform">
     <div className="inspector-item">
       <div className="item-header"> (DomHelper.textEl("Position")) </div>
       <div className="item-content">
         <TransformTemplate
-          store
+          uiState
           dispatchFunc
           transformComponent
           changeXFunc=Method.changePositionX
@@ -164,7 +164,7 @@ let render =
       <div className="item-header"> (DomHelper.textEl("Rotation")) </div>
       <div className="item-content">
         <TransformTemplate
-          store
+          uiState
           dispatchFunc
           transformComponent
           changeXFunc=Method.changeRotationX
@@ -180,7 +180,7 @@ let render =
       <div className="item-header"> (DomHelper.textEl("Scale")) </div>
       <div className="item-content">
         <TransformTemplate
-          store
+          uiState
           dispatchFunc
           transformComponent
           changeXFunc=Method.changeScaleX
@@ -197,7 +197,7 @@ let render =
 
 let make =
     (
-      ~store: AppStore.appState,
+      ~uiState: AppStore.appState,
       ~dispatchFunc,
       ~transformComponent,
       ~gameObject,
@@ -205,5 +205,5 @@ let make =
     ) => {
   ...component,
   render: self =>
-    render((store, dispatchFunc), (transformComponent, gameObject), self),
+    render((uiState, dispatchFunc), (transformComponent, gameObject), self),
 };

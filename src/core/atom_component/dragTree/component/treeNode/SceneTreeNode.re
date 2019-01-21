@@ -156,8 +156,10 @@ module Method = {
       )
       style=state.style
       draggable=(
-        SceneEngineService.isSceneGameObject(gameObject)
-        |> StateLogicService.getEngineStateToGetData
+        ! (
+          SceneEngineService.isSceneGameObject(gameObject)
+          |> StateLogicService.getEngineStateToGetData
+        )
       )
       onMouseDown=(_event => onSelectFunc(gameObject))
       onDragStart=(

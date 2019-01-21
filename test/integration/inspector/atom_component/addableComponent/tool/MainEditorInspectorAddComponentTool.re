@@ -1,55 +1,55 @@
-let _addComponent = ((store, dispatchFunc), gameObject, type_) =>
+let _addComponent = ((uiState, dispatchFunc), gameObject, type_) =>
   AddableComponent.Method.addSpecificComponent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     gameObject,
     type_,
   );
 
 let addDirectionLightComponent =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
       (),
     ) =>
-  _addComponent((store, dispatchFunc), gameObject, "Light");
+  _addComponent((uiState, dispatchFunc), gameObject, "Light");
 
 let addCameraGroupComponent =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
       (),
     ) =>
-  _addComponent((store, dispatchFunc), gameObject, "CameraGroup");
+  _addComponent((uiState, dispatchFunc), gameObject, "CameraGroup");
 
 let addGeometryComponent =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
       (),
     ) =>
-  _addComponent((store, dispatchFunc), gameObject, "Geometry");
+  _addComponent((uiState, dispatchFunc), gameObject, "Geometry");
 
 let addRenderGroupComponent =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
       (),
     ) =>
-  _addComponent((store, dispatchFunc), gameObject, "RenderGroup");
+  _addComponent((uiState, dispatchFunc), gameObject, "RenderGroup");
 
 let addArcballCameraControllerComponent =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
       (),
     ) =>
   _addComponent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     gameObject,
     "ArcballCameraController",
   );
