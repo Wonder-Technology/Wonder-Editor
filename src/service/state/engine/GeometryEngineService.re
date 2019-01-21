@@ -39,9 +39,9 @@ let getGeometryTexCoords = GeometryAPI.getGeometryTexCoords;
 
 let setGeometryTexCoords = GeometryAPI.setGeometryTexCoords;
 
-let getGeometryIndices = GeometryAPI.getGeometryIndices;
+let getGeometryIndices16 = GeometryAPI.getGeometryIndices16;
 
-let setGeometryIndices = GeometryAPI.setGeometryIndices;
+let setGeometryIndices16 = GeometryAPI.setGeometryIndices16;
 
 let getGeometryIndices32 = GeometryAPI.getGeometryIndices32;
 
@@ -84,7 +84,7 @@ let createGridPlaneGameObject = ((size, step, y), color, engineState) => {
   let engineState =
     engineState
     |> setGeometryVertices(geometry, Float32Array.make(vertices))
-    |> setGeometryIndices(geometry, Uint16Array.make(indices));
+    |> setGeometryIndices16(geometry, Uint16Array.make(indices));
 
   let engineState =
     engineState
@@ -139,22 +139,7 @@ let getIndicesCount = (geometry, engineState) => {
   endIndex - startIndex;
 };
 
-let hasIndices16 = (geometry, engineState) =>
-  GeometryType.(
-    switch (
-      IndicesGeometryMainService.unsafeGetIndicesType(geometry, engineState)
-    ) {
-    | Short => true
-    | _ => false
-    }
-  );
+let hasIndices16 = GeometryAPI.hasGeometryIndices16;
 
-let hasIndices32 = (geometry, engineState) =>
-  GeometryType.(
-    switch (
-      IndicesGeometryMainService.unsafeGetIndicesType(geometry, engineState)
-    ) {
-    | Int => true
-    | _ => false
-    }
-  );
+let hasIndices32 = GeometryAPI.hasGeometryIndices32;
+

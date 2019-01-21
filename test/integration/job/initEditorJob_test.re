@@ -80,7 +80,7 @@ let _ =
                   engineState,
                 );
               let indices =
-                GeometryEngineService.getGeometryIndices(
+                GeometryEngineService.getGeometryIndices16(
                   geometry,
                   engineState,
                 );

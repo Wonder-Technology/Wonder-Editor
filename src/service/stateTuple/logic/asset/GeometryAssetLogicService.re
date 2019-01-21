@@ -20,8 +20,8 @@ let _isGeometryVertexDataEqual = (geometry1, geometry2, engineState) =>
        Float32Array.length,
      )
   && isGeometryPointDataEqual(
-       GeometryEngineService.getGeometryIndices(geometry1, engineState),
-       GeometryEngineService.getGeometryIndices(geometry2, engineState),
+       GeometryEngineService.getGeometryIndices16(geometry1, engineState),
+       GeometryEngineService.getGeometryIndices16(geometry2, engineState),
        Uint16Array.length,
      );
 

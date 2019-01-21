@@ -187,7 +187,7 @@ let _ =
                          geometry,
                          vertices1,
                        )
-                    |> GeometryEngineService.setGeometryIndices(
+                    |> GeometryEngineService.setGeometryIndices16(
                          geometry,
                          indices1,
                        );
@@ -274,7 +274,7 @@ let _ =
               |> GeometryLogicService.setGeometryPoints(
                    geometry,
                    Js.Typed_array.Uint16Array.make([|0, 1, 2|]),
-                   GeometryEngineService.setGeometryIndices,
+                   GeometryEngineService.setGeometryIndices16,
                  );
 
             editorState |> StateEditorService.setState |> ignore;

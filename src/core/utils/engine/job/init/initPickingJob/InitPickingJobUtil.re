@@ -9,7 +9,7 @@ let _checkIntersectMesh =
     Back,
     (
       GeometryEngineService.getGeometryVertices(geometry, engineState),
-      GeometryEngineService.getGeometryIndices(geometry, engineState),
+      GeometryEngineService.getGeometryIndices16(geometry, engineState),
       GeometryEngineService.getGeometryIndices32(geometry, engineState),
       GeometryEngineService.getIndicesCount(geometry, engineState),
     ),

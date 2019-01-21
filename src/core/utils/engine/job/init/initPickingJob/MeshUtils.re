@@ -1,29 +1,14 @@
 let _forEachIndices =
-    (
-      (geometry, engineState),
-      indices16,
-      indices32,
-      indicesCount,
-      checkIntersectFunc,
-    ) => {
+    ((geometry, engineState), indices, indicesCount, checkIntersectFunc) => {
   let index = ref(0);
   let checkIntersectData = ref(None);
-
-  let indices =
-    GeometryEngineService.hasIndices16(geometry, engineState) ?
-      indices16 : indices32 |> Obj.magic;
-
-  let unsafeGetIndexFunc =
-    GeometryEngineService.hasIndices16(geometry, engineState) ?
-      Js.Typed_array.Uint16Array.unsafe_get :
-      Js.Typed_array.Uint32Array.unsafe_get |> Obj.magic;
 
   while (checkIntersectData^ |> Js.Option.isNone && index^ < indicesCount) {
     checkIntersectData :=
       checkIntersectFunc(
-        unsafeGetIndexFunc(indices, index^),
-        unsafeGetIndexFunc(indices, index^ + 1),
-        unsafeGetIndexFunc(indices, index^ + 2),
+        AbstractIndicesService.unsafeGetIndex(index^, indices),
+        AbstractIndicesService.unsafeGetIndex(index^ + 1, indices),
+        AbstractIndicesService.unsafeGetIndex(index^ + 2, indices),
       );
 
     index := index^ + 3;
@@ -61,8 +46,9 @@ let checkIntersectMesh =
 
   _forEachIndices(
     (geometry, engineState),
-    indices16,
-    indices32,
+    GeometryEngineService.hasIndices16(geometry, engineState) ?
+      indices16 |> Wonderjs.AbstractIndicesType.indices16ToIndices :
+      indices32 |> Wonderjs.AbstractIndicesType.indices32ToIndices,
     indicesCount,
     (index1, index2, index3) =>
     _checkIntersect(

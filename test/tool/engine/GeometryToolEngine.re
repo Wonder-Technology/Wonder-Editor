@@ -20,7 +20,7 @@ let createGameObjectAndSetPointData = (~engineState, ~hasTexCoords=true, ()) => 
     engineState
     |> GeometryEngineService.setGeometryVertices(geometry, vertices1)
     |> GeometryEngineService.setGeometryNormals(geometry, normals1)
-    |> GeometryEngineService.setGeometryIndices(geometry, indices1);
+    |> GeometryEngineService.setGeometryIndices16(geometry, indices1);
 
   let engineState =
     hasTexCoords ?
