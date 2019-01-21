@@ -77,7 +77,7 @@
     "wonder-webgl": "^0.0.6",
     "wonder-bs-sinon": "0.1.7",
     "component-classes": "1.2.5",
-    "wonder-commonlib": "0.2.24",
+    "wonder-commonlib": "0.2.25",
     "wonder-bs-jest": "0.2.18"
   }
 }

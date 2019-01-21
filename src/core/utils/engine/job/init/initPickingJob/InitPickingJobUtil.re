@@ -203,7 +203,6 @@ let _findPickedOne =
   |> Js.Array.map(((gameObject, checkData)) =>
        (gameObject, OptionService.unsafeGet(checkData))
      )
-     |> WonderLog.Log.print
   |> _getTopOne(cameraGameObject, engineState);
 };
 
