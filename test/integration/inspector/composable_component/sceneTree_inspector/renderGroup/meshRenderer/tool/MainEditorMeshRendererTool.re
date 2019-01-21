@@ -15,12 +15,12 @@ let changeMode =
     (
       ~value,
       ~meshRenderer=GameObjectTool.getCurrentGameObjectMeshRenderer(),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorMeshRenderer.Method.changeMode(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     meshRenderer,
     value,
   );

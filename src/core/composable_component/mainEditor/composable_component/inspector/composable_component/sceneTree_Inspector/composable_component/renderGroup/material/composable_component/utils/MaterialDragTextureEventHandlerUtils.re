@@ -26,7 +26,7 @@ let _handleGeometryAddMap =
 
 let handleSelfLogic =
     (
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       materialComponent,
       draggedNodeId,
       handleSetMapFunc,

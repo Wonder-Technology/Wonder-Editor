@@ -257,7 +257,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
 </article>
 `;
 
-exports[`MainEditorSceneTree test drag gameObject to be target gameObject sib test drag gameObject after target gameObject test target gameObject is scene gameObject set dragged gameobject to be scene first child test snapshot 1`] = `
+exports[`MainEditorSceneTree test drag test drag gameObject to be target gameObject sib test drag gameObject after target gameObject test target gameObject is scene gameObject set dragged gameobject to be scene first child test snapshot 1`] = `
 <article
   className="wonder-sceneTree-component"
 >
@@ -383,7 +383,7 @@ exports[`MainEditorSceneTree test drag gameObject to be target gameObject sib te
 </article>
 `;
 
-exports[`MainEditorSceneTree test drag gameObject to be target gameObject sib test drag gameObject after target gameObject test target gameObject isn't scene gameObject test snapshot 1`] = `
+exports[`MainEditorSceneTree test drag test drag gameObject to be target gameObject sib test drag gameObject after target gameObject test target gameObject isn't scene gameObject test snapshot 1`] = `
 <article
   className="wonder-sceneTree-component"
 >
@@ -509,7 +509,7 @@ exports[`MainEditorSceneTree test drag gameObject to be target gameObject sib te
 </article>
 `;
 
-exports[`MainEditorSceneTree test drag gameObject to be target gameObject sib test drag gameObject before target gameObject test target gameObject is scene gameObject set dragged gameobject to be scene first child test snapshot 1`] = `
+exports[`MainEditorSceneTree test drag test drag gameObject to be target gameObject sib test drag gameObject before target gameObject test target gameObject is scene gameObject set dragged gameobject to be scene first child test snapshot 1`] = `
 <article
   className="wonder-sceneTree-component"
 >
@@ -635,7 +635,7 @@ exports[`MainEditorSceneTree test drag gameObject to be target gameObject sib te
 </article>
 `;
 
-exports[`MainEditorSceneTree test drag gameObject to be target gameObject sib test drag gameObject before target gameObject test target gameObject isn't scene gameObject test snapshot 1`] = `
+exports[`MainEditorSceneTree test drag test drag gameObject to be target gameObject sib test drag gameObject before target gameObject test target gameObject isn't scene gameObject test snapshot 1`] = `
 <article
   className="wonder-sceneTree-component"
 >
@@ -761,7 +761,7 @@ exports[`MainEditorSceneTree test drag gameObject to be target gameObject sib te
 </article>
 `;
 
-exports[`MainEditorSceneTree test drag gameObject to be target gameObject sib test drag gameObject into target gameObject test target gameObject is scene gameObject set dragged gameobject to be scene last child test snapshot 1`] = `
+exports[`MainEditorSceneTree test drag test drag gameObject to be target gameObject sib test drag gameObject into target gameObject test target gameObject is scene gameObject set dragged gameobject to be scene last child test snapshot 1`] = `
 <article
   className="wonder-sceneTree-component"
 >
@@ -887,7 +887,7 @@ exports[`MainEditorSceneTree test drag gameObject to be target gameObject sib te
 </article>
 `;
 
-exports[`MainEditorSceneTree test drag gameObject to be target gameObject sib test drag gameObject into target gameObject test target gameObject isn't scene gameObject test snapshot 1`] = `
+exports[`MainEditorSceneTree test drag test drag gameObject to be target gameObject sib test drag gameObject into target gameObject test target gameObject isn't scene gameObject test snapshot 1`] = `
 <article
   className="wonder-sceneTree-component"
 >

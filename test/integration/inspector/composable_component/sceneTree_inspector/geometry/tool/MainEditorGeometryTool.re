@@ -21,12 +21,12 @@ let changeGeometry =
       ~sourceGeometry,
       ~targetGeometry,
       ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorGeometry.Method.changeGeometry(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     gameObject,
     (sourceGeometry, targetGeometry),
   );

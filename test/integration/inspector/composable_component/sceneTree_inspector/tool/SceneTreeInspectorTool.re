@@ -2,12 +2,12 @@ let renameGameObject =
     (
       ~name,
       ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   SceneTreeInspector.Method.reNameGameObjectBlurEvent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     gameObject,
     name,
   );

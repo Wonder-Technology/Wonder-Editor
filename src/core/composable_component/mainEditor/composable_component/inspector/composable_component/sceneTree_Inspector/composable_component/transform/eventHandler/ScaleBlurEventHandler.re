@@ -5,7 +5,7 @@ module CustomEventHandler = {
   type return = unit;
 
   let setUndoValueToCopiedEngineState =
-      ((store, dispatchFunc), transformComponent, (x, y, z)) =>
+      ((uiState, dispatchFunc), transformComponent, (x, y, z)) =>
     StateEngineService.unsafeGetState()
     |> StateEngineService.deepCopyForRestore
     |> TransformEngineService.setLocalScale((x, y, z), transformComponent);

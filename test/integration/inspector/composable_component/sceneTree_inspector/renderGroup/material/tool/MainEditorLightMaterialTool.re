@@ -1,11 +1,11 @@
 let changeMaterialTypeToBeLightMaterial =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorMaterial.Method.changeMaterialType(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     (),
     (BasicMaterial, LightMaterial),
   );
@@ -17,13 +17,13 @@ let changeShininess =
 let blurShininess =
     (
       ~dispatchFunc=_ => (),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~material=GameObjectTool.getCurrentGameObjectMaterial(),
       ~value,
       (),
     ) =>
   MainEditorLightMaterial.Method.blurShininessEvent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     material,
     value,
   );
@@ -39,11 +39,11 @@ let closeColorPicker =
       ~material,
       ~color,
       ~dispatchFunc=_ => (),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       (),
     ) =>
   MainEditorLightMaterial.Method.closeColorPick(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     material,
     color,
   );
@@ -52,7 +52,7 @@ module Drag = {
   let dragAssetTextureToMap =
       (
         ~dispatchFunc=_ => (),
-        ~store=TestTool.buildEmptyAppState(),
+        ~uiState=TestTool.buildEmptyAppState(),
         ~widget=AssetWidgetService.getWidget(),
         ~effectAllowd="move",
         ~dragImg=DomHelper.createElement("img"),
@@ -69,7 +69,7 @@ module Drag = {
          event,
        ); */
     MainEditorLightMaterial.Method.onDrop(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       material,
       textureNodeId,
       /* DragEventUtils.handleDragEnd(event); */

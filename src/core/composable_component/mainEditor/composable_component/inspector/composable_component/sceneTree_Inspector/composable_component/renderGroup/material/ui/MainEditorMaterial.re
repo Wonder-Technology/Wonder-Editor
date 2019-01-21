@@ -18,13 +18,13 @@ module Method = {
 
   let changeMaterial = MainEditorChangeMaterialEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let renderBasicMaterial = ((store, dispatchFunc), ()) => {
+  let renderBasicMaterial = ((uiState, dispatchFunc), ()) => {
     let gameObject =
       SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
       |> StateLogicService.getEditorState;
 
     <MainEditorBasicMaterial
-      store
+      uiState
       dispatchFunc
       materialComponent=(
         GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
@@ -35,13 +35,13 @@ module Method = {
     />;
   };
 
-  let renderLightMaterial = ((store, dispatchFunc), ()) => {
+  let renderLightMaterial = ((uiState, dispatchFunc), ()) => {
     let gameObject =
       SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
       |> StateLogicService.getEditorState;
 
     <MainEditorLightMaterial
-      store
+      uiState
       dispatchFunc
       materialComponent=(
         GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
@@ -151,7 +151,7 @@ let component = ReasonReact.reducerComponent("MainEditorMaterial");
 
 let reducer =
     (
-      (store, dispatchFunc) as reduxTuple,
+      (uiState, dispatchFunc) as reduxTuple,
       currentSceneTreeNode,
       action,
       state,
@@ -256,7 +256,7 @@ let _renderMaterialGroup =
 
 let render =
     (
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       currentSceneTreeNode,
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) =>
@@ -280,8 +280,8 @@ let render =
           MainEditorMaterialUtils.handleSpecificFuncByMaterialType(
             state.materialType,
             (
-              Method.renderBasicMaterial((store, dispatchFunc)),
-              Method.renderLightMaterial((store, dispatchFunc)),
+              Method.renderBasicMaterial((uiState, dispatchFunc)),
+              Method.renderLightMaterial((uiState, dispatchFunc)),
             ),
           )
         )
@@ -292,7 +292,7 @@ let render =
 
 let make =
     (
-      ~store,
+      ~uiState,
       ~dispatchFunc,
       ~currentSceneTreeNode,
       ~isShowMaterialGroup=false,
@@ -317,6 +317,6 @@ let make =
         |> StateLogicService.getEngineStateToGetData,
     };
   },
-  reducer: reducer((store, dispatchFunc), currentSceneTreeNode),
-  render: self => render((store, dispatchFunc), currentSceneTreeNode, self),
+  reducer: reducer((uiState, dispatchFunc), currentSceneTreeNode),
+  render: self => render((uiState, dispatchFunc), currentSceneTreeNode, self),
 };

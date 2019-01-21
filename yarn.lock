@@ -2945,6 +2945,10 @@ hosted-git-info@^2.1.4:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.7.1.tgz#97f236977bd6e125408930ff6de3eec6281ec047"
 
+hotkeys-js@^3.3.8, hotkeys-js@^3.4.3:
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/hotkeys-js/-/hotkeys-js-3.4.3.tgz#20d4d30cb1362264f57fe03170a9ffbba226f2aa"
+
 html-encoding-sniffer@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/html-encoding-sniffer/-/html-encoding-sniffer-1.0.2.tgz#e70d84b94da53aa375e11fe3a351be6642ca46f8"
@@ -5601,6 +5605,12 @@ react-dom@15.6.2:
     prop-types "^15.6.2"
     scheduler "^0.10.0"
 
+react-hot-keys@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-hot-keys/-/react-hot-keys-1.2.2.tgz#079dcecb15db7fa669300eeb844cfda8f920d4a4"
+  dependencies:
+    hotkeys-js "^3.3.8"
+
 react-lazy-load@^3.0.12:
   version "3.0.13"
   resolved "https://registry.yarnpkg.com/react-lazy-load/-/react-lazy-load-3.0.13.tgz#3b0a92d336d43d3f0d73cbe6f35b17050b08b824"
@@ -7156,9 +7166,9 @@ wonder-webgl@^0.0.2, wonder-webgl@^0.0.6:
   dependencies:
     wonder-log "^0.2.2"
 
-wonder.js@1.0.0-alpha.24.2:
-  version "1.0.0-alpha.24.2"
-  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.24.2.tgz#5d5eeda242548f23863834beaf500e2a0e43232d"
+wonder.js@1.0.0-alpha.24.5:
+  version "1.0.0-alpha.24.5"
+  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.24.5.tgz#1c798c143589bc1746e9f0927302c55b7449f15a"
   dependencies:
     bs-fetch "^0.3.0"
     wonder-bs-json "^0.0.1"

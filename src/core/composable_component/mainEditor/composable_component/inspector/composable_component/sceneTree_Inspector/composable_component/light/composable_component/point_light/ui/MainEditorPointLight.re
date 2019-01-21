@@ -19,17 +19,17 @@ module Method = {
 
   let closeColorPick = PointLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 
-  let buildColorPickComponent = ((store, dispatchFunc), lightComponent) =>
+  let buildColorPickComponent = ((uiState, dispatchFunc), lightComponent) =>
     <PickColorComponent
       label="Color"
       getColorFunc=(getColor(lightComponent))
       changeColorFunc=(changeColor(lightComponent))
       closeColorPickFunc=(
-        closeColorPick((store, dispatchFunc), lightComponent)
+        closeColorPick((uiState, dispatchFunc), lightComponent)
       )
     />;
 
-  let buildIntensityComponent = ((store, dispatchFunc), lightComponent) =>
+  let buildIntensityComponent = ((uiState, dispatchFunc), lightComponent) =>
     <MainEditorFloatInputBaseComponent
       label="Intensity"
       getComponentValueFunc=(
@@ -40,13 +40,13 @@ module Method = {
       )
       blurValueFunc=(
         MainEditorPointLightUtils.blurIntensityEvent(
-          (store, dispatchFunc),
+          (uiState, dispatchFunc),
           lightComponent,
         )
       )
     />;
 
-  let buildConstantComponent = ((store, dispatchFunc), lightComponent) =>
+  let buildConstantComponent = ((uiState, dispatchFunc), lightComponent) =>
     <MainEditorFloatInputBaseComponent
       label="Constant"
       getComponentValueFunc=(
@@ -57,13 +57,13 @@ module Method = {
       )
       blurValueFunc=(
         MainEditorPointLightUtils.blurConstantEvent(
-          (store, dispatchFunc),
+          (uiState, dispatchFunc),
           lightComponent,
         )
       )
     />;
 
-  let buildLinearComponent = ((store, dispatchFunc), lightComponent) =>
+  let buildLinearComponent = ((uiState, dispatchFunc), lightComponent) =>
     <MainEditorFloatInputBaseComponent
       label="Linear"
       getComponentValueFunc=(
@@ -74,13 +74,13 @@ module Method = {
       )
       blurValueFunc=(
         MainEditorPointLightUtils.blurLinearEvent(
-          (store, dispatchFunc),
+          (uiState, dispatchFunc),
           lightComponent,
         )
       )
     />;
 
-  let buildQuadraticComponent = ((store, dispatchFunc), lightComponent) =>
+  let buildQuadraticComponent = ((uiState, dispatchFunc), lightComponent) =>
     <MainEditorFloatInputBaseComponent
       label="Quadratic"
       getComponentValueFunc=(
@@ -91,13 +91,13 @@ module Method = {
       )
       blurValueFunc=(
         MainEditorPointLightUtils.blurQuadraticEvent(
-          (store, dispatchFunc),
+          (uiState, dispatchFunc),
           lightComponent,
         )
       )
     />;
 
-  let buildRangeComponent = ((store, dispatchFunc), lightComponent) =>
+  let buildRangeComponent = ((uiState, dispatchFunc), lightComponent) =>
     <MainEditorFloatInputBaseComponent
       label="Range"
       getComponentValueFunc=(
@@ -108,25 +108,25 @@ module Method = {
       )
       blurValueFunc=(
         MainEditorPointLightUtils.blurRangeEvent(
-          (store, dispatchFunc),
+          (uiState, dispatchFunc),
           lightComponent,
         )
       )
     />;
 };
 
-let render = ((store, dispatchFunc), lightComponent, _self) =>
+let render = ((uiState, dispatchFunc), lightComponent, _self) =>
   <article className="wonder-point-light">
-    (Method.buildColorPickComponent((store, dispatchFunc), lightComponent))
-    (Method.buildIntensityComponent((store, dispatchFunc), lightComponent))
-    (Method.buildConstantComponent((store, dispatchFunc), lightComponent))
-    (Method.buildLinearComponent((store, dispatchFunc), lightComponent))
-    (Method.buildQuadraticComponent((store, dispatchFunc), lightComponent))
-    (Method.buildRangeComponent((store, dispatchFunc), lightComponent))
+    (Method.buildColorPickComponent((uiState, dispatchFunc), lightComponent))
+    (Method.buildIntensityComponent((uiState, dispatchFunc), lightComponent))
+    (Method.buildConstantComponent((uiState, dispatchFunc), lightComponent))
+    (Method.buildLinearComponent((uiState, dispatchFunc), lightComponent))
+    (Method.buildQuadraticComponent((uiState, dispatchFunc), lightComponent))
+    (Method.buildRangeComponent((uiState, dispatchFunc), lightComponent))
   </article>;
 
 let make =
-    (~store: AppStore.appState, ~dispatchFunc, ~lightComponent, _children) => {
+    (~uiState: AppStore.appState, ~dispatchFunc, ~lightComponent, _children) => {
   ...component,
-  render: self => render((store, dispatchFunc), lightComponent, self),
+  render: self => render((uiState, dispatchFunc), lightComponent, self),
 };

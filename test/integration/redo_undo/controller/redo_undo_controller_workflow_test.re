@@ -54,7 +54,7 @@ let _ =
       |> Js.Array.length
       |> expect == 5;
     });
-    test("click run button(which store all stack), add three gameObject", () => {
+    test("click run button(which uiState all stack), add three gameObject", () => {
       _addGameObjectWithCount(2);
 
       RedoUndoTool.undoHistoryState();

@@ -1,7 +1,7 @@
 module Method = {
   let _blurArcballCameraValue =
       (
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         arcballCameraController,
         value,
         (
@@ -14,7 +14,7 @@ module Method = {
     |> ValueService.isValueEqual(ValueType.Float, value) ?
       () :
       pushUndoStackWithCopiedEngineStateFunc(
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         arcballCameraController,
         value,
       );
@@ -23,9 +23,9 @@ module Method = {
   };
 
   let blurArcballCameraDistance =
-      ((store, dispatchFunc), arcballCameraController, distance) =>
+      ((uiState, dispatchFunc), arcballCameraController, distance) =>
     _blurArcballCameraValue(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       arcballCameraController,
       distance,
       (
@@ -35,9 +35,9 @@ module Method = {
     );
 
   let blurArcballCameraMinDistance =
-      ((store, dispatchFunc), arcballCameraController, minDistance) =>
+      ((uiState, dispatchFunc), arcballCameraController, minDistance) =>
     _blurArcballCameraValue(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       arcballCameraController,
       minDistance,
       (
@@ -64,7 +64,7 @@ module Method = {
 let component =
   ReasonReact.statelessComponent("MainEditorArcballCameraController");
 
-let render = ((store, dispatchFunc), arcballCameraController, _self) =>
+let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
   <article className="wonder-inspector-arcballCameraController">
     <MainEditorFloatInputBaseComponent
       label="Distance"
@@ -78,7 +78,7 @@ let render = ((store, dispatchFunc), arcballCameraController, _self) =>
       )
       blurValueFunc=(
         Method.blurArcballCameraDistance(
-          (store, dispatchFunc),
+          (uiState, dispatchFunc),
           arcballCameraController,
         )
       )
@@ -95,15 +95,15 @@ let render = ((store, dispatchFunc), arcballCameraController, _self) =>
       )
       blurValueFunc=(
         Method.blurArcballCameraMinDistance(
-          (store, dispatchFunc),
+          (uiState, dispatchFunc),
           arcballCameraController,
         )
       )
     />
   </article>;
 
-let make = (~store, ~dispatchFunc, ~arcballCameraController, _children) => {
+let make = (~uiState, ~dispatchFunc, ~arcballCameraController, _children) => {
   ...component,
   render: self =>
-    render((store, dispatchFunc), arcballCameraController, self),
+    render((uiState, dispatchFunc), arcballCameraController, self),
 };

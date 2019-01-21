@@ -176,7 +176,7 @@ module Method = {
 let component = ReasonReact.reducerComponent("MainEditorMaterialMap");
 
 let reducer =
-    ((store, dispatchFunc), (materialComponent, onDropFunc), action, state) =>
+    ((uiState, dispatchFunc), (materialComponent, onDropFunc), action, state) =>
   switch (action) {
   | DragEnter =>
     ReasonReact.Update({
@@ -198,7 +198,7 @@ let reducer =
 
   | DragDrop(startNodeId) =>
     ReasonReactUtils.sideEffects(() =>
-      onDropFunc((store, dispatchFunc), materialComponent, startNodeId)
+      onDropFunc((uiState, dispatchFunc), materialComponent, startNodeId)
     )
 
   | SetTextureToEngine(textureNodeId, textureComponent) =>
@@ -206,14 +206,14 @@ let reducer =
     | None =>
       ReasonReactUtils.updateWithSideEffects(
         {...state, currentTextureComponent: Some(textureComponent)}, _state =>
-        onDropFunc((store, dispatchFunc), materialComponent, textureNodeId)
+        onDropFunc((uiState, dispatchFunc), materialComponent, textureNodeId)
       )
     | Some(sourceTextureComponent) =>
       sourceTextureComponent === textureComponent ?
         ReasonReact.NoUpdate :
         ReasonReactUtils.updateWithSideEffects(
           {...state, currentTextureComponent: Some(textureComponent)}, _state =>
-          onDropFunc((store, dispatchFunc), materialComponent, textureNodeId)
+          onDropFunc((uiState, dispatchFunc), materialComponent, textureNodeId)
         )
     }
 
@@ -227,7 +227,7 @@ let reducer =
   };
 
 let _renderDragableImage =
-    (store, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    (uiState, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <div
     className="texture-img"
     onClick=(_e => send(ShowTextureGroup))
@@ -285,7 +285,7 @@ let _renderTextureGroup = (state, send) =>
 
 let render =
     (
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (materialComponent, label),
       (getMapFunc, removeTextureFunc),
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
@@ -293,12 +293,12 @@ let render =
   <article className="inspector-item">
     <div className="item-header"> (DomHelper.textEl(label)) </div>
     <div className="item-content item-texture">
-      (_renderDragableImage(store, self))
+      (_renderDragableImage(uiState, self))
       <button
         className="texture-remove"
         onClick=(
           e =>
-            removeTextureFunc((store, dispatchFunc), (), materialComponent)
+            removeTextureFunc((uiState, dispatchFunc), (), materialComponent)
         )>
         (DomHelper.textEl("Remove"))
       </button>
@@ -311,7 +311,7 @@ let render =
 
 let make =
     (
-      ~store: AppStore.appState,
+      ~uiState: AppStore.appState,
       ~dispatchFunc,
       ~materialComponent,
       ~label,
@@ -329,10 +329,10 @@ let make =
       getMapFunc(materialComponent)
       |> StateLogicService.getEngineStateToGetData,
   },
-  reducer: reducer((store, dispatchFunc), (materialComponent, onDropFunc)),
+  reducer: reducer((uiState, dispatchFunc), (materialComponent, onDropFunc)),
   render: self =>
     render(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (materialComponent, label),
       (getMapFunc, removeTextureFunc),
       self,

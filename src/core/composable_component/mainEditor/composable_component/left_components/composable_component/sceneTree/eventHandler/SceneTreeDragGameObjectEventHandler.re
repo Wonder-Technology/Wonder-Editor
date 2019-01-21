@@ -102,7 +102,7 @@ module CustomEventHandler = {
 
   let handleSelfLogic =
       (
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         (),
         (targetGameObject, draggedGameObject, dragPosition),
       ) => {

@@ -8,12 +8,12 @@ let blurArcballCameraDistance =
     (
       ~cameraController,
       ~value,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorArcballCameraController.Method.blurArcballCameraDistance(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     cameraController,
     value,
   );
@@ -22,13 +22,13 @@ let changeDistanceAndBlur =
     (
       ~cameraController,
       ~value,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
   changeDistance(cameraController, value);
   blurArcballCameraDistance(
-    ~store,
+    ~uiState,
     ~dispatchFunc,
     ~cameraController,
     ~value,
@@ -46,12 +46,12 @@ let blurArcballCameraMinDistance =
     (
       ~cameraController,
       ~value,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorArcballCameraController.Method.blurArcballCameraMinDistance(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     cameraController,
     value,
   );
@@ -60,13 +60,13 @@ let changeMinDistanceAndBlur =
     (
       ~cameraController,
       ~value,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
   changeMinDistance(cameraController, value);
   blurArcballCameraMinDistance(
-    ~store,
+    ~uiState,
     ~dispatchFunc,
     ~cameraController,
     ~value,

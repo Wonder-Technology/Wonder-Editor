@@ -5,12 +5,12 @@ module CustomEventHandler = {
   type dataTuple = Wonderjs.GameObjectPrimitiveType.gameObject;
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), (), wdbGameObject) => {
+  let handleSelfLogic = ((uiState, dispatchFunc), (), wdbGameObject) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
     DragWDBEventHandlerUtils.handleSelfLogic(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (),
       (
         switch (editorState |> SceneTreeEditorService.getCurrentSceneTreeNode) {

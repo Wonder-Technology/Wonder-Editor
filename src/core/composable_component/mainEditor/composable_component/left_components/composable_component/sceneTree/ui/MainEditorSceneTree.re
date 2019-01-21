@@ -3,13 +3,13 @@ open SceneGraphType;
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
 module Method = {
-  let onSelect = ((store, dispatchFunc), uid) => {
+  let onSelect = ((uiState, dispatchFunc), uid) => {
     let editorState = StateEditorService.getState();
 
     switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
     | None =>
       SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         (),
         Some(uid),
       )
@@ -17,7 +17,7 @@ module Method = {
       gameObject === uid ?
         () :
         SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-          (store, dispatchFunc),
+          (uiState, dispatchFunc),
           (),
           Some(uid),
         )
@@ -51,7 +51,7 @@ module Method = {
 
   let rec buildSceneTreeArray =
           (
-            (store, dispatchFunc, dragImg),
+            (uiState, dispatchFunc, dragImg),
             currentSceneTreeNode,
             (onSelectFunc, dragGameObjectFunc, dragWDBFunc),
             (sceneGameObject, editorState),
@@ -86,7 +86,7 @@ module Method = {
            checkNodeRelation=CheckSceneTreeLogicService.checkGameObjectRelation
            treeChildren=(
              buildSceneTreeArray(
-               (store, dispatchFunc, dragImg),
+               (uiState, dispatchFunc, dragImg),
                currentSceneTreeNode,
                (onSelectFunc, dragGameObjectFunc, dragWDBFunc),
                (sceneGameObject, editorState),
@@ -100,7 +100,7 @@ module Method = {
 let component =
   ReasonReact.statelessComponentWithRetainedProps("MainEditorSceneTree");
 
-let render = (store, dispatchFunc, _self) => {
+let render = (uiState, dispatchFunc, _self) => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
@@ -123,16 +123,16 @@ let render = (store, dispatchFunc, _self) => {
                 ),
               |]
               |> Method.buildSceneTreeArray(
-                   (store, dispatchFunc, DomHelper.createElement("img")),
+                   (uiState, dispatchFunc, DomHelper.createElement("img")),
                    editorState
                    |> SceneTreeEditorService.getCurrentSceneTreeNode,
                    (
-                     Method.onSelect((store, dispatchFunc)),
+                     Method.onSelect((uiState, dispatchFunc)),
                      Method.dragGameObjectToBeTargetSib(
-                       (store, dispatchFunc),
+                       (uiState, dispatchFunc),
                        (),
                      ),
-                     Method.dragWDBToBeTargetSib((store, dispatchFunc), ()),
+                     Method.dragWDBToBeTargetSib((uiState, dispatchFunc), ()),
                    ),
                    (
                      SceneEngineService.getSceneGameObject(engineState),
@@ -151,11 +151,11 @@ let shouldUpdate =
   newSelf.retainedProps.updateTypeArr
   |> StoreUtils.shouldComponentUpdate(UpdateStore.SceneTree);
 
-let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
+let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
   retainedProps: {
-    updateTypeArr: StoreUtils.getUpdateComponentTypeArr(store),
+    updateTypeArr: StoreUtils.getUpdateComponentTypeArr(uiState),
   },
   shouldUpdate,
-  render: self => render(store, dispatchFunc, self),
+  render: self => render(uiState, dispatchFunc, self),
 };

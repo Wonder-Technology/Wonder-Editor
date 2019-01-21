@@ -6,7 +6,7 @@ module CustomEventHandler = {
   type dataTuple = option(Wonderjs.GameObjectPrimitiveType.gameObject);
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), (), gameObjectOpt) =>
+  let handleSelfLogic = ((uiState, dispatchFunc), (), gameObjectOpt) =>
     SceneTreeSelectCurrentNodeUtils.select(dispatchFunc, gameObjectOpt);
 };
 

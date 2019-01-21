@@ -131,7 +131,7 @@ let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
 
 let _renderGeometryGroup =
     (
-      store,
+      uiState,
       currentSceneTreeNode,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
@@ -160,7 +160,7 @@ let _renderGeometryGroup =
 
 let render =
     (
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       currentSceneTreeNode,
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) =>
@@ -185,14 +185,14 @@ let render =
     </div>
     (
       state.isShowGeometryGroup ?
-        _renderGeometryGroup(store, currentSceneTreeNode, self) :
+        _renderGeometryGroup(uiState, currentSceneTreeNode, self) :
         ReasonReact.null
     )
   </article>;
 
 let make =
     (
-      ~store,
+      ~uiState,
       ~dispatchFunc,
       ~currentSceneTreeNode,
       ~geometryComponent,
@@ -204,6 +204,6 @@ let make =
     isShowGeometryGroup,
     currentGeometry: geometryComponent,
   },
-  reducer: reducer((store, dispatchFunc), currentSceneTreeNode),
-  render: self => render((store, dispatchFunc), currentSceneTreeNode, self),
+  reducer: reducer((uiState, dispatchFunc), currentSceneTreeNode),
+  render: self => render((uiState, dispatchFunc), currentSceneTreeNode, self),
 };

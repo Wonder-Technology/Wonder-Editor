@@ -1,4 +1,4 @@
-let getDispatch = () => Reductive.Store.dispatch(IndexStore.store);
+let getDispatch = UIStateService.getDispatch;
 
 let buildEmptyAppState = () => AppStore.state;
 
@@ -54,7 +54,7 @@ let initEditorAndEngineStateAndInitSceneWithJob =
       ~noWorkerJobRecord,
       ~isBuildFakeDom=true,
       ~isInitJob=true,
-      ~context= TestToolEngine. getDefaultContext(),
+      ~context=TestToolEngine.getDefaultContext(),
       (),
     ) => {
   TestToolEngine.createAndSetEngineState(

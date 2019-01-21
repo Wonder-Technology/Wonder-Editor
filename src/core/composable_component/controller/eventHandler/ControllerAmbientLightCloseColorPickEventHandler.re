@@ -4,7 +4,7 @@ module CustomEventHandler = {
   type dataTuple = string;
   type return = unit;
 
-  let setUndoValueToCopiedEngineState = ((store, dispatchFunc), (), value) =>
+  let setUndoValueToCopiedEngineState = ((uiState, dispatchFunc), (), value) =>
     StateEngineService.unsafeGetState()
     |> StateEngineService.deepCopyForRestore
     |> SceneEngineService.setAmbientLightColor(

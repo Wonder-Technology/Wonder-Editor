@@ -8,7 +8,7 @@ module CustomEventHandler = {
   type dataTuple = componentType;
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), currentSceneTreeNode, type_) => {
+  let handleSelfLogic = ((uiState, dispatchFunc), currentSceneTreeNode, type_) => {
     let (editorState, engineState) =
       (StateEditorService.getState(), StateEngineService.unsafeGetState())
       |> InspectorAddComponentUtils.addComponentByType(

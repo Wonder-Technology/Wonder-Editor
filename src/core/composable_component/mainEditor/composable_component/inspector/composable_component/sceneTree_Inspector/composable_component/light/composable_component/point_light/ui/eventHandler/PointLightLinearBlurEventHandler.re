@@ -5,7 +5,7 @@ module CustomEventHandler = {
   type return = unit;
 
   let setUndoValueToCopiedEngineState =
-      ((store, dispatchFunc), lightComponent, linear) =>
+      ((uiState, dispatchFunc), lightComponent, linear) =>
     StateEngineService.unsafeGetState()
     |> StateEngineService.deepCopyForRestore
     |> PointLightEngineService.setPointLightLinear(linear, lightComponent);

@@ -1,6 +1,6 @@
 let handleSelfLogic =
     (
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (),
       (targetGameObject, wdbGameObject, dragPosition),
     ) => {

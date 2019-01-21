@@ -6,7 +6,7 @@ module CustomEventHandler = {
   type dataTuple = string;
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), gameObject, newName) => {
+  let handleSelfLogic = ((uiState, dispatchFunc), gameObject, newName) => {
     GameObjectEngineService.setGameObjectName(newName, gameObject)
     |> StateLogicService.getAndRefreshEngineStateWithFunc;
 

@@ -11,7 +11,7 @@ module CustomEventHandler = {
       selectedFolderNodeIdInAssetTree,
     );
 
-  let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
+  let handleSelfLogic = ((uiState, dispatchFunc), (), ()) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 

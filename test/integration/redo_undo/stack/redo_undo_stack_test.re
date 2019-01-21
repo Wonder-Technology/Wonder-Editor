@@ -27,7 +27,7 @@ let _ =
         |> StateLogicService.getAndSetEditorState
       );
 
-      test("should only store max size stacks to undo stack", () => {
+      test("should only uiState max size stacks to undo stack", () => {
         _addGameObjectWithCount(3);
 
         RedoUndoTool.undoHistoryState();

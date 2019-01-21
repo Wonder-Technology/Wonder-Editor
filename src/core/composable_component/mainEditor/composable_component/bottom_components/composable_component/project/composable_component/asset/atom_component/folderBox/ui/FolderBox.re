@@ -141,7 +141,7 @@ let render =
 
 let make =
     (
-      ~store,
+      ~uiState,
       ~dispatchFunc,
       ~dragImg,
       ~effectAllowd,
@@ -184,7 +184,7 @@ let make =
   },
   render: self =>
     render(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (dragImg, effectAllowd, imgSrc, folderId, name, widget, isSelected),
       (isWidget, checkNodeRelation),
       self,

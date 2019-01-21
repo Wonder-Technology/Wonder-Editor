@@ -1,9 +1,9 @@
 let buildStore = (~currentComponentType=BottomShowComponentStore.Project, ()) => {
-  let store = TestTool.buildEmptyAppState();
+  let uiState = TestTool.buildEmptyAppState();
   {
-    ...store,
+    ...uiState,
     showComponentState: {
-      ...store.showComponentState,
+      ...uiState.showComponentState,
       currentComponentType,
     },
   };

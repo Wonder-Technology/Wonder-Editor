@@ -6,7 +6,7 @@ module CustomEventHandler = {
 
   let handleSelfLogic =
       (
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         currentSceneTreeNode,
         (sourceGeometry, targetGeometry),
       ) => {

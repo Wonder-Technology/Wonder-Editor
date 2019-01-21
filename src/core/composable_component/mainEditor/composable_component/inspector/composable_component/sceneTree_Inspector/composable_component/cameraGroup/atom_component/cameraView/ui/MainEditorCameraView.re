@@ -1,11 +1,11 @@
 open MainEditorCameraViewType;
 
 module Method = {
-  let setCurrentCamera = ((store, dispatchFunc), basicCameraView, event) => {
+  let setCurrentCamera = ((uiState, dispatchFunc), basicCameraView, event) => {
     let e = event |> ReactEventType.convertReactMouseEventToJsEvent;
     e##target##checked ?
       CameraViewSetCurrentCameraEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         (),
         basicCameraView,
       ) :
@@ -15,7 +15,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorCameraView");
 
-let render = ((store, dispatchFunc), _self) => {
+let render = ((uiState, dispatchFunc), _self) => {
   let engineState = StateEngineService.unsafeGetState();
   let currentGameObjectBasicCameraViewComponent =
     engineState
@@ -44,7 +44,7 @@ let render = ((store, dispatchFunc), _self) => {
           defaultChecked=isCurrentCamera
           onClick=(
             Method.setCurrentCamera(
-              (store, dispatchFunc),
+              (uiState, dispatchFunc),
               currentGameObjectBasicCameraViewComponent,
             )
           )
@@ -55,7 +55,7 @@ let render = ((store, dispatchFunc), _self) => {
   </article>;
 };
 
-let make = (~store, ~dispatchFunc, _children) => {
+let make = (~uiState, ~dispatchFunc, _children) => {
   ...component,
-  render: self => render((store, dispatchFunc), self),
+  render: self => render((uiState, dispatchFunc), self),
 };

@@ -1,7 +1,7 @@
-let buildInspectorComponent = (store, addableComponentConfig, ()) =>
+let buildInspectorComponent = (uiState, addableComponentConfig, ()) =>
   ReactTestRenderer.create(
     <MainEditorInspector
-      store
+      uiState
       dispatchFunc=(TestTool.getDispatch())
       addableComponentConfig
     />,
@@ -10,7 +10,7 @@ let buildInspectorComponent = (store, addableComponentConfig, ()) =>
 let buildCameraView = () =>
   ReactTestRenderer.create(
     <MainEditorCameraView
-      store=(TestTool.buildEmptyAppState())
+      uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
     />,
   );
@@ -18,7 +18,7 @@ let buildCameraView = () =>
 let buildSceneTree = () =>
   ReactTestRenderer.create(
     <MainEditorSceneTree
-      store=(TestTool.buildEmptyAppState())
+      uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
     />,
   );
@@ -26,7 +26,7 @@ let buildSceneTree = () =>
 let buildLight = () =>
   ReactTestRenderer.create(
     <MainEditorLight
-      store=(TestTool.buildEmptyAppState())
+      uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
     />,
   );
@@ -34,7 +34,7 @@ let buildLight = () =>
 let buildGeometry = () =>
   ReactTestRenderer.create(
     <MainEditorGeometry
-      store=(TestTool.buildEmptyAppState())
+      uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
       currentSceneTreeNode=(GameObjectTool.unsafeGetCurrentSceneTreeNode())
       geometryComponent=(GameObjectTool.getCurrentGameObjectGeometry())
@@ -44,14 +44,14 @@ let buildGeometry = () =>
 let buildMeshRenderer = () =>
   ReactTestRenderer.create(
     <MainEditorMeshRenderer
-      store=(TestTool.buildEmptyAppState())
+      uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
     />,
   );
 let buildMaterial = () =>
   ReactTestRenderer.create(
     <MainEditorMaterial
-      store=(TestTool.buildEmptyAppState())
+      uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
       currentSceneTreeNode=(GameObjectTool.unsafeGetCurrentSceneTreeNode())
     />,
@@ -59,7 +59,7 @@ let buildMaterial = () =>
 let buildBasicMaterial = () =>
   ReactTestRenderer.create(
     <MainEditorBasicMaterial
-      store=(TestTool.buildEmptyAppState())
+      uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
       materialComponent=(GameObjectTool.getCurrentGameObjectBasicMaterial())
     />,
@@ -68,7 +68,7 @@ let buildBasicMaterial = () =>
 let buildLightMaterial = () =>
   ReactTestRenderer.create(
     <MainEditorLightMaterial
-      store=(TestTool.buildEmptyAppState())
+      uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
       materialComponent=(GameObjectTool.getCurrentGameObjectLightMaterial())
     />,
@@ -77,7 +77,7 @@ let buildLightMaterial = () =>
 let buildInspectorComponent = () =>
   ReactTestRenderer.create(
     <MainEditorInspector
-      store=(TestTool.buildEmptyAppState())
+      uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
       addableComponentConfig=(InspectorTool.buildFakeAllShowComponentConfig())
     />,
@@ -86,7 +86,7 @@ let buildInspectorComponent = () =>
 let buildMainEditorTransformComponent = () =>
   ReactTestRenderer.create(
     <MainEditorTransform
-      store=(TestTool.buildEmptyAppState())
+      uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
       gameObject=(GameObjectTool.unsafeGetCurrentSceneTreeNode())
       transformComponent=(GameObjectTool.getCurrentSceneTreeNodeTransform())
@@ -96,7 +96,7 @@ let buildMainEditorTransformComponent = () =>
 let buildDirectionLight = () =>
   ReactTestRenderer.create(
     <MainEditorDirectionLight
-      store=(TestTool.buildEmptyAppState())
+      uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
       lightComponent=(
         GameObjectTool.getCurrentGameObjectDirectionLightComponent()
@@ -107,14 +107,14 @@ let buildDirectionLight = () =>
 let buildCameraProjection = () =>
   ReactTestRenderer.create(
     <MainEditorCameraProjection
-      store=(TestTool.buildEmptyAppState())
+      uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
     />,
   );
 let buildPointLight = () =>
   ReactTestRenderer.create(
     <MainEditorPointLight
-      store=(TestTool.buildEmptyAppState())
+      uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
       lightComponent=(GameObjectTool.getCurrentGameObjectPointLightComponent())
     />,
@@ -123,7 +123,7 @@ let buildPointLight = () =>
 let buildHeader = () =>
   ReactTestRenderer.create(
     <Header
-      store=(TestTool.buildEmptyAppState())
+      uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
     />,
   );

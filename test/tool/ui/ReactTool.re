@@ -1,12 +1,12 @@
 /* let reducer =
      (
-       ~store=TestTool.buildEmptyAppState(),
+       ~uiState=TestTool.buildEmptyAppState(),
        ~dispatchFunc=TestTool.getDispatch(),
        ~action,
        ~reducerFunc,
        (),
      ) =>
-   reducerFunc((store, dispatchFunc)); */
+   reducerFunc((uiState, dispatchFunc)); */
 
 let getUpdateState = reducerResult =>
   switch (reducerResult) {
