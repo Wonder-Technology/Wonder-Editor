@@ -23,8 +23,10 @@ let setTransformLocalEulerAngles = (localEulerAngles, transform, engineState) =>
   );
 
 let getParent = (child: Wonderjs.TransformType.transform, state) =>
-  Wonderjs.TransformAPI.unsafeGetTransformParent(child, state)
-  |> Js.Undefined.toOption;
+  Wonderjs.HierachyTransformService.getParent(
+    child,
+    Wonderjs.RecordTransformMainService.getRecord(state),
+  );
 
 let setParent =
     (
@@ -53,7 +55,6 @@ let setParentKeepOrder =
 let getChildren = (transform: Wonderjs.TransformType.transform, state) =>
   Wonderjs.TransformAPI.unsafeGetTransformChildren(transform, state);
 
-/* TODO move to engine */
 let _changeChildOrder =
     (
       sourceTransfrom,
@@ -89,7 +90,7 @@ let changeChildOrder =
       targetTransform,
       targetParentTransform,
       action: TransformType.changeChildOrder,
-      state,
+      engineState,
     )
     : Wonderjs.StateDataMainType.state => {
   WonderLog.Contract.requireCheck(
@@ -104,8 +105,8 @@ let changeChildOrder =
               ),
               () =>
               switch (
-                getParent(sourceTransfrom, state),
-                getParent(targetTransform, state),
+                getParent(sourceTransfrom, engineState),
+                getParent(targetTransform, engineState),
               ) {
               | (Some(sourceParent), Some(targetParent)) =>
                 sourceParent == targetParent;
@@ -120,18 +121,18 @@ let changeChildOrder =
   );
 
   {
-    ...state,
+    ...engineState,
     transformRecord:
       Some(
         _changeChildOrder(
           sourceTransfrom,
           targetTransform,
-          getChildren(targetParentTransform, state),
+          getChildren(targetParentTransform, engineState),
           action,
         )
         /* TODO move to engine */
         |> Wonderjs.HierachyTransformService._setChildren(
-             Wonderjs.RecordTransformMainService.getRecord(state),
+             Wonderjs.RecordTransformMainService.getRecord(engineState),
              targetParentTransform,
            ),
       ),
