@@ -90,9 +90,7 @@ module Method = {
     |> ignore;
 
   let _isNotNeedPushToHistoryStack = pickedGameObjectOpt =>
-    UIHistoryService.getLastStoreInStack(AllStateData.getHistoryState())
-    |> Js.Option.isNone
-    || pickedGameObjectOpt
+    pickedGameObjectOpt
     |> Js.Option.isNone
     && ! (
          SceneTreeEditorService.hasCurrentSceneTreeNode
@@ -117,19 +115,11 @@ module Method = {
               dispatchFunc,
               pickedGameObjectOpt,
             ) :
-            {
-              let lastStore =
-                UIHistoryService.getLastStoreInStack(
-                  AllStateData.getHistoryState(),
-                )
-                |> OptionService.unsafeGet;
-
-              SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-                (lastStore, dispatchFunc),
-                (),
-                pickedGameObjectOpt,
-              );
-            };
+            SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+              (UIStateService.getState(), dispatchFunc),
+              (),
+              pickedGameObjectOpt,
+            );
 
           (StateEngineService.unsafeGetState(), event);
         },
