@@ -1,6 +1,6 @@
 open SettingType;
 
-let unsafeGetHotKeys = ({hotKeys}) => hotKeys |> OptionService.unsafeGet;
+let getHotKeys = ({hotKeys}) => hotKeys;
 
 let unsafeGetIsDebug = ({debug}) => {
   let {isDebug} = debug |> OptionService.unsafeGet;

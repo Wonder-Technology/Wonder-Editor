@@ -25,13 +25,12 @@ let convertToRecord = setting => {
          ),
     hotKeys:
       json
-      |> optional(
-           field("hotkeys", json =>
+      |> field(
+           "hotkeys",
+           array(json =>
              {
-               redo: json |> field("redo", array(string)),
-               undo: json |> field("undo", array(string)),
-               duplicate: json |> field("duplicate", array(string)),
-               delete: json |> field("delete", array(string)),
+               name: json |> field("name", string),
+               values: json |> field("values", array(string)),
              }
            ),
          ),

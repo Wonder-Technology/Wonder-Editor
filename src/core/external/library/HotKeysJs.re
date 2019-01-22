@@ -1,6 +1,6 @@
 type hotkeysHandler;
 
-[@bs.module "hotkeys-js/dist/hotkeys.esm"]
+[@bs.module "hotkeys-js/dist/hotkeys.common"]
 external hotkeys :
   (string, (ReactEventRe.Keyboard.t, hotkeysHandler) => unit) => unit =
   "default";
