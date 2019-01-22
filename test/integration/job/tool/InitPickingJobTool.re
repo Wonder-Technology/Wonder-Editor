@@ -217,13 +217,6 @@ let prepareState = (sandbox, editorState, engineState) => {
 
   SceneTreeEditorService.clearCurrentSceneTreeNode
   |> StateLogicService.getAndSetEditorState;
-
-  MainEditor.Method.bindPickSuccessEvent(
-    Sinon.createEmptyStubWithJsObjSandbox(sandbox),
-  );
-  MainEditor.Method.bindPickFailEvent(
-    Sinon.createEmptyStubWithJsObjSandbox(sandbox),
-  );
 };
 
 let triggerPicking = (~eventButton=1, ~sandbox, ~pageX, ~pageY, ()) => {

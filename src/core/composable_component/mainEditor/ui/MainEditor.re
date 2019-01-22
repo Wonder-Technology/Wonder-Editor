@@ -69,75 +69,6 @@ module Method = {
       } :
       ReasonReact.null;
 
-  let bindRefreshInspectorEvent = dispatchFunc =>
-    ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=EventEditorService.getRefreshInspectorEventName(),
-      ~handleFunc=
-        (. event, engineState) => {
-          engineState |> StateEngineService.setState |> ignore;
-
-          dispatchFunc(
-            AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
-          )
-          |> ignore;
-
-          (StateEngineService.unsafeGetState(), event);
-        },
-      ~state=StateEngineService.unsafeGetState(),
-      (),
-    )
-    |> StateEngineService.setState
-    |> ignore;
-
-  let _isNotNeedPushToHistoryStack = pickedGameObjectOpt =>
-    pickedGameObjectOpt
-    |> Js.Option.isNone
-    && ! (
-         SceneTreeEditorService.hasCurrentSceneTreeNode
-         |> StateLogicService.getEditorState
-       );
-
-  let _bindPickEvent = (dispatchFunc, eventName) =>
-    ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName,
-      ~handleFunc=
-        (. ({userData}: EventType.customEvent) as event, engineState) => {
-          let pickedGameObjectOpt =
-            userData
-            |> Js.Option.map((. userData) =>
-                 userData |> InitPickingJobType.userDataToGameObject
-               );
-
-          engineState |> StateEngineService.setState |> ignore;
-
-          _isNotNeedPushToHistoryStack(pickedGameObjectOpt) ?
-            SceneTreeSelectCurrentNodeUtils.select(
-              dispatchFunc,
-              pickedGameObjectOpt,
-            ) :
-            SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-              (UIStateService.getState(), dispatchFunc),
-              (),
-              pickedGameObjectOpt,
-            );
-
-          (StateEngineService.unsafeGetState(), event);
-        },
-      ~state=StateEngineService.unsafeGetState(),
-      (),
-    )
-    |> StateEngineService.setState
-    |> ignore;
-
-  let bindPickSuccessEvent = dispatchFunc =>
-    _bindPickEvent(
-      dispatchFunc,
-      EventEditorService.getPickSuccessEventName(),
-    );
-
-  let bindPickFailEvent = dispatchFunc =>
-    _bindPickEvent(dispatchFunc, EventEditorService.getPickFailEventName());
-
   let dragWDB = MainEditorDragWDBEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 };
 
@@ -224,10 +155,6 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
          })
       |> ignore
     );
-
-    Method.bindRefreshInspectorEvent(dispatchFunc);
-    Method.bindPickSuccessEvent(dispatchFunc);
-    Method.bindPickFailEvent(dispatchFunc);
 
     EventHelper.onresize(Method.resizeCanvasAndViewPort);
   },

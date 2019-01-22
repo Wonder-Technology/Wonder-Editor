@@ -206,31 +206,40 @@ let _findPickedOne =
   |> _getTopOne(cameraGameObject, engineState);
 };
 
-let _triggerPickSuccessEvent = (gameObject, engineState) => {
-  let (engineState, _) =
-    ManageEventEngineService.triggerCustomGlobalEvent(
-      CreateCustomEventEngineService.create(
-        EventEditorService.getPickSuccessEventName(),
-        Some(gameObject),
-      ),
-      engineState,
+let _isNotNeedPushToHistoryStack = pickedGameObjectOpt =>
+  pickedGameObjectOpt
+  |> Js.Option.isNone
+  && ! (
+       SceneTreeEditorService.hasCurrentSceneTreeNode
+       |> StateLogicService.getEditorState
+     );
+
+let _handleSceneTreeCurrentNodeAndRedoUndo =
+    (pickedGameObjectOpt, engineState) => {
+  engineState |> StateEngineService.setState |> ignore;
+
+  /* let pickedGameObjectOpt = None; */
+  let dispatchFunc = UIStateService.getDispatch();
+
+  _isNotNeedPushToHistoryStack(pickedGameObjectOpt) ?
+    SceneTreeSelectCurrentNodeUtils.select(
+      dispatchFunc,
+      pickedGameObjectOpt,
+    ) :
+    SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+      (UIStateService.getState(), dispatchFunc),
+      (),
+      pickedGameObjectOpt,
     );
 
-  engineState;
+  StateEngineService.unsafeGetState();
 };
 
-let _triggerPickFailEvent = engineState => {
-  let (engineState, _) =
-    ManageEventEngineService.triggerCustomGlobalEvent(
-      CreateCustomEventEngineService.create(
-        EventEditorService.getPickFailEventName(),
-        None,
-      ),
-      engineState,
-    );
+let _handlePickSuccess = (gameObject, engineState) =>
+  _handleSceneTreeCurrentNodeAndRedoUndo(Some(gameObject), engineState);
 
-  engineState;
-};
+let _handlePickFail = engineState =>
+  _handleSceneTreeCurrentNodeAndRedoUndo(None, engineState);
 
 let _handlePicking = (event: EventType.customEvent, engineState) => {
   let editorState = StateEditorService.getState();
@@ -244,8 +253,8 @@ let _handlePicking = (event: EventType.customEvent, engineState) => {
     switch (
       (editorState, engineState) |> _findPickedOne(event, allGameObjectData)
     ) {
-    | None => _triggerPickFailEvent(engineState)
-    | Some(gameObject) => _triggerPickSuccessEvent(gameObject, engineState)
+    | None => _handlePickFail(engineState)
+    | Some(gameObject) => _handlePickSuccess(gameObject, engineState)
     };
 
   (engineState, event);

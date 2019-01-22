@@ -358,28 +358,28 @@ let _ =
           |> expect == Some(SceneTreeWidgetService.getWidget());
         });
 
-        describe("trigger pickSuccess event", () => {
-          test("test trigger", () => {
-            let _ = _prepare();
-            let a = ref(0);
-            ManageEventEngineService.onCustomGlobalEvent(
-              ~eventName=EventEditorService.getPickSuccessEventName(),
-              ~handleFunc=
-                (. event, engineState) => {
-                  a := 1;
+        describe("handle pick success", () =>
+          /* test("test trigger", () => {
+               let _ = _prepare();
+               let a = ref(0);
+               ManageEventEngineService.onCustomGlobalEvent(
+                 ~eventName=EventEditorService.getPickSuccessEventName(),
+                 ~handleFunc=
+                   (. event, engineState) => {
+                     a := 1;
 
-                  (engineState, event);
-                },
-              ~state=StateEngineService.unsafeGetState(),
-              (),
-            )
-            |> StateEngineService.setState
-            |> ignore;
+                     (engineState, event);
+                   },
+                 ~state=StateEngineService.unsafeGetState(),
+                 (),
+               )
+               |> StateEngineService.setState
+               |> ignore;
 
-            _triggerPicking();
+               _triggerPicking();
 
-            a^ |> expect == 1;
-          });
+               a^ |> expect == 1;
+             }); */
           /* test("can get picked gameObject in event handle func", () => {
                let gameObject = _prepare();
                let pickedGameObject = ref(0);
@@ -451,12 +451,12 @@ let _ =
               ),
             )
             |> expect == (true, true);
-          });
-        });
+          })
+        );
       });
 
       describe("if not find", () =>
-        describe("trigger pick fail event", () => {
+        describe("handle pick fail", () => {
           let _prepare = () =>
             InitPickingJobTool.prepareOneGameObject(
               ~sandbox,
