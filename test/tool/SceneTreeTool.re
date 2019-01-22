@@ -8,7 +8,7 @@ let _prepareSpecificGameObjects = engineState => {
       engineState,
     );
   let (editorState, engineState, camera) =
-    CameraEngineService.createCamera(editorState, engineState);
+    CameraLogicService.createCamera(editorState, engineState);
   let (engineState, arcballCameraController) =
     ArcballCameraEngineService.create(engineState);
 
@@ -36,11 +36,11 @@ let _prepareSpecificGameObjects = engineState => {
 let _buildTwoCameraSceneGraph = (componentData, editorState, engineState) => {
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (editorState, engineState, camera1) =
-    CameraEngineService.createCamera(editorState, engineState);
+    CameraLogicService.createCamera(editorState, engineState);
   let (editorState, engineState, camera2) =
-    CameraEngineService.createCamera(editorState, engineState);
+    CameraLogicService.createCamera(editorState, engineState);
   let (editorState, engineState, cube1) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
 
   (
     camera1,
@@ -94,13 +94,13 @@ let buildTwoCameraSceneGraphToEngine = sandbox => {
 let _buildThreeLayerSceneGraph = (componentData, editorState, engineState) => {
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (editorState, engineState, cube1) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
   let (editorState, engineState, cube2) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
   let (editorState, engineState, cube3) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
   let (editorState, engineState, cube4) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
 
   (
     editorState,
@@ -144,13 +144,13 @@ let buildThreeLayerSceneGraphToEngine = sandbox => {
 let _buildFourLayerSceneGraph = (componentData, editorState, engineState) => {
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (editorState, engineState, cube1) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
   let (editorState, engineState, cube2) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
   let (editorState, engineState, cube3) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
   let (editorState, engineState, cube4) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
   (
     editorState,
     engineState

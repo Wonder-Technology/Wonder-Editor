@@ -8,10 +8,18 @@
     },
     "hotkeys": {
         "redo": [
-            "ctrl+r"
+            "ctrl+y",
+            "command+y"
         ],
         "undo": [
-            "ctrl+z"
+            "ctrl+z",
+            "command+z"
+        ],
+        "duplicate": [
+            "ctrl+d"
+        ],
+        "delete": [
+            "delete"
         ]
     }
 }

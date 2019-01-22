@@ -137,14 +137,14 @@ let generateDirectionPointLightsAndCubeWDB = () =>
       LightMaterialEngineService.create(engineState);
 
     let (editorState, engineState, cube1) =
-      PrimitiveEngineService.createCube(
+      PrimitiveLogicService.createCube(
         (geometry, lightMaterial),
         editorState,
         engineState,
       );
 
     let (editorState, engineState, directionLight) =
-      PrimitiveEngineService.createDirectionLight(editorState, engineState);
+      PrimitiveLogicService.createDirectionLight(editorState, engineState);
 
     let (editorState, engineState, pointLight) =
       _createPointLight(editorState, engineState);
@@ -182,14 +182,14 @@ let generateSceneWDB = () =>
       LightMaterialEngineService.create(engineState);
 
     let (editorState, engineState, cube1) =
-      PrimitiveEngineService.createCube(
+      PrimitiveLogicService.createCube(
         (geometry, lightMaterial),
         editorState,
         engineState,
       );
 
     let (editorState, engineState, camera) =
-      CameraEngineService.createCamera(editorState, engineState);
+      CameraLogicService.createCamera(editorState, engineState);
     let (engineState, arcballCameraController) =
       ArcballCameraEngineService.create(engineState);
 
@@ -235,7 +235,7 @@ let generateSceneWDB = () =>
          );
 
     let (editorState, engineState, directionLight) =
-      PrimitiveEngineService.createDirectionLight(editorState, engineState);
+      PrimitiveLogicService.createDirectionLight(editorState, engineState);
 
     /* let (editorState, engineState, pointLight) =
        _createPointLight(editorState, engineState); */

@@ -28,7 +28,7 @@ let prepareSpecificGameObjects = (editorState, engineState) => {
       engineState,
     );
   let (editorState, engineState, camera) =
-    CameraEngineService.createCamera(editorState, engineState);
+    CameraLogicService.createCamera(editorState, engineState);
   let (engineState, arcballCameraController) =
     ArcballCameraEngineService.create(engineState);
 
@@ -73,7 +73,8 @@ let prepareSpecificGameObjects = (editorState, engineState) => {
   (editorState, engineState, camera);
 };
 
-let _prepareEngineState = ((camera, directionLight, cube1, cube2), engineState) =>
+let _prepareEngineState =
+    ((camera, directionLight, cube1, cube2), engineState) =>
   engineState
   |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
        camera,
@@ -110,7 +111,7 @@ let createDefaultScene = (cubeGeometry, editorState, engineState) => {
     MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
 
   let (editorState, engineState, camera, cube1, cube2, directionLight) =
-    SceneEngineService.createDefaultSceneGameObjects(
+    SceneLogicService.createDefaultSceneGameObjects(
       (cubeGeometry, defaultLightMaterialData),
       editorState,
       engineState,

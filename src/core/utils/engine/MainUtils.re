@@ -96,6 +96,7 @@ let init = () =>
                         _,
                         StateEditorService.getState(),
                       )
+                   |> HotKeysSettingEditorService.bindHotKeys
                    |> StateEditorService.setState
                    |> ignore;
 

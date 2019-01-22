@@ -8,5 +8,5 @@ let setSetting = (setting, editorState) => {
   StateEditorService.setStateIsDebug(isDebug);
   StateEngineService.setIsDebug(isDebug) |> ignore;
 
-  {...editorState, settingRecord: OperateSettingService.setSetting(setting)};
+  {...editorState, settingRecord: setting};
 };

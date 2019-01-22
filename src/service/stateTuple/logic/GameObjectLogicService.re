@@ -187,3 +187,10 @@ let disposeArcballCameraController =
     engineState,
   ),
 );
+
+let isCurrentSceneTreeNodeCanBeOperate = ((editorState, engineState)) =>
+  switch (editorState |> SceneTreeEditorService.getCurrentSceneTreeNode) {
+  | None => false
+  | Some(gameObject) =>
+    ! (engineState |> SceneEngineService.isSceneGameObject(gameObject))
+  };

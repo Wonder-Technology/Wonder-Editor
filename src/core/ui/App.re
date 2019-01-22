@@ -47,11 +47,6 @@ let render = ((uiState: AppStore.appState, dispatchFunc), _self) =>
 let make = (~state as uiState: AppStore.appState, ~dispatch, _children) => {
   ...component,
   didMount: _self => {
-    HotKeysJs.hotkeys("shift+m", (e, handler) => {
-      Js.log(23123);
-      Js.log(handler);
-    });
-
     WonderLog.Wonder_Console.makeObjInToWindow();
 
     AppExtensionUtils.getExtension(Method.getStorageParentKey())

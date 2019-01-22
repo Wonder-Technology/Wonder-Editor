@@ -129,7 +129,7 @@ let createCube = engineState => {
 let prepareCamera =
     (cameraPos, (viewWidth, viewHeight), (editorState, engineState)) => {
   let (editorState, engineState, editCamera) =
-    CameraEngineService.createCamera(editorState, engineState);
+    CameraLogicService.createCamera(editorState, engineState);
 
   let editCameraPerspectiveCameraProjection =
     GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
