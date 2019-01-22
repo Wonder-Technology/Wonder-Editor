@@ -41,7 +41,9 @@ module CustomEventHandler = {
                engineState
                |> HierarchyGameObjectEngineService.addChild(
                     engineState
-                    |> HierarchyGameObjectEngineService.getParentGameObject(targetGameObject)
+                    |> HierarchyGameObjectEngineService.getParentGameObject(
+                         targetGameObject,
+                       )
                     |> OptionService.unsafeGet,
                     clonedGameObject,
                   );

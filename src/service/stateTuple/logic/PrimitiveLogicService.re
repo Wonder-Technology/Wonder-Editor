@@ -48,7 +48,6 @@ let _create3DGameObject =
 
   (editorState, engineState, obj);
 };
-
 let createCube = ((cubeGeometry, lightMaterial), editorState, engineState) =>
   _create3DGameObject(
     ("Cube", cubeGeometry, lightMaterial),

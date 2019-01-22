@@ -167,15 +167,8 @@ let _renderCloneGameObjectComponent =
 let render =
     (reduxTuple, ({state, send}: ReasonReact.self('a, 'b, 'c)) as self) => {
   let _isCurrentSceneTreeNodeCanBeOperate =
-    switch (
-      SceneTreeEditorService.getCurrentSceneTreeNode
-      |> StateLogicService.getEditorState
-    ) {
-    | None => false
-    | Some(gameObject) =>
-      SceneEngineService.isSceneGameObject(gameObject)
-      |> StateLogicService.getEngineStateToGetData
-    };
+    GameObjectLogicService.isCurrentSceneTreeNodeCanBeOperate
+    |> StateLogicService.getStateToGetData;
 
   <article
     key="mainEditorScenetreeHeader" className="wonder-left-components-header">

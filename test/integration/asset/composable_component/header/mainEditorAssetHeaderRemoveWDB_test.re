@@ -331,7 +331,7 @@ let _ =
                 LightMaterialEngineService.create(engineState);
 
               let (editorState, engineState, cube1) =
-                PrimitiveEngineService.createCube(
+                PrimitiveLogicService.createCube(
                   (geometry, lightMaterial),
                   editorState,
                   engineState,

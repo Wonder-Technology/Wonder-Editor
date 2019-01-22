@@ -179,7 +179,7 @@ let _ =
                 LightMaterialEngineService.create(engineState);
 
               let (editorState, engineState, cube1) =
-                PrimitiveEngineService.createCube(
+                PrimitiveLogicService.createCube(
                   (geometry, lightMaterial),
                   editorState,
                   engineState,
@@ -193,7 +193,7 @@ let _ =
                 LightMaterialEngineService.create(engineState);
 
               let (editorState, engineState, cube2) =
-                PrimitiveEngineService.createCube(
+                PrimitiveLogicService.createCube(
                   (defaultCubeGeometryComponent, lightMaterial),
                   editorState,
                   engineState,
@@ -1030,7 +1030,7 @@ let _ =
                 LightMaterialEngineService.create(engineState);
 
               let (editorState, engineState, cube1) =
-                PrimitiveEngineService.createCube(
+                PrimitiveLogicService.createCube(
                   (geometry, lightMaterial),
                   editorState,
                   engineState,
@@ -1651,22 +1651,22 @@ let _ =
           let editorState = StateEditorService.getState();
           let engineState = StateEngineService.unsafeGetState();
           let (editorState, engineState, light1) =
-            PrimitiveEngineService.createDirectionLight(
+            PrimitiveLogicService.createDirectionLight(
               editorState,
               engineState,
             );
           let (editorState, engineState, light2) =
-            PrimitiveEngineService.createDirectionLight(
+            PrimitiveLogicService.createDirectionLight(
               editorState,
               engineState,
             );
           let (editorState, engineState, light3) =
-            PrimitiveEngineService.createDirectionLight(
+            PrimitiveLogicService.createDirectionLight(
               editorState,
               engineState,
             );
           let (editorState, engineState, light4) =
-            PrimitiveEngineService.createDirectionLight(
+            PrimitiveLogicService.createDirectionLight(
               editorState,
               engineState,
             );
@@ -1696,7 +1696,7 @@ let _ =
                        |> JobEngineService.execDisposeJob;
 
                      let (editorState, engineState, light5) =
-                       PrimitiveEngineService.createDirectionLight(
+                       PrimitiveLogicService.createDirectionLight(
                          editorState,
                          engineState,
                        );

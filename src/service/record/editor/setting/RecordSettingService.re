@@ -1,3 +1,3 @@
 open SettingType;
 
-let create = () => {debug: None, redoUndo: None};
+let create = () => {debug: None, redoUndo: None, hotKeys: None};

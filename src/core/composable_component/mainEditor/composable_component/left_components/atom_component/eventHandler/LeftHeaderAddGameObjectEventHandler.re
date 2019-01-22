@@ -23,7 +23,7 @@ module CustomEventHandler = {
           );
 
         SceneUtils.addGameObject(
-          PrimitiveEngineService.createCube((
+          PrimitiveLogicService.createCube((
             defaultCubeGeometry,
             defaultLightMaterialData,
           )),
@@ -43,14 +43,14 @@ module CustomEventHandler = {
           );
 
         SceneUtils.addGameObject(
-          PrimitiveEngineService.createSphere((
+          PrimitiveLogicService.createSphere((
             defaultSphereGeometry,
             defaultLightMaterialData,
           )),
         );
 
       | EmptyGameObject =>
-        SceneUtils.addGameObject(PrimitiveEngineService.createEmptyGameObject)
+        SceneUtils.addGameObject(PrimitiveLogicService.createEmptyGameObject)
       };
 
     SceneTreeEditorService.setIsShowChildren(

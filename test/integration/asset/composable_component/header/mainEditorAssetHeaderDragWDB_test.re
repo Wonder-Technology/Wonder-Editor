@@ -243,12 +243,12 @@ let _ =
                 _test(
                   (editorState, engineState) => {
                     let (editorState, engineState, directionLight1) =
-                      PrimitiveEngineService.createDirectionLight(
+                      PrimitiveLogicService.createDirectionLight(
                         editorState,
                         engineState,
                       );
                     let (editorState, engineState, directionLight2) =
-                      PrimitiveEngineService.createDirectionLight(
+                      PrimitiveLogicService.createDirectionLight(
                         editorState,
                         engineState,
                       );
@@ -262,18 +262,18 @@ let _ =
                 _test(
                   (editorState, engineState) => {
                     let (editorState, engineState, directionLight1) =
-                      PrimitiveEngineService.createDirectionLight(
+                      PrimitiveLogicService.createDirectionLight(
                         editorState,
                         engineState,
                       );
                     let (editorState, engineState, directionLight2) =
-                      PrimitiveEngineService.createDirectionLight(
+                      PrimitiveLogicService.createDirectionLight(
                         editorState,
                         engineState,
                       );
 
                     let (editorState, engineState, directionLight3) =
-                      PrimitiveEngineService.createDirectionLight(
+                      PrimitiveLogicService.createDirectionLight(
                         editorState,
                         engineState,
                       );
@@ -296,12 +296,12 @@ let _ =
                 _test(
                   (editorState, engineState) => {
                     let (editorState, engineState, directionLight1) =
-                      PrimitiveEngineService.createDirectionLight(
+                      PrimitiveLogicService.createDirectionLight(
                         editorState,
                         engineState,
                       );
                     let (editorState, engineState, directionLight2) =
-                      PrimitiveEngineService.createDirectionLight(
+                      PrimitiveLogicService.createDirectionLight(
                         editorState,
                         engineState,
                       );
