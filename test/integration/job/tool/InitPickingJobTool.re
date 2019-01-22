@@ -190,7 +190,8 @@ let prepareGameObject =
   let sceneGameObject = SceneEngineService.getSceneGameObject(engineState);
 
   let engineState =
-    engineState |> HierarchyGameObjectEngineService.addChild(sceneGameObject, gameObject);
+    engineState
+    |> HierarchyGameObjectEngineService.addChild(sceneGameObject, gameObject);
 
   let engineState =
     engineState
@@ -225,7 +226,7 @@ let prepareState = (sandbox, editorState, engineState) => {
   );
 };
 
-let triggerPicking = (sandbox, pageX, pageY, eventButton) => {
+let triggerPicking = (~eventButton=1, ~sandbox, ~pageX, ~pageY, ()) => {
   let target = EventTool.buildCanvasTarget();
 
   EventTool.triggerDomEvent(
@@ -253,7 +254,7 @@ let triggerPicking = (sandbox, pageX, pageY, eventButton) => {
 };
 
 let triggerPickingAndRestore = (~eventButton=1, ~sandbox, ~pageX, ~pageY, ()) => {
-  triggerPicking(sandbox, pageX, pageY, eventButton);
+  triggerPicking(~eventButton, ~sandbox, ~pageX, ~pageY, ());
 
   EventTool.restore();
 };

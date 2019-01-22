@@ -17,6 +17,11 @@ let setCurrentSceneTreeNode = (gameObject, editorState) => {
        ),
 };
 
+let hasCurrentSceneTreeNode = editorState =>
+  editorState.sceneTreeRecord
+  |> CurrentSceneTreeNodeSceneTreeService.getCurrentSceneTreeNode
+  |> Js.Option.isSome;
+
 let clearCurrentSceneTreeNode = editorState => {
   ...editorState,
   sceneTreeRecord:

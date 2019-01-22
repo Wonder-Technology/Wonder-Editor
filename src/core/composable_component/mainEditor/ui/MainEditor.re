@@ -89,6 +89,16 @@ module Method = {
     |> StateEngineService.setState
     |> ignore;
 
+  let _isNotNeedPushToHistoryStack = pickedGameObjectOpt =>
+    UIHistoryService.getLastStoreInStack(AllStateData.getHistoryState())
+    |> Js.Option.isNone
+    || pickedGameObjectOpt
+    |> Js.Option.isNone
+    && ! (
+         SceneTreeEditorService.hasCurrentSceneTreeNode
+         |> StateLogicService.getEditorState
+       );
+
   let _bindPickEvent = (dispatchFunc, eventName) =>
     ManageEventEngineService.onCustomGlobalEvent(
       ~eventName,
@@ -102,23 +112,24 @@ module Method = {
 
           engineState |> StateEngineService.setState |> ignore;
 
-          switch (
-            UIHistoryService.getLastStoreInStack(
-              AllStateData.getHistoryState(),
-            )
-          ) {
-          | None =>
+          _isNotNeedPushToHistoryStack(pickedGameObjectOpt) ?
             SceneTreeSelectCurrentNodeUtils.select(
               dispatchFunc,
               pickedGameObjectOpt,
-            )
-          | Some(lastStore) =>
-            SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-              (lastStore, dispatchFunc),
-              (),
-              pickedGameObjectOpt,
-            )
-          };
+            ) :
+            {
+              let lastStore =
+                UIHistoryService.getLastStoreInStack(
+                  AllStateData.getHistoryState(),
+                )
+                |> OptionService.unsafeGet;
+
+              SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+                (lastStore, dispatchFunc),
+                (),
+                pickedGameObjectOpt,
+              );
+            };
 
           (StateEngineService.unsafeGetState(), event);
         },

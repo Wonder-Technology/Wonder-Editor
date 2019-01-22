@@ -68,10 +68,10 @@ let _ =
                 _prepareTwoGameObjects(sandbox);
 
               InitPickingJobTool.triggerPicking(
-                sandbox,
-                251 + 10,
-                91 + 20,
-                1,
+                ~sandbox,
+                ~pageX=251 + 10,
+                ~pageY=91 + 20,
+                (),
               );
               InitPickingJobTool.triggerPickingAndRestore(
                 ~sandbox,
@@ -106,15 +106,15 @@ let _ =
           describe("else, undo work", () => {
             beforeEach(() => _undoOneUiState());
 
-            test("step which from second to first", () => {
+            test("test1", () => {
               let (gameObject1, gameObject2) =
                 _prepareTwoGameObjects(sandbox);
 
               InitPickingJobTool.triggerPicking(
-                sandbox,
-                251 + 10,
-                91 + 20,
-                1,
+                ~sandbox,
+                ~pageX=251 + 10,
+                ~pageY=91 + 20,
+                (),
               );
               InitPickingJobTool.triggerPickingAndRestore(
                 ~sandbox,
@@ -126,6 +126,33 @@ let _ =
               RedoUndoTool.undoHistoryState();
 
               InitPickingJobTool.pickOne(gameObject1);
+            });
+            test("test2", () => {
+              let (gameObject1, gameObject2) =
+                _prepareTwoGameObjects(sandbox);
+
+              InitPickingJobTool.triggerPicking(
+                ~sandbox,
+                ~pageX=251 + 10,
+                ~pageY=91 + 20,
+                (),
+              );
+              InitPickingJobTool.triggerPicking(
+                ~sandbox,
+                ~pageX=451 + 10,
+                ~pageY=91 + 20,
+                (),
+              );
+              InitPickingJobTool.triggerPickingAndRestore(
+                ~sandbox,
+                ~pageX=251 + 10,
+                ~pageY=91 + 20,
+                (),
+              );
+
+              RedoUndoTool.undoHistoryState();
+
+              InitPickingJobTool.notPick();
             });
           });
         });
@@ -140,10 +167,10 @@ let _ =
           let (gameObject1, gameObject2) = _prepareTwoGameObjects(sandbox);
 
           InitPickingJobTool.triggerPicking(
-            sandbox,
-            251 + 10,
-            91 + 20,
-            1,
+            ~sandbox,
+            ~pageX=251 + 10,
+            ~pageY=91 + 20,
+            (),
           );
           InitPickingJobTool.triggerPickingAndRestore(
             ~sandbox,
@@ -158,5 +185,40 @@ let _ =
           InitPickingJobTool.pickOne(gameObject2);
         })
       )
+    );
+
+    describe("fix bug", () =>
+      describe(
+        {j|if "not pick" multiple times continuously, only push to stack once|j},
+        () => {
+        beforeEach(() => _undoOneUiState());
+
+        test("test undo", () => {
+          let (gameObject1, gameObject2) = _prepareTwoGameObjects(sandbox);
+
+          InitPickingJobTool.triggerPicking(
+            ~sandbox,
+            ~pageX=251 + 10,
+            ~pageY=91 + 20,
+            (),
+          );
+          InitPickingJobTool.triggerPicking(
+            ~sandbox,
+            ~pageX=451 + 10,
+            ~pageY=91 + 20,
+            (),
+          );
+          InitPickingJobTool.triggerPickingAndRestore(
+            ~sandbox,
+            ~pageX=451 + 10,
+            ~pageY=91 + 20,
+            (),
+          );
+
+          RedoUndoTool.undoHistoryState();
+
+          InitPickingJobTool.pickOne(gameObject1);
+        });
+      })
     );
   });

@@ -298,10 +298,10 @@ let _ =
               );
 
             InitPickingJobTool.triggerPicking(
-              sandbox,
-              255 + 10,
-              100 + 20,
-              1,
+              ~sandbox,
+              ~pageX=255 + 10,
+              ~pageY=100 + 20,
+              (),
             );
 
             SceneTreeEditorService.clearCurrentSceneTreeNode
@@ -427,7 +427,10 @@ let _ =
               engineState
               |> SceneEngineService.addSceneChild(parent1)
               |> HierarchyGameObjectEngineService.addChild(parent1, parent2)
-              |> HierarchyGameObjectEngineService.addChild(parent2, gameObject);
+              |> HierarchyGameObjectEngineService.addChild(
+                   parent2,
+                   gameObject,
+                 );
 
             _triggerPicking();
 
