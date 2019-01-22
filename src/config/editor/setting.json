@@ -6,20 +6,33 @@
     "redo_undo": {
         "max_stack_size": 50
     },
-    "hotkeys": {
-        "redo": [
-            "ctrl+y",
-            "command+y"
-        ],
-        "undo": [
-            "ctrl+z",
-            "command+z"
-        ],
-        "duplicate": [
-            "ctrl+d"
-        ],
-        "delete": [
-            "delete"
-        ]
-    }
+    "hotkeys": [
+        {
+            "name": "redo",
+            "values": [
+                "ctrl+y",
+                "command+y"
+            ]
+        },
+        {
+            "name": "undo",
+            "values": [
+                "ctrl+z",
+                "command+z"
+            ]
+        },
+        {
+            "name": "duplicate",
+            "values": [
+                "ctrl+d",
+                "command+d"
+            ]
+        },
+        {
+            "name": "delete",
+            "values": [
+                "delete"
+            ]
+        }
+    ]
 }

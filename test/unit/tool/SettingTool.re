@@ -7,13 +7,7 @@ let initSetting = editorState =>
     {
       debug: Some({isDebug: true, showMessage: true}),
       redoUndo: Some({maxStackSize: 50}),
-      hotKeys:
-        Some({
-          redo: [|"ctrl+y"|],
-          undo: [|"ctrl+z"|],
-          duplicate: [|"ctrl+d"|],
-          delete: [|"delete"|],
-        }),
+      hotKeys: [||],
     },
     editorState,
   );

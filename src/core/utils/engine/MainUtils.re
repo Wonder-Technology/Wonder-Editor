@@ -11,14 +11,18 @@ let _getLoadData = () => {
 
 let _handleEngineState = engineState => {
   let engineState =
-    JobEngineService.registerNoWorkerInitJob(
-      "init_editor",
-      InitEditorJobUtils.initEditorJob,
-      engineState,
-    )
+    engineState
+    |> JobEngineService.registerNoWorkerInitJob(
+         "init_editor",
+         InitEditorJobUtils.initEditorJob,
+       )
     |> JobEngineService.registerNoWorkerInitJob(
          "init_event_for_editor",
          InitEventJobUtils.initEventForEditorJob,
+       )
+    |> JobEngineService.registerNoWorkerInitJob(
+         "init_hotkeys",
+         InitHotKeysJobUtils.initHotKeysForEditorJob,
        )
     |> JobEngineService.registerNoWorkerInitJob(
          "init_picking",
@@ -96,7 +100,6 @@ let init = () =>
                         _,
                         StateEditorService.getState(),
                       )
-                   |> HotKeysSettingEditorService.bindHotKeys
                    |> StateEditorService.setState
                    |> ignore;
 

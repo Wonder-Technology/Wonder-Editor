@@ -2,8 +2,10 @@ open EditorType;
 
 open HotKeysType;
 
-let unsafeGetHotKeys = ({settingRecord}) =>
-  OperateSettingService.unsafeGetHotKeys(settingRecord);
+open SettingType;
+
+let getHotKeys = ({settingRecord}) =>
+  OperateSettingService.getHotKeys(settingRecord);
 
 let _preventBrowserHotKeys = event => {
   let e = ReactEventType.convertReactKeyboardEventToJsEvent(event);
@@ -27,13 +29,12 @@ let _handleHotKeyFunc = hotKeyDataArray =>
      );
 
 let bindHotKeys = editorState => {
-  let hotKeySetting = editorState |> unsafeGetHotKeys;
-  [|
-    (hotKeySetting.redo, Redo),
-    (hotKeySetting.undo, Undo),
-    (hotKeySetting.duplicate, Duplicate),
-    (hotKeySetting.delete, Delete),
-  |]
+  let hotKeyArray = editorState |> getHotKeys;
+
+  hotKeyArray
+  |> Js.Array.map(({name, values}) =>
+       (values, OperateHotKeysService.getHotKeyAction(name))
+     )
   |> _handleHotKeyFunc;
 
   editorState;
