@@ -1,5 +1,3 @@
-open InitPickingJobType;
-
 let _checkIntersectMesh =
     (ray, (_, _, geometry, localToWorldMatrixTypeArray), engineState) =>
   MeshUtils.checkIntersectMesh(
@@ -73,7 +71,9 @@ let _getSceneViewSize = editorState => {
   (width, height);
 };
 
-let _convertMouselocationInViewToNDC = ((x, y), (viewWidth, viewHeight)) => {
+let _convertMouselocationInViewToNDC =
+    ((x, y), (viewWidth, viewHeight))
+    : InitPickingJobType.mouseData => {
   x:
     (x |> NumberType.convertIntToFloat)
     /. (viewWidth |> NumberType.convertIntToFloat)
@@ -87,7 +87,8 @@ let _convertMouselocationInViewToNDC = ((x, y), (viewWidth, viewHeight)) => {
 };
 
 let _getPerspectiveCameraData =
-    (cameraGameObject, (editorState, engineState)) => {
+    (cameraGameObject, (editorState, engineState))
+    : InitPickingJobType.perspectiveCameraData => {
   cameraToWorldMatrix:
     BasicCameraViewEngineService.getBasicCameraViewWorldToCameraMatrix(
       GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
@@ -173,7 +174,9 @@ let _findPickedOne =
       (editorState, engineState),
     ) => {
   let {locationInView}: EventType.pointEvent =
-    userDataToPointEvent(userData |> OptionService.unsafeGet);
+    InitPickingJobType.userDataToPointEvent(
+      userData |> OptionService.unsafeGet,
+    );
 
   let cameraGameObject =
     SceneViewEditorService.unsafeGetEditCamera(editorState);
@@ -207,12 +210,22 @@ let _findPickedOne =
 };
 
 let _isNotNeedPushToHistoryStack = pickedGameObjectOpt =>
-  pickedGameObjectOpt
-  |> Js.Option.isNone
-  && ! (
-       SceneTreeEditorService.hasCurrentSceneTreeNode
-       |> StateLogicService.getEditorState
-     );
+  switch (pickedGameObjectOpt) {
+  | None =>
+    ! (
+      SceneTreeEditorService.hasCurrentSceneTreeNode
+      |> StateLogicService.getEditorState
+    )
+  | Some(pickedGameObject) =>
+    switch (
+      SceneTreeEditorService.getCurrentSceneTreeNode
+      |> StateLogicService.getEditorState
+    ) {
+    | Some(currentGameObject) when currentGameObject === pickedGameObject =>
+      true
+    | _ => false
+    }
+  };
 
 let _handleSceneTreeCurrentNodeAndRedoUndo =
     (pickedGameObjectOpt, engineState) => {

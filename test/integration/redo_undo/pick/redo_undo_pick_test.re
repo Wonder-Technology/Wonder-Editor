@@ -181,7 +181,38 @@ let _ =
       )
     );
 
-    describe("fix bug", () =>
+    describe("fix bug", () =>{
+      describe(
+        {j|if "pick the same gameObject" multiple times continuously, only push to stack once|j},
+        () =>
+        test("test undo", () => {
+          let (gameObject1, gameObject2) = _prepareTwoGameObjects(sandbox);
+
+          InitPickingJobTool.triggerPicking(
+            ~sandbox,
+            ~pageX=251 + 10,
+            ~pageY=91 + 20,
+            (),
+          );
+          InitPickingJobTool.triggerPicking(
+            ~sandbox,
+            ~pageX=257 + 10,
+            ~pageY=100 + 20,
+            (),
+          );
+          InitPickingJobTool.triggerPickingAndRestore(
+            ~sandbox,
+            ~pageX=257 + 10,
+            ~pageY=100 + 20,
+            (),
+          );
+
+          RedoUndoTool.undoHistoryState();
+
+          InitPickingJobTool.pickOne(gameObject1);
+        })
+      );
+
       describe(
         {j|if "not pick" multiple times continuously, only push to stack once|j},
         () =>
@@ -212,5 +243,6 @@ let _ =
           InitPickingJobTool.pickOne(gameObject1);
         })
       )
+    }
     );
   });
