@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`controller leftHeader add gameObject test add cube test scene tree snapshot test add one cube 1`] = `
+exports[`init hotKeys job bind document hotKeys event test bind clone hot-key key down ctrl+d, should execute clone operate 1`] = `
 <article
   className="wonder-sceneTree-component"
 >
@@ -63,7 +63,7 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
@@ -129,7 +129,7 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             className="item-triangle"
           />
           <div
-            className="draggable-container  no-drag"
+            className="draggable-container select-active no-drag"
             draggable={true}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
@@ -148,7 +148,111 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
 </article>
 `;
 
-exports[`controller leftHeader add gameObject test add emptyGameObject test scene tree snanpshot test add one emptyGameObject 1`] = `
+exports[`init hotKeys job bind document hotKeys event test bind delete hot-key key down delete, should execute delete operate 1`] = `
+<article
+  className="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          onMouseDown={[Function]}
+          style={Object {}}
+        >
+          Scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            onMouseDown={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            onMouseDown={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            onMouseDown={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init hotKeys job bind document hotKeys event test bind redo hot-key key down ctrl+y, should execute redo operate 1`] = `
 <article
   className="wonder-sceneTree-component"
 >
@@ -296,7 +400,7 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
 </article>
 `;
 
-exports[`controller leftHeader add gameObject test add sphere test scene tree snapshot test add one sphere 1`] = `
+exports[`init hotKeys job bind document hotKeys event test bind undo hot-key key down ctrl+z, should execute undo operate 1`] = `
 <article
   className="wonder-sceneTree-component"
 >
@@ -414,28 +518,6 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
             style={Object {}}
           >
             Direction Light
-          </div>
-        </li>
-      </ul>
-      <ul
-        className="wonder-tree-node"
-      >
-        <li>
-          <div
-            className="item-triangle"
-          />
-          <div
-            className="draggable-container  no-drag"
-            draggable={true}
-            onDragEnd={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDragStart={[Function]}
-            onDrop={[Function]}
-            onMouseDown={[Function]}
-            style={Object {}}
-          >
-            Sphere
           </div>
         </li>
       </ul>
