@@ -43,6 +43,10 @@ type eventTarget =
 
 type eventRecord = {eventTarget};
 
+external documentToEventTarget :
+  WonderWebgl.DomExtendType.document => Dom.eventTarget =
+  "%identity";
+
 external bodyToEventTarget : WonderWebgl.DomExtendType.body => Dom.eventTarget =
   "%identity";
 

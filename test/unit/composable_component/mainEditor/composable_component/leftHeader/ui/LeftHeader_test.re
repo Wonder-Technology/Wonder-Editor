@@ -124,23 +124,23 @@ let _ =
                 NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
                   ~loopPipelines=
                     {|
-             [
-         {
-           "name": "default",
-           "jobs": [
-{"name": "dispose" },
-{"name": "prepare_render_game_view" }
-           ]
-         }
-       ]
-             |},
+                      [
+                        {
+                        "name": "default",
+                          "jobs": [
+                        {"name": "dispose" },
+                        {"name": "prepare_render_game_view" }
+                            ]
+                          }
+                      ]
+                  |},
                   ~loopJobs=
                     {|
-             [
-{"name": "dispose" },
-{"name": "prepare_render_game_view" }
-             ]
-             |},
+                        [
+                          {"name": "dispose" },
+                          {"name": "prepare_render_game_view" }
+                        ]
+                  |},
                   (),
                 ),
               (),
@@ -257,7 +257,9 @@ let _ =
 
             StateEditorService.getState()
             |> InspectorEditorService.getComponentTypeMap
-            |> WonderCommonlib.ImmutableSparseMapService.get(clonedGameObject)
+            |> WonderCommonlib.ImmutableSparseMapService.get(
+                 clonedGameObject,
+               )
             |> Js.Option.isSome
             |> expect == true;
           });
@@ -282,7 +284,9 @@ let _ =
             let clonedGameObjectComponentArray =
               editorState
               |> InspectorEditorService.getComponentTypeMap
-              |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(clonedGameObject);
+              |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
+                   clonedGameObject,
+                 );
 
             targetGameObjectComponentArray
             |> expect == clonedGameObjectComponentArray;

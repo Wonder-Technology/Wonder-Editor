@@ -31,8 +31,11 @@ let _extend = [%raw
     |}
 ];
 
+let getDocument = () =>
+  Wonderjs.DomExtend.document |> EventType.documentToEventTarget;
+
 let getBody = () =>
-  Wonderjs.DomExtend.document##body |> Wonderjs.EventType.bodyToEventTarget;
+  Wonderjs.DomExtend.document##body |> EventType.bodyToEventTarget;
 
 let getKeyboardEventBindedDom = () => getBody();
 
