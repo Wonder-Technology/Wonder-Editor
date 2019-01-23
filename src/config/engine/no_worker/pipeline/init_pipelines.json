@@ -27,6 +27,9 @@
         "name": "init_hotkeys"
       },
       {
+        "name": "init_transform_gameObjects"
+      },
+      {
         "name": "init_picking"
       },
       {

@@ -21,6 +21,10 @@ let setBasicMaterialName = BasicMaterialAPI.setBasicMaterialName;
 let setColor = (color, material, engineState) =>
   engineState |> BasicMaterialAPI.setBasicMaterialColor(material, color);
 
+let setIsDepthTest = (isDepthTest, material, engineState) =>
+  engineState
+  |> BasicMaterialAPI.setBasicMaterialIsDepthTest(material, isDepthTest);
+
 let reInitMaterials = BasicMaterialAPI.reInitMaterials;
 
 let reInitAllBasicMaterialsAndClearShaderCache = (materials, engineState) =>

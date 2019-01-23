@@ -27,6 +27,10 @@ let createCubeGeometry = engineState =>
 
 let createSphereGeometry = GeometryAPI.createSphereGeometry;
 
+let createCylinderGeometry = GeometryAPI.createCylinderGeometry;
+
+let createConeGeometry = GeometryAPI.createConeGeometry;
+
 let getGeometryVertices = GeometryAPI.getGeometryVertices;
 
 let setGeometryVertices = GeometryAPI.setGeometryVertices;
@@ -142,4 +146,3 @@ let getIndicesCount = (geometry, engineState) => {
 let hasIndices16 = GeometryAPI.hasGeometryIndices16;
 
 let hasIndices32 = GeometryAPI.hasGeometryIndices32;
-

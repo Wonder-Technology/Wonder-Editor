@@ -66,5 +66,8 @@
     },
     {
         "name": "set_outline_data"
+    },
+    {
+        "name": "render_transform_gameObjects"
     }
 ]

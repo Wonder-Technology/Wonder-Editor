@@ -57,6 +57,9 @@
                 "name": "render_imgui"
             },
             {
+                "name": "render_transform_gameObjects"
+            },
+            {
                 "name": "prepare_render_game_view"
             },
             {
