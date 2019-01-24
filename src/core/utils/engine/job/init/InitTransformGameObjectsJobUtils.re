@@ -208,6 +208,9 @@ let _isSelectTranslationAxisGameObject =
        false,
      );
 
+let _getIntersectPointWithPlane = (plane, ray, (editorState, engineState)) =>
+  RayUtils.checkIntersectPlane(plane, ray);
+
 let _unsafeGetIntersectPointWithPlane =
     (plane, ray, (editorState, engineState)) =>
   switch (RayUtils.checkIntersectPlane(plane, ray)) {
@@ -499,24 +502,23 @@ let _computeCurrentGameObjectNewPositionForMoveXAxis =
   let plane =
     _findMostOrthogonalPlaneForXAxis(ray, (editorState, engineState));
 
-  let (pointX, _, _) =
-    _unsafeGetIntersectPointWithPlane(
-      plane,
-      ray,
-      (editorState, engineState),
-    );
-
   let (_, posY, posZ) =
     _getCurrentSceneTreeNodePosition(editorState, engineState);
 
-  (
-    OffsetTransformGameObjectSceneViewEditorService.unsafeGetIntersectPointWithPlaneOffsetForXAxis(
-      editorState,
-    )
-    +. pointX,
-    posY,
-    posZ,
-  );
+  switch (
+    _getIntersectPointWithPlane(plane, ray, (editorState, engineState))
+  ) {
+  | None => None
+  | Some((pointX, _, _)) =>
+    Some((
+      OffsetTransformGameObjectSceneViewEditorService.unsafeGetIntersectPointWithPlaneOffsetForXAxis(
+        editorState,
+      )
+      +. pointX,
+      posY,
+      posZ,
+    ))
+  };
 };
 
 let _computeCurrentGameObjectNewPositionForMoveYAxis =
@@ -524,24 +526,23 @@ let _computeCurrentGameObjectNewPositionForMoveYAxis =
   let plane =
     _findMostOrthogonalPlaneForYAxis(ray, (editorState, engineState));
 
-  let (_, pointY, _) =
-    _unsafeGetIntersectPointWithPlane(
-      plane,
-      ray,
-      (editorState, engineState),
-    );
-
   let (posX, _, posZ) =
     _getCurrentSceneTreeNodePosition(editorState, engineState);
 
-  (
-    posX,
-    OffsetTransformGameObjectSceneViewEditorService.unsafeGetIntersectPointWithPlaneOffsetForYAxis(
-      editorState,
-    )
-    +. pointY,
-    posZ,
-  );
+  switch (
+    _getIntersectPointWithPlane(plane, ray, (editorState, engineState))
+  ) {
+  | None => None
+  | Some((_, pointY, _)) =>
+    Some((
+      posX,
+      OffsetTransformGameObjectSceneViewEditorService.unsafeGetIntersectPointWithPlaneOffsetForYAxis(
+        editorState,
+      )
+      +. pointY,
+      posZ,
+    ))
+  };
 };
 
 let _computeCurrentGameObjectNewPositionForMoveZAxis =
@@ -549,24 +550,23 @@ let _computeCurrentGameObjectNewPositionForMoveZAxis =
   let plane =
     _findMostOrthogonalPlaneForZAxis(ray, (editorState, engineState));
 
-  let (_, _, pointZ) =
-    _unsafeGetIntersectPointWithPlane(
-      plane,
-      ray,
-      (editorState, engineState),
-    );
-
   let (posX, posY, _) =
     _getCurrentSceneTreeNodePosition(editorState, engineState);
 
-  (
-    posX,
-    posY,
-    OffsetTransformGameObjectSceneViewEditorService.unsafeGetIntersectPointWithPlaneOffsetForZAxis(
-      editorState,
-    )
-    +. pointZ,
-  );
+  switch (
+    _getIntersectPointWithPlane(plane, ray, (editorState, engineState))
+  ) {
+  | None => None
+  | Some((_, _, pointZ)) =>
+    Some((
+      posX,
+      posY,
+      OffsetTransformGameObjectSceneViewEditorService.unsafeGetIntersectPointWithPlaneOffsetForZAxis(
+        editorState,
+      )
+      +. pointZ,
+    ))
+  };
 };
 
 let _moveCurrentSceneTreeNodeAndWholeTranslationGameObject =
@@ -590,16 +590,19 @@ let _moveCurrentSceneTreeNodeAndWholeTranslationGameObject =
      );
 
 let _affectTranslationAxisGameObject =
-    (newPosition, (editorState, engineState)) => {
-  let engineState =
-    _moveCurrentSceneTreeNodeAndWholeTranslationGameObject(
-      newPosition,
-      editorState,
-      engineState,
-    );
+    (newPosition, (editorState, engineState)) =>
+  switch (newPosition) {
+  | None => (editorState, engineState)
+  | Some(newPosition) =>
+    let engineState =
+      _moveCurrentSceneTreeNodeAndWholeTranslationGameObject(
+        newPosition,
+        editorState,
+        engineState,
+      );
 
-  (editorState, engineState);
-};
+    (editorState, engineState);
+  };
 
 let _affectTransformGameObject = (event, (editorState, engineState)) => {
   let cameraGameObject =
