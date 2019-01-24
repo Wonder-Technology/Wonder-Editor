@@ -78,3 +78,8 @@ let getCenter = ({min, max}) =>
 let getHalfExtends = ({min, max}) =>
   Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, max, min)
   |> Wonderjs.Vector3Service.scale(Wonderjs.Vector3Type.Float, 0.5);
+
+let expandByScalar = (scalar, {min, max}) => {
+  min: Vector3Service.addScalar(min, -. scalar),
+  max: Vector3Service.addScalar(max, scalar),
+};

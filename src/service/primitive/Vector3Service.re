@@ -15,6 +15,12 @@ let multiplyScalar = ((x, y, z), scalar) => (
   z *. scalar,
 );
 
+let addScalar = ((x, y, z), scalar) => (
+  x +. scalar,
+  y +. scalar,
+  z +. scalar,
+);
+
 let fromBufferAttribute = (vertices, index) => {
   let vIndex = index * 3;
 

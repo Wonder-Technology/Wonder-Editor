@@ -192,7 +192,9 @@ let _setToEditorState =
 };
 
 let _isSelectTranslationAxisGameObject =
-    (translationAxisGameObject, ray, engineState, editorState) =>
+    (translationAxisGameObject, ray, engineState, editorState) => {
+  let expandFactor = 0.2;
+
   HierarchyGameObjectEngineService.getAllChildren(
     translationAxisGameObject,
     engineState,
@@ -202,11 +204,13 @@ let _isSelectTranslationAxisGameObject =
          isSelect ?
            isSelect :
            RayUtils.isIntersectAABB(
-             AABBShapeUtils.setFromGameObject(gameObject, engineState),
+             AABBShapeUtils.setFromGameObject(gameObject, engineState)
+             |> AABBShapeUtils.expandByScalar(expandFactor),
              ray,
            ),
        false,
      );
+};
 
 let _getIntersectPointWithPlane = (plane, ray, (editorState, engineState)) =>
   RayUtils.checkIntersectPlane(plane, ray);
