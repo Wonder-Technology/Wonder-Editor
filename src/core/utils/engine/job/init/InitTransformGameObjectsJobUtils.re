@@ -130,7 +130,7 @@ let _createTransformGameObjects = engineState => {
   let engineState =
     engineState
     |> TransformEngineService.setLocalEulerAngles(
-         (0., 0., -90.),
+         (0., 0., (-90.)),
          xAxisTransform,
        )
     |> TransformEngineService.setLocalEulerAngles(
@@ -183,6 +183,7 @@ let _setToEditorState =
         isTranslationYAxisGameObjectSelected: false,
         isTranslationZAxisGameObjectSelected: false,
         lastIntersectPointWithPlane: None,
+        lastPlaneForCheckIntersect: None,
       }),
   },
 };
@@ -205,7 +206,7 @@ let _isSelectTranslationAxisGameObject =
      );
 
 let _unsafeGetIntersectPointWithPlane =
-    (plane, ray, (engineState, editorState)) =>
+    (plane, ray, (editorState, engineState)) =>
   switch (RayUtils.checkIntersectPlane(plane, ray)) {
   | None =>
     WonderLog.Log.fatal(
@@ -219,38 +220,221 @@ let _unsafeGetIntersectPointWithPlane =
   | Some(point) => point
   };
 
-let _unsafeGetIntersectPointWithPlaneForXAxis =
-    (ray, (engineState, editorState)) =>
-  _unsafeGetIntersectPointWithPlane(
-    PlaneTransformGameObjectSceneViewEditorService.buildXYPlane(
-      engineState,
+let _findMostOrthogonalPlaneBetweenCurrentSceneTreeNodeAndCameraVecAndPlane =
+    (
+      (axis1Vec, plane1: ShapeType.planeShape),
+      (axis2Vec, plane2: ShapeType.planeShape),
+      (editorState, engineState),
+    ) => {
+  let cameraGameObject =
+    SceneViewEditorService.unsafeGetEditCamera(editorState);
+
+  let currentSceneTreeNodeToCameraVec =
+    Wonderjs.Vector3Service.sub(
+      Wonderjs.Vector3Type.Float,
+      TransformEngineService.getPosition(
+        GameObjectComponentEngineService.unsafeGetTransformComponent(
+          SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
+          engineState,
+        ),
+        engineState,
+      ),
+      TransformEngineService.getPosition(
+        GameObjectComponentEngineService.unsafeGetTransformComponent(
+          cameraGameObject,
+          engineState,
+        ),
+        engineState,
+      ),
+    );
+
+  Vector3Service.projectOnPlane(
+    plane1.normal,
+    currentSceneTreeNodeToCameraVec,
+  )
+  |>
+  Vector3Service.length < (
+                            Vector3Service.projectOnPlane(
+                              plane2.normal,
+                              currentSceneTreeNodeToCameraVec,
+                            )
+                            |> Vector3Service.length
+                          ) ?
+    plane1 : plane2;
+  /*
+   Vector3Service.dot(currentSceneTreeNodeToCameraVec, axis1Vec)
+   > Vector3Service.dot(currentSceneTreeNodeToCameraVec, axis2Vec) ?
+     plane2 : plane1; */
+};
+
+/* let _unsafeGetIntersectPointWithPlaneForXAxis =
+     (ray, (editorState, engineState)) =>
+   _unsafeGetIntersectPointWithPlane(
+     PlaneTransformGameObjectSceneViewEditorService.buildXYPlane(
+       editorState,
+       engineState,
+     ),
+     ray,
+     (editorState, engineState),
+   ); */
+
+let _isLastPlaneForCheckIntersectChange = (currentPlane, editorState) =>
+  switch (
+    PlaneTransformGameObjectSceneViewEditorService.getLastPlaneForCheckIntersect(
       editorState,
+    )
+  ) {
+  | None => false
+  | Some(lastPlane) =>
+    ! PlaneShapeUtils.isPlaneEqual(lastPlane, currentPlane)
+  };
+
+let _unsafeGetIntersectPointWithPlaneForXAxis =
+    (ray, (editorState, engineState)) => {
+  let plane =
+    _findMostOrthogonalPlaneBetweenCurrentSceneTreeNodeAndCameraVecAndPlane(
+      (
+        AxisTransformGameObjectSceneViewEditorService.getYAxisNormalizedVec(
+          editorState,
+          engineState,
+        ),
+        PlaneTransformGameObjectSceneViewEditorService.buildXZPlane(
+          editorState,
+          engineState,
+        ),
+      ),
+      (
+        AxisTransformGameObjectSceneViewEditorService.getZAxisNormalizedVec(
+          editorState,
+          engineState,
+        ),
+        PlaneTransformGameObjectSceneViewEditorService.buildXYPlane(
+          editorState,
+          engineState,
+        ),
+      ),
+      (editorState, engineState),
+    );
+
+  (
+    plane,
+    _unsafeGetIntersectPointWithPlane(
+      plane,
+      ray,
+      (editorState, engineState),
     ),
-    ray,
-    (engineState, editorState),
   );
+};
 
 let _unsafeGetIntersectPointWithPlaneForYAxis =
-    (ray, (engineState, editorState)) =>
-  _unsafeGetIntersectPointWithPlane(
-    PlaneTransformGameObjectSceneViewEditorService.buildXYPlane(
-      engineState,
-      editorState,
+    (ray, (editorState, engineState)) => {
+  let plane =
+    _findMostOrthogonalPlaneBetweenCurrentSceneTreeNodeAndCameraVecAndPlane(
+      (
+        AxisTransformGameObjectSceneViewEditorService.getXAxisNormalizedVec(
+          editorState,
+          engineState,
+        ),
+        PlaneTransformGameObjectSceneViewEditorService.buildYZPlane(
+          editorState,
+          engineState,
+        ),
+      ),
+      (
+        AxisTransformGameObjectSceneViewEditorService.getZAxisNormalizedVec(
+          editorState,
+          engineState,
+        ),
+        PlaneTransformGameObjectSceneViewEditorService.buildXYPlane(
+          editorState,
+          engineState,
+        ),
+      ),
+      (editorState, engineState),
+    );
+
+  (
+    plane,
+    _unsafeGetIntersectPointWithPlane(
+      plane,
+      ray,
+      (editorState, engineState),
     ),
-    ray,
-    (engineState, editorState),
   );
+};
 
 let _unsafeGetIntersectPointWithPlaneForZAxis =
-    (ray, (engineState, editorState)) =>
-  _unsafeGetIntersectPointWithPlane(
-    PlaneTransformGameObjectSceneViewEditorService.buildXZPlane(
-      engineState,
-      editorState,
+    (ray, (editorState, engineState)) => {
+  let plane =
+    _findMostOrthogonalPlaneBetweenCurrentSceneTreeNodeAndCameraVecAndPlane(
+      (
+        AxisTransformGameObjectSceneViewEditorService.getXAxisNormalizedVec(
+          editorState,
+          engineState,
+        ),
+        PlaneTransformGameObjectSceneViewEditorService.buildYZPlane(
+          editorState,
+          engineState,
+        ),
+      ),
+      (
+        AxisTransformGameObjectSceneViewEditorService.getYAxisNormalizedVec(
+          editorState,
+          engineState,
+        ),
+        PlaneTransformGameObjectSceneViewEditorService.buildXZPlane(
+          editorState,
+          engineState,
+        ),
+      ),
+      (editorState, engineState),
+    );
+
+  (
+    plane,
+    _unsafeGetIntersectPointWithPlane(
+      plane,
+      ray,
+      (editorState, engineState),
     ),
-    ray,
-    (engineState, editorState),
   );
+};
+
+let _selectAxisGameObject =
+    (
+      ray,
+      (
+        onlySelectTranslationAxisGameObjectFunc,
+        unsafeGetIntersectPointWithPlaneForAxisFunc,
+      ),
+      (editorState, engineState),
+    ) => {
+  let editorState = onlySelectTranslationAxisGameObjectFunc(editorState);
+
+  let (mostOrthogonalPlane, intersectPointWithPlane) =
+    unsafeGetIntersectPointWithPlaneForAxisFunc(
+      ray,
+      (editorState, engineState),
+    );
+
+  let editorState =
+    _isLastPlaneForCheckIntersectChange(mostOrthogonalPlane, editorState) ?
+      PlaneTransformGameObjectSceneViewEditorService.clearLastIntersectPointWithPlane(
+        editorState,
+      ) :
+      editorState;
+
+  let editorState =
+    editorState
+    |> PlaneTransformGameObjectSceneViewEditorService.setLastPlaneForCheckIntersect(
+         Some(mostOrthogonalPlane),
+       );
+
+  PlaneTransformGameObjectSceneViewEditorService.setLastIntersectPointWithPlane(
+    intersectPointWithPlane |. Some,
+    editorState,
+  );
+};
 
 let _selectTransformGameObject = (event, engineState, editorState) =>
   IsTransformGameObjectRenderSceneViewEditorService.isTranslationWholeGameObjectRender(
@@ -275,21 +459,14 @@ let _selectTransformGameObject = (event, engineState, editorState) =>
         engineState,
         editorState,
       ) ?
-        {
-          let editorState =
-            SelectTransformGameObjectSceneViewEditorService.onlySelectTranslationXAxisGameObject(
-              editorState,
-            );
-
-          PlaneTransformGameObjectSceneViewEditorService.setLastIntersectPointWithPlane(
-            _unsafeGetIntersectPointWithPlaneForXAxis(
-              ray,
-              (engineState, editorState),
-            )
-            |. Some,
-            editorState,
-          );
-        } :
+        _selectAxisGameObject(
+          ray,
+          (
+            SelectTransformGameObjectSceneViewEditorService.onlySelectTranslationXAxisGameObject,
+            _unsafeGetIntersectPointWithPlaneForXAxis,
+          ),
+          (editorState, engineState),
+        ) :
         _isSelectTranslationAxisGameObject(
           TransformGameObjectSceneViewEditorService.unsafeGetTranslationYAxisGameObject(
             editorState,
@@ -298,21 +475,14 @@ let _selectTransformGameObject = (event, engineState, editorState) =>
           engineState,
           editorState,
         ) ?
-          {
-            let editorState =
-              SelectTransformGameObjectSceneViewEditorService.onlySelectTranslationYAxisGameObject(
-                editorState,
-              );
-
-            PlaneTransformGameObjectSceneViewEditorService.setLastIntersectPointWithPlane(
-              _unsafeGetIntersectPointWithPlaneForYAxis(
-                ray,
-                (engineState, editorState),
-              )
-              |. Some,
-              editorState,
-            );
-          } :
+          _selectAxisGameObject(
+            ray,
+            (
+              SelectTransformGameObjectSceneViewEditorService.onlySelectTranslationYAxisGameObject,
+              _unsafeGetIntersectPointWithPlaneForYAxis,
+            ),
+            (editorState, engineState),
+          ) :
           _isSelectTranslationAxisGameObject(
             TransformGameObjectSceneViewEditorService.unsafeGetTranslationZAxisGameObject(
               editorState,
@@ -321,21 +491,14 @@ let _selectTransformGameObject = (event, engineState, editorState) =>
             engineState,
             editorState,
           ) ?
-            {
-              let editorState =
-                SelectTransformGameObjectSceneViewEditorService.onlySelectTranslationZAxisGameObject(
-                  editorState,
-                );
-
-              PlaneTransformGameObjectSceneViewEditorService.setLastIntersectPointWithPlane(
-                _unsafeGetIntersectPointWithPlaneForZAxis(
-                  ray,
-                  (engineState, editorState),
-                )
-                |. Some,
-                editorState,
-              );
-            } :
+            _selectAxisGameObject(
+              ray,
+              (
+                SelectTransformGameObjectSceneViewEditorService.onlySelectTranslationZAxisGameObject,
+                _unsafeGetIntersectPointWithPlaneForZAxis,
+              ),
+              (editorState, engineState),
+            ) :
             editorState
             |> SelectTransformGameObjectSceneViewEditorService.notSelectAllTransformGameObject
             |> PlaneTransformGameObjectSceneViewEditorService.setLastIntersectPointWithPlane(
@@ -345,25 +508,18 @@ let _selectTransformGameObject = (event, engineState, editorState) =>
     editorState
     |> SelectTransformGameObjectSceneViewEditorService.notSelectAllTransformGameObject;
 
-let _computeDeltaForMoveXAxis = (ray, (engineState, editorState)) => {
-  let (lastIntersectPointWithPlaneX, _, _) as lastIntersectPointWithPlane =
-    PlaneTransformGameObjectSceneViewEditorService.unsafeGetLastIntersectPointWithPlane(
-      editorState,
-    );
-  let (currentIntersectPointWithPlaneX, _, _) as currentIntersectPointWithPlane =
-    _unsafeGetIntersectPointWithPlaneForXAxis(
-      ray,
-      (engineState, editorState),
-    );
-
-  (
-    currentIntersectPointWithPlane,
-    currentIntersectPointWithPlaneX -. lastIntersectPointWithPlaneX,
-  );
-};
+let _computeDeltaForMoveXAxis =
+    (
+      (lastIntersectPointWithPlaneX, _, _),
+      (currentIntersectPointWithPlaneX, _, _),
+    ) =>
+  currentIntersectPointWithPlaneX -. lastIntersectPointWithPlaneX;
 
 let _computeCurrentGameObjectNewPositionForMoveXAxis =
-    (ray, (engineState, editorState)) => {
+    (
+      (currentIntersectPointWithPlane, lastIntersectPointWithPlane),
+      (editorState, engineState),
+    ) => {
   let (posX, posY, posZ) =
     TransformEngineService.getPosition(
       GameObjectComponentEngineService.unsafeGetTransformComponent(
@@ -373,31 +529,95 @@ let _computeCurrentGameObjectNewPositionForMoveXAxis =
       engineState,
     );
 
-  let (currentIntersectPointWithPlane, delta) =
-    _computeDeltaForMoveXAxis(ray, (engineState, editorState));
-
-  (currentIntersectPointWithPlane, (posX +. delta, posY, posZ));
-};
-
-let _computeDeltaForMoveYAxis = (ray, (engineState, editorState)) => {
-  let (_, lastIntersectPointWithPlaneY, _) as lastIntersectPointWithPlane =
-    PlaneTransformGameObjectSceneViewEditorService.unsafeGetLastIntersectPointWithPlane(
-      editorState,
-    );
-  let (_, currentIntersectPointWithPlaneY, _) as currentIntersectPointWithPlane =
-    _unsafeGetIntersectPointWithPlaneForYAxis(
-      ray,
-      (engineState, editorState),
+  let delta =
+    _computeDeltaForMoveXAxis(
+      currentIntersectPointWithPlane,
+      lastIntersectPointWithPlane,
     );
 
-  (
-    currentIntersectPointWithPlane,
-    currentIntersectPointWithPlaneY -. lastIntersectPointWithPlaneY,
-  );
+  (posX -. delta, posY, posZ);
 };
+
+/* let _computeDeltaForMoveYAxis = (ray, (engineState, editorState)) => {
+     let (_, lastIntersectPointWithPlaneY, _) as lastIntersectPointWithPlane =
+       PlaneTransformGameObjectSceneViewEditorService.unsafeGetLastIntersectPointWithPlane(
+         editorState,
+       );
+     let (_, currentIntersectPointWithPlaneY, _) as currentIntersectPointWithPlane =
+       _unsafeGetIntersectPointWithPlaneForYAxis(
+         ray,
+         (editorState, engineState),
+       );
+
+     (
+       currentIntersectPointWithPlane,
+       currentIntersectPointWithPlaneY -. lastIntersectPointWithPlaneY,
+     );
+   };
+
+   let _computeCurrentGameObjectNewPositionForMoveYAxis =
+       (ray, (engineState, editorState)) => {
+     let (posX, posY, posZ) =
+       TransformEngineService.getPosition(
+         GameObjectComponentEngineService.unsafeGetTransformComponent(
+           SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
+           engineState,
+         ),
+         engineState,
+       );
+
+     let (currentIntersectPointWithPlane, delta) =
+       _computeDeltaForMoveYAxis(ray, (engineState, editorState));
+
+     (currentIntersectPointWithPlane, (posX, posY +. delta, posZ));
+   };
+
+   let _computeDeltaForMoveZAxis = (ray, (engineState, editorState)) => {
+     let (_, _, lastIntersectPointWithPlaneZ) as lastIntersectPointWithPlane =
+       PlaneTransformGameObjectSceneViewEditorService.unsafeGetLastIntersectPointWithPlane(
+         editorState,
+       );
+     let (_, _, currentIntersectPointWithPlaneZ) as currentIntersectPointWithPlane =
+       _unsafeGetIntersectPointWithPlaneForZAxis(
+         ray,
+         (editorState, engineState),
+       );
+
+     (
+       currentIntersectPointWithPlane,
+       currentIntersectPointWithPlaneZ -. lastIntersectPointWithPlaneZ,
+     );
+   };
+
+   let _computeCurrentGameObjectNewPositionForMoveZAxis =
+       (ray, (engineState, editorState)) => {
+     let (posX, posY, posZ) =
+       TransformEngineService.getPosition(
+         GameObjectComponentEngineService.unsafeGetTransformComponent(
+           SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
+           engineState,
+         ),
+         engineState,
+       );
+
+     let (currentIntersectPointWithPlane, delta) =
+       _computeDeltaForMoveZAxis(ray, (engineState, editorState));
+
+     (currentIntersectPointWithPlane, (posX, posY, posZ +. delta));
+   }; */
+
+let _computeDeltaForMoveYAxis =
+    (
+      (_, lastIntersectPointWithPlaneY, _),
+      (_, currentIntersectPointWithPlaneY, _),
+    ) =>
+  currentIntersectPointWithPlaneY -. lastIntersectPointWithPlaneY;
 
 let _computeCurrentGameObjectNewPositionForMoveYAxis =
-    (ray, (engineState, editorState)) => {
+    (
+      (currentIntersectPointWithPlane, lastIntersectPointWithPlane),
+      (editorState, engineState),
+    ) => {
   let (posX, posY, posZ) =
     TransformEngineService.getPosition(
       GameObjectComponentEngineService.unsafeGetTransformComponent(
@@ -407,31 +627,27 @@ let _computeCurrentGameObjectNewPositionForMoveYAxis =
       engineState,
     );
 
-  let (currentIntersectPointWithPlane, delta) =
-    _computeDeltaForMoveYAxis(ray, (engineState, editorState));
-
-  (currentIntersectPointWithPlane, (posX, posY +. delta, posZ));
-};
-
-let _computeDeltaForMoveZAxis = (ray, (engineState, editorState)) => {
-  let (_, _, lastIntersectPointWithPlaneZ) as lastIntersectPointWithPlane =
-    PlaneTransformGameObjectSceneViewEditorService.unsafeGetLastIntersectPointWithPlane(
-      editorState,
-    );
-  let (_, _, currentIntersectPointWithPlaneZ) as currentIntersectPointWithPlane =
-    _unsafeGetIntersectPointWithPlaneForZAxis(
-      ray,
-      (engineState, editorState),
+  let delta =
+    _computeDeltaForMoveYAxis(
+      currentIntersectPointWithPlane,
+      lastIntersectPointWithPlane,
     );
 
-  (
-    currentIntersectPointWithPlane,
-    currentIntersectPointWithPlaneZ -. lastIntersectPointWithPlaneZ,
-  );
+  (posX, posY -. delta, posZ);
 };
+
+let _computeDeltaForMoveZAxis =
+    (
+      (_, _, lastIntersectPointWithPlaneZ),
+      (_, _, currentIntersectPointWithPlaneZ),
+    ) =>
+  currentIntersectPointWithPlaneZ -. lastIntersectPointWithPlaneZ;
 
 let _computeCurrentGameObjectNewPositionForMoveZAxis =
-    (ray, (engineState, editorState)) => {
+    (
+      (currentIntersectPointWithPlane, lastIntersectPointWithPlane),
+      (editorState, engineState),
+    ) => {
   let (posX, posY, posZ) =
     TransformEngineService.getPosition(
       GameObjectComponentEngineService.unsafeGetTransformComponent(
@@ -441,10 +657,13 @@ let _computeCurrentGameObjectNewPositionForMoveZAxis =
       engineState,
     );
 
-  let (currentIntersectPointWithPlane, delta) =
-    _computeDeltaForMoveZAxis(ray, (engineState, editorState));
+  let delta =
+    _computeDeltaForMoveZAxis(
+      currentIntersectPointWithPlane,
+      lastIntersectPointWithPlane,
+    );
 
-  (currentIntersectPointWithPlane, (posX, posY, posZ +. delta));
+  (posX, posY, posZ -. delta);
 };
 
 let _moveCurrentSceneTreeNodeAndWholeTranslationGameObject =
@@ -467,6 +686,58 @@ let _moveCurrentSceneTreeNodeAndWholeTranslationGameObject =
        newPosition,
      );
 
+let _affectTranslationAxisGameObject =
+    (
+      (mostOrthogonalPlane, currentIntersectPointWithPlane),
+      computeCurrentGameObjectNewPositionForMoveAxisFunc,
+      (editorState, engineState),
+    ) => {
+  let editorState =
+    _isLastPlaneForCheckIntersectChange(mostOrthogonalPlane, editorState) ?
+      PlaneTransformGameObjectSceneViewEditorService.clearLastIntersectPointWithPlane(
+        editorState,
+      ) :
+      editorState;
+
+  let editorState =
+    editorState
+    |> PlaneTransformGameObjectSceneViewEditorService.setLastPlaneForCheckIntersect(
+         Some(mostOrthogonalPlane),
+       );
+
+  let (editorState, engineState) =
+    switch (
+      PlaneTransformGameObjectSceneViewEditorService.getLastIntersectPointWithPlane(
+        editorState,
+      )
+    ) {
+    | None => (editorState, engineState)
+    | Some(lastIntersectPointWithPlane) =>
+      let newPosition =
+        computeCurrentGameObjectNewPositionForMoveAxisFunc(
+          (currentIntersectPointWithPlane, lastIntersectPointWithPlane),
+          (editorState, engineState),
+        );
+
+      let engineState =
+        _moveCurrentSceneTreeNodeAndWholeTranslationGameObject(
+          newPosition,
+          editorState,
+          engineState,
+        );
+
+      (editorState, engineState);
+    };
+
+  let editorState =
+    PlaneTransformGameObjectSceneViewEditorService.setLastIntersectPointWithPlane(
+      currentIntersectPointWithPlane |. Some,
+      editorState,
+    );
+
+  (editorState, engineState);
+};
+
 let _affectTransformGameObject = (event, (editorState, engineState)) => {
   let cameraGameObject =
     SceneViewEditorService.unsafeGetEditCamera(editorState);
@@ -481,78 +752,36 @@ let _affectTransformGameObject = (event, (editorState, engineState)) => {
   SelectTransformGameObjectSceneViewEditorService.isTranslationXAxisGameObjectSelected(
     editorState,
   ) ?
-    {
-      let (currentIntersectPointWithPlane, newPosition) =
-        _computeCurrentGameObjectNewPositionForMoveXAxis(
-          ray,
-          (engineState, editorState),
-        );
-
-      let engineState =
-        _moveCurrentSceneTreeNodeAndWholeTranslationGameObject(
-          newPosition,
-          editorState,
-          engineState,
-        );
-
-      let editorState =
-        PlaneTransformGameObjectSceneViewEditorService.setLastIntersectPointWithPlane(
-          currentIntersectPointWithPlane |. Some,
-          editorState,
-        );
-
-      (editorState, engineState);
-    } :
+    _affectTranslationAxisGameObject(
+      _unsafeGetIntersectPointWithPlaneForXAxis(
+        ray,
+        (editorState, engineState),
+      ),
+      _computeCurrentGameObjectNewPositionForMoveXAxis,
+      (editorState, engineState),
+    ) :
     SelectTransformGameObjectSceneViewEditorService.isTranslationYAxisGameObjectSelected(
       editorState,
     ) ?
-      {
-        let (currentIntersectPointWithPlane, newPosition) =
-          _computeCurrentGameObjectNewPositionForMoveYAxis(
-            ray,
-            (engineState, editorState),
-          );
-
-        let engineState =
-          _moveCurrentSceneTreeNodeAndWholeTranslationGameObject(
-            newPosition,
-            editorState,
-            engineState,
-          );
-
-        let editorState =
-          PlaneTransformGameObjectSceneViewEditorService.setLastIntersectPointWithPlane(
-            currentIntersectPointWithPlane |. Some,
-            editorState,
-          );
-
-        (editorState, engineState);
-      } :
+      _affectTranslationAxisGameObject(
+        _unsafeGetIntersectPointWithPlaneForYAxis(
+          ray,
+          (editorState, engineState),
+        ),
+        _computeCurrentGameObjectNewPositionForMoveYAxis,
+        (editorState, engineState),
+      ) :
       SelectTransformGameObjectSceneViewEditorService.isTranslationZAxisGameObjectSelected(
         editorState,
       ) ?
-        {
-          let (currentIntersectPointWithPlane, newPosition) =
-            _computeCurrentGameObjectNewPositionForMoveZAxis(
-              ray,
-              (engineState, editorState),
-            );
-
-          let engineState =
-            _moveCurrentSceneTreeNodeAndWholeTranslationGameObject(
-              newPosition,
-              editorState,
-              engineState,
-            );
-
-          let editorState =
-            PlaneTransformGameObjectSceneViewEditorService.setLastIntersectPointWithPlane(
-              currentIntersectPointWithPlane |. Some,
-              editorState,
-            );
-
-          (editorState, engineState);
-        } :
+        _affectTranslationAxisGameObject(
+          _unsafeGetIntersectPointWithPlaneForZAxis(
+            ray,
+            (editorState, engineState),
+          ),
+          _computeCurrentGameObjectNewPositionForMoveZAxis,
+          (editorState, engineState),
+        ) :
         (editorState, engineState);
 };
 

@@ -50,3 +50,16 @@ let max = ((x, y, z), (vx, vy, vz)) => (
 );
 
 let length = ((x, y, z)) => Js.Math.sqrt(x *. x +. y *. y +. z *. z);
+
+let projectOnVector = (sourceVec, targetVec) => {
+  let scalar = dot(targetVec, sourceVec) /. length(targetVec);
+
+  multiplyScalar(targetVec, scalar);
+};
+
+let projectOnPlane = (planeNormal, vec) =>
+  Wonderjs.Vector3Service.sub(
+    Wonderjs.Vector3Type.Float,
+    vec,
+    projectOnVector(vec, planeNormal),
+  );

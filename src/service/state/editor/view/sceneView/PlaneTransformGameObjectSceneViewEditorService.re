@@ -28,7 +28,7 @@ let _buildPlane =
     ),
   );
 
-let buildXZPlane = (engineState, editorState) =>
+let buildXZPlane = (editorState, engineState) =>
   _buildPlane(
     TransformGameObjectSceneViewEditorService.unsafeGetTranslationXAxisGameObject(
       editorState,
@@ -46,7 +46,7 @@ let buildXZPlane = (engineState, editorState) =>
     engineState,
   );
 
-let buildYZPlane = (engineState, editorState) =>
+let buildYZPlane = (editorState, engineState) =>
   _buildPlane(
     TransformGameObjectSceneViewEditorService.unsafeGetTranslationYAxisGameObject(
       editorState,
@@ -64,7 +64,7 @@ let buildYZPlane = (engineState, editorState) =>
     engineState,
   );
 
-let buildXYPlane = (engineState, editorState) =>
+let buildXYPlane = (editorState, engineState) =>
   _buildPlane(
     TransformGameObjectSceneViewEditorService.unsafeGetTranslationXAxisGameObject(
       editorState,
@@ -83,11 +83,17 @@ let buildXYPlane = (engineState, editorState) =>
   );
 
 let unsafeGetLastIntersectPointWithPlane = editorState =>
+   RecordTransformGameObjectSceneViewEditorService.getData(
+     editorState.sceneViewRecord,
+   ).
+     lastIntersectPointWithPlane
+   |> OptionService.unsafeGet;
+
+let getLastIntersectPointWithPlane = editorState =>
   RecordTransformGameObjectSceneViewEditorService.getData(
     editorState.sceneViewRecord,
   ).
-    lastIntersectPointWithPlane
-  |> OptionService.unsafeGet;
+    lastIntersectPointWithPlane;
 
 let setLastIntersectPointWithPlane = (point, editorState) => {
   ...editorState,
@@ -100,6 +106,31 @@ let setLastIntersectPointWithPlane = (point, editorState) => {
             editorState.sceneViewRecord,
           ),
         lastIntersectPointWithPlane: point,
+      }),
+  },
+};
+
+let clearLastIntersectPointWithPlane = editorState =>
+  setLastIntersectPointWithPlane(None, editorState);
+
+let getLastPlaneForCheckIntersect = editorState =>
+  RecordTransformGameObjectSceneViewEditorService.getData(
+    editorState.sceneViewRecord,
+  ).
+    lastPlaneForCheckIntersect;
+/* |> OptionService.unsafeGet; */
+
+let setLastPlaneForCheckIntersect = (plane, editorState) => {
+  ...editorState,
+  sceneViewRecord: {
+    ...editorState.sceneViewRecord,
+    transformGameObjectData:
+      Some({
+        ...
+          RecordTransformGameObjectSceneViewEditorService.getData(
+            editorState.sceneViewRecord,
+          ),
+        lastPlaneForCheckIntersect: plane,
       }),
   },
 };

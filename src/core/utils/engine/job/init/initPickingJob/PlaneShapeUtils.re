@@ -21,3 +21,11 @@ let setFromCoplanarPoints = (a, b, c) => {
 
   setFromNormalAndCoplanarPoint(normal, a);
 };
+
+let isPlaneEqual = (plane1, plane2) =>
+  plane1.constant === plane2.constant && plane1.normal == plane2.normal;
+
+let computeAngleBetweenVecAndPlane =
+    (vec, {normal, constant} as plane) => {
+
+    };
