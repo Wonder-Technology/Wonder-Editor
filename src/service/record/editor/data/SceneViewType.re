@@ -10,8 +10,9 @@ type transformGameObjectData = {
   isTranslationXAxisGameObjectSelected: bool,
   isTranslationYAxisGameObjectSelected: bool,
   isTranslationZAxisGameObjectSelected: bool,
-  lastIntersectPointWithPlane: option((float, float, float)),
-  lastPlaneForCheckIntersect: option(ShapeType.planeShape),
+  intersectPointWithPlaneOffsetForXAxis: option(float),
+  intersectPointWithPlaneOffsetForYAxis: option(float),
+  intersectPointWithPlaneOffsetForZAxis: option(float),
 };
 
 type sceneViewRecord = {
