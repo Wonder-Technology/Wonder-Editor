@@ -2953,10 +2953,6 @@ hosted-git-info@^2.1.4:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.7.1.tgz#97f236977bd6e125408930ff6de3eec6281ec047"
 
-hotkeys-js@^3.4.3:
-  version "3.4.3"
-  resolved "https://registry.yarnpkg.com/hotkeys-js/-/hotkeys-js-3.4.3.tgz#20d4d30cb1362264f57fe03170a9ffbba226f2aa"
-
 html-encoding-sniffer@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/html-encoding-sniffer/-/html-encoding-sniffer-1.0.2.tgz#e70d84b94da53aa375e11fe3a351be6642ca46f8"
@@ -7203,6 +7199,10 @@ wonder-bs-sinon@0.1.7, wonder-bs-sinon@^0.1.7:
 wonder-commonlib@0.2.26, wonder-commonlib@^0.2.26:
   version "0.2.26"
   resolved "https://registry.yarnpkg.com/wonder-commonlib/-/wonder-commonlib-0.2.26.tgz#31a3cef357b11ff55656dfa9155a27a992297954"
+
+wonder-hotkey@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/wonder-hotkey/-/wonder-hotkey-0.0.1.tgz#9d51fc386e7d5c165cfbf331de18a9ada1fff32c"
 
 wonder-imgui@^0.0.30:
   version "0.0.30"

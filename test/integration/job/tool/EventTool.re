@@ -124,69 +124,115 @@ let triggerDomEvent = [%raw
     |}
 ];
 
+let buildFakeDocumentSetToWindow = [%raw
+  {|
+    function(){
+        function _getOrCreateEventQueue(type){
+            if(window.eventQueueMap === undefined){
+                window.eventQueueMap = {};
+            }
+            if(window.eventQueueMap[type] === undefined){
+                window.eventQueueMap[type] = [];
+            }
+            return window.eventQueueMap[type];
+        };
+
+        document.addEventListener = (eventName, func, isCapture) => {
+            var queue = _getOrCreateEventQueue(eventName);
+
+            queue.push(func);
+
+        };
+        document.removeEventListener =  (eventName, func, isCapture) => {
+            var queue = _getOrCreateEventQueue(eventName);
+
+            var index = queue.indexOf(func);
+
+            if(index === -1){
+                return;
+            }
+
+            queue.splice(
+                index, 1
+            );
+        };
+        document.dispatchEvent = (event) => {
+            var queue = _getOrCreateEventQueue(event.type);
+            event.target = {
+                tagName:"keydown"
+            }
+
+
+            queue.forEach((func) => {
+                func(event)
+            });
+        };
+    }
+    |}
+];
 let buildFakeCanvasWithSize = [%raw
   (. width, height, offsetData) => {|
-var [ offsetLeft, offsetTop, offsetParent ] = offsetData;
+    var [ offsetLeft, offsetTop, offsetParent ] = offsetData;
 
-    function _getOrCreateEventQueue(type){
-        if(window.eventQueueMap === undefined){
-window.eventQueueMap = {};
-        }
-        if(window.eventQueueMap[type] === undefined){
-window.eventQueueMap[type] = [];
+        function _getOrCreateEventQueue(type){
+            if(window.eventQueueMap === undefined){
+                window.eventQueueMap = {};
+            }
+            if(window.eventQueueMap[type] === undefined){
+                window.eventQueueMap[type] = [];
+            }
+
+            return window.eventQueueMap[type];
         }
 
-        return window.eventQueueMap[type];
+    return {
+        nodeType: 1,
+        style: {
+        "left": "",
+        "top": "",
+        "width": String(width) + "px",
+        "height": String(height) + "px",
+        "position": "static",
+        },
+        width: width,
+        height: height,
+        offsetLeft: offsetLeft,
+        offsetTop: offsetTop,
+        offsetParent: offsetParent,
+
+
+
+        addEventListener: (eventName, func, isCapture) => {
+    var queue = _getOrCreateEventQueue(eventName);
+
+    queue.push(func);
+            },
+
+            removeEventListener: (eventName, func, isCapture) => {
+    var queue = _getOrCreateEventQueue(eventName);
+
+    var index = queue.indexOf(func);
+
+    if(index === -1){
+        return;
     }
 
-return {
-     nodeType: 1,
-     style: {
-       "left": "",
-       "top": "",
-       "width": String(width) + "px",
-       "height": String(height) + "px",
-       "position": "static",
-     },
-     width: width,
-     height: height,
-     offsetLeft: offsetLeft,
-     offsetTop: offsetTop,
-     offsetParent: offsetParent,
+    queue.splice(
+        index, 1
+    );
+            },
+
+            dispatchEvent: (event) => {
+    var queue = _getOrCreateEventQueue(event.type);
 
 
+    queue.forEach((func) => {
+        func(event)
+    });
+            }
 
-     addEventListener: (eventName, func, isCapture) => {
-var queue = _getOrCreateEventQueue(eventName);
-
-queue.push(func);
-        },
-
-        removeEventListener: (eventName, func, isCapture) => {
-var queue = _getOrCreateEventQueue(eventName);
-
-var index = queue.indexOf(func);
-
-if(index === -1){
-    return;
-}
-
-queue.splice(
-    index, 1
-);
-        },
-
-        dispatchEvent: (event) => {
-var queue = _getOrCreateEventQueue(event.type);
-
-
-queue.forEach((func) => {
-    func(event)
-});
-        }
-
-         }
-    |}
+            }
+        |}
 ];
 
 let _clearEventQueueMap = [%raw
@@ -197,6 +243,16 @@ let _clearEventQueueMap = [%raw
 
 let restore = () => {
   _clearEventQueueMap(.);
+
+  ManageEventEngineService.unsubscribeDomEventStream
+  |> StateLogicService.getAndSetEngineState;
+};
+
+let restoreHotKeys = () => {
+  _clearEventQueueMap(.);
+
+  HotKeysJs.setIsBind(false);
+  HotKeysJs.removeHandlers();
 
   ManageEventEngineService.unsubscribeDomEventStream
   |> StateLogicService.getAndSetEngineState;

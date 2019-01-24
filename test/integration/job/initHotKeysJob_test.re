@@ -58,15 +58,7 @@ let _ =
         (),
       );
 
-    beforeEach(() => {
-      sandbox := createSandbox();
-      _prepareKeyboardEvent(~sandbox, ());
-
-      MainEditorSceneTool.createDefaultScene(
-        sandbox,
-        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
-      );
-    });
+    beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("bind document hotKeys event", () => {
@@ -103,36 +95,33 @@ let _ =
       let triggerDeleteHotKeyEvent = () =>
         _execKeyboardEvent("keydown", 46, ()) |> ignore;
 
-      /*
+      beforeEach(() => {
+        _prepareKeyboardEvent(~sandbox, ());
 
-        TODO need use this instead of
-         first describe -> MainUtils._handleEngineState |> StateLogicService.getAndSetEngineState;
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
+        );
 
+        EventTool.buildFakeDocumentSetToWindow();
 
-       beforeAll(() => {
-            Js.log("all");
-            MainUtils._handleEngineState |> StateLogicService.getAndSetEngineState;
-          }); */
+        MainUtils._handleEngineState |> StateLogicService.getAndSetEngineState;
+      });
+      afterEach(() => EventTool.restoreHotKeys());
 
       describe("test bind undo hot-key", () =>
         test("key down ctrl+z, should execute undo operate", () => {
-          MainUtils._handleEngineState
-          |> StateLogicService.getAndSetEngineState;
-
           MainEditorLeftHeaderTool.addEmptyGameObject();
 
           triggerUndoHotKeyEvent();
-          EventTool.restore();
 
           BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
           |> ReactTestTool.createSnapshotAndMatch;
         })
       );
-
       describe("test bind clone hot-key", () =>
         test("key down ctrl+d, should execute clone operate", () => {
           triggerCloneHotKeyEvent();
-          EventTool.restore();
 
           BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
           |> ReactTestTool.createSnapshotAndMatch;
@@ -146,16 +135,15 @@ let _ =
           triggerUndoHotKeyEvent();
           triggerUndoHotKeyEvent();
           triggerRedoHotKeyEvent();
-          EventTool.restore();
 
           BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
           |> ReactTestTool.createSnapshotAndMatch;
         })
       );
+
       describe("test bind delete hot-key", () =>
         test("key down delete, should execute delete operate", () => {
           triggerDeleteHotKeyEvent();
-          EventTool.restore();
 
           BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
           |> ReactTestTool.createSnapshotAndMatch;
