@@ -1,17 +1,15 @@
 open ShapeType;
 
-/* open InitPickingJobType; */
-
-let _at = (t, {origin, direction}: InitPickingJobType.ray) =>
+let _at = (t, {origin, direction}: RayType.ray) =>
   Vector3Service.multiplyScalar(direction, t)
   |> Wonderjs.Vector3Service.add(Wonderjs.Vector3Type.Float, _, origin);
 
-let createPerspectiveCameraRay =
+let _createPerspectiveCameraRay =
     (
-      {x, y}: InitPickingJobType.mouseData,
-      {cameraToWorldMatrix, projectionMatrix}: InitPickingJobType.perspectiveCameraData,
+      {x, y}: CoordinateType.mouseData,
+      {cameraToWorldMatrix, projectionMatrix}: RayType.perspectiveCameraData,
     )
-    : InitPickingJobType.ray => {
+    : RayType.ray => {
   let origin =
     cameraToWorldMatrix |> Wonderjs.Matrix4Service.getTranslationTuple;
 
@@ -28,9 +26,52 @@ let createPerspectiveCameraRay =
   };
 };
 
-let applyMatrix4 =
-    ({origin, direction}: InitPickingJobType.ray, mat4)
-    : InitPickingJobType.ray => {
+let _getPerspectiveCameraData =
+    (cameraGameObject, (editorState, engineState))
+    : RayType.perspectiveCameraData => {
+  cameraToWorldMatrix:
+    BasicCameraViewEngineService.getBasicCameraViewWorldToCameraMatrix(
+      GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
+        cameraGameObject,
+        engineState,
+      ),
+      engineState,
+    )
+    |> Wonderjs.Matrix4Service.invert(
+         _,
+         Wonderjs.Matrix4Service.createIdentityMatrix4(),
+       ),
+  projectionMatrix:
+    PerspectiveCameraProjectionEngineService.unsafeGetPerspectiveCameraProjectionPMatrix(
+      GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
+        cameraGameObject,
+        engineState,
+      ),
+      engineState,
+    ),
+};
+
+let createPerspectiveCameraRayFromEvent =
+    (
+      {userData}: EventType.customEvent,
+      cameraGameObject,
+      (editorState, engineState),
+    ) => {
+  let {locationInView}: EventType.pointEvent =
+    EventType.userDataToPointEvent(userData |> OptionService.unsafeGet);
+
+  let (locationInViewX, locationInViewY) = locationInView;
+
+  _createPerspectiveCameraRay(
+    CoordinateUtils.convertMouselocationInViewToNDC(
+      locationInView,
+      CoordinateUtils.getSceneViewSize(editorState),
+    ),
+    _getPerspectiveCameraData(cameraGameObject, (editorState, engineState)),
+  );
+};
+
+let applyMatrix4 = ({origin, direction}: RayType.ray, mat4) : RayType.ray => {
   let direction =
     Wonderjs.Vector3Service.add(Wonderjs.Vector3Type.Float, direction, origin)
     |> Wonderjs.Vector3Service.transformMat4Tuple(_, mat4);
@@ -49,67 +90,90 @@ let applyMatrix4 =
   };
 };
 
-/* let isIntersectAABB = ({min, max}, {origin, direction} as ray) => {
-     let (originX, originY, originZ) = origin;
-     let (directionX, directionY, directionZ) = direction;
-     let (minX, minY, minZ) = min;
-     let (maxX, maxY, maxZ) = max;
+let distanceToPlane =
+    ({normal, constant} as plane, ({origin, direction}: RayType.ray) as ray) => {
+  let denominator = Vector3Service.dot(normal, direction);
 
+  denominator === 0. ?
+    PlaneShapeUtils.distanceToPoint(origin, plane) === 0. ? Some(0.) : None :
+    {
+      let t =
+        -. (Vector3Service.dot(origin, normal) +. constant) /. denominator;
 
-     let invdirx = 1. /. directionX;
-     let invdiry = 1. /. directionY;
-     let invdirz = 1. /. directionZ;
+      /* Return if the ray never intersects the plane */
 
-     let (tmin, tmax) =
-       if (invdirx >= 0.) {
-         ((minX -. originX) *. invdirx, (maxX -. originX) *. invdirx);
-       } else {
-         ((maxX -. originX) *. invdirx, (minX -. originX) *. invdirx);
-       };
+      t >= 0. ? Some(t) : None;
+    };
+};
 
-     let (tymin, tymax) =
-       if (invdiry >= 0.) {
-         ((minY -. originY) *. invdiry, (maxY -. originY) *. invdiry);
-       } else {
-         ((maxY -. originY) *. invdiry, (minY -. originY) *. invdiry);
-       };
+let checkIntersectPlane =
+    ({normal, constant} as plane, ({origin, direction}: RayType.ray) as ray) =>
+  switch (distanceToPlane(plane, ray)) {
+  | None => None
+  | Some(t) => Some(_at(t, ray))
+  };
 
-     if (tmin > tymax || tymin > tmax) {
-       false;
-     } else {
-       /* These lines also handle the case where tmin or tmax is NaN
-          (result of 0 * Infinity). x !== x returns true if x is NaN */
+let isIntersectAABB =
+    ({min, max}, ({origin, direction}: RayType.ray) as ray) => {
+  let (originX, originY, originZ) = origin;
+  let (directionX, directionY, directionZ) = direction;
+  let (minX, minY, minZ) = min;
+  let (maxX, maxY, maxZ) = max;
 
-       let tmin = tymin > tmin || tmin !== tmin ? tymin : tmin;
+  let invdirx = 1. /. directionX;
+  let invdiry = 1. /. directionY;
+  let invdirz = 1. /. directionZ;
 
-       let tmax = tymax < tmax || tmax !== tmax ? tymax : tmax;
+  let (tmin, tmax) =
+    if (invdirx >= 0.) {
+      ((minX -. originX) *. invdirx, (maxX -. originX) *. invdirx);
+    } else {
+      ((maxX -. originX) *. invdirx, (minX -. originX) *. invdirx);
+    };
 
-       let (tzmin, tzmax) =
-         if (invdirz >= 0.) {
-           ((minZ -. originZ) *. invdirz, (maxZ -. originZ) *. invdirz);
-         } else {
-           ((maxZ -. originZ) *. invdirz, (minZ -. originZ) *. invdirz);
-         };
+  let (tymin, tymax) =
+    if (invdiry >= 0.) {
+      ((minY -. originY) *. invdiry, (maxY -. originY) *. invdiry);
+    } else {
+      ((maxY -. originY) *. invdiry, (minY -. originY) *. invdiry);
+    };
 
-       if (tmin > tzmax || tzmin > tmax) {
-         false;
-       } else {
-         let tmin = tzmin > tmin || tmin !== tmin ? tzmin : tmin;
+  if (tmin > tymax || tymin > tmax) {
+    false;
+  } else {
+    /* These lines also handle the case where tmin or tmax is NaN
+       (result of 0 * Infinity). x !== x returns true if x is NaN */
 
-         let tmax = tzmax < tmax || tmax !== tmax ? tzmax : tmax;
+    let tmin = tymin > tmin || tmin !== tmin ? tymin : tmin;
 
-         if (tmax < 0.) {
-           false;
-         } else {
-           true;
-               /* _at(ray, tmin >= 0. ? tmin : tmax) |. Some; */
-         };
-       };
-     };
-   }; */
+    let tmax = tymax < tmax || tmax !== tmax ? tymax : tmax;
+
+    let (tzmin, tzmax) =
+      if (invdirz >= 0.) {
+        ((minZ -. originZ) *. invdirz, (maxZ -. originZ) *. invdirz);
+      } else {
+        ((maxZ -. originZ) *. invdirz, (minZ -. originZ) *. invdirz);
+      };
+
+    if (tmin > tzmax || tzmin > tmax) {
+      false;
+    } else {
+      let tmin = tzmin > tmin || tmin !== tmin ? tzmin : tmin;
+
+      let tmax = tzmax < tmax || tmax !== tmax ? tzmax : tmax;
+
+      if (tmax < 0.) {
+        false;
+      } else {
+        true;
+            /* _at(ray, tmin >= 0. ? tmin : tmax) |. Some; */
+      };
+    };
+  };
+};
 
 let isIntersectSphere =
-    ({center, radius}, ({origin, direction}: InitPickingJobType.ray) as ray) => {
+    ({center, radius}, ({origin, direction}: RayType.ray) as ray) => {
   let v1 =
     Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, origin, center);
 
@@ -219,7 +283,7 @@ let _checkIntersectTriangleForFrontCull =
       v0,
       v1,
       v2,
-      {origin, direction}: InitPickingJobType.ray,
+      {origin, direction}: RayType.ray,
     ) => {
   let inv_det = 1. /. det;
 
@@ -258,11 +322,11 @@ let _checkIntersectTriangleForFrontCull =
 
 let checkIntersectTriangle =
     (
-      cullType: InitPickingJobType.cull,
+      cullType: RayType.cull,
       va,
       vb,
       vc,
-      ({origin, direction}: InitPickingJobType.ray) as ray,
+      ({origin, direction}: RayType.ray) as ray,
     ) =>
   switch (cullType) {
   | Both => None
@@ -286,7 +350,7 @@ let checkIntersectTriangle =
         va,
         vb,
         vc,
-        {origin, direction}: InitPickingJobType.ray,
+        {origin, direction}: RayType.ray,
       );
   | _ =>
     let edge1 =
@@ -376,11 +440,11 @@ let checkIntersectTriangle =
 
  let checkIntersectTriangle =
       (
-        cullType: InitPickingJobType.cull,
+        cullType: RayType.cull,
         v0,
         v1,
         v2,
-        {origin, direction}: InitPickingJobType.ray,
+        {origin, direction}: RayType.ray,
       ) =>
     switch (cullType) {
     | Both => None

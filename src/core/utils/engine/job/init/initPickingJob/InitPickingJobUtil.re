@@ -64,53 +64,6 @@ let _getTopOne = (cameraGameObject, engineState, intersectedDatas) => {
   |> Js.Option.map((. (gameObject, _)) => gameObject);
 };
 
-let _getSceneViewSize = editorState => {
-  let (_, _, width, height) =
-    SceneViewEditorService.unsafeGetViewRect(editorState);
-
-  (width, height);
-};
-
-let _convertMouselocationInViewToNDC =
-    ((x, y), (viewWidth, viewHeight))
-    : InitPickingJobType.mouseData => {
-  x:
-    (x |> NumberType.convertIntToFloat)
-    /. (viewWidth |> NumberType.convertIntToFloat)
-    *. 2.
-    -. 1.,
-  y:
-    1.
-    -. (y |> NumberType.convertIntToFloat)
-    /. (viewHeight |> NumberType.convertIntToFloat)
-    *. 2.,
-};
-
-let _getPerspectiveCameraData =
-    (cameraGameObject, (editorState, engineState))
-    : InitPickingJobType.perspectiveCameraData => {
-  cameraToWorldMatrix:
-    BasicCameraViewEngineService.getBasicCameraViewWorldToCameraMatrix(
-      GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-        cameraGameObject,
-        engineState,
-      ),
-      engineState,
-    )
-    |> Wonderjs.Matrix4Service.invert(
-         _,
-         Wonderjs.Matrix4Service.createIdentityMatrix4(),
-       ),
-  projectionMatrix:
-    PerspectiveCameraProjectionEngineService.unsafeGetPerspectiveCameraProjectionPMatrix(
-      GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
-        cameraGameObject,
-        engineState,
-      ),
-      engineState,
-    ),
-};
-
 let _getAllGameObjectData = engineState =>
   HierarchyGameObjectEngineService.getAllGameObjects(
     SceneEngineService.getSceneGameObject(engineState),
@@ -167,32 +120,15 @@ let _computeSphereShapeData = (allGameObjectData, (editorState, engineState)) =>
        editorState,
      );
 
-let _findPickedOne =
-    (
-      {userData}: EventType.customEvent,
-      allGameObjectData,
-      (editorState, engineState),
-    ) => {
-  let {locationInView}: EventType.pointEvent =
-    InitPickingJobType.userDataToPointEvent(
-      userData |> OptionService.unsafeGet,
-    );
-
+let _findPickedOne = (event, allGameObjectData, (editorState, engineState)) => {
   let cameraGameObject =
     SceneViewEditorService.unsafeGetEditCamera(editorState);
 
-  let (locationInViewX, locationInViewY) = locationInView;
-
   let ray =
-    RayUtils.createPerspectiveCameraRay(
-      _convertMouselocationInViewToNDC(
-        locationInView,
-        _getSceneViewSize(editorState),
-      ),
-      _getPerspectiveCameraData(
-        cameraGameObject,
-        (editorState, engineState),
-      ),
+    RayUtils.createPerspectiveCameraRayFromEvent(
+      event,
+      cameraGameObject,
+      (editorState, engineState),
     );
 
   allGameObjectData

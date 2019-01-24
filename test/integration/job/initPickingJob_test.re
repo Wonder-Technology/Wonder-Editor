@@ -358,7 +358,7 @@ let _ =
           |> expect == Some(SceneTreeWidgetService.getWidget());
         });
 
-        describe("handle pick success", () =>
+        describe("handle pick success", ()
           /* test("test trigger", () => {
                let _ = _prepare();
                let a = ref(0);
@@ -406,53 +406,61 @@ let _ =
 
                pickedGameObject^ |> expect == gameObject;
              }); */
-          test("the picked gameObject's all parents should show children", () => {
-            let _createParentGameObject = engineState => {
-              let (engineState, parent) =
-                engineState |> GameObjectEngineService.create;
+          =>
+            test(
+              "the picked gameObject's all parents should show children", () => {
+              let _createParentGameObject = engineState => {
+                let (engineState, parent) =
+                  engineState |> GameObjectEngineService.create;
+                let engineState =
+                  engineState
+                  |> GameObjectEngineService.setGameObjectName(
+                       "parent",
+                       parent,
+                     );
+
+                (engineState, parent);
+              };
+
+              let gameObject = _prepare();
+              let engineState = StateEngineService.unsafeGetState();
+              let (engineState, parent1) =
+                _createParentGameObject(engineState);
+              let (engineState, parent2) =
+                _createParentGameObject(engineState);
               let engineState =
                 engineState
-                |> GameObjectEngineService.setGameObjectName("parent", parent);
+                |> SceneEngineService.addSceneChild(parent1)
+                |> HierarchyGameObjectEngineService.addChild(
+                     parent1,
+                     parent2,
+                   )
+                |> HierarchyGameObjectEngineService.addChild(
+                     parent2,
+                     gameObject,
+                   );
 
-              (engineState, parent);
-            };
+              _triggerPicking();
 
-            let gameObject = _prepare();
-            let engineState = StateEngineService.unsafeGetState();
-            let (engineState, parent1) =
-              _createParentGameObject(engineState);
-            let (engineState, parent2) =
-              _createParentGameObject(engineState);
-            let engineState =
-              engineState
-              |> SceneEngineService.addSceneChild(parent1)
-              |> HierarchyGameObjectEngineService.addChild(parent1, parent2)
-              |> HierarchyGameObjectEngineService.addChild(
-                   parent2,
-                   gameObject,
-                 );
-
-            _triggerPicking();
-
-            let editorState = StateEditorService.getState();
-            let engineState = StateEngineService.unsafeGetState();
-            let sceneGameObject =
-              SceneEngineService.getSceneGameObject(engineState);
-            (
-              SceneTreeEditorService.getIsShowChildern(
-                parent1,
-                sceneGameObject,
-                editorState,
-              ),
-              SceneTreeEditorService.getIsShowChildern(
-                parent2,
-                sceneGameObject,
-                editorState,
-              ),
-            )
-            |> expect == (true, true);
-          })
-        );
+              let editorState = StateEditorService.getState();
+              let engineState = StateEngineService.unsafeGetState();
+              let sceneGameObject =
+                SceneEngineService.getSceneGameObject(engineState);
+              (
+                SceneTreeEditorService.getIsShowChildern(
+                  parent1,
+                  sceneGameObject,
+                  editorState,
+                ),
+                SceneTreeEditorService.getIsShowChildern(
+                  parent2,
+                  sceneGameObject,
+                  editorState,
+                ),
+              )
+              |> expect == (true, true);
+            })
+          );
       });
 
       describe("if not find", () =>
@@ -549,12 +557,12 @@ let _ =
               SceneViewEditorService.unsafeGetEditCamera(editorState);
 
             let ray =
-              RayUtils.createPerspectiveCameraRay(
-                InitPickingJobUtil._convertMouselocationInViewToNDC(
+              RayUtils._createPerspectiveCameraRay(
+                CoordinateUtils.convertMouselocationInViewToNDC(
                   locationInView,
-                  InitPickingJobUtil._getSceneViewSize(editorState),
+                  CoordinateUtils.getSceneViewSize(editorState),
                 ),
-                InitPickingJobUtil._getPerspectiveCameraData(
+                RayUtils._getPerspectiveCameraData(
                   cameraGameObject,
                   (editorState, engineState),
                 ),
@@ -568,7 +576,7 @@ let _ =
             test("test intersect front side", () =>
               _isIntersectTriangle(
                 ~sandbox,
-                ~cullType=InitPickingJobType.Back,
+                ~cullType=RayType.Back,
                 ~viewWidth=500,
                 ~viewHeight=200,
                 ~va=(1., 0., 0.),
@@ -582,7 +590,7 @@ let _ =
             test("test not intersect back side", () =>
               _isIntersectTriangle(
                 ~sandbox,
-                ~cullType=InitPickingJobType.Back,
+                ~cullType=RayType.Back,
                 ~viewWidth=500,
                 ~viewHeight=200,
                 ~va=((-1.), 0., 0.),
@@ -599,7 +607,7 @@ let _ =
             test("test intersect back side", () =>
               _isIntersectTriangle(
                 ~sandbox,
-                ~cullType=InitPickingJobType.Front,
+                ~cullType=RayType.Front,
                 ~viewWidth=500,
                 ~viewHeight=200,
                 ~va=((-1.), 0., 0.),
@@ -613,7 +621,7 @@ let _ =
             test("test not intersect front side", () =>
               _isIntersectTriangle(
                 ~sandbox,
-                ~cullType=InitPickingJobType.Front,
+                ~cullType=RayType.Front,
                 ~viewWidth=500,
                 ~viewHeight=200,
                 ~va=(1., 0., 0.),
@@ -629,7 +637,7 @@ let _ =
             test("test intersect back side", () =>
               _isIntersectTriangle(
                 ~sandbox,
-                ~cullType=InitPickingJobType.None,
+                ~cullType=RayType.None,
                 ~viewWidth=500,
                 ~viewHeight=200,
                 ~va=((-1.), 0., 0.),
@@ -643,7 +651,7 @@ let _ =
             test("test intersect front side", () =>
               _isIntersectTriangle(
                 ~sandbox,
-                ~cullType=InitPickingJobType.None,
+                ~cullType=RayType.None,
                 ~viewWidth=500,
                 ~viewHeight=200,
                 ~va=(1., 0., 0.),
@@ -659,7 +667,7 @@ let _ =
             test("test not intersect back side", () =>
               _isIntersectTriangle(
                 ~sandbox,
-                ~cullType=InitPickingJobType.Both,
+                ~cullType=RayType.Both,
                 ~viewWidth=500,
                 ~viewHeight=200,
                 ~va=((-1.), 0., 0.),
@@ -673,7 +681,7 @@ let _ =
             test("test not intersect front side", () =>
               _isIntersectTriangle(
                 ~sandbox,
-                ~cullType=InitPickingJobType.Both,
+                ~cullType=RayType.Both,
                 ~viewWidth=500,
                 ~viewHeight=200,
                 ~va=(1., 0., 0.),

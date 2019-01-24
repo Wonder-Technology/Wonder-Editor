@@ -20,7 +20,7 @@ let _refreshInspector = engineState => {
   engineState;
 };
 
-let _judgeWhetherTriggerRefreshInspectorEvent = engineState =>
+let _handleTriggerRefreshInspectorEvent = engineState =>
   _isCurrentSceneTreeNodeHasArcballCameraControllerComponent(engineState) ?
     _refreshInspector(engineState) : engineState;
 
@@ -30,7 +30,7 @@ let initJob = (_, engineState) => {
       ~eventName=NameEventEngineService.getPointDragEventName(),
       ~handleFunc=
         (. event, engineState) => (
-          _judgeWhetherTriggerRefreshInspectorEvent(engineState),
+          _handleTriggerRefreshInspectorEvent(engineState),
           event,
         ),
       ~state=engineState,
@@ -42,7 +42,7 @@ let initJob = (_, engineState) => {
       ~eventName=NameEventEngineService.getPointScaleEventName(),
       ~handleFunc=
         (. event, engineState) => (
-          _judgeWhetherTriggerRefreshInspectorEvent(engineState),
+          _handleTriggerRefreshInspectorEvent(engineState),
           event,
         ),
       ~state=engineState,
@@ -54,7 +54,7 @@ let initJob = (_, engineState) => {
       ~eventName=EventType.KeyDown |> Obj.magic,
       ~handleFunc=
         (. event, engineState) =>
-          _judgeWhetherTriggerRefreshInspectorEvent(engineState),
+          _handleTriggerRefreshInspectorEvent(engineState),
       ~state=engineState,
       (),
     );

@@ -171,43 +171,49 @@ let _moveAndRotateTranslationWholeGameObjectToCurrentSceneTreeNode =
 let renderJob = (_, engineState) => {
   let editorState = StateEditorService.getState();
 
-  switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
-  | None => engineState
-  | Some(currentGameObject) =>
-    let translationWholeGameObject =
-      TransformGameObjectSceneViewEditorService.unsafeGetTranslationWholeGameObject(
-        editorState,
-      );
+  IsTransformGameObjectRenderSceneViewEditorService.isTranslationWholeGameObjectRender(
+    editorState,
+  ) ?
+    switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
+    | None => engineState
+    | Some(currentGameObject) =>
+      let translationWholeGameObject =
+        TransformGameObjectSceneViewEditorService.unsafeGetTranslationWholeGameObject(
+          editorState,
+        );
 
-    let engineState =
-      engineState
-      |> _moveAndRotateTranslationWholeGameObjectToCurrentSceneTreeNode(
-           currentGameObject,
-           translationWholeGameObject,
-           editorState,
-         );
+      let engineState =
+        engineState
+        |> _moveAndRotateTranslationWholeGameObjectToCurrentSceneTreeNode(
+             currentGameObject,
+             translationWholeGameObject,
+             editorState,
+           );
 
-    let renderDataArr =
-      RenderTransformGameObjects.getRenderDataArr(
-        HierarchyGameObjectEngineService.getAllGameObjects(
-          translationWholeGameObject,
+      let renderDataArr =
+        RenderTransformGameObjects.getRenderDataArr(
+          HierarchyGameObjectEngineService.getAllGameObjects(
+            translationWholeGameObject,
+            engineState,
+          ),
           engineState,
-        ),
-        engineState,
-      );
-    let gl = DeviceManagerEngineService.unsafeGetGl(engineState);
+        );
+      let gl = DeviceManagerEngineService.unsafeGetGl(engineState);
 
-    let engineState = engineState |> RenderTransformGameObjects.prepareGlState;
+      let engineState =
+        engineState |> RenderTransformGameObjects.prepareGlState;
 
-    let engineRenderState =
-      Wonderjs.CreateRenderStateMainService.createRenderState(engineState);
+      let engineRenderState =
+        Wonderjs.CreateRenderStateMainService.createRenderState(engineState);
 
-    /* TODO refactor: shouldn't operate renderState in editor!!!  */
-    let engineRenderState =
-      RenderTransformGameObjects.draw(gl, renderDataArr, engineRenderState);
+      /* TODO refactor: shouldn't operate renderState in editor!!!  */
+      let engineRenderState =
+        RenderTransformGameObjects.draw(gl, renderDataArr, engineRenderState);
 
-    let engineState = engineState |> RenderTransformGameObjects.restoreGlState;
+      let engineState =
+        engineState |> RenderTransformGameObjects.restoreGlState;
 
+      engineState;
+    } :
     engineState;
-  };
 };

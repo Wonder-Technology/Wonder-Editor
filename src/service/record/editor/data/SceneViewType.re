@@ -7,6 +7,10 @@ type transformGameObjectData = {
   translationXAxisGameObject: gameObject,
   translationYAxisGameObject: gameObject,
   translationZAxisGameObject: gameObject,
+  isTranslationXAxisGameObjectSelected: bool,
+  isTranslationYAxisGameObjectSelected: bool,
+  isTranslationZAxisGameObjectSelected: bool,
+  lastIntersectPointWithPlane: option((float, float, float)),
 };
 
 type sceneViewRecord = {
