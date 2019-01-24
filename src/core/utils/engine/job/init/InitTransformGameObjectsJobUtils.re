@@ -130,7 +130,7 @@ let _createTransformGameObjects = engineState => {
   let engineState =
     engineState
     |> TransformEngineService.setLocalEulerAngles(
-         (0., 0., 90.),
+         (0., 0., -90.),
          xAxisTransform,
        )
     |> TransformEngineService.setLocalEulerAngles(
