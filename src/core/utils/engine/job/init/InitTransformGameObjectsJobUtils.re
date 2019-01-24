@@ -145,7 +145,7 @@ let _createTransformGameObjects = engineState => {
     engineState
     |> HierarchyGameObjectEngineService.addChild(
          wholeGameObject,
-         xAxisGameObject,
+         zAxisGameObject,
        )
     |> HierarchyGameObjectEngineService.addChild(
          wholeGameObject,
@@ -153,7 +153,7 @@ let _createTransformGameObjects = engineState => {
        )
     |> HierarchyGameObjectEngineService.addChild(
          wholeGameObject,
-         zAxisGameObject,
+         xAxisGameObject,
        );
 
   (
