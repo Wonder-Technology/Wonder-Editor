@@ -182,8 +182,6 @@ let _setToEditorState =
         isTranslationXAxisGameObjectSelected: false,
         isTranslationYAxisGameObjectSelected: false,
         isTranslationZAxisGameObjectSelected: false,
-        /* lastIntersectPointWithPlane: None,
-           lastPlaneForCheckIntersect: None, */
         intersectPointWithPlaneOffsetForXAxis: None,
         intersectPointWithPlaneOffsetForYAxis: None,
         intersectPointWithPlaneOffsetForZAxis: None,

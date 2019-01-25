@@ -20,6 +20,11 @@ let isTranslationZAxisGameObjectSelected = editorState =>
   ).
     isTranslationZAxisGameObjectSelected;
 
+let isSelectAnyTransformGameObject = editorState =>
+  isTranslationXAxisGameObjectSelected(editorState)
+  || isTranslationYAxisGameObjectSelected(editorState)
+  || isTranslationZAxisGameObjectSelected(editorState);
+
 let notSelectAllTransformGameObject = editorState => {
   ...editorState,
   sceneViewRecord: {

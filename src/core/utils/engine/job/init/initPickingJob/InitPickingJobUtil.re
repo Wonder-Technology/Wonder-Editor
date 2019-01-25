@@ -202,7 +202,11 @@ let _handlePicking = (event: EventType.customEvent, engineState) => {
     switch (
       (editorState, engineState) |> _findPickedOne(event, allGameObjectData)
     ) {
-    | None => _handlePickFail(engineState)
+    | None =>
+      SelectTransformGameObjectSceneViewEditorService.isSelectAnyTransformGameObject(
+        editorState,
+      ) ?
+        engineState : _handlePickFail(engineState)
     | Some(gameObject) => _handlePickSuccess(gameObject, engineState)
     };
 
