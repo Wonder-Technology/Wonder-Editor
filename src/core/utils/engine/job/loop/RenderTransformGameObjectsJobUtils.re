@@ -231,7 +231,8 @@ let renderJob = (_, engineState) => {
              currentGameObject,
              translationWholeGameObject,
              editorState,
-           );
+           )
+        |> JobEngineService.execUpdateTransformJob;
 
       let renderDataArr =
         RenderTransformGameObjects.getRenderDataArr(
