@@ -78,25 +78,16 @@ let _createTranslationAxisGameObject = (color, engineState) => {
          false,
        );
 
-  let cylinderTransform =
-    engineState
-    |> GameObjectComponentEngineService.unsafeGetTransformComponent(
-         cylinderGameObject,
-       );
-
-  let coneTransform =
-    engineState
-    |> GameObjectComponentEngineService.unsafeGetTransformComponent(
-         coneGameObject,
-       );
-
   let engineState =
     engineState
-    |> TransformEngineService.setLocalPosition(
+    |> TransformGameObjectEngineService.setLocalPosition(
+         cylinderGameObject,
          (0., 2.5, 0.),
-         cylinderTransform,
        )
-    |> TransformEngineService.setLocalPosition((0., 5.5, 0.), coneTransform);
+    |> TransformGameObjectEngineService.setLocalPosition(
+         coneGameObject,
+         (0., 5.5, 0.),
+       );
 
   let engineState =
     engineState

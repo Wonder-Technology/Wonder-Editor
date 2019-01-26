@@ -168,6 +168,44 @@ let _moveAndRotateTranslationWholeGameObjectToCurrentSceneTreeNode =
      );
 };
 
+let _computeScaleFactorBasedOnDistanceToCamera =
+    (cameraPos, currentGameObjectPos) => {
+  let factor = 0.03;
+
+  Vector3Service.length(
+    Wonderjs.Vector3Service.sub(
+      Wonderjs.Vector3Type.Float,
+      cameraPos,
+      currentGameObjectPos,
+    ),
+  )
+  *. factor;
+};
+
+let _scaleTranslationWholeGameObject =
+    (currentGameObject, translationWholeGameObject, editorState, engineState) => {
+  let cameraGameObject =
+    SceneViewEditorService.unsafeGetEditCamera(editorState);
+
+  let factor =
+    _computeScaleFactorBasedOnDistanceToCamera(
+      TransformGameObjectEngineService.getPosition(
+        cameraGameObject,
+        engineState,
+      ),
+      TransformGameObjectEngineService.getPosition(
+        currentGameObject,
+        engineState,
+      ),
+    );
+
+  TransformGameObjectEngineService.setLocalScale(
+    translationWholeGameObject,
+    (factor, factor, factor),
+    engineState,
+  );
+};
+
 let renderJob = (_, engineState) => {
   let editorState = StateEditorService.getState();
 
@@ -185,6 +223,11 @@ let renderJob = (_, engineState) => {
       let engineState =
         engineState
         |> _moveAndRotateTranslationWholeGameObjectToCurrentSceneTreeNode(
+             currentGameObject,
+             translationWholeGameObject,
+             editorState,
+           )
+        |> _scaleTranslationWholeGameObject(
              currentGameObject,
              translationWholeGameObject,
              editorState,
