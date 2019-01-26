@@ -159,9 +159,9 @@ let _moveAndRotateTranslationWholeGameObjectToCurrentSceneTreeNode =
          engineState,
        ),
      )
-  |> TransformEngineService.setRotation(
+  |> TransformEngineService.setEulerAngles(
        translationWholeGameObjectTransform,
-       TransformEngineService.getRotation(
+       TransformEngineService.getEulerAngles(
          currentGameObjectTransform,
          engineState,
        ),
