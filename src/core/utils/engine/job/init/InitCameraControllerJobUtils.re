@@ -11,18 +11,22 @@ let _isCurrentSceneTreeNodeHasArcballCameraControllerComponent = engineState => 
   };
 };
 
-let _refreshInspector = engineState => {
+let _refreshInspector = () => {
   let dispatchFunc = UIStateService.getDispatch();
 
   dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
   |> ignore;
 
-  engineState;
+  ();
 };
 
 let _handleTriggerRefreshInspectorEvent = engineState =>
   _isCurrentSceneTreeNodeHasArcballCameraControllerComponent(engineState) ?
-    _refreshInspector(engineState) : engineState;
+    {
+      _refreshInspector();
+      engineState;
+    } :
+    engineState;
 
 let initJob = (_, engineState) => {
   let engineState =

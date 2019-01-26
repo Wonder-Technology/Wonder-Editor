@@ -134,24 +134,11 @@ let _createTransformGizmos = engineState => {
 
   let engineState =
     engineState
-    |> HierarchyGameObjectEngineService.addChild(
-         wholeGameObject,
-         zAxisGizmo,
-       )
-    |> HierarchyGameObjectEngineService.addChild(
-         wholeGameObject,
-         yAxisGizmo,
-       )
-    |> HierarchyGameObjectEngineService.addChild(
-         wholeGameObject,
-         xAxisGizmo,
-       );
+    |> HierarchyGameObjectEngineService.addChild(wholeGameObject, zAxisGizmo)
+    |> HierarchyGameObjectEngineService.addChild(wholeGameObject, yAxisGizmo)
+    |> HierarchyGameObjectEngineService.addChild(wholeGameObject, xAxisGizmo);
 
-  (
-    engineState,
-    wholeGameObject,
-    (xAxisGizmo, yAxisGizmo, zAxisGizmo),
-  );
+  (engineState, wholeGameObject, (xAxisGizmo, yAxisGizmo, zAxisGizmo));
 };
 
 let _setToEditorState =
@@ -589,8 +576,7 @@ let _moveCurrentSceneTreeNodeAndWholeTranslationGizmo =
        newPosition,
      );
 
-let _affectTranslationAxisGizmo =
-    (newPosition, (editorState, engineState)) =>
+let _affectTranslationAxisGizmo = (newPosition, (editorState, engineState)) =>
   switch (newPosition) {
   | None => (editorState, engineState)
   | Some(newPosition) =>
@@ -648,6 +634,15 @@ let _affectTransformGizmo = (event, (editorState, engineState)) => {
         (editorState, engineState);
 };
 
+let _refreshInspector = () => {
+  let dispatchFunc = UIStateService.getDispatch();
+
+  dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
+  |> ignore;
+
+  ();
+};
+
 let _bindEvent = (editorState, engineState) => {
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
@@ -680,10 +675,12 @@ let _bindEvent = (editorState, engineState) => {
               let editorState = StateEditorService.getState();
 
               let (editorState, engineState) =
-                _affectTransformGizmo(
-                  event,
-                  (editorState, engineState),
-                );
+                _affectTransformGizmo(event, (editorState, engineState));
+
+              SelectTransformGizmoSceneViewEditorService.isSelectAnyTransformGizmo(
+                editorState,
+              ) ?
+                _refreshInspector() : ();
 
               editorState |> StateEditorService.setState |> ignore;
 
@@ -698,11 +695,7 @@ let _bindEvent = (editorState, engineState) => {
 };
 
 let initJob = (_, engineState) => {
-  let (
-    engineState,
-    wholeGameObject,
-    (xAxisGizmo, yAxisGizmo, zAxisGizmo),
-  ) =
+  let (engineState, wholeGameObject, (xAxisGizmo, yAxisGizmo, zAxisGizmo)) =
     _createTransformGizmos(engineState);
 
   let editorState = StateEditorService.getState();
