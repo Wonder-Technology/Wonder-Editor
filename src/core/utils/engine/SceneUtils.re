@@ -1,20 +1,8 @@
-let addGameObjectToScene = (gameObject, engineState) =>
+let initGameObjectAndAddToParent = (parent, child, engineState) =>
   engineState
-  |> GameObjectEngineService.initGameObject(gameObject)
-  |> SceneEngineService.addSceneChild(gameObject)
+  |> GameObjectEngineService.initGameObject(child)
+  |> HierarchyGameObjectEngineService.addChild(parent, child)
   |> DirectorEngineService.loopBody(0.);
-
-let addGameObject = createGameObjectFunc => {
-  let (editorState, engineState, gameObject) =
-    StateEngineService.unsafeGetState()
-    |> createGameObjectFunc(StateEditorService.getState());
-
-  let engineState = addGameObjectToScene(gameObject, engineState);
-
-  StateLogicService.setState((editorState, engineState));
-
-  gameObject;
-};
 
 let doesSceneHasRemoveableCamera = () =>
   GameObjectComponentEngineService.getAllBasicCameraViewComponents
