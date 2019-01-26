@@ -77,6 +77,50 @@ let _ =
             |> expect == (true, false);
           })
         );
+
+        describe("test added gameObject's parent", () => {
+          test(
+            "if has currentSceneTreeNode, the gameObject should add into currentSceneTreeNode",
+            () => {
+              let engineState = StateEngineService.unsafeGetState();
+
+              let newGameObject = GameObjectTool.getNewGameObject();
+
+              MainEditorLeftHeaderTool.addEmptyGameObject();
+
+              engineState
+              |> HierarchyGameObjectEngineService.getParentGameObject(
+                   newGameObject,
+                 )
+              |> OptionService.unsafeGet
+              |>
+              expect == (
+                          SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
+                          |> StateLogicService.getEditorState
+                        );
+            },
+          );
+          test(
+            "if has no currentSceneTreeNode, the gameObject should add into scene gameObject",
+            () => {
+              SceneTreeEditorService.clearCurrentSceneTreeNode
+              |> StateLogicService.getAndSetEditorState;
+
+              let engineState = StateEngineService.unsafeGetState();
+
+              let newGameObject = GameObjectTool.getNewGameObject();
+
+              MainEditorLeftHeaderTool.addEmptyGameObject();
+
+              engineState
+              |> HierarchyGameObjectEngineService.getParentGameObject(
+                   newGameObject,
+                 )
+              |> OptionService.unsafeGet
+              |> expect == SceneEngineService.getSceneGameObject(engineState);
+            },
+          );
+        });
       });
 
       describe("test dispose gameObject", () => {

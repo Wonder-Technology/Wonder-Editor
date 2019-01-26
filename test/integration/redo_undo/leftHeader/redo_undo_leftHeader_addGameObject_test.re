@@ -20,10 +20,7 @@ let _ =
     };
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());
-      MainEditorSceneTool.createDefaultScene(
-        sandbox,
-        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
-      );
+      MainEditorSceneTool.createDefaultScene(sandbox, () => ());
     };
 
     beforeEach(() => sandbox := createSandbox());

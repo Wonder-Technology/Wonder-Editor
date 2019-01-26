@@ -17,10 +17,7 @@ let _ =
       describe("test add gameObject", () => {
         beforeEach(() => {
           MainEditorSceneTool.initState(~sandbox, ());
-          MainEditorSceneTool.createDefaultScene(
-            sandbox,
-            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
-          );
+          MainEditorSceneTool.createDefaultScene(sandbox, () => ());
           ControllerTool.stubRequestAnimationFrame(
             createEmptyStubWithJsObjSandbox(sandbox),
           );
