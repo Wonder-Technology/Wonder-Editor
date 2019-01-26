@@ -53,11 +53,6 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test set value into engineState", () => {
-      let _getPointLightIntensity = (component, engineState) =>
-        engineState
-        |> PointLightEngineService.getPointLightIntensity(component)
-        |. FloatService.truncateFloatValue(5);
-
       beforeEach(() => {
         _prepareWithJob();
         _prepareDefaultSceneAndInit();
@@ -107,7 +102,10 @@ let _ =
         );
 
         StateEngineService.unsafeGetState()
-        |> _getPointLightIntensity(currentGameObjectPointLightComponent)
+        |> PointLightEngineService.getPointLightIntensity(
+             currentGameObjectPointLightComponent,
+           )
+        |. FloatService.truncateFloatValue(5)
         |> expect == value;
       });
     });

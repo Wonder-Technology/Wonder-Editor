@@ -77,9 +77,15 @@ let _ =
               GameObjectTool.getCurrentGameObjectPointLightComponent();
             let value = 10.1;
 
-            MainEditorPointLightTool.changeIntensity(
-              currentGameObjectPointLightComponent,
-              value,
+            MainEditorPointLightTool.changeIntensityAndBlur(
+              ~light=currentGameObjectPointLightComponent,
+              ~sourceValue=
+                PointLightEngineService.getPointLightIntensity(
+                  currentGameObjectPointLightComponent,
+                  StateEngineService.unsafeGetState(),
+                ),
+              ~targetValue=value,
+              (),
             );
 
             PointLightEngineService.getPointLightIntensity(
@@ -97,9 +103,15 @@ let _ =
               GameObjectTool.getCurrentGameObjectPointLightComponent();
             let value = 10.1;
 
-            MainEditorPointLightTool.changeConstant(
-              currentGameObjectPointLightComponent,
-              value,
+            MainEditorPointLightTool.changeConstantAndBlur(
+              ~light=currentGameObjectPointLightComponent,
+              ~sourceValue=
+                PointLightEngineService.getPointLightConstant(
+                  currentGameObjectPointLightComponent,
+                  StateEngineService.unsafeGetState(),
+                ),
+              ~targetValue=value,
+              (),
             );
 
             PointLightEngineService.getPointLightConstant(
@@ -116,9 +128,15 @@ let _ =
               GameObjectTool.getCurrentGameObjectPointLightComponent();
             let value = 10.1;
 
-            MainEditorPointLightTool.changeLinear(
-              currentGameObjectPointLightComponent,
-              value,
+            MainEditorPointLightTool.changeLinearAndBlur(
+              ~light=currentGameObjectPointLightComponent,
+              ~sourceValue=
+                PointLightEngineService.getPointLightLinear(
+                  currentGameObjectPointLightComponent,
+                  StateEngineService.unsafeGetState(),
+                ),
+              ~targetValue=value,
+              (),
             );
 
             PointLightEngineService.getPointLightLinear(
@@ -139,6 +157,25 @@ let _ =
               currentGameObjectPointLightComponent,
               value,
             );
+            MainEditorPointLightTool.blurQuadratic(
+              ~light=currentGameObjectPointLightComponent,
+              ~value=
+                PointLightEngineService.getPointLightQuadratic(
+                  currentGameObjectPointLightComponent,
+                  StateEngineService.unsafeGetState(),
+                ),
+              (),
+            );
+            MainEditorPointLightTool.changeQuadraticAndBlur(
+              ~light=currentGameObjectPointLightComponent,
+              ~sourceValue=
+                PointLightEngineService.getPointLightQuadratic(
+                  currentGameObjectPointLightComponent,
+                  StateEngineService.unsafeGetState(),
+                ),
+              ~targetValue=value,
+              (),
+            );
 
             PointLightEngineService.getPointLightQuadratic(
               currentGameObjectPointLightComponent,
@@ -154,9 +191,15 @@ let _ =
               GameObjectTool.getCurrentGameObjectPointLightComponent();
             let value = 10.1;
 
-            MainEditorPointLightTool.changeRange(
-              currentGameObjectPointLightComponent,
-              value,
+            MainEditorPointLightTool.changeRangeAndBlur(
+              ~light=currentGameObjectPointLightComponent,
+              ~sourceValue=
+                PointLightEngineService.getPointLightRange(
+                  currentGameObjectPointLightComponent,
+                  StateEngineService.unsafeGetState(),
+                ),
+              ~targetValue=value,
+              (),
             );
 
             PointLightEngineService.getPointLightRange(
