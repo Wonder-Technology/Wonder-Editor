@@ -98,7 +98,7 @@ let _ =
       beforeEach(() => {
         _prepareKeyboardEvent(~sandbox, ());
 
-        MainEditorSceneTool.createDefaultScene(sandbox, () => ());
+        MainEditorSceneTool.createDefaultScene(sandbox,  MainEditorSceneTool.notSetCurrentSceneTreeNode);
 
         EventTool.buildFakeDocumentSetToWindow();
 

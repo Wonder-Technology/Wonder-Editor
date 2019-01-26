@@ -14,25 +14,25 @@ module CustomEventHandler = {
 
     switch (gameObjectType) {
     | Cude =>
-      let _defaultCubeGeometry =
+      let defaultCubeGeometry =
         GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
           editorState,
         );
 
       PrimitiveLogicService.createCube(
-        (_defaultCubeGeometry, defaultLightMaterialData),
+        (defaultCubeGeometry, defaultLightMaterialData),
         editorState,
         engineState,
       );
 
     | Sphere =>
-      let _defaultSphereGeometry =
+      let defaultSphereGeometry =
         GeometryDataAssetEditorService.unsafeGetDefaultSphereGeometryComponent(
           editorState,
         );
 
       PrimitiveLogicService.createSphere(
-        (_defaultSphereGeometry, defaultLightMaterialData),
+        (defaultSphereGeometry, defaultLightMaterialData),
         editorState,
         engineState,
       );
@@ -60,7 +60,7 @@ module CustomEventHandler = {
              );
 
         let engineState =
-          SceneUtils.initGameObjectAndAddToParent(
+          SceneUtils.initGameObjectAndAddChild(
             SceneEngineService.getSceneGameObject(engineState),
             newGameObject,
             engineState,
@@ -81,7 +81,7 @@ module CustomEventHandler = {
              );
 
         let engineState =
-          SceneUtils.initGameObjectAndAddToParent(
+          SceneUtils.initGameObjectAndAddChild(
             currentSceneTreeNode,
             newGameObject,
             engineState,

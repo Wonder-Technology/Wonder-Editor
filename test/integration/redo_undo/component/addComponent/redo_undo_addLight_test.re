@@ -15,7 +15,7 @@ let _ =
 
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());
-      MainEditorSceneTool.createDefaultScene(sandbox, () => ());
+      MainEditorSceneTool.createDefaultScene(sandbox,  MainEditorSceneTool.notSetCurrentSceneTreeNode);
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(
         SceneTreeWidgetService.getWidget(),

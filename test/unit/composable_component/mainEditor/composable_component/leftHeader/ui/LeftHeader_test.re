@@ -46,7 +46,7 @@ let _ =
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
+            MainEditorSceneTool.notSetCurrentSceneTreeNode,
           )
         );
 
@@ -83,9 +83,9 @@ let _ =
             "if has currentSceneTreeNode, added gameObject should add into currentSceneTreeNode",
             () => {
               let engineState = StateEngineService.unsafeGetState();
-
               let newGameObject = GameObjectTool.getNewGameObject();
 
+              MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
               MainEditorLeftHeaderTool.addEmptyGameObject();
 
               engineState
@@ -100,7 +100,7 @@ let _ =
                         );
             },
           );
-          test("if not, added gameObject should add into scene gameObject", () => {
+          test("else, added gameObject should add into scene gameObject", () => {
             SceneTreeEditorService.clearCurrentSceneTreeNode
             |> StateLogicService.getAndSetEditorState;
 

@@ -50,7 +50,7 @@ let _ =
 
       LoadTool.buildFakeLoadImage(.);
 
-      MainEditorSceneTool.createDefaultScene(sandbox, () => ());
+      MainEditorSceneTool.createDefaultScene(sandbox,  MainEditorSceneTool.notSetCurrentSceneTreeNode);
 
       MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
     });
