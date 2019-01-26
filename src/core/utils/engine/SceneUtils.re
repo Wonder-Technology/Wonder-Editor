@@ -1,4 +1,4 @@
-let initGameObjectAndAddToParent = (parent, child, engineState) =>
+let initGameObjectAndAddChild = (parent, child, engineState) =>
   engineState
   |> GameObjectEngineService.initGameObject(child)
   |> HierarchyGameObjectEngineService.addChild(parent, child)

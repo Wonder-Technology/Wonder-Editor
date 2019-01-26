@@ -13,10 +13,7 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
-      MainEditorSceneTool.createDefaultScene(
-        sandbox,
-        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
-      );
+      MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
       ControllerTool.stubRequestAnimationFrame(
         createEmptyStubWithJsObjSandbox(sandbox),
@@ -30,7 +27,9 @@ let _ =
         MainEditorLeftHeaderTool.addCube();
 
         StateEngineService.unsafeGetState()
-        |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> HierarchyGameObjectEngineService.getChildren(
+             MainEditorSceneTool.unsafeGetScene(),
+           )
         |> Js.Array.length
         |> expect == 5;
       });
@@ -39,7 +38,9 @@ let _ =
         MainEditorLeftHeaderTool.addCube();
 
         StateEngineService.unsafeGetState()
-        |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> HierarchyGameObjectEngineService.getChildren(
+             MainEditorSceneTool.unsafeGetScene(),
+           )
         |> Js.Array.length
         |> expect == 6;
       });
@@ -73,7 +74,9 @@ let _ =
         MainEditorLeftHeaderTool.addEmptyGameObject();
 
         StateEngineService.unsafeGetState()
-        |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> HierarchyGameObjectEngineService.getChildren(
+             MainEditorSceneTool.unsafeGetScene(),
+           )
         |> Js.Array.length
         |> expect == 5;
       });
@@ -92,7 +95,9 @@ let _ =
         MainEditorLeftHeaderTool.addSphere();
 
         StateEngineService.unsafeGetState()
-        |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> HierarchyGameObjectEngineService.getChildren(
+             MainEditorSceneTool.unsafeGetScene(),
+           )
         |> Js.Array.length
         |> expect == 5;
       });
@@ -101,7 +106,9 @@ let _ =
         MainEditorLeftHeaderTool.addSphere();
 
         StateEngineService.unsafeGetState()
-        |> HierarchyGameObjectEngineService.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> HierarchyGameObjectEngineService.getChildren(
+             MainEditorSceneTool.unsafeGetScene(),
+           )
         |> Js.Array.length
         |> expect == 6;
       });

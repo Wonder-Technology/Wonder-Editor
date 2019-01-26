@@ -29,7 +29,7 @@ let _ =
     };
 
     let _beforeEach = () =>
-      MainEditorSceneTool.createDefaultScene(sandbox, () => ());
+      MainEditorSceneTool.createDefaultScene(sandbox,  MainEditorSceneTool.notSetCurrentSceneTreeNode);
 
     beforeEach(() => {
       sandbox := createSandbox();
