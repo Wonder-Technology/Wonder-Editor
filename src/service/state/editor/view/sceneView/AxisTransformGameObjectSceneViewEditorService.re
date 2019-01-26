@@ -2,18 +2,32 @@ open EditorType;
 
 open ShapeType;
 
-let _getAxisNormalizedVec =
-    (translationAxisGameObject, (editorState, engineState)) =>
+let getAxisGameObjectPos = (editorState, engineState) =>
   TransformEngineService.getPosition(
     GameObjectComponentEngineService.unsafeGetTransformComponent(
-      translationAxisGameObject
-      |> HierarchyGameObjectEngineService.getChildren(_, engineState)
-      |> ArrayService.unsafeGetFirst,
+      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
       engineState,
     ),
     engineState,
+  );
+
+let _getAxisNormalizedVec =
+    (translationAxisGameObject, (editorState, engineState)) =>
+  Wonderjs.Vector3Service.sub(
+    Wonderjs.Vector3Type.Float,
+    TransformEngineService.getPosition(
+      GameObjectComponentEngineService.unsafeGetTransformComponent(
+        translationAxisGameObject
+        |> HierarchyGameObjectEngineService.getChildren(_, engineState)
+        |> ArrayService.unsafeGetFirst,
+        engineState,
+      ),
+      engineState,
+    ),
+    getAxisGameObjectPos(editorState, engineState),
   )
-  |> Wonderjs.Vector3Service.normalize;
+  |> Wonderjs.Vector3Service.normalize
+  |> Vector3Service.truncate(3);
 
 let getXAxisNormalizedVec = (editorState, engineState) =>
   _getAxisNormalizedVec(

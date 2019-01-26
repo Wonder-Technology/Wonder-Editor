@@ -182,9 +182,8 @@ let _setToEditorState =
         isTranslationXAxisGameObjectSelected: false,
         isTranslationYAxisGameObjectSelected: false,
         isTranslationZAxisGameObjectSelected: false,
-        intersectPointWithPlaneOffsetForXAxis: None,
-        intersectPointWithPlaneOffsetForYAxis: None,
-        intersectPointWithPlaneOffsetForZAxis: None,
+        axisGameObjectStartPoint: None,
+        pickStartPoint: None,
       }),
   },
 };
@@ -353,72 +352,87 @@ let _findMostOrthogonalPlaneForZAxis = (ray, (editorState, engineState)) =>
     (editorState, engineState),
   );
 
-let _computeOffsetForXAxis = (ray, (editorState, engineState)) => {
+let _getMoveStartDataForAxis =
+    (
+      ray,
+      axisVec,
+      findMostOrthogonalPlaneForAxisFunc,
+      (editorState, engineState),
+    ) => {
   let plane =
-    _findMostOrthogonalPlaneForXAxis(ray, (editorState, engineState));
+    findMostOrthogonalPlaneForAxisFunc(ray, (editorState, engineState));
 
-  let (pointX, _, _) =
+  let point =
     _unsafeGetIntersectPointWithPlane(
       plane,
       ray,
       (editorState, engineState),
     );
 
-  let (posX, _, _) =
-    _getCurrentSceneTreeNodePosition(editorState, engineState);
-
-  posX -. pointX;
-};
-
-let _computeOffsetForYAxis = (ray, (editorState, engineState)) => {
-  let plane =
-    _findMostOrthogonalPlaneForYAxis(ray, (editorState, engineState));
-
-  let (_, pointY, _) =
-    _unsafeGetIntersectPointWithPlane(
-      plane,
-      ray,
-      (editorState, engineState),
+  let axisGameObjectStartPoint =
+    AxisTransformGameObjectSceneViewEditorService.getAxisGameObjectPos(
+      editorState,
+      engineState,
     );
 
-  let (_, posY, _) =
-    _getCurrentSceneTreeNodePosition(editorState, engineState);
-
-  posY -. pointY;
+  (
+    axisGameObjectStartPoint,
+    PointService.projectPointToLine(point, axisGameObjectStartPoint, axisVec),
+  );
 };
 
-let _computeOffsetForZAxis = (ray, (editorState, engineState)) => {
-  let plane =
-    _findMostOrthogonalPlaneForZAxis(ray, (editorState, engineState));
+let _getMoveStartDataForZAxis = (ray, (editorState, engineState)) =>
+  _getMoveStartDataForAxis(
+    ray,
+    AxisTransformGameObjectSceneViewEditorService.getZAxisNormalizedVec(
+      editorState,
+      engineState,
+    ),
+    _findMostOrthogonalPlaneForZAxis,
+    (editorState, engineState),
+  );
 
-  let (_, _, pointZ) =
-    _unsafeGetIntersectPointWithPlane(
-      plane,
-      ray,
-      (editorState, engineState),
-    );
+let _getMoveStartDataForXAxis = (ray, (editorState, engineState)) =>
+  _getMoveStartDataForAxis(
+    ray,
+    AxisTransformGameObjectSceneViewEditorService.getXAxisNormalizedVec(
+      editorState,
+      engineState,
+    ),
+    _findMostOrthogonalPlaneForXAxis,
+    (editorState, engineState),
+  );
 
-  let (_, _, posZ) =
-    _getCurrentSceneTreeNodePosition(editorState, engineState);
-
-  posZ -. pointZ;
-};
+let _getMoveStartDataForYAxis = (ray, (editorState, engineState)) =>
+  _getMoveStartDataForAxis(
+    ray,
+    AxisTransformGameObjectSceneViewEditorService.getYAxisNormalizedVec(
+      editorState,
+      engineState,
+    ),
+    _findMostOrthogonalPlaneForYAxis,
+    (editorState, engineState),
+  );
 
 let _selectAxisGameObject =
     (
       ray,
-      (
-        onlySelectTranslationAxisGameObjectFunc,
-        computeOffsetFunc,
-        setIntersectPointWithPlaneOffsetFunc,
-      ),
+      (onlySelectTranslationAxisGameObjectFunc, getMoveStartDataFunc),
       (editorState, engineState),
-    ) =>
+    ) => {
+  let editorState = editorState |> onlySelectTranslationAxisGameObjectFunc;
+
+  let (axisGameObjectStartPoint, pickStartPoint) =
+    getMoveStartDataFunc(ray, (editorState, engineState));
+
   editorState
-  |> onlySelectTranslationAxisGameObjectFunc
-  |> setIntersectPointWithPlaneOffsetFunc(
-       computeOffsetFunc(ray, (editorState, engineState)),
+  |> MoveTransformGameObjectSceneViewEditorService.setPickStartPoint(
+       pickStartPoint,
+     )
+  |> MoveTransformGameObjectSceneViewEditorService.setAxisGameObjectStartPoint(
+       axisGameObjectStartPoint,
      );
+};
 
 let _selectTransformGameObject = (event, engineState, editorState) =>
   IsTransformGameObjectRenderSceneViewEditorService.isTranslationWholeGameObjectRender(
@@ -447,8 +461,7 @@ let _selectTransformGameObject = (event, engineState, editorState) =>
           ray,
           (
             SelectTransformGameObjectSceneViewEditorService.onlySelectTranslationXAxisGameObject,
-            _computeOffsetForXAxis,
-            OffsetTransformGameObjectSceneViewEditorService.setIntersectPointWithPlaneOffsetForXAxis,
+            _getMoveStartDataForXAxis,
           ),
           (editorState, engineState),
         ) :
@@ -464,8 +477,7 @@ let _selectTransformGameObject = (event, engineState, editorState) =>
             ray,
             (
               SelectTransformGameObjectSceneViewEditorService.onlySelectTranslationYAxisGameObject,
-              _computeOffsetForYAxis,
-              OffsetTransformGameObjectSceneViewEditorService.setIntersectPointWithPlaneOffsetForYAxis,
+              _getMoveStartDataForYAxis,
             ),
             (editorState, engineState),
           ) :
@@ -481,8 +493,7 @@ let _selectTransformGameObject = (event, engineState, editorState) =>
               ray,
               (
                 SelectTransformGameObjectSceneViewEditorService.onlySelectTranslationZAxisGameObject,
-                _computeOffsetForZAxis,
-                OffsetTransformGameObjectSceneViewEditorService.setIntersectPointWithPlaneOffsetForZAxis,
+                _getMoveStartDataForZAxis,
               ),
               (editorState, engineState),
             ) :
@@ -492,84 +503,80 @@ let _selectTransformGameObject = (event, engineState, editorState) =>
     editorState
     |> SelectTransformGameObjectSceneViewEditorService.notSelectAllTransformGameObject;
 
-let _computeDeltaForMoveXAxis =
+let _computeCurrentGameObjectNewPositionForMoveAxis =
     (
-      (lastIntersectPointWithPlaneX, _, _),
-      (currentIntersectPointWithPlaneX, _, _),
-    ) =>
-  currentIntersectPointWithPlaneX -. lastIntersectPointWithPlaneX;
+      ray,
+      axisVec,
+      findMostOrthogonalPlaneForAxisFunc,
+      (editorState, engineState),
+    ) => {
+  let plane =
+    findMostOrthogonalPlaneForAxisFunc(ray, (editorState, engineState));
+
+  switch (
+    _getIntersectPointWithPlane(plane, ray, (editorState, engineState))
+  ) {
+  | None => None
+  | Some(point) =>
+    let axisGameObjectStartPoint =
+      MoveTransformGameObjectSceneViewEditorService.unsafeAxisGameObjectStartPoint(
+        editorState,
+      );
+
+    Wonderjs.Vector3Service.add(
+      Wonderjs.Vector3Type.Float,
+      axisGameObjectStartPoint,
+      Wonderjs.Vector3Service.sub(
+        Wonderjs.Vector3Type.Float,
+        PointService.projectPointToLine(
+          point,
+          axisGameObjectStartPoint,
+          axisVec,
+        ),
+        MoveTransformGameObjectSceneViewEditorService.unsafeGetPickStartPoint(
+          editorState,
+        ),
+      ),
+    )
+    |. Some;
+  };
+};
 
 let _computeCurrentGameObjectNewPositionForMoveXAxis =
-    (ray, (editorState, engineState)) => {
-  let plane =
-    _findMostOrthogonalPlaneForXAxis(ray, (editorState, engineState));
-
-  let (_, posY, posZ) =
-    _getCurrentSceneTreeNodePosition(editorState, engineState);
-
-  switch (
-    _getIntersectPointWithPlane(plane, ray, (editorState, engineState))
-  ) {
-  | None => None
-  | Some((pointX, _, _)) =>
-    Some((
-      OffsetTransformGameObjectSceneViewEditorService.unsafeGetIntersectPointWithPlaneOffsetForXAxis(
-        editorState,
-      )
-      +. pointX,
-      posY,
-      posZ,
-    ))
-  };
-};
+    (ray, (editorState, engineState)) =>
+  _computeCurrentGameObjectNewPositionForMoveAxis(
+    ray,
+    AxisTransformGameObjectSceneViewEditorService.getXAxisNormalizedVec(
+      editorState,
+      engineState,
+    ),
+    _findMostOrthogonalPlaneForXAxis,
+    (editorState, engineState),
+  );
 
 let _computeCurrentGameObjectNewPositionForMoveYAxis =
-    (ray, (editorState, engineState)) => {
-  let plane =
-    _findMostOrthogonalPlaneForYAxis(ray, (editorState, engineState));
-
-  let (posX, _, posZ) =
-    _getCurrentSceneTreeNodePosition(editorState, engineState);
-
-  switch (
-    _getIntersectPointWithPlane(plane, ray, (editorState, engineState))
-  ) {
-  | None => None
-  | Some((_, pointY, _)) =>
-    Some((
-      posX,
-      OffsetTransformGameObjectSceneViewEditorService.unsafeGetIntersectPointWithPlaneOffsetForYAxis(
-        editorState,
-      )
-      +. pointY,
-      posZ,
-    ))
-  };
-};
+    (ray, (editorState, engineState)) =>
+  _computeCurrentGameObjectNewPositionForMoveAxis(
+    ray,
+    AxisTransformGameObjectSceneViewEditorService.getYAxisNormalizedVec(
+      editorState,
+      engineState,
+    ),
+    _findMostOrthogonalPlaneForYAxis,
+    (editorState, engineState),
+  );
 
 let _computeCurrentGameObjectNewPositionForMoveZAxis =
-    (ray, (editorState, engineState)) => {
-  let plane =
-    _findMostOrthogonalPlaneForZAxis(ray, (editorState, engineState));
-
-  let (posX, posY, _) =
-    _getCurrentSceneTreeNodePosition(editorState, engineState);
-
-  switch (
-    _getIntersectPointWithPlane(plane, ray, (editorState, engineState))
-  ) {
-  | None => None
-  | Some((_, _, pointZ)) =>
-    Some((
-      posX,
-      posY,
-      OffsetTransformGameObjectSceneViewEditorService.unsafeGetIntersectPointWithPlaneOffsetForZAxis(
-        editorState,
-      )
-      +. pointZ,
-    ))
-  };
-};
+    (ray, (editorState, engineState)) =>
+  _computeCurrentGameObjectNewPositionForMoveAxis(
+    ray,
+    AxisTransformGameObjectSceneViewEditorService.getZAxisNormalizedVec(
+      editorState,
+      engineState,
+    ),
+    _findMostOrthogonalPlaneForZAxis,
+    (editorState, engineState),
+  );
 
 let _moveCurrentSceneTreeNodeAndWholeTranslationGameObject =
     (newPosition, editorState, engineState) =>

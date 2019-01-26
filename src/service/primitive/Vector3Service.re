@@ -55,10 +55,12 @@ let max = ((x, y, z), (vx, vy, vz)) => (
   z < vz ? vz : z,
 );
 
-let length = ((x, y, z)) => Js.Math.sqrt(x *. x +. y *. y +. z *. z);
+let lengthSq = ((x, y, z)) => x *. x +. y *. y +. z *. z;
+
+let length = vec => Js.Math.sqrt(lengthSq(vec));
 
 let projectOnVector = (sourceVec, targetVec) => {
-  let scalar = dot(targetVec, sourceVec) /. length(targetVec);
+  let scalar = dot(targetVec, sourceVec) /. lengthSq(targetVec);
 
   multiplyScalar(targetVec, scalar);
 };
@@ -69,3 +71,9 @@ let projectOnPlane = (planeNormal, vec) =>
     vec,
     projectOnVector(vec, planeNormal),
   );
+
+let truncate = (digit, (x, y, z)) => (
+  FloatService.truncateFloatValue(x, digit),
+  FloatService.truncateFloatValue(y, digit),
+  FloatService.truncateFloatValue(z, digit),
+);
