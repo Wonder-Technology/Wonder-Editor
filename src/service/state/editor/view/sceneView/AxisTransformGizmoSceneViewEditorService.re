@@ -2,7 +2,7 @@ open EditorType;
 
 open ShapeType;
 
-let getAxisGameObjectPos = (editorState, engineState) =>
+let getAxisGizmoPos = (editorState, engineState) =>
   TransformEngineService.getPosition(
     GameObjectComponentEngineService.unsafeGetTransformComponent(
       SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
@@ -12,26 +12,26 @@ let getAxisGameObjectPos = (editorState, engineState) =>
   );
 
 let _getAxisNormalizedVec =
-    (translationAxisGameObject, (editorState, engineState)) =>
+    (translationAxisGizmo, (editorState, engineState)) =>
   Wonderjs.Vector3Service.sub(
     Wonderjs.Vector3Type.Float,
     TransformEngineService.getPosition(
       GameObjectComponentEngineService.unsafeGetTransformComponent(
-        translationAxisGameObject
+        translationAxisGizmo
         |> HierarchyGameObjectEngineService.getChildren(_, engineState)
         |> ArrayService.unsafeGetFirst,
         engineState,
       ),
       engineState,
     ),
-    getAxisGameObjectPos(editorState, engineState),
+    getAxisGizmoPos(editorState, engineState),
   )
   |> Wonderjs.Vector3Service.normalize
   |> Vector3Service.truncate(3);
 
 let getXAxisNormalizedVec = (editorState, engineState) =>
   _getAxisNormalizedVec(
-    TransformGameObjectSceneViewEditorService.unsafeGetTranslationXAxisGameObject(
+    TransformGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
       editorState,
     ),
     (editorState, engineState),
@@ -39,7 +39,7 @@ let getXAxisNormalizedVec = (editorState, engineState) =>
 
 let getYAxisNormalizedVec = (editorState, engineState) =>
   _getAxisNormalizedVec(
-    TransformGameObjectSceneViewEditorService.unsafeGetTranslationYAxisGameObject(
+    TransformGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
       editorState,
     ),
     (editorState, engineState),
@@ -47,7 +47,7 @@ let getYAxisNormalizedVec = (editorState, engineState) =>
 
 let getZAxisNormalizedVec = (editorState, engineState) =>
   _getAxisNormalizedVec(
-    TransformGameObjectSceneViewEditorService.unsafeGetTranslationZAxisGameObject(
+    TransformGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
       editorState,
     ),
     (editorState, engineState),

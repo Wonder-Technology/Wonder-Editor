@@ -2,21 +2,21 @@ open EditorType;
 
 open ShapeType;
 
-let unsafeAxisGameObjectStartPoint = editorState =>
-  RecordTransformGameObjectSceneViewEditorService.getData(
+let unsafeAxisGizmoStartPoint = editorState =>
+  RecordTransformGizmoSceneViewEditorService.getData(
     editorState.sceneViewRecord,
   ).
     axisGameObjectStartPoint
   |> OptionService.unsafeGet;
 
-let setAxisGameObjectStartPoint = (axisGameObjectStartPoint, editorState) => {
+let setAxisGizmoStartPoint = (axisGameObjectStartPoint, editorState) => {
   ...editorState,
   sceneViewRecord: {
     ...editorState.sceneViewRecord,
-    transformGameObjectData:
+    transformGizmoData:
       Some({
         ...
-          RecordTransformGameObjectSceneViewEditorService.getData(
+          RecordTransformGizmoSceneViewEditorService.getData(
             editorState.sceneViewRecord,
           ),
         axisGameObjectStartPoint: Some(axisGameObjectStartPoint),
@@ -25,7 +25,7 @@ let setAxisGameObjectStartPoint = (axisGameObjectStartPoint, editorState) => {
 };
 
 let unsafeGetPickStartPoint = editorState =>
-  RecordTransformGameObjectSceneViewEditorService.getData(
+  RecordTransformGizmoSceneViewEditorService.getData(
     editorState.sceneViewRecord,
   ).
     pickStartPoint
@@ -35,10 +35,10 @@ let setPickStartPoint = (pickStartPoint, editorState) => {
   ...editorState,
   sceneViewRecord: {
     ...editorState.sceneViewRecord,
-    transformGameObjectData:
+    transformGizmoData:
       Some({
         ...
-          RecordTransformGameObjectSceneViewEditorService.getData(
+          RecordTransformGizmoSceneViewEditorService.getData(
             editorState.sceneViewRecord,
           ),
         pickStartPoint: Some(pickStartPoint),

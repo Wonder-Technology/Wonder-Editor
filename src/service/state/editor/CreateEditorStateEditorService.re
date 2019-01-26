@@ -30,7 +30,7 @@ let create = () => {
     viewRect: None,
     gridPlane: None,
     editCamera: None,
-    transformGameObjectData: None,
+    transformGizmoData: None,
   },
   gameViewRecord: {
     viewRect: None,

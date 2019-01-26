@@ -29,7 +29,7 @@ let _createBasicGameObject = (geometry, engineState) => {
   );
 };
 
-let _createTranslationAxisGameObject = (color, engineState) => {
+let _createTranslationAxisGizmo = (color, engineState) => {
   let (engineState, axisGameObject) =
     GameObjectEngineService.create(engineState);
 
@@ -110,13 +110,13 @@ let _createTranslationAxisGameObject = (color, engineState) => {
   );
 };
 
-let _createTransformGameObjects = engineState => {
-  let (engineState, xAxisGameObject, xAxisTransform) =
-    _createTranslationAxisGameObject([|1., 0., 0.|], engineState);
-  let (engineState, yAxisGameObject, yAxisTransform) =
-    _createTranslationAxisGameObject([|0., 1., 0.|], engineState);
-  let (engineState, zAxisGameObject, zAxisTransform) =
-    _createTranslationAxisGameObject([|0., 0., 1.|], engineState);
+let _createTransformGizmos = engineState => {
+  let (engineState, xAxisGizmo, xAxisTransform) =
+    _createTranslationAxisGizmo([|1., 0., 0.|], engineState);
+  let (engineState, yAxisGizmo, yAxisTransform) =
+    _createTranslationAxisGizmo([|0., 1., 0.|], engineState);
+  let (engineState, zAxisGizmo, zAxisTransform) =
+    _createTranslationAxisGizmo([|0., 0., 1.|], engineState);
 
   let engineState =
     engineState
@@ -136,55 +136,55 @@ let _createTransformGameObjects = engineState => {
     engineState
     |> HierarchyGameObjectEngineService.addChild(
          wholeGameObject,
-         zAxisGameObject,
+         zAxisGizmo,
        )
     |> HierarchyGameObjectEngineService.addChild(
          wholeGameObject,
-         yAxisGameObject,
+         yAxisGizmo,
        )
     |> HierarchyGameObjectEngineService.addChild(
          wholeGameObject,
-         xAxisGameObject,
+         xAxisGizmo,
        );
 
   (
     engineState,
     wholeGameObject,
-    (xAxisGameObject, yAxisGameObject, zAxisGameObject),
+    (xAxisGizmo, yAxisGizmo, zAxisGizmo),
   );
 };
 
 let _setToEditorState =
     (
       wholeGameObject,
-      (xAxisGameObject, yAxisGameObject, zAxisGameObject),
+      (xAxisGizmo, yAxisGizmo, zAxisGizmo),
       editorState: EditorType.editorState,
     )
     : EditorType.editorState => {
   ...editorState,
   sceneViewRecord: {
     ...editorState.sceneViewRecord,
-    transformGameObjectData:
+    transformGizmoData:
       Some({
-        translationWholeGameObject: wholeGameObject,
-        translationXAxisGameObject: xAxisGameObject,
-        translationYAxisGameObject: yAxisGameObject,
-        translationZAxisGameObject: zAxisGameObject,
-        isTranslationXAxisGameObjectSelected: false,
-        isTranslationYAxisGameObjectSelected: false,
-        isTranslationZAxisGameObjectSelected: false,
+        translationWholeGizmo: wholeGameObject,
+        translationXAxisGizmo: xAxisGizmo,
+        translationYAxisGizmo: yAxisGizmo,
+        translationZAxisGizmo: zAxisGizmo,
+        isTranslationXAxisGizmoSelected: false,
+        isTranslationYAxisGizmoSelected: false,
+        isTranslationZAxisGizmoSelected: false,
         axisGameObjectStartPoint: None,
         pickStartPoint: None,
       }),
   },
 };
 
-let _isSelectTranslationAxisGameObject =
-    (translationAxisGameObject, ray, engineState, editorState) => {
+let _isSelectTranslationAxisGizmo =
+    (translationAxisGizmo, ray, engineState, editorState) => {
   let expandFactor = 0.2;
 
   HierarchyGameObjectEngineService.getAllChildren(
-    translationAxisGameObject,
+    translationAxisGizmo,
     engineState,
   )
   |> WonderCommonlib.ArrayService.reduceOneParam(
@@ -271,21 +271,21 @@ let _findMostOrthogonalPlaneBetweenCurrentSceneTreeNodeAndCameraVecAndPlane =
 let _findMostOrthogonalPlaneForXAxis = (ray, (editorState, engineState)) =>
   _findMostOrthogonalPlaneBetweenCurrentSceneTreeNodeAndCameraVecAndPlane(
     (
-      AxisTransformGameObjectSceneViewEditorService.getYAxisNormalizedVec(
+      AxisTransformGizmoSceneViewEditorService.getYAxisNormalizedVec(
         editorState,
         engineState,
       ),
-      PlaneTransformGameObjectSceneViewEditorService.buildXZPlane(
+      PlaneTransformGizmoSceneViewEditorService.buildXZPlane(
         editorState,
         engineState,
       ),
     ),
     (
-      AxisTransformGameObjectSceneViewEditorService.getZAxisNormalizedVec(
+      AxisTransformGizmoSceneViewEditorService.getZAxisNormalizedVec(
         editorState,
         engineState,
       ),
-      PlaneTransformGameObjectSceneViewEditorService.buildXYPlane(
+      PlaneTransformGizmoSceneViewEditorService.buildXYPlane(
         editorState,
         engineState,
       ),
@@ -296,21 +296,21 @@ let _findMostOrthogonalPlaneForXAxis = (ray, (editorState, engineState)) =>
 let _findMostOrthogonalPlaneForYAxis = (ray, (editorState, engineState)) =>
   _findMostOrthogonalPlaneBetweenCurrentSceneTreeNodeAndCameraVecAndPlane(
     (
-      AxisTransformGameObjectSceneViewEditorService.getXAxisNormalizedVec(
+      AxisTransformGizmoSceneViewEditorService.getXAxisNormalizedVec(
         editorState,
         engineState,
       ),
-      PlaneTransformGameObjectSceneViewEditorService.buildYZPlane(
+      PlaneTransformGizmoSceneViewEditorService.buildYZPlane(
         editorState,
         engineState,
       ),
     ),
     (
-      AxisTransformGameObjectSceneViewEditorService.getZAxisNormalizedVec(
+      AxisTransformGizmoSceneViewEditorService.getZAxisNormalizedVec(
         editorState,
         engineState,
       ),
-      PlaneTransformGameObjectSceneViewEditorService.buildXYPlane(
+      PlaneTransformGizmoSceneViewEditorService.buildXYPlane(
         editorState,
         engineState,
       ),
@@ -321,21 +321,21 @@ let _findMostOrthogonalPlaneForYAxis = (ray, (editorState, engineState)) =>
 let _findMostOrthogonalPlaneForZAxis = (ray, (editorState, engineState)) =>
   _findMostOrthogonalPlaneBetweenCurrentSceneTreeNodeAndCameraVecAndPlane(
     (
-      AxisTransformGameObjectSceneViewEditorService.getXAxisNormalizedVec(
+      AxisTransformGizmoSceneViewEditorService.getXAxisNormalizedVec(
         editorState,
         engineState,
       ),
-      PlaneTransformGameObjectSceneViewEditorService.buildYZPlane(
+      PlaneTransformGizmoSceneViewEditorService.buildYZPlane(
         editorState,
         engineState,
       ),
     ),
     (
-      AxisTransformGameObjectSceneViewEditorService.getYAxisNormalizedVec(
+      AxisTransformGizmoSceneViewEditorService.getYAxisNormalizedVec(
         editorState,
         engineState,
       ),
-      PlaneTransformGameObjectSceneViewEditorService.buildXZPlane(
+      PlaneTransformGizmoSceneViewEditorService.buildXZPlane(
         editorState,
         engineState,
       ),
@@ -361,7 +361,7 @@ let _getMoveStartDataForAxis =
     );
 
   let axisGameObjectStartPoint =
-    AxisTransformGameObjectSceneViewEditorService.getAxisGameObjectPos(
+    AxisTransformGizmoSceneViewEditorService.getAxisGizmoPos(
       editorState,
       engineState,
     );
@@ -375,7 +375,7 @@ let _getMoveStartDataForAxis =
 let _getMoveStartDataForZAxis = (ray, (editorState, engineState)) =>
   _getMoveStartDataForAxis(
     ray,
-    AxisTransformGameObjectSceneViewEditorService.getZAxisNormalizedVec(
+    AxisTransformGizmoSceneViewEditorService.getZAxisNormalizedVec(
       editorState,
       engineState,
     ),
@@ -386,7 +386,7 @@ let _getMoveStartDataForZAxis = (ray, (editorState, engineState)) =>
 let _getMoveStartDataForXAxis = (ray, (editorState, engineState)) =>
   _getMoveStartDataForAxis(
     ray,
-    AxisTransformGameObjectSceneViewEditorService.getXAxisNormalizedVec(
+    AxisTransformGizmoSceneViewEditorService.getXAxisNormalizedVec(
       editorState,
       engineState,
     ),
@@ -397,7 +397,7 @@ let _getMoveStartDataForXAxis = (ray, (editorState, engineState)) =>
 let _getMoveStartDataForYAxis = (ray, (editorState, engineState)) =>
   _getMoveStartDataForAxis(
     ray,
-    AxisTransformGameObjectSceneViewEditorService.getYAxisNormalizedVec(
+    AxisTransformGizmoSceneViewEditorService.getYAxisNormalizedVec(
       editorState,
       engineState,
     ),
@@ -405,28 +405,28 @@ let _getMoveStartDataForYAxis = (ray, (editorState, engineState)) =>
     (editorState, engineState),
   );
 
-let _selectAxisGameObject =
+let _selectAxisGizmo =
     (
       ray,
-      (onlySelectTranslationAxisGameObjectFunc, getMoveStartDataFunc),
+      (onlySelectTranslationAxisGizmoFunc, getMoveStartDataFunc),
       (editorState, engineState),
     ) => {
-  let editorState = editorState |> onlySelectTranslationAxisGameObjectFunc;
+  let editorState = editorState |> onlySelectTranslationAxisGizmoFunc;
 
   let (axisGameObjectStartPoint, pickStartPoint) =
     getMoveStartDataFunc(ray, (editorState, engineState));
 
   editorState
-  |> MoveTransformGameObjectSceneViewEditorService.setPickStartPoint(
+  |> MoveTransformGizmoSceneViewEditorService.setPickStartPoint(
        pickStartPoint,
      )
-  |> MoveTransformGameObjectSceneViewEditorService.setAxisGameObjectStartPoint(
+  |> MoveTransformGizmoSceneViewEditorService.setAxisGizmoStartPoint(
        axisGameObjectStartPoint,
      );
 };
 
-let _selectTransformGameObject = (event, engineState, editorState) =>
-  IsTransformGameObjectRenderSceneViewEditorService.isTranslationWholeGameObjectRender(
+let _selectTransformGizmo = (event, engineState, editorState) =>
+  IsTransformGizmoRenderSceneViewEditorService.isTranslationWholeGizmoRender(
     editorState,
   ) ?
     {
@@ -440,59 +440,59 @@ let _selectTransformGameObject = (event, engineState, editorState) =>
           (editorState, engineState),
         );
 
-      _isSelectTranslationAxisGameObject(
-        TransformGameObjectSceneViewEditorService.unsafeGetTranslationXAxisGameObject(
+      _isSelectTranslationAxisGizmo(
+        TransformGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
           editorState,
         ),
         ray,
         engineState,
         editorState,
       ) ?
-        _selectAxisGameObject(
+        _selectAxisGizmo(
           ray,
           (
-            SelectTransformGameObjectSceneViewEditorService.onlySelectTranslationXAxisGameObject,
+            SelectTransformGizmoSceneViewEditorService.onlySelectTranslationXAxisGizmo,
             _getMoveStartDataForXAxis,
           ),
           (editorState, engineState),
         ) :
-        _isSelectTranslationAxisGameObject(
-          TransformGameObjectSceneViewEditorService.unsafeGetTranslationYAxisGameObject(
+        _isSelectTranslationAxisGizmo(
+          TransformGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
             editorState,
           ),
           ray,
           engineState,
           editorState,
         ) ?
-          _selectAxisGameObject(
+          _selectAxisGizmo(
             ray,
             (
-              SelectTransformGameObjectSceneViewEditorService.onlySelectTranslationYAxisGameObject,
+              SelectTransformGizmoSceneViewEditorService.onlySelectTranslationYAxisGizmo,
               _getMoveStartDataForYAxis,
             ),
             (editorState, engineState),
           ) :
-          _isSelectTranslationAxisGameObject(
-            TransformGameObjectSceneViewEditorService.unsafeGetTranslationZAxisGameObject(
+          _isSelectTranslationAxisGizmo(
+            TransformGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
               editorState,
             ),
             ray,
             engineState,
             editorState,
           ) ?
-            _selectAxisGameObject(
+            _selectAxisGizmo(
               ray,
               (
-                SelectTransformGameObjectSceneViewEditorService.onlySelectTranslationZAxisGameObject,
+                SelectTransformGizmoSceneViewEditorService.onlySelectTranslationZAxisGizmo,
                 _getMoveStartDataForZAxis,
               ),
               (editorState, engineState),
             ) :
             editorState
-            |> SelectTransformGameObjectSceneViewEditorService.notSelectAllTransformGameObject;
+            |> SelectTransformGizmoSceneViewEditorService.notSelectAllTransformGizmo;
     } :
     editorState
-    |> SelectTransformGameObjectSceneViewEditorService.notSelectAllTransformGameObject;
+    |> SelectTransformGizmoSceneViewEditorService.notSelectAllTransformGizmo;
 
 let _computeCurrentGameObjectNewPositionForMoveAxis =
     (
@@ -510,7 +510,7 @@ let _computeCurrentGameObjectNewPositionForMoveAxis =
   | None => None
   | Some(point) =>
     let axisGameObjectStartPoint =
-      MoveTransformGameObjectSceneViewEditorService.unsafeAxisGameObjectStartPoint(
+      MoveTransformGizmoSceneViewEditorService.unsafeAxisGizmoStartPoint(
         editorState,
       );
 
@@ -524,7 +524,7 @@ let _computeCurrentGameObjectNewPositionForMoveAxis =
           axisGameObjectStartPoint,
           axisVec,
         ),
-        MoveTransformGameObjectSceneViewEditorService.unsafeGetPickStartPoint(
+        MoveTransformGizmoSceneViewEditorService.unsafeGetPickStartPoint(
           editorState,
         ),
       ),
@@ -537,7 +537,7 @@ let _computeCurrentGameObjectNewPositionForMoveXAxis =
     (ray, (editorState, engineState)) =>
   _computeCurrentGameObjectNewPositionForMoveAxis(
     ray,
-    AxisTransformGameObjectSceneViewEditorService.getXAxisNormalizedVec(
+    AxisTransformGizmoSceneViewEditorService.getXAxisNormalizedVec(
       editorState,
       engineState,
     ),
@@ -549,7 +549,7 @@ let _computeCurrentGameObjectNewPositionForMoveYAxis =
     (ray, (editorState, engineState)) =>
   _computeCurrentGameObjectNewPositionForMoveAxis(
     ray,
-    AxisTransformGameObjectSceneViewEditorService.getYAxisNormalizedVec(
+    AxisTransformGizmoSceneViewEditorService.getYAxisNormalizedVec(
       editorState,
       engineState,
     ),
@@ -561,7 +561,7 @@ let _computeCurrentGameObjectNewPositionForMoveZAxis =
     (ray, (editorState, engineState)) =>
   _computeCurrentGameObjectNewPositionForMoveAxis(
     ray,
-    AxisTransformGameObjectSceneViewEditorService.getZAxisNormalizedVec(
+    AxisTransformGizmoSceneViewEditorService.getZAxisNormalizedVec(
       editorState,
       engineState,
     ),
@@ -569,7 +569,7 @@ let _computeCurrentGameObjectNewPositionForMoveZAxis =
     (editorState, engineState),
   );
 
-let _moveCurrentSceneTreeNodeAndWholeTranslationGameObject =
+let _moveCurrentSceneTreeNodeAndWholeTranslationGizmo =
     (newPosition, editorState, engineState) =>
   engineState
   |> TransformEngineService.setPosition(
@@ -581,7 +581,7 @@ let _moveCurrentSceneTreeNodeAndWholeTranslationGameObject =
      )
   |> TransformEngineService.setPosition(
        GameObjectComponentEngineService.unsafeGetTransformComponent(
-         TransformGameObjectSceneViewEditorService.unsafeGetTranslationWholeGameObject(
+         TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
            editorState,
          ),
          engineState,
@@ -589,13 +589,13 @@ let _moveCurrentSceneTreeNodeAndWholeTranslationGameObject =
        newPosition,
      );
 
-let _affectTranslationAxisGameObject =
+let _affectTranslationAxisGizmo =
     (newPosition, (editorState, engineState)) =>
   switch (newPosition) {
   | None => (editorState, engineState)
   | Some(newPosition) =>
     let engineState =
-      _moveCurrentSceneTreeNodeAndWholeTranslationGameObject(
+      _moveCurrentSceneTreeNodeAndWholeTranslationGizmo(
         newPosition,
         editorState,
         engineState,
@@ -604,7 +604,7 @@ let _affectTranslationAxisGameObject =
     (editorState, engineState);
   };
 
-let _affectTransformGameObject = (event, (editorState, engineState)) => {
+let _affectTransformGizmo = (event, (editorState, engineState)) => {
   let cameraGameObject =
     SceneViewEditorService.unsafeGetEditCamera(editorState);
 
@@ -615,30 +615,30 @@ let _affectTransformGameObject = (event, (editorState, engineState)) => {
       (editorState, engineState),
     );
 
-  SelectTransformGameObjectSceneViewEditorService.isTranslationXAxisGameObjectSelected(
+  SelectTransformGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected(
     editorState,
   ) ?
-    _affectTranslationAxisGameObject(
+    _affectTranslationAxisGizmo(
       _computeCurrentGameObjectNewPositionForMoveXAxis(
         ray,
         (editorState, engineState),
       ),
       (editorState, engineState),
     ) :
-    SelectTransformGameObjectSceneViewEditorService.isTranslationYAxisGameObjectSelected(
+    SelectTransformGizmoSceneViewEditorService.isTranslationYAxisGizmoSelected(
       editorState,
     ) ?
-      _affectTranslationAxisGameObject(
+      _affectTranslationAxisGizmo(
         _computeCurrentGameObjectNewPositionForMoveYAxis(
           ray,
           (editorState, engineState),
         ),
         (editorState, engineState),
       ) :
-      SelectTransformGameObjectSceneViewEditorService.isTranslationZAxisGameObjectSelected(
+      SelectTransformGizmoSceneViewEditorService.isTranslationZAxisGizmoSelected(
         editorState,
       ) ?
-        _affectTranslationAxisGameObject(
+        _affectTranslationAxisGizmo(
           _computeCurrentGameObjectNewPositionForMoveZAxis(
             ray,
             (editorState, engineState),
@@ -659,7 +659,7 @@ let _bindEvent = (editorState, engineState) => {
               let editorState = StateEditorService.getState();
 
               let editorState =
-                _selectTransformGameObject(event, engineState, editorState);
+                _selectTransformGizmo(event, engineState, editorState);
 
               editorState |> StateEditorService.setState |> ignore;
 
@@ -680,7 +680,7 @@ let _bindEvent = (editorState, engineState) => {
               let editorState = StateEditorService.getState();
 
               let (editorState, engineState) =
-                _affectTransformGameObject(
+                _affectTransformGizmo(
                   event,
                   (editorState, engineState),
                 );
@@ -701,9 +701,9 @@ let initJob = (_, engineState) => {
   let (
     engineState,
     wholeGameObject,
-    (xAxisGameObject, yAxisGameObject, zAxisGameObject),
+    (xAxisGizmo, yAxisGizmo, zAxisGizmo),
   ) =
-    _createTransformGameObjects(engineState);
+    _createTransformGizmos(engineState);
 
   let editorState = StateEditorService.getState();
 
@@ -711,7 +711,7 @@ let initJob = (_, engineState) => {
     editorState
     |> _setToEditorState(
          wholeGameObject,
-         (xAxisGameObject, yAxisGameObject, zAxisGameObject),
+         (xAxisGizmo, yAxisGizmo, zAxisGizmo),
        );
 
   let engineState = _bindEvent(editorState, engineState);

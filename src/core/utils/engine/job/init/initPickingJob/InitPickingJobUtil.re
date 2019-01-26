@@ -203,7 +203,7 @@ let _handlePicking = (event: EventType.customEvent, engineState) => {
       (editorState, engineState) |> _findPickedOne(event, allGameObjectData)
     ) {
     | None =>
-      SelectTransformGameObjectSceneViewEditorService.isSelectAnyTransformGameObject(
+      SelectTransformGizmoSceneViewEditorService.isSelectAnyTransformGizmo(
         editorState,
       ) ?
         engineState : _handlePickFail(engineState)
@@ -216,7 +216,7 @@ let _handlePicking = (event: EventType.customEvent, engineState) => {
 let _isHandlePicking = (event, editorState) =>
   MouseEventService.isLeftMouseButton(event)
   && !
-       SelectTransformGameObjectSceneViewEditorService.isSelectAnyTransformGameObject(
+       SelectTransformGizmoSceneViewEditorService.isSelectAnyTransformGizmo(
          editorState,
        );
 

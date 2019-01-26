@@ -2,14 +2,14 @@ type rect = (int, int, int, int);
 
 type gameObject = Wonderjs.GameObjectPrimitiveType.gameObject;
 
-type transformGameObjectData = {
-  translationWholeGameObject: gameObject,
-  translationXAxisGameObject: gameObject,
-  translationYAxisGameObject: gameObject,
-  translationZAxisGameObject: gameObject,
-  isTranslationXAxisGameObjectSelected: bool,
-  isTranslationYAxisGameObjectSelected: bool,
-  isTranslationZAxisGameObjectSelected: bool,
+type transformGizmoData = {
+  translationWholeGizmo: gameObject,
+  translationXAxisGizmo: gameObject,
+  translationYAxisGizmo: gameObject,
+  translationZAxisGizmo: gameObject,
+  isTranslationXAxisGizmoSelected: bool,
+  isTranslationYAxisGizmoSelected: bool,
+  isTranslationZAxisGizmoSelected: bool,
   axisGameObjectStartPoint: option((float, float, float)),
   pickStartPoint: option((float, float, float)),
 };
@@ -18,5 +18,5 @@ type sceneViewRecord = {
   viewRect: option(rect),
   gridPlane: option(gameObject),
   editCamera: option(gameObject),
-  transformGameObjectData: option(transformGameObjectData),
+  transformGizmoData: option(transformGizmoData),
 };

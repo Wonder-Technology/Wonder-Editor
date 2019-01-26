@@ -6,7 +6,7 @@
 
    */
 
-module RenderTransformGameObjects = {
+module RenderTransformGizmos = {
   let prepareGlState = engineState =>
     engineState |> DeviceManagerEngineService.setDepthTest(false);
 
@@ -138,29 +138,29 @@ module RenderTransformGameObjects = {
     );
 };
 
-let _moveAndRotateTranslationWholeGameObjectToCurrentSceneTreeNode =
-    (currentGameObject, translationWholeGameObject, editorState, engineState) => {
+let _moveAndRotateTranslationWholeGizmoToCurrentSceneTreeNode =
+    (currentGameObject, translationWholeGizmo, editorState, engineState) => {
   let currentGameObjectTransform =
     GameObjectComponentEngineService.unsafeGetTransformComponent(
       currentGameObject,
       engineState,
     );
-  let translationWholeGameObjectTransform =
+  let translationWholeGizmoTransform =
     GameObjectComponentEngineService.unsafeGetTransformComponent(
-      translationWholeGameObject,
+      translationWholeGizmo,
       engineState,
     );
 
   engineState
   |> TransformEngineService.setPosition(
-       translationWholeGameObjectTransform,
+       translationWholeGizmoTransform,
        TransformEngineService.getPosition(
          currentGameObjectTransform,
          engineState,
        ),
      )
   |> TransformEngineService.setEulerAngles(
-       translationWholeGameObjectTransform,
+       translationWholeGizmoTransform,
        TransformEngineService.getEulerAngles(
          currentGameObjectTransform,
          engineState,
@@ -182,8 +182,8 @@ let _computeScaleFactorBasedOnDistanceToCamera =
   *. factor;
 };
 
-let _scaleTranslationWholeGameObject =
-    (currentGameObject, translationWholeGameObject, editorState, engineState) => {
+let _scaleTranslationWholeGizmo =
+    (currentGameObject, translationWholeGizmo, editorState, engineState) => {
   let cameraGameObject =
     SceneViewEditorService.unsafeGetEditCamera(editorState);
 
@@ -200,7 +200,7 @@ let _scaleTranslationWholeGameObject =
     );
 
   TransformGameObjectEngineService.setLocalScale(
-    translationWholeGameObject,
+    translationWholeGizmo,
     (factor, factor, factor),
     engineState,
   );
@@ -209,35 +209,35 @@ let _scaleTranslationWholeGameObject =
 let renderJob = (_, engineState) => {
   let editorState = StateEditorService.getState();
 
-  IsTransformGameObjectRenderSceneViewEditorService.isTranslationWholeGameObjectRender(
+  IsTransformGizmoRenderSceneViewEditorService.isTranslationWholeGizmoRender(
     editorState,
   ) ?
     switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
     | None => engineState
     | Some(currentGameObject) =>
-      let translationWholeGameObject =
-        TransformGameObjectSceneViewEditorService.unsafeGetTranslationWholeGameObject(
+      let translationWholeGizmo =
+        TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
           editorState,
         );
 
       let engineState =
         engineState
-        |> _moveAndRotateTranslationWholeGameObjectToCurrentSceneTreeNode(
+        |> _moveAndRotateTranslationWholeGizmoToCurrentSceneTreeNode(
              currentGameObject,
-             translationWholeGameObject,
+             translationWholeGizmo,
              editorState,
            )
-        |> _scaleTranslationWholeGameObject(
+        |> _scaleTranslationWholeGizmo(
              currentGameObject,
-             translationWholeGameObject,
+             translationWholeGizmo,
              editorState,
            )
         |> JobEngineService.execUpdateTransformJob;
 
       let renderDataArr =
-        RenderTransformGameObjects.getRenderDataArr(
+        RenderTransformGizmos.getRenderDataArr(
           HierarchyGameObjectEngineService.getAllGameObjects(
-            translationWholeGameObject,
+            translationWholeGizmo,
             engineState,
           ),
           engineState,
@@ -245,17 +245,17 @@ let renderJob = (_, engineState) => {
       let gl = DeviceManagerEngineService.unsafeGetGl(engineState);
 
       let engineState =
-        engineState |> RenderTransformGameObjects.prepareGlState;
+        engineState |> RenderTransformGizmos.prepareGlState;
 
       let engineRenderState =
         Wonderjs.CreateRenderStateMainService.createRenderState(engineState);
 
       /* TODO refactor: shouldn't operate renderState in editor!!!  */
       let engineRenderState =
-        RenderTransformGameObjects.draw(gl, renderDataArr, engineRenderState);
+        RenderTransformGizmos.draw(gl, renderDataArr, engineRenderState);
 
       let engineState =
-        engineState |> RenderTransformGameObjects.restoreGlState;
+        engineState |> RenderTransformGizmos.restoreGlState;
 
       engineState;
     } :

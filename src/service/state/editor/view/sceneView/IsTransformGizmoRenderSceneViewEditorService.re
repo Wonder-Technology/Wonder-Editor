@@ -3,7 +3,7 @@ open EditorType;
 open SceneViewType;
 
 let _getData = sceneViewRecord =>
-  sceneViewRecord.transformGameObjectData |> OptionService.unsafeGet;
+  sceneViewRecord.transformGizmoData |> OptionService.unsafeGet;
 
-let isTranslationWholeGameObjectRender = editorState =>
+let isTranslationWholeGizmoRender = editorState =>
   SceneTreeEditorService.hasCurrentSceneTreeNode(editorState);
