@@ -213,13 +213,20 @@ let _handlePicking = (event: EventType.customEvent, engineState) => {
   (engineState, event);
 };
 
+let _isHandlePicking = (event, editorState) =>
+  MouseEventService.isLeftMouseButton(event)
+  && !
+       SelectTransformGameObjectSceneViewEditorService.isSelectAnyTransformGameObject(
+         editorState,
+       );
+
 let initJob = (_, engineState) => {
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
       ~eventName=EventEditorService.getPointTapEventName(),
       ~handleFunc=
         (. event, engineState) =>
-          MouseEventService.isLeftMouseButton(event) ?
+          _isHandlePicking(event, StateEditorService.getState()) ?
             _handlePicking(event, engineState) : (engineState, event),
       ~state=engineState,
       (),
