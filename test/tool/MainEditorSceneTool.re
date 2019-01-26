@@ -64,8 +64,6 @@ let getFirstCube = engineState => getCubeByIndex(0, engineState);
 
 let getSecondCube = engineState => getCubeByIndex(1, engineState);
 
-let notSetCurrentSceneTreeNode = () => ();
-
 let setFirstCubeToBeCurrentSceneTreeNode = () =>
   getFirstCube(StateEngineService.unsafeGetState())
   |> GameObjectTool.setCurrentSceneTreeNode;
