@@ -29,8 +29,7 @@ let removeSphereShape = (geometry, {pickingRecord} as editorState) => {
     sphereShapeMap:
       WonderCommonlib.ImmutableSparseMapService.deleteVal(
         geometry,
-        pickingRecord.sphereShapeMap |> Obj.magic,
-      )
-      |> Obj.magic,
+        pickingRecord.sphereShapeMap,
+      ),
   },
 };

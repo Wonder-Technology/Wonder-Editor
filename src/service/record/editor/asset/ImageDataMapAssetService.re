@@ -12,19 +12,19 @@ let buildData =
 };
 
 let unsafeGetData = (index, record) =>
-  record.imageDataMap |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(index);
+  record.imageDataMap
+  |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(index);
 
 let setData = (index, data, record) => {
   ...record,
   imageDataMap:
-    record.imageDataMap |> WonderCommonlib.ImmutableSparseMapService.set(index, data),
+    record.imageDataMap
+    |> WonderCommonlib.ImmutableSparseMapService.set(index, data),
 };
 
 let removeData = (index, record) => {
   ...record,
   imageDataMap:
     record.imageDataMap
-    |> Obj.magic
-    |> WonderCommonlib.ImmutableSparseMapService.deleteVal(index)
-    |> Obj.magic,
+    |> WonderCommonlib.ImmutableSparseMapService.deleteVal(index),
 };
