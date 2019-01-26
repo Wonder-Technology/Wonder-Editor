@@ -378,7 +378,7 @@ let _ =
           (),
         );
 
-        MainEditorSceneTool.createDefaultScene(sandbox,  MainEditorSceneTool.notSetCurrentSceneTreeNode);
+        MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
         DirectorToolEngine.prepareAndInitAllEnginState();
 

@@ -25,7 +25,7 @@ let _ =
       sandbox := createSandbox();
 
       MainEditorSceneTool.initState(~sandbox, ());
-      MainEditorSceneTool.createDefaultScene(sandbox,  MainEditorSceneTool.notSetCurrentSceneTreeNode);
+      MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
