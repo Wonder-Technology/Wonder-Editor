@@ -30,6 +30,7 @@ let create = () => {
     viewRect: None,
     gridPlane: None,
     editCamera: None,
+    transformGizmoData: None,
   },
   gameViewRecord: {
     viewRect: None,
@@ -46,9 +47,12 @@ let create = () => {
     componentTypeMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
   },
   transformRecord: {
-    localEulerAngleMapX: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
-    localEulerAngleMapY: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
-    localEulerAngleMapZ: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+    localEulerAngleMapX:
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+    localEulerAngleMapY:
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+    localEulerAngleMapZ:
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
   },
   pickingRecord: {
     sphereShapeMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),

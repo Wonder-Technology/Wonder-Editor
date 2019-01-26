@@ -25,8 +25,16 @@ let _handleEngineState = engineState => {
          InitHotKeysJobUtils.initHotKeysForEditorJob,
        )
     |> JobEngineService.registerNoWorkerInitJob(
+         "init_transform_gizmos",
+         InitTransformGizmosJobUtils.initJob,
+       )
+    |> JobEngineService.registerNoWorkerInitJob(
          "init_picking",
          InitPickingJobUtil.initJob,
+       )
+    |> JobEngineService.registerNoWorkerInitJob(
+         "init_transform_gizmos",
+         InitTransformGizmosJobUtils.initJob,
        )
     |> JobEngineService.registerNoWorkerInitJob(
          "init_camera_controller",
@@ -35,6 +43,10 @@ let _handleEngineState = engineState => {
     |> JobEngineService.registerNoWorkerLoopJob(
          "reallocate_cpu_memory",
          ReallocateCPUMemoryJobUtils.reallocateJob,
+       )
+    |> JobEngineService.registerNoWorkerLoopJob(
+         "render_transform_gizmos",
+         RenderTransformGizmosJobUtils.renderJob,
        )
     |> JobEngineService.registerNoWorkerLoopJob(
          "prepare_render_scene_view",

@@ -15,6 +15,12 @@ let multiplyScalar = ((x, y, z), scalar) => (
   z *. scalar,
 );
 
+let addScalar = ((x, y, z), scalar) => (
+  x +. scalar,
+  y +. scalar,
+  z +. scalar,
+);
+
 let fromBufferAttribute = (vertices, index) => {
   let vIndex = index * 3;
 
@@ -49,4 +55,25 @@ let max = ((x, y, z), (vx, vy, vz)) => (
   z < vz ? vz : z,
 );
 
-let length = ((x, y, z)) => Js.Math.sqrt(x *. x +. y *. y +. z *. z);
+let lengthSq = ((x, y, z)) => x *. x +. y *. y +. z *. z;
+
+let length = vec => Js.Math.sqrt(lengthSq(vec));
+
+let projectOnVector = (sourceVec, targetVec) => {
+  let scalar = dot(targetVec, sourceVec) /. lengthSq(targetVec);
+
+  multiplyScalar(targetVec, scalar);
+};
+
+let projectOnPlane = (planeNormal, vec) =>
+  Wonderjs.Vector3Service.sub(
+    Wonderjs.Vector3Type.Float,
+    vec,
+    projectOnVector(vec, planeNormal),
+  );
+
+let truncate = (digit, (x, y, z)) => (
+  FloatService.truncateFloatValue(x, digit),
+  FloatService.truncateFloatValue(y, digit),
+  FloatService.truncateFloatValue(z, digit),
+);

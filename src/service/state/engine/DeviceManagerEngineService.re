@@ -16,3 +16,13 @@ let setScissor = (data, engineState) =>
 
 let setScissorTest = (test, engineState) =>
   DeviceManagerAPI.setScissorTest(test, engineState);
+
+let setDepthTest = (test, engineState) => {
+  ...engineState,
+  deviceManagerRecord:
+    DeviceManagerService.setDepthTest(
+      unsafeGetGl(engineState),
+      test,
+      engineState.deviceManagerRecord,
+    ),
+};

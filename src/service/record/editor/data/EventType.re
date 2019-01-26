@@ -74,3 +74,5 @@ external pointEventToUserData : pointEvent => Wonderjs.EventType.userData =
 
 external userDataToMouseEvent : Wonderjs.EventType.userData => mouseEvent =
   "%identity";
+
+external userDataToPointEvent : userData => pointEvent = "%identity";

@@ -21,7 +21,7 @@ let _checkIntersect =
     (
       cullType,
       (rayCasterNear, rayCasterFar),
-      ({origin}: InitPickingJobType.ray) as ray,
+      ({origin}: RayType.ray) as ray,
       va,
       vb,
       vc,
@@ -34,7 +34,7 @@ let checkIntersectMesh =
       localToWorldMatrix,
       cullType,
       (vertices, indices16, indices32, indicesCount),
-      ({origin, direction}: InitPickingJobType.ray) as ray,
+      ({origin, direction}: RayType.ray) as ray,
     ) => {
   let inverseMatrix =
     Wonderjs.Matrix4Service.invert(

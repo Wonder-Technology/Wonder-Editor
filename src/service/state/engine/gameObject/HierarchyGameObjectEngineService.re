@@ -6,6 +6,30 @@ let getAllChildrenTransform = (rootGameObject, engineState) =>
 let getAllGameObjects = (rootGameObject, engineState) =>
   GameObjectAPI.getAllGameObjects(rootGameObject, engineState);
 
+let getAllChildren = (rootGameObject, engineState) =>
+  getAllGameObjects(rootGameObject, engineState)
+  |> Js.Array.sliceFrom(1)
+  |> WonderLog.Contract.ensureCheck(
+       allChildren =>
+         WonderLog.(
+           Contract.(
+             Operators.(
+               test(
+                 Log.buildAssertMessage(
+                   ~expect={j|not contain itself|j},
+                   ~actual={j|contain|j},
+                 ),
+                 () =>
+                 allChildren
+                 |> Js.Array.includes(rootGameObject)
+                 |> assertFalse
+               )
+             )
+           )
+         ),
+       StateEditorService.getStateIsDebug(),
+     );
+
 let changeGameObjectChildOrder =
     (sourceGameObject, targetGameObject, transformType, engineState) => {
   let sourceTransform =
