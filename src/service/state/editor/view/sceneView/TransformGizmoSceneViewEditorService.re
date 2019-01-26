@@ -3,7 +3,7 @@ open EditorType;
 open SceneViewType;
 
 let unsafeGetTranslationWholeGizmo = editorState =>
-  RecordTransformGizmoSceneViewEditorService.getData(
+  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
     editorState.sceneViewRecord,
   ).
     translationWholeGizmo;
@@ -15,7 +15,7 @@ let setTranslationWholeGizmo = (gameObject, editorState) => {
     transformGizmoData:
       Some({
         ...
-          RecordTransformGizmoSceneViewEditorService.getData(
+          RecordTransformGizmoSceneViewEditorService.unsafeGetData(
             editorState.sceneViewRecord,
           ),
         translationWholeGizmo: gameObject,
@@ -24,7 +24,7 @@ let setTranslationWholeGizmo = (gameObject, editorState) => {
 };
 
 let unsafeGetTranslationXAxisGizmo = editorState =>
-  RecordTransformGizmoSceneViewEditorService.getData(
+  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
     editorState.sceneViewRecord,
   ).
     translationXAxisGizmo;
@@ -36,7 +36,7 @@ let setTranslationXAxisGizmo = (gameObject, editorState) => {
     transformGizmoData:
       Some({
         ...
-          RecordTransformGizmoSceneViewEditorService.getData(
+          RecordTransformGizmoSceneViewEditorService.unsafeGetData(
             editorState.sceneViewRecord,
           ),
         translationXAxisGizmo: gameObject,
@@ -45,7 +45,7 @@ let setTranslationXAxisGizmo = (gameObject, editorState) => {
 };
 
 let unsafeGetTranslationYAxisGizmo = editorState =>
-  RecordTransformGizmoSceneViewEditorService.getData(
+  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
     editorState.sceneViewRecord,
   ).
     translationYAxisGizmo;
@@ -57,7 +57,7 @@ let setTranslationYAxisGizmo = (gameObject, editorState) => {
     transformGizmoData:
       Some({
         ...
-          RecordTransformGizmoSceneViewEditorService.getData(
+          RecordTransformGizmoSceneViewEditorService.unsafeGetData(
             editorState.sceneViewRecord,
           ),
         translationYAxisGizmo: gameObject,
@@ -66,7 +66,7 @@ let setTranslationYAxisGizmo = (gameObject, editorState) => {
 };
 
 let unsafeGetTranslationZAxisGizmo = editorState =>
-  RecordTransformGizmoSceneViewEditorService.getData(
+  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
     editorState.sceneViewRecord,
   ).
     translationZAxisGizmo;
@@ -78,7 +78,7 @@ let setTranslationZAxisGizmo = (gameObject, editorState) => {
     transformGizmoData:
       Some({
         ...
-          RecordTransformGizmoSceneViewEditorService.getData(
+          RecordTransformGizmoSceneViewEditorService.unsafeGetData(
             editorState.sceneViewRecord,
           ),
         translationZAxisGizmo: gameObject,
