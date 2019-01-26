@@ -18,7 +18,6 @@ let _ =
         beforeEach(() => {
           MainEditorSceneTool.initState(~sandbox, ());
           MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
-
           ControllerTool.stubRequestAnimationFrame(
             createEmptyStubWithJsObjSandbox(sandbox),
           );

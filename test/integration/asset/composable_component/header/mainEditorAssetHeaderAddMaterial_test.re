@@ -30,7 +30,7 @@ let _ =
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
 
-      MainEditorSceneTool.createDefaultScene(sandbox,  MainEditorSceneTool.notSetCurrentSceneTreeNode);
+      MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
