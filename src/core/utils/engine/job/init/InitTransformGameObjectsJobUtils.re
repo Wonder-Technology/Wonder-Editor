@@ -662,16 +662,19 @@ let _bindEvent = (editorState, engineState) => {
     ManageEventEngineService.onCustomGlobalEvent(
       ~eventName=EventEditorService.getPointDownEventName(),
       ~handleFunc=
-        (. event, engineState) => {
-          let editorState = StateEditorService.getState();
+        (. event, engineState) =>
+          MouseEventService.isLeftMouseButton(event) ?
+            {
+              let editorState = StateEditorService.getState();
 
-          let editorState =
-            _selectTransformGameObject(event, engineState, editorState);
+              let editorState =
+                _selectTransformGameObject(event, engineState, editorState);
 
-          editorState |> StateEditorService.setState |> ignore;
+              editorState |> StateEditorService.setState |> ignore;
 
-          (engineState, event);
-        },
+              (engineState, event);
+            } :
+            (engineState, event),
       ~state=engineState,
       (),
     );
@@ -680,16 +683,22 @@ let _bindEvent = (editorState, engineState) => {
     ManageEventEngineService.onCustomGlobalEvent(
       ~eventName=EventEditorService.getPointDragEventName(),
       ~handleFunc=
-        (. event, engineState) => {
-          let editorState = StateEditorService.getState();
+        (. event, engineState) =>
+          MouseEventService.isLeftMouseButton(event) ?
+            {
+              let editorState = StateEditorService.getState();
 
-          let (editorState, engineState) =
-            _affectTransformGameObject(event, (editorState, engineState));
+              let (editorState, engineState) =
+                _affectTransformGameObject(
+                  event,
+                  (editorState, engineState),
+                );
 
-          editorState |> StateEditorService.setState |> ignore;
+              editorState |> StateEditorService.setState |> ignore;
 
-          (engineState, event);
-        },
+              (engineState, event);
+            } :
+            (engineState, event),
       ~state=engineState,
       (),
     );
