@@ -80,7 +80,7 @@ let _ =
 
         describe("test added gameObject's parent", () => {
           test(
-            "if has currentSceneTreeNode, the gameObject should add into currentSceneTreeNode",
+            "if has currentSceneTreeNode, added gameObject should add into currentSceneTreeNode",
             () => {
               let engineState = StateEngineService.unsafeGetState();
 
@@ -100,26 +100,23 @@ let _ =
                         );
             },
           );
-          test(
-            "if has no currentSceneTreeNode, the gameObject should add into scene gameObject",
-            () => {
-              SceneTreeEditorService.clearCurrentSceneTreeNode
-              |> StateLogicService.getAndSetEditorState;
+          test("if not, added gameObject should add into scene gameObject", () => {
+            SceneTreeEditorService.clearCurrentSceneTreeNode
+            |> StateLogicService.getAndSetEditorState;
 
-              let engineState = StateEngineService.unsafeGetState();
+            let engineState = StateEngineService.unsafeGetState();
 
-              let newGameObject = GameObjectTool.getNewGameObject();
+            let newGameObject = GameObjectTool.getNewGameObject();
 
-              MainEditorLeftHeaderTool.addEmptyGameObject();
+            MainEditorLeftHeaderTool.addEmptyGameObject();
 
-              engineState
-              |> HierarchyGameObjectEngineService.getParentGameObject(
-                   newGameObject,
-                 )
-              |> OptionService.unsafeGet
-              |> expect == SceneEngineService.getSceneGameObject(engineState);
-            },
-          );
+            engineState
+            |> HierarchyGameObjectEngineService.getParentGameObject(
+                 newGameObject,
+               )
+            |> OptionService.unsafeGet
+            |> expect == SceneEngineService.getSceneGameObject(engineState);
+          });
         });
       });
 
