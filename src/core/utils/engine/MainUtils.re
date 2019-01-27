@@ -45,6 +45,10 @@ let _handleEngineState = engineState => {
          ReallocateCPUMemoryJobUtils.reallocateJob,
        )
     |> JobEngineService.registerNoWorkerLoopJob(
+         "update_transform_gizmos",
+         UpdateTransformGizmosJobUtils.updateTransformJob,
+       )
+    |> JobEngineService.registerNoWorkerLoopJob(
          "render_transform_gizmos",
          RenderTransformGizmosJobUtils.renderJob,
        )

@@ -53,13 +53,7 @@ let prepareStateAndView = (~sandbox, ~viewWidth, ~viewHeight) => {
             },
             {
               "name": "init_picking"
-            },
-      {
-        "name": "init_basic_material"
-      },
-      {
-        "name": "init_light_material"
-      }
+            }
           ]
         }
       ]
@@ -71,22 +65,10 @@ let prepareStateAndView = (~sandbox, ~viewWidth, ~viewHeight) => {
         "name": "default",
         "jobs": [
             {
+                "name": "update_transform_gizmos"
+            },
+            {
                 "name": "update_transform"
-            },
-            {
-                "name": "update_camera"
-            },
-            {
-                "name": "get_camera_data"
-            },
-            {
-                "name": "create_basic_render_object_buffer"
-            },
-            {
-                "name": "create_light_render_object_buffer"
-            },
-            {
-                "name": "render_transform_gizmos"
             }
         ]
     }

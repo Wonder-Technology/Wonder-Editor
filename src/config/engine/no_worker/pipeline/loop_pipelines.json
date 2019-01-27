@@ -12,6 +12,9 @@
                 "name": "reallocate_cpu_memory"
             },
             {
+                "name": "update_transform_gizmos"
+            },
+            {
                 "name": "update_transform"
             },
             {
