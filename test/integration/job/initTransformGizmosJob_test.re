@@ -672,98 +672,6 @@ let _ =
                       },
                     );
                   });
-
-                  describe("test current scene tree node has parent", () => {
-                    let prepareGameObject = sandbox =>
-                      InitTransformGizmosJobTool.prepareOneGameObject(
-                        ~sandbox,
-                        ~viewWidth=500,
-                        ~viewHeight=200,
-                        ~offsetLeft=0,
-                        ~offsetTop=0,
-                        ~cameraPos=(0., 0., 3.),
-                        ~gameObjectPos=((-1.), 0., 0.),
-                        ~gameObjectEulerAngles=(0., 23., 22.),
-                        ~createGameObjectFunc=InitPickingJobTool.createCube,
-                        (),
-                      );
-
-                    let createParentGameObject =
-                        (
-                          gameObjectPos,
-                          gameObjectEulerAngles,
-                          childGameObject,
-                          engineState,
-                        ) => {
-                      let (engineState, parentGameObject) =
-                        InitPickingJobTool.prepareGameObject(
-                          gameObjectPos,
-                          gameObjectEulerAngles,
-                          InitPickingJobTool.createCube,
-                          engineState,
-                        );
-
-                      let engineState =
-                        GameObjectTool.addChild(
-                          parentGameObject,
-                          childGameObject,
-                          engineState,
-                        );
-
-                      (engineState, parentGameObject);
-                    };
-
-                    test(
-                      {|
-            create parent gameObject p1;
-            set p1->local position to (1.0, 0.0, 0.0);
-            set p1->local eulerAngles to (12.0, 22.0, 0.0);
-            add child gameObject c1;
-            set c1->local position to (-1.0, 0.0, 0.0);
-            set c1->local eulerAngles to (0.0, 23.0, 22.0);
-            pick c1;
-            select x axis;
-            mouse move (10px, 0px);
-
-            c1 should move along +x axis;
-            |},
-                      () => {
-                        let gameObject1 = prepareGameObject(sandbox);
-
-                        let engineState = StateEngineService.unsafeGetState();
-                        let (engineState, parent) =
-                          createParentGameObject(
-                            (1., 0., 0.),
-                            (12., 45., 22.),
-                            gameObject1,
-                            engineState,
-                          );
-                        engineState |> StateEngineService.setState |> ignore;
-
-                        InitPickingJobTool.triggerPicking(
-                          ~sandbox,
-                          ~pageX=250,
-                          ~pageY=100,
-                          (),
-                        );
-                        InitTransformGizmosJobTool.triggerMouseDown(
-                          ~sandbox,
-                          ~pageX=250 + 20,
-                          ~pageY=100 - 10,
-                          (),
-                        );
-                        InitTransformGizmosJobTool.triggerMouseMove(
-                          ~sandbox,
-                          ~pageX=250 + 30,
-                          ~pageY=100 - 10,
-                          (),
-                        );
-
-                        InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
-                        |> expect == (0.318, (-0.336), 0.818);
-                      },
-                    );
-                  });
                 });
 
                 describe(
@@ -819,6 +727,98 @@ let _ =
                     },
                   );
                 });
+              });
+
+              describe("test current scene tree node has parent", () => {
+                let prepareGameObject = sandbox =>
+                  InitTransformGizmosJobTool.prepareOneGameObject(
+                    ~sandbox,
+                    ~viewWidth=500,
+                    ~viewHeight=200,
+                    ~offsetLeft=0,
+                    ~offsetTop=0,
+                    ~cameraPos=(0., 0., 3.),
+                    ~gameObjectPos=((-1.), 0., 0.),
+                    ~gameObjectEulerAngles=(0., 23., 22.),
+                    ~createGameObjectFunc=InitPickingJobTool.createCube,
+                    (),
+                  );
+
+                let createParentGameObject =
+                    (
+                      gameObjectPos,
+                      gameObjectEulerAngles,
+                      childGameObject,
+                      engineState,
+                    ) => {
+                  let (engineState, parentGameObject) =
+                    InitPickingJobTool.prepareGameObject(
+                      gameObjectPos,
+                      gameObjectEulerAngles,
+                      InitPickingJobTool.createCube,
+                      engineState,
+                    );
+
+                  let engineState =
+                    GameObjectTool.addChild(
+                      parentGameObject,
+                      childGameObject,
+                      engineState,
+                    );
+
+                  (engineState, parentGameObject);
+                };
+
+                test(
+                  {|
+            create parent gameObject p1;
+            set p1->local position to (1.0, 0.0, 0.0);
+            set p1->local eulerAngles to (12.0, 22.0, 0.0);
+            add child gameObject c1;
+            set c1->local position to (-1.0, 0.0, 0.0);
+            set c1->local eulerAngles to (0.0, 23.0, 22.0);
+            pick c1;
+            select axis;
+            mouse move (10px, 0px);
+
+            c1 should move along axis in world coordinate system;
+            |},
+                  () => {
+                    let gameObject1 = prepareGameObject(sandbox);
+
+                    let engineState = StateEngineService.unsafeGetState();
+                    let (engineState, parent) =
+                      createParentGameObject(
+                        (1., 0., 0.),
+                        (12., 45., 22.),
+                        gameObject1,
+                        engineState,
+                      );
+                    engineState |> StateEngineService.setState |> ignore;
+
+                    InitPickingJobTool.triggerPicking(
+                      ~sandbox,
+                      ~pageX=250,
+                      ~pageY=100,
+                      (),
+                    );
+                    InitTransformGizmosJobTool.triggerMouseDown(
+                      ~sandbox,
+                      ~pageX=250 + 20,
+                      ~pageY=100 - 10,
+                      (),
+                    );
+                    InitTransformGizmosJobTool.triggerMouseMove(
+                      ~sandbox,
+                      ~pageX=250 + 30,
+                      ~pageY=100 - 10,
+                      (),
+                    );
+
+                    InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
+                    |> expect == (0.318, (-0.336), 0.818);
+                  },
+                );
               });
             })
           )
