@@ -204,7 +204,19 @@ let prepareGameObject =
          gameObjectTransform,
        );
 
-  (gameObject, engineState);
+  /* let engineState =
+    engineState
+    |> TransformEngineService.setLocalPosition(
+         gameObjectPos,
+         gameObjectTransform,
+       )
+    |> TransformEngineService.setLocalEulerAngles(
+         gameObjectEulerAngles,
+         gameObjectTransform,
+       ); */
+
+
+  (engineState, gameObject);
 };
 
 let prepareState = (sandbox, editorState, engineState) => {
@@ -308,7 +320,7 @@ let prepareOneGameObject =
       (editorState, engineState),
     );
 
-  let (gameObject1, engineState) =
+  let (engineState, gameObject1) =
     prepareGameObject(
       gameObjectPos,
       gameObjectEulerAngles,
@@ -357,7 +369,7 @@ let prepareTwoGameObjects =
       (editorState, engineState),
     );
 
-  let (gameObject1, engineState) =
+  let (engineState, gameObject1) =
     prepareGameObject(
       gameObject1Pos,
       gameObject1EulerAngles,
@@ -365,7 +377,7 @@ let prepareTwoGameObjects =
       engineState,
     );
 
-  let (gameObject2, engineState) =
+  let (engineState, gameObject2) =
     prepareGameObject(
       gameObject2Pos,
       gameObject2EulerAngles,

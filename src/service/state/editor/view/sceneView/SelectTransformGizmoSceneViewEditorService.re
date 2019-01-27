@@ -33,7 +33,7 @@ let isSelectAnyTransformGizmo = editorState =>
     || isTranslationZAxisGizmoSelected(editorState)
   };
 
-let notSelectAllTransformGizmo = editorState => {
+let markNotSelectAnyTranslationGizmo = editorState => {
   ...editorState,
   sceneViewRecord: {
     ...editorState.sceneViewRecord,
@@ -51,7 +51,7 @@ let notSelectAllTransformGizmo = editorState => {
 };
 
 let onlySelectTranslationXAxisGizmo = editorState => {
-  let editorState = editorState |> notSelectAllTransformGizmo;
+  let editorState = editorState |> markNotSelectAnyTranslationGizmo;
 
   {
     ...editorState,
@@ -70,7 +70,7 @@ let onlySelectTranslationXAxisGizmo = editorState => {
 };
 
 let onlySelectTranslationYAxisGizmo = editorState => {
-  let editorState = editorState |> notSelectAllTransformGizmo;
+  let editorState = editorState |> markNotSelectAnyTranslationGizmo;
 
   {
     ...editorState,
@@ -89,7 +89,7 @@ let onlySelectTranslationYAxisGizmo = editorState => {
 };
 
 let onlySelectTranslationZAxisGizmo = editorState => {
-  let editorState = editorState |> notSelectAllTransformGizmo;
+  let editorState = editorState |> markNotSelectAnyTranslationGizmo;
 
   {
     ...editorState,

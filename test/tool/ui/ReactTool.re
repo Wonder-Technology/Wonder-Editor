@@ -14,7 +14,6 @@ let getUpdateState = reducerResult =>
   | _ =>
     WonderLog.Log.fatal(
       LogUtils.buildFatalMessage(
-        
         ~description={j||j},
         ~reason="",
         ~solution={j||j},
@@ -28,3 +27,11 @@ let isNoUpdate = reducerResult =>
   | ReasonReact.NoUpdate => true
   | _ => false
   };
+
+let createDispatchFuncStub = sandbox => {
+  let stub = Sinon.createEmptyStubWithJsObjSandbox(sandbox);
+
+  Wonderjs.Root.root##dispathFuncStub_wonder_editor#=stub;
+
+  stub;
+};

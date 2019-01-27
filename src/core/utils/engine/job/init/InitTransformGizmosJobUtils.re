@@ -33,12 +33,6 @@ let _createTranslationAxisGizmo = (color, engineState) => {
   let (engineState, axisGameObject) =
     GameObjectEngineService.create(engineState);
 
-  let (engineState, coneGameObject) =
-    GameObjectEngineService.create(engineState);
-
-  let (engineState, cylinderGameObject) =
-    GameObjectEngineService.create(engineState);
-
   let (engineState, coneGeometry) =
     GeometryEngineService.createConeGeometry(0.5, 1., 10, 10, engineState);
 
@@ -62,6 +56,11 @@ let _createTranslationAxisGizmo = (color, engineState) => {
     cylinderMeshRenderer,
   ) =
     engineState |> _createBasicGameObject(cylinderGeometry);
+
+  let engineState =
+    engineState
+    |> GameObjectEngineService.setGameObjectName("arrow", coneGameObject)
+    |> GameObjectEngineService.setGameObjectName("line", cylinderGameObject);
 
   let engineState =
     engineState
@@ -115,6 +114,7 @@ let _createTransformGizmos = engineState => {
     _createTranslationAxisGizmo([|1., 0., 0.|], engineState);
   let (engineState, yAxisGizmo, yAxisTransform) =
     _createTranslationAxisGizmo([|0., 1., 0.|], engineState);
+
   let (engineState, zAxisGizmo, zAxisTransform) =
     _createTranslationAxisGizmo([|0., 0., 1.|], engineState);
 
@@ -129,21 +129,21 @@ let _createTransformGizmos = engineState => {
          zAxisTransform,
        );
 
-  let (engineState, wholeGameObject) =
+  let (engineState, wholeGizmo) =
     GameObjectEngineService.create(engineState);
 
   let engineState =
     engineState
-    |> HierarchyGameObjectEngineService.addChild(wholeGameObject, zAxisGizmo)
-    |> HierarchyGameObjectEngineService.addChild(wholeGameObject, yAxisGizmo)
-    |> HierarchyGameObjectEngineService.addChild(wholeGameObject, xAxisGizmo);
+    |> HierarchyGameObjectEngineService.addChild(wholeGizmo, zAxisGizmo)
+    |> HierarchyGameObjectEngineService.addChild(wholeGizmo, yAxisGizmo)
+    |> HierarchyGameObjectEngineService.addChild(wholeGizmo, xAxisGizmo);
 
-  (engineState, wholeGameObject, (xAxisGizmo, yAxisGizmo, zAxisGizmo));
+  (engineState, wholeGizmo, (xAxisGizmo, yAxisGizmo, zAxisGizmo));
 };
 
 let _setToEditorState =
     (
-      wholeGameObject,
+      wholeGizmo,
       (xAxisGizmo, yAxisGizmo, zAxisGizmo),
       editorState: EditorType.editorState,
     )
@@ -153,7 +153,7 @@ let _setToEditorState =
     ...editorState.sceneViewRecord,
     transformGizmoData:
       Some({
-        translationWholeGizmo: wholeGameObject,
+        translationWholeGizmo: wholeGizmo,
         translationXAxisGizmo: xAxisGizmo,
         translationYAxisGizmo: yAxisGizmo,
         translationZAxisGizmo: zAxisGizmo,
@@ -476,10 +476,10 @@ let _selectTransformGizmo = (event, engineState, editorState) =>
               (editorState, engineState),
             ) :
             editorState
-            |> SelectTransformGizmoSceneViewEditorService.notSelectAllTransformGizmo;
+            |> SelectTransformGizmoSceneViewEditorService.markNotSelectAnyTranslationGizmo;
     } :
     editorState
-    |> SelectTransformGizmoSceneViewEditorService.notSelectAllTransformGizmo;
+    |> SelectTransformGizmoSceneViewEditorService.markNotSelectAnyTranslationGizmo;
 
 let _computeCurrentGameObjectNewPositionForMoveAxis =
     (
@@ -695,17 +695,14 @@ let _bindEvent = (editorState, engineState) => {
 };
 
 let initJob = (_, engineState) => {
-  let (engineState, wholeGameObject, (xAxisGizmo, yAxisGizmo, zAxisGizmo)) =
+  let (engineState, wholeGizmo, (xAxisGizmo, yAxisGizmo, zAxisGizmo)) =
     _createTransformGizmos(engineState);
 
   let editorState = StateEditorService.getState();
 
   let editorState =
     editorState
-    |> _setToEditorState(
-         wholeGameObject,
-         (xAxisGizmo, yAxisGizmo, zAxisGizmo),
-       );
+    |> _setToEditorState(wholeGizmo, (xAxisGizmo, yAxisGizmo, zAxisGizmo));
 
   let engineState = _bindEvent(editorState, engineState);
 

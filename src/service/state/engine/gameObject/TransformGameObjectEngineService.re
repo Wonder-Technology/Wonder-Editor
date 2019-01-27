@@ -7,6 +7,15 @@ let getPosition = (gameObject, engineState) =>
     engineState,
   );
 
+let getLocalPosition = (gameObject, engineState) =>
+  TransformEngineService.getLocalPosition(
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      gameObject,
+      engineState,
+    ),
+    engineState,
+  );
+
 let setLocalPosition = (gameObject, pos, engineState) =>
   TransformEngineService.setLocalPosition(
     pos,

@@ -129,17 +129,18 @@ let initState =
     (),
   );
 
-let createDefaultSceneAndNotInit = sandbox => {
-  let engineState =
-    InitEditorJobUtils.initEditorJob(
-      [||],
-      StateEngineService.unsafeGetState(),
-    );
-
-  engineState
+let prepareGl = sandbox =>
+  StateEngineService.unsafeGetState()
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateEngineService.setState
   |> ignore;
+
+let createDefaultSceneAndNotInit = sandbox => {
+  InitEditorJobUtils.initEditorJob([||], StateEngineService.unsafeGetState())
+  |> StateEngineService.setState
+  |> ignore;
+
+  prepareGl(sandbox);
 };
 
 let createDefaultScene = (sandbox, initFunc) => {
