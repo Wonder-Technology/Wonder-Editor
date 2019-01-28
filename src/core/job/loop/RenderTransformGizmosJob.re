@@ -1,11 +1,3 @@
-/* TODO refactor: remove Wonderjs???
-   extract RenderEngineService(wonder.js should extract RenderAPI?)
-
-
-   TODO refactor: not use engineState here!!!(only use engineState)
-
-   */
-
 module RenderTransformGizmos = {
   let prepareGlState = engineState =>
     engineState |> DeviceManagerEngineService.setDepthTest(false);
