@@ -15,37 +15,71 @@ let _ =
 
     describe("test find picked one", () => {
       describe("should set finded one to current scene tree node", () => {
-        describe("if pointtap->mouse button isn't left button", () => {
+        describe("test not trigger pick", () => {
           let _prepare = () =>
             InitPickingJobTool.prepareOneGameObject(
               ~sandbox,
-              ~viewWidth=510,
+              ~viewWidth=500,
               ~viewHeight=200,
-              ~offsetLeft=10,
-              ~offsetTop=20,
-              ~cameraPos=(
-                6.986046314239502,
-                0.43706008791923523,
-                (-0.06429910659790039),
-              ),
-              ~gameObjectPos=(3., 0., 0.),
-              ~gameObjectEulerAngles=(45., 0., 0.),
+              ~offsetLeft=0,
+              ~offsetTop=0,
+              ~cameraPos=(0., 0., 2.),
+              ~gameObjectPos=(0., 0., 0.),
+              ~gameObjectEulerAngles=(0., 0., 0.),
               ~createGameObjectFunc=InitPickingJobTool.createCube,
               (),
             );
 
-          test("not trigger pick", () => {
-            let gameObject1 = _prepare();
+          describe("if pointtap->mouse button isn't left button", () =>
+            test("not trigger pick", () => {
+              let gameObject1 = _prepare();
 
-            InitPickingJobTool.triggerPickingAndRestore(
-              ~sandbox,
-              ~pageX=233 + 10,
-              ~pageY=119 + 20,
-              ~eventButton=3,
-              (),
-            );
+              InitPickingJobTool.triggerPickingAndRestore(
+                ~sandbox,
+                ~pageX=250,
+                ~pageY=100,
+                ~eventButton=3,
+                (),
+              );
 
-            InitPickingJobTool.notPick();
+              InitPickingJobTool.notPick();
+            })
+          );
+
+          describe("if select any translation gizmo", () => {
+            beforeEach(() => {
+              let _ = _prepare();
+
+              InitTransformGizmosJobTool.createTransformGizmos
+              |> StateLogicService.getAndSetStateToGetData;
+
+              SelectTransformGizmoSceneViewEditorService.onlySelectTranslationXAxisGizmo
+              |> StateLogicService.getAndSetEditorState;
+            });
+
+            test("not trigger pick success", () => {
+              InitPickingJobTool.triggerPickingAndRestore(
+                ~sandbox,
+                ~pageX=250,
+                ~pageY=100,
+                (),
+              );
+
+              InitPickingJobTool.notPick();
+            });
+            test("not trigger pick fail", () => {
+              let gameObject = 500;
+              GameObjectTool.setCurrentSceneTreeNode(gameObject);
+
+              InitPickingJobTool.triggerPickingAndRestore(
+                ~sandbox,
+                ~pageX=250 - 200,
+                ~pageY=100,
+                (),
+              );
+
+              InitPickingJobTool.pickOne(gameObject);
+            });
           });
         });
 
@@ -487,7 +521,7 @@ let _ =
               (),
             );
 
-          test("clear curent scene tree node", () => {
+          test("clear current scene tree node", () => {
             let _ = _prepare();
             let gameObject = 500;
             GameObjectTool.setCurrentSceneTreeNode(gameObject);
@@ -496,7 +530,7 @@ let _ =
 
             InitPickingJobTool.notPick();
           });
-          test("clear curent asset node id", () => {
+          test("clear current asset node id", () => {
             let _ = _prepare();
             let nodeId = 500;
             MainEditorAssetNodeTool.setCurrentNodeId(nodeId);
@@ -507,7 +541,7 @@ let _ =
             |> StateLogicService.getEditorState
             |> expect == None;
           });
-          test("clear curent select source", () => {
+          test("clear current select source", () => {
             let _ = _prepare();
             CurrentSelectSourceEditorService.setCurrentSelectSource(
               WidgetType.Asset,
@@ -721,6 +755,7 @@ let _ =
 
             InitPickingJobTool.createGameObject(geometry, engineState);
           };
+
           let _prepare = () =>
             InitPickingJobTool.prepareOneGameObject(
               ~sandbox,

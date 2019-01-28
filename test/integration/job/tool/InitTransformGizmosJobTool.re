@@ -174,3 +174,17 @@ let getCurrentSceneTreeNodePosition = () => {
   )
   |> Vector3Service.truncate(3);
 };
+
+let createTransformGizmos = ((editorState, engineState)) => {
+  let (engineState, wholeGizmo, (xAxisGizmo, yAxisGizmo, zAxisGizmo)) =
+    InitTransformGizmosJobUtils._createTransformGizmos(engineState);
+
+  let editorState =
+    editorState
+    |> InitTransformGizmosJobUtils._setToEditorState(
+         wholeGizmo,
+         (xAxisGizmo, yAxisGizmo, zAxisGizmo),
+       );
+
+  (editorState, engineState);
+};
