@@ -204,8 +204,14 @@ let _ =
 
               let engineState =
                 engineState
-                |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1)
-                |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube2);
+                |> HierarchyGameObjectEngineService.addChild(
+                     rootGameObject,
+                     cube1,
+                   )
+                |> HierarchyGameObjectEngineService.addChild(
+                     rootGameObject,
+                     cube2,
+                   );
 
               (rootGameObject, (editorState, engineState));
             });
@@ -372,10 +378,7 @@ let _ =
           (),
         );
 
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
-        );
+        MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
         DirectorToolEngine.prepareAndInitAllEnginState();
 
@@ -1040,7 +1043,11 @@ let _ =
                 GameObjectEngineService.create(engineState);
 
               let engineState =
-                engineState |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1);
+                engineState
+                |> HierarchyGameObjectEngineService.addChild(
+                     rootGameObject,
+                     cube1,
+                   );
 
               (rootGameObject, (editorState, engineState));
             });

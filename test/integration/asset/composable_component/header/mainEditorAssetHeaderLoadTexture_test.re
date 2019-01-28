@@ -18,7 +18,7 @@ let _ =
       sandbox := createSandbox();
 
       MainEditorSceneTool.initState(~sandbox, ());
-      MainEditorSceneTool.createDefaultScene(sandbox, () => ());
+      MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 

@@ -37,7 +37,7 @@ let _ =
 
         LoadTool.buildFakeLoadImage(.);
 
-        MainEditorSceneTool.createDefaultScene(sandbox, () => ());
+        MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
         MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
       });

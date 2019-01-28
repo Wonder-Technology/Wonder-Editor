@@ -64,7 +64,7 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
@@ -213,7 +213,7 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
@@ -384,7 +384,7 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
@@ -555,7 +555,7 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
@@ -704,7 +704,7 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
@@ -831,7 +831,7 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
@@ -980,7 +980,7 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
@@ -1151,7 +1151,7 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
@@ -1322,7 +1322,7 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
@@ -1471,7 +1471,7 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
             onDragLeave={[Function]}

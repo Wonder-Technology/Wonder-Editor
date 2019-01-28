@@ -121,28 +121,6 @@ exports[`init hotKeys job bind document hotKeys event test bind clone hot-key ke
           </div>
         </li>
       </ul>
-      <ul
-        className="wonder-tree-node"
-      >
-        <li>
-          <div
-            className="item-triangle"
-          />
-          <div
-            className="draggable-container select-active no-drag"
-            draggable={true}
-            onDragEnd={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDragStart={[Function]}
-            onDrop={[Function]}
-            onMouseDown={[Function]}
-            style={Object {}}
-          >
-            Cube
-          </div>
-        </li>
-      </ul>
     </ul>
   </article>
 </article>
@@ -200,6 +178,28 @@ exports[`init hotKeys job bind document hotKeys event test bind delete hot-key k
             style={Object {}}
           >
             Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            onMouseDown={[Function]}
+            style={Object {}}
+          >
+            Cube
           </div>
         </li>
       </ul>
@@ -315,7 +315,7 @@ exports[`init hotKeys job bind document hotKeys event test bind redo hot-key key
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
@@ -463,7 +463,7 @@ exports[`init hotKeys job bind document hotKeys event test bind undo hot-key key
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
             onDragLeave={[Function]}

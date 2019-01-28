@@ -65,16 +65,17 @@ let blurConstant =
   );
 
 /* let changeConstantAndBlur =
-       (
-         ~light,
-         ~value,
-         ~uiState=TestTool.buildEmptyAppState(),
-         ~dispatchFunc=TestTool.getDispatch(),
-         (),
-       ) => {
-     changeConstant(light, value);
-     blurConstant(~uiState, ~dispatchFunc, ~light, ~value, ());
-   }; */
+    (
+      ~light,
+      ~sourceValue,
+      ~targetValue,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) => {
+  changeConstant(light, targetValue);
+  blurConstant(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
+}; */
 
 let changeLinear = (light, value) =>
   MainEditorPointLightUtils.changeLinear(light, value);
@@ -94,16 +95,17 @@ let blurLinear =
   );
 
 /* let changeLinearAndBlur =
-       (
-         ~light,
-         ~value,
-         ~uiState=TestTool.buildEmptyAppState(),
-         ~dispatchFunc=TestTool.getDispatch(),
-         (),
-       ) => {
-     changeLinear(light, value);
-     blurLinear(~uiState, ~dispatchFunc, ~light, ~value, ());
-   }; */
+    (
+      ~light,
+      ~sourceValue,
+      ~targetValue,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) => {
+  changeLinear(light, targetValue);
+  blurLinear(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
+}; */
 
 let changeQuadratic = (light, value) =>
   MainEditorPointLightUtils.changeQuadratic(light, value);
@@ -123,16 +125,17 @@ let blurQuadratic =
   );
 
 /* let changeQuadraticAndBlur =
-       (
-         ~light,
-         ~value,
-         ~uiState=TestTool.buildEmptyAppState(),
-         ~dispatchFunc=TestTool.getDispatch(),
-         (),
-       ) => {
-     changeQuadratic(light, value);
-     blurQuadratic(~uiState, ~dispatchFunc, ~light, ~value, ());
-   }; */
+    (
+      ~light,
+      ~sourceValue,
+      ~targetValue,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) => {
+  changeQuadratic(light, targetValue);
+  blurQuadratic(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
+}; */
 
 let changeRange = (light, value) =>
   MainEditorPointLightUtils.changeRange(light, value);
@@ -152,16 +155,17 @@ let blurRange =
   );
 
 /* let changeRangeAndBlur =
-       (
-         ~light,
-         ~value,
-         ~uiState=TestTool.buildEmptyAppState(),
-         ~dispatchFunc=TestTool.getDispatch(),
-         (),
-       ) => {
-     changeRange(light, value);
-     blurRange(~uiState, ~dispatchFunc, ~light, ~value, ());
-   }; */
+    (
+      ~light,
+      ~sourceValue,
+      ~targetValue,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) => {
+  changeRange(light, targetValue);
+  blurRange(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
+}; */
 
 let createPointLight = (editorState, engineState) => {
   let (editorState, (engineState, obj)) =

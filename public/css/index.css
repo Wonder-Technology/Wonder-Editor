@@ -351,7 +351,7 @@ html, body {
           padding-top: 50px; }
   .wonder-app-component .wonder-controller-component {
     width: 100%;
-    height: 8%; }
+    height: 45px; }
     .wonder-app-component .wonder-controller-component .header-controller {
       height: 100%;
       background-color: #444444;
@@ -407,7 +407,7 @@ html, body {
         height: 100%; }
   .wonder-app-component .wonder-mainEditor-component {
     width: 100%;
-    height: 87%;
+    height: 95%;
     display: flex; }
     .wonder-app-component .wonder-mainEditor-component .left-component {
       display: flex;

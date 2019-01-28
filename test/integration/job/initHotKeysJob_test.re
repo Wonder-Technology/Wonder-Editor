@@ -98,10 +98,7 @@ let _ =
       beforeEach(() => {
         _prepareKeyboardEvent(~sandbox, ());
 
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
-        );
+        MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
         EventTool.buildFakeDocumentSetToWindow();
 
