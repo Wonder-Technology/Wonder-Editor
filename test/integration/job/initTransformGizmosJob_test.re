@@ -46,10 +46,16 @@ let _ =
       };
 
       let _getArrow = (axisGameObject, engineState) =>
-        axisGameObject |> GameObjectTool.getChild(_, 0, engineState);
+        TransformGizmosTool.getArrowFromAxisGameObject(
+          axisGameObject,
+          engineState,
+        );
 
       let _getLine = (axisGameObject, engineState) =>
-        axisGameObject |> GameObjectTool.getChild(_, 1, engineState);
+        TransformGizmosTool.getLineFromAxisGameObject(
+          axisGameObject,
+          engineState,
+        );
 
       beforeEach(() => _prepareState(sandbox));
 

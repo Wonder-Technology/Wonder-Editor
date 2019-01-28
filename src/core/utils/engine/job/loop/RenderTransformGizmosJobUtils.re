@@ -13,12 +13,6 @@ module RenderTransformGizmos = {
   let restoreGlState = engineState =>
     engineState |> DeviceManagerEngineService.setDepthTest(true);
 
-  let _getMaterialComponent = (gameObject, engineState) =>
-    GameObjectComponentEngineService.getBasicMaterialComponent(
-      gameObject,
-      engineState,
-    );
-
   let getRenderDataArr =
       (
         gameObjects,
@@ -40,7 +34,10 @@ module RenderTransformGizmos = {
                  gameObjectRecord,
                )
                |> Js.Option.andThen((. geometry) =>
-                    _getMaterialComponent(gameObject, engineState)
+                    GameObjectComponentEngineService.getBasicMaterialComponent(
+                      gameObject,
+                      engineState,
+                    )
                     |> Js.Option.andThen((. material) =>
                          GetComponentGameObjectService.getMeshRendererComponent(.
                            gameObject,

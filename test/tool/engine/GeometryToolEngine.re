@@ -65,3 +65,31 @@ let getVertices = engineState => {
 
   vertices;
 };
+
+let getGameObjectVertices = (gameObject, engineState) =>
+  GameObjectComponentEngineService.unsafeGetGeometryComponent(
+    gameObject,
+    engineState,
+  )
+  |> GeometryEngineService.getGeometryVertices(_, engineState);
+
+let getGameObjectNormals = (gameObject, engineState) =>
+  GameObjectComponentEngineService.unsafeGetGeometryComponent(
+    gameObject,
+    engineState,
+  )
+  |> GeometryEngineService.getGeometryNormals(_, engineState);
+
+let getGameObjectTexCoords = (gameObject, engineState) =>
+  GameObjectComponentEngineService.unsafeGetGeometryComponent(
+    gameObject,
+    engineState,
+  )
+  |> GeometryEngineService.getGeometryTexCoords(_, engineState);
+
+let getGameObjectIndices16 = (gameObject, engineState) =>
+  GameObjectComponentEngineService.unsafeGetGeometryComponent(
+    gameObject,
+    engineState,
+  )
+  |> GeometryEngineService.getGeometryIndices16(_, engineState);
