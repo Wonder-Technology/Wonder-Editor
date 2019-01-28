@@ -136,7 +136,7 @@ let prepareGl = sandbox =>
   |> ignore;
 
 let createDefaultSceneAndNotInit = sandbox => {
-  InitEditorJobUtils.initEditorJob([||], StateEngineService.unsafeGetState())
+  InitEditorJob.initEditorJob([||], StateEngineService.unsafeGetState())
   |> StateEngineService.setState
   |> ignore;
 

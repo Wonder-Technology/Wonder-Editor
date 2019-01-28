@@ -38,7 +38,7 @@ let _createStateTuple = () => {
   let engineState = StateEngineService.unsafeGetState();
 
   let engineState =
-    InitEditorJobUtils.initEditorJob(
+    InitEditorJob.initEditorJob(
       [||],
       StateEngineService.unsafeGetState(),
     );

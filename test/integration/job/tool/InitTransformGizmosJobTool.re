@@ -177,11 +177,11 @@ let getCurrentSceneTreeNodePosition = () => {
 
 let createTransformGizmos = ((editorState, engineState)) => {
   let (engineState, wholeGizmo, (xAxisGizmo, yAxisGizmo, zAxisGizmo)) =
-    InitTransformGizmosJobUtils._createTransformGizmos(engineState);
+    InitTransformGizmosJob._createTransformGizmos(engineState);
 
   let editorState =
     editorState
-    |> InitTransformGizmosJobUtils._setToEditorState(
+    |> InitTransformGizmosJob._setToEditorState(
          wholeGizmo,
          (xAxisGizmo, yAxisGizmo, zAxisGizmo),
        );

@@ -231,7 +231,7 @@ let _import = result => {
 
   StateEngineService.unsafeGetState()
   |> JobEngineService.execDisposeJob
-  |> ReallocateCPUMemoryJobUtils.reallocate(0.1)
+  |> ReallocateCPUMemoryJob.reallocate(0.1)
   |> StateEngineService.setState
   |> ignore;
 

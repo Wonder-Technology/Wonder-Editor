@@ -13,59 +13,59 @@ let _registerJob = engineState =>
   engineState
   |> JobEngineService.registerNoWorkerInitJob(
        "init_editor",
-       InitEditorJobUtils.initEditorJob,
+       InitEditorJob.initEditorJob,
      )
   |> JobEngineService.registerNoWorkerInitJob(
        "init_event_for_editor",
-       InitEventJobUtils.initEventForEditorJob,
+       InitEventJob.initEventForEditorJob,
      )
   |> JobEngineService.registerNoWorkerInitJob(
        "init_hotkeys",
-       InitHotKeysJobUtils.initHotKeysForEditorJob,
+       InitHotKeysJob.initHotKeysForEditorJob,
      )
   |> JobEngineService.registerNoWorkerInitJob(
        "init_transform_gizmos",
-       InitTransformGizmosJobUtils.initJob,
+       InitTransformGizmosJob.initJob,
      )
   |> JobEngineService.registerNoWorkerInitJob(
        "init_picking",
-       InitPickingJobUtil.initJob,
+       InitPickingJob.initJob,
      )
   |> JobEngineService.registerNoWorkerInitJob(
        "init_transform_gizmos",
-       InitTransformGizmosJobUtils.initJob,
+       InitTransformGizmosJob.initJob,
      )
   |> JobEngineService.registerNoWorkerInitJob(
        "init_camera_controller",
-       InitCameraControllerJobUtils.initJob,
+       InitCameraControllerJob.initJob,
      )
   |> JobEngineService.registerNoWorkerLoopJob(
        "reallocate_cpu_memory",
-       ReallocateCPUMemoryJobUtils.reallocateJob,
+       ReallocateCPUMemoryJob.reallocateJob,
      )
   |> JobEngineService.registerNoWorkerLoopJob(
        "update_transform_gizmos",
-       UpdateTransformGizmosJobUtils.updateTransformJob,
+       UpdateTransformGizmosJob.updateTransformJob,
      )
   |> JobEngineService.registerNoWorkerLoopJob(
        "render_transform_gizmos",
-       RenderTransformGizmosJobUtils.renderJob,
+       RenderTransformGizmosJob.renderJob,
      )
   |> JobEngineService.registerNoWorkerLoopJob(
        "prepare_render_scene_view",
-       PrepareRenderViewJobUtils.prepareRenderSceneViewJob,
+       PrepareRenderSceneViewJob.prepareRenderSceneViewJob,
      )
   |> JobEngineService.registerNoWorkerLoopJob(
        "prepare_render_game_view",
-       PrepareRenderViewJobUtils.prepareRenderGameViewJob,
+       PrepareRenderGameViewJob.prepareRenderGameViewJob,
      )
   |> JobEngineService.registerNoWorkerLoopJob(
        "set_outline_data",
-       SetOutlineDataJobUtils.setOutlineDataJob,
+       SetOutlineDataJob.setOutlineDataJob,
      )
   |> JobEngineService.registerNoWorkerLoopJob(
        "restore",
-       RestoreJobUtils.restoreJob,
+       RestoreJob.restoreJob,
      );
 
 let _handleEngineState = engineState => {

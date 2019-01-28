@@ -64,6 +64,7 @@ let _reallocateGeometryToNewBuffer =
 };
 
 let reallocate = (percent, engineState) =>
+  /* TODO remove private */
   engineState
   |> ReallocateCPUMemoryJobUtils._reallocateGameObjectByDisposeCount
   |> _reallocateGeometryToNewBuffer(percent);

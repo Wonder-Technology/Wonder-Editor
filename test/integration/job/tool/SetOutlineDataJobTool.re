@@ -1,4 +1,4 @@
-let getOutlineColor = SetOutlineDataJobUtils._getOutlineColor;
+let getOutlineColor = SetOutlineDataJob._getOutlineColor;
 
 let getGameObjectsNeedDrawOutline =
     (engineState: Wonderjs.StateDataMainType.state) =>
