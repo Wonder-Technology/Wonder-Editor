@@ -366,10 +366,17 @@ module DomEvent = {
       (sceneViewEventName, gameViewEventName, event) =>
     _isTriggerGameViewEvent() ?
       /* _triggerRefreshInspectorEvent |> StateLogicService.getAndSetEngineState; */
-      _execKeyboardEventHandle(gameViewEventName, event) :
+      _execKeyboardEventHandle(
+        gameViewEventName |> EventType.editorDomEventNameToEngineDomEventName,
+        event,
+      ) :
       _isTriggerSceneViewEvent() ?
         {
-          _execKeyboardEventHandle(sceneViewEventName |> Obj.magic, event);
+          _execKeyboardEventHandle(
+            sceneViewEventName
+            |> EventType.editorDomEventNameToEngineDomEventName,
+            event,
+          );
 
           StateLogicService.loopBodyWhenStop
           |> StateLogicService.getAndSetEngineState;
@@ -417,15 +424,23 @@ module DomEvent = {
        ),
     _fromKeyboardDomEvent("keyup", engineState)
     |> WonderBsMost.Most.tap(event =>
-         _execViewKeyboardEventHandle(KeyUp_editor, KeyUp, event)
+         _execViewKeyboardEventHandle(KeyUp_SceneView, KeyUp_GameView, event)
        ),
     _fromKeyboardDomEvent("keydown", engineState)
     |> WonderBsMost.Most.tap(event =>
-         _execViewKeyboardEventHandle(KeyDown_editor, KeyDown, event)
+         _execViewKeyboardEventHandle(
+           KeyDown_SceneView,
+           KeyDown_GameView,
+           event,
+         )
        ),
     _fromKeyboardDomEvent("keypress", engineState)
     |> WonderBsMost.Most.tap(event =>
-         _execViewKeyboardEventHandle(KeyPress_editor, KeyPress, event)
+         _execViewKeyboardEventHandle(
+           KeyPress_SceneView,
+           KeyPress_GameView,
+           event,
+         )
        ),
   |];
 

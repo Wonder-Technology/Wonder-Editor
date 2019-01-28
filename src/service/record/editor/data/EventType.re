@@ -24,17 +24,17 @@ type domEventName =
   | MouseMove
   | MouseWheel
   | MouseDrag
-  | KeyUp
-  | KeyDown
-  | KeyPress
+  | KeyUp_GameView
+  | KeyDown_GameView
+  | KeyPress_GameView
   | TouchTap
   | TouchEnd
   | TouchMove
   | TouchStart
   | TouchDrag
-  | KeyUp_editor
-  | KeyDown_editor
-  | KeyPress_editor;
+  | KeyUp_SceneView
+  | KeyDown_SceneView
+  | KeyPress_SceneView;
 
 type eventTarget =
   | Scene
@@ -76,3 +76,7 @@ external userDataToMouseEvent : Wonderjs.EventType.userData => mouseEvent =
   "%identity";
 
 external userDataToPointEvent : userData => pointEvent = "%identity";
+
+external editorDomEventNameToEngineDomEventName :
+  domEventName => Wonderjs.EventType.domEventName =
+  "%identity";

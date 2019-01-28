@@ -260,7 +260,13 @@ let restoreHotKeys = () => {
 
 let onMouseEvent = Wonderjs.ManageEventAPI.onMouseEvent;
 
-let onKeyboardEvent = Wonderjs.ManageEventAPI.onKeyboardEvent;
+let onKeyboardEvent = (eventName, priority, handleFunc, state) =>
+  Wonderjs.ManageEventAPI.onKeyboardEvent(
+    eventName |> EventType.editorDomEventNameToEngineDomEventName,
+    priority,
+    handleFunc,
+    state,
+  );
 
 let onCustomGlobalEvent = Wonderjs.ManageEventAPI.onCustomGlobalEvent;
 

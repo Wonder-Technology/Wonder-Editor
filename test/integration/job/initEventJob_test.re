@@ -590,7 +590,7 @@ let _ =
             ControllerTool.setIsRun(false);
 
             let _ =
-              _prepareAndExec(KeyUp_editor |> Obj.magic, "keyup", (10, 20));
+              _prepareAndExec(KeyUp_SceneView |> Obj.magic, "keyup", (10, 20));
 
             let gl = FakeGlToolEngine.getEngineStateGl();
             gl##clearColor |> expect |> toCalled;
@@ -605,7 +605,7 @@ let _ =
 
                   let _ =
                     _prepareAndExec(
-                      KeyUp_editor |> Obj.magic,
+                      KeyUp_SceneView |> Obj.magic,
                       "keyup",
                       ((-1), 20),
                     );
@@ -620,7 +620,7 @@ let _ =
 
                 let value =
                   _prepareAndExec(
-                    KeyUp_editor |> Obj.magic,
+                    KeyUp_SceneView |> Obj.magic,
                     "keyup",
                     ((-1), 20),
                   );
@@ -630,7 +630,7 @@ let _ =
               test("not trigger keyup event", () => {
                 _prepareKeyboardEvent(~sandbox, ());
 
-                let value = _prepareAndExec(KeyUp, "keyup", ((-1), 20));
+                let value = _prepareAndExec(KeyUp_GameView, "keyup", ((-1), 20));
 
                 value^ |> expect == 0;
               });
@@ -645,7 +645,7 @@ let _ =
 
                 let _ =
                   _prepareAndExec(
-                    KeyUp_editor |> Obj.magic,
+                    KeyUp_SceneView |> Obj.magic,
                     "keyup",
                     (10, 20),
                   );
@@ -659,7 +659,7 @@ let _ =
 
                 let _ =
                   _prepareAndExec(
-                    KeyUp_editor |> Obj.magic,
+                    KeyUp_SceneView |> Obj.magic,
                     "keyup",
                     (10, 20),
                   );
@@ -672,7 +672,7 @@ let _ =
             test("trigger keyup_editor event", () => {
               _prepareKeyboardEvent(~sandbox, ());
 
-              _test(KeyUp_editor |> Obj.magic, "keyup", (10, 20));
+              _test(KeyUp_SceneView |> Obj.magic, "keyup", (10, 20));
             });
           });
 
@@ -684,7 +684,7 @@ let _ =
 
                 let _ =
                   _prepareAndExec(
-                    KeyUp_editor |> Obj.magic,
+                    KeyUp_SceneView |> Obj.magic,
                     "keyup",
                     (60, 20),
                   );
@@ -698,7 +698,7 @@ let _ =
 
                 let _ =
                   _prepareAndExec(
-                    KeyUp_editor |> Obj.magic,
+                    KeyUp_SceneView |> Obj.magic,
                     "keyup",
                     (60, 20),
                   );
@@ -711,7 +711,7 @@ let _ =
             test("trigger keyup event", () => {
               _prepareKeyboardEvent(~sandbox, ());
 
-              _test(KeyUp, "keyup", (60, 20));
+              _test(KeyUp_GameView, "keyup", (60, 20));
             });
             /* describe("trigger refresh_inspector event", () =>
                  test("defer 0 ms to exec", () => {
@@ -730,7 +730,7 @@ let _ =
                    |> StateLogicService.getAndSetEngineState;
 
                    let _ =
-                     _prepareAndExec(KeyUp |> Obj.magic, "keyup", (60, 20));
+                     _prepareAndExec(KeyUp_GameView |> Obj.magic, "keyup", (60, 20));
 
                    let funcArr = TimeoutTool.getTimeoutFuncArr();
                    let (func, time) = funcArr |> ArrayService.unsafeGetFirst;

@@ -55,7 +55,7 @@ let initJob = (_, engineState) => {
 
   let engineState =
     ManageEventEngineService.onKeyboardEvent(
-      ~eventName=EventType.KeyDown |> Obj.magic,
+      ~eventName=EventType.KeyDown_GameView |> Obj.magic,
       ~handleFunc=
         (. event, engineState) =>
           _handleTriggerRefreshInspectorEvent(engineState),

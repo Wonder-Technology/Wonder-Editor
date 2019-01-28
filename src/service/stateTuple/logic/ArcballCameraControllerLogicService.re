@@ -57,7 +57,7 @@ let bindArcballCameraControllerEventForSceneView =
 
   let engineState =
     ManageEventEngineService.onKeyboardEvent(
-      ~eventName=EventType.KeyDown_editor |> Obj.magic,
+      ~eventName=EventType.KeyDown_SceneView |> Obj.magic,
       ~handleFunc=keydownHandleFunc,
       ~state=engineState,
       (),
