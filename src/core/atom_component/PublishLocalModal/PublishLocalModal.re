@@ -37,7 +37,7 @@ let reducer = (action, state) =>
 let _renderContent = (state, send) =>
   <div className="modal-item-content">
     <div className="content-field">
-      <div className="field-title"> (DomHelper.textEl("name:")) </div>
+      <div className="field-title"> (DomHelper.textEl("name")) </div>
       <div className="field-content">
         <input
           className="input-component"
@@ -48,7 +48,7 @@ let _renderContent = (state, send) =>
       </div>
     </div>
     <div className="content-field">
-      <div className="field-title"> (DomHelper.textEl("useWorker:")) </div>
+      <div className="field-title"> (DomHelper.textEl("useWorker")) </div>
       <div className="field-content">
         <input
           _type="checkbox"

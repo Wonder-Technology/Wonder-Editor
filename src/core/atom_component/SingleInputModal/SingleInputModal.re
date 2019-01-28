@@ -23,7 +23,7 @@ let reducer = (action, state) =>
 let _renderContent = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <div className="modal-item-content">
     <div className="content-field">
-      <div className="field-title"> (DomHelper.textEl("name:")) </div>
+      <div className="field-title"> (DomHelper.textEl("name")) </div>
       <div className="field-content">
         <input
           className="input-component"

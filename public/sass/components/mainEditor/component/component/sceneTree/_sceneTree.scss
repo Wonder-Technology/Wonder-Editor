@@ -10,7 +10,6 @@
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    overflow-x: hidden;
     white-space: nowrap;
     @import "../../../../../utils/scrollBarUtils";
     @import "../../../../ui/dragTree";

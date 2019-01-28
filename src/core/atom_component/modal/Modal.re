@@ -18,7 +18,7 @@ let render = (title, content, (closeFunc, submitFunc), _self) =>
         (DomHelper.textEl(title))
         <img src="./public/img/close.png" onClick=(_e => closeFunc()) />
       </div>
-      <div className="modal-item-content"> content </div>
+      <div className="modal-item-content"> (ReasonReact.array(content)) </div>
       (_renderFooter(submitFunc))
     </div>
   </article>;
