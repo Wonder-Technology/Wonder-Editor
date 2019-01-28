@@ -16,7 +16,7 @@ let _ =
     let _changeNear = value =>
       MainEditorCameraProjectionTool.changeNearAndBlur(
         ~cameraProjection=
-          GameObjectTool.getCurrentGameObjectPerspectiveCamera(),
+          GameObjectTool.getCurrentSceneTreeNodePerspectiveCamera(),
         ~value,
         (),
       );

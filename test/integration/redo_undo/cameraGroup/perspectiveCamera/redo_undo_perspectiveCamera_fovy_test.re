@@ -16,7 +16,7 @@ let _ =
     let _changeFovy = value =>
       MainEditorCameraProjectionTool.changeFovyAndBlur(
         ~cameraProjection=
-          GameObjectTool.getCurrentGameObjectPerspectiveCamera(),
+          GameObjectTool.getCurrentSceneTreeNodePerspectiveCamera(),
         ~value,
         (),
       );

@@ -186,7 +186,7 @@ let _ =
                  let component =
                    BuildComponentTool.buildGeometry(
                      ~geometryComponent=
-                       GameObjectTool.getCurrentGameObjectGeometry(),
+                       GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                      ~isShowGeometryGroup=true,
                      (),
                    );

@@ -44,7 +44,7 @@ let _ =
             MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
 
             let currentGameObjectArcballCamera =
-              GameObjectTool.getCurrentGameObjectArcballCamera();
+              GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
 
             let value = 21.1;
 
@@ -72,7 +72,7 @@ let _ =
             MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
 
             let currentGameObjectArcballCamera =
-              GameObjectTool.getCurrentGameObjectArcballCamera();
+              GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
 
             let value = 11.1;
 

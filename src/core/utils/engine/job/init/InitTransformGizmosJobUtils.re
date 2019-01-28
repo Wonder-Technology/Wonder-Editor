@@ -481,7 +481,7 @@ let _selectTransformGizmo = (event, engineState, editorState) =>
     editorState
     |> SelectTransformGizmoSceneViewEditorService.markNotSelectAnyTranslationGizmo;
 
-let _computeCurrentGameObjectNewPositionForMoveAxis =
+let _computeCurrentSceneTreeNodeNewPositionForMoveAxis =
     (
       ray,
       axisVec,
@@ -520,9 +520,9 @@ let _computeCurrentGameObjectNewPositionForMoveAxis =
   };
 };
 
-let _computeCurrentGameObjectNewPositionForMoveXAxis =
+let _computeCurrentSceneTreeNodeNewPositionForMoveXAxis =
     (ray, (editorState, engineState)) =>
-  _computeCurrentGameObjectNewPositionForMoveAxis(
+  _computeCurrentSceneTreeNodeNewPositionForMoveAxis(
     ray,
     AxisTransformGizmoSceneViewEditorService.getXAxisNormalizedVec(
       editorState,
@@ -532,9 +532,9 @@ let _computeCurrentGameObjectNewPositionForMoveXAxis =
     (editorState, engineState),
   );
 
-let _computeCurrentGameObjectNewPositionForMoveYAxis =
+let _computeCurrentSceneTreeNodeNewPositionForMoveYAxis =
     (ray, (editorState, engineState)) =>
-  _computeCurrentGameObjectNewPositionForMoveAxis(
+  _computeCurrentSceneTreeNodeNewPositionForMoveAxis(
     ray,
     AxisTransformGizmoSceneViewEditorService.getYAxisNormalizedVec(
       editorState,
@@ -544,9 +544,9 @@ let _computeCurrentGameObjectNewPositionForMoveYAxis =
     (editorState, engineState),
   );
 
-let _computeCurrentGameObjectNewPositionForMoveZAxis =
+let _computeCurrentSceneTreeNodeNewPositionForMoveZAxis =
     (ray, (editorState, engineState)) =>
-  _computeCurrentGameObjectNewPositionForMoveAxis(
+  _computeCurrentSceneTreeNodeNewPositionForMoveAxis(
     ray,
     AxisTransformGizmoSceneViewEditorService.getZAxisNormalizedVec(
       editorState,
@@ -605,7 +605,7 @@ let _affectTransformGizmo = (event, (editorState, engineState)) => {
     editorState,
   ) ?
     _affectTranslationAxisGizmo(
-      _computeCurrentGameObjectNewPositionForMoveXAxis(
+      _computeCurrentSceneTreeNodeNewPositionForMoveXAxis(
         ray,
         (editorState, engineState),
       ),
@@ -615,7 +615,7 @@ let _affectTransformGizmo = (event, (editorState, engineState)) => {
       editorState,
     ) ?
       _affectTranslationAxisGizmo(
-        _computeCurrentGameObjectNewPositionForMoveYAxis(
+        _computeCurrentSceneTreeNodeNewPositionForMoveYAxis(
           ray,
           (editorState, engineState),
         ),
@@ -625,7 +625,7 @@ let _affectTransformGizmo = (event, (editorState, engineState)) => {
         editorState,
       ) ?
         _affectTranslationAxisGizmo(
-          _computeCurrentGameObjectNewPositionForMoveZAxis(
+          _computeCurrentSceneTreeNodeNewPositionForMoveZAxis(
             ray,
             (editorState, engineState),
           ),

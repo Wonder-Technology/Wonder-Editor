@@ -84,7 +84,7 @@ let _ =
               () => {
                 _addNoTexCoordGeometryWDBGameObject();
                 let currentGameObjectGeometry =
-                  GameObjectTool.getCurrentGameObjectGeometry();
+                  GameObjectTool.getCurrentSceneTreeNodeGeometry();
 
                 let component =
                   BuildComponentTool.buildGeometry(
@@ -104,7 +104,7 @@ let _ =
                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
               );
               let currentGameObjectGeometry =
-                GameObjectTool.getCurrentGameObjectGeometry();
+                GameObjectTool.getCurrentSceneTreeNodeGeometry();
 
               let component =
                 BuildComponentTool.buildGeometry(
@@ -119,7 +119,7 @@ let _ =
 
           test("test hide select geometry group widget", () => {
             let currentGameObjectGeometry =
-              GameObjectTool.getCurrentGameObjectGeometry();
+              GameObjectTool.getCurrentSceneTreeNodeGeometry();
 
             let component =
               BuildComponentTool.buildGeometry(
@@ -135,7 +135,7 @@ let _ =
         describe("test logic", () => {
           test("test the current gameObject geometry should be Cube", () => {
             let currentGameObjectGeometry =
-              GameObjectTool.getCurrentGameObjectGeometry();
+              GameObjectTool.getCurrentSceneTreeNodeGeometry();
 
             GeometryEngineService.unsafeGetGeometryName(
               currentGameObjectGeometry,
@@ -147,14 +147,14 @@ let _ =
             "change geometry to be Sphere, the current gameObject geometry should be Sphere",
             () => {
               MainEditorGeometryTool.changeGeometry(
-                ~sourceGeometry=GameObjectTool.getCurrentGameObjectGeometry(),
+                ~sourceGeometry=GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                 ~targetGeometry=
                   MainEditorGeometryTool.getDefaultSphereGeometryComponent(),
                 (),
               );
 
               let newGameObjectGeometry =
-                GameObjectTool.getCurrentGameObjectGeometry();
+                GameObjectTool.getCurrentSceneTreeNodeGeometry();
 
               GeometryEngineService.unsafeGetGeometryName(
                 newGameObjectGeometry,
@@ -170,37 +170,37 @@ let _ =
               let component =
                 BuildComponentTool.buildGeometry(
                   ~geometryComponent=
-                    GameObjectTool.getCurrentGameObjectGeometry(),
+                    GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                   (),
                 );
 
               MainEditorGeometryTool.changeGeometry(
-                ~sourceGeometry=GameObjectTool.getCurrentGameObjectGeometry(),
+                ~sourceGeometry=GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                 ~targetGeometry=
                   MainEditorGeometryTool.getDefaultSphereGeometryComponent(),
                 (),
               );
               MainEditorGeometryTool.changeGeometry(
-                ~sourceGeometry=GameObjectTool.getCurrentGameObjectGeometry(),
+                ~sourceGeometry=GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                 ~targetGeometry=
                   MainEditorGeometryTool.getDefaultCubeGeometryComponent(),
                 (),
               );
               MainEditorGeometryTool.changeGeometry(
-                ~sourceGeometry=GameObjectTool.getCurrentGameObjectGeometry(),
+                ~sourceGeometry=GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                 ~targetGeometry=
                   MainEditorGeometryTool.getDefaultSphereGeometryComponent(),
                 (),
               );
               MainEditorGeometryTool.changeGeometry(
-                ~sourceGeometry=GameObjectTool.getCurrentGameObjectGeometry(),
+                ~sourceGeometry=GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                 ~targetGeometry=
                   MainEditorGeometryTool.getDefaultCubeGeometryComponent(),
                 (),
               );
 
               let newGameObjectGeometry =
-                GameObjectTool.getCurrentGameObjectGeometry();
+                GameObjectTool.getCurrentSceneTreeNodeGeometry();
 
               StateEngineService.unsafeGetState()
               |> GeometryEngineService.unsafeGetGeometryName(
@@ -243,7 +243,7 @@ let _ =
                let component =
                  BuildComponentTool.buildGeometry(
                    ~geometryComponent=
-                     GameObjectTool.getCurrentGameObjectGeometry(),
+                     GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                    ~isShowGeometryGroup=true,
                    (),
                  );
@@ -264,7 +264,7 @@ let _ =
           )
           |> then_(uploadedWDBNodeId => {
                let oldGameObjectGeometry =
-                 GameObjectTool.getCurrentGameObjectGeometry();
+                 GameObjectTool.getCurrentSceneTreeNodeGeometry();
 
                MainEditorGeometryTool.changeGeometry(
                  ~sourceGeometry=oldGameObjectGeometry,
@@ -273,7 +273,7 @@ let _ =
                );
 
                let newGameObjectGeometry =
-                 GameObjectTool.getCurrentGameObjectGeometry();
+                 GameObjectTool.getCurrentSceneTreeNodeGeometry();
 
                GeometryEngineService.unsafeGetGeometryName(
                  newGameObjectGeometry,
@@ -318,7 +318,7 @@ let _ =
         |> then_(uploadedWDBNodeId =>
              BuildComponentTool.buildGeometry(
                ~geometryComponent=
-                 GameObjectTool.getCurrentGameObjectGeometry(),
+                 GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                ~isShowGeometryGroup=true,
                (),
              )

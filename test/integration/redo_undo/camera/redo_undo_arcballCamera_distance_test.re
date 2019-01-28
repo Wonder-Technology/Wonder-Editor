@@ -12,13 +12,13 @@ let _ =
 
     let _changeDistance = value =>
       MainEditorArcballCameraControllerTool.changeDistanceAndBlur(
-        ~cameraController=GameObjectTool.getCurrentGameObjectArcballCamera(),
+        ~cameraController=GameObjectTool.getCurrentSceneTreeNodeArcballCamera(),
         ~value,
         (),
       );
     let _changeMinDistance = value =>
       MainEditorArcballCameraControllerTool.changeMinDistanceAndBlur(
-        ~cameraController=GameObjectTool.getCurrentGameObjectArcballCamera(),
+        ~cameraController=GameObjectTool.getCurrentSceneTreeNodeArcballCamera(),
         ~value,
         (),
       );

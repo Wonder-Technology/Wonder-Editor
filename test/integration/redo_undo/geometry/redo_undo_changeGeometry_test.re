@@ -15,7 +15,7 @@ let _ =
 
     let _simulateChangeGeometry = () =>
       MainEditorGeometryTool.changeGeometry(
-        ~sourceGeometry=GameObjectTool.getCurrentGameObjectGeometry(),
+        ~sourceGeometry=GameObjectTool.getCurrentSceneTreeNodeGeometry(),
         ~targetGeometry=
           MainEditorGeometryTool.getDefaultSphereGeometryComponent(),
         (),

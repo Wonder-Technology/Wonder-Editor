@@ -49,7 +49,7 @@ let _ =
           sandbox,
           BuildComponentForCurryTool.buildDirectionLight,
           (
-            GameObjectTool.getCurrentGameObjectDirectionLightComponent,
+            GameObjectTool.getCurrentSceneTreeNodeDirectionLightComponent,
             MainEditorDirectionLightTool.changeColor,
             DirectionLightEngineService.getDirectionLightColor,
           ),
@@ -70,7 +70,7 @@ let _ =
         describe("test logic", () =>
           test("test change intensity should set into engine", () => {
             let currentGameObjectDirectionLightComponent =
-              GameObjectTool.getCurrentGameObjectDirectionLightComponent();
+              GameObjectTool.getCurrentSceneTreeNodeDirectionLightComponent();
             let value = 10.1;
 
             MainEditorDirectionLightTool.changeIntensity(

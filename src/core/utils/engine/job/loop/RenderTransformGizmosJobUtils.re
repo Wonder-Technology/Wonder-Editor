@@ -143,7 +143,7 @@ let renderJob = (_, engineState) => {
   ) ?
     switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
     | None => engineState
-    | Some(currentGameObject) =>
+    | Some(currentSceneTreeNode) =>
       let translationWholeGizmo =
         TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
           editorState,

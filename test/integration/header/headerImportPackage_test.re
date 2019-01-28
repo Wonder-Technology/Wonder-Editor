@@ -118,7 +118,7 @@ let _ =
                          let component =
                            BuildComponentTool.buildGeometry(
                              ~geometryComponent=
-                               GameObjectTool.getCurrentGameObjectGeometry(),
+                               GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                              ~isShowGeometryGroup=true,
                              (),
                            );
@@ -1005,7 +1005,7 @@ let _ =
               let component =
                 BuildComponentTool.buildGeometry(
                   ~geometryComponent=
-                    GameObjectTool.getCurrentGameObjectGeometry(),
+                    GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                   ~isShowGeometryGroup=true,
                   (),
                 );
@@ -1096,7 +1096,7 @@ let _ =
                        let component =
                          BuildComponentTool.buildGeometry(
                            ~geometryComponent=
-                             GameObjectTool.getCurrentGameObjectGeometry(),
+                             GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                            ~isShowGeometryGroup=true,
                            (),
                          );
@@ -1175,7 +1175,7 @@ let _ =
                   let component =
                     BuildComponentTool.buildGeometry(
                       ~geometryComponent=
-                        GameObjectTool.getCurrentGameObjectGeometry(),
+                        GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                       ~isShowGeometryGroup=true,
                       (),
                     );
@@ -1200,7 +1200,7 @@ let _ =
                   let component =
                     BuildComponentTool.buildGeometry(
                       ~geometryComponent=
-                        GameObjectTool.getCurrentGameObjectGeometry(),
+                        GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                       ~isShowGeometryGroup=true,
                       (),
                     );
@@ -1252,7 +1252,7 @@ let _ =
                           let component =
                             BuildComponentTool.buildGeometry(
                               ~geometryComponent=
-                                GameObjectTool.getCurrentGameObjectGeometry(),
+                                GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                               ~isShowGeometryGroup=true,
                               (),
                             );
@@ -1907,7 +1907,7 @@ let _ =
 
                    MainEditorMaterialTool.changeMaterial(
                      ~sourceMaterial=
-                       GameObjectTool.getCurrentGameObjectLightMaterial(),
+                       GameObjectTool.getCurrentSceneTreeNodeLightMaterial(),
                      ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                      ~targetMaterial=materialComponent1,
                      ~targetMaterialType=MaterialDataAssetType.LightMaterial,
@@ -2035,7 +2035,7 @@ let _ =
 
                         MainEditorMaterialTool.changeMaterial(
                           ~sourceMaterial=
-                            GameObjectTool.getCurrentGameObjectLightMaterial(),
+                            GameObjectTool.getCurrentSceneTreeNodeLightMaterial(),
                           ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                           ~targetMaterial=wdbMaterial,
                           ~targetMaterialType=MaterialDataAssetType.LightMaterial,

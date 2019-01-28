@@ -14,7 +14,7 @@ let getDrawModeTriangleFanType = () => Triangle_fan |> drawModeToUint8;
 let changeMode =
     (
       ~value,
-      ~meshRenderer=GameObjectTool.getCurrentGameObjectMeshRenderer(),
+      ~meshRenderer=GameObjectTool.getCurrentSceneTreeNodeMeshRenderer(),
       ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),

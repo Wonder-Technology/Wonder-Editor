@@ -157,7 +157,7 @@ let _isNotNeedPushToHistoryStack = pickedGameObjectOpt =>
       SceneTreeEditorService.getCurrentSceneTreeNode
       |> StateLogicService.getEditorState
     ) {
-    | Some(currentGameObject) when currentGameObject === pickedGameObject =>
+    | Some(currentSceneTreeNode) when currentSceneTreeNode === pickedGameObject =>
       true
     | _ => false
     }

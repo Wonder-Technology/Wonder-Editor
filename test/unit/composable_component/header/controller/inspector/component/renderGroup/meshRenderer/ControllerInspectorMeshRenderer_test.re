@@ -46,7 +46,7 @@ let _ =
 
           MainEditorMeshRendererTool.changeMode(~value=lineType, ());
 
-          let meshRenderer = GameObjectTool.getCurrentGameObjectMeshRenderer();
+          let meshRenderer = GameObjectTool.getCurrentSceneTreeNodeMeshRenderer();
 
           StateEngineService.unsafeGetState()
           |> MeshRendererEngineService.getDrawMode(meshRenderer)
@@ -60,7 +60,7 @@ let _ =
             MainEditorMeshRendererTool.changeMode(~value=triangleFanType, ());
 
             let meshRenderer =
-              GameObjectTool.getCurrentGameObjectMeshRenderer();
+              GameObjectTool.getCurrentSceneTreeNodeMeshRenderer();
 
             StateEngineService.unsafeGetState()
             |> MeshRendererEngineService.getDrawMode(meshRenderer)

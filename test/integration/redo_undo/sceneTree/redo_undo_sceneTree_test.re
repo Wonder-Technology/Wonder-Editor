@@ -73,7 +73,7 @@ let _ =
         click undo, engineState is error",
         () => {
           let currentGameObjectMaterial =
-            GameObjectTool.getCurrentGameObjectLightMaterial();
+            GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
           let newColor = PickColorTool.buildColor1();
 
           execChangeMaterialColorWork(currentGameObjectMaterial, newColor);

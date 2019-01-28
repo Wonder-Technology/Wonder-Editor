@@ -64,7 +64,7 @@ let _ =
             () => {
               MainEditorCameraViewTool.setCurrentCamera(
                 ~cameraView=
-                  GameObjectTool.getCurrentGameObjectBasicCameraView(),
+                  GameObjectTool.getCurrentSceneTreeNodeBasicCameraView(),
                 ~event=MainEditorCameraViewTool.buildEvent(true),
                 (),
               );
@@ -82,7 +82,7 @@ let _ =
             () => {
               MainEditorCameraViewTool.setCurrentCamera(
                 ~cameraView=
-                  GameObjectTool.getCurrentGameObjectBasicCameraView(),
+                  GameObjectTool.getCurrentSceneTreeNodeBasicCameraView(),
                 ~event=MainEditorCameraViewTool.buildEvent(true),
                 (),
               );

@@ -37,7 +37,7 @@ let buildGeometry = () =>
       uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
       currentSceneTreeNode=(GameObjectTool.unsafeGetCurrentSceneTreeNode())
-      geometryComponent=(GameObjectTool.getCurrentGameObjectGeometry())
+      geometryComponent=(GameObjectTool.getCurrentSceneTreeNodeGeometry())
       isShowGeometryGroup=false
     />,
   );
@@ -61,7 +61,7 @@ let buildBasicMaterial = () =>
     <MainEditorBasicMaterial
       uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
-      materialComponent=(GameObjectTool.getCurrentGameObjectBasicMaterial())
+      materialComponent=(GameObjectTool.getCurrentSceneTreeNodeBasicMaterial())
     />,
   );
 
@@ -70,7 +70,7 @@ let buildLightMaterial = () =>
     <MainEditorLightMaterial
       uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
-      materialComponent=(GameObjectTool.getCurrentGameObjectLightMaterial())
+      materialComponent=(GameObjectTool.getCurrentSceneTreeNodeLightMaterial())
     />,
   );
 
@@ -99,7 +99,7 @@ let buildDirectionLight = () =>
       uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
       lightComponent=(
-        GameObjectTool.getCurrentGameObjectDirectionLightComponent()
+        GameObjectTool.getCurrentSceneTreeNodeDirectionLightComponent()
       )
     />,
   );
@@ -116,7 +116,7 @@ let buildPointLight = () =>
     <MainEditorPointLight
       uiState=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
-      lightComponent=(GameObjectTool.getCurrentGameObjectPointLightComponent())
+      lightComponent=(GameObjectTool.getCurrentSceneTreeNodePointLightComponent())
     />,
   );
 

@@ -102,7 +102,7 @@ let _ =
 
               MainEditorMaterialTool.changeMaterial(
                 ~sourceMaterial=
-                  GameObjectTool.getCurrentGameObjectLightMaterial(),
+                  GameObjectTool.getCurrentSceneTreeNodeLightMaterial(),
                 ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                 ~targetMaterial=materialComponent,
                 ~targetMaterialType=MaterialDataAssetType.LightMaterial,

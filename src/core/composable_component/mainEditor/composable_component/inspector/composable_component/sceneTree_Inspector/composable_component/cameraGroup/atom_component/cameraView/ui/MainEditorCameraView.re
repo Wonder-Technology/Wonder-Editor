@@ -17,7 +17,7 @@ let component = ReasonReact.statelessComponent("MainEditorCameraView");
 
 let render = ((uiState, dispatchFunc), _self) => {
   let engineState = StateEngineService.unsafeGetState();
-  let currentGameObjectBasicCameraViewComponent =
+  let currentSceneTreeNodeBasicCameraViewComponent =
     engineState
     |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
          SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
@@ -25,7 +25,7 @@ let render = ((uiState, dispatchFunc), _self) => {
        );
   let isCurrentCamera =
     GameViewEditorService.isActiveBasicCameraView(
-      currentGameObjectBasicCameraViewComponent,
+      currentSceneTreeNodeBasicCameraViewComponent,
       StateEditorService.getState(),
     );
 
@@ -45,7 +45,7 @@ let render = ((uiState, dispatchFunc), _self) => {
           onClick=(
             Method.setCurrentCamera(
               (uiState, dispatchFunc),
-              currentGameObjectBasicCameraViewComponent,
+              currentSceneTreeNodeBasicCameraViewComponent,
             )
           )
           disabled=isCurrentCamera

@@ -12,7 +12,7 @@ let _ =
 
     let _changeColor = color => {
       let currentGameObjectDirectionLightComponent =
-        GameObjectTool.getCurrentGameObjectDirectionLightComponent();
+        GameObjectTool.getCurrentSceneTreeNodeDirectionLightComponent();
 
       let sourceColor =
         MainEditorDirectionLightTool.getColor(

@@ -30,7 +30,7 @@ let _ =
       BuildCanvasTool.buildFakeCanvas(sandbox);
 
       let currentGameObjectMaterial =
-        GameObjectTool.getCurrentGameObjectBasicMaterial();
+        GameObjectTool.getCurrentSceneTreeNodeBasicMaterial();
 
       let color1 = PickColorTool.buildColor1();
       let color2 = PickColorTool.buildColor2();

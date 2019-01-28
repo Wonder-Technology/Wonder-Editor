@@ -872,7 +872,7 @@ let _ =
 
                BuildComponentTool.buildGeometry(
                  ~geometryComponent=
-                   GameObjectTool.getCurrentGameObjectGeometry(),
+                   GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                  ~isShowGeometryGroup=true,
                  (),
                )
@@ -1016,7 +1016,7 @@ let _ =
 
                  BuildComponentTool.buildGeometry(
                    ~geometryComponent=
-                     GameObjectTool.getCurrentGameObjectGeometry(),
+                     GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                    ~isShowGeometryGroup=true,
                    (),
                  )

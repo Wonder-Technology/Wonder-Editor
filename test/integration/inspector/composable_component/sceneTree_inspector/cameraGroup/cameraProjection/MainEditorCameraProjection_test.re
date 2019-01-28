@@ -31,7 +31,7 @@ let _ =
           describe("test change CameraProjection near", () =>
             test("test change near should set into engine", () => {
               let currentGameObjectPerspectiveCamera =
-                GameObjectTool.getCurrentGameObjectPerspectiveCamera();
+                GameObjectTool.getCurrentSceneTreeNodePerspectiveCamera();
               let value = 10.1;
 
               MainEditorCameraProjectionTool.changeNearAndBlur(
@@ -52,7 +52,7 @@ let _ =
           describe("test change CameraProjection far", () =>
             test("test change far should set into engine", () => {
               let currentGameObjectPerspectiveCamera =
-                GameObjectTool.getCurrentGameObjectPerspectiveCamera();
+                GameObjectTool.getCurrentSceneTreeNodePerspectiveCamera();
               let value = 120.1123;
 
               MainEditorCameraProjectionTool.changeFarAndBlur(
@@ -73,7 +73,7 @@ let _ =
           describe("test change CameraProjection fovy", () =>
             test("test change fovy should set into engine", () => {
               let currentGameObjectPerspectiveCamera =
-                GameObjectTool.getCurrentGameObjectPerspectiveCamera();
+                GameObjectTool.getCurrentSceneTreeNodePerspectiveCamera();
               let value = 32.123;
 
               MainEditorCameraProjectionTool.changeFovyAndBlur(

@@ -35,7 +35,7 @@ let _ =
       BuildCanvasTool.buildFakeCanvas(sandbox);
 
       let currentGameObjectMaterial =
-        GameObjectTool.getCurrentGameObjectLightMaterial();
+        GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
 
       let component =
         BuildComponentTool.buildLightMaterial(currentGameObjectMaterial);

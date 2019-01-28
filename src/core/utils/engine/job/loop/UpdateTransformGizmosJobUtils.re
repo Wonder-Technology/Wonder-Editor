@@ -1,8 +1,8 @@
 let _moveAndRotateTranslationWholeGizmoToCurrentSceneTreeNode =
-    (currentGameObject, translationWholeGizmo, editorState, engineState) => {
-  let currentGameObjectTransform =
+    (currentSceneTreeNode, translationWholeGizmo, editorState, engineState) => {
+  let currentSceneTreeNodeTransform =
     GameObjectComponentEngineService.unsafeGetTransformComponent(
-      currentGameObject,
+      currentSceneTreeNode,
       engineState,
     );
   let translationWholeGizmoTransform =
@@ -15,21 +15,21 @@ let _moveAndRotateTranslationWholeGizmoToCurrentSceneTreeNode =
   |> TransformEngineService.setPosition(
        translationWholeGizmoTransform,
        TransformEngineService.getPosition(
-         currentGameObjectTransform,
+         currentSceneTreeNodeTransform,
          engineState,
        ),
      )
   |> TransformEngineService.setEulerAngles(
        translationWholeGizmoTransform,
        TransformEngineService.getEulerAngles(
-         currentGameObjectTransform,
+         currentSceneTreeNodeTransform,
          engineState,
        ),
      );
 };
 
 let _computeScaleFactorBasedOnDistanceToCamera =
-    (cameraPos, currentGameObjectPos) => {
+    (cameraPos, currentSceneTreeNodePos) => {
   let factor = 0.03;
 
   switch (
@@ -37,7 +37,7 @@ let _computeScaleFactorBasedOnDistanceToCamera =
       Wonderjs.Vector3Service.sub(
         Wonderjs.Vector3Type.Float,
         cameraPos,
-        currentGameObjectPos,
+        currentSceneTreeNodePos,
       ),
     )
   ) {
@@ -47,7 +47,7 @@ let _computeScaleFactorBasedOnDistanceToCamera =
 };
 
 let _scaleTranslationWholeGizmo =
-    (currentGameObject, translationWholeGizmo, editorState, engineState) => {
+    (currentSceneTreeNode, translationWholeGizmo, editorState, engineState) => {
   let cameraGameObject =
     SceneViewEditorService.unsafeGetEditCamera(editorState);
 
@@ -58,7 +58,7 @@ let _scaleTranslationWholeGizmo =
         engineState,
       ),
       TransformGameObjectEngineService.getPosition(
-        currentGameObject,
+        currentSceneTreeNode,
         engineState,
       ),
     );
@@ -78,7 +78,7 @@ let updateTransformJob = (_, engineState) => {
   ) ?
     switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
     | None => engineState
-    | Some(currentGameObject) =>
+    | Some(currentSceneTreeNode) =>
       let translationWholeGizmo =
         TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
           editorState,
@@ -86,12 +86,12 @@ let updateTransformJob = (_, engineState) => {
 
       engineState
       |> _moveAndRotateTranslationWholeGizmoToCurrentSceneTreeNode(
-           currentGameObject,
+           currentSceneTreeNode,
            translationWholeGizmo,
            editorState,
          )
       |> _scaleTranslationWholeGizmo(
-           currentGameObject,
+           currentSceneTreeNode,
            translationWholeGizmo,
            editorState,
          );

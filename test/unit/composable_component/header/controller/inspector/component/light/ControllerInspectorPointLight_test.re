@@ -62,7 +62,7 @@ let _ =
 
       test("test change color", () => {
         let currentGameObjectPointLightComponent =
-          GameObjectTool.getCurrentGameObjectPointLightComponent();
+          GameObjectTool.getCurrentSceneTreeNodePointLightComponent();
         let newColor = {
           "hex": "#7df1e8",
           "rgb": {
@@ -87,7 +87,7 @@ let _ =
 
       test("test change intensity", () => {
         let currentGameObjectPointLightComponent =
-          GameObjectTool.getCurrentGameObjectPointLightComponent();
+          GameObjectTool.getCurrentSceneTreeNodePointLightComponent();
         let value = 10.1;
 
         MainEditorPointLightTool.changeIntensityAndBlur(

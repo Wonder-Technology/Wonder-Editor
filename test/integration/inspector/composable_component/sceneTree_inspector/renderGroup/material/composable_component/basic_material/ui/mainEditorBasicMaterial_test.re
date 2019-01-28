@@ -32,7 +32,7 @@ let _ =
         sandbox,
         BuildComponentForCurryTool.buildBasicMaterial,
         (
-          GameObjectTool.getCurrentGameObjectBasicMaterial,
+          GameObjectTool.getCurrentSceneTreeNodeBasicMaterial,
           MainEditorBasicMaterialTool.changeColor,
           BasicMaterialEngineService.getColor,
         ),

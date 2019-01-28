@@ -49,7 +49,7 @@ let _ =
           sandbox,
           BuildComponentForCurryTool.buildLightMaterial,
           (
-            GameObjectTool.getCurrentGameObjectLightMaterial,
+            GameObjectTool.getCurrentSceneTreeNodeLightMaterial,
             MainEditorLightMaterialTool.changeColor,
             LightMaterialEngineService.getLightMaterialDiffuseColor,
           ),
@@ -213,7 +213,7 @@ let _ =
                 testPromise("if gameObject has no geometry, still can set", () =>
                   _prepare((uploadedTextureNodeId, assetTreeData) => {
                     /* SceneTreeNodeDomTool.OperateDefaultScene.getGeometryComponentFromCube()
-                       |> OperateComponentEventTool.removeComponentFromCurrentGameObject; */
+                       |> OperateComponentEventTool.removeComponentFromCurrentSceneTreeNode; */
 
                     MainEditorInspectorRemoveComponentTool.removeGeometryComponent();
 
@@ -280,7 +280,7 @@ let _ =
             |},
               () => {
                 let currentGameObjectMaterial =
-                  GameObjectTool.getCurrentGameObjectLightMaterial();
+                  GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
                 let newColor = {
                   "hex": "#7df1e8",
                   "rgb": {
@@ -321,7 +321,7 @@ let _ =
                 );
 
                 let currentGameObjectMaterial =
-                  GameObjectTool.getCurrentGameObjectLightMaterial();
+                  GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
                 let newColor =
                   LightMaterialEngineService.getLightMaterialDiffuseColor(
                     currentGameObjectMaterial,
@@ -430,7 +430,7 @@ let _ =
         describe("test logic", () =>
           test("test change shininess should set into engine", () => {
             let currentGameObjectMaterial =
-              GameObjectTool.getCurrentGameObjectLightMaterial();
+              GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
             let component =
               BuildComponentTool.buildLightMaterial(
                 currentGameObjectMaterial,

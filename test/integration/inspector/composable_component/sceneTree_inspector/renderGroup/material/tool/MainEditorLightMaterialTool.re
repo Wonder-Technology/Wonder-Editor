@@ -11,14 +11,14 @@ let changeMaterialTypeToBeLightMaterial =
   );
 
 let changeShininess =
-    (~material=GameObjectTool.getCurrentGameObjectMaterial(), ~value, ()) =>
+    (~material=GameObjectTool.getCurrentSceneTreeNodeMaterial(), ~value, ()) =>
   MainEditorLightMaterial.Method.changeShininess(material, value);
 
 let blurShininess =
     (
       ~dispatchFunc=_ => (),
       ~uiState=TestTool.buildEmptyAppState(),
-      ~material=GameObjectTool.getCurrentGameObjectMaterial(),
+      ~material=GameObjectTool.getCurrentSceneTreeNodeMaterial(),
       ~value,
       (),
     ) =>
@@ -57,7 +57,7 @@ module Drag = {
         ~effectAllowd="move",
         ~dragImg=DomHelper.createElement("img"),
         ~event=BaseEventTool.buildDragEvent(.),
-        ~material=GameObjectTool.getCurrentGameObjectMaterial(),
+        ~material=GameObjectTool.getCurrentSceneTreeNodeMaterial(),
         ~textureNodeId,
         (),
       ) =>

@@ -157,7 +157,7 @@ let _ =
 
                        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
                        let basicMaterial =
-                         GameObjectTool.getCurrentGameObjectBasicMaterial();
+                         GameObjectTool.getCurrentSceneTreeNodeBasicMaterial();
                        let engineState = StateEngineService.unsafeGetState();
                        BasicMaterialEngineService.getBasicMaterialMap(
                          basicMaterial,
@@ -194,7 +194,7 @@ let _ =
 
                         MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
                         let lightMaterial =
-                          GameObjectTool.getCurrentGameObjectLightMaterial();
+                          GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
                         let engineState = StateEngineService.unsafeGetState();
                         LightMaterialEngineService.getLightMaterialDiffuseMap(
                           lightMaterial,

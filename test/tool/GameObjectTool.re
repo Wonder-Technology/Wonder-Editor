@@ -29,7 +29,7 @@ let getCurrentSceneTreeNodeTransform = () =>
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectMaterial = () => {
+let getCurrentSceneTreeNodeMaterial = () => {
   let gameObject = unsafeGetCurrentSceneTreeNode();
   let engineState = StateEngineService.unsafeGetState();
 
@@ -59,55 +59,55 @@ let getCurrentGameObjectMaterial = () => {
       );
 };
 
-let getCurrentGameObjectBasicMaterial = () =>
+let getCurrentSceneTreeNodeBasicMaterial = () =>
   GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectLightMaterial = () =>
+let getCurrentSceneTreeNodeLightMaterial = () =>
   GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectDirectionLightComponent = () =>
+let getCurrentSceneTreeNodeDirectionLightComponent = () =>
   GameObjectComponentEngineService.unsafeGetDirectionLightComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectPointLightComponent = () =>
+let getCurrentSceneTreeNodePointLightComponent = () =>
   GameObjectComponentEngineService.unsafeGetPointLightComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectBasicCameraView = () =>
+let getCurrentSceneTreeNodeBasicCameraView = () =>
   GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectPerspectiveCamera = () =>
+let getCurrentSceneTreeNodePerspectiveCamera = () =>
   GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectGeometry = () =>
+let getCurrentSceneTreeNodeGeometry = () =>
   GameObjectComponentEngineService.unsafeGetGeometryComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectArcballCamera = () =>
+let getCurrentSceneTreeNodeArcballCamera = () =>
   GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectMeshRenderer = () =>
+let getCurrentSceneTreeNodeMeshRenderer = () =>
   GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
     unsafeGetCurrentSceneTreeNode(),
   )

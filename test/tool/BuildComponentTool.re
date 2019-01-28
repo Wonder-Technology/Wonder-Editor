@@ -109,7 +109,7 @@ let buildMaterialMap =
       ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~isShowTextureGroup=false,
-      ~materialComponent=GameObjectTool.getCurrentGameObjectMaterial(),
+      ~materialComponent=GameObjectTool.getCurrentSceneTreeNodeMaterial(),
       (),
     ) =>
   ReactTestRenderer.create(

@@ -24,7 +24,7 @@ let _ =
       MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
 
       MainEditorCameraViewTool.setCurrentCamera(
-        ~cameraView=GameObjectTool.getCurrentGameObjectBasicCameraView(),
+        ~cameraView=GameObjectTool.getCurrentSceneTreeNodeBasicCameraView(),
         (),
       );
     };
