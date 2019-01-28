@@ -17,3 +17,23 @@ let setLocalEulerAngles = (gameObject, localEulerAngles, engineState) =>
     ),
     engineState,
   );
+
+let getEulerAngles = (gameObject, engineState) =>
+  TransformEngineService.getEulerAngles(
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      gameObject,
+      engineState,
+    ),
+    engineState,
+  )
+  |> Vector3Service.truncate(5);
+
+let getLocalScale = (gameObject, engineState) =>
+  TransformEngineService.getLocalScale(
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      gameObject,
+      engineState,
+    ),
+    engineState,
+  )
+  |> Vector3Service.truncate(5);

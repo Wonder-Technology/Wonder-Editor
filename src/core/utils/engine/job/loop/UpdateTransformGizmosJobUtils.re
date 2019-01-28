@@ -32,14 +32,18 @@ let _computeScaleFactorBasedOnDistanceToCamera =
     (cameraPos, currentGameObjectPos) => {
   let factor = 0.03;
 
-  Vector3Service.length(
-    Wonderjs.Vector3Service.sub(
-      Wonderjs.Vector3Type.Float,
-      cameraPos,
-      currentGameObjectPos,
-    ),
-  )
-  *. factor;
+  switch (
+    Vector3Service.length(
+      Wonderjs.Vector3Service.sub(
+        Wonderjs.Vector3Type.Float,
+        cameraPos,
+        currentGameObjectPos,
+      ),
+    )
+  ) {
+  | 0. => 1.
+  | distance => distance *. factor
+  };
 };
 
 let _scaleTranslationWholeGizmo =
@@ -80,21 +84,17 @@ let updateTransformJob = (_, engineState) => {
           editorState,
         );
 
-      let engineState =
-        engineState
-        |> _moveAndRotateTranslationWholeGizmoToCurrentSceneTreeNode(
-             currentGameObject,
-             translationWholeGizmo,
-             editorState,
-           )
-        |> _scaleTranslationWholeGizmo(
-             currentGameObject,
-             translationWholeGizmo,
-             editorState,
-           );
-      /* |> JobEngineService.execUpdateTransformJob; */
-
-      engineState;
+      engineState
+      |> _moveAndRotateTranslationWholeGizmoToCurrentSceneTreeNode(
+           currentGameObject,
+           translationWholeGizmo,
+           editorState,
+         )
+      |> _scaleTranslationWholeGizmo(
+           currentGameObject,
+           translationWholeGizmo,
+           editorState,
+         );
     } :
     engineState;
 };
