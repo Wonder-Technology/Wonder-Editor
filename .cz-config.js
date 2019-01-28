@@ -21,7 +21,7 @@ module.exports = {
     { name: "engine" },
     { name: "config" },
     { name: "job" }
-  ],
+ ],
 
 
   // it needs to match the value for field type. Eg.: "fix"

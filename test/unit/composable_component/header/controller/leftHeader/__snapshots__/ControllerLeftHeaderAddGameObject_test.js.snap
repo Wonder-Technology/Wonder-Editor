@@ -63,7 +63,7 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
@@ -211,7 +211,7 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
@@ -359,7 +359,7 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
             className="item-triangle"
           />
           <div
-            className="draggable-container select-active no-drag"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
