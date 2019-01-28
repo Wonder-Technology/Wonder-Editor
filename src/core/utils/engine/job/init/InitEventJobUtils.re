@@ -1,13 +1,13 @@
 open EventType;
 
 let _isTriggerGameViewEvent = () =>
-  EventEditorService.getEventTarget(StateEditorService.getState()) === Game;
+  TargetEventEditorService.getEventTarget(StateEditorService.getState()) === Game;
 
 let _isTriggerSceneViewEvent = () =>
-  EventEditorService.getEventTarget(StateEditorService.getState()) === Scene;
+  TargetEventEditorService.getEventTarget(StateEditorService.getState()) === Scene;
 
 let _isTriggerOtherEvent = () =>
-  EventEditorService.getEventTarget(StateEditorService.getState()) === Other;
+  TargetEventEditorService.getEventTarget(StateEditorService.getState()) === Other;
 
 module PointEvent = {
   let _convertMouseEventToPointEvent =
@@ -125,73 +125,73 @@ module PointEvent = {
       engineState
       |> _bindMouseEventToTriggerGameViewPointEvent(
            Click,
-           NameEventEngineService.getPointTapEventName(),
+           GameViewEventEditorService.getPointTapEventName(),
            PointTap,
            _isTriggerGameViewEvent,
          )
       |> _bindMouseEventToTriggerGameViewPointEvent(
            MouseUp,
-           NameEventEngineService.getPointUpEventName(),
+           GameViewEventEditorService.getPointUpEventName(),
            PointUp,
            _isTriggerGameViewEvent,
          )
       |> _bindMouseEventToTriggerGameViewPointEvent(
            MouseDown,
-           NameEventEngineService.getPointDownEventName(),
+           GameViewEventEditorService.getPointDownEventName(),
            PointDown,
            _isTriggerGameViewEvent,
          )
       |> _bindMouseEventToTriggerGameViewPointEvent(
            MouseWheel,
-           NameEventEngineService.getPointScaleEventName(),
+           GameViewEventEditorService.getPointScaleEventName(),
            PointScale,
            _isTriggerGameViewEvent,
          )
       |> _bindMouseEventToTriggerGameViewPointEvent(
            MouseMove,
-           NameEventEngineService.getPointMoveEventName(),
+           GameViewEventEditorService.getPointMoveEventName(),
            PointMove,
            _isTriggerGameViewEvent,
          )
       |> _bindMouseEventToTriggerGameViewPointEvent(
            MouseDrag,
-           NameEventEngineService.getPointDragEventName(),
+           GameViewEventEditorService.getPointDragEventName(),
            PointDrag,
            _isTriggerGameViewEvent,
          )
       |> _bindMouseEventToTriggerSceneViewPointEvent(
            Click,
-           EventEditorService.getPointTapEventName(),
+           SceneViewEventEditorService.getPointTapEventName(),
            PointTap,
            _isTriggerSceneViewEvent,
          )
       |> _bindMouseEventToTriggerSceneViewPointEvent(
            MouseUp,
-           EventEditorService.getPointUpEventName(),
+           SceneViewEventEditorService.getPointUpEventName(),
            PointUp,
            _isTriggerSceneViewEvent,
          )
       |> _bindMouseEventToTriggerSceneViewPointEvent(
            MouseDown,
-           EventEditorService.getPointDownEventName(),
+           SceneViewEventEditorService.getPointDownEventName(),
            PointDown,
            _isTriggerSceneViewEvent,
          )
       |> _bindMouseEventToTriggerSceneViewPointEvent(
            MouseWheel,
-           EventEditorService.getPointScaleEventName(),
+           SceneViewEventEditorService.getPointScaleEventName(),
            PointScale,
            _isTriggerSceneViewEvent,
          )
       |> _bindMouseEventToTriggerSceneViewPointEvent(
            MouseMove,
-           EventEditorService.getPointMoveEventName(),
+           SceneViewEventEditorService.getPointMoveEventName(),
            PointMove,
            _isTriggerSceneViewEvent,
          )
       |> _bindMouseEventToTriggerSceneViewPointEvent(
            MouseDrag,
-           EventEditorService.getPointDragEventName(),
+           SceneViewEventEditorService.getPointDragEventName(),
            PointDrag,
            _isTriggerSceneViewEvent,
          ) :
@@ -321,7 +321,7 @@ module DomEvent = {
             Game : Other;
 
     editorState
-    |> EventEditorService.setEventTarget(eventTarget)
+    |> TargetEventEditorService.setEventTarget(eventTarget)
     |> StateEditorService.setState
     |> ignore;
 
@@ -336,7 +336,7 @@ module DomEvent = {
 
     let (locationInViewX, locationInViewY) = locationInView;
 
-    switch (EventEditorService.getEventTarget(editorState)) {
+    switch (TargetEventEditorService.getEventTarget(editorState)) {
     | Other
     | Scene => mouseEvent
     | Game => {

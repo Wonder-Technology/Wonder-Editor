@@ -31,7 +31,7 @@ let _handleTriggerRefreshInspectorEvent = engineState =>
 let initJob = (_, engineState) => {
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=NameEventEngineService.getPointDragEventName(),
+      ~eventName=GameViewEventEditorService.getPointDragEventName(),
       ~handleFunc=
         (. event, engineState) => (
           _handleTriggerRefreshInspectorEvent(engineState),
@@ -43,7 +43,7 @@ let initJob = (_, engineState) => {
 
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=NameEventEngineService.getPointScaleEventName(),
+      ~eventName=GameViewEventEditorService.getPointScaleEventName(),
       ~handleFunc=
         (. event, engineState) => (
           _handleTriggerRefreshInspectorEvent(engineState),

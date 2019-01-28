@@ -219,7 +219,7 @@ let _isHandlePicking = (event, editorState) =>
 let initJob = (_, engineState) => {
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=EventEditorService.getPointTapEventName(),
+      ~eventName=SceneViewEventEditorService.getPointTapEventName(),
       ~handleFunc=
         (. event, engineState) =>
           _isHandlePicking(event, StateEditorService.getState()) ?

@@ -15,7 +15,7 @@ let bindArcballCameraControllerEventForSceneView =
 
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=EventEditorService.getPointDownEventName(),
+      ~eventName=SceneViewEventEditorService.getPointDownEventName(),
       ~handleFunc=
         (. event, engineState) =>
           MouseEventService.isRightMouseButton(event) ?
@@ -26,7 +26,7 @@ let bindArcballCameraControllerEventForSceneView =
 
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=EventEditorService.getPointUpEventName(),
+      ~eventName=SceneViewEventEditorService.getPointUpEventName(),
       ~handleFunc=
         (. event, engineState) =>
           MouseEventService.isRightMouseButton(event) ?
@@ -37,7 +37,7 @@ let bindArcballCameraControllerEventForSceneView =
 
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=EventEditorService.getPointDragEventName(),
+      ~eventName=SceneViewEventEditorService.getPointDragEventName(),
       ~handleFunc=
         (. event, engineState) =>
           MouseEventService.isRightMouseButton(event) ?
@@ -48,7 +48,7 @@ let bindArcballCameraControllerEventForSceneView =
 
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=EventEditorService.getPointScaleEventName(),
+      ~eventName=SceneViewEventEditorService.getPointScaleEventName(),
       ~handleFunc=
         (. event, engineState) => pointScaleHandleFunc(. event, engineState),
       ~state=engineState,

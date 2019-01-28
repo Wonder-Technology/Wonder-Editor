@@ -397,7 +397,7 @@ let _ =
                let _ = _prepare();
                let a = ref(0);
                ManageEventEngineService.onCustomGlobalEvent(
-                 ~eventName=EventEditorService.getPickSuccessEventName(),
+                 ~eventName=SceneViewEventEditorService.getPickSuccessEventName(),
                  ~handleFunc=
                    (. event, engineState) => {
                      a := 1;
@@ -418,7 +418,7 @@ let _ =
                let gameObject = _prepare();
                let pickedGameObject = ref(0);
                ManageEventEngineService.onCustomGlobalEvent(
-                 ~eventName=EventEditorService.getPickSuccessEventName(),
+                 ~eventName=SceneViewEventEditorService.getPickSuccessEventName(),
                  ~handleFunc=
                    (. event, engineState) => {
                      let editorState = StateEditorService.getState();

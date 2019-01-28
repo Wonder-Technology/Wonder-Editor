@@ -207,7 +207,7 @@ let _ =
 
               let _ = _prepareAndExec(10, 20, EventTool.buildBodyTarget());
 
-              EventEditorService.getEventTarget(StateEditorService.getState())
+              TargetEventEditorService.getEventTarget(StateEditorService.getState())
               |> expect == EventType.Other;
             });
 
@@ -218,7 +218,7 @@ let _ =
                 let _ =
                   _prepareAndExec(-1, 20, EventTool.buildCanvasTarget());
 
-                EventEditorService.getEventTarget(
+                TargetEventEditorService.getEventTarget(
                   StateEditorService.getState(),
                 )
                 |> expect == EventType.Other;
@@ -719,7 +719,7 @@ let _ =
                    _prepareKeyboardEvent(~sandbox, ());
                    let value = [||];
                    EventTool.onCustomGlobalEvent(
-                     EventEditorService.getRefreshInspectorEventName(),
+                     SceneViewEventEditorService.getRefreshInspectorEventName(),
                      0,
                      (. event, engineState) => {
                        value |> ArrayService.push(1) |> ignore;
@@ -793,7 +793,7 @@ let _ =
 
               let _ =
                 _prepareAndExec(
-                  EventEditorService.getPointScaleEventName(),
+                  SceneViewEventEditorService.getPointScaleEventName(),
                   ((-1), 20),
                 );
 
@@ -808,7 +808,7 @@ let _ =
 
               let value =
                 _prepareAndExec(
-                  EventEditorService.getPointScaleEventName(),
+                  SceneViewEventEditorService.getPointScaleEventName(),
                   ((-1), 20),
                 );
 
@@ -819,7 +819,7 @@ let _ =
 
               let value =
                 _prepareAndExec(
-                  NameEventEngineService.getPointScaleEventName(),
+                  GameViewEventEditorService.getPointScaleEventName(),
                   ((-1), 20),
                 );
 
@@ -836,7 +836,7 @@ let _ =
 
               let _ =
                 _prepareAndExec(
-                  EventEditorService.getPointScaleEventName(),
+                  SceneViewEventEditorService.getPointScaleEventName(),
                   (10, 20),
                 );
 
@@ -848,7 +848,7 @@ let _ =
           test("trigger editor point event", () => {
             _prepareMouseEvent(~sandbox, ());
 
-            _test(EventEditorService.getPointScaleEventName(), (10, 20));
+            _test(SceneViewEventEditorService.getPointScaleEventName(), (10, 20));
           });
         });
 
@@ -860,7 +860,7 @@ let _ =
 
               let _ =
                 _prepareAndExec(
-                  EventEditorService.getPointScaleEventName(),
+                  SceneViewEventEditorService.getPointScaleEventName(),
                   (60, 20),
                 );
 
@@ -872,7 +872,7 @@ let _ =
           test("trigger engine point event", () => {
             _prepareMouseEvent(~sandbox, ());
 
-            _test(NameEventEngineService.getPointScaleEventName(), (60, 20));
+            _test(GameViewEventEditorService.getPointScaleEventName(), (60, 20));
           });
           /* describe("trigger refresh_inspector event", () =>
                test("defer 0 ms to exec", () => {
@@ -880,7 +880,7 @@ let _ =
                  _prepareMouseEvent(~sandbox, ());
                  let value = [||];
                  EventTool.onCustomGlobalEvent(
-                   EventEditorService.getRefreshInspectorEventName(),
+                   SceneViewEventEditorService.getRefreshInspectorEventName(),
                    0,
                    (. event, engineState) => {
                      value |> ArrayService.push(1) |> ignore;
@@ -892,7 +892,7 @@ let _ =
 
                  let _ =
                    _prepareAndExec(
-                     NameEventEngineService.getPointScaleEventName(),
+                     GameViewEventEditorService.getPointScaleEventName(),
                      (60, 20),
                    );
 
