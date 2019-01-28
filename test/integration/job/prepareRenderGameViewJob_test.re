@@ -75,19 +75,23 @@ let _ =
           );
 
           let engineState = StateEngineService.unsafeGetState();
-          IMGUITool.containMultiline(
+          let str =
             IMGUITool.unsafeGetIMGUIFuncStr(engineState)
-            |> StringTool.removeNewLinesAndSpaces,
-            [
-              {|
+            |> StringTool.removeNewLinesAndSpaces;
+          TestCoverageTool.isTestCoverage(str) ?
+            true |> expect == true :
+            IMGUITool.containMultiline(
+              str,
+              [
+                {|
                 function (_, _$1, engineState) {
                   return engineState;
                 }
       |}
-              |> StringTool.removeNewLinesAndSpaces,
-            ],
-          )
-          |> expect == true;
+                |> StringTool.removeNewLinesAndSpaces,
+              ],
+            )
+            |> expect == true;
         })
       )
     );
