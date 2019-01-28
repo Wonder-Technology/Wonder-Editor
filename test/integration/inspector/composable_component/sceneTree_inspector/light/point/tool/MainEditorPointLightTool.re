@@ -64,7 +64,7 @@ let blurConstant =
     value,
   );
 
-let changeConstantAndBlur =
+/* let changeConstantAndBlur =
     (
       ~light,
       ~sourceValue,
@@ -75,7 +75,7 @@ let changeConstantAndBlur =
     ) => {
   changeConstant(light, targetValue);
   blurConstant(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
-};
+}; */
 
 let changeLinear = (light, value) =>
   MainEditorPointLightUtils.changeLinear(light, value);
@@ -94,7 +94,7 @@ let blurLinear =
     value,
   );
 
-let changeLinearAndBlur =
+/* let changeLinearAndBlur =
     (
       ~light,
       ~sourceValue,
@@ -105,7 +105,7 @@ let changeLinearAndBlur =
     ) => {
   changeLinear(light, targetValue);
   blurLinear(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
-};
+}; */
 
 let changeQuadratic = (light, value) =>
   MainEditorPointLightUtils.changeQuadratic(light, value);
@@ -124,7 +124,7 @@ let blurQuadratic =
     value,
   );
 
-let changeQuadraticAndBlur =
+/* let changeQuadraticAndBlur =
     (
       ~light,
       ~sourceValue,
@@ -135,7 +135,7 @@ let changeQuadraticAndBlur =
     ) => {
   changeQuadratic(light, targetValue);
   blurQuadratic(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
-};
+}; */
 
 let changeRange = (light, value) =>
   MainEditorPointLightUtils.changeRange(light, value);
@@ -154,7 +154,7 @@ let blurRange =
     value,
   );
 
-let changeRangeAndBlur =
+/* let changeRangeAndBlur =
     (
       ~light,
       ~sourceValue,
@@ -165,7 +165,7 @@ let changeRangeAndBlur =
     ) => {
   changeRange(light, targetValue);
   blurRange(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
-};
+}; */
 
 let createPointLight = (editorState, engineState) => {
   let (editorState, (engineState, obj)) =
