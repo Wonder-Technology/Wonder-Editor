@@ -2,7 +2,7 @@
    extract RenderEngineService(wonder.js should extract RenderAPI?)
 
 
-   TODO refactor: not use engineRenderState here!!!(only use engineState)
+   TODO refactor: not use engineState here!!!(only use engineState)
 
    */
 
@@ -63,21 +63,15 @@ module RenderTransformGizmos = {
          )
     );
 
-  let _getShaderIndex = (materialIndex, engineRenderState) =>
-    Wonderjs.(
-      ShaderIndexRenderService.getShaderIndex(
-        materialIndex,
-        ShaderIndexBasicMaterialRenderService.getShaderIndex,
-        engineRenderState,
-      )
-    );
+  let _getShaderIndex = (materialIndex, engineState) =>
+    Wonderjs.(RenderJobAPI.getShaderIndex(materialIndex, engineState));
 
-  let draw = (gl, renderDataArr, engineRenderState) =>
+  let draw = (gl, renderDataArr, engineState) =>
     Wonderjs.(
       renderDataArr
       |> WonderCommonlib.ArrayService.reduceOneParam(
            (.
-             engineRenderState,
+             engineState,
              (
                transformIndex,
                materialIndex,
@@ -85,52 +79,31 @@ module RenderTransformGizmos = {
                geometryIndex,
              ),
            ) => {
-             let shaderIndex =
-               _getShaderIndex(materialIndex, engineRenderState);
+             let shaderIndex = _getShaderIndex(materialIndex, engineState);
 
-             let engineRenderState =
-               engineRenderState
-               |> UseProgramRenderService.useByShaderIndex(gl, shaderIndex);
-
-             let sendRenderDataSubState =
-               CreateSendRenederDataSubStateRenderService.createState(
-                 engineRenderState,
-               );
-
-             /* TODO private??? change to public???*/
-             RenderJobUtils._sendAttributeData(
-               gl,
-               (shaderIndex, geometryIndex),
-               sendRenderDataSubState,
-               engineRenderState,
-             );
-
-             let getRenderDataSubState =
-               CreateGetRenederDataSubStateRenderService.createState(
-                 engineRenderState,
-               );
-
-             let engineRenderState =
-               RenderJobUtils._sendUniformRenderObjectModelData(
-                 gl,
-                 shaderIndex,
-                 transformIndex,
-                 getRenderDataSubState,
-                 engineRenderState,
-               )
-               |> RenderJobUtils._sendUniformRenderObjectMaterialData(
-                    gl,
-                    shaderIndex,
-                    materialIndex,
-                    getRenderDataSubState,
-                  );
-
-             engineRenderState
-             |> RenderJobUtils.draw(gl, meshRendererIndex, geometryIndex);
-
-             engineRenderState;
+             engineState
+             |> RenderJobEngineService.useByShaderIndex(gl, shaderIndex)
+             |> RenderJobEngineService.sendAttributeData(
+                  gl,
+                  (shaderIndex, geometryIndex),
+                )
+             |> RenderJobEngineService.sendUniformRenderObjectModelData(
+                  gl,
+                  shaderIndex,
+                  transformIndex,
+                )
+             |> RenderJobEngineService.sendUniformRenderObjectMaterialData(
+                  gl,
+                  shaderIndex,
+                  materialIndex,
+                )
+             |> RenderJobEngineService.draw(
+                  gl,
+                  meshRendererIndex,
+                  geometryIndex,
+                );
            },
-           engineRenderState,
+           engineState,
          )
     );
 };
@@ -161,12 +134,8 @@ let renderJob = (_, engineState) => {
 
       let engineState = engineState |> RenderTransformGizmos.prepareGlState;
 
-      let engineRenderState =
-        Wonderjs.CreateRenderStateMainService.createRenderState(engineState);
-
-      /* TODO refactor: shouldn't operate renderState in editor!!!  */
-      let engineRenderState =
-        RenderTransformGizmos.draw(gl, renderDataArr, engineRenderState);
+      let engineState =
+        RenderTransformGizmos.draw(gl, renderDataArr, engineState);
 
       let engineState = engineState |> RenderTransformGizmos.restoreGlState;
 
