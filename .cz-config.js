@@ -15,13 +15,29 @@ module.exports = {
   ],
 
   scopes: [
+    { name: "scene-view" },
     { name: "scene-tree" },
+    { name: "left-header" },
     { name: "redo-undo" },
+    { name: "inspector" },
+    { name: "asset" },
+    { name: "package" },
     { name: "scene" },
+    { name: "publish" },
+    { name: "light" },
+    { name: "lightMaterial" },
+    { name: "imgui" },
+    { name: "event" },
     { name: "engine" },
+    { name: "camera" },
+    { name: "transform" },
+    { name: "state" },
+    { name: "component" },
+    { name: "console" },
+    { name: "ui" },
     { name: "config" },
     { name: "job" }
- ],
+  ],
 
 
   // it needs to match the value for field type. Eg.: "fix"
