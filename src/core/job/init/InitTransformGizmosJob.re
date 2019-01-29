@@ -10,7 +10,7 @@ let _refreshInspector = () => {
 let _bindEvent = (editorState, engineState) => {
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=SceneViewEventEditorService.getPointDownEventName(),
+      ~eventName=SceneViewEventEditorService.getPointDragStartEventName(),
       ~handleFunc=
         (. event, engineState) =>
           MouseEventService.isLeftMouseButton(event) ?
