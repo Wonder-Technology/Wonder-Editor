@@ -246,6 +246,17 @@ let triggerPicking = (~eventButton=1, ~sandbox, ~pageX, ~pageY, ()) => {
     ),
   );
   EventTool.triggerDomEvent(
+    "mouseup",
+    EventTool.getBody(),
+    MouseEventTool.buildMouseEvent(
+      ~pageX,
+      ~pageY,
+      ~target,
+      ~which=eventButton,
+      (),
+    ),
+  );
+  EventTool.triggerDomEvent(
     "click",
     EventTool.getBody(),
     MouseEventTool.buildMouseEvent(

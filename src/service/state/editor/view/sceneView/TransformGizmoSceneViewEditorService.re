@@ -85,3 +85,26 @@ let setTranslationZAxisGizmo = (gameObject, editorState) => {
       }),
   },
 };
+
+let unsafeGetCurrentSceneTreeNodeStartPoint = editorState =>
+  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+    editorState.sceneViewRecord,
+  ).
+    currentSceneTreeNodeStartPoint
+  |> OptionService.unsafeGet;
+
+let setCurrentSceneTreeNodeStartPoint =
+    (currentSceneTreeNodeStartPoint, editorState) => {
+  ...editorState,
+  sceneViewRecord: {
+    ...editorState.sceneViewRecord,
+    transformGizmoData:
+      Some({
+        ...
+          RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+            editorState.sceneViewRecord,
+          ),
+        currentSceneTreeNodeStartPoint: Some(currentSceneTreeNodeStartPoint),
+      }),
+  },
+};

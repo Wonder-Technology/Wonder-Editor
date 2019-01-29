@@ -160,6 +160,7 @@ let setToEditorState =
         isTranslationXAxisGizmoSelected: false,
         isTranslationYAxisGizmoSelected: false,
         isTranslationZAxisGizmoSelected: false,
+        currentSceneTreeNodeStartPoint: None,
         axisGameObjectStartPoint: None,
         pickStartPoint: None,
       }),

@@ -346,7 +346,7 @@ let _ =
               ~pageY=100,
               (),
             );
-            InitTransformGizmosJobTool.triggerMouseDown(
+            EventTransformGizmosTool.triggerMouseDown(
               ~sandbox,
               ~eventButton=2,
               ~pageX=250 + 10,
@@ -365,7 +365,7 @@ let _ =
             test("not render translation gizmo", () => {
               let gameObject1 = prepareGameObject(sandbox);
 
-              InitTransformGizmosJobTool.triggerMouseDown(
+              EventTransformGizmosTool.triggerMouseDown(
                 ~sandbox,
                 ~pageX=250 + 10,
                 ~pageY=100,
@@ -399,7 +399,7 @@ let _ =
                 test("test point down arrow", () => {
                   let gameObject1 = _prepare(sandbox);
 
-                  InitTransformGizmosJobTool.triggerMouseDown(
+                  EventTransformGizmosTool.triggerMouseDown(
                     ~sandbox,
                     ~pageX=250 + 40,
                     ~pageY=100,
@@ -413,7 +413,7 @@ let _ =
                 test("test point down line", () => {
                   let gameObject1 = _prepare(sandbox);
 
-                  InitTransformGizmosJobTool.triggerMouseDown(
+                  EventTransformGizmosTool.triggerMouseDown(
                     ~sandbox,
                     ~pageX=250 + 2,
                     ~pageY=100,
@@ -427,7 +427,7 @@ let _ =
                 test("if not point down arrow or line, not mark", () => {
                   let gameObject1 = _prepare(sandbox);
 
-                  InitTransformGizmosJobTool.triggerMouseDown(
+                  EventTransformGizmosTool.triggerMouseDown(
                     ~sandbox,
                     ~pageX=250 + 20,
                     ~pageY=100 + 30,
@@ -445,7 +445,7 @@ let _ =
           test("else, mark not select any axis", () => {
             let gameObject1 = _prepare(sandbox);
 
-            InitTransformGizmosJobTool.triggerMouseDown(
+            EventTransformGizmosTool.triggerMouseDown(
               ~sandbox,
               ~pageX=250 + 40,
               ~pageY=100 - 30,
@@ -488,13 +488,13 @@ let _ =
             (),
           );
 
-          InitTransformGizmosJobTool.triggerMouseDown(
+          EventTransformGizmosTool.triggerMouseDown(
             ~sandbox,
             ~pageX=250 + 10,
             ~pageY=100,
             (),
           );
-          InitTransformGizmosJobTool.triggerMouseMove(
+          EventTransformGizmosTool.triggerMouseMove(
             ~sandbox,
             ~eventButton=2,
             ~pageX=250 + 20,
@@ -552,13 +552,13 @@ let _ =
                         let gameObject1 =
                           _prepare(sandbox, prepareGameObject);
 
-                        InitTransformGizmosJobTool.triggerMouseDown(
+                        EventTransformGizmosTool.triggerMouseDown(
                           ~sandbox,
                           ~pageX=250 + 10,
                           ~pageY=100,
                           (),
                         );
-                        InitTransformGizmosJobTool.triggerMouseMove(
+                        EventTransformGizmosTool.triggerMouseMove(
                           ~sandbox,
                           ~pageX=250 + 20,
                           ~pageY=100,
@@ -580,13 +580,13 @@ let _ =
                       () => {
                         _prepare(sandbox, prepareGameObject);
 
-                        InitTransformGizmosJobTool.triggerMouseDown(
+                        EventTransformGizmosTool.triggerMouseDown(
                           ~sandbox,
                           ~pageX=250 + 10,
                           ~pageY=100,
                           (),
                         );
-                        InitTransformGizmosJobTool.triggerMouseMove(
+                        EventTransformGizmosTool.triggerMouseMove(
                           ~sandbox,
                           ~pageX=250 + 20,
                           ~pageY=100 + 20,
@@ -609,19 +609,19 @@ let _ =
                       () => {
                         _prepare(sandbox, prepareGameObject);
 
-                        InitTransformGizmosJobTool.triggerMouseDown(
+                        EventTransformGizmosTool.triggerMouseDown(
                           ~sandbox,
                           ~pageX=250 + 10,
                           ~pageY=100,
                           (),
                         );
-                        InitTransformGizmosJobTool.triggerMouseMove(
+                        EventTransformGizmosTool.triggerMouseMove(
                           ~sandbox,
                           ~pageX=250 + 20,
                           ~pageY=100,
                           (),
                         );
-                        InitTransformGizmosJobTool.triggerMouseMove(
+                        EventTransformGizmosTool.triggerMouseMove(
                           ~sandbox,
                           ~pageX=250 + 30,
                           ~pageY=100,
@@ -660,13 +660,13 @@ let _ =
                       () => {
                         _prepare(sandbox, prepareGameObject);
 
-                        InitTransformGizmosJobTool.triggerMouseDown(
+                        EventTransformGizmosTool.triggerMouseDown(
                           ~sandbox,
                           ~pageX=250 + 20,
                           ~pageY=100 - 10,
                           (),
                         );
-                        InitTransformGizmosJobTool.triggerMouseMove(
+                        EventTransformGizmosTool.triggerMouseMove(
                           ~sandbox,
                           ~pageX=250 + 30,
                           ~pageY=100 - 10,
@@ -707,13 +707,13 @@ let _ =
                     () => {
                       let gameObject1 = _prepare(sandbox, prepareGameObject);
 
-                      InitTransformGizmosJobTool.triggerMouseDown(
+                      EventTransformGizmosTool.triggerMouseDown(
                         ~sandbox,
                         ~pageX=250 + 10,
                         ~pageY=100,
                         (),
                       );
-                      InitTransformGizmosJobTool.triggerMouseMove(
+                      EventTransformGizmosTool.triggerMouseMove(
                         ~sandbox,
                         ~pageX=250 + 20,
                         ~pageY=100,
@@ -808,13 +808,13 @@ let _ =
                       ~pageY=100,
                       (),
                     );
-                    InitTransformGizmosJobTool.triggerMouseDown(
+                    EventTransformGizmosTool.triggerMouseDown(
                       ~sandbox,
                       ~pageX=250 + 20,
                       ~pageY=100 - 10,
                       (),
                     );
-                    InitTransformGizmosJobTool.triggerMouseMove(
+                    EventTransformGizmosTool.triggerMouseMove(
                       ~sandbox,
                       ~pageX=250 + 30,
                       ~pageY=100 - 10,
@@ -860,13 +860,13 @@ let _ =
           test("if select any gizmo, refresh", () => {
             let dispatchFuncStub = _prepare(sandbox);
 
-            InitTransformGizmosJobTool.triggerMouseDown(
+            EventTransformGizmosTool.triggerMouseDown(
               ~sandbox,
               ~pageX=250 + 10,
               ~pageY=100,
               (),
             );
-            InitTransformGizmosJobTool.triggerMouseMove(
+            EventTransformGizmosTool.triggerMouseMove(
               ~sandbox,
               ~pageX=250 + 20,
               ~pageY=100,
@@ -882,13 +882,13 @@ let _ =
           test("else, not refresh inspector", () => {
             let dispatchFuncStub = _prepare(sandbox);
 
-            InitTransformGizmosJobTool.triggerMouseDown(
+            EventTransformGizmosTool.triggerMouseDown(
               ~sandbox,
               ~pageX=250 + 50,
               ~pageY=100 - 50,
               (),
             );
-            InitTransformGizmosJobTool.triggerMouseMove(
+            EventTransformGizmosTool.triggerMouseMove(
               ~sandbox,
               ~pageX=250 + 20,
               ~pageY=100,

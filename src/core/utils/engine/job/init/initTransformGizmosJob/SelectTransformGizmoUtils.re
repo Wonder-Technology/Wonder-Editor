@@ -116,23 +116,51 @@ let _selectAxisGizmo =
      );
 };
 
-let selectTransformGizmo = (event, engineState, editorState) =>
-  IsTransformGizmoRenderSceneViewEditorService.isTranslationWholeGizmoRender(
+let selectTransformGizmo = (event, engineState, editorState) => {
+  let cameraGameObject =
+    SceneViewEditorService.unsafeGetEditCamera(editorState);
+
+  let ray =
+    RayUtils.createPerspectiveCameraRayFromEvent(
+      event,
+      cameraGameObject,
+      (editorState, engineState),
+    );
+
+  _isSelectTranslationAxisGizmo(
+    TransformGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
+      editorState,
+    ),
+    ray,
+    engineState,
     editorState,
   ) ?
-    {
-      let cameraGameObject =
-        SceneViewEditorService.unsafeGetEditCamera(editorState);
-
-      let ray =
-        RayUtils.createPerspectiveCameraRayFromEvent(
-          event,
-          cameraGameObject,
-          (editorState, engineState),
-        );
-
+    _selectAxisGizmo(
+      ray,
+      (
+        SelectTransformGizmoSceneViewEditorService.onlySelectTranslationXAxisGizmo,
+        _getMoveStartDataForXAxis,
+      ),
+      (editorState, engineState),
+    ) :
+    _isSelectTranslationAxisGizmo(
+      TransformGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
+        editorState,
+      ),
+      ray,
+      engineState,
+      editorState,
+    ) ?
+      _selectAxisGizmo(
+        ray,
+        (
+          SelectTransformGizmoSceneViewEditorService.onlySelectTranslationYAxisGizmo,
+          _getMoveStartDataForYAxis,
+        ),
+        (editorState, engineState),
+      ) :
       _isSelectTranslationAxisGizmo(
-        TransformGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
+        TransformGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
           editorState,
         ),
         ray,
@@ -142,45 +170,11 @@ let selectTransformGizmo = (event, engineState, editorState) =>
         _selectAxisGizmo(
           ray,
           (
-            SelectTransformGizmoSceneViewEditorService.onlySelectTranslationXAxisGizmo,
-            _getMoveStartDataForXAxis,
+            SelectTransformGizmoSceneViewEditorService.onlySelectTranslationZAxisGizmo,
+            _getMoveStartDataForZAxis,
           ),
           (editorState, engineState),
         ) :
-        _isSelectTranslationAxisGizmo(
-          TransformGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
-            editorState,
-          ),
-          ray,
-          engineState,
-          editorState,
-        ) ?
-          _selectAxisGizmo(
-            ray,
-            (
-              SelectTransformGizmoSceneViewEditorService.onlySelectTranslationYAxisGizmo,
-              _getMoveStartDataForYAxis,
-            ),
-            (editorState, engineState),
-          ) :
-          _isSelectTranslationAxisGizmo(
-            TransformGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
-              editorState,
-            ),
-            ray,
-            engineState,
-            editorState,
-          ) ?
-            _selectAxisGizmo(
-              ray,
-              (
-                SelectTransformGizmoSceneViewEditorService.onlySelectTranslationZAxisGizmo,
-                _getMoveStartDataForZAxis,
-              ),
-              (editorState, engineState),
-            ) :
-            editorState
-            |> SelectTransformGizmoSceneViewEditorService.markNotSelectAnyTranslationGizmo;
-    } :
-    editorState
-    |> SelectTransformGizmoSceneViewEditorService.markNotSelectAnyTranslationGizmo;
+        editorState
+        |> SelectTransformGizmoSceneViewEditorService.markNotSelectAnyTranslationGizmo;
+};

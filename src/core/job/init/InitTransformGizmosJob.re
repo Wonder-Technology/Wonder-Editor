@@ -18,11 +18,22 @@ let _bindEvent = (editorState, engineState) => {
               let editorState = StateEditorService.getState();
 
               let editorState =
-                SelectTransformGizmoUtils.selectTransformGizmo(
-                  event,
-                  engineState,
+                IsTransformGizmoRenderSceneViewEditorService.isTranslationWholeGizmoRender(
                   editorState,
-                );
+                ) ?
+                  editorState
+                  |> TransformGizmoSceneViewEditorService.setCurrentSceneTreeNodeStartPoint(
+                       InitTransformGizmosUtils.getCurrentSceneTreeNodePosition(
+                         editorState,
+                         engineState,
+                       ),
+                     )
+                  |> SelectTransformGizmoUtils.selectTransformGizmo(
+                       event,
+                       engineState,
+                     ) :
+                  editorState
+                  |> SelectTransformGizmoSceneViewEditorService.markNotSelectAnyTranslationGizmo;
 
               editorState |> StateEditorService.setState |> ignore;
 
@@ -38,7 +49,9 @@ let _bindEvent = (editorState, engineState) => {
       ~eventName=SceneViewEventEditorService.getPointDragOverEventName(),
       ~handleFunc=
         (. event, engineState) =>
-          MouseEventService.isLeftMouseButton(event) ?
+          MouseEventService.isLeftMouseButton(event)
+          && SelectTransformGizmoSceneViewEditorService.isSelectAnyTransformGizmo
+          |> StateLogicService.getEditorState ?
             {
               let editorState = StateEditorService.getState();
 
@@ -56,6 +69,40 @@ let _bindEvent = (editorState, engineState) => {
               editorState |> StateEditorService.setState |> ignore;
 
               (engineState, event);
+            } :
+            (engineState, event),
+      ~state=engineState,
+      (),
+    );
+
+  let engineState =
+    ManageEventEngineService.onCustomGlobalEvent(
+      ~eventName=SceneViewEventEditorService.getPointDragDropEventName(),
+      ~handleFunc=
+        (. event, engineState) =>
+          MouseEventService.isLeftMouseButton(event)
+          && SelectTransformGizmoSceneViewEditorService.isSelectAnyTransformGizmo
+          |> StateLogicService.getEditorState ?
+            {
+              let editorState = StateEditorService.getState();
+              let transform =
+                GameObjectComponentEngineService.unsafeGetTransformComponent(
+                  SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(
+                    editorState,
+                  ),
+                  engineState,
+                );
+              engineState |> StateEngineService.setState |> ignore;
+
+              PositionBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
+                (UIStateService.getState(), UIStateService.getDispatch()),
+                transform,
+                TransformGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartPoint(
+                  editorState,
+                ),
+              );
+
+              (StateEngineService.unsafeGetState(), event);
             } :
             (engineState, event),
       ~state=engineState,

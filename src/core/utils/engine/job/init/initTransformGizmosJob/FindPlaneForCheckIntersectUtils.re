@@ -1,12 +1,3 @@
-let _getCurrentSceneTreeNodePosition = (editorState, engineState) =>
-  TransformEngineService.getPosition(
-    GameObjectComponentEngineService.unsafeGetTransformComponent(
-      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
-      engineState,
-    ),
-    engineState,
-  );
-
 let _findMostOrthogonalPlaneBetweenCurrentSceneTreeNodeAndCameraVecAndPlane =
     (
       (axis1Vec, plane1: ShapeType.planeShape),
@@ -19,7 +10,10 @@ let _findMostOrthogonalPlaneBetweenCurrentSceneTreeNodeAndCameraVecAndPlane =
   let currentSceneTreeNodeToCameraVec =
     Wonderjs.Vector3Service.sub(
       Wonderjs.Vector3Type.Float,
-      _getCurrentSceneTreeNodePosition(editorState, engineState),
+      InitTransformGizmosUtils.getCurrentSceneTreeNodePosition(
+        editorState,
+        engineState,
+      ),
       TransformEngineService.getPosition(
         GameObjectComponentEngineService.unsafeGetTransformComponent(
           cameraGameObject,

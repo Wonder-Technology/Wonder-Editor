@@ -10,6 +10,7 @@ type transformGizmoData = {
   isTranslationXAxisGizmoSelected: bool,
   isTranslationYAxisGizmoSelected: bool,
   isTranslationZAxisGizmoSelected: bool,
+  currentSceneTreeNodeStartPoint: option((float, float, float)),
   axisGameObjectStartPoint: option((float, float, float)),
   pickStartPoint: option((float, float, float)),
 };
