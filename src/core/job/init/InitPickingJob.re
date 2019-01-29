@@ -200,10 +200,13 @@ let _handlePicking = (event: EventType.customEvent, engineState) => {
   let editorState =
     _computeSphereShapeData(allGameObjectData, (editorState, engineState));
 
+  let pickedGameObject =
+    (editorState, engineState) |> _findPickedOne(event, allGameObjectData);
+
+  editorState |> StateEditorService.setState |> ignore;
+
   let engineState =
-    switch (
-      (editorState, engineState) |> _findPickedOne(event, allGameObjectData)
-    ) {
+    switch (pickedGameObject) {
     | None => _handlePickFail(engineState)
     | Some(gameObject) => _handlePickSuccess(gameObject, engineState)
     };
