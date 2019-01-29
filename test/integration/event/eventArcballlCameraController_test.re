@@ -107,7 +107,7 @@ let _ =
     let _prepareForPointerLock = sandbox =>
       MouseEventTool.prepareForPointerLock(sandbox);
 
-    let _testPointDownEvent =
+    let _testPointDragStartEvent =
         (sandbox, (pageX, pageY, eventButton), (judgeFunc, bindEventFunc)) => {
       _prepareMouseEvent(~sandbox, ());
 
@@ -180,9 +180,9 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test bind for scene view", () => {
-      describe("test bind point down event", () => {
+      describe("test bind point drag start event", () => {
         let _test = (sandbox, (pageX, pageY, eventButton), judgeFunc) =>
-          _testPointDownEvent(
+          _testPointDragStartEvent(
             sandbox,
             (pageX, pageY, eventButton),
             (
@@ -254,9 +254,9 @@ let _ =
     });
 
     describe("test bind for game view", () => {
-      describe("test bind point down event", () => {
+      describe("test bind point drag start event", () => {
         let _test = (sandbox, (pageX, pageY, eventButton), judgeFunc) =>
-          _testPointDownEvent(
+          _testPointDragStartEvent(
             sandbox,
             (pageX, pageY, eventButton),
             (

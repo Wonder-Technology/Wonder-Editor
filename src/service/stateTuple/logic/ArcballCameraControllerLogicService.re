@@ -2,9 +2,9 @@ let bindArcballCameraControllerEventForSceneView =
     (cameraController, engineState) => {
   let (
     engineState,
-    pointDownHandleFunc,
-    pointUpHandleFunc,
-    pointDragHandleFunc,
+    pointDragStartHandleFunc,
+    pointDragDropHandleFunc,
+    pointDragOverHandleFunc,
     pointScaleHandleFunc,
     keydownHandleFunc,
   ) =
@@ -15,22 +15,24 @@ let bindArcballCameraControllerEventForSceneView =
 
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=SceneViewEventEditorService.getPointDownEventName(),
+      ~eventName=SceneViewEventEditorService.getPointDragStartEventName(),
       ~handleFunc=
         (. event, engineState) =>
           MouseEventService.isRightMouseButton(event) ?
-            pointDownHandleFunc(. event, engineState) : (engineState, event),
+            pointDragStartHandleFunc(. event, engineState) :
+            (engineState, event),
       ~state=engineState,
       (),
     );
 
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=SceneViewEventEditorService.getPointUpEventName(),
+      ~eventName=SceneViewEventEditorService.getPointDragDropEventName(),
       ~handleFunc=
         (. event, engineState) =>
           MouseEventService.isRightMouseButton(event) ?
-            pointUpHandleFunc(. event, engineState) : (engineState, event),
+            pointDragDropHandleFunc(. event, engineState) :
+            (engineState, event),
       ~state=engineState,
       (),
     );
@@ -41,7 +43,8 @@ let bindArcballCameraControllerEventForSceneView =
       ~handleFunc=
         (. event, engineState) =>
           MouseEventService.isRightMouseButton(event) ?
-            pointDragHandleFunc(. event, engineState) : (engineState, event),
+            pointDragOverHandleFunc(. event, engineState) :
+            (engineState, event),
       ~state=engineState,
       (),
     );
