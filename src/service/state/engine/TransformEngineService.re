@@ -171,14 +171,10 @@ let getScale = Wonderjs.TransformAPI.getTransformScale;
 
 let setScale = Wonderjs.TransformAPI.setTransformScale;
 
-let getLocalToWorldMatrixTypeArray = (transform, engineState) => {
-  let {localToWorldMatrices, localToWorldMatrixCacheMap}: Wonderjs.TransformType.transformRecord =
-    Wonderjs.RecordTransformMainService.getRecord(engineState);
-  Wonderjs.ModelMatrixTransformService.getLocalToWorldMatrixTypeArray(.
+let getLocalToWorldMatrixTypeArray = (transform, engineState) =>
+  Wonderjs.TransformAPI.getTransformLocalToWorldMatrixTypeArray(
     transform,
-    localToWorldMatrices,
-    localToWorldMatrixCacheMap,
+    engineState,
   );
-};
 
 let lookAt = Wonderjs.TransformAPI.lookAt;
