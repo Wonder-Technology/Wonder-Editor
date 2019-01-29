@@ -28,31 +28,13 @@ let _moveAndRotateTranslationWholeGizmoToCurrentSceneTreeNode =
      );
 };
 
-let _computeScaleFactorBasedOnDistanceToCamera =
-    (cameraPos, currentSceneTreeNodePos) => {
-  let factor = 0.03;
-
-  switch (
-    Vector3Service.length(
-      Wonderjs.Vector3Service.sub(
-        Wonderjs.Vector3Type.Float,
-        cameraPos,
-        currentSceneTreeNodePos,
-      ),
-    )
-  ) {
-  | 0. => 1.
-  | distance => distance *. factor
-  };
-};
-
 let _scaleTranslationWholeGizmo =
     (currentSceneTreeNode, translationWholeGizmo, editorState, engineState) => {
   let cameraGameObject =
     SceneViewEditorService.unsafeGetEditCamera(editorState);
 
-  let factor =
-    _computeScaleFactorBasedOnDistanceToCamera(
+  let scaleFactor =
+    ComputeTranslationGizmoUtils.computeScaleFactorBasedOnDistanceToCamera(
       TransformGameObjectEngineService.getPosition(
         cameraGameObject,
         engineState,
@@ -65,7 +47,7 @@ let _scaleTranslationWholeGizmo =
 
   TransformGameObjectEngineService.setLocalScale(
     translationWholeGizmo,
-    (factor, factor, factor),
+    (scaleFactor, scaleFactor, scaleFactor),
     engineState,
   );
 };

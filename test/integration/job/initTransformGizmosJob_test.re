@@ -401,7 +401,7 @@ let _ =
 
                   EventTransformGizmosTool.triggerMouseDown(
                     ~sandbox,
-                    ~pageX=250 + 40,
+                    ~pageX=250 + 30,
                     ~pageY=100,
                     (),
                   );
@@ -822,7 +822,7 @@ let _ =
                     );
 
                     InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
-                    |> expect == (0.318, (-0.336), 0.818);
+                    |> expect == (0.344, (-0.265), 0.707);
                   },
                 );
               });

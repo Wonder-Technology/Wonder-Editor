@@ -1,6 +1,11 @@
 let _isSelectTranslationAxisGizmo =
     (translationAxisGizmo, ray, engineState, editorState) => {
-  let expandFactor = 0.2;
+  let expandFactor = 0.5;
+
+  let cameraGameObject =
+    SceneViewEditorService.unsafeGetEditCamera(editorState);
+  let currentSceneTreeNode =
+    SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState);
 
   HierarchyGameObjectEngineService.getAllChildren(
     translationAxisGizmo,
@@ -10,11 +15,25 @@ let _isSelectTranslationAxisGizmo =
        (. isSelect, gameObject) =>
          isSelect ?
            isSelect :
-           RayUtils.isIntersectAABB(
-             AABBShapeUtils.setFromGameObject(gameObject, engineState)
-             |> AABBShapeUtils.expandByScalar(expandFactor),
-             ray,
-           ),
+           {
+             let scaleFactor =
+               ComputeTranslationGizmoUtils.computeScaleFactorBasedOnDistanceToCamera(
+                 TransformGameObjectEngineService.getPosition(
+                   cameraGameObject,
+                   engineState,
+                 ),
+                 TransformGameObjectEngineService.getPosition(
+                   currentSceneTreeNode,
+                   engineState,
+                 ),
+               );
+
+             RayUtils.isIntersectAABB(
+               AABBShapeUtils.setFromGameObject(gameObject, engineState)
+               |> AABBShapeUtils.expandByScalar(expandFactor *. scaleFactor),
+               ray,
+             );
+           },
        false,
      );
 };

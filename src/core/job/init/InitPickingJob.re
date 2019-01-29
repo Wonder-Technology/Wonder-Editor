@@ -102,7 +102,7 @@ let _getAllGameObjectData = engineState =>
 let _computeSphereShapeData = (allGameObjectData, (editorState, engineState)) =>
   allGameObjectData
   |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. editorState, (_, _, geometry, localToWorldMatrixTypeArray)) =>
+       (. editorState, (_, _, geometry, _)) =>
          switch (PickingEditorService.getSphereShape(geometry, editorState)) {
          | None =>
            PickingEditorService.setSphereShape(
