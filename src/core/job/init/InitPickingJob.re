@@ -157,7 +157,8 @@ let _isNotNeedPushToHistoryStack = pickedGameObjectOpt =>
       SceneTreeEditorService.getCurrentSceneTreeNode
       |> StateLogicService.getEditorState
     ) {
-    | Some(currentSceneTreeNode) when currentSceneTreeNode === pickedGameObject =>
+    | Some(currentSceneTreeNode)
+        when currentSceneTreeNode === pickedGameObject =>
       true
     | _ => false
     }
@@ -167,16 +168,17 @@ let _handleSceneTreeCurrentNodeAndRedoUndo =
     (pickedGameObjectOpt, engineState) => {
   engineState |> StateEngineService.setState |> ignore;
 
-  /* let pickedGameObjectOpt = None; */
+  let uiState = UIStateService.getState();
   let dispatchFunc = UIStateService.getDispatch();
 
   _isNotNeedPushToHistoryStack(pickedGameObjectOpt) ?
-    SceneTreeSelectCurrentNodeUtils.select(
-      dispatchFunc,
+    SceneTreeSelectCurrentNodeEventHandler.CustomEventHandler.handleSelfLogic(
+      (uiState, dispatchFunc),
+      (),
       pickedGameObjectOpt,
     ) :
     SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-      (UIStateService.getState(), dispatchFunc),
+      (uiState, dispatchFunc),
       (),
       pickedGameObjectOpt,
     );

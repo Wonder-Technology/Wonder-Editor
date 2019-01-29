@@ -20,6 +20,7 @@ module.exports = {
     { name: "left-header" },
     { name: "redo-undo" },
     { name: "inspector" },
+    { name: "picking" },
     { name: "asset" },
     { name: "package" },
     { name: "scene" },
