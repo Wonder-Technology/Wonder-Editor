@@ -37,7 +37,7 @@ let bindArcballCameraControllerEventForSceneView =
 
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=SceneViewEventEditorService.getPointDragEventName(),
+      ~eventName=SceneViewEventEditorService.getPointDragOverEventName(),
       ~handleFunc=
         (. event, engineState) =>
           MouseEventService.isRightMouseButton(event) ?

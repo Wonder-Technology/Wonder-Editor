@@ -31,7 +31,7 @@ let _handleTriggerRefreshInspectorEvent = engineState =>
 let initJob = (_, engineState) => {
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=GameViewEventEditorService.getPointDragEventName(),
+      ~eventName=GameViewEventEditorService.getPointDragOverEventName(),
       ~handleFunc=
         (. event, engineState) => (
           _handleTriggerRefreshInspectorEvent(engineState),

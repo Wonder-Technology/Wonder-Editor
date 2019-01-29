@@ -1,13 +1,16 @@
 open EventType;
 
 let _isTriggerGameViewEvent = () =>
-  TargetEventEditorService.getEventTarget(StateEditorService.getState()) === Game;
+  TargetEventEditorService.getEventTarget(StateEditorService.getState())
+  === Game;
 
 let _isTriggerSceneViewEvent = () =>
-  TargetEventEditorService.getEventTarget(StateEditorService.getState()) === Scene;
+  TargetEventEditorService.getEventTarget(StateEditorService.getState())
+  === Scene;
 
 let _isTriggerOtherEvent = () =>
-  TargetEventEditorService.getEventTarget(StateEditorService.getState()) === Other;
+  TargetEventEditorService.getEventTarget(StateEditorService.getState())
+  === Other;
 
 module PointEvent = {
   let _convertMouseEventToPointEvent =
@@ -154,9 +157,21 @@ module PointEvent = {
            _isTriggerGameViewEvent,
          )
       |> _bindMouseEventToTriggerGameViewPointEvent(
-           MouseDrag,
-           GameViewEventEditorService.getPointDragEventName(),
-           PointDrag,
+           MouseDragStart,
+           GameViewEventEditorService.getPointDragStartEventName(),
+           PointDragStart,
+           _isTriggerGameViewEvent,
+         )
+      |> _bindMouseEventToTriggerGameViewPointEvent(
+           MouseDragOver,
+           GameViewEventEditorService.getPointDragOverEventName(),
+           PointDragOver,
+           _isTriggerGameViewEvent,
+         )
+      |> _bindMouseEventToTriggerGameViewPointEvent(
+           MouseDragDrop,
+           GameViewEventEditorService.getPointDragDropEventName(),
+           PointDragDrop,
            _isTriggerGameViewEvent,
          )
       |> _bindMouseEventToTriggerSceneViewPointEvent(
@@ -190,9 +205,21 @@ module PointEvent = {
            _isTriggerSceneViewEvent,
          )
       |> _bindMouseEventToTriggerSceneViewPointEvent(
-           MouseDrag,
-           SceneViewEventEditorService.getPointDragEventName(),
-           PointDrag,
+           MouseDragStart,
+           SceneViewEventEditorService.getPointDragStartEventName(),
+           PointDragStart,
+           _isTriggerSceneViewEvent,
+         )
+      |> _bindMouseEventToTriggerSceneViewPointEvent(
+           MouseDragOver,
+           SceneViewEventEditorService.getPointDragOverEventName(),
+           PointDragOver,
+           _isTriggerSceneViewEvent,
+         )
+      |> _bindMouseEventToTriggerSceneViewPointEvent(
+           MouseDragDrop,
+           SceneViewEventEditorService.getPointDragDropEventName(),
+           PointDragDrop,
            _isTriggerSceneViewEvent,
          ) :
       {
@@ -256,7 +283,7 @@ module DomEvent = {
     ();
   };
 
-  let _execMouseDragingEventHandle = mouseEvent => {
+  let _execMouseDragOverEventHandle = mouseEvent => {
     StateEngineService.unsafeGetState()
     |> HandleMouseEventEngineService.execEventHandle(mouseEvent)
     |> HandleMouseEventEngineService.setLastXYByLocation(mouseEvent)
@@ -266,8 +293,9 @@ module DomEvent = {
     ();
   };
 
-  let _execMouseDragStartEventHandle = () => {
+  let _execMouseDragStartEventHandle = mouseEvent => {
     StateEngineService.unsafeGetState()
+    |> HandleMouseEventEngineService.execEventHandle(mouseEvent)
     |> HandleMouseEventEngineService.setIsDrag(true)
     |> HandleMouseEventEngineService.setLastXY(None, None)
     |> StateEngineService.setState
@@ -276,8 +304,9 @@ module DomEvent = {
     ();
   };
 
-  let _execMouseDragEndEventHandle = () => {
+  let _execMouseDragDropEventHandle = mouseEvent => {
     StateEngineService.unsafeGetState()
+    |> HandleMouseEventEngineService.execEventHandle(mouseEvent)
     |> HandleMouseEventEngineService.setIsDrag(false)
     |> StateEngineService.setState
     |> ignore;
@@ -409,18 +438,26 @@ module DomEvent = {
          _mapAndExecMouseEventHandle(MouseWheel, event)
        ),
     _fromPointDomEvent("mousedown", engineState)
-    |> WonderBsMost.Most.tap(event => _execMouseDragStartEventHandle())
+    |> WonderBsMost.Most.tap(event =>
+         _convertDomEventToMouseEvent(MouseDragStart, event)
+         |> _mapMouseEventToView
+         |> _execMouseDragStartEventHandle
+       )
     |> WonderBsMost.Most.flatMap(event =>
          _fromPointDomEvent("mousemove", engineState)
          |> WonderBsMost.Most.until(
               _fromPointDomEvent("mouseup", engineState)
-              |> WonderBsMost.Most.tap(event => _execMouseDragEndEventHandle()),
+              |> WonderBsMost.Most.tap(event =>
+                   _convertDomEventToMouseEvent(MouseDragDrop, event)
+                   |> _mapMouseEventToView
+                   |> _execMouseDragDropEventHandle
+                 ),
             )
        )
     |> WonderBsMost.Most.tap(event =>
-         _convertDomEventToMouseEvent(MouseDrag, event)
+         _convertDomEventToMouseEvent(MouseDragOver, event)
          |> _mapMouseEventToView
-         |> _execMouseDragingEventHandle
+         |> _execMouseDragOverEventHandle
        ),
     _fromKeyboardDomEvent("keyup", engineState)
     |> WonderBsMost.Most.tap(event =>

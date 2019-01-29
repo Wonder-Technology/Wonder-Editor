@@ -207,7 +207,9 @@ let _ =
 
               let _ = _prepareAndExec(10, 20, EventTool.buildBodyTarget());
 
-              TargetEventEditorService.getEventTarget(StateEditorService.getState())
+              TargetEventEditorService.getEventTarget(
+                StateEditorService.getState(),
+              )
               |> expect == EventType.Other;
             });
 
@@ -457,26 +459,59 @@ let _ =
               (
                 (clickPageX, clickPageY),
                 (movePageX, movePageY),
-                (locationInViewX, locationInViewY),
+                (dropPageX, dropPageY),
+                (dragStartLocationInViewX, dragStartLocationInViewY),
+                (dragOverLocationInViewX, dragOverLocationInViewY),
+                (dragDropLocationInViewX, dragDropLocationInViewY),
               ) => {
             PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
             StateLogicService.getAndSetEngineState(
               MainUtils._handleEngineState,
             );
 
-            let (valueX, valueY) = (ref(0), ref(0));
+            let (x1, y1, x2, y2, x3, y3) = (
+              ref(0),
+              ref(0),
+              ref(0),
+              ref(0),
+              ref(0),
+              ref(0),
+            );
+            let engineState = StateEngineService.unsafeGetState();
 
-            EventTool.onMouseEvent(
-              MouseDrag,
-              0,
-              (. event: mouseEvent, state) => {
-                let (x, y) = event.locationInView;
-                valueX := x;
-                valueY := y;
-                state;
-              },
-            )
-            |> StateLogicService.getAndSetEngineState;
+            engineState
+            |> EventTool.onMouseEvent(
+                 MouseDragStart,
+                 0,
+                 (. event: mouseEvent, state) => {
+                   let (x, y) = event.locationInView;
+                   x1 := x;
+                   y1 := y;
+                   state;
+                 },
+               )
+            |> EventTool.onMouseEvent(
+                 MouseDragOver,
+                 0,
+                 (. event: mouseEvent, state) => {
+                   let (x, y) = event.locationInView;
+                   x2 := x;
+                   y2 := y;
+                   state;
+                 },
+               )
+            |> EventTool.onMouseEvent(
+                 MouseDragDrop,
+                 0,
+                 (. event: mouseEvent, state) => {
+                   let (x, y) = event.locationInView;
+                   x3 := x;
+                   y3 := y;
+                   state;
+                 },
+               )
+            |> StateEngineService.setState
+            |> ignore;
 
             EventTool.triggerDomEvent(
               "mousedown",
@@ -499,27 +534,46 @@ let _ =
             EventTool.triggerDomEvent(
               "mouseup",
               EventTool.getBody(),
-              MouseEventTool.buildMouseEvent(),
+              MouseEventTool.buildMouseEvent(
+                ~pageX=dropPageX,
+                ~pageY=dropPageY,
+                (),
+              ),
             );
             EventTool.restore();
 
-            (valueX^, valueY^)
-            |> expect == (locationInViewX, locationInViewY);
+            ((x1^, y1^), (x2^, y2^), (x3^, y3^))
+            |>
+            expect == (
+                        (dragStartLocationInViewX, dragStartLocationInViewY),
+                        (dragOverLocationInViewX, dragOverLocationInViewY),
+                        (dragDropLocationInViewX, dragDropLocationInViewY),
+                      );
           };
 
           describe("test eventTarget is game view", () =>
             describe("test locationInView", () =>
               describe("test view has no offsetParent", () =>
-                test("test trigger in scene view", () => {
-                  _prepareMouseEvent(
-                    ~sandbox,
-                    ~offsetLeft=1,
-                    ~offsetTop=2,
-                    (),
-                  );
+                test(
+                  "test trigger mousedragstart, mousedragover, mousedragdrop event in scene view",
+                  () => {
+                    _prepareMouseEvent(
+                      ~sandbox,
+                      ~offsetLeft=1,
+                      ~offsetTop=2,
+                      (),
+                    );
 
-                  _test((60, 20), (20, 30), (20 - 50 - 1, 30 - 2));
-                })
+                    _test(
+                      (60, 20),
+                      (20, 30),
+                      (10, 22),
+                      (60 - 50 - 1, 20 - 2),
+                      (20 - 50 - 1, 30 - 2),
+                      (10 - 50 - 1, 22 - 2),
+                    );
+                  },
+                )
               )
             )
           );
@@ -590,7 +644,11 @@ let _ =
             ControllerTool.setIsRun(false);
 
             let _ =
-              _prepareAndExec(KeyUp_SceneView |> Obj.magic, "keyup", (10, 20));
+              _prepareAndExec(
+                KeyUp_SceneView |> Obj.magic,
+                "keyup",
+                (10, 20),
+              );
 
             let gl = FakeGlToolEngine.getEngineStateGl();
             gl##clearColor |> expect |> toCalled;
@@ -630,7 +688,8 @@ let _ =
               test("not trigger keyup event", () => {
                 _prepareKeyboardEvent(~sandbox, ());
 
-                let value = _prepareAndExec(KeyUp_GameView, "keyup", ((-1), 20));
+                let value =
+                  _prepareAndExec(KeyUp_GameView, "keyup", ((-1), 20));
 
                 value^ |> expect == 0;
               });
@@ -848,7 +907,10 @@ let _ =
           test("trigger editor point event", () => {
             _prepareMouseEvent(~sandbox, ());
 
-            _test(SceneViewEventEditorService.getPointScaleEventName(), (10, 20));
+            _test(
+              SceneViewEventEditorService.getPointScaleEventName(),
+              (10, 20),
+            );
           });
         });
 
@@ -872,7 +934,10 @@ let _ =
           test("trigger engine point event", () => {
             _prepareMouseEvent(~sandbox, ());
 
-            _test(GameViewEventEditorService.getPointScaleEventName(), (60, 20));
+            _test(
+              GameViewEventEditorService.getPointScaleEventName(),
+              (60, 20),
+            );
           });
           /* describe("trigger refresh_inspector event", () =>
                test("defer 0 ms to exec", () => {

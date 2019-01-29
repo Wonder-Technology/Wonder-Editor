@@ -8,13 +8,7 @@ type customEvent = Wonderjs.EventType.customEvent;
 
 type userData = Wonderjs.EventType.userData;
 
-type pointEventName =
-  | PointTap
-  | PointDown
-  | PointUp
-  | PointMove
-  | PointScale
-  | PointDrag;
+type pointEventName = Wonderjs.EventType.pointEventName;
 
 type domEventName =
   | Contextmenu
@@ -23,7 +17,9 @@ type domEventName =
   | MouseUp
   | MouseMove
   | MouseWheel
-  | MouseDrag
+  | MouseDragStart
+  | MouseDragOver
+  | MouseDragDrop
   | KeyUp_GameView
   | KeyDown_GameView
   | KeyPress_GameView
@@ -31,7 +27,9 @@ type domEventName =
   | TouchEnd
   | TouchMove
   | TouchStart
-  | TouchDrag
+  | TouchDragStart
+  | TouchDragOver
+  | TouchDragDrop
   | KeyUp_SceneView
   | KeyDown_SceneView
   | KeyPress_SceneView;
