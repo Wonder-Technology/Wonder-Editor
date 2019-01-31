@@ -1,5 +1,5 @@
 let _moveAndRotateTranslationWholeGizmoToCurrentSceneTreeNode =
-    (currentSceneTreeNode, translationWholeGizmo, editorState, engineState) => {
+    (currentSceneTreeNode, translationWholeGizmo, engineState) => {
   let currentSceneTreeNodeTransform =
     GameObjectComponentEngineService.unsafeGetTransformComponent(
       currentSceneTreeNode,
@@ -29,10 +29,12 @@ let _moveAndRotateTranslationWholeGizmoToCurrentSceneTreeNode =
 };
 
 let _scaleTranslationWholeGizmo =
-    (currentSceneTreeNode, translationWholeGizmo, editorState, engineState) => {
-  let cameraGameObject =
-    SceneViewEditorService.unsafeGetEditCamera(editorState);
-
+    (
+      currentSceneTreeNode,
+      cameraGameObject,
+      translationWholeGizmo,
+      engineState,
+    ) => {
   let scaleFactor =
     ComputeTranslationGizmoUtils.computeScaleFactorBasedOnDistanceToCamera(
       TransformGameObjectEngineService.getPosition(
@@ -66,16 +68,18 @@ let updateTransformJob = (_, engineState) => {
           editorState,
         );
 
+      let cameraGameObject =
+        SceneViewEditorService.unsafeGetEditCamera(editorState);
+
       engineState
       |> _moveAndRotateTranslationWholeGizmoToCurrentSceneTreeNode(
            currentSceneTreeNode,
            translationWholeGizmo,
-           editorState,
          )
       |> _scaleTranslationWholeGizmo(
            currentSceneTreeNode,
+           cameraGameObject,
            translationWholeGizmo,
-           editorState,
          );
     } :
     engineState;

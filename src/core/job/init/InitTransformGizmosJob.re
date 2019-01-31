@@ -85,13 +85,24 @@ let _bindEvent = (editorState, engineState) => {
           |> StateLogicService.getEditorState ?
             {
               let editorState = StateEditorService.getState();
+
+              let currentSceneTreeNode =
+                SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(
+                  editorState,
+                );
+
               let transform =
                 GameObjectComponentEngineService.unsafeGetTransformComponent(
-                  SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(
-                    editorState,
-                  ),
+                  currentSceneTreeNode,
                   engineState,
                 );
+
+              let engineState =
+                MoveTranslationPlaneGizmosUtils.moveTranslationPlaneGizmo(
+                  editorState,
+                  engineState,
+                );
+
               engineState |> StateEngineService.setState |> ignore;
 
               PositionBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
@@ -103,6 +114,30 @@ let _bindEvent = (editorState, engineState) => {
               );
 
               (StateEngineService.unsafeGetState(), event);
+            } :
+            (engineState, event),
+      ~state=engineState,
+      (),
+    );
+
+  let engineState =
+    ManageEventEngineService.onCustomGlobalEvent(
+      ~eventName=SceneViewEventEditorService.getPointDragDropEventName(),
+      ~handleFunc=
+        (. event, engineState) =>
+          MouseEventService.isRightMouseButton(event)
+          && IsTransformGizmoRenderSceneViewEditorService.isTranslationWholeGizmoRender
+          |> StateLogicService.getEditorState ?
+            {
+              let editorState = StateEditorService.getState();
+
+              let engineState =
+                MoveTranslationPlaneGizmosUtils.moveTranslationPlaneGizmo(
+                  editorState,
+                  engineState,
+                );
+
+              (engineState, event);
             } :
             (engineState, event),
       ~state=engineState,
