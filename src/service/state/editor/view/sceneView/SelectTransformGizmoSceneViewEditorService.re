@@ -20,6 +20,24 @@ let isTranslationZAxisGizmoSelected = editorState =>
   ).
     isTranslationZAxisGizmoSelected;
 
+let isTranslationXYPlaneGizmoSelected = editorState =>
+  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+    editorState.sceneViewRecord,
+  ).
+    isTranslationXYPlaneGizmoSelected;
+
+let isTranslationXZPlaneGizmoSelected = editorState =>
+  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+    editorState.sceneViewRecord,
+  ).
+    isTranslationXZPlaneGizmoSelected;
+
+let isTranslationYZPlaneGizmoSelected = editorState =>
+  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+    editorState.sceneViewRecord,
+  ).
+    isTranslationYZPlaneGizmoSelected;
+
 let isSelectAnyTransformGizmo = editorState =>
   switch (
     RecordTransformGizmoSceneViewEditorService.getData(
@@ -31,6 +49,9 @@ let isSelectAnyTransformGizmo = editorState =>
     isTranslationXAxisGizmoSelected(editorState)
     || isTranslationYAxisGizmoSelected(editorState)
     || isTranslationZAxisGizmoSelected(editorState)
+    || isTranslationXYPlaneGizmoSelected(editorState)
+    || isTranslationXZPlaneGizmoSelected(editorState)
+    || isTranslationYZPlaneGizmoSelected(editorState)
   };
 
 let markNotSelectAnyTranslationGizmo = editorState => {
@@ -46,8 +67,68 @@ let markNotSelectAnyTranslationGizmo = editorState => {
         isTranslationXAxisGizmoSelected: false,
         isTranslationYAxisGizmoSelected: false,
         isTranslationZAxisGizmoSelected: false,
+        isTranslationXYPlaneGizmoSelected: false,
+        isTranslationXZPlaneGizmoSelected: false,
+        isTranslationYZPlaneGizmoSelected: false,
       }),
   },
+};
+
+let onlySelectTranslationXYPlaneGizmo = editorState => {
+  let editorState = editorState |> markNotSelectAnyTranslationGizmo;
+
+  {
+    ...editorState,
+    sceneViewRecord: {
+      ...editorState.sceneViewRecord,
+      transformGizmoData:
+        Some({
+          ...
+            RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+              editorState.sceneViewRecord,
+            ),
+          isTranslationXYPlaneGizmoSelected: true,
+        }),
+    },
+  };
+};
+
+let onlySelectTranslationXZPlaneGizmo = editorState => {
+  let editorState = editorState |> markNotSelectAnyTranslationGizmo;
+
+  {
+    ...editorState,
+    sceneViewRecord: {
+      ...editorState.sceneViewRecord,
+      transformGizmoData:
+        Some({
+          ...
+            RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+              editorState.sceneViewRecord,
+            ),
+          isTranslationXZPlaneGizmoSelected: true,
+        }),
+    },
+  };
+};
+
+let onlySelectTranslationYZPlaneGizmo = editorState => {
+  let editorState = editorState |> markNotSelectAnyTranslationGizmo;
+
+  {
+    ...editorState,
+    sceneViewRecord: {
+      ...editorState.sceneViewRecord,
+      transformGizmoData:
+        Some({
+          ...
+            RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+              editorState.sceneViewRecord,
+            ),
+          isTranslationYZPlaneGizmoSelected: true,
+        }),
+    },
+  };
 };
 
 let onlySelectTranslationXAxisGizmo = editorState => {

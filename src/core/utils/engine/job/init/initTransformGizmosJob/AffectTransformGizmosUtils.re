@@ -1,4 +1,3 @@
-
 let _getIntersectPointWithPlane = (plane, ray, (editorState, engineState)) =>
   RayUtils.checkIntersectPlane(plane, ray);
 
@@ -61,7 +60,7 @@ let _computeCurrentSceneTreeNodeNewPositionForMoveYAxis =
       editorState,
       engineState,
     ),
-FindPlaneForCheckIntersectUtils.   findMostOrthogonalPlaneForYAxis,
+    FindPlaneForCheckIntersectUtils.findMostOrthogonalPlaneForYAxis,
     (editorState, engineState),
   );
 
@@ -74,6 +73,65 @@ let _computeCurrentSceneTreeNodeNewPositionForMoveZAxis =
       engineState,
     ),
     FindPlaneForCheckIntersectUtils.findMostOrthogonalPlaneForZAxis,
+    (editorState, engineState),
+  );
+
+let _computeCurrentSceneTreeNodeNewPositionForMovePlane =
+    (ray, plane, (editorState, engineState)) =>
+  switch (
+    _getIntersectPointWithPlane(plane, ray, (editorState, engineState))
+  ) {
+  | None => None
+  | Some(point) =>
+    let currentSceneTreeNodeStartPoint =
+      TransformGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartPoint(
+        editorState,
+      );
+
+    Wonderjs.Vector3Service.add(
+      Wonderjs.Vector3Type.Float,
+      currentSceneTreeNodeStartPoint,
+      Wonderjs.Vector3Service.sub(
+        Wonderjs.Vector3Type.Float,
+        point,
+        MoveTransformGizmoSceneViewEditorService.unsafeGetPickStartPoint(
+          editorState,
+        ),
+      ),
+    )
+    |. Some;
+  };
+
+let _computeCurrentSceneTreeNodeNewPositionForMoveXYPlane =
+    (ray, (editorState, engineState)) =>
+  _computeCurrentSceneTreeNodeNewPositionForMovePlane(
+    ray,
+    PlaneTransformGizmoSceneViewEditorService.buildXYPlane(
+      editorState,
+      engineState,
+    ),
+    (editorState, engineState),
+  );
+
+let _computeCurrentSceneTreeNodeNewPositionForMoveXZPlane =
+    (ray, (editorState, engineState)) =>
+  _computeCurrentSceneTreeNodeNewPositionForMovePlane(
+    ray,
+    PlaneTransformGizmoSceneViewEditorService.buildXZPlane(
+      editorState,
+      engineState,
+    ),
+    (editorState, engineState),
+  );
+
+let _computeCurrentSceneTreeNodeNewPositionForMoveYZPlane =
+    (ray, (editorState, engineState)) =>
+  _computeCurrentSceneTreeNodeNewPositionForMovePlane(
+    ray,
+    PlaneTransformGizmoSceneViewEditorService.buildYZPlane(
+      editorState,
+      engineState,
+    ),
     (editorState, engineState),
   );
 
@@ -97,7 +155,7 @@ let _moveCurrentSceneTreeNodeAndWholeTranslationGizmo =
        newPosition,
      );
 
-let _affectTranslationAxisGizmo = (newPosition, (editorState, engineState)) =>
+let _affectTranslationGizmo = (newPosition, (editorState, engineState)) =>
   switch (newPosition) {
   | None => (editorState, engineState)
   | Some(newPosition) =>
@@ -111,17 +169,13 @@ let _affectTranslationAxisGizmo = (newPosition, (editorState, engineState)) =>
     (editorState, engineState);
   };
 
-let affectTransformGizmo = (event, (editorState, engineState)) => {
-  let cameraGameObject =
-    SceneViewEditorService.unsafeGetEditCamera(editorState);
+let _affectTranslationAxisGizmo = (newPosition, (editorState, engineState)) =>
+  _affectTranslationGizmo(newPosition, (editorState, engineState));
 
-  let ray =
-    RayUtils.createPerspectiveCameraRayFromEvent(
-      event,
-      cameraGameObject,
-      (editorState, engineState),
-    );
+let _affectTranslationPlaneGizmo = (newPosition, (editorState, engineState)) =>
+  _affectTranslationGizmo(newPosition, (editorState, engineState));
 
+let _affectAxisGizmo = (ray, editorState, engineState) =>
   SelectTransformGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected(
     editorState,
   ) ?
@@ -153,4 +207,50 @@ let affectTransformGizmo = (event, (editorState, engineState)) => {
           (editorState, engineState),
         ) :
         (editorState, engineState);
+
+let _affectPlaneGizmo = (ray, _affectAxisGizmoFunc, editorState, engineState) =>
+  SelectTransformGizmoSceneViewEditorService.isTranslationXYPlaneGizmoSelected(
+    editorState,
+  ) ?
+    _affectTranslationPlaneGizmo(
+      _computeCurrentSceneTreeNodeNewPositionForMoveXYPlane(
+        ray,
+        (editorState, engineState),
+      ),
+      (editorState, engineState),
+    ) :
+    SelectTransformGizmoSceneViewEditorService.isTranslationXZPlaneGizmoSelected(
+      editorState,
+    ) ?
+      _affectTranslationPlaneGizmo(
+        _computeCurrentSceneTreeNodeNewPositionForMoveXZPlane(
+          ray,
+          (editorState, engineState),
+        ),
+        (editorState, engineState),
+      ) :
+      SelectTransformGizmoSceneViewEditorService.isTranslationYZPlaneGizmoSelected(
+        editorState,
+      ) ?
+        _affectTranslationPlaneGizmo(
+          _computeCurrentSceneTreeNodeNewPositionForMoveYZPlane(
+            ray,
+            (editorState, engineState),
+          ),
+          (editorState, engineState),
+        ) :
+        _affectAxisGizmoFunc(ray, editorState, engineState);
+
+let affectTransformGizmo = (event, (editorState, engineState)) => {
+  let cameraGameObject =
+    SceneViewEditorService.unsafeGetEditCamera(editorState);
+
+  let ray =
+    RayUtils.createPerspectiveCameraRayFromEvent(
+      event,
+      cameraGameObject,
+      (editorState, engineState),
+    );
+
+  _affectPlaneGizmo(ray, _affectAxisGizmo, editorState, engineState);
 };
