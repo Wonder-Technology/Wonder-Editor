@@ -26,3 +26,31 @@ let setDepthTest = (test, engineState) => {
       engineState.deviceManagerRecord,
     ),
 };
+
+let setDepthWrite = (writeDepth: bool, engineState) => {
+  ...engineState,
+  deviceManagerRecord:
+    DeviceManagerService.setDepthWrite(
+      unsafeGetGl(engineState),
+      writeDepth,
+      engineState.deviceManagerRecord,
+    ),
+};
+
+let setSide = DeviceManagerAPI.setSide;
+
+let setBlend = (isBlend, engineState) => {
+  let gl = unsafeGetGl(engineState);
+
+  isBlend ?
+    gl |> WonderWebgl.Gl.enable(Gl.getBlend(gl)) :
+    gl |> WonderWebgl.Gl.disable(Gl.getBlend(gl));
+
+  engineState;
+};
+
+let setBlendFunc = (srcFactor, dstFactor, engineState) => {
+  unsafeGetGl(engineState) |> Gl.blendFunc(srcFactor, dstFactor);
+
+  engineState;
+};

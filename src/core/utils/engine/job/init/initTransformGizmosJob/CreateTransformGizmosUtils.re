@@ -109,7 +109,35 @@ let _createTranslationAxisGizmo = (color, engineState) => {
   );
 };
 
-let createTransformGizmos = engineState => {
+let _createTranslationPlaneGizmo = (color, engineState) => {
+  let (engineState, planeGeometry) =
+    GeometryEngineService.createPlaneGeometry(2., 2., 5, 5, engineState);
+
+  let (engineState, planeGameObject, planeMaterial, planeMeshRenderer) =
+    engineState |> _createBasicGameObject(planeGeometry);
+
+  let alpha = 0.3;
+
+  let engineState =
+    engineState
+    |> BasicMaterialEngineService.setColor(color, planeMaterial)
+    |> BasicMaterialEngineService.setAlpha(planeMaterial, alpha)
+    |> MeshRendererEngineService.setMeshRendererIsRender(
+         planeMeshRenderer,
+         false,
+       );
+
+  (
+    engineState,
+    planeGameObject,
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      planeGameObject,
+      engineState,
+    ),
+  );
+};
+
+let _createAxisGizmos = engineState => {
   let (engineState, xAxisGizmo, xAxisTransform) =
     _createTranslationAxisGizmo([|1., 0., 0.|], engineState);
   let (engineState, yAxisGizmo, yAxisTransform) =
@@ -129,6 +157,40 @@ let createTransformGizmos = engineState => {
          zAxisTransform,
        );
 
+  (engineState, (xAxisGizmo, yAxisGizmo, zAxisGizmo));
+};
+
+let _createPlaneGizmos = engineState => {
+  let (engineState, xyPlaneGizmo, xyPlaneTransform) =
+    _createTranslationPlaneGizmo([|0., 0., 1.|], engineState);
+
+  let (engineState, xzPlaneGizmo, xzPlaneTransform) =
+    _createTranslationPlaneGizmo([|0., 1., 0.|], engineState);
+
+  let (engineState, yzPlaneGizmo, yzPlaneTransform) =
+    _createTranslationPlaneGizmo([|1., 0., 0.|], engineState);
+
+  let engineState =
+    engineState
+    |> TransformEngineService.setLocalEulerAngles(
+         (0., 90., 0.),
+         yzPlaneTransform,
+       )
+    |> TransformEngineService.setLocalEulerAngles(
+         (90., 0., 0.),
+         xzPlaneTransform,
+       );
+
+  (engineState, (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo));
+};
+
+let createTransformGizmos = engineState => {
+  let (engineState, (xAxisGizmo, yAxisGizmo, zAxisGizmo)) =
+    _createAxisGizmos(engineState);
+
+  let (engineState, (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo)) =
+    _createPlaneGizmos(engineState);
+
   let (engineState, wholeGizmo) =
     GameObjectEngineService.create(engineState);
 
@@ -136,15 +198,24 @@ let createTransformGizmos = engineState => {
     engineState
     |> HierarchyGameObjectEngineService.addChild(wholeGizmo, zAxisGizmo)
     |> HierarchyGameObjectEngineService.addChild(wholeGizmo, yAxisGizmo)
-    |> HierarchyGameObjectEngineService.addChild(wholeGizmo, xAxisGizmo);
+    |> HierarchyGameObjectEngineService.addChild(wholeGizmo, xAxisGizmo)
+    |> HierarchyGameObjectEngineService.addChild(wholeGizmo, xyPlaneGizmo)
+    |> HierarchyGameObjectEngineService.addChild(wholeGizmo, xzPlaneGizmo)
+    |> HierarchyGameObjectEngineService.addChild(wholeGizmo, yzPlaneGizmo);
 
-  (engineState, wholeGizmo, (xAxisGizmo, yAxisGizmo, zAxisGizmo));
+  (
+    engineState,
+    wholeGizmo,
+    (xAxisGizmo, yAxisGizmo, zAxisGizmo),
+    (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo),
+  );
 };
 
 let setToEditorState =
     (
       wholeGizmo,
       (xAxisGizmo, yAxisGizmo, zAxisGizmo),
+      (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo),
       editorState: EditorType.editorState,
     )
     : EditorType.editorState => {
@@ -157,9 +228,15 @@ let setToEditorState =
         translationXAxisGizmo: xAxisGizmo,
         translationYAxisGizmo: yAxisGizmo,
         translationZAxisGizmo: zAxisGizmo,
+        translationXYPlaneGizmo: xyPlaneGizmo,
+        translationXZPlaneGizmo: xzPlaneGizmo,
+        translationYZPlaneGizmo: yzPlaneGizmo,
         isTranslationXAxisGizmoSelected: false,
         isTranslationYAxisGizmoSelected: false,
         isTranslationZAxisGizmoSelected: false,
+        isTranslationXYPlaneGizmoSelected: false,
+        isTranslationXZPlaneGizmoSelected: false,
+        isTranslationYZPlaneGizmoSelected: false,
         currentSceneTreeNodeStartPoint: None,
         axisGameObjectStartPoint: None,
         pickStartPoint: None,

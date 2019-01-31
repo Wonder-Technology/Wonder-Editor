@@ -1,9 +1,33 @@
 module RenderTransformGizmos = {
-  let prepareGlState = engineState =>
+  let prepareTranslationAxisGlState = engineState =>
     engineState |> DeviceManagerEngineService.setDepthTest(false);
 
-  let restoreGlState = engineState =>
+  let restoreTranslationAxisGlState = engineState =>
     engineState |> DeviceManagerEngineService.setDepthTest(true);
+
+  let prepareTranslationPlaneGlState = engineState => {
+    let gl = DeviceManagerEngineService.unsafeGetGl(engineState);
+
+    engineState
+    |> DeviceManagerEngineService.setDepthWrite(false)
+    |> DeviceManagerEngineService.setDepthTest(false)
+    |> DeviceManagerEngineService.setSide(Wonderjs.DeviceManagerType.BOTH)
+    |> DeviceManagerEngineService.setBlend(true)
+    |> DeviceManagerEngineService.setBlendFunc(
+         Gl.getSrcAlpha(gl),
+         Gl.getOneMinusSrcAlpha(gl),
+       );
+  };
+
+  let restoreTranslationPlaneGlState = engineState => {
+    let gl = DeviceManagerEngineService.unsafeGetGl(engineState);
+
+    engineState
+    |> DeviceManagerEngineService.setDepthTest(true)
+    |> DeviceManagerEngineService.setDepthWrite(true)
+    |> DeviceManagerEngineService.setSide(Wonderjs.DeviceManagerType.FRONT)
+    |> DeviceManagerEngineService.setBlend(false);
+  };
 
   let getRenderDataArr =
       (
@@ -100,6 +124,66 @@ module RenderTransformGizmos = {
     );
 };
 
+let _getTranslationAxisGameObjects = (editorState, engineState) =>
+  ArrayService.fastConcatArrays([|
+    HierarchyGameObjectEngineService.getAllGameObjects(
+      TransformGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
+        editorState,
+      ),
+      engineState,
+    ),
+    HierarchyGameObjectEngineService.getAllGameObjects(
+      TransformGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
+        editorState,
+      ),
+      engineState,
+    ),
+    HierarchyGameObjectEngineService.getAllGameObjects(
+      TransformGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
+        editorState,
+      ),
+      engineState,
+    ),
+  |]);
+
+let _getTranslationPlaneGameObjects = (editorState, engineState) =>
+  ArrayService.fastConcatArrays([|
+    HierarchyGameObjectEngineService.getAllGameObjects(
+      TransformGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+        editorState,
+      ),
+      engineState,
+    ),
+    HierarchyGameObjectEngineService.getAllGameObjects(
+      TransformGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
+        editorState,
+      ),
+      engineState,
+    ),
+    HierarchyGameObjectEngineService.getAllGameObjects(
+      TransformGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
+        editorState,
+      ),
+      engineState,
+    ),
+  |]);
+
+let _renderTranslationGameObjects =
+    (gameObjects, (prepareGlStateFunc, restoreGlStateFunc), engineState) => {
+  let renderDataArr =
+    RenderTransformGizmos.getRenderDataArr(gameObjects, engineState);
+  let gl = DeviceManagerEngineService.unsafeGetGl(engineState);
+
+  let engineState = engineState |> prepareGlStateFunc;
+
+  let engineState =
+    RenderTransformGizmos.draw(gl, renderDataArr, engineState);
+
+  let engineState = engineState |> restoreGlStateFunc;
+
+  engineState;
+};
+
 let renderJob = (_, engineState) => {
   let editorState = StateEditorService.getState();
 
@@ -109,29 +193,27 @@ let renderJob = (_, engineState) => {
     switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
     | None => engineState
     | Some(currentSceneTreeNode) =>
-      let translationWholeGizmo =
-        TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
-          editorState,
-        );
+      let translationAxisGameObjects =
+        _getTranslationAxisGameObjects(editorState, engineState);
 
-      let renderDataArr =
-        RenderTransformGizmos.getRenderDataArr(
-          HierarchyGameObjectEngineService.getAllGameObjects(
-            translationWholeGizmo,
-            engineState,
-          ),
-          engineState,
-        );
-      let gl = DeviceManagerEngineService.unsafeGetGl(engineState);
+      let translationPlaneGameObjects =
+        _getTranslationPlaneGameObjects(editorState, engineState);
 
-      let engineState = engineState |> RenderTransformGizmos.prepareGlState;
-
-      let engineState =
-        RenderTransformGizmos.draw(gl, renderDataArr, engineState);
-
-      let engineState = engineState |> RenderTransformGizmos.restoreGlState;
-
-      engineState;
+      engineState
+      |> _renderTranslationGameObjects(
+           translationAxisGameObjects,
+           (
+             RenderTransformGizmos.prepareTranslationAxisGlState,
+             RenderTransformGizmos.restoreTranslationAxisGlState,
+           ),
+         )
+      |> _renderTranslationGameObjects(
+           translationPlaneGameObjects,
+           (
+             RenderTransformGizmos.prepareTranslationPlaneGlState,
+             RenderTransformGizmos.restoreTranslationPlaneGlState,
+           ),
+         );
     } :
     engineState;
 };

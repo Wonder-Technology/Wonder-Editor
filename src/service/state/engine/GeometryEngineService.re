@@ -31,6 +31,8 @@ let createCylinderGeometry = GeometryAPI.createCylinderGeometry;
 
 let createConeGeometry = GeometryAPI.createConeGeometry;
 
+let createPlaneGeometry = GeometryAPI.createPlaneGeometry;
+
 let getGeometryVertices = GeometryAPI.getGeometryVertices;
 
 let setGeometryVertices = GeometryAPI.setGeometryVertices;

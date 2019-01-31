@@ -25,6 +25,8 @@ let setIsDepthTest = (isDepthTest, material, engineState) =>
   engineState
   |> BasicMaterialAPI.setBasicMaterialIsDepthTest(material, isDepthTest);
 
+let setAlpha = BasicMaterialAPI.setBasicMaterialAlpha;
+
 let reInitMaterials = BasicMaterialAPI.reInitMaterials;
 
 let reInitAllBasicMaterialsAndClearShaderCache = (materials, engineState) =>
