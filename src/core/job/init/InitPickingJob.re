@@ -186,15 +186,8 @@ let _handleSceneTreeCurrentNodeAndRedoUndo =
   StateEngineService.unsafeGetState();
 };
 
-let _handlePickSuccess = (gameObject, engineState) => {
-  let engineState =
-    engineState |> _handleSceneTreeCurrentNodeAndRedoUndo(Some(gameObject));
-
-  engineState
-  |> MoveTranslationPlaneGizmosUtils.moveTranslationPlaneGizmo(
-       StateEditorService.getState(),
-     );
-};
+let _handlePickSuccess = (gameObject, engineState) =>
+  engineState |> _handleSceneTreeCurrentNodeAndRedoUndo(Some(gameObject));
 
 let _handlePickFail = engineState =>
   _handleSceneTreeCurrentNodeAndRedoUndo(None, engineState);

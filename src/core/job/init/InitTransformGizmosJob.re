@@ -10,6 +10,25 @@ let _refreshInspector = () => {
 let _bindEvent = (editorState, engineState) => {
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
+      ~eventName=CustomEventEditorService.getSelectSceneTreeNodeEventName(),
+      ~handleFunc=
+        (. event, engineState) => {
+          let editorState = StateEditorService.getState();
+
+          let engineState =
+            engineState
+            |> MoveTranslationPlaneGizmosUtils.moveTranslationPlaneGizmo(
+                 editorState,
+               );
+
+          (engineState, event);
+        },
+      ~state=engineState,
+      (),
+    );
+
+  let engineState =
+    ManageEventEngineService.onCustomGlobalEvent(
       ~eventName=SceneViewEventEditorService.getPointDragStartEventName(),
       ~handleFunc=
         (. event, engineState) =>

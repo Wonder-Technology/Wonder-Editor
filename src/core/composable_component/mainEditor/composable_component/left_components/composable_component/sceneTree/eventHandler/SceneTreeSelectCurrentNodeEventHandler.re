@@ -54,6 +54,17 @@ module CustomEventHandler = {
       |> StateEditorService.setState
       |> ignore;
 
+      let engineState = StateEngineService.unsafeGetState();
+      let (engineState, _) =
+        ManageEventEngineService.triggerCustomGlobalEvent(
+          CreateCustomEventEngineService.create(
+            CustomEventEditorService.getSelectSceneTreeNodeEventName(),
+            None,
+          ),
+          engineState,
+        );
+      engineState |> StateEngineService.setState |> ignore;
+
       StateLogicService.getAndRefreshEngineStateWhenStop();
     };
 

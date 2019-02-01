@@ -132,7 +132,10 @@ let render = (uiState, dispatchFunc, _self) => {
                        (uiState, dispatchFunc),
                        (),
                      ),
-                     Method.dragWDBToBeTargetSib((uiState, dispatchFunc), ()),
+                     Method.dragWDBToBeTargetSib(
+                       (uiState, dispatchFunc),
+                       (),
+                     ),
                    ),
                    (
                      SceneEngineService.getSceneGameObject(engineState),
