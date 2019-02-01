@@ -392,7 +392,7 @@ let _ =
           |> expect == Some(SceneTreeWidgetService.getWidget());
         });
 
-        describe("handle pick success", ()
+        describe("handle pick success", () => {
           /* test("test trigger", () => {
                let _ = _prepare();
                let a = ref(0);
@@ -440,61 +440,76 @@ let _ =
 
                pickedGameObject^ |> expect == gameObject;
              }); */
-          =>
-            test(
-              "the picked gameObject's all parents should show children", () => {
-              let _createParentGameObject = engineState => {
-                let (engineState, parent) =
-                  engineState |> GameObjectEngineService.create;
-                let engineState =
-                  engineState
-                  |> GameObjectEngineService.setGameObjectName(
-                       "parent",
-                       parent,
-                     );
 
-                (engineState, parent);
-              };
-
-              let gameObject = _prepare();
-              let engineState = StateEngineService.unsafeGetState();
-              let (engineState, parent1) =
-                _createParentGameObject(engineState);
-              let (engineState, parent2) =
-                _createParentGameObject(engineState);
+          test("the picked gameObject's all parents should show children", () => {
+            let _createParentGameObject = engineState => {
+              let (engineState, parent) =
+                engineState |> GameObjectEngineService.create;
               let engineState =
                 engineState
-                |> SceneEngineService.addSceneChild(parent1)
-                |> HierarchyGameObjectEngineService.addChild(
-                     parent1,
-                     parent2,
-                   )
-                |> HierarchyGameObjectEngineService.addChild(
-                     parent2,
-                     gameObject,
-                   );
+                |> GameObjectEngineService.setGameObjectName("parent", parent);
 
-              _triggerPicking();
+              (engineState, parent);
+            };
 
-              let editorState = StateEditorService.getState();
-              let engineState = StateEngineService.unsafeGetState();
-              let sceneGameObject =
-                SceneEngineService.getSceneGameObject(engineState);
-              (
-                SceneTreeEditorService.getIsShowChildern(
-                  parent1,
-                  sceneGameObject,
-                  editorState,
-                ),
-                SceneTreeEditorService.getIsShowChildern(
-                  parent2,
-                  sceneGameObject,
-                  editorState,
-                ),
-              )
-              |> expect == (true, true);
-            })
-          );
+            let gameObject = _prepare();
+            let engineState = StateEngineService.unsafeGetState();
+            let (engineState, parent1) =
+              _createParentGameObject(engineState);
+            let (engineState, parent2) =
+              _createParentGameObject(engineState);
+            let engineState =
+              engineState
+              |> SceneEngineService.addSceneChild(parent1)
+              |> HierarchyGameObjectEngineService.addChild(parent1, parent2)
+              |> HierarchyGameObjectEngineService.addChild(
+                   parent2,
+                   gameObject,
+                 );
+
+            _triggerPicking();
+
+            let editorState = StateEditorService.getState();
+            let engineState = StateEngineService.unsafeGetState();
+            let sceneGameObject =
+              SceneEngineService.getSceneGameObject(engineState);
+            (
+              SceneTreeEditorService.getIsShowChildern(
+                parent1,
+                sceneGameObject,
+                editorState,
+              ),
+              SceneTreeEditorService.getIsShowChildern(
+                parent2,
+                sceneGameObject,
+                editorState,
+              ),
+            )
+            |> expect == (true, true);
+          });
+          test("trigger selectSceneTreeNode event", () => {
+            let _ = _prepare();
+            let a = ref(0);
+            ManageEventEngineService.onCustomGlobalEvent(
+              ~eventName=
+                CustomEventEditorService.getSelectSceneTreeNodeEventName(),
+              ~handleFunc=
+                (. event, engineState) => {
+                  a := 1;
+
+                  (engineState, event);
+                },
+              ~state=StateEngineService.unsafeGetState(),
+              (),
+            )
+            |> StateEngineService.setState
+            |> ignore;
+
+            _triggerPicking();
+
+            a^ |> expect == 1;
+          });
+        });
       });
 
       describe("if not find", () =>
@@ -553,6 +568,28 @@ let _ =
             CurrentSelectSourceEditorService.getCurrentSelectSource
             |> StateLogicService.getEditorState
             |> expect == None;
+          });
+          test("not trigger selectSceneTreeNode event", () => {
+            let _ = _prepare();
+            let a = ref(0);
+            ManageEventEngineService.onCustomGlobalEvent(
+              ~eventName=
+                CustomEventEditorService.getSelectSceneTreeNodeEventName(),
+              ~handleFunc=
+                (. event, engineState) => {
+                  a := 1;
+
+                  (engineState, event);
+                },
+              ~state=StateEngineService.unsafeGetState(),
+              (),
+            )
+            |> StateEngineService.setState
+            |> ignore;
+
+            _triggerPicking();
+
+            a^ |> expect == 0;
           });
         })
       );

@@ -6,6 +6,17 @@ let getChildren = (gameObject, engineState) =>
 let getChild = (gameObject, index, engineState) =>
   Array.unsafe_get(getChildren(gameObject, engineState), index);
 
+let hasTargetChildren = (gameObject, targetChildren, engineState) => {
+  let children = getChildren(gameObject, engineState);
+
+  targetChildren
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. has, targetChild) =>
+         has ? true : children |> Js.Array.includes(targetChild),
+       false,
+     );
+};
+
 let unsafeGetCurrentSceneTreeNode = () =>
   SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
   |> StateLogicService.getEditorState;
@@ -123,6 +134,5 @@ let setCurrentSceneTreeNode = gameObject =>
 
 let isAlive = Wonderjs.AliveGameObjectMainService.isAlive;
 
-let getNewGameObject =
-    (~engineState=StateEngineService.unsafeGetState(), ()) =>
+let getNewGameObject = (~engineState=StateEngineService.unsafeGetState(), ()) =>
   engineState.gameObjectRecord.uid;

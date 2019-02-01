@@ -23,8 +23,8 @@ module RenderTransformGizmos = {
     let gl = DeviceManagerEngineService.unsafeGetGl(engineState);
 
     engineState
-    |> DeviceManagerEngineService.setDepthTest(true)
     |> DeviceManagerEngineService.setDepthWrite(true)
+    |> DeviceManagerEngineService.setDepthTest(true)
     |> DeviceManagerEngineService.setSide(Wonderjs.DeviceManagerType.FRONT)
     |> DeviceManagerEngineService.setBlend(false);
   };
@@ -82,7 +82,7 @@ module RenderTransformGizmos = {
   let _getShaderIndex = (materialIndex, engineState) =>
     Wonderjs.(RenderJobAPI.getShaderIndex(materialIndex, engineState));
 
-  let draw = (gl, renderDataArr, engineState) =>
+  let render = (gl, renderDataArr, engineState) =>
     Wonderjs.(
       renderDataArr
       |> WonderCommonlib.ArrayService.reduceOneParam(
@@ -177,7 +177,7 @@ let _renderTranslationGameObjects =
   let engineState = engineState |> prepareGlStateFunc;
 
   let engineState =
-    RenderTransformGizmos.draw(gl, renderDataArr, engineState);
+    RenderTransformGizmos.render(gl, renderDataArr, engineState);
 
   let engineState = engineState |> restoreGlStateFunc;
 

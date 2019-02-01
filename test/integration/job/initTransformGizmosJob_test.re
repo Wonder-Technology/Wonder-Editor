@@ -45,32 +45,44 @@ let _ =
         StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
       };
 
-      let _getArrow = (axisGameObject, engineState) =>
-        TransformGizmosTool.getArrowFromAxisGameObject(
-          axisGameObject,
-          engineState,
-        );
+      describe("create translation gizmos", () => {
+        beforeEach(() => _prepareState(sandbox));
 
-      let _getLine = (axisGameObject, engineState) =>
-        TransformGizmosTool.getLineFromAxisGameObject(
-          axisGameObject,
-          engineState,
-        );
-
-      beforeEach(() => _prepareState(sandbox));
-
-      describe("create translation gizmos", () =>
         describe("create three axis gizmos", () => {
+          let _getArrow = (axisGameObject, engineState) =>
+            TransformGizmosTool.getArrowFromAxisGameObject(
+              axisGameObject,
+              engineState,
+            );
+
+          let _getLine = (axisGameObject, engineState) =>
+            TransformGizmosTool.getLineFromAxisGameObject(
+              axisGameObject,
+              engineState,
+            );
+
           test("translation whole gizmo has three axis gizmos", () => {
             let editorState = StateEditorService.getState();
             let engineState = StateEngineService.unsafeGetState();
 
-            TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
-              editorState,
+            GameObjectTool.hasTargetChildren(
+              TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+                editorState,
+              ),
+              [|
+                TransformGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
+                  editorState,
+                ),
+                TransformGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
+                  editorState,
+                ),
+                TransformGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
+                  editorState,
+                ),
+              |],
+              engineState,
             )
-            |> GameObjectTool.getChildren(_, engineState)
-            |> Js.Array.length
-            |> expect == 3;
+            |> expect == true;
           });
 
           describe("test each axis gizmo", () =>
@@ -314,14 +326,376 @@ let _ =
               })
             )
           );
-        })
+        });
+
+        describe("create three plane gizmos", () => {
+          /* TODO remove */
+          let _getArrow = (axisGameObject, engineState) =>
+            TransformGizmosTool.getArrowFromAxisGameObject(
+              axisGameObject,
+              engineState,
+            );
+
+          let _getLine = (axisGameObject, engineState) =>
+            TransformGizmosTool.getLineFromAxisGameObject(
+              axisGameObject,
+              engineState,
+            );
+
+          test("translation whole gizmo has three plane gizmos", () => {
+            let editorState = StateEditorService.getState();
+            let engineState = StateEngineService.unsafeGetState();
+
+            GameObjectTool.hasTargetChildren(
+              TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+                editorState,
+              ),
+              [|
+                TransformGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+                  editorState,
+                ),
+                TransformGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
+                  editorState,
+                ),
+                TransformGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
+                  editorState,
+                ),
+              |],
+              engineState,
+            )
+            |> expect == true;
+          });
+
+          describe("test each plane gizmo", () =>
+            describe("test xy plane gizmo", () => {
+              test("set plane->isRender to false", () => {
+                let editorState = StateEditorService.getState();
+                let engineState = StateEngineService.unsafeGetState();
+
+                TransformGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+                  editorState,
+                )
+                |> GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
+                     _,
+                     engineState,
+                   )
+                |> MeshRendererEngineService.getMeshRendererIsRender(
+                     _,
+                     engineState,
+                   )
+                |> expect == false;
+              });
+
+              test("plane->local position should be ( 0,0,0 )", () => {
+                let editorState = StateEditorService.getState();
+                let engineState = StateEngineService.unsafeGetState();
+
+                TransformGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+                  editorState,
+                )
+                |> TransformGameObjectEngineService.getLocalPosition(
+                     _,
+                     engineState,
+                   )
+                |> expect == (0., 0., 0.);
+              });
+            })
+          );
+
+          describe("test plane gizmo color", () => {
+            test("yz plane gizmo is red", () => {
+              let editorState = StateEditorService.getState();
+              let engineState = StateEngineService.unsafeGetState();
+
+              TransformGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
+                editorState,
+              )
+              |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+                   _,
+                   engineState,
+                 )
+              |> BasicMaterialEngineService.getColor(_, engineState)
+              |> expect == [|1., 0., 0.|];
+            });
+            test("xz axis gizmo is green", () => {
+              let editorState = StateEditorService.getState();
+              let engineState = StateEngineService.unsafeGetState();
+
+              TransformGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
+                editorState,
+              )
+              |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+                   _,
+                   engineState,
+                 )
+              |> BasicMaterialEngineService.getColor(_, engineState)
+              |> expect == [|0., 1., 0.|];
+            });
+            test("xy plane gizmo is blue", () => {
+              let editorState = StateEditorService.getState();
+              let engineState = StateEngineService.unsafeGetState();
+
+              TransformGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+                editorState,
+              )
+              |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+                   _,
+                   engineState,
+                 )
+              |> BasicMaterialEngineService.getColor(_, engineState)
+              |> expect == [|0., 0., 1.|];
+            });
+          });
+
+          test("xz plane gizmo should local rotate (90,0,0)", () => {
+            let editorState = StateEditorService.getState();
+            let engineState = StateEngineService.unsafeGetState();
+
+            TransformGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
+              editorState,
+            )
+            |> TransformGameObjectTool.getLocalEulerAngles(_, engineState)
+            |> expect == (90., 0., 0.);
+          });
+
+          describe("test plane gizmos->draw order", () =>
+            test("should draw after axis gizmo", () => {
+              let editorState = StateEditorService.getState();
+              let engineState = StateEngineService.unsafeGetState();
+
+              let translationWholeGizmo =
+                TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+                  editorState,
+                );
+
+              (
+                translationWholeGizmo
+                |> GameObjectTool.getChild(_, 3, engineState),
+                translationWholeGizmo
+                |> GameObjectTool.getChild(_, 4, engineState),
+                translationWholeGizmo
+                |> GameObjectTool.getChild(_, 5, engineState),
+              )
+              |>
+              expect == (
+                          TransformGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+                            editorState,
+                          ),
+                          TransformGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
+                            editorState,
+                          ),
+                          TransformGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
+                            editorState,
+                          ),
+                        );
+            })
+          );
+        });
+      });
+    });
+
+    describe("test move translation plane gizmos", () => {
+      let _prepare =
+          (
+            ~createGameObjectFunc=InitPickingJobTool.createSphere,
+            ~viewWidth=500,
+            ~viewHeight=200,
+            ~sandbox,
+            /* ~offsetLeft,
+               ~offsetTop, */
+            ~cameraPos,
+            ~gameObjectPos,
+            ~gameObjectEulerAngles,
+            (),
+          ) => {
+        let editorState = StateEditorService.getState();
+        let engineState = StateEngineService.unsafeGetState();
+
+        let (editCamera, (editorState, engineState)) =
+          InitPickingJobTool.prepareCamera(
+            cameraPos,
+            (viewWidth, viewHeight),
+            (editorState, engineState),
+          );
+
+        let (engineState, gameObject1) =
+          InitPickingJobTool.prepareGameObject(
+            gameObjectPos,
+            gameObjectEulerAngles,
+            createGameObjectFunc,
+            engineState,
+          );
+
+        editorState |> StateEditorService.setState |> ignore;
+        engineState |> StateEngineService.setState |> ignore;
+
+        GameObjectTool.setCurrentSceneTreeNode(gameObject1);
+      };
+
+      describe(
+        "move based on the camera pos in the local coordinate system of the current scene tree node",
+        () => {
+          let _getPlaneGizmoLocalPos =
+              (getGizmoFunc, editorState, engineState) =>
+            TransformGameObjectEngineService.getLocalPosition(
+              getGizmoFunc(editorState),
+              engineState,
+            );
+
+          let _getAllPlaneGizmoLocalPos = (editorState, engineState) => (
+            _getPlaneGizmoLocalPos(
+              TransformGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo,
+              editorState,
+              engineState,
+            ),
+            _getPlaneGizmoLocalPos(
+              TransformGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo,
+              editorState,
+              engineState,
+            ),
+            _getPlaneGizmoLocalPos(
+              TransformGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo,
+              editorState,
+              engineState,
+            ),
+          );
+
+          let _test =
+              (
+                ~gameObjectPos=(2., 0., 0.),
+                ~gameObjectEulerAngles=(0., 0., 0.),
+                ~sandbox,
+                ~cameraPos,
+                ~allPlaneGizmoLocalPos,
+                (),
+              ) => {
+            _prepare(
+              ~sandbox,
+              ~cameraPos,
+              ~gameObjectPos,
+              ~gameObjectEulerAngles,
+              (),
+            );
+
+            let engineState = StateEngineService.unsafeGetState();
+            let (engineState, _) =
+              ManageEventEngineService.triggerCustomGlobalEvent(
+                CreateCustomEventEngineService.create(
+                  CustomEventEditorService.getSelectSceneTreeNodeEventName(),
+                  None,
+                ),
+                engineState,
+              );
+
+            let editorState = StateEditorService.getState();
+            _getAllPlaneGizmoLocalPos(editorState, engineState)
+            |> expect == allPlaneGizmoLocalPos;
+          };
+
+          test("test camera is in px,py,pz", () =>
+            _test(
+              ~sandbox,
+              ~cameraPos=(10., 1., 3.),
+              ~allPlaneGizmoLocalPos=(
+                (1., 1., 0.),
+                (1., 0., 1.),
+                (0., 1., 1.),
+              ),
+              (),
+            )
+          );
+          test("test camera is in nx,py,pz", () =>
+            _test(
+              ~sandbox,
+              ~cameraPos=(1., 0., 3.),
+              ~allPlaneGizmoLocalPos=(
+                ((-1.), (-1.), 0.),
+                ((-1.), 0., 1.),
+                (0., (-1.), 1.),
+              ),
+              (),
+            )
+          );
+          test("test camera is in px,ny,pz", () =>
+            _test(
+              ~sandbox,
+              ~cameraPos=(10., (-1.), 3.),
+              ~allPlaneGizmoLocalPos=(
+                (1., (-1.), 0.),
+                (1., 0., 1.),
+                (0., (-1.), 1.),
+              ),
+              (),
+            )
+          );
+          test("test camera is in px,py,nz", () =>
+            _test(
+              ~sandbox,
+              ~cameraPos=(10., 1., (-3.)),
+              ~allPlaneGizmoLocalPos=(
+                (1., 1., 0.),
+                (1., 0., (-1.)),
+                (0., 1., (-1.)),
+              ),
+              (),
+            )
+          );
+          test("test camera is in nx,ny,pz", () =>
+            _test(
+              ~sandbox,
+              ~cameraPos=(1., (-1.), 3.),
+              ~allPlaneGizmoLocalPos=(
+                ((-1.), (-1.), 0.),
+                ((-1.), 0., 1.),
+                (0., (-1.), 1.),
+              ),
+              (),
+            )
+          );
+          test("test camera is in nx,py,nz", () =>
+            _test(
+              ~sandbox,
+              ~cameraPos=(1., 1., (-3.)),
+              ~allPlaneGizmoLocalPos=(
+                ((-1.), 1., 0.),
+                ((-1.), 0., (-1.)),
+                (0., 1., (-1.)),
+              ),
+              (),
+            )
+          );
+          test("test camera is in px,ny,nz", () =>
+            _test(
+              ~sandbox,
+              ~cameraPos=(10., (-1.), (-3.)),
+              ~allPlaneGizmoLocalPos=(
+                (1., (-1.), 0.),
+                (1., 0., (-1.)),
+                (0., (-1.), (-1.)),
+              ),
+              (),
+            )
+          );
+          test("test camera is in nx,ny,nz", () =>
+            _test(
+              ~sandbox,
+              ~cameraPos=(1., (-1.), (-3.)),
+              ~allPlaneGizmoLocalPos=(
+                ((-1.), (-1.), 0.),
+                ((-1.), 0., (-1.)),
+                (0., (-1.), (-1.)),
+              ),
+              (),
+            )
+          );
+        },
       );
     });
 
     describe("bind event", () => {
       afterEach(() => EventTool.restore());
 
-      describe("bind point down event", () => {
+      describe("bind point drag start event", () => {
         let prepareGameObject = sandbox =>
           InitTransformGizmosJobTool.prepareOneGameObject(
             ~sandbox,
@@ -465,7 +839,7 @@ let _ =
         });
       });
 
-      describe("bind point drag event", () => {
+      describe("bind point drag over event", () => {
         test("if mouse button isn't left button, not affect gizmo", () => {
           let _ =
             InitTransformGizmosJobTool.prepareOneGameObject(
@@ -508,7 +882,7 @@ let _ =
 
         describe("else", () =>
           describe("affect gizmo", () =>
-            describe("affect translation gizmo", () => {
+            describe("test affect translation gizmo", () => {
               let _prepare = (sandbox, prepareGameObjectFunc) => {
                 let gameObject1 = prepareGameObjectFunc(sandbox);
 
@@ -522,10 +896,220 @@ let _ =
                 gameObject1;
               };
 
-              describe("test affect x axis", () => {
-                describe(
-                  "should move current scene tree node along the x axis", () => {
-                  describe("test current scene tree node not rotate", () => {
+              describe("test affect plane gizmos", () =>
+                describe("test affect xy plane gizmo", () =>
+                  describe(
+                    "should move current scene tree node along the xy plane",
+                    () =>
+                    describe("test current scene tree node not rotate", () => {
+                      let prepareGameObject = sandbox =>
+                        InitTransformGizmosJobTool.prepareOneGameObject(
+                          ~sandbox,
+                          ~viewWidth=500,
+                          ~viewHeight=200,
+                          ~offsetLeft=0,
+                          ~offsetTop=0,
+                          ~cameraPos=(0.1, 0.1, 3.),
+                          ~gameObjectPos=(0., 0., 0.),
+                          ~gameObjectEulerAngles=(0., 0., 0.),
+                          ~createGameObjectFunc=InitPickingJobTool.createCube,
+                          (),
+                        );
+
+                      test(
+                        {|
+            pick gameObject;
+            select xy plane;
+            mouse move (10px, 10px);
+
+            gameObject should move (10px, 10px) along xy plane;
+            |},
+                        () => {
+                          _prepare(sandbox, prepareGameObject);
+
+                          EventTransformGizmosTool.triggerMouseDown(
+                            ~sandbox,
+                            ~pageX=250 + 10,
+                            ~pageY=100 - 10,
+                            (),
+                          );
+                          EventTransformGizmosTool.triggerMouseMove(
+                            ~sandbox,
+                            ~pageX=250 + 20,
+                            ~pageY=100,
+                            (),
+                          );
+
+                          InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
+                          |> expect == (0.173, (-0.173), 0.);
+                        },
+                      );
+                    })
+                  )
+                )
+              );
+
+              describe("test affect axis gizmos", () => {
+                describe("test affect x axis", () => {
+                  describe(
+                    "should move current scene tree node along the x axis", () => {
+                    describe("test current scene tree node not rotate", () => {
+                      let prepareGameObject = sandbox =>
+                        InitTransformGizmosJobTool.prepareOneGameObject(
+                          ~sandbox,
+                          ~viewWidth=500,
+                          ~viewHeight=200,
+                          ~offsetLeft=0,
+                          ~offsetTop=0,
+                          ~cameraPos=(0., 0., 3.),
+                          ~gameObjectPos=(0., 0., 0.),
+                          ~gameObjectEulerAngles=(0., 0., 0.),
+                          ~createGameObjectFunc=InitPickingJobTool.createCube,
+                          (),
+                        );
+
+                      test(
+                        {|
+            pick gameObject;
+            select x axis;
+            mouse move (10px, 0px);
+
+            gameObject should move (10px, 0px);
+            |},
+                        () => {
+                          let gameObject1 =
+                            _prepare(sandbox, prepareGameObject);
+
+                          EventTransformGizmosTool.triggerMouseDown(
+                            ~sandbox,
+                            ~pageX=250 + 10,
+                            ~pageY=100,
+                            (),
+                          );
+                          EventTransformGizmosTool.triggerMouseMove(
+                            ~sandbox,
+                            ~pageX=250 + 20,
+                            ~pageY=100,
+                            (),
+                          );
+
+                          InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
+                          |> expect == (0.173, 0., 0.);
+                        },
+                      );
+                      test(
+                        {|
+            pick gameObject;
+            select x axis;
+            mouse move (10px, 20px);
+
+            gameObject should move (10px, 0px);
+            |},
+                        () => {
+                          _prepare(sandbox, prepareGameObject);
+
+                          EventTransformGizmosTool.triggerMouseDown(
+                            ~sandbox,
+                            ~pageX=250 + 10,
+                            ~pageY=100,
+                            (),
+                          );
+                          EventTransformGizmosTool.triggerMouseMove(
+                            ~sandbox,
+                            ~pageX=250 + 20,
+                            ~pageY=100 + 20,
+                            (),
+                          );
+
+                          InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
+                          |> expect == (0.173, 0., 0.);
+                        },
+                      );
+                      test(
+                        {|
+            pick gameObject;
+            select x axis;
+            mouse move (10px, 0px);
+            mouse move (10px, 0px);
+
+            gameObject should move (20px, 0px);
+            |},
+                        () => {
+                          _prepare(sandbox, prepareGameObject);
+
+                          EventTransformGizmosTool.triggerMouseDown(
+                            ~sandbox,
+                            ~pageX=250 + 10,
+                            ~pageY=100,
+                            (),
+                          );
+                          EventTransformGizmosTool.triggerMouseMove(
+                            ~sandbox,
+                            ~pageX=250 + 20,
+                            ~pageY=100,
+                            (),
+                          );
+                          EventTransformGizmosTool.triggerMouseMove(
+                            ~sandbox,
+                            ~pageX=250 + 30,
+                            ~pageY=100,
+                            (),
+                          );
+
+                          InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
+                          |> expect == (0.173 *. 2., 0., 0.);
+                        },
+                      );
+                    });
+
+                    describe("test current scene tree node rotate", () => {
+                      let prepareGameObject = sandbox =>
+                        InitTransformGizmosJobTool.prepareOneGameObject(
+                          ~sandbox,
+                          ~viewWidth=500,
+                          ~viewHeight=200,
+                          ~offsetLeft=0,
+                          ~offsetTop=0,
+                          ~cameraPos=(0., 0., 3.),
+                          ~gameObjectPos=(0., 0., 0.),
+                          ~gameObjectEulerAngles=(12., 45., 22.),
+                          ~createGameObjectFunc=InitPickingJobTool.createCube,
+                          (),
+                        );
+
+                      test(
+                        {|
+            pick gameObject;
+            select x axis;
+            mouse move (10px, 0px);
+
+            gameObject should move along +x axis;
+            |},
+                        () => {
+                          _prepare(sandbox, prepareGameObject);
+
+                          EventTransformGizmosTool.triggerMouseDown(
+                            ~sandbox,
+                            ~pageX=250 + 20,
+                            ~pageY=100 - 10,
+                            (),
+                          );
+                          EventTransformGizmosTool.triggerMouseMove(
+                            ~sandbox,
+                            ~pageX=250 + 30,
+                            ~pageY=100 - 10,
+                            (),
+                          );
+
+                          InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
+                          |> expect == (0.224, 0.09, (-0.241));
+                        },
+                      );
+                    });
+                  });
+
+                  describe(
+                    "should move translation whole gizmo along the x axis", () => {
                     let prepareGameObject = sandbox =>
                       InitTransformGizmosJobTool.prepareOneGameObject(
                         ~sandbox,
@@ -546,7 +1130,7 @@ let _ =
             select x axis;
             mouse move (10px, 0px);
 
-            gameObject should move (10px, 0px);
+            whole gizmo should move (10px, 0px);
             |},
                       () => {
                         let gameObject1 =
@@ -565,123 +1149,22 @@ let _ =
                           (),
                         );
 
-                        InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
+                        let editorState = StateEditorService.getState();
+                        let engineState = StateEngineService.unsafeGetState();
+                        TransformGameObjectEngineService.getPosition(
+                          TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+                            editorState,
+                          ),
+                          engineState,
+                        )
+                        |> Vector3Service.truncate(3)
                         |> expect == (0.173, 0., 0.);
-                      },
-                    );
-                    test(
-                      {|
-            pick gameObject;
-            select x axis;
-            mouse move (10px, 20px);
-
-            gameObject should move (10px, 0px);
-            |},
-                      () => {
-                        _prepare(sandbox, prepareGameObject);
-
-                        EventTransformGizmosTool.triggerMouseDown(
-                          ~sandbox,
-                          ~pageX=250 + 10,
-                          ~pageY=100,
-                          (),
-                        );
-                        EventTransformGizmosTool.triggerMouseMove(
-                          ~sandbox,
-                          ~pageX=250 + 20,
-                          ~pageY=100 + 20,
-                          (),
-                        );
-
-                        InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
-                        |> expect == (0.173, 0., 0.);
-                      },
-                    );
-                    test(
-                      {|
-            pick gameObject;
-            select x axis;
-            mouse move (10px, 0px);
-            mouse move (10px, 0px);
-
-            gameObject should move (20px, 0px);
-            |},
-                      () => {
-                        _prepare(sandbox, prepareGameObject);
-
-                        EventTransformGizmosTool.triggerMouseDown(
-                          ~sandbox,
-                          ~pageX=250 + 10,
-                          ~pageY=100,
-                          (),
-                        );
-                        EventTransformGizmosTool.triggerMouseMove(
-                          ~sandbox,
-                          ~pageX=250 + 20,
-                          ~pageY=100,
-                          (),
-                        );
-                        EventTransformGizmosTool.triggerMouseMove(
-                          ~sandbox,
-                          ~pageX=250 + 30,
-                          ~pageY=100,
-                          (),
-                        );
-
-                        InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
-                        |> expect == (0.173 *. 2., 0., 0.);
-                      },
-                    );
-                  });
-
-                  describe("test current scene tree node rotate", () => {
-                    let prepareGameObject = sandbox =>
-                      InitTransformGizmosJobTool.prepareOneGameObject(
-                        ~sandbox,
-                        ~viewWidth=500,
-                        ~viewHeight=200,
-                        ~offsetLeft=0,
-                        ~offsetTop=0,
-                        ~cameraPos=(0., 0., 3.),
-                        ~gameObjectPos=(0., 0., 0.),
-                        ~gameObjectEulerAngles=(12., 45., 22.),
-                        ~createGameObjectFunc=InitPickingJobTool.createCube,
-                        (),
-                      );
-
-                    test(
-                      {|
-            pick gameObject;
-            select x axis;
-            mouse move (10px, 0px);
-
-            gameObject should move along +x axis;
-            |},
-                      () => {
-                        _prepare(sandbox, prepareGameObject);
-
-                        EventTransformGizmosTool.triggerMouseDown(
-                          ~sandbox,
-                          ~pageX=250 + 20,
-                          ~pageY=100 - 10,
-                          (),
-                        );
-                        EventTransformGizmosTool.triggerMouseMove(
-                          ~sandbox,
-                          ~pageX=250 + 30,
-                          ~pageY=100 - 10,
-                          (),
-                        );
-
-                        InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
-                        |> expect == (0.224, 0.09, (-0.241));
                       },
                     );
                   });
                 });
 
-                describe(
-                  "should move translation whole gizmo along the x axis", () => {
+                describe("test current scene tree node has parent", () => {
                   let prepareGameObject = sandbox =>
                     InitTransformGizmosJobTool.prepareOneGameObject(
                       ~sandbox,
@@ -690,93 +1173,39 @@ let _ =
                       ~offsetLeft=0,
                       ~offsetTop=0,
                       ~cameraPos=(0., 0., 3.),
-                      ~gameObjectPos=(0., 0., 0.),
-                      ~gameObjectEulerAngles=(0., 0., 0.),
+                      ~gameObjectPos=((-1.), 0., 0.),
+                      ~gameObjectEulerAngles=(0., 23., 22.),
                       ~createGameObjectFunc=InitPickingJobTool.createCube,
                       (),
                     );
 
+                  let createParentGameObject =
+                      (
+                        gameObjectPos,
+                        gameObjectEulerAngles,
+                        childGameObject,
+                        engineState,
+                      ) => {
+                    let (engineState, parentGameObject) =
+                      InitPickingJobTool.prepareGameObject(
+                        gameObjectPos,
+                        gameObjectEulerAngles,
+                        InitPickingJobTool.createCube,
+                        engineState,
+                      );
+
+                    let engineState =
+                      GameObjectTool.addChild(
+                        parentGameObject,
+                        childGameObject,
+                        engineState,
+                      );
+
+                    (engineState, parentGameObject);
+                  };
+
                   test(
                     {|
-            pick gameObject;
-            select x axis;
-            mouse move (10px, 0px);
-
-            whole gizmo should move (10px, 0px);
-            |},
-                    () => {
-                      let gameObject1 = _prepare(sandbox, prepareGameObject);
-
-                      EventTransformGizmosTool.triggerMouseDown(
-                        ~sandbox,
-                        ~pageX=250 + 10,
-                        ~pageY=100,
-                        (),
-                      );
-                      EventTransformGizmosTool.triggerMouseMove(
-                        ~sandbox,
-                        ~pageX=250 + 20,
-                        ~pageY=100,
-                        (),
-                      );
-
-                      let editorState = StateEditorService.getState();
-                      let engineState = StateEngineService.unsafeGetState();
-                      TransformGameObjectEngineService.getPosition(
-                        TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
-                          editorState,
-                        ),
-                        engineState,
-                      )
-                      |> Vector3Service.truncate(3)
-                      |> expect == (0.173, 0., 0.);
-                    },
-                  );
-                });
-              });
-
-              describe("test current scene tree node has parent", () => {
-                let prepareGameObject = sandbox =>
-                  InitTransformGizmosJobTool.prepareOneGameObject(
-                    ~sandbox,
-                    ~viewWidth=500,
-                    ~viewHeight=200,
-                    ~offsetLeft=0,
-                    ~offsetTop=0,
-                    ~cameraPos=(0., 0., 3.),
-                    ~gameObjectPos=((-1.), 0., 0.),
-                    ~gameObjectEulerAngles=(0., 23., 22.),
-                    ~createGameObjectFunc=InitPickingJobTool.createCube,
-                    (),
-                  );
-
-                let createParentGameObject =
-                    (
-                      gameObjectPos,
-                      gameObjectEulerAngles,
-                      childGameObject,
-                      engineState,
-                    ) => {
-                  let (engineState, parentGameObject) =
-                    InitPickingJobTool.prepareGameObject(
-                      gameObjectPos,
-                      gameObjectEulerAngles,
-                      InitPickingJobTool.createCube,
-                      engineState,
-                    );
-
-                  let engineState =
-                    GameObjectTool.addChild(
-                      parentGameObject,
-                      childGameObject,
-                      engineState,
-                    );
-
-                  (engineState, parentGameObject);
-                };
-
-                test(
-                  {|
             create parent gameObject p1;
             set p1->local position to (1.0, 0.0, 0.0);
             set p1->local eulerAngles to (12.0, 22.0, 0.0);
@@ -789,42 +1218,43 @@ let _ =
 
             c1 should move along axis in world coordinate system;
             |},
-                  () => {
-                    let gameObject1 = prepareGameObject(sandbox);
+                    () => {
+                      let gameObject1 = prepareGameObject(sandbox);
 
-                    let engineState = StateEngineService.unsafeGetState();
-                    let (engineState, parent) =
-                      createParentGameObject(
-                        (1., 0., 0.),
-                        (12., 45., 22.),
-                        gameObject1,
-                        engineState,
+                      let engineState = StateEngineService.unsafeGetState();
+                      let (engineState, parent) =
+                        createParentGameObject(
+                          (1., 0., 0.),
+                          (12., 45., 22.),
+                          gameObject1,
+                          engineState,
+                        );
+                      engineState |> StateEngineService.setState |> ignore;
+
+                      InitPickingJobTool.triggerPicking(
+                        ~sandbox,
+                        ~pageX=250,
+                        ~pageY=100,
+                        (),
                       );
-                    engineState |> StateEngineService.setState |> ignore;
+                      EventTransformGizmosTool.triggerMouseDown(
+                        ~sandbox,
+                        ~pageX=250 + 20,
+                        ~pageY=100 - 10,
+                        (),
+                      );
+                      EventTransformGizmosTool.triggerMouseMove(
+                        ~sandbox,
+                        ~pageX=250 + 30,
+                        ~pageY=100 - 10,
+                        (),
+                      );
 
-                    InitPickingJobTool.triggerPicking(
-                      ~sandbox,
-                      ~pageX=250,
-                      ~pageY=100,
-                      (),
-                    );
-                    EventTransformGizmosTool.triggerMouseDown(
-                      ~sandbox,
-                      ~pageX=250 + 20,
-                      ~pageY=100 - 10,
-                      (),
-                    );
-                    EventTransformGizmosTool.triggerMouseMove(
-                      ~sandbox,
-                      ~pageX=250 + 30,
-                      ~pageY=100 - 10,
-                      (),
-                    );
-
-                    InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
-                    |> expect == (0.344, (-0.265), 0.707);
-                  },
-                );
+                      InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
+                      |> expect == (0.344, (-0.265), 0.707);
+                    },
+                  );
+                });
               });
             })
           )
