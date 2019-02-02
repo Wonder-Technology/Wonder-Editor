@@ -31,7 +31,7 @@ let _getAxisNormalizedVec =
 
 let getXAxisNormalizedVec = (editorState, engineState) =>
   _getAxisNormalizedVec(
-    TransformGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
+    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
       editorState,
     ),
     (editorState, engineState),
@@ -39,7 +39,7 @@ let getXAxisNormalizedVec = (editorState, engineState) =>
 
 let getYAxisNormalizedVec = (editorState, engineState) =>
   _getAxisNormalizedVec(
-    TransformGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
+    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
       editorState,
     ),
     (editorState, engineState),
@@ -47,7 +47,7 @@ let getYAxisNormalizedVec = (editorState, engineState) =>
 
 let getZAxisNormalizedVec = (editorState, engineState) =>
   _getAxisNormalizedVec(
-    TransformGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
+    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
       editorState,
     ),
     (editorState, engineState),

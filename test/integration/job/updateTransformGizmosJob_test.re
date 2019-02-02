@@ -96,7 +96,7 @@ let _ =
               engineState |> DirectorToolEngine.runWithDefaultTime;
 
             TransformGameObjectEngineService.getPosition(
-              TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo
               |> StateLogicService.getEditorState,
               engineState,
             )
@@ -133,7 +133,7 @@ let _ =
                 engineState |> DirectorToolEngine.runWithDefaultTime;
 
               TransformGameObjectTool.getEulerAngles(
-                TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo
                 |> StateLogicService.getEditorState,
                 engineState,
               )
@@ -185,7 +185,7 @@ let _ =
               MainEditorCameraTool.getCurrentCameraGameObject(engineState)
               |> OptionService.unsafeGet;
             let translationWholeGizmo =
-              TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo
               |> StateLogicService.getEditorState;
 
             let pos1 = (0., 0., 0.);

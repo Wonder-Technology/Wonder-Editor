@@ -41,18 +41,18 @@ let _bindEvent = (editorState, engineState) => {
                   editorState,
                 ) ?
                   editorState
-                  |> TransformGizmoSceneViewEditorService.setCurrentSceneTreeNodeStartPoint(
+                  |> OperateTranslationGizmoSceneViewEditorService.setCurrentSceneTreeNodeStartPoint(
                        InitTransformGizmosUtils.getCurrentSceneTreeNodePosition(
                          editorState,
                          engineState,
                        ),
                      )
-                  |> SelectTransformGizmoUtils.selectTransformGizmo(
+                  |> SelectTranslationGizmoUtils.selectTranslationGizmo(
                        event,
                        engineState,
                      ) :
                   editorState
-                  |> SelectTransformGizmoSceneViewEditorService.markNotSelectAnyTranslationGizmo;
+                  |> SelectTranslationGizmoSceneViewEditorService.markNotSelectAnyTranslationGizmo;
 
               editorState |> StateEditorService.setState |> ignore;
 
@@ -69,18 +69,18 @@ let _bindEvent = (editorState, engineState) => {
       ~handleFunc=
         (. event, engineState) =>
           MouseEventService.isLeftMouseButton(event)
-          && SelectTransformGizmoSceneViewEditorService.isSelectAnyTransformGizmo
+          && SelectTranslationGizmoSceneViewEditorService.isSelectAnyTranslationGizmo
           |> StateLogicService.getEditorState ?
             {
               let editorState = StateEditorService.getState();
 
               let (editorState, engineState) =
-                AffectTransformGizmosUtils.affectTransformGizmo(
+                AffectTranslationGizmosUtils.affectTranslationGizmo(
                   event,
                   (editorState, engineState),
                 );
 
-              SelectTransformGizmoSceneViewEditorService.isSelectAnyTransformGizmo(
+              SelectTranslationGizmoSceneViewEditorService.isSelectAnyTranslationGizmo(
                 editorState,
               ) ?
                 _refreshInspector() : ();
@@ -100,7 +100,7 @@ let _bindEvent = (editorState, engineState) => {
       ~handleFunc=
         (. event, engineState) =>
           MouseEventService.isLeftMouseButton(event)
-          && SelectTransformGizmoSceneViewEditorService.isSelectAnyTransformGizmo
+          && SelectTranslationGizmoSceneViewEditorService.isSelectAnyTranslationGizmo
           |> StateLogicService.getEditorState ?
             {
               let editorState = StateEditorService.getState();
@@ -127,7 +127,7 @@ let _bindEvent = (editorState, engineState) => {
               PositionBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
                 (UIStateService.getState(), UIStateService.getDispatch()),
                 transform,
-                TransformGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartPoint(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartPoint(
                   editorState,
                 ),
               );
@@ -173,17 +173,17 @@ let initJob = (_, engineState) => {
     (xAxisGizmo, yAxisGizmo, zAxisGizmo),
     (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo),
   ) =
-    CreateTransformGizmosUtils.createTransformGizmos(engineState);
+    CreateTranslationGizmosUtils.createTranslationGizmos(engineState);
 
   let editorState = StateEditorService.getState();
 
   let editorState =
     editorState
-    |> CreateTransformGizmosUtils.setToEditorState(
+    |> CreateTransformGizmosUtils.setToEditorState((
          wholeGizmo,
          (xAxisGizmo, yAxisGizmo, zAxisGizmo),
          (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo),
-       );
+       ));
 
   let engineState = _bindEvent(editorState, engineState);
 

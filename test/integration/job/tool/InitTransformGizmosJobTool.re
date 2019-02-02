@@ -150,15 +150,15 @@ let createTransformGizmos = ((editorState, engineState)) => {
     (xAxisGizmo, yAxisGizmo, zAxisGizmo),
     (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo),
   ) =
-    CreateTransformGizmosUtils.createTransformGizmos(engineState);
+    CreateTranslationGizmosUtils.createTranslationGizmos(engineState);
 
   let editorState =
     editorState
-    |> CreateTransformGizmosUtils.setToEditorState(
+    |> CreateTransformGizmosUtils.setToEditorState((
          wholeGizmo,
          (xAxisGizmo, yAxisGizmo, zAxisGizmo),
          (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo),
-       );
+       ));
 
   (editorState, engineState);
 };

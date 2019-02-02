@@ -17,7 +17,7 @@ let _computeCurrentSceneTreeNodeNewPositionForMoveAxis =
   | None => None
   | Some(point) =>
     let axisGameObjectStartPoint =
-      MoveTransformGizmoSceneViewEditorService.unsafeAxisGizmoStartPoint(
+      MoveTranslationGizmoSceneViewEditorService.unsafeAxisGizmoStartPoint(
         editorState,
       );
 
@@ -31,7 +31,7 @@ let _computeCurrentSceneTreeNodeNewPositionForMoveAxis =
           axisGameObjectStartPoint,
           axisVec,
         ),
-        MoveTransformGizmoSceneViewEditorService.unsafeGetPickStartPoint(
+        MoveTranslationGizmoSceneViewEditorService.unsafeGetPickStartPoint(
           editorState,
         ),
       ),
@@ -44,7 +44,7 @@ let _computeCurrentSceneTreeNodeNewPositionForMoveXAxis =
     (ray, (editorState, engineState)) =>
   _computeCurrentSceneTreeNodeNewPositionForMoveAxis(
     ray,
-    AxisTransformGizmoSceneViewEditorService.getXAxisNormalizedVec(
+    AxisTranslationGizmoSceneViewEditorService.getXAxisNormalizedVec(
       editorState,
       engineState,
     ),
@@ -56,7 +56,7 @@ let _computeCurrentSceneTreeNodeNewPositionForMoveYAxis =
     (ray, (editorState, engineState)) =>
   _computeCurrentSceneTreeNodeNewPositionForMoveAxis(
     ray,
-    AxisTransformGizmoSceneViewEditorService.getYAxisNormalizedVec(
+    AxisTranslationGizmoSceneViewEditorService.getYAxisNormalizedVec(
       editorState,
       engineState,
     ),
@@ -68,7 +68,7 @@ let _computeCurrentSceneTreeNodeNewPositionForMoveZAxis =
     (ray, (editorState, engineState)) =>
   _computeCurrentSceneTreeNodeNewPositionForMoveAxis(
     ray,
-    AxisTransformGizmoSceneViewEditorService.getZAxisNormalizedVec(
+    AxisTranslationGizmoSceneViewEditorService.getZAxisNormalizedVec(
       editorState,
       engineState,
     ),
@@ -84,7 +84,7 @@ let _computeCurrentSceneTreeNodeNewPositionForMovePlane =
   | None => None
   | Some(point) =>
     let currentSceneTreeNodeStartPoint =
-      TransformGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartPoint(
+      OperateTranslationGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartPoint(
         editorState,
       );
 
@@ -94,7 +94,7 @@ let _computeCurrentSceneTreeNodeNewPositionForMovePlane =
       Wonderjs.Vector3Service.sub(
         Wonderjs.Vector3Type.Float,
         point,
-        MoveTransformGizmoSceneViewEditorService.unsafeGetPickStartPoint(
+        MoveTranslationGizmoSceneViewEditorService.unsafeGetPickStartPoint(
           editorState,
         ),
       ),
@@ -106,7 +106,7 @@ let _computeCurrentSceneTreeNodeNewPositionForMoveXYPlane =
     (ray, (editorState, engineState)) =>
   _computeCurrentSceneTreeNodeNewPositionForMovePlane(
     ray,
-    PlaneTransformGizmoSceneViewEditorService.buildXYPlane(
+    PlaneTranslationGizmoSceneViewEditorService.buildXYPlane(
       editorState,
       engineState,
     ),
@@ -117,7 +117,7 @@ let _computeCurrentSceneTreeNodeNewPositionForMoveXZPlane =
     (ray, (editorState, engineState)) =>
   _computeCurrentSceneTreeNodeNewPositionForMovePlane(
     ray,
-    PlaneTransformGizmoSceneViewEditorService.buildXZPlane(
+    PlaneTranslationGizmoSceneViewEditorService.buildXZPlane(
       editorState,
       engineState,
     ),
@@ -128,7 +128,7 @@ let _computeCurrentSceneTreeNodeNewPositionForMoveYZPlane =
     (ray, (editorState, engineState)) =>
   _computeCurrentSceneTreeNodeNewPositionForMovePlane(
     ray,
-    PlaneTransformGizmoSceneViewEditorService.buildYZPlane(
+    PlaneTranslationGizmoSceneViewEditorService.buildYZPlane(
       editorState,
       engineState,
     ),
@@ -147,7 +147,7 @@ let _moveCurrentSceneTreeNodeAndWholeTranslationGizmo =
      )
   |> TransformEngineService.setPosition(
        GameObjectComponentEngineService.unsafeGetTransformComponent(
-         TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+         OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
            editorState,
          ),
          engineState,
@@ -176,7 +176,7 @@ let _affectTranslationPlaneGizmo = (newPosition, (editorState, engineState)) =>
   _affectTranslationGizmo(newPosition, (editorState, engineState));
 
 let _affectAxisGizmo = (ray, editorState, engineState) =>
-  SelectTransformGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected(
+  SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected(
     editorState,
   ) ?
     _affectTranslationAxisGizmo(
@@ -186,7 +186,7 @@ let _affectAxisGizmo = (ray, editorState, engineState) =>
       ),
       (editorState, engineState),
     ) :
-    SelectTransformGizmoSceneViewEditorService.isTranslationYAxisGizmoSelected(
+    SelectTranslationGizmoSceneViewEditorService.isTranslationYAxisGizmoSelected(
       editorState,
     ) ?
       _affectTranslationAxisGizmo(
@@ -196,7 +196,7 @@ let _affectAxisGizmo = (ray, editorState, engineState) =>
         ),
         (editorState, engineState),
       ) :
-      SelectTransformGizmoSceneViewEditorService.isTranslationZAxisGizmoSelected(
+      SelectTranslationGizmoSceneViewEditorService.isTranslationZAxisGizmoSelected(
         editorState,
       ) ?
         _affectTranslationAxisGizmo(
@@ -209,7 +209,7 @@ let _affectAxisGizmo = (ray, editorState, engineState) =>
         (editorState, engineState);
 
 let _affectPlaneGizmo = (ray, _affectAxisGizmoFunc, editorState, engineState) =>
-  SelectTransformGizmoSceneViewEditorService.isTranslationXYPlaneGizmoSelected(
+  SelectTranslationGizmoSceneViewEditorService.isTranslationXYPlaneGizmoSelected(
     editorState,
   ) ?
     _affectTranslationPlaneGizmo(
@@ -219,7 +219,7 @@ let _affectPlaneGizmo = (ray, _affectAxisGizmoFunc, editorState, engineState) =>
       ),
       (editorState, engineState),
     ) :
-    SelectTransformGizmoSceneViewEditorService.isTranslationXZPlaneGizmoSelected(
+    SelectTranslationGizmoSceneViewEditorService.isTranslationXZPlaneGizmoSelected(
       editorState,
     ) ?
       _affectTranslationPlaneGizmo(
@@ -229,7 +229,7 @@ let _affectPlaneGizmo = (ray, _affectAxisGizmoFunc, editorState, engineState) =>
         ),
         (editorState, engineState),
       ) :
-      SelectTransformGizmoSceneViewEditorService.isTranslationYZPlaneGizmoSelected(
+      SelectTranslationGizmoSceneViewEditorService.isTranslationYZPlaneGizmoSelected(
         editorState,
       ) ?
         _affectTranslationPlaneGizmo(
@@ -241,7 +241,7 @@ let _affectPlaneGizmo = (ray, _affectAxisGizmoFunc, editorState, engineState) =>
         ) :
         _affectAxisGizmoFunc(ray, editorState, engineState);
 
-let affectTransformGizmo = (event, (editorState, engineState)) => {
+let affectTranslationGizmo = (event, (editorState, engineState)) => {
   let cameraGameObject =
     SceneViewEditorService.unsafeGetEditCamera(editorState);
 

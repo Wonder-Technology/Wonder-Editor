@@ -68,7 +68,7 @@ let _getMoveStartDataForAxis =
     );
 
   let axisGameObjectStartPoint =
-    AxisTransformGizmoSceneViewEditorService.getAxisGizmoPos(
+    AxisTranslationGizmoSceneViewEditorService.getAxisGizmoPos(
       editorState,
       engineState,
     );
@@ -82,7 +82,7 @@ let _getMoveStartDataForAxis =
 let _getMoveStartDataForXAxis = (ray, (editorState, engineState)) =>
   _getMoveStartDataForAxis(
     ray,
-    AxisTransformGizmoSceneViewEditorService.getXAxisNormalizedVec(
+    AxisTranslationGizmoSceneViewEditorService.getXAxisNormalizedVec(
       editorState,
       engineState,
     ),
@@ -93,7 +93,7 @@ let _getMoveStartDataForXAxis = (ray, (editorState, engineState)) =>
 let _getMoveStartDataForYAxis = (ray, (editorState, engineState)) =>
   _getMoveStartDataForAxis(
     ray,
-    AxisTransformGizmoSceneViewEditorService.getYAxisNormalizedVec(
+    AxisTranslationGizmoSceneViewEditorService.getYAxisNormalizedVec(
       editorState,
       engineState,
     ),
@@ -104,7 +104,7 @@ let _getMoveStartDataForYAxis = (ray, (editorState, engineState)) =>
 let _getMoveStartDataForZAxis = (ray, (editorState, engineState)) =>
   _getMoveStartDataForAxis(
     ray,
-    AxisTransformGizmoSceneViewEditorService.getZAxisNormalizedVec(
+    AxisTranslationGizmoSceneViewEditorService.getZAxisNormalizedVec(
       editorState,
       engineState,
     ),
@@ -114,7 +114,7 @@ let _getMoveStartDataForZAxis = (ray, (editorState, engineState)) =>
 
 let _getMoveStartDataForXYPlane = (ray, (editorState, engineState)) =>
   _unsafeGetIntersectPointWithPlane(
-    PlaneTransformGizmoSceneViewEditorService.buildXYPlane(
+    PlaneTranslationGizmoSceneViewEditorService.buildXYPlane(
       editorState,
       engineState,
     ),
@@ -124,7 +124,7 @@ let _getMoveStartDataForXYPlane = (ray, (editorState, engineState)) =>
 
 let _getMoveStartDataForXZPlane = (ray, (editorState, engineState)) =>
   _unsafeGetIntersectPointWithPlane(
-    PlaneTransformGizmoSceneViewEditorService.buildXZPlane(
+    PlaneTranslationGizmoSceneViewEditorService.buildXZPlane(
       editorState,
       engineState,
     ),
@@ -134,7 +134,7 @@ let _getMoveStartDataForXZPlane = (ray, (editorState, engineState)) =>
 
 let _getMoveStartDataForYZPlane = (ray, (editorState, engineState)) =>
   _unsafeGetIntersectPointWithPlane(
-    PlaneTransformGizmoSceneViewEditorService.buildYZPlane(
+    PlaneTranslationGizmoSceneViewEditorService.buildYZPlane(
       editorState,
       engineState,
     ),
@@ -154,10 +154,10 @@ let _selectAxisGizmo =
     getMoveStartDataFunc(ray, (editorState, engineState));
 
   editorState
-  |> MoveTransformGizmoSceneViewEditorService.setPickStartPoint(
+  |> MoveTranslationGizmoSceneViewEditorService.setPickStartPoint(
        pickStartPoint,
      )
-  |> MoveTransformGizmoSceneViewEditorService.setAxisGizmoStartPoint(
+  |> MoveTranslationGizmoSceneViewEditorService.setAxisGizmoStartPoint(
        axisGameObjectStartPoint,
      );
 };
@@ -173,14 +173,14 @@ let _selectPlaneGizmo =
   let pickStartPoint = getMoveStartDataFunc(ray, (editorState, engineState));
 
   editorState
-  |> MoveTransformGizmoSceneViewEditorService.setPickStartPoint(
+  |> MoveTranslationGizmoSceneViewEditorService.setPickStartPoint(
        pickStartPoint,
      );
 };
 
 let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
   _isSelectTranslationAxisGizmo(
-    TransformGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
+    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
       editorState,
     ),
     ray,
@@ -190,13 +190,13 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
     _selectAxisGizmo(
       ray,
       (
-        SelectTransformGizmoSceneViewEditorService.onlySelectTranslationXAxisGizmo,
+        SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXAxisGizmo,
         _getMoveStartDataForXAxis,
       ),
       (editorState, engineState),
     ) :
     _isSelectTranslationAxisGizmo(
-      TransformGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
+      OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
         editorState,
       ),
       ray,
@@ -206,13 +206,13 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
       _selectAxisGizmo(
         ray,
         (
-          SelectTransformGizmoSceneViewEditorService.onlySelectTranslationYAxisGizmo,
+          SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationYAxisGizmo,
           _getMoveStartDataForYAxis,
         ),
         (editorState, engineState),
       ) :
       _isSelectTranslationAxisGizmo(
-        TransformGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
+        OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
           editorState,
         ),
         ray,
@@ -222,18 +222,18 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
         _selectAxisGizmo(
           ray,
           (
-            SelectTransformGizmoSceneViewEditorService.onlySelectTranslationZAxisGizmo,
+            SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationZAxisGizmo,
             _getMoveStartDataForZAxis,
           ),
           (editorState, engineState),
         ) :
         editorState
-        |> SelectTransformGizmoSceneViewEditorService.markNotSelectAnyTranslationGizmo;
+        |> SelectTranslationGizmoSceneViewEditorService.markNotSelectAnyTranslationGizmo;
 
 let _handleSelectPlaneGizmo =
     (ray, handleSelectAxisGizmoFunc, editorState, engineState) =>
   _isSelectTranslationPlaneGizmo(
-    TransformGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
       editorState,
     ),
     ray,
@@ -243,13 +243,13 @@ let _handleSelectPlaneGizmo =
     _selectPlaneGizmo(
       ray,
       (
-        SelectTransformGizmoSceneViewEditorService.onlySelectTranslationXYPlaneGizmo,
+        SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXYPlaneGizmo,
         _getMoveStartDataForXYPlane,
       ),
       (editorState, engineState),
     ) :
     _isSelectTranslationPlaneGizmo(
-      TransformGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
+      OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
         editorState,
       ),
       ray,
@@ -259,13 +259,13 @@ let _handleSelectPlaneGizmo =
       _selectPlaneGizmo(
         ray,
         (
-          SelectTransformGizmoSceneViewEditorService.onlySelectTranslationXZPlaneGizmo,
+          SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXZPlaneGizmo,
           _getMoveStartDataForXZPlane,
         ),
         (editorState, engineState),
       ) :
       _isSelectTranslationPlaneGizmo(
-        TransformGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
+        OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
           editorState,
         ),
         ray,
@@ -275,14 +275,14 @@ let _handleSelectPlaneGizmo =
         _selectPlaneGizmo(
           ray,
           (
-            SelectTransformGizmoSceneViewEditorService.onlySelectTranslationYZPlaneGizmo,
+            SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationYZPlaneGizmo,
             _getMoveStartDataForYZPlane,
           ),
           (editorState, engineState),
         ) :
         handleSelectAxisGizmoFunc(ray, editorState, engineState);
 
-let selectTransformGizmo = (event, engineState, editorState) => {
+let selectTranslationGizmo = (event, engineState, editorState) => {
   let cameraGameObject =
     SceneViewEditorService.unsafeGetEditCamera(editorState);
 

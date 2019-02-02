@@ -18,19 +18,19 @@ let _updatePlaneGizmoLocalPosition =
     ((xyLocalPos, xzLocalPos, yzLocalPos), editorState, engineState) =>
   engineState
   |> TransformGameObjectEngineService.setLocalPosition(
-       TransformGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+       OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
          editorState,
        ),
        xyLocalPos,
      )
   |> TransformGameObjectEngineService.setLocalPosition(
-       TransformGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
+       OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
          editorState,
        ),
        xzLocalPos,
      )
   |> TransformGameObjectEngineService.setLocalPosition(
-       TransformGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
+       OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
          editorState,
        ),
        yzLocalPos,

@@ -45,21 +45,21 @@ let _findMostOrthogonalPlaneBetweenCurrentSceneTreeNodeAndCameraVecAndPlane =
 let findMostOrthogonalPlaneForXAxis = (ray, (editorState, engineState)) =>
   _findMostOrthogonalPlaneBetweenCurrentSceneTreeNodeAndCameraVecAndPlane(
     (
-      AxisTransformGizmoSceneViewEditorService.getYAxisNormalizedVec(
+      AxisTranslationGizmoSceneViewEditorService.getYAxisNormalizedVec(
         editorState,
         engineState,
       ),
-      PlaneTransformGizmoSceneViewEditorService.buildXZPlane(
+      PlaneTranslationGizmoSceneViewEditorService.buildXZPlane(
         editorState,
         engineState,
       ),
     ),
     (
-      AxisTransformGizmoSceneViewEditorService.getZAxisNormalizedVec(
+      AxisTranslationGizmoSceneViewEditorService.getZAxisNormalizedVec(
         editorState,
         engineState,
       ),
-      PlaneTransformGizmoSceneViewEditorService.buildXYPlane(
+      PlaneTranslationGizmoSceneViewEditorService.buildXYPlane(
         editorState,
         engineState,
       ),
@@ -70,21 +70,21 @@ let findMostOrthogonalPlaneForXAxis = (ray, (editorState, engineState)) =>
 let findMostOrthogonalPlaneForYAxis = (ray, (editorState, engineState)) =>
   _findMostOrthogonalPlaneBetweenCurrentSceneTreeNodeAndCameraVecAndPlane(
     (
-      AxisTransformGizmoSceneViewEditorService.getXAxisNormalizedVec(
+      AxisTranslationGizmoSceneViewEditorService.getXAxisNormalizedVec(
         editorState,
         engineState,
       ),
-      PlaneTransformGizmoSceneViewEditorService.buildYZPlane(
+      PlaneTranslationGizmoSceneViewEditorService.buildYZPlane(
         editorState,
         engineState,
       ),
     ),
     (
-      AxisTransformGizmoSceneViewEditorService.getZAxisNormalizedVec(
+      AxisTranslationGizmoSceneViewEditorService.getZAxisNormalizedVec(
         editorState,
         engineState,
       ),
-      PlaneTransformGizmoSceneViewEditorService.buildXYPlane(
+      PlaneTranslationGizmoSceneViewEditorService.buildXYPlane(
         editorState,
         engineState,
       ),
@@ -95,21 +95,21 @@ let findMostOrthogonalPlaneForYAxis = (ray, (editorState, engineState)) =>
 let findMostOrthogonalPlaneForZAxis = (ray, (editorState, engineState)) =>
   _findMostOrthogonalPlaneBetweenCurrentSceneTreeNodeAndCameraVecAndPlane(
     (
-      AxisTransformGizmoSceneViewEditorService.getXAxisNormalizedVec(
+      AxisTranslationGizmoSceneViewEditorService.getXAxisNormalizedVec(
         editorState,
         engineState,
       ),
-      PlaneTransformGizmoSceneViewEditorService.buildYZPlane(
+      PlaneTranslationGizmoSceneViewEditorService.buildYZPlane(
         editorState,
         engineState,
       ),
     ),
     (
-      AxisTransformGizmoSceneViewEditorService.getYAxisNormalizedVec(
+      AxisTranslationGizmoSceneViewEditorService.getYAxisNormalizedVec(
         editorState,
         engineState,
       ),
-      PlaneTransformGizmoSceneViewEditorService.buildXZPlane(
+      PlaneTranslationGizmoSceneViewEditorService.buildXZPlane(
         editorState,
         engineState,
       ),

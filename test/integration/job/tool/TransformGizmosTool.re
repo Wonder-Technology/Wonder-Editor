@@ -3,7 +3,7 @@ let getArrowFromAxisGameObject = (axisGameObject, engineState) =>
 
 let getArrowGameObject = (editorState, engineState) => {
   let xAxisGameObject =
-    TransformGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo
+    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo
     |> StateLogicService.getEditorState;
 
   getArrowFromAxisGameObject(xAxisGameObject, engineState);
@@ -14,7 +14,7 @@ let getLineFromAxisGameObject = (axisGameObject, engineState) =>
 
 let getLineGameObject = (editorState, engineState) => {
   let xAxisGameObject =
-    TransformGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo
+    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo
     |> StateLogicService.getEditorState;
 
   getLineFromAxisGameObject(xAxisGameObject, engineState);

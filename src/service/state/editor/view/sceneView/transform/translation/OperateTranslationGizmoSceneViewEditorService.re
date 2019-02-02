@@ -3,9 +3,7 @@ open EditorType;
 open SceneViewType;
 
 let unsafeGetTranslationWholeGizmo = editorState =>
-  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-    editorState.sceneViewRecord,
-  ).
+  RecordTranslationGizmoSceneViewEditorService.unsafeGetData(editorState).
     translationWholeGizmo;
 
 let setTranslationWholeGizmo = (gameObject, editorState) => {
@@ -16,17 +14,21 @@ let setTranslationWholeGizmo = (gameObject, editorState) => {
       Some({
         ...
           RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-            editorState.sceneViewRecord,
+            editorState,
           ),
-        translationWholeGizmo: gameObject,
+        translationGizmoData: {
+          ...
+            RecordTranslationGizmoSceneViewEditorService.unsafeGetData(
+              editorState,
+            ),
+          translationWholeGizmo: gameObject,
+        },
       }),
   },
 };
 
 let unsafeGetTranslationXAxisGizmo = editorState =>
-  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-    editorState.sceneViewRecord,
-  ).
+  RecordTranslationGizmoSceneViewEditorService.unsafeGetData(editorState).
     translationXAxisGizmo;
 
 let setTranslationXAxisGizmo = (gameObject, editorState) => {
@@ -37,17 +39,21 @@ let setTranslationXAxisGizmo = (gameObject, editorState) => {
       Some({
         ...
           RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-            editorState.sceneViewRecord,
+            editorState,
           ),
-        translationXAxisGizmo: gameObject,
+        translationGizmoData: {
+          ...
+            RecordTranslationGizmoSceneViewEditorService.unsafeGetData(
+              editorState,
+            ),
+          translationXAxisGizmo: gameObject,
+        },
       }),
   },
 };
 
 let unsafeGetTranslationYAxisGizmo = editorState =>
-  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-    editorState.sceneViewRecord,
-  ).
+  RecordTranslationGizmoSceneViewEditorService.unsafeGetData(editorState).
     translationYAxisGizmo;
 
 let setTranslationYAxisGizmo = (gameObject, editorState) => {
@@ -58,17 +64,21 @@ let setTranslationYAxisGizmo = (gameObject, editorState) => {
       Some({
         ...
           RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-            editorState.sceneViewRecord,
+            editorState,
           ),
-        translationYAxisGizmo: gameObject,
+        translationGizmoData: {
+          ...
+            RecordTranslationGizmoSceneViewEditorService.unsafeGetData(
+              editorState,
+            ),
+          translationYAxisGizmo: gameObject,
+        },
       }),
   },
 };
 
 let unsafeGetTranslationZAxisGizmo = editorState =>
-  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-    editorState.sceneViewRecord,
-  ).
+  RecordTranslationGizmoSceneViewEditorService.unsafeGetData(editorState).
     translationZAxisGizmo;
 
 let setTranslationZAxisGizmo = (gameObject, editorState) => {
@@ -79,17 +89,21 @@ let setTranslationZAxisGizmo = (gameObject, editorState) => {
       Some({
         ...
           RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-            editorState.sceneViewRecord,
+            editorState,
           ),
-        translationZAxisGizmo: gameObject,
+        translationGizmoData: {
+          ...
+            RecordTranslationGizmoSceneViewEditorService.unsafeGetData(
+              editorState,
+            ),
+          translationZAxisGizmo: gameObject,
+        },
       }),
   },
 };
 
 let unsafeGetTranslationXYPlaneGizmo = editorState =>
-  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-    editorState.sceneViewRecord,
-  ).
+  RecordTranslationGizmoSceneViewEditorService.unsafeGetData(editorState).
     translationXYPlaneGizmo;
 
 let setTranslationXYPlaneGizmo = (gameObject, editorState) => {
@@ -100,17 +114,21 @@ let setTranslationXYPlaneGizmo = (gameObject, editorState) => {
       Some({
         ...
           RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-            editorState.sceneViewRecord,
+            editorState,
           ),
-        translationXYPlaneGizmo: gameObject,
+        translationGizmoData: {
+          ...
+            RecordTranslationGizmoSceneViewEditorService.unsafeGetData(
+              editorState,
+            ),
+          translationXYPlaneGizmo: gameObject,
+        },
       }),
   },
 };
 
 let unsafeGetTranslationXZPlaneGizmo = editorState =>
-  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-    editorState.sceneViewRecord,
-  ).
+  RecordTranslationGizmoSceneViewEditorService.unsafeGetData(editorState).
     translationXZPlaneGizmo;
 
 let setTranslationXZPlaneGizmo = (gameObject, editorState) => {
@@ -121,17 +139,21 @@ let setTranslationXZPlaneGizmo = (gameObject, editorState) => {
       Some({
         ...
           RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-            editorState.sceneViewRecord,
+            editorState,
           ),
-        translationXZPlaneGizmo: gameObject,
+        translationGizmoData: {
+          ...
+            RecordTranslationGizmoSceneViewEditorService.unsafeGetData(
+              editorState,
+            ),
+          translationXZPlaneGizmo: gameObject,
+        },
       }),
   },
 };
 
 let unsafeGetTranslationYZPlaneGizmo = editorState =>
-  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-    editorState.sceneViewRecord,
-  ).
+  RecordTranslationGizmoSceneViewEditorService.unsafeGetData(editorState).
     translationYZPlaneGizmo;
 
 let setTranslationYZPlaneGizmo = (gameObject, editorState) => {
@@ -142,17 +164,21 @@ let setTranslationYZPlaneGizmo = (gameObject, editorState) => {
       Some({
         ...
           RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-            editorState.sceneViewRecord,
+            editorState,
           ),
-        translationYZPlaneGizmo: gameObject,
+        translationGizmoData: {
+          ...
+            RecordTranslationGizmoSceneViewEditorService.unsafeGetData(
+              editorState,
+            ),
+          translationYZPlaneGizmo: gameObject,
+        },
       }),
   },
 };
 
 let unsafeGetCurrentSceneTreeNodeStartPoint = editorState =>
-  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-    editorState.sceneViewRecord,
-  ).
+  RecordTranslationGizmoSceneViewEditorService.unsafeGetData(editorState).
     currentSceneTreeNodeStartPoint
   |> OptionService.unsafeGet;
 
@@ -165,9 +191,16 @@ let setCurrentSceneTreeNodeStartPoint =
       Some({
         ...
           RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-            editorState.sceneViewRecord,
+            editorState,
           ),
-        currentSceneTreeNodeStartPoint: Some(currentSceneTreeNodeStartPoint),
+        translationGizmoData: {
+          ...
+            RecordTranslationGizmoSceneViewEditorService.unsafeGetData(
+              editorState,
+            ),
+          currentSceneTreeNodeStartPoint:
+            Some(currentSceneTreeNodeStartPoint),
+        },
       }),
   },
 };

@@ -127,19 +127,19 @@ module RenderTransformGizmos = {
 let _getTranslationAxisGameObjects = (editorState, engineState) =>
   ArrayService.fastConcatArrays([|
     HierarchyGameObjectEngineService.getAllGameObjects(
-      TransformGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
+      OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
         editorState,
       ),
       engineState,
     ),
     HierarchyGameObjectEngineService.getAllGameObjects(
-      TransformGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
+      OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
         editorState,
       ),
       engineState,
     ),
     HierarchyGameObjectEngineService.getAllGameObjects(
-      TransformGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
+      OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
         editorState,
       ),
       engineState,
@@ -149,19 +149,19 @@ let _getTranslationAxisGameObjects = (editorState, engineState) =>
 let _getTranslationPlaneGameObjects = (editorState, engineState) =>
   ArrayService.fastConcatArrays([|
     HierarchyGameObjectEngineService.getAllGameObjects(
-      TransformGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+      OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
         editorState,
       ),
       engineState,
     ),
     HierarchyGameObjectEngineService.getAllGameObjects(
-      TransformGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
+      OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
         editorState,
       ),
       engineState,
     ),
     HierarchyGameObjectEngineService.getAllGameObjects(
-      TransformGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
+      OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
         editorState,
       ),
       engineState,

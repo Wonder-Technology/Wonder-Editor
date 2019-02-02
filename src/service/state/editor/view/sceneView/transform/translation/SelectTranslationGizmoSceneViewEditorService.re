@@ -3,47 +3,31 @@ open EditorType;
 open SceneViewType;
 
 let isTranslationXAxisGizmoSelected = editorState =>
-  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-    editorState.sceneViewRecord,
-  ).
+  RecordTranslationGizmoSceneViewEditorService.unsafeGetData(editorState).
     isTranslationXAxisGizmoSelected;
 
 let isTranslationYAxisGizmoSelected = editorState =>
-  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-    editorState.sceneViewRecord,
-  ).
+  RecordTranslationGizmoSceneViewEditorService.unsafeGetData(editorState).
     isTranslationYAxisGizmoSelected;
 
 let isTranslationZAxisGizmoSelected = editorState =>
-  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-    editorState.sceneViewRecord,
-  ).
+  RecordTranslationGizmoSceneViewEditorService.unsafeGetData(editorState).
     isTranslationZAxisGizmoSelected;
 
 let isTranslationXYPlaneGizmoSelected = editorState =>
-  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-    editorState.sceneViewRecord,
-  ).
+  RecordTranslationGizmoSceneViewEditorService.unsafeGetData(editorState).
     isTranslationXYPlaneGizmoSelected;
 
 let isTranslationXZPlaneGizmoSelected = editorState =>
-  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-    editorState.sceneViewRecord,
-  ).
+  RecordTranslationGizmoSceneViewEditorService.unsafeGetData(editorState).
     isTranslationXZPlaneGizmoSelected;
 
 let isTranslationYZPlaneGizmoSelected = editorState =>
-  RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-    editorState.sceneViewRecord,
-  ).
+  RecordTranslationGizmoSceneViewEditorService.unsafeGetData(editorState).
     isTranslationYZPlaneGizmoSelected;
 
-let isSelectAnyTransformGizmo = editorState =>
-  switch (
-    RecordTransformGizmoSceneViewEditorService.getData(
-      editorState.sceneViewRecord,
-    )
-  ) {
+let isSelectAnyTranslationGizmo = editorState =>
+  switch (RecordTranslationGizmoSceneViewEditorService.getData(editorState)) {
   | None => false
   | Some(_) =>
     isTranslationXAxisGizmoSelected(editorState)
@@ -62,14 +46,20 @@ let markNotSelectAnyTranslationGizmo = editorState => {
       Some({
         ...
           RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-            editorState.sceneViewRecord,
+            editorState,
           ),
-        isTranslationXAxisGizmoSelected: false,
-        isTranslationYAxisGizmoSelected: false,
-        isTranslationZAxisGizmoSelected: false,
-        isTranslationXYPlaneGizmoSelected: false,
-        isTranslationXZPlaneGizmoSelected: false,
-        isTranslationYZPlaneGizmoSelected: false,
+        translationGizmoData: {
+          ...
+            RecordTranslationGizmoSceneViewEditorService.unsafeGetData(
+              editorState,
+            ),
+          isTranslationXAxisGizmoSelected: false,
+          isTranslationYAxisGizmoSelected: false,
+          isTranslationZAxisGizmoSelected: false,
+          isTranslationXYPlaneGizmoSelected: false,
+          isTranslationXZPlaneGizmoSelected: false,
+          isTranslationYZPlaneGizmoSelected: false,
+        },
       }),
   },
 };
@@ -85,9 +75,15 @@ let onlySelectTranslationXYPlaneGizmo = editorState => {
         Some({
           ...
             RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-              editorState.sceneViewRecord,
+              editorState,
             ),
-          isTranslationXYPlaneGizmoSelected: true,
+          translationGizmoData: {
+            ...
+              RecordTranslationGizmoSceneViewEditorService.unsafeGetData(
+                editorState,
+              ),
+            isTranslationXYPlaneGizmoSelected: true,
+          },
         }),
     },
   };
@@ -104,9 +100,15 @@ let onlySelectTranslationXZPlaneGizmo = editorState => {
         Some({
           ...
             RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-              editorState.sceneViewRecord,
+              editorState,
             ),
-          isTranslationXZPlaneGizmoSelected: true,
+          translationGizmoData: {
+            ...
+              RecordTranslationGizmoSceneViewEditorService.unsafeGetData(
+                editorState,
+              ),
+            isTranslationXZPlaneGizmoSelected: true,
+          },
         }),
     },
   };
@@ -123,9 +125,15 @@ let onlySelectTranslationYZPlaneGizmo = editorState => {
         Some({
           ...
             RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-              editorState.sceneViewRecord,
+              editorState,
             ),
-          isTranslationYZPlaneGizmoSelected: true,
+          translationGizmoData: {
+            ...
+              RecordTranslationGizmoSceneViewEditorService.unsafeGetData(
+                editorState,
+              ),
+            isTranslationYZPlaneGizmoSelected: true,
+          },
         }),
     },
   };
@@ -142,9 +150,15 @@ let onlySelectTranslationXAxisGizmo = editorState => {
         Some({
           ...
             RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-              editorState.sceneViewRecord,
+              editorState,
             ),
-          isTranslationXAxisGizmoSelected: true,
+          translationGizmoData: {
+            ...
+              RecordTranslationGizmoSceneViewEditorService.unsafeGetData(
+                editorState,
+              ),
+            isTranslationXAxisGizmoSelected: true,
+          },
         }),
     },
   };
@@ -152,7 +166,6 @@ let onlySelectTranslationXAxisGizmo = editorState => {
 
 let onlySelectTranslationYAxisGizmo = editorState => {
   let editorState = editorState |> markNotSelectAnyTranslationGizmo;
-
   {
     ...editorState,
     sceneViewRecord: {
@@ -161,9 +174,15 @@ let onlySelectTranslationYAxisGizmo = editorState => {
         Some({
           ...
             RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-              editorState.sceneViewRecord,
+              editorState,
             ),
-          isTranslationYAxisGizmoSelected: true,
+          translationGizmoData: {
+            ...
+              RecordTranslationGizmoSceneViewEditorService.unsafeGetData(
+                editorState,
+              ),
+            isTranslationYAxisGizmoSelected: true,
+          },
         }),
     },
   };
@@ -180,9 +199,15 @@ let onlySelectTranslationZAxisGizmo = editorState => {
         Some({
           ...
             RecordTransformGizmoSceneViewEditorService.unsafeGetData(
-              editorState.sceneViewRecord,
+              editorState,
             ),
-          isTranslationZAxisGizmoSelected: true,
+          translationGizmoData: {
+            ...
+              RecordTranslationGizmoSceneViewEditorService.unsafeGetData(
+                editorState,
+              ),
+            isTranslationZAxisGizmoSelected: true,
+          },
         }),
     },
   };

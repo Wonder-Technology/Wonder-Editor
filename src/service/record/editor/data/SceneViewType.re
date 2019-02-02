@@ -1,8 +1,12 @@
 type rect = (int, int, int, int);
 
+type gizmo =
+  | Translation
+  | Rotation;
+
 type gameObject = Wonderjs.GameObjectPrimitiveType.gameObject;
 
-type transformGizmoData = {
+type translationGizmoData = {
   translationWholeGizmo: gameObject,
   translationXAxisGizmo: gameObject,
   translationYAxisGizmo: gameObject,
@@ -19,6 +23,11 @@ type transformGizmoData = {
   currentSceneTreeNodeStartPoint: option((float, float, float)),
   axisGameObjectStartPoint: option((float, float, float)),
   pickStartPoint: option((float, float, float)),
+};
+
+type transformGizmoData = {
+  currentGizmoType: gizmo,
+  translationGizmoData,
 };
 
 type sceneViewRecord = {

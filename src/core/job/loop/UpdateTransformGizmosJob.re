@@ -64,7 +64,7 @@ let updateTransformJob = (_, engineState) => {
     | None => engineState
     | Some(currentSceneTreeNode) =>
       let translationWholeGizmo =
-        TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+        OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
           editorState,
         );
 

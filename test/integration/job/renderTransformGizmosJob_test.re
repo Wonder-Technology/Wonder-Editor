@@ -481,7 +481,7 @@ let _ =
         describe("render plane gizmos", () => {
           let _getPlaneGeometry = (editorState, engineState) =>
             GameObjectComponentEngineService.unsafeGetGeometryComponent(
-              TransformGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
                 editorState,
               ),
               engineState,

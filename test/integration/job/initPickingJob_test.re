@@ -53,7 +53,7 @@ let _ =
               InitTransformGizmosJobTool.createTransformGizmos
               |> StateLogicService.getAndSetStateToGetData;
 
-              SelectTransformGizmoSceneViewEditorService.onlySelectTranslationXAxisGizmo
+              SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXAxisGizmo
               |> StateLogicService.getAndSetEditorState;
             });
 

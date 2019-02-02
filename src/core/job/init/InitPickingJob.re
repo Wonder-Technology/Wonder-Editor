@@ -217,7 +217,7 @@ let _handlePicking = (event: EventType.customEvent, engineState) => {
 let _isHandlePicking = (event, editorState) =>
   MouseEventService.isLeftMouseButton(event)
   && !
-       SelectTransformGizmoSceneViewEditorService.isSelectAnyTransformGizmo(
+       SelectTranslationGizmoSceneViewEditorService.isSelectAnyTranslationGizmo(
          editorState,
        );
 

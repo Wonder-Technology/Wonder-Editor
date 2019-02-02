@@ -66,17 +66,17 @@ let _ =
             let engineState = StateEngineService.unsafeGetState();
 
             GameObjectTool.hasTargetChildren(
-              TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
                 editorState,
               ),
               [|
-                TransformGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
                   editorState,
                 ),
-                TransformGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
                   editorState,
                 ),
-                TransformGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
                   editorState,
                 ),
               |],
@@ -94,7 +94,7 @@ let _ =
                   let engineState = StateEngineService.unsafeGetState();
 
                   let translationYAxisGizmo =
-                    TransformGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
+                    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
                       editorState,
                     );
 
@@ -122,7 +122,7 @@ let _ =
                 let engineState = StateEngineService.unsafeGetState();
 
                 let translationYAxisGizmo =
-                  TransformGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
+                  OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
                     editorState,
                   );
 
@@ -156,7 +156,7 @@ let _ =
                 let engineState = StateEngineService.unsafeGetState();
 
                 let translationYAxisGizmo =
-                  TransformGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
+                  OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
                     editorState,
                   );
 
@@ -185,7 +185,7 @@ let _ =
               let engineState = StateEngineService.unsafeGetState();
 
               let translationXAxisGizmo =
-                TransformGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
                   editorState,
                 );
 
@@ -212,7 +212,7 @@ let _ =
               let engineState = StateEngineService.unsafeGetState();
 
               let translationYAxisGizmo =
-                TransformGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
                   editorState,
                 );
 
@@ -239,7 +239,7 @@ let _ =
               let engineState = StateEngineService.unsafeGetState();
 
               let translationZAxisGizmo =
-                TransformGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
                   editorState,
                 );
 
@@ -268,7 +268,7 @@ let _ =
             let engineState = StateEngineService.unsafeGetState();
 
             let translationXAxisGizmo =
-              TransformGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
                 editorState,
               );
 
@@ -281,7 +281,7 @@ let _ =
             let engineState = StateEngineService.unsafeGetState();
 
             let translationZAxisGizmo =
-              TransformGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
                 editorState,
               );
 
@@ -299,7 +299,7 @@ let _ =
                 let engineState = StateEngineService.unsafeGetState();
 
                 let translationWholeGizmo =
-                  TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+                  OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
                     editorState,
                   );
 
@@ -313,13 +313,13 @@ let _ =
                 )
                 |>
                 expect == (
-                            TransformGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
+                            OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
                               editorState,
                             ),
-                            TransformGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
+                            OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
                               editorState,
                             ),
-                            TransformGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
+                            OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
                               editorState,
                             ),
                           );
@@ -347,17 +347,17 @@ let _ =
             let engineState = StateEngineService.unsafeGetState();
 
             GameObjectTool.hasTargetChildren(
-              TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
                 editorState,
               ),
               [|
-                TransformGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
                   editorState,
                 ),
-                TransformGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
                   editorState,
                 ),
-                TransformGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
                   editorState,
                 ),
               |],
@@ -372,7 +372,7 @@ let _ =
                 let editorState = StateEditorService.getState();
                 let engineState = StateEngineService.unsafeGetState();
 
-                TransformGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
                   editorState,
                 )
                 |> GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
@@ -390,7 +390,7 @@ let _ =
                 let editorState = StateEditorService.getState();
                 let engineState = StateEngineService.unsafeGetState();
 
-                TransformGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
                   editorState,
                 )
                 |> TransformGameObjectEngineService.getLocalPosition(
@@ -407,7 +407,7 @@ let _ =
               let editorState = StateEditorService.getState();
               let engineState = StateEngineService.unsafeGetState();
 
-              TransformGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
                 editorState,
               )
               |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
@@ -421,7 +421,7 @@ let _ =
               let editorState = StateEditorService.getState();
               let engineState = StateEngineService.unsafeGetState();
 
-              TransformGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
                 editorState,
               )
               |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
@@ -435,7 +435,7 @@ let _ =
               let editorState = StateEditorService.getState();
               let engineState = StateEngineService.unsafeGetState();
 
-              TransformGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
                 editorState,
               )
               |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
@@ -451,7 +451,7 @@ let _ =
             let editorState = StateEditorService.getState();
             let engineState = StateEngineService.unsafeGetState();
 
-            TransformGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
+            OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
               editorState,
             )
             |> TransformGameObjectTool.getLocalEulerAngles(_, engineState)
@@ -464,7 +464,7 @@ let _ =
               let engineState = StateEngineService.unsafeGetState();
 
               let translationWholeGizmo =
-                TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
                   editorState,
                 );
 
@@ -478,13 +478,13 @@ let _ =
               )
               |>
               expect == (
-                          TransformGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+                          OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
                             editorState,
                           ),
-                          TransformGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
+                          OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
                             editorState,
                           ),
-                          TransformGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
+                          OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
                             editorState,
                           ),
                         );
@@ -544,17 +544,17 @@ let _ =
 
           let _getAllPlaneGizmoLocalPos = (editorState, engineState) => (
             _getPlaneGizmoLocalPos(
-              TransformGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo,
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo,
               editorState,
               engineState,
             ),
             _getPlaneGizmoLocalPos(
-              TransformGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo,
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo,
               editorState,
               engineState,
             ),
             _getPlaneGizmoLocalPos(
-              TransformGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo,
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo,
               editorState,
               engineState,
             ),
@@ -728,7 +728,7 @@ let _ =
               (),
             );
 
-            SelectTransformGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
+            SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
             |> StateLogicService.getEditorState
             |> expect == false;
           })
@@ -746,7 +746,7 @@ let _ =
                 (),
               );
 
-              SelectTransformGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
+              SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
               |> StateLogicService.getEditorState
               |> expect == false;
             })
@@ -780,7 +780,7 @@ let _ =
                     (),
                   );
 
-                  SelectTransformGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
+                  SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
                   |> StateLogicService.getEditorState
                   |> expect == true;
                 });
@@ -794,7 +794,7 @@ let _ =
                     (),
                   );
 
-                  SelectTransformGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
+                  SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
                   |> StateLogicService.getEditorState
                   |> expect == true;
                 });
@@ -808,7 +808,7 @@ let _ =
                     (),
                   );
 
-                  SelectTransformGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
+                  SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
                   |> StateLogicService.getEditorState
                   |> expect == false;
                 });
@@ -827,11 +827,11 @@ let _ =
             );
 
             (
-              SelectTransformGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
+              SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
               |> StateLogicService.getEditorState,
-              SelectTransformGizmoSceneViewEditorService.isTranslationYAxisGizmoSelected
+              SelectTranslationGizmoSceneViewEditorService.isTranslationYAxisGizmoSelected
               |> StateLogicService.getEditorState,
-              SelectTransformGizmoSceneViewEditorService.isTranslationZAxisGizmoSelected
+              SelectTranslationGizmoSceneViewEditorService.isTranslationZAxisGizmoSelected
               |> StateLogicService.getEditorState,
             )
             |> expect == (false, false, false);
@@ -1152,7 +1152,7 @@ let _ =
                         let editorState = StateEditorService.getState();
                         let engineState = StateEngineService.unsafeGetState();
                         TransformGameObjectEngineService.getPosition(
-                          TransformGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+                          OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
                             editorState,
                           ),
                           engineState,
