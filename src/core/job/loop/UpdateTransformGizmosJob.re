@@ -1,26 +1,26 @@
-let _moveAndRotateTranslationWholeGizmoToCurrentSceneTreeNode =
-    (currentSceneTreeNode, translationWholeGizmo, engineState) => {
+let _moveAndRotateWholeGizmoToCurrentSceneTreeNode =
+    (currentSceneTreeNode, wholeGizmo, engineState) => {
   let currentSceneTreeNodeTransform =
     GameObjectComponentEngineService.unsafeGetTransformComponent(
       currentSceneTreeNode,
       engineState,
     );
-  let translationWholeGizmoTransform =
+  let wholeGizmoTransform =
     GameObjectComponentEngineService.unsafeGetTransformComponent(
-      translationWholeGizmo,
+      wholeGizmo,
       engineState,
     );
 
   engineState
   |> TransformEngineService.setPosition(
-       translationWholeGizmoTransform,
+       wholeGizmoTransform,
        TransformEngineService.getPosition(
          currentSceneTreeNodeTransform,
          engineState,
        ),
      )
   |> TransformEngineService.setEulerAngles(
-       translationWholeGizmoTransform,
+       wholeGizmoTransform,
        TransformEngineService.getEulerAngles(
          currentSceneTreeNodeTransform,
          engineState,
@@ -28,13 +28,8 @@ let _moveAndRotateTranslationWholeGizmoToCurrentSceneTreeNode =
      );
 };
 
-let _scaleTranslationWholeGizmo =
-    (
-      currentSceneTreeNode,
-      cameraGameObject,
-      translationWholeGizmo,
-      engineState,
-    ) => {
+let _scaleWholeGizmo =
+    (currentSceneTreeNode, cameraGameObject, wholeGizmo, engineState) => {
   let scaleFactor =
     ComputeTranslationGizmoUtils.computeScaleFactorBasedOnDistanceToCamera(
       TransformGameObjectEngineService.getPosition(
@@ -48,7 +43,7 @@ let _scaleTranslationWholeGizmo =
     );
 
   TransformGameObjectEngineService.setLocalScale(
-    translationWholeGizmo,
+    wholeGizmo,
     (scaleFactor, scaleFactor, scaleFactor),
     engineState,
   );
@@ -57,30 +52,65 @@ let _scaleTranslationWholeGizmo =
 let updateTransformJob = (_, engineState) => {
   let editorState = StateEditorService.getState();
 
-  IsTransformGizmoRenderSceneViewEditorService.isTranslationWholeGizmoRender(
+  IsTransformGizmoRenderSceneViewEditorService.isTransformGizmoRender(
     editorState,
   ) ?
-    switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
-    | None => engineState
-    | Some(currentSceneTreeNode) =>
-      let translationWholeGizmo =
-        OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
-          editorState,
-        );
+    {
+      let currentSceneTreeNode =
+        SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState);
+
+      let wholeGizmo =
+        switch (
+          CurrentTransformGizmoSceneViewEditorService.getCurrentGizmoType(
+            editorState,
+          )
+        ) {
+        | Translation =>
+          OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+            editorState,
+          )
+
+        | Rotation =>
+          OperateRotationGizmoSceneViewEditorService.unsafeGetRotationWholeGizmo(
+            editorState,
+          )
+        };
 
       let cameraGameObject =
         SceneViewEditorService.unsafeGetEditCamera(editorState);
 
       engineState
-      |> _moveAndRotateTranslationWholeGizmoToCurrentSceneTreeNode(
+      |> _moveAndRotateWholeGizmoToCurrentSceneTreeNode(
            currentSceneTreeNode,
-           translationWholeGizmo,
+           wholeGizmo,
          )
-      |> _scaleTranslationWholeGizmo(
-           currentSceneTreeNode,
-           cameraGameObject,
-           translationWholeGizmo,
-         );
+      |> _scaleWholeGizmo(currentSceneTreeNode, cameraGameObject, wholeGizmo);
     } :
     engineState;
+  /* IsTransformGizmoRenderSceneViewEditorService.isTranslationWholeGizmoRender(
+       editorState,
+     ) ?
+       switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
+       | None => engineState
+       | Some(currentSceneTreeNode) =>
+         let wholeGizmo =
+           OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+             editorState,
+           );
+
+         let cameraGameObject =
+           SceneViewEditorService.unsafeGetEditCamera(editorState);
+
+         engineState
+         |> _moveAndRotateWholeGizmoToCurrentSceneTreeNode(
+              currentSceneTreeNode,
+              wholeGizmo,
+            )
+         |> _scaleWholeGizmo(
+              currentSceneTreeNode,
+              cameraGameObject,
+              wholeGizmo,
+            );
+       } :
+       engineState; */
 };
