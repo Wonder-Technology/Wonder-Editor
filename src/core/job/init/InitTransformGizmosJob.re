@@ -166,24 +166,37 @@ let _bindEvent = (editorState, engineState) => {
   engineState;
 };
 
-let initJob = (_, engineState) => {
+let _createTransformGizmos = ((editorState, engineState)) => {
   let (
     engineState,
-    wholeGizmo,
+    translationWholeGizmo,
     (xAxisGizmo, yAxisGizmo, zAxisGizmo),
     (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo),
   ) =
     CreateTranslationGizmosUtils.createTranslationGizmos(engineState);
 
-  let editorState = StateEditorService.getState();
+  let (engineState, rotationWholeGizmo, (yzGizmo, xzGizmo, xyGizmo)) =
+    CreateRotationGizmosUtils.createRotationGizmos(engineState);
 
   let editorState =
     editorState
-    |> CreateTransformGizmosUtils.setToEditorState((
-         wholeGizmo,
-         (xAxisGizmo, yAxisGizmo, zAxisGizmo),
-         (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo),
-       ));
+    |> CreateTransformGizmosUtils.setToEditorState(
+         (
+           translationWholeGizmo,
+           (xAxisGizmo, yAxisGizmo, zAxisGizmo),
+           (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo),
+         ),
+         (rotationWholeGizmo, (yzGizmo, xzGizmo, xyGizmo)),
+       );
+
+  (editorState, engineState);
+};
+
+let initJob = (_, engineState) => {
+  let editorState = StateEditorService.getState();
+
+  let (editorState, engineState) =
+    _createTransformGizmos((editorState, engineState));
 
   let engineState = _bindEvent(editorState, engineState);
 

@@ -1,4 +1,4 @@
-module RenderTransformGizmos = {
+module RenderTranslationGizmos = {
   let prepareTranslationAxisGlState = engineState =>
     engineState |> DeviceManagerEngineService.setDepthTest(false);
 
@@ -29,99 +29,250 @@ module RenderTransformGizmos = {
     |> DeviceManagerEngineService.setBlend(false);
   };
 
-  let getRenderDataArr =
-      (
-        gameObjects,
-        ({gameObjectRecord}: Wonderjs.StateDataMainType.state) as engineState,
-      ) =>
-    Wonderjs.(
-      gameObjects
-      |> WonderCommonlib.ArrayService.reduceOneParam(
-           (. renderDataArr, gameObject) => {
-             let transform =
-               GetComponentGameObjectService.unsafeGetTransformComponent(
-                 gameObject,
-                 gameObjectRecord,
-               );
+  let getRenderDataArr = (gameObjects, engineState) =>
+    gameObjects
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. renderDataArr, gameObject) => {
+           let transform =
+             GameObjectComponentEngineService.unsafeGetTransformComponent(
+               gameObject,
+               engineState,
+             );
 
-             switch (
-               GetComponentGameObjectService.getGeometryComponent(.
-                 gameObject,
-                 gameObjectRecord,
-               )
-               |> Js.Option.andThen((. geometry) =>
-                    GameObjectComponentEngineService.getBasicMaterialComponent(
-                      gameObject,
-                      engineState,
-                    )
-                    |> Js.Option.andThen((. material) =>
-                         GetComponentGameObjectService.getMeshRendererComponent(.
-                           gameObject,
-                           gameObjectRecord,
-                         )
-                         |> Js.Option.andThen((. meshRenderer) =>
-                              Some((
-                                transform,
-                                material,
-                                meshRenderer,
-                                geometry,
-                              ))
-                            )
-                       )
+           switch (
+             GameObjectComponentEngineService.getGeometryComponent(
+               gameObject,
+               engineState,
+             )
+             |> Js.Option.andThen((. geometry) =>
+                  GameObjectComponentEngineService.getBasicMaterialComponent(
+                    gameObject,
+                    engineState,
                   )
-             ) {
-             | None => renderDataArr
-             | Some(renderData) =>
-               renderDataArr |> ArrayService.push(renderData)
-             };
-           },
-           [||],
-         )
-    );
-
-  let _getShaderIndex = (materialIndex, engineState) =>
-    Wonderjs.(RenderJobAPI.getShaderIndex(materialIndex, engineState));
+                  |> Js.Option.andThen((. material) =>
+                       GameObjectComponentEngineService.getMeshRendererComponent(
+                         gameObject,
+                         engineState,
+                       )
+                       |> Js.Option.andThen((. meshRenderer) =>
+                            Some((
+                              transform,
+                              material,
+                              meshRenderer,
+                              geometry,
+                            ))
+                          )
+                     )
+                )
+           ) {
+           | None => renderDataArr
+           | Some(renderData) =>
+             renderDataArr |> ArrayService.push(renderData)
+           };
+         },
+         [||],
+       );
 
   let render = (gl, renderDataArr, engineState) =>
-    Wonderjs.(
-      renderDataArr
-      |> WonderCommonlib.ArrayService.reduceOneParam(
-           (.
-             engineState,
-             (
-               transformIndex,
-               materialIndex,
-               meshRendererIndex,
-               geometryIndex,
-             ),
-           ) => {
-             let shaderIndex = _getShaderIndex(materialIndex, engineState);
-
-             engineState
-             |> RenderJobEngineService.useByShaderIndex(gl, shaderIndex)
-             |> RenderJobEngineService.sendAttributeData(
-                  gl,
-                  (shaderIndex, geometryIndex),
-                )
-             |> RenderJobEngineService.sendUniformRenderObjectModelData(
-                  gl,
-                  shaderIndex,
-                  transformIndex,
-                )
-             |> RenderJobEngineService.sendUniformRenderObjectMaterialData(
-                  gl,
-                  shaderIndex,
-                  materialIndex,
-                )
-             |> RenderJobEngineService.draw(
-                  gl,
-                  meshRendererIndex,
-                  geometryIndex,
-                );
-           },
+    renderDataArr
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (.
            engineState,
-         )
-    );
+           (transformIndex, materialIndex, meshRendererIndex, geometryIndex),
+         ) => {
+           let shaderIndex =
+             RenderJobEngineService.getShaderIndex(
+               materialIndex,
+               engineState,
+             );
+
+           engineState
+           |> RenderJobEngineService.useByShaderIndex(gl, shaderIndex)
+           |> RenderJobEngineService.sendAttributeData(
+                gl,
+                (shaderIndex, geometryIndex),
+              )
+           |> RenderJobEngineService.sendUniformRenderObjectModelData(
+                gl,
+                shaderIndex,
+                transformIndex,
+              )
+           |> RenderJobEngineService.sendUniformRenderObjectMaterialData(
+                gl,
+                shaderIndex,
+                materialIndex,
+              )
+           |> RenderJobEngineService.draw(
+                gl,
+                meshRendererIndex,
+                geometryIndex,
+              );
+         },
+         engineState,
+       );
+};
+
+module RenderRotationGizmos = {
+  external vec3ToArray : ((float, float, float)) => array(float) =
+    "%identity";
+
+  let prepareRotationGlState = engineState =>
+    engineState |> DeviceManagerEngineService.setDepthTest(false);
+
+  let restoreRotationGlState = engineState =>
+    engineState |> DeviceManagerEngineService.setDepthTest(true);
+
+  /* TODO refactor: duplicate */
+  let getRenderDataArr = (gameObjects, engineState) =>
+    gameObjects
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. renderDataArr, gameObject) => {
+           let transform =
+             GameObjectComponentEngineService.unsafeGetTransformComponent(
+               gameObject,
+               engineState,
+             );
+
+           switch (
+             GameObjectComponentEngineService.getGeometryComponent(
+               gameObject,
+               engineState,
+             )
+             |> Js.Option.andThen((. geometry) =>
+                  GameObjectComponentEngineService.getBasicMaterialComponent(
+                    gameObject,
+                    engineState,
+                  )
+                  |> Js.Option.andThen((. material) =>
+                       GameObjectComponentEngineService.getMeshRendererComponent(
+                         gameObject,
+                         engineState,
+                       )
+                       |> Js.Option.andThen((. meshRenderer) =>
+                            Some((
+                              transform,
+                              material,
+                              meshRenderer,
+                              geometry,
+                            ))
+                          )
+                     )
+                )
+           ) {
+           | None => renderDataArr
+           | Some(renderData) =>
+             renderDataArr |> ArrayService.push(renderData)
+           };
+         },
+         [||],
+       );
+
+  let _sendUniformNoMaterialShaderData =
+      (
+        gl,
+        transformIndex,
+        materialIndex,
+        noMaterialShaderIndex,
+        cameraPos,
+        engineState,
+      ) => {
+    NoMaterialShaderEngineService.unsafeGetUniformSendData(
+      noMaterialShaderIndex,
+      engineState,
+    )
+    |> WonderCommonlib.ArrayService.forEach(
+         (.
+           {shaderCacheMap, name, pos, getDataFunc, sendDataFunc}: Wonderjs.GLSLSenderType.uniformNoMaterialShaderSendCachableData,
+         ) =>
+         GLSLLocationEngineService.isUniformLocationExist(pos) ?
+           {
+             /* TODO refactor(extend): need refactor with engine! */
+             let data =
+               switch (name) {
+               | "u_color" =>
+                 BasicMaterialEngineService.getColor(
+                   materialIndex,
+                   engineState,
+                 )
+               | "u_cameraPosInLocalCoordSystem" =>
+                 Wonderjs.Vector3Service.transformMat4Tuple(
+                   cameraPos,
+                   TransformEngineService.getLocalToWorldMatrixTypeArray(
+                     transformIndex,
+                     engineState,
+                   )
+                   |> Wonderjs.Matrix4Service.invert(
+                        _,
+                        Wonderjs.Matrix4Service.createIdentityMatrix4(),
+                      ),
+                 )
+                 |> vec3ToArray
+               };
+
+             sendDataFunc(. gl, shaderCacheMap, (name, pos), data);
+           } :
+           /* sendDataFunc(.
+                gl,
+                shaderCacheMap,
+                (name, pos),
+                getDataFunc(. getRenderDataSubState),
+              ) : */
+           ()
+       );
+
+    engineState;
+  };
+
+  let render = (editorState, gl, renderDataArr, engineState) => {
+    let rotationGizmoNoMaterialShaderIndex =
+      NoMaterialShaderEngineService.unsafeGetNoMaterialShader(
+        "rotation_gizmo_for_editor",
+        engineState,
+      );
+
+    /* TODO finish */
+    /* let cameraPosInLocalCoordSystem =
+       CameraPosUtils.getCameraPosInLocalCoordSystem(
+
+       ); */
+
+    let cameraPos = CameraPosUtils.getCameraPos(editorState, engineState);
+
+    renderDataArr
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (.
+           engineState,
+           (transformIndex, materialIndex, meshRendererIndex, geometryIndex),
+         ) =>
+           engineState
+           |> RenderJobEngineService.useByShaderIndex(
+                gl,
+                rotationGizmoNoMaterialShaderIndex,
+              )
+           |> RenderJobEngineService.sendAttributeData(
+                gl,
+                (rotationGizmoNoMaterialShaderIndex, geometryIndex),
+              )
+           |> RenderJobEngineService.sendUniformRenderObjectModelData(
+                gl,
+                rotationGizmoNoMaterialShaderIndex,
+                transformIndex,
+              )
+           |> _sendUniformNoMaterialShaderData(
+                gl,
+                transformIndex,
+                materialIndex,
+                rotationGizmoNoMaterialShaderIndex,
+                cameraPos,
+              )
+           |> RenderJobEngineService.draw(
+                gl,
+                meshRendererIndex,
+                geometryIndex,
+              ),
+         engineState,
+       );
+  };
 };
 
 let _getTranslationAxisGameObjects = (editorState, engineState) =>
@@ -168,52 +319,127 @@ let _getTranslationPlaneGameObjects = (editorState, engineState) =>
     ),
   |]);
 
-let _renderTranslationGameObjects =
-    (gameObjects, (prepareGlStateFunc, restoreGlStateFunc), engineState) => {
-  let renderDataArr =
-    RenderTransformGizmos.getRenderDataArr(gameObjects, engineState);
+let _renderTransformGameObjects =
+    (
+      gameObjects,
+      (
+        getRenderDataArrFunc,
+        prepareGlStateFunc,
+        renderFunc,
+        restoreGlStateFunc,
+      ),
+      engineState,
+    ) => {
+  let renderDataArr = getRenderDataArrFunc(gameObjects, engineState);
   let gl = DeviceManagerEngineService.unsafeGetGl(engineState);
 
   let engineState = engineState |> prepareGlStateFunc;
 
-  let engineState =
-    RenderTransformGizmos.render(gl, renderDataArr, engineState);
+  let engineState = renderFunc(gl, renderDataArr, engineState);
 
   let engineState = engineState |> restoreGlStateFunc;
 
   engineState;
 };
 
+/* let _renderTranslationGameObjects =
+       (gameObjects, (prepareGlStateFunc, restoreGlStateFunc), engineState) => {
+     let renderDataArr =
+       RenderTranslationGizmos.getRenderDataArr(gameObjects, engineState);
+     let gl = DeviceManagerEngineService.unsafeGetGl(engineState);
+
+     let engineState = engineState |> prepareGlStateFunc;
+
+     let engineState =
+       RenderTranslationGizmos.render(gl, renderDataArr, engineState);
+
+     let engineState = engineState |> restoreGlStateFunc;
+
+     engineState;
+   }; */
+
+let _renderTranslationGizmos = (editorState, engineState) => {
+  let translationAxisGameObjects =
+    _getTranslationAxisGameObjects(editorState, engineState);
+
+  let translationPlaneGameObjects =
+    _getTranslationPlaneGameObjects(editorState, engineState);
+
+  engineState
+  |> _renderTransformGameObjects(
+       translationAxisGameObjects,
+       (
+         RenderTranslationGizmos.getRenderDataArr,
+         RenderTranslationGizmos.prepareTranslationAxisGlState,
+         RenderTranslationGizmos.render,
+         RenderTranslationGizmos.restoreTranslationAxisGlState,
+       ),
+     )
+  |> _renderTransformGameObjects(
+       translationPlaneGameObjects,
+       (
+         RenderTranslationGizmos.getRenderDataArr,
+         RenderTranslationGizmos.prepareTranslationPlaneGlState,
+         RenderTranslationGizmos.render,
+         RenderTranslationGizmos.restoreTranslationPlaneGlState,
+       ),
+     );
+};
+
+let _getRotationGameObjects = (editorState, engineState) =>
+  ArrayService.fastConcatArrays([|
+    HierarchyGameObjectEngineService.getAllGameObjects(
+      OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
+        editorState,
+      ),
+      engineState,
+    ),
+    HierarchyGameObjectEngineService.getAllGameObjects(
+      OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
+        editorState,
+      ),
+      engineState,
+    ),
+    HierarchyGameObjectEngineService.getAllGameObjects(
+      OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
+        editorState,
+      ),
+      engineState,
+    ),
+  |]);
+
+let _renderRotationGizmos = (editorState, engineState) =>
+  engineState
+  |> _renderTransformGameObjects(
+       _getRotationGameObjects(editorState, engineState),
+       (
+         RenderRotationGizmos.getRenderDataArr,
+         RenderRotationGizmos.prepareRotationGlState,
+         RenderRotationGizmos.render(editorState),
+         RenderRotationGizmos.restoreRotationGlState,
+       ),
+     );
+
 let renderJob = (_, engineState) => {
+  open SceneViewType;
+
   let editorState = StateEditorService.getState();
 
-  IsTransformGizmoRenderSceneViewEditorService.isTranslationWholeGizmoRender(
+  IsTransformGizmoRenderSceneViewEditorService.isTransformGizmoRender(
     editorState,
   ) ?
-    switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
-    | None => engineState
-    | Some(currentSceneTreeNode) =>
-      let translationAxisGameObjects =
-        _getTranslationAxisGameObjects(editorState, engineState);
+    {
+      let currentSceneTreeNode =
+        SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState);
 
-      let translationPlaneGameObjects =
-        _getTranslationPlaneGameObjects(editorState, engineState);
-
-      engineState
-      |> _renderTranslationGameObjects(
-           translationAxisGameObjects,
-           (
-             RenderTransformGizmos.prepareTranslationAxisGlState,
-             RenderTransformGizmos.restoreTranslationAxisGlState,
-           ),
-         )
-      |> _renderTranslationGameObjects(
-           translationPlaneGameObjects,
-           (
-             RenderTransformGizmos.prepareTranslationPlaneGlState,
-             RenderTransformGizmos.restoreTranslationPlaneGlState,
-           ),
-         );
+      switch (
+        CurrentTransformGizmoSceneViewEditorService.getCurrentGizmoType(
+          editorState,
+        )
+      ) {
+      | Translation => _renderTranslationGizmos(editorState, engineState)
+      | Rotation => _renderRotationGizmos(editorState, engineState)
+      };
     } :
     engineState;
 };

@@ -143,22 +143,5 @@ let getCurrentSceneTreeNodePosition = () => {
   |> Vector3Service.truncate(3);
 };
 
-let createTransformGizmos = ((editorState, engineState)) => {
-  let (
-    engineState,
-    wholeGizmo,
-    (xAxisGizmo, yAxisGizmo, zAxisGizmo),
-    (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo),
-  ) =
-    CreateTranslationGizmosUtils.createTranslationGizmos(engineState);
-
-  let editorState =
-    editorState
-    |> CreateTransformGizmosUtils.setToEditorState((
-         wholeGizmo,
-         (xAxisGizmo, yAxisGizmo, zAxisGizmo),
-         (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo),
-       ));
-
-  (editorState, engineState);
-};
+let createTransformGizmos = ((editorState, engineState)) =>
+  InitTransformGizmosJob._createTransformGizmos((editorState, engineState));

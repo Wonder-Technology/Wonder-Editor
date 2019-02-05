@@ -1,34 +1,3 @@
-let _createBasicGameObject = (geometry, engineState) => {
-  let (engineState, gameObject) =
-    GameObjectEngineService.create(engineState);
-
-  let (engineState, renderGroup) =
-    engineState
-    |> RenderGroupEngineService.createRenderGroup((
-         MeshRendererEngineService.create,
-         BasicMaterialEngineService.create,
-       ));
-
-  (
-    engineState
-    |> GameObjectComponentEngineService.addGeometryComponent(
-         gameObject,
-         geometry,
-       )
-    |> RenderGroupEngineService.addRenderGroupComponents(
-         gameObject,
-         renderGroup,
-         (
-           GameObjectComponentEngineService.addMeshRendererComponent,
-           GameObjectComponentEngineService.addBasicMaterialComponent,
-         ),
-       ),
-    gameObject,
-    renderGroup.material,
-    renderGroup.meshRenderer,
-  );
-};
-
 let _createTranslationAxisGizmo = (color, engineState) => {
   let (engineState, axisGameObject) =
     GameObjectEngineService.create(engineState);
@@ -47,7 +16,8 @@ let _createTranslationAxisGizmo = (color, engineState) => {
     );
 
   let (engineState, coneGameObject, coneMaterial, coneMeshRenderer) =
-    engineState |> _createBasicGameObject(coneGeometry);
+    engineState
+    |> CreateTransformGizmosUtils.createBasicGameObject(coneGeometry);
 
   let (
     engineState,
@@ -55,7 +25,8 @@ let _createTranslationAxisGizmo = (color, engineState) => {
     cylinderMaterial,
     cylinderMeshRenderer,
   ) =
-    engineState |> _createBasicGameObject(cylinderGeometry);
+    engineState
+    |> CreateTransformGizmosUtils.createBasicGameObject(cylinderGeometry);
 
   let engineState =
     engineState
@@ -114,7 +85,8 @@ let _createTranslationPlaneGizmo = (color, engineState) => {
     GeometryEngineService.createPlaneGeometry(2., 2., 5, 5, engineState);
 
   let (engineState, planeGameObject, planeMaterial, planeMeshRenderer) =
-    engineState |> _createBasicGameObject(planeGeometry);
+    engineState
+    |> CreateTransformGizmosUtils.createBasicGameObject(planeGeometry);
 
   let alpha = 0.3;
 

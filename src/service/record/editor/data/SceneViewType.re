@@ -25,9 +25,17 @@ type translationGizmoData = {
   pickStartPoint: option((float, float, float)),
 };
 
+type rotationGizmoData = {
+  rotationWholeGizmo: gameObject,
+  rotationXZCircle: gameObject,
+  rotationXYCircle: gameObject,
+  rotationYZCircle: gameObject,
+};
+
 type transformGizmoData = {
   currentGizmoType: gizmo,
   translationGizmoData,
+  rotationGizmoData,
 };
 
 type sceneViewRecord = {

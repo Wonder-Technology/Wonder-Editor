@@ -16,3 +16,22 @@ let markTranslation = editorState => {
       }),
   },
 };
+
+let markRotation = editorState => {
+  ...editorState,
+  sceneViewRecord: {
+    ...editorState.sceneViewRecord,
+    transformGizmoData:
+      Some({
+        ...
+          RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+            editorState,
+          ),
+        currentGizmoType: Rotation,
+      }),
+  },
+};
+
+let getCurrentGizmoType = editorState =>
+  RecordTransformGizmoSceneViewEditorService.unsafeGetData(editorState).
+    currentGizmoType;

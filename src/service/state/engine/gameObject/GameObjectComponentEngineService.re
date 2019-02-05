@@ -42,6 +42,12 @@ let removeBasicMaterialComponent = GameObjectAPI.removeGameObjectBasicMaterialCo
 
 let addMeshRendererComponent = GameObjectAPI.addGameObjectMeshRendererComponent;
 
+let getMeshRendererComponent = (gameObject, engineState) =>
+  GetComponentGameObjectService.getMeshRendererComponent(.
+    gameObject,
+    engineState.gameObjectRecord,
+  );
+
 let unsafeGetMeshRendererComponent = GameObjectAPI.unsafeGetGameObjectMeshRendererComponent;
 
 let hasMeshRendererComponent = GameObjectAPI.hasGameObjectMeshRendererComponent;

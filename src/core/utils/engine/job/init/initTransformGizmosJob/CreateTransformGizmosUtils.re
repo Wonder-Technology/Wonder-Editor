@@ -1,10 +1,42 @@
+let createBasicGameObject = (geometry, engineState) => {
+  let (engineState, gameObject) =
+    GameObjectEngineService.create(engineState);
+
+  let (engineState, renderGroup) =
+    engineState
+    |> RenderGroupEngineService.createRenderGroup((
+         MeshRendererEngineService.create,
+         BasicMaterialEngineService.create,
+       ));
+
+  (
+    engineState
+    |> GameObjectComponentEngineService.addGeometryComponent(
+         gameObject,
+         geometry,
+       )
+    |> RenderGroupEngineService.addRenderGroupComponents(
+         gameObject,
+         renderGroup,
+         (
+           GameObjectComponentEngineService.addMeshRendererComponent,
+           GameObjectComponentEngineService.addBasicMaterialComponent,
+         ),
+       ),
+    gameObject,
+    renderGroup.material,
+    renderGroup.meshRenderer,
+  );
+};
+
 let setToEditorState =
     (
       (
-        wholeGizmo,
+        translationWholeGizmo,
         (xAxisGizmo, yAxisGizmo, zAxisGizmo),
         (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo),
       ),
+      (rotationWholeGizmo, (yzGizmo, xzGizmo, xyGizmo)),
       editorState: EditorType.editorState,
     )
     : EditorType.editorState => {
@@ -13,9 +45,10 @@ let setToEditorState =
     ...editorState.sceneViewRecord,
     transformGizmoData:
       Some({
-        currentGizmoType: Translation,
+        /* TODO need change to Translation */
+        currentGizmoType: Rotation,
         translationGizmoData: {
-          translationWholeGizmo: wholeGizmo,
+          translationWholeGizmo,
           translationXAxisGizmo: xAxisGizmo,
           translationYAxisGizmo: yAxisGizmo,
           translationZAxisGizmo: zAxisGizmo,
@@ -31,6 +64,12 @@ let setToEditorState =
           currentSceneTreeNodeStartPoint: None,
           axisGameObjectStartPoint: None,
           pickStartPoint: None,
+        },
+        rotationGizmoData: {
+          rotationWholeGizmo,
+          rotationXZCircle: xzGizmo,
+          rotationXYCircle: xyGizmo,
+          rotationYZCircle: yzGizmo,
         },
       }),
   },
