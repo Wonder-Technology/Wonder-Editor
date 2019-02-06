@@ -19,3 +19,13 @@ let convertMouselocationInViewToNDC =
     /. (viewHeight |> NumberType.convertIntToFloat)
     *. 2.,
 };
+
+let convertPosFromWorldToLocalCoordSystem = (pos, mMatrix, engineState) =>
+  Wonderjs.Vector3Service.transformMat4Tuple(
+    pos,
+    mMatrix
+    |> Wonderjs.Matrix4Service.invert(
+         _,
+         Wonderjs.Matrix4Service.createIdentityMatrix4(),
+       ),
+  );

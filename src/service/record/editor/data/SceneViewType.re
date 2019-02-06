@@ -34,6 +34,7 @@ type rotationGizmoData = {
   isXYCircleGizmoSelected: bool,
   isYZCircleGizmoSelected: bool,
   dragStartPoint: option((float, float, float)),
+  lastTotalAngle: option(float),
 };
 
 type transformGizmoData = {

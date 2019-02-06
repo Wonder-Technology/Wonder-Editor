@@ -49,3 +49,24 @@ let onlySelectXYCircleGizmo = editorState => {
     },
   };
 };
+
+let isXYCircleGizmoSelected = editorState =>
+  RecordRotationGizmoSceneViewEditorService.unsafeGetData(editorState).
+    isXYCircleGizmoSelected;
+
+let isXZCircleGizmoSelected = editorState =>
+  RecordRotationGizmoSceneViewEditorService.unsafeGetData(editorState).
+    isXZCircleGizmoSelected;
+
+let isYZCircleGizmoSelected = editorState =>
+  RecordRotationGizmoSceneViewEditorService.unsafeGetData(editorState).
+    isYZCircleGizmoSelected;
+
+let isSelectAnyRotationGizmo = editorState =>
+  switch (RecordRotationGizmoSceneViewEditorService.getData(editorState)) {
+  | None => false
+  | Some(_) =>
+    isXYCircleGizmoSelected(editorState)
+    || isXZCircleGizmoSelected(editorState)
+    || isYZCircleGizmoSelected(editorState)
+  };

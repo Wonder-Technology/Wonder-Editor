@@ -1,10 +1,13 @@
-let _refreshInspector = () => {
+let _refreshInspector = (editorState, engineState) => {
+  editorState |> StateEditorService.setState |> ignore;
+  engineState |> StateEngineService.setState |> ignore;
+
   let dispatchFunc = UIStateService.getDispatch();
 
   dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
   |> ignore;
 
-  ();
+  (StateEditorService.getState(), StateEngineService.unsafeGetState());
 };
 
 let _bindEvent = (editorState, engineState) => {
@@ -88,22 +91,36 @@ let _bindEvent = (editorState, engineState) => {
       ~eventName=SceneViewEventEditorService.getPointDragOverEventName(),
       ~handleFunc=
         (. event, engineState) =>
-          MouseEventService.isLeftMouseButton(event)
-          && SelectTranslationGizmoSceneViewEditorService.isSelectAnyTranslationGizmo
-          |> StateLogicService.getEditorState ?
+          MouseEventService.isLeftMouseButton(event) ?
             {
               let editorState = StateEditorService.getState();
 
               let (editorState, engineState) =
-                AffectTranslationGizmosUtils.affectTranslationGizmo(
-                  event,
-                  (editorState, engineState),
-                );
+                SelectTranslationGizmoSceneViewEditorService.isSelectAnyTranslationGizmo(
+                  editorState,
+                ) ?
+                  {
+                    let (editorState, engineState) =
+                      AffectTranslationGizmosUtils.affectTranslationGizmo(
+                        event,
+                        (editorState, engineState),
+                      );
 
-              SelectTranslationGizmoSceneViewEditorService.isSelectAnyTranslationGizmo(
-                editorState,
-              ) ?
-                _refreshInspector() : ();
+                    _refreshInspector(editorState, engineState);
+                  } :
+                  SelectRotationGizmoSceneViewEditorService.isSelectAnyRotationGizmo(
+                    editorState,
+                  ) ?
+                    {
+                      let (editorState, engineState) =
+                        AffectRotationGizmosUtils.affectRotationGizmo(
+                          event,
+                          (editorState, engineState),
+                        );
+
+                      _refreshInspector(editorState, engineState);
+                    } :
+                    (editorState, engineState);
 
               editorState |> StateEditorService.setState |> ignore;
 

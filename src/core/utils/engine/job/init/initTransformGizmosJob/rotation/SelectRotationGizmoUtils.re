@@ -2,11 +2,6 @@
 
    open SceneViewType; */
 
-let _getCenterPoint = (editorState, engineState) =>
-  InitTransformGizmosUtils.getCurrentSceneTreeNodePosition(
-    editorState,
-    engineState,
-  );
 /* TransformEngineService.getPosition(
      GameObjectComponentEngineService.unsafeGetTransformComponent(
        SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
@@ -15,19 +10,37 @@ let _getCenterPoint = (editorState, engineState) =>
      engineState,
    ); */
 
+/* let _isSelectCircleNotVisiblePart =
+     (intersectPointInCircle,  cameraPosInLocalCoordSystem) =>
+   Vector3Service.dot(
+     Wonderjs.Vector3Service.normalize(
+       Wonderjs.Vector3Service.sub(
+         Wonderjs.Vector3Type.Float,
+         (0., 0., 0.),
+         intersectPointInCircle,
+       ),
+     ),
+     Wonderjs.Vector3Service.sub(
+       Wonderjs.Vector3Type.Float,
+       cameraPosInLocalCoordSystem,
+       intersectPointInCircle,
+     ),
+   )
+   >= 0.0; */
+
 let _isSelectCircleNotVisiblePart =
-    (intersectPointInCircle, cameraPosInLocalCoordSystem) =>
+    (intersectPointInCircle, centerPoint, cameraPos) =>
   Vector3Service.dot(
     Wonderjs.Vector3Service.normalize(
       Wonderjs.Vector3Service.sub(
         Wonderjs.Vector3Type.Float,
-        (0., 0., 0.),
+        centerPoint,
         intersectPointInCircle,
       ),
     ),
     Wonderjs.Vector3Service.sub(
       Wonderjs.Vector3Type.Float,
-      cameraPosInLocalCoordSystem,
+      cameraPos,
       intersectPointInCircle,
     ),
   )
@@ -39,14 +52,16 @@ let _isSelectCircle = (intersectXYPlanePoint, editorState, engineState) =>
   | Some(intersectPoint) =>
     _isSelectCircleNotVisiblePart(
       intersectPoint,
-      CameraPosUtils.getCameraPosInLocalCoordSystem(
-        CameraPosUtils.getCameraPos(editorState, engineState),
-        TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
-          SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
-          engineState,
-        ),
-        engineState,
-      ),
+      CircleRotationGizmosUtils.getCenterPoint(editorState, engineState),
+      /* CameraPosUtils.getCameraPosInLocalCoordSystem(
+           CameraPosUtils.getCameraPos(editorState, engineState),
+           TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
+             SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
+             engineState,
+           ),
+           engineState,
+         ), */
+      CameraPosUtils.getCameraPos(editorState, engineState),
     ) ?
       false :
       {
@@ -63,7 +78,10 @@ let _isSelectCircle = (intersectXYPlanePoint, editorState, engineState) =>
             Wonderjs.Vector3Service.sub(
               Wonderjs.Vector3Type.Float,
               intersectPoint,
-              _getCenterPoint(editorState, engineState),
+              CircleRotationGizmosUtils.getCenterPoint(
+                editorState,
+                engineState,
+              ),
             ),
           );
 
@@ -73,28 +91,6 @@ let _isSelectCircle = (intersectXYPlanePoint, editorState, engineState) =>
         *. (1. -. expandFactor);
       }
   };
-
-let _buildPlane =
-    (initialDirectionVector, centerPoint, editorState, engineState) =>
-  PlaneShapeUtils.setFromNormalAndCoplanarPoint(
-    Wonderjs.Vector3Service.transformMat4Tuple(
-      initialDirectionVector,
-      TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
-        SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
-        engineState,
-      ),
-    )
-    |> Wonderjs.Vector3Service.normalize,
-    centerPoint,
-  );
-
-let _buildXYPlane = (editorState, engineState) =>
-  _buildPlane(
-    (0., 0., 1.),
-    _getCenterPoint(editorState, engineState),
-    editorState,
-    engineState,
-  );
 
 let _selectXYCircle = (intersectXYPlanePoint, editorState, engineState) =>
   editorState
@@ -116,7 +112,7 @@ let selectRotationGizmo = (event, engineState, editorState) => {
 
   let intersectXYPlanePoint =
     RayUtils.checkIntersectPlane(
-      _buildXYPlane(editorState, engineState),
+      CircleRotationGizmosUtils.buildXYPlane(editorState, engineState),
       ray,
     );
 

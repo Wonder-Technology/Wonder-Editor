@@ -74,6 +74,7 @@ let setToEditorState =
           isXYCircleGizmoSelected: false,
           isYZCircleGizmoSelected: false,
           dragStartPoint: None,
+          lastTotalAngle: None,
         },
       }),
   },
