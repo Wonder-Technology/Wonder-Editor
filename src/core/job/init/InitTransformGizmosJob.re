@@ -136,40 +136,54 @@ let _bindEvent = (editorState, engineState) => {
       ~eventName=SceneViewEventEditorService.getPointDragDropEventName(),
       ~handleFunc=
         (. event, engineState) =>
-          MouseEventService.isLeftMouseButton(event)
-          && SelectTranslationGizmoSceneViewEditorService.isSelectAnyTranslationGizmo
-          |> StateLogicService.getEditorState ?
+          MouseEventService.isLeftMouseButton(event) ?
             {
               let editorState = StateEditorService.getState();
 
-              let currentSceneTreeNode =
-                SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(
-                  editorState,
-                );
+              SelectTranslationGizmoSceneViewEditorService.isSelectAnyTranslationGizmo(
+                editorState,
+              ) ?
+                {
+                  let currentSceneTreeNode =
+                    SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(
+                      editorState,
+                    );
 
-              let transform =
-                GameObjectComponentEngineService.unsafeGetTransformComponent(
-                  currentSceneTreeNode,
-                  engineState,
-                );
+                  let transform =
+                    GameObjectComponentEngineService.unsafeGetTransformComponent(
+                      currentSceneTreeNode,
+                      engineState,
+                    );
 
-              let engineState =
-                MoveTranslationPlaneGizmosUtils.moveTranslationPlaneGizmo(
-                  editorState,
-                  engineState,
-                );
+                  let engineState =
+                    MoveTranslationPlaneGizmosUtils.moveTranslationPlaneGizmo(
+                      editorState,
+                      engineState,
+                    );
 
-              engineState |> StateEngineService.setState |> ignore;
+                  engineState |> StateEngineService.setState |> ignore;
 
-              PositionBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
-                (UIStateService.getState(), UIStateService.getDispatch()),
-                transform,
-                OperateTranslationGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartPoint(
-                  editorState,
-                ),
-              );
+                  PositionBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
+                    (UIStateService.getState(), UIStateService.getDispatch()),
+                    transform,
+                    OperateTranslationGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartPoint(
+                      editorState,
+                    ),
+                  );
 
-              (StateEngineService.unsafeGetState(), event);
+                  (StateEngineService.unsafeGetState(), event);
+                } :
+                {
+                  let editorState =
+                    editorState
+                    |> AngleRotationGizmoSceneViewEditorService.setLastTotalAngle(
+                         None,
+                       );
+
+                  editorState |> StateEditorService.setState |> ignore;
+
+                  (engineState, event);
+                };
             } :
             (engineState, event),
       ~state=engineState,
