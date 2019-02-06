@@ -100,9 +100,16 @@ let distanceToPlane =
       let t =
         -. (Vector3Service.dot(origin, normal) +. constant) /. denominator;
 
-      /* Return if the ray never intersects the plane */
+      /*
 
-      t >= 0. ? Some(t) : None;
+       /* Return if the ray never intersects the plane
+
+          t >= 0. ? Some(t) : None;
+          */
+
+          */
+
+      Some(t);
     };
 };
 
