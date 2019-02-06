@@ -150,12 +150,12 @@ let _selectAxisGizmo =
     ) => {
   let editorState = editorState |> onlySelectTranslationAxisGizmoFunc;
 
-  let (axisGameObjectStartPoint, pickStartPoint) =
+  let (axisGameObjectStartPoint, dragStartPoint) =
     getMoveStartDataFunc(ray, (editorState, engineState));
 
   editorState
-  |> MoveTranslationGizmoSceneViewEditorService.setPickStartPoint(
-       pickStartPoint,
+  |> MoveTranslationGizmoSceneViewEditorService.setDragStartPoint(
+       dragStartPoint,
      )
   |> MoveTranslationGizmoSceneViewEditorService.setAxisGizmoStartPoint(
        axisGameObjectStartPoint,
@@ -170,11 +170,11 @@ let _selectPlaneGizmo =
     ) => {
   let editorState = editorState |> onlySelectTranslationPlaneGizmoFunc;
 
-  let pickStartPoint = getMoveStartDataFunc(ray, (editorState, engineState));
+  let dragStartPoint = getMoveStartDataFunc(ray, (editorState, engineState));
 
   editorState
-  |> MoveTranslationGizmoSceneViewEditorService.setPickStartPoint(
-       pickStartPoint,
+  |> MoveTranslationGizmoSceneViewEditorService.setDragStartPoint(
+       dragStartPoint,
      );
 };
 

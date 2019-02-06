@@ -31,7 +31,7 @@ let _computeCurrentSceneTreeNodeNewPositionForMoveAxis =
           axisGameObjectStartPoint,
           axisVec,
         ),
-        MoveTranslationGizmoSceneViewEditorService.unsafeGetPickStartPoint(
+        MoveTranslationGizmoSceneViewEditorService.unsafeGetDragStartPoint(
           editorState,
         ),
       ),
@@ -94,7 +94,7 @@ let _computeCurrentSceneTreeNodeNewPositionForMovePlane =
       Wonderjs.Vector3Service.sub(
         Wonderjs.Vector3Type.Float,
         point,
-        MoveTranslationGizmoSceneViewEditorService.unsafeGetPickStartPoint(
+        MoveTranslationGizmoSceneViewEditorService.unsafeGetDragStartPoint(
           editorState,
         ),
       ),

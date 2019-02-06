@@ -1,7 +1,7 @@
 let _createCircleGeometry = engineState => {
   open Js.Typed_array;
 
-  let radius = 5.;
+  let radius = DataRotationGizmoSceneViewEditorService.getRadius();
   let segments = 20;
 
   let rec _generate = ((radius, segments), (vertices, indices), i) =>

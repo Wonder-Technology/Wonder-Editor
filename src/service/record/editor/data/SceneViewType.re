@@ -22,7 +22,7 @@ type translationGizmoData = {
   isTranslationYZPlaneGizmoSelected: bool,
   currentSceneTreeNodeStartPoint: option((float, float, float)),
   axisGameObjectStartPoint: option((float, float, float)),
-  pickStartPoint: option((float, float, float)),
+  dragStartPoint: option((float, float, float)),
 };
 
 type rotationGizmoData = {
@@ -30,6 +30,10 @@ type rotationGizmoData = {
   rotationXZCircle: gameObject,
   rotationXYCircle: gameObject,
   rotationYZCircle: gameObject,
+  isXZCircleGizmoSelected: bool,
+  isXYCircleGizmoSelected: bool,
+  isYZCircleGizmoSelected: bool,
+  dragStartPoint: option((float, float, float)),
 };
 
 type transformGizmoData = {

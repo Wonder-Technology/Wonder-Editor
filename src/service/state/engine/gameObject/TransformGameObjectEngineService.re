@@ -26,9 +26,27 @@ let setLocalPosition = (gameObject, pos, engineState) =>
     engineState,
   );
 
+let getLocalScale = (gameObject, engineState) =>
+  TransformEngineService.getLocalScale(
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      gameObject,
+      engineState,
+    ),
+    engineState,
+  );
+
 let setLocalScale = (gameObject, scale, engineState) =>
   TransformEngineService.setLocalScale(
     scale,
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      gameObject,
+      engineState,
+    ),
+    engineState,
+  );
+
+let getLocalToWorldMatrixTypeArray = (gameObject, engineState) =>
+  TransformEngineService.getLocalToWorldMatrixTypeArray(
     GameObjectComponentEngineService.unsafeGetTransformComponent(
       gameObject,
       engineState,

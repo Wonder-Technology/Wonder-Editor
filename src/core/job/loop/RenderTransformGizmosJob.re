@@ -195,16 +195,13 @@ module RenderRotationGizmos = {
                    engineState,
                  )
                | "u_cameraPosInLocalCoordSystem" =>
-                 Wonderjs.Vector3Service.transformMat4Tuple(
+                 CameraPosUtils.getCameraPosInLocalCoordSystem(
                    cameraPos,
                    TransformEngineService.getLocalToWorldMatrixTypeArray(
                      transformIndex,
                      engineState,
-                   )
-                   |> Wonderjs.Matrix4Service.invert(
-                        _,
-                        Wonderjs.Matrix4Service.createIdentityMatrix4(),
-                      ),
+                   ),
+                   engineState,
                  )
                  |> vec3ToArray
                };

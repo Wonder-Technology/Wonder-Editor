@@ -28,12 +28,12 @@ let setAxisGizmoStartPoint = (axisGameObjectStartPoint, editorState) => {
   },
 };
 
-let unsafeGetPickStartPoint = editorState =>
+let unsafeGetDragStartPoint = editorState =>
   RecordTranslationGizmoSceneViewEditorService.unsafeGetData(editorState).
-    pickStartPoint
+    dragStartPoint
   |> OptionService.unsafeGet;
 
-let setPickStartPoint = (pickStartPoint, editorState) => {
+let setDragStartPoint = (dragStartPoint, editorState) => {
   ...editorState,
   sceneViewRecord: {
     ...editorState.sceneViewRecord,
@@ -48,7 +48,7 @@ let setPickStartPoint = (pickStartPoint, editorState) => {
             RecordTranslationGizmoSceneViewEditorService.unsafeGetData(
               editorState,
             ),
-          pickStartPoint: Some(pickStartPoint),
+          dragStartPoint: Some(dragStartPoint),
         },
       }),
   },

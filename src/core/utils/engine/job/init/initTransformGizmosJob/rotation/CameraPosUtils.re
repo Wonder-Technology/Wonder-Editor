@@ -5,8 +5,12 @@ let getCameraPos = (editorState, engineState) =>
   );
 
 let getCameraPosInLocalCoordSystem =
-    (cameraPos, inverseMMatrix, editorState, engineState) =>
+    (cameraPos, mMatrix, engineState) =>
   Wonderjs.Vector3Service.transformMat4Tuple(
-    getCameraPos(editorState, engineState),
-    inverseMMatrix,
+  cameraPos,
+    mMatrix
+    |> Wonderjs.Matrix4Service.invert(
+         _,
+         Wonderjs.Matrix4Service.createIdentityMatrix4(),
+       ),
   );

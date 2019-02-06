@@ -1,0 +1,1 @@
+let getRadius = () => 5.;
