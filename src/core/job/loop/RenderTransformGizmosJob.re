@@ -73,7 +73,7 @@ module RenderTranslationGizmos = {
          [||],
        );
 
-  let render = (gl, renderDataArr, engineState) =>
+  let render = (renderDataArr, gl, engineState) =>
     renderDataArr
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (.
@@ -116,11 +116,25 @@ module RenderRotationGizmos = {
   external vec3ToArray : ((float, float, float)) => array(float) =
     "%identity";
 
-  let prepareRotationGlState = engineState =>
-    engineState |> DeviceManagerEngineService.setDepthTest(false);
+  let prepareRotationGlState = engineState => {
+    let gl = DeviceManagerEngineService.unsafeGetGl(engineState);
 
-  let restoreRotationGlState = engineState =>
-    engineState |> DeviceManagerEngineService.setDepthTest(true);
+    engineState
+    |> DeviceManagerEngineService.setDepthTest(false)
+    |> DeviceManagerEngineService.setBlend(true)
+    |> DeviceManagerEngineService.setBlendFunc(
+         Gl.getSrcAlpha(gl),
+         Gl.getOneMinusSrcAlpha(gl),
+       );
+  };
+
+  let restoreRotationGlState = engineState => {
+    let gl = DeviceManagerEngineService.unsafeGetGl(engineState);
+
+    engineState
+    |> DeviceManagerEngineService.setDepthTest(true)
+    |> DeviceManagerEngineService.setBlend(false);
+  };
 
   /* TODO refactor: duplicate */
   let getRenderDataArr = (gameObjects, engineState) =>
@@ -150,6 +164,10 @@ module RenderRotationGizmos = {
                        )
                        |> Js.Option.andThen((. meshRenderer) =>
                             Some((
+                              GameObjectEngineService.unsafeGetGameObjectName(
+                                gameObject,
+                                engineState,
+                              ),
                               transform,
                               material,
                               meshRenderer,
@@ -170,10 +188,14 @@ module RenderRotationGizmos = {
   let _sendUniformNoMaterialShaderData =
       (
         gl,
-        transformIndex,
-        materialIndex,
-        noMaterialShaderIndex,
-        cameraPos,
+        (
+          gizmoName,
+          transformIndex,
+          materialIndex,
+          noMaterialShaderIndex,
+          cameraPos,
+        ),
+        editorState,
         engineState,
       ) => {
     NoMaterialShaderEngineService.unsafeGetUniformSendData(
@@ -189,11 +211,20 @@ module RenderRotationGizmos = {
              /* TODO refactor(extend): need refactor with engine! */
              let data =
                switch (name) {
+               | "u_alpha" =>
+                 ComputeRotationGizmosUtils.isGizmoUnUsed(
+                   gizmoName,
+                   editorState,
+                   engineState,
+                 ) ?
+                   DataRotationGizmoSceneViewEditorService.getAlphaForUnUsedGizmo() :
+                   1.0 |> Obj.magic
                | "u_color" =>
                  BasicMaterialEngineService.getColor(
                    materialIndex,
                    engineState,
                  )
+                 |> Obj.magic
                | "u_cameraPosInLocalCoordSystem" =>
                  CameraPosUtils.getCameraPosInLocalCoordSystem(
                    cameraPos,
@@ -204,9 +235,15 @@ module RenderRotationGizmos = {
                    engineState,
                  )
                  |> vec3ToArray
+                 |> Obj.magic
                };
 
-             sendDataFunc(. gl, shaderCacheMap, (name, pos), data);
+             sendDataFunc(.
+               gl,
+               shaderCacheMap,
+               (name, pos),
+               data |> Obj.magic,
+             );
            } :
            /* sendDataFunc(.
                 gl,
@@ -220,7 +257,7 @@ module RenderRotationGizmos = {
     engineState;
   };
 
-  let render = (editorState, gl, renderDataArr, engineState) => {
+  let render = (editorState, renderDataArr, gl, engineState) => {
     let rotationGizmoNoMaterialShaderIndex =
       NoMaterialShaderEngineService.unsafeGetNoMaterialShader(
         "rotation_gizmo_for_editor",
@@ -239,7 +276,13 @@ module RenderRotationGizmos = {
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (.
            engineState,
-           (transformIndex, materialIndex, meshRendererIndex, geometryIndex),
+           (
+             name,
+             transformIndex,
+             materialIndex,
+             meshRendererIndex,
+             geometryIndex,
+           ),
          ) =>
            engineState
            |> RenderJobEngineService.useByShaderIndex(
@@ -257,10 +300,14 @@ module RenderRotationGizmos = {
               )
            |> _sendUniformNoMaterialShaderData(
                 gl,
-                transformIndex,
-                materialIndex,
-                rotationGizmoNoMaterialShaderIndex,
-                cameraPos,
+                (
+                  name,
+                  transformIndex,
+                  materialIndex,
+                  rotationGizmoNoMaterialShaderIndex,
+                  cameraPos,
+                ),
+                editorState,
               )
            |> RenderJobEngineService.draw(
                 gl,
@@ -317,22 +364,12 @@ let _getTranslationPlaneGameObjects = (editorState, engineState) =>
   |]);
 
 let _renderTransformGameObjects =
-    (
-      gameObjects,
-      (
-        getRenderDataArrFunc,
-        prepareGlStateFunc,
-        renderFunc,
-        restoreGlStateFunc,
-      ),
-      engineState,
-    ) => {
-  let renderDataArr = getRenderDataArrFunc(gameObjects, engineState);
+    ((prepareGlStateFunc, renderFunc, restoreGlStateFunc), engineState) => {
   let gl = DeviceManagerEngineService.unsafeGetGl(engineState);
 
   let engineState = engineState |> prepareGlStateFunc;
 
-  let engineState = renderFunc(gl, renderDataArr, engineState);
+  let engineState = renderFunc(gl, engineState);
 
   let engineState = engineState |> restoreGlStateFunc;
 
@@ -363,59 +400,103 @@ let _renderTranslationGizmos = (editorState, engineState) => {
     _getTranslationPlaneGameObjects(editorState, engineState);
 
   engineState
-  |> _renderTransformGameObjects(
-       translationAxisGameObjects,
-       (
-         RenderTranslationGizmos.getRenderDataArr,
-         RenderTranslationGizmos.prepareTranslationAxisGlState,
-         RenderTranslationGizmos.render,
-         RenderTranslationGizmos.restoreTranslationAxisGlState,
+  |> _renderTransformGameObjects((
+       RenderTranslationGizmos.prepareTranslationAxisGlState,
+       RenderTranslationGizmos.render(
+         RenderTranslationGizmos.getRenderDataArr(
+           translationAxisGameObjects,
+           engineState,
+         ),
        ),
-     )
-  |> _renderTransformGameObjects(
-       translationPlaneGameObjects,
-       (
-         RenderTranslationGizmos.getRenderDataArr,
-         RenderTranslationGizmos.prepareTranslationPlaneGlState,
-         RenderTranslationGizmos.render,
-         RenderTranslationGizmos.restoreTranslationPlaneGlState,
+       RenderTranslationGizmos.restoreTranslationAxisGlState,
+     ))
+  |> _renderTransformGameObjects((
+       RenderTranslationGizmos.prepareTranslationPlaneGlState,
+       RenderTranslationGizmos.render(
+         RenderTranslationGizmos.getRenderDataArr(
+           translationPlaneGameObjects,
+           engineState,
+         ),
        ),
-     );
+       RenderTranslationGizmos.restoreTranslationPlaneGlState,
+     ));
 };
 
-let _getRotationGameObjects = (editorState, engineState) =>
-  ArrayService.fastConcatArrays([|
-    HierarchyGameObjectEngineService.getAllGameObjects(
-      OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
-        editorState,
-      ),
-      engineState,
+let _getRotationGameObjects = editorState =>
+  /* ArrayService.fastConcatArrays([|
+     OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
+             editorState,
+           ),
+
+     OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
+             editorState,
+           ),
+     OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
+             editorState,
+           ),
+
+         /* HierarchyGameObjectEngineService.getAllGameObjects(
+           OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
+             editorState,
+           ),
+           engineState,
+         ),
+         HierarchyGameObjectEngineService.getAllGameObjects(
+           OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
+             editorState,
+           ),
+           engineState,
+         ),
+         HierarchyGameObjectEngineService.getAllGameObjects(
+           OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
+             editorState,
+           ),
+           engineState,
+         ), */
+       |]); */
+  [|
+    OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
+      editorState,
     ),
-    HierarchyGameObjectEngineService.getAllGameObjects(
-      OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
-        editorState,
-      ),
-      engineState,
+    OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
+      editorState,
     ),
-    HierarchyGameObjectEngineService.getAllGameObjects(
-      OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
-        editorState,
-      ),
-      engineState,
+    OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
+      editorState,
     ),
-  |]);
+    /* HierarchyGameObjectEngineService.getAllGameObjects(
+         OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
+           editorState,
+         ),
+         engineState,
+       ),
+       HierarchyGameObjectEngineService.getAllGameObjects(
+         OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
+           editorState,
+         ),
+         engineState,
+       ),
+       HierarchyGameObjectEngineService.getAllGameObjects(
+         OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
+           editorState,
+         ),
+         engineState,
+       ), */
+  |];
 
 let _renderRotationGizmos = (editorState, engineState) =>
   engineState
-  |> _renderTransformGameObjects(
-       _getRotationGameObjects(editorState, engineState),
-       (
-         RenderRotationGizmos.getRenderDataArr,
-         RenderRotationGizmos.prepareRotationGlState,
-         RenderRotationGizmos.render(editorState),
-         RenderRotationGizmos.restoreRotationGlState,
+  |> _renderTransformGameObjects((
+       RenderRotationGizmos.prepareRotationGlState,
+       RenderRotationGizmos.render(
+         editorState,
+         RenderRotationGizmos.getRenderDataArr(
+           _getRotationGameObjects(editorState),
+           engineState,
+         ),
        ),
-     );
+       RenderRotationGizmos.restoreRotationGlState,
+     ));
 
 let renderJob = (_, engineState) => {
   open SceneViewType;

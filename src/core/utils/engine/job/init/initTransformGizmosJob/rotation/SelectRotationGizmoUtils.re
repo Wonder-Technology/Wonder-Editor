@@ -116,7 +116,18 @@ let selectRotationGizmo = (event, engineState, editorState) => {
       ray,
     );
 
-  _isSelectCircle(intersectXYPlanePoint, editorState, engineState) ?
+  !
+    ComputeRotationGizmosUtils.isGizmoUnUsed(
+      GameObjectEngineService.unsafeGetGameObjectName(
+        OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
+          editorState,
+        ),
+        engineState,
+      ),
+      editorState,
+      engineState,
+    )
+  && _isSelectCircle(intersectXYPlanePoint, editorState, engineState) ?
     {
       WonderLog.Log.print("select xy plane") |> ignore;
 
@@ -129,7 +140,8 @@ let selectRotationGizmo = (event, engineState, editorState) => {
     {
       WonderLog.Log.print("not select xy plane") |> ignore;
 
-      editorState;
+      editorState
+      |> SelectRotationGizmoSceneViewEditorService.markNotSelectAnyRotationGizmo;
     };
   /* _handleSelectPlaneGizmo(
        ray,

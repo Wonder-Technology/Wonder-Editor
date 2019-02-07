@@ -81,6 +81,12 @@ let _createCircleGizmos = engineState => {
 
   let engineState =
     engineState
+    |> GameObjectEngineService.setGameObjectName("yz", yzGizmo)
+    |> GameObjectEngineService.setGameObjectName("xz", xzGizmo)
+    |> GameObjectEngineService.setGameObjectName("xy", xyGizmo);
+
+  let engineState =
+    engineState
     |> TransformEngineService.setLocalEulerAngles(
          (0., 90., 0.),
          yzGizmoTransform,
