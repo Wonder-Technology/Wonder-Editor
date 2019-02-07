@@ -356,40 +356,71 @@ html, body {
       height: 100%;
       background-color: #444444;
       display: flex; }
-      .wonder-app-component .wonder-controller-component .header-controller .controller-transform {
+      .wonder-app-component .wonder-controller-component .header-controller .controller-ambient {
         flex: initial;
-        width: 48%;
+        width: 18%;
         height: 100%; }
-        .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item {
+        .wonder-app-component .wonder-controller-component .header-controller .controller-ambient .header-item {
           display: flex;
           flex: initial;
           align-items: center;
           height: 100%;
           flex-direction: row;
           margin-left: 10px; }
-          .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item {
+          .wonder-app-component .wonder-controller-component .header-controller .controller-ambient .header-item .component-item {
             flex: initial; }
-            .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item .inspector-item {
+            .wonder-app-component .wonder-controller-component .header-controller .controller-ambient .header-item .component-item .inspector-item {
               display: flex; }
-              .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item .inspector-item .item-header {
+              .wonder-app-component .wonder-controller-component .header-controller .controller-ambient .header-item .component-item .inspector-item .item-header {
                 height: 25px;
                 line-height: 25px; }
-              .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item .inspector-item .item-content {
+              .wonder-app-component .wonder-controller-component .header-controller .controller-ambient .header-item .component-item .inspector-item .item-content {
                 flex: initial;
                 display: flex;
                 flex-direction: row;
                 margin-left: 10px;
                 align-items: center;
                 justify-content: center; }
-                .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item .inspector-item .item-content .color-hex {
+                .wonder-app-component .wonder-controller-component .header-controller .controller-ambient .header-item .component-item .inspector-item .item-content .color-hex {
                   border-radius: 10px;
                   width: 40px;
                   height: 15px; }
-                .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item .inspector-item .item-content .color-select {
+                .wonder-app-component .wonder-controller-component .header-controller .controller-ambient .header-item .component-item .inspector-item .item-content .color-select {
                   margin-left: 10px; }
-                  .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item .inspector-item .item-content .color-select img {
+                  .wonder-app-component .wonder-controller-component .header-controller .controller-ambient .header-item .component-item .inspector-item .item-content .color-select img {
                     width: 15px;
                     height: 15px; }
+      .wonder-app-component .wonder-controller-component .header-controller .controller-transform {
+        flex: initial;
+        width: 30%;
+        height: 100%; }
+        .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item {
+          display: flex;
+          flex: initial;
+          align-items: center;
+          height: 100%;
+          flex-direction: row; }
+          .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .transform-gizmo-radio {
+            flex: initial;
+            display: flex;
+            flex-direction: row;
+            margin-left: 10px;
+            align-items: center;
+            justify-content: center; }
+            .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .transform-gizmo-radio .translation {
+              background-image: url("../img/translation.png"); }
+            .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .transform-gizmo-radio .rotation {
+              background-image: url("../img/rotation.png"); }
+            .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .transform-gizmo-radio .select {
+              background-color: white;
+              background-size: 100%;
+              width: 30px;
+              height: 30px; }
+            .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .transform-gizmo-radio .not-select {
+              background-color: gray;
+              background-size: 100%;
+              width: 30px;
+              height: 30px; }
       .wonder-app-component .wonder-controller-component .header-controller .controller-runAndStop {
         flex: initial;
         width: 4%;

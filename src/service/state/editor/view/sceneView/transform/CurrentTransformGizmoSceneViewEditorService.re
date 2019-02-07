@@ -2,6 +2,21 @@ open EditorType;
 
 open SceneViewType;
 
+let mark = (currentGizmoType, editorState) => {
+  ...editorState,
+  sceneViewRecord: {
+    ...editorState.sceneViewRecord,
+    transformGizmoData:
+      Some({
+        ...
+          RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+            editorState,
+          ),
+        currentGizmoType,
+      }),
+  },
+};
+
 let markTranslation = editorState => {
   ...editorState,
   sceneViewRecord: {

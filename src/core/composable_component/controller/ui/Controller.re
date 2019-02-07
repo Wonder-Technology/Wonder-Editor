@@ -44,6 +44,42 @@ module Method = {
         />
       </div>
     </div>;
+
+  let _handleChangeCurrentTransformType = type_ => {
+    open SceneViewType;
+
+    StateEditorService.getState()
+    |> CurrentTransformGizmoSceneViewEditorService.mark(type_)
+    |> SelectTransformGizmoSceneViewEditorService.markNotSelectAnyTransformGizmo
+    |> StateEditorService.setState
+    |> ignore;
+
+    StateLogicService.getAndRefreshEngineState();
+  };
+
+  let _getCurrentTransformType = () =>
+    CurrentTransformGizmoSceneViewEditorService.getCurrentGizmoType
+    |> StateLogicService.getEditorState;
+
+  let buildTransformComponent = (uiState, dispatchFunc) =>
+    <div className="header-item">
+      <div className="component-item">
+        <TransformGizmoRadio
+          key=(DomHelper.getRandomKey())
+          data=[|
+            {
+              type_: SceneViewType.Translation,
+              onChangeFunc: _handleChangeCurrentTransformType,
+            },
+            {
+              type_: SceneViewType.Rotation,
+              onChangeFunc: _handleChangeCurrentTransformType,
+            },
+          |]
+          defaultType=(_getCurrentTransformType())
+        />
+      </div>
+    </div>;
 };
 
 let component = ReasonReact.reducerComponent("Controller");
@@ -61,15 +97,19 @@ let render =
     ) =>
   <article key="header" className="wonder-controller-component">
     <div className="header-controller">
-      <div className="controller-transform">
+      <div className="controller-ambient">
         (Method.buildAmbientLightComponent(uiState, dispatchFunc))
+      </div>
+      <div className="controller-transform">
+        (Method.buildTransformComponent(uiState, dispatchFunc))
       </div>
       <div
         className="controller-runAndStop"
         onClick=(
           _e => {
             StateEditorService.getIsRun() ?
-              ControllerUtils.stop(dispatchFunc) : ControllerUtils.run(uiState);
+              ControllerUtils.stop(dispatchFunc) :
+              ControllerUtils.run(uiState);
 
             send(Reload);
           }

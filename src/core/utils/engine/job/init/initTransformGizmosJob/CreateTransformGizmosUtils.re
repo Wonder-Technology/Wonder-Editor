@@ -52,7 +52,7 @@ let setToEditorState =
     transformGizmoData:
       Some({
         /* TODO need change to Translation */
-        currentGizmoType: Rotation,
+        currentGizmoType: Translation,
         translationGizmoData: {
           translationWholeGizmo,
           translationXAxisGizmo: xAxisGizmo,
