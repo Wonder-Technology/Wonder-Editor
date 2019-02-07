@@ -50,6 +50,56 @@ let onlySelectXYCircleGizmo = editorState => {
   };
 };
 
+let onlySelectXZCircleGizmo = editorState => {
+  let editorState = editorState |> markNotSelectAnyRotationGizmo;
+
+  {
+    ...editorState,
+    sceneViewRecord: {
+      ...editorState.sceneViewRecord,
+      transformGizmoData:
+        Some({
+          ...
+            RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+              editorState,
+            ),
+          rotationGizmoData: {
+            ...
+              RecordRotationGizmoSceneViewEditorService.unsafeGetData(
+                editorState,
+              ),
+            isXZCircleGizmoSelected: true,
+          },
+        }),
+    },
+  };
+};
+
+let onlySelectYZCircleGizmo = editorState => {
+  let editorState = editorState |> markNotSelectAnyRotationGizmo;
+
+  {
+    ...editorState,
+    sceneViewRecord: {
+      ...editorState.sceneViewRecord,
+      transformGizmoData:
+        Some({
+          ...
+            RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+              editorState,
+            ),
+          rotationGizmoData: {
+            ...
+              RecordRotationGizmoSceneViewEditorService.unsafeGetData(
+                editorState,
+              ),
+            isYZCircleGizmoSelected: true,
+          },
+        }),
+    },
+  };
+};
+
 let isXYCircleGizmoSelected = editorState =>
   RecordRotationGizmoSceneViewEditorService.unsafeGetData(editorState).
     isXYCircleGizmoSelected;

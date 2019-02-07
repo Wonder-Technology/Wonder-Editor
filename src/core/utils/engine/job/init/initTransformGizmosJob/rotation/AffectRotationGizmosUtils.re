@@ -1,37 +1,43 @@
-/* open ShapeType; */
-/*
- let _computeTotalAngle = (dragStartPoint, intersectXYPlanePoint, centerPoint) =>
-   (
-     Vector3Service.dot(
-       Wonderjs.Vector3Service.sub(
-         Wonderjs.Vector3Type.Float,
-         dragStartPoint,
-         centerPoint,
-       )
-       |> Wonderjs.Vector3Service.normalize,
-       Wonderjs.Vector3Service.sub(
-         Wonderjs.Vector3Type.Float,
-         intersectXYPlanePoint,
-         centerPoint,
-       )
-       |> Wonderjs.Vector3Service.normalize,
-     )
-     |> Js.Math.acos
-   )
-   *. AngleService.getRadToDeg(); */
-
-let _computeTotalAngle =
+let _computeXYPlaneTotalAngle =
     (
       (localDragStartPointX, localDragStartPointY, _),
-      (localIntersectXYPlanePointX, localIntersectXYPlanePointY, _),
+      (localIntersectPlanePointX, localIntersectPlanePointY, _),
     ) =>
   Js.Math.atan2(
-    ~x=localIntersectXYPlanePointX,
-    ~y=localIntersectXYPlanePointY,
+    ~x=localIntersectPlanePointX,
+    ~y=localIntersectPlanePointY,
     (),
   )
   *. AngleService.getRadToDeg()
   -. Js.Math.atan2(~x=localDragStartPointX, ~y=localDragStartPointY, ())
+  *. AngleService.getRadToDeg();
+
+let _computeXZPlaneTotalAngle =
+    (
+      (localDragStartPointX, _, localDragStartPointZ),
+      (localIntersectPlanePointX, _, localIntersectPlanePointZ),
+    ) =>
+  Js.Math.atan2(
+    ~x=localIntersectPlanePointZ,
+    ~y=localIntersectPlanePointX,
+    (),
+  )
+  *. AngleService.getRadToDeg()
+  -. Js.Math.atan2(~x=localDragStartPointZ, ~y=localDragStartPointX, ())
+  *. AngleService.getRadToDeg();
+
+let _computeYZPlaneTotalAngle =
+    (
+      (_, localDragStartPointY, localDragStartPointZ),
+      (_, localIntersectPlanePointY, localIntersectPlanePointZ),
+    ) =>
+  Js.Math.atan2(
+    ~x=localIntersectPlanePointY,
+    ~y=localIntersectPlanePointZ,
+    (),
+  )
+  *. AngleService.getRadToDeg()
+  -. Js.Math.atan2(~x=localDragStartPointY, ~y=localDragStartPointZ, ())
   *. AngleService.getRadToDeg();
 
 let _computeNeedRotateAngle = (totalAngle, editorState) =>
@@ -142,6 +148,74 @@ let _rotateCurrentSceneTreeNodeAndWholeRotationGizmo =
      (angle, axis, center, position),
    ); */
 
+let _affectGizmo =
+    (
+      ray,
+      (plane, planeLocalAxis),
+      computeTotalAngleFunc,
+      editorState,
+      engineState,
+    ) => {
+  let (totalAngle, needRotateAngle) =
+    switch (RayUtils.checkIntersectPlane(plane, ray)) {
+    | None =>
+      /* TODO test */
+      WonderLog.Log.print("not find intersected point!!! 00000000") |> ignore;
+
+      (
+        AngleRotationGizmoSceneViewEditorService.getLastTotalAngle(
+          editorState,
+        ),
+        0.,
+      );
+    | Some(intersectPlanePoint) =>
+      let localToWorldMatrixTypeArray =
+        TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
+          SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
+          engineState,
+        );
+
+      let dragStartPoint =
+        AngleRotationGizmoSceneViewEditorService.unsafeGetDragStartPoint(
+          editorState,
+        );
+
+      let totalAngle =
+        computeTotalAngleFunc(
+          CoordinateUtils.convertPosFromWorldToLocalCoordSystem(
+            dragStartPoint,
+            localToWorldMatrixTypeArray,
+            engineState,
+          ),
+          CoordinateUtils.convertPosFromWorldToLocalCoordSystem(
+            intersectPlanePoint,
+            localToWorldMatrixTypeArray,
+            engineState,
+          ),
+        );
+
+      (Some(totalAngle), _computeNeedRotateAngle(totalAngle, editorState));
+    };
+
+  WonderLog.Log.printJson((
+    "(totalAngle, needRotateAngle): ",
+    (totalAngle, needRotateAngle),
+  ))
+  |> ignore;
+
+  let editorState =
+    editorState
+    |> AngleRotationGizmoSceneViewEditorService.setLastTotalAngle(totalAngle);
+
+  _rotateCurrentSceneTreeNodeAndWholeRotationGizmo(
+    (needRotateAngle, planeLocalAxis),
+    editorState,
+    engineState,
+  );
+
+  (editorState, engineState);
+};
+
 let affectRotationGizmo = (event, (editorState, engineState)) => {
   let cameraGameObject =
     SceneViewEditorService.unsafeGetEditCamera(editorState);
@@ -156,88 +230,41 @@ let affectRotationGizmo = (event, (editorState, engineState)) => {
   SelectRotationGizmoSceneViewEditorService.isXYCircleGizmoSelected(
     editorState,
   ) ?
-    {
-      let plane =
-        CircleRotationGizmosUtils.buildXYPlane(editorState, engineState);
-
-      let (totalAngle, needRotateAngle) =
-        switch (RayUtils.checkIntersectPlane(plane, ray)) {
-        | None =>
-          /* TODO test */
-          WonderLog.Log.print("not find intersected point!!! 00000000")
-          |> ignore;
-
-          (
-            AngleRotationGizmoSceneViewEditorService.getLastTotalAngle(
-              editorState,
-            ),
-            0.,
-          );
-        | Some(intersectXYPlanePoint) =>
-          let localToWorldMatrixTypeArray =
-            TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
-              SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(
-                editorState,
-              ),
-              engineState,
-            );
-
-          let dragStartPoint =
-            AngleRotationGizmoSceneViewEditorService.unsafeGetDragStartPoint(
-              editorState,
-            );
-
-          /* let centerPoint =
-             CircleRotationGizmosUtils.getCenterPoint(
-               editorState,
-               engineState,
-             ); */
-
-          let totalAngle =
-            _computeTotalAngle(
-              CoordinateUtils.convertPosFromWorldToLocalCoordSystem(
-                dragStartPoint,
-                localToWorldMatrixTypeArray,
-                engineState,
-              ),
-              CoordinateUtils.convertPosFromWorldToLocalCoordSystem(
-                intersectXYPlanePoint,
-                localToWorldMatrixTypeArray,
-                engineState,
-              ),
-              /* centerPoint, */
-            );
-
-          (
-            Some(totalAngle),
-            _computeNeedRotateAngle(totalAngle, editorState),
-          );
-        };
-
-      WonderLog.Log.printJson((
-        "(totalAngle, needRotateAngle): ",
-        (totalAngle, needRotateAngle),
-      ))
-      |> ignore;
-
-      let editorState =
-        editorState
-        |> AngleRotationGizmoSceneViewEditorService.setLastTotalAngle(
-             totalAngle,
-           );
-
-      _rotateCurrentSceneTreeNodeAndWholeRotationGizmo(
+    _affectGizmo(
+      ray,
+      (
+        CircleRotationGizmosUtils.buildXYPlane(editorState, engineState),
+        CircleRotationGizmosUtils.getXYPlaneLocalAxis(),
+      ),
+      _computeXYPlaneTotalAngle,
+      editorState,
+      engineState,
+    ) :
+    SelectRotationGizmoSceneViewEditorService.isXZCircleGizmoSelected(
+      editorState,
+    ) ?
+      _affectGizmo(
+        ray,
         (
-          needRotateAngle,
-          /* plane.normal, */
-          CircleRotationGizmosUtils.getXYPlaneLocalAxis(),
-          /* CircleRotationGizmosUtils.getCenterPoint(editorState, engineState), */
+          CircleRotationGizmosUtils.buildXZPlane(editorState, engineState),
+          CircleRotationGizmosUtils.getXZPlaneLocalAxis(),
         ),
+        _computeXZPlaneTotalAngle,
         editorState,
         engineState,
-      );
-
-      (editorState, engineState);
-    } :
-    (editorState, engineState);
+      ) :
+      SelectRotationGizmoSceneViewEditorService.isYZCircleGizmoSelected(
+        editorState,
+      ) ?
+        _affectGizmo(
+          ray,
+          (
+            CircleRotationGizmosUtils.buildYZPlane(editorState, engineState),
+            CircleRotationGizmosUtils.getYZPlaneLocalAxis(),
+          ),
+          _computeYZPlaneTotalAngle,
+          editorState,
+          engineState,
+        ) :
+        (editorState, engineState);
 };

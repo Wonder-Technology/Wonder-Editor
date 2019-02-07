@@ -92,11 +92,12 @@ let _isSelectCircle = (intersectXYPlanePoint, editorState, engineState) =>
       }
   };
 
-let _selectXYCircle = (intersectXYPlanePoint, editorState, engineState) =>
+let _selectCircle =
+    (intersectPlanePoint, onlySelectCircleGizmoFunc, editorState, engineState) =>
   editorState
-  |> SelectRotationGizmoSceneViewEditorService.onlySelectXYCircleGizmo
+  |> onlySelectCircleGizmoFunc
   |> AngleRotationGizmoSceneViewEditorService.setDragStartPoint(
-       intersectXYPlanePoint,
+       intersectPlanePoint,
      );
 
 let selectRotationGizmo = (event, engineState, editorState) => {
@@ -131,22 +132,80 @@ let selectRotationGizmo = (event, engineState, editorState) => {
     {
       WonderLog.Log.print("select xy plane") |> ignore;
 
-      _selectXYCircle(
+      _selectCircle(
         intersectXYPlanePoint |> OptionService.unsafeGet,
+        SelectRotationGizmoSceneViewEditorService.onlySelectXYCircleGizmo,
         editorState,
         engineState,
       );
     } :
     {
-      WonderLog.Log.print("not select xy plane") |> ignore;
+      let intersectXZPlanePoint =
+        RayUtils.checkIntersectPlane(
+          CircleRotationGizmosUtils.buildXZPlane(editorState, engineState),
+          ray,
+        );
 
-      editorState
-      |> SelectRotationGizmoSceneViewEditorService.markNotSelectAnyRotationGizmo;
+      !
+        ComputeRotationGizmosUtils.isGizmoUnUsed(
+          GameObjectEngineService.unsafeGetGameObjectName(
+            OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
+              editorState,
+            ),
+            engineState,
+          ),
+          editorState,
+          engineState,
+        )
+      && _isSelectCircle(intersectXZPlanePoint, editorState, engineState) ?
+        {
+          WonderLog.Log.print("select xz plane") |> ignore;
+
+          _selectCircle(
+            intersectXZPlanePoint |> OptionService.unsafeGet,
+            SelectRotationGizmoSceneViewEditorService.onlySelectXZCircleGizmo,
+            editorState,
+            engineState,
+          );
+        } :
+        {
+          let intersectYZPlanePoint =
+            RayUtils.checkIntersectPlane(
+              CircleRotationGizmosUtils.buildYZPlane(
+                editorState,
+                engineState,
+              ),
+              ray,
+            );
+
+          !
+            ComputeRotationGizmosUtils.isGizmoUnUsed(
+              GameObjectEngineService.unsafeGetGameObjectName(
+                OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
+                  editorState,
+                ),
+                engineState,
+              ),
+              editorState,
+              engineState,
+            )
+          && _isSelectCircle(intersectYZPlanePoint, editorState, engineState) ?
+            {
+              WonderLog.Log.print("select yz plane") |> ignore;
+
+              _selectCircle(
+                intersectYZPlanePoint |> OptionService.unsafeGet,
+                SelectRotationGizmoSceneViewEditorService.onlySelectYZCircleGizmo,
+                editorState,
+                engineState,
+              );
+            } :
+            {
+              WonderLog.Log.print("not select any plane") |> ignore;
+
+              editorState
+              |> SelectRotationGizmoSceneViewEditorService.markNotSelectAnyRotationGizmo;
+            };
+        };
     };
-  /* _handleSelectPlaneGizmo(
-       ray,
-       _handleSelectAxisGizmo,
-       editorState,
-       engineState,
-     ); */
 };
