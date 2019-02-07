@@ -93,14 +93,25 @@ let _isSelectCircle = (intersectXYPlanePoint, editorState, engineState) =>
   };
 
 let _selectCircle =
-    (intersectPlanePoint, onlySelectCircleGizmoFunc, editorState, engineState) =>
-  editorState
-  |> onlySelectCircleGizmoFunc
-  |> AngleRotationGizmoSceneViewEditorService.setDragStartPoint(
-       intersectPlanePoint,
-     );
+    (
+      intersectPlanePoint,
+      (setCurrentGizmoColorFunc, onlySelectCircleGizmoFunc),
+      editorState,
+      engineState,
+    ) => {
+  let editorState =
+    editorState
+    |> onlySelectCircleGizmoFunc
+    |> AngleRotationGizmoSceneViewEditorService.setDragStartPoint(
+         intersectPlanePoint,
+       );
 
-let selectRotationGizmo = (event, engineState, editorState) => {
+  let engineState = setCurrentGizmoColorFunc(editorState, engineState);
+
+  (editorState, engineState);
+};
+
+let selectRotationGizmo = (event, editorState, engineState) => {
   let cameraGameObject =
     SceneViewEditorService.unsafeGetEditCamera(editorState);
 
@@ -134,7 +145,27 @@ let selectRotationGizmo = (event, engineState, editorState) => {
 
       _selectCircle(
         intersectXYPlanePoint |> OptionService.unsafeGet,
-        SelectRotationGizmoSceneViewEditorService.onlySelectXYCircleGizmo,
+        (
+          CurrentTransformGizmosUtils.setCurrentGizmoColor(
+            GameObjectEngineService.getAllBasicMaterials(
+              HierarchyGameObjectEngineService.getAllGameObjects(
+                OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
+                  editorState,
+                ),
+                engineState,
+              ),
+              engineState,
+            ),
+            GameObjectEngineService.unsafeGetGameObjectName(
+              OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
+                editorState,
+              ),
+              engineState,
+            ),
+            CurrentRotationGizmosUtils.isSelected,
+          ),
+          SelectRotationGizmoSceneViewEditorService.onlySelectXYCircleGizmo,
+        ),
         editorState,
         engineState,
       );
@@ -163,7 +194,27 @@ let selectRotationGizmo = (event, engineState, editorState) => {
 
           _selectCircle(
             intersectXZPlanePoint |> OptionService.unsafeGet,
-            SelectRotationGizmoSceneViewEditorService.onlySelectXZCircleGizmo,
+            (
+              CurrentTransformGizmosUtils.setCurrentGizmoColor(
+                GameObjectEngineService.getAllBasicMaterials(
+                  HierarchyGameObjectEngineService.getAllGameObjects(
+                    OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
+                      editorState,
+                    ),
+                    engineState,
+                  ),
+                  engineState,
+                ),
+                GameObjectEngineService.unsafeGetGameObjectName(
+                  OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
+                    editorState,
+                  ),
+                  engineState,
+                ),
+                CurrentRotationGizmosUtils.isSelected,
+              ),
+              SelectRotationGizmoSceneViewEditorService.onlySelectXZCircleGizmo,
+            ),
             editorState,
             engineState,
           );
@@ -195,7 +246,27 @@ let selectRotationGizmo = (event, engineState, editorState) => {
 
               _selectCircle(
                 intersectYZPlanePoint |> OptionService.unsafeGet,
-                SelectRotationGizmoSceneViewEditorService.onlySelectYZCircleGizmo,
+                (
+                  CurrentTransformGizmosUtils.setCurrentGizmoColor(
+                    GameObjectEngineService.getAllBasicMaterials(
+                      HierarchyGameObjectEngineService.getAllGameObjects(
+                        OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
+                          editorState,
+                        ),
+                        engineState,
+                      ),
+                      engineState,
+                    ),
+                    GameObjectEngineService.unsafeGetGameObjectName(
+                      OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
+                        editorState,
+                      ),
+                      engineState,
+                    ),
+                    CurrentRotationGizmosUtils.isSelected,
+                  ),
+                  SelectRotationGizmoSceneViewEditorService.onlySelectYZCircleGizmo,
+                ),
                 editorState,
                 engineState,
               );
@@ -203,8 +274,11 @@ let selectRotationGizmo = (event, engineState, editorState) => {
             {
               WonderLog.Log.print("not select any plane") |> ignore;
 
-              editorState
-              |> SelectRotationGizmoSceneViewEditorService.markNotSelectAnyRotationGizmo;
+              (
+                editorState
+                |> SelectRotationGizmoSceneViewEditorService.markNotSelectAnyRotationGizmo,
+                engineState,
+              );
             };
         };
     };

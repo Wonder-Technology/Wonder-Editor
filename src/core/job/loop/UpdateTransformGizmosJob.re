@@ -31,7 +31,7 @@ let _moveAndRotateWholeGizmoToCurrentSceneTreeNode =
 let _scaleWholeGizmo =
     (currentSceneTreeNode, cameraGameObject, wholeGizmo, engineState) => {
   let scaleFactor =
-    ComputeTransformGizmoScaleUtils .computeScaleFactorBasedOnDistanceToCamera(
+    ComputeTransformGizmoScaleUtils.computeScaleFactorBasedOnDistanceToCamera(
       TransformGameObjectEngineService.getPosition(
         cameraGameObject,
         engineState,

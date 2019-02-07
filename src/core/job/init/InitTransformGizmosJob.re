@@ -39,7 +39,7 @@ let _bindEvent = (editorState, engineState) => {
             {
               let editorState = StateEditorService.getState();
 
-              let editorState =
+              let (editorState, engineState) =
                 IsTransformGizmoRenderSceneViewEditorService.isTransformGizmoRender(
                   editorState,
                 ) ?
@@ -55,27 +55,33 @@ let _bindEvent = (editorState, engineState) => {
                       )
                     ) {
                     | Translation =>
-                      editorState
-                      |> OperateTranslationGizmoSceneViewEditorService.setCurrentSceneTreeNodeStartPoint(
-                           InitTransformGizmosUtils.getCurrentSceneTreeNodePosition(
-                             editorState,
+                      let editorState =
+                        editorState
+                        |> OperateTranslationGizmoSceneViewEditorService.setCurrentSceneTreeNodeStartPoint(
+                             InitTransformGizmosUtils.getCurrentSceneTreeNodePosition(
+                               editorState,
+                               engineState,
+                             ),
+                           )
+                        |> SelectTranslationGizmoUtils.selectTranslationGizmo(
+                             event,
                              engineState,
-                           ),
-                         )
-                      |> SelectTranslationGizmoUtils.selectTranslationGizmo(
-                           event,
-                           engineState,
-                         )
+                           );
+
+                      (editorState, engineState);
                     | Rotation =>
-                      editorState
-                      |> SelectRotationGizmoUtils.selectRotationGizmo(
-                           event,
-                           engineState,
-                         )
+                      SelectRotationGizmoUtils.selectRotationGizmo(
+                        event,
+                        editorState,
+                        engineState,
+                      )
                     };
                   } :
-                  editorState
-                  |> SelectTransformGizmoSceneViewEditorService.markNotSelectAnyTransformGizmo;
+                  (
+                    editorState
+                    |> SelectTransformGizmoSceneViewEditorService.markNotSelectAnyTransformGizmo,
+                    engineState,
+                  );
 
               editorState |> StateEditorService.setState |> ignore;
 
@@ -159,7 +165,10 @@ let _bindEvent = (editorState, engineState) => {
                     MoveTranslationPlaneGizmosUtils.moveTranslationPlaneGizmo(
                       editorState,
                       engineState,
-                    );
+                    )
+                    |> CurrentTranslationGizmosUtils.restoreTranslationGizmoColor(
+                         editorState,
+                       );
 
                   engineState |> StateEngineService.setState |> ignore;
 
@@ -178,6 +187,12 @@ let _bindEvent = (editorState, engineState) => {
                     editorState
                     |> AngleRotationGizmoSceneViewEditorService.setLastTotalAngle(
                          None,
+                       );
+
+                  let engineState =
+                    engineState
+                    |> CurrentRotationGizmosUtils.restoreRotationGizmoColor(
+                         editorState,
                        );
 
                   editorState |> StateEditorService.setState |> ignore;

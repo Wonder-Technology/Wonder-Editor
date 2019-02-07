@@ -145,10 +145,16 @@ let _getMoveStartDataForYZPlane = (ray, (editorState, engineState)) =>
 let _selectAxisGizmo =
     (
       ray,
-      (onlySelectTranslationAxisGizmoFunc, getMoveStartDataFunc),
+      (
+        setCurrentGizmoColorFunc,
+        onlySelectTranslationAxisGizmoFunc,
+        getMoveStartDataFunc,
+      ),
       (editorState, engineState),
     ) => {
   let editorState = editorState |> onlySelectTranslationAxisGizmoFunc;
+
+  let engineState = setCurrentGizmoColorFunc(editorState, engineState);
 
   let (axisGameObjectStartPoint, dragStartPoint) =
     getMoveStartDataFunc(ray, (editorState, engineState));
@@ -165,10 +171,16 @@ let _selectAxisGizmo =
 let _selectPlaneGizmo =
     (
       ray,
-      (onlySelectTranslationPlaneGizmoFunc, getMoveStartDataFunc),
+      (
+        setCurrentGizmoColorFunc,
+        onlySelectTranslationPlaneGizmoFunc,
+        getMoveStartDataFunc,
+      ),
       (editorState, engineState),
     ) => {
   let editorState = editorState |> onlySelectTranslationPlaneGizmoFunc;
+
+  let engineState = setCurrentGizmoColorFunc(editorState, engineState);
 
   let dragStartPoint = getMoveStartDataFunc(ray, (editorState, engineState));
 
@@ -190,6 +202,24 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
     _selectAxisGizmo(
       ray,
       (
+        CurrentTransformGizmosUtils.setCurrentGizmoColor(
+          GameObjectEngineService.getAllBasicMaterials(
+            HierarchyGameObjectEngineService.getAllGameObjects(
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
+                editorState,
+              ),
+              engineState,
+            ),
+            engineState,
+          ),
+          GameObjectEngineService.unsafeGetGameObjectName(
+            OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
+              editorState,
+            ),
+            engineState,
+          ),
+          CurrentTranslationGizmosUtils.isAxisSelected,
+        ),
         SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXAxisGizmo,
         _getMoveStartDataForXAxis,
       ),
@@ -206,6 +236,24 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
       _selectAxisGizmo(
         ray,
         (
+          CurrentTransformGizmosUtils.setCurrentGizmoColor(
+            GameObjectEngineService.getAllBasicMaterials(
+              HierarchyGameObjectEngineService.getAllGameObjects(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
+                  editorState,
+                ),
+                engineState,
+              ),
+              engineState,
+            ),
+            GameObjectEngineService.unsafeGetGameObjectName(
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
+                editorState,
+              ),
+              engineState,
+            ),
+            CurrentTranslationGizmosUtils.isAxisSelected,
+          ),
           SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationYAxisGizmo,
           _getMoveStartDataForYAxis,
         ),
@@ -222,6 +270,24 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
         _selectAxisGizmo(
           ray,
           (
+            CurrentTransformGizmosUtils.setCurrentGizmoColor(
+              GameObjectEngineService.getAllBasicMaterials(
+                HierarchyGameObjectEngineService.getAllGameObjects(
+                  OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
+                    editorState,
+                  ),
+                  engineState,
+                ),
+                engineState,
+              ),
+              GameObjectEngineService.unsafeGetGameObjectName(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
+                  editorState,
+                ),
+                engineState,
+              ),
+              CurrentTranslationGizmosUtils.isAxisSelected,
+            ),
             SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationZAxisGizmo,
             _getMoveStartDataForZAxis,
           ),
@@ -243,6 +309,24 @@ let _handleSelectPlaneGizmo =
     _selectPlaneGizmo(
       ray,
       (
+        CurrentTransformGizmosUtils.setCurrentGizmoColor(
+          GameObjectEngineService.getAllBasicMaterials(
+            HierarchyGameObjectEngineService.getAllGameObjects(
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+                editorState,
+              ),
+              engineState,
+            ),
+            engineState,
+          ),
+          GameObjectEngineService.unsafeGetGameObjectName(
+            OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+              editorState,
+            ),
+            engineState,
+          ),
+          CurrentTranslationGizmosUtils.isPlaneSelected,
+        ),
         SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXYPlaneGizmo,
         _getMoveStartDataForXYPlane,
       ),
@@ -259,6 +343,24 @@ let _handleSelectPlaneGizmo =
       _selectPlaneGizmo(
         ray,
         (
+          CurrentTransformGizmosUtils.setCurrentGizmoColor(
+            GameObjectEngineService.getAllBasicMaterials(
+              HierarchyGameObjectEngineService.getAllGameObjects(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
+                  editorState,
+                ),
+                engineState,
+              ),
+              engineState,
+            ),
+            GameObjectEngineService.unsafeGetGameObjectName(
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
+                editorState,
+              ),
+              engineState,
+            ),
+            CurrentTranslationGizmosUtils.isPlaneSelected,
+          ),
           SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXZPlaneGizmo,
           _getMoveStartDataForXZPlane,
         ),
@@ -275,6 +377,24 @@ let _handleSelectPlaneGizmo =
         _selectPlaneGizmo(
           ray,
           (
+            CurrentTransformGizmosUtils.setCurrentGizmoColor(
+              GameObjectEngineService.getAllBasicMaterials(
+                HierarchyGameObjectEngineService.getAllGameObjects(
+                  OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+                    editorState,
+                  ),
+                  engineState,
+                ),
+                engineState,
+              ),
+              GameObjectEngineService.unsafeGetGameObjectName(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+                  editorState,
+                ),
+                engineState,
+              ),
+              CurrentTranslationGizmosUtils.isPlaneSelected,
+            ),
             SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationYZPlaneGizmo,
             _getMoveStartDataForYZPlane,
           ),

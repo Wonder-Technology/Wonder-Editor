@@ -73,11 +73,20 @@ let _createCircleGizmo = (color, engineState) => {
 
 let _createCircleGizmos = engineState => {
   let (engineState, yzGizmo, yzGizmoTransform) =
-    _createCircleGizmo([|1., 0., 0.|], engineState);
+    _createCircleGizmo(
+      DataRotationGizmoSceneViewEditorService.getYZCircleColor(),
+      engineState,
+    );
   let (engineState, xzGizmo, xzGizmoTransform) =
-    _createCircleGizmo([|0., 1., 0.|], engineState);
+    _createCircleGizmo(
+      DataRotationGizmoSceneViewEditorService.getXZCircleColor(),
+      engineState,
+    );
   let (engineState, xyGizmo, xyGizmoTransform) =
-    _createCircleGizmo([|0., 0., 1.|], engineState);
+    _createCircleGizmo(
+      DataRotationGizmoSceneViewEditorService.getXYCircleColor(),
+      engineState,
+    );
 
   let engineState =
     engineState

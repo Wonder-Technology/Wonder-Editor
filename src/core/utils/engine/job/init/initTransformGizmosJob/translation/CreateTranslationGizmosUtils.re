@@ -111,12 +111,27 @@ let _createTranslationPlaneGizmo = (color, engineState) => {
 
 let _createAxisGizmos = engineState => {
   let (engineState, xAxisGizmo, xAxisTransform) =
-    _createTranslationAxisGizmo([|1., 0., 0.|], engineState);
+    _createTranslationAxisGizmo(
+      DataTranslationGizmoSceneViewEditorService.getXAxisColor(),
+      engineState,
+    );
   let (engineState, yAxisGizmo, yAxisTransform) =
-    _createTranslationAxisGizmo([|0., 1., 0.|], engineState);
+    _createTranslationAxisGizmo(
+      DataTranslationGizmoSceneViewEditorService.getYAxisColor(),
+      engineState,
+    );
 
   let (engineState, zAxisGizmo, zAxisTransform) =
-    _createTranslationAxisGizmo([|0., 0., 1.|], engineState);
+    _createTranslationAxisGizmo(
+      DataTranslationGizmoSceneViewEditorService.getZAxisColor(),
+      engineState,
+    );
+
+  let engineState =
+    engineState
+    |> GameObjectEngineService.setGameObjectName("x", xAxisGizmo)
+    |> GameObjectEngineService.setGameObjectName("y", yAxisGizmo)
+    |> GameObjectEngineService.setGameObjectName("z", zAxisGizmo);
 
   let engineState =
     engineState
@@ -134,13 +149,28 @@ let _createAxisGizmos = engineState => {
 
 let _createPlaneGizmos = engineState => {
   let (engineState, xyPlaneGizmo, xyPlaneTransform) =
-    _createTranslationPlaneGizmo([|0., 0., 1.|], engineState);
+    _createTranslationPlaneGizmo(
+      DataTranslationGizmoSceneViewEditorService.getXYPlaneColor(),
+      engineState,
+    );
 
   let (engineState, xzPlaneGizmo, xzPlaneTransform) =
-    _createTranslationPlaneGizmo([|0., 1., 0.|], engineState);
+    _createTranslationPlaneGizmo(
+      DataTranslationGizmoSceneViewEditorService.getXZPlaneColor(),
+      engineState,
+    );
 
   let (engineState, yzPlaneGizmo, yzPlaneTransform) =
-    _createTranslationPlaneGizmo([|1., 0., 0.|], engineState);
+    _createTranslationPlaneGizmo(
+      DataTranslationGizmoSceneViewEditorService.getYZPlaneColor(),
+      engineState,
+    );
+
+  let engineState =
+    engineState
+    |> GameObjectEngineService.setGameObjectName("xy", xyPlaneGizmo)
+    |> GameObjectEngineService.setGameObjectName("xz", xzPlaneGizmo)
+    |> GameObjectEngineService.setGameObjectName("yz", yzPlaneGizmo);
 
   let engineState =
     engineState

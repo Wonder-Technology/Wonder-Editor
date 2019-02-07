@@ -40,7 +40,13 @@ let setToEditorState =
       editorState: EditorType.editorState,
     )
     : EditorType.editorState => {
-  ...editorState,
+
+
+    WonderLog.Log.print((
+      "translationWholeGizmo:", translationWholeGizmo
+    )) |> ignore;
+
+      {   ...editorState,
   sceneViewRecord: {
     ...editorState.sceneViewRecord,
     transformGizmoData:
@@ -77,5 +83,5 @@ let setToEditorState =
           lastTotalAngle: None,
         },
       }),
-  },
+  }, }
 };
