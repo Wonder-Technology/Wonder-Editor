@@ -220,7 +220,7 @@ let _bindEvent = (editorState, engineState) => {
 let _createTransformGizmos = ((editorState, engineState)) => {
   let (
     engineState,
-    rotationWholeGizmo,
+    translationWholeGizmo,
     (xAxisGizmo, yAxisGizmo, zAxisGizmo),
     (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo),
   ) =
@@ -233,7 +233,7 @@ let _createTransformGizmos = ((editorState, engineState)) => {
     editorState
     |> CreateTransformGizmosUtils.setToEditorState(
          (
-           rotationWholeGizmo,
+           translationWholeGizmo,
            (xAxisGizmo, yAxisGizmo, zAxisGizmo),
            (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo),
          ),
