@@ -380,7 +380,7 @@ let _handleSelectPlaneGizmo =
             CurrentTransformGizmosUtils.setCurrentGizmoColor(
               GameObjectEngineService.getAllBasicMaterials(
                 HierarchyGameObjectEngineService.getAllGameObjects(
-                  OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+                  OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
                     editorState,
                   ),
                   engineState,
@@ -388,7 +388,7 @@ let _handleSelectPlaneGizmo =
                 engineState,
               ),
               GameObjectEngineService.unsafeGetGameObjectName(
-                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
                   editorState,
                 ),
                 engineState,
