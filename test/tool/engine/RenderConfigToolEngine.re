@@ -164,6 +164,25 @@ let buildRenderConfig =
   ],
   "no_material_shaders": [
     {
+      "name": "rotation_gizmo_for_editor",
+      "shader_libs": [
+        {
+          "type": "group",
+          "name": "top"
+        },
+        {
+          "name": "modelMatrix_noInstance"
+        },
+        {
+          "name": "rotation_gizmo_circle_for_editor"
+        },
+        {
+          "type": "group",
+          "name": "end"
+        }
+      ]
+    },
+    {
       "name": "outline_draw_origin_gameObjects",
       "shader_libs": [
         {
@@ -738,6 +757,41 @@ let buildRenderConfig =
         "name": "webgl1_frontLight_end_fragment"
       }
     ]
+  },
+  {
+    "name": "rotation_gizmo_circle_for_editor",
+    "glsls": [
+      {
+        "type": "vs",
+        "name": "webgl1_rotation_gizmo_circle_for_editor_vertex"
+      },
+      {
+        "type": "fs",
+        "name": "webgl1_rotation_gizmo_circle_for_editor_fragment"
+      }
+    ],
+    "variables": {
+      "uniforms": [
+        {
+          "name": "u_color",
+          "from": "no_material_shader",
+          "field": "rotationGizmoForEditor",
+          "type": "float3"
+        },
+        {
+          "name": "u_alpha",
+          "from": "no_material_shader",
+          "field": "rotationGizmoForEditor",
+          "type": "float"
+        },
+        {
+          "name": "u_cameraPosInLocalCoordSystem",
+          "from": "no_material_shader",
+          "field": "rotationGizmoForEditor",
+          "type": "float3"
+        }
+      ]
+    }
   },
   {
     "name": "outline_expand",

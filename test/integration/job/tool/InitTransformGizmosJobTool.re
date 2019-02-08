@@ -143,5 +143,20 @@ let getCurrentSceneTreeNodePosition = () => {
   |> Vector3Service.truncate(3);
 };
 
+
+let getCurrentSceneTreeNodeEulerAngles = () => {
+  let editorState = StateEditorService.getState();
+  let engineState = StateEngineService.unsafeGetState();
+
+  TransformEngineService.getEulerAngles(
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
+      engineState,
+    ),
+    engineState,
+  )
+  |> Vector3Service.truncate(1);
+};
+
 let createTransformGizmos = ((editorState, engineState)) =>
   InitTransformGizmosJob._createTransformGizmos((editorState, engineState));

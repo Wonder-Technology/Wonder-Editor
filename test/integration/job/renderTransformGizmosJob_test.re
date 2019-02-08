@@ -27,6 +27,9 @@ let _ =
             {
               "name": "init_transform_gizmos"
             },
+      {
+        "name": "init_no_material_shader"
+      },
             {
               "name": "init_basic_material"
             },
@@ -988,5 +991,403 @@ let _ =
           });
         });
       });
+
+      describe("render rotation gizmos", () =>
+        describe("render circle gizmos", () => {
+          let _getCircleGeometry = (editorState, engineState) =>
+            GameObjectComponentEngineService.unsafeGetGeometryComponent(
+              OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
+                editorState,
+              ),
+              engineState,
+            );
+
+          let _handleEngineState = engineState => {
+            let engineState = engineState |> MainUtils._handleEngineState;
+
+            CurrentTransformGizmoSceneViewEditorService.markRotation
+            |> StateLogicService.getAndSetEditorState;
+
+            engineState;
+          };
+
+          describe("prepare gl state", () => {
+            test("disable depth test", () => {
+              let engineState = StateEngineService.unsafeGetState();
+              let disable = createEmptyStubWithJsObjSandbox(sandbox);
+              let getDepthTest = 1;
+              let engineState =
+                engineState
+                |> FakeGlToolEngine.setFakeGl(
+                     FakeGlToolEngine.buildFakeGl(
+                       ~sandbox,
+                       ~disable,
+                       ~getDepthTest,
+                       (),
+                     ),
+                   );
+
+              let engineState =
+                engineState
+                |> _handleEngineState
+                |> DirectorToolEngine.runWithDefaultTime;
+
+              disable
+              |> getCall(0)
+              |> expect
+              |> toCalledWith([|getDepthTest|]);
+            });
+
+            describe("open blend", () => {
+              test("enable blend", () => {
+                let engineState = StateEngineService.unsafeGetState();
+                let enable = createEmptyStubWithJsObjSandbox(sandbox);
+                let getBlend = 1;
+                let engineState =
+                  engineState
+                  |> FakeGlToolEngine.setFakeGl(
+                       FakeGlToolEngine.buildFakeGl(
+                         ~sandbox,
+                         ~enable,
+                         ~getBlend,
+                         (),
+                       ),
+                     );
+
+                let engineState =
+                  engineState
+                  |> _handleEngineState
+                  |> DirectorToolEngine.runWithDefaultTime;
+
+                enable |> getCall(0) |> expect |> toCalledWith([|getBlend|]);
+              });
+              test("set blend func", () => {
+                let engineState = StateEngineService.unsafeGetState();
+                let blendFunc = createEmptyStubWithJsObjSandbox(sandbox);
+                let getSrcAlpha = 1;
+                let getOneMinusSrcAlpha = 2;
+                let engineState =
+                  engineState
+                  |> FakeGlToolEngine.setFakeGl(
+                       FakeGlToolEngine.buildFakeGl(
+                         ~sandbox,
+                         ~blendFunc,
+                         ~getSrcAlpha,
+                         ~getOneMinusSrcAlpha,
+                         (),
+                       ),
+                     );
+
+                let engineState =
+                  engineState
+                  |> _handleEngineState
+                  |> DirectorToolEngine.runWithDefaultTime;
+
+                blendFunc
+                |> getCall(0)
+                |> expect
+                |> toCalledWith([|getSrcAlpha, getOneMinusSrcAlpha|]);
+              });
+            });
+          });
+
+          test("use no material shader->rotation_gizmo_for_editor", () => {
+            let engineState = StateEngineService.unsafeGetState();
+            let createProgram = createEmptyStubWithJsObjSandbox(sandbox);
+            let program1 = Obj.magic(1);
+            let program2 = Obj.magic(2);
+            let program3 = Obj.magic(3);
+            createProgram |> onCall(0) |> returns(program1);
+            createProgram |> onCall(1) |> returns(program2);
+            createProgram |> onCall(2) |> returns(program3);
+            let useProgram = createEmptyStubWithJsObjSandbox(sandbox);
+            let engineState =
+              engineState
+              |> FakeGlToolEngine.setFakeGl(
+                   FakeGlToolEngine.buildFakeGl(
+                     ~sandbox,
+                     ~useProgram,
+                     ~createProgram,
+                     (),
+                   ),
+                 );
+
+            let engineState =
+              engineState
+              |> _handleEngineState
+              |> DirectorToolEngine.runWithDefaultTime;
+
+            let shaderIndex =
+              NoMaterialShaderEngineService.unsafeGetNoMaterialShader(
+                "rotation_gizmo_for_editor",
+                engineState,
+              );
+            (
+              useProgram |> getCallCount,
+              useProgram
+              |> SinonTool.calledWith(
+                   _,
+                   ProgramToolEngine.getProgram(shaderIndex, engineState)
+                   |> WonderLog.Log.print,
+                 ),
+              ProgramToolEngine.getProgram(shaderIndex, engineState),
+            )
+            |> expect == (1, true, program1);
+          });
+
+          describe("send gl data", () =>
+            describe("send uniform data", () =>
+              describe("test send no material shader data", () => {
+                let _prepareCamera = () => {
+                  let engineState = StateEngineService.unsafeGetState();
+
+                  let currentCameraTransform =
+                    MainEditorCameraTool.getCurrentCameraGameObject(
+                      engineState,
+                    )
+                    |> OptionService.unsafeGet
+                    |> GameObjectComponentEngineService.unsafeGetTransformComponent(
+                         _,
+                         engineState,
+                       );
+                  let engineState =
+                    engineState
+                    |> TransformEngineService.setLocalPosition(
+                         (0., 2., 3.),
+                         currentCameraTransform,
+                       )
+                    |> TransformEngineService.lookAt(
+                         currentCameraTransform,
+                         (0., 0., 0.),
+                       );
+
+                  engineState |> StateEngineService.setState |> ignore;
+                };
+
+                describe("send u_alpha", () => {
+                  let _test = (alpha, count) => {
+                    let engineState = StateEngineService.unsafeGetState();
+                    let uniform1f = createEmptyStubWithJsObjSandbox(sandbox);
+                    let pos = 10;
+                    let getUniformLocation =
+                      GLSLLocationToolEngine.getUniformLocation(
+                        ~pos,
+                        sandbox,
+                        "u_alpha",
+                      );
+                    let engineState =
+                      FakeGlToolEngine.setFakeGl(
+                        FakeGlToolEngine.buildFakeGl(
+                          ~sandbox,
+                          ~uniform1f,
+                          ~getUniformLocation,
+                          (),
+                        ),
+                        engineState,
+                      );
+
+                    let engineState =
+                      engineState
+                      |> _handleEngineState
+                      |> DirectorToolEngine.runWithDefaultTime;
+
+                    uniform1f
+                    |> withTwoArgs(pos, alpha)
+                    |> getCallCount
+                    |> expect == count;
+                  };
+
+                  beforeEach(() => _prepareCamera());
+
+                  test("if circle gizmo is unused, send small value", () =>
+                    _test(0.1, 1)
+                  );
+                  test("else, send 1.0", () =>
+                    _test(1.0, 1)
+                  );
+                });
+
+                describe("send u_color", () =>
+                  test("test send each circle gameObject->u_color", () => {
+                    let engineState = StateEngineService.unsafeGetState();
+                    let uniform3f = createEmptyStubWithJsObjSandbox(sandbox);
+                    let pos = 10;
+                    let getUniformLocation =
+                      GLSLLocationToolEngine.getUniformLocation(
+                        ~pos,
+                        sandbox,
+                        "u_color",
+                      );
+                    let engineState =
+                      FakeGlToolEngine.setFakeGl(
+                        FakeGlToolEngine.buildFakeGl(
+                          ~sandbox,
+                          ~uniform3f,
+                          ~getUniformLocation,
+                          (),
+                        ),
+                        engineState,
+                      );
+
+                    let engineState =
+                      engineState
+                      |> _handleEngineState
+                      |> DirectorToolEngine.runWithDefaultTime;
+
+                    uniform3f
+                    |> withOneArg(pos)
+                    |> getCallCount
+                    |> expect == 3;
+                  })
+                );
+
+                describe("send u_cameraPosInLocalCoordSystem", () =>
+                  test(
+                    "send send each circle gameObject->camera pos in local coord system",
+                    () => {
+                    _prepareCamera();
+                    let engineState = StateEngineService.unsafeGetState();
+                    let uniform3f = createEmptyStubWithJsObjSandbox(sandbox);
+                    let pos = 10;
+                    let getUniformLocation =
+                      GLSLLocationToolEngine.getUniformLocation(
+                        ~pos,
+                        sandbox,
+                        "u_cameraPosInLocalCoordSystem",
+                      );
+                    let engineState =
+                      FakeGlToolEngine.setFakeGl(
+                        FakeGlToolEngine.buildFakeGl(
+                          ~sandbox,
+                          ~uniform3f,
+                          ~getUniformLocation,
+                          (),
+                        ),
+                        engineState,
+                      );
+
+                    let engineState =
+                      engineState
+                      |> _handleEngineState
+                      |> DirectorToolEngine.runWithDefaultTime;
+
+                    let (x, y, z) =
+                      CameraPosUtils.getCameraPos(
+                        StateEditorService.getState(),
+                        engineState,
+                      );
+                    (
+                      uniform3f |> withFourArgs(pos, x, y, z) |> getCallCount,
+                      uniform3f
+                      |> withFourArgs(
+                           pos,
+                           0.,
+                           3.0000004260849593,
+                           -2.000000135732943,
+                         )
+                      |> getCallCount,
+                      uniform3f
+                      |> withFourArgs(
+                           pos,
+                           -3.0000003576278687,
+                           2.,
+                           1.0268563599424851e-7,
+                         )
+                      |> getCallCount,
+                    )
+                    |> expect == (1, 1, 1);
+                  })
+                );
+              })
+            )
+          );
+
+          describe("draw", () =>
+            test("draw each circle gameObject with line_strip", () => {
+              let engineState = StateEngineService.unsafeGetState();
+              let line_strip = 2;
+              let drawElements = createEmptyStubWithJsObjSandbox(sandbox);
+              let engineState =
+                FakeGlToolEngine.setFakeGl(
+                  FakeGlToolEngine.buildFakeGl(
+                    ~sandbox,
+                    ~line_strip,
+                    ~drawElements,
+                    (),
+                  ),
+                  engineState,
+                );
+
+              let engineState =
+                engineState
+                |> _handleEngineState
+                |> DirectorToolEngine.runWithDefaultTime;
+
+              let editorState = StateEditorService.getState();
+
+              drawElements
+              |> withTwoArgs(
+                   line_strip,
+                   GeometryEngineService.getIndicesCount(
+                     _getCircleGeometry(editorState, engineState),
+                     engineState,
+                   ),
+                 )
+              |> getCallCount
+              |> expect == 3;
+            })
+          );
+
+          describe("restore gl state", () => {
+            test("enable depth test", () => {
+              let engineState = StateEngineService.unsafeGetState();
+              let enable = createEmptyStubWithJsObjSandbox(sandbox);
+              let getDepthTest = 1;
+              let engineState =
+                engineState
+                |> FakeGlToolEngine.setFakeGl(
+                     FakeGlToolEngine.buildFakeGl(
+                       ~sandbox,
+                       ~enable,
+                       ~getDepthTest,
+                       (),
+                     ),
+                   );
+
+              let engineState =
+                engineState
+                |> _handleEngineState
+                |> DirectorToolEngine.runWithDefaultTime;
+
+              enable
+              |> getCall(1)
+              |> expect
+              |> toCalledWith([|getDepthTest|]);
+            });
+            test("disable blend", () => {
+              let engineState = StateEngineService.unsafeGetState();
+              let disable = createEmptyStubWithJsObjSandbox(sandbox);
+              let getBlend = 10;
+              let engineState =
+                engineState
+                |> FakeGlToolEngine.setFakeGl(
+                     FakeGlToolEngine.buildFakeGl(
+                       ~sandbox,
+                       ~disable,
+                       ~getBlend,
+                       (),
+                     ),
+                   );
+
+              let engineState =
+                engineState
+                |> _handleEngineState
+                |> DirectorToolEngine.runWithDefaultTime;
+
+              disable |> getCall(1) |> expect |> toCalledWith([|getBlend|]);
+            });
+          });
+        })
+      );
     });
   });

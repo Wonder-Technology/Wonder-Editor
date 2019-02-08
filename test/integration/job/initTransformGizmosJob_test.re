@@ -263,7 +263,7 @@ let _ =
             });
           });
 
-          test("x axis gizmo should rotate -90 by z", () => {
+          test("x axis gizmo should rotate -90 by z axis", () => {
             let editorState = StateEditorService.getState();
             let engineState = StateEngineService.unsafeGetState();
 
@@ -276,7 +276,7 @@ let _ =
             |> TransformGameObjectTool.getLocalEulerAngles(_, engineState)
             |> expect == (0., 0., (-90.));
           });
-          test("z axis gizmo should rotate 90 by x", () => {
+          test("z axis gizmo should rotate 90 by x axis", () => {
             let editorState = StateEditorService.getState();
             let engineState = StateEngineService.unsafeGetState();
 
@@ -492,6 +492,172 @@ let _ =
           );
         });
       });
+
+      describe("create rotation gizmos", () => {
+        beforeEach(() => _prepareState(sandbox));
+
+        describe("create three circle gizmos", () => {
+          test("rotation whole gizmo has three circle gizmos", () => {
+            let editorState = StateEditorService.getState();
+            let engineState = StateEngineService.unsafeGetState();
+
+            GameObjectTool.hasTargetChildren(
+              OperateRotationGizmoSceneViewEditorService.unsafeGetRotationWholeGizmo(
+                editorState,
+              ),
+              [|
+                OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
+                  editorState,
+                ),
+                OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
+                  editorState,
+                ),
+                OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
+                  editorState,
+                ),
+              |],
+              engineState,
+            )
+            |> expect == true;
+          });
+
+          describe("test each circle gizmo", () =>
+            describe("test xy circle gizmo", () => {
+              /* test(
+                   "contain two gameObjects: cone gameObject as arrow and cylinder gameObject as line",
+                   () => {
+                     let editorState = StateEditorService.getState();
+                     let engineState = StateEngineService.unsafeGetState();
+
+                     let rotationYAxisGizmo =
+                       OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYAxisGizmo(
+                         editorState,
+                       );
+
+                     (
+                       rotationYAxisGizmo
+                       |> _getArrow(_, engineState)
+                       |> GameObjectEngineService.unsafeGetGameObjectName(
+                            _,
+                            engineState,
+                          ),
+                       rotationYAxisGizmo
+                       |> _getLine(_, engineState)
+                       |> GameObjectEngineService.unsafeGetGameObjectName(
+                            _,
+                            engineState,
+                          ),
+                     )
+                     |> expect == ("arrow", "line");
+                   },
+                 ); */
+
+              test("set gizmo->meshRenderer->isRender to false", () => {
+                let editorState = StateEditorService.getState();
+                let engineState = StateEngineService.unsafeGetState();
+
+                OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
+                  editorState,
+                )
+                |> GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
+                     _,
+                     engineState,
+                   )
+                |> MeshRendererEngineService.getMeshRendererIsRender(
+                     _,
+                     engineState,
+                   )
+                |> expect == false;
+              });
+
+              test("set gizmo->drawMode to line_strip", () => {
+                let editorState = StateEditorService.getState();
+                let engineState = StateEngineService.unsafeGetState();
+
+                OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
+                  editorState,
+                )
+                |> GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
+                     _,
+                     engineState,
+                   )
+                |> MeshRendererEngineService.getDrawMode(_, engineState)
+                |>
+                expect == (
+                            Wonderjs.DrawModeType.Line_strip
+                            |> Wonderjs.DrawModeType.drawModeToUint8
+                          );
+              });
+            })
+          );
+
+          describe("test circle gizmo color", () => {
+            test("yz circle gizmo is red", () => {
+              let editorState = StateEditorService.getState();
+              let engineState = StateEngineService.unsafeGetState();
+
+              OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
+                editorState,
+              )
+              |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+                   _,
+                   engineState,
+                 )
+              |> BasicMaterialEngineService.getColor(_, engineState)
+              |> expect == [|1., 0., 0.|];
+            });
+            test("xz circle gizmo is green", () => {
+              let editorState = StateEditorService.getState();
+              let engineState = StateEngineService.unsafeGetState();
+
+              OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
+                editorState,
+              )
+              |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+                   _,
+                   engineState,
+                 )
+              |> BasicMaterialEngineService.getColor(_, engineState)
+              |> expect == [|0., 1., 0.|];
+            });
+            test("xy circle gizmo is blue", () => {
+              let editorState = StateEditorService.getState();
+              let engineState = StateEngineService.unsafeGetState();
+
+              OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
+                editorState,
+              )
+              |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+                   _,
+                   engineState,
+                 )
+              |> BasicMaterialEngineService.getColor(_, engineState)
+              |> expect == [|0., 0., 1.|];
+            });
+          });
+
+          test("yz circle gizmo should rotate 90 by y axis", () => {
+            let editorState = StateEditorService.getState();
+            let engineState = StateEngineService.unsafeGetState();
+
+            OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
+              editorState,
+            )
+            |> TransformGameObjectTool.getLocalEulerAngles(_, engineState)
+            |> expect == (0., 90., 0.);
+          });
+          test("xz circle gizmo should rotate 90 by x axis", () => {
+            let editorState = StateEditorService.getState();
+            let engineState = StateEngineService.unsafeGetState();
+
+            OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
+              editorState,
+            )
+            |> TransformGameObjectTool.getLocalEulerAngles(_, engineState)
+            |> expect == (90., 0., 0.);
+          });
+        });
+      });
     });
 
     describe("test move translation plane gizmos", () => {
@@ -696,152 +862,8 @@ let _ =
       afterEach(() => EventTool.restore());
 
       describe("bind point drag start event", () => {
-        let prepareGameObject = sandbox =>
-          InitTransformGizmosJobTool.prepareOneGameObject(
-            ~sandbox,
-            ~viewWidth=500,
-            ~viewHeight=200,
-            ~offsetLeft=0,
-            ~offsetTop=0,
-            ~cameraPos=(0., 0., 3.),
-            ~gameObjectPos=(0., 0., 0.),
-            ~gameObjectEulerAngles=(0., 0., 0.),
-            ~createGameObjectFunc=InitPickingJobTool.createCube,
-            (),
-          );
-
-        describe("if mouse button isn't left button", () =>
-          test("if point down x axis, still not select x axis", () => {
-            let gameObject1 = prepareGameObject(sandbox);
-
-            InitPickingJobTool.triggerPicking(
-              ~sandbox,
-              ~pageX=250,
-              ~pageY=100,
-              (),
-            );
-            EventTransformGizmosTool.triggerMouseDown(
-              ~sandbox,
-              ~eventButton=2,
-              ~pageX=250 + 10,
-              ~pageY=100,
-              (),
-            );
-
-            SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
-            |> StateLogicService.getEditorState
-            |> expect == false;
-          })
-        );
-
-        describe("if translation gizmo isn't render, not select gizmo", () =>
-          describe("if not has current scene tree node", () =>
-            test("not render translation gizmo", () => {
-              let gameObject1 = prepareGameObject(sandbox);
-
-              EventTransformGizmosTool.triggerMouseDown(
-                ~sandbox,
-                ~pageX=250 + 10,
-                ~pageY=100,
-                (),
-              );
-
-              SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
-              |> StateLogicService.getEditorState
-              |> expect == false;
-            })
-          )
-        );
-
-        describe("else", () => {
-          let _prepare = sandbox => {
-            let gameObject1 = prepareGameObject(sandbox);
-
-            InitPickingJobTool.triggerPicking(
-              ~sandbox,
-              ~pageX=250,
-              ~pageY=100,
-              (),
-            );
-
-            gameObject1;
-          };
-
-          describe("if point down any axis, select that axis", () =>
-            describe("test point down x axis", () =>
-              describe("should mark x axis selected", () => {
-                test("test point down arrow", () => {
-                  let gameObject1 = _prepare(sandbox);
-
-                  EventTransformGizmosTool.triggerMouseDown(
-                    ~sandbox,
-                    ~pageX=250 + 30,
-                    ~pageY=100,
-                    (),
-                  );
-
-                  SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
-                  |> StateLogicService.getEditorState
-                  |> expect == true;
-                });
-                test("test point down line", () => {
-                  let gameObject1 = _prepare(sandbox);
-
-                  EventTransformGizmosTool.triggerMouseDown(
-                    ~sandbox,
-                    ~pageX=250 + 2,
-                    ~pageY=100,
-                    (),
-                  );
-
-                  SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
-                  |> StateLogicService.getEditorState
-                  |> expect == true;
-                });
-                test("if not point down arrow or line, not mark", () => {
-                  let gameObject1 = _prepare(sandbox);
-
-                  EventTransformGizmosTool.triggerMouseDown(
-                    ~sandbox,
-                    ~pageX=250 + 20,
-                    ~pageY=100 + 30,
-                    (),
-                  );
-
-                  SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
-                  |> StateLogicService.getEditorState
-                  |> expect == false;
-                });
-              })
-            )
-          );
-
-          test("else, mark not select any axis", () => {
-            let gameObject1 = _prepare(sandbox);
-
-            EventTransformGizmosTool.triggerMouseDown(
-              ~sandbox,
-              ~pageX=250 + 40,
-              ~pageY=100 - 30,
-              (),
-            );
-
-            (
-              SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
-              |> StateLogicService.getEditorState,
-              SelectTranslationGizmoSceneViewEditorService.isTranslationYAxisGizmoSelected
-              |> StateLogicService.getEditorState,
-              SelectTranslationGizmoSceneViewEditorService.isTranslationZAxisGizmoSelected
-              |> StateLogicService.getEditorState,
-            )
-            |> expect == (false, false, false);
-          });
-        });
-      });
-
-      describe("bind point drag over event", () => {
-        test("if mouse button isn't left button, not affect gizmo", () => {
-          let _ =
+        describe("test translation gizmo", () => {
+          let prepareGameObject = sandbox =>
             InitTransformGizmosJobTool.prepareOneGameObject(
               ~sandbox,
               ~viewWidth=500,
@@ -855,34 +877,308 @@ let _ =
               (),
             );
 
-          InitPickingJobTool.triggerPicking(
-            ~sandbox,
-            ~pageX=250,
-            ~pageY=100,
-            (),
+          describe("if mouse button isn't left button", () =>
+            test("if point down x axis, still not select x axis", () => {
+              let gameObject1 = prepareGameObject(sandbox);
+
+              InitPickingJobTool.triggerPicking(
+                ~sandbox,
+                ~pageX=250,
+                ~pageY=100,
+                (),
+              );
+              EventTransformGizmosTool.triggerMouseDown(
+                ~sandbox,
+                ~eventButton=2,
+                ~pageX=250 + 10,
+                ~pageY=100,
+                (),
+              );
+
+              SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
+              |> StateLogicService.getEditorState
+              |> expect == false;
+            })
           );
 
-          EventTransformGizmosTool.triggerMouseDown(
-            ~sandbox,
-            ~pageX=250 + 10,
-            ~pageY=100,
-            (),
-          );
-          EventTransformGizmosTool.triggerMouseMove(
-            ~sandbox,
-            ~eventButton=2,
-            ~pageX=250 + 20,
-            ~pageY=100,
-            (),
+          describe(
+            "else if translation gizmo isn't render, not select gizmo", () =>
+            describe("if not has current scene tree node", () =>
+              test("not render translation gizmo", () => {
+                let gameObject1 = prepareGameObject(sandbox);
+
+                EventTransformGizmosTool.triggerMouseDown(
+                  ~sandbox,
+                  ~pageX=250 + 10,
+                  ~pageY=100,
+                  (),
+                );
+
+                SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
+                |> StateLogicService.getEditorState
+                |> expect == false;
+              })
+            )
           );
 
-          InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
-          |> expect == (0., 0., 0.);
+          describe("else", () => {
+            let _prepare = sandbox => {
+              let gameObject1 = prepareGameObject(sandbox);
+
+              InitPickingJobTool.triggerPicking(
+                ~sandbox,
+                ~pageX=250,
+                ~pageY=100,
+                (),
+              );
+
+              gameObject1;
+            };
+
+            describe("if point down any axis, select that axis", () =>
+              describe("test point down x axis", () =>
+                describe("should mark x axis selected", () => {
+                  test("test point down arrow", () => {
+                    let gameObject1 = _prepare(sandbox);
+
+                    EventTransformGizmosTool.triggerMouseDown(
+                      ~sandbox,
+                      ~pageX=250 + 30,
+                      ~pageY=100,
+                      (),
+                    );
+
+                    SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
+                    |> StateLogicService.getEditorState
+                    |> expect == true;
+                  });
+                  test("test point down line", () => {
+                    let gameObject1 = _prepare(sandbox);
+
+                    EventTransformGizmosTool.triggerMouseDown(
+                      ~sandbox,
+                      ~pageX=250 + 2,
+                      ~pageY=100,
+                      (),
+                    );
+
+                    SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
+                    |> StateLogicService.getEditorState
+                    |> expect == true;
+                  });
+                  test("if not point down arrow or line, not mark", () => {
+                    let gameObject1 = _prepare(sandbox);
+
+                    EventTransformGizmosTool.triggerMouseDown(
+                      ~sandbox,
+                      ~pageX=250 + 20,
+                      ~pageY=100 + 30,
+                      (),
+                    );
+
+                    SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
+                    |> StateLogicService.getEditorState
+                    |> expect == false;
+                  });
+                })
+              )
+            );
+
+            test("else, mark not select any axis", () => {
+              let gameObject1 = _prepare(sandbox);
+
+              EventTransformGizmosTool.triggerMouseDown(
+                ~sandbox,
+                ~pageX=250 + 40,
+                ~pageY=100 - 30,
+                (),
+              );
+
+              (
+                SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
+                |> StateLogicService.getEditorState,
+                SelectTranslationGizmoSceneViewEditorService.isTranslationYAxisGizmoSelected
+                |> StateLogicService.getEditorState,
+                SelectTranslationGizmoSceneViewEditorService.isTranslationZAxisGizmoSelected
+                |> StateLogicService.getEditorState,
+              )
+              |> expect == (false, false, false);
+            });
+          });
         });
 
-        describe("else", () =>
-          describe("affect gizmo", () =>
-            describe("test affect translation gizmo", () => {
+        describe("test rotation gizmo", () => {
+          let prepareGameObject = sandbox =>
+            InitTransformGizmosJobTool.prepareOneGameObject(
+              ~sandbox,
+              ~viewWidth=500,
+              ~viewHeight=400,
+              ~offsetLeft=0,
+              ~offsetTop=0,
+              ~cameraPos=(0., 16.180339813232422, 11.755704879760742),
+              ~gameObjectPos=(0., 0., 0.),
+              ~gameObjectEulerAngles=(0., 0., 0.),
+              ~createGameObjectFunc=InitPickingJobTool.createCube,
+              (),
+            );
+
+          let _prepare = sandbox => {
+            let gameObject1 = prepareGameObject(sandbox);
+
+            CurrentTransformGizmoSceneViewEditorService.markRotation
+            |> StateLogicService.getAndSetEditorState;
+
+            InitPickingJobTool.triggerPicking(
+              ~sandbox,
+              ~pageX=250,
+              ~pageY=200,
+              (),
+            );
+
+            gameObject1;
+          };
+
+          describe("if circle gizmo is unused, not select it", () =>
+            test("test yz circle gizmo", () => {
+              let gameObject1 = _prepare(sandbox);
+
+              EventTransformGizmosTool.triggerMouseDown(
+                ~sandbox,
+                ~pageX=250,
+                ~pageY=200,
+                (),
+              );
+
+              SelectRotationGizmoSceneViewEditorService.isYZCircleGizmoSelected
+              |> StateLogicService.getEditorState
+              |> expect == false;
+            })
+          );
+
+          describe(
+            "else if point down the not visible part of the circle gizmo, not select it",
+            () =>
+            test("test xy circle gizmo", () => {
+              let gameObject1 = _prepare(sandbox);
+
+              EventTransformGizmosTool.triggerMouseDown(
+                ~sandbox,
+                ~pageX=201,
+                ~pageY=199,
+                (),
+              );
+
+              SelectRotationGizmoSceneViewEditorService.isXYCircleGizmoSelected
+              |> StateLogicService.getEditorState
+              |> expect == false;
+            })
+          );
+
+          describe("else if point down any circle gizmo, select it", () =>
+            describe("test point down xy circle gizmo", () => {
+              describe("if point down", () =>
+                test("should mark circle gizmo selected", () => {
+                  let gameObject1 = _prepare(sandbox);
+
+                  EventTransformGizmosTool.triggerMouseDown(
+                    ~sandbox,
+                    ~pageX=223,
+                    ~pageY=172,
+                    (),
+                  );
+
+                  SelectRotationGizmoSceneViewEditorService.isXYCircleGizmoSelected
+                  |> StateLogicService.getEditorState
+                  |> expect == true;
+                })
+              );
+
+              test("else, not mark", () => {
+                let gameObject1 = _prepare(sandbox);
+
+                EventTransformGizmosTool.triggerMouseDown(
+                  ~sandbox,
+                  ~pageX=350,
+                  ~pageY=172,
+                  (),
+                );
+
+                SelectRotationGizmoSceneViewEditorService.isXYCircleGizmoSelected
+                |> StateLogicService.getEditorState
+                |> expect == false;
+              });
+            })
+          );
+
+          test("else, mark not select any circle gizmo", () => {
+            let gameObject1 = _prepare(sandbox);
+            SelectRotationGizmoSceneViewEditorService.onlySelectXZCircleGizmo
+            |> StateLogicService.getAndSetEditorState;
+
+            EventTransformGizmosTool.triggerMouseDown(
+              ~sandbox,
+              ~pageX=314,
+              ~pageY=229,
+              (),
+            );
+
+            (
+              SelectRotationGizmoSceneViewEditorService.isXYCircleGizmoSelected
+              |> StateLogicService.getEditorState,
+              SelectRotationGizmoSceneViewEditorService.isXZCircleGizmoSelected
+              |> StateLogicService.getEditorState,
+              SelectRotationGizmoSceneViewEditorService.isYZCircleGizmoSelected
+              |> StateLogicService.getEditorState,
+            )
+            |> expect == (false, false, false);
+          });
+        });
+      });
+
+      describe("bind point drag over event", () => {
+        describe("test translation gizmo", () => {
+          test("if mouse button isn't left button, not affect gizmo", () => {
+            let _ =
+              InitTransformGizmosJobTool.prepareOneGameObject(
+                ~sandbox,
+                ~viewWidth=500,
+                ~viewHeight=200,
+                ~offsetLeft=0,
+                ~offsetTop=0,
+                ~cameraPos=(0., 0., 3.),
+                ~gameObjectPos=(0., 0., 0.),
+                ~gameObjectEulerAngles=(0., 0., 0.),
+                ~createGameObjectFunc=InitPickingJobTool.createCube,
+                (),
+              );
+
+            InitPickingJobTool.triggerPicking(
+              ~sandbox,
+              ~pageX=250,
+              ~pageY=100,
+              (),
+            );
+
+            EventTransformGizmosTool.triggerMouseDown(
+              ~sandbox,
+              ~pageX=250 + 10,
+              ~pageY=100,
+              (),
+            );
+            EventTransformGizmosTool.triggerMouseMove(
+              ~sandbox,
+              ~eventButton=2,
+              ~pageX=250 + 20,
+              ~pageY=100,
+              (),
+            );
+
+            InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
+            |> expect == (0., 0., 0.);
+          });
+
+          describe("else", () =>
+            describe("affect gizmo", () => {
               let _prepare = (sandbox, prepareGameObjectFunc) => {
                 let gameObject1 = prepareGameObjectFunc(sandbox);
 
@@ -1257,82 +1553,344 @@ let _ =
                 });
               });
             })
-          )
-        );
+          );
 
-        describe("test refresh inspector", () => {
-          let _prepare = sandbox => {
-            let dispatchFuncStub = ReactTool.createDispatchFuncStub(sandbox);
-            let _ =
-              InitTransformGizmosJobTool.prepareOneGameObject(
+          describe("test refresh inspector", () => {
+            let _prepare = sandbox => {
+              let dispatchFuncStub =
+                ReactTool.createDispatchFuncStub(sandbox);
+              let _ =
+                InitTransformGizmosJobTool.prepareOneGameObject(
+                  ~sandbox,
+                  ~viewWidth=500,
+                  ~viewHeight=200,
+                  ~offsetLeft=0,
+                  ~offsetTop=0,
+                  ~cameraPos=(0., 0., 3.),
+                  ~gameObjectPos=(0., 0., 0.),
+                  ~gameObjectEulerAngles=(0., 0., 0.),
+                  ~createGameObjectFunc=InitPickingJobTool.createCube,
+                  (),
+                );
+
+              InitPickingJobTool.triggerPicking(
                 ~sandbox,
-                ~viewWidth=500,
-                ~viewHeight=200,
-                ~offsetLeft=0,
-                ~offsetTop=0,
-                ~cameraPos=(0., 0., 3.),
-                ~gameObjectPos=(0., 0., 0.),
-                ~gameObjectEulerAngles=(0., 0., 0.),
-                ~createGameObjectFunc=InitPickingJobTool.createCube,
+                ~pageX=250,
+                ~pageY=100,
                 (),
               );
 
-            InitPickingJobTool.triggerPicking(
-              ~sandbox,
-              ~pageX=250,
-              ~pageY=100,
-              (),
-            );
+              dispatchFuncStub;
+            };
 
-            dispatchFuncStub;
-          };
+            test("if select any gizmo, refresh", () => {
+              let dispatchFuncStub = _prepare(sandbox);
 
-          test("if select any gizmo, refresh", () => {
-            let dispatchFuncStub = _prepare(sandbox);
+              EventTransformGizmosTool.triggerMouseDown(
+                ~sandbox,
+                ~pageX=250 + 10,
+                ~pageY=100,
+                (),
+              );
+              EventTransformGizmosTool.triggerMouseMove(
+                ~sandbox,
+                ~pageX=250 + 20,
+                ~pageY=100,
+                (),
+              );
 
-            EventTransformGizmosTool.triggerMouseDown(
-              ~sandbox,
-              ~pageX=250 + 10,
-              ~pageY=100,
-              (),
-            );
-            EventTransformGizmosTool.triggerMouseMove(
-              ~sandbox,
-              ~pageX=250 + 20,
-              ~pageY=100,
-              (),
-            );
+              dispatchFuncStub
+              |> expect
+              |> toCalledWith([|
+                   AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
+                 |]);
+            });
+            test("else, not refresh inspector", () => {
+              let dispatchFuncStub = _prepare(sandbox);
 
-            dispatchFuncStub
-            |> expect
-            |> toCalledWith([|
-                 AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
-               |]);
-          });
-          test("else, not refresh inspector", () => {
-            let dispatchFuncStub = _prepare(sandbox);
+              EventTransformGizmosTool.triggerMouseDown(
+                ~sandbox,
+                ~pageX=250 + 50,
+                ~pageY=100 - 50,
+                (),
+              );
+              EventTransformGizmosTool.triggerMouseMove(
+                ~sandbox,
+                ~pageX=250 + 20,
+                ~pageY=100,
+                (),
+              );
 
-            EventTransformGizmosTool.triggerMouseDown(
-              ~sandbox,
-              ~pageX=250 + 50,
-              ~pageY=100 - 50,
-              (),
-            );
-            EventTransformGizmosTool.triggerMouseMove(
-              ~sandbox,
-              ~pageX=250 + 20,
-              ~pageY=100,
-              (),
-            );
-
-            dispatchFuncStub
-            |> expect
-            |> not_
-            |> toCalledWith([|
-                 AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
-               |]);
+              dispatchFuncStub
+              |> expect
+              |> not_
+              |> toCalledWith([|
+                   AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
+                 |]);
+            });
           });
         });
+
+        describe("test rotation gizmo", () =>
+          describe("affect gizmo", () => {
+            let _prepare =
+                (
+                  ~cameraPos=(0., 16.180339813232422, 11.755704879760742),
+                  ~sandbox,
+                  (),
+                ) => {
+              let gameObject1 =
+                InitTransformGizmosJobTool.prepareOneGameObject(
+                  ~sandbox,
+                  ~viewWidth=500,
+                  ~viewHeight=400,
+                  ~offsetLeft=0,
+                  ~offsetTop=0,
+                  ~cameraPos,
+                  ~gameObjectPos=(0., 0., 0.),
+                  ~gameObjectEulerAngles=(0., 0., 0.),
+                  ~createGameObjectFunc=InitPickingJobTool.createCube,
+                  (),
+                );
+
+              CurrentTransformGizmoSceneViewEditorService.markRotation
+              |> StateLogicService.getAndSetEditorState;
+
+              InitPickingJobTool.triggerPicking(
+                ~sandbox,
+                ~pageX=250,
+                ~pageY=200,
+                (),
+              );
+
+              gameObject1;
+            };
+
+            describe("test affect circle gizmos", () => {
+              describe("test affect xy circle", () => {
+                describe(
+                  "should rotate current scene tree node along the local z axis(compute the angle based on the point projected mouse to xy plane of the circle)",
+                  () => {
+                    test(
+                      {|
+            pick gameObject;
+            select xy circle;
+            mouse move (10px, 0px);
+
+            gameObject should rotate;
+            |},
+                      () => {
+                        let gameObject1 = _prepare(~sandbox, ());
+
+                        EventTransformGizmosTool.triggerMouseDown(
+                          ~sandbox,
+                          ~pageX=226,
+                          ~pageY=172,
+                          (),
+                        );
+                        EventTransformGizmosTool.triggerMouseMove(
+                          ~sandbox,
+                          ~pageX=226 + 10,
+                          ~pageY=172,
+                          (),
+                        );
+
+                        InitTransformGizmosJobTool.getCurrentSceneTreeNodeEulerAngles()
+                        |> expect == (0., 0., (-10.4));
+                      },
+                    );
+
+                    test(
+                      {|
+            pick gameObject;
+            select xy circle;
+            mouse move (10px, 0px);
+            mouse move (0px, 10px);
+
+            gameObject should rotate;
+            |},
+                      () => {
+                        let gameObject1 = _prepare(~sandbox, ());
+
+                        EventTransformGizmosTool.triggerMouseDown(
+                          ~sandbox,
+                          ~pageX=226,
+                          ~pageY=172,
+                          (),
+                        );
+                        EventTransformGizmosTool.triggerMouseMove(
+                          ~sandbox,
+                          ~pageX=226 + 10,
+                          ~pageY=172,
+                          (),
+                        );
+                        EventTransformGizmosTool.triggerMouseMove(
+                          ~sandbox,
+                          ~pageX=226 + 10,
+                          ~pageY=172 + 10,
+                          (),
+                        );
+
+                        InitTransformGizmosJobTool.getCurrentSceneTreeNodeEulerAngles()
+                        |> expect == (0., 0., (-2.2));
+                      },
+                    );
+                  },
+                );
+
+                describe(
+                  "should rotate translation whole gizmo along the local z axis",
+                  () => {
+                  let prepareGameObject = sandbox =>
+                    InitTransformGizmosJobTool.prepareOneGameObject(
+                      ~sandbox,
+                      ~viewWidth=500,
+                      ~viewHeight=200,
+                      ~offsetLeft=0,
+                      ~offsetTop=0,
+                      ~cameraPos=(0., 0., 3.),
+                      ~gameObjectPos=(0., 0., 0.),
+                      ~gameObjectEulerAngles=(0., 0., 0.),
+                      ~createGameObjectFunc=InitPickingJobTool.createCube,
+                      (),
+                    );
+
+                  test(
+                    {|
+            pick gameObject;
+            select xy circle;
+            mouse move (10px, 0px);
+
+            whole gizmo should rotate;
+            |},
+                    () => {
+                      let gameObject1 = _prepare(~sandbox, ());
+
+                      EventTransformGizmosTool.triggerMouseDown(
+                        ~sandbox,
+                        ~pageX=226,
+                        ~pageY=172,
+                        (),
+                      );
+                      EventTransformGizmosTool.triggerMouseMove(
+                        ~sandbox,
+                        ~pageX=226 + 10,
+                        ~pageY=172,
+                        (),
+                      );
+
+                      let editorState = StateEditorService.getState();
+                      let engineState = StateEngineService.unsafeGetState();
+
+                      TransformGameObjectTool.getEulerAngles(
+                        OperateRotationGizmoSceneViewEditorService.unsafeGetRotationWholeGizmo(
+                          editorState,
+                        ),
+                        engineState,
+                      )
+                      |> Vector3Service.truncate(1)
+                      |> expect == (0., 0., (-10.4));
+                    },
+                  );
+                });
+              });
+
+              describe("test affect xy+xz circle", () =>
+                describe(
+                  "should rotate current scene tree node along the local z and y axis",
+                  () =>
+                  test(
+                    {|
+            pick gameObject;
+            select xy circle;
+            mouse move (30px, 0px);
+            select xz circle;
+            mouse move (0px, -20px);
+
+            gameObject should rotate;
+            |},
+                    () => {
+                      let gameObject1 = _prepare(~sandbox, ());
+
+                      EventTransformGizmosTool.triggerMouseDown(
+                        ~sandbox,
+                        ~pageX=226,
+                        ~pageY=172,
+                        (),
+                      );
+                      EventTransformGizmosTool.triggerMouseMove(
+                        ~sandbox,
+                        ~pageX=226 + 30,
+                        ~pageY=172,
+                        (),
+                      );
+                      EventTransformGizmosTool.triggerMouseDown(
+                        ~sandbox,
+                        ~pageX=216,
+                        ~pageY=218,
+                        (),
+                      );
+                      EventTransformGizmosTool.triggerMouseMove(
+                        ~sandbox,
+                        ~pageX=216,
+                        ~pageY=218 - 20,
+                        (),
+                      );
+
+                      InitTransformGizmosJobTool.getCurrentSceneTreeNodeEulerAngles()
+                      |> expect == (0., 9.5, (-33.9));
+                    },
+                  )
+                )
+              );
+
+              describe("fix bug", () =>
+                describe(
+                  "test camera is look at the negative plane of the circle", () =>
+                  describe("test xy circle", () =>
+                    test(
+                      {|
+            pick gameObject;
+            select xy circle;
+            mouse move (30px, 0px);
+
+            gameObject should rotate;
+            |},
+                      () => {
+                        let gameObject1 =
+                          _prepare(
+                            ~sandbox,
+                            ~cameraPos=(
+                              (-0.11191991716623306),
+                              14.925893783569336,
+                              (-13.311843872070312),
+                            ),
+                            (),
+                          );
+
+                        EventTransformGizmosTool.triggerMouseDown(
+                          ~sandbox,
+                          ~pageX=213,
+                          ~pageY=172,
+                          (),
+                        );
+                        EventTransformGizmosTool.triggerMouseMove(
+                          ~sandbox,
+                          ~pageX=213 + 30,
+                          ~pageY=172,
+                          (),
+                        );
+
+                        InitTransformGizmosJobTool.getCurrentSceneTreeNodeEulerAngles()
+                        |> expect == (0., 0., 32.1);
+                      },
+                    )
+                  )
+                )
+              );
+            });
+          })
+        );
       });
     });
   });
