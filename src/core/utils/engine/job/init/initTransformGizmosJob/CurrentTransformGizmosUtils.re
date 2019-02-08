@@ -11,14 +11,8 @@ let setColor = (gizmoAllBasicMaterials, color, engineState) =>
      );
 
 let setCurrentGizmoColor =
-    (
-      gizmoAllBasicMaterials,
-      gizmoName,
-      isSelectFunc,
-      editorState,
-      engineState,
-    ) =>
-  isSelectFunc(gizmoName, editorState) ?
+    (gizmoAllBasicMaterials, isSelectFunc, editorState, engineState) =>
+  isSelectFunc(editorState) ?
     {
       let currentGizmoColor =
         DataTransformGizmoSceneViewEditorService.getColorForCurrentGizmo();

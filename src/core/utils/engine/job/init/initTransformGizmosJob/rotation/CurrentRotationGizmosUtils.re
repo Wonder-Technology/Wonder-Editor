@@ -1,14 +1,16 @@
-let isSelected = (gizmoName, editorState) =>
-  switch (gizmoName) {
-  | "xy" =>
+open SceneViewType;
+
+let isSelected = (gizmoType, editorState) =>
+  switch (gizmoType) {
+  | XYCircle =>
     SelectRotationGizmoSceneViewEditorService.isXYCircleGizmoSelected(
       editorState,
     )
-  | "xz" =>
+  | XZCircle =>
     SelectRotationGizmoSceneViewEditorService.isXZCircleGizmoSelected(
       editorState,
     )
-  | "yz" =>
+  | YZCircle =>
     SelectRotationGizmoSceneViewEditorService.isYZCircleGizmoSelected(
       editorState,
     )

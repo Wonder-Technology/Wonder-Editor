@@ -129,12 +129,6 @@ let _createAxisGizmos = engineState => {
 
   let engineState =
     engineState
-    |> GameObjectEngineService.setGameObjectName("x", xAxisGizmo)
-    |> GameObjectEngineService.setGameObjectName("y", yAxisGizmo)
-    |> GameObjectEngineService.setGameObjectName("z", zAxisGizmo);
-
-  let engineState =
-    engineState
     |> TransformEngineService.setLocalEulerAngles(
          (0., 0., (-90.)),
          xAxisTransform,
@@ -165,12 +159,6 @@ let _createPlaneGizmos = engineState => {
       DataTranslationGizmoSceneViewEditorService.getYZPlaneColor(),
       engineState,
     );
-
-  let engineState =
-    engineState
-    |> GameObjectEngineService.setGameObjectName("xy", xyPlaneGizmo)
-    |> GameObjectEngineService.setGameObjectName("xz", xzPlaneGizmo)
-    |> GameObjectEngineService.setGameObjectName("yz", yzPlaneGizmo);
 
   let engineState =
     engineState

@@ -212,13 +212,7 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
             ),
             engineState,
           ),
-          GameObjectEngineService.unsafeGetGameObjectName(
-            OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
-              editorState,
-            ),
-            engineState,
-          ),
-          CurrentTranslationGizmosUtils.isAxisSelected,
+          CurrentTranslationGizmosUtils.isAxisSelected(SceneViewType.XAxis),
         ),
         SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXAxisGizmo,
         _getMoveStartDataForXAxis,
@@ -246,13 +240,7 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
               ),
               engineState,
             ),
-            GameObjectEngineService.unsafeGetGameObjectName(
-              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
-                editorState,
-              ),
-              engineState,
-            ),
-            CurrentTranslationGizmosUtils.isAxisSelected,
+            CurrentTranslationGizmosUtils.isAxisSelected(SceneViewType.YAxis),
           ),
           SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationYAxisGizmo,
           _getMoveStartDataForYAxis,
@@ -280,13 +268,9 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
                 ),
                 engineState,
               ),
-              GameObjectEngineService.unsafeGetGameObjectName(
-                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
-                  editorState,
-                ),
-                engineState,
+              CurrentTranslationGizmosUtils.isAxisSelected(
+                SceneViewType.ZAxis,
               ),
-              CurrentTranslationGizmosUtils.isAxisSelected,
             ),
             SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationZAxisGizmo,
             _getMoveStartDataForZAxis,
@@ -319,13 +303,9 @@ let _handleSelectPlaneGizmo =
             ),
             engineState,
           ),
-          GameObjectEngineService.unsafeGetGameObjectName(
-            OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
-              editorState,
-            ),
-            engineState,
+          CurrentTranslationGizmosUtils.isPlaneSelected(
+            SceneViewType.XYPlane,
           ),
-          CurrentTranslationGizmosUtils.isPlaneSelected,
         ),
         SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXYPlaneGizmo,
         _getMoveStartDataForXYPlane,
@@ -353,13 +333,9 @@ let _handleSelectPlaneGizmo =
               ),
               engineState,
             ),
-            GameObjectEngineService.unsafeGetGameObjectName(
-              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
-                editorState,
-              ),
-              engineState,
+            CurrentTranslationGizmosUtils.isPlaneSelected(
+              SceneViewType.XZPlane,
             ),
-            CurrentTranslationGizmosUtils.isPlaneSelected,
           ),
           SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXZPlaneGizmo,
           _getMoveStartDataForXZPlane,
@@ -387,13 +363,9 @@ let _handleSelectPlaneGizmo =
                 ),
                 engineState,
               ),
-              GameObjectEngineService.unsafeGetGameObjectName(
-                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
-                  editorState,
-                ),
-                engineState,
+              CurrentTranslationGizmosUtils.isPlaneSelected(
+                SceneViewType.YZPlane,
               ),
-              CurrentTranslationGizmosUtils.isPlaneSelected,
             ),
             SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationYZPlaneGizmo,
             _getMoveStartDataForYZPlane,

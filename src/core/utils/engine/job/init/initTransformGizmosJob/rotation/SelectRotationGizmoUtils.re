@@ -130,12 +130,7 @@ let selectRotationGizmo = (event, editorState, engineState) => {
 
   !
     ComputeRotationGizmosUtils.isGizmoUnUsed(
-      GameObjectEngineService.unsafeGetGameObjectName(
-        OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
-          editorState,
-        ),
-        engineState,
-      ),
+      SceneViewType.XYCircle,
       editorState,
       engineState,
     )
@@ -156,13 +151,7 @@ let selectRotationGizmo = (event, editorState, engineState) => {
               ),
               engineState,
             ),
-            GameObjectEngineService.unsafeGetGameObjectName(
-              OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
-                editorState,
-              ),
-              engineState,
-            ),
-            CurrentRotationGizmosUtils.isSelected,
+            CurrentRotationGizmosUtils.isSelected(SceneViewType.XYCircle),
           ),
           SelectRotationGizmoSceneViewEditorService.onlySelectXYCircleGizmo,
         ),
@@ -179,12 +168,7 @@ let selectRotationGizmo = (event, editorState, engineState) => {
 
       !
         ComputeRotationGizmosUtils.isGizmoUnUsed(
-          GameObjectEngineService.unsafeGetGameObjectName(
-            OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
-              editorState,
-            ),
-            engineState,
-          ),
+          SceneViewType.XZCircle,
           editorState,
           engineState,
         )
@@ -205,13 +189,7 @@ let selectRotationGizmo = (event, editorState, engineState) => {
                   ),
                   engineState,
                 ),
-                GameObjectEngineService.unsafeGetGameObjectName(
-                  OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
-                    editorState,
-                  ),
-                  engineState,
-                ),
-                CurrentRotationGizmosUtils.isSelected,
+                CurrentRotationGizmosUtils.isSelected(SceneViewType.XZCircle),
               ),
               SelectRotationGizmoSceneViewEditorService.onlySelectXZCircleGizmo,
             ),
@@ -231,12 +209,7 @@ let selectRotationGizmo = (event, editorState, engineState) => {
 
           !
             ComputeRotationGizmosUtils.isGizmoUnUsed(
-              GameObjectEngineService.unsafeGetGameObjectName(
-                OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
-                  editorState,
-                ),
-                engineState,
-              ),
+              SceneViewType.YZCircle,
               editorState,
               engineState,
             )
@@ -257,13 +230,9 @@ let selectRotationGizmo = (event, editorState, engineState) => {
                       ),
                       engineState,
                     ),
-                    GameObjectEngineService.unsafeGetGameObjectName(
-                      OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
-                        editorState,
-                      ),
-                      engineState,
+                    CurrentRotationGizmosUtils.isSelected(
+                      SceneViewType.YZCircle,
                     ),
-                    CurrentRotationGizmosUtils.isSelected,
                   ),
                   SelectRotationGizmoSceneViewEditorService.onlySelectYZCircleGizmo,
                 ),

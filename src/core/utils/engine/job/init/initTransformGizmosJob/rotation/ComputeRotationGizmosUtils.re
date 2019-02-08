@@ -15,30 +15,38 @@ let _isCenterToCameraAndNormalOfCirclePlaneNearlyPerpendicular =
   cosVal <= factor && cosVal >= -. factor;
 };
 
-let isGizmoUnUsed = (circleGizmoName, editorState, engineState) => {
+let isGizmoUnUsed = (gizmoType, editorState, engineState) => {
   let cameraPos = CameraPosUtils.getCameraPos(editorState, engineState);
 
   let centerPoint =
     CircleRotationGizmosUtils.getCenterPoint(editorState, engineState);
 
-  switch (circleGizmoName) {
-  | "xy" =>
+  WonderLog.Log.print((
+    cameraPos,
+    centerPoint,
+    CircleRotationGizmosUtils.getZAxisOfPlane(editorState, engineState),
+  ))
+  |> ignore;
+
+  switch (gizmoType) {
+  | SceneViewType.XYCircle =>
     _isCenterToCameraAndNormalOfCirclePlaneNearlyPerpendicular(
       cameraPos,
       centerPoint,
       CircleRotationGizmosUtils.getZAxisOfPlane(editorState, engineState),
     )
-  | "xz" =>
+  | SceneViewType.XZCircle =>
     _isCenterToCameraAndNormalOfCirclePlaneNearlyPerpendicular(
       cameraPos,
       centerPoint,
       CircleRotationGizmosUtils.getYAxisOfPlane(editorState, engineState),
     )
-  | "yz" =>
+  | SceneViewType.YZCircle =>
     _isCenterToCameraAndNormalOfCirclePlaneNearlyPerpendicular(
       cameraPos,
       centerPoint,
       CircleRotationGizmosUtils.getXAxisOfPlane(editorState, engineState),
     )
+    |> WonderLog.Log.print
   };
 };

@@ -1,37 +1,38 @@
-let isAxisSelected = (gizmoName, editorState) =>
-  switch (gizmoName) {
-  | "x" =>
+open SceneViewType;
+
+let isAxisSelected = (gizmoType, editorState) =>
+  switch (gizmoType) {
+  | XAxis =>
     SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected(
       editorState,
     )
-  | "y" =>
+  | YAxis =>
     SelectTranslationGizmoSceneViewEditorService.isTranslationYAxisGizmoSelected(
       editorState,
     )
-  | "z" =>
+  | ZAxis =>
     SelectTranslationGizmoSceneViewEditorService.isTranslationZAxisGizmoSelected(
       editorState,
     )
   };
 
-let isPlaneSelected = (gizmoName, editorState) =>
-  switch (gizmoName) {
-  | "xy" =>
+let isPlaneSelected = (gizmoType, editorState) =>
+  switch (gizmoType) {
+  | XYPlane =>
     SelectTranslationGizmoSceneViewEditorService.isTranslationXYPlaneGizmoSelected(
       editorState,
     )
-  | "xz" =>
+  | XZPlane =>
     SelectTranslationGizmoSceneViewEditorService.isTranslationXZPlaneGizmoSelected(
       editorState,
     )
-  | "yz" =>
+  | YZPlane =>
     SelectTranslationGizmoSceneViewEditorService.isTranslationYZPlaneGizmoSelected(
       editorState,
     )
   };
 
-let restoreTranslationGizmoColor =
-    (editorState, engineState) => {
+let restoreTranslationGizmoColor = (editorState, engineState) => {
   let engineState =
     CurrentTransformGizmosUtils.setColor(
       GameObjectEngineService.getAllBasicMaterials(
@@ -77,9 +78,6 @@ let restoreTranslationGizmoColor =
       engineState,
     );
 
-
-
-
   let engineState =
     CurrentTransformGizmosUtils.setColor(
       GameObjectEngineService.getAllBasicMaterials(
@@ -94,7 +92,6 @@ let restoreTranslationGizmoColor =
       DataTranslationGizmoSceneViewEditorService.getXYPlaneColor(),
       engineState,
     );
-
 
   let engineState =
     CurrentTransformGizmosUtils.setColor(
@@ -111,8 +108,6 @@ let restoreTranslationGizmoColor =
       engineState,
     );
 
-
-
   let engineState =
     CurrentTransformGizmosUtils.setColor(
       GameObjectEngineService.getAllBasicMaterials(
@@ -128,5 +123,5 @@ let restoreTranslationGizmoColor =
       engineState,
     );
 
-    engineState
+  engineState;
 };

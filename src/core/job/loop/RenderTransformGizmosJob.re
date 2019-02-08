@@ -137,10 +137,10 @@ module RenderRotationGizmos = {
   };
 
   /* TODO refactor: duplicate */
-  let getRenderDataArr = (gameObjects, engineState) =>
-    gameObjects
+  let getRenderDataArr = (gameObjectData, engineState) =>
+    gameObjectData
     |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. renderDataArr, gameObject) => {
+         (. renderDataArr, (gameObject, gizmoType)) => {
            let transform =
              GameObjectComponentEngineService.unsafeGetTransformComponent(
                gameObject,
@@ -164,10 +164,7 @@ module RenderRotationGizmos = {
                        )
                        |> Js.Option.andThen((. meshRenderer) =>
                             Some((
-                              GameObjectEngineService.unsafeGetGameObjectName(
-                                gameObject,
-                                engineState,
-                              ),
+                              gizmoType,
                               transform,
                               material,
                               meshRenderer,
@@ -189,7 +186,7 @@ module RenderRotationGizmos = {
       (
         gl,
         (
-          gizmoName,
+          gizmoType,
           transformIndex,
           materialIndex,
           noMaterialShaderIndex,
@@ -209,11 +206,12 @@ module RenderRotationGizmos = {
          GLSLLocationEngineService.isUniformLocationExist(pos) ?
            {
              /* TODO refactor(extend): need refactor with engine! */
+             WonderLog.Log.print(("name: ", name)) |> ignore;
              let data =
                switch (name) {
                | "u_alpha" =>
                  ComputeRotationGizmosUtils.isGizmoUnUsed(
-                   gizmoName,
+                   gizmoType,
                    editorState,
                    engineState,
                  ) ?
@@ -226,6 +224,16 @@ module RenderRotationGizmos = {
                  )
                  |> Obj.magic
                | "u_cameraPosInLocalCoordSystem" =>
+                 WonderLog.Log.print((
+                   "aaaa: ",
+                   transformIndex,
+                   TransformEngineService.getLocalToWorldMatrixTypeArray(
+                     transformIndex,
+                     engineState,
+                   ),
+                 ))
+                 |> ignore;
+
                  CameraPosUtils.getCameraPosInLocalCoordSystem(
                    cameraPos,
                    TransformEngineService.getLocalToWorldMatrixTypeArray(
@@ -235,7 +243,8 @@ module RenderRotationGizmos = {
                    engineState,
                  )
                  |> vec3ToArray
-                 |> Obj.magic
+                 |> WonderLog.Log.print
+                 |> Obj.magic;
                };
 
              sendDataFunc(.
@@ -271,6 +280,8 @@ module RenderRotationGizmos = {
        ); */
 
     let cameraPos = CameraPosUtils.getCameraPos(editorState, engineState);
+
+    WonderLog.Log.printJson(("cameraPos: ", cameraPos)) |> ignore;
 
     renderDataArr
     |> WonderCommonlib.ArrayService.reduceOneParam(
@@ -422,67 +433,26 @@ let _renderTranslationGizmos = (editorState, engineState) => {
      ));
 };
 
-let _getRotationGameObjects = editorState =>
-  /* ArrayService.fastConcatArrays([|
-     OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
-             editorState,
-           ),
-
-     OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
-             editorState,
-           ),
-     OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
-             editorState,
-           ),
-
-         /* HierarchyGameObjectEngineService.getAllGameObjects(
-           OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
-             editorState,
-           ),
-           engineState,
-         ),
-         HierarchyGameObjectEngineService.getAllGameObjects(
-           OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
-             editorState,
-           ),
-           engineState,
-         ),
-         HierarchyGameObjectEngineService.getAllGameObjects(
-           OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
-             editorState,
-           ),
-           engineState,
-         ), */
-       |]); */
-  [|
+let _getRotationGameObjectData = editorState => [|
+  (
     OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
       editorState,
     ),
+    SceneViewType.XYCircle,
+  ),
+  (
     OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
       editorState,
     ),
+    SceneViewType.XZCircle,
+  ),
+  (
     OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
       editorState,
     ),
-    /* HierarchyGameObjectEngineService.getAllGameObjects(
-         OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
-           editorState,
-         ),
-         engineState,
-       ),
-       HierarchyGameObjectEngineService.getAllGameObjects(
-         OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
-           editorState,
-         ),
-         engineState,
-       ),
-       HierarchyGameObjectEngineService.getAllGameObjects(
-         OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
-           editorState,
-         ),
-         engineState,
-       ), */
-  |];
+    SceneViewType.YZCircle,
+  ),
+|];
 
 let _renderRotationGizmos = (editorState, engineState) =>
   engineState
@@ -491,7 +461,7 @@ let _renderRotationGizmos = (editorState, engineState) =>
        RenderRotationGizmos.render(
          editorState,
          RenderRotationGizmos.getRenderDataArr(
-           _getRotationGameObjects(editorState),
+           _getRotationGameObjectData(editorState),
            engineState,
          ),
        ),

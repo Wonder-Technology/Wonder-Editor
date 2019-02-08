@@ -4,6 +4,19 @@ type gizmo =
   | Translation
   | Rotation;
 
+type translationGizmo =
+  | XAxis
+  | YAxis
+  | ZAxis
+  | XYPlane
+  | XZPlane
+  | YZPlane;
+
+type rotationGizmo =
+  | XYCircle
+  | XZCircle
+  | YZCircle;
+
 type gameObject = Wonderjs.GameObjectPrimitiveType.gameObject;
 
 type translationGizmoData = {
