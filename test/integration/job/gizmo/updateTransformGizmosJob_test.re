@@ -144,6 +144,7 @@ let _ =
               test("test only rotate", () => {
                 let (engineState, (firstCube, secondCube)) =
                   _prepareForTestParent();
+                TransformGizmosTool.setCoordinateSystem(SceneViewType.Local);
 
                 let engineState =
                   _setRotate(engineState, (firstCube, secondCube));
@@ -153,6 +154,7 @@ let _ =
               test("test translation+rotate", () => {
                 let (engineState, (firstCube, secondCube)) =
                   _prepareForTestParent();
+                TransformGizmosTool.setCoordinateSystem(SceneViewType.Local);
 
                 let pos1 = (1., 2., 3.);
                 let pos2 = (3., 2., 3.);

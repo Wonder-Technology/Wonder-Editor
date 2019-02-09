@@ -24,17 +24,17 @@ let _ =
             NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
               ~initPipelines=
                 {|
-            [
-        {
-          "name": "default",
-          "jobs": [
-            {
-              "name": "init_transform_gizmos"
-            }
-          ]
-        }
-      ]
-            |},
+               [
+           {
+             "name": "default",
+             "jobs": [
+               {
+                 "name": "init_transform_gizmos"
+               }
+             ]
+           }
+         ]
+               |},
               (),
             ),
           (),
@@ -661,6 +661,57 @@ let _ =
     });
 
     describe("test move translation plane gizmos", () => {
+      let _prepareState = sandbox => {
+        MainEditorSceneTool.initStateWithJob(
+          ~sandbox,
+          ~isInitJob=false,
+          ~noWorkerJobRecord=
+            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+              ~initPipelines=
+                {|
+            [
+        {
+          "name": "default",
+          "jobs": [
+            {
+              "name": "init_camera"
+            },
+            {
+              "name": "init_transform_gizmos"
+            },
+            {
+              "name": "init_picking"
+            }
+          ]
+        }
+      ]
+            |},
+              ~loopPipelines=
+                {|
+              [
+    {
+        "name": "default",
+        "jobs": [
+            {
+                "name": "update_transform_gizmos"
+            },
+            {
+                "name": "update_transform"
+            }
+        ]
+    }
+]
+              |},
+              (),
+            ),
+          (),
+        );
+
+        MainEditorSceneTool.prepareGl(sandbox);
+
+        StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
+      };
+
       let _prepare =
           (
             ~createGameObjectFunc=InitPickingJobTool.createSphere,
@@ -674,6 +725,8 @@ let _ =
             ~gameObjectEulerAngles,
             (),
           ) => {
+        _prepareState(sandbox);
+
         let editorState = StateEditorService.getState();
         let engineState = StateEngineService.unsafeGetState();
 
@@ -696,6 +749,8 @@ let _ =
         engineState |> StateEngineService.setState |> ignore;
 
         GameObjectTool.setCurrentSceneTreeNode(gameObject1);
+
+        TransformGizmosTool.setCoordinateSystem(SceneViewType.Local);
       };
 
       describe(
@@ -773,11 +828,11 @@ let _ =
           test("test camera is in nx,py,pz", () =>
             _test(
               ~sandbox,
-              ~cameraPos=(1., 0., 3.),
+              ~cameraPos=(1., 0.1, 3.),
               ~allPlaneGizmoLocalPos=(
-                ((-1.), (-1.), 0.),
+                ((-1.), 1., 0.),
                 ((-1.), 0., 1.),
-                (0., (-1.), 1.),
+                (0., 1., 1.),
               ),
               (),
             )
@@ -925,6 +980,8 @@ let _ =
             let _prepare = sandbox => {
               let gameObject1 = prepareGameObject(sandbox);
 
+              TransformGizmosTool.setCoordinateSystem(SceneViewType.Local);
+
               InitPickingJobTool.triggerPicking(
                 ~sandbox,
                 ~pageX=250,
@@ -1026,6 +1083,10 @@ let _ =
                   let _prepare = sandbox => {
                     let gameObject1 = prepareGameObject(sandbox);
 
+                    TransformGizmosTool.setCoordinateSystem(
+                      SceneViewType.Local,
+                    );
+
                     InitPickingJobTool.triggerPicking(
                       ~sandbox,
                       ~pageX=250,
@@ -1076,6 +1137,7 @@ let _ =
 
             CurrentTransformGizmoSceneViewEditorService.markRotation
             |> StateLogicService.getAndSetEditorState;
+            TransformGizmosTool.setCoordinateSystem(SceneViewType.Local);
 
             InitPickingJobTool.triggerPicking(
               ~sandbox,
@@ -1429,6 +1491,10 @@ let _ =
                       let _prepare = sandbox => {
                         let gameObject1 = prepareGameObject(sandbox);
 
+                        TransformGizmosTool.setCoordinateSystem(
+                          SceneViewType.Local,
+                        );
+
                         InitPickingJobTool.triggerPicking(
                           ~sandbox,
                           ~pageX=250,
@@ -1721,6 +1787,7 @@ let _ =
 
               CurrentTransformGizmoSceneViewEditorService.markRotation
               |> StateLogicService.getAndSetEditorState;
+              TransformGizmosTool.setCoordinateSystem(SceneViewType.Local);
 
               InitPickingJobTool.triggerPicking(
                 ~sandbox,
@@ -1904,7 +1971,7 @@ let _ =
                       );
 
                       InitTransformGizmosJobTool.getCurrentSceneTreeNodeEulerAngles()
-                      |> expect == (0., 9.5, (-33.9));
+                      |> expect == ((-0.), 9.5, (-33.9));
                     },
                   )
                 )

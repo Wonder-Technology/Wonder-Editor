@@ -19,3 +19,12 @@ let getLineGameObject = (editorState, engineState) => {
 
   getLineFromAxisGameObject(xAxisGameObject, engineState);
 };
+
+let setCoordinateSystem = coordinateSystem => {
+  CoordinateSystemTransformGizmoSceneViewEditorService.setCoordinateSystem(
+    coordinateSystem,
+  )
+  |> StateLogicService.getAndSetEditorState;
+
+  StateLogicService.getAndRefreshEngineState();
+};
