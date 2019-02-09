@@ -21,29 +21,6 @@ let _moveWholeGizmoToCurrentSceneTreeNode =
      );
 };
 
-let _rotateWholeGizmoToCurrentSceneTreeNode =
-    (currentSceneTreeNode, wholeGizmo, engineState) => {
-  let currentSceneTreeNodeTransform =
-    GameObjectComponentEngineService.unsafeGetTransformComponent(
-      currentSceneTreeNode,
-      engineState,
-    );
-  let wholeGizmoTransform =
-    GameObjectComponentEngineService.unsafeGetTransformComponent(
-      wholeGizmo,
-      engineState,
-    );
-
-  engineState
-  |> TransformEngineService.setEulerAngles(
-       wholeGizmoTransform,
-       TransformEngineService.getEulerAngles(
-         currentSceneTreeNodeTransform,
-         engineState,
-       ),
-     );
-};
-
 let _scaleWholeGizmo =
     (currentSceneTreeNode, cameraGameObject, wholeGizmo, engineState) => {
   let scaleFactor =
@@ -108,19 +85,14 @@ let updateTransformJob = (_, engineState) => {
            );
 
       /* TODO test */
-      switch (
-        CoordinateSystemTransformGizmoSceneViewEditorService.getCoordinateSystem(
-          editorState,
-        )
-      ) {
-      | Local =>
-        engineState
-        |> _rotateWholeGizmoToCurrentSceneTreeNode(
-             currentSceneTreeNode,
-             wholeGizmo,
-           )
-      | World => engineState
-      };
+      engineState
+      |> CoordinateSystemTransformGizmosUtils.rotateWholeGizmoToCurrentSceneTreeNode(
+           currentSceneTreeNode,
+           wholeGizmo,
+           CoordinateSystemTransformGizmoSceneViewEditorService.getCoordinateSystem(
+             editorState,
+           ),
+         );
     } :
     engineState;
   /* IsTransformGizmoRenderSceneViewEditorService.isTranslationWholeGizmoRender(

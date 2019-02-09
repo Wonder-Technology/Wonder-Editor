@@ -2,6 +2,8 @@ open ColorType;
 
 open Color;
 
+type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
+
 type state = {isReload: bool};
 
 type action =
@@ -45,7 +47,7 @@ module Method = {
       </div>
     </div>;
 
-  let _handleChangeCurrentTransformType = type_ => {
+  let _handleChangeCurrentTransformGizmoType = type_ => {
     open SceneViewType;
 
     StateEditorService.getState()
@@ -55,6 +57,19 @@ module Method = {
     |> ignore;
 
     StateLogicService.getAndRefreshEngineState();
+  };
+
+  let _handleChangeCurrentTransformGizmoCoordinateSystem = coordinateSystem => {
+    StateEditorService.getState()
+    |> CoordinateSystemTransformGizmoSceneViewEditorService.setCoordinateSystem(
+         coordinateSystem,
+       )
+    |> StateEditorService.setState
+    |> ignore;
+
+    StateLogicService.getAndRefreshEngineState();
+
+    ();
   };
 
   let _getCurrentTransformType = () =>
@@ -69,20 +84,25 @@ module Method = {
           data=[|
             {
               type_: SceneViewType.Translation,
-              onChangeFunc: _handleChangeCurrentTransformType,
+              onChangeFunc: _handleChangeCurrentTransformGizmoType,
             },
             {
               type_: SceneViewType.Rotation,
-              onChangeFunc: _handleChangeCurrentTransformType,
+              onChangeFunc: _handleChangeCurrentTransformGizmoType,
             },
           |]
           defaultType=(_getCurrentTransformType())
+        />
+        <TransformGizmoCoordinateSystemSwitch
+          key=(DomHelper.getRandomKey())
+          onChange=_handleChangeCurrentTransformGizmoCoordinateSystem
+          defaultCoordinateSystem=SceneViewType.World
         />
       </div>
     </div>;
 };
 
-let component = ReasonReact.reducerComponent("Controller");
+let component = ReasonReact.reducerComponentWithRetainedProps("Controller");
 
 let reducer = (action, state) =>
   switch (action) {
@@ -124,9 +144,18 @@ let render =
     </div>
   </article>;
 
+let shouldUpdate =
+    ({newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
+  newSelf.retainedProps.updateTypeArr
+  |> StoreUtils.shouldComponentUpdateWithAll;
+
 let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
   initialState: () => {isReload: false},
   reducer,
+  retainedProps: {
+    updateTypeArr: StoreUtils.getUpdateComponentTypeArr(uiState),
+  },
+  shouldUpdate,
   render: self => render(uiState, dispatchFunc, self),
 };

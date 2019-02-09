@@ -17,13 +17,14 @@ let geGameObjectisShowComponentFromStore = (uiState, componentType) =>
   | Some(isShowComponent) => isShowComponent
   };
 
+let shouldComponentUpdateWithAll = updateComponentTypeArr =>
+  updateComponentTypeArr |> Js.Array.includes(All);
+
 let shouldComponentUpdate = (componentType, updateComponentTypeArr) =>
   updateComponentTypeArr
   |> Js.Array.includes(componentType)
-  || updateComponentTypeArr
-  |> Js.Array.includes(All);
+  || shouldComponentUpdateWithAll(updateComponentTypeArr);
 
 let shouldComponentUpdateMany = (componentTypeArr, updateComponentTypeArr) =>
   ArrayService.hasIntersect(updateComponentTypeArr, componentTypeArr)
-  || updateComponentTypeArr
-  |> Js.Array.includes(UpdateStore.All);
+  || shouldComponentUpdateWithAll(updateComponentTypeArr);

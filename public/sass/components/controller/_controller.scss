@@ -58,30 +58,42 @@
                 align-items: center;
                 height: 100%;
                 flex-direction: row;
-                .transform-gizmo-switch {
+                .component-item {
                     flex: initial;
                     display: flex;
                     flex-direction: row;
                     margin-left: 10px;
                     align-items: center;
                     justify-content: center;
-                    .translation {
-                        background-image: url("../img/translation.png")
+                    .transform-gizmo-switch {
+                        flex: initial;
+                        display: flex;
+                        flex-direction: row;
+                        margin-left: 10px;
+                        align-items: center;
+                        justify-content: center;
+                        .translation {
+                            background-image: url("../img/translation.png")
+                        }
+                        .rotation {
+                            background-image: url("../img/rotation.png")
+                        }
+                        .select {
+                            background-color: white;
+                            background-size: 100%;
+                            width: 30px;
+                            height: 30px;
+                        }
+                        .not-select {
+                            background-color: gray;
+                            background-size: 100%;
+                            width: 30px;
+                            height: 30px;
+                        }
                     }
-                    .rotation {
-                        background-image: url("../img/rotation.png")
-                    }
-                    .select {
-                        background-color: white;
-                        background-size: 100%;
-                        width: 30px;
-                        height: 30px;
-                    }
-                    .not-select {
-                        background-color: gray;
-                        background-size: 100%;
-                        width: 30px;
-                        height: 30px;
+                    ;
+                    .transform-gizmo-coordinate-system-switch {
+                        margin-left: 30px
                     }
                 }
             }
