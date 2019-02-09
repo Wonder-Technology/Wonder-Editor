@@ -1004,6 +1004,55 @@ let _ =
               )
               |> expect == (false, false, false);
             });
+
+            describe("fix bug", () =>
+              describe(
+                {|"select translation gizmo" should intersect "with mesh" instead of "with aabb"|},
+                () => {
+                  let prepareGameObject = sandbox =>
+                    InitTransformGizmosJobTool.prepareOneGameObject(
+                      ~sandbox,
+                      ~viewWidth=500,
+                      ~viewHeight=400,
+                      ~offsetLeft=0,
+                      ~offsetTop=0,
+                      ~cameraPos=(0., 16.180339813232422, 11.755704879760742),
+                      ~gameObjectPos=(0., 0., 0.),
+                      ~gameObjectEulerAngles=(12., 45., 22.),
+                      ~createGameObjectFunc=InitPickingJobTool.createCube,
+                      (),
+                    );
+
+                  let _prepare = sandbox => {
+                    let gameObject1 = prepareGameObject(sandbox);
+
+                    InitPickingJobTool.triggerPicking(
+                      ~sandbox,
+                      ~pageX=250,
+                      ~pageY=200,
+                      (),
+                    );
+
+                    gameObject1;
+                  };
+
+                  test("test not select x axis", () => {
+                    _prepare(sandbox);
+
+                    EventTransformGizmosTool.triggerMouseDown(
+                      ~sandbox,
+                      ~pageX=262,
+                      ~pageY=159,
+                      (),
+                    );
+
+                    SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected
+                    |> StateLogicService.getEditorState
+                    |> expect == false;
+                  });
+                },
+              )
+            );
           });
         });
 
@@ -1363,7 +1412,7 @@ let _ =
                         InitTransformGizmosJobTool.prepareOneGameObject(
                           ~sandbox,
                           ~viewWidth=500,
-                          ~viewHeight=200,
+                          ~viewHeight=400,
                           ~offsetLeft=0,
                           ~offsetTop=0,
                           ~cameraPos=(0., 0., 3.),
@@ -1372,6 +1421,19 @@ let _ =
                           ~createGameObjectFunc=InitPickingJobTool.createCube,
                           (),
                         );
+
+                      let _prepare = sandbox => {
+                        let gameObject1 = prepareGameObject(sandbox);
+
+                        InitPickingJobTool.triggerPicking(
+                          ~sandbox,
+                          ~pageX=250,
+                          ~pageY=200,
+                          (),
+                        );
+
+                        gameObject1;
+                      };
 
                       test(
                         {|
@@ -1382,23 +1444,23 @@ let _ =
             gameObject should move along +x axis;
             |},
                         () => {
-                          _prepare(sandbox, prepareGameObject);
+                          _prepare(sandbox);
 
                           EventTransformGizmosTool.triggerMouseDown(
                             ~sandbox,
-                            ~pageX=250 + 20,
-                            ~pageY=100 - 10,
+                            ~pageX=280,
+                            ~pageY=198,
                             (),
                           );
                           EventTransformGizmosTool.triggerMouseMove(
                             ~sandbox,
-                            ~pageX=250 + 30,
-                            ~pageY=100 - 10,
+                            ~pageX=280 + 10,
+                            ~pageY=198,
                             (),
                           );
 
                           InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
-                          |> expect == (0.224, 0.09, (-0.241));
+                          |> expect == (0.071, 0.006, 0.068);
                         },
                       );
                     });

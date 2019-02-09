@@ -1,17 +1,10 @@
 let _checkIntersectMesh =
     (ray, (_, _, geometry, localToWorldMatrixTypeArray), engineState) =>
   MeshUtils.checkIntersectMesh(
-    (geometry, engineState),
-    localToWorldMatrixTypeArray,
-    /* TODO judge material->side */
-    Back,
-    (
-      GeometryEngineService.getGeometryVertices(geometry, engineState),
-      GeometryEngineService.getGeometryIndices16(geometry, engineState),
-      GeometryEngineService.getGeometryIndices32(geometry, engineState),
-      GeometryEngineService.getIndicesCount(geometry, engineState),
-    ),
     ray,
+    /* TODO judge material->side */
+    (geometry, localToWorldMatrixTypeArray, RayType.Back),
+    engineState,
   )
   |> Js.Option.andThen((. intersectedPoint) =>
        Wonderjs.Vector3Service.transformMat4Tuple(

@@ -1,39 +1,39 @@
-let _isSelectTranslationAxisGizmo =
-    (translationAxisGizmo, ray, engineState, editorState) => {
-  let expandFactor = 0.3;
+let isIntersectMesh = (gameObject, ray, engineState) =>
+  MeshUtils.checkIntersectMesh(
+    ray,
+    (
+      GameObjectComponentEngineService.unsafeGetGeometryComponent(
+        gameObject,
+        engineState,
+      ),
+      TransformEngineService.getLocalToWorldMatrixTypeArray(
+        GameObjectComponentEngineService.unsafeGetTransformComponent(
+          gameObject,
+          engineState,
+        ),
+        engineState,
+      ),
+      RayType.None,
+    ),
+    engineState,
+  )
+  |> Js.Option.isSome;
 
+let _isSelectTranslationAxisGizmo =
+    (translationAxisGizmo, ray, engineState, editorState) =>
   HierarchyGameObjectEngineService.getAllChildren(
     translationAxisGizmo,
     engineState,
   )
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. isSelect, gameObject) =>
-         isSelect ?
-           isSelect :
-           {
-             let halfExtendsLength =
-               AABBShapeUtils.setFromGameObject(gameObject, engineState)
-               |> AABBShapeUtils.getHalfExtends
-               |> Vector3Service.length;
-
-             RayUtils.isIntersectAABB(
-               AABBShapeUtils.setFromGameObject(gameObject, engineState)
-               |> AABBShapeUtils.expandByScalar(
-                    expandFactor *. halfExtendsLength,
-                  ),
-               ray,
-             );
-           },
+         isSelect ? isSelect : isIntersectMesh(gameObject, ray, engineState),
        false,
      );
-};
 
 let _isSelectTranslationPlaneGizmo =
     (translationPlaneGizmo, ray, engineState, editorState) =>
-  RayUtils.isIntersectAABB(
-    AABBShapeUtils.setFromGameObject(translationPlaneGizmo, engineState),
-    ray,
-  );
+  isIntersectMesh(translationPlaneGizmo, ray, engineState);
 
 let _unsafeGetIntersectPointWithPlane =
     (plane, ray, (editorState, engineState)) =>

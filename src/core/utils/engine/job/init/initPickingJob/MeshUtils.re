@@ -28,7 +28,7 @@ let _checkIntersect =
     ) =>
   RayUtils.checkIntersectTriangle(cullType, va, vb, vc, ray);
 
-let checkIntersectMesh =
+let _checkIntersectMesh =
     (
       (geometry, engineState),
       localToWorldMatrix,
@@ -61,3 +61,18 @@ let checkIntersectMesh =
     )
   );
 };
+
+let checkIntersectMesh =
+    (ray, (geometry, localToWorldMatrixTypeArray, cullType), engineState) =>
+  _checkIntersectMesh(
+    (geometry, engineState),
+    localToWorldMatrixTypeArray,
+    cullType,
+    (
+      GeometryEngineService.getGeometryVertices(geometry, engineState),
+      GeometryEngineService.getGeometryIndices16(geometry, engineState),
+      GeometryEngineService.getGeometryIndices32(geometry, engineState),
+      GeometryEngineService.getIndicesCount(geometry, engineState),
+    ),
+    ray,
+  );
