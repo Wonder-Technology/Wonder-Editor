@@ -1,4 +1,4 @@
-open TransformGizmoRadioType;
+open TransformGizmoSwitchType;
 
 type state = {selectedType: type_};
 
@@ -30,7 +30,7 @@ module Method = {
        );
 };
 
-let component = ReasonReact.reducerComponent("TransformGizmoRadio");
+let component = ReasonReact.reducerComponent("TransformGizmoSwitch");
 
 let reducer = (action, state) =>
   switch (action) {
@@ -41,7 +41,7 @@ let reducer = (action, state) =>
   };
 
 let render = (data, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
-  <article key="TransformGizmoRadio" className="transform-gizmo-radio">
+  <article key="TransformGizmoSwitch" className="transform-gizmo-switch">
     (ReasonReact.array(Method.renderContent((state, send), data)))
   </article>;
 

@@ -64,7 +64,7 @@ module Method = {
   let buildTransformComponent = (uiState, dispatchFunc) =>
     <div className="header-item">
       <div className="component-item">
-        <TransformGizmoRadio
+        <TransformGizmoSwitch
           key=(DomHelper.getRandomKey())
           data=[|
             {

@@ -400,23 +400,23 @@ html, body {
           align-items: center;
           height: 100%;
           flex-direction: row; }
-          .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .transform-gizmo-radio {
+          .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .transform-gizmo-switch {
             flex: initial;
             display: flex;
             flex-direction: row;
             margin-left: 10px;
             align-items: center;
             justify-content: center; }
-            .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .transform-gizmo-radio .translation {
+            .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .transform-gizmo-switch .translation {
               background-image: url("../img/translation.png"); }
-            .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .transform-gizmo-radio .rotation {
+            .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .transform-gizmo-switch .rotation {
               background-image: url("../img/rotation.png"); }
-            .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .transform-gizmo-radio .select {
+            .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .transform-gizmo-switch .select {
               background-color: white;
               background-size: 100%;
               width: 30px;
               height: 30px; }
-            .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .transform-gizmo-radio .not-select {
+            .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .transform-gizmo-switch .not-select {
               background-color: gray;
               background-size: 100%;
               width: 30px;
