@@ -69,9 +69,9 @@ let _computeNeedRotateAngle = (totalAngle, editorState) =>
      StateEditorService.getStateIsDebug(),
    ); */
 
-let _rotateCurrentSceneTreeNodeAndWholeRotationGizmo =
+let _rotateCurrentSceneTreeNode =
     /* ((angle, axis, center), editorState, engineState) => { */
-    ((angle, axis), editorState, engineState) =>
+    ((angle, axis), rotateOnAxisFunc, editorState, engineState) =>
   /* WonderLog.Contract.requireCheck(
        () => {
          open WonderLog;
@@ -115,28 +115,13 @@ let _rotateCurrentSceneTreeNodeAndWholeRotationGizmo =
      ); */
   /* let position = center; */
   engineState
-  |> TransformEngineService.rotateLocalOnLocalAxis(
+  |> rotateOnAxisFunc(
        GameObjectComponentEngineService.unsafeGetTransformComponent(
          SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
          engineState,
        ),
        (angle, axis),
-     )
-  |> TransformEngineService.rotateLocalOnLocalAxis(
-       GameObjectComponentEngineService.unsafeGetTransformComponent(
-         OperateRotationGizmoSceneViewEditorService.unsafeGetRotationWholeGizmo(
-           editorState,
-         ),
-         engineState,
-       ),
-       (angle, axis),
-     ); /* |> TransformEngineService.rotateAround(
-           GameObjectComponentEngineService.unsafeGetTransformComponent(
-             SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
-             engineState,
-           ),
-           (angle, axis, center, position),
-         ) */
+     );
 
 /* |> TransformEngineService.rotateAround(
      GameObjectComponentEngineService.unsafeGetTransformComponent(
@@ -171,7 +156,9 @@ let _affectGizmo =
     | Some(intersectPlanePoint) =>
       let localToWorldMatrixTypeArray =
         TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
-          SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
+          OperateRotationGizmoSceneViewEditorService.unsafeGetRotationWholeGizmo(
+            editorState,
+          ),
           engineState,
         );
 
@@ -198,17 +185,25 @@ let _affectGizmo =
     };
 
   /* WonderLog.Log.printJson((
-    "(totalAngle, needRotateAngle): ",
-    (totalAngle, needRotateAngle),
-  ))
-  |> ignore; */
+       "(totalAngle, needRotateAngle): ",
+       (totalAngle, needRotateAngle),
+     ))
+     |> ignore; */
 
   let editorState =
     editorState
     |> AngleRotationGizmoSceneViewEditorService.setLastTotalAngle(totalAngle);
 
-  _rotateCurrentSceneTreeNodeAndWholeRotationGizmo(
+  _rotateCurrentSceneTreeNode(
     (needRotateAngle, planeLocalAxis),
+    switch (
+      CoordinateSystemTransformGizmoSceneViewEditorService.getCoordinateSystem(
+        editorState,
+      )
+    ) {
+    | World => TransformEngineService.rotateWorldOnAxis
+    | Local => TransformEngineService.rotateLocalOnAxis
+    },
     editorState,
     engineState,
   );

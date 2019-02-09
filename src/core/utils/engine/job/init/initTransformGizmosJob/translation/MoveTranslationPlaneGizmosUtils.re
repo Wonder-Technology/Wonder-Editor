@@ -37,12 +37,10 @@ let _updatePlaneGizmoLocalPosition =
      );
 
 let moveTranslationPlaneGizmo = (editorState, engineState) => {
-  let currentSceneTreeNode =
-    SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState);
   let cameraGameObject =
     SceneViewEditorService.unsafeGetEditCamera(editorState);
   let planeMoveStep = 1.;
-  let cameraPosInCurrentSceneTreeNodeLocalCoordSystem =
+  let cameraPosInWholeGizmoLocalCoordSystem =
     Wonderjs.Vector3Service.transformMat4Tuple(
       TransformGameObjectEngineService.getPosition(
         cameraGameObject,
@@ -50,7 +48,9 @@ let moveTranslationPlaneGizmo = (editorState, engineState) => {
       ),
       TransformEngineService.getLocalToWorldMatrixTypeArray(
         GameObjectComponentEngineService.unsafeGetTransformComponent(
-          currentSceneTreeNode,
+          OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+            editorState,
+          ),
           engineState,
         ),
         engineState,
@@ -64,49 +64,49 @@ let moveTranslationPlaneGizmo = (editorState, engineState) => {
   /* xy, xz, yz */
 
   let planeLocalPositionData =
-    if (_isInPXPYPZ(cameraPosInCurrentSceneTreeNodeLocalCoordSystem)) {
+    if (_isInPXPYPZ(cameraPosInWholeGizmoLocalCoordSystem)) {
       (
         (planeMoveStep, planeMoveStep, 0.),
         (planeMoveStep, 0., planeMoveStep),
         (0., planeMoveStep, planeMoveStep),
       );
-    } else if (_isInNXPYPZ(cameraPosInCurrentSceneTreeNodeLocalCoordSystem)) {
+    } else if (_isInNXPYPZ(cameraPosInWholeGizmoLocalCoordSystem)) {
       (
         (-. planeMoveStep, planeMoveStep, 0.),
         (-. planeMoveStep, 0., planeMoveStep),
         (0., planeMoveStep, planeMoveStep),
       );
-    } else if (_isInPXNYPZ(cameraPosInCurrentSceneTreeNodeLocalCoordSystem)) {
+    } else if (_isInPXNYPZ(cameraPosInWholeGizmoLocalCoordSystem)) {
       (
         (planeMoveStep, -. planeMoveStep, 0.),
         (planeMoveStep, 0., planeMoveStep),
         (0., -. planeMoveStep, planeMoveStep),
       );
-    } else if (_isInPXPYNZ(cameraPosInCurrentSceneTreeNodeLocalCoordSystem)) {
+    } else if (_isInPXPYNZ(cameraPosInWholeGizmoLocalCoordSystem)) {
       (
         (planeMoveStep, planeMoveStep, 0.),
         (planeMoveStep, 0., -. planeMoveStep),
         (0., planeMoveStep, -. planeMoveStep),
       );
-    } else if (_isInNXNYPZ(cameraPosInCurrentSceneTreeNodeLocalCoordSystem)) {
+    } else if (_isInNXNYPZ(cameraPosInWholeGizmoLocalCoordSystem)) {
       (
         (-. planeMoveStep, -. planeMoveStep, 0.),
         (-. planeMoveStep, 0., planeMoveStep),
         (0., -. planeMoveStep, planeMoveStep),
       );
-    } else if (_isInNXPYNZ(cameraPosInCurrentSceneTreeNodeLocalCoordSystem)) {
+    } else if (_isInNXPYNZ(cameraPosInWholeGizmoLocalCoordSystem)) {
       (
         (-. planeMoveStep, planeMoveStep, 0.),
         (-. planeMoveStep, 0., -. planeMoveStep),
         (0., planeMoveStep, -. planeMoveStep),
       );
-    } else if (_isInPXNYNZ(cameraPosInCurrentSceneTreeNodeLocalCoordSystem)) {
+    } else if (_isInPXNYNZ(cameraPosInWholeGizmoLocalCoordSystem)) {
       (
         (planeMoveStep, -. planeMoveStep, 0.),
         (planeMoveStep, 0., -. planeMoveStep),
         (0., -. planeMoveStep, -. planeMoveStep),
       );
-    } else if (_isInNXNYNZ(cameraPosInCurrentSceneTreeNodeLocalCoordSystem)) {
+    } else if (_isInNXNYNZ(cameraPosInWholeGizmoLocalCoordSystem)) {
       (
         (-. planeMoveStep, -. planeMoveStep, 0.),
         (-. planeMoveStep, 0., -. planeMoveStep),
@@ -117,7 +117,7 @@ let moveTranslationPlaneGizmo = (editorState, engineState) => {
         WonderLog.Log.buildErrorMessage(
           ~title="moveTranslationPlaneGizmo",
           ~description=
-            {j|cameraPosInCurrentSceneTreeNodeLocalCoordSystem: $cameraPosInCurrentSceneTreeNodeLocalCoordSystem is error|j},
+            {j|cameraPosInWholeGizmoLocalCoordSystem: $cameraPosInWholeGizmoLocalCoordSystem is error|j},
           ~reason="",
           ~solution={j||j},
           ~params={j||j},

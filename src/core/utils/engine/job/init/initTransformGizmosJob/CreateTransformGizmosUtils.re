@@ -40,15 +40,13 @@ let setToEditorState =
       editorState: EditorType.editorState,
     )
     : EditorType.editorState => {
-
-
-      {   ...editorState,
+  ...editorState,
   sceneViewRecord: {
     ...editorState.sceneViewRecord,
     transformGizmoData:
       Some({
-        /* TODO need change to Translation */
         currentGizmoType: Translation,
+        coordinateSystem: World,
         translationGizmoData: {
           translationWholeGizmo,
           translationXAxisGizmo: xAxisGizmo,
@@ -79,5 +77,5 @@ let setToEditorState =
           lastTotalAngle: None,
         },
       }),
-  }, }
+  },
 };

@@ -50,8 +50,13 @@ type rotationGizmoData = {
   lastTotalAngle: option(float),
 };
 
+type coordinateSystem =
+  | World
+  | Local;
+
 type transformGizmoData = {
   currentGizmoType: gizmo,
+  coordinateSystem,
   translationGizmoData,
   rotationGizmoData,
 };

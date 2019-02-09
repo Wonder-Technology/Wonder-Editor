@@ -1,4 +1,4 @@
-let _moveAndRotateWholeGizmoToCurrentSceneTreeNode =
+let _moveWholeGizmoToCurrentSceneTreeNode =
     (currentSceneTreeNode, wholeGizmo, engineState) => {
   let currentSceneTreeNodeTransform =
     GameObjectComponentEngineService.unsafeGetTransformComponent(
@@ -18,7 +18,23 @@ let _moveAndRotateWholeGizmoToCurrentSceneTreeNode =
          currentSceneTreeNodeTransform,
          engineState,
        ),
-     )
+     );
+};
+
+let _rotateWholeGizmoToCurrentSceneTreeNode =
+    (currentSceneTreeNode, wholeGizmo, engineState) => {
+  let currentSceneTreeNodeTransform =
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      currentSceneTreeNode,
+      engineState,
+    );
+  let wholeGizmoTransform =
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      wholeGizmo,
+      engineState,
+    );
+
+  engineState
   |> TransformEngineService.setEulerAngles(
        wholeGizmoTransform,
        TransformEngineService.getEulerAngles(
@@ -79,12 +95,32 @@ let updateTransformJob = (_, engineState) => {
       let cameraGameObject =
         SceneViewEditorService.unsafeGetEditCamera(editorState);
 
-      engineState
-      |> _moveAndRotateWholeGizmoToCurrentSceneTreeNode(
-           currentSceneTreeNode,
-           wholeGizmo,
-         )
-      |> _scaleWholeGizmo(currentSceneTreeNode, cameraGameObject, wholeGizmo);
+      let engineState =
+        engineState
+        |> _moveWholeGizmoToCurrentSceneTreeNode(
+             currentSceneTreeNode,
+             wholeGizmo,
+           )
+        |> _scaleWholeGizmo(
+             currentSceneTreeNode,
+             cameraGameObject,
+             wholeGizmo,
+           );
+
+      /* TODO test */
+      switch (
+        CoordinateSystemTransformGizmoSceneViewEditorService.getCoordinateSystem(
+          editorState,
+        )
+      ) {
+      | Local =>
+        engineState
+        |> _rotateWholeGizmoToCurrentSceneTreeNode(
+             currentSceneTreeNode,
+             wholeGizmo,
+           )
+      | World => engineState
+      };
     } :
     engineState;
   /* IsTransformGizmoRenderSceneViewEditorService.isTranslationWholeGizmoRender(

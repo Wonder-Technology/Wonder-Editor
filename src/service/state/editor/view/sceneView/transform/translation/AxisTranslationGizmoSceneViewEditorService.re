@@ -5,7 +5,9 @@ open ShapeType;
 let getAxisGizmoPos = (editorState, engineState) =>
   TransformEngineService.getPosition(
     GameObjectComponentEngineService.unsafeGetTransformComponent(
-      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
+      OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+        editorState,
+      ),
       engineState,
     ),
     engineState,

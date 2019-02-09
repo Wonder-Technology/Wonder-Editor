@@ -205,7 +205,7 @@ let lookAt = Wonderjs.TransformAPI.lookAt;
         );
    }; */
 
-let rotateLocalOnLocalAxis = (transform, (angle, localAxis), engineState) => {
+let rotateLocalOnAxis = (transform, (angle, localAxis), engineState) => {
   let rot = QuaternionService.setFromAxisAngle(angle, localAxis);
 
   engineState
@@ -214,6 +214,21 @@ let rotateLocalOnLocalAxis = (transform, (angle, localAxis), engineState) => {
        Wonderjs.QuaternionService.multiply(
          getLocalRotation(transform, engineState),
          rot,
+       ),
+     );
+};
+
+
+
+let rotateWorldOnAxis = (transform, (angle, localAxis), engineState) => {
+  let rot = QuaternionService.setFromAxisAngle(angle, localAxis);
+
+  engineState
+  |> setLocalRotation(
+       transform,
+       Wonderjs.QuaternionService.multiply(
+         rot,
+         getLocalRotation(transform, engineState),
        ),
      );
 };

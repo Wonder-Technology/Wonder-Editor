@@ -1,6 +1,12 @@
 let getCenterPoint = (editorState, engineState) =>
-  InitTransformGizmosUtils.getCurrentSceneTreeNodePosition(
-    editorState,
+  /* InitTransformGizmosUtils.getCurrentSceneTreeNodePosition(
+       editorState,
+       engineState,
+     ); */
+  TransformGameObjectEngineService.getPosition(
+    OperateRotationGizmoSceneViewEditorService.unsafeGetRotationWholeGizmo(
+      editorState,
+    ),
     engineState,
   );
 
@@ -37,7 +43,9 @@ let getYZPlaneLocalAxis = () => (1., 0., 0.);
 let getXAxisOfPlane = (editorState, engineState) => {
   let (xAxis, _, _) =
     TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
-      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
+      OperateRotationGizmoSceneViewEditorService.unsafeGetRotationWholeGizmo(
+        editorState,
+      ),
       engineState,
     )
     |> Matrix4Service.extractBasic;
@@ -48,7 +56,9 @@ let getXAxisOfPlane = (editorState, engineState) => {
 let getYAxisOfPlane = (editorState, engineState) => {
   let (_, yAxis, _) =
     TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
-      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
+      OperateRotationGizmoSceneViewEditorService.unsafeGetRotationWholeGizmo(
+        editorState,
+      ),
       engineState,
     )
     |> Matrix4Service.extractBasic;
@@ -59,7 +69,9 @@ let getYAxisOfPlane = (editorState, engineState) => {
 let getZAxisOfPlane = (editorState, engineState) => {
   let (_, _, zAxis) =
     TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
-      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
+      OperateRotationGizmoSceneViewEditorService.unsafeGetRotationWholeGizmo(
+        editorState,
+      ),
       engineState,
     )
     |> Matrix4Service.extractBasic;
