@@ -20,16 +20,50 @@ let isIntersectMesh = (gameObject, ray, engineState) =>
   |> Js.Option.isSome;
 
 let _isSelectTranslationAxisGizmo =
-    (translationAxisGizmo, ray, engineState, editorState) =>
+    (translationAxisGizmo, ray, engineState, editorState) => {
+  let expandFactor = 0.3;
+
   HierarchyGameObjectEngineService.getAllChildren(
     translationAxisGizmo,
     engineState,
   )
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. isSelect, gameObject) =>
-         isSelect ? isSelect : isIntersectMesh(gameObject, ray, engineState),
+         isSelect ?
+           isSelect :
+           {
+             let aabb =
+               AABBShapeUtils.setFromPoints(
+                 GeometryEngineService.getGeometryVertices(
+                   GameObjectComponentEngineService.unsafeGetGeometryComponent(
+                     gameObject,
+                     engineState,
+                   ),
+                   engineState,
+                 ),
+               );
+
+             let halfExtendsLength =
+               aabb |> AABBShapeUtils.getHalfExtends |> Vector3Service.length;
+
+             RayUtils.isIntersectOBB(
+               aabb
+               |> AABBShapeUtils.expandByScalar(
+                    expandFactor *. halfExtendsLength,
+                  ),
+               TransformEngineService.getLocalToWorldMatrixTypeArray(
+                 GameObjectComponentEngineService.unsafeGetTransformComponent(
+                   gameObject,
+                   engineState,
+                 ),
+                 engineState,
+               ),
+               ray,
+             );
+           },
        false,
      );
+};
 
 let _isSelectTranslationPlaneGizmo =
     (translationPlaneGizmo, ray, engineState, editorState) =>

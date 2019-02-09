@@ -1415,7 +1415,11 @@ let _ =
                           ~viewHeight=400,
                           ~offsetLeft=0,
                           ~offsetTop=0,
-                          ~cameraPos=(0., 0., 3.),
+                          ~cameraPos=(
+                            0.,
+                            16.180339813232422,
+                            11.755704879760742,
+                          ),
                           ~gameObjectPos=(0., 0., 0.),
                           ~gameObjectEulerAngles=(12., 45., 22.),
                           ~createGameObjectFunc=InitPickingJobTool.createCube,
@@ -1448,19 +1452,19 @@ let _ =
 
                           EventTransformGizmosTool.triggerMouseDown(
                             ~sandbox,
-                            ~pageX=280,
-                            ~pageY=198,
+                            ~pageX=275,
+                            ~pageY=165,
                             (),
                           );
                           EventTransformGizmosTool.triggerMouseMove(
                             ~sandbox,
-                            ~pageX=280 + 10,
-                            ~pageY=198,
+                            ~pageX=275 + 10,
+                            ~pageY=165,
                             (),
                           );
 
                           InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
-                          |> expect == (0.071, 0.006, 0.068);
+                          |> expect == (0.22, 0.089, (-0.238));
                         },
                       );
                     });

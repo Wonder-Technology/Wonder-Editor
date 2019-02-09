@@ -179,6 +179,19 @@ let isIntersectAABB =
   };
 };
 
+let isIntersectOBB =
+    (aabb, localToWorldMatrix, ({origin, direction}: RayType.ray) as ray) => {
+  let inverseMatrix =
+    Wonderjs.Matrix4Service.invert(
+      localToWorldMatrix,
+      Wonderjs.Matrix4Service.createIdentityMatrix4(),
+    );
+
+  let ray = applyMatrix4(ray, inverseMatrix);
+
+  isIntersectAABB(aabb, ray);
+};
+
 let isIntersectSphere =
     ({center, radius}, ({origin, direction}: RayType.ray) as ray) => {
   let v1 =
