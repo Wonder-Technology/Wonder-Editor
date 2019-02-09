@@ -42,10 +42,6 @@ let setToEditorState =
     : EditorType.editorState => {
 
 
-    WonderLog.Log.print((
-      "translationWholeGizmo:", translationWholeGizmo
-    )) |> ignore;
-
       {   ...editorState,
   sceneViewRecord: {
     ...editorState.sceneViewRecord,

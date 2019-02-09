@@ -197,11 +197,11 @@ let _affectGizmo =
       (Some(totalAngle), _computeNeedRotateAngle(totalAngle, editorState));
     };
 
-  WonderLog.Log.printJson((
+  /* WonderLog.Log.printJson((
     "(totalAngle, needRotateAngle): ",
     (totalAngle, needRotateAngle),
   ))
-  |> ignore;
+  |> ignore; */
 
   let editorState =
     editorState

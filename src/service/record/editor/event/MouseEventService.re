@@ -8,12 +8,18 @@ let _getMouseButton = ({userData}: EventType.customEvent) => {
 };
 
 let isLeftMouseButton = (event: EventType.customEvent) =>
-  EventType.(
+  {
+    
+  /* let {locationInView}: EventType. mouseEvent =
+    EventType.userDataToMouseEvent(event.userData |> OptionService.unsafeGet);
+    WonderLog.Log.print(("locationInView:", locationInView)) |> ignore; */
+    
+    EventType.(
     switch (_getMouseButton(event)) {
     | Left => true
     | _ => false
     }
-  );
+  );}
 
 let isRightMouseButton = (event: EventType.customEvent) =>
   EventType.(

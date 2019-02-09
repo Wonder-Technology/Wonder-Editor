@@ -1127,8 +1127,7 @@ let _ =
               useProgram
               |> SinonTool.calledWith(
                    _,
-                   ProgramToolEngine.getProgram(shaderIndex, engineState)
-                   |> WonderLog.Log.print,
+                   ProgramToolEngine.getProgram(shaderIndex, engineState),
                  ),
               ProgramToolEngine.getProgram(shaderIndex, engineState),
             )

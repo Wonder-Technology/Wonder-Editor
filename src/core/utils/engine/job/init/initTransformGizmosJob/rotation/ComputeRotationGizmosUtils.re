@@ -21,13 +21,6 @@ let isGizmoUnUsed = (gizmoType, editorState, engineState) => {
   let centerPoint =
     CircleRotationGizmosUtils.getCenterPoint(editorState, engineState);
 
-  WonderLog.Log.print((
-    cameraPos,
-    centerPoint,
-    CircleRotationGizmosUtils.getZAxisOfPlane(editorState, engineState),
-  ))
-  |> ignore;
-
   switch (gizmoType) {
   | SceneViewType.XYCircle =>
     _isCenterToCameraAndNormalOfCirclePlaneNearlyPerpendicular(
@@ -47,6 +40,5 @@ let isGizmoUnUsed = (gizmoType, editorState, engineState) => {
       centerPoint,
       CircleRotationGizmosUtils.getXAxisOfPlane(editorState, engineState),
     )
-    |> WonderLog.Log.print
   };
 };

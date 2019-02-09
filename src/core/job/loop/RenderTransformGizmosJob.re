@@ -206,7 +206,6 @@ module RenderRotationGizmos = {
          GLSLLocationEngineService.isUniformLocationExist(pos) ?
            {
              /* TODO refactor(extend): need refactor with engine! */
-             WonderLog.Log.print(("name: ", name)) |> ignore;
              let data =
                switch (name) {
                | "u_alpha" =>
@@ -224,16 +223,6 @@ module RenderRotationGizmos = {
                  )
                  |> Obj.magic
                | "u_cameraPosInLocalCoordSystem" =>
-                 WonderLog.Log.print((
-                   "aaaa: ",
-                   transformIndex,
-                   TransformEngineService.getLocalToWorldMatrixTypeArray(
-                     transformIndex,
-                     engineState,
-                   ),
-                 ))
-                 |> ignore;
-
                  CameraPosUtils.getCameraPosInLocalCoordSystem(
                    cameraPos,
                    TransformEngineService.getLocalToWorldMatrixTypeArray(
@@ -243,8 +232,7 @@ module RenderRotationGizmos = {
                    engineState,
                  )
                  |> vec3ToArray
-                 |> WonderLog.Log.print
-                 |> Obj.magic;
+                 |> Obj.magic
                };
 
              sendDataFunc(.
@@ -273,15 +261,7 @@ module RenderRotationGizmos = {
         engineState,
       );
 
-    /* TODO finish */
-    /* let cameraPosInLocalCoordSystem =
-       CameraPosUtils.getCameraPosInLocalCoordSystem(
-
-       ); */
-
     let cameraPos = CameraPosUtils.getCameraPos(editorState, engineState);
-
-    WonderLog.Log.printJson(("cameraPos: ", cameraPos)) |> ignore;
 
     renderDataArr
     |> WonderCommonlib.ArrayService.reduceOneParam(
@@ -471,7 +451,7 @@ let _renderRotationGizmos = (editorState, engineState) =>
 let renderJob = (_, engineState) => {
   open SceneViewType;
 
-  WonderLog.Log.print("render gizmo") |> ignore;
+  /* WonderLog.Log.print("render gizmo") |> ignore; */
 
   let editorState = StateEditorService.getState();
 

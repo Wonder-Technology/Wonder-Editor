@@ -4,7 +4,7 @@ let getCenterPoint = (editorState, engineState) =>
     engineState,
   );
 
-let _buildPlane = (axisOfPlane, centerPoint, editorState, engineState) => {
+let _buildPlane = (axisOfPlane, centerPoint, editorState, engineState) =>
   /* WonderLog.Log.print((
        "LocalToWorldMatrixTypeArray: ",
      TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
@@ -23,30 +23,16 @@ let _buildPlane = (axisOfPlane, centerPoint, editorState, engineState) => {
 
 
      )) |> ignore; */
-
-  WonderLog.Log.print((
-    "axis: ",
-    axisOfPlane,
-    centerPoint,
-    PlaneShapeUtils.setFromNormalAndCoplanarPoint(
-      axisOfPlane |> Wonderjs.Vector3Service.normalize,
-      centerPoint,
-    ),
-  ))
-  |> ignore;
-
   PlaneShapeUtils.setFromNormalAndCoplanarPoint(
     axisOfPlane |> Wonderjs.Vector3Service.normalize,
     centerPoint,
   );
-};
 
 let getXYPlaneLocalAxis = () => (0., 0., 1.);
 
 let getXZPlaneLocalAxis = () => (0., 1., 0.);
 
 let getYZPlaneLocalAxis = () => (1., 0., 0.);
-
 
 let getXAxisOfPlane = (editorState, engineState) => {
   let (xAxis, _, _) =
