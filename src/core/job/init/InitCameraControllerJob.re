@@ -23,7 +23,13 @@ let _refreshInspector = () => {
 let _handleTriggerRefreshInspectorEvent = engineState =>
   _isCurrentSceneTreeNodeHasArcballCameraControllerComponent(engineState) ?
     {
+      engineState |> StateEngineService.setState |> ignore;
+
       _refreshInspector();
+
+      let engineState =
+        StateEngineService.unsafeGetState() |> StateLogicService.renderWhenStop;
+
       engineState;
     } :
     engineState;

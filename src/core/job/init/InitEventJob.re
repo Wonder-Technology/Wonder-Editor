@@ -60,10 +60,7 @@ module PointEvent = {
                   engineState,
                 );
 
-              switch (eventTarget) {
-              | Scene => StateLogicService.loopBodyWhenStop(engineState)
-              | _ => engineState
-              };
+              engineState;
             } :
             engineState,
       ~state=engineState,
@@ -400,16 +397,11 @@ module DomEvent = {
         event,
       ) :
       _isTriggerSceneViewEvent() ?
-        {
-          _execKeyboardEventHandle(
-            sceneViewEventName
-            |> EventType.editorDomEventNameToEngineDomEventName,
-            event,
-          );
-
-          StateLogicService.loopBodyWhenStop
-          |> StateLogicService.getAndSetEngineState;
-        } :
+        _execKeyboardEventHandle(
+          sceneViewEventName
+          |> EventType.editorDomEventNameToEngineDomEventName,
+          event,
+        ) :
         ();
 
   let _fromPCDomEventArr = engineState => [|

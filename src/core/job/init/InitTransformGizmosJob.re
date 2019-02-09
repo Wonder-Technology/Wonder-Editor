@@ -83,6 +83,8 @@ let _bindEvent = (editorState, engineState) => {
                     engineState,
                   );
 
+              let engineState = StateLogicService.renderWhenStop(engineState);
+
               editorState |> StateEditorService.setState |> ignore;
 
               (engineState, event);
@@ -112,7 +114,13 @@ let _bindEvent = (editorState, engineState) => {
                         (editorState, engineState),
                       );
 
-                    _refreshInspector(editorState, engineState);
+                    let (editorState, engineState) =
+                      _refreshInspector(editorState, engineState);
+
+                    let engineState =
+                      StateLogicService.renderWhenStop(engineState);
+
+                    (editorState, engineState);
                   } :
                   SelectRotationGizmoSceneViewEditorService.isSelectAnyRotationGizmo(
                     editorState,
@@ -124,7 +132,16 @@ let _bindEvent = (editorState, engineState) => {
                           (editorState, engineState),
                         );
 
-                      _refreshInspector(editorState, engineState);
+                      let engineState =
+                        StateLogicService.loopBodyWhenStop(engineState);
+
+                      let (editorState, engineState) =
+                        _refreshInspector(editorState, engineState);
+
+                      let engineState =
+                        StateLogicService.renderWhenStop(engineState);
+
+                      (editorState, engineState);
                     } :
                     (editorState, engineState);
 
@@ -180,7 +197,11 @@ let _bindEvent = (editorState, engineState) => {
                     ),
                   );
 
-                  (StateEngineService.unsafeGetState(), event);
+                  let engineState = StateEngineService.unsafeGetState();
+                  let engineState =
+                    StateLogicService.renderWhenStop(engineState);
+
+                  (engineState, event);
                 } :
                 {
                   let editorState =
@@ -196,6 +217,11 @@ let _bindEvent = (editorState, engineState) => {
                        );
 
                   editorState |> StateEditorService.setState |> ignore;
+
+                  let engineState =
+                    StateLogicService.renderWhenStop(engineState);
+
+                  (engineState, event);
 
                   (engineState, event);
                 };
@@ -221,6 +247,8 @@ let _bindEvent = (editorState, engineState) => {
                   editorState,
                   engineState,
                 );
+
+              let engineState = StateLogicService.renderWhenStop(engineState);
 
               (engineState, event);
             } :

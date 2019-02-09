@@ -204,6 +204,8 @@ let _handlePicking = (event: EventType.customEvent, engineState) => {
     | Some(gameObject) => _handlePickSuccess(gameObject, engineState)
     };
 
+  let engineState = StateLogicService.renderWhenStop(engineState);
+
   (engineState, event);
 };
 

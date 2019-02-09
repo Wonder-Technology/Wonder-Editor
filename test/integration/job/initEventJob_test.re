@@ -226,23 +226,22 @@ let _ =
                 |> expect == EventType.Other;
               })
             );
+            /* describe("test loopBody", () =>
+                 test("if not run, not loopBody", () => {
+                   _prepareMouseEvent(~sandbox, ());
+                   ControllerTool.setIsRun(false);
 
-            describe("test loopBody", () =>
-              test("if not run, not loopBody", () => {
-                _prepareMouseEvent(~sandbox, ());
-                ControllerTool.setIsRun(false);
+                   let _ = _prepareAndExec(10, 20, EventTool.buildBodyTarget());
 
-                let _ = _prepareAndExec(10, 20, EventTool.buildBodyTarget());
-
-                let gl = FakeGlToolEngine.getEngineStateGl();
-                gl##clearColor |> expect |> not_ |> toCalled;
-              })
-            );
+                   let gl = FakeGlToolEngine.getEngineStateGl();
+                   gl##clearColor |> expect |> not_ |> toCalled;
+                 })
+               ); */
           });
 
           describe("test trigger in scene view", () => {
             describe("test loopBody", () => {
-              test("if not run, loopBody", () => {
+              test("if not run, not loopBody", () => {
                 _prepareMouseEvent(~sandbox, ());
                 ControllerTool.setIsRun(false);
 
@@ -250,7 +249,7 @@ let _ =
                   _prepareAndExec(10, 20, EventTool.buildCanvasTarget());
 
                 let gl = FakeGlToolEngine.getEngineStateGl();
-                gl##clearColor |> expect |> toCalled;
+                gl##clearColor |> expect |> not_ |> toCalled;
               });
               test("else, not loopBody", () => {
                 _prepareMouseEvent(~sandbox, ());
@@ -639,7 +638,7 @@ let _ =
             value^ |> expect == 1;
           };
 
-          test("if is stop, loopBody", () => {
+          test("if is stop, not loopBody", () => {
             _prepareKeyboardEvent(~sandbox, ());
             ControllerTool.setIsRun(false);
 
@@ -651,7 +650,7 @@ let _ =
               );
 
             let gl = FakeGlToolEngine.getEngineStateGl();
-            gl##clearColor |> expect |> toCalled;
+            gl##clearColor |> expect |> not_ |> toCalled;
           });
 
           describe("test eventTarget is other", () =>
@@ -698,7 +697,7 @@ let _ =
 
           describe("test eventTarget is scene view", () => {
             describe("test loopBody", () => {
-              test("if not run, loopBody", () => {
+              test("if not run, not loopBody", () => {
                 _prepareMouseEvent(~sandbox, ());
                 ControllerTool.setIsRun(false);
 
@@ -710,7 +709,7 @@ let _ =
                   );
 
                 let gl = FakeGlToolEngine.getEngineStateGl();
-                gl##clearColor |> expect |> toCalled;
+                gl##clearColor |> expect |> not_ |> toCalled;
               });
               test("else, not loopBody", () => {
                 _prepareMouseEvent(~sandbox, ());
@@ -889,7 +888,7 @@ let _ =
 
         describe("test eventTarget is scene view", () => {
           describe("test loopBody", () =>
-            test("if is stop, loopBody", () => {
+            test("if is stop, not loopBody", () => {
               _prepareMouseEvent(~sandbox, ());
               ControllerTool.setIsRun(false);
 
@@ -900,7 +899,7 @@ let _ =
                 );
 
               let gl = FakeGlToolEngine.getEngineStateGl();
-              gl##clearColor |> expect |> toCalled;
+                gl##clearColor |> expect |> not_ |> toCalled;
             })
           );
 
@@ -916,7 +915,7 @@ let _ =
 
         describe("test eventTarget is game view", () => {
           describe("test loopBody", () =>
-            test("if is stop, not_ loopBody", () => {
+            test("if is stop, not loopBody", () => {
               _prepareMouseEvent(~sandbox, ());
               ControllerTool.setIsRun(false);
 

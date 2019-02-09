@@ -179,151 +179,152 @@ let _ =
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test bind for scene view", () => {
-      describe("test bind point drag start event", () => {
-        let _test = (sandbox, (pageX, pageY, eventButton), judgeFunc) =>
-          _testPointDragStartEvent(
-            sandbox,
-            (pageX, pageY, eventButton),
-            (
-              judgeFunc,
-              ArcballCameraControllerLogicService.bindArcballCameraControllerEventForSceneView,
-            ),
-          );
+    describe("test bind for scene view", () =>
+      describe("test bind point drag start event", ()
+        => {
+          let _test = (sandbox, (pageX, pageY, eventButton), judgeFunc) =>
+            _testPointDragStartEvent(
+              sandbox,
+              (pageX, pageY, eventButton),
+              (
+                judgeFunc,
+                ArcballCameraControllerLogicService.bindArcballCameraControllerEventForSceneView,
+              ),
+            );
 
-        test("if mouse button isn't right button, not trigger", () =>
-          _test(sandbox, (10, 20, 1), requestPointerLockStub =>
-            requestPointerLockStub |> expect |> not_ |> toCalled
-          )
-        );
-
-        describe("else", () => {
-          test("if eventTarget is scene view, request canvas pointerLock", () =>
-            _test(sandbox, (10, 20, 3), requestPointerLockStub =>
-              requestPointerLockStub |> expect |> toCalledOnce
-            )
-          );
-          test(
-            "if eventTarget is game view, not request canvas pointerLock", () =>
-            _test(sandbox, (60, 20, 3), requestPointerLockStub =>
+          test("if mouse button isn't right button, not trigger", () =>
+            _test(sandbox, (10, 20, 1), requestPointerLockStub =>
               requestPointerLockStub |> expect |> not_ |> toCalled
             )
           );
-        });
-      });
 
-      describe("test bind keydown event", () =>
-        describe("test set target", () => {
-          let _prepareMouseEvent = (~sandbox, ()) =>
-            _prepareMouseEventForTestKeyboardEvent(
-              ~sandbox,
-              ~bindEventFunc=ArcballCameraControllerLogicService.bindArcballCameraControllerEventForSceneView,
-              (),
+          describe("else", () => {
+            test(
+              "if eventTarget is scene view, request canvas pointerLock", () =>
+              _test(sandbox, (10, 20, 3), requestPointerLockStub =>
+                requestPointerLockStub |> expect |> toCalledOnce
+              )
+            );
+            test(
+              "if eventTarget is game view, not request canvas pointerLock", () =>
+              _test(sandbox, (60, 20, 3), requestPointerLockStub =>
+                requestPointerLockStub |> expect |> not_ |> toCalled
+              )
+            );
+          });
+        })
+        /* describe("test bind keydown event", () =>
+             describe("test set target", () => {
+               let _prepareMouseEvent = (~sandbox, ()) =>
+                 _prepareMouseEventForTestKeyboardEvent(
+                   ~sandbox,
+                   ~bindEventFunc=ArcballCameraControllerLogicService.bindArcballCameraControllerEventForSceneView,
+                   (),
+                 );
+
+               test("if eventTarget is scene view, move", () =>
+                 _testKeydownEvent(
+                   sandbox,
+                   (10, 20),
+                   (
+                     ((moveSpeedX, moveSpeedY), (posX, posY, posZ)) => (
+                       posX -. moveSpeedX,
+                       posY,
+                       posZ,
+                     ),
+                     _prepareMouseEvent,
+                   ),
+                 )
+               );
+               test("if eventTarget is game view, not move", () =>
+                 _testKeydownEvent(
+                   sandbox,
+                   (60, 20),
+                   (
+                     ((moveSpeedX, moveSpeedY), (posX, posY, posZ)) => (
+                       posX,
+                       posY,
+                       posZ,
+                     ),
+                     _prepareMouseEvent,
+                   ),
+                 )
+               );
+             })
+           ); */
+    );
+
+    describe("test bind for game view", () =>
+      describe("test bind point drag start event", ()
+        => {
+          let _test = (sandbox, (pageX, pageY, eventButton), judgeFunc) =>
+            _testPointDragStartEvent(
+              sandbox,
+              (pageX, pageY, eventButton),
+              (
+                judgeFunc,
+                ArcballCameraEngineService.bindArcballCameraControllerEventForGameView,
+              ),
             );
 
-          test("if eventTarget is scene view, move", () =>
-            _testKeydownEvent(
-              sandbox,
-              (10, 20),
-              (
-                ((moveSpeedX, moveSpeedY), (posX, posY, posZ)) => (
-                  posX -. moveSpeedX,
-                  posY,
-                  posZ,
-                ),
-                _prepareMouseEvent,
-              ),
+          test(
+            "if eventTarget is scene view, not request canvas pointerLock", () =>
+            _test(sandbox, (10, 20, 3), requestPointerLockStub =>
+              requestPointerLockStub |> expect |> not_ |> toCalled
             )
           );
-          test("if eventTarget is game view, not move", () =>
-            _testKeydownEvent(
-              sandbox,
-              (60, 20),
-              (
-                ((moveSpeedX, moveSpeedY), (posX, posY, posZ)) => (
-                  posX,
-                  posY,
-                  posZ,
-                ),
-                _prepareMouseEvent,
-              ),
-            )
-          );
-        })
-      );
-    });
 
-    describe("test bind for game view", () => {
-      describe("test bind point drag start event", () => {
-        let _test = (sandbox, (pageX, pageY, eventButton), judgeFunc) =>
-          _testPointDragStartEvent(
-            sandbox,
-            (pageX, pageY, eventButton),
-            (
-              judgeFunc,
-              ArcballCameraEngineService.bindArcballCameraControllerEventForGameView,
-            ),
-          );
-
-        test(
-          "if eventTarget is scene view, not request canvas pointerLock", () =>
-          _test(sandbox, (10, 20, 3), requestPointerLockStub =>
-            requestPointerLockStub |> expect |> not_ |> toCalled
-          )
-        );
-
-        describe("if eventTarget is game view", () => {
-          test("if mouse button isn't right button, still trigger", () =>
-            _test(sandbox, (60, 20, 1), requestPointerLockStub =>
-              requestPointerLockStub |> expect |> toCalledOnce
-            )
-          );
-          test("if eventTarget is game view, request canvas pointerLock", () =>
-            _test(sandbox, (60, 20, 3), requestPointerLockStub =>
-              requestPointerLockStub |> expect |> toCalledOnce
-            )
-          );
-        });
-      });
-
-      describe("test bind keydown event", () =>
-        describe("test set target", () => {
-          let _prepareMouseEvent = (~sandbox, ()) =>
-            _prepareMouseEventForTestKeyboardEvent(
-              ~sandbox,
-              ~bindEventFunc=ArcballCameraEngineService.bindArcballCameraControllerEventForGameView,
-              (),
+          describe("if eventTarget is game view", () => {
+            test("if mouse button isn't right button, still trigger", () =>
+              _test(sandbox, (60, 20, 1), requestPointerLockStub =>
+                requestPointerLockStub |> expect |> toCalledOnce
+              )
             );
-
-          test("if eventTarget is scene view, not move", () =>
-            _testKeydownEvent(
-              sandbox,
-              (10, 20),
-              (
-                ((moveSpeedX, moveSpeedY), (posX, posY, posZ)) => (
-                  posX,
-                  posY,
-                  posZ,
-                ),
-                _prepareMouseEvent,
-              ),
-            )
-          );
-          test("if eventTarget is game view, move", () =>
-            _testKeydownEvent(
-              sandbox,
-              (60, 20),
-              (
-                ((moveSpeedX, moveSpeedY), (posX, posY, posZ)) => (
-                  posX -. moveSpeedX,
-                  posY,
-                  posZ,
-                ),
-                _prepareMouseEvent,
-              ),
-            )
-          );
+            test("if eventTarget is game view, request canvas pointerLock", () =>
+              _test(sandbox, (60, 20, 3), requestPointerLockStub =>
+                requestPointerLockStub |> expect |> toCalledOnce
+              )
+            );
+          });
         })
-      );
-    });
+        /* describe("test bind keydown event", () =>
+             describe("test set target", () => {
+               let _prepareMouseEvent = (~sandbox, ()) =>
+                 _prepareMouseEventForTestKeyboardEvent(
+                   ~sandbox,
+                   ~bindEventFunc=ArcballCameraEngineService.bindArcballCameraControllerEventForGameView,
+                   (),
+                 );
+
+               test("if eventTarget is scene view, not move", () =>
+                 _testKeydownEvent(
+                   sandbox,
+                   (10, 20),
+                   (
+                     ((moveSpeedX, moveSpeedY), (posX, posY, posZ)) => (
+                       posX,
+                       posY,
+                       posZ,
+                     ),
+                     _prepareMouseEvent,
+                   ),
+                 )
+               );
+               test("if eventTarget is game view, move", () =>
+                 _testKeydownEvent(
+                   sandbox,
+                   (60, 20),
+                   (
+                     ((moveSpeedX, moveSpeedY), (posX, posY, posZ)) => (
+                       posX -. moveSpeedX,
+                       posY,
+                       posZ,
+                     ),
+                     _prepareMouseEvent,
+                   ),
+                 )
+               );
+             })
+           ); */
+    );
   });

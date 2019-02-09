@@ -451,7 +451,7 @@ let _renderRotationGizmos = (editorState, engineState) =>
 let renderJob = (_, engineState) => {
   open SceneViewType;
 
-  /* WonderLog.Log.print("render gizmo") |> ignore; */
+  WonderLog.Log.print("render gizmo") |> ignore;
 
   let editorState = StateEditorService.getState();
 
