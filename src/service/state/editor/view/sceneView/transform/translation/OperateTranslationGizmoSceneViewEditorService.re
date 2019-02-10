@@ -204,3 +204,31 @@ let setCurrentSceneTreeNodeStartPoint =
       }),
   },
 };
+
+let unsafeGetCurrentSceneTreeNodeStartLocalPosition = editorState =>
+  RecordTranslationGizmoSceneViewEditorService.unsafeGetData(editorState).
+    currentSceneTreeNodeStartLocalPosition
+  |> OptionService.unsafeGet;
+
+let setCurrentSceneTreeNodeStartLocalPosition =
+    (currentSceneTreeNodeStartLocalPosition, editorState) => {
+  ...editorState,
+  sceneViewRecord: {
+    ...editorState.sceneViewRecord,
+    transformGizmoData:
+      Some({
+        ...
+          RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+            editorState,
+          ),
+        translationGizmoData: {
+          ...
+            RecordTranslationGizmoSceneViewEditorService.unsafeGetData(
+              editorState,
+            ),
+          currentSceneTreeNodeStartLocalPosition:
+            Some(currentSceneTreeNodeStartLocalPosition),
+        },
+      }),
+  },
+};

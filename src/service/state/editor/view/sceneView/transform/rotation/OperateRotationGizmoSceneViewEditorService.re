@@ -101,3 +101,31 @@ let setRotationYZCircleGizmo = (gameObject, editorState) => {
       }),
   },
 };
+
+let unsafeGetCurrentSceneTreeNodeStartLocalEulerAngles = editorState =>
+  RecordRotationGizmoSceneViewEditorService.unsafeGetData(editorState).
+    currentSceneTreeNodeStartLocalEulerAngles
+  |> OptionService.unsafeGet;
+
+let setCurrentSceneTreeNodeStartLocalEulerAngles =
+    (currentSceneTreeNodeStartLocalEulerAngles, editorState) => {
+  ...editorState,
+  sceneViewRecord: {
+    ...editorState.sceneViewRecord,
+    transformGizmoData:
+      Some({
+        ...
+          RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+            editorState,
+          ),
+        rotationGizmoData: {
+          ...
+            RecordRotationGizmoSceneViewEditorService.unsafeGetData(
+              editorState,
+            ),
+          currentSceneTreeNodeStartLocalEulerAngles:
+            Some(currentSceneTreeNodeStartLocalEulerAngles),
+        },
+      }),
+  },
+};

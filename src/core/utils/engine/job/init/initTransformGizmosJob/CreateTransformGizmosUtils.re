@@ -64,6 +64,7 @@ let setToEditorState =
           currentSceneTreeNodeStartPoint: None,
           axisGameObjectStartPoint: None,
           dragStartPoint: None,
+          currentSceneTreeNodeStartLocalPosition: None,
         },
         rotationGizmoData: {
           rotationWholeGizmo,
@@ -75,6 +76,7 @@ let setToEditorState =
           isYZCircleGizmoSelected: false,
           dragStartPoint: None,
           lastTotalAngle: None,
+          currentSceneTreeNodeStartLocalEulerAngles: None,
         },
       }),
   },

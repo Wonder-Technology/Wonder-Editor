@@ -36,6 +36,7 @@ type translationGizmoData = {
   currentSceneTreeNodeStartPoint: option((float, float, float)),
   axisGameObjectStartPoint: option((float, float, float)),
   dragStartPoint: option((float, float, float)),
+  currentSceneTreeNodeStartLocalPosition: option((float, float, float)),
 };
 
 type rotationGizmoData = {
@@ -48,6 +49,7 @@ type rotationGizmoData = {
   isYZCircleGizmoSelected: bool,
   dragStartPoint: option((float, float, float)),
   lastTotalAngle: option(float),
+  currentSceneTreeNodeStartLocalEulerAngles: option((float, float, float)),
 };
 
 type coordinateSystem =

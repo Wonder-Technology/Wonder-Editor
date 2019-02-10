@@ -76,6 +76,12 @@ let _bindEvent = (editorState, engineState) => {
                                engineState,
                              ),
                            )
+                        |> OperateTranslationGizmoSceneViewEditorService.setCurrentSceneTreeNodeStartLocalPosition(
+                             InitTransformGizmosUtils.getCurrentSceneTreeNodeLocalPosition(
+                               editorState,
+                               engineState,
+                             ),
+                           )
                         |> SelectTranslationGizmoUtils.selectTranslationGizmo(
                              event,
                              engineState,
@@ -83,11 +89,20 @@ let _bindEvent = (editorState, engineState) => {
 
                       (editorState, engineState);
                     | Rotation =>
+                      let editorState =
+                        editorState
+                        |> OperateRotationGizmoSceneViewEditorService.setCurrentSceneTreeNodeStartLocalEulerAngles(
+                             InitTransformGizmosUtils.getCurrentSceneTreeNodeLocalEulerAngles(
+                               editorState,
+                               engineState,
+                             ),
+                           );
+
                       SelectRotationGizmoUtils.selectRotationGizmo(
                         event,
                         editorState,
                         engineState,
-                      )
+                      );
                     };
                   } :
                   (
@@ -200,12 +215,13 @@ let _bindEvent = (editorState, engineState) => {
                          editorState,
                        );
 
+                  editorState |> StateEditorService.setState |> ignore;
                   engineState |> StateEngineService.setState |> ignore;
 
                   PositionBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
                     (UIStateService.getState(), UIStateService.getDispatch()),
                     transform,
-                    OperateTranslationGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartPoint(
+                    OperateTranslationGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartLocalPosition(
                       editorState,
                     ),
                   );
@@ -216,28 +232,55 @@ let _bindEvent = (editorState, engineState) => {
 
                   (engineState, event);
                 } :
-                {
-                  let editorState =
-                    editorState
-                    |> AngleRotationGizmoSceneViewEditorService.setLastTotalAngle(
-                         None,
-                       );
+                SelectRotationGizmoSceneViewEditorService.isSelectAnyRotationGizmo(
+                  editorState,
+                ) ?
+                  {
+                    /* TODO refactor: duplicate */
+                    let editorState =
+                      editorState
+                      |> AngleRotationGizmoSceneViewEditorService.setLastTotalAngle(
+                           None,
+                         );
 
-                  let engineState =
-                    engineState
-                    |> CurrentRotationGizmosUtils.restoreRotationGizmoColor(
-                         editorState,
-                       );
+                    let currentSceneTreeNode =
+                      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(
+                        editorState,
+                      );
 
-                  editorState |> StateEditorService.setState |> ignore;
+                    let transform =
+                      GameObjectComponentEngineService.unsafeGetTransformComponent(
+                        currentSceneTreeNode,
+                        engineState,
+                      );
 
-                  let engineState =
-                    StateLogicService.renderWhenStop(engineState);
+                    let engineState =
+                      engineState
+                      |> CurrentRotationGizmosUtils.restoreRotationGizmoColor(
+                           editorState,
+                         );
 
+                    editorState |> StateEditorService.setState |> ignore;
+                    engineState |> StateEngineService.setState |> ignore;
+
+                    RotationBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
+                      (
+                        UIStateService.getState(),
+                        UIStateService.getDispatch(),
+                      ),
+                      transform,
+                      OperateRotationGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartLocalEulerAngles(
+                        editorState,
+                      ),
+                    );
+
+                    let engineState = StateEngineService.unsafeGetState();
+                    let engineState =
+                      StateLogicService.renderWhenStop(engineState);
+
+                    (engineState, event);
+                  } :
                   (engineState, event);
-
-                  (engineState, event);
-                };
             } :
             (engineState, event),
       ~state=engineState,
