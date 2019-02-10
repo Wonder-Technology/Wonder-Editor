@@ -1,4 +1,4 @@
-let rotateWholeGizmoToCurrentSceneTreeNode =
+let setWholeGizmoRotation =
     (
       currentSceneTreeNode,
       wholeGizmo,
@@ -34,31 +34,4 @@ let rotateWholeGizmoToCurrentSceneTreeNode =
          (0., 0., 0.),
        )
   };
-};
-
-let rotateWholeTransformGizmoToCurrentSceneTreeNode =
-    (editorState, engineState) => {
-  let currentSceneTreeNode =
-    SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState);
-
-  let coordinateSystem =
-    CoordinateSystemTransformGizmoSceneViewEditorService.getCoordinateSystem(
-      editorState,
-    );
-
-  engineState
-  |> rotateWholeGizmoToCurrentSceneTreeNode(
-       currentSceneTreeNode,
-       OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
-         editorState,
-       ),
-       coordinateSystem,
-     )
-  |> rotateWholeGizmoToCurrentSceneTreeNode(
-       currentSceneTreeNode,
-       OperateRotationGizmoSceneViewEditorService.unsafeGetRotationWholeGizmo(
-         editorState,
-       ),
-       coordinateSystem,
-     );
 };

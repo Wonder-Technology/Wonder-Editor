@@ -84,9 +84,8 @@ let updateTransformJob = (_, engineState) => {
              wholeGizmo,
            );
 
-      /* TODO test */
       engineState
-      |> CoordinateSystemTransformGizmosUtils.rotateWholeGizmoToCurrentSceneTreeNode(
+      |> CoordinateSystemTransformGizmosUtils.setWholeGizmoRotation(
            currentSceneTreeNode,
            wholeGizmo,
            CoordinateSystemTransformGizmoSceneViewEditorService.getCoordinateSystem(
@@ -95,30 +94,4 @@ let updateTransformJob = (_, engineState) => {
          );
     } :
     engineState;
-  /* IsTransformGizmoRenderSceneViewEditorService.isTranslationWholeGizmoRender(
-       editorState,
-     ) ?
-       switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
-       | None => engineState
-       | Some(currentSceneTreeNode) =>
-         let wholeGizmo =
-           OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
-             editorState,
-           );
-
-         let cameraGameObject =
-           SceneViewEditorService.unsafeGetEditCamera(editorState);
-
-         engineState
-         |> _moveAndRotateWholeGizmoToCurrentSceneTreeNode(
-              currentSceneTreeNode,
-              wholeGizmo,
-            )
-         |> _scaleWholeGizmo(
-              currentSceneTreeNode,
-              cameraGameObject,
-              wholeGizmo,
-            );
-       } :
-       engineState; */
 };
