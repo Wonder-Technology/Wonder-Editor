@@ -53,7 +53,7 @@ module CustomEventHandler = {
       |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
            draggedGameObject,
            targetGameObject,
-           WonderEditor.TransformType.Before,
+           Wonderjs.TransformType.Before,
          );
     };
 
@@ -73,7 +73,7 @@ module CustomEventHandler = {
       |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
            draggedGameObject,
            targetGameObject,
-           WonderEditor.TransformType.Before,
+           Wonderjs.TransformType.Before,
          )
 
     | DragIntoTarget =>
@@ -96,7 +96,7 @@ module CustomEventHandler = {
       |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
            draggedGameObject,
            targetGameObject,
-           WonderEditor.TransformType.After,
+           Wonderjs.TransformType.After,
          )
     };
 

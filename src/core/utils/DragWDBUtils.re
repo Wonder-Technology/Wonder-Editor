@@ -77,7 +77,7 @@ let dragWDB =
         |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
              clonedWDBGameObject,
              targetGameObject,
-             WonderEditor.TransformType.Before,
+             Wonderjs.TransformType.Before,
            )
 
       | DragIntoTarget =>
@@ -97,7 +97,7 @@ let dragWDB =
         |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
              clonedWDBGameObject,
              targetGameObject,
-             WonderEditor.TransformType.After,
+             Wonderjs.TransformType.After,
            )
       };
 
