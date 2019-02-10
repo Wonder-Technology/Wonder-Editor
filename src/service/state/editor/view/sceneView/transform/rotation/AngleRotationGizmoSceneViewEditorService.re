@@ -1,20 +1,6 @@
 open EditorType;
 
 open SceneViewType;
-/*
- let computeAngleOnCircle = (event, engineState, editorState) => {
-   let cameraGameObject =
-     SceneViewEditorService.unsafeGetEditCamera(editorState);
-
-   let ray =
-     RayUtils.createPerspectiveCameraRayFromEvent(
-       event,
-       cameraGameObject,
-       (editorState, engineState),
-     );
-   ();
-   /* TODO finish!!! */
- }; */
 
 let unsafeGetDragStartPoint = editorState =>
   RecordRotationGizmoSceneViewEditorService.unsafeGetData(editorState).
@@ -61,7 +47,7 @@ let setLastTotalAngle = (lastTotalAngle, editorState) => {
             RecordRotationGizmoSceneViewEditorService.unsafeGetData(
               editorState,
             ),
-          lastTotalAngle
+          lastTotalAngle,
         },
       }),
   },

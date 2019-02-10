@@ -179,56 +179,6 @@ let getLocalToWorldMatrixTypeArray = (transform, engineState) =>
 
 let lookAt = Wonderjs.TransformAPI.lookAt;
 
-/* TODO move to wonder.js */
-/* TODO test */
-/* let rotateAround = (transform, (angle, center, axis, position), engineState) => {
-     let rot = QuaternionService.setFromAxisAngle(angle, axis);
+let rotateLocalOnAxis = Wonderjs.TransformAPI.rotateLocalOnAxis;
 
-     /* find current direction relative to center */
-     let dir =
-       Wonderjs.Vector3Service.sub(Wonderjs.Vector3Type.Float, position, center);
-
-     /* rotate the direction */
-     let dir = QuaternionService.multiplyVector3(dir, rot);
-
-     engineState
-     |> setPosition(
-          transform,
-          Wonderjs.Vector3Service.add(Wonderjs.Vector3Type.Float, center, dir),
-        )
-     |> setRotation(
-          transform,
-          Wonderjs.QuaternionService.multiply(
-            rot,
-            getRotation(transform, engineState),
-          ),
-        );
-   }; */
-
-let rotateLocalOnAxis = (transform, (angle, localAxis), engineState) => {
-  let rot = QuaternionService.setFromAxisAngle(angle, localAxis);
-
-  engineState
-  |> setLocalRotation(
-       transform,
-       Wonderjs.QuaternionService.multiply(
-         getLocalRotation(transform, engineState),
-         rot,
-       ),
-     );
-};
-
-
-
-let rotateWorldOnAxis = (transform, (angle, localAxis), engineState) => {
-  let rot = QuaternionService.setFromAxisAngle(angle, localAxis);
-
-  engineState
-  |> setLocalRotation(
-       transform,
-       Wonderjs.QuaternionService.multiply(
-         rot,
-         getLocalRotation(transform, engineState),
-       ),
-     );
-};
+let rotateWorldOnAxis = Wonderjs.TransformAPI.rotateWorldOnAxis;

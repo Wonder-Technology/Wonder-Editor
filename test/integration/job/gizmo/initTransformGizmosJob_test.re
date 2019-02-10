@@ -329,19 +329,6 @@ let _ =
         });
 
         describe("create three plane gizmos", () => {
-          /* TODO remove */
-          let _getArrow = (axisGameObject, engineState) =>
-            TransformGizmosTool.getArrowFromAxisGameObject(
-              axisGameObject,
-              engineState,
-            );
-
-          let _getLine = (axisGameObject, engineState) =>
-            TransformGizmosTool.getLineFromAxisGameObject(
-              axisGameObject,
-              engineState,
-            );
-
           test("translation whole gizmo has three plane gizmos", () => {
             let editorState = StateEditorService.getState();
             let engineState = StateEngineService.unsafeGetState();

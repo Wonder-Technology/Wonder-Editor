@@ -14,23 +14,9 @@ let _isCurrentGizmoTranslation = editorState =>
   | _ => false
   };
 
-/* let _isCurrentGizmoRotation = editorState =>
-   switch (
-     RecordTransformGizmoSceneViewEditorService.unsafeGetData(editorState).
-       currentGizmoType
-   ) {
-   | Rotation => true
-   | _ => false
-   }; */
-
 let isTransformGizmoRender = editorState =>
   SceneTreeEditorService.hasCurrentSceneTreeNode(editorState);
 
-/* TODO remove */
 let isTranslationWholeGizmoRender = editorState =>
   SceneTreeEditorService.hasCurrentSceneTreeNode(editorState)
   && _isCurrentGizmoTranslation(editorState);
-
-/* let isRotationWholeGizmoRender = editorState =>
-   SceneTreeEditorService.hasCurrentSceneTreeNode(editorState)
-   && _isCurrentGizmoRotation(editorState); */

@@ -144,7 +144,6 @@ let _affectGizmo =
   let (totalAngle, needRotateAngle) =
     switch (RayUtils.checkIntersectPlane(plane, ray)) {
     | None =>
-      /* TODO test */
       WonderLog.Log.print("not find intersected point!!! 00000000") |> ignore;
 
       (
