@@ -23,6 +23,34 @@ let _refreshInspectorForRotation = (editorState, engineState) => {
   _refreshInspector(editorState, engineState);
 };
 
+let _pushUndoStack =
+    (
+      startData,
+      pushUndoStackWithCopiedEngineStateFunc,
+      editorState,
+      engineState,
+    ) => {
+  let currentSceneTreeNode =
+    SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState);
+
+  let transform =
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      currentSceneTreeNode,
+      engineState,
+    );
+
+  editorState |> StateEditorService.setState |> ignore;
+  engineState |> StateEngineService.setState |> ignore;
+
+  pushUndoStackWithCopiedEngineStateFunc(
+    (UIStateService.getState(), UIStateService.getDispatch()),
+    transform,
+    startData,
+  );
+
+  StateEngineService.unsafeGetState();
+};
+
 let _bindEvent = (editorState, engineState) => {
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
@@ -215,20 +243,16 @@ let _bindEvent = (editorState, engineState) => {
                          editorState,
                        );
 
-                  editorState |> StateEditorService.setState |> ignore;
-                  engineState |> StateEngineService.setState |> ignore;
-
-                  PositionBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
-                    (UIStateService.getState(), UIStateService.getDispatch()),
-                    transform,
-                    OperateTranslationGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartLocalPosition(
-                      editorState,
-                    ),
-                  );
-
-                  let engineState = StateEngineService.unsafeGetState();
                   let engineState =
-                    StateLogicService.renderWhenStop(engineState);
+                    _pushUndoStack(
+                      OperateTranslationGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartLocalPosition(
+                        editorState,
+                      ),
+                      PositionBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState,
+                      editorState,
+                      engineState,
+                    )
+                    |> StateLogicService.renderWhenStop;
 
                   (engineState, event);
                 } :
@@ -236,23 +260,11 @@ let _bindEvent = (editorState, engineState) => {
                   editorState,
                 ) ?
                   {
-                    /* TODO refactor: duplicate */
                     let editorState =
                       editorState
                       |> AngleRotationGizmoSceneViewEditorService.setLastTotalAngle(
                            None,
                          );
-
-                    let currentSceneTreeNode =
-                      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(
-                        editorState,
-                      );
-
-                    let transform =
-                      GameObjectComponentEngineService.unsafeGetTransformComponent(
-                        currentSceneTreeNode,
-                        engineState,
-                      );
 
                     let engineState =
                       engineState
@@ -260,23 +272,16 @@ let _bindEvent = (editorState, engineState) => {
                            editorState,
                          );
 
-                    editorState |> StateEditorService.setState |> ignore;
-                    engineState |> StateEngineService.setState |> ignore;
-
-                    RotationBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
-                      (
-                        UIStateService.getState(),
-                        UIStateService.getDispatch(),
-                      ),
-                      transform,
-                      OperateRotationGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartLocalEulerAngles(
-                        editorState,
-                      ),
-                    );
-
-                    let engineState = StateEngineService.unsafeGetState();
                     let engineState =
-                      StateLogicService.renderWhenStop(engineState);
+                      _pushUndoStack(
+                        OperateRotationGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartLocalEulerAngles(
+                          editorState,
+                        ),
+                        RotationBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState,
+                        editorState,
+                        engineState,
+                      )
+                      |> StateLogicService.renderWhenStop;
 
                     (engineState, event);
                   } :
