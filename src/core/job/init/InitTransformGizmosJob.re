@@ -10,6 +10,19 @@ let _refreshInspector = (editorState, engineState) => {
   (StateEditorService.getState(), StateEngineService.unsafeGetState());
 };
 
+let _refreshInspectorForRotation = (editorState, engineState) => {
+  let editorState =
+    TransformEditorService.removeLocalEulerAngleData(
+      GameObjectComponentEngineService.unsafeGetTransformComponent(
+        SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
+        engineState,
+      ),
+      editorState,
+    );
+
+  _refreshInspector(editorState, engineState);
+};
+
 let _bindEvent = (editorState, engineState) => {
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
@@ -132,11 +145,11 @@ let _bindEvent = (editorState, engineState) => {
                           (editorState, engineState),
                         );
 
-                      let engineState =
-                        StateLogicService.loopBodyWhenStop(engineState);
-
                       let (editorState, engineState) =
-                        _refreshInspector(editorState, engineState);
+                        _refreshInspectorForRotation(
+                          editorState,
+                          engineState,
+                        );
 
                       let engineState =
                         StateLogicService.renderWhenStop(engineState);

@@ -1763,42 +1763,42 @@ let _ =
           });
         });
 
-        describe("test rotation gizmo", () =>
-          describe("affect gizmo", () => {
-            let _prepare =
-                (
-                  ~cameraPos=(0., 16.180339813232422, 11.755704879760742),
-                  ~sandbox,
-                  (),
-                ) => {
-              let gameObject1 =
-                InitTransformGizmosJobTool.prepareOneGameObject(
-                  ~sandbox,
-                  ~viewWidth=500,
-                  ~viewHeight=400,
-                  ~offsetLeft=0,
-                  ~offsetTop=0,
-                  ~cameraPos,
-                  ~gameObjectPos=(0., 0., 0.),
-                  ~gameObjectEulerAngles=(0., 0., 0.),
-                  ~createGameObjectFunc=InitPickingJobTool.createCube,
-                  (),
-                );
-
-              CurrentTransformGizmoSceneViewEditorService.markRotation
-              |> StateLogicService.getAndSetEditorState;
-              TransformGizmosTool.setCoordinateSystem(SceneViewType.Local);
-
-              InitPickingJobTool.triggerPicking(
+        describe("test rotation gizmo", () => {
+          let _prepare =
+              (
+                ~cameraPos=(0., 16.180339813232422, 11.755704879760742),
                 ~sandbox,
-                ~pageX=250,
-                ~pageY=200,
+                (),
+              ) => {
+            let gameObject1 =
+              InitTransformGizmosJobTool.prepareOneGameObject(
+                ~sandbox,
+                ~viewWidth=500,
+                ~viewHeight=400,
+                ~offsetLeft=0,
+                ~offsetTop=0,
+                ~cameraPos,
+                ~gameObjectPos=(0., 0., 0.),
+                ~gameObjectEulerAngles=(0., 0., 0.),
+                ~createGameObjectFunc=InitPickingJobTool.createCube,
                 (),
               );
 
-              gameObject1;
-            };
+            CurrentTransformGizmoSceneViewEditorService.markRotation
+            |> StateLogicService.getAndSetEditorState;
+            TransformGizmosTool.setCoordinateSystem(SceneViewType.Local);
 
+            InitPickingJobTool.triggerPicking(
+              ~sandbox,
+              ~pageX=250,
+              ~pageY=200,
+              (),
+            );
+
+            gameObject1;
+          };
+
+          describe("affect gizmo", () =>
             describe("test affect circle gizmos", () => {
               describe("test affect xy circle", () => {
                 describe(
@@ -1873,21 +1873,7 @@ let _ =
 
                 describe(
                   "should rotate translation whole gizmo along the local z axis",
-                  () => {
-                  let prepareGameObject = sandbox =>
-                    InitTransformGizmosJobTool.prepareOneGameObject(
-                      ~sandbox,
-                      ~viewWidth=500,
-                      ~viewHeight=200,
-                      ~offsetLeft=0,
-                      ~offsetTop=0,
-                      ~cameraPos=(0., 0., 3.),
-                      ~gameObjectPos=(0., 0., 0.),
-                      ~gameObjectEulerAngles=(0., 0., 0.),
-                      ~createGameObjectFunc=InitPickingJobTool.createCube,
-                      (),
-                    );
-
+                  () =>
                   test(
                     {|
             pick gameObject;
@@ -1924,8 +1910,8 @@ let _ =
                       |> Vector3Service.truncate(1)
                       |> expect == (0., 0., (-10.4));
                     },
-                  );
-                });
+                  )
+                );
               });
 
               describe("test affect xy+xz circle", () =>
@@ -2021,9 +2007,102 @@ let _ =
                   )
                 )
               );
+            })
+          );
+
+          describe("test refresh inspector", () => {
+            describe("if select any circle gizmo", () => {
+              test(
+                "remove current scene tree node->local euler angle data from editorState",
+                () => {
+                let _ = _prepare(~sandbox, ());
+
+                EventTransformGizmosTool.triggerMouseDown(
+                  ~sandbox,
+                  ~pageX=226,
+                  ~pageY=172,
+                  (),
+                );
+                EventTransformGizmosTool.triggerMouseMove(
+                  ~sandbox,
+                  ~pageX=226 + 10,
+                  ~pageY=172,
+                  (),
+                );
+                TransformUtils.getTransformRotationData(
+                  GameObjectTool.getCurrentSceneTreeNodeTransform(),
+                )
+                |> ignore;
+                EventTransformGizmosTool.triggerMouseMove(
+                  ~sandbox,
+                  ~pageX=226 + 20,
+                  ~pageY=172,
+                  (),
+                );
+
+                let localEulerAngle =
+                  TransformUtils.getTransformRotationData(
+                    GameObjectTool.getCurrentSceneTreeNodeTransform(),
+                  );
+                localEulerAngle
+                |> Vector3Service.truncate(3)
+                |> expect == (0., 0., (-21.94));
+              });
+              test("refresh", () => {
+                let _ = _prepare(~sandbox, ());
+                let dispatchFuncStub =
+                  ReactTool.createDispatchFuncStub(sandbox);
+
+                EventTransformGizmosTool.triggerMouseDown(
+                  ~sandbox,
+                  ~pageX=226,
+                  ~pageY=172,
+                  (),
+                );
+                EventTransformGizmosTool.triggerMouseMove(
+                  ~sandbox,
+                  ~pageX=226 + 10,
+                  ~pageY=172,
+                  (),
+                );
+
+                dispatchFuncStub
+                |> expect
+                |> toCalledWith([|
+                     AppStore.UpdateAction(
+                       Update([|UpdateStore.Inspector|]),
+                     ),
+                   |]);
+              });
             });
-          })
-        );
+
+            test("else, not refresh inspector", () => {
+              let _ = _prepare(~sandbox, ());
+              let dispatchFuncStub =
+                ReactTool.createDispatchFuncStub(sandbox);
+
+              EventTransformGizmosTool.triggerMouseDown(
+                ~sandbox,
+                ~pageX=0,
+                ~pageY=0,
+                (),
+              );
+              EventTransformGizmosTool.triggerMouseMove(
+                ~sandbox,
+                ~pageX=0 + 20,
+                ~pageY=0,
+                (),
+              );
+
+              dispatchFuncStub
+              |> expect
+              |> not_
+              |> toCalledWith([|
+                   AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
+                 |]);
+            });
+          });
+        });
       });
     });
   });
