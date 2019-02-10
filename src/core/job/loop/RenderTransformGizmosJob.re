@@ -1,3 +1,33 @@
+module RenderTransformGizmos = {
+  let getRenderData = (gameObject, engineState) => {
+    let transform =
+      GameObjectComponentEngineService.unsafeGetTransformComponent(
+        gameObject,
+        engineState,
+      );
+
+    GameObjectComponentEngineService.getGeometryComponent(
+      gameObject,
+      engineState,
+    )
+    |> Js.Option.andThen((. geometry) =>
+         GameObjectComponentEngineService.getBasicMaterialComponent(
+           gameObject,
+           engineState,
+         )
+         |> Js.Option.andThen((. material) =>
+              GameObjectComponentEngineService.getMeshRendererComponent(
+                gameObject,
+                engineState,
+              )
+              |> Js.Option.andThen((. meshRenderer) =>
+                   Some((transform, material, meshRenderer, geometry))
+                 )
+            )
+       );
+  };
+};
+
 module RenderTranslationGizmos = {
   let prepareTranslationAxisGlState = engineState =>
     engineState |> DeviceManagerEngineService.setDepthTest(false);
@@ -32,44 +62,14 @@ module RenderTranslationGizmos = {
   let getRenderDataArr = (gameObjects, engineState) =>
     gameObjects
     |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. renderDataArr, gameObject) => {
-           let transform =
-             GameObjectComponentEngineService.unsafeGetTransformComponent(
-               gameObject,
-               engineState,
-             );
-
+         (. renderDataArr, gameObject) =>
            switch (
-             GameObjectComponentEngineService.getGeometryComponent(
-               gameObject,
-               engineState,
-             )
-             |> Js.Option.andThen((. geometry) =>
-                  GameObjectComponentEngineService.getBasicMaterialComponent(
-                    gameObject,
-                    engineState,
-                  )
-                  |> Js.Option.andThen((. material) =>
-                       GameObjectComponentEngineService.getMeshRendererComponent(
-                         gameObject,
-                         engineState,
-                       )
-                       |> Js.Option.andThen((. meshRenderer) =>
-                            Some((
-                              transform,
-                              material,
-                              meshRenderer,
-                              geometry,
-                            ))
-                          )
-                     )
-                )
+             RenderTransformGizmos.getRenderData(gameObject, engineState)
            ) {
            | None => renderDataArr
            | Some(renderData) =>
              renderDataArr |> ArrayService.push(renderData)
-           };
-         },
+           },
          [||],
        );
 
@@ -136,49 +136,27 @@ module RenderRotationGizmos = {
     |> DeviceManagerEngineService.setBlend(false);
   };
 
-  /* TODO refactor: duplicate */
   let getRenderDataArr = (gameObjectData, engineState) =>
     gameObjectData
     |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. renderDataArr, (gameObject, gizmoType)) => {
-           let transform =
-             GameObjectComponentEngineService.unsafeGetTransformComponent(
-               gameObject,
-               engineState,
-             );
-
+         (. renderDataArr, (gameObject, gizmoType)) =>
            switch (
-             GameObjectComponentEngineService.getGeometryComponent(
-               gameObject,
-               engineState,
-             )
-             |> Js.Option.andThen((. geometry) =>
-                  GameObjectComponentEngineService.getBasicMaterialComponent(
-                    gameObject,
-                    engineState,
-                  )
-                  |> Js.Option.andThen((. material) =>
-                       GameObjectComponentEngineService.getMeshRendererComponent(
-                         gameObject,
-                         engineState,
-                       )
-                       |> Js.Option.andThen((. meshRenderer) =>
-                            Some((
-                              gizmoType,
-                              transform,
-                              material,
-                              meshRenderer,
-                              geometry,
-                            ))
-                          )
-                     )
+             RenderTransformGizmos.getRenderData(gameObject, engineState)
+             |> Js.Option.andThen(
+                  (. (transform, material, meshRenderer, geometry)) =>
+                  Some((
+                    gizmoType,
+                    transform,
+                    material,
+                    meshRenderer,
+                    geometry,
+                  ))
                 )
            ) {
            | None => renderDataArr
            | Some(renderData) =>
              renderDataArr |> ArrayService.push(renderData)
-           };
-         },
+           },
          [||],
        );
 
@@ -367,22 +345,6 @@ let _renderTransformGameObjects =
   engineState;
 };
 
-/* let _renderTranslationGameObjects =
-       (gameObjects, (prepareGlStateFunc, restoreGlStateFunc), engineState) => {
-     let renderDataArr =
-       RenderTranslationGizmos.getRenderDataArr(gameObjects, engineState);
-     let gl = DeviceManagerEngineService.unsafeGetGl(engineState);
-
-     let engineState = engineState |> prepareGlStateFunc;
-
-     let engineState =
-       RenderTranslationGizmos.render(gl, renderDataArr, engineState);
-
-     let engineState = engineState |> restoreGlStateFunc;
-
-     engineState;
-   }; */
-
 let _renderTranslationGizmos = (editorState, engineState) => {
   let translationAxisGameObjects =
     _getTranslationAxisGameObjects(editorState, engineState);
@@ -450,8 +412,6 @@ let _renderRotationGizmos = (editorState, engineState) =>
 
 let renderJob = (_, engineState) => {
   open SceneViewType;
-
-  WonderLog.Log.print("render gizmo") |> ignore;
 
   let editorState = StateEditorService.getState();
 
