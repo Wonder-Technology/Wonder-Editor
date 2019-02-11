@@ -16,6 +16,14 @@ let _ =
       MainEditorSceneTool.initStateWithJob(
         ~sandbox,
         ~isInitJob=false,
+        ~buffer=
+          SettingToolEngine.buildBufferConfigStr(
+            ~geometryCount=100,
+            ~transformCount=100,
+            ~basicMaterialCount=100,
+            ~lightMaterialCount=100,
+            (),
+          ),
         ~noWorkerJobRecord=
           NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
             ~initPipelines=
