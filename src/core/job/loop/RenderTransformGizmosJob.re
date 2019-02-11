@@ -288,6 +288,67 @@ module RenderRotationGizmos = {
   };
 };
 
+module RenderScaleGizmos = {
+  /* TODO refactor duplicate with translation */
+  let prepareScaleGlState = engineState =>
+    engineState |> DeviceManagerEngineService.setDepthTest(false);
+
+  let restoreScaleGlState = engineState =>
+    engineState |> DeviceManagerEngineService.setDepthTest(true);
+
+  let getRenderDataArr = (gameObjects, engineState) =>
+    gameObjects
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. renderDataArr, gameObject) =>
+           switch (
+             RenderTransformGizmos.getRenderData(gameObject, engineState)
+           ) {
+           | None => renderDataArr
+           | Some(renderData) =>
+             renderDataArr |> ArrayService.push(renderData)
+           },
+         [||],
+       );
+
+  let render = (renderDataArr, gl, engineState) =>
+    renderDataArr
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (.
+           engineState,
+           (transformIndex, materialIndex, meshRendererIndex, geometryIndex),
+         ) => {
+           let shaderIndex =
+             RenderJobEngineService.getShaderIndex(
+               materialIndex,
+               engineState,
+             );
+
+           engineState
+           |> RenderJobEngineService.useByShaderIndex(gl, shaderIndex)
+           |> RenderJobEngineService.sendAttributeData(
+                gl,
+                (shaderIndex, geometryIndex),
+              )
+           |> RenderJobEngineService.sendUniformRenderObjectModelData(
+                gl,
+                shaderIndex,
+                transformIndex,
+              )
+           |> RenderJobEngineService.sendUniformRenderObjectMaterialData(
+                gl,
+                shaderIndex,
+                materialIndex,
+              )
+           |> RenderJobEngineService.draw(
+                gl,
+                meshRendererIndex,
+                geometryIndex,
+              );
+         },
+         engineState,
+       );
+};
+
 let _getTranslationAxisGameObjects = (editorState, engineState) =>
   ArrayService.fastConcatArrays([|
     HierarchyGameObjectEngineService.getAllGameObjects(
@@ -410,6 +471,46 @@ let _renderRotationGizmos = (editorState, engineState) =>
        RenderRotationGizmos.restoreRotationGlState,
      ));
 
+let _getScaleGameObjects = (editorState, engineState) =>
+  ArrayService.fastConcatArrays([|
+    HierarchyGameObjectEngineService.getAllGameObjects(
+      OperateScaleGizmoSceneViewEditorService.unsafeGetScaleXAxisGizmo(
+        editorState,
+      ),
+      engineState,
+    ),
+    HierarchyGameObjectEngineService.getAllGameObjects(
+      OperateScaleGizmoSceneViewEditorService.unsafeGetScaleYAxisGizmo(
+        editorState,
+      ),
+      engineState,
+    ),
+    HierarchyGameObjectEngineService.getAllGameObjects(
+      OperateScaleGizmoSceneViewEditorService.unsafeGetScaleZAxisGizmo(
+        editorState,
+      ),
+      engineState,
+    ),
+    [|
+      OperateScaleGizmoSceneViewEditorService.unsafeGetScaleCenterBoxGizmo(
+        editorState,
+      ),
+    |],
+  |]);
+
+let _renderScaleGizmos = (editorState, engineState) => {
+  let scaleGameObjects = _getScaleGameObjects(editorState, engineState);
+
+  engineState
+  |> _renderTransformGameObjects((
+       RenderScaleGizmos.prepareScaleGlState,
+       RenderScaleGizmos.render(
+         RenderScaleGizmos.getRenderDataArr(scaleGameObjects, engineState),
+       ),
+       RenderScaleGizmos.restoreScaleGlState,
+     ));
+};
+
 let renderJob = (_, engineState) => {
   open SceneViewType;
 
@@ -429,6 +530,7 @@ let renderJob = (_, engineState) => {
       ) {
       | Translation => _renderTranslationGizmos(editorState, engineState)
       | Rotation => _renderRotationGizmos(editorState, engineState)
+      | Scale => _renderScaleGizmos(editorState, engineState)
       };
     } :
     engineState;

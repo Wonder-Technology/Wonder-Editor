@@ -4,17 +4,17 @@ open ShapeType;
 
 let buildXZPlane = (editorState, engineState) =>
   PlaneTransformGizmoSceneViewEditorService.buildPlane(
-    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
+    OperateScaleGizmoSceneViewEditorService.unsafeGetScaleXAxisGizmo(
       editorState,
     )
     |> HierarchyGameObjectEngineService.getChildren(_, engineState)
     |> ArrayService.unsafeGetFirst,
-    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
+    OperateScaleGizmoSceneViewEditorService.unsafeGetScaleZAxisGizmo(
       editorState,
     )
     |> HierarchyGameObjectEngineService.getChildren(_, engineState)
     |> ArrayService.unsafeGetFirst,
-    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+    OperateScaleGizmoSceneViewEditorService.unsafeGetScaleWholeGizmo(
       editorState,
     ),
     engineState,
@@ -22,17 +22,17 @@ let buildXZPlane = (editorState, engineState) =>
 
 let buildYZPlane = (editorState, engineState) =>
   PlaneTransformGizmoSceneViewEditorService.buildPlane(
-    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
+    OperateScaleGizmoSceneViewEditorService.unsafeGetScaleYAxisGizmo(
       editorState,
     )
     |> HierarchyGameObjectEngineService.getChildren(_, engineState)
     |> ArrayService.unsafeGetFirst,
-    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
+    OperateScaleGizmoSceneViewEditorService.unsafeGetScaleZAxisGizmo(
       editorState,
     )
     |> HierarchyGameObjectEngineService.getChildren(_, engineState)
     |> ArrayService.unsafeGetFirst,
-    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+    OperateScaleGizmoSceneViewEditorService.unsafeGetScaleWholeGizmo(
       editorState,
     ),
     engineState,
@@ -40,17 +40,17 @@ let buildYZPlane = (editorState, engineState) =>
 
 let buildXYPlane = (editorState, engineState) =>
   PlaneTransformGizmoSceneViewEditorService.buildPlane(
-    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
+    OperateScaleGizmoSceneViewEditorService.unsafeGetScaleXAxisGizmo(
       editorState,
     )
     |> HierarchyGameObjectEngineService.getChildren(_, engineState)
     |> ArrayService.unsafeGetFirst,
-    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
+    OperateScaleGizmoSceneViewEditorService.unsafeGetScaleYAxisGizmo(
       editorState,
     )
     |> HierarchyGameObjectEngineService.getChildren(_, engineState)
     |> ArrayService.unsafeGetFirst,
-    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+    OperateScaleGizmoSceneViewEditorService.unsafeGetScaleWholeGizmo(
       editorState,
     ),
     engineState,

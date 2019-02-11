@@ -122,7 +122,7 @@ let _getMoveStartDataForXAxis = (ray, (editorState, engineState)) =>
       editorState,
       engineState,
     ),
-    FindPlaneForCheckIntersectUtils.findMostOrthogonalPlaneForXAxis,
+    FindPlaneForCheckIntersectTranslationUtils.findMostOrthogonalPlaneForXAxis,
     (editorState, engineState),
   );
 
@@ -133,7 +133,7 @@ let _getMoveStartDataForYAxis = (ray, (editorState, engineState)) =>
       editorState,
       engineState,
     ),
-    FindPlaneForCheckIntersectUtils.findMostOrthogonalPlaneForYAxis,
+    FindPlaneForCheckIntersectTranslationUtils.findMostOrthogonalPlaneForYAxis,
     (editorState, engineState),
   );
 
@@ -144,7 +144,7 @@ let _getMoveStartDataForZAxis = (ray, (editorState, engineState)) =>
       editorState,
       engineState,
     ),
-    FindPlaneForCheckIntersectUtils.findMostOrthogonalPlaneForZAxis,
+    FindPlaneForCheckIntersectTranslationUtils.findMostOrthogonalPlaneForZAxis,
     (editorState, engineState),
   );
 
@@ -251,7 +251,6 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
               ),
               engineState,
             ),
-            CurrentTranslationGizmosUtils.isAxisSelected(SceneViewType.XAxis),
           ),
           SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXAxisGizmo,
           _getMoveStartDataForXAxis,
@@ -283,9 +282,6 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
                 ),
                 engineState,
               ),
-              CurrentTranslationGizmosUtils.isAxisSelected(
-                SceneViewType.YAxis,
-              ),
             ),
             SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationYAxisGizmo,
             _getMoveStartDataForYAxis,
@@ -316,9 +312,6 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
                     engineState,
                   ),
                   engineState,
-                ),
-                CurrentTranslationGizmosUtils.isAxisSelected(
-                  SceneViewType.ZAxis,
                 ),
               ),
               SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationZAxisGizmo,
@@ -356,9 +349,6 @@ let _handleSelectPlaneGizmo =
               ),
               engineState,
             ),
-            CurrentTranslationGizmosUtils.isPlaneSelected(
-              SceneViewType.XYPlane,
-            ),
           ),
           SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXYPlaneGizmo,
           _getMoveStartDataForXYPlane,
@@ -390,9 +380,6 @@ let _handleSelectPlaneGizmo =
                 ),
                 engineState,
               ),
-              CurrentTranslationGizmosUtils.isPlaneSelected(
-                SceneViewType.XZPlane,
-              ),
             ),
             SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXZPlaneGizmo,
             _getMoveStartDataForXZPlane,
@@ -423,9 +410,6 @@ let _handleSelectPlaneGizmo =
                     engineState,
                   ),
                   engineState,
-                ),
-                CurrentTranslationGizmosUtils.isPlaneSelected(
-                  SceneViewType.YZPlane,
                 ),
               ),
               SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationYZPlaneGizmo,

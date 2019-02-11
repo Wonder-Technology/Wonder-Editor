@@ -103,7 +103,10 @@ let _bindEvent = (editorState, engineState) => {
                                editorState,
                                engineState,
                              ),
-                           )
+                           );
+
+                      let editorState =
+                        editorState
                         |> OperateTranslationGizmoSceneViewEditorService.setCurrentSceneTreeNodeStartLocalPosition(
                              InitTransformGizmosUtils.getCurrentSceneTreeNodeLocalPosition(
                                editorState,
@@ -131,6 +134,24 @@ let _bindEvent = (editorState, engineState) => {
                         editorState,
                         engineState,
                       );
+                    | Scale =>
+                      let editorState =
+                        editorState
+                        |> OperateScaleGizmoSceneViewEditorService.setCurrentSceneTreeNodeStartLocalScale(
+                             InitTransformGizmosUtils.getCurrentSceneTreeNodeLocalScale(
+                               editorState,
+                               engineState,
+                             ),
+                           );
+
+                      let editorState =
+                        editorState
+                        |> SelectScaleGizmoUtils.selectScaleGizmo(
+                             event,
+                             engineState,
+                           );
+
+                      (editorState, engineState);
                     };
                   } :
                   (
@@ -199,7 +220,25 @@ let _bindEvent = (editorState, engineState) => {
 
                       (editorState, engineState);
                     } :
-                    (editorState, engineState);
+                    SelectScaleGizmoSceneViewEditorService.isSelectAnyScaleGizmo(
+                      editorState,
+                    ) ?
+                      {
+                        let (editorState, engineState) =
+                          AffectScaleGizmosUtils.affectScaleGizmo(
+                            event,
+                            (editorState, engineState),
+                          );
+
+                        let (editorState, engineState) =
+                          _refreshInspector(editorState, engineState);
+
+                        let engineState =
+                          StateLogicService.renderWhenStop(engineState);
+
+                        (editorState, engineState);
+                      } :
+                      (editorState, engineState);
 
               editorState |> StateEditorService.setState |> ignore;
 
@@ -285,7 +324,44 @@ let _bindEvent = (editorState, engineState) => {
 
                     (engineState, event);
                   } :
-                  (engineState, event);
+                  SelectScaleGizmoSceneViewEditorService.isSelectAnyScaleGizmo(
+                    editorState,
+                  ) ?
+                    {
+                      let currentSceneTreeNode =
+                        SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(
+                          editorState,
+                        );
+
+                      let transform =
+                        GameObjectComponentEngineService.unsafeGetTransformComponent(
+                          currentSceneTreeNode,
+                          engineState,
+                        );
+
+                      let engineState =
+                        engineState
+                        |> CurrentScaleGizmosUtils.restoreScaleGizmoColor(
+                             editorState,
+                           );
+
+                      /* let engineState =
+                         _pushUndoStack(
+                           OperateScaleGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartLocalPosition(
+                             editorState,
+                           ),
+                           PositionBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState,
+                           editorState,
+                           engineState,
+                         )
+                         |> StateLogicService.renderWhenStop; */
+
+                      let engineState =
+                        engineState |> StateLogicService.renderWhenStop;
+
+                      (engineState, event);
+                    } :
+                    (engineState, event);
             } :
             (engineState, event),
       ~state=engineState,
@@ -333,6 +409,14 @@ let _createTransformGizmos = ((editorState, engineState)) => {
   let (engineState, rotationWholeGizmo, (yzGizmo, xzGizmo, xyGizmo)) =
     CreateRotationGizmosUtils.createRotationGizmos(engineState);
 
+  let (
+    engineState,
+    scaleWholeGizmo,
+    (xAxisScaleGizmo, yAxisScaleGizmo, zAxisScaleGizmo),
+    centerBoxScaleGizmo,
+  ) =
+    CreateScaleGizmosUtils.createScaleGizmos(engineState);
+
   let editorState =
     editorState
     |> CreateTransformGizmosUtils.setToEditorState(
@@ -342,6 +426,11 @@ let _createTransformGizmos = ((editorState, engineState)) => {
            (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo),
          ),
          (rotationWholeGizmo, (yzGizmo, xzGizmo, xyGizmo)),
+         (
+           scaleWholeGizmo,
+           (xAxisScaleGizmo, yAxisScaleGizmo, zAxisScaleGizmo),
+           centerBoxScaleGizmo,
+         ),
        );
 
   (editorState, engineState);

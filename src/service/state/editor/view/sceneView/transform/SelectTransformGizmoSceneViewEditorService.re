@@ -1,7 +1,8 @@
 let markNotSelectAnyTransformGizmo = editorState =>
   editorState
   |> SelectTranslationGizmoSceneViewEditorService.markNotSelectAnyTranslationGizmo
-  |> SelectRotationGizmoSceneViewEditorService.markNotSelectAnyRotationGizmo;
+  |> SelectRotationGizmoSceneViewEditorService.markNotSelectAnyRotationGizmo
+  |> SelectScaleGizmoSceneViewEditorService.markNotSelectAnyScaleGizmo;
 
 let isSelectAnyTransformGizmo = editorState =>
   SelectTranslationGizmoSceneViewEditorService.isSelectAnyTranslationGizmo(
@@ -9,4 +10,5 @@ let isSelectAnyTransformGizmo = editorState =>
   )
   || SelectRotationGizmoSceneViewEditorService.isSelectAnyRotationGizmo(
        editorState,
-     );
+     )
+  || SelectScaleGizmoSceneViewEditorService.isSelectAnyScaleGizmo(editorState);

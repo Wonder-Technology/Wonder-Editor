@@ -48,7 +48,7 @@ let _computeCurrentSceneTreeNodeNewPositionForMoveXAxis =
       editorState,
       engineState,
     ),
-    FindPlaneForCheckIntersectUtils.findMostOrthogonalPlaneForXAxis,
+    FindPlaneForCheckIntersectTranslationUtils.findMostOrthogonalPlaneForXAxis,
     (editorState, engineState),
   );
 
@@ -60,7 +60,7 @@ let _computeCurrentSceneTreeNodeNewPositionForMoveYAxis =
       editorState,
       engineState,
     ),
-    FindPlaneForCheckIntersectUtils.findMostOrthogonalPlaneForYAxis,
+    FindPlaneForCheckIntersectTranslationUtils.findMostOrthogonalPlaneForYAxis,
     (editorState, engineState),
   );
 
@@ -72,7 +72,7 @@ let _computeCurrentSceneTreeNodeNewPositionForMoveZAxis =
       editorState,
       engineState,
     ),
-    FindPlaneForCheckIntersectUtils.findMostOrthogonalPlaneForZAxis,
+    FindPlaneForCheckIntersectTranslationUtils.findMostOrthogonalPlaneForZAxis,
     (editorState, engineState),
   );
 
@@ -208,7 +208,7 @@ let _affectAxisGizmo = (ray, editorState, engineState) =>
         ) :
         (editorState, engineState);
 
-let _affectPlaneGizmo = (ray, _affectAxisGizmoFunc, editorState, engineState) =>
+let _affectPlaneGizmo = (ray, affectAxisGizmoFunc, editorState, engineState) =>
   SelectTranslationGizmoSceneViewEditorService.isTranslationXYPlaneGizmoSelected(
     editorState,
   ) ?
@@ -239,7 +239,7 @@ let _affectPlaneGizmo = (ray, _affectAxisGizmoFunc, editorState, engineState) =>
           ),
           (editorState, engineState),
         ) :
-        _affectAxisGizmoFunc(ray, editorState, engineState);
+        affectAxisGizmoFunc(ray, editorState, engineState);
 
 let affectTranslationGizmo = (event, (editorState, engineState)) => {
   let cameraGameObject =

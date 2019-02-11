@@ -1,34 +1,18 @@
 open SceneViewType;
 
-/* let isSelected = (gizmoType, editorState) =>
-  switch (gizmoType) {
-  | XYCircle =>
-    SelectRotationGizmoSceneViewEditorService.isXYCircleGizmoSelected(
-      editorState,
-    )
-  | XZCircle =>
-    SelectRotationGizmoSceneViewEditorService.isXZCircleGizmoSelected(
-      editorState,
-    )
-  | YZCircle =>
-    SelectRotationGizmoSceneViewEditorService.isYZCircleGizmoSelected(
-      editorState,
-    )
-  }; */
-
-let restoreRotationGizmoColor = (editorState, engineState) => {
+let restoreScaleGizmoColor = (editorState, engineState) => {
   let engineState =
     CurrentTransformGizmosUtils.setColor(
       GameObjectEngineService.getAllBasicMaterials(
         HierarchyGameObjectEngineService.getAllGameObjects(
-          OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
+          OperateScaleGizmoSceneViewEditorService.unsafeGetScaleXAxisGizmo(
             editorState,
           ),
           engineState,
         ),
         engineState,
       ),
-      DataRotationGizmoSceneViewEditorService.getXYCircleColor(),
+      DataScaleGizmoSceneViewEditorService.getXAxisColor(),
       engineState,
     );
 
@@ -36,14 +20,14 @@ let restoreRotationGizmoColor = (editorState, engineState) => {
     CurrentTransformGizmosUtils.setColor(
       GameObjectEngineService.getAllBasicMaterials(
         HierarchyGameObjectEngineService.getAllGameObjects(
-          OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
+          OperateScaleGizmoSceneViewEditorService.unsafeGetScaleYAxisGizmo(
             editorState,
           ),
           engineState,
         ),
         engineState,
       ),
-      DataRotationGizmoSceneViewEditorService.getXZCircleColor(),
+      DataScaleGizmoSceneViewEditorService.getYAxisColor(),
       engineState,
     );
 
@@ -51,14 +35,14 @@ let restoreRotationGizmoColor = (editorState, engineState) => {
     CurrentTransformGizmosUtils.setColor(
       GameObjectEngineService.getAllBasicMaterials(
         HierarchyGameObjectEngineService.getAllGameObjects(
-          OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
+          OperateScaleGizmoSceneViewEditorService.unsafeGetScaleZAxisGizmo(
             editorState,
           ),
           engineState,
         ),
         engineState,
       ),
-      DataRotationGizmoSceneViewEditorService.getYZCircleColor(),
+      DataScaleGizmoSceneViewEditorService.getZAxisColor(),
       engineState,
     );
 

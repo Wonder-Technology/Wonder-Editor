@@ -18,6 +18,12 @@ type rotationGizmo =
   | XZCircle
   | YZCircle;
 
+type scaleGizmo =
+  | XAxis
+  | YAxis
+  | ZAxis
+  | CenterBox;
+
 type gameObject = Wonderjs.GameObjectPrimitiveType.gameObject;
 
 type translationGizmoData = {
@@ -53,6 +59,21 @@ type rotationGizmoData = {
   currentSceneTreeNodeStartLocalEulerAngles: option((float, float, float)),
 };
 
+type scaleGizmoData = {
+  scaleWholeGizmo: gameObject,
+  scaleXAxisGizmo: gameObject,
+  scaleYAxisGizmo: gameObject,
+  scaleZAxisGizmo: gameObject,
+  scaleCenterBoxGizmo: gameObject,
+  isScaleXAxisGizmoSelected: bool,
+  isScaleYAxisGizmoSelected: bool,
+  isScaleZAxisGizmoSelected: bool,
+  isScaleCenterBoxGizmoSelected: bool,
+  dragStartMouseLocation: option((int, int)),
+  dragStartPointInLocalCoordinateSystem: option((float, float, float)),
+  currentSceneTreeNodeStartLocalScale: option((float, float, float)),
+};
+
 type coordinateSystem =
   | World
   | Local;
@@ -62,6 +83,7 @@ type transformGizmoData = {
   coordinateSystem,
   translationGizmoData,
   rotationGizmoData,
+  scaleGizmoData,
 };
 
 type sceneViewRecord = {

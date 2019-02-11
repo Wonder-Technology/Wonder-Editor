@@ -24,3 +24,12 @@ let getCurrentSceneTreeNodeLocalEulerAngles = (editorState, engineState) =>
     ),
     engineState,
   );
+
+let getCurrentSceneTreeNodeLocalScale = (editorState, engineState) =>
+  TransformEngineService.getLocalScale(
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
+      engineState,
+    ),
+    engineState,
+  );

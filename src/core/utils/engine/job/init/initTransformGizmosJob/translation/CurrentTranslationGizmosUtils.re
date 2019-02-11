@@ -1,6 +1,6 @@
 open SceneViewType;
 
-let isAxisSelected = (gizmoType, editorState) =>
+/* let isAxisSelected = (gizmoType, editorState) =>
   switch (gizmoType) {
   | XAxis =>
     SelectTranslationGizmoSceneViewEditorService.isTranslationXAxisGizmoSelected(
@@ -30,7 +30,7 @@ let isPlaneSelected = (gizmoType, editorState) =>
     SelectTranslationGizmoSceneViewEditorService.isTranslationYZPlaneGizmoSelected(
       editorState,
     )
-  };
+  }; */
 
 let restoreTranslationGizmoColor = (editorState, engineState) => {
   let engineState =

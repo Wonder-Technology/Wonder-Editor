@@ -37,6 +37,11 @@ let setToEditorState =
         (xyPlaneGizmo, xzPlaneGizmo, yzPlaneGizmo),
       ),
       (rotationWholeGizmo, (yzGizmo, xzGizmo, xyGizmo)),
+      (
+        scaleWholeGizmo,
+        (xAxisScaleGizmo, yAxisScaleGizmo, zAxisScaleGizmo),
+        centerBoxScaleGizmo,
+      ),
       editorState: EditorType.editorState,
     )
     : EditorType.editorState => {
@@ -77,6 +82,20 @@ let setToEditorState =
           dragStartPoint: None,
           lastTotalAngle: None,
           currentSceneTreeNodeStartLocalEulerAngles: None,
+        },
+        scaleGizmoData: {
+          scaleWholeGizmo,
+          scaleXAxisGizmo: xAxisScaleGizmo,
+          scaleYAxisGizmo: yAxisScaleGizmo,
+          scaleZAxisGizmo: zAxisScaleGizmo,
+          scaleCenterBoxGizmo: centerBoxScaleGizmo,
+          isScaleXAxisGizmoSelected: false,
+          isScaleYAxisGizmoSelected: false,
+          isScaleZAxisGizmoSelected: false,
+          isScaleCenterBoxGizmoSelected: false,
+          dragStartMouseLocation: None,
+          dragStartPointInLocalCoordinateSystem: None,
+          currentSceneTreeNodeStartLocalScale: None,
         },
       }),
   },
