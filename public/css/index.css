@@ -418,6 +418,8 @@ html, body {
                 background-image: url("../img/translation.png"); }
               .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item .transform-gizmo-switch .rotation {
                 background-image: url("../img/rotation.png"); }
+              .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item .transform-gizmo-switch .scale {
+                background-image: url("../img/scale.png"); }
               .wonder-app-component .wonder-controller-component .header-controller .controller-transform .header-item .component-item .transform-gizmo-switch .select {
                 background-color: white;
                 background-size: 100%;

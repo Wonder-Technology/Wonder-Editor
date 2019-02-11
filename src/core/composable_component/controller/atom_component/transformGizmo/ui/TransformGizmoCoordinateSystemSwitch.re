@@ -36,18 +36,24 @@ let reducer = (action, state) =>
   };
 
 let render =
-    (onChangeFunc, ({state, send}: ReasonReact.self('a, 'b, 'c)) as self) =>
+    (
+      isDisable,
+      onChangeFunc,
+      ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
+    ) =>
   <article
     key="TransformGizmoCoordinateSystemSwitch"
     className="transform-gizmo-coordinate-system-switch">
-    <button onClick=(_e => Method.change((state, send), onChangeFunc))>
+    <button
+      disabled=isDisable
+      onClick=(_e => Method.change((state, send), onChangeFunc))>
       (DomHelper.textEl(Method.getText(state.selectedCoordinateSystem)))
     </button>
   </article>;
 
-let make = (~defaultCoordinateSystem, ~onChange, _children) => {
+let make = (~defaultCoordinateSystem, ~isDisable, ~onChange, _children) => {
   ...component,
   initialState: () => {selectedCoordinateSystem: defaultCoordinateSystem},
   reducer,
-  render: self => render(onChange, self),
+  render: self => render(isDisable, onChange, self),
 };

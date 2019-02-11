@@ -2,7 +2,8 @@ type rect = (int, int, int, int);
 
 type gizmo =
   | Translation
-  | Rotation;
+  | Rotation
+  | Scale;
 
 type translationGizmo =
   | XAxis

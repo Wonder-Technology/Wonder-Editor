@@ -11,6 +11,7 @@ module Method = {
       switch (type_) {
       | Translation => "translation"
       | Rotation => "rotation"
+      | Scale => "scale"
       }
     );
 

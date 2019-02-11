@@ -42,7 +42,7 @@ module Method = {
       </div>
     </div>;
 
-  let _handleChangeCurrentTransformGizmoType = type_ => {
+  let _handleChangeCurrentTransformGizmoType = (dispatchFunc, type_) => {
     open SceneViewType;
 
     StateEditorService.getState()
@@ -52,6 +52,9 @@ module Method = {
     |> ignore;
 
     StateLogicService.getAndRefreshEngineState();
+
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Controller|])))
+    |> ignore;
   };
 
   let _handleChangeCurrentTransformGizmoCoordinateSystem = coordinateSystem => {
@@ -75,6 +78,12 @@ module Method = {
     CoordinateSystemTransformGizmoSceneViewEditorService.getCoordinateSystem
     |> StateLogicService.getEditorState;
 
+  let _isTransformGizmoCoordinateSystemSwitchDisable = () =>
+    switch (_getCurrentTransformGizmoType()) {
+    | Scale => true
+    | _ => false
+    };
+
   let buildTransformComponent = (uiState, dispatchFunc) =>
     <div className="header-item">
       <div className="component-item">
@@ -83,11 +92,18 @@ module Method = {
           data=[|
             {
               type_: SceneViewType.Translation,
-              onChangeFunc: _handleChangeCurrentTransformGizmoType,
+              onChangeFunc:
+                _handleChangeCurrentTransformGizmoType(dispatchFunc),
             },
             {
               type_: SceneViewType.Rotation,
-              onChangeFunc: _handleChangeCurrentTransformGizmoType,
+              onChangeFunc:
+                _handleChangeCurrentTransformGizmoType(dispatchFunc),
+            },
+            {
+              type_: SceneViewType.Scale,
+              onChangeFunc:
+                _handleChangeCurrentTransformGizmoType(dispatchFunc),
             },
           |]
           defaultType=(_getCurrentTransformGizmoType())
@@ -96,6 +112,7 @@ module Method = {
           key=(DomHelper.getRandomKey())
           onChange=_handleChangeCurrentTransformGizmoCoordinateSystem
           defaultCoordinateSystem=(_getCurrentTransformGizmoCoordinateSystem())
+          isDisable=(_isTransformGizmoCoordinateSystemSwitchDisable())
         />
       </div>
     </div>;
