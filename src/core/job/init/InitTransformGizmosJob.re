@@ -142,6 +142,36 @@ let _bindEvent = (editorState, engineState) => {
                                editorState,
                                engineState,
                              ),
+                           )
+                        |> OperateScaleGizmoSceneViewEditorService.setDragStartScaleWholeGizmoInvertLocalToWorldMatrixTypeArray(
+                             TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
+                               OperateScaleGizmoSceneViewEditorService.unsafeGetScaleWholeGizmo(
+                                 editorState,
+                               ),
+                               engineState,
+                             )
+                             |> Wonderjs.Matrix4Service.invert(
+                                  _,
+                                  Wonderjs.Matrix4Service.createIdentityMatrix4(),
+                                ),
+                           )
+                        |> OperateScaleGizmoSceneViewEditorService.setDragStartXAxisNormalizedVec(
+                             AxisScaleGizmoSceneViewEditorService.getXAxisNormalizedVec(
+                               editorState,
+                               engineState,
+                             ),
+                           )
+                        |> OperateScaleGizmoSceneViewEditorService.setDragStartYAxisNormalizedVec(
+                             AxisScaleGizmoSceneViewEditorService.getYAxisNormalizedVec(
+                               editorState,
+                               engineState,
+                             ),
+                           )
+                        |> OperateScaleGizmoSceneViewEditorService.setDragStartZAxisNormalizedVec(
+                             AxisScaleGizmoSceneViewEditorService.getZAxisNormalizedVec(
+                               editorState,
+                               engineState,
+                             ),
                            );
 
                       let editorState =

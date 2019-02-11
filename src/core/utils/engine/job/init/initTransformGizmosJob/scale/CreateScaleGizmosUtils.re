@@ -2,7 +2,7 @@ let _createAxisGizmo = (color, engineState) => {
   let (engineState, axisGameObject) =
     GameObjectEngineService.create(engineState);
 
-  let (engineState, boxGeometry) =
+  let (engineState, cubeGeometry) =
     GeometryEngineService.createCubeGeometry(engineState);
 
   let (engineState, cylinderGeometry) =
@@ -15,9 +15,9 @@ let _createAxisGizmo = (color, engineState) => {
       engineState,
     );
 
-  let (engineState, boxGameObject, boxMaterial, boxMeshRenderer) =
+  let (engineState, cubeGameObject, cubeMaterial, cubeMeshRenderer) =
     engineState
-    |> CreateTransformGizmosUtils.createBasicGameObject(boxGeometry);
+    |> CreateTransformGizmosUtils.createBasicGameObject(cubeGeometry);
 
   let (
     engineState,
@@ -30,14 +30,14 @@ let _createAxisGizmo = (color, engineState) => {
 
   let engineState =
     engineState
-    |> GameObjectEngineService.setGameObjectName("box", boxGameObject)
+    |> GameObjectEngineService.setGameObjectName("cube", cubeGameObject)
     |> GameObjectEngineService.setGameObjectName("line", cylinderGameObject);
 
   let engineState =
     engineState
-    |> BasicMaterialEngineService.setColor(color, boxMaterial)
+    |> BasicMaterialEngineService.setColor(color, cubeMaterial)
     |> MeshRendererEngineService.setMeshRendererIsRender(
-         boxMeshRenderer,
+         cubeMeshRenderer,
          false,
        )
     |> BasicMaterialEngineService.setColor(color, cylinderMaterial)
@@ -53,7 +53,7 @@ let _createAxisGizmo = (color, engineState) => {
          (0., 2.5, 0.),
        )
     |> TransformGameObjectEngineService.setLocalPosition(
-         boxGameObject,
+         cubeGameObject,
          (0., 5.5, 0.),
        );
 
@@ -61,7 +61,7 @@ let _createAxisGizmo = (color, engineState) => {
     engineState
     |> HierarchyGameObjectEngineService.addChild(
          axisGameObject,
-         boxGameObject,
+         cubeGameObject,
        )
     |> HierarchyGameObjectEngineService.addChild(
          axisGameObject,
@@ -111,28 +111,28 @@ let _createAxisGizmos = engineState => {
 };
 
 let _createCenterBoxGizmo = engineState => {
-  let (engineState, boxGameObject) =
+  let (engineState, cubeGameObject) =
     GameObjectEngineService.create(engineState);
 
-  let (engineState, boxGeometry) =
+  let (engineState, cubeGeometry) =
     GeometryEngineService.createCubeGeometry(engineState);
 
-  let (engineState, boxGameObject, boxMaterial, boxMeshRenderer) =
+  let (engineState, cubeGameObject, cubeMaterial, cubeMeshRenderer) =
     engineState
-    |> CreateTransformGizmosUtils.createBasicGameObject(boxGeometry);
+    |> CreateTransformGizmosUtils.createBasicGameObject(cubeGeometry);
 
   let engineState =
     engineState
     |> BasicMaterialEngineService.setColor(
          DataScaleGizmoSceneViewEditorService.getCenterBoxColor(),
-         boxMaterial,
+         cubeMaterial,
        )
     |> MeshRendererEngineService.setMeshRendererIsRender(
-         boxMeshRenderer,
+         cubeMeshRenderer,
          false,
        );
 
-  (engineState, boxGameObject);
+  (engineState, cubeGameObject);
 };
 
 let createScaleGizmos = engineState => {

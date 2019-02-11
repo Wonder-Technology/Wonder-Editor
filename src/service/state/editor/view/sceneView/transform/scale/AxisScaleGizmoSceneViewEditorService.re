@@ -18,9 +18,9 @@ let _getAxisNormalizedVec = (scaleAxisGizmo, (editorState, engineState)) =>
     Wonderjs.Vector3Type.Float,
     TransformEngineService.getPosition(
       GameObjectComponentEngineService.unsafeGetTransformComponent(
-        scaleAxisGizmo,
-        /* |> HierarchyGameObjectEngineService.getChildren(_, engineState)
-           |> ArrayService.unsafeGetFirst, */
+        scaleAxisGizmo
+        |> HierarchyGameObjectEngineService.getChildren(_, engineState)
+        |> ArrayService.unsafeGetFirst,
         engineState,
       ),
       engineState,

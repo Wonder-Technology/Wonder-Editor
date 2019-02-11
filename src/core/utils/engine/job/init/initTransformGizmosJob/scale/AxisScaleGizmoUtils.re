@@ -36,25 +36,11 @@ let _getIntersectedPointWithAxisInLocalCoordinateSystemForAxis =
       (editorState, engineState),
     );
 
-  /* let axisGameObjectStartPoint =
-     AxisScaleGizmoSceneViewEditorService.getAxisGizmoPos(
-       editorState,
-       engineState,
-     ); */
-
   Wonderjs.Vector3Service.transformMat4Tuple(
-    /* PointService.projectPointToLine(point, axisGameObjectStartPoint, axisVec), */
     point,
-    TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
-      OperateScaleGizmoSceneViewEditorService.unsafeGetScaleWholeGizmo(
-        editorState,
-      ),
-      engineState,
-    )
-    |> Wonderjs.Matrix4Service.invert(
-         _,
-         Wonderjs.Matrix4Service.createIdentityMatrix4(),
-       ),
+    OperateScaleGizmoSceneViewEditorService.unsafeGetDragStartScaleWholeGizmoInvertLocalToWorldMatrixTypeArray(
+      editorState,
+    ),
   )
   |> onlyRemainFunc;
 };
@@ -63,9 +49,8 @@ let getIntersectedPointWithAxisInLocalCoordinateSystemForXAxis =
     (ray, (editorState, engineState)) =>
   _getIntersectedPointWithAxisInLocalCoordinateSystemForAxis(
     ray,
-    AxisScaleGizmoSceneViewEditorService.getXAxisNormalizedVec(
+    OperateScaleGizmoSceneViewEditorService.unsafeGetDragStartXAxisNormalizedVec(
       editorState,
-      engineState,
     ),
     (
       FindPlaneForCheckIntersectScaleUtils.findMostOrthogonalPlaneForXAxis,
@@ -78,9 +63,8 @@ let getIntersectedPointWithAxisInLocalCoordinateSystemForYAxis =
     (ray, (editorState, engineState)) =>
   _getIntersectedPointWithAxisInLocalCoordinateSystemForAxis(
     ray,
-    AxisScaleGizmoSceneViewEditorService.getYAxisNormalizedVec(
+    OperateScaleGizmoSceneViewEditorService.unsafeGetDragStartYAxisNormalizedVec(
       editorState,
-      engineState,
     ),
     (
       FindPlaneForCheckIntersectScaleUtils.findMostOrthogonalPlaneForYAxis,
@@ -93,9 +77,8 @@ let getIntersectedPointWithAxisInLocalCoordinateSystemForZAxis =
     (ray, (editorState, engineState)) =>
   _getIntersectedPointWithAxisInLocalCoordinateSystemForAxis(
     ray,
-    AxisScaleGizmoSceneViewEditorService.getZAxisNormalizedVec(
+    OperateScaleGizmoSceneViewEditorService.unsafeGetDragStartZAxisNormalizedVec(
       editorState,
-      engineState,
     ),
     (
       FindPlaneForCheckIntersectScaleUtils.findMostOrthogonalPlaneForZAxis,

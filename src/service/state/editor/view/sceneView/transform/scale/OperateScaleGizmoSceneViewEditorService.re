@@ -47,3 +47,104 @@ let setCurrentSceneTreeNodeStartLocalScale =
       }),
   },
 };
+
+let unsafeGetDragStartXAxisNormalizedVec = editorState =>
+  RecordScaleGizmoSceneViewEditorService.unsafeGetData(editorState).
+    dragStartXAxisNormalizedVec
+  |> OptionService.unsafeGet;
+
+let setDragStartXAxisNormalizedVec =
+    (dragStartXAxisNormalizedVec, editorState) => {
+  ...editorState,
+  sceneViewRecord: {
+    ...editorState.sceneViewRecord,
+    transformGizmoData:
+      Some({
+        ...
+          RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+            editorState,
+          ),
+        scaleGizmoData: {
+          ...
+            RecordScaleGizmoSceneViewEditorService.unsafeGetData(editorState),
+          dragStartXAxisNormalizedVec: Some(dragStartXAxisNormalizedVec),
+        },
+      }),
+  },
+};
+
+let unsafeGetDragStartYAxisNormalizedVec = editorState =>
+  RecordScaleGizmoSceneViewEditorService.unsafeGetData(editorState).
+    dragStartYAxisNormalizedVec
+  |> OptionService.unsafeGet;
+
+let setDragStartYAxisNormalizedVec =
+    (dragStartYAxisNormalizedVec, editorState) => {
+  ...editorState,
+  sceneViewRecord: {
+    ...editorState.sceneViewRecord,
+    transformGizmoData:
+      Some({
+        ...
+          RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+            editorState,
+          ),
+        scaleGizmoData: {
+          ...
+            RecordScaleGizmoSceneViewEditorService.unsafeGetData(editorState),
+          dragStartYAxisNormalizedVec: Some(dragStartYAxisNormalizedVec),
+        },
+      }),
+  },
+};
+
+let unsafeGetDragStartZAxisNormalizedVec = editorState =>
+  RecordScaleGizmoSceneViewEditorService.unsafeGetData(editorState).
+    dragStartZAxisNormalizedVec
+  |> OptionService.unsafeGet;
+
+let setDragStartZAxisNormalizedVec =
+    (dragStartZAxisNormalizedVec, editorState) => {
+  ...editorState,
+  sceneViewRecord: {
+    ...editorState.sceneViewRecord,
+    transformGizmoData:
+      Some({
+        ...
+          RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+            editorState,
+          ),
+        scaleGizmoData: {
+          ...
+            RecordScaleGizmoSceneViewEditorService.unsafeGetData(editorState),
+          dragStartZAxisNormalizedVec: Some(dragStartZAxisNormalizedVec),
+        },
+      }),
+  },
+};
+
+let unsafeGetDragStartScaleWholeGizmoInvertLocalToWorldMatrixTypeArray = editorState =>
+  RecordScaleGizmoSceneViewEditorService.unsafeGetData(editorState).
+    dragStartScaleWholeGizmoInvertLocalToWorldMatrixTypeArray
+  |> OptionService.unsafeGet;
+
+let setDragStartScaleWholeGizmoInvertLocalToWorldMatrixTypeArray =
+    (dragStartScaleWholeGizmoInvertLocalToWorldMatrixTypeArray, editorState) => {
+  ...editorState,
+  sceneViewRecord: {
+    ...editorState.sceneViewRecord,
+    transformGizmoData:
+      Some({
+        ...
+          RecordTransformGizmoSceneViewEditorService.unsafeGetData(
+            editorState,
+          ),
+        scaleGizmoData: {
+          ...
+            RecordScaleGizmoSceneViewEditorService.unsafeGetData(editorState),
+          dragStartScaleWholeGizmoInvertLocalToWorldMatrixTypeArray:
+            Some(dragStartScaleWholeGizmoInvertLocalToWorldMatrixTypeArray),
+        },
+      }),
+  },
+};

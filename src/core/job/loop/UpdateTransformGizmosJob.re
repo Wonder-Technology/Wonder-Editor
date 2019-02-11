@@ -46,7 +46,9 @@ let _setWholeGizmoRotation =
     (
       currentSceneTreeNode,
       wholeGizmo,
+      currentGizmoType: SceneViewType.gizmo,
       coordinateSystem: SceneViewType.coordinateSystem,
+      editorState,
       engineState,
     ) => {
   let wholeGizmoTransform =
@@ -55,8 +57,33 @@ let _setWholeGizmoRotation =
       engineState,
     );
 
-  switch (coordinateSystem) {
-  | Local =>
+  switch (currentGizmoType) {
+  | Translation
+  | Rotation =>
+    switch (coordinateSystem) {
+    | Local =>
+      let currentSceneTreeNodeTransform =
+        GameObjectComponentEngineService.unsafeGetTransformComponent(
+          currentSceneTreeNode,
+          engineState,
+        );
+
+      engineState
+      |> TransformEngineService.setEulerAngles(
+           wholeGizmoTransform,
+           TransformEngineService.getEulerAngles(
+             currentSceneTreeNodeTransform,
+             engineState,
+           ),
+         );
+    | World =>
+      engineState
+      |> TransformEngineService.setEulerAngles(
+           wholeGizmoTransform,
+           (0., 0., 0.),
+         )
+    }
+  | Scale =>
     let currentSceneTreeNodeTransform =
       GameObjectComponentEngineService.unsafeGetTransformComponent(
         currentSceneTreeNode,
@@ -71,12 +98,6 @@ let _setWholeGizmoRotation =
            engineState,
          ),
        );
-  | World =>
-    engineState
-    |> TransformEngineService.setEulerAngles(
-         wholeGizmoTransform,
-         (0., 0., 0.),
-       )
   };
 };
 
@@ -90,29 +111,24 @@ let updateTransformJob = (_, engineState) => {
       let currentSceneTreeNode =
         SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState);
 
-      let (wholeGizmo, isSetRotation) =
-        switch (
-          CurrentTransformGizmoSceneViewEditorService.getCurrentGizmoType(
+      let currentGizmoType =
+        CurrentTransformGizmoSceneViewEditorService.getCurrentGizmoType(
+          editorState,
+        );
+
+      let wholeGizmo =
+        switch (currentGizmoType) {
+        | Translation =>
+          OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
             editorState,
           )
-        ) {
-        | Translation => (
-            OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
-              editorState,
-            ),
-            true,
+        | Rotation =>
+          OperateRotationGizmoSceneViewEditorService.unsafeGetRotationWholeGizmo(
+            editorState,
           )
-        | Rotation => (
-            OperateRotationGizmoSceneViewEditorService.unsafeGetRotationWholeGizmo(
-              editorState,
-            ),
-            true,
-          )
-        | Scale => (
-            OperateScaleGizmoSceneViewEditorService.unsafeGetScaleWholeGizmo(
-              editorState,
-            ),
-            false,
+        | Scale =>
+          OperateScaleGizmoSceneViewEditorService.unsafeGetScaleWholeGizmo(
+            editorState,
           )
         };
 
@@ -131,16 +147,16 @@ let updateTransformJob = (_, engineState) => {
              wholeGizmo,
            );
 
-      isSetRotation ?
-        engineState
-        |> _setWholeGizmoRotation(
-             currentSceneTreeNode,
-             wholeGizmo,
-             CoordinateSystemTransformGizmoSceneViewEditorService.getCoordinateSystem(
-               editorState,
-             ),
-           ) :
-        engineState;
+      engineState
+      |> _setWholeGizmoRotation(
+           currentSceneTreeNode,
+           wholeGizmo,
+           currentGizmoType,
+           CoordinateSystemTransformGizmoSceneViewEditorService.getCoordinateSystem(
+             editorState,
+           ),
+           editorState,
+         );
     } :
     engineState;
 };
