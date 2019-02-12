@@ -123,7 +123,8 @@ let setDragStartZAxisNormalizedVec =
   },
 };
 
-let unsafeGetDragStartScaleWholeGizmoInvertLocalToWorldMatrixTypeArray = editorState =>
+let unsafeGetDragStartScaleWholeGizmoInvertLocalToWorldMatrixTypeArray =
+    editorState =>
   RecordScaleGizmoSceneViewEditorService.unsafeGetData(editorState).
     dragStartScaleWholeGizmoInvertLocalToWorldMatrixTypeArray
   |> OptionService.unsafeGet;

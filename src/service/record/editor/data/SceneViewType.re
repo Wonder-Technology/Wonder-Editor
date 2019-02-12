@@ -75,7 +75,8 @@ type scaleGizmoData = {
   dragStartXAxisNormalizedVec: option((float, float, float)),
   dragStartYAxisNormalizedVec: option((float, float, float)),
   dragStartZAxisNormalizedVec: option((float, float, float)),
-  dragStartScaleWholeGizmoInvertLocalToWorldMatrixTypeArray: option((Js.Typed_array.Float32Array.t)),
+  dragStartScaleWholeGizmoInvertLocalToWorldMatrixTypeArray:
+    option(Js.Typed_array.Float32Array.t),
 };
 
 type coordinateSystem =

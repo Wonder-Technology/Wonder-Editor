@@ -375,19 +375,16 @@ let _bindEvent = (editorState, engineState) => {
                              editorState,
                            );
 
-                      /* let engineState =
-                         _pushUndoStack(
-                           OperateScaleGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartLocalPosition(
-                             editorState,
-                           ),
-                           PositionBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState,
-                           editorState,
-                           engineState,
-                         )
-                         |> StateLogicService.renderWhenStop; */
-
                       let engineState =
-                        engineState |> StateLogicService.renderWhenStop;
+                        _pushUndoStack(
+                          OperateScaleGizmoSceneViewEditorService.unsafeGetCurrentSceneTreeNodeStartLocalScale(
+                            editorState,
+                          ),
+                          ScaleBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState,
+                          editorState,
+                          engineState,
+                        )
+                        |> StateLogicService.renderWhenStop;
 
                       (engineState, event);
                     } :
