@@ -6,6 +6,8 @@ type pointDomEvent = Wonderjs.EventType.pointDomEvent;
 
 type customEvent = Wonderjs.EventType.customEvent;
 
+type keyboardEvent = Wonderjs.EventType.keyboardEvent;
+
 type userData = Wonderjs.EventType.userData;
 
 type pointEventName = Wonderjs.EventType.pointEventName;
@@ -77,4 +79,8 @@ external userDataToPointEvent : userData => pointEvent = "%identity";
 
 external editorDomEventNameToEngineDomEventName :
   domEventName => Wonderjs.EventType.domEventName =
+  "%identity";
+
+external keyboardDomEventToDomEvent :
+  Wonderjs.EventType.keyboardDomEvent => Wonderjs.EventType.domEvent =
   "%identity";

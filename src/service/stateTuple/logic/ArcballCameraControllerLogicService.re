@@ -6,6 +6,15 @@ let _renderWhenStop = (event, handleFunc, engineState) => {
   (engineState, event);
 };
 
+let _isKeyAffectedArballCameraController = ({key}: EventType.keyboardEvent) =>
+  switch (key) {
+  | "a"
+  | "s"
+  | "d"
+  | "w" => true
+  | _ => false
+  };
+
 let bindArcballCameraControllerEventForSceneView =
     (cameraController, engineState) => {
   let (
@@ -14,7 +23,7 @@ let bindArcballCameraControllerEventForSceneView =
     pointDragDropHandleFunc,
     pointDragOverHandleFunc,
     pointScaleHandleFunc,
-    _,
+    keydownHandleFunc,
   ) =
     ArcballCameraEngineService.prepareBindEvent(
       cameraController,
@@ -67,13 +76,28 @@ let bindArcballCameraControllerEventForSceneView =
       (),
     );
 
-  /* let engineState =
-     ManageEventEngineService.onKeyboardEvent(
-       ~eventName=EventType.KeyDown_SceneView |> Obj.magic,
-       ~handleFunc=keydownHandleFunc,
-       ~state=engineState,
-       (),
-     ); */
+  let engineState =
+    ManageEventEngineService.onKeyboardEvent(
+      ~eventName=EventType.KeyDown_SceneView |> Obj.magic,
+      ~handleFunc=
+        (. event: EventType.keyboardEvent, engineState) =>
+          _isKeyAffectedArballCameraController(event) ?
+            {
+              HandleDomEventEngineService.preventDefault(
+                event.event |> EventType.keyboardDomEventToDomEvent,
+              )
+              |> ignore;
+
+              let engineState = keydownHandleFunc(. event, engineState);
+
+              let engineState = StateLogicService.renderWhenStop(engineState);
+
+              engineState;
+            } :
+            engineState,
+      ~state=engineState,
+      (),
+    );
 
   engineState;
 };
