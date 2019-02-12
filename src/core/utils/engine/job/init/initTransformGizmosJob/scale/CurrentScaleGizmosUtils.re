@@ -46,5 +46,20 @@ let restoreScaleGizmoColor = (editorState, engineState) => {
       engineState,
     );
 
+  let engineState =
+    CurrentTransformGizmosUtils.setColor(
+      GameObjectEngineService.getAllBasicMaterials(
+        HierarchyGameObjectEngineService.getAllGameObjects(
+          OperateScaleGizmoSceneViewEditorService.unsafeGetScaleCenterBoxGizmo(
+            editorState,
+          ),
+          engineState,
+        ),
+        engineState,
+      ),
+      DataScaleGizmoSceneViewEditorService.getCenterBoxColor(),
+      engineState,
+    );
+
   engineState;
 };

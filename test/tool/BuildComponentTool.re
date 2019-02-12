@@ -22,7 +22,9 @@ let buildBottom =
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
-  ReactTestRenderer.create(<MainEditorBottomComponents uiState dispatchFunc />);
+  ReactTestRenderer.create(
+    <MainEditorBottomComponents uiState dispatchFunc />,
+  );
 
 let buildBottomHeader =
     (
@@ -192,5 +194,13 @@ let buildAssetChildrenNode = (~debounceTime=10, ()) =>
       dispatchFunc=(TestTool.getDispatch())
       dragImg=(DomHelper.createElement("img"))
       debounceTime
+    />,
+  );
+
+let buildController = () =>
+  ReactTestRenderer.create(
+    <Controller
+      uiState=(TestTool.buildEmptyAppState())
+      dispatchFunc=(TestTool.getDispatch())
     />,
   );

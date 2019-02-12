@@ -154,6 +154,46 @@ let _ =
           )
         );
       });
+
+      describe("test scale gizmo", () => {
+        let _prepare = sandbox =>
+          _prepare(
+            sandbox,
+            SceneViewType.World,
+            CurrentTransformGizmoSceneViewEditorService.markScale,
+          );
+
+        describe("axis gizmos should be aligned with local axis", () =>
+          test(
+            {|
+            pick gameObject;
+            select x axis;
+            mouse move (5px, 0px);
+
+            gameObject should scale bigger in the x axis;
+            |},
+            () => {
+              _prepare(sandbox);
+
+              EventTransformGizmosTool.triggerMouseDown(
+                ~sandbox,
+                ~pageX=283,
+                ~pageY=162,
+                (),
+              );
+              EventTransformGizmosTool.triggerMouseMove(
+                ~sandbox,
+                ~pageX=283 + 5,
+                ~pageY=162,
+                (),
+              );
+
+              InitTransformGizmosJobTool.getCurrentSceneTreeNodeLocalScale()
+              |> expect == (1.1, 1., 1.);
+            },
+          )
+        );
+      });
     });
 
     describe("test local coordinate system", () => {
@@ -263,6 +303,46 @@ let _ =
 
               InitTransformGizmosJobTool.getCurrentSceneTreeNodeEulerAngles()
               |> expect == (26.8, 39.2, 43.8);
+            },
+          )
+        );
+      });
+
+      describe("test scale gizmo", () => {
+        let _prepare = sandbox =>
+          _prepare(
+            sandbox,
+            SceneViewType.Local,
+            CurrentTransformGizmoSceneViewEditorService.markScale,
+          );
+
+        describe("axis gizmos should be aligned with local axis", () =>
+          test(
+            {|
+            pick gameObject;
+            select x axis;
+            mouse move (5px, 0px);
+
+            gameObject should scale bigger in the x axis;
+            |},
+            () => {
+              _prepare(sandbox);
+
+              EventTransformGizmosTool.triggerMouseDown(
+                ~sandbox,
+                ~pageX=283,
+                ~pageY=162,
+                (),
+              );
+              EventTransformGizmosTool.triggerMouseMove(
+                ~sandbox,
+                ~pageX=283 + 5,
+                ~pageY=162,
+                (),
+              );
+
+              InitTransformGizmosJobTool.getCurrentSceneTreeNodeLocalScale()
+              |> expect == (1.1, 1., 1.);
             },
           )
         );

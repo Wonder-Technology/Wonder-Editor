@@ -20,6 +20,17 @@ let getLineGameObject = (editorState, engineState) => {
   getLineFromAxisGameObject(xAxisGameObject, engineState);
 };
 
+let getCubeFromAxisGameObject = (axisGameObject, engineState) =>
+  axisGameObject |> GameObjectTool.getChild(_, 0, engineState);
+
+let getCubeGameObject = (editorState, engineState) => {
+  let xAxisGameObject =
+    OperateScaleGizmoSceneViewEditorService.unsafeGetScaleXAxisGizmo
+    |> StateLogicService.getEditorState;
+
+  getCubeFromAxisGameObject(xAxisGameObject, engineState);
+};
+
 let setCoordinateSystem = coordinateSystem => {
   CoordinateSystemTransformGizmoSceneViewEditorService.setCoordinateSystem(
     coordinateSystem,

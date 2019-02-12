@@ -38,6 +38,16 @@ let getLocalScale = (gameObject, engineState) =>
   )
   |> Vector3Service.truncate(5);
 
+let setLocalScale = (gameObject, localScale, engineState) =>
+  TransformEngineService.setLocalScale(
+    localScale,
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      gameObject,
+      engineState,
+    ),
+    engineState,
+  );
+
 let setPosition = (gameObject, pos, engineState) =>
   TransformEngineService.setPosition(
     GameObjectComponentEngineService.unsafeGetTransformComponent(

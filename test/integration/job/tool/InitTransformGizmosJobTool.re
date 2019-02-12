@@ -171,10 +171,30 @@ let getGameObjectLocalEulerAngles = gameObject => {
   |> Vector3Service.truncate(1);
 };
 
+let getGameObjectLocalScale = gameObject => {
+  let editorState = StateEditorService.getState();
+  let engineState = StateEngineService.unsafeGetState();
+
+  TransformEngineService.getLocalScale(
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      gameObject,
+      engineState,
+    ),
+    engineState,
+  )
+  |> Vector3Service.truncate(1);
+};
+
 let getCurrentSceneTreeNodeEulerAngles = () => {
   let editorState = StateEditorService.getState();
   SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState)
   |> getGameObjectEulerAngles;
+};
+
+let getCurrentSceneTreeNodeLocalScale = () => {
+  let editorState = StateEditorService.getState();
+  SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState)
+  |> getGameObjectLocalScale;
 };
 
 let createTransformGizmos = ((editorState, engineState)) =>

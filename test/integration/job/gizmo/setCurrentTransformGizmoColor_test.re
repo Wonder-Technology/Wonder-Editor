@@ -204,4 +204,100 @@ let _ =
         })
       );
     });
+
+    describe("test scale gizmo", () => {
+      let prepareGameObject = sandbox =>
+        InitTransformGizmosJobTool.prepareOneGameObject(
+          ~sandbox,
+          ~viewWidth=500,
+          ~viewHeight=200,
+          ~offsetLeft=0,
+          ~offsetTop=0,
+          ~cameraPos=(0.1, 0.1, 3.),
+          ~gameObjectPos=(0., 0., 0.),
+          ~gameObjectEulerAngles=(0., 0., 0.),
+          ~createGameObjectFunc=InitPickingJobTool.createCube,
+          (),
+        );
+
+      let _prepare = sandbox => {
+        let gameObject1 = prepareGameObject(sandbox);
+
+        CurrentTransformGizmoSceneViewEditorService.markScale
+        |> StateLogicService.getAndSetEditorState;
+
+        InitPickingJobTool.triggerPicking(
+          ~sandbox,
+          ~pageX=250,
+          ~pageY=100,
+          (),
+        );
+
+        gameObject1;
+      };
+
+      describe("set current gizmo color when drag start", () => {
+        describe("test axis gizmo", () =>
+          test("test current gizmo is x axis", () => {
+            let gameObject1 = _prepare(sandbox);
+
+            EventTransformGizmosTool.triggerMouseDown(
+              ~sandbox,
+              ~pageX=250 + 30,
+              ~pageY=100,
+              (),
+            );
+
+            _isGameObjectAndItsChildrenTargetColor(
+              OperateScaleGizmoSceneViewEditorService.unsafeGetScaleXAxisGizmo
+              |> StateLogicService.getEditorState,
+              DataTransformGizmoSceneViewEditorService.getColorForCurrentGizmo(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == true;
+          })
+        );
+
+        test("test center box gizmo", () => {
+          let gameObject1 = _prepare(sandbox);
+
+          EventTransformGizmosTool.triggerMouseDown(
+            ~sandbox,
+            ~pageX=250,
+            ~pageY=100,
+            (),
+          );
+
+          _isGameObjectAndItsChildrenTargetColor(
+            OperateScaleGizmoSceneViewEditorService.unsafeGetScaleCenterBoxGizmo
+            |> StateLogicService.getEditorState,
+            DataTransformGizmoSceneViewEditorService.getColorForCurrentGizmo(),
+          )
+          |> StateLogicService.getEngineStateToGetData
+          |> expect == true;
+        });
+      });
+
+      describe("restore current gizmo color when drag drop", () =>
+        test("test current gizmo is center box", () => {
+          let gameObject1 = _prepare(sandbox);
+
+          EventTransformGizmosTool.triggerMouseDown(
+            ~sandbox,
+            ~pageX=250,
+            ~pageY=100,
+            (),
+          );
+          EventTransformGizmosTool.triggerMouseUp(~sandbox, ());
+
+          _isGameObjectAndItsChildrenTargetColor(
+            OperateScaleGizmoSceneViewEditorService.unsafeGetScaleCenterBoxGizmo
+            |> StateLogicService.getEditorState,
+            DataTransformGizmoSceneViewEditorService.getColorForCurrentGizmo(),
+          )
+          |> StateLogicService.getEngineStateToGetData
+          |> expect == false;
+        })
+      );
+    });
   });

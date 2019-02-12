@@ -645,6 +645,377 @@ let _ =
           });
         });
       });
+
+      describe("create scale gizmos", () => {
+        beforeEach(() => _prepareState(sandbox));
+
+        describe("create three axis gizmos", () => {
+          let _getCube = (axisGameObject, engineState) =>
+            TransformGizmosTool.getCubeFromAxisGameObject(
+              axisGameObject,
+              engineState,
+            );
+
+          let _getLine = (axisGameObject, engineState) =>
+            TransformGizmosTool.getLineFromAxisGameObject(
+              axisGameObject,
+              engineState,
+            );
+
+          test("scale whole gizmo has three axis gizmos", () => {
+            let editorState = StateEditorService.getState();
+            let engineState = StateEngineService.unsafeGetState();
+
+            GameObjectTool.hasTargetChildren(
+              OperateScaleGizmoSceneViewEditorService.unsafeGetScaleWholeGizmo(
+                editorState,
+              ),
+              [|
+                OperateScaleGizmoSceneViewEditorService.unsafeGetScaleXAxisGizmo(
+                  editorState,
+                ),
+                OperateScaleGizmoSceneViewEditorService.unsafeGetScaleYAxisGizmo(
+                  editorState,
+                ),
+                OperateScaleGizmoSceneViewEditorService.unsafeGetScaleZAxisGizmo(
+                  editorState,
+                ),
+              |],
+              engineState,
+            )
+            |> expect == true;
+          });
+
+          describe("test each axis gizmo", () =>
+            describe("test y axis gizmo", () => {
+              test(
+                "contain two gameObjects: cube gameObject as cube and cylinder gameObject as line",
+                () => {
+                  let editorState = StateEditorService.getState();
+                  let engineState = StateEngineService.unsafeGetState();
+
+                  let scaleYAxisGizmo =
+                    OperateScaleGizmoSceneViewEditorService.unsafeGetScaleYAxisGizmo(
+                      editorState,
+                    );
+
+                  (
+                    scaleYAxisGizmo
+                    |> _getCube(_, engineState)
+                    |> GameObjectEngineService.unsafeGetGameObjectName(
+                         _,
+                         engineState,
+                       ),
+                    scaleYAxisGizmo
+                    |> _getLine(_, engineState)
+                    |> GameObjectEngineService.unsafeGetGameObjectName(
+                         _,
+                         engineState,
+                       ),
+                  )
+                  |> expect == ("cube", "line");
+                },
+              );
+
+              test(
+                "set cube and cylinder->meshRenderer->isRender to false", () => {
+                let editorState = StateEditorService.getState();
+                let engineState = StateEngineService.unsafeGetState();
+
+                let scaleYAxisGizmo =
+                  OperateScaleGizmoSceneViewEditorService.unsafeGetScaleYAxisGizmo(
+                    editorState,
+                  );
+
+                (
+                  scaleYAxisGizmo
+                  |> _getCube(_, engineState)
+                  |> GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
+                       _,
+                       engineState,
+                     )
+                  |> MeshRendererEngineService.getMeshRendererIsRender(
+                       _,
+                       engineState,
+                     ),
+                  scaleYAxisGizmo
+                  |> _getLine(_, engineState)
+                  |> GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
+                       _,
+                       engineState,
+                     )
+                  |> MeshRendererEngineService.getMeshRendererIsRender(
+                       _,
+                       engineState,
+                     ),
+                )
+                |> expect == (false, false);
+              });
+
+              test("test cube and cylinder->local position", () => {
+                let editorState = StateEditorService.getState();
+                let engineState = StateEngineService.unsafeGetState();
+
+                let scaleYAxisGizmo =
+                  OperateScaleGizmoSceneViewEditorService.unsafeGetScaleYAxisGizmo(
+                    editorState,
+                  );
+
+                (
+                  scaleYAxisGizmo
+                  |> _getCube(_, engineState)
+                  |> TransformGameObjectEngineService.getLocalPosition(
+                       _,
+                       engineState,
+                     ),
+                  scaleYAxisGizmo
+                  |> _getLine(_, engineState)
+                  |> TransformGameObjectEngineService.getLocalPosition(
+                       _,
+                       engineState,
+                     ),
+                )
+                |> expect == ((0., 5.5, 0.), (0., 2.5, 0.));
+              });
+            })
+          );
+
+          describe("test axis gizmo color", () => {
+            test("x axis gizmo is red", () => {
+              let editorState = StateEditorService.getState();
+              let engineState = StateEngineService.unsafeGetState();
+
+              let scaleXAxisGizmo =
+                OperateScaleGizmoSceneViewEditorService.unsafeGetScaleXAxisGizmo(
+                  editorState,
+                );
+
+              (
+                scaleXAxisGizmo
+                |> _getCube(_, engineState)
+                |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+                     _,
+                     engineState,
+                   )
+                |> BasicMaterialEngineService.getColor(_, engineState),
+                scaleXAxisGizmo
+                |> _getCube(_, engineState)
+                |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+                     _,
+                     engineState,
+                   )
+                |> BasicMaterialEngineService.getColor(_, engineState),
+              )
+              |> expect == ([|1., 0., 0.|], [|1., 0., 0.|]);
+            });
+            test("y axis gizmo is green", () => {
+              let editorState = StateEditorService.getState();
+              let engineState = StateEngineService.unsafeGetState();
+
+              let scaleYAxisGizmo =
+                OperateScaleGizmoSceneViewEditorService.unsafeGetScaleYAxisGizmo(
+                  editorState,
+                );
+
+              (
+                scaleYAxisGizmo
+                |> _getCube(_, engineState)
+                |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+                     _,
+                     engineState,
+                   )
+                |> BasicMaterialEngineService.getColor(_, engineState),
+                scaleYAxisGizmo
+                |> _getCube(_, engineState)
+                |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+                     _,
+                     engineState,
+                   )
+                |> BasicMaterialEngineService.getColor(_, engineState),
+              )
+              |> expect == ([|0., 1., 0.|], [|0., 1., 0.|]);
+            });
+            test("z axis gizmo is blue", () => {
+              let editorState = StateEditorService.getState();
+              let engineState = StateEngineService.unsafeGetState();
+
+              let scaleZAxisGizmo =
+                OperateScaleGizmoSceneViewEditorService.unsafeGetScaleZAxisGizmo(
+                  editorState,
+                );
+
+              (
+                scaleZAxisGizmo
+                |> _getCube(_, engineState)
+                |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+                     _,
+                     engineState,
+                   )
+                |> BasicMaterialEngineService.getColor(_, engineState),
+                scaleZAxisGizmo
+                |> _getCube(_, engineState)
+                |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+                     _,
+                     engineState,
+                   )
+                |> BasicMaterialEngineService.getColor(_, engineState),
+              )
+              |> expect == ([|0., 0., 1.|], [|0., 0., 1.|]);
+            });
+          });
+
+          test("x axis gizmo should rotate -90 by z axis", () => {
+            let editorState = StateEditorService.getState();
+            let engineState = StateEngineService.unsafeGetState();
+
+            let scaleXAxisGizmo =
+              OperateScaleGizmoSceneViewEditorService.unsafeGetScaleXAxisGizmo(
+                editorState,
+              );
+
+            scaleXAxisGizmo
+            |> TransformGameObjectTool.getLocalEulerAngles(_, engineState)
+            |> expect == (0., 0., (-90.));
+          });
+          test("z axis gizmo should rotate 90 by x axis", () => {
+            let editorState = StateEditorService.getState();
+            let engineState = StateEngineService.unsafeGetState();
+
+            let scaleZAxisGizmo =
+              OperateScaleGizmoSceneViewEditorService.unsafeGetScaleZAxisGizmo(
+                editorState,
+              );
+
+            scaleZAxisGizmo
+            |> TransformGameObjectTool.getLocalEulerAngles(_, engineState)
+            |> expect == (90., 0., 0.);
+          });
+          /* describe("test axis gizmos->draw order", () =>
+               describe("should draw z->y->x axis gizmo", () =>
+                 test(
+                   "scale whole gizmo->children order should be: z,y,x axis gizmo",
+                   () => {
+                   let editorState = StateEditorService.getState();
+                   let engineState = StateEngineService.unsafeGetState();
+
+                   let scaleWholeGizmo =
+                     OperateScaleGizmoSceneViewEditorService.unsafeGetScaleWholeGizmo(
+                       editorState,
+                     );
+
+                   (
+                     scaleWholeGizmo
+                     |> GameObjectTool.getChild(_, 0, engineState),
+                     scaleWholeGizmo
+                     |> GameObjectTool.getChild(_, 1, engineState),
+                     scaleWholeGizmo
+                     |> GameObjectTool.getChild(_, 2, engineState),
+                   )
+                   |>
+                   expect == (
+                               OperateScaleGizmoSceneViewEditorService.unsafeGetScaleZAxisGizmo(
+                                 editorState,
+                               ),
+                               OperateScaleGizmoSceneViewEditorService.unsafeGetScaleYAxisGizmo(
+                                 editorState,
+                               ),
+                               OperateScaleGizmoSceneViewEditorService.unsafeGetScaleXAxisGizmo(
+                                 editorState,
+                               ),
+                             );
+                 })
+               )
+             ); */
+        });
+
+        describe("create center box gizmo", () => {
+          test("scale whole gizmo has one center box gizmo", () => {
+            let editorState = StateEditorService.getState();
+            let engineState = StateEngineService.unsafeGetState();
+
+            GameObjectTool.hasTargetChildren(
+              OperateScaleGizmoSceneViewEditorService.unsafeGetScaleWholeGizmo(
+                editorState,
+              ),
+              [|
+                OperateScaleGizmoSceneViewEditorService.unsafeGetScaleCenterBoxGizmo(
+                  editorState,
+                ),
+              |],
+              engineState,
+            )
+            |> expect == true;
+          });
+
+          test("set center box->isRender to false", () => {
+            let editorState = StateEditorService.getState();
+            let engineState = StateEngineService.unsafeGetState();
+
+            OperateScaleGizmoSceneViewEditorService.unsafeGetScaleCenterBoxGizmo(
+              editorState,
+            )
+            |> GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
+                 _,
+                 engineState,
+               )
+            |> MeshRendererEngineService.getMeshRendererIsRender(
+                 _,
+                 engineState,
+               )
+            |> expect == false;
+          });
+
+          test("center box->local position should be ( 0,0,0 )", () => {
+            let editorState = StateEditorService.getState();
+            let engineState = StateEngineService.unsafeGetState();
+
+            OperateScaleGizmoSceneViewEditorService.unsafeGetScaleCenterBoxGizmo(
+              editorState,
+            )
+            |> TransformGameObjectEngineService.getLocalPosition(
+                 _,
+                 engineState,
+               )
+            |> expect == (0., 0., 0.);
+          });
+
+          test("center box gizmo color should be grey", () => {
+            let editorState = StateEditorService.getState();
+            let engineState = StateEngineService.unsafeGetState();
+
+            OperateScaleGizmoSceneViewEditorService.unsafeGetScaleCenterBoxGizmo(
+              editorState,
+            )
+            |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+                 _,
+                 engineState,
+               )
+            |> BasicMaterialEngineService.getColor(_, engineState)
+            |> ArrayTool.truncate(1)
+            |>
+            expect == DataScaleGizmoSceneViewEditorService.getCenterBoxColor();
+          });
+
+          describe("test center box gizmos->draw order", () =>
+            test("should draw after axis gizmo", () => {
+              let editorState = StateEditorService.getState();
+              let engineState = StateEngineService.unsafeGetState();
+
+              let scaleWholeGizmo =
+                OperateScaleGizmoSceneViewEditorService.unsafeGetScaleWholeGizmo(
+                  editorState,
+                );
+
+              scaleWholeGizmo
+              |> GameObjectTool.getChild(_, 3, engineState)
+              |>
+              expect == OperateScaleGizmoSceneViewEditorService.unsafeGetScaleCenterBoxGizmo(
+                          editorState,
+                        );
+            })
+          );
+        });
+      });
     });
 
     describe("test move translation plane gizmos", () => {
@@ -1229,6 +1600,183 @@ let _ =
               |> StateLogicService.getEditorState,
             )
             |> expect == (false, false, false);
+          });
+        });
+
+        describe("test scale gizmo", () => {
+          let prepareGameObject = sandbox => {
+            InitTransformGizmosJobTool.prepareOneGameObject(
+              ~sandbox,
+              ~viewWidth=500,
+              ~viewHeight=200,
+              ~offsetLeft=0,
+              ~offsetTop=0,
+              ~cameraPos=(0., 0., 3.),
+              ~gameObjectPos=(0., 0., 0.),
+              ~gameObjectEulerAngles=(0., 0., 0.),
+              ~createGameObjectFunc=InitPickingJobTool.createCube,
+              (),
+            );
+
+            CurrentTransformGizmoSceneViewEditorService.markScale
+            |> StateLogicService.getAndSetEditorState;
+          };
+
+          describe("if mouse button isn't left button", () =>
+            test("if point down x axis, still not select x axis", () => {
+              let gameObject1 = prepareGameObject(sandbox);
+
+              InitPickingJobTool.triggerPicking(
+                ~sandbox,
+                ~pageX=250,
+                ~pageY=100,
+                (),
+              );
+              EventTransformGizmosTool.triggerMouseDown(
+                ~sandbox,
+                ~eventButton=2,
+                ~pageX=250 + 10,
+                ~pageY=100,
+                (),
+              );
+
+              SelectScaleGizmoSceneViewEditorService.isScaleXAxisGizmoSelected
+              |> StateLogicService.getEditorState
+              |> expect == false;
+            })
+          );
+
+          describe("else if scale gizmo isn't render, not select gizmo", () =>
+            describe("if not has current scene tree node", () =>
+              test("not render scale gizmo", () => {
+                let gameObject1 = prepareGameObject(sandbox);
+
+                EventTransformGizmosTool.triggerMouseDown(
+                  ~sandbox,
+                  ~pageX=250 + 10,
+                  ~pageY=100,
+                  (),
+                );
+
+                SelectScaleGizmoSceneViewEditorService.isScaleXAxisGizmoSelected
+                |> StateLogicService.getEditorState
+                |> expect == false;
+              })
+            )
+          );
+
+          describe("else", () => {
+            let _prepare = sandbox => {
+              let gameObject1 = prepareGameObject(sandbox);
+
+              InitPickingJobTool.triggerPicking(
+                ~sandbox,
+                ~pageX=250,
+                ~pageY=100,
+                (),
+              );
+
+              gameObject1;
+            };
+
+            describe("if point down any axis, select that axis", () =>
+              describe("test point down x axis", () =>
+                describe("should mark x axis selected", () => {
+                  test("test point down cube", () => {
+                    let gameObject1 = _prepare(sandbox);
+
+                    EventTransformGizmosTool.triggerMouseDown(
+                      ~sandbox,
+                      ~pageX=250 + 30,
+                      ~pageY=100,
+                      (),
+                    );
+
+                    SelectScaleGizmoSceneViewEditorService.isScaleXAxisGizmoSelected
+                    |> StateLogicService.getEditorState
+                    |> expect == true;
+                  });
+                  test("test point down line", () => {
+                    let gameObject1 = _prepare(sandbox);
+
+                    EventTransformGizmosTool.triggerMouseDown(
+                      ~sandbox,
+                      ~pageX=250 + 20,
+                      ~pageY=100 - 2,
+                      (),
+                    );
+
+                    SelectScaleGizmoSceneViewEditorService.isScaleXAxisGizmoSelected
+                    |> StateLogicService.getEditorState
+                    |> expect == true;
+                  });
+                  test("if not point down cube or line, not mark", () => {
+                    let gameObject1 = _prepare(sandbox);
+
+                    EventTransformGizmosTool.triggerMouseDown(
+                      ~sandbox,
+                      ~pageX=250 + 20,
+                      ~pageY=100 + 30,
+                      (),
+                    );
+
+                    SelectScaleGizmoSceneViewEditorService.isScaleXAxisGizmoSelected
+                    |> StateLogicService.getEditorState
+                    |> expect == false;
+                  });
+                })
+              )
+            );
+
+            test("else, not select any axis", () => {
+              let gameObject1 = _prepare(sandbox);
+
+              EventTransformGizmosTool.triggerMouseDown(
+                ~sandbox,
+                ~pageX=250 + 40,
+                ~pageY=100 - 30,
+                (),
+              );
+
+              (
+                SelectScaleGizmoSceneViewEditorService.isScaleXAxisGizmoSelected
+                |> StateLogicService.getEditorState,
+                SelectScaleGizmoSceneViewEditorService.isScaleYAxisGizmoSelected
+                |> StateLogicService.getEditorState,
+                SelectScaleGizmoSceneViewEditorService.isScaleZAxisGizmoSelected
+                |> StateLogicService.getEditorState,
+              )
+              |> expect == (false, false, false);
+            });
+
+            test("if point down center box, select it", () => {
+              let gameObject1 = _prepare(sandbox);
+
+              EventTransformGizmosTool.triggerMouseDown(
+                ~sandbox,
+                ~pageX=250,
+                ~pageY=100,
+                (),
+              );
+
+              SelectScaleGizmoSceneViewEditorService.isScaleCenterBoxGizmoSelected
+              |> StateLogicService.getEditorState
+              |> expect == true;
+            });
+            test("else, not select it", () => {
+              let gameObject1 = _prepare(sandbox);
+
+              EventTransformGizmosTool.triggerMouseDown(
+                ~sandbox,
+                ~pageX=250 - 20,
+                ~pageY=100,
+                (),
+              );
+
+              SelectScaleGizmoSceneViewEditorService.isScaleCenterBoxGizmoSelected
+              |> StateLogicService.getEditorState
+              |> expect == false;
+            });
           });
         });
       });
@@ -2078,6 +2626,384 @@ let _ =
                 ~sandbox,
                 ~pageX=0 + 20,
                 ~pageY=0,
+                (),
+              );
+
+              dispatchFuncStub
+              |> expect
+              |> not_
+              |> toCalledWith([|
+                   AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
+                 |]);
+            });
+          });
+        });
+
+        describe("test scale gizmo", () => {
+          test("if mouse button isn't left button, not affect gizmo", () => {
+            let _ =
+              InitTransformGizmosJobTool.prepareOneGameObject(
+                ~sandbox,
+                ~viewWidth=500,
+                ~viewHeight=200,
+                ~offsetLeft=0,
+                ~offsetTop=0,
+                ~cameraPos=(0., 0., 3.),
+                ~gameObjectPos=(0., 0., 0.),
+                ~gameObjectEulerAngles=(0., 0., 0.),
+                ~createGameObjectFunc=InitPickingJobTool.createCube,
+                (),
+              );
+
+            CurrentTransformGizmoSceneViewEditorService.markScale
+            |> StateLogicService.getAndSetEditorState;
+
+            InitPickingJobTool.triggerPicking(
+              ~sandbox,
+              ~pageX=250,
+              ~pageY=100,
+              (),
+            );
+
+            EventTransformGizmosTool.triggerMouseDown(
+              ~sandbox,
+              ~pageX=250 + 20,
+              ~pageY=100,
+              (),
+            );
+            EventTransformGizmosTool.triggerMouseMove(
+              ~sandbox,
+              ~eventButton=2,
+              ~pageX=250 + 20,
+              ~pageY=100,
+              (),
+            );
+
+            InitTransformGizmosJobTool.getCurrentSceneTreeNodeLocalScale()
+            |> expect == (1., 1., 1.);
+          });
+
+          describe("else", () =>
+            describe("affect gizmo", () => {
+              let _prepare = (sandbox, prepareGameObjectFunc) => {
+                let gameObject1 = prepareGameObjectFunc(sandbox);
+
+                CurrentTransformGizmoSceneViewEditorService.markScale
+                |> StateLogicService.getAndSetEditorState;
+
+                InitPickingJobTool.triggerPicking(
+                  ~sandbox,
+                  ~pageX=250,
+                  ~pageY=100,
+                  (),
+                );
+
+                gameObject1;
+              };
+
+              describe("test affect center box gizmos", () =>
+                describe("should scale the same value for x,y,z together", () => {
+                  let prepareGameObject = sandbox =>
+                    InitTransformGizmosJobTool.prepareOneGameObject(
+                      ~sandbox,
+                      ~viewWidth=500,
+                      ~viewHeight=200,
+                      ~offsetLeft=0,
+                      ~offsetTop=0,
+                      ~cameraPos=(0.0, 2.0, 3.),
+                      ~gameObjectPos=(0., 0., 0.),
+                      ~gameObjectEulerAngles=(0., 0., 0.),
+                      ~createGameObjectFunc=InitPickingJobTool.createCube,
+                      (),
+                    );
+
+                  describe("based on mouse location in view", () => {
+                    test("if mouse move up, scale bigger", () => {
+                      _prepare(sandbox, prepareGameObject);
+
+                      EventTransformGizmosTool.triggerMouseDown(
+                        ~sandbox,
+                        ~pageX=250,
+                        ~pageY=100,
+                        (),
+                      );
+                      EventTransformGizmosTool.triggerMouseMove(
+                        ~sandbox,
+                        ~pageX=250,
+                        ~pageY=100 - 20,
+                        (),
+                      );
+
+                      InitTransformGizmosJobTool.getCurrentSceneTreeNodeLocalScale()
+                      |> expect == (1.5, 1.5, 1.5);
+                    });
+                    test("if mouse move right, scale bigger", () => {
+                      _prepare(sandbox, prepareGameObject);
+
+                      EventTransformGizmosTool.triggerMouseDown(
+                        ~sandbox,
+                        ~pageX=250,
+                        ~pageY=100,
+                        (),
+                      );
+                      EventTransformGizmosTool.triggerMouseMove(
+                        ~sandbox,
+                        ~pageX=250 + 20,
+                        ~pageY=100,
+                        (),
+                      );
+
+                      InitTransformGizmosJobTool.getCurrentSceneTreeNodeLocalScale()
+                      |> expect == (1.5, 1.5, 1.5);
+                    });
+                    test("if mouse move down, scale smaller", () => {
+                      _prepare(sandbox, prepareGameObject);
+
+                      EventTransformGizmosTool.triggerMouseDown(
+                        ~sandbox,
+                        ~pageX=250,
+                        ~pageY=100,
+                        (),
+                      );
+                      EventTransformGizmosTool.triggerMouseMove(
+                        ~sandbox,
+                        ~pageX=250,
+                        ~pageY=100 + 20,
+                        (),
+                      );
+
+                      InitTransformGizmosJobTool.getCurrentSceneTreeNodeLocalScale()
+                      |> expect == (0.5, 0.5, 0.5);
+                    });
+                    test("if mouse move left, scale smaller", () => {
+                      _prepare(sandbox, prepareGameObject);
+
+                      EventTransformGizmosTool.triggerMouseDown(
+                        ~sandbox,
+                        ~pageX=250,
+                        ~pageY=100,
+                        (),
+                      );
+                      EventTransformGizmosTool.triggerMouseMove(
+                        ~sandbox,
+                        ~pageX=250 - 20,
+                        ~pageY=100,
+                        (),
+                      );
+
+                      InitTransformGizmosJobTool.getCurrentSceneTreeNodeLocalScale()
+                      |> expect == (0.5, 0.5, 0.5);
+                    });
+                  });
+                })
+              );
+
+              describe("test affect axis gizmos", () =>
+                describe("test affect y axis", () =>
+                  describe(
+                    "should scale current scene tree node in the y axis", () => {
+                    let prepareGameObject = sandbox =>
+                      InitTransformGizmosJobTool.prepareOneGameObject(
+                        ~sandbox,
+                        ~viewWidth=500,
+                        ~viewHeight=200,
+                        ~offsetLeft=0,
+                        ~offsetTop=0,
+                        ~cameraPos=(0., 0., 3.),
+                        ~gameObjectPos=(0., 0., 0.),
+                        ~gameObjectEulerAngles=(0., 0., 0.),
+                        ~createGameObjectFunc=InitPickingJobTool.createCube,
+                        (),
+                      );
+
+                    test(
+                      {|
+            pick gameObject;
+            select y axis;
+            mouse move (0px, -5px);
+
+            gameObject should scale bigger in the y axis;
+            |},
+                      () => {
+                        let gameObject1 =
+                          _prepare(sandbox, prepareGameObject);
+
+                        EventTransformGizmosTool.triggerMouseDown(
+                          ~sandbox,
+                          ~pageX=250,
+                          ~pageY=100 - 10,
+                          (),
+                        );
+                        EventTransformGizmosTool.triggerMouseMove(
+                          ~sandbox,
+                          ~pageX=250,
+                          ~pageY=100 - 10 - 5,
+                          (),
+                        );
+
+                        InitTransformGizmosJobTool.getCurrentSceneTreeNodeLocalScale()
+                        |> expect == (1., 1.5, 1.);
+                      },
+                    );
+                    test(
+                      {|
+            pick gameObject;
+            select y axis;
+            mouse move (10px, -5px);
+
+            gameObject should scale to the same value as mouse move (0px, -5px);
+            |},
+                      () => {
+                        let gameObject1 =
+                          _prepare(sandbox, prepareGameObject);
+
+                        EventTransformGizmosTool.triggerMouseDown(
+                          ~sandbox,
+                          ~pageX=250,
+                          ~pageY=100 - 10,
+                          (),
+                        );
+                        EventTransformGizmosTool.triggerMouseMove(
+                          ~sandbox,
+                          ~pageX=250 + 10,
+                          ~pageY=100 - 10 - 5,
+                          (),
+                        );
+
+                        InitTransformGizmosJobTool.getCurrentSceneTreeNodeLocalScale()
+                        |> expect == (1., 1.5, 1.);
+                      },
+                    );
+                    test(
+                      {|
+            pick gameObject;
+            select y axis;
+            mouse move (0px, +5px);
+
+            gameObject should scale smaller in the y axis;
+            |},
+                      () => {
+                        let gameObject1 =
+                          _prepare(sandbox, prepareGameObject);
+
+                        EventTransformGizmosTool.triggerMouseDown(
+                          ~sandbox,
+                          ~pageX=250,
+                          ~pageY=100 - 10,
+                          (),
+                        );
+                        EventTransformGizmosTool.triggerMouseMove(
+                          ~sandbox,
+                          ~pageX=250,
+                          ~pageY=100 - 10 + 5,
+                          (),
+                        );
+
+                        InitTransformGizmosJobTool.getCurrentSceneTreeNodeLocalScale()
+                        |> expect == (1., 0.5, 1.);
+                      },
+                    );
+                    test(
+                      {|
+            pick gameObject;
+            select y axis;
+            mouse move to the position of the whole scale gizmo;
+
+            gameObject should scale to 0 in the y axis;
+            |},
+                      () => {
+                        let gameObject1 =
+                          _prepare(sandbox, prepareGameObject);
+
+                        EventTransformGizmosTool.triggerMouseDown(
+                          ~sandbox,
+                          ~pageX=250,
+                          ~pageY=100 - 10,
+                          (),
+                        );
+                        EventTransformGizmosTool.triggerMouseMove(
+                          ~sandbox,
+                          ~pageX=250,
+                          ~pageY=100,
+                          (),
+                        );
+
+                        InitTransformGizmosJobTool.getCurrentSceneTreeNodeLocalScale()
+                        |> expect == (1., 0., 1.);
+                      },
+                    );
+                  })
+                )
+              );
+            })
+          );
+
+          describe("test refresh inspector", () => {
+            let _prepare = sandbox => {
+              let dispatchFuncStub =
+                ReactTool.createDispatchFuncStub(sandbox);
+              let _ =
+                InitTransformGizmosJobTool.prepareOneGameObject(
+                  ~sandbox,
+                  ~viewWidth=500,
+                  ~viewHeight=200,
+                  ~offsetLeft=0,
+                  ~offsetTop=0,
+                  ~cameraPos=(0., 0., 3.),
+                  ~gameObjectPos=(0., 0., 0.),
+                  ~gameObjectEulerAngles=(0., 0., 0.),
+                  ~createGameObjectFunc=InitPickingJobTool.createCube,
+                  (),
+                );
+
+              CurrentTransformGizmoSceneViewEditorService.markScale
+              |> StateLogicService.getAndSetEditorState;
+
+              InitPickingJobTool.triggerPicking(
+                ~sandbox,
+                ~pageX=250,
+                ~pageY=100,
+                (),
+              );
+
+              dispatchFuncStub;
+            };
+
+            test("if select any gizmo, refresh", () => {
+              let dispatchFuncStub = _prepare(sandbox);
+
+              EventTransformGizmosTool.triggerMouseDown(
+                ~sandbox,
+                ~pageX=250 + 10,
+                ~pageY=100,
+                (),
+              );
+              EventTransformGizmosTool.triggerMouseMove(
+                ~sandbox,
+                ~pageX=250 + 20,
+                ~pageY=100,
+                (),
+              );
+
+              dispatchFuncStub
+              |> expect
+              |> toCalledWith([|
+                   AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
+                 |]);
+            });
+            test("else, not refresh inspector", () => {
+              let dispatchFuncStub = _prepare(sandbox);
+
+              EventTransformGizmosTool.triggerMouseDown(
+                ~sandbox,
+                ~pageX=250 + 50,
+                ~pageY=100 - 50,
+                (),
+              );
+              EventTransformGizmosTool.triggerMouseMove(
+                ~sandbox,
+                ~pageX=250 + 20,
+                ~pageY=100,
                 (),
               );
 

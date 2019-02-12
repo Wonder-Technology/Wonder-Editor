@@ -218,7 +218,7 @@ let _ =
                 );
 
                 describe("not init texCoord buffer", () =>
-                  test("bufferData arrow and line texCoords three times", () => {
+                  test("not bufferData arrow and line texCoords", () => {
                     let engineState = StateEngineService.unsafeGetState();
                     let editorState = StateEditorService.getState();
 
@@ -1396,5 +1396,360 @@ let _ =
           });
         })
       );
+
+      describe("render scale gizmos", () => {
+        let _handleEngineState = engineState => {
+          let engineState = engineState |> MainUtils._handleEngineState;
+
+          CurrentTransformGizmoSceneViewEditorService.markScale
+          |> StateLogicService.getAndSetEditorState;
+
+          engineState;
+        };
+
+        describe("render axis gizmos and center box gizmo", () => {
+          let _getCubeGeometry = (editorState, engineState) =>
+            GameObjectComponentEngineService.unsafeGetGeometryComponent(
+              TransformGizmosTool.getCubeGameObject(editorState, engineState),
+              engineState,
+            );
+
+          let _getLineGeometry = (editorState, engineState) =>
+            GameObjectComponentEngineService.unsafeGetGeometryComponent(
+              TransformGizmosTool.getLineGameObject(editorState, engineState),
+              engineState,
+            );
+
+          describe("prepare gl state", () =>
+            test("disable depth test", () => {
+              let engineState = StateEngineService.unsafeGetState();
+              let disable = createEmptyStubWithJsObjSandbox(sandbox);
+              let getDepthTest = 1;
+              let engineState =
+                engineState
+                |> FakeGlToolEngine.setFakeGl(
+                     FakeGlToolEngine.buildFakeGl(
+                       ~sandbox,
+                       ~disable,
+                       ~getDepthTest,
+                       (),
+                     ),
+                   );
+
+              let engineState =
+                engineState
+                |> _handleEngineState
+                |> DirectorToolEngine.runWithDefaultTime;
+
+              disable
+              |> getCall(0)
+              |> expect
+              |> toCalledWith([|getDepthTest|]);
+            })
+          );
+
+          test("use one program", () => {
+            let engineState = StateEngineService.unsafeGetState();
+            let useProgram = createEmptyStubWithJsObjSandbox(sandbox);
+            let engineState =
+              engineState
+              |> FakeGlToolEngine.setFakeGl(
+                   FakeGlToolEngine.buildFakeGl(~sandbox, ~useProgram, ()),
+                 );
+
+            let engineState =
+              engineState
+              |> _handleEngineState
+              |> DirectorToolEngine.runWithDefaultTime;
+
+            useProgram |> getCallCount |> expect >= 1;
+          });
+
+          describe("send gl data", () => {
+            describe("send attribute", () =>
+              describe("init vbo buffers when first send", () => {
+                let _prepareForBufferData =
+                    (cubeGeometryPoints, linePoints, countTuple) => {
+                  let engineState = StateEngineService.unsafeGetState();
+                  let array_buffer = 1;
+                  let static_draw = 2;
+                  let bufferData = createEmptyStubWithJsObjSandbox(sandbox);
+                  let engineState =
+                    engineState
+                    |> FakeGlToolEngine.setFakeGl(
+                         FakeGlToolEngine.buildFakeGl(
+                           ~sandbox,
+                           ~array_buffer,
+                           ~static_draw,
+                           ~bufferData,
+                           (),
+                         ),
+                       );
+
+                  let engineState =
+                    engineState
+                    |> _handleEngineState
+                    |> DirectorToolEngine.runWithDefaultTime;
+
+                  (
+                    bufferData
+                    |> withThreeArgs(
+                         array_buffer,
+                         cubeGeometryPoints,
+                         static_draw,
+                       )
+                    |> getCallCount,
+                    bufferData
+                    |> withThreeArgs(array_buffer, linePoints, static_draw)
+                    |> getCallCount,
+                  )
+                  |> expect == countTuple;
+                };
+
+                beforeEach(() =>
+                  _handleEngineState |> StateLogicService.getAndSetEngineState
+                );
+
+                describe("init vertex buffer", () =>
+                  test(
+                    "bufferData cube geometry vertices(3 cube gameObjects+1 center box gameObject) four times and line vertices three times",
+                    () => {
+                      let engineState = StateEngineService.unsafeGetState();
+                      let editorState = StateEditorService.getState();
+
+                      let (engineState, cubeGeometry) =
+                        GeometryEngineService.createCubeGeometry(engineState);
+                      _prepareForBufferData(
+                        GeometryEngineService.getGeometryVertices(
+                          cubeGeometry,
+                          engineState,
+                        ),
+                        GeometryToolEngine.getGameObjectVertices(
+                          TransformGizmosTool.getLineGameObject(
+                            editorState,
+                            engineState,
+                          ),
+                          engineState,
+                        ),
+                        (4, 3),
+                      );
+                    },
+                  )
+                );
+              })
+            );
+
+            describe("send uniform data", () => {
+              describe("test send model data", () =>
+                describe("send u_mMatrix", () =>
+                  test(
+                    "test send each axis->arrow and line gameObjects and center box->u_mMatrix",
+                    () => {
+                    let engineState = StateEngineService.unsafeGetState();
+                    let uniformMatrix4fv =
+                      createEmptyStubWithJsObjSandbox(sandbox);
+                    let pos = 10;
+                    let getUniformLocation =
+                      GLSLLocationToolEngine.getUniformLocation(
+                        ~pos,
+                        sandbox,
+                        "u_mMatrix",
+                      );
+                    let engineState =
+                      FakeGlToolEngine.setFakeGl(
+                        FakeGlToolEngine.buildFakeGl(
+                          ~sandbox,
+                          ~uniformMatrix4fv,
+                          ~getUniformLocation,
+                          (),
+                        ),
+                        engineState,
+                      );
+
+                    let engineState =
+                      engineState
+                      |> _handleEngineState
+                      |> DirectorToolEngine.runWithDefaultTime;
+
+                    uniformMatrix4fv
+                    |> withOneArg(pos)
+                    |> getCallCount
+                    |> expect == 7;
+                  })
+                )
+              );
+
+              describe("test send material data", () => {
+                describe("send u_alpha", () =>
+                  test(
+                    "test send axis gameObjects and center box gameObject->u_alpha with 1.0",
+                    () => {
+                    let engineState = StateEngineService.unsafeGetState();
+                    let uniform1f = createEmptyStubWithJsObjSandbox(sandbox);
+                    let pos = 10;
+                    let getUniformLocation =
+                      GLSLLocationToolEngine.getUniformLocation(
+                        ~pos,
+                        sandbox,
+                        "u_alpha",
+                      );
+                    let engineState =
+                      FakeGlToolEngine.setFakeGl(
+                        FakeGlToolEngine.buildFakeGl(
+                          ~sandbox,
+                          ~uniform1f,
+                          ~getUniformLocation,
+                          (),
+                        ),
+                        engineState,
+                      );
+
+                    let engineState =
+                      engineState
+                      |> _handleEngineState
+                      |> DirectorToolEngine.runWithDefaultTime;
+
+                    uniform1f
+                    |> withTwoArgs(pos, 1.0)
+                    |> getCallCount
+                    |> expect == 1;
+                  })
+                );
+
+                describe("send u_color", () => {
+                  let _prepareAndExec = sandbox => {
+                    let engineState = StateEngineService.unsafeGetState();
+                    let uniform3f = createEmptyStubWithJsObjSandbox(sandbox);
+                    let pos = 10;
+                    let getUniformLocation =
+                      GLSLLocationToolEngine.getUniformLocation(
+                        ~pos,
+                        sandbox,
+                        "u_color",
+                      );
+                    let engineState =
+                      FakeGlToolEngine.setFakeGl(
+                        FakeGlToolEngine.buildFakeGl(
+                          ~sandbox,
+                          ~uniform3f,
+                          ~getUniformLocation,
+                          (),
+                        ),
+                        engineState,
+                      );
+
+                    let engineState =
+                      engineState
+                      |> _handleEngineState
+                      |> DirectorToolEngine.runWithDefaultTime;
+
+                    (pos, uniform3f);
+                  };
+
+                  test("test send each axis gameObject->u_color", () => {
+                    let (pos, uniform3f) = _prepareAndExec(sandbox);
+
+                    uniform3f
+                    |> withOneArg(pos)
+                    |> getCallCount
+                    |> expect >= 3;
+                  });
+                  test("test send center box gameObject->u_color", () => {
+                    let (pos, uniform3f) = _prepareAndExec(sandbox);
+
+                    uniform3f
+                    |> withFourArgs(
+                         pos,
+                         0.800000011920929,
+                         0.800000011920929,
+                         0.800000011920929,
+                       )
+                    |> getCallCount
+                    |> expect == 1;
+                  });
+                });
+              });
+            });
+          });
+
+          describe("draw", () =>
+            test(
+              "draw each axis->arrow and line gameObjects and center box gameObject",
+              () => {
+              let engineState = StateEngineService.unsafeGetState();
+              let triangles = 2;
+              let drawElements = createEmptyStubWithJsObjSandbox(sandbox);
+              let engineState =
+                FakeGlToolEngine.setFakeGl(
+                  FakeGlToolEngine.buildFakeGl(
+                    ~sandbox,
+                    ~triangles,
+                    ~drawElements,
+                    (),
+                  ),
+                  engineState,
+                );
+
+              let engineState =
+                engineState
+                |> _handleEngineState
+                |> DirectorToolEngine.runWithDefaultTime;
+
+              let editorState = StateEditorService.getState();
+              let (engineState, cubeGeometry) =
+                GeometryEngineService.createCubeGeometry(engineState);
+              (
+                drawElements
+                |> withTwoArgs(
+                     triangles,
+                     GeometryEngineService.getIndicesCount(
+                       cubeGeometry,
+                       engineState,
+                     ),
+                   )
+                |> getCallCount,
+                drawElements
+                |> withTwoArgs(
+                     triangles,
+                     GeometryEngineService.getIndicesCount(
+                       _getLineGeometry(editorState, engineState),
+                       engineState,
+                     ),
+                   )
+                |> getCallCount,
+              )
+              |> expect == (4, 3);
+            })
+          );
+
+          describe("restore gl state", () =>
+            test("enable depth test", () => {
+              let engineState = StateEngineService.unsafeGetState();
+              let enable = createEmptyStubWithJsObjSandbox(sandbox);
+              let getDepthTest = 1;
+              let engineState =
+                engineState
+                |> FakeGlToolEngine.setFakeGl(
+                     FakeGlToolEngine.buildFakeGl(
+                       ~sandbox,
+                       ~enable,
+                       ~getDepthTest,
+                       (),
+                     ),
+                   );
+
+              let engineState =
+                engineState
+                |> _handleEngineState
+                |> DirectorToolEngine.runWithDefaultTime;
+
+              enable
+              |> getCall(0)
+              |> expect
+              |> toCalledWith([|getDepthTest|]);
+            })
+          );
+        });
+      });
     });
   });

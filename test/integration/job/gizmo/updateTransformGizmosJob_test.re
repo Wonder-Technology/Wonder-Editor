@@ -60,36 +60,37 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("if has current scene tree node", () => {
+      let _prepareForTestParent = () => {
+        let engineState = StateEngineService.unsafeGetState();
+        let currentSceneTreeNode =
+          MainEditorSceneTool.getFirstCube(engineState);
+        let parent = MainEditorSceneTool.getSecondCube(engineState);
+        let engineState =
+          GameObjectTool.addChild(parent, currentSceneTreeNode, engineState);
+
+        (engineState, (currentSceneTreeNode, parent));
+      };
+
       beforeEach(() =>
         MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode()
       );
 
       describe("test translation gizmo", () =>
         describe("update translation whole gizmo transform", () => {
-          let _prepareForTestParent = () => {
-            let engineState = StateEngineService.unsafeGetState();
-            let firstCube = MainEditorSceneTool.getFirstCube(engineState);
-            let secondCube = MainEditorSceneTool.getSecondCube(engineState);
-            let engineState =
-              GameObjectTool.addChild(secondCube, firstCube, engineState);
-
-            (engineState, (firstCube, secondCube));
-          };
-
           describe("move gizmo to current scene tree node position", () =>
             test("test current scene tree node has parent", () => {
-              let (engineState, (firstCube, secondCube)) =
+              let (engineState, (currentSceneTreeNode, parent)) =
                 _prepareForTestParent();
               let pos1 = (1., 2., 3.);
               let pos2 = (3., 2., 3.);
               let engineState =
                 engineState
                 |> TransformGameObjectEngineService.setLocalPosition(
-                     firstCube,
+                     currentSceneTreeNode,
                      pos1,
                    )
                 |> TransformGameObjectEngineService.setLocalPosition(
-                     secondCube,
+                     parent,
                      pos2,
                    );
 
@@ -111,17 +112,17 @@ let _ =
           );
 
           describe("test rotate gizmo to current scene tree node rotation", () => {
-            let _setRotate = (engineState, (firstCube, secondCube)) => {
+            let _setRotate = (engineState, (currentSceneTreeNode, parent)) => {
               let localEulerAngles1 = (1., 2., 3.);
               let localEulerAngles2 = (3., 2., 3.);
               let engineState =
                 engineState
                 |> TransformGameObjectTool.setLocalEulerAngles(
-                     firstCube,
+                     currentSceneTreeNode,
                      localEulerAngles1,
                    )
                 |> TransformGameObjectTool.setLocalEulerAngles(
-                     secondCube,
+                     parent,
                      localEulerAngles2,
                    );
 
@@ -129,7 +130,11 @@ let _ =
             };
 
             let _judge =
-                (engineState, (firstCube, secondCube), targetEulerAngles) => {
+                (
+                  engineState,
+                  (currentSceneTreeNode, parent),
+                  targetEulerAngles,
+                ) => {
               let engineState =
                 engineState |> DirectorToolEngine.runWithDefaultTime;
 
@@ -144,31 +149,34 @@ let _ =
             describe("if coordinate system is local", () =>
               describe("rotate", () =>
                 describe("test current scene tree node has parent", () => {
-                  let _judge = (engineState, (firstCube, secondCube)) =>
+                  let _judge = (engineState, (currentSceneTreeNode, parent)) =>
                     _judge(
                       engineState,
-                      (firstCube, secondCube),
+                      (currentSceneTreeNode, parent),
                       (4.10583, 3.8374, 6.10583),
                     );
 
                   test(
                     "test only rotate current scene tree node and its parent",
                     () => {
-                    let (engineState, (firstCube, secondCube)) =
+                    let (engineState, (currentSceneTreeNode, parent)) =
                       _prepareForTestParent();
                     TransformGizmosTool.setCoordinateSystem(
                       SceneViewType.Local,
                     );
 
                     let engineState =
-                      _setRotate(engineState, (firstCube, secondCube));
+                      _setRotate(
+                        engineState,
+                        (currentSceneTreeNode, parent),
+                      );
 
-                    _judge(engineState, (firstCube, secondCube));
+                    _judge(engineState, (currentSceneTreeNode, parent));
                   });
                   test(
                     "test translation+rotate current scene tree node and its parent",
                     () => {
-                    let (engineState, (firstCube, secondCube)) =
+                    let (engineState, (currentSceneTreeNode, parent)) =
                       _prepareForTestParent();
                     TransformGizmosTool.setCoordinateSystem(
                       SceneViewType.Local,
@@ -179,17 +187,20 @@ let _ =
                     let engineState =
                       engineState
                       |> TransformGameObjectEngineService.setLocalPosition(
-                           firstCube,
+                           currentSceneTreeNode,
                            pos1,
                          )
                       |> TransformGameObjectEngineService.setLocalPosition(
-                           secondCube,
+                           parent,
                            pos2,
                          );
                     let engineState =
-                      _setRotate(engineState, (firstCube, secondCube));
+                      _setRotate(
+                        engineState,
+                        (currentSceneTreeNode, parent),
+                      );
 
-                    _judge(engineState, (firstCube, secondCube));
+                    _judge(engineState, (currentSceneTreeNode, parent));
                   });
                 })
               )
@@ -197,25 +208,25 @@ let _ =
 
             describe("else, not rotate gizmo", () =>
               describe("test current scene tree node has parent", () => {
-                let _judge = (engineState, (firstCube, secondCube)) =>
+                let _judge = (engineState, (currentSceneTreeNode, parent)) =>
                   _judge(
                     engineState,
-                    (firstCube, secondCube),
+                    (currentSceneTreeNode, parent),
                     (0., 0., 0.),
                   );
 
                 test(
                   "test only rotate current scene tree node and its parent", () => {
-                  let (engineState, (firstCube, secondCube)) =
+                  let (engineState, (currentSceneTreeNode, parent)) =
                     _prepareForTestParent();
                   TransformGizmosTool.setCoordinateSystem(
                     SceneViewType.World,
                   );
 
                   let engineState =
-                    _setRotate(engineState, (firstCube, secondCube));
+                    _setRotate(engineState, (currentSceneTreeNode, parent));
 
-                  _judge(engineState, (firstCube, secondCube));
+                  _judge(engineState, (currentSceneTreeNode, parent));
                 });
               })
             );
