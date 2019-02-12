@@ -16,6 +16,11 @@ let _getDirection = theAxisSegOfIntersectedPointWithAxisInLocalCoordinateSystem 
   theAxisSegOfIntersectedPointWithAxisInLocalCoordinateSystem > 0. ?
     1. : (-1.);
 
+let _getReplacedZeroFactor = () => 0.001;
+
+let _avoidZero = scaleFactor =>
+  scaleFactor === 0. ? _getReplacedZeroFactor() : scaleFactor;
+
 let _computeCurrentSceneTreeNodeNewScaleForXAxis =
     (ray, (editorState, engineState)) => {
   let (intersectedPointWithAxisInLocalCoordinateSystemX, _, _) =
@@ -43,7 +48,8 @@ let _computeCurrentSceneTreeNodeNewScaleForXAxis =
     *. Js.Math.abs_float(
          intersectedPointWithAxisInLocalCoordinateSystemX
          /. dragStartPointInLocalCoordinateSystemX,
-       ),
+       )
+    |> _avoidZero,
     startLocalScaleY,
     startLocalScaleZ,
   );
@@ -77,7 +83,9 @@ let _computeCurrentSceneTreeNodeNewScaleForYAxis =
     *. Js.Math.abs_float(
          intersectedPointWithAxisInLocalCoordinateSystemY
          /. dragStartPointInLocalCoordinateSystemY,
-       ),
+       )
+    |> _avoidZero
+    |> WonderLog.Log.print,
     startLocalScaleZ,
   );
 };
@@ -111,7 +119,8 @@ let _computeCurrentSceneTreeNodeNewScaleForZAxis =
     *. Js.Math.abs_float(
          intersectedPointWithAxisInLocalCoordinateSystemZ
          /. dragStartPointInLocalCoordinateSystemZ,
-       ),
+       )
+    |> _avoidZero,
   );
 };
 
@@ -162,6 +171,39 @@ let _affectAxisGizmo = (event, editorState, engineState) => {
         (editorState, engineState);
 };
 
+let _avoidVectorFactorZero = ((x, y, z) as scale) => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          test(
+            Log.buildAssertMessage(
+              ~expect={j|scaleX,scaleY,scaleZ should be 0.0 together|j},
+              ~actual={j|not|j},
+            ),
+            () =>
+            x === 0. || y === 0. || z === 0. ?
+              {
+                x |> assertEqual(Float, 0.);
+                y |> assertEqual(Float, 0.);
+                z |> assertEqual(Float, 0.);
+              } :
+              assertPass()
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
+  x === 0. && y === 0. && z === 0. ?
+    (
+      _getReplacedZeroFactor(),
+      _getReplacedZeroFactor(),
+      _getReplacedZeroFactor(),
+    ) :
+    scale;
+};
+
 let _computeCurrentSceneTreeNodeNewScaleForCenterBox =
     (event: EventType.customEvent, (editorState, engineState)) => {
   let (locationInViewX, locationInViewY) =
@@ -191,7 +233,8 @@ let _computeCurrentSceneTreeNodeNewScaleForCenterBox =
             dragStartMouseLocationY - locationInViewY,
           )
        /. factor,
-     );
+     )
+  |> _avoidVectorFactorZero;
 };
 
 let _affectCenterBoxGizmo =

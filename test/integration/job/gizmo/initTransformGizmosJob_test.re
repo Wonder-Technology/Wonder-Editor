@@ -2794,6 +2794,34 @@ let _ =
                       InitTransformGizmosJobTool.getCurrentSceneTreeNodeLocalScale()
                       |> expect == (0.5, 0.5, 0.5);
                     });
+                    test(
+                      "should avoid scale to 0",
+                      () => {
+                        let gameObject1 =
+                          _prepare(sandbox, prepareGameObject);
+
+                        EventTransformGizmosTool.triggerMouseDown(
+                          ~sandbox,
+                          ~pageX=250,
+                          ~pageY=100,
+                          (),
+                        );
+                        EventTransformGizmosTool.triggerMouseMove(
+                          ~sandbox,
+                          ~pageX=250 - 40,
+                          ~pageY=100,
+                          (),
+                        );
+
+                        TransformGameObjectEngineService.getLocalScale(
+                          SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
+                          |> StateLogicService.getEditorState,
+                        )
+                        |> StateLogicService.getEngineStateToGetData
+                        |> Vector3Service.truncate(3)
+                        |> expect == (0.001, 0.001, 0.001);
+                      },
+                    );
                   });
                 })
               );
@@ -2909,7 +2937,7 @@ let _ =
             select y axis;
             mouse move to the position of the whole scale gizmo;
 
-            gameObject should scale to 0 in the y axis;
+            gameObject should scale to 0.001 in the y axis;
             |},
                       () => {
                         let gameObject1 =
@@ -2928,8 +2956,13 @@ let _ =
                           (),
                         );
 
-                        InitTransformGizmosJobTool.getCurrentSceneTreeNodeLocalScale()
-                        |> expect == (1., 0., 1.);
+                        TransformGameObjectEngineService.getLocalScale(
+                          SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
+                          |> StateLogicService.getEditorState,
+                        )
+                        |> StateLogicService.getEngineStateToGetData
+                        |> Vector3Service.truncate(3)
+                        |> expect == (1., 0.001, 1.);
                       },
                     );
                   })

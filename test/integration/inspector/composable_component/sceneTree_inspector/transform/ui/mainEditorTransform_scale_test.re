@@ -52,14 +52,14 @@ let _ =
 
           let reasonStateUpdate =
             FloatInputTool.reducer(
-              ~canBeZero=Some(true),
+              ~canBeZero=Some(false),
               ~action=Blur,
               ~state,
               (),
             )
             |> ReactTool.getUpdateState;
 
-          reasonStateUpdate.inputValue |> expect == Some("0");
+          reasonStateUpdate.inputValue |> expect == Some("1.0");
         })
       );
     });
