@@ -1,70 +1,18 @@
-let isIntersectMesh = (gameObject, ray, engineState) =>
-  MeshUtils.checkIntersectMesh(
+let _isSelectScaleAxisGizmo = (scaleAxisGizmo, ray, engineState, editorState) =>
+  SelectTranslationGizmoUtils.isSelectTranslationAxisGizmo(
+    scaleAxisGizmo,
     ray,
-    (
-      GameObjectComponentEngineService.unsafeGetGeometryComponent(
-        gameObject,
-        engineState,
-      ),
-      TransformEngineService.getLocalToWorldMatrixTypeArray(
-        GameObjectComponentEngineService.unsafeGetTransformComponent(
-          gameObject,
-          engineState,
-        ),
-        engineState,
-      ),
-      RayType.None,
-    ),
     engineState,
-  )
-  |> Js.Option.isSome;
-
-/* TODO refactor: duplicate with translation */
-let _isSelectScaleAxisGizmo = (scaleAxisGizmo, ray, engineState, editorState) => {
-  let expandFactor = 0.3;
-
-  HierarchyGameObjectEngineService.getAllChildren(scaleAxisGizmo, engineState)
-  |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. isSelect, gameObject) =>
-         isSelect ?
-           isSelect :
-           {
-             let aabb =
-               AABBShapeUtils.setFromPoints(
-                 GeometryEngineService.getGeometryVertices(
-                   GameObjectComponentEngineService.unsafeGetGeometryComponent(
-                     gameObject,
-                     engineState,
-                   ),
-                   engineState,
-                 ),
-               );
-
-             let halfExtendsLength =
-               aabb |> AABBShapeUtils.getHalfExtends |> Vector3Service.length;
-
-             RayUtils.isIntersectOBB(
-               aabb
-               |> AABBShapeUtils.expandByScalar(
-                    expandFactor *. halfExtendsLength,
-                  ),
-               TransformEngineService.getLocalToWorldMatrixTypeArray(
-                 GameObjectComponentEngineService.unsafeGetTransformComponent(
-                   gameObject,
-                   engineState,
-                 ),
-                 engineState,
-               ),
-               ray,
-             );
-           },
-       false,
-     );
-};
+    editorState,
+  );
 
 let _isSelectScaleCenterBoxGizmo =
     (scaleCenterBoxGizmo, ray, engineState, editorState) =>
-  isIntersectMesh(scaleCenterBoxGizmo, ray, engineState);
+  SelectTranslationGizmoUtils.isIntersectMesh(
+    scaleCenterBoxGizmo,
+    ray,
+    engineState,
+  );
 
 let _selectAxisGizmo =
     (

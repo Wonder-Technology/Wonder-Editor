@@ -19,7 +19,7 @@ let isIntersectMesh = (gameObject, ray, engineState) =>
   )
   |> Js.Option.isSome;
 
-let _isSelectTranslationAxisGizmo =
+let isSelectTranslationAxisGizmo =
     (translationAxisGizmo, ray, engineState, editorState) => {
   let expandFactor = 0.3;
 
@@ -227,7 +227,7 @@ let _selectPlaneGizmo =
 };
 
 let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
-  _isSelectTranslationAxisGizmo(
+  isSelectTranslationAxisGizmo(
     OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
       editorState,
     ),
@@ -258,7 +258,7 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
         (editorState, engineState),
       );
     } :
-    _isSelectTranslationAxisGizmo(
+    isSelectTranslationAxisGizmo(
       OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
         editorState,
       ),
@@ -289,7 +289,7 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
           (editorState, engineState),
         );
       } :
-      _isSelectTranslationAxisGizmo(
+      isSelectTranslationAxisGizmo(
         OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
           editorState,
         ),

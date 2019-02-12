@@ -289,64 +289,17 @@ module RenderRotationGizmos = {
 };
 
 module RenderScaleGizmos = {
-  /* TODO refactor duplicate with translation */
   let prepareScaleGlState = engineState =>
-    engineState |> DeviceManagerEngineService.setDepthTest(false);
+    RenderTranslationGizmos.prepareTranslationAxisGlState(engineState);
 
   let restoreScaleGlState = engineState =>
-    engineState |> DeviceManagerEngineService.setDepthTest(true);
+    RenderTranslationGizmos.restoreTranslationAxisGlState(engineState);
 
   let getRenderDataArr = (gameObjects, engineState) =>
-    gameObjects
-    |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. renderDataArr, gameObject) =>
-           switch (
-             RenderTransformGizmos.getRenderData(gameObject, engineState)
-           ) {
-           | None => renderDataArr
-           | Some(renderData) =>
-             renderDataArr |> ArrayService.push(renderData)
-           },
-         [||],
-       );
+    RenderTranslationGizmos.getRenderDataArr(gameObjects, engineState);
 
   let render = (renderDataArr, gl, engineState) =>
-    renderDataArr
-    |> WonderCommonlib.ArrayService.reduceOneParam(
-         (.
-           engineState,
-           (transformIndex, materialIndex, meshRendererIndex, geometryIndex),
-         ) => {
-           let shaderIndex =
-             RenderJobEngineService.getShaderIndex(
-               materialIndex,
-               engineState,
-             );
-
-           engineState
-           |> RenderJobEngineService.useByShaderIndex(gl, shaderIndex)
-           |> RenderJobEngineService.sendAttributeData(
-                gl,
-                (shaderIndex, geometryIndex),
-              )
-           |> RenderJobEngineService.sendUniformRenderObjectModelData(
-                gl,
-                shaderIndex,
-                transformIndex,
-              )
-           |> RenderJobEngineService.sendUniformRenderObjectMaterialData(
-                gl,
-                shaderIndex,
-                materialIndex,
-              )
-           |> RenderJobEngineService.draw(
-                gl,
-                meshRendererIndex,
-                geometryIndex,
-              );
-         },
-         engineState,
-       );
+    RenderTranslationGizmos.render(renderDataArr, gl, engineState);
 };
 
 let _getTranslationAxisGameObjects = (editorState, engineState) =>
