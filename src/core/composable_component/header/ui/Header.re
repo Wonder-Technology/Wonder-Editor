@@ -53,9 +53,6 @@ module Method = {
         onClick=(_e => AllHistoryService.handleUndo(uiState, dispatchFunc))>
         <span className="section-header"> (DomHelper.textEl("Undo")) </span>
       </div>
-      /* <span className="section-tail">
-           (DomHelper.textEl("Ctrl+Z"))
-         </span> */
       <div
         className="content-section"
         onClick=(

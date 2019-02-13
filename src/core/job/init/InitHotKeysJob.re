@@ -8,6 +8,7 @@ let _getHotKeyAction = hotKeyName =>
   | "undo" => Undo
   | "duplicate" => Duplicate
   | "delete" => Delete
+  | "focus" => Focus
   };
 
 let _getHandleFuncByHotKeyAction = hotKeyAction => {
@@ -48,6 +49,16 @@ let _getHandleFuncByHotKeyAction = hotKeyAction => {
             (),
           ) :
           ()
+    )
+  | Focus => (
+      () =>
+        ArcballCameraControllerLogicService.setEditorCameraFocusTargetGameObject(
+          3.0,
+          isCurrentSceneTreeNodeCanBeOperate,
+          StateEditorService.getState(),
+          StateEngineService.unsafeGetState(),
+        )
+        |> StateLogicService.refreshEngineState
     )
   };
 };

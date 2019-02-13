@@ -3,7 +3,7 @@ open Js.Promise;
 open Js.Typed_array;
 
 let _disposeAssets = () =>
-  StateLogicService.getAndSetStateToGetData(
+  StateLogicService.getAndSetState(
     DisposeTreeAssetLogicService.disposeTree,
   );
 

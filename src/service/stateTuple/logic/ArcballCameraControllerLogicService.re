@@ -183,3 +183,59 @@ let unbindGameViewActiveCameraArcballCameraControllerEvent = engineState =>
          _checkSceneAllArcballCameraControllersNotBindEvent(engineState),
        StateEditorService.getStateIsDebug(),
      );
+
+let setEditorCameraFocusTargetGameObject =
+    (distance, isCurrentSceneTreeNodeCanBeOperate, editorState, engineState) => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect=
+                  {j|the editor camera should has arcballCameraController component|j},
+                ~actual={j|not|j},
+              ),
+              () =>
+              editorState
+              |> SceneViewEditorService.unsafeGetEditCamera
+              |. GameObjectComponentEngineService.hasArcballCameraControllerComponent(
+                   engineState,
+                 )
+              |> assertTrue
+            )
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
+  let editorCameraArcballControllerComponent =
+    editorState
+    |> SceneViewEditorService.unsafeGetEditCamera
+    |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+         engineState,
+       );
+
+  isCurrentSceneTreeNodeCanBeOperate ?
+    engineState
+    |> ArcballCameraEngineService.setArcballCameraControllerTarget(
+         editorCameraArcballControllerComponent,
+         editorState
+         |> SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
+         |. GameObjectComponentEngineService.unsafeGetTransformComponent(
+              engineState,
+            )
+         |. TransformEngineService.getPosition(engineState),
+       )
+    |> ArcballCameraEngineService.setArcballCameraControllerDistance(
+         distance,
+         editorCameraArcballControllerComponent,
+       ) :
+    engineState
+    |> ArcballCameraEngineService.setArcballCameraControllerTarget(
+         editorCameraArcballControllerComponent,
+         (0., 0., 0.),
+       );
+};
