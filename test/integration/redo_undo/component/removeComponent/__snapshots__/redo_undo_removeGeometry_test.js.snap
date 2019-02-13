@@ -73,10 +73,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -93,10 +96,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -113,10 +119,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -150,10 +159,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -170,10 +182,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -190,10 +205,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -227,10 +245,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -247,10 +268,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -267,10 +291,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -550,10 +577,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="inspector-item wonder-float-input"
                     >
                       <div
-                        className="item-header"
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
                       >
                         Shininess
                       </div>
@@ -675,10 +705,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -695,10 +728,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -715,10 +751,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -752,10 +791,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -772,10 +814,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -792,10 +837,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -829,10 +877,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -849,10 +900,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -869,10 +923,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -1152,10 +1209,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="inspector-item wonder-float-input"
                     >
                       <div
-                        className="item-header"
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
                       >
                         Shininess
                       </div>
@@ -1277,10 +1337,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -1297,10 +1360,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -1317,10 +1383,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -1354,10 +1423,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -1374,10 +1446,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -1394,10 +1469,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -1431,10 +1509,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -1451,10 +1532,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -1471,10 +1555,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -1754,10 +1841,13 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="inspector-item wonder-float-input"
                     >
                       <div
-                        className="item-header"
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
                       >
                         Shininess
                       </div>

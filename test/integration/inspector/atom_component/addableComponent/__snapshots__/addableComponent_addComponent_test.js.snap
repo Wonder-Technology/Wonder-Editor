@@ -73,10 +73,13 @@ exports[`AddableComponent add component test camera add component test add arcba
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -93,10 +96,13 @@ exports[`AddableComponent add component test camera add component test add arcba
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -113,10 +119,13 @@ exports[`AddableComponent add component test camera add component test add arcba
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -150,10 +159,13 @@ exports[`AddableComponent add component test camera add component test add arcba
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -170,10 +182,13 @@ exports[`AddableComponent add component test camera add component test add arcba
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -190,10 +205,13 @@ exports[`AddableComponent add component test camera add component test add arcba
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -227,10 +245,13 @@ exports[`AddableComponent add component test camera add component test add arcba
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -247,10 +268,13 @@ exports[`AddableComponent add component test camera add component test add arcba
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -267,10 +291,13 @@ exports[`AddableComponent add component test camera add component test add arcba
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -432,10 +459,13 @@ exports[`AddableComponent add component test camera add component test add arcba
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Near
                 </div>
@@ -452,10 +482,13 @@ exports[`AddableComponent add component test camera add component test add arcba
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Far
                 </div>
@@ -472,10 +505,13 @@ exports[`AddableComponent add component test camera add component test add arcba
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Fovy
                 </div>
@@ -528,10 +564,13 @@ exports[`AddableComponent add component test camera add component test add arcba
         className="wonder-inspector-arcballCameraController"
       >
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Distance
           </div>
@@ -548,10 +587,13 @@ exports[`AddableComponent add component test camera add component test add arcba
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Min Distance
           </div>
@@ -664,10 +706,13 @@ exports[`AddableComponent add component test camera add component test add geome
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -684,10 +729,13 @@ exports[`AddableComponent add component test camera add component test add geome
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -704,10 +752,13 @@ exports[`AddableComponent add component test camera add component test add geome
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -741,10 +792,13 @@ exports[`AddableComponent add component test camera add component test add geome
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -761,10 +815,13 @@ exports[`AddableComponent add component test camera add component test add geome
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -781,10 +838,13 @@ exports[`AddableComponent add component test camera add component test add geome
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -818,10 +878,13 @@ exports[`AddableComponent add component test camera add component test add geome
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -838,10 +901,13 @@ exports[`AddableComponent add component test camera add component test add geome
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -858,10 +924,13 @@ exports[`AddableComponent add component test camera add component test add geome
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -1020,10 +1089,13 @@ exports[`AddableComponent add component test camera add component test add geome
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Near
                 </div>
@@ -1040,10 +1112,13 @@ exports[`AddableComponent add component test camera add component test add geome
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Far
                 </div>
@@ -1060,10 +1135,13 @@ exports[`AddableComponent add component test camera add component test add geome
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Fovy
                 </div>
@@ -1242,10 +1320,13 @@ exports[`AddableComponent add component test camera add component test add rende
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -1262,10 +1343,13 @@ exports[`AddableComponent add component test camera add component test add rende
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -1282,10 +1366,13 @@ exports[`AddableComponent add component test camera add component test add rende
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -1319,10 +1406,13 @@ exports[`AddableComponent add component test camera add component test add rende
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -1339,10 +1429,13 @@ exports[`AddableComponent add component test camera add component test add rende
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -1359,10 +1452,13 @@ exports[`AddableComponent add component test camera add component test add rende
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -1396,10 +1492,13 @@ exports[`AddableComponent add component test camera add component test add rende
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -1416,10 +1515,13 @@ exports[`AddableComponent add component test camera add component test add rende
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -1436,10 +1538,13 @@ exports[`AddableComponent add component test camera add component test add rende
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -1598,10 +1703,13 @@ exports[`AddableComponent add component test camera add component test add rende
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Near
                 </div>
@@ -1618,10 +1726,13 @@ exports[`AddableComponent add component test camera add component test add rende
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Far
                 </div>
@@ -1638,10 +1749,13 @@ exports[`AddableComponent add component test camera add component test add rende
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Fovy
                 </div>
@@ -1921,10 +2035,13 @@ exports[`AddableComponent add component test camera add component test add rende
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="inspector-item wonder-float-input"
                     >
                       <div
-                        className="item-header"
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
                       >
                         Shininess
                       </div>
@@ -2046,10 +2163,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -2066,10 +2186,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -2086,10 +2209,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -2123,10 +2249,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -2143,10 +2272,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -2163,10 +2295,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -2200,10 +2335,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -2220,10 +2358,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -2240,10 +2381,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -2523,10 +2667,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="inspector-item wonder-float-input"
                     >
                       <div
-                        className="item-header"
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
                       >
                         Shininess
                       </div>
@@ -2754,10 +2901,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Near
                 </div>
@@ -2774,10 +2924,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Far
                 </div>
@@ -2794,10 +2947,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Fovy
                 </div>
@@ -2913,10 +3069,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -2933,10 +3092,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -2953,10 +3115,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -2990,10 +3155,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -3010,10 +3178,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -3030,10 +3201,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -3067,10 +3241,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -3087,10 +3264,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -3107,10 +3287,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -3390,10 +3573,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="inspector-item wonder-float-input"
                     >
                       <div
-                        className="item-header"
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
                       >
                         Shininess
                       </div>
@@ -3580,10 +3766,13 @@ exports[`AddableComponent add component test gameObject add component workflow t
             </div>
           </article>
           <article
-            className="inspector-item"
+            className="inspector-item wonder-float-input"
           >
             <div
-              className="item-header"
+              className="item-header component-label"
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              onMouseUp={[Function]}
             >
               Intensity
             </div>

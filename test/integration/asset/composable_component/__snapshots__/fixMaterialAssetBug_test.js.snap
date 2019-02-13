@@ -145,10 +145,13 @@ exports[`fix material asset bug fix bug
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Shininess
           </div>
@@ -545,10 +548,13 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Shininess
           </div>
