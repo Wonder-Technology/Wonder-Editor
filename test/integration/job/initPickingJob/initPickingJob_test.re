@@ -11,7 +11,11 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+    afterEach(() => {
+      restoreSandbox(refJsObjToSandbox(sandbox^));
+
+      EventTool.restore();
+    });
 
     describe("test find picked one", () => {
       describe("should set finded one to current scene tree node", () => {
@@ -34,7 +38,7 @@ let _ =
             test("not trigger pick", () => {
               let gameObject1 = _prepare();
 
-              InitPickingJobTool.triggerPickingAndRestore(
+              InitPickingJobTool.triggerPicking(
                 ~sandbox,
                 ~pageX=250,
                 ~pageY=100,
@@ -58,7 +62,7 @@ let _ =
             });
 
             test("not trigger pick success", () => {
-              InitPickingJobTool.triggerPickingAndRestore(
+              InitPickingJobTool.triggerPicking(
                 ~sandbox,
                 ~pageX=250,
                 ~pageY=100,
@@ -71,7 +75,7 @@ let _ =
               let gameObject = 500;
               GameObjectTool.setCurrentSceneTreeNode(gameObject);
 
-              InitPickingJobTool.triggerPickingAndRestore(
+              InitPickingJobTool.triggerPicking(
                 ~sandbox,
                 ~pageX=250 - 200,
                 ~pageY=100,
@@ -106,7 +110,7 @@ let _ =
             test("test find", () => {
               let gameObject1 = _prepare();
 
-              InitPickingJobTool.triggerPickingAndRestore(
+              InitPickingJobTool.triggerPicking(
                 ~sandbox,
                 ~pageX=233 + 10,
                 ~pageY=119 + 20,
@@ -118,7 +122,7 @@ let _ =
             test("test not find", () => {
               let gameObject1 = _prepare();
 
-              InitPickingJobTool.triggerPickingAndRestore(
+              InitPickingJobTool.triggerPicking(
                 ~sandbox,
                 ~pageX=225 + 10,
                 ~pageY=124 + 20,
@@ -159,7 +163,7 @@ let _ =
                 test("test find gameObject1", () => {
                   let (gameObject1, gameObject2) = _prepare();
 
-                  InitPickingJobTool.triggerPickingAndRestore(
+                  InitPickingJobTool.triggerPicking(
                     ~sandbox,
                     ~pageX=251 + 10,
                     ~pageY=91 + 20,
@@ -171,7 +175,7 @@ let _ =
                 test("test find gameObject2", () => {
                   let (gameObject1, gameObject2) = _prepare();
 
-                  InitPickingJobTool.triggerPickingAndRestore(
+                  InitPickingJobTool.triggerPicking(
                     ~sandbox,
                     ~pageX=257 + 10,
                     ~pageY=100 + 20,
@@ -183,7 +187,7 @@ let _ =
                 test("test not find", () => {
                   let (gameObject1, gameObject2) = _prepare();
 
-                  InitPickingJobTool.triggerPickingAndRestore(
+                  InitPickingJobTool.triggerPicking(
                     ~sandbox,
                     ~pageX=241 + 10,
                     ~pageY=120 + 20,
@@ -250,7 +254,7 @@ let _ =
                   let (gameObject1, gameObject2) =
                     _prepare((0., 0., 3.), (0., 0., 1.));
 
-                  InitPickingJobTool.triggerPickingAndRestore(
+                  InitPickingJobTool.triggerPicking(
                     ~sandbox,
                     ~pageX=250,
                     ~pageY=100,
@@ -263,7 +267,7 @@ let _ =
                   let (gameObject1, gameObject2) =
                     _prepare((0., 0., 4.1), (0., 0., 1.));
 
-                  InitPickingJobTool.triggerPickingAndRestore(
+                  InitPickingJobTool.triggerPicking(
                     ~sandbox,
                     ~pageX=250,
                     ~pageY=100,
@@ -343,7 +347,7 @@ let _ =
 
             _changePoints(gameObject);
 
-            InitPickingJobTool.triggerPickingAndRestore(
+            InitPickingJobTool.triggerPicking(
               ~sandbox,
               ~pageX=255 + 10,
               ~pageY=100 + 20,
@@ -371,7 +375,7 @@ let _ =
           );
 
         let _triggerPicking = () =>
-          InitPickingJobTool.triggerPickingAndRestore(
+          InitPickingJobTool.triggerPicking(
             ~sandbox,
             ~pageX=250 + 10,
             ~pageY=100 + 20,
@@ -529,7 +533,7 @@ let _ =
             );
 
           let _triggerPicking = () =>
-            InitPickingJobTool.triggerPickingAndRestore(
+            InitPickingJobTool.triggerPicking(
               ~sandbox,
               ~pageX=400 + 10,
               ~pageY=100 + 20,
@@ -810,7 +814,7 @@ let _ =
           test("test pick", () => {
             let gameObject1 = _prepare();
 
-            InitPickingJobTool.triggerPickingAndRestore(
+            InitPickingJobTool.triggerPicking(
               ~sandbox,
               ~pageX=250,
               ~pageY=100,
