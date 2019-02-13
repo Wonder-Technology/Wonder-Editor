@@ -161,6 +161,49 @@ module Method = {
   };
 
   let isDragStart = ({isDragStart}) => isDragStart;
+
+  let handleDragStart = (event, send) => {
+    let e = ReactEventType.convertReactMouseEventToJsEvent(event);
+
+    Wonderjs.DomExtend.requestPointerLock(e##target);
+
+    send(DragStart);
+
+    ();
+  };
+
+  let handleDragDrop = ((send, state)) =>
+    isDragStart(state) ?
+      {
+        Wonderjs.DomExtend.exitPointerLock();
+
+        send(Blur);
+
+        ();
+      } :
+      ();
+
+  let handleDragOver = (event, (send, state)) =>
+    isDragStart(state) ?
+      {
+        let e = ReactEventType.convertReactMouseEventToJsEvent(event);
+
+        send(
+          Change(
+            Some(
+              computeNewValue(
+                state.inputValue |> OptionService.unsafeGet |> float_of_string,
+                state.canBeZero,
+                MouseEventService.getMovementDeltaWhenPointerLocked(e),
+              )
+              |> string_of_float,
+            ),
+          ),
+        );
+
+        ();
+      } :
+      ();
 };
 
 let component = ReasonReact.reducerComponent("FloatInput");
@@ -183,57 +226,9 @@ let render =
       | Some(label) =>
         <div
           className="item-header component-label"
-          onMouseDown=(
-            event => {
-              let e = ReactEventType.convertReactMouseEventToJsEvent(event);
-
-              Wonderjs.DomExtend.requestPointerLock(e##target);
-
-              send(DragStart);
-
-              ();
-            }
-          )
-          onMouseMove=(
-            event =>
-              Method.isDragStart(state) ?
-                {
-                  let e =
-                    ReactEventType.convertReactMouseEventToJsEvent(event);
-
-                  send(
-                    Change(
-                      Some(
-                        Method.computeNewValue(
-                          state.inputValue
-                          |> OptionService.unsafeGet
-                          |> float_of_string,
-                          state.canBeZero,
-                          MouseEventService.getMovementDeltaWhenPointerLocked(
-                            e,
-                          ),
-                        )
-                        |> string_of_float,
-                      ),
-                    ),
-                  );
-
-                  ();
-                } :
-                ()
-          )
-          onMouseUp=(
-            _event =>
-              Method.isDragStart(state) ?
-                {
-                  Wonderjs.DomExtend.exitPointerLock();
-
-                  send(Blur);
-
-                  ();
-                } :
-                ()
-          )>
+          onMouseDown=(event => Method.handleDragStart(event, send))
+          onMouseMove=(event => Method.handleDragOver(event, (send, state)))
+          onMouseUp=(_event => Method.handleDragDrop((send, state)))>
           (DomHelper.textEl(label))
         </div>
       }
@@ -265,7 +260,6 @@ let make =
     ) => {
   ...component,
   initialState: () =>
-    /* let canBeZero =  */
     switch (defaultValue) {
     | None => {
         inputValue: Some("0"),

@@ -48,12 +48,12 @@ let _ =
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
           let value = 0.;
-          let state = {
-            inputValue: Some("0."),
-            originValue: "1.0",
-            isDragStart: false,
-            canBeZero: false,
-          };
+          let state =
+            FloatInputTool.buildState(
+              ~inputValue=Some("0."),
+              ~originValue="1.0",
+              (),
+            );
 
           let reasonStateUpdate =
             FloatInputTool.reducer(~canBeZero=false, ~action=Blur, ~state, ())
