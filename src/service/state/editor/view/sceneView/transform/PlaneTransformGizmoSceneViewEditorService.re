@@ -2,23 +2,9 @@ open EditorType;
 
 open ShapeType;
 
-let buildPlane =
-    (axisAEndGameObject, axisBEndGameObject, wholeGameObject, engineState) =>
-  PlaneShapeUtils.setFromCoplanarPoints(
-    TransformEngineService.getPosition(
-      GameObjectComponentEngineService.unsafeGetTransformComponent(
-        axisAEndGameObject,
-        engineState,
-      ),
-      engineState,
-    ),
-    TransformEngineService.getPosition(
-      GameObjectComponentEngineService.unsafeGetTransformComponent(
-        axisBEndGameObject,
-        engineState,
-      ),
-      engineState,
-    ),
+let buildPlane = (normal, wholeGameObject, engineState) =>
+  PlaneShapeUtils.setFromNormalAndCoplanarPoint(
+    normal,
     TransformEngineService.getPosition(
       GameObjectComponentEngineService.unsafeGetTransformComponent(
         wholeGameObject,
