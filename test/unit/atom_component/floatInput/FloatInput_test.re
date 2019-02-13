@@ -16,7 +16,12 @@ let _ =
     describe("test FloatInput component set float value", () => {
       let _test = (value, onChangeValue, onBlurValue) => {
         open FloatInput;
-        let state = {inputValue: None, originValue: "", isDragStart: false};
+        let state = {
+          inputValue: None,
+          originValue: "",
+          isDragStart: false,
+          canBeZero: false,
+        };
 
         let onChangeFunc = createEmptyStubWithJsObjSandbox(sandbox);
         let onBlurFunc = createEmptyStubWithJsObjSandbox(sandbox);
@@ -25,7 +30,7 @@ let _ =
           FloatInputTool.reducer(
             ~onChangeFunc=Some(onChangeFunc),
             ~onBlurFunc=Some(onBlurFunc),
-            ~canBeZero=Some(false),
+            ~canBeZero=false,
             ~action=Change(Some(value)),
             ~state,
             (),
@@ -36,7 +41,7 @@ let _ =
           FloatInputTool.reducer(
             ~onChangeFunc=Some(onChangeFunc),
             ~onBlurFunc=Some(onBlurFunc),
-            ~canBeZero=Some(false),
+            ~canBeZero=false,
             ~action=Blur,
             ~state,
             (),

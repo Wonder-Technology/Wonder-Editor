@@ -52,15 +52,11 @@ let _ =
             inputValue: Some("0."),
             originValue: "1.0",
             isDragStart: false,
+            canBeZero: false,
           };
 
           let reasonStateUpdate =
-            FloatInputTool.reducer(
-              ~canBeZero=Some(false),
-              ~action=Blur,
-              ~state,
-              (),
-            )
+            FloatInputTool.reducer(~canBeZero=false, ~action=Blur, ~state, ())
             |> ReactTool.getUpdateState;
 
           reasonStateUpdate.inputValue |> expect == Some("1.0");
