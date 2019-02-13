@@ -2,4 +2,5 @@ type hotKeyAction =
   | Redo
   | Undo
   | Duplicate
-  | Delete;
+  | Delete
+  | Focus;

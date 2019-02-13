@@ -33,6 +33,12 @@
             "values": [
                 "delete"
             ]
+        },
+        {
+            "name": "focus",
+            "values": [
+                "f"
+            ]
         }
     ]
 }
