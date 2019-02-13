@@ -8,11 +8,11 @@ let _ =
     open Js.Promise;
 
     let sandbox = getSandboxDefaultVal();
-    let cubeTexturedWDBArrayBuffer = ref(Obj.magic(1));
+    let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
     let sceneWDBArrayBuffer = ref(Obj.magic(1));
 
     beforeAll(() => {
-      cubeTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("CubeTextured");
+      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
       sceneWDBArrayBuffer := WDBTool.generateSceneWDB();
     });
 
@@ -68,7 +68,7 @@ let _ =
             MainEditorSceneTool.prepareScene(sandbox);
 
             MainEditorAssetUploadTool.loadOneWDB(
-              ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
               (),
             )
             |> then_(uploadedWDBNodeId => {
@@ -95,7 +95,7 @@ let _ =
               MainEditorSceneTool.prepareScene(sandbox);
 
               MainEditorAssetUploadTool.loadOneWDB(
-                ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                 (),
               )
               |> then_(uploadedWDBNodeId => {
@@ -116,7 +116,7 @@ let _ =
                    let engineState = StateEngineService.unsafeGetState();
 
                    let clonedGameObjectsWhoHasGeometryWhenCloned =
-                     LoadWDBTool.getCubeTexturedMeshGameObjects(engineState);
+                     LoadWDBTool.getBoxTexturedMeshGameObjects(engineState);
 
                    engineState |> StateEngineService.setState |> ignore;
 
@@ -167,7 +167,7 @@ let _ =
             MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
             MainEditorAssetUploadTool.loadOneWDB(
-              ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
               (),
             )
             |> then_(uploadedWDBNodeId => {
@@ -202,7 +202,7 @@ let _ =
               MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
               MainEditorAssetUploadTool.loadOneWDB(
-                ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                 (),
               )
               |> then_(uploadedWDBNodeId => {
@@ -239,7 +239,7 @@ let _ =
             MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
             MainEditorAssetUploadTool.loadOneWDB(
-              ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
               (),
             )
             |> then_(uploadedWDBNodeId => {
@@ -252,7 +252,7 @@ let _ =
                  let engineState = StateEngineService.unsafeGetState();
 
                  let wdbGameObject =
-                   LoadWDBTool.getCubeTexturedMeshGameObjectFromAssetNode(
+                   LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
                      uploadedWDBNodeId,
                      (editorState, engineState),
                    );
@@ -272,10 +272,10 @@ let _ =
     );
 
     testPromise(
-      {|load CubeTextured.wdb;
-              remove CubeTextured.wdb;
+      {|load BoxTextured.wdb;
+              remove BoxTextured.wdb;
               load Scene.wdb;
-              load CubeTextured.wdb;
+              load BoxTextured.wdb;
 
               the MainEditorAssetChildrenNode panel should show "Scene","Cubetextured"
                 |},
@@ -283,7 +283,7 @@ let _ =
         MainEditorSceneTool.prepareScene(sandbox);
 
         MainEditorAssetUploadTool.loadOneWDB(
-          ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+          ~arrayBuffer=boxTexturedWDBArrayBuffer^,
           (),
         )
         |> then_(uploadedWDBNodeId => {
@@ -298,7 +298,7 @@ let _ =
              )
              |> then_(_ =>
                   MainEditorAssetUploadTool.loadOneWDB(
-                    ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                    ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                     (),
                   )
                   |> then_(_ =>

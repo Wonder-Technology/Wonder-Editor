@@ -17,7 +17,7 @@ let unsafeGetFirst = arr =>
              Operators.(
                test(
                  Log.buildAssertMessage(
-                   ~expect={j|array[0] element exist|j},
+                   ~expect={j|first array element exist|j},
                    ~actual={j|not|j},
                  ),
                  () =>
@@ -29,7 +29,8 @@ let unsafeGetFirst = arr =>
        StateEditorService.getStateIsDebug(),
      );
 
-let getFirst = arr => WonderCommonlib.ArrayService.get(0, arr);
+let getFirst = arr =>
+  WonderCommonlib.ArrayService.unsafeGet(arr, 0) |> Js.toOption;
 
 let unsafeGetLast = arr =>
   arr
@@ -43,7 +44,7 @@ let unsafeGetLast = arr =>
              Operators.(
                test(
                  Log.buildAssertMessage(
-                   ~expect={j|array[0] element exist|j},
+                   ~expect={j|last array element exist|j},
                    ~actual={j|not|j},
                  ),
                  () =>
@@ -59,7 +60,8 @@ let getLast = arr =>
   arr
   |> Js.Array.length
   |> (len => len - 1)
-  |> WonderCommonlib.ArrayService.get(_, arr);
+  |> WonderCommonlib.ArrayService.unsafeGet(arr)
+  |> Js.toOption;
 
 let removeLast = arr => {
   WonderLog.Contract.requireCheck(

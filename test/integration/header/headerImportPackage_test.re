@@ -16,14 +16,14 @@ let _ =
   describe("header import package", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let cubeTexturedWDBArrayBuffer = ref(Obj.magic(1));
+    let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
     let directionPointLightsAndCubeWDBArrayBuffer = ref(Obj.magic(1));
 
     let _prepareFakeCanvas = () =>
       ImportPackageTool.prepareFakeCanvas(sandbox);
 
     beforeAll(() => {
-      cubeTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("CubeTextured");
+      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
 
       directionPointLightsAndCubeWDBArrayBuffer :=
         WDBTool.generateDirectionPointLightsAndCubeWDB();
@@ -78,7 +78,7 @@ let _ =
         describe("dispose geometry assets", () => {
           testPromise(
             {|
-          1.load CubeTextured wdb asset w1;
+          1.load BoxTextured wdb asset w1;
           2.drag w1 to scene tree to be gameObject g1;
           3.export;
           4.import;
@@ -90,7 +90,7 @@ let _ =
               _prepareFakeCanvas() |> ignore;
 
               MainEditorAssetUploadTool.loadOneWDB(
-                ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                 (),
               )
               |> then_(uploadedWDBNodeId => {
@@ -104,7 +104,7 @@ let _ =
                        () => {
                          let engineState = StateEngineService.unsafeGetState();
 
-                         LoadWDBTool.getCubeTexturedMeshGameObject(
+                         LoadWDBTool.getBoxTexturedMeshGameObject(
                            engineState,
                          )
                          |> GameObjectTool.setCurrentSceneTreeNode;
@@ -134,7 +134,7 @@ let _ =
           );
           testPromise("should dispose geometry engine data", () =>
             MainEditorAssetUploadTool.loadOneWDB(
-              ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
               (),
             )
             |> then_(uploadedWDBNodeId => {
@@ -257,7 +257,7 @@ let _ =
 
         testPromise(
           {|
-          1.load CubeTextured wdb asset w1;
+          1.load BoxTextured wdb asset w1;
           2.drag w1 to scene tree to be gameObject g1;
           3.export;
           4.import;
@@ -266,7 +266,7 @@ let _ =
           |},
           () =>
           MainEditorAssetUploadTool.loadOneWDB(
-            ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
             (),
           )
           |> then_(uploadedWDBNodeId => {
@@ -280,7 +280,7 @@ let _ =
                    () => {
                      let engineState = StateEngineService.unsafeGetState();
 
-                     LoadWDBTool.getCubeTexturedMeshGameObject(engineState)
+                     LoadWDBTool.getBoxTexturedMeshGameObject(engineState)
                      |> GameObjectTool.setCurrentSceneTreeNode;
 
                      BuildComponentTool.buildMaterial(
@@ -340,7 +340,7 @@ let _ =
           "if geometry-buffer-use percent >= 10%, reallocate geometry to new buffer",
           () =>
           MainEditorAssetUploadTool.loadOneWDB(
-            ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
             (),
           )
           |> then_(uploadedWDBNodeId => {
@@ -1216,7 +1216,7 @@ let _ =
              () =>
              testPromise(
                {|
-             1.load CubeTextured wdb asset w1;
+             1.load BoxTextured wdb asset w1;
              2.drag w1 to scene tree to be gameObject g1;
              3.export;
              4.import;
@@ -1226,7 +1226,7 @@ let _ =
              |},
                () =>
                MainEditorAssetUploadTool.loadOneWDB(
-                 ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                 ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                  (),
                )
                |> then_(uploadedWDBNodeId => {
@@ -1240,7 +1240,7 @@ let _ =
                         () => {
                           let engineState = StateEngineService.unsafeGetState();
 
-                          LoadWDBTool.getCubeTexturedMeshGameObject(engineState)
+                          LoadWDBTool.getBoxTexturedMeshGameObject(engineState)
                           |> GameObjectTool.setCurrentSceneTreeNode;
 
                           MainEditorSceneTreeTool.Select.selectGameObject(
@@ -1523,7 +1523,7 @@ let _ =
         describe("relate wdb asset gameObjects and material assets", () =>
           testPromise("test", () =>
             MainEditorAssetUploadTool.loadOneWDB(
-              ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
               (),
             )
             |> then_(uploadedWDBNodeId => {
@@ -1539,7 +1539,7 @@ let _ =
                        let engineState = StateEngineService.unsafeGetState();
 
                        let material =
-                         LoadWDBTool.getCubeTexturedMeshGameObject(
+                         LoadWDBTool.getBoxTexturedMeshGameObject(
                            engineState,
                          )
                          |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
@@ -1549,7 +1549,7 @@ let _ =
                        (
                          MainEditorAssetMaterialNodeTool.hasMaterialComponent(
                            material,
-                           LoadWDBTool.getCubeTexturedMeshGameObjectMaterialType(),
+                           LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
                            editorState,
                          ),
                          MaterialNodeAssetEditorService.findAllMaterialNodes(
@@ -1569,7 +1569,7 @@ let _ =
         describe("fix bug", () =>
           testPromise(
             {|
-          1.load CubeTextured wdb asset w1;
+          1.load BoxTextured wdb asset w1;
           2.load texture asset t1;
           3.export;
           4.import;
@@ -1578,7 +1578,7 @@ let _ =
           |},
             () =>
             MainEditorAssetUploadTool.loadOneWDB(
-              ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
               (),
             )
             |> then_(uploadedWDBNodeId =>
@@ -1754,11 +1754,11 @@ let _ =
           ConsoleTool.notShowMessage();
 
           MainEditorAssetUploadTool.loadOneWDB(
-            ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
             (),
           )
           |> then_(uploadedWDBNodeId => {
-               let cubeTexturedWPKArrayBuffer = ExportPackageTool.exportWPK();
+               let boxTexturedWPKArrayBuffer = ExportPackageTool.exportWPK();
 
                MainEditorAssetUploadTool.loadOneWDB(
                  ~arrayBuffer=stoveWDBArrayBuffer^,
@@ -1794,7 +1794,7 @@ let _ =
                             );
 
                           ImportPackageTool.testImportPackageWithoutExport(
-                            ~wpkArrayBuffer=cubeTexturedWPKArrayBuffer,
+                            ~wpkArrayBuffer=boxTexturedWPKArrayBuffer,
                             ~testFunc=
                               () =>
                                 error |> expect |> not_ |> toCalled |> resolve,
@@ -1831,7 +1831,7 @@ let _ =
             {|
           add gameObject g1 to scene tree;
           add material asset m1;
-          load CubeTextured wdb asset w1;
+          load BoxTextured wdb asset w1;
           drag w1 to scene tree to be gameObject g2;
           drag w1->extracted texture t1 to be m1->diffuseMap;
           set g1->material to be m1;
@@ -1867,7 +1867,7 @@ let _ =
                 |> StateLogicService.getEngineStateToGetData;
 
               MainEditorAssetUploadTool.loadOneWDB(
-                ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                 (),
               )
               |> then_(uploadedWDBNodeId => {
@@ -1879,12 +1879,12 @@ let _ =
                    let editorState = StateEditorService.getState();
                    let engineState = StateEngineService.unsafeGetState();
 
-                   let cubeTexturedMeshDiffuseMap =
-                     LoadWDBTool.unsafeGetCubeTexturedMeshDiffuseMap(
+                   let boxTexturedMeshDiffuseMap =
+                     LoadWDBTool.unsafeGetBoxTexturedMeshDiffuseMap(
                        engineState,
                      );
-                   let cubeTexturedMeshDiffuseMapName =
-                     cubeTexturedMeshDiffuseMap
+                   let boxTexturedMeshDiffuseMapName =
+                     boxTexturedMeshDiffuseMap
                      |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
                           _,
                           engineState,
@@ -1892,7 +1892,7 @@ let _ =
 
                    MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
                      ~textureNodeId=
-                       cubeTexturedMeshDiffuseMap
+                       boxTexturedMeshDiffuseMap
                        |> MainEditorAssetTextureNodeTool.findTextureNodeIdByTextureComponent(
                             _,
                             editorState,
@@ -1960,7 +1960,7 @@ let _ =
                          expect == (
                                      0,
                                      materialComponent1Name,
-                                     cubeTexturedMeshDiffuseMapName,
+                                     boxTexturedMeshDiffuseMapName,
                                    )
                          |> resolve;
                        },
@@ -1973,7 +1973,7 @@ let _ =
             {|
           add gameObject g1 to scene tree;
           load texture asset t1;
-          load CubeTextured wdb asset w1;
+          load BoxTextured wdb asset w1;
           drag w1 to scene tree to be gameObject g2;
           drag t1 to be w1->extracted material m1->diffuseMap;
           set g1->material to be m1;
@@ -1996,7 +1996,7 @@ let _ =
               MainEditorAssetUploadTool.loadOneTexture(~imgName=imgName1, ())
               |> then_(uploadedTextureNodeId1 =>
                    MainEditorAssetUploadTool.loadOneWDB(
-                     ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                     ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                      (),
                    )
                    |> then_(uploadedWDBNodeId => {
@@ -2009,7 +2009,7 @@ let _ =
                         let engineState = StateEngineService.unsafeGetState();
 
                         let wdbMaterial =
-                          LoadWDBTool.unsafeGetCubeTexturedMeshLightMaterial(
+                          LoadWDBTool.unsafeGetBoxTexturedMeshLightMaterial(
                             engineState,
                           );
                         let wdbMaterialName =
@@ -2045,11 +2045,11 @@ let _ =
                           (),
                         );
 
-                        let cubeTexturedWPKArrayBuffer =
+                        let boxTexturedWPKArrayBuffer =
                           ExportPackageTool.exportWPK();
 
                         ImportPackageTool.testImportPackageWithoutExport(
-                          ~wpkArrayBuffer=cubeTexturedWPKArrayBuffer,
+                          ~wpkArrayBuffer=boxTexturedWPKArrayBuffer,
                           ~testFunc=
                             () => {
                               let engineState =

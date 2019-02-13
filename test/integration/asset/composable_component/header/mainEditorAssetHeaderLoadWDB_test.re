@@ -16,12 +16,12 @@ let _ =
   describe("MainEditorAssetHeader->load wdb", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let cubeTexturedWDBArrayBuffer = ref(Obj.magic(1));
+    let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
     let truckWDBArrayBuffer = ref(Obj.magic(1));
     let sceneWDBArrayBuffer = ref(Obj.magic(1));
 
     beforeAll(() => {
-      cubeTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("CubeTextured");
+      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
       truckWDBArrayBuffer := WDBTool.convertGLBToWDB("CesiumMilkTruck");
       sceneWDBArrayBuffer := WDBTool.generateSceneWDB();
     });
@@ -78,11 +78,11 @@ let _ =
       testPromise(
         "test the wdb gameObject and it's children isRender should be false",
         () => {
-        let fileName = "CubeTextured";
+        let fileName = "BoxTextured";
 
         MainEditorAssetUploadTool.loadOneWDB(
           ~fileName,
-          ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+          ~arrayBuffer=boxTexturedWDBArrayBuffer^,
           (),
         )
         |> then_(uploadedWDBNodeId => {
@@ -171,7 +171,7 @@ let _ =
               () => {
               testPromise("test load the same wdb once", () =>
                 MainEditorAssetUploadTool.loadOneWDB(
-                  ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                  ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                   (),
                 )
                 |> then_(uploadedWDBNodeId => {
@@ -195,12 +195,12 @@ let _ =
               );
               testPromise("test load the same wdb twice", () =>
                 MainEditorAssetUploadTool.loadOneWDB(
-                  ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                  ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                   (),
                 )
                 |> then_(uploadedWDBNodeId1 =>
                      MainEditorAssetUploadTool.loadOneWDB(
-                       ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                       ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                        (),
                      )
                      |> then_(uploadedWDBNodeId2 => {
@@ -251,12 +251,12 @@ let _ =
 
               AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
                 ~nodeId=addedMaterialNodeId,
-                ~name=LoadWDBTool.getCubeTexturedMeshGameObjectMaterialName(),
+                ~name=LoadWDBTool.getBoxTexturedMeshGameObjectMaterialName(),
                 (),
               );
 
               MainEditorAssetUploadTool.loadOneWDB(
-                ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                 (),
               )
               |> then_(uploadedWDBNodeId1 => {
@@ -279,20 +279,20 @@ let _ =
               "wdb gameObject should use extraced material asset->materialComponent",
               () =>
               MainEditorAssetUploadTool.loadOneWDB(
-                ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                 (),
               )
               |> then_(uploadedWDBNodeId => {
                    let engineState = StateEngineService.unsafeGetState();
                    let editorState = StateEditorService.getState();
 
-                   let cubeTexturedMeshGameObject =
-                     LoadWDBTool.getCubeTexturedMeshGameObjectFromAssetNode(
+                   let boxTexturedMeshGameObject =
+                     LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
                        uploadedWDBNodeId,
                        (editorState, engineState),
                      );
                    let material =
-                     cubeTexturedMeshGameObject
+                     boxTexturedMeshGameObject
                      |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                           _,
                           engineState,
@@ -300,7 +300,7 @@ let _ =
 
                    MainEditorAssetMaterialNodeTool.hasMaterialComponent(
                      material,
-                     LoadWDBTool.getCubeTexturedMeshGameObjectMaterialType(),
+                     LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
                      editorState,
                    )
                    |> expect == true
@@ -311,37 +311,37 @@ let _ =
               "if already has equaled material asset, wdb gameObject should use it",
               () =>
               MainEditorAssetUploadTool.loadOneWDB(
-                ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                 (),
               )
               |> then_(uploadedWDBNodeId1 =>
                    MainEditorAssetUploadTool.loadOneWDB(
-                     ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                     ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                      (),
                    )
                    |> then_(uploadedWDBNodeId2 => {
                         let engineState = StateEngineService.unsafeGetState();
                         let editorState = StateEditorService.getState();
 
-                        let cubeTexturedMeshGameObject1 =
-                          LoadWDBTool.getCubeTexturedMeshGameObjectFromAssetNode(
+                        let boxTexturedMeshGameObject1 =
+                          LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
                             uploadedWDBNodeId1,
                             (editorState, engineState),
                           );
                         let material1 =
-                          cubeTexturedMeshGameObject1
+                          boxTexturedMeshGameObject1
                           |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                                _,
                                engineState,
                              );
 
-                        let cubeTexturedMeshGameObject2 =
-                          LoadWDBTool.getCubeTexturedMeshGameObjectFromAssetNode(
+                        let boxTexturedMeshGameObject2 =
+                          LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
                             uploadedWDBNodeId2,
                             (editorState, engineState),
                           );
                         let material2 =
-                          cubeTexturedMeshGameObject2
+                          boxTexturedMeshGameObject2
                           |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                                _,
                                engineState,
@@ -350,12 +350,12 @@ let _ =
                         (
                           MainEditorAssetMaterialNodeTool.hasMaterialComponent(
                             material1,
-                            LoadWDBTool.getCubeTexturedMeshGameObjectMaterialType(),
+                            LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
                             editorState,
                           ),
                           MainEditorAssetMaterialNodeTool.hasMaterialComponent(
                             material2,
-                            LoadWDBTool.getCubeTexturedMeshGameObjectMaterialType(),
+                            LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
                             editorState,
                           ),
                           MaterialNodeAssetEditorService.findAllMaterialNodes(
@@ -443,7 +443,7 @@ let _ =
               () => {
               testPromise("test load the same wdb once", () =>
                 MainEditorAssetUploadTool.loadOneWDB(
-                  ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                  ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                   (),
                 )
                 |> then_(uploadedWDBNodeId => {
@@ -467,12 +467,12 @@ let _ =
               );
               testPromise("test load the same wdb twice", () =>
                 MainEditorAssetUploadTool.loadOneWDB(
-                  ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                  ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                   (),
                 )
                 |> then_(uploadedWDBNodeId1 =>
                      MainEditorAssetUploadTool.loadOneWDB(
-                       ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                       ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                        (),
                      )
                      |> then_(uploadedWDBNodeId2 => {
@@ -522,7 +522,7 @@ let _ =
 
               AssetTreeInspectorTool.Rename.renameAssetTextureNode(
                 ~nodeId=textureNodeId,
-                ~name=LoadWDBTool.getCubeTexturedMeshGameObjectTextureName(),
+                ~name=LoadWDBTool.getBoxTexturedMeshGameObjectTextureName(),
                 (),
               );
 
@@ -540,7 +540,7 @@ let _ =
               );
 
               MainEditorAssetUploadTool.loadOneWDB(
-                ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                 (),
               )
               |> then_(uploadedWDBNodeId1 => {
@@ -563,20 +563,20 @@ let _ =
               "wdb gameObject should use extraced texture asset->textureComponent",
               () =>
               MainEditorAssetUploadTool.loadOneWDB(
-                ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                 (),
               )
               |> then_(uploadedWDBNodeId => {
                    let engineState = StateEngineService.unsafeGetState();
                    let editorState = StateEditorService.getState();
 
-                   let cubeTexturedMeshGameObject =
-                     LoadWDBTool.getCubeTexturedMeshGameObjectFromAssetNode(
+                   let boxTexturedMeshGameObject =
+                     LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
                        uploadedWDBNodeId,
                        (editorState, engineState),
                      );
                    let diffuseMap =
-                     cubeTexturedMeshGameObject
+                     boxTexturedMeshGameObject
                      |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                           _,
                           engineState,
@@ -598,20 +598,20 @@ let _ =
               "if already has equaled texture asset, wdb gameObject should use it",
               () =>
               MainEditorAssetUploadTool.loadOneWDB(
-                ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                 (),
               )
               |> then_(uploadedWDBNodeId1 => {
                    let engineState = StateEngineService.unsafeGetState();
                    let editorState = StateEditorService.getState();
 
-                   let cubeTexturedMeshGameObject1 =
-                     LoadWDBTool.getCubeTexturedMeshGameObjectFromAssetNode(
+                   let boxTexturedMeshGameObject1 =
+                     LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
                        uploadedWDBNodeId1,
                        (editorState, engineState),
                      );
                    let material1 =
-                     cubeTexturedMeshGameObject1
+                     boxTexturedMeshGameObject1
                      |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                           _,
                           engineState,
@@ -624,7 +624,7 @@ let _ =
                      ~materialNodeId=
                        MainEditorAssetMaterialNodeTool.findNodeIdByMaterialComponentAndType(
                          material1,
-                         LoadWDBTool.getCubeTexturedMeshGameObjectMaterialType(),
+                         LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
                          editorState,
                        )
                        |> OptionService.unsafeGet,
@@ -632,20 +632,20 @@ let _ =
                    );
 
                    MainEditorAssetUploadTool.loadOneWDB(
-                     ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                     ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                      (),
                    )
                    |> then_(uploadedWDBNodeId2 => {
                         let engineState = StateEngineService.unsafeGetState();
                         let editorState = StateEditorService.getState();
 
-                        let cubeTexturedMeshGameObject2 =
-                          LoadWDBTool.getCubeTexturedMeshGameObjectFromAssetNode(
+                        let boxTexturedMeshGameObject2 =
+                          LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
                             uploadedWDBNodeId2,
                             (editorState, engineState),
                           );
                         let diffuseMap2 =
-                          cubeTexturedMeshGameObject2
+                          boxTexturedMeshGameObject2
                           |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                                _,
                                engineState,
@@ -884,17 +884,17 @@ let _ =
 
       describe("fix bug", () => {
         testPromise("the wdb->name in the same path should be unique", () => {
-          let fileName = "CubeTextured";
+          let fileName = "BoxTextured";
 
           MainEditorAssetUploadTool.loadOneWDB(
             ~fileName,
-            ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
             (),
           )
           |> then_(uploadedWDBNodeId1 =>
                MainEditorAssetUploadTool.loadOneWDB(
                  ~fileName,
-                 ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                 ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                  (),
                )
                |> then_(uploadedWDBNodeId2 => {
@@ -1069,7 +1069,7 @@ let _ =
                      );
 
                    MainEditorAssetUploadTool.loadOneWDB(
-                     ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                     ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                      (),
                    )
                    |> then_(uploadedWDBNodeId =>

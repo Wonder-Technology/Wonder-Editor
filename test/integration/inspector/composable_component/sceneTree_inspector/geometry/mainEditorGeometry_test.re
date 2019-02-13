@@ -147,7 +147,8 @@ let _ =
             "change geometry to be Sphere, the current gameObject geometry should be Sphere",
             () => {
               MainEditorGeometryTool.changeGeometry(
-                ~sourceGeometry=GameObjectTool.getCurrentSceneTreeNodeGeometry(),
+                ~sourceGeometry=
+                  GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                 ~targetGeometry=
                   MainEditorGeometryTool.getDefaultSphereGeometryComponent(),
                 (),
@@ -175,25 +176,29 @@ let _ =
                 );
 
               MainEditorGeometryTool.changeGeometry(
-                ~sourceGeometry=GameObjectTool.getCurrentSceneTreeNodeGeometry(),
+                ~sourceGeometry=
+                  GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                 ~targetGeometry=
                   MainEditorGeometryTool.getDefaultSphereGeometryComponent(),
                 (),
               );
               MainEditorGeometryTool.changeGeometry(
-                ~sourceGeometry=GameObjectTool.getCurrentSceneTreeNodeGeometry(),
+                ~sourceGeometry=
+                  GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                 ~targetGeometry=
                   MainEditorGeometryTool.getDefaultCubeGeometryComponent(),
                 (),
               );
               MainEditorGeometryTool.changeGeometry(
-                ~sourceGeometry=GameObjectTool.getCurrentSceneTreeNodeGeometry(),
+                ~sourceGeometry=
+                  GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                 ~targetGeometry=
                   MainEditorGeometryTool.getDefaultSphereGeometryComponent(),
                 (),
               );
               MainEditorGeometryTool.changeGeometry(
-                ~sourceGeometry=GameObjectTool.getCurrentSceneTreeNodeGeometry(),
+                ~sourceGeometry=
+                  GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                 ~targetGeometry=
                   MainEditorGeometryTool.getDefaultCubeGeometryComponent(),
                 (),
@@ -213,10 +218,10 @@ let _ =
       });
 
       describe("test load asset wdb", () => {
-        let cubeTexturedWDBArrayBuffer = ref(Obj.magic(1));
+        let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
 
         beforeAll(() =>
-          cubeTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("CubeTextured")
+          boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
         );
         beforeEach(() => {
           MainEditorAssetTool.buildFakeFileReader();
@@ -232,11 +237,11 @@ let _ =
           "test select geometry group widget should show all geometry", () => {
           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
           |> ignore;
-          let fileName = "CubeTextured";
+          let fileName = "BoxTextured";
 
           MainEditorAssetUploadTool.loadOneWDB(
             ~fileName,
-            ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
             (),
           )
           |> then_(uploadedWDBNodeId => {
@@ -254,12 +259,12 @@ let _ =
         testPromise("test set new geometry should set into engineState", () => {
           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
           |> ignore;
-          let fileName = "CubeTextured";
+          let fileName = "BoxTextured";
           let newGeometry = GeometryToolEngine.getNewGeometry();
 
           MainEditorAssetUploadTool.loadOneWDB(
             ~fileName,
-            ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
             (),
           )
           |> then_(uploadedWDBNodeId => {
@@ -279,7 +284,7 @@ let _ =
                  newGameObjectGeometry,
                )
                |> StateLogicService.getEngineStateToGetData
-               |> expect == MainEditorGeometryTool.getCubeTexturedGeometryName()
+               |> expect == MainEditorGeometryTool.getBoxTexturedGeometryName()
                |> resolve;
              });
         });
