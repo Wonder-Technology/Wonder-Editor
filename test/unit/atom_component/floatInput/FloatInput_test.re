@@ -16,7 +16,7 @@ let _ =
     describe("test FloatInput component set float value", () => {
       let _test = (value, onChangeValue, onBlurValue) => {
         open FloatInput;
-        let state = {inputValue: None, originValue: ""};
+        let state = {inputValue: None, originValue: "", isDragStart: false};
 
         let onChangeFunc = createEmptyStubWithJsObjSandbox(sandbox);
         let onBlurFunc = createEmptyStubWithJsObjSandbox(sandbox);
