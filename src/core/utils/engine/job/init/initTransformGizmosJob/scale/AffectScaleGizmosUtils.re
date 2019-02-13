@@ -18,8 +18,11 @@ let _getDirection = theAxisSegOfIntersectedPointWithAxisInLocalCoordinateSystem 
 
 let _getReplacedZeroFactor = () => 0.001;
 
+let _isFactorNearlyZero = scaleFactor =>
+  scaleFactor |> Js.Math.abs_float <= 0.001;
+
 let _avoidZero = scaleFactor =>
-  scaleFactor === 0. ? _getReplacedZeroFactor() : scaleFactor;
+  _isFactorNearlyZero(scaleFactor) ? _getReplacedZeroFactor() : scaleFactor;
 
 let _computeCurrentSceneTreeNodeNewScaleForXAxis =
     (ray, (editorState, engineState)) => {
@@ -178,15 +181,18 @@ let _avoidVectorFactorZero = ((x, y, z) as scale) => {
         Contract.(
           test(
             Log.buildAssertMessage(
-              ~expect={j|scaleX,scaleY,scaleZ should be 0.0 together|j},
+              ~expect=
+                {j|scaleX,scaleY,scaleZ should be nearly zero together|j},
               ~actual={j|not|j},
             ),
             () =>
-            x === 0. || y === 0. || z === 0. ?
+            _isFactorNearlyZero(x)
+            || _isFactorNearlyZero(y)
+            || _isFactorNearlyZero(z) ?
               {
-                x |> assertEqual(Float, 0.);
-                y |> assertEqual(Float, 0.);
-                z |> assertEqual(Float, 0.);
+                _isFactorNearlyZero(x) |> assertTrue;
+                _isFactorNearlyZero(y) |> assertTrue;
+                _isFactorNearlyZero(z) |> assertTrue;
               } :
               assertPass()
           )
@@ -195,7 +201,7 @@ let _avoidVectorFactorZero = ((x, y, z) as scale) => {
     StateEditorService.getStateIsDebug(),
   );
 
-  x === 0. && y === 0. && z === 0. ?
+  _isFactorNearlyZero(x) && _isFactorNearlyZero(y) && _isFactorNearlyZero(z) ?
     (
       _getReplacedZeroFactor(),
       _getReplacedZeroFactor(),
