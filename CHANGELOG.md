@@ -1,3 +1,13 @@
+<a name="1.0.0-beta.1"></a>
+# [1.0.0-beta.1](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.14.0...v1.0.0-beta.1) (2019-02-14)
+
+
+### Features
+
+* **engine:** update wonder.js to 1.0.0-beta.1 ([772a54f](https://github.com/Wonder-Technology/Wonder-Editor/commit/772a54f))
+
+
+
 <a name="0.14.0"></a>
 # [0.14.0](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.13.1...v0.14.0) (2019-02-14)
 
