@@ -2,7 +2,7 @@
   "name": "wonder-editor",
   "version": "0.14.0",
   "authors": "Wonder",
-  "license": "GPL-3.0",
+  "license": "Apache-2.0",
   "repository": "git@github.com:Wonder-Technology/Wonder-Editor.git",
   "homepage": "https://github.com/Wonder-Technology/Wonder-Editor.js",
   "scripts": {
