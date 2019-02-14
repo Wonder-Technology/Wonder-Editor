@@ -26,30 +26,7 @@ let isRightMouseButton = (event: EventType.customEvent) =>
     }
   );
 
-/* TODO refactor: duplicate with engine */
-let getMovementDeltaWhenPointerLocked = mouseDomEvent => (
-  switch (Js.toOption(mouseDomEvent##movementX)) {
-  | Some(movementX) => movementX
-  | None =>
-    switch (Js.toOption(mouseDomEvent##webkitMovementX)) {
-    | Some(webkitMovementX) => webkitMovementX
-    | None =>
-      switch (Js.toOption(mouseDomEvent##mozMovementX)) {
-      | Some(mozMovementX) => mozMovementX
-      | None => 0
-      }
-    }
-  },
-  switch (Js.toOption(mouseDomEvent##movementY)) {
-  | Some(movementY) => movementY
-  | None =>
-    switch (Js.toOption(mouseDomEvent##webkitMovementY)) {
-    | Some(webkitMovementY) => webkitMovementY
-    | None =>
-      switch (Js.toOption(mouseDomEvent##mozMovementY)) {
-      | Some(mozMovementY) => mozMovementY
-      | None => 0
-      }
-    }
-  },
-);
+let getMovementDeltaWhenPointerLocked = mouseDomEvent =>
+  Wonderjs.HandleMouseEventMainService._getMovementDeltaWhenPointerLocked(
+    mouseDomEvent,
+  );

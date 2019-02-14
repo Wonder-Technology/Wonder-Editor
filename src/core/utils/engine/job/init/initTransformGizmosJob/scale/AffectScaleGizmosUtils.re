@@ -87,8 +87,7 @@ let _computeCurrentSceneTreeNodeNewScaleForYAxis =
          intersectedPointWithAxisInLocalCoordinateSystemY
          /. dragStartPointInLocalCoordinateSystemY,
        )
-    |> _avoidZero
-    |> WonderLog.Log.print,
+    |> _avoidZero,
     startLocalScaleZ,
   );
 };

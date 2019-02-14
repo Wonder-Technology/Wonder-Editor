@@ -70,7 +70,7 @@
     "wonder-bs-most": "^0.0.3",
     "wonder-commonlib": "0.2.26",
     "wonder-log": "^0.2.10",
-    "wonder.js": "1.0.0-alpha.24.20"
+    "wonder.js": "1.0.0-alpha.24.21"
   },
   "resolutions": {
     "wonder-log": "^0.2.10",
