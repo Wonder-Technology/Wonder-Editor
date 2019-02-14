@@ -14,7 +14,7 @@ let _ =
 
     let _changeShininess = value => {
       let currentGameObjectMaterial =
-        GameObjectTool.getCurrentGameObjectLightMaterial();
+        GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
 
       MainEditorLightMaterialTool.changeShininess(~value, ());
       MainEditorLightMaterialTool.blurShininess(~value, ());
@@ -32,7 +32,7 @@ let _ =
         sandbox,
         () => {
           MainEditorAssetTool.initAssetTree();
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
         },
       );
 

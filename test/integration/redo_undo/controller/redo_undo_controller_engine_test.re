@@ -17,10 +17,7 @@ let _ =
       describe("test add gameObject", () => {
         beforeEach(() => {
           MainEditorSceneTool.initState(~sandbox, ());
-          MainEditorSceneTool.createDefaultScene(
-            sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
-          );
+          MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
           ControllerTool.stubRequestAnimationFrame(
             createEmptyStubWithJsObjSandbox(sandbox),
           );
@@ -33,7 +30,7 @@ let _ =
           RedoUndoTool.undoHistoryState();
 
           StateEngineService.unsafeGetState()
-          |> GameObjectUtils.getChildren(
+          |> HierarchyGameObjectEngineService.getChildren(
                MainEditorSceneTool.unsafeGetScene(),
              )
           |> Js.Array.length
@@ -66,7 +63,7 @@ let _ =
 
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           );
           ControllerTool.stubRequestAnimationFrame(
             createEmptyStubWithJsObjSandbox(sandbox),
@@ -76,13 +73,13 @@ let _ =
 
         test("test undo one step which from second to first", () => {
           MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
           MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
 
           RedoUndoTool.undoHistoryState();
 
           StateEngineService.unsafeGetState()
-          |> GameObjectUtils.getChildren(
+          |> HierarchyGameObjectEngineService.getChildren(
                MainEditorSceneTool.unsafeGetScene(),
              )
           |> Js.Array.length
@@ -99,7 +96,7 @@ let _ =
           );
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           );
           ControllerTool.stubRequestAnimationFrame(
             createEmptyStubWithJsObjSandbox(sandbox),
@@ -133,7 +130,7 @@ let _ =
 
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           );
           ControllerTool.stubRequestAnimationFrame(
             createEmptyStubWithJsObjSandbox(sandbox),

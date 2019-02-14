@@ -23,7 +23,7 @@ let _ =
       test("if console one message, unread count should + 1", () => {
         open AppStore;
 
-        let store =
+        let uiState =
           ConsoleStoreTool.buildStore(
             ~currentComponentType=BottomShowComponentStore.Project,
             (),
@@ -33,7 +33,7 @@ let _ =
         |> StateLogicService.getEditorState;
 
         BuildComponentTool.buildBottomHeader(
-          ~store=TestTool.buildEmptyAppState(),
+          ~uiState=TestTool.buildEmptyAppState(),
           (),
         )
         |> ReactTestTool.createSnapshotAndMatch;
@@ -46,7 +46,7 @@ let _ =
         unread count should be clear to 0
         |},
         () => {
-          let store =
+          let uiState =
             ConsoleStoreTool.buildStore(
               ~currentComponentType=BottomShowComponentStore.Console,
               (),
@@ -55,9 +55,9 @@ let _ =
           ConsoleUtils.warn({j|warn message|j})
           |> StateLogicService.getEditorState;
 
-          let component = BuildComponentTool.buildConsole(~store, ());
+          let component = BuildComponentTool.buildConsole(~uiState, ());
 
-          BuildComponentTool.buildBottomHeader(~store, ())
+          BuildComponentTool.buildBottomHeader(~uiState, ())
           |> ReactTestTool.createSnapshotAndMatch;
         },
       );

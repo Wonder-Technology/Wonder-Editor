@@ -1,5 +1,5 @@
 type state = {
-  materialType: AssetMaterialDataType.materialType,
+  materialType: MaterialDataAssetType.materialType,
   isShowMaterialGroup: bool,
   currentMaterial: int,
 };
@@ -7,8 +7,8 @@ type state = {
 type action =
   | ChangeMaterialType(int)
   | ChangeMaterial(
-      option(AssetNodeType.nodeId),
-      (int, AssetMaterialDataType.materialType),
+      option(NodeAssetType.nodeId),
+      (int, MaterialDataAssetType.materialType),
     )
   | ShowMaterialGroup
   | HideMaterialGroup;
@@ -18,13 +18,13 @@ module Method = {
 
   let changeMaterial = MainEditorChangeMaterialEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let renderBasicMaterial = ((store, dispatchFunc), ()) => {
+  let renderBasicMaterial = ((uiState, dispatchFunc), ()) => {
     let gameObject =
-      SceneEditorService.unsafeGetCurrentSceneTreeNode
+      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
       |> StateLogicService.getEditorState;
 
     <MainEditorBasicMaterial
-      store
+      uiState
       dispatchFunc
       materialComponent=(
         GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
@@ -35,13 +35,13 @@ module Method = {
     />;
   };
 
-  let renderLightMaterial = ((store, dispatchFunc), ()) => {
+  let renderLightMaterial = ((uiState, dispatchFunc), ()) => {
     let gameObject =
-      SceneEditorService.unsafeGetCurrentSceneTreeNode
+      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
       |> StateLogicService.getEditorState;
 
     <MainEditorLightMaterial
-      store
+      uiState
       dispatchFunc
       materialComponent=(
         GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
@@ -52,7 +52,7 @@ module Method = {
     />;
   };
 
-  let _sortByName = (allMaterialAssetData, engineState) =>
+  let _sortByName = (engineState, allMaterialAssetData) =>
     allMaterialAssetData
     |> Js.Array.sortInPlaceWith(
          (
@@ -60,16 +60,16 @@ module Method = {
            (_, (materialComponent2, materialType2)),
          ) =>
          Js.String.localeCompare(
-           MainEditorMaterialUtils.getName(
-             materialComponent2,
-             materialType2,
-             engineState,
+           NodeNameAssetLogicService.getMaterialNodeName(
+             ~material=materialComponent2,
+             ~type_=materialType2,
+             ~engineState,
            )
            |> Js.String.charAt(0),
-           MainEditorMaterialUtils.getName(
-             materialComponent1,
-             materialType1,
-             engineState,
+           NodeNameAssetLogicService.getMaterialNodeName(
+             ~material=materialComponent1,
+             ~type_=materialType1,
+             ~engineState,
            )
            |> Js.String.charAt(0),
          )
@@ -77,16 +77,22 @@ module Method = {
        );
 
   let _getAllMaterialAssetData = (editorState, engineState) =>
-    AssetNodeType.(
+    NodeAssetType.(
       ArrayService.fastConcat(
-        MaterialNodeMapAssetEditorService.getResults(editorState)
-        |> Js.Array.map(((materialNodeId, {materialComponent, type_})) =>
-             (Some(materialNodeId), (materialComponent, type_))
-           ),
+        MaterialNodeAssetEditorService.findAllMaterialNodes(editorState)
+        |> Js.Array.map(materialNode => {
+             let {materialComponent, type_}: NodeAssetType.materialNodeData =
+               MaterialNodeAssetService.getNodeData(materialNode);
+
+             (
+               Some(NodeAssetService.getNodeId(~node=materialNode)),
+               (materialComponent, type_),
+             );
+           }),
         MaterialDataAssetEditorService.getAllDefaultMaterialData(editorState)
         |> Js.Array.map(materialData => (None, materialData)),
       )
-      |> _sortByName(_, engineState)
+      |> _sortByName(engineState)
     );
 
   let showMaterialAssets =
@@ -98,7 +104,7 @@ module Method = {
     |> Js.Array.map(((materialNodeId, (material, materialType))) => {
          let className =
            (material, materialType) == (currentMaterial, currentMaterialType) ?
-             "item-content item-active" : "item-content";
+             "select-item-content select-item-active" : "select-item-content";
 
          <div
            className
@@ -111,10 +117,10 @@ module Method = {
            )>
            (
              DomHelper.textEl(
-               MainEditorMaterialUtils.getName(
-                 material,
-                 materialType,
-                 engineState,
+               NodeNameAssetLogicService.getMaterialNodeName(
+                 ~material,
+                 ~type_=materialType,
+                 ~engineState,
                ),
              )
            )
@@ -124,7 +130,7 @@ module Method = {
 
   let _isEqualDefaultMaterial = (material, materialType, editorState) => {
     let (defaultMaterial, _) =
-      MaterialDataAssetEditorService.unsafeGetMaterialDataByType(
+      MaterialDataAssetEditorService.unsafeGetDefaultMaterialDataByType(
         materialType,
         editorState,
       );
@@ -143,7 +149,13 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("MainEditorMaterial");
 
-let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
+let reducer =
+    (
+      (uiState, dispatchFunc) as reduxTuple,
+      currentSceneTreeNode,
+      action,
+      state,
+    ) =>
   switch (action) {
   | ChangeMaterialType(value) =>
     let sourceMaterialType = state.materialType;
@@ -184,8 +196,13 @@ let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
       );
   | ShowMaterialGroup =>
     ReasonReact.Update({...state, isShowMaterialGroup: true})
+
   | HideMaterialGroup =>
-    ReasonReact.Update({...state, isShowMaterialGroup: false})
+    ReasonReactUtils.updateWithSideEffects(
+      {...state, isShowMaterialGroup: false}, _state =>
+      dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
+      |> ignore
+    )
   };
 
 let _renderSelectMaterial = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
@@ -196,11 +213,11 @@ let _renderSelectMaterial = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
         <div className="select-name">
           (
             DomHelper.textEl(
-              MainEditorMaterialUtils.getName(
-                state.currentMaterial,
-                state.materialType,
-              )
-              |> StateLogicService.getEngineStateToGetData,
+              NodeNameAssetLogicService.getMaterialNodeName(
+                ~material=state.currentMaterial,
+                ~type_=state.materialType,
+                ~engineState=StateEngineService.unsafeGetState(),
+              ),
             )
           )
         </div>
@@ -215,17 +232,21 @@ let _renderMaterialGroup =
     (currentSceneTreeNode, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <div className="select-component-content">
     <div className="select-component-item">
-      <div className="item-header"> (DomHelper.textEl("Material")) </div>
-      (
-        ReasonReact.array(
-          Method.showMaterialAssets(
-            send,
-            currentSceneTreeNode,
-            state.currentMaterial,
-            state.materialType,
-          ),
+      <div className="select-item-header">
+        (DomHelper.textEl("Material"))
+      </div>
+      <div className="select-item-body">
+        (
+          ReasonReact.array(
+            Method.showMaterialAssets(
+              send,
+              currentSceneTreeNode,
+              state.currentMaterial,
+              state.materialType,
+            ),
+          )
         )
-      )
+      </div>
     </div>
     <div
       className="select-component-bg"
@@ -235,7 +256,7 @@ let _renderMaterialGroup =
 
 let render =
     (
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       currentSceneTreeNode,
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) =>
@@ -259,8 +280,8 @@ let render =
           MainEditorMaterialUtils.handleSpecificFuncByMaterialType(
             state.materialType,
             (
-              Method.renderBasicMaterial((store, dispatchFunc)),
-              Method.renderLightMaterial((store, dispatchFunc)),
+              Method.renderBasicMaterial((uiState, dispatchFunc)),
+              Method.renderLightMaterial((uiState, dispatchFunc)),
             ),
           )
         )
@@ -271,7 +292,7 @@ let render =
 
 let make =
     (
-      ~store,
+      ~uiState,
       ~dispatchFunc,
       ~currentSceneTreeNode,
       ~isShowMaterialGroup=false,
@@ -296,6 +317,6 @@ let make =
         |> StateLogicService.getEngineStateToGetData,
     };
   },
-  reducer: reducer((store, dispatchFunc), currentSceneTreeNode),
-  render: self => render((store, dispatchFunc), currentSceneTreeNode, self),
+  reducer: reducer((uiState, dispatchFunc), currentSceneTreeNode),
+  render: self => render((uiState, dispatchFunc), currentSceneTreeNode, self),
 };

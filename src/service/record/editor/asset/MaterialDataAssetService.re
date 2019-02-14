@@ -1,6 +1,6 @@
 open AssetType;
 
-open AssetMaterialDataType;
+open MaterialDataAssetType;
 
 let getMaterialData = assetRecord => assetRecord.materialData;
 

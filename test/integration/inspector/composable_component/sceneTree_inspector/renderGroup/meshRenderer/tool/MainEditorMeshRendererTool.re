@@ -14,13 +14,13 @@ let getDrawModeTriangleFanType = () => Triangle_fan |> drawModeToUint8;
 let changeMode =
     (
       ~value,
-      ~meshRenderer=GameObjectTool.getCurrentGameObjectMeshRenderer(),
-      ~store=TestTool.buildEmptyAppState(),
+      ~meshRenderer=GameObjectTool.getCurrentSceneTreeNodeMeshRenderer(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorMeshRenderer.Method.changeMode(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     meshRenderer,
     value,
   );

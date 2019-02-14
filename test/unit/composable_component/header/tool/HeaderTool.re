@@ -6,7 +6,7 @@ let buildFakeZipData = [%bs.raw
     ["Assets/",{}],
     ["Assets/newFolder",{}],
     ["Assets/newFolder 1",{}],
-    ["Assets/BoxTexture.wdb",{
+    ["Assets/CubeTexture.wdb",{
       async: function(){
           return new Promise((resolve, _) => resolve(
             new Int8Array(arrayBuffer)

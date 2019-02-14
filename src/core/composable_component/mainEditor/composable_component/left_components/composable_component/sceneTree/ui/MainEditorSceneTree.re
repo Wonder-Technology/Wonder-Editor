@@ -3,54 +3,43 @@ open SceneGraphType;
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
 module Method = {
-  let onSelect = ((store, dispatchFunc), uid) => {
+  let onSelect = ((uiState, dispatchFunc), uid) => {
     let editorState = StateEditorService.getState();
 
-    switch (SceneEditorService.getCurrentSceneTreeNode(editorState)) {
+    switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
     | None =>
       SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         (),
-        uid,
+        Some(uid),
       )
     | Some(gameObject) =>
       gameObject === uid ?
         () :
         SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-          (store, dispatchFunc),
+          (uiState, dispatchFunc),
           (),
-          uid,
+          Some(uid),
         )
     };
   };
 
-  let handleToggleShowTreeChildren =
-      (store, dispatchFunc, targetId, isShowChildren) => {
-    let newSceneGraphData =
-      store
-      |> StoreUtils.unsafeGetSceneGraphDataFromStore
-      |> SceneGraphUtils.setSpecificSceneTreeNodeIsShowChildren(
-           targetId,
-           isShowChildren,
-         );
-
-    dispatchFunc(
-      AppStore.SceneTreeAction(SetSceneGraph(Some(newSceneGraphData))),
-    )
-    |> ignore;
+  let handleToggleShowTreeChildren = (dispatchFunc, targetId, isShowChildren) => {
+    SceneTreeEditorService.setIsShowChildren(targetId, isShowChildren)
+    |> StateLogicService.getAndSetEditorState;
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))
     |> ignore;
   };
 
-  let dragGameObjectIntoGameObject = SceneTreeDragGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+  let dragGameObjectToBeTargetSib = SceneTreeDragGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let dragWDBIntoScene = SceneTreeDragWDBEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+  let dragWDBToBeTargetSib = SceneTreeDragWDBEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let buildSceneNode = (children, engineState) => {
     uid: SceneEngineService.getSceneGameObject(engineState),
     name: "Scene",
-    isShowChildren: SceneGraphUtils.getSceneTreeNodeIsShowChildren(),
+    /* isShowChildren: SceneGraphUtils.getSceneTreeNodeIsShowChildren(), */
     children,
   };
 
@@ -62,37 +51,45 @@ module Method = {
 
   let rec buildSceneTreeArray =
           (
-            (store, dispatchFunc, dragImg),
+            (uiState, dispatchFunc, dragImg),
             currentSceneTreeNode,
             (onSelectFunc, dragGameObjectFunc, dragWDBFunc),
+            (sceneGameObject, editorState),
             sceneGraphArr,
           ) =>
     sceneGraphArr
-    |> Js.Array.map(({uid, name, isShowChildren, children}) =>
+    |> Js.Array.map(({uid, name, children}) =>
          <SceneTreeNode
            key=(StringService.intToString(uid))
-           id=uid
+           gameObject=uid
            name
            isSelected=(_isSelected(uid, currentSceneTreeNode))
            isActive=true
            dragImg
-           widget=(SceneTreeUtils.getWidget())
+           widget=(SceneTreeWidgetService.getWidget())
            onSelect=onSelectFunc
            dragGameObject=dragGameObjectFunc
            dragWDB=dragWDBFunc
-           isWidget=SceneTreeUtils.isWidget
-           isShowChildren
-           isAssetWDBFile=AssetUtils.isWDBAssetFile
+           isWidget=SceneTreeWidgetService.isWidget
+           isShowChildren=(
+             SceneTreeEditorService.getIsShowChildern(
+               uid,
+               sceneGameObject,
+               editorState,
+             )
+           )
+           isAssetWDBFile=WDBNodeAssetEditorService.isWDBAssetFile
            isHasChildren=(children |> Js.Array.length >= 1)
            handleToggleShowTreeChildren=(
-             handleToggleShowTreeChildren(store, dispatchFunc)
+             handleToggleShowTreeChildren(dispatchFunc)
            )
-           handleRelationError=SceneTreeUtils.isGameObjectRelationError
+           checkNodeRelation=CheckSceneTreeLogicService.checkGameObjectRelation
            treeChildren=(
              buildSceneTreeArray(
-               (store, dispatchFunc, dragImg),
+               (uiState, dispatchFunc, dragImg),
                currentSceneTreeNode,
                (onSelectFunc, dragGameObjectFunc, dragWDBFunc),
+               (sceneGameObject, editorState),
                children,
              )
            )
@@ -103,15 +100,18 @@ module Method = {
 let component =
   ReasonReact.statelessComponentWithRetainedProps("MainEditorSceneTree");
 
-let render = (store, dispatchFunc, _self) => {
+let render = (uiState, dispatchFunc, _self) => {
   let editorState = StateEditorService.getState();
+  let engineState = StateEngineService.unsafeGetState();
 
   <article key="sceneTree" className="wonder-sceneTree-component">
     <article className="wonder-tree">
       (
         ReasonReact.array(
-          store
-          |> StoreUtils.unsafeGetSceneGraphDataFromStore
+          SceneGraphUtils.getSceneGraphDataFromEngine((
+            editorState,
+            engineState,
+          ))
           |> ArrayService.unsafeGetFirst
           |> (scene => scene.children)
           |> (
@@ -123,15 +123,23 @@ let render = (store, dispatchFunc, _self) => {
                 ),
               |]
               |> Method.buildSceneTreeArray(
-                   (store, dispatchFunc, DomHelper.createElement("img")),
-                   editorState |> SceneEditorService.getCurrentSceneTreeNode,
+                   (uiState, dispatchFunc, DomHelper.createElement("img")),
+                   editorState
+                   |> SceneTreeEditorService.getCurrentSceneTreeNode,
                    (
-                     Method.onSelect((store, dispatchFunc)),
-                     Method.dragGameObjectIntoGameObject(
-                       (store, dispatchFunc),
+                     Method.onSelect((uiState, dispatchFunc)),
+                     Method.dragGameObjectToBeTargetSib(
+                       (uiState, dispatchFunc),
                        (),
                      ),
-                     Method.dragWDBIntoScene((store, dispatchFunc), ()),
+                     Method.dragWDBToBeTargetSib(
+                       (uiState, dispatchFunc),
+                       (),
+                     ),
+                   ),
+                   (
+                     SceneEngineService.getSceneGameObject(engineState),
+                     editorState,
                    ),
                  )
           ),
@@ -146,11 +154,11 @@ let shouldUpdate =
   newSelf.retainedProps.updateTypeArr
   |> StoreUtils.shouldComponentUpdate(UpdateStore.SceneTree);
 
-let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
+let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
   retainedProps: {
-    updateTypeArr: StoreUtils.getUpdateComponentTypeArr(store),
+    updateTypeArr: StoreUtils.getUpdateComponentTypeArr(uiState),
   },
   shouldUpdate,
-  render: self => render(store, dispatchFunc, self),
+  render: self => render(uiState, dispatchFunc, self),
 };

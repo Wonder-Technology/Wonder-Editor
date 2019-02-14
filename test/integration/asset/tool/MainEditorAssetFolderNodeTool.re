@@ -1,27 +1,44 @@
-let getFolderName = (nodeId, editorState) =>
-  FolderNodeMapAssetEditorService.getFolderName(
-    nodeId,
-    FolderNodeMapAssetEditorService.getFolderNodeMap(editorState),
-  );
+let getNoNameFolderName = () => "NoName Folder";
 
-let setFolderName = (nodeId, name, editorState) =>
-  FolderNodeMapAssetEditorService.setResult(
+let findChild = FolderNodeAssetService.findChild;
+
+let _setNodeData = (nodeId, nodeData, editorState) =>
+  NodeAssetEditorService.setNodeData(
     nodeId,
-    FolderNodeMapAssetEditorService.unsafeGetResult(nodeId, editorState)
-    |> FolderNodeMapAssetEditorService.renameFolderNodeResult(name),
+    nodeData,
+    FolderNodeAssetService.buildNodeByNodeData(
+      ~children=
+        FolderNodeAssetService.getChildren(
+          OperateTreeAssetEditorService.unsafeFindNodeById(
+            nodeId,
+            editorState,
+          ),
+        ),
+    ),
     editorState,
   );
 
-let getNoNameFolderName = () => FolderNodeUtils.getNoNameFolderName();
+let getFolderName = (nodeId, editorState) =>
+  NodeNameAssetLogicService.getFolderNodeName(
+    OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState),
+  );
 
-let getNodeIdByName = (folderName, editorState) =>
-  switch (
-    FolderNodeMapAssetEditorService.getFolderNodeMap(editorState)
-    |> SparseMapService.getValidDataArr
-    |> Js.Array.find(((nodeId, {name}: AssetNodeType.folderResultType)) =>
-         name === folderName
-       )
-  ) {
-  | None => None
-  | Some((nodeId, _)) => Some(nodeId)
-  };
+let setFolderName = (nodeId, name, editorState) =>
+  editorState
+  |> _setNodeData(
+       nodeId,
+       FolderNodeAssetService.rename(
+         ~name,
+         ~nodeData=
+           OperateTreeAssetEditorService.unsafeFindNodeById(
+             nodeId,
+             editorState,
+           )
+           |> FolderNodeAssetService.getNodeData,
+       ),
+     );
+
+let getIsShowChildren = (nodeId, editorState) =>
+  FolderNodeAssetService.getIsShowChildren(
+    OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState),
+  );

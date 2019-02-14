@@ -40,7 +40,7 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
       CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
+        SceneTreeWidgetService.getWidget(),
       )
       |> StateLogicService.getAndSetEditorState;
 
@@ -53,11 +53,6 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test set value into engineState", () => {
-      let _getPointLightIntensity = (component, engineState) =>
-        engineState
-        |> PointLightEngineService.getPointLightIntensity(component)
-        |. FloatService.truncateFloatValue(5);
-
       beforeEach(() => {
         _prepareWithJob();
         _prepareDefaultSceneAndInit();
@@ -67,7 +62,7 @@ let _ =
 
       test("test change color", () => {
         let currentGameObjectPointLightComponent =
-          GameObjectTool.getCurrentGameObjectPointLightComponent();
+          GameObjectTool.getCurrentSceneTreeNodePointLightComponent();
         let newColor = {
           "hex": "#7df1e8",
           "rgb": {
@@ -92,7 +87,7 @@ let _ =
 
       test("test change intensity", () => {
         let currentGameObjectPointLightComponent =
-          GameObjectTool.getCurrentGameObjectPointLightComponent();
+          GameObjectTool.getCurrentSceneTreeNodePointLightComponent();
         let value = 10.1;
 
         MainEditorPointLightTool.changeIntensityAndBlur(
@@ -107,7 +102,10 @@ let _ =
         );
 
         StateEngineService.unsafeGetState()
-        |> _getPointLightIntensity(currentGameObjectPointLightComponent)
+        |> PointLightEngineService.getPointLightIntensity(
+             currentGameObjectPointLightComponent,
+           )
+        |. FloatService.truncateFloatValue(5)
         |> expect == value;
       });
     });

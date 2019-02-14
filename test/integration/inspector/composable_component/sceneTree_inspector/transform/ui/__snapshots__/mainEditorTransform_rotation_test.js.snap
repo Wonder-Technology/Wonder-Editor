@@ -24,10 +24,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
         className="wonder-transform-template"
       >
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             X
           </div>
@@ -44,10 +47,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Y
           </div>
@@ -64,10 +70,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Z
           </div>
@@ -101,10 +110,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
         className="wonder-transform-template"
       >
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             X
           </div>
@@ -121,10 +133,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Y
           </div>
@@ -141,10 +156,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Z
           </div>
@@ -178,10 +196,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
         className="wonder-transform-template"
       >
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             X
           </div>
@@ -198,10 +219,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Y
           </div>
@@ -218,10 +242,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Z
           </div>
@@ -267,10 +294,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
         className="wonder-transform-template"
       >
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             X
           </div>
@@ -287,10 +317,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Y
           </div>
@@ -307,10 +340,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Z
           </div>
@@ -344,10 +380,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
         className="wonder-transform-template"
       >
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             X
           </div>
@@ -364,10 +403,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Y
           </div>
@@ -384,10 +426,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Z
           </div>
@@ -421,10 +466,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
         className="wonder-transform-template"
       >
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             X
           </div>
@@ -441,10 +489,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Y
           </div>
@@ -461,10 +512,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Z
           </div>
@@ -505,10 +559,13 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
         className="wonder-transform-template"
       >
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             X
           </div>
@@ -525,10 +582,13 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Y
           </div>
@@ -545,10 +605,13 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Z
           </div>
@@ -582,10 +645,13 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
         className="wonder-transform-template"
       >
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             X
           </div>
@@ -602,10 +668,13 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Y
           </div>
@@ -622,10 +691,13 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Z
           </div>
@@ -659,10 +731,13 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
         className="wonder-transform-template"
       >
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             X
           </div>
@@ -679,10 +754,13 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Y
           </div>
@@ -699,10 +777,13 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
           </div>
         </article>
         <article
-          className="inspector-item"
+          className="inspector-item wonder-float-input"
         >
           <div
-            className="item-header"
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
           >
             Z
           </div>

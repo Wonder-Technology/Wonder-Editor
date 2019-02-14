@@ -1,29 +1,29 @@
 let changeMaterialTypeToBeLightMaterial =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorMaterial.Method.changeMaterialType(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     (),
     (BasicMaterial, LightMaterial),
   );
 
 let changeShininess =
-    (~material=GameObjectTool.getCurrentGameObjectMaterial(), ~value, ()) =>
+    (~material=GameObjectTool.getCurrentSceneTreeNodeMaterial(), ~value, ()) =>
   MainEditorLightMaterial.Method.changeShininess(material, value);
 
 let blurShininess =
     (
       ~dispatchFunc=_ => (),
-      ~store=TestTool.buildEmptyAppState(),
-      ~material=GameObjectTool.getCurrentGameObjectMaterial(),
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~material=GameObjectTool.getCurrentSceneTreeNodeMaterial(),
       ~value,
       (),
     ) =>
   MainEditorLightMaterial.Method.blurShininessEvent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     material,
     value,
   );
@@ -39,11 +39,11 @@ let closeColorPicker =
       ~material,
       ~color,
       ~dispatchFunc=_ => (),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       (),
     ) =>
   MainEditorLightMaterial.Method.closeColorPick(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     material,
     color,
   );
@@ -52,27 +52,26 @@ module Drag = {
   let dragAssetTextureToMap =
       (
         ~dispatchFunc=_ => (),
-        ~store=TestTool.buildEmptyAppState(),
-        ~widget=AssetUtils.getWidget(),
+        ~uiState=TestTool.buildEmptyAppState(),
+        ~widget=AssetWidgetService.getWidget(),
         ~effectAllowd="move",
         ~dragImg=DomHelper.createElement("img"),
         ~event=BaseEventTool.buildDragEvent(.),
-        ~material=GameObjectTool.getCurrentGameObjectMaterial(),
+        ~material=GameObjectTool.getCurrentSceneTreeNodeMaterial(),
         ~textureNodeId,
         (),
-      ) => {
-    DragEventUtils.handleDragStart(
-      textureNodeId,
-      widget,
-      dragImg,
-      effectAllowd,
-      event,
-    );
+      ) =>
+    /* DragEventUtils.handleDragStart(
+         textureNodeId,
+         widget,
+         dragImg,
+         effectAllowd,
+         event,
+       ); */
     MainEditorLightMaterial.Method.onDrop(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       material,
       textureNodeId,
+      /* DragEventUtils.handleDragEnd(event); */
     );
-    DragEventUtils.handleDrageEnd(event);
-  };
 };

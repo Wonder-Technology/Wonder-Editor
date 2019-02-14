@@ -1,10 +1,10 @@
-open AssetMaterialDataType;
+open MaterialDataAssetType;
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = int;
   type dataTuple = (
-    option(AssetNodeType.nodeId),
+    option(NodeAssetType.nodeId),
     (int, int),
     (materialType, materialType),
   );
@@ -12,7 +12,7 @@ module CustomEventHandler = {
 
   let handleSelfLogic =
       (
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         currentSceneTreeNode,
         (
           materialNodeId,
@@ -22,16 +22,29 @@ module CustomEventHandler = {
       ) => {
     let editorState = StateEditorService.getState();
 
+    /* let editorState =
+       switch (materialNodeId) {
+       | None => editorState
+       | Some(materialNodeId) =>
+         MaterialNodeIdMapAssetEditorService.setNodeId(
+           targetMaterial,
+           materialNodeId,
+           editorState,
+         )
+       }; */
+
     let editorState =
-      switch (materialNodeId) {
-      | None => editorState
-      | Some(materialNodeId) =>
-        MaterialNodeIdMapAssetEditorService.setNodeId(
-          targetMaterial,
-          materialNodeId,
-          editorState,
-        )
-      };
+      materialNodeId
+      |> OptionService.eitherWithNoData(
+           materialNodeId =>
+             MaterialNodeAssetEditorService.updateMaterialNodeData(
+               materialNodeId,
+               targetMaterial,
+               targetMaterialType,
+               editorState,
+             ),
+           () => editorState,
+         );
 
     editorState |> StateEditorService.setState |> ignore;
 
@@ -49,7 +62,6 @@ module CustomEventHandler = {
       |> GameObjectEngineService.initGameObject(currentSceneTreeNode);
 
     StateLogicService.refreshEngineState(engineState);
-
   };
 };
 

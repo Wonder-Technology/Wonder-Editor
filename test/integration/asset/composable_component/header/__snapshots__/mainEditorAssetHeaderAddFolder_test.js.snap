@@ -246,7 +246,7 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-2"
+      id="folder-3"
       style={
         Object {
           "border": "0px",
@@ -280,7 +280,7 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-3"
+      id="folder-4"
       style={
         Object {
           "border": "0px",
@@ -580,6 +580,126 @@ exports[`MainEditorAssetHeader->add folder test name test add the same name fold
           style={Object {}}
         >
           New Folder 2
+        </div>
+      </li>
+    </ul>
+  </ul>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->add folder test name test select folder and add the same name folder, the name should add postfix 1`] = `
+<article
+  className="wonder-asset-assetTree"
+>
+  <ul
+    className="wonder-tree-node"
+  >
+    <li>
+      <div
+        className="item-triangle"
+        onMouseDown={[Function]}
+      >
+        <img
+          src="./public/img/down.png"
+        />
+      </div>
+      <img
+        className="treeNode-icon"
+        src="./public/img/package.png"
+      />
+      <div
+        className="draggable-container select-active"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+        onMouseDown={[Function]}
+        style={Object {}}
+      >
+        Assets
+      </div>
+    </li>
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+        />
+        <img
+          className="treeNode-icon"
+          src="./public/img/package.png"
+        />
+        <div
+          className="draggable-container"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          onMouseDown={[Function]}
+          style={Object {}}
+        >
+          NoName Folder
+        </div>
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+        />
+        <img
+          className="treeNode-icon"
+          src="./public/img/package.png"
+        />
+        <div
+          className="draggable-container"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          onMouseDown={[Function]}
+          style={Object {}}
+        >
+          New Folder
+        </div>
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+        />
+        <img
+          className="treeNode-icon"
+          src="./public/img/package.png"
+        />
+        <div
+          className="draggable-container"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          onMouseDown={[Function]}
+          style={Object {}}
+        >
+          New Folder 1
         </div>
       </li>
     </ul>

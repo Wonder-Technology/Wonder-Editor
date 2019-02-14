@@ -53,24 +53,24 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorBottomComponents");
 
-let render = ((store, dispatchFunc), _self) => {
-  let currentComponentType = store |> StoreUtils.getBottomCurrentComponentType;
+let render = ((uiState, dispatchFunc), _self) => {
+  let currentComponentType = uiState |> StoreUtils.getBottomCurrentComponentType;
 
   <article
     key="MainEditorBottomComponents" className="wonder-bottom-component">
-    <MainEditorBottomHeader store dispatchFunc />
+    <MainEditorBottomHeader uiState dispatchFunc />
     (
       MainEditorBottomComponentUtils.isTypeEqualProject(currentComponentType) ?
-        <MainEditorProject store dispatchFunc /> : ReasonReact.null
+        <MainEditorProject uiState dispatchFunc /> : ReasonReact.null
     )
     (
       MainEditorBottomComponentUtils.isTypeEqualConsole(currentComponentType) ?
-        <MainEditorConsole store dispatchFunc /> : ReasonReact.null
+        <MainEditorConsole uiState dispatchFunc /> : ReasonReact.null
     )
   </article>;
 };
 
-let make = (~store, ~dispatchFunc, _children) => {
+let make = (~uiState, ~dispatchFunc, _children) => {
   Console.stubConsole(
     Method.triggerConsoleByType(dispatchFunc, Error),
     Method.triggerConsoleByType(dispatchFunc, Info),
@@ -80,5 +80,5 @@ let make = (~store, ~dispatchFunc, _children) => {
     Method.triggerConsoleByType(dispatchFunc, Log),
   );
 
-  {...component, render: self => render((store, dispatchFunc), self)};
+  {...component, render: self => render((uiState, dispatchFunc), self)};
 };

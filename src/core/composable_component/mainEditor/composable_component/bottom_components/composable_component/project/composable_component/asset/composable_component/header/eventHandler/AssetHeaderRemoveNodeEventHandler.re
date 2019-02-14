@@ -1,69 +1,47 @@
-open CurrentNodeDataType;
-
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
   type dataTuple = unit;
   type return = unit;
 
-  let _isRemoveAssetTreeNode = (currentNodeId, currentNodeParentId) =>
-    TreeAssetEditorService.isIdEqual(currentNodeParentId, currentNodeId);
+  let _isRemoveAssetTreeNode =
+      (currentNodeId, selectedFolderNodeIdInAssetTree) =>
+    NodeAssetService.isIdEqual(
+      currentNodeId,
+      selectedFolderNodeIdInAssetTree,
+    );
 
-  let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
+  let handleSelfLogic = ((uiState, dispatchFunc), (), ()) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
-    let {currentNodeId} =
-      editorState |> CurrentNodeDataAssetEditorService.unsafeGetCurrentNodeData;
-    let (newAssetTreeRoot, removedTreeNode) =
-      editorState
-      |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
-      |> RemoveAssetTreeNodeAssetLogicService.removeSpecificTreeNode(
-           currentNodeId,
-         );
+    let currentNodeId =
+      editorState |> CurrentNodeIdAssetEditorService.unsafeGetCurrentNodeId;
 
-    let ((editorState, engineState), removedAssetIdArr) =
-      (editorState, engineState)
-      |> RemoveAssetTreeNodeAssetLogicService.deepRemoveTreeNode(
-           removedTreeNode,
-         );
+    let (editorState, engineState) =
+      DisposeTreeAssetLogicService.disposeNode(
+        OperateTreeAssetEditorService.unsafeFindNodeById(
+          currentNodeId,
+          editorState,
+        ),
+        (editorState, engineState),
+      );
 
     StateLogicService.refreshEngineState(engineState);
 
     let editorState =
-      editorState
-      |> RemovedAssetIdArrayAssetEditorService.getRemovedAssetIdArray
-      |> Js.Array.concat(removedAssetIdArr)
-      |. RemovedAssetIdArrayAssetEditorService.setRemovedAssetIdArray(
-           editorState,
-         );
-
-    let editorState =
       _isRemoveAssetTreeNode(
         currentNodeId,
-        AssetTreeUtils.getTargetTreeNodeId(editorState),
+        TreeAssetEditorService.getSelectedFolderNodeIdInAssetTree(
+          editorState,
+        ),
       ) ?
         editorState
-        |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
-        |> TreeRootAssetEditorService.setAssetTreeRoot(newAssetTreeRoot)
-        |> CurrentNodeDataAssetEditorService.clearCurrentNodeData :
-        editorState
-        |> TreeRootAssetEditorService.setAssetTreeRoot(newAssetTreeRoot)
-        |> CurrentNodeDataAssetEditorService.clearCurrentNodeData;
+        |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
+        |> CurrentNodeIdAssetEditorService.clearCurrentNodeId :
+        editorState |> CurrentNodeIdAssetEditorService.clearCurrentNodeId;
 
     editorState |> StateEditorService.setState |> ignore;
-
-    dispatchFunc(
-      AppStore.SceneTreeAction(
-        SetSceneGraph(
-          Some(
-            SceneGraphUtils.getSceneGraphDataFromEngine
-            |> StateLogicService.getStateToGetData,
-          ),
-        ),
-      ),
-    )
-    |> ignore;
 
     dispatchFunc(AppStore.UpdateAction(Update([|All|]))) |> ignore;
   };

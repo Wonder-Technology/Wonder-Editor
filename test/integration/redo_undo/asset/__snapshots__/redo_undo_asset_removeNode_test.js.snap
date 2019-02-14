@@ -109,7 +109,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
               onMouseDown={[Function]}
               style={Object {}}
             >
-              NoName Folder
+              NoName Folder 1
             </div>
           </li>
         </ul>
@@ -121,7 +121,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-4"
+      id="folder-5"
       style={
         Object {
           "border": "0px",
@@ -149,7 +149,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
         className="item-text item-active"
       >
         <span>
-          NoName Folder
+          NoName Folder 1
         </span>
       </div>
     </article>
@@ -446,7 +446,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
               onMouseDown={[Function]}
               style={Object {}}
             >
-              NoName Folder
+              NoName Folder 1
             </div>
           </li>
         </ul>
@@ -458,7 +458,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-4"
+      id="folder-5"
       style={
         Object {
           "border": "0px",
@@ -486,7 +486,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
         className="item-text item-active"
       >
         <span>
-          NoName Folder
+          NoName Folder 1
         </span>
       </div>
     </article>
@@ -630,7 +630,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
               onMouseDown={[Function]}
               style={Object {}}
             >
-              NoName Folder
+              NoName Folder 1
             </div>
           </li>
         </ul>
@@ -642,7 +642,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-3"
+      id="folder-4"
       style={
         Object {
           "border": "0px",
@@ -676,7 +676,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-4"
+      id="folder-5"
       style={
         Object {
           "border": "0px",
@@ -704,7 +704,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
         className="item-text "
       >
         <span>
-          NoName Folder
+          NoName Folder 1
         </span>
       </div>
     </article>

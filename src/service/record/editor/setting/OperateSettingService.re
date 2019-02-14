@@ -1,17 +1,6 @@
 open SettingType;
 
-let setSetting = ({debug, redoUndo}) => {
-  debug:
-    switch (debug) {
-    | None => None
-    | Some(debug) => Some(debug)
-    },
-  redoUndo:
-    switch (redoUndo) {
-    | None => None
-    | Some(redoUndo) => Some(redoUndo)
-    },
-};
+let getHotKeys = ({hotKeys}) => hotKeys;
 
 let unsafeGetIsDebug = ({debug}) => {
   let {isDebug} = debug |> OptionService.unsafeGet;

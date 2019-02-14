@@ -121,7 +121,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-3"
+      id="folder-4"
       style={
         Object {
           "border": "0px",
@@ -278,7 +278,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-3"
+      id="folder-4"
       style={
         Object {
           "border": "0px",
@@ -456,132 +456,7 @@ exports[`MainEditorAssetTree test asse tree node->isShowChildren test add treeNo
 </article>
 `;
 
-exports[`MainEditorAssetTree test asse tree node->isShowChildren test drag treeNode to target treeNode target treeNode->isShowChildren should set to true 1`] = `
-<article
-  className="wonder-asset-assetTree"
->
-  <ul
-    className="wonder-tree-node"
-  >
-    <li>
-      <div
-        className="item-triangle"
-        onMouseDown={[Function]}
-      >
-        <img
-          src="./public/img/down.png"
-        />
-      </div>
-      <img
-        className="treeNode-icon"
-        src="./public/img/package.png"
-      />
-      <div
-        className="draggable-container select-active"
-        draggable={true}
-        onDragEnd={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDragStart={[Function]}
-        onDrop={[Function]}
-        onMouseDown={[Function]}
-        style={Object {}}
-      >
-        Assets
-      </div>
-    </li>
-    <ul
-      className="wonder-tree-node"
-    >
-      <li>
-        <div
-          className="item-triangle"
-          onMouseDown={[Function]}
-        >
-          <img
-            src="./public/img/down.png"
-          />
-        </div>
-        <img
-          className="treeNode-icon"
-          src="./public/img/package.png"
-        />
-        <div
-          className="draggable-container"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragEnter={[Function]}
-          onDragLeave={[Function]}
-          onDragOver={[Function]}
-          onDragStart={[Function]}
-          onDrop={[Function]}
-          onMouseDown={[Function]}
-          style={Object {}}
-        >
-          New Folder
-        </div>
-      </li>
-      <ul
-        className="wonder-tree-node"
-      >
-        <li>
-          <div
-            className="item-triangle"
-          />
-          <img
-            className="treeNode-icon"
-            src="./public/img/package.png"
-          />
-          <div
-            className="draggable-container"
-            draggable={true}
-            onDragEnd={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDragStart={[Function]}
-            onDrop={[Function]}
-            onMouseDown={[Function]}
-            style={Object {}}
-          >
-            New Folder
-          </div>
-        </li>
-      </ul>
-      <ul
-        className="wonder-tree-node"
-      >
-        <li>
-          <div
-            className="item-triangle"
-          />
-          <img
-            className="treeNode-icon"
-            src="./public/img/package.png"
-          />
-          <div
-            className="draggable-container"
-            draggable={true}
-            onDragEnd={[Function]}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDragStart={[Function]}
-            onDrop={[Function]}
-            onMouseDown={[Function]}
-            style={Object {}}
-          >
-            New Folder 1
-          </div>
-        </li>
-      </ul>
-    </ul>
-  </ul>
-</article>
-`;
-
-exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test drag folder into it's parent's brother folder 1`] = `
+exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test drag folder test drag folder into it's parent's brother folder 1`] = `
 <article
   className="wonder-asset-component"
 >
@@ -754,7 +629,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
               onMouseDown={[Function]}
               style={Object {}}
             >
-              NoName Folder
+              NoName Folder 1
             </div>
           </li>
           <ul
@@ -780,7 +655,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
                 onMouseDown={[Function]}
                 style={Object {}}
               >
-                NoName Folder
+                NoName Folder 1
               </div>
             </li>
           </ul>
@@ -793,7 +668,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-5"
+      id="folder-6"
       style={
         Object {
           "border": "0px",
@@ -829,7 +704,54 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
 </article>
 `;
 
-exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test drag texture file into it's brother folder 1`] = `
+exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test drag material test drag material file into it's parent's brother folder 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/mat.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        material1
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="texture5img"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        texture5
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test drag texture test drag texture file into it's brother folder 1`] = `
 <article
   className="wonder-asset-component"
 >
@@ -921,7 +843,12 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
           <li>
             <div
               className="item-triangle"
-            />
+              onMouseDown={[Function]}
+            >
+              <img
+                src="./public/img/down.png"
+              />
+            </div>
             <img
               className="treeNode-icon"
               src="./public/img/package.png"
@@ -970,7 +897,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
               onMouseDown={[Function]}
               style={Object {}}
             >
-              NoName Folder
+              NoName Folder 1
             </div>
           </li>
           <ul
@@ -979,7 +906,12 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
             <li>
               <div
                 className="item-triangle"
-              />
+                onMouseDown={[Function]}
+              >
+                <img
+                  src="./public/img/down.png"
+                />
+              </div>
               <img
                 className="treeNode-icon"
                 src="./public/img/package.png"
@@ -1023,7 +955,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
                 onMouseDown={[Function]}
                 style={Object {}}
               >
-                NoName Folder
+                NoName Folder 1
               </div>
             </li>
           </ul>
@@ -1058,7 +990,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
 </article>
 `;
 
-exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test drag texture file into it's parent's brother folder 1`] = `
+exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test drag texture test drag texture file into it's parent's brother folder 1`] = `
 <article
   className="wonder-asset-assetChildren"
 >
@@ -1246,7 +1178,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
               onMouseDown={[Function]}
               style={Object {}}
             >
-              NoName Folder
+              NoName Folder 1
             </div>
           </li>
           <ul
@@ -1299,7 +1231,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
                 onMouseDown={[Function]}
                 style={Object {}}
               >
-                NoName Folder
+                NoName Folder 1
               </div>
             </li>
           </ul>
@@ -1312,7 +1244,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-3"
+      id="folder-4"
       style={
         Object {
           "border": "0px",
@@ -1346,7 +1278,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-4"
+      id="folder-5"
       style={
         Object {
           "border": "0px",
@@ -1374,7 +1306,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
         className="item-text "
       >
         <span>
-          NoName Folder
+          NoName Folder 1
         </span>
       </div>
     </article>
@@ -1471,7 +1403,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             onMouseDown={[Function]}
             style={Object {}}
           >
-            NoName Folder
+            NoName Folder 1
           </div>
         </li>
       </ul>
@@ -1601,7 +1533,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-3"
+      id="folder-4"
       style={
         Object {
           "border": "0px",
@@ -1805,7 +1737,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
               onMouseDown={[Function]}
               style={Object {}}
             >
-              NoName Folder
+              NoName Folder 1
             </div>
           </li>
           <ul
@@ -1831,7 +1763,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
                 onMouseDown={[Function]}
                 style={Object {}}
               >
-                NoName Folder
+                NoName Folder 1
               </div>
             </li>
           </ul>
@@ -1844,7 +1776,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-5"
+      id="folder-6"
       style={
         Object {
           "border": "0px",
@@ -1873,40 +1805,6 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       >
         <span>
           a1
-        </span>
-      </div>
-    </article>
-    <article
-      className="wonder-asset-folderBox"
-      id="folder-3"
-      style={
-        Object {
-          "border": "0px",
-        }
-      }
-    >
-      <div
-        className="item-ground"
-        draggable={true}
-        onDragEnd={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDragStart={[Function]}
-        onDrop={[Function]}
-      />
-      <div
-        className="box-image"
-      >
-        <img
-          src="./public/img/assetPackage.png"
-        />
-      </div>
-      <div
-        className="item-text "
-      >
-        <span>
-          NoName Folder
         </span>
       </div>
     </article>
@@ -1941,6 +1839,40 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       >
         <span>
           NoName Folder
+        </span>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-folderBox"
+      id="folder-5"
+      style={
+        Object {
+          "border": "0px",
+        }
+      }
+    >
+      <div
+        className="item-ground"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+      />
+      <div
+        className="box-image"
+      >
+        <img
+          src="./public/img/assetPackage.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          NoName Folder 1
         </span>
       </div>
     </article>
@@ -2089,7 +2021,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
               onMouseDown={[Function]}
               style={Object {}}
             >
-              NoName Folder
+              NoName Folder 1
             </div>
           </li>
           <ul
@@ -2142,7 +2074,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
                 onMouseDown={[Function]}
                 style={Object {}}
               >
-                NoName Folder
+                NoName Folder 1
               </div>
             </li>
           </ul>
@@ -2155,7 +2087,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-3"
+      id="folder-4"
       style={
         Object {
           "border": "0px",
@@ -2189,7 +2121,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-4"
+      id="folder-5"
       style={
         Object {
           "border": "0px",
@@ -2217,7 +2149,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
         className="item-text "
       >
         <span>
-          NoName Folder
+          NoName Folder 1
         </span>
       </div>
     </article>

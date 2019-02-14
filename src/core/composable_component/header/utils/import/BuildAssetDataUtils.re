@@ -57,24 +57,23 @@ let buildImageData =
        },
        [||],
      )
-  /* |> WonderBsMost.Most.from */
   |> WonderBsMost.Most.mergeArray
   |> WonderBsMost.Most.reduce(
        (
-         (imageMap, imageNodeIdMap, editorState),
+         (imageMap, imageDataIndexMap, editorState),
          (image, uint8Array, imageIndex, name, mimeType),
        ) => {
-         let (editorState, assetNodeId) =
-           AssetIdUtils.generateAssetId(editorState);
+         let (editorState, imageDataIndex) =
+           IndexAssetEditorService.generateImageDataMapIndex(editorState);
 
          (
-           imageMap |> WonderCommonlib.SparseMapService.set(imageIndex, image),
-           imageNodeIdMap
-           |> WonderCommonlib.SparseMapService.set(imageIndex, assetNodeId),
+           imageMap |> WonderCommonlib.ImmutableSparseMapService.set(imageIndex, image),
+           imageDataIndexMap
+           |> WonderCommonlib.ImmutableSparseMapService.set(imageIndex, imageDataIndex),
            editorState
-           |> ImageNodeMapAssetEditorService.setResult(
-                assetNodeId,
-                ImageNodeMapAssetEditorService.buildImageNodeResult(
+           |> ImageDataMapAssetEditorService.setData(
+                imageDataIndex,
+                ImageDataMapAssetService.buildData(
                   ~base64=None,
                   ~uint8Array=Some(uint8Array),
                   ~name,
@@ -85,8 +84,8 @@ let buildImageData =
          );
        },
        (
-         WonderCommonlib.SparseMapService.createEmpty(),
-         WonderCommonlib.SparseMapService.createEmpty(),
+         WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+         WonderCommonlib.ImmutableSparseMapService.createEmpty(),
          editorState,
        ),
      );
@@ -94,7 +93,7 @@ let buildImageData =
 let buildTextureData =
     (
       {textures}: ExportAssetType.assets,
-      (imageMap, imageNodeIdMap),
+      (imageMap, imageDataIndexMap),
       (editorState, engineState),
     ) =>
   textures
@@ -148,72 +147,95 @@ let buildTextureData =
               )
            |> BasicSourceTextureEngineService.setSource(
                 imageMap
-                |> WonderCommonlib.SparseMapService.unsafeGet(source)
+                |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(source)
                 |> ImageType.convertDomToImageElement,
                 texture,
               );
 
          let (editorState, assetNodeId) =
-           AssetIdUtils.generateAssetId(editorState);
+           IdAssetEditorService.generateNodeId(editorState);
 
-         let (parentFolderNodeId, editorState) =
-           HeaderImportFolderUtils.buildFolder(
+         let (editorState, parentFolderNode) =
+           OperateTreeAssetLogicService.addFolderNodesToTreeByPath(
              path,
              (editorState, engineState),
            );
 
          let editorState =
            editorState
-           |> TextureNodeMapAssetEditorService.setResult(
-                assetNodeId,
-                TextureNodeMapAssetEditorService.buildTextureNodeResult(
+           |> TextureNodeAssetEditorService.addTextureNodeToAssetTree(
+                parentFolderNode,
+                TextureNodeAssetService.buildNode(
+                  ~nodeId=assetNodeId,
                   ~textureComponent=texture,
-                  ~parentFolderNodeId,
-                  ~image=
-                    imageNodeIdMap
-                    |> WonderCommonlib.SparseMapService.unsafeGet(source),
-                  (),
+                  ~imageDataIndex=
+                    imageDataIndexMap
+                    |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(source),
                 ),
-              )
-           |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
-                parentFolderNodeId |> OptionService.unsafeGet,
-                assetNodeId,
-                AssetNodeType.Texture,
               );
+
+         /* OperateTreeAssetLogicService.addFolderNodesToTreeByPath(
+              path,
+              (editorState, engineState),
+            )
+            |> TextureNodeAssetEditorService.setNodeData(
+                 assetNodeId,
+                 TextureNodeAssetService.buildNodeData(
+                   ~textureComponent=texture,
+                   ~imageNodeId=
+                     imageDataIndexMap
+                     |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(source),
+                 ),
+               ); */
+         /* editorState
+            |> TextureNodeMapAssetEditorService.setResult(
+                 assetNodeId,
+                 TextureNodeMapAssetEditorService.buildTextureNodeResult(
+                   ~textureComponent=texture,
+                   ~parentFolderNodeId,
+                   ~image=
+                     imageDataIndexMap
+                     |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(source),
+                   (),
+                 ),
+               ) */
+         /* |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
+              parentFolderNodeId |> OptionService.unsafeGet,
+              assetNodeId,
+              NodeAssetType.Texture,
+            ); */
 
          (
            textureMap
-           |> WonderCommonlib.SparseMapService.set(textureIndex, texture),
+           |> WonderCommonlib.ImmutableSparseMapService.set(textureIndex, texture),
            (editorState, engineState),
          );
        },
        (
-         WonderCommonlib.SparseMapService.createEmpty(),
+         WonderCommonlib.ImmutableSparseMapService.createEmpty(),
          (editorState, engineState),
        ),
      );
 
 let _buildMaterialEditorData =
     (material, path, type_, (editorState, engineState)) => {
-  let (editorState, assetNodeId) = AssetIdUtils.generateAssetId(editorState);
+  let (editorState, assetNodeId) =
+    IdAssetEditorService.generateNodeId(editorState);
 
-  let (parentFolderNodeId, editorState) =
-    HeaderImportFolderUtils.buildFolder(path, (editorState, engineState));
+  let (editorState, parentFolderNode) =
+    OperateTreeAssetLogicService.addFolderNodesToTreeByPath(
+      path,
+      (editorState, engineState),
+    );
 
   editorState
-  |> MaterialNodeMapAssetEditorService.setResult(
-       assetNodeId,
-       MaterialNodeMapAssetEditorService.buildMaterialNodeResult(
-         ~parentFolderNodeId,
+  |> MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
+       parentFolderNode,
+       MaterialNodeAssetService.buildNode(
+         ~nodeId=assetNodeId,
          ~type_,
          ~materialComponent=material,
-         (),
        ),
-     )
-  |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
-       parentFolderNodeId |> OptionService.unsafeGet,
-       assetNodeId,
-       AssetNodeType.Material,
      );
 };
 
@@ -237,18 +259,18 @@ let _buildBasicMaterialData = (basicMaterials, (editorState, engineState)) =>
            _buildMaterialEditorData(
              material,
              path,
-             AssetMaterialDataType.BasicMaterial,
+             MaterialDataAssetType.BasicMaterial,
              (editorState, engineState),
            );
 
          (
            basicMaterialMap
-           |> WonderCommonlib.SparseMapService.set(materialIndex, material),
+           |> WonderCommonlib.ImmutableSparseMapService.set(materialIndex, material),
            (editorState, engineState),
          );
        },
        (
-         WonderCommonlib.SparseMapService.createEmpty(),
+         WonderCommonlib.ImmutableSparseMapService.createEmpty(),
          (editorState, engineState),
        ),
      );
@@ -287,7 +309,7 @@ let _buildLightMaterialData =
                engineState
                |> LightMaterialEngineService.setLightMaterialDiffuseMap(
                     textureMap
-                    |> WonderCommonlib.SparseMapService.unsafeGet(diffuseMap),
+                    |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(diffuseMap),
                     material,
                   );
              };
@@ -296,18 +318,18 @@ let _buildLightMaterialData =
            _buildMaterialEditorData(
              material,
              path,
-             AssetMaterialDataType.LightMaterial,
+             MaterialDataAssetType.LightMaterial,
              (editorState, engineState),
            );
 
          (
            lightMaterialMap
-           |> WonderCommonlib.SparseMapService.set(materialIndex, material),
+           |> WonderCommonlib.ImmutableSparseMapService.set(materialIndex, material),
            (editorState, engineState),
          );
        },
        (
-         WonderCommonlib.SparseMapService.createEmpty(),
+         WonderCommonlib.ImmutableSparseMapService.createEmpty(),
          (editorState, engineState),
        ),
      );
@@ -330,7 +352,7 @@ let buildMaterialData =
   (basicMaterialMap, lightMaterialMap, (editorState, engineState));
 };
 
-let addExtractedMateriialAssetDataToMaterialData =
+/* let addExtractedMateriialAssetDataToMaterialData =
     (extractedMaterialAssetDataArr, (basicMaterialMap, lightMaterialMap)) =>
   extractedMaterialAssetDataArr
   |> WonderCommonlib.ArrayService.reduceOneParam(
@@ -339,17 +361,17 @@ let addExtractedMateriialAssetDataToMaterialData =
          ((material, materialType), _),
        ) =>
          switch (materialType) {
-         | AssetMaterialDataType.BasicMaterial => (
-             basicMaterialMap |> SparseMapService.push(material),
+         | MaterialDataAssetType.BasicMaterial => (
+             basicMaterialMap |> WonderCommonlib.ImmutableSparseMapService.push(material),
              lightMaterialMap,
            )
-         | AssetMaterialDataType.LightMaterial => (
+         | MaterialDataAssetType.LightMaterial => (
              basicMaterialMap,
-             lightMaterialMap |> SparseMapService.push(material),
+             lightMaterialMap |> WonderCommonlib.ImmutableSparseMapService.push(material),
            )
          },
        (basicMaterialMap, lightMaterialMap),
-     );
+     ); */
 
 let _mergeImageUint8ArrayDataMap =
     (totalImageUint8ArrayDataMap, targetImageUint8ArrayDataMap) => {
@@ -366,10 +388,10 @@ let _mergeImageUint8ArrayDataMap =
               ),
               () =>
               targetImageUint8ArrayDataMap
-              |> SparseMapService.getValidKeys
+              |> WonderCommonlib.ImmutableSparseMapService.getValidKeys
               |> Js.Array.filter(texture =>
                    totalImageUint8ArrayDataMap
-                   |> WonderCommonlib.SparseMapService.has(texture)
+                   |> WonderCommonlib.ImmutableSparseMapService.has(texture)
                  )
               |> Js.Array.length == 0
             )
@@ -379,7 +401,7 @@ let _mergeImageUint8ArrayDataMap =
     StateEditorService.getStateIsDebug(),
   );
 
-  SparseMapService.mergeSparseMaps([|
+  WonderCommonlib.ImmutableSparseMapService.mergeSparseMaps([|
     totalImageUint8ArrayDataMap,
     targetImageUint8ArrayDataMap,
   |]);
@@ -395,7 +417,7 @@ let buildWDBData =
   engineState |> StateEngineService.setState |> ignore;
   let allGameObjectsArrRef = ref([||]);
   /* let totalImageUint8ArrayDataMapRef =
-     ref(WonderCommonlib.SparseMapService.createEmpty()); */
+     ref(WonderCommonlib.ImmutableSparseMapService.createEmpty()); */
 
   wdbs
   |> WonderBsMost.Most.from
@@ -407,17 +429,17 @@ let buildWDBData =
        let arrayBuffer = _getArrayBuffer(buffer, bufferView, bufferViews);
 
        let (editorState, assetNodeId) =
-         AssetIdUtils.generateAssetId(editorState);
+         IdAssetEditorService.generateNodeId(editorState);
 
-       let (parentFolderNodeId, editorState) =
-         HeaderImportFolderUtils.buildFolder(
+       let (editorState, parentFolderNode) =
+         OperateTreeAssetLogicService.addFolderNodesToTreeByPath(
            path,
            (editorState, engineState),
          );
 
        HeaderImportASBWDBUtils.importWDB(
          (name, arrayBuffer),
-         (assetNodeId, parentFolderNodeId |> OptionService.unsafeGet),
+         (assetNodeId, parentFolderNode),
          (editorState, engineState),
        )
        |> then_(
@@ -439,7 +461,7 @@ let buildWDBData =
                         ),
                         () =>
                         _wdbImageUint8ArrayDataMap
-                        |> SparseMapService.length == 0
+                        |> WonderCommonlib.ImmutableSparseMapService.length == 0
                       )
                     )
                   )

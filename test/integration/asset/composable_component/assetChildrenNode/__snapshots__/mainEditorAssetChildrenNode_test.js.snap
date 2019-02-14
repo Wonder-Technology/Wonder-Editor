@@ -121,7 +121,7 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-3"
+      id="folder-4"
       style={
         Object {
           "border": "0px",
@@ -167,7 +167,7 @@ exports[`MainEditorAssetChildrenNode test show order
 >
   <article
     className="wonder-asset-folderBox"
-    id="folder-4"
+    id="folder-5"
     style={
       Object {
         "border": "0px",
@@ -201,7 +201,7 @@ exports[`MainEditorAssetChildrenNode test show order
   </article>
   <article
     className="wonder-asset-folderBox"
-    id="folder-2"
+    id="folder-3"
     style={
       Object {
         "border": "0px",
@@ -235,7 +235,7 @@ exports[`MainEditorAssetChildrenNode test show order
   </article>
   <article
     className="wonder-asset-folderBox"
-    id="folder-7"
+    id="folder-8"
     style={
       Object {
         "border": "0px",
@@ -269,7 +269,7 @@ exports[`MainEditorAssetChildrenNode test show order
   </article>
   <article
     className="wonder-asset-folderBox"
-    id="folder-9"
+    id="folder-10"
     style={
       Object {
         "border": "0px",

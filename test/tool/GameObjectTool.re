@@ -1,15 +1,28 @@
+let addChild = HierarchyGameObjectEngineService.addChild;
+
 let getChildren = (gameObject, engineState) =>
-  GameObjectUtils.getChildren(gameObject, engineState);
+  HierarchyGameObjectEngineService.getChildren(gameObject, engineState);
 
 let getChild = (gameObject, index, engineState) =>
   Array.unsafe_get(getChildren(gameObject, engineState), index);
 
+let hasTargetChildren = (gameObject, targetChildren, engineState) => {
+  let children = getChildren(gameObject, engineState);
+
+  targetChildren
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. has, targetChild) =>
+         has ? true : children |> Js.Array.includes(targetChild),
+       false,
+     );
+};
+
 let unsafeGetCurrentSceneTreeNode = () =>
-  SceneEditorService.unsafeGetCurrentSceneTreeNode
+  SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
   |> StateLogicService.getEditorState;
 
 let clearCurrentSceneTreeNode = () =>
-  SceneEditorService.clearCurrentSceneTreeNode
+  SceneTreeEditorService.clearCurrentSceneTreeNode
   |> StateLogicService.getAndSetEditorState;
 
 let addFakeVboBufferForGameObject = gameObject =>
@@ -27,7 +40,7 @@ let getCurrentSceneTreeNodeTransform = () =>
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectMaterial = () => {
+let getCurrentSceneTreeNodeMaterial = () => {
   let gameObject = unsafeGetCurrentSceneTreeNode();
   let engineState = StateEngineService.unsafeGetState();
 
@@ -49,7 +62,6 @@ let getCurrentGameObjectMaterial = () => {
       ) :
       WonderLog.Log.fatal(
         LogUtils.buildFatalMessage(
-          
           ~description={j|gameObject should has material, but actual not|j},
           ~reason="",
           ~solution={j||j},
@@ -58,70 +70,69 @@ let getCurrentGameObjectMaterial = () => {
       );
 };
 
-let getCurrentGameObjectBasicMaterial = () =>
+let getCurrentSceneTreeNodeBasicMaterial = () =>
   GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectLightMaterial = () =>
+let getCurrentSceneTreeNodeLightMaterial = () =>
   GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectDirectionLightComponent = () =>
+let getCurrentSceneTreeNodeDirectionLightComponent = () =>
   GameObjectComponentEngineService.unsafeGetDirectionLightComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectPointLightComponent = () =>
+let getCurrentSceneTreeNodePointLightComponent = () =>
   GameObjectComponentEngineService.unsafeGetPointLightComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectBasicCameraView = () =>
+let getCurrentSceneTreeNodeBasicCameraView = () =>
   GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectPerspectiveCamera = () =>
+let getCurrentSceneTreeNodePerspectiveCamera = () =>
   GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectGeometry = () =>
+let getCurrentSceneTreeNodeGeometry = () =>
   GameObjectComponentEngineService.unsafeGetGeometryComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectArcballCamera = () =>
+let getCurrentSceneTreeNodeArcballCamera = () =>
   GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectMeshRenderer = () =>
+let getCurrentSceneTreeNodeMeshRenderer = () =>
   GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
 let getCurrentSceneTreeNode = () =>
-  SceneEditorService.getCurrentSceneTreeNode
+  SceneTreeEditorService.getCurrentSceneTreeNode
   |> StateLogicService.getEditorState;
 
 let setCurrentSceneTreeNode = gameObject =>
-  SceneEditorService.setCurrentSceneTreeNode(gameObject)
+  SceneTreeEditorService.setCurrentSceneTreeNode(gameObject)
   |> StateLogicService.getAndSetEditorState;
 
 let isAlive = Wonderjs.AliveGameObjectMainService.isAlive;
 
-let getNewGameObjectUid =
-    (~engineState=StateEngineService.unsafeGetState(), ()) =>
+let getNewGameObject = (~engineState=StateEngineService.unsafeGetState(), ()) =>
   engineState.gameObjectRecord.uid;

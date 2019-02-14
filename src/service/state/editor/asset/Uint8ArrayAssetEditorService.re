@@ -1,20 +1,26 @@
 let buildImageUint8ArrayMap = editorState =>
-  editorState
-  |> TextureNodeMapAssetEditorService.getValidValues
-  |> SparseMapService.reduce(
-       (. map, {textureComponent, image}: AssetNodeType.textureResultType) => {
-         let {mimeType, uint8Array}: AssetNodeType.imageResultType =
-           ImageNodeMapAssetEditorService.unsafeGetResult(image, editorState);
+  TextureNodeAssetEditorService.findAllTextureNodes(editorState)
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. map, textureNode) => {
+         let {textureComponent, imageDataIndex}: NodeAssetType.textureNodeData =
+           TextureNodeAssetService.getNodeData(textureNode);
 
-         switch (uint8Array) {
-         | Some(uint8Array) =>
-           map
-           |> WonderCommonlib.SparseMapService.set(
-                textureComponent,
-                (mimeType, uint8Array),
-              )
-         | None => map
-         };
+         let {uint8Array, mimeType}: ImageDataType.imageData =
+           ImageDataMapAssetEditorService.unsafeGetData(
+             imageDataIndex,
+             editorState,
+           );
+
+         uint8Array
+         |> OptionService.andThenWithDefault(
+              uint8Array =>
+                map
+                |> WonderCommonlib.ImmutableSparseMapService.set(
+                     textureComponent,
+                     (mimeType, uint8Array),
+                   ),
+              map,
+            );
        },
-       WonderCommonlib.SparseMapService.createEmpty(),
+       WonderCommonlib.ImmutableSparseMapService.createEmpty(),
      );

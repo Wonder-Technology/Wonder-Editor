@@ -2,33 +2,29 @@ open AppStore;
 
 open UpdateStore;
 
-let getSceneGraphDataFromStore = (store: AppStore.appState) =>
-  store.sceneTreeState.sceneGraphData;
+let getUpdateComponentTypeArr = uiState =>
+  uiState.updateState.componentTypeArr;
 
-let unsafeGetSceneGraphDataFromStore = (store: AppStore.appState) =>
-  getSceneGraphDataFromStore(store) |> OptionService.unsafeGet;
+let getBottomCurrentComponentType = uiState =>
+  uiState.showComponentState.currentComponentType;
 
-let getUpdateComponentTypeArr = store => store.updateState.componentTypeArr;
-
-let getBottomCurrentComponentType = store =>
-  store.showComponentState.currentComponentType;
-
-let geGameObjectisShowComponentFromStore = (store, componentType) =>
+let geGameObjectisShowComponentFromStore = (uiState, componentType) =>
   switch (
-    store.inspectorState.showComponentMap
-    |> WonderCommonlib.SparseMapService.get(componentType)
+    uiState.inspectorState.showComponentMap
+    |> WonderCommonlib.ImmutableSparseMapService.get(componentType)
   ) {
   | None => true
   | Some(isShowComponent) => isShowComponent
   };
 
+let shouldComponentUpdateWithAll = updateComponentTypeArr =>
+  updateComponentTypeArr |> Js.Array.includes(All);
+
 let shouldComponentUpdate = (componentType, updateComponentTypeArr) =>
   updateComponentTypeArr
   |> Js.Array.includes(componentType)
-  || updateComponentTypeArr
-  |> Js.Array.includes(All);
+  || shouldComponentUpdateWithAll(updateComponentTypeArr);
 
 let shouldComponentUpdateMany = (componentTypeArr, updateComponentTypeArr) =>
   ArrayService.hasIntersect(updateComponentTypeArr, componentTypeArr)
-  || updateComponentTypeArr
-  |> Js.Array.includes(UpdateStore.All);
+  || shouldComponentUpdateWithAll(updateComponentTypeArr);

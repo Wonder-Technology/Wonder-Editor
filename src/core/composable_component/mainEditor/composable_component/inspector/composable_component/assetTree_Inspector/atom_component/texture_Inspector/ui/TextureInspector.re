@@ -66,7 +66,7 @@ let render = ((dispatchFunc, renameFunc), name, textureComponent, _self) =>
   </article>;
 
 let make =
-    (~store, ~dispatchFunc, ~name, ~textureComponent, ~renameFunc, _children) => {
+    (~uiState, ~dispatchFunc, ~name, ~textureComponent, ~renameFunc, _children) => {
   ...component,
   render: self =>
     render((dispatchFunc, renameFunc), name, textureComponent, self),

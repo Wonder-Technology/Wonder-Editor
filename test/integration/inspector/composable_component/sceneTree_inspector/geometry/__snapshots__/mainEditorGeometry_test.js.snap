@@ -45,45 +45,49 @@ exports[`MainEditorGeometry component test select geometry group->show order
       className="select-component-item"
     >
       <div
-        className="item-header"
+        className="select-item-header"
       >
         Geometry
       </div>
       <div
-        className="item-content"
-        onClick={[Function]}
+        className="select-item-body"
       >
-        Cesium_Milk_Truck_0
-      </div>
-      <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Cesium_Milk_Truck_1
-      </div>
-      <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Cesium_Milk_Truck_2
-      </div>
-      <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wheels
-      </div>
-      <div
-        className="item-content item-active"
-        onClick={[Function]}
-      >
-        Wonder-Default-Cube
-      </div>
-      <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Sphere
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Cesium_Milk_Truck_0
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Cesium_Milk_Truck_1
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Cesium_Milk_Truck_2
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wheels
+        </div>
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Sphere
+        </div>
       </div>
     </div>
     <div
@@ -172,21 +176,25 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
       className="select-component-item"
     >
       <div
-        className="item-header"
+        className="select-item-header"
       >
         Geometry
       </div>
       <div
-        className="item-content item-active"
-        onClick={[Function]}
+        className="select-item-body"
       >
-        Wonder-Default-Cube
-      </div>
-      <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Sphere
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Sphere
+        </div>
       </div>
     </div>
     <div
@@ -238,27 +246,31 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
       className="select-component-item"
     >
       <div
-        className="item-header"
+        className="select-item-header"
       >
         Geometry
       </div>
       <div
-        className="item-content"
-        onClick={[Function]}
+        className="select-item-body"
       >
-        geometryNoTexCoord
-      </div>
-      <div
-        className="item-content item-active"
-        onClick={[Function]}
-      >
-        Wonder-Default-Cube
-      </div>
-      <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Sphere
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          geometryNoTexCoord
+        </div>
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Sphere
+        </div>
       </div>
     </div>
     <div
@@ -310,27 +322,31 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test load as
       className="select-component-item"
     >
       <div
-        className="item-header"
+        className="select-item-header"
       >
         Geometry
       </div>
       <div
-        className="item-content"
-        onClick={[Function]}
+        className="select-item-body"
       >
-        Mesh
-      </div>
-      <div
-        className="item-content item-active"
-        onClick={[Function]}
-      >
-        Wonder-Default-Cube
-      </div>
-      <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Sphere
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Mesh
+        </div>
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Sphere
+        </div>
       </div>
     </div>
     <div

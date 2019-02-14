@@ -1,14 +1,12 @@
 open DomHelper;
 
-open MainEditorSceneTreeStore;
-
 module Method = {
   let getStorageParentKey = () => "userExtension";
   let addExtension = text =>
     /* todo use extension names instead of the name */
     AppExtensionUtils.setExtension(getStorageParentKey(), text);
 
-  let showComponent = (store, dispatchFunc) =>
+  let showComponent = (uiState, dispatchFunc) =>
     <article key="app" className="wonder-app-component">
       (
         AppExtensionUtils.getExtension(getStorageParentKey())
@@ -21,33 +19,32 @@ module Method = {
                 ExtensionParseUtils.extensionPanelComponent(
                   "App",
                   value,
-                  store,
+                  uiState,
                 ),
               )
             }
         )
       )
       (
-        store.isEditorAndEngineStart ?
-          <Header store dispatchFunc /> : ReasonReact.null
+        uiState.isEditorAndEngineStart ?
+          <Header uiState dispatchFunc /> : ReasonReact.null
       )
       (
-        store.isEditorAndEngineStart ?
-          <Controller store dispatchFunc /> : ReasonReact.null
+        uiState.isEditorAndEngineStart ?
+          <Controller uiState dispatchFunc /> : ReasonReact.null
       )
-      <MainEditor store dispatchFunc />
+      <MainEditor uiState dispatchFunc />
     </article>;
 };
 
 let component = ReasonReact.statelessComponent("App");
 
-let render = ((store: AppStore.appState, dispatchFunc), _self) =>
-  switch (store.isDidMounted) {
-  | false => <article key="app" className="app-component" />
-  | true => Method.showComponent(store, dispatchFunc)
-  };
+let render = ((uiState: AppStore.appState, dispatchFunc), _self) =>
+  uiState.isDidMounted ?
+    Method.showComponent(uiState, dispatchFunc) :
+    <article key="app" className="app-component" />;
 
-let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
+let make = (~state as uiState: AppStore.appState, ~dispatch, _children) => {
   ...component,
   didMount: _self => {
     WonderLog.Wonder_Console.makeObjInToWindow();
@@ -65,5 +62,5 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
     );
     dispatch(AppStore.IsDidMounted);
   },
-  render: self => render((store, dispatch), self),
+  render: self => render((uiState, dispatch), self),
 };

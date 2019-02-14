@@ -22,7 +22,7 @@ module Method = {
 
   let onDrop = LightMaterialDragTextureEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let removeTexture = ((store, dispatchFunc), (), materialComponent) =>
+  let removeTexture = ((uiState, dispatchFunc), (), materialComponent) =>
     switch (
       LightMaterialEngineService.getLightMaterialDiffuseMap(materialComponent)
       |> StateLogicService.getEngineStateToGetData
@@ -30,20 +30,20 @@ module Method = {
     | None => ()
     | Some(_mapId) =>
       LightMaterialRemoveTextureEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         (),
         materialComponent,
       )
     };
 
   let blurShininessEvent =
-      ((store, dispatchFunc), materialComponent, shininessValue) =>
+      ((uiState, dispatchFunc), materialComponent, shininessValue) =>
     LightMaterialEngineService.getLightMaterialShininess(materialComponent)
     |> StateLogicService.getEngineStateToGetData
     |> ValueService.isValueEqual(ValueType.Float, shininessValue) ?
       () :
       LightMaterialShininessBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         materialComponent,
         shininessValue,
       );
@@ -58,24 +58,25 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorLightMaterial");
 
-let render = ((store, dispatchFunc), materialComponent, _self) =>
+let render = ((uiState, dispatchFunc), materialComponent, _self) =>
   <article className="wonder-light-material">
     <PickColorComponent
       label="Diffcuse color"
       getColorFunc=(Method.getColor(materialComponent))
       changeColorFunc=(Method.changeColor(materialComponent))
       closeColorPickFunc=(
-        Method.closeColorPick((store, dispatchFunc), materialComponent)
+        Method.closeColorPick((uiState, dispatchFunc), materialComponent)
       )
     />
     <MainEditorMaterialMap
-      store
+      uiState
       dispatchFunc
       materialComponent
       label="Diffuse map"
       getMapFunc=LightMaterialEngineService.getLightMaterialDiffuseMap
       removeTextureFunc=Method.removeTexture
       onDropFunc=Method.onDrop
+      isShowTextureGroup=false
     />
     <MainEditorFloatInputBaseComponent
       label="Shininess"
@@ -86,13 +87,13 @@ let render = ((store, dispatchFunc), materialComponent, _self) =>
       )
       changeComponentValueFunc=(Method.changeShininess(materialComponent))
       blurValueFunc=(
-        Method.blurShininessEvent((store, dispatchFunc), materialComponent)
+        Method.blurShininessEvent((uiState, dispatchFunc), materialComponent)
       )
     />
   </article>;
 
 let make =
-    (~store: AppStore.appState, ~dispatchFunc, ~materialComponent, _children) => {
+    (~uiState: AppStore.appState, ~dispatchFunc, ~materialComponent, _children) => {
   ...component,
-  render: self => render((store, dispatchFunc), materialComponent, self),
+  render: self => render((uiState, dispatchFunc), materialComponent, self),
 };

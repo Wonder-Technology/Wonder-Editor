@@ -8,7 +8,8 @@ type updateComponentType =
   | BottomHeader
   | Project
   | Console
-  | SceneTree;
+  | SceneTree
+  | Controller;
 
 type updateComponentTypeArr = array(updateComponentType);
 

@@ -2,7 +2,7 @@ open Js.Typed_array;
 
 let findGameObjectsByName = (name, engineState) =>
   engineState
-  |> GameObjectEngineService.getAllGameObjects(
+  |> HierarchyGameObjectEngineService.getAllGameObjects(
        SceneEngineService.getSceneGameObject(engineState),
      )
   |> Js.Array.filter(gameObject =>
@@ -41,7 +41,7 @@ let getBoxTexturedMeshGameObjectFromAssetNode =
   GameObjectTool.getChild(wdbGameObject, 0, engineState);
 };
 
-let getBoxTexturedMeshGameObjectMaterialType = () => AssetMaterialDataType.LightMaterial;
+let getBoxTexturedMeshGameObjectMaterialType = () => MaterialDataAssetType.LightMaterial;
 
 let getBoxTexturedMeshGameObjectMaterialName = () => "Texture";
 
@@ -296,10 +296,10 @@ module Truck = {
   let getTruck1GameObjectName = () => "Cesium_Milk_Truck_1";
 
   let getTruckGeometryData = () => {
-    let map = WonderCommonlib.HashMapService.createEmpty();
+    let map = WonderCommonlib.MutableHashMapService.createEmpty();
 
     map
-    |> WonderCommonlib.HashMapService.set(
+    |> WonderCommonlib.MutableHashMapService.set(
          "Cesium_Milk_Truck_0",
          (
            Float32Array.make([|
@@ -534,7 +534,7 @@ module Truck = {
            None,
          ),
        )
-    |> WonderCommonlib.HashMapService.set(
+    |> WonderCommonlib.MutableHashMapService.set(
          "Cesium_Milk_Truck_1",
          (
            Float32Array.make([|
@@ -728,7 +728,7 @@ module Truck = {
            None,
          ),
        )
-    |> WonderCommonlib.HashMapService.set(
+    |> WonderCommonlib.MutableHashMapService.set(
          "Cesium_Milk_Truck_2",
          (
            Float32Array.make([|
@@ -922,7 +922,7 @@ module Truck = {
            None,
          ),
        )
-    |> WonderCommonlib.HashMapService.set(
+    |> WonderCommonlib.MutableHashMapService.set(
          "Wheels",
          (
            Float32Array.make([|
@@ -1159,52 +1159,3 @@ module Truck = {
        );
   };
 };
-
-open EditorType;
-
-open AssetNodeType;
-
-let getResult = (nodeId, editorState) =>
-  editorState.assetRecord |> TextureNodeMapAssetService.getResult(nodeId);
-
-let getTextureComponent = (nodeId, editorState) =>
-  (getResult(nodeId, editorState) |> OptionService.unsafeGet).
-    textureComponent;
-
-let setTextureName = (nodeId, name, editorState) => {
-  let textureComponent = getTextureComponent(nodeId, editorState);
-
-  editorState
-  |> ImageNodeMapAssetEditorService.setResult(
-       textureComponent,
-       {
-         ...
-           ImageNodeMapAssetEditorService.unsafeGetResult(
-             textureComponent,
-             editorState,
-           ),
-         name,
-       },
-     );
-};
-
-let hasTextureComponent = (material, editorState) =>
-  TextureNodeMapAssetEditorService.getValidValues(editorState)
-  |> Js.Array.find(({textureComponent}: AssetNodeType.textureResultType) =>
-       JudgeTool.isEqual(textureComponent, material)
-     )
-  |> Js.Option.isSome;
-
-let getTextureNodeId = (texture, editorState) =>
-  switch (
-    editorState
-    |> TextureNodeMapAssetEditorService.getTextureNodeMap
-    |> SparseMapService.getValidDataArr
-    |> Js.Array.find(
-         ((_, {textureComponent}: AssetNodeType.textureResultType)) =>
-         textureComponent === texture
-       )
-  ) {
-  | None => None
-  | Some((textureNodeId, _)) => Some(textureNodeId)
-  };

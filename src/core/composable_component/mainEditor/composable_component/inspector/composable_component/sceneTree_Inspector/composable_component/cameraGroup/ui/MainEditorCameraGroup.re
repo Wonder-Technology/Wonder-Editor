@@ -1,12 +1,12 @@
 let component = ReasonReact.statelessComponent("MainEditorCameraGroup");
 
-let render = ((store, dispatchFunc), _self) =>
+let render = ((uiState, dispatchFunc), _self) =>
   <article key="MainEditorCameraGroup" className="wonder-camera-group">
     <div className="inspector-component">
       <div className="component-title"> (DomHelper.textEl("CameView")) </div>
       <hr />
       <div className="component-content">
-        <MainEditorCameraView store dispatchFunc />
+        <MainEditorCameraView uiState dispatchFunc />
       </div>
     </div>
     <div className="inspector-component">
@@ -15,12 +15,12 @@ let render = ((store, dispatchFunc), _self) =>
       </div>
       <hr />
       <div className="component-content">
-        <MainEditorCameraProjection store dispatchFunc />
+        <MainEditorCameraProjection uiState dispatchFunc />
       </div>
     </div>
   </article>;
 
-let make = (~store, ~dispatchFunc, _children) => {
+let make = (~uiState, ~dispatchFunc, _children) => {
   ...component,
-  render: self => render((store, dispatchFunc), self),
+  render: self => render((uiState, dispatchFunc), self),
 };

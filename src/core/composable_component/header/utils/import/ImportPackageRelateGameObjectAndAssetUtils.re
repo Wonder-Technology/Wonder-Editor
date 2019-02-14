@@ -42,7 +42,7 @@ let _isImageDataEqual =
   );
 
   switch (
-    imageUint8ArrayDataMap |> WonderCommonlib.SparseMapService.get(texture2)
+    imageUint8ArrayDataMap |> WonderCommonlib.ImmutableSparseMapService.get(texture2)
   ) {
   | None => true
   | Some((_, uint8Array2)) =>
@@ -86,7 +86,7 @@ let _replaceGameObjectMaterialComponentToMaterialAsset =
   let (sourceMaterial, targetMaterial, materialType, _) =
     RelateGameObjectAndMaterialAssetUtils.getRelatedMaterialDataFromGameObject(
       gameObject,
-      WonderCommonlib.SparseMapService.createEmpty(),
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
       imageUint8ArrayDataMap,
       defaultMaterialData,
       materialDataMapData,
@@ -100,6 +100,7 @@ let _replaceGameObjectMaterialComponentToMaterialAsset =
     engineState,
   );
 };
+
 
 let _replaceSceneGameObjectMaterialComponentToMaterialAsset =
     (
@@ -376,6 +377,7 @@ let relateSceneWDBGameObjectsAndAssets =
            _replaceSceneGameObjectMaterialComponentToMaterialAsset(
              gameObject,
              defaultMaterialData,
+             
              (basicMaterialDataMap, lightMaterialDataMap),
              imageUint8ArrayDataMap,
              engineState,

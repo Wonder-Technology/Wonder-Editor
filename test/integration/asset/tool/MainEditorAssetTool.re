@@ -1,10 +1,10 @@
-open AssetTreeNodeType;
+open NodeAssetType;
 
 open AssetTreeTwoLayerTypeTool;
 
 open AssetTreeThreeLayerTypeTool;
 
-open AssetNodeType;
+open NodeAssetType;
 
 let buildFakeFileReader = [%bs.raw
   {|
@@ -46,14 +46,15 @@ let _buildImageObj = src =>
 
 let initAssetTree = () =>
   (
-    editorState => {
-      let (asseTreeRoot, editorState) =
-        AssetTreeUtils.initRootAssetTree(
-          editorState,
-          StateEngineService.unsafeGetState(),
-        );
-
-      editorState |> TreeRootAssetEditorService.setAssetTreeRoot(asseTreeRoot);
-    }
+    editorState =>
+      /* let (asseTreeRoot, editorState) = */
+      editorState
+      |> TreeAssetEditorService.createTree
+      |> StateEditorService.setState
+      /* AssetTreeUtils.initRootAssetTree(
+           editorState,
+           StateEngineService.unsafeGetState(),
+         ); */
+      /* editorState |> TreeRootAssetEditorService.setAssetTreeRoot(asseTreeRoot); */
   )
   |> StateLogicService.getAndSetEditorState;

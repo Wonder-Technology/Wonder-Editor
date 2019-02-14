@@ -4,11 +4,11 @@ open InspectorComponentType;
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
-  type prepareTuple = Wonderjs.GameObjectType.gameObject;
+  type prepareTuple = Wonderjs.GameObjectPrimitiveType.gameObject;
   type dataTuple = componentType;
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), currentSceneTreeNode, type_) => {
+  let handleSelfLogic = ((uiState, dispatchFunc), currentSceneTreeNode, type_) => {
     let (editorState, engineState) =
       (StateEditorService.getState(), StateEngineService.unsafeGetState())
       |> InspectorAddComponentUtils.addComponentByType(

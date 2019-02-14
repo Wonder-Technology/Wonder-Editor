@@ -7,7 +7,7 @@ module CustomEventHandler = {
   type return = unit;
 
   let setUndoValueToCopiedEngineState =
-      ((store, dispatchFunc), materialComponent, value) =>
+      ((uiState, dispatchFunc), materialComponent, value) =>
     StateEngineService.unsafeGetState()
     |> StateEngineService.deepCopyForRestore
     |> LightMaterialEngineService.setLightMaterialDiffuseColor(

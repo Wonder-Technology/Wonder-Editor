@@ -19,7 +19,7 @@ let _ =
         MainEditorSceneTool.initState(~sandbox, ());
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
       });
       afterEach(() => {

@@ -147,7 +147,7 @@ let _ =
           "test getLightTypeByGameObject should throw error when gameObject haven't light ",
           () =>
           expect(() => {
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
 
             MainEditorLightUtils.getLightTypeByGameObject(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),

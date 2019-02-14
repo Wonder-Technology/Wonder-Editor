@@ -2,7 +2,7 @@ let testOperateColorPickToChangeColor =
     (
       sandbox,
       buildComponent,
-      (getCurrentGameObjectComponentFunc, changeColorFunc, getColorFunc),
+      (getCurrentSceneTreeNodeComponentFunc, changeColorFunc, getColorFunc),
     ) =>
   Wonder_jest.(
     Expect.(
@@ -12,7 +12,7 @@ let testOperateColorPickToChangeColor =
             describe("test logic", () =>
               test("test change color should set into engine", () => {
                 let currentGameObjectComponent =
-                  getCurrentGameObjectComponentFunc();
+                  getCurrentSceneTreeNodeComponentFunc();
                 let newColor = {
                   "hex": "#7df1e8",
                   "rgb": {

@@ -24,7 +24,7 @@ let _ =
 
            CanvasTool.Drag.dragWDBAsset(~wdbNodeId=uploadedWDBNodeId, ());
 
-           MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+           MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
 
            CanvasTool.Drag.dragWDBAsset(~wdbNodeId=uploadedWDBNodeId, ());
 
@@ -50,7 +50,7 @@ let _ =
 
       LoadTool.buildFakeLoadImage(.);
 
-      MainEditorSceneTool.createDefaultScene(sandbox, () => ());
+      MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
       MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
     });
@@ -63,7 +63,7 @@ let _ =
             RedoUndoTool.undoHistoryState();
 
             BuildComponentTool.buildSceneTree(
-              TestTool.buildAppStateSceneGraphFromEngine(),
+              TestTool.buildEmptyAppState(),
             )
             |> ReactTestTool.createSnapshotAndMatch
             |> resolve;

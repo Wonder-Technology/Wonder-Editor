@@ -26,20 +26,23 @@ let _handleGeometryAddMap =
 
 let handleSelfLogic =
     (
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       materialComponent,
-      dragedNodeId,
+      draggedNodeId,
       handleSetMapFunc,
     ) => {
   StateEditorService.getState()
-  |> TextureNodeMapAssetEditorService.getTextureNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(dragedNodeId)
+  |> OperateTreeAssetEditorService.unsafeFindNodeById(draggedNodeId)
   |> (
-    ({textureComponent}) => {
+    /* ({textureComponent}: NodeAssetType.textureNodeData) => { */
+    textureNode => {
       let editorState = StateEditorService.getState();
       let gameObject =
-        SceneEditorService.getCurrentSceneTreeNode(editorState);
+        SceneTreeEditorService.getCurrentSceneTreeNode(editorState);
       let engineState = StateEngineService.unsafeGetState();
+
+      let {textureComponent}: NodeAssetType.textureNodeData =
+        TextureNodeAssetService.getNodeData(textureNode);
 
       let engineState =
         switch (gameObject) {
@@ -64,10 +67,10 @@ let handleSelfLogic =
     }
   );
 
-  dispatchFunc(
+  /* dispatchFunc(
     AppStore.UpdateAction(
       Update([|UpdateStore.Project, UpdateStore.Inspector|]),
     ),
   )
-  |> ignore;
+  |> ignore; */
 };

@@ -8,7 +8,7 @@ open Expect.Operators;
 
 open Sinon;
 
-open AssetTreeNodeType;
+open NodeAssetType;
 
 open Js.Promise;
 
@@ -132,7 +132,7 @@ let _ =
 
               let engineState =
                 engineState
-                |> GameObjectUtils.addChild(rootGameObject, gameObject1);
+                |> HierarchyGameObjectEngineService.addChild(rootGameObject, gameObject1);
 
               (rootGameObject, (editorState, engineState));
             });
@@ -152,7 +152,7 @@ let _ =
 
                  MainEditorAssetTreeTool.Select.selectFolderNode(
                    ~nodeId=
-                     TreeRootAssetEditorService.getRootTreeNodeId
+                     MainEditorAssetTreeTool.getRootNodeId
                      |> StateLogicService.getEditorState,
                    (),
                  );
@@ -176,12 +176,13 @@ let _ =
                 )
                 |> then_(uploadedWDBNodeId => {
                      let editorState = StateEditorService.getState();
+                     let engineState = StateEngineService.unsafeGetState();
 
                      MainEditorAssetTreeTool.Select.selectFolderNode(
                        ~nodeId=
-                         MainEditorAssetFolderNodeTool.getNodeIdByName(
+                         MainEditorAssetTreeTool.findNodeIdByName(
                            "Materials",
-                           editorState,
+                           (editorState, engineState),
                          )
                          |> OptionService.unsafeGet,
                        (),
@@ -204,12 +205,14 @@ let _ =
                      )
                      |> then_(uploadedWDBNodeId2 => {
                           let editorState = StateEditorService.getState();
+                          let engineState =
+                            StateEngineService.unsafeGetState();
 
                           MainEditorAssetTreeTool.Select.selectFolderNode(
                             ~nodeId=
-                              MainEditorAssetFolderNodeTool.getNodeIdByName(
+                              MainEditorAssetTreeTool.findNodeIdByName(
                                 "Materials",
-                                editorState,
+                                (editorState, engineState),
                               )
                               |> OptionService.unsafeGet,
                             (),
@@ -355,10 +358,10 @@ let _ =
                             LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
                             editorState,
                           ),
-                          MaterialNodeMapAssetEditorService.getValidValues(
+                          MaterialNodeAssetEditorService.findAllMaterialNodes(
                             editorState,
                           )
-                          |> SparseMapService.length,
+                          |> Js.Array.length,
                         )
                         |> expect == (true, true, 1)
                         |> resolve;
@@ -373,19 +376,19 @@ let _ =
             let _generateShareMaterialWDB = () =>
               WDBTool.generateWDB((editorState, engineState) => {
                 let (engineState, geometry) =
-                  GeometryEngineService.createBoxGeometry(engineState);
+                  GeometryEngineService.createCubeGeometry(engineState);
                 let (engineState, lightMaterial) =
                   LightMaterialEngineService.create(engineState);
 
-                let (editorState, engineState, box1) =
-                  PrimitiveEngineService.createCube(
+                let (editorState, engineState, cube1) =
+                  PrimitiveLogicService.createCube(
                     (geometry, lightMaterial),
                     editorState,
                     engineState,
                   );
 
-                let (editorState, engineState, box2) =
-                  PrimitiveEngineService.createCube(
+                let (editorState, engineState, cube2) =
+                  PrimitiveLogicService.createCube(
                     (geometry, lightMaterial),
                     editorState,
                     engineState,
@@ -396,8 +399,8 @@ let _ =
 
                 let engineState =
                   engineState
-                  |> GameObjectUtils.addChild(rootGameObject, box1)
-                  |> GameObjectUtils.addChild(rootGameObject, box2);
+                  |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1)
+                  |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube2);
 
                 (rootGameObject, (editorState, engineState));
               });
@@ -413,12 +416,13 @@ let _ =
               )
               |> then_(uploadedWDBNodeId => {
                    let editorState = StateEditorService.getState();
+                   let engineState = StateEngineService.unsafeGetState();
 
                    MainEditorAssetTreeTool.Select.selectFolderNode(
                      ~nodeId=
-                       MainEditorAssetFolderNodeTool.getNodeIdByName(
+                       MainEditorAssetTreeTool.findNodeIdByName(
                          "Materials",
-                         editorState,
+                         (editorState, engineState),
                        )
                        |> OptionService.unsafeGet,
                      (),
@@ -444,12 +448,13 @@ let _ =
                 )
                 |> then_(uploadedWDBNodeId => {
                      let editorState = StateEditorService.getState();
+                     let engineState = StateEngineService.unsafeGetState();
 
                      MainEditorAssetTreeTool.Select.selectFolderNode(
                        ~nodeId=
-                         MainEditorAssetFolderNodeTool.getNodeIdByName(
+                         MainEditorAssetTreeTool.findNodeIdByName(
                            "Textures",
-                           editorState,
+                           (editorState, engineState),
                          )
                          |> OptionService.unsafeGet,
                        (),
@@ -472,12 +477,14 @@ let _ =
                      )
                      |> then_(uploadedWDBNodeId2 => {
                           let editorState = StateEditorService.getState();
+                          let engineState =
+                            StateEngineService.unsafeGetState();
 
                           MainEditorAssetTreeTool.Select.selectFolderNode(
                             ~nodeId=
-                              MainEditorAssetFolderNodeTool.getNodeIdByName(
+                              MainEditorAssetTreeTool.findNodeIdByName(
                                 "Textures",
-                                editorState,
+                                (editorState, engineState),
                               )
                               |> OptionService.unsafeGet,
                             (),
@@ -527,7 +534,7 @@ let _ =
 
               MainEditorAssetTreeTool.Select.selectFolderNode(
                 ~nodeId=
-                  TreeRootAssetEditorService.getRootTreeNodeId
+                  MainEditorAssetTreeTool.getRootNodeId
                   |> StateLogicService.getEditorState,
                 (),
               );
@@ -615,7 +622,7 @@ let _ =
 
                    MainEditorAssetHeaderOperateNodeTool.removeMaterialNode(
                      ~materialNodeId=
-                       MainEditorAssetMaterialNodeTool.findNodeIdByMaterialComponent(
+                       MainEditorAssetMaterialNodeTool.findNodeIdByMaterialComponentAndType(
                          material1,
                          LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
                          editorState,
@@ -653,14 +660,14 @@ let _ =
                             diffuseMap2,
                             editorState,
                           ),
-                          TextureNodeMapAssetEditorService.getValidValues(
+                          TextureNodeAssetEditorService.findAllTextureNodes(
                             editorState,
                           )
-                          |> SparseMapService.length,
-                          ImageNodeMapAssetEditorService.getValidValues(
+                          |> Js.Array.length,
+                          ImageDataMapAssetEditorService.getValidValues(
                             editorState,
                           )
-                          |> SparseMapService.length,
+                          |> WonderCommonlib.ImmutableSparseMapService.length,
                         )
                         |> expect == (true, 1, 1)
                         |> resolve;
@@ -676,7 +683,7 @@ let _ =
           let _generateWDB = () =>
             WDBTool.generateWDB((editorState, engineState) => {
               let (engineState, geometry) =
-                GeometryEngineService.createBoxGeometry(engineState);
+                GeometryEngineService.createCubeGeometry(engineState);
               let (engineState, lightMaterial1) =
                 LightMaterialEngineService.create(engineState);
 
@@ -715,22 +722,22 @@ let _ =
                      engineState,
                    );
 
-              let (editorState, engineState, box1) =
-                PrimitiveEngineService.createCube(
+              let (editorState, engineState, cube1) =
+                PrimitiveLogicService.createCube(
                   (geometry, lightMaterial1),
                   editorState,
                   engineState,
                 );
 
-              let (editorState, engineState, box2) =
-                PrimitiveEngineService.createCube(
+              let (editorState, engineState, cube2) =
+                PrimitiveLogicService.createCube(
                   (geometry, lightMaterial1),
                   editorState,
                   engineState,
                 );
 
-              let (editorState, engineState, box3) =
-                PrimitiveEngineService.createCube(
+              let (editorState, engineState, cube3) =
+                PrimitiveLogicService.createCube(
                   (geometry, lightMaterial2),
                   editorState,
                   engineState,
@@ -741,9 +748,9 @@ let _ =
 
               let engineState =
                 engineState
-                |> GameObjectUtils.addChild(rootGameObject, box1)
-                |> GameObjectUtils.addChild(rootGameObject, box2)
-                |> GameObjectUtils.addChild(rootGameObject, box3);
+                |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1)
+                |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube2)
+                |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube3);
 
               (rootGameObject, (editorState, engineState));
             });
@@ -773,10 +780,12 @@ let _ =
                  let editorState = StateEditorService.getState();
 
                  (
-                   TextureNodeMapAssetEditorService.getValidValues(editorState)
+                   TextureNodeAssetEditorService.findAllTextureNodes(
+                     editorState,
+                   )
                    |> Js.Array.length,
-                   ImageNodeMapAssetEditorService.getValidValues(editorState)
-                   |> Js.Array.length,
+                   ImageDataMapAssetEditorService.getValidValues(editorState)
+                   |> WonderCommonlib.ImmutableSparseMapService.length,
                  )
                  |> expect == (2, 1)
                  |> resolve;
@@ -801,15 +810,15 @@ let _ =
             let (engineState, lightMaterial) =
               LightMaterialEngineService.create(engineState);
 
-            let (editorState, engineState, box1) =
-              PrimitiveEngineService.createCube(
+            let (editorState, engineState, cube1) =
+              PrimitiveLogicService.createCube(
                 (geometry, lightMaterial),
                 editorState,
                 engineState,
               );
 
             let engineState =
-              engineState |> GameObjectUtils.addChild(rootGameObject, box1);
+              engineState |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1);
 
             (rootGameObject, (editorState, engineState));
           });
@@ -849,7 +858,7 @@ let _ =
         testPromise(
           {|
         1.create gameObject g1 with default cube geometry in scene;
-        2.load wdb asset w1(has one box gameObject with default cube geometry);
+        2.load wdb asset w1(has one cube gameObject with default cube geometry);
 
         g1->geometry->select geometry group widget should only have not-duplicate-default-geometrys and be using default cube geometry
         |},
@@ -859,11 +868,11 @@ let _ =
             (),
           )
           |> then_(uploadedWDBNodeId => {
-               MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+               MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
 
                BuildComponentTool.buildGeometry(
                  ~geometryComponent=
-                   GameObjectTool.getCurrentGameObjectGeometry(),
+                   GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                  ~isShowGeometryGroup=true,
                  (),
                )
@@ -890,17 +899,19 @@ let _ =
                )
                |> then_(uploadedWDBNodeId2 => {
                     let editorState = StateEditorService.getState();
-                    let wdbNodeMap =
-                      WDBNodeMapAssetEditorService.getWDBNodeMap(editorState);
 
                     (
-                      WDBNodeMapAssetEditorService.getWDBBaseName(
-                        uploadedWDBNodeId1,
-                        wdbNodeMap,
+                      NodeNameAssetLogicService.getWDBNodeName(
+                        OperateTreeAssetEditorService.unsafeFindNodeById(
+                          uploadedWDBNodeId1,
+                          editorState,
+                        ),
                       ),
-                      WDBNodeMapAssetEditorService.getWDBBaseName(
-                        uploadedWDBNodeId2,
-                        wdbNodeMap,
+                      NodeNameAssetLogicService.getWDBNodeName(
+                        OperateTreeAssetEditorService.unsafeFindNodeById(
+                          uploadedWDBNodeId2,
+                          editorState,
+                        ),
                       ),
                     )
                     |> expect == (fileName, fileName ++ " 1")
@@ -920,14 +931,14 @@ let _ =
                   GameObjectEngineService.create(engineState);
 
                 let (editorState, engineState, directionLight1) =
-                  PrimitiveEngineService.createDirectionLight(
+                  PrimitiveLogicService.createDirectionLight(
                     editorState,
                     engineState,
                   );
 
                 let engineState =
                   engineState
-                  |> GameObjectUtils.addChild(rootGameObject, directionLight1);
+                  |> HierarchyGameObjectEngineService.addChild(rootGameObject, directionLight1);
 
                 (rootGameObject, (editorState, engineState));
               });
@@ -953,22 +964,22 @@ let _ =
               let engineState = StateEngineService.unsafeGetState();
 
               let (editorState, engineState, _) =
-                PrimitiveEngineService.createDirectionLight(
+                PrimitiveLogicService.createDirectionLight(
                   editorState,
                   engineState,
                 );
               let (editorState, engineState, _) =
-                PrimitiveEngineService.createDirectionLight(
+                PrimitiveLogicService.createDirectionLight(
                   editorState,
                   engineState,
                 );
               let (editorState, engineState, _) =
-                PrimitiveEngineService.createDirectionLight(
+                PrimitiveLogicService.createDirectionLight(
                   editorState,
                   engineState,
                 );
               let (editorState, engineState, _) =
-                PrimitiveEngineService.createDirectionLight(
+                PrimitiveLogicService.createDirectionLight(
                   editorState,
                   engineState,
                 );
@@ -1001,11 +1012,11 @@ let _ =
               (),
             )
             |> then_(uploadedWDBNodeId => {
-                 MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+                 MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
 
                  BuildComponentTool.buildGeometry(
                    ~geometryComponent=
-                     GameObjectTool.getCurrentGameObjectGeometry(),
+                     GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                    ~isShowGeometryGroup=true,
                    (),
                  )

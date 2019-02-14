@@ -9,11 +9,11 @@ let closeColorPicker =
       ~light,
       ~color,
       ~dispatchFunc=_ => (),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       (),
     ) =>
   MainEditorDirectionLight.Method.closeColorPick(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     light,
     color,
   );
@@ -25,12 +25,12 @@ let blurIntensity =
     (
       ~light,
       ~value,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorDirectionLight.Method.blurIntensityEvent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     light,
     value,
   );
@@ -40,10 +40,10 @@ let changeIntensityAndBlur =
       ~light,
       ~sourceValue,
       ~targetValue,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
   changeIntensity(light, targetValue);
-  blurIntensity(~store, ~dispatchFunc, ~light, ~value=sourceValue, ());
+  blurIntensity(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
 };

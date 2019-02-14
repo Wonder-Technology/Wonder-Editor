@@ -1,3 +1,5 @@
+let getGapHeight = () => 4;
+
 let buildNotDragableUl = (treeChildren, isShowChildren, content) =>
   <ul className="wonder-tree-node">
     content
@@ -11,7 +13,7 @@ let renderChildren = (id, isShowChildren, send, togggleChildren) =>
     className="item-triangle"
     onMouseDown=(
       event => {
-        DomHelper.stopPropagation(
+        EventHelper.stopPropagation(
           ReactEventType.convertReactMouseEventToJsEvent(event),
         );
 

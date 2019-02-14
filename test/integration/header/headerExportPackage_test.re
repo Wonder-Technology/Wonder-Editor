@@ -60,17 +60,13 @@ let _ =
 
              let editorState = StateEditorService.getState();
 
-             editorState
-             |> TextureNodeMapAssetEditorService.getValidValues
-             |> Js.Array.filter(({image}: AssetNodeType.textureResultType) =>
-                  ImageNodeMapAssetEditorService.getUint8Array(
-                    image,
-                    ImageNodeMapAssetEditorService.getImageNodeMap(
-                      editorState,
-                    ),
-                  )
-                  |> Js.Option.isSome
-                )
+             TextureNodeAssetEditorService.findAllTextureNodes(editorState)
+             |> Js.Array.filter(node => {
+                  let {uint8Array}: ImageDataType.imageData =
+                    ImageDataMapTool.getDataByTextureNode(node, editorState);
+
+                  uint8Array |> Js.Option.isSome;
+                })
              |> Js.Array.length
              |> expect == 1
              |> resolve;

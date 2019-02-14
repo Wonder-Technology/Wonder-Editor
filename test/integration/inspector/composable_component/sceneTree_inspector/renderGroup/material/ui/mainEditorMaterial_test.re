@@ -6,7 +6,7 @@ open Expect.Operators;
 
 open Sinon;
 
-open AssetMaterialDataType;
+open MaterialDataAssetType;
 
 let _ =
   describe("MainEditorMaterial", () => {
@@ -28,7 +28,7 @@ let _ =
       beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         )
       );
 
@@ -52,7 +52,7 @@ let _ =
               )
               |> StateLogicService.getEngineStateToGetData;
 
-            materialType |> expect == AssetMaterialDataType.LightMaterial;
+            materialType |> expect == MaterialDataAssetType.LightMaterial;
           });
 
           describe(
@@ -70,7 +70,7 @@ let _ =
               |> expect == true;
             });
             test(
-              "test gameObject should move from lightMaterialRenderArray to basicMaterialRenderArray",
+              "test gameObject should move from lightMaterialRenderGameObjectArray to basicMaterialRenderGameObjectArray",
               () => {
                 let (basicMaterialRenderCount, lightMaterialRenderCount) =
                   MeshRendererToolEngine.getAllRenderArrayCount();
@@ -136,7 +136,7 @@ let _ =
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
 
         MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;

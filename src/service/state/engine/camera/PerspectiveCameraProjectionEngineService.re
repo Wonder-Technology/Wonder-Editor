@@ -68,3 +68,5 @@ let markAllPerspectiveCameraProjectionsDirty = engineState =>
      );
 
 let markPerspectiveCameraProjectionNotDirty = PerspectiveCameraProjectionAPI.markPerspectiveCameraProjectionNotDirty;
+
+let unsafeGetPerspectiveCameraProjectionPMatrix = PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraProjectionPMatrix;

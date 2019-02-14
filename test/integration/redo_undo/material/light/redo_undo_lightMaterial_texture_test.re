@@ -44,12 +44,12 @@ let _ =
         sandbox,
         () => {
           MainEditorAssetTool.initAssetTree();
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
         },
       );
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
+        SceneTreeWidgetService.getWidget(),
       )
       |> StateLogicService.getAndSetEditorState;
     };
@@ -58,8 +58,8 @@ let _ =
       StateHistoryToolEditor.clearAllState();
 
       StateEditorService.getState()
-      |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
-      |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
+      |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
+      |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
       |> StateEditorService.setState
       |> ignore;
     };

@@ -8,7 +8,7 @@ open Expect.Operators;
 
 open Sinon;
 
-open AssetTreeNodeType;
+open NodeAssetType;
 
 let _ =
   describe("MainEditorAssetHeader->remove node", () => {
@@ -25,8 +25,8 @@ let _ =
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
       StateEditorService.getState()
-      |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
-      |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
+      |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
+      |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
       |> StateEditorService.setState
       |> ignore;
     });
@@ -138,10 +138,10 @@ let _ =
               describe("should remove it from engineState", () => {
                 beforeEach(() => {
                   CurrentSelectSourceEditorService.setCurrentSelectSource(
-                    EditorType.SceneTree,
+                    SceneTreeWidgetService.getWidget(),
                   )
                   |> StateLogicService.getAndSetEditorState;
-                  MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+                  MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
                 });
 
                 describe("should remove it from scene->materials", ()
@@ -155,9 +155,9 @@ let _ =
 
                        _exec();
 
-                       MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+                       MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
                        let basicMaterial =
-                         GameObjectTool.getCurrentGameObjectBasicMaterial();
+                         GameObjectTool.getCurrentSceneTreeNodeBasicMaterial();
                        let engineState = StateEngineService.unsafeGetState();
                        BasicMaterialEngineService.getBasicMaterialMap(
                          basicMaterial,
@@ -192,9 +192,9 @@ let _ =
                         _drag(assetTreeData);
                         _remove(assetTreeData);
 
-                        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+                        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
                         let lightMaterial =
-                          GameObjectTool.getCurrentGameObjectLightMaterial();
+                          GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
                         let engineState = StateEngineService.unsafeGetState();
                         LightMaterialEngineService.getLightMaterialDiffuseMap(
                           lightMaterial,
@@ -214,13 +214,13 @@ let _ =
                             |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                                  currentGameObject,
                                );
-                          let secondBoxGameObject =
+                          let secondCubeGameObject =
                             engineState
-                            |> MainEditorSceneTool.getBoxByIndex(1);
+                            |> MainEditorSceneTool.getCubeByIndex(1);
                           let engineState =
                             engineState
                             |> LightMaterialToolEngine.replaceGameObjectLightMaterial(
-                                 secondBoxGameObject,
+                                 secondCubeGameObject,
                                  oldMaterial,
                                );
                           engineState |> StateEngineService.setState |> ignore;
@@ -228,7 +228,7 @@ let _ =
                           let assetTreeData =
                             MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
                           _drag(assetTreeData);
-                          MainEditorSceneTool.setSecondBoxToBeCurrentSceneTreeNode();
+                          MainEditorSceneTool.setSecondCubeToBeCurrentSceneTreeNode();
                           _drag(assetTreeData);
                           _remove(assetTreeData);
 
@@ -242,7 +242,7 @@ let _ =
                           let newMaterial2 =
                             engineState
                             |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-                                 secondBoxGameObject,
+                                 secondCubeGameObject,
                                );
 
                           (
@@ -264,7 +264,7 @@ let _ =
             );
           });
 
-          describe(
+          /* describe(
             "test removed asset node, the id should be added into removedAssetIdArray",
             () =>
             describe("test remove first folder", () => {
@@ -339,7 +339,7 @@ let _ =
                 expect == [|removedFolderNodeId, removedFolderNodeId |> succ|];
               });
             })
-          );
+          ); */
         });
       });
     });

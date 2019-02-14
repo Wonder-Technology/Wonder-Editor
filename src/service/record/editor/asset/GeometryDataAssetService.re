@@ -1,6 +1,6 @@
 open AssetType;
 
-open AssetGeometryDataType;
+open GeometryDataAssetType;
 
 let getGeometryData = assetRecord => assetRecord.geometryData;
 

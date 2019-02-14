@@ -6,8 +6,6 @@ open Expect.Operators;
 
 open Sinon;
 
-open CurrentNodeDataType;
-
 let _ =
   describe("MainEditorAssetTree", () => {
     let sandbox = getSandboxDefaultVal();
@@ -29,15 +27,16 @@ let _ =
       restoreSandbox(refJsObjToSandbox(sandbox^));
 
       StateEditorService.getState()
-      |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
-      |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
+      |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
+      |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
       |> StateEditorService.setState
       |> ignore;
     });
 
-    describe("test set currentNode and currentNodeParent", () =>
+    describe("test set currentNode and selectedFolderNodeInAssetTree", () =>
       describe("click assetTree node", () =>
-        test("currentNodeId and currentNodeParentId should be same", () => {
+        test(
+          "currentNode and selectedFolderNodeInAssetTree should be same", () => {
           let assetTreeData =
             MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
 
@@ -50,15 +49,16 @@ let _ =
           );
 
           let editorState = StateEditorService.getState();
-          let {currentNodeId} =
-            editorState
-            |> CurrentNodeDataAssetEditorService.unsafeGetCurrentNodeData;
 
-          let currentNodeParentId =
-            editorState
-            |> CurrentNodeParentIdAssetEditorService.unsafeGetCurrentNodeParentId;
-
-          expect(currentNodeId) == currentNodeParentId;
+          NodeAssetService.isNodeEqualById(
+            ~sourceNode=
+              MainEditorAssetNodeTool.unsafeGetCurrentNode(editorState),
+            ~targetNode=
+              MainEditorAssetNodeTool.unsafeGetSelectedFolderNodeInAssetTree(
+                editorState,
+              ),
+          )
+          |> expect == true;
         })
       )
     );
@@ -148,90 +148,122 @@ let _ =
         |> ReactTestTool.createSnapshotAndMatch;
       });
 
-      test("test drag folder into it's parent's brother folder", () => {
-        let assetTreeData =
-          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.buildFourFolderAssetTree();
-        let secondLayerFirstFolderNodeId =
-          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getSecondLayerFirstFolderNodeId(
-            assetTreeData,
-          );
-        let secondLayerSecondFolderNodeId =
-          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getSecondLayerSecondFolderNodeId(
-            assetTreeData,
-          );
-        let thirdLayerFirstFolderNodeId =
-          MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getThirdLayerFirstFolderNodeId(
-            assetTreeData,
-          );
+      describe("test drag folder", () =>
+        test("test drag folder into it's parent's brother folder", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.buildFourFolderAssetTree();
+          let secondLayerFirstFolderNodeId =
+            MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getSecondLayerFirstFolderNodeId(
+              assetTreeData,
+            );
+          let secondLayerSecondFolderNodeId =
+            MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getSecondLayerSecondFolderNodeId(
+              assetTreeData,
+            );
+          let thirdLayerFirstFolderNodeId =
+            MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getThirdLayerFirstFolderNodeId(
+              assetTreeData,
+            );
 
-        /* MainEditorAssetTreeTool.Select.selectFolderNode(
-             ~nodeId=secondLayerSecondFolderNodeId,
-             (),
-           ); */
-        MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
-          ~startNodeId=thirdLayerFirstFolderNodeId,
-          ~targetNodeId=secondLayerFirstFolderNodeId,
-          (),
-        );
-        MainEditorAssetTreeTool.Select.selectFolderNode(
-          ~nodeId=secondLayerFirstFolderNodeId,
-          (),
-        );
-
-        BuildComponentTool.buildAssetComponent()
-        |> ReactTestTool.createSnapshotAndMatch;
-      });
-
-      test("test drag texture file into it's parent's brother folder", () => {
-        let assetTreeData =
-          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAndMaterialAssetTree();
-        let secondLayerFirstFolderNodeId =
-          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getSecondLayerFirstFolderNodeId(
-            assetTreeData,
+          /* MainEditorAssetTreeTool.Select.selectFolderNode(
+               ~nodeId=secondLayerSecondFolderNodeId,
+               (),
+             ); */
+          MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
+            ~startNodeId=thirdLayerFirstFolderNodeId,
+            ~targetNodeId=secondLayerFirstFolderNodeId,
+            (),
           );
-        let thirdLayerFirstTextureNodeId =
-          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstTextureNodeId(
-            assetTreeData,
+          MainEditorAssetTreeTool.Select.selectFolderNode(
+            ~nodeId=secondLayerFirstFolderNodeId,
+            (),
           );
 
-        MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
-          ~startNodeId=thirdLayerFirstTextureNodeId,
-          ~targetNodeId=secondLayerFirstFolderNodeId,
-          (),
-        );
-        MainEditorAssetTreeTool.Select.selectFolderNode(
-          ~nodeId=secondLayerFirstFolderNodeId,
-          (),
-        );
+          BuildComponentTool.buildAssetComponent()
+          |> ReactTestTool.createSnapshotAndMatch;
+        })
+      );
 
-        BuildComponentTool.buildAssetChildrenNode()
-        |> ReactTestTool.createSnapshotAndMatch;
-      });
-
-      test("test drag texture file into it's brother folder", () => {
-        let assetTreeData =
-          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAndMaterialAssetTree();
-        let thirdLayerFirstFolderNodeId =
-          MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstFolderNodeId(
-            assetTreeData,
-          );
-
-        MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
-          ~startNodeId=
+      describe("test drag texture", () => {
+        test("test drag texture file into it's parent's brother folder", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAndMaterialAssetTree();
+          let secondLayerFirstFolderNodeId =
+            MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getSecondLayerFirstFolderNodeId(
+              assetTreeData,
+            );
+          let thirdLayerFirstTextureNodeId =
             MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstTextureNodeId(
               assetTreeData,
-            ),
-          ~targetNodeId=thirdLayerFirstFolderNodeId,
-          (),
-        );
-        MainEditorAssetTreeTool.Select.selectFolderNode(
-          ~nodeId=thirdLayerFirstFolderNodeId,
-          (),
-        );
+            );
 
-        BuildComponentTool.buildAssetComponent()
-        |> ReactTestTool.createSnapshotAndMatch;
+          MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
+            ~startNodeId=thirdLayerFirstTextureNodeId,
+            ~targetNodeId=secondLayerFirstFolderNodeId,
+            (),
+          );
+          MainEditorAssetTreeTool.Select.selectFolderNode(
+            ~nodeId=secondLayerFirstFolderNodeId,
+            (),
+          );
+
+          BuildComponentTool.buildAssetChildrenNode()
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
+
+        test("test drag texture file into it's brother folder", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAndMaterialAssetTree();
+          let thirdLayerFirstFolderNodeId =
+            MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstFolderNodeId(
+              assetTreeData,
+            );
+
+          MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
+            ~startNodeId=
+              MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstTextureNodeId(
+                assetTreeData,
+              ),
+            ~targetNodeId=thirdLayerFirstFolderNodeId,
+            (),
+          );
+          MainEditorAssetTreeTool.Select.selectFolderNode(
+            ~nodeId=thirdLayerFirstFolderNodeId,
+            (),
+          );
+
+          BuildComponentTool.buildAssetComponent()
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
       });
+
+      describe("test drag material", () =>
+        test("test drag material file into it's parent's brother folder", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.buildFolderAndTextureAndMaterialAssetTree();
+          let secondLayerFirstFolderNodeId =
+            MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getSecondLayerFirstFolderNodeId(
+              assetTreeData,
+            );
+          let thirdLayerFirstTextureNodeId =
+            MainEditorAssetTreeTool.BuildAssetTree.All.ThreeLayer.getThirdLayerFirstTextureNodeId(
+              assetTreeData,
+            );
+
+          MainEditorAssetTreeTool.Drag.dragAssetChildrenNodeIntoAssetTreeNode(
+            ~startNodeId=thirdLayerFirstTextureNodeId,
+            ~targetNodeId=secondLayerFirstFolderNodeId,
+            (),
+          );
+          MainEditorAssetTreeTool.Select.selectFolderNode(
+            ~nodeId=secondLayerFirstFolderNodeId,
+            (),
+          );
+
+          BuildComponentTool.buildAssetChildrenNode()
+          |> ReactTestTool.createSnapshotAndMatch;
+        })
+      );
     });
 
     describe("deal with the specific case", () => {
@@ -293,7 +325,7 @@ let _ =
 
         MainEditorAssetTreeTool.Select.selectFolderNode(
           ~nodeId=
-            TreeRootAssetEditorService.getRootTreeNodeId
+            MainEditorAssetTreeTool.getRootNodeId
             |> StateLogicService.getEditorState,
           (),
         );
@@ -311,40 +343,32 @@ let _ =
 
           MainEditorAssetHeaderOperateNodeTool.addFolder();
 
-          MainEditorAssetTreeTool.Select.selectFolderNode(
-            ~nodeId=addedFolderNodeId1,
-            (),
-          );
-
           let addedFolderNodeId2 = addedFolderNodeId1 |> succ;
 
           MainEditorAssetHeaderOperateNodeTool.addFolder();
 
-          AssetTreeUtils.setSpecificAssetTreeNodeIsShowChildrenFromEditorState(
+          OperateTreeAssetEditorService.setNodeIsShowChildren(
             addedFolderNodeId1,
             false,
           )
           |> StateLogicService.getAndSetEditorState;
 
-          let addedFolderNodeId3 = addedFolderNodeId2 |> succ;
-
-          MainEditorAssetHeaderOperateNodeTool.addFolder();
-
           MainEditorAssetTreeTool.Drag.dragAssetTreeNode(
-            ~startNodeId=addedFolderNodeId3,
+            ~startNodeId=addedFolderNodeId2,
             ~targetNodeId=addedFolderNodeId1,
             (),
           );
 
           MainEditorAssetTreeTool.Select.selectFolderNode(
             ~nodeId=
-              TreeRootAssetEditorService.getRootTreeNodeId
+              MainEditorAssetTreeTool.getRootNodeId
               |> StateLogicService.getEditorState,
             (),
           );
 
-          BuildComponentTool.buildAssetTree()
-          |> ReactTestTool.createSnapshotAndMatch;
+          MainEditorAssetFolderNodeTool.getIsShowChildren(addedFolderNodeId1)
+          |> StateLogicService.getEditorState
+          |> expect == true;
         })
       );
 
@@ -368,7 +392,7 @@ let _ =
 
           MainEditorAssetTreeTool.Select.selectFolderNode(
             ~nodeId=
-              TreeRootAssetEditorService.getRootTreeNodeId
+              MainEditorAssetTreeTool.getRootNodeId
               |> StateLogicService.getEditorState,
             (),
           );
@@ -406,7 +430,7 @@ let _ =
           (),
         );
 
-        AssetTreeUtils.setSpecificAssetTreeNodeIsShowChildrenFromEditorState(
+        OperateTreeAssetEditorService.setNodeIsShowChildren(
           addedFolderNodeId2,
           true,
         )

@@ -12,7 +12,7 @@ let buildMouseEvent =
     (
       ~pageX=10,
       ~pageY=20,
-      ~button=0,
+      ~which=1,
       ~movementX=1,
       ~movementY=2,
       ~detail=Js.Nullable.undefined,
@@ -24,7 +24,7 @@ let buildMouseEvent =
     ) => {
   "pageX": pageX,
   "pageY": pageY,
-  "button": button,
+  "which": which,
   "movementX": movementX,
   "movementY": movementY,
   "detail": detail,
@@ -48,6 +48,8 @@ let prepareWithState =
     (
       ~sandbox,
       ~engineState,
+      ~canvasWidth=0,
+      ~canvasHeight=0,
       ~offsetLeft=1,
       ~offsetTop=2,
       ~offsetParent=Js.Nullable.undefined,
@@ -55,7 +57,11 @@ let prepareWithState =
       (),
     ) => {
   let canvasDom =
-    EventTool.buildFakeCanvas((offsetLeft, offsetTop, offsetParent));
+    EventTool.buildFakeCanvasWithSize(
+      canvasWidth,
+      canvasHeight,
+      (offsetLeft, offsetTop, offsetParent),
+    );
 
   let engineState =
     ViewToolEngine.setCanvas(

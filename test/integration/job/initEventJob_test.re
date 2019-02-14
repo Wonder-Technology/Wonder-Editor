@@ -110,7 +110,8 @@ let _ =
         (),
       );
 
-      let canvasDom = EventTool.buildFakeCanvas((0, 0, Js.Nullable.null));
+      let canvasDom =
+        EventTool.buildFakeCanvasWithSize(0, 0, (0, 0, Js.Nullable.null));
 
       let engineState =
         ViewToolEngine.setCanvas(
@@ -206,7 +207,9 @@ let _ =
 
               let _ = _prepareAndExec(10, 20, EventTool.buildBodyTarget());
 
-              EventEditorService.getEventTarget(StateEditorService.getState())
+              TargetEventEditorService.getEventTarget(
+                StateEditorService.getState(),
+              )
               |> expect == EventType.Other;
             });
 
@@ -217,29 +220,28 @@ let _ =
                 let _ =
                   _prepareAndExec(-1, 20, EventTool.buildCanvasTarget());
 
-                EventEditorService.getEventTarget(
+                TargetEventEditorService.getEventTarget(
                   StateEditorService.getState(),
                 )
                 |> expect == EventType.Other;
               })
             );
+            /* describe("test loopBody", () =>
+                 test("if not run, not loopBody", () => {
+                   _prepareMouseEvent(~sandbox, ());
+                   ControllerTool.setIsRun(false);
 
-            describe("test loopBody", () =>
-              test("if not run, not loopBody", () => {
-                _prepareMouseEvent(~sandbox, ());
-                ControllerTool.setIsRun(false);
+                   let _ = _prepareAndExec(10, 20, EventTool.buildBodyTarget());
 
-                let _ = _prepareAndExec(10, 20, EventTool.buildBodyTarget());
-
-                let gl = FakeGlToolEngine.getEngineStateGl();
-                gl##clearColor |> expect |> not_ |> toCalled;
-              })
-            );
+                   let gl = FakeGlToolEngine.getEngineStateGl();
+                   gl##clearColor |> expect |> not_ |> toCalled;
+                 })
+               ); */
           });
 
           describe("test trigger in scene view", () => {
             describe("test loopBody", () => {
-              test("if not run, loopBody", () => {
+              test("if not run, not loopBody", () => {
                 _prepareMouseEvent(~sandbox, ());
                 ControllerTool.setIsRun(false);
 
@@ -247,7 +249,7 @@ let _ =
                   _prepareAndExec(10, 20, EventTool.buildCanvasTarget());
 
                 let gl = FakeGlToolEngine.getEngineStateGl();
-                gl##clearColor |> expect |> toCalled;
+                gl##clearColor |> expect |> not_ |> toCalled;
               });
               test("else, not loopBody", () => {
                 _prepareMouseEvent(~sandbox, ());
@@ -456,26 +458,59 @@ let _ =
               (
                 (clickPageX, clickPageY),
                 (movePageX, movePageY),
-                (locationInViewX, locationInViewY),
+                (dropPageX, dropPageY),
+                (dragStartLocationInViewX, dragStartLocationInViewY),
+                (dragOverLocationInViewX, dragOverLocationInViewY),
+                (dragDropLocationInViewX, dragDropLocationInViewY),
               ) => {
             PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
             StateLogicService.getAndSetEngineState(
               MainUtils._handleEngineState,
             );
 
-            let (valueX, valueY) = (ref(0), ref(0));
+            let (x1, y1, x2, y2, x3, y3) = (
+              ref(0),
+              ref(0),
+              ref(0),
+              ref(0),
+              ref(0),
+              ref(0),
+            );
+            let engineState = StateEngineService.unsafeGetState();
 
-            EventTool.onMouseEvent(
-              MouseMove,
-              0,
-              (. event: mouseEvent, state) => {
-                let (x, y) = event.locationInView;
-                valueX := x;
-                valueY := y;
-                state;
-              },
-            )
-            |> StateLogicService.getAndSetEngineState;
+            engineState
+            |> EventTool.onMouseEvent(
+                 MouseDragStart,
+                 0,
+                 (. event: mouseEvent, state) => {
+                   let (x, y) = event.locationInView;
+                   x1 := x;
+                   y1 := y;
+                   state;
+                 },
+               )
+            |> EventTool.onMouseEvent(
+                 MouseDragOver,
+                 0,
+                 (. event: mouseEvent, state) => {
+                   let (x, y) = event.locationInView;
+                   x2 := x;
+                   y2 := y;
+                   state;
+                 },
+               )
+            |> EventTool.onMouseEvent(
+                 MouseDragDrop,
+                 0,
+                 (. event: mouseEvent, state) => {
+                   let (x, y) = event.locationInView;
+                   x3 := x;
+                   y3 := y;
+                   state;
+                 },
+               )
+            |> StateEngineService.setState
+            |> ignore;
 
             EventTool.triggerDomEvent(
               "mousedown",
@@ -498,27 +533,46 @@ let _ =
             EventTool.triggerDomEvent(
               "mouseup",
               EventTool.getBody(),
-              MouseEventTool.buildMouseEvent(),
+              MouseEventTool.buildMouseEvent(
+                ~pageX=dropPageX,
+                ~pageY=dropPageY,
+                (),
+              ),
             );
             EventTool.restore();
 
-            (valueX^, valueY^)
-            |> expect == (locationInViewX, locationInViewY);
+            ((x1^, y1^), (x2^, y2^), (x3^, y3^))
+            |>
+            expect == (
+                        (dragStartLocationInViewX, dragStartLocationInViewY),
+                        (dragOverLocationInViewX, dragOverLocationInViewY),
+                        (dragDropLocationInViewX, dragDropLocationInViewY),
+                      );
           };
 
           describe("test eventTarget is game view", () =>
             describe("test locationInView", () =>
               describe("test view has no offsetParent", () =>
-                test("test trigger in scene view", () => {
-                  _prepareMouseEvent(
-                    ~sandbox,
-                    ~offsetLeft=1,
-                    ~offsetTop=2,
-                    (),
-                  );
+                test(
+                  "test trigger mousedragstart, mousedragover, mousedragdrop event in scene view",
+                  () => {
+                    _prepareMouseEvent(
+                      ~sandbox,
+                      ~offsetLeft=1,
+                      ~offsetTop=2,
+                      (),
+                    );
 
-                  _test((60, 20), (20, 30), (20 - 50 - 1, 30 - 2));
-                })
+                    _test(
+                      (60, 20),
+                      (20, 30),
+                      (10, 22),
+                      (60 - 50 - 1, 20 - 2),
+                      (20 - 50 - 1, 30 - 2),
+                      (10 - 50 - 1, 22 - 2),
+                    );
+                  },
+                )
               )
             )
           );
@@ -534,9 +588,8 @@ let _ =
                 (clickPageX, clickPageY),
               ) => {
             PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
-            StateLogicService.getAndSetEngineState(
-              MainUtils._handleEngineState,
-            );
+            MainUtils._handleEngineState
+            |> StateLogicService.getAndSetEngineState;
 
             let value = ref(0);
 
@@ -585,15 +638,19 @@ let _ =
             value^ |> expect == 1;
           };
 
-          test("if is stop, loopBody", () => {
+          test("if is stop, not loopBody", () => {
             _prepareKeyboardEvent(~sandbox, ());
             ControllerTool.setIsRun(false);
 
             let _ =
-              _prepareAndExec(KeyUp_editor |> Obj.magic, "keyup", (10, 20));
+              _prepareAndExec(
+                KeyUp_SceneView |> Obj.magic,
+                "keyup",
+                (10, 20),
+              );
 
             let gl = FakeGlToolEngine.getEngineStateGl();
-            gl##clearColor |> expect |> toCalled;
+            gl##clearColor |> expect |> not_ |> toCalled;
           });
 
           describe("test eventTarget is other", () =>
@@ -605,7 +662,7 @@ let _ =
 
                   let _ =
                     _prepareAndExec(
-                      KeyUp_editor |> Obj.magic,
+                      KeyUp_SceneView |> Obj.magic,
                       "keyup",
                       ((-1), 20),
                     );
@@ -620,7 +677,7 @@ let _ =
 
                 let value =
                   _prepareAndExec(
-                    KeyUp_editor |> Obj.magic,
+                    KeyUp_SceneView |> Obj.magic,
                     "keyup",
                     ((-1), 20),
                   );
@@ -630,7 +687,8 @@ let _ =
               test("not trigger keyup event", () => {
                 _prepareKeyboardEvent(~sandbox, ());
 
-                let value = _prepareAndExec(KeyUp, "keyup", ((-1), 20));
+                let value =
+                  _prepareAndExec(KeyUp_GameView, "keyup", ((-1), 20));
 
                 value^ |> expect == 0;
               });
@@ -639,19 +697,19 @@ let _ =
 
           describe("test eventTarget is scene view", () => {
             describe("test loopBody", () => {
-              test("if not run, loopBody", () => {
+              test("if not run, not loopBody", () => {
                 _prepareMouseEvent(~sandbox, ());
                 ControllerTool.setIsRun(false);
 
                 let _ =
                   _prepareAndExec(
-                    KeyUp_editor |> Obj.magic,
+                    KeyUp_SceneView |> Obj.magic,
                     "keyup",
                     (10, 20),
                   );
 
                 let gl = FakeGlToolEngine.getEngineStateGl();
-                gl##clearColor |> expect |> toCalled;
+                gl##clearColor |> expect |> not_ |> toCalled;
               });
               test("else, not loopBody", () => {
                 _prepareMouseEvent(~sandbox, ());
@@ -659,7 +717,7 @@ let _ =
 
                 let _ =
                   _prepareAndExec(
-                    KeyUp_editor |> Obj.magic,
+                    KeyUp_SceneView |> Obj.magic,
                     "keyup",
                     (10, 20),
                   );
@@ -672,7 +730,7 @@ let _ =
             test("trigger keyup_editor event", () => {
               _prepareKeyboardEvent(~sandbox, ());
 
-              _test(KeyUp_editor |> Obj.magic, "keyup", (10, 20));
+              _test(KeyUp_SceneView |> Obj.magic, "keyup", (10, 20));
             });
           });
 
@@ -684,7 +742,7 @@ let _ =
 
                 let _ =
                   _prepareAndExec(
-                    KeyUp_editor |> Obj.magic,
+                    KeyUp_SceneView |> Obj.magic,
                     "keyup",
                     (60, 20),
                   );
@@ -698,7 +756,7 @@ let _ =
 
                 let _ =
                   _prepareAndExec(
-                    KeyUp_editor |> Obj.magic,
+                    KeyUp_SceneView |> Obj.magic,
                     "keyup",
                     (60, 20),
                   );
@@ -711,35 +769,34 @@ let _ =
             test("trigger keyup event", () => {
               _prepareKeyboardEvent(~sandbox, ());
 
-              _test(KeyUp, "keyup", (60, 20));
+              _test(KeyUp_GameView, "keyup", (60, 20));
             });
+            /* describe("trigger refresh_inspector event", () =>
+                 test("defer 0 ms to exec", () => {
+                   TimeoutTool.buildFakeSetTimeoutFunc();
+                   _prepareKeyboardEvent(~sandbox, ());
+                   let value = [||];
+                   EventTool.onCustomGlobalEvent(
+                     SceneViewEventEditorService.getRefreshInspectorEventName(),
+                     0,
+                     (. event, engineState) => {
+                       value |> ArrayService.push(1) |> ignore;
 
-            describe("trigger refresh_inspector event", () =>
-              test("defer 0 ms to exec", () => {
-                TimeoutTool.buildFakeSetTimeoutFunc();
-                _prepareKeyboardEvent(~sandbox, ());
-                let value = [||];
-                EventTool.onCustomGlobalEvent(
-                  EventEditorService.getRefreshInspectorEventName(),
-                  0,
-                  (. event, engineState) => {
-                    value |> ArrayService.push(1) |> ignore;
+                       (engineState, event);
+                     },
+                   )
+                   |> StateLogicService.getAndSetEngineState;
 
-                    (engineState, event);
-                  },
-                )
-                |> StateLogicService.getAndSetEngineState;
+                   let _ =
+                     _prepareAndExec(KeyUp_GameView |> Obj.magic, "keyup", (60, 20));
 
-                let _ =
-                  _prepareAndExec(KeyUp |> Obj.magic, "keyup", (60, 20));
-
-                let funcArr = TimeoutTool.getTimeoutFuncArr();
-                let (func, time) = funcArr |> ArrayService.unsafeGetFirst;
-                func();
-                (funcArr |> Js.Array.length, value, time)
-                |> expect == (2, [|1|], 0);
-              })
-            );
+                   let funcArr = TimeoutTool.getTimeoutFuncArr();
+                   let (func, time) = funcArr |> ArrayService.unsafeGetFirst;
+                   func();
+                   (funcArr |> Js.Array.length, value, time)
+                   |> expect == (2, [|1|], 0);
+                 })
+               ); */
           });
         })
       );
@@ -749,7 +806,9 @@ let _ =
       describe("bind mouse event to trigger point event", () => {
         let _prepareAndExec = (pointEventName, (pageX, pageY)) => {
           PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
-          StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
+          StateLogicService.getAndSetEngineState(
+            MainUtils._handleEngineState,
+          );
 
           let value = ref(0);
 
@@ -792,7 +851,7 @@ let _ =
 
               let _ =
                 _prepareAndExec(
-                  EventEditorService.getPointScaleEventName(),
+                  SceneViewEventEditorService.getPointScaleEventName(),
                   ((-1), 20),
                 );
 
@@ -807,7 +866,7 @@ let _ =
 
               let value =
                 _prepareAndExec(
-                  EventEditorService.getPointScaleEventName(),
+                  SceneViewEventEditorService.getPointScaleEventName(),
                   ((-1), 20),
                 );
 
@@ -818,7 +877,7 @@ let _ =
 
               let value =
                 _prepareAndExec(
-                  NameEventEngineService.getPointScaleEventName(),
+                  GameViewEventEditorService.getPointScaleEventName(),
                   ((-1), 20),
                 );
 
@@ -829,37 +888,40 @@ let _ =
 
         describe("test eventTarget is scene view", () => {
           describe("test loopBody", () =>
-            test("if is stop, loopBody", () => {
+            test("if is stop, not loopBody", () => {
               _prepareMouseEvent(~sandbox, ());
               ControllerTool.setIsRun(false);
 
               let _ =
                 _prepareAndExec(
-                  EventEditorService.getPointScaleEventName(),
+                  SceneViewEventEditorService.getPointScaleEventName(),
                   (10, 20),
                 );
 
               let gl = FakeGlToolEngine.getEngineStateGl();
-              gl##clearColor |> expect |> toCalled;
+                gl##clearColor |> expect |> not_ |> toCalled;
             })
           );
 
           test("trigger editor point event", () => {
             _prepareMouseEvent(~sandbox, ());
 
-            _test(EventEditorService.getPointScaleEventName(), (10, 20));
+            _test(
+              SceneViewEventEditorService.getPointScaleEventName(),
+              (10, 20),
+            );
           });
         });
 
         describe("test eventTarget is game view", () => {
           describe("test loopBody", () =>
-            test("if is stop, not_ loopBody", () => {
+            test("if is stop, not loopBody", () => {
               _prepareMouseEvent(~sandbox, ());
               ControllerTool.setIsRun(false);
 
               let _ =
                 _prepareAndExec(
-                  EventEditorService.getPointScaleEventName(),
+                  SceneViewEventEditorService.getPointScaleEventName(),
                   (60, 20),
                 );
 
@@ -871,38 +933,40 @@ let _ =
           test("trigger engine point event", () => {
             _prepareMouseEvent(~sandbox, ());
 
-            _test(NameEventEngineService.getPointScaleEventName(), (60, 20));
+            _test(
+              GameViewEventEditorService.getPointScaleEventName(),
+              (60, 20),
+            );
           });
+          /* describe("trigger refresh_inspector event", () =>
+               test("defer 0 ms to exec", () => {
+                 TimeoutTool.buildFakeSetTimeoutFunc();
+                 _prepareMouseEvent(~sandbox, ());
+                 let value = [||];
+                 EventTool.onCustomGlobalEvent(
+                   SceneViewEventEditorService.getRefreshInspectorEventName(),
+                   0,
+                   (. event, engineState) => {
+                     value |> ArrayService.push(1) |> ignore;
 
-          describe("trigger refresh_inspector event", () =>
-            test("defer 0 ms to exec", () => {
-              TimeoutTool.buildFakeSetTimeoutFunc();
-              _prepareMouseEvent(~sandbox, ());
-              let value = [||];
-              EventTool.onCustomGlobalEvent(
-                EventEditorService.getRefreshInspectorEventName(),
-                0,
-                (. event, engineState) => {
-                  value |> ArrayService.push(1) |> ignore;
+                     (engineState, event);
+                   },
+                 )
+                 |> StateLogicService.getAndSetEngineState;
 
-                  (engineState, event);
-                },
-              )
-              |> StateLogicService.getAndSetEngineState;
+                 let _ =
+                   _prepareAndExec(
+                     GameViewEventEditorService.getPointScaleEventName(),
+                     (60, 20),
+                   );
 
-              let _ =
-                _prepareAndExec(
-                  NameEventEngineService.getPointScaleEventName(),
-                  (60, 20),
-                );
-
-              let funcArr = TimeoutTool.getTimeoutFuncArr();
-              let (func, time) = funcArr |> ArrayService.unsafeGetFirst;
-              func();
-              (funcArr |> Js.Array.length, value, time)
-              |> expect == (2, [|1|], 0);
-            })
-          );
+                 let funcArr = TimeoutTool.getTimeoutFuncArr();
+                 let (func, time) = funcArr |> ArrayService.unsafeGetFirst;
+                 func();
+                 (funcArr |> Js.Array.length, value, time)
+                 |> expect == (2, [|1|], 0);
+               })
+             ); */
         });
       })
     );

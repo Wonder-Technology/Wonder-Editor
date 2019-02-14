@@ -15,7 +15,7 @@
     "test:watch": "gulp changeSnapshotPath && jest --maxWorkers=4 --watch --config jest.json",
     "test:update": "gulp changeSnapshotPath && jest --maxWorkers=4 -u --config jest.json",
     "test:coverage": "gulp changeSnapshotPath && jest --maxWorkers=4 --config jest_coverage.json || true",
-    "test:ci": "npm run bsb:build && gulp changeSnapshotPath && jest -u --maxWorkers=4 --config jest_coverage.json || true",
+    "test:ci": "npm run bsb:build && jest --maxWorkers=4 -u --config jest_coverage.json",
     "codecov": "cat coverage/lcov.info | codecov",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "updateVersion": "gulp updateVersion"
@@ -65,18 +65,19 @@
     "react-test-renderer": "15.5.4",
     "reason-react": "0.4.2",
     "wonder-bs-json": "^0.0.1",
+    "wonder-hotkey": "^0.0.1",
     "wonder-bs-jszip": "0.0.2",
     "wonder-bs-most": "^0.0.3",
-    "wonder-commonlib": "0.2.23",
+    "wonder-commonlib": "0.2.26",
     "wonder-log": "^0.2.10",
-    "wonder.js": "1.0.0-alpha.24.1"
+    "wonder.js": "1.0.0-alpha.25"
   },
   "resolutions": {
     "wonder-log": "^0.2.10",
-    "wonder-webgl": "^0.0.5",
+    "wonder-webgl": "^0.0.6",
     "wonder-bs-sinon": "0.1.7",
     "component-classes": "1.2.5",
-    "wonder-commonlib": "0.2.23",
+    "wonder-commonlib": "0.2.27",
     "wonder-bs-jest": "0.2.18"
   }
 }

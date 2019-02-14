@@ -73,10 +73,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -93,10 +96,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -113,10 +119,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -150,10 +159,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -170,10 +182,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -190,10 +205,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -227,10 +245,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -247,10 +268,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -267,10 +291,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -287,69 +314,6 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
             </article>
-          </div>
-        </div>
-      </article>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          Geometry
-        </div>
-        <div
-          className="header-close"
-        >
-          <img
-            onClick={[Function]}
-            src="./public/img/close.png"
-          />
-        </div>
-      </div>
-      <article
-        className="wonder-inspector-geometry"
-      >
-        <div
-          className="inspector-item"
-        >
-          <div
-            className="item-header"
-          >
-            Geometry
-          </div>
-          <div
-            className="item-content"
-          >
-            <div
-              className="inspector-select"
-            >
-              <div
-                className="select-name"
-              >
-                Wonder-Default-Cube
-              </div>
-              <div
-                className="select-img"
-                onClick={[Function]}
-              >
-                <img
-                  src="./public/img/select.png"
-                />
-              </div>
-            </div>
           </div>
         </div>
       </article>
@@ -589,6 +553,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
@@ -615,10 +580,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="inspector-item wonder-float-input"
                     >
                       <div
-                        className="item-header"
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
                       >
                         Shininess
                       </div>
@@ -641,6 +609,69 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 />
               </div>
             </article>
+          </div>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Geometry
+        </div>
+        <div
+          className="header-close"
+        >
+          <img
+            onClick={[Function]}
+            src="./public/img/close.png"
+          />
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-geometry"
+      >
+        <div
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Geometry
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="inspector-select"
+            >
+              <div
+                className="select-name"
+              >
+                Wonder-Default-Cube
+              </div>
+              <div
+                className="select-img"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/select.png"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </article>
@@ -740,10 +771,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -760,10 +794,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -780,10 +817,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -817,10 +857,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -837,10 +880,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -857,10 +903,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -894,10 +943,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -914,10 +966,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -934,10 +989,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -954,69 +1012,6 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
             </article>
-          </div>
-        </div>
-      </article>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          Geometry
-        </div>
-        <div
-          className="header-close"
-        >
-          <img
-            onClick={[Function]}
-            src="./public/img/close.png"
-          />
-        </div>
-      </div>
-      <article
-        className="wonder-inspector-geometry"
-      >
-        <div
-          className="inspector-item"
-        >
-          <div
-            className="item-header"
-          >
-            Geometry
-          </div>
-          <div
-            className="item-content"
-          >
-            <div
-              className="inspector-select"
-            >
-              <div
-                className="select-name"
-              >
-                Wonder-Default-Cube
-              </div>
-              <div
-                className="select-img"
-                onClick={[Function]}
-              >
-                <img
-                  src="./public/img/select.png"
-                />
-              </div>
-            </div>
           </div>
         </div>
       </article>
@@ -1256,6 +1251,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
@@ -1279,10 +1275,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="inspector-item wonder-float-input"
                     >
                       <div
-                        className="item-header"
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
                       >
                         Shininess
                       </div>
@@ -1305,6 +1304,69 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 />
               </div>
             </article>
+          </div>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Geometry
+        </div>
+        <div
+          className="header-close"
+        >
+          <img
+            onClick={[Function]}
+            src="./public/img/close.png"
+          />
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-geometry"
+      >
+        <div
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Geometry
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="inspector-select"
+            >
+              <div
+                className="select-name"
+              >
+                Wonder-Default-Cube
+              </div>
+              <div
+                className="select-img"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/select.png"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </article>
@@ -1404,10 +1466,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -1424,10 +1489,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -1444,10 +1512,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -1481,10 +1552,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -1501,10 +1575,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -1521,10 +1598,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -1558,10 +1638,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -1578,10 +1661,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -1598,10 +1684,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -1618,69 +1707,6 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
             </article>
-          </div>
-        </div>
-      </article>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          Geometry
-        </div>
-        <div
-          className="header-close"
-        >
-          <img
-            onClick={[Function]}
-            src="./public/img/close.png"
-          />
-        </div>
-      </div>
-      <article
-        className="wonder-inspector-geometry"
-      >
-        <div
-          className="inspector-item"
-        >
-          <div
-            className="item-header"
-          >
-            Geometry
-          </div>
-          <div
-            className="item-content"
-          >
-            <div
-              className="inspector-select"
-            >
-              <div
-                className="select-name"
-              >
-                Wonder-Default-Cube
-              </div>
-              <div
-                className="select-img"
-                onClick={[Function]}
-              >
-                <img
-                  src="./public/img/select.png"
-                />
-              </div>
-            </div>
           </div>
         </div>
       </article>
@@ -1920,6 +1946,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
@@ -1946,10 +1973,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="inspector-item wonder-float-input"
                     >
                       <div
-                        className="item-header"
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
                       >
                         Shininess
                       </div>
@@ -1972,6 +2002,69 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 />
               </div>
             </article>
+          </div>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Geometry
+        </div>
+        <div
+          className="header-close"
+        >
+          <img
+            onClick={[Function]}
+            src="./public/img/close.png"
+          />
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-geometry"
+      >
+        <div
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Geometry
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="inspector-select"
+            >
+              <div
+                className="select-name"
+              >
+                Wonder-Default-Cube
+              </div>
+              <div
+                className="select-img"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/select.png"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </article>
@@ -2071,10 +2164,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -2091,10 +2187,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -2111,10 +2210,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -2148,10 +2250,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -2168,10 +2273,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -2188,10 +2296,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -2225,10 +2336,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -2245,10 +2359,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -2265,10 +2382,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -2285,69 +2405,6 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
             </article>
-          </div>
-        </div>
-      </article>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          Geometry
-        </div>
-        <div
-          className="header-close"
-        >
-          <img
-            onClick={[Function]}
-            src="./public/img/close.png"
-          />
-        </div>
-      </div>
-      <article
-        className="wonder-inspector-geometry"
-      >
-        <div
-          className="inspector-item"
-        >
-          <div
-            className="item-header"
-          >
-            Geometry
-          </div>
-          <div
-            className="item-content"
-          >
-            <div
-              className="inspector-select"
-            >
-              <div
-                className="select-name"
-              >
-                Wonder-Default-Cube
-              </div>
-              <div
-                className="select-img"
-                onClick={[Function]}
-              >
-                <img
-                  src="./public/img/select.png"
-                />
-              </div>
-            </div>
           </div>
         </div>
       </article>
@@ -2587,6 +2644,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
@@ -2610,10 +2668,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="inspector-item wonder-float-input"
                     >
                       <div
-                        className="item-header"
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
                       >
                         Shininess
                       </div>
@@ -2636,6 +2697,69 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 />
               </div>
             </article>
+          </div>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Geometry
+        </div>
+        <div
+          className="header-close"
+        >
+          <img
+            onClick={[Function]}
+            src="./public/img/close.png"
+          />
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-geometry"
+      >
+        <div
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Geometry
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="inspector-select"
+            >
+              <div
+                className="select-name"
+              >
+                Wonder-Default-Cube
+              </div>
+              <div
+                className="select-img"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/select.png"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </article>
@@ -2735,10 +2859,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -2755,10 +2882,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -2775,10 +2905,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -2812,10 +2945,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -2832,10 +2968,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -2852,10 +2991,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -2889,10 +3031,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -2909,10 +3054,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -2929,10 +3077,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -2949,69 +3100,6 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 </div>
               </article>
             </article>
-          </div>
-        </div>
-      </article>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          Geometry
-        </div>
-        <div
-          className="header-close"
-        >
-          <img
-            onClick={[Function]}
-            src="./public/img/close.png"
-          />
-        </div>
-      </div>
-      <article
-        className="wonder-inspector-geometry"
-      >
-        <div
-          className="inspector-item"
-        >
-          <div
-            className="item-header"
-          >
-            Geometry
-          </div>
-          <div
-            className="item-content"
-          >
-            <div
-              className="inspector-select"
-            >
-              <div
-                className="select-name"
-              >
-                Wonder-Default-Cube
-              </div>
-              <div
-                className="select-img"
-                onClick={[Function]}
-              >
-                <img
-                  src="./public/img/select.png"
-                />
-              </div>
-            </div>
           </div>
         </div>
       </article>
@@ -3251,6 +3339,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
@@ -3274,10 +3363,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="inspector-item wonder-float-input"
                     >
                       <div
-                        className="item-header"
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
                       >
                         Shininess
                       </div>
@@ -3300,6 +3392,69 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 />
               </div>
             </article>
+          </div>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Geometry
+        </div>
+        <div
+          className="header-close"
+        >
+          <img
+            onClick={[Function]}
+            src="./public/img/close.png"
+          />
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-geometry"
+      >
+        <div
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+          >
+            Geometry
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="inspector-select"
+            >
+              <div
+                className="select-name"
+              >
+                Wonder-Default-Cube
+              </div>
+              <div
+                className="select-img"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/select.png"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </article>

@@ -1,6 +1,6 @@
 open EditorType;
 
-open AssetMaterialDataType;
+open MaterialDataAssetType;
 
 let getMaterialData = editorState =>
   editorState.assetRecord |> MaterialDataAssetService.getMaterialData;
@@ -36,15 +36,11 @@ let unsafeGetDefaultLightMaterial = editorState => {
   material;
 };
 
-let unsafeGetMaterialDataByType = (type_, editorState) => {
-  let unsafeGetMaterialDataFunc =
-    switch (type_) {
-    | BasicMaterial => unsafeGetDefaultBasicMaterialData
-    | LightMaterial => unsafeGetDefaultLightMaterialData
-    };
-
-  unsafeGetMaterialDataFunc(editorState);
-};
+let unsafeGetDefaultMaterialDataByType = (type_, editorState) =>
+  switch (type_) {
+  | BasicMaterial => unsafeGetDefaultBasicMaterialData(editorState)
+  | LightMaterial => unsafeGetDefaultLightMaterialData(editorState)
+  };
 
 let setDefaultLightMaterialData = (material, editorState) => {
   ...editorState,

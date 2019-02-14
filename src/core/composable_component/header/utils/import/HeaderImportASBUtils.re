@@ -49,11 +49,11 @@ let importASB = asb => {
 
   BuildAssetDataUtils.buildImageData(asbRecord, buffer, editorState)
   |> WonderBsMost.Most.fromPromise
-  |> WonderBsMost.Most.map(((imageMap, imageNodeIdMap, editorState)) => {
+  |> WonderBsMost.Most.map(((imageMap, imageDataIndexMap, editorState)) => {
        let (textureMap, (editorState, engineState)) =
          BuildAssetDataUtils.buildTextureData(
            asbRecord,
-           (imageMap, imageNodeIdMap),
+           (imageMap, imageDataIndexMap),
            (editorState, engineState),
          );
 

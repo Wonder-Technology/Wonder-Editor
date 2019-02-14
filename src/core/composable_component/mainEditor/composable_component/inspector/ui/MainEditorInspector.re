@@ -1,35 +1,32 @@
-open EditorType;
-
-open CurrentNodeDataType;
+open WidgetType;
 
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
 module Method = {
   let showInspectorBySourceType =
       (
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         addableComponentConfig,
-        (currentSelectSource, currentSceneTreeNode, currentNodeData),
+        (currentSelectSource, currentSceneTreeNode, currentNode),
       ) =>
     switch (currentSelectSource) {
     | None => ReasonReact.null
     | Some(SceneTree) =>
       <SceneTreeInspector
-        store
+        uiState
         dispatchFunc
         addableComponentConfig
         currentSceneTreeNode
       />
     | Some(Asset) =>
-      switch (currentNodeData) {
+      switch (currentNode) {
       | None => ReasonReact.null
-      | Some({currentNodeId, nodeType}) =>
+      | Some(currentNode) =>
         <AssetTreeInspector
           key=(DomHelper.getRandomKey())
-          store
+          uiState
           dispatchFunc
-          currentNodeId
-          nodeType
+          currentNode
         />
       }
     };
@@ -38,18 +35,17 @@ module Method = {
 let component =
   ReasonReact.statelessComponentWithRetainedProps("MainEditorInspector");
 
-let render = ((store, dispatchFunc), addableComponentConfig, _self) => {
+let render = ((uiState, dispatchFunc), addableComponentConfig, _self) => {
   let editorState = StateEditorService.getState();
   <article key="inspector" className="wonder-inspector-component">
     (
       Method.showInspectorBySourceType(
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         addableComponentConfig,
         (
           CurrentSelectSourceEditorService.getCurrentSelectSource(editorState),
-          SceneEditorService.getCurrentSceneTreeNode(editorState),
-          CurrentNodeDataAssetEditorService.getCurrentNodeData
-          |> StateLogicService.getEditorState,
+          SceneTreeEditorService.getCurrentSceneTreeNode(editorState),
+          OperateTreeAssetEditorService.getCurrentNode(editorState),
         ),
       )
     )
@@ -63,16 +59,16 @@ let shouldUpdate =
 
 let make =
     (
-      ~store: AppStore.appState,
+      ~uiState: AppStore.appState,
       ~dispatchFunc,
       ~addableComponentConfig,
       _children,
     ) => {
   ...component,
   retainedProps: {
-    updateTypeArr: StoreUtils.getUpdateComponentTypeArr(store),
+    updateTypeArr: StoreUtils.getUpdateComponentTypeArr(uiState),
   },
   shouldUpdate,
   render: self =>
-    render((store, dispatchFunc), addableComponentConfig, self),
+    render((uiState, dispatchFunc), addableComponentConfig, self),
 };

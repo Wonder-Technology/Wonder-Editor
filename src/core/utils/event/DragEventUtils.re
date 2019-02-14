@@ -1,31 +1,33 @@
-type action =
-  | TogggleChildren(int)
-  | Nothing
-  | DragEnter
-  | DragLeave
-  | DragEnd
-  | DragStart
-  | DragDrop(int, int);
-
-let handleDragStart = (id, widget, dragImg, effectAllowd, event) => {
+let handleDragStart =
+    (id, dragStartAction, widget, dragImg, effectAllowd, event) => {
   DragEventBaseUtils.dragStart(id, widget, dragImg, effectAllowd, event);
-  DragStart;
+  dragStartAction;
 };
 
-let handleDragEnter = (id, isWidgetFunc, handleRelationErrorFunc, _event) =>
-  DragEventBaseUtils.isTriggerDragEnter(
-    id,
-    isWidgetFunc,
-    handleRelationErrorFunc,
-  ) ?
-    DragEnter : Nothing;
+let handleDragEnter =
+    (
+      id,
+      (dragEnterAction, nothingAction),
+      isWidgetFunc,
+      checkNodeRelationFunc,
+      _event,
+    ) => {
+  let (isValid, _) =
+    DragEventBaseUtils.isValidForDragEnter(
+      id,
+      isWidgetFunc,
+      checkNodeRelationFunc,
+    );
 
-let handleDragLeave = (id, event) => {
-  DomHelper.stopPropagation(
+  isValid ? dragEnterAction : nothingAction;
+};
+
+let handleDragLeave = (id, dragLeaveAction, event) => {
+  EventHelper.stopPropagation(
     ReactEventType.convertReactMouseEventToJsEvent(event),
   );
 
-  DragLeave;
+  dragLeaveAction;
 };
 
 let handleDragOver = (dropEffect, event) => {
@@ -33,26 +35,47 @@ let handleDragOver = (dropEffect, event) => {
 
   DragUtils.setDataTransferDropEffect(dropEffect, e);
 
-  DomHelper.preventDefault(e);
+  EventHelper.preventDefault(e);
 };
 
-let handleDrop = (id, isWidgetFunc, handleRelationErrorFunc, event) => {
+let handleDrop =
+    (
+      id,
+      (dragDropActionFunc, dragLeaveAction),
+      isWidgetFunc,
+      checkNodeRelationFunc,
+      event,
+    ) => {
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);
   let startId = DragUtils.getDragedId(e);
 
-  DomHelper.preventDefault(e);
+  EventHelper.preventDefault(e);
 
-  DragEventBaseUtils.isTriggerDragDrop(
-    id,
-    startId,
-    isWidgetFunc,
-    handleRelationErrorFunc,
-  ) ?
-    DragDrop(id, startId) : DragLeave;
+  let (isValid, relationResult) =
+    DragEventBaseUtils.isValidForDragDrop(
+      id,
+      startId,
+      isWidgetFunc,
+      checkNodeRelationFunc,
+    );
+
+  relationResult
+  |> OptionService.handleSomeAndIgnore(relationResult =>
+       relationResult
+       |> Result.RelationResult.handleError(msgOpt =>
+            OptionService.handleSomeAndIgnore(
+              msg => ConsoleUtils.error(msg, StateEditorService.getState()),
+              msgOpt,
+            )
+          )
+     );
+
+  isValid ? dragDropActionFunc(id, startId) : dragLeaveAction;
 };
 
-let handleDrageEnd = _event => {
+let handleDragEnd = (dragEndAction, _event) => {
   CurrentDragSourceEditorService.clearCurrentDragSource
   |> StateLogicService.getAndSetEditorState;
-  DragEnd;
+
+  dragEndAction;
 };

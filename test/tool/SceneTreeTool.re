@@ -8,7 +8,7 @@ let _prepareSpecificGameObjects = engineState => {
       engineState,
     );
   let (editorState, engineState, camera) =
-    CameraEngineService.createCamera(editorState, engineState);
+    CameraLogicService.createCamera(editorState, engineState);
   let (engineState, arcballCameraController) =
     ArcballCameraEngineService.create(engineState);
 
@@ -29,28 +29,28 @@ let _prepareSpecificGameObjects = engineState => {
   editorState |> StateEditorService.setState |> ignore;
 
   engineState;
-  /* |> GameObjectUtils.addChild(scene, gridPlane)
-     |> GameObjectUtils.addChild(scene, camera); */
+  /* |> HierarchyGameObjectEngineService.addChild(scene, gridPlane)
+     |> HierarchyGameObjectEngineService.addChild(scene, camera); */
 };
 
 let _buildTwoCameraSceneGraph = (componentData, editorState, engineState) => {
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (editorState, engineState, camera1) =
-    CameraEngineService.createCamera(editorState, engineState);
+    CameraLogicService.createCamera(editorState, engineState);
   let (editorState, engineState, camera2) =
-    CameraEngineService.createCamera(editorState, engineState);
-  let (editorState, engineState, box1) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
+    CameraLogicService.createCamera(editorState, engineState);
+  let (editorState, engineState, cube1) =
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
 
   (
     camera1,
     camera2,
-    box1,
+    cube1,
     editorState,
     engineState
-    |> GameObjectUtils.addChild(scene, camera1)
-    |> GameObjectUtils.addChild(scene, camera2)
-    |> GameObjectUtils.addChild(scene, box1),
+    |> HierarchyGameObjectEngineService.addChild(scene, camera1)
+    |> HierarchyGameObjectEngineService.addChild(scene, camera2)
+    |> HierarchyGameObjectEngineService.addChild(scene, cube1),
   );
 };
 
@@ -68,13 +68,13 @@ let buildTwoCameraSceneGraphToEngine = sandbox => {
   let (editorState, engineState, cubeGeometry) =
     DefaultSceneUtils.prepareDefaultComponent(editorState, engineState);
 
-  let defaultLightMaterial =
+  let defaultLightMaterialData =
     MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
 
-  let (camera1, camera2, box1, editorState, engineState) =
+  let (camera1, camera2, cube1, editorState, engineState) =
     engineState
     |> _buildTwoCameraSceneGraph(
-         (cubeGeometry, defaultLightMaterial),
+         (cubeGeometry, defaultLightMaterialData),
          editorState,
        );
 
@@ -88,28 +88,28 @@ let buildTwoCameraSceneGraphToEngine = sandbox => {
 
   editorState |> StateEditorService.setState |> ignore;
 
-  (camera1, camera2, box1);
+  (camera1, camera2, cube1);
 };
 
 let _buildThreeLayerSceneGraph = (componentData, editorState, engineState) => {
   let scene = MainEditorSceneTool.unsafeGetScene();
-  let (editorState, engineState, box1) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
-  let (editorState, engineState, box2) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
-  let (editorState, engineState, box3) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
-  let (editorState, engineState, box4) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
+  let (editorState, engineState, cube1) =
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
+  let (editorState, engineState, cube2) =
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
+  let (editorState, engineState, cube3) =
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
+  let (editorState, engineState, cube4) =
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
 
   (
     editorState,
     engineState
-    |> GameObjectUtils.addChild(scene, box1)
-    |> GameObjectUtils.addChild(box1, box4)
-    |> GameObjectUtils.addChild(scene, box2)
-    |> GameObjectUtils.addChild(scene, box3),
-    (scene, (box1, box4), box2, box3),
+    |> HierarchyGameObjectEngineService.addChild(scene, cube1)
+    |> HierarchyGameObjectEngineService.addChild(cube1, cube4)
+    |> HierarchyGameObjectEngineService.addChild(scene, cube2)
+    |> HierarchyGameObjectEngineService.addChild(scene, cube3),
+    (scene, (cube1, cube4), cube2, cube3),
   );
 };
 
@@ -122,13 +122,13 @@ let buildThreeLayerSceneGraphToEngine = sandbox => {
   let (editorState, engineState, cubeGeometry) =
     DefaultSceneUtils.prepareDefaultComponent(editorState, engineState);
 
-  let defaultLightMaterial =
+  let defaultLightMaterialData =
     MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
 
   let (editorState, engineState, layerGameObjectData) =
     engineState
     |> _buildThreeLayerSceneGraph(
-         (cubeGeometry, defaultLightMaterial),
+         (cubeGeometry, defaultLightMaterialData),
          editorState,
        );
 
@@ -143,22 +143,22 @@ let buildThreeLayerSceneGraphToEngine = sandbox => {
 
 let _buildFourLayerSceneGraph = (componentData, editorState, engineState) => {
   let scene = MainEditorSceneTool.unsafeGetScene();
-  let (editorState, engineState, box1) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
-  let (editorState, engineState, box2) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
-  let (editorState, engineState, box3) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
-  let (editorState, engineState, box4) =
-    PrimitiveEngineService.createCube(componentData, editorState, engineState);
+  let (editorState, engineState, cube1) =
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
+  let (editorState, engineState, cube2) =
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
+  let (editorState, engineState, cube3) =
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
+  let (editorState, engineState, cube4) =
+    PrimitiveLogicService.createCube(componentData, editorState, engineState);
   (
     editorState,
     engineState
-    |> GameObjectUtils.addChild(scene, box1)
-    |> GameObjectUtils.addChild(box1, box3)
-    |> GameObjectUtils.addChild(box3, box4)
-    |> GameObjectUtils.addChild(scene, box2),
-    (scene, (box1, box3, box4), box2),
+    |> HierarchyGameObjectEngineService.addChild(scene, cube1)
+    |> HierarchyGameObjectEngineService.addChild(cube1, cube3)
+    |> HierarchyGameObjectEngineService.addChild(cube3, cube4)
+    |> HierarchyGameObjectEngineService.addChild(scene, cube2),
+    (scene, (cube1, cube3, cube4), cube2),
   );
 };
 
@@ -171,13 +171,13 @@ let buildFourLayerSceneGraphToEngine = sandbox => {
   let (editorState, engineState, cubeGeometry) =
     DefaultSceneUtils.prepareDefaultComponent(editorState, engineState);
 
-  let defaultLightMaterial =
+  let defaultLightMaterialData =
     MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(editorState);
 
   let (editorState, engineState, layerGameObjectData) =
     engineState
     |> _buildFourLayerSceneGraph(
-         (cubeGeometry, defaultLightMaterial),
+         (cubeGeometry, defaultLightMaterialData),
          editorState,
        );
 

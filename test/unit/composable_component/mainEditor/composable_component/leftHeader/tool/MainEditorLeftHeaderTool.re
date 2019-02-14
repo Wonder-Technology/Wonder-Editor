@@ -1,35 +1,59 @@
 let addCube =
     (
-      ~store=TestTool.buildAppStateSceneGraphFromEngine(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorLeftHeader.Method.addGameObjectByType(
-    (store, dispatchFunc),
-    AddGameObjectType.Box,
+    (uiState, dispatchFunc),
+    AddGameObjectType.Cude,
+    (),
+  );
+
+let addSphere =
+    (
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorLeftHeader.Method.addGameObjectByType(
+    (uiState, dispatchFunc),
+    AddGameObjectType.Sphere,
     (),
   );
 
 let addEmptyGameObject =
     (
-      ~store=TestTool.buildAppStateSceneGraphFromEngine(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorLeftHeader.Method.addGameObjectByType(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     AddGameObjectType.EmptyGameObject,
     (),
   );
 
 let disposeCurrentSceneTreeNode =
     (
-      ~store=TestTool.buildAppStateSceneGraphFromEngine(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorLeftHeader.Method.disposeCurrentSceneTreeNode(
-    (store, dispatchFunc |> Obj.magic),
+    (uiState, dispatchFunc |> Obj.magic),
+    (),
+    (),
+  );
+
+let cloneCurrentSceneTreeNode =
+    (
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorLeftHeader.Method.cloneCurrentSceneTreeNode(
+    (uiState, dispatchFunc |> Obj.magic),
     (),
     (),
   );

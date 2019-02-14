@@ -3,17 +3,22 @@ module CustomEventHandler = {
 
   type prepareTuple = unit;
   type dataTuple = (
-    Wonderjs.GameObjectType.gameObject,
-    Wonderjs.GameObjectType.gameObject,
+    Wonderjs.GameObjectPrimitiveType.gameObject,
+    Wonderjs.GameObjectPrimitiveType.gameObject,
+    SceneTreeNodeType.sceneTreeDragType,
   );
   type return = unit;
 
   let handleSelfLogic =
-      ((store, dispatchFunc), (), (targetGameObjectUid, wdbGameObjectUid)) =>
+      (
+        (uiState, dispatchFunc),
+        (),
+        (targetGameObject, wdbGameObject, dragPosition),
+      ) =>
     DragWDBEventHandlerUtils.handleSelfLogic(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (),
-      (targetGameObjectUid, wdbGameObjectUid),
+      (targetGameObject, wdbGameObject, dragPosition),
     );
 };
 

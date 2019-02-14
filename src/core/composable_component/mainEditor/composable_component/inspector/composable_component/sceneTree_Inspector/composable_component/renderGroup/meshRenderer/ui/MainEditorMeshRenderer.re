@@ -2,7 +2,7 @@ open Wonderjs;
 
 type state = {
   drawMode: Js.Typed_array.Uint8Array.elt,
-  meshRenderer: GameObjectType.gameObject,
+  meshRenderer: GameObjectPrimitiveType.gameObject,
 };
 
 type action =
@@ -14,12 +14,12 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("MainEditorMeshRenderer");
 
-let reducer = ((store, dispatchFunc), action, state) =>
+let reducer = ((uiState, dispatchFunc), action, state) =>
   switch (action) {
   | ChangeMode(value) =>
     ReasonReactUtils.updateWithSideEffects({...state, drawMode: value}, state =>
       Method.changeMode(
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         state.meshRenderer,
         state.drawMode,
       )
@@ -27,7 +27,7 @@ let reducer = ((store, dispatchFunc), action, state) =>
   };
 
 let render =
-    ((store, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    ((uiState, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article key="MainEditorMeshRenderer" className="wonder-mesh-renderer">
     <Select
       label="Draw mode"
@@ -37,13 +37,13 @@ let render =
     />
   </article>;
 
-let make = (~store, ~dispatchFunc, _children) => {
+let make = (~uiState, ~dispatchFunc, _children) => {
   ...component,
   initialState: () => {
     let engineState = StateEngineService.unsafeGetState();
     let meshRenderer =
       StateEditorService.getState()
-      |> SceneEditorService.unsafeGetCurrentSceneTreeNode
+      |> SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
       |. GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
            engineState,
          );
@@ -53,6 +53,6 @@ let make = (~store, ~dispatchFunc, _children) => {
         engineState |> MeshRendererEngineService.getDrawMode(meshRenderer),
     };
   },
-  reducer: reducer((store, dispatchFunc)),
-  render: self => render((store, dispatchFunc), self),
+  reducer: reducer((uiState, dispatchFunc)),
+  render: self => render((uiState, dispatchFunc), self),
 };

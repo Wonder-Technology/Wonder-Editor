@@ -1,290 +1,229 @@
-open AssetNodeType;
+open NodeAssetType;
 
-open AssetTreeNodeType;
-
-open CurrentNodeDataType;
+open ImageDataType;
 
 module Method = {
-  let _isSelected = (currentNodeData, nodeId) =>
-    switch (currentNodeData) {
-    | None => false
-    | Some({currentNodeId}) =>
-      TreeAssetEditorService.isIdEqual(nodeId, currentNodeId)
-    };
-
-  let _buildImageNodeObjectURLIfNoBase64 =
-      (assetTreeChildrenNodeArr, editorState) =>
-    assetTreeChildrenNodeArr
-    |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. editorState, {nodeId, type_}) =>
-           switch (type_) {
-           | Texture =>
-             let {image} =
-               editorState
-               |> TextureNodeMapAssetEditorService.getTextureNodeMap
-               |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
-
-             editorState
-             |> ImageNodeMapAssetEditorService.getImageNodeMap
-             |> WonderCommonlib.SparseMapService.unsafeGet(image)
-             |> (
-               ({base64, uint8Array, blobObjectURL, mimeType} as result) =>
-                 switch (blobObjectURL) {
-                 | Some(_) => editorState
-                 | None =>
-                   switch (base64) {
-                   | Some(_) => editorState
-                   | None =>
-                     switch (uint8Array) {
-                     | None =>
-                       ConsoleUtils.error(
-                         "_buildImageNodeObjectURLIfNoBase64:image->uint8Array should exist",
-                         editorState,
-                       );
-
-                       editorState;
-                     | Some(uint8Array) =>
-                       ImageNodeMapAssetEditorService.setResult(
-                         image,
-                         {
-                           ...result,
-                           blobObjectURL:
-                             Some(
-                               Blob.newBlobFromArrayBuffer(
-                                 uint8Array,
-                                 mimeType,
-                               )
-                               |> Blob.createObjectURL,
-                             ),
-                         },
-                         editorState,
-                       )
-                     }
-                   }
-                 }
-             );
-           | _ => editorState
-           },
-         editorState,
+  let _isSelected = (currentNodeId, nodeId) =>
+    currentNodeId
+    |> OptionService.andThenWithDefault(
+         currentNodeId => NodeAssetService.isIdEqual(nodeId, currentNodeId),
+         false,
        );
 
-  let _getNodeNameByType = ({nodeId, type_}, (editorState, engineState)) =>
-    switch (type_) {
-    | Folder =>
-      let {name}: folderResultType =
-        editorState
-        |> FolderNodeMapAssetEditorService.getFolderNodeMap
-        |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
-
-      name;
-    | WDB =>
-      let {name}: wdbResultType =
-        editorState
-        |> WDBNodeMapAssetEditorService.getWDBNodeMap
-        |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
-
-      name;
-    | Material =>
-      let baseName =
-        MaterialNodeMapAssetLogicService.getMaterialBaseName(
-          nodeId,
-          engineState,
-          editorState |> MaterialNodeMapAssetEditorService.getMaterialNodeMap,
-        );
-
-      baseName;
-    | Texture =>
-      let {textureComponent} =
-        editorState
-        |> TextureNodeMapAssetEditorService.getTextureNodeMap
-        |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
-
-      BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
-        textureComponent,
-        engineState,
+  let _build = (imageDataIndex, editorState) => {
+    let {base64, uint8Array, blobObjectURL, mimeType} as data =
+      ImageDataMapAssetEditorService.unsafeGetData(
+        imageDataIndex,
+        editorState,
       );
-    };
 
-  let _sortByName = (assetTreeChildrenNodeArr, (editorState, engineState)) =>
+    blobObjectURL
+    |> OptionService.either(
+         (editorState, _) => editorState |> Result.SameDataResult.success,
+         editorState =>
+           base64
+           |> OptionService.either(
+                (editorState, _) =>
+                  editorState |> Result.SameDataResult.success,
+                editorState =>
+                  uint8Array
+                  |> OptionService.either(
+                       (editorState, _) =>
+                         ImageDataMapAssetEditorService.setData(
+                           imageDataIndex,
+                           {
+                             ...data,
+                             blobObjectURL:
+                               Some(
+                                 Blob.newBlobFromArrayBuffer(
+                                   uint8Array,
+                                   mimeType,
+                                 )
+                                 |> Blob.createObjectURL,
+                               ),
+                           },
+                           editorState,
+                         )
+                         |> Result.SameDataResult.success,
+                       editorState =>
+                         ("image->uint8Array should exist", editorState)
+                         |> Result.SameDataResult.fail,
+                       editorState,
+                     ),
+                editorState,
+              ),
+         editorState,
+       );
+  };
+
+  let _buildImageDataObjectURLIfNoBase64 = editorState =>
+    TextureNodeAssetEditorService.findAllTextureNodes(editorState)
+    |> Js.Array.map(textureNode =>
+         TextureNodeAssetService.getNodeData(textureNode).imageDataIndex
+       )
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. editorState, imageDataIndex) =>
+           editorState
+           |> Result.SameDataResult.either(_build(imageDataIndex)),
+         editorState |> Result.SameDataResult.success,
+       );
+
+  let _sortByName = (assetTreeChildrenNodeArr, engineState) =>
     assetTreeChildrenNodeArr
     |> Js.Array.sortInPlaceWith((node1, node2) =>
          Js.String.localeCompare(
-           _getNodeNameByType(node2, (editorState, engineState))
+           NodeNameAssetLogicService.getNodeName(node2, engineState)
            |> Js.String.charAt(0),
-           _getNodeNameByType(node1, (editorState, engineState))
+           NodeNameAssetLogicService.getNodeName(node1, engineState)
            |> Js.String.charAt(0),
          )
          |> NumberType.convertFloatToInt
        );
 
-  let sortAssetTreeChildrenNode =
-      (assetTreeChildrenNodeArr, (editorState, engineState)) => {
+  let sortAssetTreeChildrenNode = (assetTreeChildrenNodeArr, engineState) => {
     let folderAssetTreeChildrenNodeArr =
       assetTreeChildrenNodeArr
-      |> Js.Array.filter(({type_}) => type_ === Folder);
+      |> Js.Array.filter(node => node |> FolderNodeAssetService.isFolderNode);
 
     let wdbAssetTreeChildrenNodeArr =
-      assetTreeChildrenNodeArr |> Js.Array.filter(({type_}) => type_ === WDB);
+      assetTreeChildrenNodeArr
+      |> Js.Array.filter(node => node |> WDBNodeAssetService.isWDBNode);
 
     let materialAssetTreeChildrenNodeArr =
       assetTreeChildrenNodeArr
-      |> Js.Array.filter(({type_}) => type_ === Material);
+      |> Js.Array.filter(node =>
+           node |> MaterialNodeAssetService.isMaterialNode
+         );
 
     let textureAssetTreeChildrenNodeArr =
       assetTreeChildrenNodeArr
-      |> Js.Array.filter(({type_}) => type_ === Texture);
+      |> Js.Array.filter(node => node |> TextureNodeAssetService.isTextureNode);
 
-    ArrayService.fastConcat(
-      _sortByName(
-        folderAssetTreeChildrenNodeArr,
-        (editorState, engineState),
-      ),
-      _sortByName(wdbAssetTreeChildrenNodeArr, (editorState, engineState)),
-    )
-    |> ArrayService.fastConcat(
-         _,
-         _sortByName(
-           materialAssetTreeChildrenNodeArr,
-           (editorState, engineState),
-         ),
-       )
-    |> ArrayService.fastConcat(
-         _,
-         _sortByName(
-           textureAssetTreeChildrenNodeArr,
-           (editorState, engineState),
-         ),
-       );
+    ArrayService.fastConcatArrays([|
+      _sortByName(folderAssetTreeChildrenNodeArr, engineState),
+      _sortByName(wdbAssetTreeChildrenNodeArr, engineState),
+      _sortByName(materialAssetTreeChildrenNodeArr, engineState),
+      _sortByName(textureAssetTreeChildrenNodeArr, engineState),
+    |]);
   };
 
   let showSpecificTreeNodeChildren =
       (
-        assetTreeChildrenNodeArr,
-        (store, dispatchFunc),
-        (dragImg, debounceTime, currentNodeData),
-        (editorState, engineState),
+        (uiState, dispatchFunc),
+        (dragImg, debounceTime, currentNodeId),
+        engineState,
+        editorState,
       ) => {
+    let widget = AssetWidgetService.getWidget();
+
     let result =
-      assetTreeChildrenNodeArr
-      |> sortAssetTreeChildrenNode(_, (editorState, engineState))
-      |> Js.Array.map(({nodeId, type_}) =>
-           switch (type_) {
-           | Folder =>
-             let {name}: folderResultType =
-               editorState
-               |> FolderNodeMapAssetEditorService.getFolderNodeMap
-               |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+      editorState
+      |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree
+      |> FolderNodeAssetService.getChildrenNodes
+      |> sortAssetTreeChildrenNode(_, engineState)
+      |> ArrayService.traverseSameDataResultAndCollectByApply(node => {
+           let nodeId = NodeAssetService.getNodeId(~node);
+           let key = StringService.intToString(nodeId);
+           let isSelected = _isSelected(currentNodeId, nodeId);
 
-             <FolderBox
-               key=(StringService.intToString(nodeId))
-               store
-               dispatchFunc
-               dragImg
-               effectAllowd="move"
-               imgSrc="./public/img/assetPackage.png"
-               folderId=nodeId
-               fileType=type_
-               name
-               isSelected=(_isSelected(currentNodeData, nodeId))
-               widget=(AssetUtils.getWidget())
-               debounceTime
-               onDrop=(
-                 AssetDragNodeToFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-                   (store, dispatchFunc),
-                   (),
-                 )
-               )
-               isWidget=AssetUtils.isWidget
-               handleRelationError=AssetTreeUtils.isTreeNodeRelationError
-             />;
-           | Texture =>
-             let {textureComponent, image} =
-               editorState
-               |> TextureNodeMapAssetEditorService.getTextureNodeMap
-               |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+           NodeAssetService.handleNode(
+             ~node,
+             ~textureNodeFunc=
+               (nodeId, {textureComponent, imageDataIndex}) => {
+                 let effectAllowd = "move";
+                 let fileName =
+                   NodeNameAssetLogicService.getTextureNodeName(
+                     ~texture=textureComponent,
+                     ~engineState,
+                   );
 
-             <FileBox
-               key=(StringService.intToString(nodeId))
-               store
-               dispatchFunc
-               dragImg
-               effectAllowd="move"
-               imgSrc=(
-                 editorState
-                 |> ImageNodeMapAssetEditorService.getImageNodeMap
-                 |> WonderCommonlib.SparseMapService.unsafeGet(image)
-                 |> (
-                   ({blobObjectURL, base64, mimeType}) =>
-                     switch (blobObjectURL) {
-                     | Some(blobObjectURL) => blobObjectURL
-                     | None =>
-                       switch (base64) {
-                       | Some(base64) => base64
-                       | None =>
-                         ConsoleUtils.error(
-                           "texture->source should has base64 or blobObjectURL data, but acutally not has",
-                           editorState,
-                         );
+                 ImageDataMapUtils.getImgSrc(imageDataIndex, editorState)
+                 |> Result.SameDataResult.either(imgSrc =>
+                      <FileBox
+                        key
+                        uiState
+                        dispatchFunc
+                        dragImg
+                        effectAllowd
+                        imgSrc
+                        nodeId
+                        fileName
+                        widget
+                        isSelected
+                      />
+                      |> Result.SameDataResult.success
+                    );
+               },
+             ~materialNodeFunc=
+               (nodeId, {materialComponent, type_}) => {
+                 let fileName =
+                   NodeNameAssetLogicService.getMaterialNodeName(
+                     ~material=materialComponent,
+                     ~type_,
+                     ~engineState,
+                   );
 
-                         ImageUtils.getNullImageSrc();
-                       }
-                     }
-                 )
-               )
-               fileId=nodeId
-               fileType=type_
-               fileName=(
-                 BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
-                   textureComponent,
-                   engineState,
-                 )
-               )
-               widget=(AssetUtils.getWidget())
-               isSelected=(_isSelected(currentNodeData, nodeId))
-             />;
-           | Material =>
-             let baseName =
-               MaterialNodeMapAssetLogicService.getMaterialBaseName(
-                 nodeId,
-                 engineState,
-                 editorState
-                 |> MaterialNodeMapAssetEditorService.getMaterialNodeMap,
-               );
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc="./public/img/mat.png"
+                   nodeId
+                   fileName
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success;
+               },
+             ~wdbNodeFunc=
+               (nodeId, nodeData) => {
+                 let fileName = WDBNodeAssetService.getNodeName(nodeData);
 
-             <FileBox
-               key=(StringService.intToString(nodeId))
-               store
-               dispatchFunc
-               dragImg
-               effectAllowd="move"
-               imgSrc="./public/img/mat.png"
-               fileId=nodeId
-               fileType=type_
-               fileName=baseName
-               widget=(AssetUtils.getWidget())
-               isSelected=(_isSelected(currentNodeData, nodeId))
-             />;
-           | WDB =>
-             let {name}: wdbResultType =
-               editorState
-               |> WDBNodeMapAssetEditorService.getWDBNodeMap
-               |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   effectAllowd="copyMove"
+                   dragImg
+                   imgSrc="./public/img/wdb.png"
+                   nodeId
+                   fileName
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success;
+               },
+             ~folderNodeFunc=
+               (nodeId, nodeData, children) => {
+                 let name = FolderNodeAssetService.getNodeName(nodeData);
 
-             <FileBox
-               key=(StringService.intToString(nodeId))
-               store
-               dispatchFunc
-               effectAllowd="copyMove"
-               dragImg
-               imgSrc="./public/img/wdb.png"
-               fileId=nodeId
-               fileType=type_
-               fileName=name
-               widget=(AssetUtils.getWidget())
-               isSelected=(_isSelected(currentNodeData, nodeId))
-             />;
-           }
-         );
+                 <FolderBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc="./public/img/assetPackage.png"
+                   folderId=nodeId
+                   name
+                   isSelected
+                   widget
+                   debounceTime
+                   onDrop=(
+                     AssetDragNodeToFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+                       (uiState, dispatchFunc),
+                       (),
+                     )
+                   )
+                   isWidget=AssetWidgetService.isWidget
+                   checkNodeRelation=OperateTreeAssetLogicService.checkNodeRelation
+                 />
+                 |> Result.SameDataResult.success;
+               },
+           );
+         });
 
     engineState |> StateEngineService.setState |> ignore;
     editorState |> StateEditorService.setState |> ignore;
@@ -293,49 +232,35 @@ module Method = {
   };
 
   let buildCurrentTreeNodeChildrenComponent =
-      ((store, dispatchFunc), dragImg, debounceTime) => {
+      ((uiState, dispatchFunc), dragImg, debounceTime) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
-    let assetTreeChildrenNodeArr =
-      editorState
-      |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
-      |> TreeAssetEditorService.getSpecificTreeNodeById(
-           editorState |> AssetTreeUtils.getTargetTreeNodeId,
-         )
-      |> OptionService.unsafeGet
-      |> (currentParentNode => currentParentNode.children);
-
-    let editorState =
-      _buildImageNodeObjectURLIfNoBase64(
-        assetTreeChildrenNodeArr,
-        editorState,
-      );
-
-    let result =
-      showSpecificTreeNodeChildren(
-        assetTreeChildrenNodeArr,
-        (store, dispatchFunc),
-        (
-          dragImg,
-          debounceTime,
-          editorState |> CurrentNodeDataAssetEditorService.getCurrentNodeData,
-        ),
-        (editorState, engineState),
-      );
-
-    result;
+    editorState
+    |> _buildImageDataObjectURLIfNoBase64
+    |> Result.SameDataResult.either(
+         showSpecificTreeNodeChildren(
+           (uiState, dispatchFunc),
+           (
+             dragImg,
+             debounceTime,
+             editorState |> CurrentNodeIdAssetEditorService.getCurrentNodeId,
+           ),
+           engineState,
+         ),
+       )
+    |> ResultUtils.handleError;
   };
 };
 
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
-let render = ((store, dispatchFunc), dragImg, debounceTime, _self) =>
+let render = ((uiState, dispatchFunc), dragImg, debounceTime, _self) =>
   <article key="assetChildrenNode" className="wonder-asset-assetChildren">
     (
       ReasonReact.array(
         Method.buildCurrentTreeNodeChildrenComponent(
-          (store, dispatchFunc),
+          (uiState, dispatchFunc),
           dragImg,
           debounceTime,
         ),
@@ -343,7 +268,7 @@ let render = ((store, dispatchFunc), dragImg, debounceTime, _self) =>
     )
   </article>;
 
-let make = (~store, ~dispatchFunc, ~dragImg, ~debounceTime, _children) => {
+let make = (~uiState, ~dispatchFunc, ~dragImg, ~debounceTime, _children) => {
   ...component,
-  render: self => render((store, dispatchFunc), dragImg, debounceTime, self),
+  render: self => render((uiState, dispatchFunc), dragImg, debounceTime, self),
 };

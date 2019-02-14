@@ -61,7 +61,12 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
         <li>
           <div
             className="item-triangle"
-          />
+            onMouseDown={[Function]}
+          >
+            <img
+              src="./public/img/down.png"
+            />
+          </div>
           <img
             className="treeNode-icon"
             src="./public/img/package.png"
@@ -172,7 +177,12 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
         <li>
           <div
             className="item-triangle"
-          />
+            onMouseDown={[Function]}
+          >
+            <img
+              src="./public/img/down.png"
+            />
+          </div>
           <img
             className="treeNode-icon"
             src="./public/img/package.png"
@@ -303,7 +313,12 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
         <li>
           <div
             className="item-triangle"
-          />
+            onMouseDown={[Function]}
+          >
+            <img
+              src="./public/img/down.png"
+            />
+          </div>
           <img
             className="treeNode-icon"
             src="./public/img/package.png"
@@ -434,7 +449,12 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
         <li>
           <div
             className="item-triangle"
-          />
+            onMouseDown={[Function]}
+          >
+            <img
+              src="./public/img/down.png"
+            />
+          </div>
           <img
             className="treeNode-icon"
             src="./public/img/package.png"

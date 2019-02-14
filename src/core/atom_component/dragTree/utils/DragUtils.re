@@ -1,8 +1,8 @@
 let getDragedId = e : int =>
-  JsTypeHelper.convertStringToInt(e##dataTransfer##getData("dragedId"));
+  JsTypeHelper.convertStringToInt(e##dataTransfer##getData("draggedId"));
 
-let setDragedId = (dragedId, e) : unit =>
-  e##dataTransfer##setData("dragedId", dragedId);
+let setDragedId = (draggedId, e) : unit =>
+  e##dataTransfer##setData("draggedId", draggedId);
 
 let setDataTransferEffectAllowed = (effectAllowed, e) : unit => e##dataTransfer##effectAllowed#=effectAllowed;
 

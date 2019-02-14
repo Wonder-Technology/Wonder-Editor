@@ -17,7 +17,7 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
-    let directionPointLightsAndBoxWDBArrayBuffer = ref(Obj.magic(1));
+    let directionPointLightsAndCubeWDBArrayBuffer = ref(Obj.magic(1));
 
     let _prepareFakeCanvas = () =>
       ImportPackageTool.prepareFakeCanvas(sandbox);
@@ -25,8 +25,8 @@ let _ =
     beforeAll(() => {
       boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
 
-      directionPointLightsAndBoxWDBArrayBuffer :=
-        WDBTool.generateDirectionPointLightsAndBoxWDB();
+      directionPointLightsAndCubeWDBArrayBuffer :=
+        WDBTool.generateDirectionPointLightsAndCubeWDB();
     });
 
     beforeEach(() => {
@@ -104,7 +104,9 @@ let _ =
                        () => {
                          let engineState = StateEngineService.unsafeGetState();
 
-                         LoadWDBTool.getBoxTexturedMeshGameObject(engineState)
+                         LoadWDBTool.getBoxTexturedMeshGameObject(
+                           engineState,
+                         )
                          |> GameObjectTool.setCurrentSceneTreeNode;
 
                          MainEditorSceneTreeTool.Select.selectGameObject(
@@ -116,7 +118,7 @@ let _ =
                          let component =
                            BuildComponentTool.buildGeometry(
                              ~geometryComponent=
-                               GameObjectTool.getCurrentGameObjectGeometry(),
+                               GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                              ~isShowGeometryGroup=true,
                              (),
                            );
@@ -176,8 +178,8 @@ let _ =
               let (engineState, lightMaterial) =
                 LightMaterialEngineService.create(engineState);
 
-              let (editorState, engineState, box1) =
-                PrimitiveEngineService.createCube(
+              let (editorState, engineState, cube1) =
+                PrimitiveLogicService.createCube(
                   (geometry, lightMaterial),
                   editorState,
                   engineState,
@@ -190,8 +192,8 @@ let _ =
               let (engineState, lightMaterial) =
                 LightMaterialEngineService.create(engineState);
 
-              let (editorState, engineState, box2) =
-                PrimitiveEngineService.createCube(
+              let (editorState, engineState, cube2) =
+                PrimitiveLogicService.createCube(
                   (defaultCubeGeometryComponent, lightMaterial),
                   editorState,
                   engineState,
@@ -202,8 +204,14 @@ let _ =
 
               let engineState =
                 engineState
-                |> GameObjectUtils.addChild(rootGameObject, box1)
-                |> GameObjectUtils.addChild(rootGameObject, box2);
+                |> HierarchyGameObjectEngineService.addChild(
+                     rootGameObject,
+                     cube1,
+                   )
+                |> HierarchyGameObjectEngineService.addChild(
+                     rootGameObject,
+                     cube2,
+                   );
 
               (rootGameObject, (editorState, engineState));
             });
@@ -366,14 +374,11 @@ let _ =
           ~sandbox,
           ~isBuildFakeDom=false,
           ~noWorkerJobRecord=
-            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
+            NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(),
           (),
         );
 
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
-        );
+        MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
         DirectorToolEngine.prepareAndInitAllEnginState();
 
@@ -386,9 +391,7 @@ let _ =
         ImportPackageTool.testImportPackage(
           ~testFunc=
             () =>
-              BuildComponentTool.buildSceneTree(
-                TestTool.buildAppStateSceneGraphFromEngine(),
-              )
+              BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
               |> ReactTestTool.createSnapshotAndMatch
               |> resolve,
           (),
@@ -405,7 +408,7 @@ let _ =
 
             let engineState = StateEngineService.unsafeGetState();
 
-            let gameObject = MainEditorSceneTool.getFirstBox(engineState);
+            let gameObject = MainEditorSceneTool.getFirstCube(engineState);
 
             let sourceMaterial =
               GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
@@ -413,16 +416,17 @@ let _ =
                 engineState,
               );
 
-            let {materialComponent}: AssetNodeType.materialResultType =
-              StateEditorService.getState()
-              |> MaterialNodeMapAssetEditorService.unsafeGetResult(
-                   addedMaterialNodeId,
-                 );
+            let materialComponent =
+              MainEditorAssetMaterialNodeTool.getMaterialComponent(
+                ~nodeId=addedMaterialNodeId,
+                (),
+              );
+
             MainEditorMaterialTool.changeMaterial(
               ~sourceMaterial,
-              ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+              ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
               ~targetMaterial=materialComponent,
-              ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+              ~targetMaterialType=MaterialDataAssetType.LightMaterial,
               ~gameObject,
               ~materialNodeId=Some(addedMaterialNodeId),
               (),
@@ -434,7 +438,7 @@ let _ =
                   let engineState = StateEngineService.unsafeGetState();
 
                   MainEditorSceneTreeTool.Select.selectGameObject(
-                    ~gameObject=MainEditorSceneTool.getFirstBox(engineState),
+                    ~gameObject=MainEditorSceneTool.getFirstCube(engineState),
                     (),
                   );
 
@@ -462,7 +466,8 @@ let _ =
                   let engineState = StateEngineService.unsafeGetState();
 
                   MainEditorSceneTreeTool.Select.selectGameObject(
-                    ~gameObject=MainEditorSceneTool.getSecondBox(engineState),
+                    ~gameObject=
+                      MainEditorSceneTool.getSecondCube(engineState),
                     (),
                   );
 
@@ -487,7 +492,7 @@ let _ =
 
             let engineState = StateEngineService.unsafeGetState();
 
-            let gameObject = MainEditorSceneTool.getFirstBox(engineState);
+            let gameObject = MainEditorSceneTool.getFirstCube(engineState);
 
             let sourceMaterial =
               GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
@@ -495,17 +500,17 @@ let _ =
                 engineState,
               );
 
-            let {materialComponent}: AssetNodeType.materialResultType =
-              StateEditorService.getState()
-              |> MaterialNodeMapAssetEditorService.unsafeGetResult(
-                   addedMaterialNodeId,
-                 );
+            let materialComponent =
+              MainEditorAssetMaterialNodeTool.getMaterialComponent(
+                ~nodeId=addedMaterialNodeId,
+                (),
+              );
 
             MainEditorMaterialTool.changeMaterial(
               ~sourceMaterial,
-              ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+              ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
               ~targetMaterial=materialComponent,
-              ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+              ~targetMaterialType=MaterialDataAssetType.LightMaterial,
               ~gameObject,
               ~materialNodeId=Some(addedMaterialNodeId),
               (),
@@ -520,7 +525,7 @@ let _ =
                     ImportPackageTool.getFirstImportedMaterialAssetData();
 
                   let gameObject =
-                    MainEditorSceneTool.getSecondBox(engineState);
+                    MainEditorSceneTool.getSecondCube(engineState);
 
                   let sourceMaterial =
                     GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
@@ -530,9 +535,9 @@ let _ =
 
                   MainEditorMaterialTool.changeMaterial(
                     ~sourceMaterial,
-                    ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                    ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                     ~targetMaterial=materialComponent,
-                    ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                    ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                     ~gameObject,
                     ~materialNodeId=Some(materialNodeId),
                     (),
@@ -617,7 +622,7 @@ let _ =
                      let engineState = StateEngineService.unsafeGetState();
 
                      let gameObject1 =
-                       MainEditorSceneTool.getFirstBox(engineState);
+                       MainEditorSceneTool.getFirstCube(engineState);
 
                      let sourceMaterial1 =
                        GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
@@ -627,9 +632,9 @@ let _ =
 
                      MainEditorMaterialTool.changeMaterial(
                        ~sourceMaterial=sourceMaterial1,
-                       ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                       ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                        ~targetMaterial=material1,
-                       ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                       ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                        ~gameObject=gameObject1,
                        ~materialNodeId=Some(addedMaterialNodeId1),
                        (),
@@ -641,7 +646,7 @@ let _ =
                            let engineState =
                              StateEngineService.unsafeGetState();
                            let gameObject1 =
-                             MainEditorSceneTool.getFirstBox(engineState);
+                             MainEditorSceneTool.getFirstCube(engineState);
 
                            [|
                              GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
@@ -723,7 +728,7 @@ let _ =
                             StateEngineService.unsafeGetState();
 
                           let gameObject1 =
-                            MainEditorSceneTool.getFirstBox(engineState);
+                            MainEditorSceneTool.getFirstCube(engineState);
 
                           let sourceMaterial1 =
                             GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
@@ -733,16 +738,16 @@ let _ =
 
                           MainEditorMaterialTool.changeMaterial(
                             ~sourceMaterial=sourceMaterial1,
-                            ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                            ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                             ~targetMaterial=material1,
-                            ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                            ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                             ~gameObject=gameObject1,
                             ~materialNodeId=Some(addedMaterialNodeId1),
                             (),
                           );
 
                           let gameObject2 =
-                            MainEditorSceneTool.getSecondBox(engineState);
+                            MainEditorSceneTool.getSecondCube(engineState);
 
                           let sourceMaterial2 =
                             GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
@@ -752,9 +757,9 @@ let _ =
 
                           MainEditorMaterialTool.changeMaterial(
                             ~sourceMaterial=sourceMaterial2,
-                            ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                            ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                             ~targetMaterial=material2,
-                            ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                            ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                             ~gameObject=gameObject2,
                             ~materialNodeId=Some(addedMaterialNodeId2),
                             (),
@@ -767,11 +772,11 @@ let _ =
                                   StateEngineService.unsafeGetState();
 
                                 let gameObject1 =
-                                  MainEditorSceneTool.getFirstBox(
+                                  MainEditorSceneTool.getFirstCube(
                                     engineState,
                                   );
                                 let gameObject2 =
-                                  MainEditorSceneTool.getSecondBox(
+                                  MainEditorSceneTool.getSecondCube(
                                     engineState,
                                   );
 
@@ -835,8 +840,8 @@ let _ =
 
                 MaterialInspectorTool.changeMaterialType(
                   ~material=material2,
-                  ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
-                  ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
+                  ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
+                  ~targetMaterialType=MaterialDataAssetType.BasicMaterial,
                   ~materialNodeId=addedMaterialNodeId2,
                   (),
                 );
@@ -862,7 +867,7 @@ let _ =
                      let engineState = StateEngineService.unsafeGetState();
 
                      let gameObject1 =
-                       MainEditorSceneTool.getFirstBox(engineState);
+                       MainEditorSceneTool.getFirstCube(engineState);
 
                      let sourceMaterial1 =
                        GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
@@ -872,16 +877,16 @@ let _ =
 
                      MainEditorMaterialTool.changeMaterial(
                        ~sourceMaterial=sourceMaterial1,
-                       ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                       ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                        ~targetMaterial=material1,
-                       ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                       ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                        ~gameObject=gameObject1,
                        ~materialNodeId=Some(addedMaterialNodeId1),
                        (),
                      );
 
                      let gameObject2 =
-                       MainEditorSceneTool.getSecondBox(engineState);
+                       MainEditorSceneTool.getSecondCube(engineState);
 
                      let sourceMaterial2 =
                        GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
@@ -891,9 +896,9 @@ let _ =
 
                      MainEditorMaterialTool.changeMaterial(
                        ~sourceMaterial=sourceMaterial2,
-                       ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                       ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                        ~targetMaterial=material2,
-                       ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
+                       ~targetMaterialType=MaterialDataAssetType.BasicMaterial,
                        ~gameObject=gameObject2,
                        ~materialNodeId=Some(addedMaterialNodeId2),
                        (),
@@ -906,9 +911,9 @@ let _ =
                              StateEngineService.unsafeGetState();
 
                            let gameObject1 =
-                             MainEditorSceneTool.getFirstBox(engineState);
+                             MainEditorSceneTool.getFirstCube(engineState);
                            let gameObject2 =
-                             MainEditorSceneTool.getSecondBox(engineState);
+                             MainEditorSceneTool.getSecondCube(engineState);
 
                            (
                              [|
@@ -968,7 +973,7 @@ let _ =
 
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
 
         DirectorToolEngine.prepareAndInitAllEnginState();
@@ -989,7 +994,7 @@ let _ =
             () => {
               let engineState = StateEngineService.unsafeGetState();
 
-              MainEditorSceneTool.getFirstBox(engineState)
+              MainEditorSceneTool.getFirstCube(engineState)
               |> GameObjectTool.setCurrentSceneTreeNode;
 
               MainEditorSceneTreeTool.Select.selectGameObject(
@@ -1000,7 +1005,7 @@ let _ =
               let component =
                 BuildComponentTool.buildGeometry(
                   ~geometryComponent=
-                    GameObjectTool.getCurrentGameObjectGeometry(),
+                    GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                   ~isShowGeometryGroup=true,
                   (),
                 );
@@ -1015,9 +1020,9 @@ let _ =
         beforeEach(() => _prepareFakeCanvas() |> ignore);
 
         describe("relate wdb asset gameObjects with default geometrys", () => {
-          let boxWDBArrayBuffer = ref(Obj.magic(1));
+          let cubeWDBArrayBuffer = ref(Obj.magic(1));
 
-          let _generateBoxWDB = () =>
+          let _generateCubeWDB = () =>
             WDBTool.generateWDB((editorState, engineState) => {
               let geometry =
                 GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
@@ -1027,8 +1032,8 @@ let _ =
               let (engineState, lightMaterial) =
                 LightMaterialEngineService.create(engineState);
 
-              let (editorState, engineState, box1) =
-                PrimitiveEngineService.createCube(
+              let (editorState, engineState, cube1) =
+                PrimitiveLogicService.createCube(
                   (geometry, lightMaterial),
                   editorState,
                   engineState,
@@ -1038,16 +1043,20 @@ let _ =
                 GameObjectEngineService.create(engineState);
 
               let engineState =
-                engineState |> GameObjectUtils.addChild(rootGameObject, box1);
+                engineState
+                |> HierarchyGameObjectEngineService.addChild(
+                     rootGameObject,
+                     cube1,
+                   );
 
               (rootGameObject, (editorState, engineState));
             });
 
-          beforeAll(() => boxWDBArrayBuffer := _generateBoxWDB());
+          beforeAll(() => cubeWDBArrayBuffer := _generateCubeWDB());
 
           testPromise(
             {|
-               1.load box wdb asset w1(with default cube geometry);
+               1.load cube wdb asset w1(with default cube geometry);
                2.export;
                3.import;
                4.drag w1 to scene tree to be gameObject g1;
@@ -1057,15 +1066,15 @@ let _ =
                |},
             () =>
             MainEditorAssetUploadTool.loadOneWDB(
-              ~arrayBuffer=boxWDBArrayBuffer^,
+              ~arrayBuffer=cubeWDBArrayBuffer^,
               (),
             )
             |> then_(uploadedWDBNodeId =>
                  ImportPackageTool.testImportPackage(
                    ~testFunc=
                      () => {
-                       let (wdbNodeId, _) =
-                         ImportPackageTool.getImportedWDBAssetData()
+                       let wdbNodeId =
+                         ImportPackageTool.getImportedWDBAssetNodeId()
                          |> ArrayService.unsafeGetFirst;
 
                        MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
@@ -1075,7 +1084,7 @@ let _ =
 
                        let engineState = StateEngineService.unsafeGetState();
 
-                       MainEditorSceneTool.getFirstBox(engineState)
+                       MainEditorSceneTool.getFirstCube(engineState)
                        |> GameObjectTool.setCurrentSceneTreeNode;
 
                        MainEditorSceneTreeTool.Select.selectGameObject(
@@ -1087,7 +1096,7 @@ let _ =
                        let component =
                          BuildComponentTool.buildGeometry(
                            ~geometryComponent=
-                             GameObjectTool.getCurrentGameObjectGeometry(),
+                             GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                            ~isShowGeometryGroup=true,
                            (),
                          );
@@ -1103,34 +1112,34 @@ let _ =
 
           describe(
             {|
-               1.load box wdb asset w1(with default cube geometry);
-               1.load box wdb asset w2(with default cube geometry);
-               2.export;
-               3.import;
-               4.drag w1 to scene tree to be gameObject g1;
-               5.drag w2 to scene tree to be gameObject g2;
-               |},
+                  1.load cube wdb asset w1(with default cube geometry);
+                  1.load cube wdb asset w2(with default cube geometry);
+                  2.export;
+                  3.import;
+                  4.drag w1 to scene tree to be gameObject g1;
+                  5.drag w2 to scene tree to be gameObject g2;
+                  |},
             () => {
               let _prepare = testFunc =>
                 MainEditorAssetUploadTool.loadOneWDB(
-                  ~arrayBuffer=boxWDBArrayBuffer^,
+                  ~arrayBuffer=cubeWDBArrayBuffer^,
                   (),
                 )
                 |> then_(uploadedWDBNodeId1 =>
                      MainEditorAssetUploadTool.loadOneWDB(
-                       ~arrayBuffer=boxWDBArrayBuffer^,
+                       ~arrayBuffer=cubeWDBArrayBuffer^,
                        (),
                      )
                      |> then_(uploadedWDBNodeId2 =>
                           ImportPackageTool.testImportPackage(
                             ~testFunc=
                               () => {
-                                let (wdbNodeId1, _) =
-                                  ImportPackageTool.getImportedWDBAssetData()
+                                let wdbNodeId1 =
+                                  ImportPackageTool.getImportedWDBAssetNodeId()
                                   |> ArrayService.unsafeGetFirst;
 
-                                let (wdbNodeId2, _) =
-                                  ImportPackageTool.getImportedWDBAssetData()
+                                let wdbNodeId2 =
+                                  ImportPackageTool.getImportedWDBAssetNodeId()
                                   |> ArrayService.unsafeGetNth(1);
 
                                 MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
@@ -1155,7 +1164,7 @@ let _ =
                 _prepare(() => {
                   let engineState = StateEngineService.unsafeGetState();
 
-                  MainEditorSceneTool.getFirstBox(engineState)
+                  MainEditorSceneTool.getFirstCube(engineState)
                   |> GameObjectTool.setCurrentSceneTreeNode;
 
                   MainEditorSceneTreeTool.Select.selectGameObject(
@@ -1166,7 +1175,7 @@ let _ =
                   let component =
                     BuildComponentTool.buildGeometry(
                       ~geometryComponent=
-                        GameObjectTool.getCurrentGameObjectGeometry(),
+                        GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                       ~isShowGeometryGroup=true,
                       (),
                     );
@@ -1180,7 +1189,7 @@ let _ =
                 _prepare(() => {
                   let engineState = StateEngineService.unsafeGetState();
 
-                  MainEditorSceneTool.getSecondBox(engineState)
+                  MainEditorSceneTool.getSecondCube(engineState)
                   |> GameObjectTool.setCurrentSceneTreeNode;
 
                   MainEditorSceneTreeTool.Select.selectGameObject(
@@ -1191,7 +1200,7 @@ let _ =
                   let component =
                     BuildComponentTool.buildGeometry(
                       ~geometryComponent=
-                        GameObjectTool.getCurrentGameObjectGeometry(),
+                        GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                       ~isShowGeometryGroup=true,
                       (),
                     );
@@ -1243,7 +1252,7 @@ let _ =
                           let component =
                             BuildComponentTool.buildGeometry(
                               ~geometryComponent=
-                                GameObjectTool.getCurrentGameObjectGeometry(),
+                                GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                               ~isShowGeometryGroup=true,
                               (),
                             );
@@ -1262,12 +1271,15 @@ let _ =
 
     describe("test import assets", () => {
       describe("test import material assets", () => {
-        beforeEach(() =>
+        beforeEach(() => {
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
-          )
-        );
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
+          );
+
+          EventListenerTool.buildFakeDom()
+          |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+        });
 
         testPromise("should add material assets to asset tree", () => {
           MainEditorAssetHeaderOperateNodeTool.addMaterial();
@@ -1295,7 +1307,7 @@ let _ =
 
             MainEditorSceneTool.createDefaultScene(
               sandbox,
-              MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+              MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
             );
 
             DirectorToolEngine.prepareAndInitAllEnginState();
@@ -1327,7 +1339,7 @@ let _ =
                     let engineState = StateEngineService.unsafeGetState();
 
                     let gameObject =
-                      MainEditorSceneTool.getFirstBox(engineState);
+                      MainEditorSceneTool.getFirstCube(engineState);
 
                     let sourceMaterial =
                       GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
@@ -1337,9 +1349,9 @@ let _ =
 
                     MainEditorMaterialTool.changeMaterial(
                       ~sourceMaterial,
-                      ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                      ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                       ~targetMaterial=materialComponent,
-                      ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                      ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                       ~gameObject,
                       ~materialNodeId=Some(materialNodeId),
                       (),
@@ -1352,16 +1364,16 @@ let _ =
 
                     MaterialInspectorTool.changeMaterialType(
                       ~material=materialComponent,
-                      ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
-                      ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
+                      ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
+                      ~targetMaterialType=MaterialDataAssetType.BasicMaterial,
                       ~materialNodeId,
                       (),
                     );
 
                     MaterialInspectorTool.changeMaterialType(
                       ~material=materialComponent,
-                      ~sourceMaterialType=AssetMaterialDataType.BasicMaterial,
-                      ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                      ~sourceMaterialType=MaterialDataAssetType.BasicMaterial,
+                      ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                       ~materialNodeId,
                       (),
                     );
@@ -1389,7 +1401,7 @@ let _ =
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           )
         );
 
@@ -1488,7 +1500,7 @@ let _ =
 
           /* MainEditorSceneTool.createDefaultScene(
                sandbox,
-               MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+               MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
              ); */
 
           MainEditorSceneTool.createDefaultComponents();
@@ -1527,7 +1539,9 @@ let _ =
                        let engineState = StateEngineService.unsafeGetState();
 
                        let material =
-                         LoadWDBTool.getBoxTexturedMeshGameObject(engineState)
+                         LoadWDBTool.getBoxTexturedMeshGameObject(
+                           engineState,
+                         )
                          |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                               _,
                               engineState,
@@ -1538,10 +1552,10 @@ let _ =
                            LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
                            editorState,
                          ),
-                         MaterialNodeMapAssetEditorService.getValidValues(
+                         MaterialNodeAssetEditorService.findAllMaterialNodes(
                            editorState,
                          )
-                         |> SparseMapService.length,
+                         |> Js.Array.length,
                        )
                        |> expect == (true, 1)
                        |> resolve;
@@ -1644,22 +1658,22 @@ let _ =
           let editorState = StateEditorService.getState();
           let engineState = StateEngineService.unsafeGetState();
           let (editorState, engineState, light1) =
-            PrimitiveEngineService.createDirectionLight(
+            PrimitiveLogicService.createDirectionLight(
               editorState,
               engineState,
             );
           let (editorState, engineState, light2) =
-            PrimitiveEngineService.createDirectionLight(
+            PrimitiveLogicService.createDirectionLight(
               editorState,
               engineState,
             );
           let (editorState, engineState, light3) =
-            PrimitiveEngineService.createDirectionLight(
+            PrimitiveLogicService.createDirectionLight(
               editorState,
               engineState,
             );
           let (editorState, engineState, light4) =
-            PrimitiveEngineService.createDirectionLight(
+            PrimitiveLogicService.createDirectionLight(
               editorState,
               engineState,
             );
@@ -1673,7 +1687,7 @@ let _ =
           engineState |> StateEngineService.setState |> ignore;
 
           MainEditorAssetUploadTool.loadOneWDB(
-            ~arrayBuffer=directionPointLightsAndBoxWDBArrayBuffer^,
+            ~arrayBuffer=directionPointLightsAndCubeWDBArrayBuffer^,
             (),
           )
           |> then_(uploadedWDBNodeId =>
@@ -1689,7 +1703,7 @@ let _ =
                        |> JobEngineService.execDisposeJob;
 
                      let (editorState, engineState, light5) =
-                       PrimitiveEngineService.createDirectionLight(
+                       PrimitiveLogicService.createDirectionLight(
                          editorState,
                          engineState,
                        );
@@ -1751,7 +1765,7 @@ let _ =
                  (),
                )
                |> then_(uploadedWDBNodeId => {
-                    let boxTextuedAndStoveWPKArrayBuffer =
+                    let cubeTextuedAndStoveWPKArrayBuffer =
                       ExportPackageTool.exportWPK();
 
                     MainEditorSceneTool.initState(
@@ -1769,7 +1783,7 @@ let _ =
                     ConsoleTool.notShowMessage();
 
                     ImportPackageTool.testImportPackageWithoutExport(
-                      ~wpkArrayBuffer=boxTextuedAndStoveWPKArrayBuffer,
+                      ~wpkArrayBuffer=cubeTextuedAndStoveWPKArrayBuffer,
                       ~testFunc=
                         () => {
                           let error =
@@ -1809,7 +1823,7 @@ let _ =
 
             MainEditorSceneTool.createDefaultScene(
               sandbox,
-              MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+              MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
             );
           });
 
@@ -1828,11 +1842,11 @@ let _ =
           g1->material->diffuseMap should be t1;
           |},
             () => {
-              let firstBox = GameObjectTool.unsafeGetCurrentSceneTreeNode();
-              let firstBoxName = "firstBox";
+              let firstCube = GameObjectTool.unsafeGetCurrentSceneTreeNode();
+              let firstCubeName = "firstCube";
               GameObjectEngineService.setGameObjectName(
-                firstBoxName,
-                firstBox,
+                firstCubeName,
+                firstCube,
               )
               |> StateLogicService.getAndSetEngineState;
 
@@ -1893,10 +1907,10 @@ let _ =
 
                    MainEditorMaterialTool.changeMaterial(
                      ~sourceMaterial=
-                       GameObjectTool.getCurrentGameObjectLightMaterial(),
-                     ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                       GameObjectTool.getCurrentSceneTreeNodeLightMaterial(),
+                     ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                      ~targetMaterial=materialComponent1,
-                     ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                     ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                      ~gameObject=
                        GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                      ~materialNodeId=Some(addedMaterialNodeId1),
@@ -1911,15 +1925,15 @@ let _ =
                        () => {
                          let engineState = StateEngineService.unsafeGetState();
 
-                         let firstBox =
+                         let firstCube =
                            SceneToolEngine.findGameObjectByName(
-                             firstBoxName,
+                             firstCubeName,
                              engineState,
                            )
                            |> ArrayService.unsafeGetFirst;
 
-                         let firstBoxMaterial =
-                           firstBox
+                         let firstCubeMaterial =
+                           firstCube
                            |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                                 _,
                                 engineState,
@@ -1927,12 +1941,12 @@ let _ =
 
                          (
                            error^ |> getCallCount,
-                           firstBoxMaterial
+                           firstCubeMaterial
                            |> LightMaterialEngineService.unsafeGetLightMaterialName(
                                 _,
                                 engineState,
                               ),
-                           firstBoxMaterial
+                           firstCubeMaterial
                            |> LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
                                 _,
                                 engineState,
@@ -1970,11 +1984,11 @@ let _ =
           g1->material->diffuseMap should be t1;
           |},
             () => {
-              let firstBox = GameObjectTool.unsafeGetCurrentSceneTreeNode();
-              let firstBoxName = "firstBox";
+              let firstCube = GameObjectTool.unsafeGetCurrentSceneTreeNode();
+              let firstCubeName = "firstCube";
               GameObjectEngineService.setGameObjectName(
-                firstBoxName,
-                firstBox,
+                firstCubeName,
+                firstCube,
               )
               |> StateLogicService.getAndSetEngineState;
 
@@ -2004,9 +2018,9 @@ let _ =
                             engineState,
                           );
                         let wdbMaterialNodeId =
-                          MainEditorAssetMaterialNodeTool.findNodeIdByMaterialComponent(
+                          MainEditorAssetMaterialNodeTool.findNodeIdByMaterialComponentAndType(
                             wdbMaterial,
-                            AssetMaterialDataType.LightMaterial,
+                            MaterialDataAssetType.LightMaterial,
                             editorState,
                           );
 
@@ -2021,10 +2035,10 @@ let _ =
 
                         MainEditorMaterialTool.changeMaterial(
                           ~sourceMaterial=
-                            GameObjectTool.getCurrentGameObjectLightMaterial(),
-                          ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                            GameObjectTool.getCurrentSceneTreeNodeLightMaterial(),
+                          ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                           ~targetMaterial=wdbMaterial,
-                          ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                          ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                           ~gameObject=
                             GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                           ~materialNodeId=wdbMaterialNodeId,
@@ -2041,15 +2055,15 @@ let _ =
                               let engineState =
                                 StateEngineService.unsafeGetState();
 
-                              let firstBox =
+                              let firstCube =
                                 SceneToolEngine.findGameObjectByName(
-                                  firstBoxName,
+                                  firstCubeName,
                                   engineState,
                                 )
                                 |> ArrayService.unsafeGetFirst;
 
-                              let firstBoxMaterial =
-                                firstBox
+                              let firstCubeMaterial =
+                                firstCube
                                 |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                                      _,
                                      engineState,
@@ -2057,12 +2071,12 @@ let _ =
 
                               (
                                 error^ |> getCallCount,
-                                firstBoxMaterial
+                                firstCubeMaterial
                                 |> LightMaterialEngineService.unsafeGetLightMaterialName(
                                      _,
                                      engineState,
                                    ),
-                                firstBoxMaterial
+                                firstCubeMaterial
                                 |> LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
                                      _,
                                      engineState,

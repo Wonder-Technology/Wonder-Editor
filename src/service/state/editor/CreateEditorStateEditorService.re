@@ -2,22 +2,17 @@ open EditorType;
 
 let create = () => {
   settingRecord: RecordSettingService.create(),
-  sceneRecord: {
+  sceneTreeRecord: {
     currentSceneTreeNode: None,
+    isShowChildrenMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
   },
   assetRecord: {
-    assetTreeRoot: None,
-    index: 0,
-    imageIndex: (-1),
-    removedAssetIdArray: [||],
-    currentNodeData: None,
-    currentNodeParentId: None,
-    textureNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
-    imageNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
-    folderNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
-    wdbNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
-    materialNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
-    materialNodeIdMap: WonderCommonlib.SparseMapService.createEmpty(),
+    nodeIndex: 0,
+    imageDataMapIndex: 0,
+    tree: None,
+    currentNodeId: None,
+    selectedFolderNodeIdInAssetTree: None,
+    imageDataMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
     geometryData: {
       defaultCubeGeometryComponent: (-1),
       defaultSphereGeometryComponent: (-1),
@@ -35,6 +30,7 @@ let create = () => {
     viewRect: None,
     gridPlane: None,
     editCamera: None,
+    transformGizmoData: None,
   },
   gameViewRecord: {
     viewRect: None,
@@ -48,12 +44,18 @@ let create = () => {
     gameViewCustomData: None,
   },
   inspectorRecord: {
-    componentTypeMap: WonderCommonlib.SparseMapService.createEmpty(),
+    componentTypeMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
   },
   transformRecord: {
-    localEulerAngleMapX: WonderCommonlib.SparseMapService.createEmpty(),
-    localEulerAngleMapY: WonderCommonlib.SparseMapService.createEmpty(),
-    localEulerAngleMapZ: WonderCommonlib.SparseMapService.createEmpty(),
+    localEulerAngleMapX:
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+    localEulerAngleMapY:
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+    localEulerAngleMapZ:
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+  },
+  pickingRecord: {
+    sphereShapeMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
   },
   currentDragSource: (None, None),
   currentSelectSource: None,

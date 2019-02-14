@@ -1,10 +1,6 @@
-.wonder-float-input{
-    @import "uiComponentBase";
-    .component-label{
-        cursor: crosshair;
+.wonder-float-input {
+    .component-label {
+        cursor: move;
         user-select: none;
-    }
-    .float-input{
-      width:140px;
     }
 }

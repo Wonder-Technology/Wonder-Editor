@@ -80,7 +80,7 @@ let _ =
                   engineState,
                 );
               let indices =
-                GeometryEngineService.getGeometryIndices(
+                GeometryEngineService.getGeometryIndices16(
                   geometry,
                   engineState,
                 );
@@ -159,7 +159,7 @@ let _ =
 
       test("not add to scene", () => {
         let sceneAllGameObjects =
-          GameObjectEngineService.getAllGameObjects(
+          HierarchyGameObjectEngineService.getAllGameObjects(
             SceneEngineService.getSceneGameObject(
               StateEngineService.unsafeGetState(),
             ),
@@ -248,31 +248,31 @@ let _ =
         });
       });
 
-      describe("add box", () =>
+      describe("add cube", () =>
         describe("test components", () => {
           test("add material component", () => {
             let engineState = StateEngineService.unsafeGetState();
-            let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
+            let cube = MainEditorSceneTool.getCubeInDefaultScene(engineState);
 
             engineState
             |> GameObjectComponentEngineService.hasLightMaterialComponent(
-                 box,
+                 cube,
                )
             |> expect == true;
           });
           test("add meshRenderer component", () => {
             let engineState = StateEngineService.unsafeGetState();
-            let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
+            let cube = MainEditorSceneTool.getCubeInDefaultScene(engineState);
             engineState
-            |> GameObjectComponentEngineService.hasMeshRendererComponent(box)
+            |> GameObjectComponentEngineService.hasMeshRendererComponent(cube)
             |> expect == true;
           });
           describe("test geometry component", () =>
             test("add geometry component", () => {
               let engineState = StateEngineService.unsafeGetState();
-              let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
+              let cube = MainEditorSceneTool.getCubeInDefaultScene(engineState);
               engineState
-              |> GameObjectComponentEngineService.hasGeometryComponent(box)
+              |> GameObjectComponentEngineService.hasGeometryComponent(cube)
               |> expect == true;
             })
           );

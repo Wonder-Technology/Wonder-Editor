@@ -61,7 +61,7 @@ let _ =
 
       test("test change color", () => {
         let currentGameObjectDirectionLightComponent =
-          GameObjectTool.getCurrentGameObjectDirectionLightComponent();
+          GameObjectTool.getCurrentSceneTreeNodeDirectionLightComponent();
         let newColor = {
           "hex": "#7df1e8",
           "rgb": {
@@ -86,7 +86,7 @@ let _ =
 
       test("test change intensity", () => {
         let currentGameObjectDirectionLightComponent =
-          GameObjectTool.getCurrentGameObjectDirectionLightComponent();
+          GameObjectTool.getCurrentSceneTreeNodeDirectionLightComponent();
         let value = 10.1;
 
         MainEditorDirectionLightTool.changeIntensityAndBlur(

@@ -37,14 +37,3 @@ let removePathPostfix = filePath =>
   };
 
 let buildFileTotalName = (baseName, extName) => baseName ++ extName;
-
-let buildNameSucc = fileName =>
-  switch ([%re {|/(.+)[\s](\d+)$/|}] |> Js.Re.exec(fileName)) {
-  | None => fileName ++ " 1"
-
-  | Some(result) =>
-    let resultArr = Js.Re.matches(result);
-    let postfix = resultArr[2] |> int_of_string |> succ |> string_of_int;
-
-    resultArr[1] ++ " " ++ postfix;
-  };

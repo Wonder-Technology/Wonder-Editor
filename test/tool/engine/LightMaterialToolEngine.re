@@ -39,7 +39,7 @@ let getNewLightMaterial =
     Wonderjs.RecordLightMaterialMainService.getRecord(engineState);
 
   let (index, newIndex, disposedIndexArray) =
-    ComponentToolEngine.generateIndex(index, disposedIndexArray);
+    ComponentToolEngine.computeGeneratedIndex(index, disposedIndexArray);
 
   index;
 };

@@ -1,15 +1,14 @@
 let removeNode =
     (
       ~dispatchFunc=TestTool.getDispatch(),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~nodeId,
-      ~nodeType,
       (),
     ) => {
-  MainEditorAssetNodeTool.setCurrentNodeData(nodeId, nodeType);
+  MainEditorAssetNodeTool.setCurrentNodeId(nodeId);
 
   MainEditorAssetHeader.Method.removeAssetNode(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     (),
     (),
   );
@@ -18,75 +17,51 @@ let removeNode =
 let removeTextureNode =
     (
       ~dispatchFunc=TestTool.getDispatch(),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~textureNodeId,
       (),
     ) =>
-  removeNode(
-    ~dispatchFunc,
-    ~store,
-    ~nodeId=textureNodeId,
-    ~nodeType=AssetNodeType.Texture,
-    (),
-  );
+  removeNode(~dispatchFunc, ~uiState, ~nodeId=textureNodeId, ());
 
 let removeMaterialNode =
     (
       ~dispatchFunc=TestTool.getDispatch(),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~materialNodeId,
       (),
     ) =>
-  removeNode(
-    ~dispatchFunc,
-    ~store,
-    ~nodeId=materialNodeId,
-    ~nodeType=AssetNodeType.Material,
-    (),
-  );
+  removeNode(~dispatchFunc, ~uiState, ~nodeId=materialNodeId, ());
 
 let removeFolderNode =
     (
       ~dispatchFunc=TestTool.getDispatch(),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~folderNodeId,
       (),
     ) =>
-  removeNode(
-    ~dispatchFunc,
-    ~store,
-    ~nodeId=folderNodeId,
-    ~nodeType=AssetNodeType.Folder,
-    (),
-  );
+  removeNode(~dispatchFunc, ~uiState, ~nodeId=folderNodeId, ());
 
 let removeWDBNode =
     (
       ~dispatchFunc=TestTool.getDispatch(),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~wdbNodeId,
       (),
     ) =>
-  removeNode(
-    ~dispatchFunc,
-    ~store,
-    ~nodeId=wdbNodeId,
-    ~nodeType=AssetNodeType.WDB,
-    (),
-  );
+  removeNode(~dispatchFunc, ~uiState, ~nodeId=wdbNodeId, ());
 
 let addFolder =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
-  MainEditorAssetHeader.Method.addFolder((store, dispatchFunc), (), ());
+  MainEditorAssetHeader.Method.addFolder((uiState, dispatchFunc), (), ());
 
 let addMaterial =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
-  MainEditorAssetHeader.Method.addMaterial((store, dispatchFunc), (), ());
+  MainEditorAssetHeader.Method.addMaterial((uiState, dispatchFunc), (), ());

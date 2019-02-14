@@ -12,7 +12,10 @@ let setLocalEulerAngleX =
       ...transformRecord,
       localEulerAngleMapX:
         localEulerAngleMapX
-        |> WonderCommonlib.SparseMapService.set(transformComponent, value),
+        |> WonderCommonlib.ImmutableSparseMapService.set(
+             transformComponent,
+             value,
+           ),
     },
   };
 };
@@ -27,7 +30,10 @@ let setLocalEulerAngleY =
       ...transformRecord,
       localEulerAngleMapY:
         localEulerAngleMapY
-        |> WonderCommonlib.SparseMapService.set(transformComponent, value),
+        |> WonderCommonlib.ImmutableSparseMapService.set(
+             transformComponent,
+             value,
+           ),
     },
   };
 };
@@ -42,7 +48,10 @@ let setLocalEulerAngleZ =
       ...transformRecord,
       localEulerAngleMapZ:
         localEulerAngleMapZ
-        |> WonderCommonlib.SparseMapService.set(transformComponent, value),
+        |> WonderCommonlib.ImmutableSparseMapService.set(
+             transformComponent,
+             value,
+           ),
     },
   };
 };
@@ -53,11 +62,11 @@ let getLocalEulerAngleAndInit =
 
   switch (
     localEulerAngleMapX
-    |> WonderCommonlib.SparseMapService.get(transformComponent),
+    |> WonderCommonlib.ImmutableSparseMapService.get(transformComponent),
     localEulerAngleMapY
-    |> WonderCommonlib.SparseMapService.get(transformComponent),
+    |> WonderCommonlib.ImmutableSparseMapService.get(transformComponent),
     localEulerAngleMapZ
-    |> WonderCommonlib.SparseMapService.get(transformComponent),
+    |> WonderCommonlib.ImmutableSparseMapService.get(transformComponent),
   ) {
   | (Some(x), Some(y), Some(z)) => ((x, y, z), editorState)
   | (valueX, valueY, valueZ) =>
@@ -74,5 +83,32 @@ let getLocalEulerAngleAndInit =
       |> setLocalEulerAngleZ(transformComponent, ez);
 
     ((ex, ey, ez), editorState);
+  };
+};
+
+let removeLocalEulerAngleData =
+    (transformComponent, {transformRecord} as editorState) => {
+  let {localEulerAngleMapX, localEulerAngleMapY, localEulerAngleMapZ} = transformRecord;
+
+  {
+    ...editorState,
+    transformRecord: {
+      ...transformRecord,
+      localEulerAngleMapX:
+        localEulerAngleMapX
+        |> WonderCommonlib.ImmutableSparseMapService.deleteVal(
+             transformComponent,
+           ),
+      localEulerAngleMapY:
+        localEulerAngleMapY
+        |> WonderCommonlib.ImmutableSparseMapService.deleteVal(
+             transformComponent,
+           ),
+      localEulerAngleMapZ:
+        localEulerAngleMapZ
+        |> WonderCommonlib.ImmutableSparseMapService.deleteVal(
+             transformComponent,
+           ),
+    },
   };
 };

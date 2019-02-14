@@ -1,21 +1,21 @@
 let _storeHistoryState =
-    (store, storeHistoryStateFunc, (editorState, engineState)) =>
+    (uiState, storeHistoryStateFunc, (editorState, engineState)) =>
   AllStateData.getHistoryState()
-  |> storeHistoryStateFunc(store, (editorState, engineState))
+  |> storeHistoryStateFunc(uiState, (editorState, engineState))
   |> AllStateData.setHistoryState;
 
 let storeHistoryStateWithCopiedEngineState =
-    (store, (editorState, engineState)) =>
+    (uiState, (editorState, engineState)) =>
   _storeHistoryState(
-    store,
+    uiState,
     AllHistoryService.storeCopiedEngineHistoryState,
     (editorState, engineState),
   );
 
 let storeHistoryStateWithNoCopyEngineState =
-    (store, (editorState, engineState)) =>
+    (uiState, (editorState, engineState)) =>
   _storeHistoryState(
-    store,
+    uiState,
     AllHistoryService.storeHistoryState,
     (editorState, engineState),
   );

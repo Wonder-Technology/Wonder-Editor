@@ -4,13 +4,13 @@ let testImportPackageWithoutExport =
     (
       ~testFunc,
       ~wpkArrayBuffer,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~fileName="Wpk",
       (),
     ) =>
   Header.Method.importPackage(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     (_ => (), Obj.magic(-1)),
     BaseEventTool.buildPackageFileEvent(fileName, wpkArrayBuffer),
   )
@@ -19,7 +19,7 @@ let testImportPackageWithoutExport =
 let testImportPackage =
     (
       ~testFunc,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~execBeforeImportFunc=wpkArrayBuffer => (),
       ~fileName="Wpk",
@@ -32,65 +32,79 @@ let testImportPackage =
   testImportPackageWithoutExport(
     ~testFunc,
     ~wpkArrayBuffer,
-    ~store,
+    ~uiState,
     ~dispatchFunc,
     ~fileName,
     (),
   );
 };
 
-let getImportedMaterialAssetResults = () =>
-  MaterialNodeMapAssetEditorService.getResults
+let getImportedMaterialAssetNodes = () =>
+  MaterialNodeAssetEditorService.findAllMaterialNodes
   |> StateLogicService.getEditorState;
 
 let getFirstImportedMaterialAssetData = () => {
-  let (materialNodeId, {materialComponent}: AssetNodeType.materialResultType) =
-    getImportedMaterialAssetResults() |> ArrayService.unsafeGetFirst;
+  let node = getImportedMaterialAssetNodes() |> ArrayService.unsafeGetFirst;
 
-  (materialNodeId, materialComponent);
+  let {materialComponent}: NodeAssetType.materialNodeData =
+    MaterialNodeAssetService.getNodeData(node);
+
+  (NodeAssetService.getNodeId(~node), materialComponent);
 };
 
 let getImporteMaterialAssetMaterialComponents = () =>
-  MaterialNodeMapAssetEditorService.getValidValues
-  |> StateLogicService.getEditorState
-  |> Js.Array.map(({materialComponent}: AssetNodeType.materialResultType) =>
-       materialComponent
-     );
+  getImportedMaterialAssetNodes()
+  |> Js.Array.map(node => {
+       let {materialComponent}: NodeAssetType.materialNodeData =
+         MaterialNodeAssetService.getNodeData(node);
+
+       materialComponent;
+     });
 
 let getImporteMaterialAssetBasicMaterialComponents = () =>
-  MaterialNodeMapAssetEditorService.getValidValues
-  |> StateLogicService.getEditorState
-  |> Js.Array.filter(({type_}: AssetNodeType.materialResultType) =>
-       type_ === AssetMaterialDataType.BasicMaterial
-     )
-  |> Js.Array.map(({materialComponent}: AssetNodeType.materialResultType) =>
-       materialComponent
-     );
+  getImportedMaterialAssetNodes()
+  |> Js.Array.filter(node => {
+       let {type_}: NodeAssetType.materialNodeData =
+         MaterialNodeAssetService.getNodeData(node);
+
+       type_ === MaterialDataAssetType.BasicMaterial;
+     })
+  |> Js.Array.map(node => {
+       let {materialComponent}: NodeAssetType.materialNodeData =
+         MaterialNodeAssetService.getNodeData(node);
+
+       materialComponent;
+     });
 
 let getImporteMaterialAssetLightMaterialComponents = () =>
-  MaterialNodeMapAssetEditorService.getValidValues
-  |> StateLogicService.getEditorState
-  |> Js.Array.filter(({type_}: AssetNodeType.materialResultType) =>
-       type_ === AssetMaterialDataType.LightMaterial
-     )
-  |> Js.Array.map(({materialComponent}: AssetNodeType.materialResultType) =>
-       materialComponent
-     );
+  getImportedMaterialAssetNodes()
+  |> Js.Array.filter(node => {
+       let {type_}: NodeAssetType.materialNodeData =
+         MaterialNodeAssetService.getNodeData(node);
+
+       type_ === MaterialDataAssetType.LightMaterial;
+     })
+  |> Js.Array.map(node => {
+       let {materialComponent}: NodeAssetType.materialNodeData =
+         MaterialNodeAssetService.getNodeData(node);
+
+       materialComponent;
+     });
 
 let getImportedTextureAssetTextureComponents = () =>
-  TextureNodeMapAssetEditorService.getValidValues
+  TextureNodeAssetEditorService.findAllTextureNodes
   |> StateLogicService.getEditorState
-  |> Js.Array.map(({textureComponent}: AssetNodeType.textureResultType) =>
-       textureComponent
-     );
+  |> Js.Array.map(node => {
+       let {textureComponent}: NodeAssetType.textureNodeData =
+         TextureNodeAssetService.getNodeData(node);
 
-let getImportedWDBAssetData = () =>
-  StateEditorService.getState()
-  |> WDBNodeMapAssetEditorService.getWDBNodeMap
-  |> SparseMapService.getValidDataArr;
+       textureComponent;
+     });
 
-let getFirstImportedWDBAssetData = () =>
-  getImportedWDBAssetData() |> ArrayService.unsafeGetFirst;
+let getImportedWDBAssetNodeId = () =>
+  WDBNodeAssetEditorService.findAllWDBNodes
+  |> StateLogicService.getEditorState
+  |> Js.Array.map(node => NodeAssetService.getNodeId(~node));
 
 let disposeAssets = () => {
   HeaderImportPackageUtils._disposeAssets();

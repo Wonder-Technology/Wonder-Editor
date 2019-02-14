@@ -5,12 +5,12 @@ let passBufferShouldExistCheckWhenDisposeGeometry =
   open VboBufferType;
   let {geometryVertexBufferMap, geometryElementArrayBufferMap} =
     state.vboBufferRecord;
-  WonderCommonlib.SparseMapService.set(
+  WonderCommonlib.ImmutableSparseMapService.set(
     geometryIndex,
     Obj.magic(0),
     geometryVertexBufferMap,
   );
-  WonderCommonlib.SparseMapService.set(
+  WonderCommonlib.ImmutableSparseMapService.set(
     geometryIndex,
     Obj.magic(0),
     geometryElementArrayBufferMap,

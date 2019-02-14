@@ -20,8 +20,8 @@ let _isGeometryVertexDataEqual = (geometry1, geometry2, engineState) =>
        Float32Array.length,
      )
   && isGeometryPointDataEqual(
-       GeometryEngineService.getGeometryIndices(geometry1, engineState),
-       GeometryEngineService.getGeometryIndices(geometry2, engineState),
+       GeometryEngineService.getGeometryIndices16(geometry1, engineState),
+       GeometryEngineService.getGeometryIndices16(geometry2, engineState),
        Uint16Array.length,
      );
 
@@ -36,13 +36,13 @@ let isDefaultGeometry = (geometry, (editorState, engineState)) => {
     GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
       editorState,
     ),
-    PrepareDefaultComponentUtils.getDefaultCubeGeometryName(),
+    PrepareDefaultComponentLogicService.getDefaultCubeGeometryName(),
   );
   let (defaultSphereGeometry, defaultSphereGeometryName) = (
     GeometryDataAssetEditorService.unsafeGetDefaultSphereGeometryComponent(
       editorState,
     ),
-    PrepareDefaultComponentUtils.getDefaultSphereGeometryName(),
+    PrepareDefaultComponentLogicService.getDefaultSphereGeometryName(),
   );
 
   isGeometryEqualDefaultGeometryData(
@@ -64,13 +64,13 @@ let isGeometryAsset = (geometry, (editorState, engineState)) =>
 
 let getAllWDBGameObjects = (editorState, engineState) =>
   editorState
-  |> WDBNodeMapAssetEditorService.getWDBNodeMap
-  |> SparseMapService.reduceValid(
-       (. allWDBGameObjects, {wdbGameObject}: AssetNodeType.wdbResultType) =>
+  |> WDBNodeAssetEditorService.findAllWDBNodes
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. allWDBGameObjects, wdbNode) =>
          ArrayService.fastConcat(
            allWDBGameObjects,
-           GameObjectEngineService.getAllGameObjects(
-             wdbGameObject,
+           HierarchyGameObjectEngineService.getAllGameObjects(
+             WDBNodeAssetService.getWDBGameObject(wdbNode),
              engineState,
            ),
          ),

@@ -20,20 +20,20 @@ module Method = {
   let closeColorPick = BasicMaterialCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 };
 
-let render = ((store, dispatchFunc), materialComponent, _self) =>
+let render = ((uiState, dispatchFunc), materialComponent, _self) =>
   <article className="wonder-basic-material">
     <PickColorComponent
       label="Color"
       getColorFunc=(Method.getColor(materialComponent))
       changeColorFunc=(Method.changeColor(materialComponent))
       closeColorPickFunc=(
-        Method.closeColorPick((store, dispatchFunc), materialComponent)
+        Method.closeColorPick((uiState, dispatchFunc), materialComponent)
       )
     />
   </article>;
 
 let make =
-    (~store: AppStore.appState, ~dispatchFunc, ~materialComponent, _children) => {
+    (~uiState: AppStore.appState, ~dispatchFunc, ~materialComponent, _children) => {
   ...component,
-  render: self => render((store, dispatchFunc), materialComponent, self),
+  render: self => render((uiState, dispatchFunc), materialComponent, self),
 };

@@ -83,7 +83,7 @@ let _ =
                  );
 
                  BuildComponentTool.buildSceneTree(
-                   TestTool.buildAppStateSceneGraphFromEngine(),
+                   TestTool.buildEmptyAppState(),
                  )
                  |> ReactTestTool.createSnapshotAndMatch
                  |> resolve;
@@ -181,12 +181,12 @@ let _ =
                    (),
                  );
 
-                 MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+                 MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
 
                  let component =
                    BuildComponentTool.buildGeometry(
                      ~geometryComponent=
-                       GameObjectTool.getCurrentGameObjectGeometry(),
+                       GameObjectTool.getCurrentSceneTreeNodeGeometry(),
                      ~isShowGeometryGroup=true,
                      (),
                    );
@@ -217,12 +217,13 @@ let _ =
                    );
 
                    let editorState = StateEditorService.getState();
+                   let engineState = StateEngineService.unsafeGetState();
 
                    MainEditorAssetTreeTool.Select.selectFolderNode(
                      ~nodeId=
-                       MainEditorAssetFolderNodeTool.getNodeIdByName(
+                       MainEditorAssetTreeTool.findNodeIdByName(
                          "Materials",
-                         editorState,
+                         (editorState, engineState),
                        )
                        |> OptionService.unsafeGet,
                      (),
@@ -276,7 +277,7 @@ let _ =
               load Scene.wdb;
               load BoxTextured.wdb;
 
-              the MainEditorAssetChildrenNode panel should show "Scene","Boxtextured"
+              the MainEditorAssetChildrenNode panel should show "Scene","Cubetextured"
                 |},
       () => {
         MainEditorSceneTool.prepareScene(sandbox);
@@ -329,8 +330,8 @@ let _ =
               let (engineState, lightMaterial) =
                 LightMaterialEngineService.create(engineState);
 
-              let (editorState, engineState, box1) =
-                PrimitiveEngineService.createCube(
+              let (editorState, engineState, cube1) =
+                PrimitiveLogicService.createCube(
                   (geometry, lightMaterial),
                   editorState,
                   engineState,
@@ -338,13 +339,13 @@ let _ =
 
               let engineState =
                 GameObjectEngineService.setGameObjectName(
-                  "Box1",
-                  box1,
+                  "Cube1",
+                  cube1,
                   engineState,
                 );
 
               let engineState =
-                engineState |> GameObjectUtils.addChild(rootGameObject, box1);
+                engineState |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1);
 
               (rootGameObject, (editorState, engineState));
             });
@@ -354,7 +355,7 @@ let _ =
           testPromise(
             {|
         1.create gameObject g1 with default cube geometry in scene;
-        2.load wdb asset w1(has one box gameObject with default cube geometry);
+        2.load wdb asset w1(has one cube gameObject with default cube geometry);
         3.drag wdb asset to scene tree to be c1;
         4.remove w1;
 
@@ -369,8 +370,8 @@ let _ =
 
               let engineState = StateEngineService.unsafeGetState();
 
-              let firstBoxGameObject =
-                MainEditorSceneTool.getFirstBox(engineState);
+              let firstCubeGameObject =
+                MainEditorSceneTool.getFirstCube(engineState);
 
               MainEditorAssetUploadTool.loadOneWDB(
                 ~arrayBuffer=wdbArrayBuffer^,
@@ -386,7 +387,7 @@ let _ =
                    let engineState = StateEngineService.unsafeGetState();
 
                    let clonedGameObject =
-                     LoadWDBTool.findGameObjectByName("Box1", engineState);
+                     LoadWDBTool.findGameObjectByName("Cube1", engineState);
 
                    MainEditorAssetHeaderOperateNodeTool.removeWDBNode(
                      ~wdbNodeId=uploadedWDBNodeId,
@@ -401,7 +402,7 @@ let _ =
                           _,
                           engineState,
                         ),
-                     firstBoxGameObject
+                     firstCubeGameObject
                      |> GameObjectComponentEngineService.hasGeometryComponent(
                           _,
                           engineState,
@@ -496,7 +497,7 @@ let _ =
                                ~wdbNodeId=
                                  MainEditorAssetWDBNodeTool.getWDBNodeIdByName(
                                    wdbName,
-                                   editorState,
+                                   (editorState, engineState),
                                  ),
                                (),
                              );

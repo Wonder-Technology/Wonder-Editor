@@ -40,7 +40,7 @@ let _ =
 
             MainEditorSceneTool.setSceneSecondCameraToBeCurrentSceneTreeNode();
             MainEditorCameraViewTool.setCurrentCamera(
-              ~cameraView=GameObjectTool.getCurrentGameObjectBasicCameraView(),
+              ~cameraView=GameObjectTool.getCurrentSceneTreeNodeBasicCameraView(),
               (),
             );
 
@@ -118,7 +118,7 @@ let _ =
             ControllerTool.run();
             MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
             MainEditorCameraViewTool.setCurrentCamera(
-              ~cameraView=GameObjectTool.getCurrentGameObjectBasicCameraView(),
+              ~cameraView=GameObjectTool.getCurrentSceneTreeNodeBasicCameraView(),
               (),
             );
 

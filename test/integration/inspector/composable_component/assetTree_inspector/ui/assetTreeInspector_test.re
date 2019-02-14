@@ -24,14 +24,14 @@ let _ =
           MainEditorAssetTool.initAssetTree,
         );
         CurrentSelectSourceEditorService.setCurrentSelectSource(
-          EditorType.Asset,
+          AssetWidgetService.getWidget(),
         )
         |> StateLogicService.getAndSetEditorState;
       });
       afterEach(() =>
         StateEditorService.getState()
-        |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
-        |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
+        |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
+        |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
         |> StateEditorService.setState
         |> ignore
       );
@@ -199,7 +199,6 @@ let _ =
             let reasonStateUpdate =
               AssetTreeInspectorTool.reducer(
                 ~nodeId,
-                ~nodeType=AssetNodeType.Folder,
                 ~action=AssetTreeInspector.Blur,
                 ~state,
                 (),
@@ -222,7 +221,7 @@ let _ =
                   assetTreeData,
                 );
 
-              MainEditorAssetTextureNodeTool.setTextureName(
+              MainEditorAssetTextureNodeTool.setTextureImageName(
                 nodeId,
                 "texture1.png",
               )

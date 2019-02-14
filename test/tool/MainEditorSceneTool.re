@@ -6,7 +6,7 @@ let getSceneCameras = () => {
   let engineState = StateEngineService.unsafeGetState();
 
   engineState
-  |> GameObjectEngineService.getAllGameObjects(
+  |> HierarchyGameObjectEngineService.getAllGameObjects(
        engineState |> SceneEngineService.getSceneGameObject,
      )
   |> Js.Array.filter(gameObject =>
@@ -29,7 +29,7 @@ let setSceneFirstCameraToBeCurrentSceneTreeNode = () =>
 let setSceneSecondCameraToBeCurrentSceneTreeNode = () =>
   getSceneSecondCamera() |> GameObjectTool.setCurrentSceneTreeNode;
 
-let _isBox = (gameObject, engineState) =>
+let _isCube = (gameObject, engineState) =>
   GameObjectComponentEngineService.hasGeometryComponent(
     gameObject,
     engineState,
@@ -43,15 +43,15 @@ let _isBox = (gameObject, engineState) =>
      )
   |> Js.Typed_array.Float32Array.length === 72;
 
-let getBoxByIndex = (index, engineState) =>
+let getCubeByIndex = (index, engineState) =>
   engineState
-  |> GameObjectUtils.getChildren(unsafeGetScene())
-  |> Js.Array.filter(gameObject => _isBox(gameObject, engineState))
+  |> HierarchyGameObjectEngineService.getChildren(unsafeGetScene())
+  |> Js.Array.filter(gameObject => _isCube(gameObject, engineState))
   |> ArrayService.unsafeGetNth(index);
 
 let getDirectionLightGameObjectByIndex = (index, engineState) =>
   engineState
-  |> GameObjectUtils.getChildren(unsafeGetScene())
+  |> HierarchyGameObjectEngineService.getChildren(unsafeGetScene())
   |> Js.Array.filter(gameObject =>
        GameObjectComponentEngineService.hasDirectionLightComponent(
          gameObject,
@@ -60,16 +60,16 @@ let getDirectionLightGameObjectByIndex = (index, engineState) =>
      )
   |> ArrayService.unsafeGetNth(index);
 
-let getFirstBox = engineState => getBoxByIndex(0, engineState);
+let getFirstCube = engineState => getCubeByIndex(0, engineState);
 
-let getSecondBox = engineState => getBoxByIndex(1, engineState);
+let getSecondCube = engineState => getCubeByIndex(1, engineState);
 
-let setFirstBoxToBeCurrentSceneTreeNode = () =>
-  getFirstBox(StateEngineService.unsafeGetState())
+let setFirstCubeToBeCurrentSceneTreeNode = () =>
+  getFirstCube(StateEngineService.unsafeGetState())
   |> GameObjectTool.setCurrentSceneTreeNode;
 
-let setSecondBoxToBeCurrentSceneTreeNode = () =>
-  getSecondBox(StateEngineService.unsafeGetState())
+let setSecondCubeToBeCurrentSceneTreeNode = () =>
+  getSecondCube(StateEngineService.unsafeGetState())
   |> GameObjectTool.setCurrentSceneTreeNode;
 
 let setDirectionLightGameObjectToBeCurrentSceneTreeNode = () =>
@@ -83,6 +83,7 @@ let initStateWithJob =
       ~buffer=SettingToolEngine.buildBufferConfigStr(),
       ~isBuildFakeDom=true,
       ~isInitJob=true,
+      ~context=TestToolEngine.getDefaultContext(),
       (),
     ) => {
   TestTool.initEditorAndEngineStateAndInitSceneWithJob(
@@ -91,6 +92,7 @@ let initStateWithJob =
     ~noWorkerJobRecord,
     ~isBuildFakeDom,
     ~isInitJob,
+    ~context,
     (),
   );
 
@@ -102,7 +104,9 @@ let initStateWithJob =
   SettingToolEngine.setFakeCanvasToEngineState();
 
   StateEditorService.setState(
-    CreateEditorStateEditorService.create() |> SettingTool.initSetting,
+    CreateEditorStateEditorService.create()
+    |> SettingTool.initSetting
+    |> TreeAssetEditorService.createTree,
   )
   |> ignore;
 
@@ -125,17 +129,18 @@ let initState =
     (),
   );
 
-let createDefaultSceneAndNotInit = sandbox => {
-  let engineState =
-    InitEditorJobUtils.initEditorJob(
-      [||],
-      StateEngineService.unsafeGetState(),
-    );
-
-  engineState
+let prepareGl = sandbox =>
+  StateEngineService.unsafeGetState()
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateEngineService.setState
   |> ignore;
+
+let createDefaultSceneAndNotInit = sandbox => {
+  InitEditorJob.initEditorJob([||], StateEngineService.unsafeGetState())
+  |> StateEngineService.setState
+  |> ignore;
+
+  prepareGl(sandbox);
 };
 
 let createDefaultScene = (sandbox, initFunc) => {
@@ -168,7 +173,7 @@ let prepareScene = sandbox => {
 };
 
 let getCameraInDefaultScene = engineState =>
-  GameObjectUtils.getChildren(unsafeGetScene(), engineState)
+  HierarchyGameObjectEngineService.getChildren(unsafeGetScene(), engineState)
   |> Js.Array.filter(gameObject =>
        GameObjectComponentEngineService.hasBasicCameraViewComponent(
          gameObject,
@@ -180,14 +185,27 @@ let getCameraInDefaultScene = engineState =>
 let _isDirectionLight = (gameObject, engineState) =>
   LightEngineService.hasLightComponent(gameObject, engineState);
 
-let getBoxInDefaultScene = engineState =>
-  GameObjectUtils.getChildren(unsafeGetScene(), engineState)
-  |> Js.Array.filter(gameObject => _isBox(gameObject, engineState))
+let getCubeInDefaultScene = engineState =>
+  HierarchyGameObjectEngineService.getChildren(unsafeGetScene(), engineState)
+  |> Js.Array.filter(gameObject => _isCube(gameObject, engineState))
   |> WonderCommonlib.ArrayService.unsafePop;
 
 let getDirectionLightInDefaultScene = engineState =>
-  GameObjectUtils.getChildren(unsafeGetScene(), engineState)
+  HierarchyGameObjectEngineService.getChildren(unsafeGetScene(), engineState)
   |> Js.Array.filter(gameObject =>
        _isDirectionLight(gameObject, engineState)
      )
   |> ArrayService.unsafeGetFirst;
+
+let getDefaultGameObjects = engineState => {
+  let scene = unsafeGetScene();
+  (
+    scene,
+    (
+      getCameraInDefaultScene(engineState),
+      getFirstCube(engineState),
+      getSecondCube(engineState),
+      getDirectionLightInDefaultScene(engineState),
+    ),
+  );
+};

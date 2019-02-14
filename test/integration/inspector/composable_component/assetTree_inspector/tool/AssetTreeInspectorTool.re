@@ -1,71 +1,55 @@
 module Rename = {
-  let _renameAssetNode = ((store, dispatchFunc), (nodeId, nodeType), name) =>
+  let _renameAssetNode = ((uiState, dispatchFunc), nodeId, name) =>
     AssetTreeInspector.Method.renameAssetTreeNode(
-      (store, dispatchFunc),
-      (nodeId, nodeType),
+      (uiState, dispatchFunc),
+      nodeId,
       name,
     );
 
   let renameAssetTextureNode =
       (
-        ~store=TestTool.buildEmptyAppState(),
+        ~uiState=TestTool.buildEmptyAppState(),
         ~dispatchFunc=TestTool.getDispatch(),
         ~nodeId,
         ~name,
         (),
       ) =>
-    _renameAssetNode(
-      (store, dispatchFunc),
-      (nodeId, AssetNodeType.Texture),
-      name,
-    );
+    _renameAssetNode((uiState, dispatchFunc), nodeId, name);
 
   let renameAssetMaterialNode =
       (
-        ~store=TestTool.buildEmptyAppState(),
+        ~uiState=TestTool.buildEmptyAppState(),
         ~dispatchFunc=TestTool.getDispatch(),
         ~nodeId,
         ~name,
         (),
       ) =>
-    _renameAssetNode(
-      (store, dispatchFunc),
-      (nodeId, AssetNodeType.Material),
-      name,
-    );
+    _renameAssetNode((uiState, dispatchFunc), nodeId, name);
 
   let renameAssetFolderNode =
       (
-        ~store=TestTool.buildEmptyAppState(),
+        ~uiState=TestTool.buildEmptyAppState(),
         ~dispatchFunc=TestTool.getDispatch(),
         ~nodeId,
         ~name,
         (),
       ) =>
-    _renameAssetNode(
-      (store, dispatchFunc),
-      (nodeId, AssetNodeType.Folder),
-      name,
-    );
+    _renameAssetNode((uiState, dispatchFunc), nodeId, name);
 
   let isFolderNameDisabled = nodeId =>
-    AssetTreeInspector.Method._isFolderNameDisabled(nodeId);
+    NodeAssetService.isIdEqual(
+      MainEditorAssetTreeTool.getRootNodeId(StateEditorService.getState()),
+      nodeId,
+    );
 };
 
 let reducer =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~nodeId,
-      ~nodeType,
       ~action,
       ~state,
       (),
     ) =>
-  AssetTreeInspector.reducer(
-    (store, dispatchFunc),
-    nodeId,
-    nodeType,
-    action,
-    state,
-  );
+  AssetTreeInspector.reducer((uiState, dispatchFunc), nodeId, action, state);

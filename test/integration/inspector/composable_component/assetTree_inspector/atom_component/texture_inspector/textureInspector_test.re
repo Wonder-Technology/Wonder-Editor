@@ -4,7 +4,7 @@ open Expect;
 
 open Expect.Operators;
 
-open AssetNodeType;
+open NodeAssetType;
 
 open Sinon;
 
@@ -27,7 +27,7 @@ let _ =
           MainEditorAssetTool.initAssetTree,
         );
         CurrentSelectSourceEditorService.setCurrentSelectSource(
-          EditorType.Asset,
+          AssetWidgetService.getWidget(),
         )
         |> StateLogicService.getAndSetEditorState;
       });
@@ -179,7 +179,10 @@ let _ =
               );
 
             TextureInspectorTool.changeMagFilter(
-              MainEditorAssetNodeTool.getTextureNode(nodeId).textureComponent,
+              MainEditorAssetTextureNodeTool.getTextureComponent(
+                nodeId,
+                StateEditorService.getState(),
+              ),
               filterNearestType,
             );
 

@@ -6,10 +6,10 @@ module Method = {
     parent##offsetHeight,
   );
 
-  let _setAllAspectsWhoseAspectBasedOnCanvasSize = engineState =>
-    GameObjectComponentEngineService.getAllPerspectiveCameraProjectionComponents(
-      engineState,
-    );
+  /* let _setAllAspectsWhoseAspectBasedOnCanvasSize = engineState =>
+     GameObjectComponentEngineService.getAllPerspectiveCameraProjectionComponents(
+       engineState,
+     ); */
 
   let _updateViewRect = (canvasWidth, canvasHeight) =>
     StateEditorService.setState(
@@ -69,30 +69,12 @@ module Method = {
       } :
       ReasonReact.null;
 
-  let bindRefreshInspectorEvent = dispatchFunc =>
-    ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=EventEditorService.getRefreshInspectorEventName(),
-      ~handleFunc=
-        (. event, engineState) => {
-          dispatchFunc(
-            AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
-          )
-          |> ignore;
-
-          (engineState, event);
-        },
-      ~state=StateEngineService.unsafeGetState(),
-      (),
-    )
-    |> StateEngineService.setState
-    |> ignore;
-
   let dragWDB = MainEditorDragWDBEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
 
-let _buildNotStartElement = (store, dispatchFunc) =>
+let _buildNotStartElement = (uiState, dispatchFunc) =>
   <article key="mainEditor" className="wonder-mainEditor-component">
     <div key="leftComponent" className="left-component">
       <div className="top-widget">
@@ -100,8 +82,8 @@ let _buildNotStartElement = (store, dispatchFunc) =>
           <Canvas
             key="webgl"
             domId="canvas"
-            dragWDB=(Method.dragWDB((store, dispatchFunc), ()))
-            isWDBAssetFile=AssetUtils.isWDBAssetFile
+            dragWDB=(Method.dragWDB((uiState, dispatchFunc), ()))
+            isWDBAssetFile=WDBNodeAssetEditorService.isWDBAssetFile
           />
         </div>
       </div>
@@ -110,29 +92,29 @@ let _buildNotStartElement = (store, dispatchFunc) =>
     <div key="rightComponent" className="right-component" />
   </article>;
 
-let _buildStartedElement = (store, dispatchFunc) =>
+let _buildStartedElement = (uiState, dispatchFunc) =>
   <article key="mainEditor" className="wonder-mainEditor-component">
     <div key="leftComponent" className="left-component">
       <div className="top-widget">
-        <MainEditorLeftComponents store dispatchFunc />
+        <MainEditorLeftComponents uiState dispatchFunc />
         <div id="canvasParent" key="webglParent" className="webgl-parent">
           (Method.buildStartedRunWebglComponent())
           <Canvas
             key="webgl"
             domId="canvas"
-            dragWDB=(Method.dragWDB((store, dispatchFunc), ()))
-            isWDBAssetFile=AssetUtils.isWDBAssetFile
+            dragWDB=(Method.dragWDB((uiState, dispatchFunc), ()))
+            isWDBAssetFile=WDBNodeAssetEditorService.isWDBAssetFile
           />
         </div>
       </div>
       <div className="bottom-widget">
-        <MainEditorBottomComponents store dispatchFunc />
+        <MainEditorBottomComponents uiState dispatchFunc />
       </div>
     </div>
     <div key="rightComponent" className="right-component">
       <div className="inline-component inspector-parent">
         <MainEditorInspector
-          store
+          uiState
           dispatchFunc
           addableComponentConfig=(
             GameObjectAllComponentParseUtils.getGameObjectAllComponentConfig()
@@ -142,19 +124,19 @@ let _buildStartedElement = (store, dispatchFunc) =>
     </div>
   </article>;
 
-let render = (store: AppStore.appState, dispatchFunc, _self) =>
-  store.isEditorAndEngineStart ?
-    _buildStartedElement(store, dispatchFunc) :
-    _buildNotStartElement(store, dispatchFunc);
+let render = (uiState: AppStore.appState, dispatchFunc, _self) =>
+  uiState.isEditorAndEngineStart ?
+    _buildStartedElement(uiState, dispatchFunc) :
+    _buildNotStartElement(uiState, dispatchFunc);
 
-let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
+let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
   retainedProps: {
-    isEngineStart: store.isEditorAndEngineStart,
+    isEngineStart: uiState.isEditorAndEngineStart,
   },
   didUpdate:
     ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
-    store.isEditorAndEngineStart
+    uiState.isEditorAndEngineStart
     && oldSelf.retainedProps != newSelf.retainedProps ?
       Method.resizeCanvasAndViewPort() : (),
   didMount: _self => {
@@ -162,36 +144,19 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
       MainUtils.start()
       |> then_(_ => {
            (
-             editorState => {
-               let (assetTree, editorState) =
-                 AssetTreeUtils.initRootAssetTree(
-                   editorState,
-                   StateEngineService.unsafeGetState(),
-                 );
-
+             editorState =>
                editorState
-               |> TreeRootAssetEditorService.setAssetTreeRoot(assetTree);
-             }
+               |> TreeAssetEditorService.createTree
+               |> StateEditorService.setState
            )
            |> StateLogicService.getAndSetEditorState;
-           dispatchFunc(
-             AppStore.SceneTreeAction(
-               SetSceneGraph(
-                 Some(
-                   SceneGraphUtils.getSceneGraphDataFromEngine
-                   |> StateLogicService.getStateToGetData,
-                 ),
-               ),
-             ),
-           );
+
            dispatchFunc(AppStore.StartEngineAction) |> resolve;
          })
       |> ignore
     );
 
-    Method.bindRefreshInspectorEvent(dispatchFunc);
-
-    DomHelper.onresize(Method.resizeCanvasAndViewPort);
+    EventHelper.onresize(Method.resizeCanvasAndViewPort);
   },
-  render: self => render(store, dispatchFunc, self),
+  render: self => render(uiState, dispatchFunc, self),
 };

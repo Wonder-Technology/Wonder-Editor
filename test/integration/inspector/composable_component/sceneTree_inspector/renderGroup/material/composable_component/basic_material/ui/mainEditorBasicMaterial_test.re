@@ -22,7 +22,7 @@ let _ =
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
 
         MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
@@ -32,7 +32,7 @@ let _ =
         sandbox,
         BuildComponentForCurryTool.buildBasicMaterial,
         (
-          GameObjectTool.getCurrentGameObjectBasicMaterial,
+          GameObjectTool.getCurrentSceneTreeNodeBasicMaterial,
           MainEditorBasicMaterialTool.changeColor,
           BasicMaterialEngineService.getColor,
         ),

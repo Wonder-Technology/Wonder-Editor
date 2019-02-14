@@ -20,7 +20,7 @@ let createGameObjectAndSetPointData = (~engineState, ~hasTexCoords=true, ()) => 
     engineState
     |> GeometryEngineService.setGeometryVertices(geometry, vertices1)
     |> GeometryEngineService.setGeometryNormals(geometry, normals1)
-    |> GeometryEngineService.setGeometryIndices(geometry, indices1);
+    |> GeometryEngineService.setGeometryIndices16(geometry, indices1);
 
   let engineState =
     hasTexCoords ?
@@ -47,7 +47,7 @@ let getNewGeometry = (~engineState=StateEngineService.unsafeGetState(), ()) => {
     Wonderjs.RecordGeometryMainService.getRecord(engineState);
 
   let (index, newIndex, disposedIndexArray) =
-    ComponentToolEngine.generateIndex(index, disposedIndexArray);
+    ComponentToolEngine.computeGeneratedIndex(index, disposedIndexArray);
 
   index;
 };
@@ -65,3 +65,31 @@ let getVertices = engineState => {
 
   vertices;
 };
+
+let getGameObjectVertices = (gameObject, engineState) =>
+  GameObjectComponentEngineService.unsafeGetGeometryComponent(
+    gameObject,
+    engineState,
+  )
+  |> GeometryEngineService.getGeometryVertices(_, engineState);
+
+let getGameObjectNormals = (gameObject, engineState) =>
+  GameObjectComponentEngineService.unsafeGetGeometryComponent(
+    gameObject,
+    engineState,
+  )
+  |> GeometryEngineService.getGeometryNormals(_, engineState);
+
+let getGameObjectTexCoords = (gameObject, engineState) =>
+  GameObjectComponentEngineService.unsafeGetGeometryComponent(
+    gameObject,
+    engineState,
+  )
+  |> GeometryEngineService.getGeometryTexCoords(_, engineState);
+
+let getGameObjectIndices16 = (gameObject, engineState) =>
+  GameObjectComponentEngineService.unsafeGetGeometryComponent(
+    gameObject,
+    engineState,
+  )
+  |> GeometryEngineService.getGeometryIndices16(_, engineState);

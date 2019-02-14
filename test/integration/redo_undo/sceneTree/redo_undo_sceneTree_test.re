@@ -11,18 +11,18 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     let _simulateTwiceDragEvent = () => {
-      MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
+      MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
         ~sourceGameObject=
-          MainEditorSceneTool.getSecondBox(
+          MainEditorSceneTool.getSecondCube(
             StateEngineService.unsafeGetState(),
           ),
         ~targetGameObject=MainEditorSceneTool.getSceneFirstCamera(),
         (),
       );
 
-      MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
+      MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
         ~sourceGameObject=
-          MainEditorSceneTool.getFirstBox(
+          MainEditorSceneTool.getFirstCube(
             StateEngineService.unsafeGetState(),
           ),
         ~targetGameObject=MainEditorSceneTool.getSceneFirstCamera(),
@@ -34,7 +34,7 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
     };
 
@@ -62,7 +62,7 @@ let _ =
         MainEditorSceneTool.initState(~sandbox, ());
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
       });
       test(
@@ -73,7 +73,7 @@ let _ =
         click undo, engineState is error",
         () => {
           let currentGameObjectMaterial =
-            GameObjectTool.getCurrentGameObjectLightMaterial();
+            GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
           let newColor = PickColorTool.buildColor1();
 
           execChangeMaterialColorWork(currentGameObjectMaterial, newColor);

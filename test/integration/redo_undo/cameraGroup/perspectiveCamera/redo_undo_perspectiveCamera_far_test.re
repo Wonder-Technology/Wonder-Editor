@@ -16,7 +16,7 @@ let _ =
     let _changeFar = value =>
       MainEditorCameraProjectionTool.changeFarAndBlur(
         ~cameraProjection=
-          GameObjectTool.getCurrentGameObjectPerspectiveCamera(),
+          GameObjectTool.getCurrentSceneTreeNodePerspectiveCamera(),
         ~value,
         (),
       );

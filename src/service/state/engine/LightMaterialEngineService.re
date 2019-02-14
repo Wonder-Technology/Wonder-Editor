@@ -65,6 +65,6 @@ let reInitMaterials = LightMaterialAPI.reInitMaterials;
 let reInitAllLightMaterialsAndClearShaderCache = (materials, engineState) =>
   engineState
   |> reInitMaterials(materials)
-  |> ShaderEngineService.clearShaderCache;
+  |> ShaderEngineService.clearInitShaderCache;
 
 let getAllLightMaterials = LightMaterialAPI.getAllLightMaterials;

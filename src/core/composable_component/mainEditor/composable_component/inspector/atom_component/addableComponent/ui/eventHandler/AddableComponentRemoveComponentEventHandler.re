@@ -2,13 +2,13 @@ open InspectorComponentType;
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
-  type prepareTuple = Wonderjs.GameObjectType.gameObject;
+  type prepareTuple = Wonderjs.GameObjectPrimitiveType.gameObject;
   type dataTuple = componentType;
   type return = unit;
 
   let _isRemoveLight = type_ => type_ === Light;
 
-  let handleSelfLogic = ((store, dispatchFunc), currentSceneTreeNode, type_) => {
+  let handleSelfLogic = ((uiState, dispatchFunc), currentSceneTreeNode, type_) => {
     let (editorState, engineState) =
       (StateEditorService.getState(), StateEngineService.unsafeGetState())
       |> InspectorRemoveComponentUtils.removeComponentByType(

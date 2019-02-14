@@ -15,7 +15,7 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
 
       ControllerTool.stubRequestAnimationFrame(
@@ -28,28 +28,28 @@ let _ =
     describe("test set parent in engine", () => {
       test("no drag", () =>
         BuildComponentTool.buildSceneTree(
-          TestTool.buildAppStateSceneGraphFromEngine(),
+          TestTool.buildEmptyAppState(),
         )
         |> ReactTestTool.createSnapshotAndMatch
       );
       test(
-        "drag treeNode into target treeNode, set draged gameObject's parent to be target gameObject",
+        "drag treeNode into target treeNode, set dragged gameObject's parent to be target gameObject",
         () => {
           let targetGameObject =
             StateEngineService.unsafeGetState()
-            |> MainEditorSceneTool.getBoxByIndex(0);
-          let dragedGameObject =
+            |> MainEditorSceneTool.getCubeByIndex(0);
+          let draggedGameObject =
             StateEngineService.unsafeGetState()
-            |> MainEditorSceneTool.getBoxByIndex(1);
+            |> MainEditorSceneTool.getCubeByIndex(1);
 
-          MainEditorSceneTreeTool.Drag.dragGameObjectIntoGameObject(
-            ~sourceGameObject=dragedGameObject,
+          MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+            ~sourceGameObject=draggedGameObject,
             ~targetGameObject,
             (),
           );
 
-          GameObjectUtils.getParent(
-            dragedGameObject,
+          HierarchyGameObjectEngineService.getParentTransform(
+            draggedGameObject,
             StateEngineService.unsafeGetState(),
           )
           |> expect == targetGameObject;

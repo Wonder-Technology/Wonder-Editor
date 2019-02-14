@@ -4,7 +4,7 @@ open Expect;
 
 open Expect.Operators;
 
-open AssetNodeType;
+open NodeAssetType;
 
 open Sinon;
 
@@ -21,8 +21,8 @@ let _ =
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
       StateEditorService.getState()
-      |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
-      |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
+      |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
+      |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
       |> StateEditorService.setState
       |> ignore;
     });
@@ -31,11 +31,11 @@ let _ =
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
 
         CurrentSelectSourceEditorService.setCurrentSelectSource(
-          EditorType.SceneTree,
+          SceneTreeWidgetService.getWidget(),
         )
         |> StateLogicService.getAndSetEditorState;
       });
@@ -46,7 +46,7 @@ let _ =
 
           MainEditorMeshRendererTool.changeMode(~value=lineType, ());
 
-          let meshRenderer = GameObjectTool.getCurrentGameObjectMeshRenderer();
+          let meshRenderer = GameObjectTool.getCurrentSceneTreeNodeMeshRenderer();
 
           StateEngineService.unsafeGetState()
           |> MeshRendererEngineService.getDrawMode(meshRenderer)
@@ -60,7 +60,7 @@ let _ =
             MainEditorMeshRendererTool.changeMode(~value=triangleFanType, ());
 
             let meshRenderer =
-              GameObjectTool.getCurrentGameObjectMeshRenderer();
+              GameObjectTool.getCurrentSceneTreeNodeMeshRenderer();
 
             StateEngineService.unsafeGetState()
             |> MeshRendererEngineService.getDrawMode(meshRenderer)

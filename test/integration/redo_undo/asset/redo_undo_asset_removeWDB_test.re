@@ -110,7 +110,7 @@ let _ =
                |> GeometryEngineService.getGeometryTexCoords(_, engineState)
                |> Js.Typed_array.Float32Array.length,
                geometry
-               |> GeometryEngineService.getGeometryIndices(_, engineState)
+               |> GeometryEngineService.getGeometryIndices16(_, engineState)
                |> Js.Typed_array.Uint16Array.length,
              )
              |> expect == (72, 72, 48, 36)

@@ -9,7 +9,7 @@ type action =
 module Method = {
   let removeComponent = AddableComponentRemoveComponentEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let changeShowComponentByType = ((store, dispatchFunc), type_, value) =>
+  let changeShowComponentByType = ((uiState, dispatchFunc), type_, value) =>
     dispatchFunc(
       AppStore.InspectorAction(
         SetShowComponent(

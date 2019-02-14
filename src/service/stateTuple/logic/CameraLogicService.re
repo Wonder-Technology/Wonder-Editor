@@ -32,6 +32,25 @@
      );
    }; */
 
+let createCamera = (editorState, engineState) => {
+  let (editorState, (engineState, gameObject)) =
+    GameObjectLogicService.createGameObject((editorState, engineState));
+  let (engineState, cameraComponentRecord) =
+    CameraEngineService.createCameraGroup(engineState);
+
+  let engineState =
+    engineState
+    |> GameObjectEngineService.setGameObjectName("Camera", gameObject);
+
+  let (editorState, engineState) =
+    (editorState, engineState)
+    |> GameObjectLogicService.addCameraGroup(
+         gameObject,
+         cameraComponentRecord,
+       );
+
+  (editorState, engineState, gameObject);
+};
 let unbindArcballCameraControllerEventIfHasComponentForGameView =
     (gameObject, editorState, engineState) => {
   let targetRemoveBasicCameraView =

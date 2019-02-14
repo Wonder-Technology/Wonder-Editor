@@ -70,8 +70,8 @@ let _renderConsole = (currentComponentType, dispatchFunc) => {
   </div>;
 };
 
-let render = (store, dispatchFunc, _self) => {
-  let currentComponentType = store |> StoreUtils.getBottomCurrentComponentType;
+let render = (uiState, dispatchFunc, _self) => {
+  let currentComponentType = uiState |> StoreUtils.getBottomCurrentComponentType;
 
   <article className="bottom-header" key="MainEditorBottomHeader">
     <div className="bottom-widget-category">
@@ -105,11 +105,11 @@ let shouldUpdate =
   newSelf.retainedProps.updateTypeArr
   |> StoreUtils.shouldComponentUpdate(UpdateStore.BottomHeader);
 
-let make = (~store, ~dispatchFunc, _children) => {
+let make = (~uiState, ~dispatchFunc, _children) => {
   ...component,
   retainedProps: {
-    updateTypeArr: StoreUtils.getUpdateComponentTypeArr(store),
+    updateTypeArr: StoreUtils.getUpdateComponentTypeArr(uiState),
   },
   shouldUpdate,
-  render: render(store, dispatchFunc),
+  render: render(uiState, dispatchFunc),
 };

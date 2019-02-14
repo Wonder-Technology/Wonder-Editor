@@ -37,7 +37,7 @@ let _ =
 
         LoadTool.buildFakeLoadImage(.);
 
-        MainEditorSceneTool.createDefaultScene(sandbox, () => ());
+        MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
         MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
       });
@@ -54,7 +54,7 @@ let _ =
                CanvasTool.Drag.dragWDBAsset(~wdbNodeId=uploadedWDBNodeId, ());
 
                BuildComponentTool.buildSceneTree(
-                 TestTool.buildAppStateSceneGraphFromEngine(),
+                 TestTool.buildEmptyAppState(),
                )
                |> ReactTestTool.createSnapshotAndMatch
                |> resolve;
@@ -69,12 +69,12 @@ let _ =
             (),
           )
           |> then_(uploadedWDBNodeId => {
-               MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+               MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
 
                CanvasTool.Drag.dragWDBAsset(~wdbNodeId=uploadedWDBNodeId, ());
 
                BuildComponentTool.buildSceneTree(
-                 TestTool.buildAppStateSceneGraphFromEngine(),
+                 TestTool.buildEmptyAppState(),
                )
                |> ReactTestTool.createSnapshotAndMatch
                |> resolve;

@@ -2,25 +2,13 @@ open AppStore;
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
-  type prepareTuple = Wonderjs.GameObjectType.gameObject;
+  type prepareTuple = Wonderjs.GameObjectPrimitiveType.gameObject;
   type dataTuple = string;
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), gameObject, newName) => {
+  let handleSelfLogic = ((uiState, dispatchFunc), gameObject, newName) => {
     GameObjectEngineService.setGameObjectName(newName, gameObject)
     |> StateLogicService.getAndRefreshEngineStateWithFunc;
-
-    dispatchFunc(
-      AppStore.SceneTreeAction(
-        SetSceneGraph(
-          store
-          |> StoreUtils.unsafeGetSceneGraphDataFromStore
-          |> SceneGraphUtils.renameSceneGraphData(gameObject, newName)
-          |. Some,
-        ),
-      ),
-    )
-    |> ignore;
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))
     |> ignore;

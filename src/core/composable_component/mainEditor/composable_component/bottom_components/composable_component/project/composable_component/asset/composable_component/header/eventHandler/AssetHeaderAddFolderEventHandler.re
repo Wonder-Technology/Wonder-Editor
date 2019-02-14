@@ -4,28 +4,40 @@ module CustomEventHandler = {
   type dataTuple = unit;
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
+  let handleSelfLogic = ((uiState, dispatchFunc), (), ()) => {
     (
       editorState => {
-        let (editorState, newIndex) =
-          AssetIdUtils.generateAssetId(editorState);
         let engineState = StateEngineService.unsafeGetState();
 
-        let targetTreeNodeId =
-          editorState |> AssetTreeUtils.getTargetTreeNodeId;
+        let (editorState, nodeId) =
+          IdAssetEditorService.generateNodeId(editorState);
 
-        AddFolderNodeUtils.addFolderNodeToAssetTree(
-          FolderNodeUtils.getNewFolderName(),
-          (targetTreeNodeId, newIndex),
-          (editorState, engineState),
-        );
+        let parentFolderNode =
+          editorState
+          |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree;
+
+        let editorState =
+          FolderNodeAssetEditorService.addFolderNodeToAssetTree(
+            parentFolderNode,
+            FolderNodeAssetService.buildNode(
+              ~nodeId,
+              ~name=
+                FolderNodeAssetService.getNewFolderName()
+                |. OperateTreeAssetLogicService.getUniqueNodeName(
+                     parentFolderNode,
+                     engineState,
+                   ),
+              (),
+            ),
+            editorState,
+          );
+
+        editorState;
       }
     )
     |> StateLogicService.getAndSetEditorState;
 
-    dispatchFunc(
-      AppStore.UpdateAction(Update([|UpdateStore.Project|])),
-    )
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])))
     |> ignore;
   };
 };

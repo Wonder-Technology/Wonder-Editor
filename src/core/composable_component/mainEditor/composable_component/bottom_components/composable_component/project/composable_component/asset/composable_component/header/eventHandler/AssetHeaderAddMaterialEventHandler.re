@@ -4,18 +4,19 @@ module CustomEventHandler = {
   type dataTuple = unit;
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
+  let handleSelfLogic = ((uiState, dispatchFunc), (), ()) => {
     let engineState = StateEngineService.unsafeGetState();
-    let (editorState, newIndex) =
-      AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
-    let targetTreeNodeId = editorState |> AssetTreeUtils.getTargetTreeNodeId;
+    let (editorState, newNodeId) =
+      IdAssetEditorService.generateNodeId |> StateLogicService.getEditorState;
+    let targetTreeNode =
+      editorState
+      |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree;
 
     let materialName =
-      MainEditorMaterialUtils.getNewMaterilaName()
-      |. IterateAssetTreeAssetEditorService.getUniqueTreeNodeName(
-           Material,
-           targetTreeNodeId |. Some,
-           (editorState, engineState),
+      OperateMaterialLogicService.getNewMaterilaName()
+      |. OperateTreeAssetLogicService.getUniqueNodeName(
+           targetTreeNode,
+           engineState,
          );
 
     let (newMaterial, engineState) =
@@ -25,11 +26,19 @@ module CustomEventHandler = {
       );
 
     let editorState =
-      AddMaterialNodeUtils.addMaterialNodeToAssetTree(
-        newMaterial,
-        (targetTreeNodeId, newIndex),
+      MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
+        targetTreeNode,
+        MaterialNodeAssetService.buildNode(
+          ~nodeId=newNodeId,
+          ~type_=MaterialDataAssetType.LightMaterial,
+          ~materialComponent=newMaterial,
+        ),
         editorState,
       );
+
+    let targetTreeNode =
+      editorState
+      |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree;
 
     editorState |> StateEditorService.setState |> ignore;
 

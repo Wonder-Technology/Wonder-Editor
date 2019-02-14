@@ -18,7 +18,7 @@ let _ =
     let _prepareDefaultSceneAndInit = () => {
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
       DirectorToolEngine.prepareAndInitAllEnginState();
     };
@@ -49,7 +49,7 @@ let _ =
           sandbox,
           BuildComponentForCurryTool.buildLightMaterial,
           (
-            GameObjectTool.getCurrentGameObjectLightMaterial,
+            GameObjectTool.getCurrentSceneTreeNodeLightMaterial,
             MainEditorLightMaterialTool.changeColor,
             LightMaterialEngineService.getLightMaterialDiffuseColor,
           ),
@@ -72,19 +72,19 @@ let _ =
             sandbox,
             () => {
               MainEditorAssetTool.initAssetTree();
-              MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+              MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
             },
           );
 
           CurrentSelectSourceEditorService.setCurrentSelectSource(
-            EditorType.SceneTree,
+            SceneTreeWidgetService.getWidget(),
           )
           |> StateLogicService.getAndSetEditorState;
         });
         afterEach(() =>
           StateEditorService.getState()
-          |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
-          |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
+          |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
+          |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
           |> StateEditorService.setState
           |> ignore
         );
@@ -186,7 +186,7 @@ let _ =
                 let _hasMap = () => {
                   let engineState = StateEngineService.unsafeGetState();
                   let currentGameObject =
-                    SceneEditorService.unsafeGetCurrentSceneTreeNode
+                    SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
                     |> StateLogicService.getEditorState;
 
                   engineState
@@ -212,8 +212,8 @@ let _ =
                 );
                 testPromise("if gameObject has no geometry, still can set", () =>
                   _prepare((uploadedTextureNodeId, assetTreeData) => {
-                    /* SceneTreeNodeDomTool.OperateDefaultScene.getGeometryComponentFromBox()
-                       |> OperateComponentEventTool.removeComponentFromCurrentGameObject; */
+                    /* SceneTreeNodeDomTool.OperateDefaultScene.getGeometryComponentFromCube()
+                       |> OperateComponentEventTool.removeComponentFromCurrentSceneTreeNode; */
 
                     MainEditorInspectorRemoveComponentTool.removeGeometryComponent();
 
@@ -234,7 +234,7 @@ let _ =
                         "warn",
                       );
                     let currentGameObject =
-                      SceneEditorService.unsafeGetCurrentSceneTreeNode
+                      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
                       |> StateLogicService.getEditorState;
 
                     let engineState = StateEngineService.unsafeGetState();
@@ -280,7 +280,7 @@ let _ =
             |},
               () => {
                 let currentGameObjectMaterial =
-                  GameObjectTool.getCurrentGameObjectLightMaterial();
+                  GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
                 let newColor = {
                   "hex": "#7df1e8",
                   "rgb": {
@@ -321,7 +321,7 @@ let _ =
                 );
 
                 let currentGameObjectMaterial =
-                  GameObjectTool.getCurrentGameObjectLightMaterial();
+                  GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
                 let newColor =
                   LightMaterialEngineService.getLightMaterialDiffuseColor(
                     currentGameObjectMaterial,
@@ -402,7 +402,7 @@ let _ =
               );
 
               let currentGameObject =
-                SceneEditorService.unsafeGetCurrentSceneTreeNode
+                SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
                 |> StateLogicService.getEditorState;
 
               let engineMaterialMap =
@@ -423,14 +423,14 @@ let _ =
 
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           );
         });
 
         describe("test logic", () =>
           test("test change shininess should set into engine", () => {
             let currentGameObjectMaterial =
-              GameObjectTool.getCurrentGameObjectLightMaterial();
+              GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
             let component =
               BuildComponentTool.buildLightMaterial(
                 currentGameObjectMaterial,

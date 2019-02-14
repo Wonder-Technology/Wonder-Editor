@@ -1,71 +1,71 @@
-let _removeComponent = ((store, dispatchFunc), gameObject, type_) =>
+let _removeComponent = ((uiState, dispatchFunc), gameObject, type_) =>
   ComponentBox.Method.removeComponent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     gameObject,
     type_,
   );
 
 let removeDirectionLightComponent =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
       (),
     ) =>
   _removeComponent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     gameObject,
     InspectorComponentType.Light,
   );
 
 let removeCameraGroupComponent =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
       (),
     ) =>
   _removeComponent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     gameObject,
     InspectorComponentType.CameraGroup,
   );
 
 let removeGeometryComponent =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
       (),
     ) =>
   _removeComponent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     gameObject,
     InspectorComponentType.Geometry,
   );
 
 let removeRenderGroupComponent =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
       (),
     ) =>
   _removeComponent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     gameObject,
     InspectorComponentType.RenderGroup,
   );
 
 let removeArcballCameraControllerComponent =
     (
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
       (),
     ) =>
   _removeComponent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     gameObject,
     InspectorComponentType.ArcballCameraController,
   );

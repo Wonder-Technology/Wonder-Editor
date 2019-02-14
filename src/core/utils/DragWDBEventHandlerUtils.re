@@ -1,36 +1,26 @@
 let handleSelfLogic =
-    ((store, dispatchFunc), (), (targetGameObjectUid, wdbGameObjectUid)) => {
+    (
+      (uiState, dispatchFunc),
+      (),
+      (targetGameObject, wdbGameObject, dragPosition),
+    ) => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
-  let isShowChildrenMap =
-    SceneGraphUtils.buildIsShowChildrenMapFromStore(store)
-    |> WonderCommonlib.SparseMapService.set(targetGameObjectUid, true);
+  let editorState =
+    editorState
+    |> SceneTreeEditorService.setIsShowChildren(targetGameObject, true);
 
   let (isSuccess, (editorState, engineState)) =
     DragWDBUtils.dragWDB(
-      wdbGameObjectUid,
-      targetGameObjectUid,
+      wdbGameObject,
+      targetGameObject,
+      dragPosition,
       (editorState, engineState),
     );
 
   isSuccess ?
     {
-      dispatchFunc(
-        AppStore.SceneTreeAction(
-          SetSceneGraph(
-            Some(
-              SceneGraphUtils.getSceneGraphDataFromEngine((
-                editorState,
-                engineState,
-              ))
-              |> SceneGraphUtils.setIsShowChildrenByMap(isShowChildrenMap),
-            ),
-          ),
-        ),
-      )
-      |> ignore;
-
       dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))
       |> ignore;
 

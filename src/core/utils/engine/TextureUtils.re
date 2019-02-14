@@ -1,4 +1,4 @@
-open AssetNodeType;
+open NodeAssetType;
 
 let createAndInitTexture = (textureName, engineState) => {
   let (engineState, texture) =

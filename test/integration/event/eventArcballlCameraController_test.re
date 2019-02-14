@@ -107,8 +107,8 @@ let _ =
     let _prepareForPointerLock = sandbox =>
       MouseEventTool.prepareForPointerLock(sandbox);
 
-    let _testPointDownEvent =
-        (sandbox, (pageX, pageY), (judgeFunc, bindEventFunc)) => {
+    let _testPointDragStartEvent =
+        (sandbox, (pageX, pageY, eventButton), (judgeFunc, bindEventFunc)) => {
       _prepareMouseEvent(~sandbox, ());
 
       let requestPointerLockStub = _prepareForPointerLock(sandbox);
@@ -131,11 +131,30 @@ let _ =
       EventTool.triggerDomEvent(
         "mousedown",
         EventTool.getBody(),
-        MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+        MouseEventTool.buildMouseEvent(
+          ~pageX,
+          ~pageY,
+          ~which=eventButton,
+          (),
+        ),
       );
       EventTool.restore();
 
       judgeFunc(requestPointerLockStub);
+    };
+
+    let _execKeydownEvent = (~pageX, ~pageY, ~keyCode) => {
+      EventTool.triggerDomEvent(
+        "mousedown",
+        EventTool.getBody(),
+        MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+      );
+      EventTool.triggerDomEvent(
+        "keydown",
+        EventTool.getKeyboardEventBindedDom(),
+        KeyboardEventTool.buildKeyboardEvent(~keyCode, ()),
+      );
+      EventTool.restore();
     };
 
     let _testKeydownEvent =
@@ -147,17 +166,7 @@ let _ =
       let (cameraController, (moveSpeedX, moveSpeedY), (posX, posY, posZ)) =
         prepareMouseEventFunc(~sandbox, ());
 
-      EventTool.triggerDomEvent(
-        "mousedown",
-        EventTool.getBody(),
-        MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
-      );
-      EventTool.triggerDomEvent(
-        "keydown",
-        EventTool.getKeyboardEventBindedDom(),
-        KeyboardEventTool.buildKeyboardEvent(~keyCode=65, ()),
-      );
-      EventTool.restore();
+      _execKeydownEvent(~pageX, ~pageY, ~keyCode=65);
 
       let engineState = StateEngineService.unsafeGetState();
       engineState
@@ -175,38 +184,78 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test bind for scene view", () => {
-      describe("test bind point down event", () => {
-        let _test = (sandbox, (pageX, pageY), judgeFunc) =>
-          _testPointDownEvent(
+      describe("test bind point drag start event", () => {
+        let _test = (sandbox, (pageX, pageY, eventButton), judgeFunc) =>
+          _testPointDragStartEvent(
             sandbox,
-            (pageX, pageY),
+            (pageX, pageY, eventButton),
             (
               judgeFunc,
               ArcballCameraControllerLogicService.bindArcballCameraControllerEventForSceneView,
             ),
           );
 
-        test("if eventTarget is scene view, request canvas pointerLock", () =>
-          _test(sandbox, (10, 20), requestPointerLockStub =>
-            requestPointerLockStub |> expect |> toCalledOnce
-          )
-        );
-        test("if eventTarget is game view, not request canvas pointerLock", () =>
-          _test(sandbox, (60, 20), requestPointerLockStub =>
+        test("if mouse button isn't right button, not trigger", () =>
+          _test(sandbox, (10, 20, 1), requestPointerLockStub =>
             requestPointerLockStub |> expect |> not_ |> toCalled
           )
         );
+
+        describe("else", () => {
+          test("if eventTarget is scene view, request canvas pointerLock", () =>
+            _test(sandbox, (10, 20, 3), requestPointerLockStub =>
+              requestPointerLockStub |> expect |> toCalledOnce
+            )
+          );
+          test(
+            "if eventTarget is game view, not request canvas pointerLock", () =>
+            _test(sandbox, (60, 20, 3), requestPointerLockStub =>
+              requestPointerLockStub |> expect |> not_ |> toCalled
+            )
+          );
+        });
       });
 
-      describe("test bind keydown event", () =>
-        describe("test set target", () => {
-          let _prepareMouseEvent = (~sandbox, ()) =>
-            _prepareMouseEventForTestKeyboardEvent(
-              ~sandbox,
-              ~bindEventFunc=ArcballCameraControllerLogicService.bindArcballCameraControllerEventForSceneView,
-              (),
-            );
+      describe("test bind keydown event", () => {
+        let _prepareMouseEvent = (~sandbox, ()) =>
+          _prepareMouseEventForTestKeyboardEvent(
+            ~sandbox,
+            ~bindEventFunc=ArcballCameraControllerLogicService.bindArcballCameraControllerEventForSceneView,
+            (),
+          );
 
+        describe("if key affect arcballCameraController, loop when stop", () => {
+          beforeEach(() => ControllerTool.setIsRun(false));
+
+          test("if key is a, loop when stop", () => {
+            let (
+              cameraController,
+              (moveSpeedX, moveSpeedY),
+              (posX, posY, posZ),
+            ) =
+              _prepareMouseEvent(~sandbox, ());
+
+            _execKeydownEvent(~pageX=10, ~pageY=20, ~keyCode=65);
+
+            let gl = FakeGlToolEngine.getEngineStateGl();
+            gl##clearColor |> expect |> toCalled;
+          });
+          test("if key is e, not loop", () => {
+            let (
+              cameraController,
+              (moveSpeedX, moveSpeedY),
+              (posX, posY, posZ),
+            ) =
+              _prepareMouseEvent(~sandbox, ());
+
+            _execKeydownEvent(~pageX=10, ~pageY=20, ~keyCode=69);
+
+            let gl = FakeGlToolEngine.getEngineStateGl();
+            gl##clearColor |> expect |> not_ |> toCalled;
+          });
+        });
+
+        describe("test set target", () => {
           test("if eventTarget is scene view, move", () =>
             _testKeydownEvent(
               sandbox,
@@ -235,16 +284,16 @@ let _ =
               ),
             )
           );
-        })
-      );
+        });
+      });
     });
 
     describe("test bind for game view", () => {
-      describe("test bind point down event", () => {
-        let _test = (sandbox, (pageX, pageY), judgeFunc) =>
-          _testPointDownEvent(
+      describe("test bind point drag start event", () => {
+        let _test = (sandbox, (pageX, pageY, eventButton), judgeFunc) =>
+          _testPointDragStartEvent(
             sandbox,
-            (pageX, pageY),
+            (pageX, pageY, eventButton),
             (
               judgeFunc,
               ArcballCameraEngineService.bindArcballCameraControllerEventForGameView,
@@ -253,26 +302,34 @@ let _ =
 
         test(
           "if eventTarget is scene view, not request canvas pointerLock", () =>
-          _test(sandbox, (10, 20), requestPointerLockStub =>
+          _test(sandbox, (10, 20, 3), requestPointerLockStub =>
             requestPointerLockStub |> expect |> not_ |> toCalled
           )
         );
-        test("if eventTarget is game view, request canvas pointerLock", () =>
-          _test(sandbox, (60, 20), requestPointerLockStub =>
-            requestPointerLockStub |> expect |> toCalledOnce
-          )
-        );
+
+        describe("if eventTarget is game view", () => {
+          test("if mouse button isn't right button, still trigger", () =>
+            _test(sandbox, (60, 20, 1), requestPointerLockStub =>
+              requestPointerLockStub |> expect |> toCalledOnce
+            )
+          );
+          test("if eventTarget is game view, request canvas pointerLock", () =>
+            _test(sandbox, (60, 20, 3), requestPointerLockStub =>
+              requestPointerLockStub |> expect |> toCalledOnce
+            )
+          );
+        });
       });
 
-      describe("test bind keydown event", () =>
-        describe("test set target", () => {
-          let _prepareMouseEvent = (~sandbox, ()) =>
-            _prepareMouseEventForTestKeyboardEvent(
-              ~sandbox,
-              ~bindEventFunc=ArcballCameraEngineService.bindArcballCameraControllerEventForGameView,
-              (),
-            );
+      describe("test bind keydown event", () => {
+        let _prepareMouseEvent = (~sandbox, ()) =>
+          _prepareMouseEventForTestKeyboardEvent(
+            ~sandbox,
+            ~bindEventFunc=ArcballCameraEngineService.bindArcballCameraControllerEventForGameView,
+            (),
+          );
 
+        describe("test set target", () => {
           test("if eventTarget is scene view, not move", () =>
             _testKeydownEvent(
               sandbox,
@@ -301,7 +358,7 @@ let _ =
               ),
             )
           );
-        })
-      );
+        });
+      });
     });
   });

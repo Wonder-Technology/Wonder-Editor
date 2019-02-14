@@ -15,16 +15,16 @@ let _ =
 
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());
-      MainEditorSceneTool.createDefaultScene(sandbox, () => ());
+      MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
+        SceneTreeWidgetService.getWidget(),
       )
       |> StateLogicService.getAndSetEditorState;
 
       MainEditorSceneTreeTool.Select.selectGameObject(
         ~gameObject=
-          MainEditorSceneTool.getFirstBox(
+          MainEditorSceneTool.getFirstCube(
             StateEngineService.unsafeGetState(),
           ),
         (),

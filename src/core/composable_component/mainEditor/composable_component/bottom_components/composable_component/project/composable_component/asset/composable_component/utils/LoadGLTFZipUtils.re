@@ -1,14 +1,14 @@
-open AssetNodeType;
+open NodeAssetType;
 
 open WonderBsJszip;
 
 open Js.Promise;
 
 /* let isZipFile = file =>
-  switch (LoadAssetUtils.getUploadAssetType(file##name)) {
-  | LoadGLTFZip => true
-  | _ => false
-  }; */
+   switch (LoadAssetUtils.getUploadAssetType(file##name)) {
+   | LoadGLTFZip => true
+   | _ => false
+   }; */
 
 /* by makeglb
    https://github.com/sbtron/makeglb
@@ -226,7 +226,7 @@ finalBuffer
 
 let convertGLTFToGLB = (jsZipBlob, createJsZipFunc) => {
   let gltfJson = ref(None);
-  let outerDataMap = WonderCommonlib.HashMapService.createEmpty();
+  let outerDataMap = WonderCommonlib.MutableHashMapService.createEmpty();
 
   createJsZipFunc()
   |. Zip.loadAsync(`blob(jsZipBlob))
@@ -265,7 +265,7 @@ let convertGLTFToGLB = (jsZipBlob, createJsZipFunc) => {
                      |> Obj.magic
                      |> then_(content => {
                           outerDataMap
-                          |> WonderCommonlib.HashMapService.set(
+                          |> WonderCommonlib.MutableHashMapService.set(
                                FileNameService.getBaseName(relativePath),
                                content |> Js.Typed_array.Uint8Array.buffer,
                              )

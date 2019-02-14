@@ -43,7 +43,7 @@ let _ =
         );
 
         CurrentSelectSourceEditorService.setCurrentSelectSource(
-          EditorType.SceneTree,
+          SceneTreeWidgetService.getWidget(),
         )
         |> StateLogicService.getAndSetEditorState;
       });
@@ -107,11 +107,11 @@ let _ =
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
 
         CurrentSelectSourceEditorService.setCurrentSelectSource(
-          EditorType.SceneTree,
+          SceneTreeWidgetService.getWidget(),
         )
         |> StateLogicService.getAndSetEditorState;
       });
@@ -222,7 +222,7 @@ let _ =
         );
 
         CurrentSelectSourceEditorService.setCurrentSelectSource(
-          EditorType.SceneTree,
+          SceneTreeWidgetService.getWidget(),
         )
         |> StateLogicService.getAndSetEditorState;
       });

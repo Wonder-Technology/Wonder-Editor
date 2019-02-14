@@ -1,40 +1,129 @@
+open SceneTreeNodeType;
+
+open Wonderjs;
+
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
 
   type prepareTuple = unit;
   type dataTuple = (
-    Wonderjs.GameObjectType.gameObject,
-    Wonderjs.GameObjectType.gameObject,
+    GameObjectPrimitiveType.gameObject,
+    GameObjectPrimitiveType.gameObject,
+    sceneTreeDragType,
   );
   type return = unit;
 
-  let handleSelfLogic = ((store, dispatchFunc), (), (targetUid, dragedUid)) => {
-    let isShowChildrenMap =
-      SceneGraphUtils.buildIsShowChildrenMapFromStore(store)
-      |> WonderCommonlib.SparseMapService.set(targetUid, true);
+  let _handleDragIntoTarget =
+      (targetGameObject, draggedGameObject, engineState) => {
+    SceneTreeEditorService.setIsShowChildren(targetGameObject, true)
+    |> StateLogicService.getAndSetEditorState;
 
-    GameObjectUtils.setParentKeepOrder(targetUid, dragedUid)
-    |> StateLogicService.getAndRefreshEngineStateWithFunc;
+    engineState
+    |> HierarchyGameObjectEngineService.setParentKeepOrder(
+         targetGameObject,
+         draggedGameObject,
+       );
+  };
 
-    let editorState = StateEditorService.getState();
+  let _handleDragToBeSceneGameObjectChild =
+      (dragPosition, sceneGameObject, draggedGameObject, engineState) =>
+    switch (dragPosition) {
+    | DragIntoTarget =>
+      _handleDragIntoTarget(
+        sceneGameObject,
+        draggedGameObject,
+        engineState,
+      )
+
+    | DragBeforeTarget
+    | DragAfterTarget =>
+      let targetGameObject =
+        engineState
+        |> HierarchyGameObjectEngineService.getChildren(sceneGameObject)
+        |> ArrayService.unsafeGetFirst;
+      engineState
+      |> HierarchyGameObjectEngineService.setParentKeepOrder(
+           HierarchyGameObjectEngineService.getParentGameObject(
+             targetGameObject,
+             engineState,
+           )
+           |> OptionService.unsafeGet,
+           draggedGameObject,
+         )
+      |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
+           draggedGameObject,
+           targetGameObject,
+           Wonderjs.TransformType.Before,
+         );
+    };
+
+  let _handleDragToBeTargetGameObjectSib =
+      (dragPosition, targetGameObject, draggedGameObject, engineState) =>
+    switch (dragPosition) {
+    | DragBeforeTarget =>
+      engineState
+      |> HierarchyGameObjectEngineService.setParentKeepOrder(
+           HierarchyGameObjectEngineService.getParentGameObject(
+             targetGameObject,
+             engineState,
+           )
+           |> OptionService.unsafeGet,
+           draggedGameObject,
+         )
+      |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
+           draggedGameObject,
+           targetGameObject,
+           Wonderjs.TransformType.Before,
+         )
+
+    | DragIntoTarget =>
+      _handleDragIntoTarget(
+        targetGameObject,
+        draggedGameObject,
+        engineState,
+      )
+
+    | DragAfterTarget =>
+      engineState
+      |> HierarchyGameObjectEngineService.setParentKeepOrder(
+           HierarchyGameObjectEngineService.getParentGameObject(
+             targetGameObject,
+             engineState,
+           )
+           |> OptionService.unsafeGet,
+           draggedGameObject,
+         )
+      |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
+           draggedGameObject,
+           targetGameObject,
+           Wonderjs.TransformType.After,
+         )
+    };
+
+  let handleSelfLogic =
+      (
+        (uiState, dispatchFunc),
+        (),
+        (targetGameObject, draggedGameObject, dragPosition),
+      ) => {
     let engineState = StateEngineService.unsafeGetState();
 
-    dispatchFunc(
-      AppStore.SceneTreeAction(
-        SetSceneGraph(
-          Some(
-            SceneGraphUtils.getSceneGraphDataFromEngine((
-              editorState,
-              engineState,
-            ))
-            |> SceneGraphUtils.setIsShowChildrenByMap(isShowChildrenMap),
-          ),
-        ),
-      ),
-    )
-    |> ignore;
+    let engineState =
+      SceneEngineService.isSceneGameObject(targetGameObject)
+      |> StateLogicService.getEngineStateToGetData ?
+        _handleDragToBeSceneGameObjectChild(
+          dragPosition,
+          targetGameObject,
+          draggedGameObject,
+          engineState,
+        ) :
+        _handleDragToBeTargetGameObjectSib(
+          dragPosition,
+          targetGameObject,
+          draggedGameObject,
+          engineState,
+        );
 
-    editorState |> StateEditorService.setState |> ignore;
     engineState |> StateEngineService.setState |> ignore;
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))

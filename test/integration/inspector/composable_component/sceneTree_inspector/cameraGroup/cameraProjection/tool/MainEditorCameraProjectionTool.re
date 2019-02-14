@@ -5,12 +5,12 @@ let blurNear =
     (
       ~cameraProjection,
       ~value,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorCameraProjection.Method.blurNearEvent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     cameraProjection,
     value,
   );
@@ -19,12 +19,12 @@ let changeNearAndBlur =
     (
       ~cameraProjection,
       ~value,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
   MainEditorCameraProjection.Method.changeNear(cameraProjection, value);
-  blurNear(~store, ~dispatchFunc, ~cameraProjection, ~value, ());
+  blurNear(~uiState, ~dispatchFunc, ~cameraProjection, ~value, ());
 };
 
 let changeFar = (cameraProjection, value) =>
@@ -34,12 +34,12 @@ let blurFar =
     (
       ~cameraProjection,
       ~value,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorCameraProjection.Method.blurFarEvent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     cameraProjection,
     value,
   );
@@ -48,12 +48,12 @@ let changeFarAndBlur =
     (
       ~cameraProjection,
       ~value,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
   MainEditorCameraProjection.Method.changeFar(cameraProjection, value);
-  blurFar(~store, ~dispatchFunc, ~cameraProjection, ~value, ());
+  blurFar(~uiState, ~dispatchFunc, ~cameraProjection, ~value, ());
 };
 
 let changeFovy = (cameraProjection, value) =>
@@ -63,12 +63,12 @@ let blurFovy =
     (
       ~cameraProjection,
       ~value,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorCameraProjection.Method.blurFovyEvent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     cameraProjection,
     value,
   );
@@ -77,10 +77,10 @@ let changeFovyAndBlur =
     (
       ~cameraProjection,
       ~value,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
   MainEditorCameraProjection.Method.changeFovy(cameraProjection, value);
-  blurFovy(~store, ~dispatchFunc, ~cameraProjection, ~value, ());
+  blurFovy(~uiState, ~dispatchFunc, ~cameraProjection, ~value, ());
 };

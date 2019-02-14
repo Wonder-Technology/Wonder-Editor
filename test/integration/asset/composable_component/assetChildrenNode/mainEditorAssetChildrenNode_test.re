@@ -4,11 +4,9 @@ open Expect;
 
 open Expect.Operators;
 
-open CurrentNodeDataType;
-
 open Sinon;
 
-open AssetNodeType;
+open NodeAssetType;
 
 open Js.Promise;
 
@@ -28,8 +26,8 @@ let _ =
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
       StateEditorService.getState()
-      |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
-      |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
+      |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
+      |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
       |> StateEditorService.setState
       |> ignore;
     });
@@ -47,17 +45,14 @@ let _ =
           (),
         );
 
-        let {currentNodeId, nodeType} =
+        let currentNodeId =
           StateEditorService.getState()
-          |> CurrentNodeDataAssetEditorService.unsafeGetCurrentNodeData;
+          |> MainEditorAssetNodeTool.unsafeGetCurrentNodeId;
 
-        (currentNodeId, nodeType)
+        currentNodeId
         |>
-        expect == (
-                    MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
-                      assetTreeData,
-                    ),
-                    AssetNodeType.Texture,
+        expect == MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                    assetTreeData,
                   );
       });
 
@@ -77,7 +72,7 @@ let _ =
            expect == (
                        assetTreeData
                        |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonNodeId,
-                       AssetNodeType.Json,
+                       NodeAssetType.Json,
                      );
          }); */
 
@@ -100,16 +95,15 @@ let _ =
                   EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
                   resolve(.
                     {
-                      let {currentNodeId, nodeType} =
+                      let currentNodeId =
                         StateEditorService.getState()
-                        |> CurrentNodeDataAssetEditorService.unsafeGetCurrentNodeData;
+                        |> MainEditorAssetNodeTool.unsafeGetCurrentNodeId;
 
-                      (currentNodeId, nodeType)
+                      currentNodeId
                       |>
                       expect == (
                                   assetTreeData
-                                  |> MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId,
-                                  AssetNodeType.Folder,
+                                  |> MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId
                                 );
                     },
                   );
@@ -169,14 +163,19 @@ let _ =
                       );
                       resolve(.
                         {
-                          let currentNodeId =
-                            MainEditorAssetNodeTool.getCurrentNodeId();
+                          let editorState = StateEditorService.getState();
 
-                          let currentNodeParentId =
-                            CurrentNodeParentIdAssetEditorService.unsafeGetCurrentNodeParentId
-                            |> StateLogicService.getEditorState;
-
-                          currentNodeId |> expect == currentNodeParentId;
+                          NodeAssetService.isNodeEqualById(
+                            ~sourceNode=
+                              MainEditorAssetNodeTool.unsafeGetCurrentNode(
+                                editorState,
+                              ),
+                            ~targetNode=
+                              MainEditorAssetNodeTool.unsafeGetSelectedFolderNodeInAssetTree(
+                                editorState,
+                              ),
+                          )
+                          |> expect == true;
                         },
                       );
                     },
@@ -219,7 +218,7 @@ let _ =
 
           MainEditorAssetHeaderOperateNodeTool.addFolder();
 
-          AssetTreeUtils.setSpecificAssetTreeNodeIsShowChildrenFromEditorState(
+          OperateTreeAssetEditorService.setNodeIsShowChildren(
             addedFolderNodeId1,
             false,
           )
@@ -227,14 +226,13 @@ let _ =
 
           FolderBoxTool.onDoubleClick(~nodeId=addedFolderNodeId2, ());
 
-          let {isShowChildren}: AssetTreeNodeType.assetTreeNodeType =
-            MainEditorAssetTreeNodeTool.getSpecificTreeNode(
+          FolderNodeAssetService.getIsShowChildren(
+            OperateTreeAssetEditorService.unsafeFindNodeById(
               addedFolderNodeId1,
-            )
-            |> StateLogicService.getEditorState
-            |> OptionService.unsafeGet;
-
-          isShowChildren |> expect == true;
+              StateEditorService.getState(),
+            ),
+          )
+          |> expect == true;
         })
       )
     );

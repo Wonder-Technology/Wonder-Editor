@@ -15,14 +15,14 @@ let addOneBasicMaterial = () => {
 
   MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
-  /* let {materialComponent}: AssetNodeType.materialResultType =
+  /* let {materialComponent}: NodeAssetType.materialResultType =
      StateEditorService.getState()
      |> MaterialNodeMapAssetEditorService.unsafeGetResult(addedMaterialNodeId); */
   /* MainEditorMaterialTool.changeMaterial(
-       ~sourceMaterial=GameObjectTool.getCurrentGameObjectLightMaterial(),
-       ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+       ~sourceMaterial=GameObjectTool.getCurrentSceneTreeNodeLightMaterial(),
+       ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
        ~targetMaterial=materialComponent,
-       ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+       ~targetMaterialType=MaterialDataAssetType.LightMaterial,
        ~materialNodeId=Some(addedMaterialNodeId),
        (),
      ); */
@@ -37,8 +37,8 @@ let addOneBasicMaterial = () => {
 
   MaterialInspectorTool.changeMaterialType(
     ~material=materialComponent,
-    ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
-    ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
+    ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
+    ~targetMaterialType=MaterialDataAssetType.BasicMaterial,
     ~materialNodeId=addedMaterialNodeId,
     (),
   );

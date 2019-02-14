@@ -1,4 +1,4 @@
-open AssetMaterialDataType;
+open MaterialDataAssetType;
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
@@ -8,7 +8,7 @@ module CustomEventHandler = {
 
   let handleSelfLogic =
       (
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         (nodeId, materialComponent),
         (sourceMaterialType, targetMaterialType),
       ) => {

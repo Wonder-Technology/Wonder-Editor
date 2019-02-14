@@ -5,7 +5,6 @@ let convertToRecord = setting => {
   open Decode;
 
   let json = setting;
-
   {
     debug:
       json
@@ -22,6 +21,17 @@ let convertToRecord = setting => {
       |> optional(
            field("redo_undo", json =>
              {maxStackSize: json |> field("max_stack_size", int)}
+           ),
+         ),
+    hotKeys:
+      json
+      |> field(
+           "hotkeys",
+           array(json =>
+             {
+               name: json |> field("name", string),
+               values: json |> field("values", array(string)),
+             }
            ),
          ),
   };

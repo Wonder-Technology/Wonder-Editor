@@ -1,7 +1,7 @@
 let dragStart = (id, widget, dragImg, effectAllowd, event) => {
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);
 
-  DomHelper.stopPropagation(e);
+  EventHelper.stopPropagation(e);
   e##dataTransfer##setDragImage(
     dragImg |> DomHelperType.convertDomToJsObj,
     0,
@@ -14,30 +14,36 @@ let dragStart = (id, widget, dragImg, effectAllowd, event) => {
   |> StateLogicService.getAndSetEditorState;
 };
 
-let _isTreeNodeRelationValid = (targetId, startId, handleRelationErrorFunc) =>
+let _isTreeNodeRelationValid = (targetId, startId, checkNodeRelationFunc) =>
   switch (startId) {
-  | None => false
+  | None => (false, None)
   | Some(startId) =>
-    ! (
-      handleRelationErrorFunc(targetId, startId)
-      |> StateLogicService.getStateToGetData
-    )
+    let relationResult =
+      checkNodeRelationFunc(startId, targetId)
+      |> StateLogicService.getStateToGetData;
+
+    (
+      relationResult |> Result.RelationResult.isSuccess,
+      Some(relationResult),
+    );
   };
 
-let isTriggerDragEnter = (id, isWidgetFunc, handleRelationErrorFunc) => {
+let isValidForDragEnter = (id, isWidgetFunc, checkNodeRelationFunc) => {
   let (widget, startId) =
     StateEditorService.getState()
     |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-  isWidgetFunc(widget)
-  && _isTreeNodeRelationValid(id, startId, handleRelationErrorFunc);
+  ! isWidgetFunc(widget) ?
+    (false, None) :
+    _isTreeNodeRelationValid(id, startId, checkNodeRelationFunc);
 };
 
-let isTriggerDragDrop = (id, startId, isWidgetFunc, handleRelationErrorFunc) => {
+let isValidForDragDrop = (id, startId, isWidgetFunc, checkNodeRelationFunc) => {
   let (widget, _startId) =
     StateEditorService.getState()
     |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-  isWidgetFunc(widget)
-  && _isTreeNodeRelationValid(id, Some(startId), handleRelationErrorFunc);
+  ! isWidgetFunc(widget) ?
+    (false, None) :
+    _isTreeNodeRelationValid(id, Some(startId), checkNodeRelationFunc);
 };

@@ -1,30 +1,16 @@
-let getDispatch = () => Reductive.Store.dispatch(IndexStore.store);
+let getDispatch = UIStateService.getDispatch;
 
 let buildEmptyAppState = () => AppStore.state;
 
-let _buildSceneTreeAppState = sceneGraphData => {
+let _buildInspectorAppState = () => {
   let state = buildEmptyAppState();
   {
     ...state,
-    sceneTreeState: {
-      ...state.sceneTreeState,
-      sceneGraphData: Some(sceneGraphData),
-    },
-  };
-};
-let _buildSceneTreeAppStateWithInspectorState = sceneGraphData => {
-  let state = buildEmptyAppState();
-  {
-    ...state,
-    sceneTreeState: {
-      ...state.sceneTreeState,
-      sceneGraphData: Some(sceneGraphData),
-    },
     inspectorState: {
       ...state.inspectorState,
       showComponentMap:
         state.inspectorState.showComponentMap
-        |> SparseMapService.immutableSet(
+        |> WonderCommonlib.ImmutableSparseMapService.set(
              InspectorComponentType.Transform
              |> InspectorComponentType.convertComponentTypeToInt,
              false,
@@ -33,22 +19,8 @@ let _buildSceneTreeAppStateWithInspectorState = sceneGraphData => {
   };
 };
 
-let buildAppStateSceneGraphFromEngine = () =>
-  (
-    stateTuple =>
-      stateTuple
-      |> SceneGraphUtils.getSceneGraphDataFromEngine
-      |> _buildSceneTreeAppState
-  )
-  |> StateLogicService.getStateToGetData;
-
-let buildAppStateSceneGraphAndInspectorState = () =>
-  (
-    stateTuple =>
-      stateTuple
-      |> SceneGraphUtils.getSceneGraphDataFromEngine
-      |> _buildSceneTreeAppStateWithInspectorState
-  )
+let buildAppStateInspectorState = () =>
+  (stateTuple => _buildInspectorAppState())
   |> StateLogicService.getStateToGetData;
 
 let initScene = () => {
@@ -82,6 +54,7 @@ let initEditorAndEngineStateAndInitSceneWithJob =
       ~noWorkerJobRecord,
       ~isBuildFakeDom=true,
       ~isInitJob=true,
+      ~context=TestToolEngine.getDefaultContext(),
       (),
     ) => {
   TestToolEngine.createAndSetEngineState(
@@ -90,6 +63,7 @@ let initEditorAndEngineStateAndInitSceneWithJob =
     ~noWorkerJobRecord,
     ~isBuildFakeDom,
     ~isInitJob,
+    ~context,
     (),
   );
   initScene();

@@ -1,6 +1,6 @@
 open SettingType;
 
-open SceneType;
+open SceneTreeType;
 
 open AssetType;
 
@@ -18,13 +18,13 @@ open ConsoleType;
 
 open TransformType;
 
-type widgetType =
-  | SceneTree
-  | Asset;
+open WidgetType;
+
+open PickingType;
 
 type editorState = {
   settingRecord,
-  sceneRecord,
+  sceneTreeRecord,
   assetRecord,
   sceneViewRecord,
   gameViewRecord,
@@ -33,6 +33,7 @@ type editorState = {
   inspectorRecord,
   consoleRecord,
   transformRecord,
+  pickingRecord,
   currentDragSource: (option(widgetType), option(int)),
   currentSelectSource: option(widgetType),
   loopId: int,

@@ -9,15 +9,14 @@ type action =
   | BlurNav;
 
 module Method = {
-  let isCurrentNodeIdEqualRootId = editorState =>
-    switch (
-      editorState |> CurrentNodeDataAssetEditorService.getCurrentNodeData
-    ) {
+  let isCurrentNodeEqualRootNode = editorState =>
+    switch (editorState |> CurrentNodeIdAssetEditorService.getCurrentNodeId) {
     | None => true
-    | Some({currentNodeId}) =>
-      TreeAssetEditorService.isIdEqual(
+    | Some(currentNodeId) =>
+      NodeAssetService.isIdEqual(
         currentNodeId,
-        editorState |> TreeRootAssetEditorService.getRootTreeNodeId,
+        RootTreeAssetEditorService.getRootNode(editorState)
+        |> NodeAssetService.getNodeId(~node=_),
       )
     };
   let addFolder = AssetHeaderAddFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
@@ -33,26 +32,26 @@ let component = ReasonReact.reducerComponent("MainEditorAssetHeader");
 
 let _renderSelectNav =
     (
-      store: AppStore.appState,
+      uiState: AppStore.appState,
       dispatchFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <div className="item-content">
     <div
       className="content-section"
-      onClick=(_e => Method.addFolder((store, dispatchFunc), (), ()))>
+      onClick=(_e => Method.addFolder((uiState, dispatchFunc), (), ()))>
       <span className="section-header"> (DomHelper.textEl("Folder")) </span>
     </div>
     <div
       className="content-section"
-      onClick=(_e => Method.addMaterial((store, dispatchFunc), (), ()))>
+      onClick=(_e => Method.addMaterial((uiState, dispatchFunc), (), ()))>
       <div className="section-header"> (DomHelper.textEl("Material")) </div>
     </div>
   </div>;
 
 let _renderRemoveItem =
     (
-      store: AppStore.appState,
+      uiState: AppStore.appState,
       dispatchFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
@@ -60,11 +59,11 @@ let _renderRemoveItem =
     className="asset-header-item"
     onClick=(
       _e =>
-        Method.isCurrentNodeIdEqualRootId |> StateLogicService.getEditorState ?
-          () : Method.removeAssetNode((store, dispatchFunc), (), ())
+        Method.isCurrentNodeEqualRootNode |> StateLogicService.getEditorState ?
+          () : Method.removeAssetNode((uiState, dispatchFunc), (), ())
     )>
     (
-      Method.isCurrentNodeIdEqualRootId |> StateLogicService.getEditorState ?
+      Method.isCurrentNodeEqualRootNode |> StateLogicService.getEditorState ?
         <div className="item-notBeClick">
           <img src="./public/img/notRemove.png" />
         </div> :
@@ -76,7 +75,7 @@ let _renderRemoveItem =
 
 let render =
     (
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) =>
   <article key="assetHeader" className="wonder-asset-header">
@@ -86,10 +85,10 @@ let render =
       </div>
       (
         state.isSelectNav ?
-          _renderSelectNav(store, dispatchFunc, self) : ReasonReact.null
+          _renderSelectNav(uiState, dispatchFunc, self) : ReasonReact.null
       )
     </div>
-    (_renderRemoveItem(store, dispatchFunc, self))
+    (_renderRemoveItem(uiState, dispatchFunc, self))
     <div className="asset-header-item">
       <div className="item-canBeClick">
         <img src="./public/img/load.png" />
@@ -100,7 +99,7 @@ let render =
           onChange=(
             e =>
               Method.fileLoad(
-                (store, dispatchFunc),
+                (uiState, dispatchFunc),
                 WonderBsJszip.Zip.create,
                 e,
               )
@@ -122,7 +121,7 @@ let reducer = (action, state) =>
   | BlurNav => ReasonReact.Update({...state, isSelectNav: false})
   };
 
-let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
+let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
   initialState: () => {isSelectNav: false, streamSubscription: None},
   reducer,
@@ -138,7 +137,7 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
       },
       subscription => send(SetSubscription(subscription)),
     ),
-  render: self => render((store, dispatchFunc), self),
+  render: self => render((uiState, dispatchFunc), self),
   willUnmount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
     EventUtils.unmountStreamSubscription(state.streamSubscription),
 };

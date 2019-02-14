@@ -1,4 +1,5 @@
 open EditorType;
+
 open AssetType;
 
 type editorStateData = {

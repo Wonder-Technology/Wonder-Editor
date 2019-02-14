@@ -4,7 +4,7 @@ open Js.Typed_array;
 
 let _disposeAssets = () =>
   StateLogicService.getAndSetStateToGetData(
-    RemoveWholeAssetTreeAssetLogicService.deepDisposeAssetTreeRoot,
+    DisposeTreeAssetLogicService.disposeTree,
   );
 
 let _readHeader = dataView => {
@@ -42,12 +42,15 @@ let _initAssetTreeRoot = () => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
-  let (assetTree, editorState) =
-    editorState |> AssetTreeUtils.initRootAssetTree(_, engineState);
+  /* let (assetTree, editorState) =
+     editorState |> AssetTreeUtils.initRootAssetTree(_, engineState); */
 
   editorState
-  |> TreeRootAssetEditorService.setAssetTreeRoot(assetTree)
+  |> TreeAssetEditorService.createTree
   |> StateEditorService.setState
+  /* editorState
+     |> TreeRootAssetEditorService.setAssetTreeRoot(assetTree)
+     |> StateEditorService.setState */
   |> ignore;
 
   engineState |> StateEngineService.setState |> ignore;
@@ -74,7 +77,7 @@ let _checkMaterial = (gameObjectMaterials, type_, (editorState, engineState)) =>
   gameObjectMaterials |> Js.Array.sortInPlace;
 
   let materialAssets =
-    MaterialNodeMapAssetEditorService.getMaterialComponentsByType(
+    MaterialNodeAssetEditorService.getMaterialComponentsByType(
       type_,
       editorState,
     );
@@ -113,7 +116,7 @@ let _checkMaterials = (where, gameObjects) =>
                   gameObjects,
                   engineState,
                 ),
-                AssetMaterialDataType.LightMaterial,
+                MaterialDataAssetType.LightMaterial,
                 (editorState, engineState),
               )
               && _checkMaterial(
@@ -121,7 +124,7 @@ let _checkMaterials = (where, gameObjects) =>
                      gameObjects,
                      engineState,
                    ),
-                   AssetMaterialDataType.BasicMaterial,
+                   MaterialDataAssetType.BasicMaterial,
                    (editorState, engineState),
                  )
             )
@@ -136,7 +139,7 @@ let _checkSceneMaterials = () =>
   _checkMaterials(
     "scene gameObjects",
     SceneEngineService.getSceneGameObject(StateEngineService.unsafeGetState())
-    |> GameObjectEngineService.getAllGameObjects(
+    |> HierarchyGameObjectEngineService.getAllGameObjects(
          _,
          StateEngineService.unsafeGetState(),
        ),
@@ -174,7 +177,7 @@ let _checkTextures = (where, gameObjects) =>
             gameObjectTextures |> Js.Array.sortInPlace;
 
             let textureAssets =
-              TextureNodeMapAssetEditorService.getTextureComponents(
+              TextureNodeAssetEditorService.getTextureComponents(
                 StateEditorService.getState(),
               );
 
@@ -192,7 +195,7 @@ let _checkSceneTextures = () =>
   _checkTextures(
     "scene gameObjects",
     SceneEngineService.getSceneGameObject(StateEngineService.unsafeGetState())
-    |> GameObjectEngineService.getAllGameObjects(
+    |> HierarchyGameObjectEngineService.getAllGameObjects(
          _,
          StateEngineService.unsafeGetState(),
        ),
@@ -205,13 +208,13 @@ let _init = allWDBGameObjectArrRef => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
-  let engineState = engineState |> ShaderEngineService.clearShaderCache;
+  let engineState = engineState |> ShaderEngineService.clearInitShaderCache;
 
   let engineState = _reInitDefaultMaterials(editorState, engineState);
 
   ArrayService.fastConcat(
     allWDBGameObjectArrRef^,
-    GameObjectEngineService.getAllGameObjects(
+    HierarchyGameObjectEngineService.getAllGameObjects(
       SceneEngineService.getSceneGameObject(engineState),
       engineState,
     ),
@@ -228,7 +231,7 @@ let _import = result => {
 
   StateEngineService.unsafeGetState()
   |> JobEngineService.execDisposeJob
-  |> ReallocateCPUMemoryJobUtils.reallocate(0.1)
+  |> ReallocateCPUMemoryJob.reallocate(0.1)
   |> StateEngineService.setState
   |> ignore;
 
@@ -242,12 +245,12 @@ let _import = result => {
 
   let materialMapTupleRef =
     ref((
-      WonderCommonlib.SparseMapService.createEmpty(),
-      WonderCommonlib.SparseMapService.createEmpty(),
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
     ));
 
   let asbImageUint8ArrayDataMapRef =
-    ref(WonderCommonlib.SparseMapService.createEmpty());
+    ref(WonderCommonlib.ImmutableSparseMapService.createEmpty());
 
   let allWDBGameObjectArrRef = ref([||]);
 
@@ -308,7 +311,7 @@ let _import = result => {
                           ),
                           () =>
                           _sceneGameObjectImageUint8ArrayDataMap
-                          |> SparseMapService.length == 0
+                          |> WonderCommonlib.ImmutableSparseMapService.length == 0
                         )
                       )
                     )
@@ -319,7 +322,7 @@ let _import = result => {
               let engineState = StateEngineService.unsafeGetState();
 
               ImportPackageRelateGameObjectAndAssetUtils.relateSceneWDBGameObjectsAndAssets(
-                GameObjectEngineService.getAllGameObjects(
+                HierarchyGameObjectEngineService.getAllGameObjects(
                   sceneGameObject,
                   engineState,
                 ),
@@ -369,26 +372,15 @@ let _readFile = (fileInfo: FileType.fileInfoType, resolve) => {
         name: fileInfo.name,
         type_: LoadAssetUtils.getUploadPackageType(fileInfo.name),
         result,
-      }: AssetNodeType.nodeResultType,
+      }: NodeAssetType.nodeResultType,
     )
   );
 
   LoadAssetUtils.readPakckageByTypeSync(reader, fileInfo);
 };
 
-let _dispatch = dispatchFunc => {
-  dispatchFunc(
-    AppStore.SceneTreeAction(
-      SetSceneGraph(
-        Some(
-          SceneGraphUtils.getSceneGraphDataFromEngine
-          |> StateLogicService.getStateToGetData,
-        ),
-      ),
-    ),
-  );
+let _dispatch = dispatchFunc =>
   dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])));
-};
 
 let importPackage = (dispatchFunc, event) => {
   let editorState = StateEditorService.getState();
@@ -397,7 +389,7 @@ let importPackage = (dispatchFunc, event) => {
     _handleIsRun(dispatchFunc, editorState) :
     {
       let e = ReactEventType.convertReactFormEventToJsEvent(event);
-      DomHelper.preventDefault(e);
+      EventHelper.preventDefault(e);
 
       switch (e##target##files |> Js.Dict.values |> ArrayService.getFirst) {
       | None =>
@@ -418,7 +410,7 @@ let importPackage = (dispatchFunc, event) => {
           ),
         )
         |> WonderBsMost.Most.flatMap(
-             (fileResult: AssetNodeType.nodeResultType) =>
+             (fileResult: NodeAssetType.nodeResultType) =>
              _import(fileResult.result)
            )
         |> WonderBsMost.Most.drain

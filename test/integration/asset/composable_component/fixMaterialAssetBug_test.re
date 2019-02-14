@@ -18,7 +18,7 @@ let _ =
 
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -30,8 +30,8 @@ let _ =
             MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
           let addedMaterialNodeId = MainEditorAssetIdTool.getNewAssetId();
           let engineState = StateEngineService.unsafeGetState();
-          let gameObject1 = MainEditorSceneTool.getFirstBox(engineState);
-          let gameObject2 = MainEditorSceneTool.getSecondBox(engineState);
+          let gameObject1 = MainEditorSceneTool.getFirstCube(engineState);
+          let gameObject2 = MainEditorSceneTool.getSecondCube(engineState);
           let sourceMaterial1 =
             GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
               gameObject1,
@@ -53,18 +53,18 @@ let _ =
 
           MainEditorMaterialTool.changeMaterial(
             ~sourceMaterial=sourceMaterial1,
-            ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+            ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
             ~targetMaterial=materialComponent,
-            ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+            ~targetMaterialType=MaterialDataAssetType.LightMaterial,
             ~gameObject=gameObject1,
             ~materialNodeId=Some(addedMaterialNodeId),
             (),
           );
           MainEditorMaterialTool.changeMaterial(
             ~sourceMaterial=sourceMaterial2,
-            ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+            ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
             ~targetMaterial=materialComponent,
-            ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+            ~targetMaterialType=MaterialDataAssetType.LightMaterial,
             ~gameObject=gameObject2,
             ~materialNodeId=Some(addedMaterialNodeId),
             (),
@@ -93,17 +93,19 @@ let _ =
               let gameObject = GameObjectTool.unsafeGetCurrentSceneTreeNode();
 
               MainEditorAssetHeaderOperateNodeTool.addMaterial();
-              let {materialComponent}: AssetNodeType.materialResultType =
-                StateEditorService.getState()
-                |> MaterialNodeMapAssetEditorService.unsafeGetResult(
-                     addedMaterialNodeId,
-                   );
+
+              let materialComponent =
+                MainEditorAssetMaterialNodeTool.getMaterialComponent(
+                  ~nodeId=addedMaterialNodeId,
+                  (),
+                );
+
               MainEditorMaterialTool.changeMaterial(
                 ~sourceMaterial=
-                  GameObjectTool.getCurrentGameObjectLightMaterial(),
-                ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
+                  GameObjectTool.getCurrentSceneTreeNodeLightMaterial(),
+                ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
                 ~targetMaterial=materialComponent,
-                ~targetMaterialType=AssetMaterialDataType.LightMaterial,
+                ~targetMaterialType=MaterialDataAssetType.LightMaterial,
                 ~gameObject,
                 ~materialNodeId=Some(addedMaterialNodeId),
                 (),
@@ -111,12 +113,13 @@ let _ =
 
               MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
 
-              let {type_}: AssetNodeType.materialResultType =
-                StateEditorService.getState()
-                |> MaterialNodeMapAssetEditorService.unsafeGetResult(
-                     addedMaterialNodeId,
-                   );
-              type_ |> expect == AssetMaterialDataType.BasicMaterial;
+              let type_ =
+                MainEditorAssetMaterialNodeTool.getMaterialType(
+                  ~nodeId=addedMaterialNodeId,
+                  (),
+                );
+
+              type_ |> expect == MaterialDataAssetType.BasicMaterial;
             })
           );
 
@@ -143,11 +146,12 @@ let _ =
               MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
               MainEditorLightMaterialTool.changeMaterialTypeToBeLightMaterial();
 
-              let {type_}: AssetNodeType.materialResultType =
-                StateEditorService.getState()
-                |> MaterialNodeMapAssetEditorService.unsafeGetResult(
-                     addedMaterialNodeId,
-                   );
+              let type_ =
+                MainEditorAssetMaterialNodeTool.getMaterialType(
+                  ~nodeId=addedMaterialNodeId,
+                  (),
+                );
+
               let engineState = StateEngineService.unsafeGetState();
               (
                 type_,
@@ -156,7 +160,7 @@ let _ =
                   engineState,
                 ),
               )
-              |> expect == (AssetMaterialDataType.LightMaterial, true);
+              |> expect == (MaterialDataAssetType.LightMaterial, true);
             })
           );
         });
@@ -172,8 +176,8 @@ let _ =
 
             MaterialInspectorTool.changeMaterialType(
               ~material=materialComponent,
-              ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
-              ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
+              ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
+              ~targetMaterialType=MaterialDataAssetType.BasicMaterial,
               ~materialNodeId=addedMaterialNodeId,
               (),
             );
@@ -212,8 +216,8 @@ let _ =
 
                 MaterialInspectorTool.changeMaterialType(
                   ~material=materialComponent,
-                  ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
-                  ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
+                  ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
+                  ~targetMaterialType=MaterialDataAssetType.BasicMaterial,
                   ~materialNodeId=addedMaterialNodeId,
                   (),
                 );
@@ -257,8 +261,8 @@ let _ =
 
                 MaterialInspectorTool.changeMaterialType(
                   ~material=materialComponent,
-                  ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
-                  ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
+                  ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
+                  ~targetMaterialType=MaterialDataAssetType.BasicMaterial,
                   ~materialNodeId=addedMaterialNodeId,
                   (),
                 );
@@ -338,8 +342,8 @@ let _ =
 
                 MaterialInspectorTool.changeMaterialType(
                   ~material=materialComponent,
-                  ~sourceMaterialType=AssetMaterialDataType.LightMaterial,
-                  ~targetMaterialType=AssetMaterialDataType.BasicMaterial,
+                  ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
+                  ~targetMaterialType=MaterialDataAssetType.BasicMaterial,
                   ~materialNodeId=addedMaterialNodeId2,
                   (),
                 );
@@ -411,7 +415,7 @@ let _ =
                 );
                 MainEditorSceneTool.createDefaultScene(
                   sandbox,
-                  MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+                  MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
                 );
 
                 let ((gameObject1, gameObject2), sourceMaterialAsset, _) =
@@ -442,11 +446,11 @@ let _ =
 
                   MainEditorLightMaterialTool.changeMaterialTypeToBeLightMaterial();
 
-                  let {type_}: AssetNodeType.materialResultType =
-                    StateEditorService.getState()
-                    |> MaterialNodeMapAssetEditorService.unsafeGetResult(
-                         addedMaterialNodeId,
-                       );
+                  let type_ =
+                    MainEditorAssetMaterialNodeTool.getMaterialType(
+                      ~nodeId=addedMaterialNodeId,
+                      (),
+                    );
                   let engineState = StateEngineService.unsafeGetState();
                   (
                     type_,
@@ -455,7 +459,7 @@ let _ =
                       engineState,
                     ),
                   )
-                  |> expect == (AssetMaterialDataType.LightMaterial, true);
+                  |> expect == (MaterialDataAssetType.LightMaterial, true);
                 })
               );
             },

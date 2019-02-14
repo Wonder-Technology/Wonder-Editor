@@ -51,7 +51,7 @@ let _ =
           sandbox,
           BuildComponentForCurryTool.buildPointLight,
           (
-            GameObjectTool.getCurrentGameObjectPointLightComponent,
+            GameObjectTool.getCurrentSceneTreeNodePointLightComponent,
             MainEditorPointLightTool.changeColor,
             PointLightEngineService.getPointLightColor,
           ),
@@ -74,7 +74,7 @@ let _ =
         describe("test change point light intensity", () =>
           test("test change intensity should set into engine", () => {
             let currentGameObjectPointLightComponent =
-              GameObjectTool.getCurrentGameObjectPointLightComponent();
+              GameObjectTool.getCurrentSceneTreeNodePointLightComponent();
             let value = 10.1;
 
             MainEditorPointLightTool.changeIntensity(
@@ -94,7 +94,7 @@ let _ =
         describe("test change point light constant", () =>
           test("test change constant should set into engine", () => {
             let currentGameObjectPointLightComponent =
-              GameObjectTool.getCurrentGameObjectPointLightComponent();
+              GameObjectTool.getCurrentSceneTreeNodePointLightComponent();
             let value = 10.1;
 
             MainEditorPointLightTool.changeConstant(
@@ -113,7 +113,7 @@ let _ =
         describe("test change point light linear", () =>
           test("test change linear should set into engine", () => {
             let currentGameObjectPointLightComponent =
-              GameObjectTool.getCurrentGameObjectPointLightComponent();
+              GameObjectTool.getCurrentSceneTreeNodePointLightComponent();
             let value = 10.1;
 
             MainEditorPointLightTool.changeLinear(
@@ -132,7 +132,7 @@ let _ =
         describe("test change point light quadratic", () =>
           test("test change quadratic should set into engine", () => {
             let currentGameObjectPointLightComponent =
-              GameObjectTool.getCurrentGameObjectPointLightComponent();
+              GameObjectTool.getCurrentSceneTreeNodePointLightComponent();
             let value = 10.1;
 
             MainEditorPointLightTool.changeQuadratic(
@@ -151,7 +151,7 @@ let _ =
         describe("test change point light range", () =>
           test("test change range should set into engine", () => {
             let currentGameObjectPointLightComponent =
-              GameObjectTool.getCurrentGameObjectPointLightComponent();
+              GameObjectTool.getCurrentSceneTreeNodePointLightComponent();
             let value = 10.1;
 
             MainEditorPointLightTool.changeRange(

@@ -1,23 +1,27 @@
 open EditorType;
 
-open AssetNodeType;
+open NodeAssetType;
 
-let getResult = (nodeId, editorState) =>
-  editorState.assetRecord |> TextureNodeMapAssetService.getResult(nodeId);
+/* let getResult = (nodeId, editorState) =>
+   editorState.assetRecord |> TextureNodeMapAssetService.getResult(nodeId); */
 
-let getTextureComponent = (nodeId, editorState) =>
-  (getResult(nodeId, editorState) |> OptionService.unsafeGet).
-    textureComponent;
+let getTextureComponent = (nodeId, editorState) => {
+  let {textureComponent} =
+    OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
+    |> TextureNodeAssetService.getNodeData;
 
-let setTextureName = (nodeId, name, editorState) => {
+  textureComponent;
+};
+
+let setTextureImageName = (nodeId, name, editorState) => {
   let textureComponent = getTextureComponent(nodeId, editorState);
 
   editorState
-  |> ImageNodeMapAssetEditorService.setResult(
+  |> ImageDataMapAssetEditorService.setData(
        textureComponent,
        {
          ...
-           ImageNodeMapAssetEditorService.unsafeGetResult(
+           ImageDataMapAssetEditorService.unsafeGetData(
              textureComponent,
              editorState,
            ),
@@ -26,27 +30,19 @@ let setTextureName = (nodeId, name, editorState) => {
      );
 };
 
-let hasTextureComponent = (material, editorState) =>
-  TextureNodeMapAssetEditorService.getValidValues(editorState)
-  |> Js.Array.find(({textureComponent}: AssetNodeType.textureResultType) =>
-       JudgeTool.isEqual(textureComponent, material)
-     )
-  |> Js.Option.isSome;
+let hasTextureComponent = (texture, editorState) =>
+  TextureNodeAssetEditorService.getTextureComponents(editorState)
+  |> Js.Array.includes(texture);
 
 let findTextureNodeIdByTextureComponent = (texture, editorState) =>
-  switch (
-    editorState
-    |> TextureNodeMapAssetEditorService.getTextureNodeMap
-    |> SparseMapService.getValidDataArr
-    |> Js.Array.find(
-         ((_, {textureComponent}: AssetNodeType.textureResultType)) =>
-         textureComponent === texture
-       )
-  ) {
-  | None => None
-  | Some((textureNodeId, _)) => Some(textureNodeId)
-  };
+  TextureNodeAssetEditorService.findAllTextureNodes(editorState)
+  |> Js.Array.find(node => {
+       let {textureComponent}: NodeAssetType.textureNodeData =
+         TextureNodeAssetService.getNodeData(node);
 
-  let buildTextureAssetName= (imageName) => FileNameService.getBaseName(
-                                            imageName,
-                                          )
+       textureComponent === texture;
+     })
+  |> Js.Option.map((. node) => NodeAssetService.getNodeId(~node));
+
+let buildTextureAssetName = imageName =>
+  FileNameService.getBaseName(imageName);

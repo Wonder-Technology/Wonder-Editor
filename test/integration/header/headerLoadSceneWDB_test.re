@@ -82,7 +82,7 @@ let _ =
         )
         |> then_(_ =>
              BuildComponentTool.buildSceneTree(
-               TestTool.buildAppStateSceneGraphFromEngine(),
+               TestTool.buildEmptyAppState(),
              )
              |> ReactTestTool.createSnapshotAndMatch
              |> resolve
@@ -108,7 +108,7 @@ let _ =
              );
         };
 
-        testPromise("new scene->box->glsl should has no light count", () =>
+        testPromise("new scene->cube->glsl should has no light count", () =>
           _prepare((shaderSourceCountBeforeLoadSceneWDB, glShaderSource) =>
             (
               GLSLToolEngine.contain(

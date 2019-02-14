@@ -8,12 +8,12 @@ let setCurrentCamera =
     (
       ~cameraView,
       ~event=buildEvent(true),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorCameraView.Method.setCurrentCamera(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     cameraView,
     event,
   );

@@ -8,7 +8,7 @@ open Expect.Operators;
 
 open Sinon;
 
-open AssetTreeNodeType;
+open NodeAssetType;
 
 let _ =
   describe("MainEditorAssetHeader->add folder", () => {
@@ -18,7 +18,7 @@ let _ =
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
 
-      MainEditorSceneTool.createDefaultScene(sandbox, () => ());
+      MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
 
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
@@ -44,13 +44,15 @@ let _ =
 
           MainEditorAssetHeaderOperateNodeTool.addFolder();
 
-          let {parentFolderNodeId}: AssetNodeType.folderResultType =
-            StateEditorService.getState()
-            |> FolderNodeMapAssetEditorService.unsafeGetResult(
-                 addedFolderNodeId,
-               );
+          let editorState = StateEditorService.getState();
 
-          parentFolderNodeId
+          MainEditorAssetTreeTool.findNodeParentId(
+            OperateTreeAssetEditorService.unsafeFindNodeById(
+              addedFolderNodeId,
+              editorState,
+            ),
+            editorState,
+          )
           |> OptionService.unsafeGet
           |>
           expect == MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getRootNodeId(
@@ -87,6 +89,28 @@ let _ =
           MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
 
         MainEditorAssetHeaderOperateNodeTool.addFolder();
+        MainEditorAssetHeaderOperateNodeTool.addFolder();
+        MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+        BuildComponentTool.buildAssetTree()
+        |> ReactTestTool.createSnapshotAndMatch;
+      });
+      test(
+        "test select folder and add the same name folder, the name should add postfix",
+        () => {
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
+
+        let rootNodeId =
+          MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getRootNodeId(
+            assetTreeData,
+          );
+
+        MainEditorAssetTreeTool.Select.selectFolderNode(
+          ~nodeId=rootNodeId,
+          (),
+        );
+
         MainEditorAssetHeaderOperateNodeTool.addFolder();
         MainEditorAssetHeaderOperateNodeTool.addFolder();
 

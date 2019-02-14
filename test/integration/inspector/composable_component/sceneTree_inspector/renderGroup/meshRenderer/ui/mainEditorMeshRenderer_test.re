@@ -4,7 +4,7 @@ open Expect;
 
 open Expect.Operators;
 
-open AssetNodeType;
+open NodeAssetType;
 
 open Sinon;
 
@@ -21,7 +21,7 @@ let _ =
       beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         )
       );
       describe("test set drawMode to Lines", () => {
@@ -39,7 +39,7 @@ let _ =
 
           MainEditorMeshRendererTool.changeMode(~value=lineType, ());
 
-          let meshRenderer = GameObjectTool.getCurrentGameObjectMeshRenderer();
+          let meshRenderer = GameObjectTool.getCurrentSceneTreeNodeMeshRenderer();
 
           MeshRendererEngineService.getDrawMode(meshRenderer)
           |> StateLogicService.getEngineStateToGetData
@@ -61,7 +61,7 @@ let _ =
 
           MainEditorMeshRendererTool.changeMode(~value=pointType, ());
 
-          let meshRenderer = GameObjectTool.getCurrentGameObjectMeshRenderer();
+          let meshRenderer = GameObjectTool.getCurrentSceneTreeNodeMeshRenderer();
 
           MeshRendererEngineService.getDrawMode(meshRenderer)
           |> StateLogicService.getEngineStateToGetData
@@ -85,7 +85,7 @@ let _ =
 
           MainEditorMeshRendererTool.changeMode(~value=triangleFanType, ());
 
-          let meshRenderer = GameObjectTool.getCurrentGameObjectMeshRenderer();
+          let meshRenderer = GameObjectTool.getCurrentSceneTreeNodeMeshRenderer();
 
           MeshRendererEngineService.getDrawMode(meshRenderer)
           |> StateLogicService.getEngineStateToGetData

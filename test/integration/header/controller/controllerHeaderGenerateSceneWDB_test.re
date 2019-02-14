@@ -32,7 +32,7 @@ let _ =
       LoadTool.buildFakeLoadImage(.);
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
+        SceneTreeWidgetService.getWidget(),
       )
       |> StateLogicService.getAndSetEditorState;
 
@@ -56,7 +56,7 @@ let _ =
       "fix bind arcballCameraController event bug: package should bind event if any basicCameraView is active",
       () => {
         let _getIsBindLength = (gameObject, engineState) =>
-          GameObjectEngineService.getAllGameObjects(gameObject, engineState)
+          HierarchyGameObjectEngineService.getAllGameObjects(gameObject, engineState)
           |> GameObjectEngineService.getAllArcballCameraControllers(
                _,
                engineState,
@@ -73,13 +73,13 @@ let _ =
           MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
 
           let basicCameraView =
-            GameObjectTool.getCurrentGameObjectBasicCameraView();
+            GameObjectTool.getCurrentSceneTreeNodeBasicCameraView();
 
           BasicCameraViewEngineService.activeBasicCameraView(basicCameraView)
           |> StateLogicService.getAndSetEngineState;
 
           let arcballCameraController =
-            GameObjectTool.getCurrentGameObjectArcballCamera();
+            GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
 
           controlFunc();
 
@@ -129,7 +129,7 @@ let _ =
           test("should unbind after package", () => {
             MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
             let basicCameraView =
-              GameObjectTool.getCurrentGameObjectBasicCameraView();
+              GameObjectTool.getCurrentSceneTreeNodeBasicCameraView();
             BasicCameraViewEngineService.activeBasicCameraView(
               basicCameraView,
             )

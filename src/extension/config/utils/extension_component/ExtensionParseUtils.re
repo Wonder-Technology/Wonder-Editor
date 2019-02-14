@@ -94,7 +94,7 @@ let _convertdRecord = (extensionObj) => {
   didMount: extensionObj##didMount
 };
 
-let extensionPanelComponent = (componentName, extensionText, store) => {
+let extensionPanelComponent = (componentName, extensionText, uiState) => {
   let extensionRecord = _buildExtensionRecord(extensionText);
   _getExtensionPanels(extensionRecord)
   |> Js.Array.map((panel: panelType) => parsePanelTypeToJsObj(panel))
@@ -113,7 +113,7 @@ let extensionPanelComponent = (componentName, extensionText, store) => {
                  key=(getRandomKey())
                  record
                  name=(_getExtensionName(extensionRecord))
-                 store
+                 uiState
                />
            )
       }

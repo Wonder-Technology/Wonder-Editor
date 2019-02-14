@@ -10,7 +10,7 @@ let isDefaultLightMaterial = (material, defaultMaterialName, engineState) =>
 
 let isDefaultMaterial = (material, type_, (editorState, engineState)) =>
   switch (type_) {
-  | AssetMaterialDataType.BasicMaterial =>
+  | MaterialDataAssetType.BasicMaterial =>
     isDefaultBasicMaterial(
       material,
       MaterialDataAssetEditorService.unsafeGetDefaultBasicMaterial(
@@ -20,7 +20,7 @@ let isDefaultMaterial = (material, type_, (editorState, engineState)) =>
       engineState,
     )
 
-  | AssetMaterialDataType.LightMaterial =>
+  | MaterialDataAssetType.LightMaterial =>
     isDefaultLightMaterial(
       material,
       MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial(
@@ -32,6 +32,6 @@ let isDefaultMaterial = (material, type_, (editorState, engineState)) =>
   };
 
 /* let getGameObjectMaterialType = (gameObject, engineState) => {
-       GameObjectComponentEngineService.hasBasicMaterialComponent(gameObject, engineState) ? AssetMaterialDataType.BasicMaterial :
+       GameObjectComponentEngineService.hasBasicMaterialComponent(gameObject, engineState) ? MaterialDataAssetType.BasicMaterial :
    GameObjectComponentEngineService.hasBasicMaterialComponent(gameObject, engineState)
      } */

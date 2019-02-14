@@ -87,12 +87,22 @@ let _ =
 
           let addedMaterialNodeId = MaterialAssetTool.addOneLightMaterial();
 
-          let newName =
-            AssetNodeUtils.getAssetNodeTotalName(
-              AssetNodeType.Material,
+          let editorState = StateEditorService.getState();
+          let engineState = StateEngineService.unsafeGetState();
+
+          let {materialComponent, type_}: NodeAssetType.materialNodeData =
+            OperateTreeAssetEditorService.unsafeFindNodeById(
               addedMaterialNodeId,
+              editorState,
             )
-            |> StateLogicService.getStateToGetData;
+            |> MaterialNodeAssetService.getNodeData;
+
+          let newName =
+            NodeNameAssetLogicService.getMaterialNodeName(
+              ~material=materialComponent,
+              ~type_,
+              ~engineState,
+            );
 
           AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
             ~nodeId=addedMaterialNodeId,

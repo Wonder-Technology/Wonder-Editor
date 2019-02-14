@@ -4,13 +4,13 @@ let handleSceneWDB = wdbArrayBuffer =>
   SceneWDBUtils.importSceneWDB(wdbArrayBuffer)
   |> WonderBsMost.Most.tap(((gameObject, _)) =>
        StateEngineService.unsafeGetState()
-       |> ShaderEngineService.clearShaderCache
+       |> ShaderEngineService.clearInitShaderCache
        |> GameObjectEngineService.initAllGameObjects(gameObject)
        |> StateLogicService.refreshEngineState
      );
 
 let _getUploadAssetType = name => {
-  open AssetNodeType;
+  open NodeAssetType;
 
   let extname = FileNameService.getExtName(name);
 
@@ -35,11 +35,11 @@ let _readWDBByTypeSync = (reader, fileInfo: FileType.fileInfoType) =>
   FileReader.readAsArrayBuffer(reader, fileInfo.file);
 
 let load = (dispatchFunc, event) => {
-  open AssetNodeType;
+  open NodeAssetType;
   open FileType;
 
   let e = ReactEventType.convertReactFormEventToJsEvent(event);
-  DomHelper.preventDefault(e);
+  EventHelper.preventDefault(e);
 
   switch (
     e##target##files
@@ -80,21 +80,10 @@ let load = (dispatchFunc, event) => {
          |> handleSceneWDB
        )
     |> WonderBsMost.Most.drain
-    |> then_(_ => {
-         dispatchFunc(
-           AppStore.SceneTreeAction(
-             SetSceneGraph(
-               Some(
-                 SceneGraphUtils.getSceneGraphDataFromEngine
-                 |> StateLogicService.getStateToGetData,
-               ),
-             ),
-           ),
-         );
-
+    |> then_(_ =>
          dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))
-         |> resolve;
-       })
+         |> resolve
+       )
   };
 };
 

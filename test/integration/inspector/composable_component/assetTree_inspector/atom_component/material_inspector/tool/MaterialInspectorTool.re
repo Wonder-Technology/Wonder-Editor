@@ -4,12 +4,12 @@ let changeMaterialType =
       ~sourceMaterialType,
       ~targetMaterialType,
       ~materialNodeId,
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MaterialInspector.Method.changeMaterialType(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     (materialNodeId, material),
     (sourceMaterialType, targetMaterialType),
   );

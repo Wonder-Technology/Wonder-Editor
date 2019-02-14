@@ -1,13 +1,13 @@
 .wonder-controller-component {
     width: 100%;
-    height: 8%;
+    height: 45px;
     .header-controller {
         height: 100%;
         background-color: #444444;
         display: flex;
-        .controller-transform {
+        .controller-ambient {
             flex: initial;
-            width: 48%;
+            width: 18%;
             height: 100%;
             .header-item {
                 display: flex;
@@ -44,6 +44,59 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        }
+        .controller-transform {
+            flex: initial;
+            width: 30%;
+            height: 100%;
+            .header-item {
+                display: flex;
+                flex: initial;
+                align-items: center;
+                height: 100%;
+                flex-direction: row;
+                .component-item {
+                    flex: initial;
+                    display: flex;
+                    flex-direction: row;
+                    margin-left: 10px;
+                    align-items: center;
+                    justify-content: center;
+                    .transform-gizmo-switch {
+                        flex: initial;
+                        display: flex;
+                        flex-direction: row;
+                        margin-left: 10px;
+                        align-items: center;
+                        justify-content: center;
+                        .translation {
+                            background-image: url("../img/translation.png")
+                        }
+                        .rotation {
+                            background-image: url("../img/rotation.png")
+                        }
+                        .scale {
+                            background-image: url("../img/scale.png")
+                        }
+                        .select {
+                            background-color: white;
+                            background-size: 100%;
+                            width: 30px;
+                            height: 30px;
+                        }
+                        .not-select {
+                            background-color: gray;
+                            background-size: 100%;
+                            width: 30px;
+                            height: 30px;
+                        }
+                    }
+                    ;
+                    .transform-gizmo-coordinate-system-switch {
+                        margin-left: 30px
                     }
                 }
             }

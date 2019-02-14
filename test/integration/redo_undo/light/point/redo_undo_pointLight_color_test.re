@@ -12,7 +12,7 @@ let _ =
 
     let _changeColor = color => {
       let currentGameObjectPointLightComponent =
-        GameObjectTool.getCurrentGameObjectPointLightComponent();
+        GameObjectTool.getCurrentSceneTreeNodePointLightComponent();
 
       let sourceColor =
         MainEditorPointLightTool.getColor(

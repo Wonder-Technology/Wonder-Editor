@@ -61,7 +61,7 @@ let generateWDBForWPK = (sceneGameObject, imageUint8ArrayMap, engineState) =>
         },
         (. geometry, engineState) =>
           Uint16Array.make([|
-            IndicesGeometryMainService.getIndices(. geometry, engineState)
+            IndicesGeometryMainService.getIndices16(. geometry, engineState)
             |> Uint16Array.length,
           |]),
         (. geometry, engineState) =>
@@ -85,7 +85,7 @@ let generateWDBForASB = (sceneGameObject, imageUint8ArrayMap, engineState) =>
         VerticesGeometryMainService.getVertices,
         NormalsGeometryMainService.getNormals,
         TexCoordsGeometryMainService.getTexCoords,
-        IndicesGeometryMainService.getIndices,
+        IndicesGeometryMainService.getIndices16,
         IndicesGeometryMainService.getIndices32,
       ),
       imageUint8Array =>

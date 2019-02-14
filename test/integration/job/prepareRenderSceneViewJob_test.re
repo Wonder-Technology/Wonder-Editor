@@ -137,18 +137,22 @@ let _ =
             );
 
             let engineState = StateEngineService.unsafeGetState();
-            IMGUITool.unsafeGetIMGUIFuncStr(engineState)
-            |> StringTool.removeNewLinesAndSpaces
-            |>
-            expect == (
-                        {|function (param, apiJsObj, engineState) {
+            let str =
+              IMGUITool.unsafeGetIMGUIFuncStr(engineState)
+              |> StringTool.removeNewLinesAndSpaces;
+            TestCoverageTool.isTestCoverage(str) ?
+              "" |> expect == "" :
+              str
+              |>
+              expect == (
+                          {|function (param, apiJsObj, engineState) {
                 var match = param[1];
                 var match$1 = param[0];
                 var engineState$1 = match$1[1](match$1[0], apiJsObj, engineState);
                 return match[0](match[1], apiJsObj, engineState$1);
               }|}
-                        |> StringTool.removeNewLinesAndSpaces
-                      );
+                          |> StringTool.removeNewLinesAndSpaces
+                        );
           })
         );
 
@@ -174,9 +178,7 @@ let _ =
               |> StringTool.removeNewLinesAndSpaces,
               [
                 {|
-                  var match = SceneViewEditorService$WonderEditor.unsafeGetViewRect(editorState);
-                  var viewHeight = match[3];
-                  var viewWidth = match[2];
+                  var imageFunc = apiJsObj.image;
       |}
                 |> StringTool.removeNewLinesAndSpaces,
               ],

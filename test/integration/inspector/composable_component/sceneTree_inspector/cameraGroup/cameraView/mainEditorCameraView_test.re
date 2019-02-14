@@ -25,7 +25,7 @@ let _ =
           MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
         );
 
-        let newGameObject = GameObjectTool.getNewGameObjectUid();
+        let newGameObject = GameObjectTool.getNewGameObject();
 
         MainEditorLeftHeaderTool.addCube();
 
@@ -64,7 +64,7 @@ let _ =
             () => {
               MainEditorCameraViewTool.setCurrentCamera(
                 ~cameraView=
-                  GameObjectTool.getCurrentGameObjectBasicCameraView(),
+                  GameObjectTool.getCurrentSceneTreeNodeBasicCameraView(),
                 ~event=MainEditorCameraViewTool.buildEvent(true),
                 (),
               );
@@ -82,7 +82,7 @@ let _ =
             () => {
               MainEditorCameraViewTool.setCurrentCamera(
                 ~cameraView=
-                  GameObjectTool.getCurrentGameObjectBasicCameraView(),
+                  GameObjectTool.getCurrentSceneTreeNodeBasicCameraView(),
                 ~event=MainEditorCameraViewTool.buildEvent(true),
                 (),
               );

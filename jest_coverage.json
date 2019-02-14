@@ -43,7 +43,8 @@
     "<rootDir>/lib/es6_global/src/core/.+/AddableComponentBox.js",
     "<rootDir>/lib/es6_global/src/core/.+/PublishLocalModal.js",
     "<rootDir>/lib/es6_global/src/core/.+/Canvas.js",
-    "<rootDir>/lib/es6_global/src/core/.+/SingleInputModal.js"
+    "<rootDir>/lib/es6_global/src/core/.+/SingleInputModal.js",
+    "<rootDir>/lib/es6_global/src/module/"
   ],
   "collectCoverageFrom": [
     "lib/es6_global/src/**/*.{js}",

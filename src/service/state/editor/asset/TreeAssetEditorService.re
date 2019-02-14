@@ -1,40 +1,58 @@
-open AssetTreeNodeType;
+open EditorType;
 
-open AssetNodeType;
+let getTree = ({assetRecord}) => assetRecord.tree;
 
-let getRootTreeNodeIsShowChildren = () => true;
+let unsafeGetTree = editorState =>
+  editorState |> getTree |> OptionService.unsafeGet;
 
-let getTreeNodeDefaultIsShowChildren = () => false;
-
-let buildAssetTreeNodeByIndex = (index, type_, isShowChildren) => {
-  nodeId: index,
-  type_,
-  children: [||],
-  isShowChildren,
+let setTree = (tree, {assetRecord} as editorState) => {
+  ...editorState,
+  assetRecord: {
+    ...assetRecord,
+    tree: Some(tree),
+  },
 };
 
-let isIdEqual = (nodeId, targetNodeId) => nodeId === targetNodeId;
+let clearTree = ({assetRecord} as editorState) => {
+  ...editorState,
+  assetRecord: {
+    ...assetRecord,
+    tree: None,
+  },
+};
 
-let rec getSpecificTreeNodeById = (nodeId, targetTreeNode) =>
-  isIdEqual(nodeId, targetTreeNode.nodeId) ?
-    Some(targetTreeNode) :
-    {
-      let (resultNode, _) =
-        targetTreeNode.children
-        |> WonderCommonlib.ArrayService.reduceOneParam(
-             (. (resultNode, nodeId), child) =>
-               switch (resultNode) {
-               | Some(_) => (resultNode, nodeId)
-               | None => (getSpecificTreeNodeById(nodeId, child), nodeId)
-               },
-             (None, nodeId),
-           );
-      resultNode;
-    };
+let createTree = editorState => {
+  let (_, newTree, newIndex) =
+    RootTreeAssetService.buildRootNode(
+      RootTreeAssetService.getAssetTreeRootName(),
+      IndexAssetEditorService.getNodeIndex(editorState),
+    );
 
-let getAssetNodeFromRoot = (nodeId, editorState) =>
   editorState
-  |> TreeRootAssetEditorService.getAssetTreeRoot
-  |> OptionService.unsafeGet
-  |> getSpecificTreeNodeById(nodeId)
-  |> OptionService.unsafeGet;
+  |> setTree(newTree)
+  |> IndexAssetEditorService.setNodeIndex(newIndex);
+};
+
+/* let getSelectedFolderNodeIdInAssetTree = editorState =>
+   switch (
+     SelectedFolderNodeIdInAssetTreeAssetEditorService.getSelectedFolderNodeIdInAssetTree(
+       editorState,
+     )
+   ) {
+   | None =>
+     RootTreeAssetService.getRootNode(unsafeGetTree(editorState))
+     |> NodeAssetService.getNodeId(~node=_)
+   | Some(nodeId) => nodeId
+   }; */
+
+let getSelectedFolderNodeIdInAssetTree = editorState =>
+  switch (
+    SelectedFolderNodeIdInAssetTreeAssetEditorService.getSelectedFolderNodeIdInAssetTree(
+      editorState,
+    )
+  ) {
+  | None =>
+    RootTreeAssetService.getRootNode(unsafeGetTree(editorState))
+    |> NodeAssetService.getNodeId(~node=_)
+  | Some(nodeId) => nodeId
+  };

@@ -20,7 +20,7 @@ let _ =
       );
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
+        SceneTreeWidgetService.getWidget(),
       )
       |> StateLogicService.getAndSetEditorState;
     });
@@ -64,7 +64,7 @@ let _ =
       describe("else", () =>
         test("not bind event for game view", () => {
           ControllerTool.setIsRun(true);
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
 
           MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
 

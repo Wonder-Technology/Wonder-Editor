@@ -12,7 +12,7 @@ let unsafeGetGeometryName = GeometryAPI.unsafeGetGeometryName;
 
 let setGeometryName = GeometryAPI.setGeometryName;
 
-let createBoxGeometry = engineState =>
+let createCubeGeometry = engineState =>
   CreateDefaultGeometryGeometryMainService.create(
     ComputeBoxPointsGeometryService.generateAllFaces((
       0.5,
@@ -27,6 +27,12 @@ let createBoxGeometry = engineState =>
 
 let createSphereGeometry = GeometryAPI.createSphereGeometry;
 
+let createCylinderGeometry = GeometryAPI.createCylinderGeometry;
+
+let createConeGeometry = GeometryAPI.createConeGeometry;
+
+let createPlaneGeometry = GeometryAPI.createPlaneGeometry;
+
 let getGeometryVertices = GeometryAPI.getGeometryVertices;
 
 let setGeometryVertices = GeometryAPI.setGeometryVertices;
@@ -39,9 +45,9 @@ let getGeometryTexCoords = GeometryAPI.getGeometryTexCoords;
 
 let setGeometryTexCoords = GeometryAPI.setGeometryTexCoords;
 
-let getGeometryIndices = GeometryAPI.getGeometryIndices;
+let getGeometryIndices16 = GeometryAPI.getGeometryIndices16;
 
-let setGeometryIndices = GeometryAPI.setGeometryIndices;
+let setGeometryIndices16 = GeometryAPI.setGeometryIndices16;
 
 let getGeometryIndices32 = GeometryAPI.getGeometryIndices32;
 
@@ -84,7 +90,7 @@ let createGridPlaneGameObject = ((size, step, y), color, engineState) => {
   let engineState =
     engineState
     |> setGeometryVertices(geometry, Float32Array.make(vertices))
-    |> setGeometryIndices(geometry, Uint16Array.make(indices));
+    |> setGeometryIndices16(geometry, Uint16Array.make(indices));
 
   let engineState =
     engineState
@@ -123,3 +129,22 @@ let createGridPlaneGameObject = ((size, step, y), color, engineState) => {
 let getGeometryTexCoords = GeometryAPI.getGeometryTexCoords;
 
 let batchDisposeGeometry = GeometryAPI.batchDisposeGeometry;
+
+let getIndicesCount = (geometry, engineState) => {
+  open StateDataMainType;
+  open GeometryType;
+
+  /* let {geometryRecord} = engineState; */
+
+  let {indicesInfos} = RecordGeometryMainService.getRecord(engineState);
+  let (startIndex, endIndex) =
+    ReallocatedPointsGeometryService.getInfo(
+      BufferGeometryService.getInfoIndex(geometry),
+      indicesInfos,
+    );
+  endIndex - startIndex;
+};
+
+let hasIndices16 = GeometryAPI.hasGeometryIndices16;
+
+let hasIndices32 = GeometryAPI.hasGeometryIndices32;

@@ -1,26 +1,26 @@
 let _storeEngineHistoryState =
-    (store, (editorState, engineState), storeEngineStateFunc, historyState) => {
+    (uiState, (editorState, engineState), storeEngineStateFunc, historyState) => {
   let maxStackSize =
     RedoUndoSettingEditorService.unsafeGetMaxStackSize(editorState);
 
   historyState
-  |> UIHistoryService.storeUIState(maxStackSize, store)
+  |> UIHistoryService.storeUIState(maxStackSize, uiState)
   |> EditorHistoryService.storeState(maxStackSize, editorState)
   |> storeEngineStateFunc(maxStackSize, engineState);
 };
 
 let storeCopiedEngineHistoryState =
-    (store, (editorState, engineState), historyState) =>
+    (uiState, (editorState, engineState), historyState) =>
   _storeEngineHistoryState(
-    store,
+    uiState,
     (editorState, engineState),
     EngineHistoryService.storeHasCopyState,
     historyState,
   );
 
-let storeHistoryState = (store, (editorState, engineState), historyState) =>
+let storeHistoryState = (uiState, (editorState, engineState), historyState) =>
   _storeEngineHistoryState(
-    store,
+    uiState,
     (editorState, engineState),
     EngineHistoryService.storeNoCopyState,
     historyState,
@@ -28,7 +28,7 @@ let storeHistoryState = (store, (editorState, engineState), historyState) =>
 
 let _operateHistoryState =
     (
-      store,
+      uiState,
       dispatchFunc,
       (
         operateUIHistoryStateFunc,
@@ -39,7 +39,7 @@ let _operateHistoryState =
     ) => {
   dispatchFunc(
     AppStore.ReplaceState(
-      operateUIHistoryStateFunc(AllStateData.getHistoryState(), store),
+      operateUIHistoryStateFunc(AllStateData.getHistoryState(), uiState),
     ),
   );
 
@@ -59,9 +59,9 @@ let _operateHistoryState =
   (editorState, engineState);
 };
 
-let undoHistoryState = (store, dispatchFunc, (editorState, engineState)) =>
+let undoHistoryState = (uiState, dispatchFunc, (editorState, engineState)) =>
   _operateHistoryState(
-    store,
+    uiState,
     dispatchFunc,
     (
       UIHistoryService.undo,
@@ -71,9 +71,9 @@ let undoHistoryState = (store, dispatchFunc, (editorState, engineState)) =>
     (editorState, engineState),
   );
 
-let redoHistoryState = (store, dispatchFunc, (editorState, engineState)) =>
+let redoHistoryState = (uiState, dispatchFunc, (editorState, engineState)) =>
   _operateHistoryState(
-    store,
+    uiState,
     dispatchFunc,
     (
       UIHistoryService.redo,
@@ -83,8 +83,8 @@ let redoHistoryState = (store, dispatchFunc, (editorState, engineState)) =>
     (editorState, engineState),
   );
 
-let handleUndo = (store, dispatchFunc) =>
+let handleUndo = (uiState, dispatchFunc) =>
   OperateStateHistoryService.hasUndoState(AllStateData.getHistoryState()) ?
-    undoHistoryState(store, dispatchFunc)
+    undoHistoryState(uiState, dispatchFunc)
     |> StateHistoryService.getAndRefreshStateForHistory :
     ();

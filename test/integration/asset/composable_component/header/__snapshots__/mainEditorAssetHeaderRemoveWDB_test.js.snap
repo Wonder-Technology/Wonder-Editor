@@ -44,21 +44,25 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
       className="select-component-item"
     >
       <div
-        className="item-header"
+        className="select-item-header"
       >
         Geometry
       </div>
       <div
-        className="item-content item-active"
-        onClick={[Function]}
+        className="select-item-body"
       >
-        Wonder-Default-Cube
-      </div>
-      <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Wonder-Default-Sphere
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Sphere
+        </div>
       </div>
     </div>
     <div
@@ -122,10 +126,9 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
           />
         </div>
         <div
-          className="draggable-container"
-          draggable={true}
+          className="draggable-container  no-drag"
+          draggable={false}
           onDragEnd={[Function]}
-          onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
@@ -149,10 +152,9 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
             />
           </div>
           <div
-            className="draggable-container"
+            className="draggable-container  no-drag"
             draggable={true}
             onDragEnd={[Function]}
-            onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
@@ -245,10 +247,13 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -265,10 +270,13 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -285,10 +293,13 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -322,10 +333,13 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -342,10 +356,13 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -362,10 +379,13 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -399,10 +419,13 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -419,10 +442,13 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -439,10 +465,13 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -698,6 +727,7 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
                       >
                         <div
                           className="texture-img"
+                          onClick={[Function]}
                           style={
                             Object {
                               "opacity": "1",
@@ -724,10 +754,13 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="inspector-item wonder-float-input"
                     >
                       <div
-                        className="item-header"
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
                       >
                         Shininess
                       </div>
@@ -778,7 +811,7 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
               load Scene.wdb;
               load BoxTextured.wdb;
 
-              the MainEditorAssetChildrenNode panel should show "Scene","Boxtextured"
+              the MainEditorAssetChildrenNode panel should show "Scene","Cubetextured"
                  1`] = `
 <article
   className="wonder-asset-component"
@@ -871,7 +904,12 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
           <li>
             <div
               className="item-triangle"
-            />
+              onMouseDown={[Function]}
+            >
+              <img
+                src="./public/img/right.png"
+              />
+            </div>
             <img
               className="treeNode-icon"
               src="./public/img/package.png"
@@ -898,7 +936,12 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
           <li>
             <div
               className="item-triangle"
-            />
+              onMouseDown={[Function]}
+            >
+              <img
+                src="./public/img/right.png"
+              />
+            </div>
             <img
               className="treeNode-icon"
               src="./public/img/package.png"
@@ -927,7 +970,7 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-4"
+      id="folder-5"
       style={
         Object {
           "border": "0px",
@@ -961,7 +1004,281 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-6"
+      id="folder-7"
+      style={
+        Object {
+          "border": "0px",
+        }
+      }
+    >
+      <div
+        className="item-ground"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+      />
+      <div
+        className="box-image"
+      >
+        <img
+          src="./public/img/assetPackage.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          Textures
+        </span>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <div
+        className="box-image"
+      >
+        <img
+          onDragStart={[Function]}
+          src="./public/img/wdb.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          Wdb
+        </span>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <div
+        className="box-image"
+      >
+        <img
+          onDragStart={[Function]}
+          src="./public/img/wdb.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          Wdb 1
+        </span>
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->remove wdb load CubeTextured.wdb;
+              remove CubeTextured.wdb;
+              load Scene.wdb;
+              load CubeTextured.wdb;
+
+              the MainEditorAssetChildrenNode panel should show "Scene","Cubetextured"
+                 1`] = `
+<article
+  className="wonder-asset-component"
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="wonder-asset-header"
+    >
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/add.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+        onClick={[Function]}
+      >
+        <div
+          className="item-notBeClick"
+        >
+          <img
+            src="./public/img/notRemove.png"
+          />
+        </div>
+      </div>
+      <div
+        className="asset-header-item"
+      >
+        <div
+          className="item-canBeClick"
+        >
+          <img
+            src="./public/img/load.png"
+          />
+          <input
+            className="asset-fileLoad"
+            multiple={false}
+            onChange={[Function]}
+            type="file"
+          />
+        </div>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-assetTree"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+            onMouseDown={[Function]}
+          >
+            <img
+              src="./public/img/down.png"
+            />
+          </div>
+          <img
+            className="treeNode-icon"
+            src="./public/img/package.png"
+          />
+          <div
+            className="draggable-container select-not-active"
+            draggable={true}
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            onMouseDown={[Function]}
+            style={Object {}}
+          >
+            Assets
+          </div>
+        </li>
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
+            <div
+              className="item-triangle"
+              onMouseDown={[Function]}
+            >
+              <img
+                src="./public/img/right.png"
+              />
+            </div>
+            <img
+              className="treeNode-icon"
+              src="./public/img/package.png"
+            />
+            <div
+              className="draggable-container"
+              draggable={true}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              onMouseDown={[Function]}
+              style={Object {}}
+            >
+              Materials
+            </div>
+          </li>
+        </ul>
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
+            <div
+              className="item-triangle"
+              onMouseDown={[Function]}
+            >
+              <img
+                src="./public/img/right.png"
+              />
+            </div>
+            <img
+              className="treeNode-icon"
+              src="./public/img/package.png"
+            />
+            <div
+              className="draggable-container"
+              draggable={true}
+              onDragEnd={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              onMouseDown={[Function]}
+              style={Object {}}
+            >
+              Textures
+            </div>
+          </li>
+        </ul>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="wonder-asset-assetChildren"
+  >
+    <article
+      className="wonder-asset-folderBox"
+      id="folder-5"
+      style={
+        Object {
+          "border": "0px",
+        }
+      }
+    >
+      <div
+        className="item-ground"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+      />
+      <div
+        className="box-image"
+      >
+        <img
+          src="./public/img/assetPackage.png"
+        />
+      </div>
+      <div
+        className="item-text "
+      >
+        <span>
+          Materials
+        </span>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-folderBox"
+      id="folder-7"
       style={
         Object {
           "border": "0px",

@@ -61,7 +61,12 @@ exports[`MainEditorAssetHeader->load file test load file test logic test should 
         <li>
           <div
             className="item-triangle"
-          />
+            onMouseDown={[Function]}
+          >
+            <img
+              src="./public/img/down.png"
+            />
+          </div>
           <img
             className="treeNode-icon"
             src="./public/img/package.png"
@@ -172,7 +177,12 @@ exports[`MainEditorAssetHeader->load file test load file test snapshot if not se
         <li>
           <div
             className="item-triangle"
-          />
+            onMouseDown={[Function]}
+          >
+            <img
+              src="./public/img/down.png"
+            />
+          </div>
           <img
             className="treeNode-icon"
             src="./public/img/package.png"

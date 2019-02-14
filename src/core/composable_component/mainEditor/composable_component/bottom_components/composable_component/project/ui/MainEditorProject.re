@@ -3,9 +3,9 @@ type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 let component =
   ReasonReact.statelessComponentWithRetainedProps("MainEditorProject");
 
-let render = ((store, dispatchFunc), _self) =>
+let render = ((uiState, dispatchFunc), _self) =>
   <article key="MainEditorProject" className="wonder-bottom-project">
-    <MainEditorAsset store dispatchFunc />
+    <MainEditorAsset uiState dispatchFunc />
   </article>;
 
 let shouldUpdate =
@@ -13,11 +13,11 @@ let shouldUpdate =
   newSelf.retainedProps.updateTypeArr
   |> StoreUtils.shouldComponentUpdate(UpdateStore.Project);
 
-let make = (~store, ~dispatchFunc, _children) => {
+let make = (~uiState, ~dispatchFunc, _children) => {
   ...component,
   retainedProps: {
-    updateTypeArr: StoreUtils.getUpdateComponentTypeArr(store),
+    updateTypeArr: StoreUtils.getUpdateComponentTypeArr(uiState),
   },
   shouldUpdate,
-  render: self => render((store, dispatchFunc), self),
+  render: self => render((uiState, dispatchFunc), self),
 };

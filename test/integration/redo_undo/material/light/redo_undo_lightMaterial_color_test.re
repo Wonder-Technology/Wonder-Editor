@@ -35,7 +35,7 @@ let _ =
       BuildCanvasTool.buildFakeCanvas(sandbox);
 
       let currentGameObjectMaterial =
-        GameObjectTool.getCurrentGameObjectLightMaterial();
+        GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
 
       let component =
         BuildComponentTool.buildLightMaterial(currentGameObjectMaterial);
@@ -51,13 +51,13 @@ let _ =
     let _beforeEach = () =>
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
 
     let _afterEach = () =>
       StateEditorService.getState()
-      |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
-      |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
+      |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
+      |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
       |> StateEditorService.setState
       |> ignore;
 

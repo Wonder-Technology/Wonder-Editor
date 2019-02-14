@@ -19,7 +19,7 @@ let _ =
     describe("prepare currentSelectSource is SceneTree", () => {
       beforeEach(() =>
         CurrentSelectSourceEditorService.setCurrentSelectSource(
-          EditorType.SceneTree,
+          SceneTreeWidgetService.getWidget(),
         )
         |> StateLogicService.getAndSetEditorState
       );
@@ -28,7 +28,7 @@ let _ =
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           )
         );
 
@@ -36,7 +36,7 @@ let _ =
           describe("test engine", () => {
             let _getName = () =>
               GameObjectEngineService.unsafeGetGameObjectName(
-                SceneEditorService.unsafeGetCurrentSceneTreeNode
+                SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
                 |> StateLogicService.getEditorState,
               )
               |> StateLogicService.getEngineStateToGetData;

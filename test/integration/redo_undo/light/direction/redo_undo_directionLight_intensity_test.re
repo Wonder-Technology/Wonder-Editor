@@ -11,7 +11,7 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     let _changeIntensity = value => {
-      let light = GameObjectTool.getCurrentGameObjectDirectionLightComponent();
+      let light = GameObjectTool.getCurrentSceneTreeNodeDirectionLightComponent();
 
       MainEditorDirectionLightTool.changeIntensityAndBlur(
         ~light,

@@ -17,7 +17,7 @@ let unsafeGetFirst = arr =>
              Operators.(
                test(
                  Log.buildAssertMessage(
-                   ~expect={j|array[0] element exist|j},
+                   ~expect={j|first array element exist|j},
                    ~actual={j|not|j},
                  ),
                  () =>
@@ -44,7 +44,7 @@ let unsafeGetLast = arr =>
              Operators.(
                test(
                  Log.buildAssertMessage(
-                   ~expect={j|array[0] element exist|j},
+                   ~expect={j|last array element exist|j},
                    ~actual={j|not|j},
                  ),
                  () =>
@@ -153,16 +153,16 @@ let removeDuplicateItems = (buildKeyFunc, arr) => {
   open WonderCommonlib;
 
   let resultArr = [||];
-  let map = HashMapService.createEmpty();
+  let map = MutableHashMapService.createEmpty();
 
   for (i in 0 to Js.Array.length(arr) - 1) {
     let item = Array.unsafe_get(arr, i);
     let key = buildKeyFunc(. item);
 
-    switch (HashMapService.get(key, map)) {
+    switch (MutableHashMapService.get(key, map)) {
     | None =>
       Js.Array.push(item, resultArr) |> ignore;
-      HashMapService.set(key, item, map) |> ignore;
+      MutableHashMapService.set(key, item, map) |> ignore;
     | Some(_) => ()
     };
   };
@@ -186,6 +186,34 @@ let fastConcat = (arr1, arr2) =>
        arr1,
      );
 
+let fastConcatArrays = arrayArrays => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect={j|length >= 1|j},
+                ~actual={j|not|j},
+              ),
+              () =>
+              Js.Array.length(arrayArrays) >= 1
+            )
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
+  arrayArrays
+  |> Js.Array.sliceFrom(1)
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. arr1, arr) => fastConcat(arr1, arr),
+       Array.unsafe_get(arrayArrays, 0),
+     );
+};
+
 let isEqual = (arr1, arr2) =>
   arr1 |> Js.Array.sortInPlace == (arr2 |> Js.Array.sortInPlace);
 
@@ -193,3 +221,36 @@ let isInclude = (sourceArr, targetArr) =>
   targetArr
   |> Js.Array.filter(value => ! (sourceArr |> Js.Array.includes(value)))
   |> Js.Array.length === 0;
+
+let _addFailureFunc = ((msg1, value1), (msg2, value2)) => (
+  msg1,
+  value1(value2),
+);
+
+let _handleFailAndSuceessFunc = ((msg, value1), s) => (msg, value1(s));
+
+let _handleSuceessFuncAndFailFunc = (func, (msg2, value2)) => (
+  msg2,
+  func(value2),
+);
+
+let traverseSameDataResultAndCollectByApply = (traverseFunc, arr) => {
+  let applyFunc =
+    Result.SameDataResult.apply(
+      ~addFailureFunc=_addFailureFunc,
+      ~handleFailAndSuceessFunc=_handleFailAndSuceessFunc,
+      ~handleSuceessFuncAndFailFunc=_handleSuceessFuncAndFailFunc,
+    );
+  let returnFunc = Result.SameDataResult.success;
+
+  arr
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. resultArr, value) =>
+         applyFunc(
+           ~switchFunc=returnFunc(push),
+           ~result=traverseFunc(value),
+         )
+         |> applyFunc(~switchFunc=_, ~result=resultArr),
+       returnFunc([||]),
+     );
+};

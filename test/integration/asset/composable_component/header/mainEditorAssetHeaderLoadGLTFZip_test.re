@@ -8,7 +8,7 @@ open Expect.Operators;
 
 open Sinon;
 
-open AssetTreeNodeType;
+open NodeAssetType;
 
 open Js.Promise;
 
@@ -61,7 +61,7 @@ let _ =
     ["BoxTextured0.bin",{
       async: function(){
           return new Promise((resolve, _) => resolve(
-new Uint8Array(getArrayBufferFunc("BoxTextured/BoxTextured0.bin"))
+new Uint8Array(getArrayBufferFunc("boxTextured/BoxTextured0.bin"))
           ))
       },
     }],
@@ -255,7 +255,7 @@ new Uint8Array(getArrayBufferFunc("BoxTextured/BoxTextured0.bin"))
     ["textures/CesiumLogoFlat.png",{
       async: function(){
           return new Promise((resolve, _) => resolve(
-new Uint8Array(getArrayBufferFunc("BoxTextured/CesiumLogoFlat.png"))
+new Uint8Array(getArrayBufferFunc("boxTextured/CesiumLogoFlat.png"))
           ))
       },
     }],

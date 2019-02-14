@@ -1,6 +1,6 @@
-let getDefaultCubeGeometryName = PrepareDefaultComponentUtils.getDefaultCubeGeometryName;
+let getDefaultCubeGeometryName = PrepareDefaultComponentLogicService.getDefaultCubeGeometryName;
 
-let getDefaultSphereGeometryName = PrepareDefaultComponentUtils.getDefaultSphereGeometryName;
+let getDefaultSphereGeometryName = PrepareDefaultComponentLogicService.getDefaultSphereGeometryName;
 
 let getBoxTexturedGeometryName = () => "Mesh";
 
@@ -21,12 +21,12 @@ let changeGeometry =
       ~sourceGeometry,
       ~targetGeometry,
       ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
   MainEditorGeometry.Method.changeGeometry(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     gameObject,
     (sourceGeometry, targetGeometry),
   );

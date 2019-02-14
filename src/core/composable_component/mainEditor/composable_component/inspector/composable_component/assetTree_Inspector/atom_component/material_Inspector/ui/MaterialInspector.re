@@ -1,4 +1,4 @@
-type state = {materialType: AssetMaterialDataType.materialType};
+type state = {materialType: MaterialDataAssetType.materialType};
 
 type action =
   | ChangeMaterialType(int);
@@ -11,7 +11,7 @@ let component = ReasonReact.reducerComponent("MaterialInspector");
 
 let reducer =
     (
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (currentNodeId, materialComponent),
       action,
       state,
@@ -24,7 +24,7 @@ let reducer =
 
     ReasonReactUtils.sideEffects(() =>
       Method.changeMaterialType(
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         (currentNodeId, materialComponent),
         (sourceMaterialType, targetMaterialType),
       )
@@ -33,7 +33,7 @@ let reducer =
 
 let render =
     (
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (name, type_, materialComponent),
       renameFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
@@ -58,17 +58,17 @@ let render =
     (
       switch (state.materialType) {
       | BasicMaterial =>
-        <MainEditorBasicMaterial store dispatchFunc materialComponent />
+        <MainEditorBasicMaterial uiState dispatchFunc materialComponent />
 
       | LightMaterial =>
-        <MainEditorLightMaterial store dispatchFunc materialComponent />
+        <MainEditorLightMaterial uiState dispatchFunc materialComponent />
       }
     )
   </article>;
 
 let make =
     (
-      ~store,
+      ~uiState,
       ~dispatchFunc,
       ~currentNodeId,
       ~name,
@@ -80,10 +80,10 @@ let make =
   ...component,
   initialState: () => {materialType: type_},
   reducer:
-    reducer((store, dispatchFunc), (currentNodeId, materialComponent)),
+    reducer((uiState, dispatchFunc), (currentNodeId, materialComponent)),
   render: self =>
     render(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       (name, type_, materialComponent),
       renameFunc,
       self,

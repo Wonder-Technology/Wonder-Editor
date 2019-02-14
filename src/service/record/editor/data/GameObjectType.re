@@ -1,4 +1,4 @@
-type gameObject = Wonderjs.GameObjectType.gameObject;
+type gameObject = Wonderjs.GameObjectPrimitiveType.gameObject;
 
 type gameObjectRecord = {
   gridPlane: option(gameObject),

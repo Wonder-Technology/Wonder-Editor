@@ -14,7 +14,7 @@ type action =
 
 module Method = {
   let addSpecificComponent =
-      ((store, dispatchFunc), currentSceneTreeNode, type_) => {
+      ((uiState, dispatchFunc), currentSceneTreeNode, type_) => {
     let type_ =
       OperateComponentUtils.getInspectorComponentType(
         type_,
@@ -33,14 +33,14 @@ module Method = {
           messageObj##warn("the game object already have this component !", 4)
       ) :
       AddableComponentAddComponentEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         currentSceneTreeNode,
         type_,
       );
   };
 
   let buildGameObjectAddableComponent =
-      ((store, dispatchFunc), currentSceneTreeNode, componentArr) =>
+      ((uiState, dispatchFunc), currentSceneTreeNode, componentArr) =>
     componentArr
     |> Js.Array.map(({type_, components}: componentCategory) =>
          <AddableComponentBox
@@ -49,7 +49,7 @@ module Method = {
            componentArr=components
            addSpecificComponent=(
              addSpecificComponent(
-               (store, dispatchFunc),
+               (uiState, dispatchFunc),
                currentSceneTreeNode,
              )
            )
@@ -74,7 +74,7 @@ let reducer = (action, state) =>
 
 let render =
     (
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       currentSceneTreeNode,
       addableComponentList,
       {state, send}: ReasonReact.self('a, 'b, 'c),
@@ -96,7 +96,7 @@ let render =
                 ReasonReact.array(
                   addableComponentList
                   |> Method.buildGameObjectAddableComponent(
-                       (store, dispatchFunc),
+                       (uiState, dispatchFunc),
                        currentSceneTreeNode,
                      ),
                 )

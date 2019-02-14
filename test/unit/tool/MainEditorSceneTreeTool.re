@@ -1,85 +1,77 @@
 open SceneGraphType;
 
-let getSimpleSceneTree = () => [|
-  {
-    uid: 0,
-    name: "root",
-    isShowChildren: true,
-    children: [|
-      {uid: 1, name: "gameObject1", isShowChildren: true, children: [||]},
-      {uid: 2, name: "gameObject2", isShowChildren: true, children: [||]},
-      {uid: 3, name: "gameObject3", isShowChildren: true, children: [||]},
-    |],
-  },
-|];
+/* let getSimpleSceneTree = () => [|
+     {
+       uid: 0,
+       name: "root",
+       children: [|
+         {uid: 1, name: "gameObject1", children: [||]},
+         {uid: 2, name: "gameObject2", children: [||]},
+         {uid: 3, name: "gameObject3", children: [||]},
+       |],
+     },
+   |]; */
 
-let getTwoLayerSceneTree = () => [|
-  {
-    uid: 0,
-    name: "root",
-    isShowChildren: true,
-    children: [|
-      {uid: 1, name: "gameObject1", isShowChildren: true, children: [||]},
-      {uid: 2, name: "gameObject2", isShowChildren: true, children: [||]},
-      {
-        uid: 3,
-        name: "gameObject3",
-        isShowChildren: true,
-        children: [|
-          {uid: 4, name: "gameObject4", isShowChildren: true, children: [||]},
-          {uid: 5, name: "gameObject5", isShowChildren: true, children: [||]},
-        |],
-      },
-    |],
-  },
-|];
+/* let getTwoLayerSceneTree = () => [|
+     {
+       uid: 0,
+       name: "root",
+       children: [|
+         {uid: 1, name: "gameObject1", children: [||]},
+         {uid: 2, name: "gameObject2", children: [||]},
+         {
+           uid: 3,
+           name: "gameObject3",
+           children: [|
+             {uid: 4, name: "gameObject4", children: [||]},
+             {uid: 5, name: "gameObject5", children: [||]},
+           |],
+         },
+       |],
+     },
+   |]; */
 
-let getThreeLayerSceneTree = () => [|
-  {
-    uid: 0,
-    name: "root",
-    isShowChildren: true,
-    children: [|
-      {uid: 1, name: "gameObject1", isShowChildren: true, children: [||]},
-      {uid: 2, name: "gameObject2", isShowChildren: true, children: [||]},
-      {
-        uid: 3,
-        name: "gameObject3",
-        isShowChildren: true,
-        children: [|
-          {uid: 4, name: "gameObject4", isShowChildren: true, children: [||]},
-          {
-            uid: 5,
-            name: "gameObject5",
-            isShowChildren: true,
-            children: [|
-              {
-                uid: 6,
-                name: "gameObject6",
-                isShowChildren: true,
-                children: [||],
-              },
-            |],
-          },
-        |],
-      },
-    |],
-  },
-|];
+/* let getThreeLayerSceneTree = () => [|
+     {
+       uid: 0,
+       name: "root",
+       children: [|
+         {uid: 1, name: "gameObject1", children: [||]},
+         {uid: 2, name: "gameObject2", children: [||]},
+         {
+           uid: 3,
+           name: "gameObject3",
+           children: [|
+             {uid: 4, name: "gameObject4", children: [||]},
+             {
+               uid: 5,
+               name: "gameObject5",
+               children: [|{uid: 6, name: "gameObject6", children: [||]}|],
+             },
+           |],
+         },
+       |],
+     },
+   |]; */
 
 module Drag = {
-  let isTriggerDragCurrentSceneTreeNode = targetGameObject =>
-    /* DragEventBaseUtils.isTriggerDragDrop(
+  let isTriggerDragCurrentSceneTreeNode = targetGameObject => {
+    /* DragEventBaseUtils.isValidForDragDrop(
          targetGameObject,
          sourceGameObject,
-         SceneTreeUtils.isWidget,
-         SceneTreeUtils.isGameObjectRelationError,
+         SceneTreeWidgetService.isWidget,
+         CheckSceneTreeLogicService.checkGameObjectRelation,
        ); */
-    DragEventBaseUtils.isTriggerDragEnter(
-      targetGameObject,
-      SceneTreeUtils.isWidget,
-      SceneTreeUtils.isGameObjectRelationError,
-    );
+
+    let (isValid, _) =
+      DragEventBaseUtils.isValidForDragEnter(
+        targetGameObject,
+        SceneTreeWidgetService.isWidget,
+        CheckSceneTreeLogicService.checkGameObjectRelation,
+      );
+
+    isValid;
+  };
 
   let dragWDBAssetToSceneTree =
       (
@@ -88,47 +80,48 @@ module Drag = {
                             StateEngineService.unsafeGetState(),
                           ),
         ~dispatchFunc=TestTool.getDispatch(),
-        ~store=TestTool.buildEmptyAppState(),
-        ~widget=AssetUtils.getWidget(),
+        ~uiState=TestTool.buildEmptyAppState(),
+        ~widget=AssetWidgetService.getWidget(),
         ~effectEffectAllowd="move",
         ~dragImg=DomHelper.createElement("img"),
         ~event=BaseEventTool.buildDragEvent(.),
+        ~dragPosition=SceneTreeNodeType.DragIntoTarget,
         (),
       ) => {
-    DragEventUtils.handleDragStart(
-      wdbNodeId,
-      widget,
-      dragImg,
-      effectEffectAllowd,
-      event,
-    );
+    /* DragEventUtils.handleDragStart(
+         wdbNodeId,
+         widget,
+         dragImg,
+         effectEffectAllowd,
+         event,
+       ); */
 
-    let wdbGameObjectUid =
+    let wdbGameObject =
       StateEditorService.getState()
-      |> WDBNodeMapAssetEditorService.getWDBNodeMap
-      |> WonderCommonlib.SparseMapService.unsafeGet(wdbNodeId)
-      |> (({wdbGameObject}) => wdbGameObject);
-    MainEditorSceneTree.Method.dragWDBIntoScene(
-      (store, dispatchFunc),
-      (),
-      (targetGameObject, wdbGameObjectUid),
-    );
+      |> OperateTreeAssetEditorService.unsafeFindNodeById(wdbNodeId)
+      |> WDBNodeAssetService.getWDBGameObject;
 
-    DragEventUtils.handleDrageEnd(event);
+    MainEditorSceneTree.Method.dragWDBToBeTargetSib(
+      (uiState, dispatchFunc),
+      (),
+      (targetGameObject, wdbGameObject, dragPosition),
+    );
+    /* DragEventUtils.handleDragEnd(event); */
   };
 
-  let dragGameObjectIntoGameObject =
+  let dragGameObjectToBeTargetSib =
       (
         ~sourceGameObject,
         ~targetGameObject,
+        ~dragPosition=SceneTreeNodeType.DragIntoTarget,
         ~dispatchFunc=TestTool.getDispatch(),
-        ~store=TestTool.buildAppStateSceneGraphFromEngine(),
+        ~uiState=TestTool.buildEmptyAppState(),
         (),
       ) =>
-    MainEditorSceneTree.Method.dragGameObjectIntoGameObject(
-      (store, dispatchFunc),
+    MainEditorSceneTree.Method.dragGameObjectToBeTargetSib(
+      (uiState, dispatchFunc),
       (),
-      (targetGameObject, sourceGameObject),
+      (targetGameObject, sourceGameObject, dragPosition),
     );
 };
 
@@ -136,9 +129,9 @@ module Select = {
   let selectGameObject =
       (
         ~dispatchFunc=TestTool.getDispatch(),
-        ~store=TestTool.buildEmptyAppState(),
+        ~uiState=TestTool.buildEmptyAppState(),
         ~gameObject,
         (),
       ) =>
-    MainEditorSceneTree.Method.onSelect((store, dispatchFunc), gameObject);
+    MainEditorSceneTree.Method.onSelect((uiState, dispatchFunc), gameObject);
 };

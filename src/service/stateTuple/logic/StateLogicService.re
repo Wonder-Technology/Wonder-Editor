@@ -29,6 +29,20 @@ let getAndRefreshEngineStateWithFunc = handleFunc =>
   |> StateEngineService.setState
   |> ignore;
 
+let loopBodyWhenStop = engineState =>
+  StateEditorService.getIsRun() ?
+    engineState : engineState |> DirectorEngineService.loopBody(0.);
+
+let getAndRefreshEngineStateWhenStop = () =>
+  StateEngineService.unsafeGetState()
+  |> loopBodyWhenStop
+  |> StateEngineService.setState
+  |> ignore;
+
+let renderWhenStop = engineState =>
+  StateEditorService.getIsRun() ?
+    engineState : engineState |> DirectorEngineService.loopBody(0.);
+
 let getEditorState = handleFunc => StateEditorService.getState() |> handleFunc;
 
 let getAndSetEditorState = handleFunc =>
@@ -46,6 +60,13 @@ let getAndSetStateToGetData = handleFunc => {
     (StateEditorService.getState(), StateEngineService.unsafeGetState())
     |> handleFunc;
 
+  editorState |> StateEditorService.setState |> ignore;
+  engineState |> StateEngineService.setState |> ignore;
+
+  ();
+};
+
+let setState = ((editorState, engineState)) => {
   editorState |> StateEditorService.setState |> ignore;
   engineState |> StateEngineService.setState |> ignore;
 

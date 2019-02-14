@@ -1,17 +1,17 @@
 module Method = {
   let reNameGameObjectBlurEvent =
-      ((store, dispatchFunc), gameObject, newName) =>
+      ((uiState, dispatchFunc), gameObject, newName) =>
     GameObjectEngineService.unsafeGetGameObjectName(gameObject)
     |> StateLogicService.getEngineStateToGetData
     |> ValueService.isValueEqual(ValueType.String, newName) ?
       () :
       SceneTreeNodeRenameEventHandlder.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-        (store, dispatchFunc),
+        (uiState, dispatchFunc),
         gameObject,
         newName,
       );
 
-  let _buildNameFunc = ((store, dispatchFunc), gameObject) =>
+  let _buildNameFunc = ((uiState, dispatchFunc), gameObject) =>
     <div key=(DomHelper.getRandomKey()) className="sceneTree-name">
       <StringInput
         label="Name"
@@ -19,47 +19,46 @@ module Method = {
           GameObjectEngineService.unsafeGetGameObjectName(gameObject)
           |> StateLogicService.getEngineStateToGetData
         )
-        onBlur=(reNameGameObjectBlurEvent((store, dispatchFunc), gameObject))
+        onBlur=(reNameGameObjectBlurEvent((uiState, dispatchFunc), gameObject))
         canBeNull=false
       />
     </div>;
 
   let _buildGameObjectAllShowComponent =
-      ((store, dispatchFunc), gameObject, componentTypeArr) =>
+      ((uiState, dispatchFunc), gameObject, componentTypeArr) =>
     componentTypeArr
     |> Js.Array.map((componentType: InspectorComponentType.componentType) =>
          InspectorGameObjectUtils.buildComponentUIComponent(
-           (store, dispatchFunc),
+           (uiState, dispatchFunc),
            componentType,
            gameObject,
          )
        );
 
   let buildCurrentSceneTreeNodeComponent =
-      ((store, dispatchFunc), addableComponentConfig, currentSceneTreeNode) =>
+      ((uiState, dispatchFunc), addableComponentConfig, currentSceneTreeNode) =>
     switch (currentSceneTreeNode) {
     | None => [||]
     | Some(gameObject)
         when
-          gameObject
-          === SceneEngineService.getSceneGameObject(
-                StateEngineService.unsafeGetState(),
-              ) => [||]
+          SceneEngineService.isSceneGameObject(gameObject)
+          |> StateLogicService.getEngineStateToGetData => [||]
+
     | Some(gameObject) =>
-      [|_buildNameFunc((store, dispatchFunc), gameObject)|]
+      [|_buildNameFunc((uiState, dispatchFunc), gameObject)|]
       |> Js.Array.concat(
            StateEditorService.getState()
            |> InspectorEditorService.getComponentTypeMap
-           |> WonderCommonlib.SparseMapService.unsafeGet(gameObject)
+           |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(gameObject)
            |> _buildGameObjectAllShowComponent(
-                (store, dispatchFunc),
+                (uiState, dispatchFunc),
                 gameObject,
               ),
          )
       |> ArrayService.push(
            <AddableComponent
              key=(DomHelper.getRandomKey())
-             reduxTuple=(store, dispatchFunc)
+             reduxTuple=(uiState, dispatchFunc)
              currentSceneTreeNode=gameObject
              addableComponentList=addableComponentConfig
            />,
@@ -71,7 +70,7 @@ let component = ReasonReact.statelessComponent("SceneTreeInspector");
 
 let render =
     (
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       addableComponentConfig,
       currentSceneTreeNode,
       _self,
@@ -80,7 +79,7 @@ let render =
     (
       ReasonReact.array(
         Method.buildCurrentSceneTreeNodeComponent(
-          (store, dispatchFunc),
+          (uiState, dispatchFunc),
           addableComponentConfig,
           currentSceneTreeNode,
         ),
@@ -90,7 +89,7 @@ let render =
 
 let make =
     (
-      ~store: AppStore.appState,
+      ~uiState: AppStore.appState,
       ~dispatchFunc,
       ~addableComponentConfig,
       ~currentSceneTreeNode,
@@ -99,7 +98,7 @@ let make =
   ...component,
   render: self =>
     render(
-      (store, dispatchFunc),
+      (uiState, dispatchFunc),
       addableComponentConfig,
       currentSceneTreeNode,
       self,

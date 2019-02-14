@@ -15,7 +15,7 @@ let _ =
 
     let _simulateChangeGeometry = () =>
       MainEditorGeometryTool.changeGeometry(
-        ~sourceGeometry=GameObjectTool.getCurrentGameObjectGeometry(),
+        ~sourceGeometry=GameObjectTool.getCurrentSceneTreeNodeGeometry(),
         ~targetGeometry=
           MainEditorGeometryTool.getDefaultSphereGeometryComponent(),
         (),
@@ -24,7 +24,7 @@ let _ =
     let _beforeEach = () =>
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
     let _afterEach = () => ();
 

@@ -30,7 +30,7 @@ let _ =
       BuildCanvasTool.buildFakeCanvas(sandbox);
 
       let currentGameObjectMaterial =
-        GameObjectTool.getCurrentGameObjectBasicMaterial();
+        GameObjectTool.getCurrentSceneTreeNodeBasicMaterial();
 
       let color1 = PickColorTool.buildColor1();
       let color2 = PickColorTool.buildColor2();
@@ -45,12 +45,12 @@ let _ =
         sandbox,
         () => {
           MainEditorAssetTool.initAssetTree();
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
         },
       );
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
+        SceneTreeWidgetService.getWidget(),
       )
       |> StateLogicService.getAndSetEditorState;
 
@@ -59,8 +59,8 @@ let _ =
 
     let _afterEach = () =>
       StateEditorService.getState()
-      |> CurrentNodeDataAssetEditorService.clearCurrentNodeData
-      |> CurrentNodeParentIdAssetEditorService.clearCurrentNodeParentId
+      |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
+      |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
       |> StateEditorService.setState
       |> ignore;
 

@@ -5,7 +5,7 @@ let changePositionXAndBlur =
     (
       ~value,
       ~transform=GameObjectTool.getCurrentSceneTreeNodeTransform(),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
@@ -14,7 +14,7 @@ let changePositionXAndBlur =
   changePositionX(transform, value);
 
   MainEditorTransform.Method.blurPositionEvent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     transform,
     oldPosition,
   );
@@ -27,7 +27,7 @@ let changePositionYAndBlur =
     (
       ~value,
       ~transform=GameObjectTool.getCurrentSceneTreeNodeTransform(),
-      ~store=TestTool.buildEmptyAppState(),
+      ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
@@ -36,7 +36,7 @@ let changePositionYAndBlur =
   changePositionY(transform, value);
 
   MainEditorTransform.Method.blurPositionEvent(
-    (store, dispatchFunc),
+    (uiState, dispatchFunc),
     transform,
     oldPosition,
   );

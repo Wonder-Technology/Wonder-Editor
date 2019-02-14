@@ -38,7 +38,7 @@ let _createStateTuple = () => {
   let engineState = StateEngineService.unsafeGetState();
 
   let engineState =
-    InitEditorJobUtils.initEditorJob(
+    InitEditorJob.initEditorJob(
       [||],
       StateEngineService.unsafeGetState(),
     );
@@ -129,22 +129,22 @@ let generateWDB = buildWDBGameObjectFunc => {
 let buildSource = (~width=1, ~height=2, ~name="image.png", ()) =>
   {"width": width, "height": height, "name": name} |> Obj.magic;
 
-let generateDirectionPointLightsAndBoxWDB = () =>
+let generateDirectionPointLightsAndCubeWDB = () =>
   generateWDB((editorState, engineState) => {
     let (engineState, geometry) =
-      GeometryEngineService.createBoxGeometry(engineState);
+      GeometryEngineService.createCubeGeometry(engineState);
     let (engineState, lightMaterial) =
       LightMaterialEngineService.create(engineState);
 
-    let (editorState, engineState, box1) =
-      PrimitiveEngineService.createCube(
+    let (editorState, engineState, cube1) =
+      PrimitiveLogicService.createCube(
         (geometry, lightMaterial),
         editorState,
         engineState,
       );
 
     let (editorState, engineState, directionLight) =
-      PrimitiveEngineService.createDirectionLight(editorState, engineState);
+      PrimitiveLogicService.createDirectionLight(editorState, engineState);
 
     let (editorState, engineState, pointLight) =
       _createPointLight(editorState, engineState);
@@ -154,9 +154,9 @@ let generateDirectionPointLightsAndBoxWDB = () =>
 
     let engineState =
       engineState
-      |> GameObjectUtils.addChild(rootGameObject, box1)
-      |> GameObjectUtils.addChild(rootGameObject, directionLight)
-      |> GameObjectUtils.addChild(rootGameObject, pointLight);
+      |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1)
+      |> HierarchyGameObjectEngineService.addChild(rootGameObject, directionLight)
+      |> HierarchyGameObjectEngineService.addChild(rootGameObject, pointLight);
 
     (rootGameObject, (editorState, engineState));
   });
@@ -177,19 +177,19 @@ let generateSceneWDB = () =>
       );
 
     let (engineState, geometry) =
-      GeometryEngineService.createBoxGeometry(engineState);
+      GeometryEngineService.createCubeGeometry(engineState);
     let (engineState, lightMaterial) =
       LightMaterialEngineService.create(engineState);
 
-    let (editorState, engineState, box1) =
-      PrimitiveEngineService.createCube(
+    let (editorState, engineState, cube1) =
+      PrimitiveLogicService.createCube(
         (geometry, lightMaterial),
         editorState,
         engineState,
       );
 
     let (editorState, engineState, camera) =
-      CameraEngineService.createCamera(editorState, engineState);
+      CameraLogicService.createCamera(editorState, engineState);
     let (engineState, arcballCameraController) =
       ArcballCameraEngineService.create(engineState);
 
@@ -235,7 +235,7 @@ let generateSceneWDB = () =>
          );
 
     let (editorState, engineState, directionLight) =
-      PrimitiveEngineService.createDirectionLight(editorState, engineState);
+      PrimitiveLogicService.createDirectionLight(editorState, engineState);
 
     /* let (editorState, engineState, pointLight) =
        _createPointLight(editorState, engineState); */
@@ -245,10 +245,10 @@ let generateSceneWDB = () =>
 
     let engineState =
       engineState
-      |> GameObjectUtils.addChild(rootGameObject, box1)
-      |> GameObjectUtils.addChild(rootGameObject, camera)
-      |> GameObjectUtils.addChild(rootGameObject, directionLight);
-    /* |> GameObjectUtils.addChild(rootGameObject, pointLight); */
+      |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1)
+      |> HierarchyGameObjectEngineService.addChild(rootGameObject, camera)
+      |> HierarchyGameObjectEngineService.addChild(rootGameObject, directionLight);
+    /* |> HierarchyGameObjectEngineService.addChild(rootGameObject, pointLight); */
 
     (rootGameObject, (editorState, engineState));
   });

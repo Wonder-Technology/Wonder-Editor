@@ -27,10 +27,5 @@ let getColor = () => Controller.Method.getColor();
 let changeColor = color => Controller.Method.changeColor(color);
 
 let closeColorPicker =
-    (
-      ~color,
-      ~dispatchFunc=_ => (),
-      ~store=TestTool.buildAppStateSceneGraphFromEngine(),
-      (),
-    ) =>
-  Controller.Method.closeColorPick((store, dispatchFunc), (), color);
+    (~color, ~dispatchFunc=_ => (), ~uiState=TestTool.buildEmptyAppState(), ()) =>
+  Controller.Method.closeColorPick((uiState, dispatchFunc), (), color);

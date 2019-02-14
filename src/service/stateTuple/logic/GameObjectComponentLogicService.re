@@ -1,6 +1,6 @@
 open InspectorComponentType;
 
-let getAllComponentArray = () => [|
+let buildAllComponentArray = () => [|
   {
     componentType: Transform,
     hasComponentFunc: GameObjectComponentEngineService.hasTransformComponent,
@@ -27,9 +27,9 @@ let getAllComponentArray = () => [|
   },
 |];
 
-let _storeGameObjectComponentInComponentTypeMap =
-    (gameObject, engineState, editorState) =>
-  getAllComponentArray()
+let _setGameObjectComponentInComponentTypeMap =
+    (gameObject, gameObjectAllComponentArray, engineState, editorState) =>
+  gameObjectAllComponentArray
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. editorState, {componentType, hasComponentFunc}) =>
          engineState |> hasComponentFunc(gameObject) ?
@@ -42,21 +42,22 @@ let _storeGameObjectComponentInComponentTypeMap =
        editorState,
      );
 
-let getGameObjectComponentStoreInComponentTypeMap =
-    (gameObjectArr, engineState, editorState) => {
+let setGameObjectArrComponentTypeMap =
+    (gameObjectArr, gameObjectAllComponentArray, engineState, editorState) => {
   let rec _iterateGameObject = (gameObjectArr, engineState, editorState) =>
     gameObjectArr
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. editorState, gameObject) => {
            let editorState =
-             _storeGameObjectComponentInComponentTypeMap(
+             _setGameObjectComponentInComponentTypeMap(
                gameObject,
+               gameObjectAllComponentArray,
                engineState,
                editorState,
              );
 
            _iterateGameObject(
-             engineState |> GameObjectUtils.getChildren(gameObject),
+             engineState |> HierarchyGameObjectEngineService.getChildren(gameObject),
              engineState,
              editorState,
            );

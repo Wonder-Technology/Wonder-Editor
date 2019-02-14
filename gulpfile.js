@@ -36,11 +36,17 @@ gulp.task("updateVersion", function (done) {
     done();
 });
 
-function replaceSnapshotPath(filePath) {
+function replaceSnapshotPath(filePath, done) {
     fs.readFile(filePath, "utf8", function (err, data) {
         if (err) {
-            return console.log(err);
+            console.log(err);
+
+            done();
+
+            return;
         }
+
+
         var result = data.replace(/const\sgetSnapshotPath[\w\W]+?;/img, `
         const getSnapshotPath = (exports.getSnapshotPath = testPath => {
               let filePathArray = testPath.split('/')
@@ -52,7 +58,15 @@ function replaceSnapshotPath(filePath) {
         );
 
         fs.writeFile(filePath, result, "utf8", function (err) {
-            if (err) return console.log(err);
+            if (err) {
+                console.log(err);
+
+                done();
+
+                return;
+            }
+
+            done();
         });
     });
 };
@@ -65,7 +79,7 @@ gulp.task("sass", function () {
 gulp.task("changeSnapshotPath", function (done) {
     const filePath = path.join(__dirname, 'node_modules/jest-snapshot/build/utils.js');
 
-    replaceSnapshotPath(filePath)
+    replaceSnapshotPath(filePath, done)
 });
 
 gulp.task("webpack", function (done) {

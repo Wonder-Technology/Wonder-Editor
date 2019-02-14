@@ -26,7 +26,7 @@ let _ =
         );
 
         CurrentSelectSourceEditorService.setCurrentSelectSource(
-          EditorType.SceneTree,
+          SceneTreeWidgetService.getWidget(),
         )
         |> StateLogicService.getAndSetEditorState;
       });
@@ -36,7 +36,7 @@ let _ =
           test("test change distance should set into engine", () => {
             MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
             let currentGameObjectArcballCamera =
-              GameObjectTool.getCurrentGameObjectArcballCamera();
+              GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
             let value = 21.1;
 
             MainEditorArcballCameraControllerTool.changeDistanceAndBlur(
@@ -60,7 +60,7 @@ let _ =
           test("test change minDistance should set into engine", () => {
             MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
             let currentGameObjectArcballCamera =
-              GameObjectTool.getCurrentGameObjectArcballCamera();
+              GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
             let value = 11.1;
 
             MainEditorArcballCameraControllerTool.changeMinDistanceAndBlur(

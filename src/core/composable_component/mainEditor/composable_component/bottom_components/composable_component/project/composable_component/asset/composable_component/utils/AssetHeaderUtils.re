@@ -1,13 +1,13 @@
 open FileType;
 
-open AssetNodeType;
+open NodeAssetType;
 
 open Js.Promise;
 
 let _handleImage =
     (
       (mimeType, fileName, imgBase64),
-      (textureNodeId, parentFolderNodeId, textureComponent),
+      (textureNodeId, selectedFolderNodeInAssetTree, textureComponent),
       (editorState, engineState),
     ) =>
   make((~resolve, ~reject) =>
@@ -23,8 +23,8 @@ let _handleImage =
                textureComponent,
              );
 
-        let (imageNodeId, editorState) =
-          AddTextureNodeUtils.addImageNodeByBase64(
+        let (editorState, imageDataIndex) =
+          ImageDataMapAssetEditorService.addImageNodeByBase64(
             imgBase64,
             fileName,
             mimeType,
@@ -32,9 +32,13 @@ let _handleImage =
           );
 
         let editorState =
-          AddTextureNodeUtils.addTextureNodeToAssetTree(
-            textureComponent,
-            (parentFolderNodeId, textureNodeId, imageNodeId),
+          TextureNodeAssetEditorService.addTextureNodeToAssetTree(
+            selectedFolderNodeInAssetTree,
+            TextureNodeAssetService.buildNode(
+              ~nodeId=textureNodeId,
+              ~textureComponent,
+              ~imageDataIndex,
+            ),
             editorState,
           );
 
@@ -46,20 +50,19 @@ let _handleImage =
 let _handleAssetWDBType =
     (
       (fileName, wdbArrayBuffer),
-      (wdbNodeId, parentFolderNodeId),
+      (wdbNodeId, selectedFolderNodeInAssetTree),
       (editorState, engineState),
     ) =>
-  AssetWDBUtils.importAssetWDB(
+  WDBAssetLogicService.importAssetWDB(
     (
       FileNameService.getBaseName(fileName)
-      |. IterateAssetTreeAssetEditorService.getUniqueTreeNodeName(
-           WDB,
-           parentFolderNodeId |. Some,
-           (editorState, engineState),
+      |. OperateTreeAssetLogicService.getUniqueNodeName(
+           selectedFolderNodeInAssetTree,
+           engineState,
          ),
       wdbArrayBuffer,
     ),
-    (wdbNodeId, parentFolderNodeId),
+    (wdbNodeId, selectedFolderNodeInAssetTree),
     true,
     (editorState, engineState),
   )
@@ -113,19 +116,19 @@ let _handleAssetWDBType =
 let _handleGLBType =
     (
       (fileName, glbArrayBuffer),
-      (wdbNodeId, parentFolderNodeId),
+      (wdbNodeId, selectedFolderNodeInAssetTree),
       (editorState, engineState),
     ) =>
   _handleAssetWDBType(
     (fileName, ConverterEngineService.convertGLBToWDB(glbArrayBuffer)),
-    (wdbNodeId, parentFolderNodeId),
+    (wdbNodeId, selectedFolderNodeInAssetTree),
     (editorState, engineState),
   );
 
 let _handleGLTFZipType =
     (
       (fileName, jsZipBlob),
-      (wdbNodeId, parentFolderNodeId),
+      (wdbNodeId, selectedFolderNodeInAssetTree),
       createJsZipFunc,
       (editorState, engineState),
     ) =>
@@ -133,7 +136,7 @@ let _handleGLTFZipType =
   |> then_(glbArrayBuffer =>
        _handleGLBType(
          (fileName, glbArrayBuffer),
-         (wdbNodeId, parentFolderNodeId),
+         (wdbNodeId, selectedFolderNodeInAssetTree),
          (editorState, engineState),
        )
      );
@@ -155,7 +158,7 @@ let _handleSpecificFuncByTypeAsync =
 let _handleTextureType =
     (
       fileResult: nodeResultType,
-      (targetTreeNodeId, assetNodeId),
+      (selectedFolderNodeInAssetTree, assetNodeId),
       (editorState, engineState),
     ) => {
   let baseName = FileNameService.getBaseName(fileResult.name);
@@ -164,10 +167,9 @@ let _handleTextureType =
   let (textureComponent, engineState) =
     TextureUtils.createAndInitTexture(
       baseName
-      |. IterateAssetTreeAssetEditorService.getUniqueTreeNodeName(
-           Texture,
-           targetTreeNodeId |. Some,
-           (editorState, engineState),
+      |. OperateTreeAssetLogicService.getUniqueNodeName(
+           selectedFolderNodeInAssetTree,
+           engineState,
          ),
       StateEngineService.unsafeGetState(),
     );
@@ -178,17 +180,19 @@ let _handleTextureType =
       fileResult.name,
       fileResult.result |> FileReader.convertResultToString,
     ),
-    (assetNodeId, targetTreeNodeId, textureComponent),
+    (assetNodeId, selectedFolderNodeInAssetTree, textureComponent),
     (editorState, engineState),
   );
 };
 
 let handleFileByTypeAsync = (fileResult: nodeResultType, createJsZipFunc) => {
   let (editorState, assetNodeId) =
-    AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
+    IdAssetEditorService.generateNodeId |> StateLogicService.getEditorState;
   let engineState = StateEngineService.unsafeGetState();
 
-  let targetTreeNodeId = editorState |> AssetTreeUtils.getTargetTreeNodeId;
+  let selectedFolderNodeInAssetTree =
+    editorState
+    |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree;
 
   _handleSpecificFuncByTypeAsync(
     fileResult.type_,
@@ -196,7 +200,7 @@ let handleFileByTypeAsync = (fileResult: nodeResultType, createJsZipFunc) => {
       () =>
         _handleTextureType(
           fileResult,
-          (targetTreeNodeId, assetNodeId),
+          (selectedFolderNodeInAssetTree, assetNodeId),
           (editorState, engineState),
         ),
       () =>
@@ -205,7 +209,7 @@ let handleFileByTypeAsync = (fileResult: nodeResultType, createJsZipFunc) => {
             fileResult.name,
             fileResult.result |> FileReader.convertResultToArrayBuffer,
           ),
-          (assetNodeId, targetTreeNodeId),
+          (assetNodeId, selectedFolderNodeInAssetTree),
           (editorState, engineState),
         ),
       () =>
@@ -214,7 +218,7 @@ let handleFileByTypeAsync = (fileResult: nodeResultType, createJsZipFunc) => {
             fileResult.name,
             fileResult.result |> FileReader.convertResultToArrayBuffer,
           ),
-          (assetNodeId, targetTreeNodeId),
+          (assetNodeId, selectedFolderNodeInAssetTree),
           (editorState, engineState),
         ),
       () =>
@@ -223,7 +227,7 @@ let handleFileByTypeAsync = (fileResult: nodeResultType, createJsZipFunc) => {
             fileResult.name,
             fileResult.result |> FileReader.convertResultToJsZipBlob,
           ),
-          (assetNodeId, targetTreeNodeId),
+          (assetNodeId, selectedFolderNodeInAssetTree),
           createJsZipFunc,
           (editorState, engineState),
         ),
@@ -237,9 +241,9 @@ let handleFileByTypeAsync = (fileResult: nodeResultType, createJsZipFunc) => {
      });
 };
 
-let fileLoad = ((store, dispatchFunc), createJsZipFunc, event) => {
+let fileLoad = ((uiState, dispatchFunc), createJsZipFunc, event) => {
   let e = ReactEventType.convertReactFormEventToJsEvent(event);
-  DomHelper.preventDefault(e);
+  EventHelper.preventDefault(e);
 
   let target = e##target;
 

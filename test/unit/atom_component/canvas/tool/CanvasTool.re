@@ -3,28 +3,27 @@ module Drag = {
       (
         ~wdbNodeId,
         ~dispatchFunc=TestTool.getDispatch(),
-        ~store=TestTool.buildEmptyAppState(),
-        ~widget=AssetUtils.getWidget(),
+        ~uiState=TestTool.buildEmptyAppState(),
+        ~widget=AssetWidgetService.getWidget(),
         ~effectEffectAllowd="move",
         ~dragImg=DomHelper.createElement("img"),
         ~event=BaseEventTool.buildDragEvent(.),
         (),
       ) => {
-    DragEventUtils.handleDragStart(
-      wdbNodeId,
-      widget,
-      dragImg,
-      effectEffectAllowd,
-      event,
-    );
+    /* DragEventUtils.handleDragStart(
+         wdbNodeId,
+         widget,
+         dragImg,
+         effectEffectAllowd,
+         event,
+       ); */
 
-    let wdbGameObjectUid =
+    let wdbGameObject =
       StateEditorService.getState()
-      |> WDBNodeMapAssetEditorService.getWDBNodeMap
-      |> WonderCommonlib.SparseMapService.unsafeGet(wdbNodeId)
-      |> (({wdbGameObject}) => wdbGameObject);
-    MainEditor.Method.dragWDB((store, dispatchFunc), (), wdbGameObjectUid);
+      |> OperateTreeAssetEditorService.unsafeFindNodeById(wdbNodeId)
+      |> WDBNodeAssetService.getWDBGameObject;
 
-    DragEventUtils.handleDrageEnd(event);
+    MainEditor.Method.dragWDB((uiState, dispatchFunc), (), wdbGameObject);
+    /* DragEventUtils.handleDragEnd(event); */
   };
 };

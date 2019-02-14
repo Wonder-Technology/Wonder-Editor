@@ -1,35 +1,44 @@
-let getTextureNode = nodeId =>
-  StateEditorService.getState()
-  |> TextureNodeMapAssetEditorService.getTextureNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+let unsafeGetTextureNode = nodeId =>
+  OperateTreeAssetEditorService.unsafeFindNodeById(
+    nodeId,
+    StateEditorService.getState(),
+  );
 
-let getCurrentNodeId = () => {
-  let {currentNodeId}: CurrentNodeDataType.currentNodeDataType =
-    CurrentNodeDataAssetEditorService.unsafeGetCurrentNodeData
-    |> StateLogicService.getEditorState;
+let unsafeGetSelectedFolderNodeInAssetTree = editorState =>
+  OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree(
+    editorState,
+  );
 
-  currentNodeId;
-};
+let unsafeGetCurrentNode = editorState =>
+  OperateTreeAssetEditorService.getCurrentNode(editorState)
+  |> OptionService.unsafeGet;
+
+let getCurrentNodeId = editorState =>
+  CurrentNodeIdAssetEditorService.getCurrentNodeId(editorState);
+
+let unsafeGetCurrentNodeId = editorState =>
+  CurrentNodeIdAssetEditorService.unsafeGetCurrentNodeId(editorState);
 
 let getTextureComponentFromNodeId = nodeId => {
-  let {textureComponent}: AssetNodeType.textureResultType =
-    getTextureNode(nodeId);
+  let {textureComponent}: NodeAssetType.textureNodeData =
+    unsafeGetTextureNode(nodeId) |> TextureNodeAssetService.getNodeData;
 
   textureComponent;
 };
 
 let getTextureComponentFromCurrentNodeId = () =>
-  getTextureComponentFromNodeId(getCurrentNodeId());
+  getTextureComponentFromNodeId(
+    unsafeGetCurrentNodeId(StateEditorService.getState()),
+  );
 
-let setCurrentNodeData = (nodeId, nodeType) =>
-  CurrentNodeDataAssetEditorService.setCurrentNodeData({
-    currentNodeId: nodeId,
-    nodeType,
-  })
-  |> StateLogicService.getAndSetEditorState;
+let setCurrentNodeId = nodeId => {
+  let editorState = StateEditorService.getState();
 
-let setCurrentTextureNodeData = nodeId =>
-  setCurrentNodeData(nodeId, AssetNodeType.Texture);
+  editorState
+  |> CurrentNodeIdAssetEditorService.setCurrentNodeId(nodeId)
+  |> StateEditorService.setState
+  |> ignore;
+};
 
 module OperateTwoLayer = {
   open AssetTreeTwoLayerTypeTool;
