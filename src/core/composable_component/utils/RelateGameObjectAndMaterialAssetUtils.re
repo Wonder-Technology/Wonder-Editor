@@ -29,9 +29,7 @@ let isLightMaterialDataEqual =
     (
       (name, diffuseColor, shininess, textureData),
       material2,
-      imageUint8ArrayDataMap,
-      isTextureDataEqualFunc,
-      engineState,
+      (imageUint8ArrayDataMap, isTextureDataEqualFunc, engineState),
     ) =>
   _isLightMaterialNameEqual(name, material2, engineState)
   &&
@@ -106,11 +104,9 @@ let _findMaterialAsset =
   | Some((materialAssetComponent, _)) => Some(materialAssetComponent)
   };
 
-let getRelatedMaterialData =
+let _getRelatedMaterialData =
     (
-      gameObject,
-      replacedTargetMaterialMap,
-      imageUint8ArrayDataMap,
+      (gameObject, replacedTargetMaterialMap, imageUint8ArrayDataMap),
       (materialType, materialAssetDataMap, defaultMaterialData),
       (
         unsafeGetMaterialComponentFunc,
@@ -199,10 +195,8 @@ let getRelatedMaterialDataFromGameObject =
     gameObject,
     engineState,
   ) ?
-    getRelatedMaterialData(
-      gameObject,
-      replacedTargetMaterialMap,
-      imageUint8ArrayDataMap,
+    _getRelatedMaterialData(
+      (gameObject, replacedTargetMaterialMap, imageUint8ArrayDataMap),
       (
         MaterialDataAssetType.BasicMaterial,
         basicMaterialDataMap,
@@ -219,10 +213,8 @@ let getRelatedMaterialDataFromGameObject =
       gameObject,
       engineState,
     ) ?
-      getRelatedMaterialData(
-        gameObject,
-        replacedTargetMaterialMap,
-        imageUint8ArrayDataMap,
+      _getRelatedMaterialData(
+        (gameObject, replacedTargetMaterialMap, imageUint8ArrayDataMap),
         (
           MaterialDataAssetType.LightMaterial,
           lightMaterialDataMap,

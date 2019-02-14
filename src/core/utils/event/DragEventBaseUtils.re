@@ -1,4 +1,4 @@
-let dragStart = (id, widget, dragImg, effectAllowd, event) => {
+let dragStart = (id, widget, (dragImg, effectAllowd), event) => {
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);
 
   EventHelper.stopPropagation(e);

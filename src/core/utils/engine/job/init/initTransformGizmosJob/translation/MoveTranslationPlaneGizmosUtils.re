@@ -36,30 +36,35 @@ let _updatePlaneGizmoLocalPosition =
        yzLocalPos,
      );
 
-let _computePlaneLocalPosition = (editorState, engineState) => {
+let _computeCameraPosInWholeGizmoLocalCoordSystem = (editorState, engineState) => {
   let cameraGameObject =
     SceneViewEditorService.unsafeGetEditCamera(editorState);
-  let planeMoveStep = 1.;
-  let cameraPosInWholeGizmoLocalCoordSystem =
-    Wonderjs.Vector3Service.transformMat4Tuple(
-      TransformGameObjectEngineService.getPosition(
-        cameraGameObject,
-        engineState,
-      ),
-      TransformEngineService.getLocalToWorldMatrixTypeArray(
-        GameObjectComponentEngineService.unsafeGetTransformComponent(
-          OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
-            editorState,
-          ),
-          engineState,
+
+  Wonderjs.Vector3Service.transformMat4Tuple(
+    TransformGameObjectEngineService.getPosition(
+      cameraGameObject,
+      engineState,
+    ),
+    TransformEngineService.getLocalToWorldMatrixTypeArray(
+      GameObjectComponentEngineService.unsafeGetTransformComponent(
+        OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+          editorState,
         ),
         engineState,
-      )
-      |> Wonderjs.Matrix4Service.invert(
-           _,
-           Wonderjs.Matrix4Service.createIdentityMatrix4(),
-         ),
-    );
+      ),
+      engineState,
+    )
+    |> Wonderjs.Matrix4Service.invert(
+         _,
+         Wonderjs.Matrix4Service.createIdentityMatrix4(),
+       ),
+  );
+};
+
+let _computePlaneLocalPosition = (editorState, engineState) => {
+  let planeMoveStep = 1.;
+  let cameraPosInWholeGizmoLocalCoordSystem =
+    _computeCameraPosInWholeGizmoLocalCoordSystem(editorState, engineState);
 
   if (_isInPXPYPZ(cameraPosInWholeGizmoLocalCoordSystem)) {
     (

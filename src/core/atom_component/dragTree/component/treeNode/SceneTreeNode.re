@@ -24,12 +24,11 @@ module Method = {
     style: ReactUtils.addStyleProp("opacity", "1", state.style),
   };
 
-  let handleDragStart = (gameObject, widget, dragImg, effectAllowd, event) => {
+  let handleDragStart = (gameObject, widget, (dragImg, effectAllowd), event) => {
     DragEventBaseUtils.dragStart(
       gameObject,
       widget,
-      dragImg,
-      effectAllowd,
+      (dragImg, effectAllowd),
       event,
     );
     DragStart;
@@ -163,7 +162,7 @@ module Method = {
       )
       onMouseDown=(_event => onSelectFunc(gameObject))
       onDragStart=(
-        e => send(handleDragStart(gameObject, widget, dragImg, "move", e))
+        e => send(handleDragStart(gameObject, widget, (dragImg, "move"), e))
       )
       onDragEnd=(_e => send(handleDragEnd(_e)))
       onDragLeave=(_e => send(handleDragLeave(gameObject, _e)))

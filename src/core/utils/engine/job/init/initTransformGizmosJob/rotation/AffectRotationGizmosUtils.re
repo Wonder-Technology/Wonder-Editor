@@ -138,8 +138,7 @@ let _affectGizmo =
       ray,
       (plane, planeLocalAxis),
       computeTotalAngleFunc,
-      editorState,
-      engineState,
+      (editorState, engineState),
     ) => {
   let (totalAngle, needRotateAngle) =
     switch (RayIntersectUtils.checkIntersectPlane(plane, ray)) {
@@ -222,8 +221,7 @@ let affectRotationGizmo = (event, (editorState, engineState)) => {
         CircleRotationGizmosUtils.getXYPlaneLocalAxis(),
       ),
       _computeXYPlaneTotalAngle,
-      editorState,
-      engineState,
+      (editorState, engineState),
     ) :
     SelectRotationGizmoSceneViewEditorService.isXZCircleGizmoSelected(
       editorState,
@@ -235,8 +233,7 @@ let affectRotationGizmo = (event, (editorState, engineState)) => {
           CircleRotationGizmosUtils.getXZPlaneLocalAxis(),
         ),
         _computeXZPlaneTotalAngle,
-        editorState,
-        engineState,
+        (editorState, engineState),
       ) :
       SelectRotationGizmoSceneViewEditorService.isYZCircleGizmoSelected(
         editorState,
@@ -248,8 +245,7 @@ let affectRotationGizmo = (event, (editorState, engineState)) => {
             CircleRotationGizmosUtils.getYZPlaneLocalAxis(),
           ),
           _computeYZPlaneTotalAngle,
-          editorState,
-          engineState,
+          (editorState, engineState),
         ) :
         (editorState, engineState);
 };

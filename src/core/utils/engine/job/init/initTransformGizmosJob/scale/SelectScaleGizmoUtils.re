@@ -140,7 +140,7 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
         |> SelectScaleGizmoSceneViewEditorService.markNotSelectAnyScaleGizmo;
 
 let _handleSelectCenterBoxGizmo =
-    (event, ray, handleSelectAxisGizmoFunc, editorState, engineState) =>
+    ((event, ray), handleSelectAxisGizmoFunc, (editorState, engineState)) =>
   _isSelectScaleCenterBoxGizmo(
     OperateScaleGizmoSceneViewEditorService.unsafeGetScaleCenterBoxGizmo(
       editorState,
@@ -178,10 +178,8 @@ let selectScaleGizmo = (event, engineState, editorState) => {
     );
 
   _handleSelectCenterBoxGizmo(
-    event,
-    ray,
+    (event, ray),
     _handleSelectAxisGizmo,
-    editorState,
-    engineState,
+    (editorState, engineState),
   );
 };

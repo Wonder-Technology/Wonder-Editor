@@ -138,9 +138,7 @@ let computePositionAndSize = (gameObject, editorState, engineState) => {
 
 let _drawLight =
     (
-      (maxDistance, scene, allGameObjects),
-      name,
-      sceneLights,
+      (maxDistance, scene, allGameObjects, name, sceneLights),
       imageFunc,
       editorState,
       engineState,
@@ -166,29 +164,52 @@ let _drawLight =
   );
 
 let _drawDirectionLight =
-    (maxDistance, scene, allGameObjects, imageFunc, editorState, engineState) =>
+    (
+      (maxDistance, scene, allGameObjects),
+      imageFunc,
+      editorState,
+      engineState,
+    ) =>
   _drawLight(
-    (maxDistance, scene, allGameObjects),
-    "directionLight",
-    _getSceneDirectionLights(scene, allGameObjects, engineState),
+    (
+      maxDistance,
+      scene,
+      allGameObjects,
+      "directionLight",
+      _getSceneDirectionLights(scene, allGameObjects, engineState),
+    ),
     imageFunc,
     editorState,
     engineState,
   );
 
 let _drawPointLight =
-    (maxDistance, scene, allGameObjects, imageFunc, editorState, engineState) =>
+    (
+      (maxDistance, scene, allGameObjects),
+      imageFunc,
+      editorState,
+      engineState,
+    ) =>
   _drawLight(
-    (maxDistance, scene, allGameObjects),
-    "pointLight",
-    _getScenePointLights(scene, allGameObjects, engineState),
+    (
+      maxDistance,
+      scene,
+      allGameObjects,
+      "pointLight",
+      _getScenePointLights(scene, allGameObjects, engineState),
+    ),
     imageFunc,
     editorState,
     engineState,
   );
 
 let _drawSceneCamera =
-    (maxDistance, scene, allGameObjects, imageFunc, editorState, engineState) =>
+    (
+      (maxDistance, scene, allGameObjects),
+      imageFunc,
+      editorState,
+      engineState,
+    ) =>
   WonderCommonlib.ArrayService.reduceOneParam(
     (. engineState, sceneCameraGameObject) => {
       let (x, y, imageWidth, imageHeight) =
@@ -221,24 +242,18 @@ let getEngineStateIMGUIFunc = () =>
 
     let engineState =
       _drawDirectionLight(
-        maxDistance,
-        scene,
-        allGameObjects,
+        (maxDistance, scene, allGameObjects),
         imageFunc,
         editorState,
         engineState,
       )
       |> _drawPointLight(
-           maxDistance,
-           scene,
-           allGameObjects,
+           (maxDistance, scene, allGameObjects),
            imageFunc,
            editorState,
          )
       |> _drawSceneCamera(
-           maxDistance,
-           scene,
-           allGameObjects,
+           (maxDistance, scene, allGameObjects),
            imageFunc,
            editorState,
          );

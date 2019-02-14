@@ -69,9 +69,7 @@ module PointEvent = {
 
   let _bindMouseEventToTriggerViewPointEvent =
       (
-        mouseEventName,
-        customEventName,
-        pointEventName,
+        (mouseEventName, customEventName, pointEventName),
         eventTarget,
         isTriggerCustomGlobalEventFunc,
         engineState,
@@ -88,16 +86,12 @@ module PointEvent = {
 
   let _bindMouseEventToTriggerSceneViewPointEvent =
       (
-        mouseEventName,
-        customEventName,
-        pointEventName,
+        (mouseEventName, customEventName, pointEventName),
         isTriggerCustomGlobalEventFunc,
         engineState,
       ) =>
     _bindMouseEventToTriggerViewPointEvent(
-      mouseEventName,
-      customEventName,
-      pointEventName,
+      (mouseEventName, customEventName, pointEventName),
       Scene,
       isTriggerCustomGlobalEventFunc,
       engineState,
@@ -105,16 +99,12 @@ module PointEvent = {
 
   let _bindMouseEventToTriggerGameViewPointEvent =
       (
-        mouseEventName,
-        customEventName,
-        pointEventName,
+        (mouseEventName, customEventName, pointEventName),
         isTriggerCustomGlobalEventFunc,
         engineState,
       ) =>
     _bindMouseEventToTriggerViewPointEvent(
-      mouseEventName,
-      customEventName,
-      pointEventName,
+      (mouseEventName, customEventName, pointEventName),
       Game,
       isTriggerCustomGlobalEventFunc,
       engineState,
@@ -124,99 +114,131 @@ module PointEvent = {
     BrowserEngineService.isPC(engineState) ?
       engineState
       |> _bindMouseEventToTriggerGameViewPointEvent(
-           Click,
-           GameViewEventEditorService.getPointTapEventName(),
-           PointTap,
+           (
+             Click,
+             GameViewEventEditorService.getPointTapEventName(),
+             PointTap,
+           ),
            _isTriggerGameViewEvent,
          )
       |> _bindMouseEventToTriggerGameViewPointEvent(
-           MouseUp,
-           GameViewEventEditorService.getPointUpEventName(),
-           PointUp,
+           (
+             MouseUp,
+             GameViewEventEditorService.getPointUpEventName(),
+             PointUp,
+           ),
            _isTriggerGameViewEvent,
          )
       |> _bindMouseEventToTriggerGameViewPointEvent(
-           MouseDown,
-           GameViewEventEditorService.getPointDownEventName(),
-           PointDown,
+           (
+             MouseDown,
+             GameViewEventEditorService.getPointDownEventName(),
+             PointDown,
+           ),
            _isTriggerGameViewEvent,
          )
       |> _bindMouseEventToTriggerGameViewPointEvent(
-           MouseWheel,
-           GameViewEventEditorService.getPointScaleEventName(),
-           PointScale,
+           (
+             MouseWheel,
+             GameViewEventEditorService.getPointScaleEventName(),
+             PointScale,
+           ),
            _isTriggerGameViewEvent,
          )
       |> _bindMouseEventToTriggerGameViewPointEvent(
-           MouseMove,
-           GameViewEventEditorService.getPointMoveEventName(),
-           PointMove,
+           (
+             MouseMove,
+             GameViewEventEditorService.getPointMoveEventName(),
+             PointMove,
+           ),
            _isTriggerGameViewEvent,
          )
       |> _bindMouseEventToTriggerGameViewPointEvent(
-           MouseDragStart,
-           GameViewEventEditorService.getPointDragStartEventName(),
-           PointDragStart,
+           (
+             MouseDragStart,
+             GameViewEventEditorService.getPointDragStartEventName(),
+             PointDragStart,
+           ),
            _isTriggerGameViewEvent,
          )
       |> _bindMouseEventToTriggerGameViewPointEvent(
-           MouseDragOver,
-           GameViewEventEditorService.getPointDragOverEventName(),
-           PointDragOver,
+           (
+             MouseDragOver,
+             GameViewEventEditorService.getPointDragOverEventName(),
+             PointDragOver,
+           ),
            _isTriggerGameViewEvent,
          )
       |> _bindMouseEventToTriggerGameViewPointEvent(
-           MouseDragDrop,
-           GameViewEventEditorService.getPointDragDropEventName(),
-           PointDragDrop,
+           (
+             MouseDragDrop,
+             GameViewEventEditorService.getPointDragDropEventName(),
+             PointDragDrop,
+           ),
            _isTriggerGameViewEvent,
          )
       |> _bindMouseEventToTriggerSceneViewPointEvent(
-           Click,
-           SceneViewEventEditorService.getPointTapEventName(),
-           PointTap,
+           (
+             Click,
+             SceneViewEventEditorService.getPointTapEventName(),
+             PointTap,
+           ),
            _isTriggerSceneViewEvent,
          )
       |> _bindMouseEventToTriggerSceneViewPointEvent(
-           MouseUp,
-           SceneViewEventEditorService.getPointUpEventName(),
-           PointUp,
+           (
+             MouseUp,
+             SceneViewEventEditorService.getPointUpEventName(),
+             PointUp,
+           ),
            _isTriggerSceneViewEvent,
          )
       |> _bindMouseEventToTriggerSceneViewPointEvent(
-           MouseDown,
-           SceneViewEventEditorService.getPointDownEventName(),
-           PointDown,
+           (
+             MouseDown,
+             SceneViewEventEditorService.getPointDownEventName(),
+             PointDown,
+           ),
            _isTriggerSceneViewEvent,
          )
       |> _bindMouseEventToTriggerSceneViewPointEvent(
-           MouseWheel,
-           SceneViewEventEditorService.getPointScaleEventName(),
-           PointScale,
+           (
+             MouseWheel,
+             SceneViewEventEditorService.getPointScaleEventName(),
+             PointScale,
+           ),
            _isTriggerSceneViewEvent,
          )
       |> _bindMouseEventToTriggerSceneViewPointEvent(
-           MouseMove,
-           SceneViewEventEditorService.getPointMoveEventName(),
-           PointMove,
+           (
+             MouseMove,
+             SceneViewEventEditorService.getPointMoveEventName(),
+             PointMove,
+           ),
            _isTriggerSceneViewEvent,
          )
       |> _bindMouseEventToTriggerSceneViewPointEvent(
-           MouseDragStart,
-           SceneViewEventEditorService.getPointDragStartEventName(),
-           PointDragStart,
+           (
+             MouseDragStart,
+             SceneViewEventEditorService.getPointDragStartEventName(),
+             PointDragStart,
+           ),
            _isTriggerSceneViewEvent,
          )
       |> _bindMouseEventToTriggerSceneViewPointEvent(
-           MouseDragOver,
-           SceneViewEventEditorService.getPointDragOverEventName(),
-           PointDragOver,
+           (
+             MouseDragOver,
+             SceneViewEventEditorService.getPointDragOverEventName(),
+             PointDragOver,
+           ),
            _isTriggerSceneViewEvent,
          )
       |> _bindMouseEventToTriggerSceneViewPointEvent(
-           MouseDragDrop,
-           SceneViewEventEditorService.getPointDragDropEventName(),
-           PointDragDrop,
+           (
+             MouseDragDrop,
+             SceneViewEventEditorService.getPointDragDropEventName(),
+             PointDragDrop,
+           ),
            _isTriggerSceneViewEvent,
          ) :
       {

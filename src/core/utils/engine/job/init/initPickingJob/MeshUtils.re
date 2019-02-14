@@ -22,17 +22,13 @@ let _checkIntersect =
       cullType,
       (rayCasterNear, rayCasterFar),
       ({origin}: RayType.ray) as ray,
-      va,
-      vb,
-      vc,
+      (va, vb, vc),
     ) =>
-  RayIntersectUtils.checkIntersectTriangle(cullType, va, vb, vc, ray);
+  RayIntersectUtils.checkIntersectTriangle(cullType, (va, vb, vc), ray);
 
 let _checkIntersectMesh =
     (
-      (geometry, engineState),
-      localToWorldMatrix,
-      cullType,
+      (geometry, localToWorldMatrix, cullType, engineState),
       (vertices, indices16, indices32, indicesCount),
       ({origin, direction}: RayType.ray) as ray,
     ) => {
@@ -55,9 +51,11 @@ let _checkIntersectMesh =
       cullType,
       (0., infinity),
       ray,
-      Vector3Service.fromBufferAttribute(vertices, index1),
-      Vector3Service.fromBufferAttribute(vertices, index2),
-      Vector3Service.fromBufferAttribute(vertices, index3),
+      (
+        Vector3Service.fromBufferAttribute(vertices, index1),
+        Vector3Service.fromBufferAttribute(vertices, index2),
+        Vector3Service.fromBufferAttribute(vertices, index3),
+      ),
     )
   );
 };
@@ -65,9 +63,7 @@ let _checkIntersectMesh =
 let checkIntersectMesh =
     (ray, (geometry, localToWorldMatrixTypeArray, cullType), engineState) =>
   _checkIntersectMesh(
-    (geometry, engineState),
-    localToWorldMatrixTypeArray,
-    cullType,
+    (geometry, localToWorldMatrixTypeArray, cullType, engineState),
     (
       GeometryEngineService.getGeometryVertices(geometry, engineState),
       GeometryEngineService.getGeometryIndices16(geometry, engineState),

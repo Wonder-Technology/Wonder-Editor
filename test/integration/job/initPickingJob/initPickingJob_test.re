@@ -645,9 +645,7 @@ let _ =
 
             RayIntersectUtils.checkIntersectTriangle(
               cullType,
-              va,
-              vb,
-              vc,
+              (va, vb, vc),
               ray,
             )
             |> Js.Option.isSome;

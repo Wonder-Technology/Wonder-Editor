@@ -5,7 +5,7 @@ let getViewRect = editorState => editorState.sceneViewRecord.viewRect;
 let unsafeGetViewRect = editorState =>
   getViewRect(editorState) |> OptionService.unsafeGet;
 
-let updateViewRect = (x, y, width, height, editorState) => {
+let updateViewRect = ((x, y, width, height), editorState) => {
   ...editorState,
   sceneViewRecord: {
     ...editorState.sceneViewRecord,
@@ -37,4 +37,5 @@ let setEditCamera = (editCamera, editorState) => {
   },
 };
 
-let unsafeGetNeedActiveCamera = editorState => editorState |> unsafeGetEditCamera;
+let unsafeGetNeedActiveCamera = editorState =>
+  editorState |> unsafeGetEditCamera;

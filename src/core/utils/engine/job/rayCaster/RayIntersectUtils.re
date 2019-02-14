@@ -109,9 +109,7 @@ let isIntersectSphere =
 let _checkIntersectTriangleForFrontCull =
     (
       (det, edge1, edge2, pvec),
-      v0,
-      v1,
-      v2,
+      (v0, v1, v2),
       {origin, direction}: RayType.ray,
     ) => {
   let inv_det = 1. /. det;
@@ -235,9 +233,7 @@ let _checkIntersectTriangleForBackAndNoneCull =
 let checkIntersectTriangle =
     (
       cullType: RayType.cull,
-      va,
-      vb,
-      vc,
+      (va, vb, vc),
       ({origin, direction}: RayType.ray) as ray,
     ) =>
   switch (cullType) {
@@ -259,9 +255,7 @@ let checkIntersectTriangle =
       None :
       _checkIntersectTriangleForFrontCull(
         (det, edge1, edge2, pvec),
-        va,
-        vb,
-        vc,
+        (va, vb, vc),
         {origin, direction}: RayType.ray,
       );
   | _ =>

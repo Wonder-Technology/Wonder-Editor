@@ -14,18 +14,18 @@ module Method = {
   let _updateViewRect = (canvasWidth, canvasHeight) =>
     StateEditorService.setState(
       StateEditorService.getState()
-      |> SceneViewEditorService.updateViewRect(
+      |> SceneViewEditorService.updateViewRect((
            0,
            0,
            canvasWidth / 2,
            canvasHeight,
-         )
-      |> GameViewEditorService.updateViewRect(
+         ))
+      |> GameViewEditorService.updateViewRect((
            canvasWidth / 2,
            0,
            canvasWidth / 2,
            canvasHeight,
-         ),
+         )),
     );
 
   let resizeCanvasAndViewPort = () => {
