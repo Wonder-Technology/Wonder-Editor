@@ -20,7 +20,7 @@ let _isIntersectSphere =
       (_, _, geometry, localToWorldMatrixTypeArray),
       (editorState, engineState),
     ) =>
-  RayUtils.isIntersectSphere(
+  RayIntersectUtils.isIntersectSphere(
     SphereShapeUtils.applyMatrix4(
       PickingEditorService.unsafeGetSphereShape(geometry, editorState),
       localToWorldMatrixTypeArray,

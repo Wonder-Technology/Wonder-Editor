@@ -11,7 +11,7 @@ type action =
   | Blur;
 
 module Method = {
-  let change = event => {
+  let _change = event => {
     let inputVal = ReactDOMRe.domElementToObj(
                      ReactEventRe.Form.target(event),
                    )##value;
@@ -204,6 +204,35 @@ module Method = {
         ();
       } :
       ();
+
+  let renderLabel = ((send, state), label) =>
+    switch (label) {
+    | None => ReasonReact.null
+    | Some(label) =>
+      <div
+        className="item-header component-label"
+        onMouseDown=(event => handleDragStart(event, send))
+        onMouseMove=(event => handleDragOver(event, (send, state)))
+        onMouseUp=(_event => handleDragDrop((send, state)))>
+        (DomHelper.textEl(label))
+      </div>
+    };
+
+  let renderContent = ((send, state)) =>
+    <div className="item-content">
+      <input
+        className="input-component float-input"
+        _type="text"
+        value=(
+          switch (state.inputValue) {
+          | None => ""
+          | Some(value) => value
+          }
+        )
+        onChange=(_e => send(_change(_e)))
+        onBlur=(_e => send(Blur))
+      />
+    </div>;
 };
 
 let component = ReasonReact.reducerComponent("FloatInput");
@@ -220,33 +249,8 @@ let reducer = ((onChangeFunc, onBlurFunc), canBeZero, action, state) =>
 let render =
     (label, onBlurFunc, {state, handle, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="inspector-item wonder-float-input">
-    (
-      switch (label) {
-      | None => ReasonReact.null
-      | Some(label) =>
-        <div
-          className="item-header component-label"
-          onMouseDown=(event => Method.handleDragStart(event, send))
-          onMouseMove=(event => Method.handleDragOver(event, (send, state)))
-          onMouseUp=(_event => Method.handleDragDrop((send, state)))>
-          (DomHelper.textEl(label))
-        </div>
-      }
-    )
-    <div className="item-content">
-      <input
-        className="input-component float-input"
-        _type="text"
-        value=(
-          switch (state.inputValue) {
-          | None => ""
-          | Some(value) => value
-          }
-        )
-        onChange=(_e => send(Method.change(_e)))
-        onBlur=(_e => send(Blur))
-      />
-    </div>
+    (Method.renderLabel((send, state), label))
+    (Method.renderContent((send, state)))
   </article>;
 
 let make =

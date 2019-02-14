@@ -13,7 +13,7 @@ module CustomEventHandler = {
       );
 
     switch (gameObjectType) {
-    | Cude =>
+    | Cube =>
       let defaultCubeGeometry =
         GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
           editorState,
@@ -40,6 +40,26 @@ module CustomEventHandler = {
     | EmptyGameObject =>
       PrimitiveLogicService.createEmptyGameObject(editorState, engineState)
     };
+  };
+
+  let _addToGameObject =
+      (newGameObject, targetGameObject, (editorState, engineState)) => {
+    let editorState =
+      editorState
+      |> SceneTreeEditorService.setIsShowChildren(
+           newGameObject,
+           SceneTreeEditorService.getDefaultIsShowChildren(),
+         )
+      |> SceneTreeEditorService.setIsShowChildren(targetGameObject, true);
+
+    let engineState =
+      SceneUtils.initGameObjectAndAddChild(
+        targetGameObject,
+        newGameObject,
+        engineState,
+      );
+
+    (editorState, engineState);
   };
 
   let handleSelfLogic = ((uiState, dispatchFunc), gameObjectType, ()) => {
@@ -69,25 +89,11 @@ module CustomEventHandler = {
         (editorState, engineState);
 
       | Some(currentSceneTreeNode) =>
-        let editorState =
-          editorState
-          |> SceneTreeEditorService.setIsShowChildren(
-               newGameObject,
-               SceneTreeEditorService.getDefaultIsShowChildren(),
-             )
-          |> SceneTreeEditorService.setIsShowChildren(
-               currentSceneTreeNode,
-               true,
-             );
-
-        let engineState =
-          SceneUtils.initGameObjectAndAddChild(
-            currentSceneTreeNode,
-            newGameObject,
-            engineState,
-          );
-
-        (editorState, engineState);
+        _addToGameObject(
+          newGameObject,
+          currentSceneTreeNode,
+          (editorState, engineState),
+        )
       };
 
     StateLogicService.setState((editorState, engineState));

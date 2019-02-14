@@ -1,6 +1,6 @@
 let _unsafeGetIntersectPointWithPlane =
     (plane, ray, (editorState, engineState)) =>
-  switch (RayUtils.checkIntersectPlane(plane, ray)) {
+  switch (RayIntersectUtils.checkIntersectPlane(plane, ray)) {
   | None =>
     WonderLog.Log.fatal(
       LogUtils.buildFatalMessage(

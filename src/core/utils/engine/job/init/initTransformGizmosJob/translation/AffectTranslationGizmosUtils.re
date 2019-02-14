@@ -1,5 +1,5 @@
 let _getIntersectPointWithPlane = (plane, ray, (editorState, engineState)) =>
-  RayUtils.checkIntersectPlane(plane, ray);
+  RayIntersectUtils.checkIntersectPlane(plane, ray);
 
 let _computeCurrentSceneTreeNodeNewPositionForMoveAxis =
     (

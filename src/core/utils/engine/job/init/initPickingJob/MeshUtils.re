@@ -26,7 +26,7 @@ let _checkIntersect =
       vb,
       vc,
     ) =>
-  RayUtils.checkIntersectTriangle(cullType, va, vb, vc, ray);
+  RayIntersectUtils.checkIntersectTriangle(cullType, va, vb, vc, ray);
 
 let _checkIntersectMesh =
     (

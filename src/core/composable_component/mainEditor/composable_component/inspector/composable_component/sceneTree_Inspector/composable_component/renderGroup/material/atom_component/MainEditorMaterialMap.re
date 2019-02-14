@@ -175,8 +175,35 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("MainEditorMaterialMap");
 
+let _handleSetTextureToEngine =
+    (
+      (textureNodeId, textureComponent),
+      (uiState, dispatchFunc),
+      (materialComponent, onDropFunc),
+      state,
+    ) =>
+  switch (state.currentTextureComponent) {
+  | None =>
+    ReasonReactUtils.updateWithSideEffects(
+      {...state, currentTextureComponent: Some(textureComponent)}, _state =>
+      onDropFunc((uiState, dispatchFunc), materialComponent, textureNodeId)
+    )
+  | Some(sourceTextureComponent) =>
+    sourceTextureComponent === textureComponent ?
+      ReasonReact.NoUpdate :
+      ReasonReactUtils.updateWithSideEffects(
+        {...state, currentTextureComponent: Some(textureComponent)}, _state =>
+        onDropFunc((uiState, dispatchFunc), materialComponent, textureNodeId)
+      )
+  };
+
 let reducer =
-    ((uiState, dispatchFunc), (materialComponent, onDropFunc), action, state) =>
+    (
+      (uiState, dispatchFunc),
+      (materialComponent, onDropFunc),
+      action,
+      state,
+    ) =>
   switch (action) {
   | DragEnter =>
     ReasonReact.Update({
@@ -184,7 +211,6 @@ let reducer =
       style:
         ReactUtils.addStyleProp("border", "2px solid coral", state.style),
     })
-
   | DragLeave =>
     ReasonReact.Update({
       ...state,
@@ -195,33 +221,20 @@ let reducer =
           state.style,
         ),
     })
-
   | DragDrop(startNodeId) =>
     ReasonReactUtils.sideEffects(() =>
       onDropFunc((uiState, dispatchFunc), materialComponent, startNodeId)
     )
-
   | SetTextureToEngine(textureNodeId, textureComponent) =>
-    switch (state.currentTextureComponent) {
-    | None =>
-      ReasonReactUtils.updateWithSideEffects(
-        {...state, currentTextureComponent: Some(textureComponent)}, _state =>
-        onDropFunc((uiState, dispatchFunc), materialComponent, textureNodeId)
-      )
-    | Some(sourceTextureComponent) =>
-      sourceTextureComponent === textureComponent ?
-        ReasonReact.NoUpdate :
-        ReasonReactUtils.updateWithSideEffects(
-          {...state, currentTextureComponent: Some(textureComponent)}, _state =>
-          onDropFunc((uiState, dispatchFunc), materialComponent, textureNodeId)
-        )
-    }
-
+    _handleSetTextureToEngine(
+      (textureNodeId, textureComponent),
+      (uiState, dispatchFunc),
+      (materialComponent, onDropFunc),
+      state,
+    )
   | Nothing => ReasonReact.NoUpdate
-
   | ShowTextureGroup =>
     ReasonReact.Update({...state, isShowTextureGroup: true})
-
   | HideTextureGroup =>
     ReasonReact.Update({...state, isShowTextureGroup: false})
   };
@@ -329,7 +342,8 @@ let make =
       getMapFunc(materialComponent)
       |> StateLogicService.getEngineStateToGetData,
   },
-  reducer: reducer((uiState, dispatchFunc), (materialComponent, onDropFunc)),
+  reducer:
+    reducer((uiState, dispatchFunc), (materialComponent, onDropFunc)),
   render: self =>
     render(
       (uiState, dispatchFunc),

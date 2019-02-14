@@ -142,7 +142,7 @@ let _affectGizmo =
       engineState,
     ) => {
   let (totalAngle, needRotateAngle) =
-    switch (RayUtils.checkIntersectPlane(plane, ray)) {
+    switch (RayIntersectUtils.checkIntersectPlane(plane, ray)) {
     | None => (
         AngleRotationGizmoSceneViewEditorService.getLastTotalAngle(
           editorState,

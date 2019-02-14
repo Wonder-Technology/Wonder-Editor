@@ -1,31 +1,31 @@
+let rec _generate = ((radius, segments), (vertices, indices), i) =>
+  i > segments ?
+    (vertices, indices) :
+    {
+      let rad =
+        NumberType.convertIntToFloat(i)
+        /. NumberType.convertIntToFloat(segments)
+        *. 2.
+        *. Js.Math._PI;
+
+      _generate(
+        (radius, segments),
+        (
+          vertices
+          |> ArrayService.push(radius *. Js.Math.cos(rad))
+          |> ArrayService.push(radius *. Js.Math.sin(rad))
+          |> ArrayService.push(0.),
+          indices |> ArrayService.push(i),
+        ),
+        i |> succ,
+      );
+    };
+
 let _createCircleGeometry = engineState => {
   open Js.Typed_array;
 
   let radius = DataRotationGizmoSceneViewEditorService.getRadius();
   let segments = 20;
-
-  let rec _generate = ((radius, segments), (vertices, indices), i) =>
-    i > segments ?
-      (vertices, indices) :
-      {
-        let rad =
-          NumberType.convertIntToFloat(i)
-          /. NumberType.convertIntToFloat(segments)
-          *. 2.
-          *. Js.Math._PI;
-
-        _generate(
-          (radius, segments),
-          (
-            vertices
-            |> ArrayService.push(radius *. Js.Math.cos(rad))
-            |> ArrayService.push(radius *. Js.Math.sin(rad))
-            |> ArrayService.push(0.),
-            indices |> ArrayService.push(i),
-          ),
-          i |> succ,
-        );
-      };
 
   let (vertices, indices) = _generate((radius, segments), ([||], [||]), 0);
 
