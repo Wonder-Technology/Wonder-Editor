@@ -46,7 +46,7 @@ let isSelectTranslationAxisGizmo =
              let halfExtendsLength =
                aabb |> AABBShapeUtils.getHalfExtends |> Vector3Service.length;
 
-             RayUtils.isIntersectOBB(
+             RayIntersectUtils.isIntersectOBB(
                aabb
                |> AABBShapeUtils.expandByScalar(
                     expandFactor *. halfExtendsLength,
@@ -71,7 +71,7 @@ let _isSelectTranslationPlaneGizmo =
 
 let _unsafeGetIntersectPointWithPlane =
     (plane, ray, (editorState, engineState)) =>
-  switch (RayUtils.checkIntersectPlane(plane, ray)) {
+  switch (RayIntersectUtils.checkIntersectPlane(plane, ray)) {
   | None =>
     WonderLog.Log.fatal(
       LogUtils.buildFatalMessage(

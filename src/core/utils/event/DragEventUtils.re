@@ -1,6 +1,6 @@
 let handleDragStart =
-    (id, dragStartAction, widget, dragImg, effectAllowd, event) => {
-  DragEventBaseUtils.dragStart(id, widget, dragImg, effectAllowd, event);
+    ((id, dragStartAction, widget), (dragImg, effectAllowd), event) => {
+  DragEventBaseUtils.dragStart(id, widget, (dragImg, effectAllowd), event);
   dragStartAction;
 };
 
@@ -8,8 +8,7 @@ let handleDragEnter =
     (
       id,
       (dragEnterAction, nothingAction),
-      isWidgetFunc,
-      checkNodeRelationFunc,
+      (isWidgetFunc, checkNodeRelationFunc),
       _event,
     ) => {
   let (isValid, _) =
@@ -42,8 +41,7 @@ let handleDrop =
     (
       id,
       (dragDropActionFunc, dragLeaveAction),
-      isWidgetFunc,
-      checkNodeRelationFunc,
+      (isWidgetFunc, checkNodeRelationFunc),
       event,
     ) => {
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);

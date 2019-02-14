@@ -90,9 +90,7 @@ let _findTextureAsset =
 let getRelatedTextureData =
     (
       gameObject,
-      replacedTargetTextureMap,
-      textureAssetDataMap,
-      imageUint8ArrayDataMap,
+      (replacedTargetTextureMap, textureAssetDataMap, imageUint8ArrayDataMap),
       (unsafeGetMaterialComponentFunc, getMapFunc, setMapFunc),
       (editorState, engineState),
     ) => {
@@ -144,9 +142,7 @@ let doesNeedReplaceTexture = ((targetTexture, setMapFunc)) =>
 let getRelatedTextureDataFromGameObject =
     (
       gameObject,
-      replacedTargetTextureMap,
-      textureAssetDataMap,
-      imageUint8ArrayDataMap,
+      (replacedTargetTextureMap, textureAssetDataMap, imageUint8ArrayDataMap),
       (editorState, engineState),
     ) =>
   GameObjectComponentEngineService.hasBasicMaterialComponent(
@@ -160,9 +156,11 @@ let getRelatedTextureDataFromGameObject =
     ) ?
       getRelatedTextureData(
         gameObject,
-        replacedTargetTextureMap,
-        textureAssetDataMap,
-        imageUint8ArrayDataMap,
+        (
+          replacedTargetTextureMap,
+          textureAssetDataMap,
+          imageUint8ArrayDataMap,
+        ),
         (
           GameObjectComponentEngineService.unsafeGetLightMaterialComponent,
           LightMaterialEngineService.getLightMaterialDiffuseMap,

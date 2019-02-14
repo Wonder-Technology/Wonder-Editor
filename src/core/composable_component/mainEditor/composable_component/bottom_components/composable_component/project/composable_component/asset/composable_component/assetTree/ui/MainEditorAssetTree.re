@@ -54,6 +54,64 @@ module Method = {
          |> NumberType.convertFloatToInt
        );
 
+  let rec _build =
+          (
+            (selectedFolderNodeIdInAssetTree, currentNodeId),
+            allFolderNodes,
+            (uiState, dispatchFunc, dragImg),
+            (onSelectFunc, onDropFunc),
+            editorState,
+          ) =>
+    allFolderNodes
+    |> _sortByName
+    |> Js.Array.map(folderNode => {
+         let nodeId = NodeAssetService.getNodeId(~node=folderNode);
+         let name =
+           FolderNodeAssetService.getNodeName(
+             FolderNodeAssetService.getNodeData(folderNode),
+           );
+
+         <AssetTreeNode
+           key=(StringService.intToString(nodeId))
+           id=nodeId
+           name
+           isSelected=(_isSelected(selectedFolderNodeIdInAssetTree, nodeId))
+           isActive=(
+             _isActive(
+               selectedFolderNodeIdInAssetTree,
+               currentNodeId,
+               editorState,
+             )
+           )
+           dragImg
+           widget=(AssetWidgetService.getWidget())
+           icon="./public/img/package.png"
+           onSelect=onSelectFunc
+           onDrop=onDropFunc
+           isWidget=AssetWidgetService.isWidget
+           isShowChildren=(
+             FolderNodeAssetService.getIsShowChildren(folderNode)
+           )
+           isHasChildren=(FolderNodeAssetService.hasChildren(folderNode))
+           handleToggleShowTreeChildren=(
+             handleToggleShowTreeChildren(uiState, dispatchFunc)
+           )
+           checkNodeRelation=OperateTreeAssetLogicService.checkNodeRelation
+           treeChildren=(
+             _build(
+               (selectedFolderNodeIdInAssetTree, currentNodeId),
+               FolderNodeAssetService.getChildrenNodes(folderNode)
+               |> Js.Array.filter(node =>
+                    FolderNodeAssetService.isFolderNode(node)
+                  ),
+               (uiState, dispatchFunc, dragImg),
+               (onSelectFunc, onDropFunc),
+               editorState,
+             )
+           )
+         />;
+       });
+
   let buildAssetTreeArray =
       (
         (uiState, dispatchFunc, dragImg),
@@ -64,64 +122,6 @@ module Method = {
       TreeAssetEditorService.getSelectedFolderNodeIdInAssetTree(editorState);
     let currentNodeId =
       CurrentNodeIdAssetEditorService.getCurrentNodeId(editorState);
-
-    let rec _build =
-            (
-              (selectedFolderNodeIdInAssetTree, currentNodeId),
-              allFolderNodes,
-              (uiState, dispatchFunc, dragImg),
-              (onSelectFunc, onDropFunc),
-              editorState,
-            ) =>
-      allFolderNodes
-      |> _sortByName
-      |> Js.Array.map(folderNode => {
-           let nodeId = NodeAssetService.getNodeId(~node=folderNode);
-           let name =
-             FolderNodeAssetService.getNodeName(
-               FolderNodeAssetService.getNodeData(folderNode),
-             );
-
-           <AssetTreeNode
-             key=(StringService.intToString(nodeId))
-             id=nodeId
-             name
-             isSelected=(_isSelected(selectedFolderNodeIdInAssetTree, nodeId))
-             isActive=(
-               _isActive(
-                 selectedFolderNodeIdInAssetTree,
-                 currentNodeId,
-                 editorState,
-               )
-             )
-             dragImg
-             widget=(AssetWidgetService.getWidget())
-             icon="./public/img/package.png"
-             onSelect=onSelectFunc
-             onDrop=onDropFunc
-             isWidget=AssetWidgetService.isWidget
-             isShowChildren=(
-               FolderNodeAssetService.getIsShowChildren(folderNode)
-             )
-             isHasChildren=(FolderNodeAssetService.hasChildren(folderNode))
-             handleToggleShowTreeChildren=(
-               handleToggleShowTreeChildren(uiState, dispatchFunc)
-             )
-             checkNodeRelation=OperateTreeAssetLogicService.checkNodeRelation
-             treeChildren=(
-               _build(
-                 (selectedFolderNodeIdInAssetTree, currentNodeId),
-                 FolderNodeAssetService.getChildrenNodes(folderNode)
-                 |> Js.Array.filter(node =>
-                      FolderNodeAssetService.isFolderNode(node)
-                    ),
-                 (uiState, dispatchFunc, dragImg),
-                 (onSelectFunc, onDropFunc),
-                 editorState,
-               )
-             )
-           />;
-         });
 
     _build(
       (selectedFolderNodeIdInAssetTree, currentNodeId),

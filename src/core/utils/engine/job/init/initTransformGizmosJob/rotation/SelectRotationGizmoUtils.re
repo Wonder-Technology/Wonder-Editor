@@ -46,6 +46,30 @@ let _isSelectCircleNotVisiblePart =
   )
   >= 0.0;
 
+let _isIntersectWithCircle = (intersectPoint, editorState, engineState) => {
+  let expandFactor = 0.2;
+  let radius =
+    DataRotationGizmoSceneViewEditorService.getRadius()
+    *. ComputeTransformGizmoScaleUtils.getScaleFactor(
+         editorState,
+         engineState,
+       );
+
+  let lengthToCenter =
+    Vector3Service.length(
+      Wonderjs.Vector3Service.sub(
+        Wonderjs.Vector3Type.Float,
+        intersectPoint,
+        CircleRotationGizmosUtils.getCenterPoint(editorState, engineState),
+      ),
+    );
+
+  lengthToCenter <= radius
+  *. (1. +. expandFactor)
+  && lengthToCenter >= radius
+  *. (1. -. expandFactor);
+};
+
 let _isSelectCircle = (intersectXYPlanePoint, editorState, engineState) =>
   switch (intersectXYPlanePoint) {
   | None => false
@@ -53,43 +77,9 @@ let _isSelectCircle = (intersectXYPlanePoint, editorState, engineState) =>
     _isSelectCircleNotVisiblePart(
       intersectPoint,
       CircleRotationGizmosUtils.getCenterPoint(editorState, engineState),
-      /* CameraPosUtils.getCameraPosInLocalCoordSystem(
-           CameraPosUtils.getCameraPos(editorState, engineState),
-           TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
-             SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
-             engineState,
-           ),
-           engineState,
-         ), */
       CameraPosUtils.getCameraPos(editorState, engineState),
     ) ?
-      false :
-      {
-        let expandFactor = 0.2;
-        let radius =
-          DataRotationGizmoSceneViewEditorService.getRadius()
-          *. ComputeTransformGizmoScaleUtils.getScaleFactor(
-               editorState,
-               engineState,
-             );
-
-        let lengthToCenter =
-          Vector3Service.length(
-            Wonderjs.Vector3Service.sub(
-              Wonderjs.Vector3Type.Float,
-              intersectPoint,
-              CircleRotationGizmosUtils.getCenterPoint(
-                editorState,
-                engineState,
-              ),
-            ),
-          );
-
-        lengthToCenter <= radius
-        *. (1. +. expandFactor)
-        && lengthToCenter >= radius
-        *. (1. -. expandFactor);
-      }
+      false : _isIntersectWithCircle(intersectPoint, editorState, engineState)
   };
 
 let _selectCircle =
@@ -123,7 +113,7 @@ let selectRotationGizmo = (event, editorState, engineState) => {
     );
 
   let intersectXYPlanePoint =
-    RayUtils.checkIntersectPlane(
+    RayIntersectUtils.checkIntersectPlane(
       CircleRotationGizmosUtils.buildXYPlane(editorState, engineState),
       ray,
     );
@@ -156,7 +146,7 @@ let selectRotationGizmo = (event, editorState, engineState) => {
     ) :
     {
       let intersectXZPlanePoint =
-        RayUtils.checkIntersectPlane(
+        RayIntersectUtils.checkIntersectPlane(
           CircleRotationGizmosUtils.buildXZPlane(editorState, engineState),
           ray,
         );
@@ -189,7 +179,7 @@ let selectRotationGizmo = (event, editorState, engineState) => {
         ) :
         {
           let intersectYZPlanePoint =
-            RayUtils.checkIntersectPlane(
+            RayIntersectUtils.checkIntersectPlane(
               CircleRotationGizmosUtils.buildYZPlane(
                 editorState,
                 engineState,

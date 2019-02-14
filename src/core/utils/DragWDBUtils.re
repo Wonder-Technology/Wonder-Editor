@@ -4,7 +4,10 @@ let _checkLightCount = (gameObject, (editorState, engineState)) => {
   let result =
     (
       GameObjectEngineService.getAllDirectionLights(
-        HierarchyGameObjectEngineService.getAllGameObjects(gameObject, engineState),
+        HierarchyGameObjectEngineService.getAllGameObjects(
+          gameObject,
+          engineState,
+        ),
         engineState,
       )
       |> Js.Array.length
@@ -21,7 +24,10 @@ let _checkLightCount = (gameObject, (editorState, engineState)) => {
       } :
       (
         GameObjectEngineService.getAllPointLights(
-          HierarchyGameObjectEngineService.getAllGameObjects(gameObject, engineState),
+          HierarchyGameObjectEngineService.getAllGameObjects(
+            gameObject,
+            engineState,
+          ),
           engineState,
         )
         |> Js.Array.length
@@ -40,6 +46,49 @@ let _checkLightCount = (gameObject, (editorState, engineState)) => {
 
   (engineState, result);
 };
+
+let _setHierachy =
+    (dragPosition, targetGameObject, clonedWDBGameObject, engineState) =>
+  switch (dragPosition) {
+  | DragBeforeTarget =>
+    engineState
+    |> HierarchyGameObjectEngineService.addChild(
+         HierarchyGameObjectEngineService.getParentGameObject(
+           targetGameObject,
+           engineState,
+         )
+         |> OptionService.unsafeGet,
+         clonedWDBGameObject,
+       )
+    |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
+         clonedWDBGameObject,
+         targetGameObject,
+         Wonderjs.TransformType.Before,
+       )
+
+  | DragIntoTarget =>
+    engineState
+    |> HierarchyGameObjectEngineService.addChild(
+         targetGameObject,
+         clonedWDBGameObject,
+       )
+
+  | DragAfterTarget =>
+    engineState
+    |> HierarchyGameObjectEngineService.addChild(
+         HierarchyGameObjectEngineService.getParentGameObject(
+           targetGameObject,
+           engineState,
+         )
+         |> OptionService.unsafeGet,
+         clonedWDBGameObject,
+       )
+    |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
+         clonedWDBGameObject,
+         targetGameObject,
+         Wonderjs.TransformType.After,
+       )
+  };
 
 let dragWDB =
     (
@@ -62,44 +111,12 @@ let dragWDB =
     let clonedWDBGameObject =
       cloneGameObjectArr |> CloneGameObjectLogicService.getClonedGameObject;
 
-    let engineState =
-      switch (dragPosition) {
-      | DragBeforeTarget =>
-        engineState
-        |> HierarchyGameObjectEngineService.addChild(
-             HierarchyGameObjectEngineService.getParentGameObject(
-               targetGameObject,
-               engineState,
-             )
-             |> OptionService.unsafeGet,
-             clonedWDBGameObject,
-           )
-        |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
-             clonedWDBGameObject,
-             targetGameObject,
-             Wonderjs.TransformType.Before,
-           )
-
-      | DragIntoTarget =>
-        engineState
-        |> HierarchyGameObjectEngineService.addChild(targetGameObject, clonedWDBGameObject)
-
-      | DragAfterTarget =>
-        engineState
-        |> HierarchyGameObjectEngineService.addChild(
-             HierarchyGameObjectEngineService.getParentGameObject(
-               targetGameObject,
-               engineState,
-             )
-             |> OptionService.unsafeGet,
-             clonedWDBGameObject,
-           )
-        |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
-             clonedWDBGameObject,
-             targetGameObject,
-             Wonderjs.TransformType.After,
-           )
-      };
+    _setHierachy(
+      dragPosition,
+      targetGameObject,
+      clonedWDBGameObject,
+      engineState,
+    );
 
     let engineState =
       SceneEngineService.isNeedReInitSceneAllLightMaterials(

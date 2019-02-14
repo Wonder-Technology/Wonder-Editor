@@ -1,4 +1,4 @@
 type addGameObjectType =
-  | Cude
+  | Cube
   | Sphere
   | EmptyGameObject;

@@ -42,7 +42,8 @@ let _isImageDataEqual =
   );
 
   switch (
-    imageUint8ArrayDataMap |> WonderCommonlib.ImmutableSparseMapService.get(texture2)
+    imageUint8ArrayDataMap
+    |> WonderCommonlib.ImmutableSparseMapService.get(texture2)
   ) {
   | None => true
   | Some((_, uint8Array2)) =>
@@ -69,11 +70,13 @@ let _isLightMaterialDataEqualForSceneGameObject =
   RelateGameObjectAndMaterialAssetUtils.isLightMaterialDataEqual(
     (name, diffuseColor, shininess, textureData),
     material2,
-    imageUint8ArrayDataMap,
-    RelateGameObjectAndTextureAssetUtils.isTextureDataEqual(
-      _isImageDataEqual,
+    (
+      imageUint8ArrayDataMap,
+      RelateGameObjectAndTextureAssetUtils.isTextureDataEqual(
+        _isImageDataEqual,
+      ),
+      engineState,
     ),
-    engineState,
   );
 
 let _replaceGameObjectMaterialComponentToMaterialAsset =
@@ -101,13 +104,10 @@ let _replaceGameObjectMaterialComponentToMaterialAsset =
   );
 };
 
-
 let _replaceSceneGameObjectMaterialComponentToMaterialAsset =
     (
       gameObject,
-      defaultMaterialData,
-      materialDataMapData,
-      imageUint8ArrayDataMap,
+      (defaultMaterialData, materialDataMapData, imageUint8ArrayDataMap),
       engineState,
     ) =>
   _replaceGameObjectMaterialComponentToMaterialAsset(
@@ -124,31 +124,22 @@ let _isLightMaterialDataEqualForWDBAssetGameObject =
       imageUint8ArrayDataMap,
       engineState,
     ) =>
-  /* RelateGameObjectAndMaterialAssetUtils.isLightMaterialDataEqual(
-       (name, diffuseColor, shininess, textureData),
-       material2,
-       imageUint8ArrayDataMap,
-       RelateGameObjectAndTextureAssetUtils.isTextureDataEqual(
-         RelateGameObjectAndTextureAssetUtils.isImageDataEqual,
-       ),
-       engineState,
-     ); */
   RelateGameObjectAndMaterialAssetUtils.isLightMaterialDataEqual(
     (name, diffuseColor, shininess, textureData),
     material2,
-    imageUint8ArrayDataMap,
-    RelateGameObjectAndTextureAssetUtils.isTextureDataEqual(
-      _isImageDataEqual,
+    (
+      imageUint8ArrayDataMap,
+      RelateGameObjectAndTextureAssetUtils.isTextureDataEqual(
+        _isImageDataEqual,
+      ),
+      engineState,
     ),
-    engineState,
   );
 
 let _replaceWDBAssetGameObjectMaterialComponentToMaterialAsset =
     (
       gameObject,
-      defaultMaterialData,
-      materialDataMapData,
-      imageUint8ArrayDataMap,
+      (defaultMaterialData, materialDataMapData, imageUint8ArrayDataMap),
       engineState,
     ) =>
   _replaceGameObjectMaterialComponentToMaterialAsset(
@@ -270,8 +261,7 @@ let _findWDBAssetGameObjectGeometry =
 let _replaceSceneGameObjectGeometryComponentToWDBAssetGeometryComponent =
     (
       gameObject,
-      defaultGeometryData,
-      wdbAssetGameObjectGeometryDataArr,
+      (defaultGeometryData, wdbAssetGameObjectGeometryDataArr),
       editorState,
       engineState,
     ) =>
@@ -376,16 +366,16 @@ let relateSceneWDBGameObjectsAndAssets =
          (. engineState, gameObject) =>
            _replaceSceneGameObjectMaterialComponentToMaterialAsset(
              gameObject,
-             defaultMaterialData,
-             
-             (basicMaterialDataMap, lightMaterialDataMap),
-             imageUint8ArrayDataMap,
+             (
+               defaultMaterialData,
+               (basicMaterialDataMap, lightMaterialDataMap),
+               imageUint8ArrayDataMap,
+             ),
              engineState,
            )
            |> _replaceSceneGameObjectGeometryComponentToWDBAssetGeometryComponent(
                 gameObject,
-                defaultGeometryData,
-                wdbAssetGameObjectGeometryDataArr,
+                (defaultGeometryData, wdbAssetGameObjectGeometryDataArr),
                 editorState,
               ),
          engineState,
@@ -466,9 +456,11 @@ let relateWDBAssetGameObjectsAndAssets =
          (. engineState, gameObject) =>
            _replaceWDBAssetGameObjectMaterialComponentToMaterialAsset(
              gameObject,
-             defaultMaterialData,
-             (basicMaterialDataMap, lightMaterialDataMap),
-             imageUint8ArrayDataMap,
+             (
+               defaultMaterialData,
+               (basicMaterialDataMap, lightMaterialDataMap),
+               imageUint8ArrayDataMap,
+             ),
              engineState,
            )
            |> RelateGameObjectAndGeometryAssetUtils.replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent(

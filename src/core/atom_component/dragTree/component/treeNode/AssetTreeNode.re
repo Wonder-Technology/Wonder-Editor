@@ -39,11 +39,8 @@ module Method = {
         _e =>
           send(
             DragEventUtils.handleDragStart(
-              id,
-              DragStart,
-              widget,
-              dragImg,
-              "move",
+              (id, DragStart, widget),
+              (dragImg, "move"),
               _e,
             ),
           )
@@ -55,8 +52,7 @@ module Method = {
             DragEventUtils.handleDragEnter(
               id,
               (DragEnter, Nothing),
-              isWidgetFunc,
-              checkNodeRelationFunc,
+              (isWidgetFunc, checkNodeRelationFunc),
               _e,
             ),
           )
@@ -74,8 +70,7 @@ module Method = {
                 (targetId, removedId) => DragDrop(targetId, removedId),
                 DragLeave,
               ),
-              isWidgetFunc,
-              checkNodeRelationFunc,
+              (isWidgetFunc, checkNodeRelationFunc),
               _e,
             ),
           )

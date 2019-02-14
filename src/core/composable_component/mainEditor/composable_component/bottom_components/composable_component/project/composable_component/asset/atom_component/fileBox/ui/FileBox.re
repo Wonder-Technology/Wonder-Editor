@@ -37,8 +37,7 @@ let render =
             DragEventBaseUtils.dragStart(
               nodeId,
               widget,
-              dragImg,
-              effectAllowd,
+              (dragImg, effectAllowd),
               e,
             )
         )

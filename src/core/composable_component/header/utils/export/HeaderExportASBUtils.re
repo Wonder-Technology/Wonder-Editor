@@ -27,9 +27,11 @@ let _writeJson =
 let _writeBuffer =
     (
       headerAndJsonAlignedByteOffset,
-      (imageBufferViewArr, wdbBufferViewArr),
-      imageUint8ArrayArr,
-      wdbArrayBufferArr,
+      (
+        (imageBufferViewArr, wdbBufferViewArr),
+        imageUint8ArrayArr,
+        wdbArrayBufferArr,
+      ),
       arrayBuffer,
     ) => {
   let uint8Array = Uint8Array.fromBuffer(arrayBuffer);
@@ -134,9 +136,11 @@ let generateASB = (imageUint8ArrayMap, (editorState, engineState)) => {
   let arrayBuffer =
     _writeBuffer(
       byteOffset,
-      (imageBufferViewArr, wdbBufferViewArr),
-      imageUint8ArrayArr,
-      wdbArrayBufferArr,
+      (
+        (imageBufferViewArr, wdbBufferViewArr),
+        imageUint8ArrayArr,
+        wdbArrayBufferArr,
+      ),
       dataView |> DataView.buffer,
     );
 
