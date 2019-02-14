@@ -135,29 +135,25 @@ let selectRotationGizmo = (event, editorState, engineState) => {
       engineState,
     )
   && _isSelectCircle(intersectXYPlanePoint, editorState, engineState) ?
-    {
-      WonderLog.Log.print("select xy plane") |> ignore;
-
-      _selectCircle(
-        intersectXYPlanePoint |> OptionService.unsafeGet,
-        (
-          CurrentTransformGizmosUtils.setCurrentGizmoColor(
-            GameObjectEngineService.getAllBasicMaterials(
-              HierarchyGameObjectEngineService.getAllGameObjects(
-                OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
-                  editorState,
-                ),
-                engineState,
+    _selectCircle(
+      intersectXYPlanePoint |> OptionService.unsafeGet,
+      (
+        CurrentTransformGizmosUtils.setCurrentGizmoColor(
+          GameObjectEngineService.getAllBasicMaterials(
+            HierarchyGameObjectEngineService.getAllGameObjects(
+              OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXYCircleGizmo(
+                editorState,
               ),
               engineState,
             ),
+            engineState,
           ),
-          SelectRotationGizmoSceneViewEditorService.onlySelectXYCircleGizmo,
         ),
-        editorState,
-        engineState,
-      );
-    } :
+        SelectRotationGizmoSceneViewEditorService.onlySelectXYCircleGizmo,
+      ),
+      editorState,
+      engineState,
+    ) :
     {
       let intersectXZPlanePoint =
         RayUtils.checkIntersectPlane(
@@ -172,29 +168,25 @@ let selectRotationGizmo = (event, editorState, engineState) => {
           engineState,
         )
       && _isSelectCircle(intersectXZPlanePoint, editorState, engineState) ?
-        {
-          WonderLog.Log.print("select xz plane") |> ignore;
-
-          _selectCircle(
-            intersectXZPlanePoint |> OptionService.unsafeGet,
-            (
-              CurrentTransformGizmosUtils.setCurrentGizmoColor(
-                GameObjectEngineService.getAllBasicMaterials(
-                  HierarchyGameObjectEngineService.getAllGameObjects(
-                    OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
-                      editorState,
-                    ),
-                    engineState,
+        _selectCircle(
+          intersectXZPlanePoint |> OptionService.unsafeGet,
+          (
+            CurrentTransformGizmosUtils.setCurrentGizmoColor(
+              GameObjectEngineService.getAllBasicMaterials(
+                HierarchyGameObjectEngineService.getAllGameObjects(
+                  OperateRotationGizmoSceneViewEditorService.unsafeGetRotationXZCircleGizmo(
+                    editorState,
                   ),
                   engineState,
                 ),
+                engineState,
               ),
-              SelectRotationGizmoSceneViewEditorService.onlySelectXZCircleGizmo,
             ),
-            editorState,
-            engineState,
-          );
-        } :
+            SelectRotationGizmoSceneViewEditorService.onlySelectXZCircleGizmo,
+          ),
+          editorState,
+          engineState,
+        ) :
         {
           let intersectYZPlanePoint =
             RayUtils.checkIntersectPlane(
@@ -212,38 +204,30 @@ let selectRotationGizmo = (event, editorState, engineState) => {
               engineState,
             )
           && _isSelectCircle(intersectYZPlanePoint, editorState, engineState) ?
-            {
-              WonderLog.Log.print("select yz plane") |> ignore;
-
-              _selectCircle(
-                intersectYZPlanePoint |> OptionService.unsafeGet,
-                (
-                  CurrentTransformGizmosUtils.setCurrentGizmoColor(
-                    GameObjectEngineService.getAllBasicMaterials(
-                      HierarchyGameObjectEngineService.getAllGameObjects(
-                        OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
-                          editorState,
-                        ),
-                        engineState,
+            _selectCircle(
+              intersectYZPlanePoint |> OptionService.unsafeGet,
+              (
+                CurrentTransformGizmosUtils.setCurrentGizmoColor(
+                  GameObjectEngineService.getAllBasicMaterials(
+                    HierarchyGameObjectEngineService.getAllGameObjects(
+                      OperateRotationGizmoSceneViewEditorService.unsafeGetRotationYZCircleGizmo(
+                        editorState,
                       ),
                       engineState,
                     ),
+                    engineState,
                   ),
-                  SelectRotationGizmoSceneViewEditorService.onlySelectYZCircleGizmo,
                 ),
-                editorState,
-                engineState,
-              );
-            } :
-            {
-              WonderLog.Log.print("not select any plane") |> ignore;
-
-              (
-                editorState
-                |> SelectRotationGizmoSceneViewEditorService.markNotSelectAnyRotationGizmo,
-                engineState,
-              );
-            };
+                SelectRotationGizmoSceneViewEditorService.onlySelectYZCircleGizmo,
+              ),
+              editorState,
+              engineState,
+            ) :
+            (
+              editorState
+              |> SelectRotationGizmoSceneViewEditorService.markNotSelectAnyRotationGizmo,
+              engineState,
+            );
         };
     };
 };

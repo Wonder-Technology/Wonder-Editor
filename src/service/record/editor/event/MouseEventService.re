@@ -8,9 +8,6 @@ let _getMouseButton = ({userData}: EventType.customEvent) => {
 };
 
 let isLeftMouseButton = (event: EventType.customEvent) =>
-  /* let {locationInView}: EventType. mouseEvent =
-     EventType.userDataToMouseEvent(event.userData |> OptionService.unsafeGet);
-     WonderLog.Log.print(("locationInView:", locationInView)) |> ignore; */
   EventType.(
     switch (_getMouseButton(event)) {
     | Left => true

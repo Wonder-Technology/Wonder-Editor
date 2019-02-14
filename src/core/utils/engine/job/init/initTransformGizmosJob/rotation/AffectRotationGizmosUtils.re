@@ -143,15 +143,12 @@ let _affectGizmo =
     ) => {
   let (totalAngle, needRotateAngle) =
     switch (RayUtils.checkIntersectPlane(plane, ray)) {
-    | None =>
-      WonderLog.Log.print("not find intersected point!!! 00000000") |> ignore;
-
-      (
+    | None => (
         AngleRotationGizmoSceneViewEditorService.getLastTotalAngle(
           editorState,
         ),
         0.,
-      );
+      )
     | Some(intersectPlanePoint) =>
       let localToWorldMatrixTypeArray =
         TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
@@ -182,12 +179,6 @@ let _affectGizmo =
 
       (Some(totalAngle), _computeNeedRotateAngle(totalAngle, editorState));
     };
-
-  /* WonderLog.Log.printJson((
-       "(totalAngle, needRotateAngle): ",
-       (totalAngle, needRotateAngle),
-     ))
-     |> ignore; */
 
   let editorState =
     editorState

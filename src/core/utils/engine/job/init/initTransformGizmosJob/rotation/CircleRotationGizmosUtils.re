@@ -1,8 +1,4 @@
 let getCenterPoint = (editorState, engineState) =>
-  /* InitTransformGizmosUtils.getCurrentSceneTreeNodePosition(
-       editorState,
-       engineState,
-     ); */
   TransformGameObjectEngineService.getPosition(
     OperateRotationGizmoSceneViewEditorService.unsafeGetRotationWholeGizmo(
       editorState,
@@ -11,24 +7,6 @@ let getCenterPoint = (editorState, engineState) =>
   );
 
 let _buildPlane = (axisOfPlane, centerPoint, editorState, engineState) =>
-  /* WonderLog.Log.print((
-       "LocalToWorldMatrixTypeArray: ",
-     TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
-             SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
-             engineState,
-           ),
-
-     initialDirectionVector,
-     Wonderjs.Vector3Service.transformMat4Tuple(
-           initialDirectionVector,
-           TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
-             SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
-             engineState,
-           ),
-         )
-
-
-     )) |> ignore; */
   PlaneShapeUtils.setFromNormalAndCoplanarPoint(
     axisOfPlane |> Wonderjs.Vector3Service.normalize,
     centerPoint,
