@@ -271,7 +271,7 @@ let _ =
       });
     });
 
-    describe("fix bug", () =>
+    describe("fix bug", () => {
       test("dispose gameObject should refresh engine state", () =>
         RefreshEngineStateTool.testRefreshEngineState(
           sandbox,
@@ -281,6 +281,77 @@ let _ =
             MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
           },
         )
-      )
-    );
+      );
+
+      describe(
+        "dispose gameObject shouldn't cause update_transform_gizmos job error",
+        () => {
+        let _prepareState = () => {
+          MainEditorSceneTool.initStateWithJob(
+            ~sandbox,
+            ~isInitJob=false,
+            ~noWorkerJobRecord=
+              NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                ~initPipelines=
+                  {|
+            [
+        {
+          "name": "default",
+          "jobs": [
+            {
+              "name": "init_transform_gizmos"
+            }
+          ]
+        }
+      ]
+            |},
+                ~loopPipelines=
+                  {|
+             [
+         {
+           "name": "default",
+           "jobs": [
+
+                               {
+                                   "name": "dispose"
+                               },
+{"name": "update_transform_gizmos" }
+           ]
+         }
+       ]
+             |},
+                (),
+              ),
+            (),
+          );
+
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
+          );
+        };
+
+        beforeEach(() => {
+          _prepareState();
+
+          StateLogicService.getAndSetEngineState(
+            MainUtils._handleEngineState,
+          );
+        });
+
+        test("test", () => {
+          ConsoleTool.notShowMessage();
+          let error =
+            createMethodStubWithJsObjSandbox(
+              sandbox,
+              ConsoleTool.console,
+              "error",
+            );
+
+          MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
+
+          error |> expect |> not_ |> toCalled;
+        });
+      });
+    });
   });
