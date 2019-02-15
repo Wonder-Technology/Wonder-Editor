@@ -64,9 +64,7 @@ let _ =
             describe(
               "if current gameObject or its children has light component", () =>
               describe("test has direction light component", () =>
-                describe(
-                  "should re-init all light material components in the scene",
-                  () => {
+                describe("should re-init all light material components", () => {
                   let _prepare = () => {
                     let gl = FakeGlToolEngine.getEngineStateGl();
                     let glShaderSource = gl##shaderSource;
@@ -92,6 +90,49 @@ let _ =
                       {|#define DIRECTION_LIGHTS_COUNT 0|},
                     )
                     |> expect == true;
+                  });
+
+                  describe("fix bug", () => {
+                    beforeEach(() => {
+                      MainEditorAssetTool.buildFakeFileReader();
+                      MainEditorAssetTool.buildFakeImage();
+                    });
+
+                    testPromise(
+                      "should re-init material assets which type is lightMaterial",
+                      () => {
+                      let glShaderSource = _prepare();
+                      let assetTreeData =
+                        MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+
+                      let addedMaterialNodeId =
+                        MainEditorAssetIdTool.getNewAssetId();
+                      MainEditorAssetHeaderOperateNodeTool.addMaterial();
+                      let material =
+                        MainEditorAssetMaterialNodeTool.getMaterialComponent(
+                          ~nodeId=addedMaterialNodeId,
+                          (),
+                        );
+                      MainEditorAssetUploadTool.loadOneTexture()
+                      |> Js.Promise.then_(uploadedTextureNodeId => {
+                           MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                             ~textureNodeId=uploadedTextureNodeId,
+                             ~material,
+                             (),
+                           );
+
+                           let glShaderSourceCallCountBeforeDispose =
+                             glShaderSource |> getCallCount;
+
+
+                           MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
+
+                           (glShaderSource |> getCallCount)
+                           - glShaderSourceCallCountBeforeDispose
+                           |> expect == 4
+                           |> Js.Promise.resolve;
+                         });
+                    });
                   });
                 })
               )

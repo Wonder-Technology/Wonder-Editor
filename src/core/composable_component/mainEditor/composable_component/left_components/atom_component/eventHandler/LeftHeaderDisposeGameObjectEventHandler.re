@@ -20,12 +20,12 @@ module CustomEventHandler = {
                  (editorState, engineState),
                );
 
-             let isNeedReInitSceneAllLightMaterials =
+             let isNeedReInitAllLightMaterials =
                HierarchyGameObjectEngineService.getAllGameObjects(
                  removedGameObject,
                  engineState,
                )
-               |> SceneEngineService.isNeedReInitSceneAllLightMaterials(
+               |> SceneEngineService.isNeedReInitAllLightMaterials(
                     _,
                     engineState,
                   );
@@ -35,8 +35,8 @@ module CustomEventHandler = {
              let engineState = engineState |> JobEngineService.execDisposeJob;
 
              let engineState =
-               isNeedReInitSceneAllLightMaterials ?
-                 SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials(
+               isNeedReInitAllLightMaterials ?
+                 SceneEngineService.clearShaderCacheAndReInitAllLightMaterials(
                    engineState,
                  ) :
                  engineState;

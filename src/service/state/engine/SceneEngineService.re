@@ -72,13 +72,13 @@ let getSceneAllLightMaterials = engineState =>
     engineState,
   );
 
-let clearShaderCacheAndReInitSceneAllLightMaterials = engineState =>
+let clearShaderCacheAndReInitAllLightMaterials = engineState =>
   LightMaterialEngineService.reInitAllLightMaterialsAndClearShaderCache(
-    getSceneAllLightMaterials(engineState),
+    LightMaterialEngineService.getAllLightMaterials(engineState),
     engineState,
   );
 
-let isNeedReInitSceneAllLightMaterials = (gameObjects, engineState) =>
+let isNeedReInitAllLightMaterials = (gameObjects, engineState) =>
   gameObjects
   |> Js.Array.filter(gameObject =>
        GameObjectComponentEngineService.hasLightComponent(

@@ -340,8 +340,7 @@ let _ =
             )
           );
           describe("test has direction light component", () =>
-            describe(
-              "should re-init all light material components in the scene", () => {
+            describe("should re-init all light material components", () => {
               let _prepare = () => {
                 let gl = FakeGlToolEngine.getEngineStateGl();
                 let glShaderSource = gl##shaderSource;

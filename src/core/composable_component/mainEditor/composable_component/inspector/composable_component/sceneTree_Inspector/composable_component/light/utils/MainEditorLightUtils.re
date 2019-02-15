@@ -117,7 +117,7 @@ let replaceLightByType = (sourceLightType, targetLightType) => {
 
       StateLogicService.refreshEngineState(engineState);
 
-      SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials
+      SceneEngineService.clearShaderCacheAndReInitAllLightMaterials
       |> StateLogicService.getAndRefreshEngineStateWithFunc;
     };
 };

@@ -136,7 +136,7 @@ let _ =
           )
         );
 
-        describe("should reinit origin gameObjects in scene", () =>
+        describe("should reinit origin gameObjects", () =>
           testPromise("glsl->direction,point light count should + 1", () =>
             _test(
               sandbox,

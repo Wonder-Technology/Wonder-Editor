@@ -8,7 +8,8 @@ module CustomEventHandler = {
 
   let _isRemoveLight = type_ => type_ === Light;
 
-  let handleSelfLogic = ((uiState, dispatchFunc), currentSceneTreeNode, type_) => {
+  let handleSelfLogic =
+      ((uiState, dispatchFunc), currentSceneTreeNode, type_) => {
     let (editorState, engineState) =
       (StateEditorService.getState(), StateEngineService.unsafeGetState())
       |> InspectorRemoveComponentUtils.removeComponentByType(
@@ -23,7 +24,7 @@ module CustomEventHandler = {
       {
         StateLogicService.getAndRefreshEngineState();
 
-        SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials
+        SceneEngineService.clearShaderCacheAndReInitAllLightMaterials
         |> StateLogicService.getAndSetEngineState;
       } :
       ();

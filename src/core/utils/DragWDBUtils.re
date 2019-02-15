@@ -119,12 +119,12 @@ let dragWDB =
     );
 
     let engineState =
-      SceneEngineService.isNeedReInitSceneAllLightMaterials(
+      SceneEngineService.isNeedReInitAllLightMaterials(
         allClonedGameObjectArr,
         engineState,
       ) ?
         engineState
-        |> SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials :
+        |> SceneEngineService.clearShaderCacheAndReInitAllLightMaterials :
         engineState;
 
     let editorState =

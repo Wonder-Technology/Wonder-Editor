@@ -14,12 +14,12 @@ module CustomEventHandler = {
       LeftHeaderGameObjectResultUtils.getTargetGameObject()
       |> Result.Result.either(
            targetGameObject => {
-             let isNeedReInitSceneAllLightMaterials =
+             let isNeedReInitAllLightMaterials =
                HierarchyGameObjectEngineService.getAllGameObjects(
                  targetGameObject,
                  engineState,
                )
-               |> SceneEngineService.isNeedReInitSceneAllLightMaterials(
+               |> SceneEngineService.isNeedReInitAllLightMaterials(
                     _,
                     engineState,
                   );
@@ -60,9 +60,9 @@ module CustomEventHandler = {
                   );
 
              let engineState =
-               isNeedReInitSceneAllLightMaterials ?
+               isNeedReInitAllLightMaterials ?
                  engineState
-                 |> SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials :
+                 |> SceneEngineService.clearShaderCacheAndReInitAllLightMaterials :
                  engineState;
 
              editorState |> StateEditorService.setState |> ignore;
