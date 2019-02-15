@@ -104,9 +104,7 @@ let _ =
                        () => {
                          let engineState = StateEngineService.unsafeGetState();
 
-                         LoadWDBTool.getBoxTexturedMeshGameObject(
-                           engineState,
-                         )
+                         LoadWDBTool.getBoxTexturedMeshGameObject(engineState)
                          |> GameObjectTool.setCurrentSceneTreeNode;
 
                          MainEditorSceneTreeTool.Select.selectGameObject(
@@ -944,6 +942,46 @@ let _ =
           });
         });
       });
+
+      testPromise("set scene gameObject->name to Scene", () =>
+        ImportPackageTool.testImportPackage(
+          ~testFunc=
+            () =>
+              GameObjectEngineService.unsafeGetGameObjectName(
+                SceneEngineService.getSceneGameObject
+                |> StateLogicService.getEngineStateToGetData,
+              )
+              |> StateLogicService.getEngineStateToGetData
+              |> expect == "Scene"
+              |> resolve,
+          (),
+        )
+      );
+
+      describe("test show Scene inspector", () =>
+        testPromise("should show component ui", () =>
+          ImportPackageTool.testImportPackage(
+            ~testFunc=
+              () => {
+                MainEditorSceneTreeTool.Select.selectGameObject(
+                  ~gameObject=
+                    SceneEngineService.getSceneGameObject(
+                      StateEngineService.unsafeGetState(),
+                    ),
+                  (),
+                );
+
+                BuildComponentTool.buildInspectorComponent(
+                  TestTool.buildEmptyAppState(),
+                  InspectorTool.buildFakeAllShowComponentConfig(),
+                )
+                |> ReactTestTool.createSnapshotAndMatch
+                |> resolve;
+              },
+            (),
+          )
+        )
+      );
     });
 
     describe("test geometry", () => {
@@ -1539,9 +1577,7 @@ let _ =
                        let engineState = StateEngineService.unsafeGetState();
 
                        let material =
-                         LoadWDBTool.getBoxTexturedMeshGameObject(
-                           engineState,
-                         )
+                         LoadWDBTool.getBoxTexturedMeshGameObject(engineState)
                          |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                               _,
                               engineState,

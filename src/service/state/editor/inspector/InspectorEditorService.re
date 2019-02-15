@@ -44,3 +44,7 @@ let clearComponentType = editorState => {
     editorState.inspectorRecord
     |> ComponentTypeMapInspectorService.clearComponentType,
 };
+
+let addSceneGameObjectComponentTypeToMap = (sceneGameObject, editorState) =>
+  editorState
+  |> addComponentTypeToMap(sceneGameObject, InspectorComponentType.Transform);

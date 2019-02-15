@@ -30,7 +30,7 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
           onMouseDown={[Function]}
           style={Object {}}
         >
-          scene
+          Scene
         </div>
       </li>
       <ul

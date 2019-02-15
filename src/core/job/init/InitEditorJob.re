@@ -31,7 +31,10 @@ let initEditorJob = (_, engineState) => {
        );
 
   let editorState =
-    editorState |> _addSceneGameObjectComponentTypeToMap(engineState);
+    editorState
+    |> InspectorEditorService.addSceneGameObjectComponentTypeToMap(
+         SceneEngineService.getSceneGameObject(engineState),
+       );
 
   editorState |> StateEditorService.setState |> ignore;
 
