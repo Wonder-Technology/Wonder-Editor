@@ -1,9 +1,3 @@
-let initGameObjectAndAddChild = (parent, child, engineState) =>
-  engineState
-  |> GameObjectEngineService.initGameObject(child)
-  |> HierarchyGameObjectEngineService.addChild(parent, child)
-  |> DirectorEngineService.loopBody(0.);
-
 let doesSceneHasRemoveableCamera = () =>
   GameObjectComponentEngineService.getAllBasicCameraViewComponents
   |> StateLogicService.getEngineStateToGetData

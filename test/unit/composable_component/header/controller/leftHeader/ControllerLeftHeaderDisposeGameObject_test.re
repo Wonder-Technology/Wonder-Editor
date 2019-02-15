@@ -353,5 +353,62 @@ let _ =
           error |> expect |> not_ |> toCalled;
         });
       });
+
+      describe(
+        "dispose gameObject shouldn't dispose gameObject->material component",
+        () => {
+        beforeEach(() => {
+          MainEditorSceneTool.initStateWithJob(
+            ~sandbox,
+            ~noWorkerJobRecord=
+              NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                ~loopPipelines=
+                  {|
+                   [
+                       {
+                           "name": "default",
+                           "jobs": [
+                               {
+                                   "name": "dispose"
+                               }
+                           ]
+                       }
+                   ]
+               |},
+                (),
+              ),
+            (),
+          );
+
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
+          );
+        });
+
+        let _disposeAllSceneGameObjects = () => {
+          MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
+
+          MainEditorSceneTreeTool.Select.selectGameObject(
+            ~gameObject=
+              MainEditorSceneTool.getFirstCube
+              |> StateLogicService.getEngineStateToGetData,
+            (),
+          );
+
+          MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
+        };
+
+        test("test", () => {
+          _disposeAllSceneGameObjects();
+
+          LightMaterialToolEngine.isAlive(
+            MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial
+            |> StateLogicService.getEditorState,
+          )
+          |> StateLogicService.getEngineStateToGetData
+          |> expect == true;
+        });
+      });
     });
   });
