@@ -30,7 +30,7 @@ exports[`controller sceneTree test set parent in engine no drag 1`] = `
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul

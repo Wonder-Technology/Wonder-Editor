@@ -37,10 +37,14 @@ module Method = {
   let dragWDBToBeTargetSib = SceneTreeDragWDBEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let buildSceneNode = (children, engineState) => {
-    uid: SceneEngineService.getSceneGameObject(engineState),
-    name: "Scene",
-    /* isShowChildren: SceneGraphUtils.getSceneTreeNodeIsShowChildren(), */
-    children,
+    let scene = SceneEngineService.getSceneGameObject(engineState);
+
+    {
+      uid: scene,
+      name:
+        GameObjectEngineService.unsafeGetGameObjectName(scene, engineState),
+      children,
+    };
   };
 
   let _isSelected = (uid, currentSceneTreeNode) =>

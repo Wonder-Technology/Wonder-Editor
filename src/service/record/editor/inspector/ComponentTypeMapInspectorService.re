@@ -2,10 +2,10 @@ open InspectorType;
 
 let getComponentTypeMap = inspectorRecord => inspectorRecord.componentTypeMap;
 
-let setComponentTypeMap = (componentTypeMap, inspectorRecord) => {
-  ...inspectorRecord,
-  componentTypeMap,
-};
+/* let setComponentTypeMap = (componentTypeMap, inspectorRecord) => {
+     ...inspectorRecord,
+     componentTypeMap,
+   }; */
 
 let clearComponentTypeMap = inspectorRecord => {
   ...inspectorRecord,
@@ -13,7 +13,9 @@ let clearComponentTypeMap = inspectorRecord => {
 };
 
 let _addComponentType = (index, componentType, componentTypeMap) =>
-  switch (componentTypeMap |> WonderCommonlib.ImmutableSparseMapService.get(index)) {
+  switch (
+    componentTypeMap |> WonderCommonlib.ImmutableSparseMapService.get(index)
+  ) {
   | None => ArrayService.create() |> ArrayService.push(componentType)
   | Some(map) => map |> Js.Array.copy |> ArrayService.push(componentType)
   };

@@ -74,7 +74,7 @@ let _handleEngineState = engineState => {
   let scene = engineState |> SceneEngineService.getSceneGameObject;
 
   engineState
-  |> GameObjectEngineService.setGameObjectName("scene", scene)
+  |> GameObjectEngineService.setGameObjectName("Scene", scene)
   |> DirectorEngineService.init
   |> StateEngineService.setState;
 };

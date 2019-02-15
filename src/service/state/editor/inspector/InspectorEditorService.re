@@ -4,12 +4,12 @@ let getComponentTypeMap = editorState =>
   editorState.inspectorRecord
   |> ComponentTypeMapInspectorService.getComponentTypeMap;
 
-let setComponentTypeMap = (componentTypeMap, editorState) => {
-  ...editorState,
-  inspectorRecord:
-    editorState.inspectorRecord
-    |> ComponentTypeMapInspectorService.setComponentTypeMap(componentTypeMap),
-};
+/* let setComponentTypeMap = (componentTypeMap, editorState) => {
+     ...editorState,
+     inspectorRecord:
+       editorState.inspectorRecord
+       |> ComponentTypeMapInspectorService.setComponentTypeMap(componentTypeMap),
+   }; */
 
 let clearComponentTypeMap = editorState => {
   ...editorState,

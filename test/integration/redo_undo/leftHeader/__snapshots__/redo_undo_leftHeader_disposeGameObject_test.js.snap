@@ -30,7 +30,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -134,7 +134,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -216,7 +216,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -298,7 +298,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -424,7 +424,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul

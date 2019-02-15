@@ -30,7 +30,7 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -188,7 +188,7 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul

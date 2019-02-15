@@ -30,7 +30,7 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -178,7 +178,7 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -326,7 +326,7 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul

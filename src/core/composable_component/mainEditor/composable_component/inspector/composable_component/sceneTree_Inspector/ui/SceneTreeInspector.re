@@ -19,7 +19,9 @@ module Method = {
           GameObjectEngineService.unsafeGetGameObjectName(gameObject)
           |> StateLogicService.getEngineStateToGetData
         )
-        onBlur=(reNameGameObjectBlurEvent((uiState, dispatchFunc), gameObject))
+        onBlur=(
+          reNameGameObjectBlurEvent((uiState, dispatchFunc), gameObject)
+        )
         canBeNull=false
       />
     </div>;
@@ -39,11 +41,6 @@ module Method = {
       ((uiState, dispatchFunc), addableComponentConfig, currentSceneTreeNode) =>
     switch (currentSceneTreeNode) {
     | None => [||]
-    | Some(gameObject)
-        when
-          SceneEngineService.isSceneGameObject(gameObject)
-          |> StateLogicService.getEngineStateToGetData => [||]
-
     | Some(gameObject) =>
       [|_buildNameFunc((uiState, dispatchFunc), gameObject)|]
       |> Js.Array.concat(

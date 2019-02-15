@@ -30,7 +30,7 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -178,7 +178,7 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -348,7 +348,7 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -518,7 +518,7 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -666,7 +666,7 @@ exports[`redo_undo:leftHeader clone gameObject prepare first step: set currentSc
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul

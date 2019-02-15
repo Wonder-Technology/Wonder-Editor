@@ -30,7 +30,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -161,7 +161,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -292,7 +292,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -423,7 +423,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -554,7 +554,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
