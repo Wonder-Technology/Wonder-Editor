@@ -10,7 +10,7 @@ module CustomEventHandler = {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
-    let (editorState, engineState) =
+    let engineState =
       LeftHeaderGameObjectResultUtils.getTargetGameObject()
       |> Result.Result.either(
            targetGameObject => {
@@ -65,21 +65,23 @@ module CustomEventHandler = {
                  |> SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials :
                  engineState;
 
+             editorState |> StateEditorService.setState |> ignore;
+
              let engineState =
                StateLogicService.refreshEngineStateAndReturnEngineState(
                  engineState,
                );
 
-             (editorState, engineState);
+             engineState;
            },
            errorMsg => {
              ConsoleUtils.error(errorMsg, editorState);
 
-             (editorState, engineState);
+             engineState;
            },
          );
 
-    StateLogicService.setState((editorState, engineState));
+    engineState |> StateEngineService.setState |> ignore;
 
     dispatchFunc(AppStore.UpdateAction(Update([|Inspector, SceneTree|])))
     |> ignore;

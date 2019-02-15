@@ -135,8 +135,10 @@ let dragWDB =
            engineState,
          );
 
+    editorState |> StateEditorService.setState |> ignore;
+
     let engineState =
       StateLogicService.refreshEngineStateAndReturnEngineState(engineState);
 
-    (true, (editorState, engineState));
+    (true, (StateEditorService.getState(), engineState));
   };
