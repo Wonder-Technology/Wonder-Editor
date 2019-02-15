@@ -7,6 +7,16 @@ let getLightOptions = () => [|
   {key: PointLight |> convertLightTypeToInt, value: "point_light"},
 |];
 
+let isLightGameObject = (gameObject, engineState) =>
+  GameObjectComponentEngineService.hasDirectionLightComponent(
+    gameObject,
+    engineState,
+  )
+  || GameObjectComponentEngineService.hasPointLightComponent(
+       gameObject,
+       engineState,
+     );
+
 let getLightTypeByGameObject = (gameObject, engineState) =>
   switch (
     GameObjectComponentEngineService.hasDirectionLightComponent(

@@ -65,17 +65,17 @@ let blurConstant =
   );
 
 /* let changeConstantAndBlur =
-    (
-      ~light,
-      ~sourceValue,
-      ~targetValue,
-      ~uiState=TestTool.buildEmptyAppState(),
-      ~dispatchFunc=TestTool.getDispatch(),
-      (),
-    ) => {
-  changeConstant(light, targetValue);
-  blurConstant(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
-}; */
+       (
+         ~light,
+         ~sourceValue,
+         ~targetValue,
+         ~uiState=TestTool.buildEmptyAppState(),
+         ~dispatchFunc=TestTool.getDispatch(),
+         (),
+       ) => {
+     changeConstant(light, targetValue);
+     blurConstant(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
+   }; */
 
 let changeLinear = (light, value) =>
   MainEditorPointLightUtils.changeLinear(light, value);
@@ -95,17 +95,17 @@ let blurLinear =
   );
 
 /* let changeLinearAndBlur =
-    (
-      ~light,
-      ~sourceValue,
-      ~targetValue,
-      ~uiState=TestTool.buildEmptyAppState(),
-      ~dispatchFunc=TestTool.getDispatch(),
-      (),
-    ) => {
-  changeLinear(light, targetValue);
-  blurLinear(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
-}; */
+       (
+         ~light,
+         ~sourceValue,
+         ~targetValue,
+         ~uiState=TestTool.buildEmptyAppState(),
+         ~dispatchFunc=TestTool.getDispatch(),
+         (),
+       ) => {
+     changeLinear(light, targetValue);
+     blurLinear(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
+   }; */
 
 let changeQuadratic = (light, value) =>
   MainEditorPointLightUtils.changeQuadratic(light, value);
@@ -125,17 +125,17 @@ let blurQuadratic =
   );
 
 /* let changeQuadraticAndBlur =
-    (
-      ~light,
-      ~sourceValue,
-      ~targetValue,
-      ~uiState=TestTool.buildEmptyAppState(),
-      ~dispatchFunc=TestTool.getDispatch(),
-      (),
-    ) => {
-  changeQuadratic(light, targetValue);
-  blurQuadratic(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
-}; */
+       (
+         ~light,
+         ~sourceValue,
+         ~targetValue,
+         ~uiState=TestTool.buildEmptyAppState(),
+         ~dispatchFunc=TestTool.getDispatch(),
+         (),
+       ) => {
+     changeQuadratic(light, targetValue);
+     blurQuadratic(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
+   }; */
 
 let changeRange = (light, value) =>
   MainEditorPointLightUtils.changeRange(light, value);
@@ -155,23 +155,22 @@ let blurRange =
   );
 
 /* let changeRangeAndBlur =
-    (
-      ~light,
-      ~sourceValue,
-      ~targetValue,
-      ~uiState=TestTool.buildEmptyAppState(),
-      ~dispatchFunc=TestTool.getDispatch(),
-      (),
-    ) => {
-  changeRange(light, targetValue);
-  blurRange(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
-}; */
+       (
+         ~light,
+         ~sourceValue,
+         ~targetValue,
+         ~uiState=TestTool.buildEmptyAppState(),
+         ~dispatchFunc=TestTool.getDispatch(),
+         (),
+       ) => {
+     changeRange(light, targetValue);
+     blurRange(~uiState, ~dispatchFunc, ~light, ~value=sourceValue, ());
+   }; */
 
 let createPointLight = (editorState, engineState) => {
   let (editorState, (engineState, obj)) =
     GameObjectLogicService.createGameObject((editorState, engineState));
-  let (engineState, directionLight) =
-    PointLightEngineService.create(engineState);
+  let (engineState, light) = PointLightEngineService.create(engineState);
 
   let engineState =
     engineState
@@ -179,7 +178,7 @@ let createPointLight = (editorState, engineState) => {
 
   let (editorState, engineState) =
     (editorState, engineState)
-    |> GameObjectLogicService.addPointLight(obj, directionLight);
+    |> GameObjectLogicService.addPointLight(obj, light);
 
   (editorState, engineState, obj);
 };
