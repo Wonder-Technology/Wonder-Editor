@@ -47,49 +47,6 @@ let _checkLightCount = (gameObject, (editorState, engineState)) => {
   (engineState, result);
 };
 
-let _setHierachy =
-    (dragPosition, targetGameObject, clonedWDBGameObject, engineState) =>
-  switch (dragPosition) {
-  | DragBeforeTarget =>
-    engineState
-    |> HierarchyGameObjectEngineService.addChild(
-         HierarchyGameObjectEngineService.getParentGameObject(
-           targetGameObject,
-           engineState,
-         )
-         |> OptionService.unsafeGet,
-         clonedWDBGameObject,
-       )
-    |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
-         clonedWDBGameObject,
-         targetGameObject,
-         Wonderjs.TransformType.Before,
-       )
-
-  | DragIntoTarget =>
-    engineState
-    |> HierarchyGameObjectEngineService.addChild(
-         targetGameObject,
-         clonedWDBGameObject,
-       )
-
-  | DragAfterTarget =>
-    engineState
-    |> HierarchyGameObjectEngineService.addChild(
-         HierarchyGameObjectEngineService.getParentGameObject(
-           targetGameObject,
-           engineState,
-         )
-         |> OptionService.unsafeGet,
-         clonedWDBGameObject,
-       )
-    |> HierarchyGameObjectEngineService.changeGameObjectChildOrder(
-         clonedWDBGameObject,
-         targetGameObject,
-         Wonderjs.TransformType.After,
-       )
-  };
-
 let dragWDB =
     (
       wdbGameObject,
@@ -111,12 +68,21 @@ let dragWDB =
     let clonedWDBGameObject =
       cloneGameObjectArr |> CloneGameObjectLogicService.getClonedGameObject;
 
-    _setHierachy(
-      dragPosition,
-      targetGameObject,
-      clonedWDBGameObject,
-      engineState,
-    );
+    let engineState =
+      SceneEngineService.isSceneGameObject(targetGameObject)
+      |> StateLogicService.getEngineStateToGetData ?
+        DragGameObjectUtils.handleDragToBeSceneGameObjectChild(
+          dragPosition,
+          targetGameObject,
+          clonedWDBGameObject,
+          engineState,
+        ) :
+        DragGameObjectUtils.handleDragToBeTargetGameObjectSib(
+          dragPosition,
+          targetGameObject,
+          clonedWDBGameObject,
+          engineState,
+        );
 
     let engineState =
       SceneEngineService.isNeedReInitAllLightMaterials(

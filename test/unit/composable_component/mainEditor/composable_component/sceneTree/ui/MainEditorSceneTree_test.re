@@ -172,6 +172,7 @@ let _ =
       });
 
       describe("test drag gameObject to be target gameObject sib", () => {
+
         describe("test drag gameObject before target gameObject", () => {
           beforeEach(() =>
             MainEditorSceneTool.createDefaultScene(
