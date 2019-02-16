@@ -53,18 +53,23 @@ let _handleEngineState = (sceneGameObject, hasWDBIMGUIFunc, engineState) => {
 
   editorState
   |> GameObjectComponentLogicService.setGameObjectArrComponentTypeMap(
-       engineState |> HierarchyGameObjectEngineService.getChildren(sceneGameObject),
+       engineState
+       |> HierarchyGameObjectEngineService.getChildren(sceneGameObject),
        GameObjectComponentLogicService.buildAllComponentArray(),
        engineState,
      )
-  /* |> TreeRootAssetEditorService.setAssetTreeRoot(assetTree) */
+  |> InspectorEditorService.addSceneGameObjectComponentTypeToMap(
+       sceneGameObject,
+     )
   |> StateEditorService.setState
   |> ignore;
 
-  let scene = engineState |> SceneEngineService.getSceneGameObject;
-
   let engineState =
-    engineState |> GameObjectEngineService.setGameObjectName("scene", scene);
+    engineState
+    |> GameObjectEngineService.setGameObjectName(
+         SceneEngineService.getDefaultName(),
+         sceneGameObject,
+       );
 
   (sceneGameObject, engineState);
 };

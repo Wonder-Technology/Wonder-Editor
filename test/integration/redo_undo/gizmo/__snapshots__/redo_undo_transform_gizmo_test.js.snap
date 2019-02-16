@@ -1,6 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditorTransform scale test change scale value changeX should set current gameObject->transform->value x set x value to floatInput 1`] = `
+exports[`redo_undo: transform gizmo test rotation gizmo fix bug 
+            pick gameObject g1;
+            drag rotate by xy circle gizmo to r1;
+            drag rotate by xy circle gizmo to r2;
+            undo;
+
+            ui->inspector->transform->g1->rotation should be r1
+             1`] = `
 <article
   className="wonder-inspector-transform"
 >
@@ -169,7 +176,7 @@ exports[`MainEditorTransform scale test change scale value changeX should set cu
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="0"
+              value="-10.3622"
             />
           </div>
         </article>
@@ -209,7 +216,7 @@ exports[`MainEditorTransform scale test change scale value changeX should set cu
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="-10.1213"
+              value="1"
             />
           </div>
         </article>

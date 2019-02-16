@@ -64,7 +64,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul

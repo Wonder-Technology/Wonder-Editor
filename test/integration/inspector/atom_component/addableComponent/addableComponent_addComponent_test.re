@@ -62,8 +62,7 @@ let _ =
           });
         });
 
-        describe(
-          "should re-init all light material components in the scene", () =>
+        describe("should re-init all light material components", () =>
           describe("test add direction light component", () =>
             test("glsl->DIRECTION_LIGHTS_COUNT should + 1", () => {
               let gl = FakeGlToolEngine.getEngineStateGl();

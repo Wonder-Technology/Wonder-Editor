@@ -1,0 +1,2 @@
+let refreshInspectorTransform = () =>
+  BuildComponentForCurryTool.buildMainEditorTransformComponent();

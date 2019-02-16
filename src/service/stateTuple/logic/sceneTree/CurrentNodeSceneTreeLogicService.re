@@ -19,12 +19,15 @@ let disposeCurrentSceneTreeNode =
 
            let engineState =
              engineState
-             |> GameObjectEngineService.disposeGameObjectKeepOrderRemoveGeometry(
+             |> GameObjectEngineService.disposeGameObjectKeepOrderRemoveGeometryRemoveMaterial(
                   removedGameObject,
                 );
 
            _iterateSceneGraphRemove(
-             HierarchyGameObjectEngineService.getChildren(removedGameObject, engineState),
+             HierarchyGameObjectEngineService.getChildren(
+               removedGameObject,
+               engineState,
+             ),
              (editorState, engineState),
            );
          },

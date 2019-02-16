@@ -29,11 +29,7 @@ module CustomEventHandler = {
       (dragPosition, sceneGameObject, draggedGameObject, engineState) =>
     switch (dragPosition) {
     | DragIntoTarget =>
-      _handleDragIntoTarget(
-        sceneGameObject,
-        draggedGameObject,
-        engineState,
-      )
+      _handleDragIntoTarget(sceneGameObject, draggedGameObject, engineState)
 
     | DragBeforeTarget
     | DragAfterTarget =>
@@ -77,11 +73,7 @@ module CustomEventHandler = {
          )
 
     | DragIntoTarget =>
-      _handleDragIntoTarget(
-        targetGameObject,
-        draggedGameObject,
-        engineState,
-      )
+      _handleDragIntoTarget(targetGameObject, draggedGameObject, engineState)
 
     | DragAfterTarget =>
       engineState
@@ -124,7 +116,7 @@ module CustomEventHandler = {
           engineState,
         );
 
-    engineState |> StateEngineService.setState |> ignore;
+    StateLogicService.refreshEngineState(engineState);
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))
     |> ignore;

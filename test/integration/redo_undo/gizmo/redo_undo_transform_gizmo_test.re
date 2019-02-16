@@ -148,6 +148,7 @@ let _ =
           ~pageY=172,
           (),
         );
+        RotationGizmosTool.refreshInspectorTransform();
         EventTransformGizmosTool.triggerMouseUp(~sandbox, ());
 
         EventTransformGizmosTool.triggerMouseDown(
@@ -162,6 +163,7 @@ let _ =
           ~pageY=172,
           (),
         );
+        RotationGizmosTool.refreshInspectorTransform();
         EventTransformGizmosTool.triggerMouseUp(~sandbox, ());
 
         gameObject1;
@@ -218,6 +220,27 @@ let _ =
               |> expect == (0., 0., (-10.4));
             },
           )
+        )
+      );
+
+      describe("fix bug", () =>
+        test(
+          {|
+            pick gameObject g1;
+            drag rotate by xy circle gizmo to r1;
+            drag rotate by xy circle gizmo to r2;
+            undo;
+
+            ui->inspector->transform->g1->rotation should be r1
+            |},
+          () => {
+            let gameObject = _prepare(sandbox);
+
+            RedoUndoTool.undoHistoryState();
+
+            BuildComponentForCurryTool.buildMainEditorTransformComponent()
+            |> ReactTestTool.createSnapshotAndMatch;
+          },
         )
       );
     });

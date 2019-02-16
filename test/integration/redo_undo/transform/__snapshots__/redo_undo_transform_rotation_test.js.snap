@@ -1,11 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditorTransform rotation test change rotation value deal with the specific case 
-      1.getTransformRotationData;
-      2.set rotation to (x:-45.0, y:180.0);
+exports[`redo_undo: transform rotation fix bug 
+            set current scene tree node to c1;
+            change c1->local euler angles;
+            undo;
 
-      inspector->transform->rotation should show (-45.0, 180.0, 0.0)
-       1`] = `
+            ui->inspector->transform->c1->local euler angles should be (0,0,0);
+             1`] = `
 <article
   className="wonder-inspector-transform"
 >
@@ -128,7 +129,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="-45"
+              value="0"
             />
           </div>
         </article>
@@ -151,7 +152,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="180"
+              value="0"
             />
           </div>
         </article>
@@ -270,12 +271,13 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
 </article>
 `;
 
-exports[`MainEditorTransform rotation test change rotation value deal with the specific case 
-      1.getTransformRotationData;
-      2.set rotation to (x:-45.0, y:180.0, z:0.0);
+exports[`redo_undo: transform rotation fix bug 
+            set current scene tree node to c1;
+            change c1->local euler angles;
+            undo;
 
-      inspector->transform->rotation should show (-45.0, 180.0, 0.0)
-       1`] = `
+            ui->inspector->transform->c1->local euler angles should be (0,0,0);
+             2`] = `
 <article
   className="wonder-inspector-transform"
 >
@@ -398,272 +400,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
               onBlur={[Function]}
               onChange={[Function]}
               type="text"
-              value="-45"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
-        >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Y
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="180"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
-        >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Z
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
               value="0"
-            />
-          </div>
-        </article>
-      </article>
-    </div>
-  </div>
-  <div
-    className="inspector-item"
-  >
-    <div
-      className="item-header"
-    >
-      Scale
-    </div>
-    <div
-      className="item-content"
-    >
-      <article
-        className="wonder-transform-template"
-      >
-        <article
-          className="inspector-item wonder-float-input"
-        >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            X
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="1"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
-        >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Y
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="1"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
-        >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Z
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="1"
-            />
-          </div>
-        </article>
-      </article>
-    </div>
-  </div>
-</article>
-`;
-
-exports[`MainEditorTransform rotation test change rotation value test change localEulerAngle x test snapshot 1`] = `
-<article
-  className="wonder-inspector-transform"
->
-  <div
-    className="inspector-item"
-  >
-    <div
-      className="item-header"
-    >
-      Position
-    </div>
-    <div
-      className="item-content"
-    >
-      <article
-        className="wonder-transform-template"
-      >
-        <article
-          className="inspector-item wonder-float-input"
-        >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            X
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="0"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
-        >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Y
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="0"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
-        >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Z
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="0"
-            />
-          </div>
-        </article>
-      </article>
-    </div>
-  </div>
-  <div
-    className="inspector-item"
-  >
-    <div
-      className="item-header"
-    >
-      Rotation
-    </div>
-    <div
-      className="item-content"
-    >
-      <article
-        className="wonder-transform-template"
-      >
-        <article
-          className="inspector-item wonder-float-input"
-        >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            X
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="-10.1213"
             />
           </div>
         </article>

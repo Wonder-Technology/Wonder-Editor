@@ -30,7 +30,7 @@ exports[`controller leftHeader dispose gameObject test scene tree dispose curren
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul

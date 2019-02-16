@@ -51,6 +51,15 @@ let handleDragDropEvent = (event, (editorState, engineState)) => {
   let engineState =
     engineState
     |> CurrentRotationGizmosUtils.restoreRotationGizmoColor(editorState);
+  /*
+   let editorState =
+     TransformEditorService.removeLocalEulerAngleData(
+       GameObjectComponentEngineService.unsafeGetTransformComponent(
+         SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
+         engineState,
+       ),
+       editorState,
+     ); */
 
   let engineState =
     InitTransformGizmosUtils.pushUndoStack(

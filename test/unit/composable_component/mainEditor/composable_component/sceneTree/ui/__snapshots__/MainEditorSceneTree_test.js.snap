@@ -30,7 +30,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -161,7 +161,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -287,7 +287,7 @@ exports[`MainEditorSceneTree test drag test drag gameObject to be target gameObj
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -413,7 +413,7 @@ exports[`MainEditorSceneTree test drag test drag gameObject to be target gameObj
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -539,7 +539,7 @@ exports[`MainEditorSceneTree test drag test drag gameObject to be target gameObj
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -665,7 +665,7 @@ exports[`MainEditorSceneTree test drag test drag gameObject to be target gameObj
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -791,7 +791,7 @@ exports[`MainEditorSceneTree test drag test drag gameObject to be target gameObj
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -917,7 +917,7 @@ exports[`MainEditorSceneTree test drag test drag gameObject to be target gameObj
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul

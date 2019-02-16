@@ -2564,10 +2564,7 @@ let _ =
                   ~pageY=172,
                   (),
                 );
-                TransformUtils.getTransformRotationData(
-                  GameObjectTool.getCurrentSceneTreeNodeTransform(),
-                )
-                |> ignore;
+                RotationGizmosTool.refreshInspectorTransform();
                 EventTransformGizmosTool.triggerMouseMove(
                   ~sandbox,
                   ~pageX=226 + 20,
@@ -2794,34 +2791,30 @@ let _ =
                       InitTransformGizmosJobTool.getCurrentSceneTreeNodeLocalScale()
                       |> expect == (0.5, 0.5, 0.5);
                     });
-                    test(
-                      "should avoid scale to 0",
-                      () => {
-                        let gameObject1 =
-                          _prepare(sandbox, prepareGameObject);
+                    test("should avoid scale to 0", () => {
+                      let gameObject1 = _prepare(sandbox, prepareGameObject);
 
-                        EventTransformGizmosTool.triggerMouseDown(
-                          ~sandbox,
-                          ~pageX=250,
-                          ~pageY=100,
-                          (),
-                        );
-                        EventTransformGizmosTool.triggerMouseMove(
-                          ~sandbox,
-                          ~pageX=250 - 40,
-                          ~pageY=100,
-                          (),
-                        );
+                      EventTransformGizmosTool.triggerMouseDown(
+                        ~sandbox,
+                        ~pageX=250,
+                        ~pageY=100,
+                        (),
+                      );
+                      EventTransformGizmosTool.triggerMouseMove(
+                        ~sandbox,
+                        ~pageX=250 - 40,
+                        ~pageY=100,
+                        (),
+                      );
 
-                        TransformGameObjectEngineService.getLocalScale(
-                          SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
-                          |> StateLogicService.getEditorState,
-                        )
-                        |> StateLogicService.getEngineStateToGetData
-                        |> Vector3Service.truncate(3)
-                        |> expect == (0.001, 0.001, 0.001);
-                      },
-                    );
+                      TransformGameObjectEngineService.getLocalScale(
+                        SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
+                        |> StateLogicService.getEditorState,
+                      )
+                      |> StateLogicService.getEngineStateToGetData
+                      |> Vector3Service.truncate(3)
+                      |> expect == (0.001, 0.001, 0.001);
+                    });
                   });
                 })
               );

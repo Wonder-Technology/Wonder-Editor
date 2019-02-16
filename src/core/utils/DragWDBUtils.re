@@ -119,12 +119,12 @@ let dragWDB =
     );
 
     let engineState =
-      SceneEngineService.isNeedReInitSceneAllLightMaterials(
+      SceneEngineService.isNeedReInitAllLightMaterials(
         allClonedGameObjectArr,
         engineState,
       ) ?
         engineState
-        |> SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials :
+        |> SceneEngineService.clearShaderCacheAndReInitAllLightMaterials :
         engineState;
 
     let editorState =
@@ -135,8 +135,10 @@ let dragWDB =
            engineState,
          );
 
+    editorState |> StateEditorService.setState |> ignore;
+
     let engineState =
       StateLogicService.refreshEngineStateAndReturnEngineState(engineState);
 
-    (true, (editorState, engineState));
+    (true, (StateEditorService.getState(), engineState));
   };

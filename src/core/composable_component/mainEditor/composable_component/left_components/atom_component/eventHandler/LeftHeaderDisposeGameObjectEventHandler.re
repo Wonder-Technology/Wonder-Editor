@@ -10,7 +10,7 @@ module CustomEventHandler = {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
-    let (editorState, engineState) =
+    let engineState =
       LeftHeaderGameObjectResultUtils.getTargetGameObject()
       |> Result.Result.either(
            removedGameObject => {
@@ -20,24 +20,28 @@ module CustomEventHandler = {
                  (editorState, engineState),
                );
 
-             let isNeedReInitSceneAllLightMaterials =
+             let isNeedReInitAllLightMaterials =
                HierarchyGameObjectEngineService.getAllGameObjects(
                  removedGameObject,
                  engineState,
                )
-               |> SceneEngineService.isNeedReInitSceneAllLightMaterials(
+               |> SceneEngineService.isNeedReInitAllLightMaterials(
                     _,
                     engineState,
                   );
 
+             editorState |> StateEditorService.setState |> ignore;
+
              let engineState = engineState |> JobEngineService.execDisposeJob;
 
              let engineState =
-               isNeedReInitSceneAllLightMaterials ?
-                 SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials(
+               isNeedReInitAllLightMaterials ?
+                 SceneEngineService.clearShaderCacheAndReInitAllLightMaterials(
                    engineState,
                  ) :
                  engineState;
+
+             let editorState = StateEditorService.getState();
 
              let editorState =
                SceneTreeEditorService.removeIsShowChildren(
@@ -45,21 +49,22 @@ module CustomEventHandler = {
                  editorState,
                );
 
+             editorState |> StateEditorService.setState |> ignore;
+
              let engineState =
                StateLogicService.refreshEngineStateAndReturnEngineState(
                  engineState,
                );
 
-             (editorState, engineState);
+             engineState;
            },
            errorMsg => {
              ConsoleUtils.error(errorMsg, editorState);
 
-             (editorState, engineState);
+             engineState;
            },
          );
 
-    editorState |> StateEditorService.setState |> ignore;
     engineState |> StateEngineService.setState |> ignore;
 
     dispatchFunc(AppStore.UpdateAction(Update([|Inspector, SceneTree|])))

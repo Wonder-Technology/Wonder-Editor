@@ -31,7 +31,7 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -180,7 +180,7 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -351,7 +351,7 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -522,7 +522,7 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -671,7 +671,7 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -798,7 +798,7 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -947,7 +947,7 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -1118,7 +1118,7 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -1289,7 +1289,7 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul
@@ -1438,7 +1438,7 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
           onMouseDown={[Function]}
           style={Object {}}
         >
-          Scene
+          scene
         </div>
       </li>
       <ul

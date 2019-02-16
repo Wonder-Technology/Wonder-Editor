@@ -71,8 +71,7 @@ let _ =
           },
         );
 
-        describe(
-          "should re-init all light material components in the scene", () =>
+        describe("should re-init all light material components", () =>
           describe("test change direction light to be point light", () =>
             test(
               "test

@@ -54,6 +54,25 @@ let changeRotationY = (transform, value) =>
 let changeRotationZ = (transform, value) =>
   MainEditorTransform.Method.changeRotationZ(transform, value);
 
+let changeRotationYAndBlur =
+    (
+      ~value,
+      ~transform=GameObjectTool.getCurrentSceneTreeNodeTransform(),
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) => {
+  let oldRotation = TransformUtils.getTransformRotationData(transform);
+
+  changeRotationY(transform, value);
+
+  MainEditorTransform.Method.blurRotationEvent(
+    (uiState, dispatchFunc),
+    transform,
+    oldRotation,
+  );
+};
+
 let changeScaleX = (transform, value) =>
   MainEditorTransform.Method.changeScaleX(transform, value);
 

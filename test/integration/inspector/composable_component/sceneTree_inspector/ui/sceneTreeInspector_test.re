@@ -50,10 +50,29 @@ let _ =
             });
           })
         );
+
+        describe("test rename scene", () =>
+          test("ui->scene tree->scene node->name should be updated", () => {
+            let newName = "gameObjectNewName";
+
+            SceneTreeInspectorTool.renameGameObject(
+              ~name=newName,
+              ~gameObject=
+                SceneEngineService.getSceneGameObject
+                |> StateLogicService.getEngineStateToGetData,
+              (),
+            );
+
+            BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
+            |> ReactTestTool.createSnapshotAndMatch;
+          })
+        );
       });
 
       describe("test show Scene inspector", () =>
-        test("should show nothing", () => {
+        test("should show component ui", () => {
+          MainEditorSceneTool.addSceneGameObjectComponentTypeToMap();
+
           MainEditorSceneTreeTool.Select.selectGameObject(
             ~gameObject=
               SceneEngineService.getSceneGameObject(

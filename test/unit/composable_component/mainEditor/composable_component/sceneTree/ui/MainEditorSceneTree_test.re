@@ -157,6 +157,8 @@ let _ =
                   ),
                 );
 
+              (result, (sourceGameObject, targetGameObject));
+
               result
               |>
               expect == SceneTreeNode.DragGameObject(
@@ -425,6 +427,23 @@ let _ =
             })
           );
         });
+
+        test("should refresh engine state", () =>
+          RefreshEngineStateTool.testRefreshEngineState(sandbox, () =>
+            MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+              ~sourceGameObject=
+                MainEditorSceneTool.getSecondCube(
+                  StateEngineService.unsafeGetState(),
+                ),
+              ~targetGameObject=
+                MainEditorSceneTool.getFirstCube(
+                  StateEngineService.unsafeGetState(),
+                ),
+              ~dragPosition=SceneTreeNodeType.DragBeforeTarget,
+              (),
+            )
+          )
+        );
       });
     });
 
@@ -479,6 +498,7 @@ let _ =
                     );
         });
       });
+
       test("should refresh engine state", () =>
         RefreshEngineStateTool.testRefreshEngineState(sandbox, () =>
           MainEditorSceneTreeTool.Select.selectGameObject(

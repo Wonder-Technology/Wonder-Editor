@@ -209,3 +209,9 @@ let getDefaultGameObjects = engineState => {
     ),
   );
 };
+
+let addSceneGameObjectComponentTypeToMap = () =>
+  InitEditorJob._addSceneGameObjectComponentTypeToMap(
+    StateEngineService.unsafeGetState(),
+  )
+  |> StateLogicService.getAndSetEditorState;

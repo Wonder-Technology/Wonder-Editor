@@ -41,7 +41,7 @@ let _addLight = (currentSceneTreeNode, (editorState, engineState)) =>
   engineState |> DirectionLightEngineService.isMaxCount ?
     {
       ConsoleUtils.warn(
-        "the direction light count is exceed max count !",
+        MainEditorLightUtils.getDirectionLightExceedMaxCountMessage(),
         editorState,
       );
 
@@ -60,7 +60,7 @@ let _addLight = (currentSceneTreeNode, (editorState, engineState)) =>
         ((editorState, engineState)) => (
           editorState,
           engineState
-          |> SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials,
+          |> SceneEngineService.clearShaderCacheAndReInitAllLightMaterials,
         )
       );
     };

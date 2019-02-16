@@ -47,7 +47,8 @@ let _getAllComponents =
   |> Js.Array.filter(gameObject => hasComponentFunc(gameObject, engineState))
   |> Js.Array.map(gameObject =>
        unsafeGetComponentFunc(gameObject, engineState)
-     );
+     )
+  |> WonderCommonlib.ArrayService.removeDuplicateItems;
 
 let getAllBasicMaterials = (allGameObjects, engineState) =>
   _getAllComponents(

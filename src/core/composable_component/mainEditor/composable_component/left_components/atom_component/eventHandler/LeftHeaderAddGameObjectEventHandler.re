@@ -42,6 +42,11 @@ module CustomEventHandler = {
     };
   };
 
+  let _initAndAddChild = (parent, child, engineState) =>
+    engineState
+    |> GameObjectEngineService.initGameObject(child)
+    |> HierarchyGameObjectEngineService.addChild(parent, child);
+
   let _addToGameObject =
       (newGameObject, targetGameObject, (editorState, engineState)) => {
     let editorState =
@@ -53,11 +58,7 @@ module CustomEventHandler = {
       |> SceneTreeEditorService.setIsShowChildren(targetGameObject, true);
 
     let engineState =
-      SceneUtils.initGameObjectAndAddChild(
-        targetGameObject,
-        newGameObject,
-        engineState,
-      );
+      _initAndAddChild(targetGameObject, newGameObject, engineState);
 
     (editorState, engineState);
   };
@@ -80,7 +81,7 @@ module CustomEventHandler = {
              );
 
         let engineState =
-          SceneUtils.initGameObjectAndAddChild(
+          _initAndAddChild(
             SceneEngineService.getSceneGameObject(engineState),
             newGameObject,
             engineState,
@@ -96,7 +97,9 @@ module CustomEventHandler = {
         )
       };
 
-    StateLogicService.setState((editorState, engineState));
+    StateLogicService.refreshEngineState(engineState);
+
+    editorState |> StateEditorService.setState |> ignore;
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))
     |> ignore;
