@@ -12,13 +12,13 @@
                 "name": "reallocate_cpu_memory"
             },
             {
+                "name": "update_camera"
+            },
+            {
                 "name": "update_transform_gizmos"
             },
             {
                 "name": "update_transform"
-            },
-            {
-                "name": "update_camera"
             },
             {
                 "name": "clear_color"

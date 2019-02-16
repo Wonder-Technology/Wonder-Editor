@@ -8,6 +8,7 @@
         height: 100%;
         background: #666666;
         overflow-y: auto;
+        overflow-x: hidden;
         @import "../../../utils/_scrollBarUtils.scss";
         @import "component/inspector/inspector";
     }

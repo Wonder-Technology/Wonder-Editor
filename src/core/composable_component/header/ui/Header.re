@@ -3,6 +3,7 @@ open HeaderType;
 type state = {
   isSelectNav: bool,
   currentSelectNav: navType,
+  isShowFileControlsModal: bool,
   isShowEditExportPackageModal: bool,
   isShowEditExportSceneModal: bool,
   isShowPublishLocalModal: bool,
@@ -52,9 +53,6 @@ module Method = {
         onClick=(_e => AllHistoryService.handleUndo(uiState, dispatchFunc))>
         <span className="section-header"> (DomHelper.textEl("Undo")) </span>
       </div>
-      /* <span className="section-tail">
-           (DomHelper.textEl("Ctrl+Z"))
-         </span> */
       <div
         className="content-section"
         onClick=(
@@ -68,10 +66,14 @@ module Method = {
         )>
         <span className="section-header"> (DomHelper.textEl("Redo")) </span>
       </div>
+      <div
+        className="content-section"
+        onClick=(_e => send(ShowFileControlsModal))>
+        <span className="section-header">
+          (DomHelper.textEl("Controls"))
+        </span>
+      </div>
     </div>;
-  /* <span className="section-tail">
-       (DomHelper.textEl("Ctrl+U"))
-     </span> */
 
   let buildFileComponent = (state, send, uiState, dispatchFunc) => {
     let className =
@@ -90,6 +92,48 @@ module Method = {
       (
         state.currentSelectNav === File ?
           _buildFileComponentSelectNav(send, uiState, dispatchFunc) :
+          ReasonReact.null
+      )
+      (
+        state.isShowFileControlsModal ?
+          <Modal
+            title="Controls"
+            closeFunc=(() => send(HideFileControlsModal))
+            content=[|
+              <div className="content-field">
+                <div className="field-title">
+                  (DomHelper.textEl("Redo"))
+                </div>
+                <div className="field-content">
+                  (DomHelper.textEl("Ctrl + y"))
+                </div>
+              </div>,
+              <div className="content-field">
+                <div className="field-title">
+                  (DomHelper.textEl("Undo"))
+                </div>
+                <div className="field-content">
+                  (DomHelper.textEl("Ctrl + z"))
+                </div>
+              </div>,
+              <div className="content-field">
+                <div className="field-title">
+                  (DomHelper.textEl("Duplicate GameObject"))
+                </div>
+                <div className="field-content">
+                  (DomHelper.textEl("Ctrl + d"))
+                </div>
+              </div>,
+              <div className="content-field">
+                <div className="field-title">
+                  (DomHelper.textEl("Delete Selected"))
+                </div>
+                <div className="field-content">
+                  (DomHelper.textEl("Delete"))
+                </div>
+              </div>,
+            |]
+          /> :
           ReasonReact.null
       )
     </div>;
@@ -197,6 +241,7 @@ module Method = {
     let className =
       state.currentSelectNav === Publish ?
         "item-title item-active" : "item-title";
+
     <div className="header-item">
       <div className="component-item">
         <span
@@ -255,7 +300,6 @@ module Method = {
         "item-title item-active" : "item-title";
 
     <div className="header-item">
-      
       <div className="component-item">
         <span
           className
@@ -273,16 +317,16 @@ module Method = {
           <Modal
             title="About Wonder"
             closeFunc=(() => send(HideHelpVersionModal))
-            content={
+            content=[|
               <div className="content-field">
                 <div className="field-title">
-                  (DomHelper.textEl("Version:"))
+                  (DomHelper.textEl("Version"))
                 </div>
                 <div className="field-content">
                   (DomHelper.textEl(Copyright.getVersion()))
                 </div>
-              </div>
-            }
+              </div>,
+            |]
           /> :
           ReasonReact.null
       )
@@ -326,6 +370,12 @@ let reducer = (action, state) =>
     state.isSelectNav ?
       ReasonReact.Update({...state, currentSelectNav: selectNav}) :
       ReasonReact.NoUpdate
+
+  | ShowFileControlsModal =>
+    ReasonReact.Update({...state, isShowFileControlsModal: true})
+
+  | HideFileControlsModal =>
+    ReasonReact.Update({...state, isShowFileControlsModal: false})
 
   | ShowHelpVersionModal =>
     ReasonReact.Update({...state, isShowHelpVersionModal: true})
@@ -372,6 +422,7 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   initialState: () => {
     isSelectNav: false,
     currentSelectNav: None,
+    isShowFileControlsModal: false,
     isShowHelpVersionModal: false,
     isShowEditExportPackageModal: false,
     isShowEditExportSceneModal: false,

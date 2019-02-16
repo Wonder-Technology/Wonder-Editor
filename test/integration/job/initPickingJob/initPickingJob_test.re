@@ -55,7 +55,7 @@ let _ =
               let _ = _prepare();
 
               InitTransformGizmosJobTool.createTransformGizmos
-              |> StateLogicService.getAndSetStateToGetData;
+              |> StateLogicService.getAndSetState;
 
               SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXAxisGizmo
               |> StateLogicService.getAndSetEditorState;

@@ -9,6 +9,8 @@ type action =
   | HoverNav(navType)
   | ToggleShowNav(navType)
   | BlurNav
+  | ShowFileControlsModal
+  | HideFileControlsModal
   | ShowEditExportPackageModal
   | HideEditExportPackageModal
   | ShowEditExportSceneModal

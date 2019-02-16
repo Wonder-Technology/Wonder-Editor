@@ -124,10 +124,10 @@ let buildNoWorkerLoopJobConfig = () => {|
         "name": "tick"
     },
     {
-        "name": "update_transform_gizmos"
+        "name": "update_transform"
     },
     {
-        "name": "update_transform"
+        "name": "update_transform_gizmos"
     },
     {
         "name": "update_camera"

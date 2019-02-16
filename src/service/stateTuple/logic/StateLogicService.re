@@ -55,7 +55,7 @@ let getStateToGetData = handleFunc =>
   (StateEditorService.getState(), StateEngineService.unsafeGetState())
   |> handleFunc;
 
-let getAndSetStateToGetData = handleFunc => {
+let getAndSetState = handleFunc => {
   let (editorState, engineState) =
     (StateEditorService.getState(), StateEngineService.unsafeGetState())
     |> handleFunc;

@@ -8,13 +8,14 @@ let _getHotKeyAction = hotKeyName =>
   | "undo" => Undo
   | "duplicate" => Duplicate
   | "delete" => Delete
+  | "focus" => Focus
   };
 
 let _getHandleFuncByHotKeyAction = hotKeyAction => {
   let uiState = UIStateService.getState();
   let dispatch = UIStateService.getDispatch();
-  let isCurrentSceneTreeNodeCanBeOperate =
-    GameObjectLogicService.isCurrentSceneTreeNodeCanBeOperate
+  let isCurrentSceneTreeNodeSceneChildren =
+    GameObjectLogicService.isCurrentSceneTreeNodeSceneChildren
     |> StateLogicService.getStateToGetData;
 
   switch (hotKeyAction) {
@@ -31,7 +32,7 @@ let _getHandleFuncByHotKeyAction = hotKeyAction => {
 
   | Duplicate => (
       () =>
-        isCurrentSceneTreeNodeCanBeOperate ?
+        isCurrentSceneTreeNodeSceneChildren ?
           MainEditorLeftHeader.Method.cloneCurrentSceneTreeNode(
             (uiState, dispatch),
             (),
@@ -41,13 +42,29 @@ let _getHandleFuncByHotKeyAction = hotKeyAction => {
     )
   | Delete => (
       () =>
-        isCurrentSceneTreeNodeCanBeOperate ?
+        isCurrentSceneTreeNodeSceneChildren ?
           MainEditorLeftHeader.Method.disposeCurrentSceneTreeNode(
             (uiState, dispatch),
             (),
             (),
           ) :
           ()
+    )
+  | Focus => (
+      () => {
+        let editorState = StateEditorService.getState();
+
+        switch (editorState |> SceneTreeEditorService.getCurrentSceneTreeNode) {
+        | None => ()
+        | Some(currentSceneTreeNode) =>
+          ArcballCameraControllerLogicService.setEditorCameraFocusTargetGameObject(
+            currentSceneTreeNode,
+            editorState,
+            StateEngineService.unsafeGetState(),
+          )
+          |> StateLogicService.refreshEngineState
+        };
+      }
     )
   };
 };

@@ -123,17 +123,17 @@ let _renderAddGameObjectComponent = ((uiState, dispatchFunc), state, send) =>
   </div>;
 
 let _renderRemoveGameObjectComponent =
-    (reduxTuple, isCurrentSceneTreeNodeCanBeOperate) =>
+    (reduxTuple, isCurrentSceneTreeNodeSceneChildren) =>
   <div
     className="sceneTree-header-item"
     title="remove"
     onClick=(
       _e =>
-        isCurrentSceneTreeNodeCanBeOperate ?
+        isCurrentSceneTreeNodeSceneChildren ?
           Method.disposeCurrentSceneTreeNode(reduxTuple, (), ()) : ()
     )>
     (
-      isCurrentSceneTreeNodeCanBeOperate ?
+      isCurrentSceneTreeNodeSceneChildren ?
         <div className="item-notBeClick">
           <img src="./public/img/remove.png" />
         </div> :
@@ -144,17 +144,17 @@ let _renderRemoveGameObjectComponent =
   </div>;
 
 let _renderCloneGameObjectComponent =
-    (reduxTuple, isCurrentSceneTreeNodeCanBeOperate) =>
+    (reduxTuple, isCurrentSceneTreeNodeSceneChildren) =>
   <div
     className="sceneTree-header-item"
     title="clone"
     onClick=(
       _e =>
-        isCurrentSceneTreeNodeCanBeOperate ?
+        isCurrentSceneTreeNodeSceneChildren ?
           Method.cloneCurrentSceneTreeNode(reduxTuple, (), ()) : ()
     )>
     (
-      isCurrentSceneTreeNodeCanBeOperate ?
+      isCurrentSceneTreeNodeSceneChildren ?
         <div className="item-notBeClick">
           <img src="./public/img/clone.png" />
         </div> :
@@ -166,8 +166,8 @@ let _renderCloneGameObjectComponent =
 
 let render =
     (reduxTuple, ({state, send}: ReasonReact.self('a, 'b, 'c)) as self) => {
-  let _isCurrentSceneTreeNodeCanBeOperate =
-    GameObjectLogicService.isCurrentSceneTreeNodeCanBeOperate
+  let isCurrentSceneTreeNodeSceneChildren =
+    GameObjectLogicService.isCurrentSceneTreeNodeSceneChildren
     |> StateLogicService.getStateToGetData;
 
   <article
@@ -176,13 +176,13 @@ let render =
     (
       _renderRemoveGameObjectComponent(
         reduxTuple,
-        _isCurrentSceneTreeNodeCanBeOperate,
+        isCurrentSceneTreeNodeSceneChildren,
       )
     )
     (
       _renderCloneGameObjectComponent(
         reduxTuple,
-        _isCurrentSceneTreeNodeCanBeOperate,
+        isCurrentSceneTreeNodeSceneChildren,
       )
     )
   </article>;

@@ -188,7 +188,14 @@ let disposeArcballCameraController =
   ),
 );
 
-let isCurrentSceneTreeNodeCanBeOperate = ((editorState, engineState)) =>
+let isCurrentSceneTreeNodeSceneGameObject = ((editorState, engineState)) =>
+  switch (editorState |> SceneTreeEditorService.getCurrentSceneTreeNode) {
+  | None => false
+  | Some(gameObject) =>
+    engineState |> SceneEngineService.isSceneGameObject(gameObject)
+  };
+
+let isCurrentSceneTreeNodeSceneChildren = ((editorState, engineState)) =>
   switch (editorState |> SceneTreeEditorService.getCurrentSceneTreeNode) {
   | None => false
   | Some(gameObject) =>
