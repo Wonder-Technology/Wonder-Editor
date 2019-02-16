@@ -44,6 +44,10 @@ let _registerJob = engineState =>
        ReallocateCPUMemoryJob.reallocateJob,
      )
   |> JobEngineService.registerNoWorkerLoopJob(
+       "update_camera",
+       UpdateCameraJob.updateJob,
+     )
+  |> JobEngineService.registerNoWorkerLoopJob(
        "update_transform_gizmos",
        UpdateTransformGizmosJob.updateTransformJob,
      )
