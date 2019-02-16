@@ -1,8 +1,8 @@
 {
   "name": "wonder-editor",
-  "version": "0.13.1",
+  "version": "1.0.0-beta.1",
   "authors": "Wonder",
-  "license": "GPL-3.0",
+  "license": "Apache-2.0",
   "repository": "git@github.com:Wonder-Technology/Wonder-Editor.git",
   "homepage": "https://github.com/Wonder-Technology/Wonder-Editor.js",
   "scripts": {
@@ -70,14 +70,14 @@
     "wonder-bs-most": "^0.0.3",
     "wonder-commonlib": "0.2.26",
     "wonder-log": "^0.2.10",
-    "wonder.js": "1.0.0-alpha.24.19"
+    "wonder.js": "1.0.0-beta.1"
   },
   "resolutions": {
     "wonder-log": "^0.2.10",
     "wonder-webgl": "^0.0.6",
     "wonder-bs-sinon": "0.1.7",
     "component-classes": "1.2.5",
-    "wonder-commonlib": "0.2.26",
+    "wonder-commonlib": "0.2.27",
     "wonder-bs-jest": "0.2.18"
   }
 }

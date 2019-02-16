@@ -238,10 +238,10 @@ let _ =
     );
 
     describe("test show order", () => {
-      let cubeTexturedWDBArrayBuffer = ref(Obj.magic(1));
+      let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
 
       beforeAll(() =>
-        cubeTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("CubeTextured")
+        boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
       );
 
       beforeEach(() => {
@@ -278,7 +278,7 @@ let _ =
 
           MainEditorAssetUploadTool.loadOneWDB(
             ~fileName=wdbName1,
-            ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
             (),
           )
           |> then_(uploadedWDBNodeId1 => {
@@ -289,7 +289,7 @@ let _ =
 
                     MainEditorAssetUploadTool.loadOneWDB(
                       ~fileName=wdbName2,
-                      ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                      ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                       (),
                     )
                     |> then_(uploadedWDBNodeId2 => {

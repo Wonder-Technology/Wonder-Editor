@@ -63,29 +63,25 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
     engineState,
     editorState,
   ) ?
-    {
-      WonderLog.Log.print("select x axis") |> ignore;
-
-      _selectAxisGizmo(
-        ray,
-        (
-          CurrentTransformGizmosUtils.setCurrentGizmoColor(
-            GameObjectEngineService.getAllBasicMaterials(
-              HierarchyGameObjectEngineService.getAllGameObjects(
-                OperateScaleGizmoSceneViewEditorService.unsafeGetScaleXAxisGizmo(
-                  editorState,
-                ),
-                engineState,
+    _selectAxisGizmo(
+      ray,
+      (
+        CurrentTransformGizmosUtils.setCurrentGizmoColor(
+          GameObjectEngineService.getAllBasicMaterials(
+            HierarchyGameObjectEngineService.getAllGameObjects(
+              OperateScaleGizmoSceneViewEditorService.unsafeGetScaleXAxisGizmo(
+                editorState,
               ),
               engineState,
             ),
+            engineState,
           ),
-          SelectScaleGizmoSceneViewEditorService.onlySelectScaleXAxisGizmo,
-          AxisScaleGizmoUtils.getIntersectedPointWithAxisInLocalCoordinateSystemForXAxis,
         ),
-        (editorState, engineState),
-      );
-    } :
+        SelectScaleGizmoSceneViewEditorService.onlySelectScaleXAxisGizmo,
+        AxisScaleGizmoUtils.getIntersectedPointWithAxisInLocalCoordinateSystemForXAxis,
+      ),
+      (editorState, engineState),
+    ) :
     _isSelectScaleAxisGizmo(
       OperateScaleGizmoSceneViewEditorService.unsafeGetScaleYAxisGizmo(
         editorState,
@@ -94,29 +90,25 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
       engineState,
       editorState,
     ) ?
-      {
-        WonderLog.Log.print("select y axis") |> ignore;
-
-        _selectAxisGizmo(
-          ray,
-          (
-            CurrentTransformGizmosUtils.setCurrentGizmoColor(
-              GameObjectEngineService.getAllBasicMaterials(
-                HierarchyGameObjectEngineService.getAllGameObjects(
-                  OperateScaleGizmoSceneViewEditorService.unsafeGetScaleYAxisGizmo(
-                    editorState,
-                  ),
-                  engineState,
+      _selectAxisGizmo(
+        ray,
+        (
+          CurrentTransformGizmosUtils.setCurrentGizmoColor(
+            GameObjectEngineService.getAllBasicMaterials(
+              HierarchyGameObjectEngineService.getAllGameObjects(
+                OperateScaleGizmoSceneViewEditorService.unsafeGetScaleYAxisGizmo(
+                  editorState,
                 ),
                 engineState,
               ),
+              engineState,
             ),
-            SelectScaleGizmoSceneViewEditorService.onlySelectScaleYAxisGizmo,
-            AxisScaleGizmoUtils.getIntersectedPointWithAxisInLocalCoordinateSystemForYAxis,
           ),
-          (editorState, engineState),
-        );
-      } :
+          SelectScaleGizmoSceneViewEditorService.onlySelectScaleYAxisGizmo,
+          AxisScaleGizmoUtils.getIntersectedPointWithAxisInLocalCoordinateSystemForYAxis,
+        ),
+        (editorState, engineState),
+      ) :
       _isSelectScaleAxisGizmo(
         OperateScaleGizmoSceneViewEditorService.unsafeGetScaleZAxisGizmo(
           editorState,
@@ -125,34 +117,30 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
         engineState,
         editorState,
       ) ?
-        {
-          WonderLog.Log.print("select z axis") |> ignore;
-
-          _selectAxisGizmo(
-            ray,
-            (
-              CurrentTransformGizmosUtils.setCurrentGizmoColor(
-                GameObjectEngineService.getAllBasicMaterials(
-                  HierarchyGameObjectEngineService.getAllGameObjects(
-                    OperateScaleGizmoSceneViewEditorService.unsafeGetScaleZAxisGizmo(
-                      editorState,
-                    ),
-                    engineState,
+        _selectAxisGizmo(
+          ray,
+          (
+            CurrentTransformGizmosUtils.setCurrentGizmoColor(
+              GameObjectEngineService.getAllBasicMaterials(
+                HierarchyGameObjectEngineService.getAllGameObjects(
+                  OperateScaleGizmoSceneViewEditorService.unsafeGetScaleZAxisGizmo(
+                    editorState,
                   ),
                   engineState,
                 ),
+                engineState,
               ),
-              SelectScaleGizmoSceneViewEditorService.onlySelectScaleZAxisGizmo,
-              AxisScaleGizmoUtils.getIntersectedPointWithAxisInLocalCoordinateSystemForZAxis,
             ),
-            (editorState, engineState),
-          );
-        } :
+            SelectScaleGizmoSceneViewEditorService.onlySelectScaleZAxisGizmo,
+            AxisScaleGizmoUtils.getIntersectedPointWithAxisInLocalCoordinateSystemForZAxis,
+          ),
+          (editorState, engineState),
+        ) :
         editorState
         |> SelectScaleGizmoSceneViewEditorService.markNotSelectAnyScaleGizmo;
 
 let _handleSelectCenterBoxGizmo =
-    (event, ray, handleSelectAxisGizmoFunc, editorState, engineState) =>
+    ((event, ray), handleSelectAxisGizmoFunc, (editorState, engineState)) =>
   _isSelectScaleCenterBoxGizmo(
     OperateScaleGizmoSceneViewEditorService.unsafeGetScaleCenterBoxGizmo(
       editorState,
@@ -161,25 +149,21 @@ let _handleSelectCenterBoxGizmo =
     engineState,
     editorState,
   ) ?
-    {
-      WonderLog.Log.print("select center box") |> ignore;
-
-      _selectCenterBoxGizmo(
-        event,
-        CurrentTransformGizmosUtils.setCurrentGizmoColor(
-          GameObjectEngineService.getAllBasicMaterials(
-            HierarchyGameObjectEngineService.getAllGameObjects(
-              OperateScaleGizmoSceneViewEditorService.unsafeGetScaleCenterBoxGizmo(
-                editorState,
-              ),
-              engineState,
+    _selectCenterBoxGizmo(
+      event,
+      CurrentTransformGizmosUtils.setCurrentGizmoColor(
+        GameObjectEngineService.getAllBasicMaterials(
+          HierarchyGameObjectEngineService.getAllGameObjects(
+            OperateScaleGizmoSceneViewEditorService.unsafeGetScaleCenterBoxGizmo(
+              editorState,
             ),
             engineState,
           ),
+          engineState,
         ),
-        (editorState, engineState),
-      );
-    } :
+      ),
+      (editorState, engineState),
+    ) :
     handleSelectAxisGizmoFunc(ray, editorState, engineState);
 
 let selectScaleGizmo = (event, engineState, editorState) => {
@@ -194,10 +178,8 @@ let selectScaleGizmo = (event, engineState, editorState) => {
     );
 
   _handleSelectCenterBoxGizmo(
-    event,
-    ray,
+    (event, ray),
     _handleSelectAxisGizmo,
-    editorState,
-    engineState,
+    (editorState, engineState),
   );
 };

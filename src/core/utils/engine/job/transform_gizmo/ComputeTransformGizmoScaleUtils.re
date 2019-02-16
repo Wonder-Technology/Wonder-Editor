@@ -1,4 +1,4 @@
-let computeScaleFactorBasedOnDistanceToCamera =
+let computeScaleComponentBasedOnDistanceToCamera =
     (cameraPos, currentSceneTreeNodePos) => {
   let factor = 0.03;
 
@@ -17,7 +17,7 @@ let computeScaleFactorBasedOnDistanceToCamera =
 };
 
 let getScaleFactor = (editorState, engineState) => {
-  let (scaleFactor, _, _) =
+  let (scaleX, _, _) =
     TransformGameObjectEngineService.getLocalScale(
       OperateRotationGizmoSceneViewEditorService.unsafeGetRotationWholeGizmo(
         editorState,
@@ -25,5 +25,5 @@ let getScaleFactor = (editorState, engineState) => {
       engineState,
     );
 
-  scaleFactor;
+  scaleX;
 };

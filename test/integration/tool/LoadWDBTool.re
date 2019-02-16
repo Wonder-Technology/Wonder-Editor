@@ -13,27 +13,27 @@ let findGameObjectsByName = (name, engineState) =>
 let findGameObjectByName = (name, engineState) =>
   findGameObjectsByName(name, engineState) |> ArrayService.unsafeGetFirst;
 
-let getCubeTexturedMeshGameObjects = engineState =>
+let getBoxTexturedMeshGameObjects = engineState =>
   findGameObjectsByName("Mesh", engineState);
 
-let getCubeTexturedMeshGameObject = engineState =>
-  engineState |> getCubeTexturedMeshGameObjects |> ArrayService.unsafeGetFirst;
+let getBoxTexturedMeshGameObject = engineState =>
+  engineState |> getBoxTexturedMeshGameObjects |> ArrayService.unsafeGetFirst;
 
-let unsafeGetCubeTexturedMeshLightMaterial = engineState =>
-  getCubeTexturedMeshGameObject(engineState)
+let unsafeGetBoxTexturedMeshLightMaterial = engineState =>
+  getBoxTexturedMeshGameObject(engineState)
   |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
        _,
        engineState,
      );
 
-let unsafeGetCubeTexturedMeshDiffuseMap = engineState =>
-  unsafeGetCubeTexturedMeshLightMaterial(engineState)
+let unsafeGetBoxTexturedMeshDiffuseMap = engineState =>
+  unsafeGetBoxTexturedMeshLightMaterial(engineState)
   |> LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
        _,
        engineState,
      );
 
-let getCubeTexturedMeshGameObjectFromAssetNode =
+let getBoxTexturedMeshGameObjectFromAssetNode =
     (wdbNodeId, (editorState, engineState)) => {
   let wdbGameObject =
     MainEditorAssetWDBNodeTool.getWDBGameObject(wdbNodeId, editorState);
@@ -41,15 +41,15 @@ let getCubeTexturedMeshGameObjectFromAssetNode =
   GameObjectTool.getChild(wdbGameObject, 0, engineState);
 };
 
-let getCubeTexturedMeshGameObjectMaterialType = () => MaterialDataAssetType.LightMaterial;
+let getBoxTexturedMeshGameObjectMaterialType = () => MaterialDataAssetType.LightMaterial;
 
-let getCubeTexturedMeshGameObjectMaterialName = () => "Texture";
+let getBoxTexturedMeshGameObjectMaterialName = () => "Texture";
 
-let getCubeTexturedMeshGameObjectTextureName = () => "texture_0";
+let getBoxTexturedMeshGameObjectTextureName = () => "texture_0";
 
-let getCubeTexturedMeshGameObjectImageName = () => "CesiumLogoFlat.png";
+let getBoxTexturedMeshGameObjectImageName = () => "CesiumLogoFlat.png";
 
-let getCubeTexturedGeometryData = () => (
+let getBoxTexturedGeometryData = () => (
   Float32Array.make([|
     (-0.5),
     (-0.5),

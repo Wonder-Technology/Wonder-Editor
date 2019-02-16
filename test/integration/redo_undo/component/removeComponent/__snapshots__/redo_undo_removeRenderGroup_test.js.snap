@@ -73,10 +73,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -93,10 +96,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -113,10 +119,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -150,10 +159,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -170,10 +182,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -190,10 +205,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -227,10 +245,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -247,10 +268,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -267,10 +291,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -449,10 +476,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -469,10 +499,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -489,10 +522,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -526,10 +562,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -546,10 +585,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -566,10 +608,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -603,10 +648,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -623,10 +671,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -643,10 +694,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -825,10 +879,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -845,10 +902,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -865,10 +925,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -902,10 +965,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -922,10 +988,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -942,10 +1011,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -979,10 +1051,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -999,10 +1074,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -1019,10 +1097,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -1302,10 +1383,13 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="inspector-item wonder-float-input"
                     >
                       <div
-                        className="item-header"
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
                       >
                         Shininess
                       </div>

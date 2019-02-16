@@ -138,20 +138,16 @@ let _affectGizmo =
       ray,
       (plane, planeLocalAxis),
       computeTotalAngleFunc,
-      editorState,
-      engineState,
+      (editorState, engineState),
     ) => {
   let (totalAngle, needRotateAngle) =
-    switch (RayUtils.checkIntersectPlane(plane, ray)) {
-    | None =>
-      WonderLog.Log.print("not find intersected point!!! 00000000") |> ignore;
-
-      (
+    switch (RayIntersectUtils.checkIntersectPlane(plane, ray)) {
+    | None => (
         AngleRotationGizmoSceneViewEditorService.getLastTotalAngle(
           editorState,
         ),
         0.,
-      );
+      )
     | Some(intersectPlanePoint) =>
       let localToWorldMatrixTypeArray =
         TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
@@ -182,12 +178,6 @@ let _affectGizmo =
 
       (Some(totalAngle), _computeNeedRotateAngle(totalAngle, editorState));
     };
-
-  /* WonderLog.Log.printJson((
-       "(totalAngle, needRotateAngle): ",
-       (totalAngle, needRotateAngle),
-     ))
-     |> ignore; */
 
   let editorState =
     editorState
@@ -231,8 +221,7 @@ let affectRotationGizmo = (event, (editorState, engineState)) => {
         CircleRotationGizmosUtils.getXYPlaneLocalAxis(),
       ),
       _computeXYPlaneTotalAngle,
-      editorState,
-      engineState,
+      (editorState, engineState),
     ) :
     SelectRotationGizmoSceneViewEditorService.isXZCircleGizmoSelected(
       editorState,
@@ -244,8 +233,7 @@ let affectRotationGizmo = (event, (editorState, engineState)) => {
           CircleRotationGizmosUtils.getXZPlaneLocalAxis(),
         ),
         _computeXZPlaneTotalAngle,
-        editorState,
-        engineState,
+        (editorState, engineState),
       ) :
       SelectRotationGizmoSceneViewEditorService.isYZCircleGizmoSelected(
         editorState,
@@ -257,8 +245,7 @@ let affectRotationGizmo = (event, (editorState, engineState)) => {
             CircleRotationGizmosUtils.getYZPlaneLocalAxis(),
           ),
           _computeYZPlaneTotalAngle,
-          editorState,
-          engineState,
+          (editorState, engineState),
         ) :
         (editorState, engineState);
 };

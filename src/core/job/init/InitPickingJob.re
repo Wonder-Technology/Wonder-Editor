@@ -20,7 +20,7 @@ let _isIntersectSphere =
       (_, _, geometry, localToWorldMatrixTypeArray),
       (editorState, engineState),
     ) =>
-  RayUtils.isIntersectSphere(
+  RayIntersectUtils.isIntersectSphere(
     SphereShapeUtils.applyMatrix4(
       PickingEditorService.unsafeGetSphereShape(geometry, editorState),
       localToWorldMatrixTypeArray,
@@ -188,13 +188,30 @@ let _handlePickFail = engineState =>
 let _handlePicking = (event: EventType.customEvent, engineState) => {
   let editorState = StateEditorService.getState();
 
-  let allGameObjectData = _getAllGameObjectData(engineState);
+  let (editorState, pickedGameObject) =
+    switch (
+      PickIMGUIUtils.findPickedIMGUIGameObject(
+        event,
+        editorState,
+        engineState,
+      )
+    ) {
+    | Some(gameObject) => (editorState, Some(gameObject))
+    | None =>
+      let allGameObjectData = _getAllGameObjectData(engineState);
 
-  let editorState =
-    _computeSphereShapeData(allGameObjectData, (editorState, engineState));
+      let editorState =
+        _computeSphereShapeData(
+          allGameObjectData,
+          (editorState, engineState),
+        );
 
-  let pickedGameObject =
-    (editorState, engineState) |> _findPickedOne(event, allGameObjectData);
+      (
+        editorState,
+        (editorState, engineState)
+        |> _findPickedOne(event, allGameObjectData),
+      );
+    };
 
   editorState |> StateEditorService.setState |> ignore;
 

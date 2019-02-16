@@ -59,6 +59,7 @@ module.exports = {
     chore: [
       { name: "review" },
       { name: "ci" },
+      { name: "todo" },
       { name: "code-climate" },
       { name: "publish" },
       { name: "bumped" },

@@ -18,17 +18,18 @@ module Extract = {
     RelateGameObjectAndMaterialAssetUtils.isLightMaterialDataEqual(
       (name, diffuseColor, shininess, textureData),
       material2,
-      imageUint8ArrayDataMap,
-      RelateGameObjectAndTextureAssetUtils.isTextureDataEqual(
-        RelateGameObjectAndTextureAssetUtils.isImageDataEqual,
+      (
+        imageUint8ArrayDataMap,
+        RelateGameObjectAndTextureAssetUtils.isTextureDataEqual(
+          RelateGameObjectAndTextureAssetUtils.isImageDataEqual,
+        ),
+        engineState,
       ),
-      engineState,
     );
 
   let _addExtractedMaterialAssetData =
       (
-        sourceMaterial,
-        materialType,
+        (sourceMaterial, materialType),
         replacedTargetMaterialMap,
         (hasExtractedMaterialAssetMap, extractedMaterialAssetDataArr),
         engineState,
@@ -73,9 +74,7 @@ module Extract = {
           hasExtractedMaterialAssetMap,
           extractedMaterialAssetDataArr,
         ),
-        imageUint8ArrayDataMap,
-        defaultMaterialData,
-        materialDataMapData,
+        (imageUint8ArrayDataMap, defaultMaterialData, materialDataMapData),
         engineState,
       ) => {
     let (
@@ -116,8 +115,7 @@ module Extract = {
         );
       } :
       _addExtractedMaterialAssetData(
-        sourceMaterial,
-        materialType,
+        (sourceMaterial, materialType),
         replacedTargetMaterialMap,
         (hasExtractedMaterialAssetMap, extractedMaterialAssetDataArr),
         engineState,
@@ -191,9 +189,11 @@ module Extract = {
     let (sourceTexture, targetTexture, setMapFunc, replacedTargetTextureMap) =
       RelateGameObjectAndTextureAssetUtils.getRelatedTextureDataFromGameObject(
         gameObject,
-        replacedTargetTextureMap,
-        textureAssetDataMap,
-        imageUint8ArrayDataMap,
+        (
+          replacedTargetTextureMap,
+          textureAssetDataMap,
+          imageUint8ArrayDataMap,
+        ),
         (editorState, engineState),
       );
 
@@ -332,9 +332,11 @@ module Extract = {
                    hasExtractedMaterialAssetMap,
                    extractedMaterialAssetDataArr,
                  ),
-                 imageUint8ArrayDataMap,
-                 defaultMaterialData,
-                 (basicMaterialDataMap, lightMaterialDataMap),
+                 (
+                   imageUint8ArrayDataMap,
+                   defaultMaterialData,
+                   (basicMaterialDataMap, lightMaterialDataMap),
+                 ),
                  engineState,
                );
 

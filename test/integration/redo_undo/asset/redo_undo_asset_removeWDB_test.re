@@ -12,10 +12,10 @@ let _ =
   describe("redo_undo: asset remove wdb", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let cubeTexturedWDBArrayBuffer = ref(Obj.magic(1));
+    let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
 
     beforeAll(() =>
-      cubeTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("CubeTextured")
+      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
     );
 
     beforeEach(() => {
@@ -74,7 +74,7 @@ let _ =
             |},
         () =>
         MainEditorAssetUploadTool.loadOneWDB(
-          ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+          ~arrayBuffer=boxTexturedWDBArrayBuffer^,
           (),
         )
         |> then_(uploadedWDBNodeId => {
@@ -93,7 +93,7 @@ let _ =
              let engineState = StateEngineService.unsafeGetState();
 
              let geometry =
-               LoadWDBTool.getCubeTexturedMeshGameObject(engineState)
+               LoadWDBTool.getBoxTexturedMeshGameObject(engineState)
                |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
                     _,
                     engineState,

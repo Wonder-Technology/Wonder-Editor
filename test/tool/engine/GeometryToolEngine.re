@@ -47,7 +47,7 @@ let getNewGeometry = (~engineState=StateEngineService.unsafeGetState(), ()) => {
     Wonderjs.RecordGeometryMainService.getRecord(engineState);
 
   let (index, newIndex, disposedIndexArray) =
-    ComponentToolEngine.generateIndex(index, disposedIndexArray);
+    ComponentToolEngine.computeGeneratedIndex(index, disposedIndexArray);
 
   index;
 };

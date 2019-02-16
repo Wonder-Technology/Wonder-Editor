@@ -70,10 +70,13 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Intensity
       </div>
@@ -163,10 +166,13 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Intensity
       </div>
@@ -183,10 +189,13 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Constant
       </div>
@@ -203,10 +212,13 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Linear
       </div>
@@ -223,10 +235,13 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Quadratic
       </div>
@@ -243,10 +258,13 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Range
       </div>
@@ -336,10 +354,13 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Intensity
       </div>

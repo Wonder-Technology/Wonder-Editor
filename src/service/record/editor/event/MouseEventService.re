@@ -8,18 +8,12 @@ let _getMouseButton = ({userData}: EventType.customEvent) => {
 };
 
 let isLeftMouseButton = (event: EventType.customEvent) =>
-  {
-    
-  /* let {locationInView}: EventType. mouseEvent =
-    EventType.userDataToMouseEvent(event.userData |> OptionService.unsafeGet);
-    WonderLog.Log.print(("locationInView:", locationInView)) |> ignore; */
-    
-    EventType.(
+  EventType.(
     switch (_getMouseButton(event)) {
     | Left => true
     | _ => false
     }
-  );}
+  );
 
 let isRightMouseButton = (event: EventType.customEvent) =>
   EventType.(
@@ -27,4 +21,9 @@ let isRightMouseButton = (event: EventType.customEvent) =>
     | Right => true
     | _ => false
     }
+  );
+
+let getMovementDeltaWhenPointerLocked = mouseDomEvent =>
+  Wonderjs.HandleMouseEventMainService._getMovementDeltaWhenPointerLocked(
+    mouseDomEvent,
   );

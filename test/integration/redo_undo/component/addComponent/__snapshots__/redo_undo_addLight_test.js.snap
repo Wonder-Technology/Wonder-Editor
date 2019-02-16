@@ -73,10 +73,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -93,10 +96,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -113,10 +119,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -150,10 +159,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -170,10 +182,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -190,10 +205,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -227,10 +245,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -247,10 +268,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -267,10 +291,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -550,10 +577,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="inspector-item wonder-float-input"
                     >
                       <div
-                        className="item-header"
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
                       >
                         Shininess
                       </div>
@@ -740,10 +770,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
             </div>
           </article>
           <article
-            className="inspector-item"
+            className="inspector-item wonder-float-input"
           >
             <div
-              className="item-header"
+              className="item-header component-label"
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              onMouseUp={[Function]}
             >
               Intensity
             </div>
@@ -857,10 +890,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -877,10 +913,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -897,10 +936,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -934,10 +976,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -954,10 +999,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -974,10 +1022,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -1011,10 +1062,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -1031,10 +1085,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -1051,10 +1108,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -1334,10 +1394,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="inspector-item wonder-float-input"
                     >
                       <div
-                        className="item-header"
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
                       >
                         Shininess
                       </div>
@@ -1524,10 +1587,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
             </div>
           </article>
           <article
-            className="inspector-item"
+            className="inspector-item wonder-float-input"
           >
             <div
-              className="item-header"
+              className="item-header component-label"
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              onMouseUp={[Function]}
             >
               Intensity
             </div>
@@ -1641,10 +1707,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -1661,10 +1730,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -1681,10 +1753,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -1718,10 +1793,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -1738,10 +1816,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -1758,10 +1839,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -1795,10 +1879,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -1815,10 +1902,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -1835,10 +1925,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -2118,10 +2211,13 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="inspector-item wonder-float-input"
                     >
                       <div
-                        className="item-header"
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
                       >
                         Shininess
                       </div>

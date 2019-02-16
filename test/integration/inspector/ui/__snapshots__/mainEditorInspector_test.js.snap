@@ -274,10 +274,13 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -294,10 +297,13 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -314,10 +320,13 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -351,10 +360,13 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -371,10 +383,13 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -391,10 +406,13 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -428,10 +446,13 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
               className="wonder-transform-template"
             >
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   X
                 </div>
@@ -448,10 +469,13 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Y
                 </div>
@@ -468,10 +492,13 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
                 </div>
               </article>
               <article
-                className="inspector-item"
+                className="inspector-item wonder-float-input"
               >
                 <div
-                  className="item-header"
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
                 >
                   Z
                 </div>
@@ -751,10 +778,13 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
                       </div>
                     </article>
                     <article
-                      className="inspector-item"
+                      className="inspector-item wonder-float-input"
                     >
                       <div
-                        className="item-header"
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
                       >
                         Shininess
                       </div>

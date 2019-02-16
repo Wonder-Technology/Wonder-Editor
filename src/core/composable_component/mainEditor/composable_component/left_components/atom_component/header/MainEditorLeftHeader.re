@@ -84,7 +84,7 @@ let _renderSelectNav = ((uiState, dispatchFunc), state, send) =>
                 _e =>
                   Method.addGameObjectByType(
                     (uiState, dispatchFunc),
-                    AddGameObjectType.Cude,
+                    AddGameObjectType.Cube,
                     (),
                   )
               )>

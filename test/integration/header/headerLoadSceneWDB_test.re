@@ -12,11 +12,11 @@ let _ =
   describe("header load scene wdb", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let cubeTexturedWDBArrayBuffer = ref(Obj.magic(1));
+    let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
     let sceneWDBArrayBuffer = ref(Obj.magic(1));
 
     beforeAll(() => {
-      cubeTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("CubeTextured");
+      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
       sceneWDBArrayBuffer := WDBTool.generateSceneWDB();
     });
 
@@ -91,7 +91,7 @@ let _ =
 
       describe("test load no light scene wdb to scene which has light", () => {
         let _prepare = testFunc => {
-          let fileName = "CubeTextured";
+          let fileName = "BoxTextured";
 
           let gl = FakeGlToolEngine.getEngineStateGl();
           let glShaderSource = gl##shaderSource;
@@ -100,7 +100,7 @@ let _ =
 
           LoadSceneWDBTool.loadSceneWDB(
             ~fileName,
-            ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
             (),
           )
           |> then_(_ =>
@@ -214,11 +214,11 @@ let _ =
                 (),
               )
               |> then_(_ => {
-                   let fileName = "CubeTextured";
+                   let fileName = "BoxTextured";
 
                    LoadSceneWDBTool.loadSceneWDB(
                      ~fileName,
-                     ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+                     ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                      (),
                    )
                    |> then_(_ => {
@@ -326,11 +326,11 @@ let _ =
              });
         });
         testPromise("test wdb not has one", () => {
-          let fileName = "CubeTextured";
+          let fileName = "BoxTextured";
 
           LoadSceneWDBTool.loadSceneWDB(
             ~fileName,
-            ~arrayBuffer=cubeTexturedWDBArrayBuffer^,
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
             (),
           )
           |> then_(_ => {

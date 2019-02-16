@@ -116,6 +116,27 @@ module Method = {
         />
       </div>
     </div>;
+
+  let renderRunAndStop = (uiState, dispatchFunc) =>
+    <div
+      className="controller-runAndStop"
+      onClick=(
+        _e => {
+          StateEditorService.getIsRun() ?
+            ControllerUtils.stop(dispatchFunc) : ControllerUtils.run(uiState);
+
+          dispatchFunc(
+            AppStore.UpdateAction(Update([|UpdateStore.Controller|])),
+          )
+          |> ignore;
+        }
+      )>
+      (
+        StateEditorService.getIsRun() ?
+          <img src="./public/img/stop.png" /> :
+          <img src="./public/img/run.png" />
+      )
+    </div>;
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("Controller");
@@ -134,26 +155,7 @@ let render =
       <div className="controller-transform">
         (Method.buildTransformComponent(uiState, dispatchFunc))
       </div>
-      <div
-        className="controller-runAndStop"
-        onClick=(
-          _e => {
-            StateEditorService.getIsRun() ?
-              ControllerUtils.stop(dispatchFunc) :
-              ControllerUtils.run(uiState);
-
-            dispatchFunc(
-              AppStore.UpdateAction(Update([|UpdateStore.Controller|])),
-            )
-            |> ignore;
-          }
-        )>
-        (
-          StateEditorService.getIsRun() ?
-            <img src="./public/img/stop.png" /> :
-            <img src="./public/img/run.png" />
-        )
-      </div>
+      (Method.renderRunAndStop(uiState, dispatchFunc))
       <div className="controller-other" />
     </div>
   </article>;

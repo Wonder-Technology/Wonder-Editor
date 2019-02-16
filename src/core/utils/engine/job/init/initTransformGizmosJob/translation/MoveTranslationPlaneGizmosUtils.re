@@ -36,100 +36,103 @@ let _updatePlaneGizmoLocalPosition =
        yzLocalPos,
      );
 
-let moveTranslationPlaneGizmo = (editorState, engineState) => {
+let _computeCameraPosInWholeGizmoLocalCoordSystem = (editorState, engineState) => {
   let cameraGameObject =
     SceneViewEditorService.unsafeGetEditCamera(editorState);
-  let planeMoveStep = 1.;
-  let cameraPosInWholeGizmoLocalCoordSystem =
-    Wonderjs.Vector3Service.transformMat4Tuple(
-      TransformGameObjectEngineService.getPosition(
-        cameraGameObject,
+
+  Wonderjs.Vector3Service.transformMat4Tuple(
+    TransformGameObjectEngineService.getPosition(
+      cameraGameObject,
+      engineState,
+    ),
+    TransformEngineService.getLocalToWorldMatrixTypeArray(
+      GameObjectComponentEngineService.unsafeGetTransformComponent(
+        OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
+          editorState,
+        ),
         engineState,
       ),
-      TransformEngineService.getLocalToWorldMatrixTypeArray(
-        GameObjectComponentEngineService.unsafeGetTransformComponent(
-          OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationWholeGizmo(
-            editorState,
-          ),
-          engineState,
-        ),
-        engineState,
-      )
-      |> Wonderjs.Matrix4Service.invert(
-           _,
-           Wonderjs.Matrix4Service.createIdentityMatrix4(),
-         ),
+      engineState,
+    )
+    |> Wonderjs.Matrix4Service.invert(
+         _,
+         Wonderjs.Matrix4Service.createIdentityMatrix4(),
+       ),
+  );
+};
+
+let _computePlaneLocalPosition = (editorState, engineState) => {
+  let planeMoveStep = 1.;
+  let cameraPosInWholeGizmoLocalCoordSystem =
+    _computeCameraPosInWholeGizmoLocalCoordSystem(editorState, engineState);
+
+  if (_isInPXPYPZ(cameraPosInWholeGizmoLocalCoordSystem)) {
+    (
+      (planeMoveStep, planeMoveStep, 0.),
+      (planeMoveStep, 0., planeMoveStep),
+      (0., planeMoveStep, planeMoveStep),
+    );
+  } else if (_isInNXPYPZ(cameraPosInWholeGizmoLocalCoordSystem)) {
+    (
+      (-. planeMoveStep, planeMoveStep, 0.),
+      (-. planeMoveStep, 0., planeMoveStep),
+      (0., planeMoveStep, planeMoveStep),
+    );
+  } else if (_isInPXNYPZ(cameraPosInWholeGizmoLocalCoordSystem)) {
+    (
+      (planeMoveStep, -. planeMoveStep, 0.),
+      (planeMoveStep, 0., planeMoveStep),
+      (0., -. planeMoveStep, planeMoveStep),
+    );
+  } else if (_isInPXPYNZ(cameraPosInWholeGizmoLocalCoordSystem)) {
+    (
+      (planeMoveStep, planeMoveStep, 0.),
+      (planeMoveStep, 0., -. planeMoveStep),
+      (0., planeMoveStep, -. planeMoveStep),
+    );
+  } else if (_isInNXNYPZ(cameraPosInWholeGizmoLocalCoordSystem)) {
+    (
+      (-. planeMoveStep, -. planeMoveStep, 0.),
+      (-. planeMoveStep, 0., planeMoveStep),
+      (0., -. planeMoveStep, planeMoveStep),
+    );
+  } else if (_isInNXPYNZ(cameraPosInWholeGizmoLocalCoordSystem)) {
+    (
+      (-. planeMoveStep, planeMoveStep, 0.),
+      (-. planeMoveStep, 0., -. planeMoveStep),
+      (0., planeMoveStep, -. planeMoveStep),
+    );
+  } else if (_isInPXNYNZ(cameraPosInWholeGizmoLocalCoordSystem)) {
+    (
+      (planeMoveStep, -. planeMoveStep, 0.),
+      (planeMoveStep, 0., -. planeMoveStep),
+      (0., -. planeMoveStep, -. planeMoveStep),
+    );
+  } else if (_isInNXNYNZ(cameraPosInWholeGizmoLocalCoordSystem)) {
+    (
+      (-. planeMoveStep, -. planeMoveStep, 0.),
+      (-. planeMoveStep, 0., -. planeMoveStep),
+      (0., -. planeMoveStep, -. planeMoveStep),
+    );
+  } else {
+    WonderLog.Log.error(
+      WonderLog.Log.buildErrorMessage(
+        ~title="moveTranslationPlaneGizmo",
+        ~description=
+          {j|cameraPosInWholeGizmoLocalCoordSystem: $cameraPosInWholeGizmoLocalCoordSystem is error|j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j||j},
+      ),
     );
 
-  /* xy, xz, yz */
+    ((0., 0., 0.), (0., 0., 0.), (0., 0., 0.));
+  };
+};
 
-  let planeLocalPositionData =
-    if (_isInPXPYPZ(cameraPosInWholeGizmoLocalCoordSystem)) {
-      (
-        (planeMoveStep, planeMoveStep, 0.),
-        (planeMoveStep, 0., planeMoveStep),
-        (0., planeMoveStep, planeMoveStep),
-      );
-    } else if (_isInNXPYPZ(cameraPosInWholeGizmoLocalCoordSystem)) {
-      (
-        (-. planeMoveStep, planeMoveStep, 0.),
-        (-. planeMoveStep, 0., planeMoveStep),
-        (0., planeMoveStep, planeMoveStep),
-      );
-    } else if (_isInPXNYPZ(cameraPosInWholeGizmoLocalCoordSystem)) {
-      (
-        (planeMoveStep, -. planeMoveStep, 0.),
-        (planeMoveStep, 0., planeMoveStep),
-        (0., -. planeMoveStep, planeMoveStep),
-      );
-    } else if (_isInPXPYNZ(cameraPosInWholeGizmoLocalCoordSystem)) {
-      (
-        (planeMoveStep, planeMoveStep, 0.),
-        (planeMoveStep, 0., -. planeMoveStep),
-        (0., planeMoveStep, -. planeMoveStep),
-      );
-    } else if (_isInNXNYPZ(cameraPosInWholeGizmoLocalCoordSystem)) {
-      (
-        (-. planeMoveStep, -. planeMoveStep, 0.),
-        (-. planeMoveStep, 0., planeMoveStep),
-        (0., -. planeMoveStep, planeMoveStep),
-      );
-    } else if (_isInNXPYNZ(cameraPosInWholeGizmoLocalCoordSystem)) {
-      (
-        (-. planeMoveStep, planeMoveStep, 0.),
-        (-. planeMoveStep, 0., -. planeMoveStep),
-        (0., planeMoveStep, -. planeMoveStep),
-      );
-    } else if (_isInPXNYNZ(cameraPosInWholeGizmoLocalCoordSystem)) {
-      (
-        (planeMoveStep, -. planeMoveStep, 0.),
-        (planeMoveStep, 0., -. planeMoveStep),
-        (0., -. planeMoveStep, -. planeMoveStep),
-      );
-    } else if (_isInNXNYNZ(cameraPosInWholeGizmoLocalCoordSystem)) {
-      (
-        (-. planeMoveStep, -. planeMoveStep, 0.),
-        (-. planeMoveStep, 0., -. planeMoveStep),
-        (0., -. planeMoveStep, -. planeMoveStep),
-      );
-    } else {
-      WonderLog.Log.error(
-        WonderLog.Log.buildErrorMessage(
-          ~title="moveTranslationPlaneGizmo",
-          ~description=
-            {j|cameraPosInWholeGizmoLocalCoordSystem: $cameraPosInWholeGizmoLocalCoordSystem is error|j},
-          ~reason="",
-          ~solution={j||j},
-          ~params={j||j},
-        ),
-      );
-
-      ((0., 0., 0.), (0., 0., 0.), (0., 0., 0.));
-    };
-
+let moveTranslationPlaneGizmo = (editorState, engineState) =>
   _updatePlaneGizmoLocalPosition(
-    planeLocalPositionData,
+    _computePlaneLocalPosition(editorState, engineState),
     editorState,
     engineState,
   );
-};

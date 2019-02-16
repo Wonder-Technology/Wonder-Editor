@@ -47,13 +47,13 @@ let _ =
 
         DragWDBTool.testDragWDB(
           sandbox,
-          ("CubeTextured", WDBTool.convertGLBToWDB("CubeTextured")),
+          ("BoxTextured", WDBTool.convertGLBToWDB("BoxTextured")),
           (
             shaderSourceCountBeforeDrag,
             shaderSourceCountAfterDrag,
             glShaderSource,
           ) => {
-            LoadWDBTool.getCubeTexturedMeshGameObject(
+            LoadWDBTool.getBoxTexturedMeshGameObject(
               StateEngineService.unsafeGetState(),
             )
             |> GameObjectTool.setCurrentSceneTreeNode;

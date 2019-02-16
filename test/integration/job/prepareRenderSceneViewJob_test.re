@@ -178,9 +178,7 @@ let _ =
               |> StringTool.removeNewLinesAndSpaces,
               [
                 {|
-                  var match = SceneViewEditorService$WonderEditor.unsafeGetViewRect(editorState);
-                  var viewHeight = match[3];
-                  var viewWidth = match[2];
+                  var imageFunc = apiJsObj.image;
       |}
                 |> StringTool.removeNewLinesAndSpaces,
               ],

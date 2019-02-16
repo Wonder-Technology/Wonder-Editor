@@ -46,7 +46,7 @@ let isSelectTranslationAxisGizmo =
              let halfExtendsLength =
                aabb |> AABBShapeUtils.getHalfExtends |> Vector3Service.length;
 
-             RayUtils.isIntersectOBB(
+             RayIntersectUtils.isIntersectOBB(
                aabb
                |> AABBShapeUtils.expandByScalar(
                     expandFactor *. halfExtendsLength,
@@ -71,7 +71,7 @@ let _isSelectTranslationPlaneGizmo =
 
 let _unsafeGetIntersectPointWithPlane =
     (plane, ray, (editorState, engineState)) =>
-  switch (RayUtils.checkIntersectPlane(plane, ray)) {
+  switch (RayIntersectUtils.checkIntersectPlane(plane, ray)) {
   | None =>
     WonderLog.Log.fatal(
       LogUtils.buildFatalMessage(
@@ -93,8 +93,6 @@ let _getMoveStartDataForAxis =
     ) => {
   let plane =
     findMostOrthogonalPlaneForAxisFunc(ray, (editorState, engineState));
-
-  WonderLog.Log.print((axisVec, plane)) |> ignore;
 
   let point =
     _unsafeGetIntersectPointWithPlane(
@@ -235,29 +233,25 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
     engineState,
     editorState,
   ) ?
-    {
-      WonderLog.Log.print("select x axis") |> ignore;
-
-      _selectAxisGizmo(
-        ray,
-        (
-          CurrentTransformGizmosUtils.setCurrentGizmoColor(
-            GameObjectEngineService.getAllBasicMaterials(
-              HierarchyGameObjectEngineService.getAllGameObjects(
-                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
-                  editorState,
-                ),
-                engineState,
+    _selectAxisGizmo(
+      ray,
+      (
+        CurrentTransformGizmosUtils.setCurrentGizmoColor(
+          GameObjectEngineService.getAllBasicMaterials(
+            HierarchyGameObjectEngineService.getAllGameObjects(
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
+                editorState,
               ),
               engineState,
             ),
+            engineState,
           ),
-          SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXAxisGizmo,
-          _getMoveStartDataForXAxis,
         ),
-        (editorState, engineState),
-      );
-    } :
+        SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXAxisGizmo,
+        _getMoveStartDataForXAxis,
+      ),
+      (editorState, engineState),
+    ) :
     isSelectTranslationAxisGizmo(
       OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
         editorState,
@@ -266,29 +260,25 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
       engineState,
       editorState,
     ) ?
-      {
-        WonderLog.Log.print("select y axis") |> ignore;
-
-        _selectAxisGizmo(
-          ray,
-          (
-            CurrentTransformGizmosUtils.setCurrentGizmoColor(
-              GameObjectEngineService.getAllBasicMaterials(
-                HierarchyGameObjectEngineService.getAllGameObjects(
-                  OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
-                    editorState,
-                  ),
-                  engineState,
+      _selectAxisGizmo(
+        ray,
+        (
+          CurrentTransformGizmosUtils.setCurrentGizmoColor(
+            GameObjectEngineService.getAllBasicMaterials(
+              HierarchyGameObjectEngineService.getAllGameObjects(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYAxisGizmo(
+                  editorState,
                 ),
                 engineState,
               ),
+              engineState,
             ),
-            SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationYAxisGizmo,
-            _getMoveStartDataForYAxis,
           ),
-          (editorState, engineState),
-        );
-      } :
+          SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationYAxisGizmo,
+          _getMoveStartDataForYAxis,
+        ),
+        (editorState, engineState),
+      ) :
       isSelectTranslationAxisGizmo(
         OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
           editorState,
@@ -297,29 +287,25 @@ let _handleSelectAxisGizmo = (ray, editorState, engineState) =>
         engineState,
         editorState,
       ) ?
-        {
-          WonderLog.Log.print("select z axis") |> ignore;
-
-          _selectAxisGizmo(
-            ray,
-            (
-              CurrentTransformGizmosUtils.setCurrentGizmoColor(
-                GameObjectEngineService.getAllBasicMaterials(
-                  HierarchyGameObjectEngineService.getAllGameObjects(
-                    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
-                      editorState,
-                    ),
-                    engineState,
+        _selectAxisGizmo(
+          ray,
+          (
+            CurrentTransformGizmosUtils.setCurrentGizmoColor(
+              GameObjectEngineService.getAllBasicMaterials(
+                HierarchyGameObjectEngineService.getAllGameObjects(
+                  OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationZAxisGizmo(
+                    editorState,
                   ),
                   engineState,
                 ),
+                engineState,
               ),
-              SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationZAxisGizmo,
-              _getMoveStartDataForZAxis,
             ),
-            (editorState, engineState),
-          );
-        } :
+            SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationZAxisGizmo,
+            _getMoveStartDataForZAxis,
+          ),
+          (editorState, engineState),
+        ) :
         editorState
         |> SelectTranslationGizmoSceneViewEditorService.markNotSelectAnyTranslationGizmo;
 
@@ -333,29 +319,25 @@ let _handleSelectPlaneGizmo =
     engineState,
     editorState,
   ) ?
-    {
-      WonderLog.Log.print("select xy plane") |> ignore;
-
-      _selectPlaneGizmo(
-        ray,
-        (
-          CurrentTransformGizmosUtils.setCurrentGizmoColor(
-            GameObjectEngineService.getAllBasicMaterials(
-              HierarchyGameObjectEngineService.getAllGameObjects(
-                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
-                  editorState,
-                ),
-                engineState,
+    _selectPlaneGizmo(
+      ray,
+      (
+        CurrentTransformGizmosUtils.setCurrentGizmoColor(
+          GameObjectEngineService.getAllBasicMaterials(
+            HierarchyGameObjectEngineService.getAllGameObjects(
+              OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
+                editorState,
               ),
               engineState,
             ),
+            engineState,
           ),
-          SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXYPlaneGizmo,
-          _getMoveStartDataForXYPlane,
         ),
-        (editorState, engineState),
-      );
-    } :
+        SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXYPlaneGizmo,
+        _getMoveStartDataForXYPlane,
+      ),
+      (editorState, engineState),
+    ) :
     _isSelectTranslationPlaneGizmo(
       OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
         editorState,
@@ -364,29 +346,25 @@ let _handleSelectPlaneGizmo =
       engineState,
       editorState,
     ) ?
-      {
-        WonderLog.Log.print("select xz plane") |> ignore;
-
-        _selectPlaneGizmo(
-          ray,
-          (
-            CurrentTransformGizmosUtils.setCurrentGizmoColor(
-              GameObjectEngineService.getAllBasicMaterials(
-                HierarchyGameObjectEngineService.getAllGameObjects(
-                  OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
-                    editorState,
-                  ),
-                  engineState,
+      _selectPlaneGizmo(
+        ray,
+        (
+          CurrentTransformGizmosUtils.setCurrentGizmoColor(
+            GameObjectEngineService.getAllBasicMaterials(
+              HierarchyGameObjectEngineService.getAllGameObjects(
+                OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXZPlaneGizmo(
+                  editorState,
                 ),
                 engineState,
               ),
+              engineState,
             ),
-            SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXZPlaneGizmo,
-            _getMoveStartDataForXZPlane,
           ),
-          (editorState, engineState),
-        );
-      } :
+          SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationXZPlaneGizmo,
+          _getMoveStartDataForXZPlane,
+        ),
+        (editorState, engineState),
+      ) :
       _isSelectTranslationPlaneGizmo(
         OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
           editorState,
@@ -395,29 +373,25 @@ let _handleSelectPlaneGizmo =
         engineState,
         editorState,
       ) ?
-        {
-          WonderLog.Log.print("select yz plane") |> ignore;
-
-          _selectPlaneGizmo(
-            ray,
-            (
-              CurrentTransformGizmosUtils.setCurrentGizmoColor(
-                GameObjectEngineService.getAllBasicMaterials(
-                  HierarchyGameObjectEngineService.getAllGameObjects(
-                    OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
-                      editorState,
-                    ),
-                    engineState,
+        _selectPlaneGizmo(
+          ray,
+          (
+            CurrentTransformGizmosUtils.setCurrentGizmoColor(
+              GameObjectEngineService.getAllBasicMaterials(
+                HierarchyGameObjectEngineService.getAllGameObjects(
+                  OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationYZPlaneGizmo(
+                    editorState,
                   ),
                   engineState,
                 ),
+                engineState,
               ),
-              SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationYZPlaneGizmo,
-              _getMoveStartDataForYZPlane,
             ),
-            (editorState, engineState),
-          );
-        } :
+            SelectTranslationGizmoSceneViewEditorService.onlySelectTranslationYZPlaneGizmo,
+            _getMoveStartDataForYZPlane,
+          ),
+          (editorState, engineState),
+        ) :
         handleSelectAxisGizmoFunc(ray, editorState, engineState);
 
 let selectTranslationGizmo = (event, engineState, editorState) => {

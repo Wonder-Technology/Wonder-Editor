@@ -53,8 +53,8 @@ let _ =
 
       StateEditorService.setState(
         StateEditorService.getState()
-        |> SceneViewEditorService.updateViewRect(x1, y, width1, height)
-        |> GameViewEditorService.updateViewRect(x2, y, width2, height),
+        |> SceneViewEditorService.updateViewRect((x1, y, width1, height))
+        |> GameViewEditorService.updateViewRect((x2, y, width2, height)),
       );
 
       ((x1, y, width1, height), (x2, y, width2, height));

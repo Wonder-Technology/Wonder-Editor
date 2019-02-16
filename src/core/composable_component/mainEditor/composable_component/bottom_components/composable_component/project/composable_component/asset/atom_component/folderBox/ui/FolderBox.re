@@ -92,11 +92,8 @@ let render =
         _e =>
           send(
             DragEventUtils.handleDragStart(
-              folderId,
-              DragStart,
-              widget,
-              dragImg,
-              effectAllowd,
+              (folderId, DragStart, widget),
+              (dragImg, effectAllowd),
               _e,
             ),
           )
@@ -108,8 +105,7 @@ let render =
             DragEventUtils.handleDragEnter(
               folderId,
               (DragEnter, Nothing),
-              isWidget,
-              checkNodeRelation,
+              (isWidget, checkNodeRelation),
               _e,
             ),
           )
@@ -127,8 +123,7 @@ let render =
                 (targetId, removedId) => DragDrop(targetId, removedId),
                 DragLeave,
               ),
-              isWidget,
-              checkNodeRelation,
+              (isWidget, checkNodeRelation),
               _e,
             ),
           )

@@ -2,11 +2,11 @@ open Wonderjs;
 
 open StateDataMainType;
 
-let createGameObject = state => {
+let createGameObject = engineState => {
   open GameObjectAPI;
   open PointLightAPI;
-  let (state, light) = createPointLight(state);
-  let (state, gameObject) = state |> createGameObject;
-  let state = state |> addGameObjectPointLightComponent(gameObject, light);
-  (state, gameObject, light);
+  let (engineState, light) = createPointLight(engineState);
+  let (engineState, gameObject) = engineState |> createGameObject;
+  let engineState = engineState |> addGameObjectPointLightComponent(gameObject, light);
+  (engineState, gameObject, light);
 };

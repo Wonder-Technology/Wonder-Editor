@@ -48,15 +48,15 @@ let _ =
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
           let value = 0.;
-          let state = {inputValue: Some("0."), originValue: "1.0"};
+          let state =
+            FloatInputTool.buildState(
+              ~inputValue=Some("0."),
+              ~originValue="1.0",
+              (),
+            );
 
           let reasonStateUpdate =
-            FloatInputTool.reducer(
-              ~canBeZero=Some(false),
-              ~action=Blur,
-              ~state,
-              (),
-            )
+            FloatInputTool.reducer(~canBeZero=false, ~action=Blur, ~state, ())
             |> ReactTool.getUpdateState;
 
           reasonStateUpdate.inputValue |> expect == Some("1.0");

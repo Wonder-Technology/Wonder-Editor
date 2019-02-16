@@ -23,8 +23,8 @@ let _moveWholeGizmoToCurrentSceneTreeNode =
 
 let _scaleWholeGizmo =
     (currentSceneTreeNode, cameraGameObject, wholeGizmo, engineState) => {
-  let scaleFactor =
-    ComputeTransformGizmoScaleUtils.computeScaleFactorBasedOnDistanceToCamera(
+  let scaleComponent =
+    ComputeTransformGizmoScaleUtils.computeScaleComponentBasedOnDistanceToCamera(
       TransformGameObjectEngineService.getPosition(
         cameraGameObject,
         engineState,
@@ -37,17 +37,19 @@ let _scaleWholeGizmo =
 
   TransformGameObjectEngineService.setLocalScale(
     wholeGizmo,
-    (scaleFactor, scaleFactor, scaleFactor),
+    (scaleComponent, scaleComponent, scaleComponent),
     engineState,
   );
 };
 
 let _setWholeGizmoRotation =
     (
-      currentSceneTreeNode,
       wholeGizmo,
-      currentGizmoType: SceneViewType.gizmo,
-      coordinateSystem: SceneViewType.coordinateSystem,
+      (
+        currentSceneTreeNode,
+        currentGizmoType: SceneViewType.gizmo,
+        coordinateSystem: SceneViewType.coordinateSystem,
+      ),
       editorState,
       engineState,
     ) => {
@@ -149,11 +151,13 @@ let updateTransformJob = (_, engineState) => {
 
       engineState
       |> _setWholeGizmoRotation(
-           currentSceneTreeNode,
            wholeGizmo,
-           currentGizmoType,
-           CoordinateSystemTransformGizmoSceneViewEditorService.getCoordinateSystem(
-             editorState,
+           (
+             currentSceneTreeNode,
+             currentGizmoType,
+             CoordinateSystemTransformGizmoSceneViewEditorService.getCoordinateSystem(
+               editorState,
+             ),
            ),
            editorState,
          );

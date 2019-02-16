@@ -70,10 +70,13 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Intensity
       </div>
@@ -90,10 +93,13 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Constant
       </div>
@@ -110,10 +116,13 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Linear
       </div>
@@ -130,10 +139,13 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Quadratic
       </div>
@@ -150,10 +162,13 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Range
       </div>
@@ -243,10 +258,13 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Intensity
       </div>
@@ -263,10 +281,13 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Constant
       </div>
@@ -283,10 +304,13 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Linear
       </div>
@@ -303,10 +327,13 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Quadratic
       </div>
@@ -323,10 +350,13 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Range
       </div>
@@ -416,10 +446,13 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
       </div>
     </article>
     <article
-      className="inspector-item"
+      className="inspector-item wonder-float-input"
     >
       <div
-        className="item-header"
+        className="item-header component-label"
+        onMouseDown={[Function]}
+        onMouseMove={[Function]}
+        onMouseUp={[Function]}
       >
         Intensity
       </div>

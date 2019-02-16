@@ -15,6 +15,22 @@ let _isKeyAffectedArballCameraController = ({key}: EventType.keyboardEvent) =>
   | _ => false
   };
 
+let _handleKeyDownForSceneView = (event, keydownHandleFunc, engineState) =>
+  _isKeyAffectedArballCameraController(event) ?
+    {
+      HandleDomEventEngineService.preventDefault(
+        event.event |> EventType.keyboardDomEventToDomEvent,
+      )
+      |> ignore;
+
+      let engineState = keydownHandleFunc(. event, engineState);
+
+      let engineState = StateLogicService.renderWhenStop(engineState);
+
+      engineState;
+    } :
+    engineState;
+
 let bindArcballCameraControllerEventForSceneView =
     (cameraController, engineState) => {
   let (
@@ -81,20 +97,7 @@ let bindArcballCameraControllerEventForSceneView =
       ~eventName=EventType.KeyDown_SceneView |> Obj.magic,
       ~handleFunc=
         (. event: EventType.keyboardEvent, engineState) =>
-          _isKeyAffectedArballCameraController(event) ?
-            {
-              HandleDomEventEngineService.preventDefault(
-                event.event |> EventType.keyboardDomEventToDomEvent,
-              )
-              |> ignore;
-
-              let engineState = keydownHandleFunc(. event, engineState);
-
-              let engineState = StateLogicService.renderWhenStop(engineState);
-
-              engineState;
-            } :
-            engineState,
+          _handleKeyDownForSceneView(event, keydownHandleFunc, engineState),
       ~state=engineState,
       (),
     );

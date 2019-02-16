@@ -145,6 +145,38 @@ module Method = {
       StateEditorService.getState(),
     ) ?
       <div className="material-shade" /> : ReasonReact.null;
+
+  let handleChangeMaterial =
+      (
+        reduxTuple,
+        currentSceneTreeNode,
+        (materialNodeId, (targetMaterial, targetMaterialType)),
+        state,
+      ) => {
+    let sourceMaterial = state.currentMaterial;
+    let sourceMaterialType = state.materialType;
+
+    (sourceMaterial, sourceMaterialType)
+    == (targetMaterial, targetMaterialType) ?
+      ReasonReact.NoUpdate :
+      ReasonReactUtils.updateWithSideEffects(
+        {
+          ...state,
+          currentMaterial: targetMaterial,
+          materialType: targetMaterialType,
+        },
+        _state =>
+        changeMaterial(
+          reduxTuple,
+          currentSceneTreeNode,
+          (
+            materialNodeId,
+            (sourceMaterial, targetMaterial),
+            (state.materialType, targetMaterialType),
+          ),
+        )
+      );
+  };
 };
 
 let component = ReasonReact.reducerComponent("MainEditorMaterial");
@@ -171,32 +203,14 @@ let reducer =
       )
     );
   | ChangeMaterial(materialNodeId, (targetMaterial, targetMaterialType)) =>
-    let sourceMaterial = state.currentMaterial;
-    let sourceMaterialType = state.materialType;
-
-    (sourceMaterial, sourceMaterialType)
-    == (targetMaterial, targetMaterialType) ?
-      ReasonReact.NoUpdate :
-      ReasonReactUtils.updateWithSideEffects(
-        {
-          ...state,
-          currentMaterial: targetMaterial,
-          materialType: targetMaterialType,
-        },
-        _state =>
-        Method.changeMaterial(
-          reduxTuple,
-          currentSceneTreeNode,
-          (
-            materialNodeId,
-            (sourceMaterial, targetMaterial),
-            (state.materialType, targetMaterialType),
-          ),
-        )
-      );
+    Method.handleChangeMaterial(
+      reduxTuple,
+      currentSceneTreeNode,
+      (materialNodeId, (targetMaterial, targetMaterialType)),
+      state,
+    )
   | ShowMaterialGroup =>
     ReasonReact.Update({...state, isShowMaterialGroup: true})
-
   | HideMaterialGroup =>
     ReasonReactUtils.updateWithSideEffects(
       {...state, isShowMaterialGroup: false}, _state =>
@@ -318,5 +332,6 @@ let make =
     };
   },
   reducer: reducer((uiState, dispatchFunc), currentSceneTreeNode),
-  render: self => render((uiState, dispatchFunc), currentSceneTreeNode, self),
+  render: self =>
+    render((uiState, dispatchFunc), currentSceneTreeNode, self),
 };

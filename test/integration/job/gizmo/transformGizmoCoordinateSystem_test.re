@@ -231,7 +231,7 @@ let _ =
               );
 
               InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
-              |> expect == (0.224, 0.091, (-0.241));
+              |> expect == (0.224, 0.091, (-0.242));
             },
           )
         );
@@ -262,7 +262,7 @@ let _ =
               );
 
               InitTransformGizmosJobTool.getCurrentSceneTreeNodePosition()
-              |> expect == (0.548, (-1.574), (-0.418));
+              |> expect == (0.548, (-1.575), (-0.419));
             },
           )
         );

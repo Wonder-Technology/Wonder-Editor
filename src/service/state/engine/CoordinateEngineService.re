@@ -1,3 +1,3 @@
-/* open Wonderjs;
+open Wonderjs;
 
-let convertWorldToScreen = CoordinateAPI.convertWorldToScreen; */
+let convertWorldToScreen = CoordinateAPI.convertWorldToScreen;

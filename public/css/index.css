@@ -1171,6 +1171,9 @@ html, body {
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent::-webkit-scrollbar-thumb {
           background: #cfcccc;
           border-radius: 4px; }
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-float-input .component-label {
+          cursor: move;
+          user-select: none; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree {
           padding-top: 5px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .sceneTree-name h1 {

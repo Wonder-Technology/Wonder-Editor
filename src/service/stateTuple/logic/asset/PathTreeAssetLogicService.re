@@ -1,88 +1,108 @@
-let getNodePath = (targetNode, (editorState, engineState)) => {
-  let targetNodeId = NodeAssetService.getNodeId(~node=targetNode);
+let _handleLeafNodeFunc = ((isFindNode, pathArr), targetNodeId, nodeId, node) =>
+  isFindNode ?
+    (true, pathArr) :
+    NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
+      (true, pathArr) : (false, pathArr);
 
-  let _handleLeafNodeFunc = ((isFindNode, pathArr), nodeId, node) =>
-    isFindNode ?
-      (true, pathArr) :
-      NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
-        (true, pathArr) : (false, pathArr);
-  let _handleFolderNodeFunc = ((isFindNode, pathArr), nodeId, node) =>
-    isFindNode ?
-      (true, pathArr) :
-      NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
-        (true, pathArr |> ArrayService.push(node)) : (false, pathArr);
-  let _textureNodeFunc =
-      (acc, nodeId, {textureComponent}: NodeAssetType.textureNodeData) =>
-    _handleLeafNodeFunc(
+let _handleFolderNodeFunc =
+    ((isFindNode, pathArr), targetNodeId, nodeId, node) =>
+  isFindNode ?
+    (true, pathArr) :
+    NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
+      (true, pathArr |> ArrayService.push(node)) : (false, pathArr);
+
+let _textureNodeFunc =
+    (
+      targetNodeId,
+      engineState,
       acc,
       nodeId,
-      NodeNameAssetLogicService.getTextureNodeName(
-        ~texture=textureComponent,
-        ~engineState,
-      ),
-    );
-  let _materialNodeFunc =
-      (
-        acc,
-        nodeId,
-        {materialComponent, type_}: NodeAssetType.materialNodeData,
-      ) =>
-    _handleLeafNodeFunc(
+      {textureComponent}: NodeAssetType.textureNodeData,
+    ) =>
+  _handleLeafNodeFunc(
+    acc,
+    targetNodeId,
+    nodeId,
+    NodeNameAssetLogicService.getTextureNodeName(
+      ~texture=textureComponent,
+      ~engineState,
+    ),
+  );
+
+let _materialNodeFunc =
+    (
+      targetNodeId,
+      engineState,
       acc,
       nodeId,
-      NodeNameAssetLogicService.getMaterialNodeName(
-        ~material=materialComponent,
-        ~type_,
-        ~engineState,
+      {materialComponent, type_}: NodeAssetType.materialNodeData,
+    ) =>
+  _handleLeafNodeFunc(
+    acc,
+    targetNodeId,
+    nodeId,
+    NodeNameAssetLogicService.getMaterialNodeName(
+      ~material=materialComponent,
+      ~type_,
+      ~engineState,
+    ),
+  );
+
+let _wdbNodeFunc = (targetNodeId, acc, nodeId, nodeData) =>
+  _handleLeafNodeFunc(
+    acc,
+    targetNodeId,
+    nodeId,
+    NodeNameAssetLogicService.getWDBNodeName(
+      WDBNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData),
+    ),
+  );
+
+let _folderNodeFunc = (targetNodeId, acc, nodeId, nodeData, children) =>
+  _handleFolderNodeFunc(
+    acc,
+    targetNodeId,
+    nodeId,
+    NodeNameAssetLogicService.getFolderNodeName(
+      FolderNodeAssetService.buildNodeByNodeData(
+        ~nodeId,
+        ~nodeData,
+        ~children,
       ),
-    );
-  let _wdbNodeFunc = (acc, nodeId, nodeData) =>
-    _handleLeafNodeFunc(
-      acc,
-      nodeId,
-      NodeNameAssetLogicService.getWDBNodeName(
-        WDBNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData),
-      ),
-    );
-  let _folderNodeFunc = (acc, nodeId, nodeData, children) =>
-    _handleFolderNodeFunc(
-      acc,
-      nodeId,
-      NodeNameAssetLogicService.getFolderNodeName(
-        FolderNodeAssetService.buildNodeByNodeData(
-          ~nodeId,
-          ~nodeData,
-          ~children,
-        ),
-      ),
-    );
-  let _handleBeforeFoldChildrenFunc = ((isFindNode, _)) => isFindNode;
-  let _handleAfterFoldChildrenFunc =
-      (nodeId, folderNodeData, children, (isFindNode, pathArr)) =>
-    isFindNode ?
-      (
-        true,
-        pathArr
-        |> ArrayService.push(
-             NodeNameAssetLogicService.getFolderNodeName(
-               FolderNodeAssetService.buildNodeByNodeData(
-                 ~nodeId,
-                 ~nodeData=folderNodeData,
-                 ~children,
-               ),
+    ),
+  );
+
+let _handleBeforeFoldChildrenFunc = ((isFindNode, _)) => isFindNode;
+
+let _handleAfterFoldChildrenFunc =
+    (nodeId, folderNodeData, children, (isFindNode, pathArr)) =>
+  isFindNode ?
+    (
+      true,
+      pathArr
+      |> ArrayService.push(
+           NodeNameAssetLogicService.getFolderNodeName(
+             FolderNodeAssetService.buildNodeByNodeData(
+               ~nodeId,
+               ~nodeData=folderNodeData,
+               ~children,
              ),
            ),
-      ) :
-      (false, pathArr);
+         ),
+    ) :
+    (false, pathArr);
+
+let getNodePath = (targetNode, (editorState, engineState)) => {
+  let targetNodeId = NodeAssetService.getNodeId(~node=targetNode);
 
   let (_, pathArr) =
     IterateTreeAssetService.foldWithHandleBeforeAndAfterFoldChildren(
       ~acc=(false, [||]),
       ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
-      ~textureNodeFunc=_textureNodeFunc,
-      ~materialNodeFunc=_materialNodeFunc,
-      ~wdbNodeFunc=_wdbNodeFunc,
-      ~folderNodeFunc=_folderNodeFunc,
+      ~textureNodeFunc=_textureNodeFunc(targetNodeId, engineState),
+      ~materialNodeFunc=_materialNodeFunc(targetNodeId, engineState),
+      ~wdbNodeFunc=_wdbNodeFunc(targetNodeId),
+      ~folderNodeFunc=_folderNodeFunc(targetNodeId),
       ~handleBeforeFoldChildrenFunc=_handleBeforeFoldChildrenFunc,
       ~handleAfterFoldChildrenFunc=_handleAfterFoldChildrenFunc,
       (),

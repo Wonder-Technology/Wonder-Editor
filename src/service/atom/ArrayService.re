@@ -17,7 +17,7 @@ let unsafeGetFirst = arr =>
              Operators.(
                test(
                  Log.buildAssertMessage(
-                   ~expect={j|array[0] element exist|j},
+                   ~expect={j|first array element exist|j},
                    ~actual={j|not|j},
                  ),
                  () =>
@@ -44,7 +44,7 @@ let unsafeGetLast = arr =>
              Operators.(
                test(
                  Log.buildAssertMessage(
-                   ~expect={j|array[0] element exist|j},
+                   ~expect={j|last array element exist|j},
                    ~actual={j|not|j},
                  ),
                  () =>
