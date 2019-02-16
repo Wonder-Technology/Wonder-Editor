@@ -192,12 +192,12 @@ let _getGameObjectPosition = (gameObject, engineState) =>
   |> GameObjectComponentEngineService.unsafeGetTransformComponent(gameObject)
   |. TransformEngineService.getPosition(engineState);
 
-let _setArcballCameraControllerAttribute =
-    (arcballCameraController, (distance, position), engineState) =>
+let _setArcballCameraControllerFocusRelatedAttribute =
+    (arcballCameraController, (distance, target), engineState) =>
   engineState
   |> ArcballCameraEngineService.setArcballCameraControllerTarget(
        arcballCameraController,
-       position,
+       target,
      )
   |> ArcballCameraEngineService.setArcballCameraControllerDistance(
        distance,
@@ -239,7 +239,7 @@ let setEditorCameraFocusTargetGameObject =
        );
 
   engineState |> SceneEngineService.isSceneGameObject(targetGameObject) ?
-    _setArcballCameraControllerAttribute(
+    _setArcballCameraControllerFocusRelatedAttribute(
       editorCameraArcballControllerComponent,
       (
         FocusDataUtils.getSceneGameObjectArcballCameraDistance(),
@@ -247,7 +247,7 @@ let setEditorCameraFocusTargetGameObject =
       ),
       engineState,
     ) :
-    _setArcballCameraControllerAttribute(
+    _setArcballCameraControllerFocusRelatedAttribute(
       editorCameraArcballControllerComponent,
       (
         FocusDataUtils.getSceneChildrenArcballCameraDistance(),
