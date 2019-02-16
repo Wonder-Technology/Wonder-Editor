@@ -73,6 +73,30 @@ module Method = {
       ),
     );
 
+  let blurArcballCameraPhi =
+      ((uiState, dispatchFunc), arcballCameraController, minDistance) =>
+    _blurArcballCameraValue(
+      (uiState, dispatchFunc),
+      arcballCameraController,
+      minDistance,
+      (
+        ArcballCameraEngineService.unsafeGetArcballCameraControllerPhi,
+        ArcballCameraPhiEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState,
+      ),
+    );
+
+  let blurArcballCameraTheta =
+      ((uiState, dispatchFunc), arcballCameraController, minDistance) =>
+    _blurArcballCameraValue(
+      (uiState, dispatchFunc),
+      arcballCameraController,
+      minDistance,
+      (
+        ArcballCameraEngineService.unsafeGetArcballCameraControllerTheta,
+        ArcballCameraThetaEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState,
+      ),
+    );
+
   let blurArcballCameraTarget =
       ((uiState, dispatchFunc), arcballCameraController, target) =>
     _blurArcballCameraTarget(
@@ -96,6 +120,20 @@ module Method = {
     ArcballCameraEngineService.setArcballCameraControllerMinDistance(
       value,
       arcballCameraController,
+    )
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
+
+  let changePhi = (arcballCameraController, value) =>
+    ArcballCameraEngineService.setArcballCameraControllerPhi(
+      arcballCameraController,
+      value,
+    )
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
+
+  let changeTheta = (arcballCameraController, value) =>
+    ArcballCameraEngineService.setArcballCameraControllerTheta(
+      arcballCameraController,
+      value,
     )
     |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
@@ -135,13 +173,6 @@ module Method = {
 
     _setTarget(arcballCameraController, (x, y, value));
   };
-
-  let unsafeGetArcballCameraControllerTarget =
-      (engineState, arcballCameraController) =>
-    ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
-      arcballCameraController,
-      engineState,
-    );
 };
 
 let component =
@@ -187,6 +218,11 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
           arcballCameraController,
         )
       )
+      dragDropFunc=(
+        _ =>
+          TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
+          |> StateLogicService.getAndSetStateToGetData
+      )
     />
     <ThreeFloatInput
       uiState
@@ -204,6 +240,46 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
           |> StateLogicService.getAndSetStateToGetData
       )
       canBeZero=true
+    />
+    <MainEditorFloatInputBaseComponent
+      label="Phi"
+      getComponentValueFunc=(
+        ArcballCameraEngineService.unsafeGetArcballCameraControllerPhi(
+          arcballCameraController,
+        )
+      )
+      changeComponentValueFunc=(Method.changePhi(arcballCameraController))
+      blurValueFunc=(
+        Method.blurArcballCameraPhi(
+          (uiState, dispatchFunc),
+          arcballCameraController,
+        )
+      )
+      dragDropFunc=(
+        _ =>
+          TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
+          |> StateLogicService.getAndSetStateToGetData
+      )
+    />
+    <MainEditorFloatInputBaseComponent
+      label="Theta"
+      getComponentValueFunc=(
+        ArcballCameraEngineService.unsafeGetArcballCameraControllerTheta(
+          arcballCameraController,
+        )
+      )
+      changeComponentValueFunc=(Method.changeTheta(arcballCameraController))
+      blurValueFunc=(
+        Method.blurArcballCameraTheta(
+          (uiState, dispatchFunc),
+          arcballCameraController,
+        )
+      )
+      dragDropFunc=(
+        _ =>
+          TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
+          |> StateLogicService.getAndSetStateToGetData
+      )
     />
   </article>;
 

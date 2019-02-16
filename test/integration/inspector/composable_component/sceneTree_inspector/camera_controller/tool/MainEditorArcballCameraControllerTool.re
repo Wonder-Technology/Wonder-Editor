@@ -42,12 +42,6 @@ let changeMinDistance = (cameraController, value) =>
     value,
   );
 
-let changeTargetX = (cameraController, value) =>
-  MainEditorArcballCameraController.Method.changeTargetX(
-    cameraController,
-    value,
-  );
-
 let blurArcballCameraMinDistance =
     (
       ~cameraController,
@@ -57,20 +51,6 @@ let blurArcballCameraMinDistance =
       (),
     ) =>
   MainEditorArcballCameraController.Method.blurArcballCameraMinDistance(
-    (uiState, dispatchFunc),
-    cameraController,
-    value,
-  );
-
-let blurArcballCameraTarget =
-    (
-      ~cameraController,
-      ~value,
-      ~uiState=TestTool.buildEmptyAppState(),
-      ~dispatchFunc=TestTool.getDispatch(),
-      (),
-    ) =>
-  MainEditorArcballCameraController.Method.blurArcballCameraTarget(
     (uiState, dispatchFunc),
     cameraController,
     value,
@@ -93,6 +73,99 @@ let changeMinDistanceAndBlur =
     (),
   );
 };
+
+let changePhi = (cameraController, value) =>
+  MainEditorArcballCameraController.Method.changePhi(cameraController, value);
+
+let blurArcballCameraPhi =
+    (
+      ~cameraController,
+      ~value,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorArcballCameraController.Method.blurArcballCameraPhi(
+    (uiState, dispatchFunc),
+    cameraController,
+    value,
+  );
+
+let changePhiAndBlur =
+    (
+      ~cameraController,
+      ~value,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) => {
+  changePhi(cameraController, value);
+  blurArcballCameraPhi(
+    ~uiState,
+    ~dispatchFunc,
+    ~cameraController,
+    ~value,
+    (),
+  );
+};
+
+let changeTheta = (cameraController, value) =>
+  MainEditorArcballCameraController.Method.changeTheta(
+    cameraController,
+    value,
+  );
+
+let blurArcballCameraTheta =
+    (
+      ~cameraController,
+      ~value,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorArcballCameraController.Method.blurArcballCameraTheta(
+    (uiState, dispatchFunc),
+    cameraController,
+    value,
+  );
+
+let changeThetaAndBlur =
+    (
+      ~cameraController,
+      ~value,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) => {
+  changeTheta(cameraController, value);
+  blurArcballCameraTheta(
+    ~uiState,
+    ~dispatchFunc,
+    ~cameraController,
+    ~value,
+    (),
+  );
+};
+
+let changeTargetX = (cameraController, value) =>
+  MainEditorArcballCameraController.Method.changeTargetX(
+    cameraController,
+    value,
+  );
+
+let blurArcballCameraTarget =
+    (
+      ~cameraController,
+      ~value,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorArcballCameraController.Method.blurArcballCameraTarget(
+    (uiState, dispatchFunc),
+    cameraController,
+    value,
+  );
 
 let changeTargetXAndBlur =
     (

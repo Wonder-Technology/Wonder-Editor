@@ -114,6 +114,50 @@ let _ =
         })
       );
 
+      describe("test change arcballCameraController phi", () =>
+        test("test change should set into engine", () => {
+          MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
+          let currentGameObjectArcballCamera =
+            GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
+          let value = 11.1;
+
+          MainEditorArcballCameraControllerTool.changePhiAndBlur(
+            ~cameraController=currentGameObjectArcballCamera,
+            ~value,
+            (),
+          );
+
+          ArcballCameraEngineService.unsafeGetArcballCameraControllerPhi(
+            currentGameObjectArcballCamera,
+          )
+          |> StateLogicService.getEngineStateToGetData
+          |. FloatService.truncateFloatValue(5)
+          |> expect == value;
+        })
+      );
+
+      describe("test change arcballCameraController theta", () =>
+        test("test change should set into engine", () => {
+          MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
+          let currentGameObjectArcballCamera =
+            GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
+          let value = 11.1;
+
+          MainEditorArcballCameraControllerTool.changePhiAndBlur(
+            ~cameraController=currentGameObjectArcballCamera,
+            ~value,
+            (),
+          );
+
+          ArcballCameraEngineService.unsafeGetArcballCameraControllerPhi(
+            currentGameObjectArcballCamera,
+          )
+          |> StateLogicService.getEngineStateToGetData
+          |. FloatService.truncateFloatValue(5)
+          |> expect == value;
+        })
+      );
+
       describe("test change arcballCameraController target", () => {
         test("test change should set into engine", () => {
           MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();

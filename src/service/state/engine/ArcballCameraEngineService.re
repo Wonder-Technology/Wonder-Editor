@@ -29,6 +29,7 @@ let setArcballCameraControllerWheelSpeed = ArcballCameraControllerAPI.setArcball
 let unsafeGetArcballCameraControllerPhi = ArcballCameraControllerAPI.unsafeGetArcballCameraControllerPhi;
 
 let setArcballCameraControllerPhi = ArcballCameraControllerAPI.setArcballCameraControllerPhi;
+
 let unsafeGetArcballCameraControllerTheta = ArcballCameraControllerAPI.unsafeGetArcballCameraControllerTheta;
 
 let setArcballCameraControllerTheta = ArcballCameraControllerAPI.setArcballCameraControllerTheta;
