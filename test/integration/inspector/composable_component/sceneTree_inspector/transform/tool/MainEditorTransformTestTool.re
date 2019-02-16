@@ -46,7 +46,8 @@ let transformBaseTest =
                       let value = (-11.1111);
                       changeXFunc(currentGameObjectTransform, value);
                       let (xFromEngine, _, _) =
-                        getValueFunc(currentGameObjectTransform);
+                        getValueFunc(currentGameObjectTransform)
+                        |> StateLogicService.getEngineStateToGetData;
 
                       expect(xFromEngine) == value;
                     });
@@ -56,7 +57,8 @@ let transformBaseTest =
                       let value = (-11.11112);
                       changeXFunc(currentGameObjectTransform, value);
                       let (xFromEngine, _, _) =
-                        getValueFunc(currentGameObjectTransform);
+                        getValueFunc(currentGameObjectTransform)
+                        |> StateLogicService.getEngineStateToGetData;
                       expect(xFromEngine) == value;
                     });
                     test("get the x from engine should == last value", () => {
@@ -72,7 +74,8 @@ let transformBaseTest =
                       changeXFunc(currentGameObjectTransform, value1);
                       changeXFunc(currentGameObjectTransform, value2);
                       let (xFromEngine, _, _) =
-                        getValueFunc(currentGameObjectTransform);
+                        getValueFunc(currentGameObjectTransform)
+                        |> StateLogicService.getEngineStateToGetData;
 
                       expect(xFromEngine) == value2;
                     });
@@ -85,7 +88,8 @@ let transformBaseTest =
                       let value = (-14.6613123);
                       changeXFunc(currentGameObjectTransform, value);
                       let (xFromEngine, _, _) =
-                        getValueFunc(currentGameObjectTransform);
+                        getValueFunc(currentGameObjectTransform)
+                        |> StateLogicService.getEngineStateToGetData;
 
                       expect(xFromEngine) == (-14.66131);
                     })

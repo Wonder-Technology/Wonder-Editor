@@ -42,6 +42,12 @@ let changeMinDistance = (cameraController, value) =>
     value,
   );
 
+let changeTargetX = (cameraController, value) =>
+  MainEditorArcballCameraController.Method.changeTargetX(
+    cameraController,
+    value,
+  );
+
 let blurArcballCameraMinDistance =
     (
       ~cameraController,
@@ -51,6 +57,20 @@ let blurArcballCameraMinDistance =
       (),
     ) =>
   MainEditorArcballCameraController.Method.blurArcballCameraMinDistance(
+    (uiState, dispatchFunc),
+    cameraController,
+    value,
+  );
+
+let blurArcballCameraTarget =
+    (
+      ~cameraController,
+      ~value,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorArcballCameraController.Method.blurArcballCameraTarget(
     (uiState, dispatchFunc),
     cameraController,
     value,
@@ -70,6 +90,31 @@ let changeMinDistanceAndBlur =
     ~dispatchFunc,
     ~cameraController,
     ~value,
+    (),
+  );
+};
+
+let changeTargetXAndBlur =
+    (
+      ~cameraController,
+      ~value,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) => {
+  let oldTarget =
+    ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
+      cameraController,
+    )
+    |> StateLogicService.getEngineStateToGetData;
+
+  changeTargetX(cameraController, value);
+
+  blurArcballCameraTarget(
+    ~uiState,
+    ~dispatchFunc,
+    ~cameraController,
+    ~value=oldTarget,
     (),
   );
 };

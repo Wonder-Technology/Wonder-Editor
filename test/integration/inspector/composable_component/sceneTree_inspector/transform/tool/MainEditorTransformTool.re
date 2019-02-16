@@ -9,7 +9,9 @@ let changePositionXAndBlur =
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
-  let oldPosition = TransformUtils.getTransformPositionData(transform);
+  let oldPosition =
+    TransformUtils.getTransformPositionData(transform)
+    |> StateLogicService.getEngineStateToGetData;
 
   changePositionX(transform, value);
 
@@ -31,7 +33,9 @@ let changePositionYAndBlur =
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
-  let oldPosition = TransformUtils.getTransformPositionData(transform);
+  let oldPosition =
+    TransformUtils.getTransformPositionData(transform)
+    |> StateLogicService.getEngineStateToGetData;
 
   changePositionY(transform, value);
 
@@ -62,7 +66,9 @@ let changeRotationYAndBlur =
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
-  let oldRotation = TransformUtils.getTransformRotationData(transform);
+  let oldRotation =
+    TransformUtils.getTransformRotationData(transform)
+    |> StateLogicService.getEngineStateToGetData;
 
   changeRotationY(transform, value);
 
@@ -103,7 +109,8 @@ let judgeShouldRemoveLocalEulerAngleData = () => {
   let localEulerAngle =
     TransformUtils.getTransformRotationData(
       GameObjectTool.getCurrentSceneTreeNodeTransform(),
-    );
+    )
+    |> StateLogicService.getEngineStateToGetData;
 
   JudgeTool.isEqual(
     localEulerAngle |> Vector3Service.truncate(3),

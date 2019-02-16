@@ -2,9 +2,10 @@ module Method = {
   let blurPositionEvent =
       ((uiState, dispatchFunc), transformComponent, (x, y, z)) => {
     let (newX, newY, newZ) =
-      TransformUtils.getTransformPositionData(transformComponent);
+      TransformUtils.getTransformPositionData(transformComponent)
+      |> StateLogicService.getEngineStateToGetData;
 
-    TransformUtils.isTransformVec3Equal((x, y, z), (newX, newY, newZ)) ?
+    Vector3Service.isEqual((x, y, z), (newX, newY, newZ)) ?
       () :
       PositionBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
         (uiState, dispatchFunc),
@@ -16,9 +17,10 @@ module Method = {
   let blurRotationEvent =
       ((uiState, dispatchFunc), transformComponent, (x, y, z)) => {
     let (newX, newY, newZ) =
-      TransformUtils.getTransformRotationData(transformComponent);
+      TransformUtils.getTransformRotationData(transformComponent)
+      |> StateLogicService.getEngineStateToGetData;
 
-    TransformUtils.isTransformVec3Equal((x, y, z), (newX, newY, newZ)) ?
+    Vector3Service.isEqual((x, y, z), (newX, newY, newZ)) ?
       () :
       RotationBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
         (uiState, dispatchFunc),
@@ -30,9 +32,10 @@ module Method = {
   let blurScaleEvent =
       ((uiState, dispatchFunc), transformComponent, (x, y, z)) => {
     let (newX, newY, newZ) =
-      TransformUtils.getTransformScaleData(transformComponent);
+      TransformUtils.getTransformScaleData(transformComponent)
+      |> StateLogicService.getEngineStateToGetData;
 
-    TransformUtils.isTransformVec3Equal((x, y, z), (newX, newY, newZ)) ?
+    Vector3Service.isEqual((x, y, z), (newX, newY, newZ)) ?
       () :
       ScaleBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
         (uiState, dispatchFunc),
@@ -47,21 +50,24 @@ module Method = {
 
   let changePositionX = (transformComponent, value) => {
     let (_x, y, z) =
-      TransformUtils.getSceneTreeNodeLocalPosition(transformComponent);
+      TransformUtils.getSceneTreeNodeLocalPosition(transformComponent)
+      |> StateLogicService.getEngineStateToGetData;
 
     _setCurrentSceneTreeNodeLocalPosition(transformComponent, (value, y, z));
   };
 
   let changePositionY = (transformComponent, value) => {
     let (x, _y, z) =
-      TransformUtils.getSceneTreeNodeLocalPosition(transformComponent);
+      TransformUtils.getSceneTreeNodeLocalPosition(transformComponent)
+      |> StateLogicService.getEngineStateToGetData;
 
     _setCurrentSceneTreeNodeLocalPosition(transformComponent, (x, value, z));
   };
 
   let changePositionZ = (transformComponent, value) => {
     let (x, y, _z) =
-      TransformUtils.getSceneTreeNodeLocalPosition(transformComponent);
+      TransformUtils.getSceneTreeNodeLocalPosition(transformComponent)
+      |> StateLogicService.getEngineStateToGetData;
 
     _setCurrentSceneTreeNodeLocalPosition(transformComponent, (x, y, value));
   };
@@ -144,54 +150,42 @@ let component = ReasonReact.statelessComponent("MainEditorTransform");
 let render =
     ((uiState, dispatchFunc), (transformComponent, gameObject), _self) =>
   <article className="wonder-inspector-transform">
-    <div className="inspector-item">
-      <div className="item-header"> (DomHelper.textEl("Position")) </div>
-      <div className="item-content">
-        <TransformTemplate
-          uiState
-          dispatchFunc
-          transformComponent
-          changeXFunc=Method.changePositionX
-          changeYFunc=Method.changePositionY
-          changeZFunc=Method.changePositionZ
-          getDataFunc=TransformUtils.getTransformPositionData
-          blurEventFunc=Method.blurPositionEvent
-          canBeZero=true
-        />
-      </div>
-    </div>
-    <div className="inspector-item">
-      <div className="item-header"> (DomHelper.textEl("Rotation")) </div>
-      <div className="item-content">
-        <TransformTemplate
-          uiState
-          dispatchFunc
-          transformComponent
-          changeXFunc=Method.changeRotationX
-          changeYFunc=Method.changeRotationY
-          changeZFunc=Method.changeRotationZ
-          getDataFunc=TransformUtils.getTransformRotationData
-          blurEventFunc=Method.blurRotationEvent
-          canBeZero=true
-        />
-      </div>
-    </div>
-    <div className="inspector-item">
-      <div className="item-header"> (DomHelper.textEl("Scale")) </div>
-      <div className="item-content">
-        <TransformTemplate
-          uiState
-          dispatchFunc
-          transformComponent
-          changeXFunc=Method.changeScaleX
-          changeYFunc=Method.changeScaleY
-          changeZFunc=Method.changeScaleZ
-          getDataFunc=TransformUtils.getTransformScaleData
-          blurEventFunc=Method.blurScaleEvent
-          canBeZero=false
-        />
-      </div>
-    </div>
+    <ThreeFloatInput
+      uiState
+      dispatchFunc
+      label="Position"
+      gameObjectComponent=transformComponent
+      changeXFunc=Method.changePositionX
+      changeYFunc=Method.changePositionY
+      changeZFunc=Method.changePositionZ
+      getDataFunc=TransformUtils.getTransformPositionData
+      blurEventFunc=Method.blurPositionEvent
+      canBeZero=true
+    />
+    <ThreeFloatInput
+      uiState
+      dispatchFunc
+      label="Rotation"
+      gameObjectComponent=transformComponent
+      changeXFunc=Method.changeRotationX
+      changeYFunc=Method.changeRotationY
+      changeZFunc=Method.changeRotationZ
+      getDataFunc=TransformUtils.getTransformRotationData
+      blurEventFunc=Method.blurRotationEvent
+      canBeZero=true
+    />
+    <ThreeFloatInput
+      uiState
+      dispatchFunc
+      label="Scale"
+      gameObjectComponent=transformComponent
+      changeXFunc=Method.changeScaleX
+      changeYFunc=Method.changeScaleY
+      changeZFunc=Method.changeScaleZ
+      getDataFunc=TransformUtils.getTransformScaleData
+      blurEventFunc=Method.blurScaleEvent
+      canBeZero=true
+    />
     (Method.buildShadeComponent(gameObject))
   </article>;
 

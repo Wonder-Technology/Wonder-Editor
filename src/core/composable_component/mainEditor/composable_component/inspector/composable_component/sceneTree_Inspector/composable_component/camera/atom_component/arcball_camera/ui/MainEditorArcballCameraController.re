@@ -23,6 +23,32 @@ module Method = {
     |> StateLogicService.getAndSetStateToGetData;
   };
 
+  let _blurArcballCameraTarget =
+      (
+        (uiState, dispatchFunc),
+        arcballCameraController,
+        target,
+        (
+          unsafeGetArcballCameraControllerTargetFunc,
+          pushUndoStackWithCopiedEngineStateFunc,
+        ),
+      ) => {
+    let newTarget =
+      unsafeGetArcballCameraControllerTargetFunc(arcballCameraController)
+      |> StateLogicService.getEngineStateToGetData;
+
+    Vector3Service.isEqual(target, newTarget) ?
+      () :
+      pushUndoStackWithCopiedEngineStateFunc(
+        (uiState, dispatchFunc),
+        arcballCameraController,
+        target,
+      );
+
+    TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
+    |> StateLogicService.getAndSetStateToGetData;
+  };
+
   let blurArcballCameraDistance =
       ((uiState, dispatchFunc), arcballCameraController, distance) =>
     _blurArcballCameraValue(
@@ -47,6 +73,18 @@ module Method = {
       ),
     );
 
+  let blurArcballCameraTarget =
+      ((uiState, dispatchFunc), arcballCameraController, target) =>
+    _blurArcballCameraTarget(
+      (uiState, dispatchFunc),
+      arcballCameraController,
+      target,
+      (
+        ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget,
+        ArcballCameraTargetEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState,
+      ),
+    );
+
   let changeDistance = (arcballCameraController, value) =>
     ArcballCameraEngineService.setArcballCameraControllerDistance(
       value,
@@ -60,6 +98,50 @@ module Method = {
       arcballCameraController,
     )
     |> StateLogicService.getAndRefreshEngineStateWithFunc;
+
+  let _setTarget = (arcballCameraController, target) =>
+    ArcballCameraEngineService.setArcballCameraControllerTarget(
+      arcballCameraController,
+      target,
+    )
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
+
+  let changeTargetX = (arcballCameraController, value) => {
+    let (_x, y, z) =
+      ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
+        arcballCameraController,
+      )
+      |> StateLogicService.getEngineStateToGetData;
+
+    _setTarget(arcballCameraController, (value, y, z));
+  };
+
+  let changeTargetY = (arcballCameraController, value) => {
+    let (x, _y, z) =
+      ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
+        arcballCameraController,
+      )
+      |> StateLogicService.getEngineStateToGetData;
+
+    _setTarget(arcballCameraController, (x, value, z));
+  };
+
+  let changeTargetZ = (arcballCameraController, value) => {
+    let (x, y, _z) =
+      ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
+        arcballCameraController,
+      )
+      |> StateLogicService.getEngineStateToGetData;
+
+    _setTarget(arcballCameraController, (x, y, value));
+  };
+
+  let unsafeGetArcballCameraControllerTarget =
+      (engineState, arcballCameraController) =>
+    ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
+      arcballCameraController,
+      engineState,
+    );
 };
 
 let component =
@@ -84,7 +166,7 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
         )
       )
       dragDropFunc=(
-        (_) =>
+        _ =>
           TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
           |> StateLogicService.getAndSetStateToGetData
       )
@@ -105,6 +187,23 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
           arcballCameraController,
         )
       )
+    />
+    <ThreeFloatInput
+      uiState
+      dispatchFunc
+      label="Target"
+      gameObjectComponent=arcballCameraController
+      changeXFunc=Method.changeTargetX
+      changeYFunc=Method.changeTargetY
+      changeZFunc=Method.changeTargetZ
+      getDataFunc=ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget
+      blurEventFunc=Method.blurArcballCameraTarget
+      dragDropFunc=(
+        _ =>
+          TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
+          |> StateLogicService.getAndSetStateToGetData
+      )
+      canBeZero=true
     />
   </article>;
 

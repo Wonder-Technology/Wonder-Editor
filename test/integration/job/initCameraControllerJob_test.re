@@ -46,7 +46,8 @@ let _ =
         let localEulerAngle =
           TransformUtils.getTransformRotationData(
             GameObjectTool.getCurrentSceneTreeNodeTransform(),
-          );
+          )
+          |> StateLogicService.getEngineStateToGetData;
 
         JudgeTool.isEqual(
           localEulerAngle |> Vector3Service.truncate(3),

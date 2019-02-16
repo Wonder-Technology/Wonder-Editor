@@ -32,7 +32,7 @@ let _ =
       });
 
       describe("test change arcballCameraController distance", () => {
-        test("test change distance should set into engine", () => {
+        test("test change should set into engine", () => {
           MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
           let currentGameObjectArcballCamera =
             GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
@@ -93,7 +93,7 @@ let _ =
       });
 
       describe("test change arcballCameraController minDistance", () =>
-        test("test change minDistance should set into engine", () => {
+        test("test change should set into engine", () => {
           MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
           let currentGameObjectArcballCamera =
             GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
@@ -113,6 +113,67 @@ let _ =
           |> expect == value;
         })
       );
+
+      describe("test change arcballCameraController target", () => {
+        test("test change should set into engine", () => {
+          MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
+          let currentGameObjectArcballCamera =
+            GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
+          let value = 11.1;
+
+          MainEditorArcballCameraControllerTool.changeTargetXAndBlur(
+            ~cameraController=currentGameObjectArcballCamera,
+            ~value,
+            (),
+          );
+
+          ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
+            currentGameObjectArcballCamera,
+          )
+          |> StateLogicService.getEngineStateToGetData
+          |> Vector3Service.truncate(5)
+          |> expect == (value, 0., 0.);
+        });
+
+        describe("if blur", () =>
+          describe("refresh inspector", () => {
+            let _prepareAndExec = () => {
+              MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
+              MainEditorTransformTool.setLocalEulerAngleData();
+              let currentGameObjectArcballCamera =
+                GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
+              let value = 21.1;
+
+              MainEditorArcballCameraControllerTool.changeTargetXAndBlur(
+                ~cameraController=currentGameObjectArcballCamera,
+                ~value,
+                (),
+              );
+            };
+
+            test(
+              "should remove current scene tree node->local euler angle data",
+              () => {
+              _prepareAndExec();
+
+              MainEditorTransformTool.judgeShouldRemoveLocalEulerAngleData()
+              |> expect == true;
+            });
+            test("refresh inspector", () => {
+              let dispatchFuncStub =
+                ReactTool.createDispatchFuncStub(sandbox);
+
+              _prepareAndExec();
+
+              dispatchFuncStub
+              |> expect
+              |> toCalledWith([|
+                   AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
+                 |]);
+            });
+          })
+        );
+      });
 
       describe(
         "add shade dom for transformComponent if has arcballCameraController",
