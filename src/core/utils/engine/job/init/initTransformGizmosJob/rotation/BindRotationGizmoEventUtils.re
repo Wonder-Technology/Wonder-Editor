@@ -15,19 +15,6 @@ let handleDragStartEvent = (event, (editorState, engineState)) => {
   );
 };
 
-let _refreshInspectorForRotation = (editorState, engineState) => {
-  let editorState =
-    TransformEditorService.removeLocalEulerAngleData(
-      GameObjectComponentEngineService.unsafeGetTransformComponent(
-        SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
-        engineState,
-      ),
-      editorState,
-    );
-
-  InitTransformGizmosUtils.refreshInspector(editorState, engineState);
-};
-
 let handleDragOverEvent = (event, (editorState, engineState)) => {
   let (editorState, engineState) =
     AffectRotationGizmosUtils.affectRotationGizmo(
@@ -36,7 +23,7 @@ let handleDragOverEvent = (event, (editorState, engineState)) => {
     );
 
   let (editorState, engineState) =
-    _refreshInspectorForRotation(editorState, engineState);
+    TransformUtils.refreshTransform((editorState, engineState));
 
   let engineState = StateLogicService.renderWhenStop(engineState);
 
@@ -51,15 +38,6 @@ let handleDragDropEvent = (event, (editorState, engineState)) => {
   let engineState =
     engineState
     |> CurrentRotationGizmosUtils.restoreRotationGizmoColor(editorState);
-  /*
-   let editorState =
-     TransformEditorService.removeLocalEulerAngleData(
-       GameObjectComponentEngineService.unsafeGetTransformComponent(
-         SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
-         engineState,
-       ),
-       editorState,
-     ); */
 
   let engineState =
     InitTransformGizmosUtils.pushUndoStack(

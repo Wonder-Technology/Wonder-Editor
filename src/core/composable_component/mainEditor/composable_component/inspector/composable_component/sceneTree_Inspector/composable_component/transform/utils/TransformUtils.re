@@ -36,3 +36,24 @@ let isTransformVec3Equal = ((x, y, z), (newX, newY, newZ)) =>
   |> ValueService.isValueEqual(ValueType.Float, newY)
   && z
   |> ValueService.isValueEqual(ValueType.Float, newZ);
+
+let refreshTransform = ((editorState, engineState)) => {
+  let editorState =
+    TransformEditorService.removeLocalEulerAngleData(
+      GameObjectComponentEngineService.unsafeGetTransformComponent(
+        SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
+        engineState,
+      ),
+      editorState,
+    );
+
+  editorState |> StateEditorService.setState |> ignore;
+  engineState |> StateEngineService.setState |> ignore;
+
+  let dispatchFunc = UIStateService.getDispatch();
+
+  dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
+  |> ignore;
+
+  (StateEditorService.getState(), StateEngineService.unsafeGetState());
+};
