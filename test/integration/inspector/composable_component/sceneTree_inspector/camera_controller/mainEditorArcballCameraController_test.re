@@ -53,40 +53,46 @@ let _ =
         });
 
         describe("if blur", () =>
-          describe("refresh inspector", () => {
-            let _prepareAndExec = () => {
+          describe("not refresh inspector", () => {
+            let _prepareAndExec = dispatchFuncStub => {
               MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
               MainEditorTransformTool.setLocalEulerAngleData();
               let currentGameObjectArcballCamera =
                 GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
               let value = 21.1;
 
+              let dispatchFuncCallCountBeforeChangeTarget =
+                dispatchFuncStub |> getCallCount;
               MainEditorArcballCameraControllerTool.changeDistanceAndBlur(
                 ~cameraController=currentGameObjectArcballCamera,
                 ~value,
                 (),
               );
+
+              dispatchFuncCallCountBeforeChangeTarget;
             };
 
             test(
-              "should remove current scene tree node->local euler angle data",
+              "shouldn't remove current scene tree node->local euler angle data",
               () => {
-              _prepareAndExec();
+              _prepareAndExec(ReactTool.createDispatchFuncStub(sandbox));
 
               MainEditorTransformTool.judgeShouldRemoveLocalEulerAngleData()
-              |> expect == true;
+              |> expect == false;
             });
-            test("refresh inspector", () => {
+            test("not refresh inspector", () => {
               let dispatchFuncStub =
                 ReactTool.createDispatchFuncStub(sandbox);
 
-              _prepareAndExec();
+              let dispatchFuncCallCountBeforeChangeTarget =
+                _prepareAndExec(dispatchFuncStub);
 
               dispatchFuncStub
-              |> expect
-              |> toCalledWith([|
+              |> withOneArg(
                    AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
-                 |]);
+                 )
+              |> getCallCount
+              |> expect == dispatchFuncCallCountBeforeChangeTarget;
             });
           })
         );
@@ -180,40 +186,46 @@ let _ =
         });
 
         describe("if blur", () =>
-          describe("refresh inspector", () => {
-            let _prepareAndExec = () => {
+          describe("not refresh inspector", () => {
+            let _prepareAndExec = dispatchFuncStub => {
               MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
               MainEditorTransformTool.setLocalEulerAngleData();
               let currentGameObjectArcballCamera =
                 GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
               let value = 21.1;
 
+              let dispatchFuncCallCountBeforeChangeTarget =
+                dispatchFuncStub |> getCallCount;
               MainEditorArcballCameraControllerTool.changeTargetXAndBlur(
                 ~cameraController=currentGameObjectArcballCamera,
                 ~value,
                 (),
               );
+
+              dispatchFuncCallCountBeforeChangeTarget;
             };
 
             test(
-              "should remove current scene tree node->local euler angle data",
+              "shouldn't remove current scene tree node->local euler angle data",
               () => {
-              _prepareAndExec();
+              _prepareAndExec(ReactTool.createDispatchFuncStub(sandbox));
 
               MainEditorTransformTool.judgeShouldRemoveLocalEulerAngleData()
-              |> expect == true;
+              |> expect == false;
             });
-            test("refresh inspector", () => {
+            test("not refresh inspector", () => {
               let dispatchFuncStub =
                 ReactTool.createDispatchFuncStub(sandbox);
 
-              _prepareAndExec();
+              let dispatchFuncCallCountBeforeChangeTarget =
+                _prepareAndExec(dispatchFuncStub);
 
               dispatchFuncStub
-              |> expect
-              |> toCalledWith([|
+              |> withOneArg(
                    AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
-                 |]);
+                 )
+              |> getCallCount
+              |> expect == dispatchFuncCallCountBeforeChangeTarget;
             });
           })
         );

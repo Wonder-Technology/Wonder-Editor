@@ -8,7 +8,7 @@ module Method = {
           unsafeGetArcballCameraControllerValueFunc,
           pushUndoStackWithCopiedEngineStateFunc,
         ),
-      ) => {
+      ) =>
     unsafeGetArcballCameraControllerValueFunc(arcballCameraController)
     |> StateLogicService.getEngineStateToGetData
     |> ValueService.isValueEqual(ValueType.Float, value) ?
@@ -18,10 +18,8 @@ module Method = {
         arcballCameraController,
         value,
       );
-
-    TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
-    |> StateLogicService.getAndSetStateToGetData;
-  };
+      /* TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
+         |> StateLogicService.getAndSetStateToGetData; */
 
   let _blurArcballCameraTarget =
       (
@@ -45,8 +43,8 @@ module Method = {
         target,
       );
 
-    TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
-    |> StateLogicService.getAndSetStateToGetData;
+    /* TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
+    |> StateLogicService.getAndSetStateToGetData; */
   };
 
   let blurArcballCameraDistance =
@@ -219,11 +217,17 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
         )
       )
       dragDropFunc=(
-        _ =>{
-          WonderLog.Log.debug(WonderLog.Log.buildDebugMessage(~description={j|aaa|j}, ~params={j||j}), true);
+        _ => {
+          WonderLog.Log.debug(
+            WonderLog.Log.buildDebugMessage(
+              ~description={j|aaa|j},
+              ~params={j||j},
+            ),
+            true,
+          );
 
           TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
-          |> StateLogicService.getAndSetStateToGetData
+          |> StateLogicService.getAndSetStateToGetData;
         }
       )
     />
