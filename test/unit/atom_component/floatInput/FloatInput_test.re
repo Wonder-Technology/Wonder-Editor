@@ -253,13 +253,13 @@ let _ =
 
             Obj.magic(document^)##exitPointerLock |> expect |> toCalledOnce;
           });
-          test("send Blur", () => {
+          test("send DragDrop", () => {
             let send = createEmptyStubWithJsObjSandbox(sandbox);
             let state = FloatInputTool.buildState(~isDragStart=true, ());
 
             _handleDragDrop(~send, ~state, ());
 
-            send |> expect |> toCalledWith([|FloatInput.Blur|]);
+            send |> expect |> toCalledWith([|FloatInput.DragDrop|]);
           });
         });
       });

@@ -1,15 +1,20 @@
 type state = {componentValueForUndo: float};
 
 type action =
-  | TriggerBlur(float);
+  | TriggerBlur(float)
+  | TriggerDragDrop(float);
 
 let component =
   ReasonReact.reducerComponent("MainEditorFloatInputBaseComponent");
 
-let reducer = (blurValueFunc, action, state) =>
+let reducer = ((blurValueFunc, dragDropFunc), action, state) =>
   switch (action) {
   | TriggerBlur(value) =>
     blurValueFunc(state.componentValueForUndo);
+
+    ReasonReact.Update({...state, componentValueForUndo: value});
+  | TriggerDragDrop(value) =>
+    dragDropFunc(state.componentValueForUndo);
 
     ReasonReact.Update({...state, componentValueForUndo: value});
   };
@@ -17,7 +22,7 @@ let reducer = (blurValueFunc, action, state) =>
 let render =
     (
       label,
-      (changeComponentValueFunc, dragDropFunc),
+      changeComponentValueFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <FloatInput
@@ -25,7 +30,7 @@ let render =
     label
     onChange=changeComponentValueFunc
     onBlur=(value => send(TriggerBlur(value)))
-    onDragDrop=dragDropFunc
+    onDragDrop=(value => send(TriggerDragDrop(value)))
   />;
 
 let make =
@@ -44,7 +49,6 @@ let make =
       |> StateLogicService.getEngineStateToGetData
       |. FloatService.truncateFloatValue(5),
   },
-  reducer: reducer(blurValueFunc),
-  render: self =>
-    render(label, (changeComponentValueFunc, dragDropFunc), self),
+  reducer: reducer((blurValueFunc, dragDropFunc)),
+  render: self => render(label, changeComponentValueFunc, self),
 };

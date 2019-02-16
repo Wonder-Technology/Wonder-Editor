@@ -44,6 +44,12 @@ module Method = {
           lightComponent,
         )
       )
+      dragDropFunc=(
+        MainEditorPointLightUtils.blurIntensityEvent(
+          (uiState, dispatchFunc),
+          lightComponent,
+        )
+      )
     />;
 
   let buildConstantComponent = ((uiState, dispatchFunc), lightComponent) =>
@@ -56,6 +62,12 @@ module Method = {
         MainEditorPointLightUtils.changeConstant(lightComponent)
       )
       blurValueFunc=(
+        MainEditorPointLightUtils.blurConstantEvent(
+          (uiState, dispatchFunc),
+          lightComponent,
+        )
+      )
+      dragDropFunc=(
         MainEditorPointLightUtils.blurConstantEvent(
           (uiState, dispatchFunc),
           lightComponent,
@@ -78,6 +90,12 @@ module Method = {
           lightComponent,
         )
       )
+      dragDropFunc=(
+        MainEditorPointLightUtils.blurLinearEvent(
+          (uiState, dispatchFunc),
+          lightComponent,
+        )
+      )
     />;
 
   let buildQuadraticComponent = ((uiState, dispatchFunc), lightComponent) =>
@@ -95,6 +113,12 @@ module Method = {
           lightComponent,
         )
       )
+      dragDropFunc=(
+        MainEditorPointLightUtils.blurQuadraticEvent(
+          (uiState, dispatchFunc),
+          lightComponent,
+        )
+      )
     />;
 
   let buildRangeComponent = ((uiState, dispatchFunc), lightComponent) =>
@@ -107,6 +131,12 @@ module Method = {
         MainEditorPointLightUtils.changeRange(lightComponent)
       )
       blurValueFunc=(
+        MainEditorPointLightUtils.blurRangeEvent(
+          (uiState, dispatchFunc),
+          lightComponent,
+        )
+      )
+      dragDropFunc=(
         MainEditorPointLightUtils.blurRangeEvent(
           (uiState, dispatchFunc),
           lightComponent,

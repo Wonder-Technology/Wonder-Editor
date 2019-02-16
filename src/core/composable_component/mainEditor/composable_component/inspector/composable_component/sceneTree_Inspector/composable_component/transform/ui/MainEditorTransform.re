@@ -5,6 +5,8 @@ module Method = {
       TransformUtils.getTransformPositionData(transformComponent)
       |> StateLogicService.getEngineStateToGetData;
 
+      WonderLog.Log.printJson(("new: ", (newX, newY, newZ), "old: ", (x, y, z))) |> ignore;
+
     Vector3Service.isEqual((x, y, z), (newX, newY, newZ)) ?
       () :
       PositionBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
@@ -160,6 +162,7 @@ let render =
       changeZFunc=Method.changePositionZ
       getDataFunc=TransformUtils.getTransformPositionData
       blurEventFunc=Method.blurPositionEvent
+      dragDropFunc=Method.blurPositionEvent
       canBeZero=true
     />
     <ThreeFloatInput
@@ -172,6 +175,7 @@ let render =
       changeZFunc=Method.changeRotationZ
       getDataFunc=TransformUtils.getTransformRotationData
       blurEventFunc=Method.blurRotationEvent
+      dragDropFunc=Method.blurRotationEvent
       canBeZero=true
     />
     <ThreeFloatInput
@@ -184,6 +188,7 @@ let render =
       changeZFunc=Method.changeScaleZ
       getDataFunc=TransformUtils.getTransformScaleData
       blurEventFunc=Method.blurScaleEvent
+      dragDropFunc=Method.blurScaleEvent
       canBeZero=true
     />
     (Method.buildShadeComponent(gameObject))

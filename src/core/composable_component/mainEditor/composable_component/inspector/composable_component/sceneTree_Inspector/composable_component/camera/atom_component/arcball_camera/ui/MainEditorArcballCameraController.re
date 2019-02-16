@@ -18,8 +18,8 @@ module Method = {
         arcballCameraController,
         value,
       );
-      /* TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
-         |> StateLogicService.getAndSetStateToGetData; */
+  /* TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
+     |> StateLogicService.getAndSetStateToGetData; */
 
   let _blurArcballCameraTarget =
       (
@@ -42,9 +42,8 @@ module Method = {
         arcballCameraController,
         target,
       );
-
     /* TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
-    |> StateLogicService.getAndSetStateToGetData; */
+       |> StateLogicService.getAndSetStateToGetData; */
   };
 
   let blurArcballCameraDistance =
@@ -195,9 +194,16 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
         )
       )
       dragDropFunc=(
-        _ =>
+        value => {
+          Method.blurArcballCameraDistance(
+            (uiState, dispatchFunc),
+            arcballCameraController,
+            value,
+          );
+
           TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
-          |> StateLogicService.getAndSetStateToGetData
+          |> StateLogicService.getAndSetStateToGetData;
+        }
       )
     />
     <MainEditorFloatInputBaseComponent
@@ -217,13 +223,11 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
         )
       )
       dragDropFunc=(
-        _ => {
-          WonderLog.Log.debug(
-            WonderLog.Log.buildDebugMessage(
-              ~description={j|aaa|j},
-              ~params={j||j},
-            ),
-            true,
+        value => {
+          Method.blurArcballCameraMinDistance(
+            (uiState, dispatchFunc),
+            arcballCameraController,
+            value,
           );
 
           TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
@@ -242,9 +246,16 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
       getDataFunc=ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget
       blurEventFunc=Method.blurArcballCameraTarget
       dragDropFunc=(
-        _ =>
+        ((uiState, dispatchFunc), arcballCameraController, target) => {
+          Method.blurArcballCameraTarget(
+            (uiState, dispatchFunc),
+            arcballCameraController,
+            target,
+          );
+
           TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
-          |> StateLogicService.getAndSetStateToGetData
+          |> StateLogicService.getAndSetStateToGetData;
+        }
       )
       canBeZero=true
     />
@@ -263,9 +274,16 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
         )
       )
       dragDropFunc=(
-        _ =>
+        value => {
+          Method.blurArcballCameraPhi(
+            (uiState, dispatchFunc),
+            arcballCameraController,
+            value,
+          );
+
           TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
-          |> StateLogicService.getAndSetStateToGetData
+          |> StateLogicService.getAndSetStateToGetData;
+        }
       )
     />
     <MainEditorFloatInputBaseComponent
@@ -283,9 +301,16 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
         )
       )
       dragDropFunc=(
-        _ =>
+        value => {
+          Method.blurArcballCameraTheta(
+            (uiState, dispatchFunc),
+            arcballCameraController,
+            value,
+          );
+
           TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
-          |> StateLogicService.getAndSetStateToGetData
+          |> StateLogicService.getAndSetStateToGetData;
+        }
       )
     />
   </article>;

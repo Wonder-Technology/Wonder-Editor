@@ -89,11 +89,19 @@ let render = ((uiState, dispatchFunc), materialComponent, _self) =>
       blurValueFunc=(
         Method.blurShininessEvent((uiState, dispatchFunc), materialComponent)
       )
+      dragDropFunc=(
+        Method.blurShininessEvent((uiState, dispatchFunc), materialComponent)
+      )
     />
   </article>;
 
 let make =
-    (~uiState: AppStore.appState, ~dispatchFunc, ~materialComponent, _children) => {
+    (
+      ~uiState: AppStore.appState,
+      ~dispatchFunc,
+      ~materialComponent,
+      _children,
+    ) => {
   ...component,
   render: self => render((uiState, dispatchFunc), materialComponent, self),
 };

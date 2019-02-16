@@ -19,7 +19,8 @@ module Method = {
 
   let closeColorPick = DirectionLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 
-  let blurIntensityEvent = ((uiState, dispatchFunc), lightComponent, intensity) =>
+  let blurIntensityEvent =
+      ((uiState, dispatchFunc), lightComponent, intensity) =>
     DirectionLightEngineService.getDirectionLightIntensity(lightComponent)
     |> StateLogicService.getEngineStateToGetData
     |> ValueService.isValueEqual(ValueType.Float, intensity) ?
@@ -55,6 +56,9 @@ let render = ((uiState, dispatchFunc), lightComponent, _self) =>
       )
       changeComponentValueFunc=(Method.changeIntensity(lightComponent))
       blurValueFunc=(
+        Method.blurIntensityEvent((uiState, dispatchFunc), lightComponent)
+      )
+      dragDropFunc=(
         Method.blurIntensityEvent((uiState, dispatchFunc), lightComponent)
       )
     />
