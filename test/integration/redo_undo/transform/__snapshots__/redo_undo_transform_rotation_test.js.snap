@@ -10,8 +10,8 @@ exports[`redo_undo: transform rotation fix bug
 <article
   className="wonder-inspector-transform"
 >
-  <div
-    className="inspector-item"
+  <article
+    className="inspector-item wonder-three-float-input"
   >
     <div
       className="item-header"
@@ -22,82 +22,78 @@ exports[`redo_undo: transform rotation fix bug
       className="item-content"
     >
       <article
-        className="wonder-transform-template"
+        className="inspector-item wonder-float-input"
       >
-        <article
-          className="inspector-item wonder-float-input"
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            X
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="0"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
+          X
+        </div>
+        <div
+          className="item-content"
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Y
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="0"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Z
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="0"
-            />
-          </div>
-        </article>
+          Y
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
+        >
+          Z
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
       </article>
     </div>
-  </div>
-  <div
-    className="inspector-item"
+  </article>
+  <article
+    className="inspector-item wonder-three-float-input"
   >
     <div
       className="item-header"
@@ -108,82 +104,78 @@ exports[`redo_undo: transform rotation fix bug
       className="item-content"
     >
       <article
-        className="wonder-transform-template"
+        className="inspector-item wonder-float-input"
       >
-        <article
-          className="inspector-item wonder-float-input"
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            X
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="0"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
+          X
+        </div>
+        <div
+          className="item-content"
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Y
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="0"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Z
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="0"
-            />
-          </div>
-        </article>
+          Y
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
+        >
+          Z
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
       </article>
     </div>
-  </div>
-  <div
-    className="inspector-item"
+  </article>
+  <article
+    className="inspector-item wonder-three-float-input"
   >
     <div
       className="item-header"
@@ -194,80 +186,76 @@ exports[`redo_undo: transform rotation fix bug
       className="item-content"
     >
       <article
-        className="wonder-transform-template"
+        className="inspector-item wonder-float-input"
       >
-        <article
-          className="inspector-item wonder-float-input"
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            X
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="1"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
+          X
+        </div>
+        <div
+          className="item-content"
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Y
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="1"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="1"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Z
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="1"
-            />
-          </div>
-        </article>
+          Y
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="1"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
+        >
+          Z
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="1"
+          />
+        </div>
       </article>
     </div>
-  </div>
+  </article>
 </article>
 `;
 
@@ -281,8 +269,8 @@ exports[`redo_undo: transform rotation fix bug
 <article
   className="wonder-inspector-transform"
 >
-  <div
-    className="inspector-item"
+  <article
+    className="inspector-item wonder-three-float-input"
   >
     <div
       className="item-header"
@@ -293,82 +281,78 @@ exports[`redo_undo: transform rotation fix bug
       className="item-content"
     >
       <article
-        className="wonder-transform-template"
+        className="inspector-item wonder-float-input"
       >
-        <article
-          className="inspector-item wonder-float-input"
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            X
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="0"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
+          X
+        </div>
+        <div
+          className="item-content"
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Y
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="0"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Z
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="0"
-            />
-          </div>
-        </article>
+          Y
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
+        >
+          Z
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
       </article>
     </div>
-  </div>
-  <div
-    className="inspector-item"
+  </article>
+  <article
+    className="inspector-item wonder-three-float-input"
   >
     <div
       className="item-header"
@@ -379,82 +363,78 @@ exports[`redo_undo: transform rotation fix bug
       className="item-content"
     >
       <article
-        className="wonder-transform-template"
+        className="inspector-item wonder-float-input"
       >
-        <article
-          className="inspector-item wonder-float-input"
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            X
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="0"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
+          X
+        </div>
+        <div
+          className="item-content"
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Y
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="0"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Z
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="0"
-            />
-          </div>
-        </article>
+          Y
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
+        >
+          Z
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
       </article>
     </div>
-  </div>
-  <div
-    className="inspector-item"
+  </article>
+  <article
+    className="inspector-item wonder-three-float-input"
   >
     <div
       className="item-header"
@@ -465,79 +445,75 @@ exports[`redo_undo: transform rotation fix bug
       className="item-content"
     >
       <article
-        className="wonder-transform-template"
+        className="inspector-item wonder-float-input"
       >
-        <article
-          className="inspector-item wonder-float-input"
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            X
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="1"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
+          X
+        </div>
+        <div
+          className="item-content"
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Y
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="1"
-            />
-          </div>
-        </article>
-        <article
-          className="inspector-item wonder-float-input"
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="1"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
         >
-          <div
-            className="item-header component-label"
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            onMouseUp={[Function]}
-          >
-            Z
-          </div>
-          <div
-            className="item-content"
-          >
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="1"
-            />
-          </div>
-        </article>
+          Y
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="1"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
+        >
+          Z
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="1"
+          />
+        </div>
       </article>
     </div>
-  </div>
+  </article>
 </article>
 `;
