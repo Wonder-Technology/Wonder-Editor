@@ -156,11 +156,9 @@ let _ =
       );
 
       describe("test bind focus hot-key", () => {
-        describe("if has currentScenetreeNode", () => {
+        describe("test arcball camera controller distance", () => {
           describe("if the currentSceneTreeNode is scene gameObject", () =>
-            test(
-              "key down f, arcballCamera should set target to be (0.,0.,0.)",
-              () => {
+            test("key down f, test arcballCamera distance", () => {
               MainEditorSceneTool.unsafeGetScene()
               |> GameObjectTool.setCurrentSceneTreeNode;
 
@@ -174,70 +172,72 @@ let _ =
               |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
                    engineState,
                  )
-              |. ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
+              |. ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
                    engineState,
                  )
-              |> expect == (0., 0., 0.);
+              |>
+              expect == FocusDataUtils.getSceneGameObjectArcballCameraDistance();
             })
           );
 
-          describe("else", () =>
-            test(
-              "key down f, arcballCamera should set target to be currentSceneTreeNode position",
-              () => {
-                MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
+          describe("else if the currentSceneTreeNode is scene children", () =>
+            test("key down f, test arcballCamera distance", () => {
+              MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
 
-                let editorState = StateEditorService.getState();
-                let engineState = StateEngineService.unsafeGetState();
-                let targetPosition = (10.0, 20.0, 15.0);
+              let editorState = StateEditorService.getState();
+              let engineState = StateEngineService.unsafeGetState();
 
-                let firstCube =
-                  engineState |> MainEditorSceneTool.getFirstCube;
+              triggerFocusHotKeyEvent();
 
-                let engineState =
-                  engineState
-                  |> GameObjectComponentEngineService.unsafeGetTransformComponent(
-                       firstCube,
-                     )
-                  |. TransformEngineService.setPosition(
-                       targetPosition,
-                       engineState,
-                     );
-
-                triggerFocusHotKeyEvent();
-
-                editorState
-                |> SceneViewEditorService.unsafeGetEditCamera
-                |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-                     engineState,
-                   )
-                |. ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
-                     engineState,
-                   )
-                |> expect == targetPosition;
-              },
-            )
+              editorState
+              |> SceneViewEditorService.unsafeGetEditCamera
+              |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+                   engineState,
+                 )
+              |. ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
+                   engineState,
+                 )
+              |>
+              expect == FocusDataUtils.getSceneChildrenArcballCameraDistance();
+            })
           );
         });
 
-        describe("else", () =>
+        describe("test arcball camera controller target", () =>
           test(
-            "key down f, arcballCamera should set target to be (0.,0.,0.)", () => {
-            let editorState = StateEditorService.getState();
-            let engineState = StateEngineService.unsafeGetState();
+            "key down f, arcballCamera should set target to be currentSceneTreeNode position",
+            () => {
+              MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
 
-            triggerFocusHotKeyEvent();
+              let editorState = StateEditorService.getState();
+              let engineState = StateEngineService.unsafeGetState();
+              let targetPosition = (10.0, 20.0, 15.0);
 
-            editorState
-            |> SceneViewEditorService.unsafeGetEditCamera
-            |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-                 engineState,
-               )
-            |. ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
-                 engineState,
-               )
-            |> expect == (0., 0., 0.);
-          })
+              let firstCube = engineState |> MainEditorSceneTool.getFirstCube;
+
+              let engineState =
+                engineState
+                |> GameObjectComponentEngineService.unsafeGetTransformComponent(
+                     firstCube,
+                   )
+                |. TransformEngineService.setPosition(
+                     targetPosition,
+                     engineState,
+                   );
+
+              triggerFocusHotKeyEvent();
+
+              editorState
+              |> SceneViewEditorService.unsafeGetEditCamera
+              |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+                   engineState,
+                 )
+              |. ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
+                   engineState,
+                 )
+              |> expect == targetPosition;
+            },
+          )
         );
       });
     });

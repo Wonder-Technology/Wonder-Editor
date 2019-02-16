@@ -187,8 +187,25 @@ let unbindGameViewActiveCameraArcballCameraControllerEvent = engineState =>
        StateEditorService.getStateIsDebug(),
      );
 
+let _getGameObjectPosition = (gameObject, engineState) =>
+  engineState
+  |> GameObjectComponentEngineService.unsafeGetTransformComponent(gameObject)
+  |. TransformEngineService.getPosition(engineState);
+
+let _setArcballCameraControllerAttribute =
+    (arcballCameraController, (distance, position), engineState) =>
+  engineState
+  |> ArcballCameraEngineService.setArcballCameraControllerTarget(
+       arcballCameraController,
+       position,
+     )
+  |> ArcballCameraEngineService.setArcballCameraControllerDistance(
+       distance,
+       arcballCameraController,
+     );
+
 let setEditorCameraFocusTargetGameObject =
-    (distance, isCurrentSceneTreeNodeCanBeOperate, editorState, engineState) => {
+    (targetGameObject, editorState, engineState) => {
   WonderLog.Contract.requireCheck(
     () =>
       WonderLog.(
@@ -221,24 +238,21 @@ let setEditorCameraFocusTargetGameObject =
          engineState,
        );
 
-  isCurrentSceneTreeNodeCanBeOperate ?
-    engineState
-    |> ArcballCameraEngineService.setArcballCameraControllerTarget(
-         editorCameraArcballControllerComponent,
-         editorState
-         |> SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
-         |. GameObjectComponentEngineService.unsafeGetTransformComponent(
-              engineState,
-            )
-         |. TransformEngineService.getPosition(engineState),
-       )
-    |> ArcballCameraEngineService.setArcballCameraControllerDistance(
-         distance,
-         editorCameraArcballControllerComponent,
-       ) :
-    engineState
-    |> ArcballCameraEngineService.setArcballCameraControllerTarget(
-         editorCameraArcballControllerComponent,
-         (0., 0., 0.),
-       );
+  engineState |> SceneEngineService.isSceneGameObject(targetGameObject) ?
+    _setArcballCameraControllerAttribute(
+      editorCameraArcballControllerComponent,
+      (
+        FocusDataUtils.getSceneGameObjectArcballCameraDistance(),
+        engineState |> _getGameObjectPosition(targetGameObject),
+      ),
+      engineState,
+    ) :
+    _setArcballCameraControllerAttribute(
+      editorCameraArcballControllerComponent,
+      (
+        FocusDataUtils.getSceneChildrenArcballCameraDistance(),
+        engineState |> _getGameObjectPosition(targetGameObject),
+      ),
+      engineState,
+    );
 };
