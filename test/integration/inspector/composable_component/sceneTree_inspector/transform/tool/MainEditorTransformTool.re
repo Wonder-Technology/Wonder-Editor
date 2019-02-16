@@ -81,3 +81,32 @@ let changeScaleY = (transform, value) =>
 
 let changeScaleZ = (transform, value) =>
   MainEditorTransform.Method.changeScaleZ(transform, value);
+
+let setLocalEulerAngleData = () =>
+  StateEditorService.getState()
+  |> TransformEditorService.setLocalEulerAngleX(
+       GameObjectTool.getCurrentSceneTreeNodeTransform(),
+       10.,
+     )
+  |> TransformEditorService.setLocalEulerAngleY(
+       GameObjectTool.getCurrentSceneTreeNodeTransform(),
+       10.,
+     )
+  |> TransformEditorService.setLocalEulerAngleZ(
+       GameObjectTool.getCurrentSceneTreeNodeTransform(),
+       10.,
+     )
+  |> StateEditorService.setState
+  |> ignore;
+
+let judgeShouldRemoveLocalEulerAngleData = () => {
+  let localEulerAngle =
+    TransformUtils.getTransformRotationData(
+      GameObjectTool.getCurrentSceneTreeNodeTransform(),
+    );
+
+  JudgeTool.isEqual(
+    localEulerAngle |> Vector3Service.truncate(3),
+    (0., 0., 0.),
+  );
+};

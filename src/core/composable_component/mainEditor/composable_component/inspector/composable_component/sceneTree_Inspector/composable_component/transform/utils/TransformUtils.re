@@ -37,7 +37,8 @@ let isTransformVec3Equal = ((x, y, z), (newX, newY, newZ)) =>
   && z
   |> ValueService.isValueEqual(ValueType.Float, newZ);
 
-let refreshTransform = ((editorState, engineState)) => {
+let refreshTransformWithDispatchFunc =
+    (dispatchFunc, (editorState, engineState)) => {
   let editorState =
     TransformEditorService.removeLocalEulerAngleData(
       GameObjectComponentEngineService.unsafeGetTransformComponent(
@@ -50,10 +51,14 @@ let refreshTransform = ((editorState, engineState)) => {
   editorState |> StateEditorService.setState |> ignore;
   engineState |> StateEngineService.setState |> ignore;
 
-  let dispatchFunc = UIStateService.getDispatch();
-
   dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
   |> ignore;
 
   (StateEditorService.getState(), StateEngineService.unsafeGetState());
 };
+
+let refreshTransform = ((editorState, engineState)) =>
+  refreshTransformWithDispatchFunc(
+    UIStateService.getDispatch(),
+    (editorState, engineState),
+  );

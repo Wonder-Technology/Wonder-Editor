@@ -19,7 +19,8 @@ module Method = {
         value,
       );
 
-    dispatchFunc(AppStore.UpdateAction(Update([|Inspector|]))) |> ignore;
+    TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
+    |> StateLogicService.getAndSetStateToGetData;
   };
 
   let blurArcballCameraDistance =
@@ -81,6 +82,11 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
           (uiState, dispatchFunc),
           arcballCameraController,
         )
+      )
+      dragDropFunc=(
+        (_) =>
+          TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
+          |> StateLogicService.getAndSetStateToGetData
       )
     />
     <MainEditorFloatInputBaseComponent

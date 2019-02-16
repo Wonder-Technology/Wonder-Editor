@@ -21,7 +21,9 @@ let _ =
       ControllerTool.stubRequestAnimationFrame(
         createEmptyStubWithJsObjSandbox(sandbox),
       );
-      ControllerTool.run();
+      ControllerTool.stubCancelAnimationFrame(
+        createEmptyStubWithJsObjSandbox(sandbox),
+      );
     });
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
@@ -30,6 +32,7 @@ let _ =
 
     describe("test set transform in engine state", () =>
       test("current gameObject's tranform position should set into engine", () => {
+        ControllerTool.run();
         let currentGameObjectTransform =
           GameObjectTool.getCurrentSceneTreeNodeTransform();
         let expectValue = 155.;
@@ -45,6 +48,29 @@ let _ =
              currentGameObjectTransform,
            )
         |> expect == (expectValue, 0., 0.);
+      })
+    );
+
+    describe("fix bug", () =>
+      test("should refresh transform when stop", () => {
+        ControllerTool.run();
+        let currentGameObjectTransform =
+          GameObjectTool.getCurrentSceneTreeNodeTransform();
+        let expectValue = 155.;
+
+        MainEditorTransformTool.changePositionXAndBlur(
+          ~transform=currentGameObjectTransform,
+          ~value=expectValue,
+          (),
+        );
+        ControllerTool.stop();
+
+
+        BuildComponentTool.buildMainEditorTransformComponent(
+          TestTool.buildEmptyAppState(),
+          currentGameObjectTransform,
+        )
+        |> ReactTestTool.createSnapshotAndMatch;
       })
     );
   });

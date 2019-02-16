@@ -61,23 +61,6 @@ let _ =
              AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
            );
 
-      let _setLocalEulerAngleMap = () =>
-        StateEditorService.getState()
-        |> TransformEditorService.setLocalEulerAngleX(
-             GameObjectTool.getCurrentSceneTreeNodeTransform(),
-             10.,
-           )
-        |> TransformEditorService.setLocalEulerAngleY(
-             GameObjectTool.getCurrentSceneTreeNodeTransform(),
-             10.,
-           )
-        |> TransformEditorService.setLocalEulerAngleZ(
-             GameObjectTool.getCurrentSceneTreeNodeTransform(),
-             10.,
-           )
-        |> StateEditorService.setState
-        |> ignore;
-
       describe(
         "if current scene tree node has arcballCameraController component", () => {
         let _prepareMouseEvent = (~sandbox, ()) => {
@@ -141,7 +124,7 @@ let _ =
             _prepareAndExec(
               (60, 20),
               (pageX, pageY) => {
-                _setLocalEulerAngleMap();
+                MainEditorTransformTool.setLocalEulerAngleData();
 
                 EventTool.triggerDomEvent(
                   "mousedown",
@@ -153,7 +136,6 @@ let _ =
                   EventTool.getBody(),
                   MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
                 );
-                RotationGizmosTool.refreshInspectorTransform();
                 EventTool.triggerDomEvent(
                   "mouseup",
                   EventTool.getBody(),
@@ -176,7 +158,7 @@ let _ =
             _prepareAndExec(
               (60, 20),
               (pageX, pageY) => {
-                _setLocalEulerAngleMap();
+                MainEditorTransformTool.setLocalEulerAngleData();
 
                 EventTool.triggerDomEvent(
                   "mousedown",
@@ -267,7 +249,7 @@ let _ =
           () => {
           let _prepareAndExec = ((pageX, pageY)) => {
             _prepare();
-            _setLocalEulerAngleMap();
+            MainEditorTransformTool.setLocalEulerAngleData();
 
             EventTool.triggerDomEvent(
               "mousedown",

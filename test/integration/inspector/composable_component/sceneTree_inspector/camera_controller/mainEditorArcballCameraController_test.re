@@ -31,52 +31,87 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
       });
 
-      describe("test change arcballCameraController distance", () =>
-        describe("test logic", () =>
-          test("test change distance should set into engine", () => {
-            MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
-            let currentGameObjectArcballCamera =
-              GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
-            let value = 21.1;
+      describe("test change arcballCameraController distance", () => {
+        test("test change distance should set into engine", () => {
+          MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
+          let currentGameObjectArcballCamera =
+            GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
+          let value = 21.1;
 
-            MainEditorArcballCameraControllerTool.changeDistanceAndBlur(
-              ~cameraController=currentGameObjectArcballCamera,
-              ~value,
-              (),
-            );
+          MainEditorArcballCameraControllerTool.changeDistanceAndBlur(
+            ~cameraController=currentGameObjectArcballCamera,
+            ~value,
+            (),
+          );
 
-            ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
-              currentGameObjectArcballCamera,
-            )
-            |> StateLogicService.getEngineStateToGetData
-            |. FloatService.truncateFloatValue(5)
-            |> expect == value;
+          ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
+            currentGameObjectArcballCamera,
+          )
+          |> StateLogicService.getEngineStateToGetData
+          |. FloatService.truncateFloatValue(5)
+          |> expect == value;
+        });
+
+        describe("if blur", () =>
+          describe("refresh inspector", () => {
+            let _prepareAndExec = () => {
+              MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
+              MainEditorTransformTool.setLocalEulerAngleData();
+              let currentGameObjectArcballCamera =
+                GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
+              let value = 21.1;
+
+              MainEditorArcballCameraControllerTool.changeDistanceAndBlur(
+                ~cameraController=currentGameObjectArcballCamera,
+                ~value,
+                (),
+              );
+            };
+
+            test(
+              "should remove current scene tree node->local euler angle data",
+              () => {
+              _prepareAndExec();
+
+              MainEditorTransformTool.judgeShouldRemoveLocalEulerAngleData()
+              |> expect == true;
+            });
+            test("refresh inspector", () => {
+              let dispatchFuncStub =
+                ReactTool.createDispatchFuncStub(sandbox);
+
+              _prepareAndExec();
+
+              dispatchFuncStub
+              |> expect
+              |> toCalledWith([|
+                   AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
+                 |]);
+            });
           })
-        )
-      );
+        );
+      });
 
       describe("test change arcballCameraController minDistance", () =>
-        describe("test logic", () =>
-          test("test change minDistance should set into engine", () => {
-            MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
-            let currentGameObjectArcballCamera =
-              GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
-            let value = 11.1;
+        test("test change minDistance should set into engine", () => {
+          MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
+          let currentGameObjectArcballCamera =
+            GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
+          let value = 11.1;
 
-            MainEditorArcballCameraControllerTool.changeMinDistanceAndBlur(
-              ~cameraController=currentGameObjectArcballCamera,
-              ~value,
-              (),
-            );
+          MainEditorArcballCameraControllerTool.changeMinDistanceAndBlur(
+            ~cameraController=currentGameObjectArcballCamera,
+            ~value,
+            (),
+          );
 
-            ArcballCameraEngineService.unsafeGetArcballCameraControllerMinDistance(
-              currentGameObjectArcballCamera,
-            )
-            |> StateLogicService.getEngineStateToGetData
-            |. FloatService.truncateFloatValue(5)
-            |> expect == value;
-          })
-        )
+          ArcballCameraEngineService.unsafeGetArcballCameraControllerMinDistance(
+            currentGameObjectArcballCamera,
+          )
+          |> StateLogicService.getEngineStateToGetData
+          |. FloatService.truncateFloatValue(5)
+          |> expect == value;
+        })
       );
 
       describe(

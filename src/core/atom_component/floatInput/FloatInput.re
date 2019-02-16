@@ -205,7 +205,7 @@ module Method = {
       } :
       ();
 
-  let renderLabel = ((send, state), label) =>
+  let renderLabel = ((send, state), label, onDragDrop) =>
     switch (label) {
     | None => ReasonReact.null
     | Some(label) =>
@@ -213,7 +213,13 @@ module Method = {
         className="item-header component-label"
         onMouseDown=(event => handleDragStart(event, send))
         onMouseMove=(event => handleDragOver(event, (send, state)))
-        onMouseUp=(_event => handleDragDrop((send, state)))>
+        onMouseUp=(
+          event => {
+            handleDragDrop((send, state));
+
+            onDragDrop(event);
+          }
+        )>
         (DomHelper.textEl(label))
       </div>
     };
@@ -247,15 +253,20 @@ let reducer = ((onChangeFunc, onBlurFunc), canBeZero, action, state) =>
   };
 
 let render =
-    (label, onBlurFunc, {state, handle, send}: ReasonReact.self('a, 'b, 'c)) =>
+    (
+      label,
+      (onBlurFunc, onDragDrop),
+      {state, handle, send}: ReasonReact.self('a, 'b, 'c),
+    ) =>
   <article className="inspector-item wonder-float-input">
-    (Method.renderLabel((send, state), label))
+    (Method.renderLabel((send, state), label, onDragDrop))
     (Method.renderContent((send, state)))
   </article>;
 
 let make =
     (
       ~canBeZero: bool=true,
+      ~onDragDrop=e => (),
       ~defaultValue: option(string)=?,
       ~label: option(string)=?,
       ~onChange: option(float => unit)=?,
@@ -279,5 +290,5 @@ let make =
       }
     },
   reducer: reducer((onChange, onBlur), canBeZero),
-  render: self => render(label, onBlur, self),
+  render: self => render(label, (onBlur, onDragDrop), self),
 };

@@ -39,9 +39,6 @@ let restoreHistoryStack =
     )
     |> StateHistoryService.refreshStateForHistory;
 
-    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))
-    |> ignore;
-
     AllStateData.setHistoryState({
       copiedRedoUndoStackRecord: None,
       uiUndoStack:

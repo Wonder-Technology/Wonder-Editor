@@ -17,7 +17,7 @@ let reducer = (blurValueFunc, action, state) =>
 let render =
     (
       label,
-      changeComponentValueFunc,
+      (changeComponentValueFunc, dragDropFunc),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <FloatInput
@@ -25,10 +25,12 @@ let render =
     label
     onChange=changeComponentValueFunc
     onBlur=(value => send(TriggerBlur(value)))
+    onDragDrop=dragDropFunc
   />;
 
 let make =
     (
+      ~dragDropFunc=_ => (),
       ~label,
       ~getComponentValueFunc,
       ~changeComponentValueFunc,
@@ -43,5 +45,6 @@ let make =
       |. FloatService.truncateFloatValue(5),
   },
   reducer: reducer(blurValueFunc),
-  render: self => render(label, changeComponentValueFunc, self),
+  render: self =>
+    render(label, (changeComponentValueFunc, dragDropFunc), self),
 };
