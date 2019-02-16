@@ -219,9 +219,12 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
         )
       )
       dragDropFunc=(
-        _ =>
+        _ =>{
+          WonderLog.Log.debug(WonderLog.Log.buildDebugMessage(~description={j|aaa|j}, ~params={j||j}), true);
+
           TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
           |> StateLogicService.getAndSetStateToGetData
+        }
       )
     />
     <ThreeFloatInput

@@ -172,7 +172,7 @@ module Method = {
     ();
   };
 
-  let handleDragDrop = ((send, state)) =>
+  let handleDragDrop = (event, (send, state), onDragDropFunc) =>
     isDragStart(state) ?
       {
         Wonderjs.DomExtend.exitPointerLock();
@@ -180,6 +180,8 @@ module Method = {
         send(Blur);
 
         ();
+
+        onDragDropFunc(event);
       } :
       ();
 
@@ -213,13 +215,7 @@ module Method = {
         className="item-header component-label"
         onMouseDown=(event => handleDragStart(event, send))
         onMouseMove=(event => handleDragOver(event, (send, state)))
-        onMouseUp=(
-          event => {
-            handleDragDrop((send, state));
-
-            onDragDrop(event);
-          }
-        )>
+        onMouseUp=(event => handleDragDrop(event, (send, state), onDragDrop))>
         (DomHelper.textEl(label))
       </div>
     };

@@ -201,16 +201,31 @@ let _ =
       });
 
       describe("test drag drop", () => {
-        test("if not drag start, do nothing", () => {
-          let send = createEmptyStubWithJsObjSandbox(sandbox);
-          let state = FloatInputTool.buildState(~isDragStart=false, ());
+        let _handleDragDrop =
+            (
+              ~send,
+              ~state,
+              ~event=_buildFakeEvent(~sandbox, ()),
+              ~onDragDrop=createEmptyStubWithJsObjSandbox(sandbox),
+              (),
+            ) =>
+          FloatInput.Method.handleDragDrop(event, (send, state), onDragDrop);
 
-          FloatInput.Method.handleDragDrop((send, state));
+        describe("if not drag start", () =>
+          test("not exec onDragDrop", () => {
+            let onDragDrop = createEmptyStubWithJsObjSandbox(sandbox);
+            let send = createEmptyStubWithJsObjSandbox(sandbox);
+            let state = FloatInputTool.buildState(~isDragStart=false, ());
 
-          send |> expect |> not_ |> toCalled;
-        });
+            _handleDragDrop(~send, ~state, ~onDragDrop, ());
+
+            onDragDrop |> expect |> not_ |> toCalled;
+          })
+        );
 
         describe("else", () => {
+          let document = ref(Obj.magic(-1));
+
           let _prepareDocument = [%raw
             sandbox => {|
  document.exitPointerLock = sandbox.stub();
@@ -219,20 +234,30 @@ let _ =
   |}
           ];
 
+          beforeEach(() => document := _prepareDocument(sandbox^));
+
+          test("exec onDragDrop", () => {
+            let onDragDrop = createEmptyStubWithJsObjSandbox(sandbox);
+            let send = createEmptyStubWithJsObjSandbox(sandbox);
+            let state = FloatInputTool.buildState(~isDragStart=true, ());
+
+            _handleDragDrop(~send, ~state, ~onDragDrop, ());
+
+            onDragDrop |> expect |> toCalledOnce;
+          });
           test("exit pointer lock", () => {
             let send = createEmptyStubWithJsObjSandbox(sandbox);
             let state = FloatInputTool.buildState(~isDragStart=true, ());
-            let document = _prepareDocument(sandbox^);
 
-            FloatInput.Method.handleDragDrop((send, state));
+            _handleDragDrop(~send, ~state, ());
 
-            document##exitPointerLock |> expect |> toCalledOnce;
+            Obj.magic(document^)##exitPointerLock |> expect |> toCalledOnce;
           });
           test("send Blur", () => {
             let send = createEmptyStubWithJsObjSandbox(sandbox);
             let state = FloatInputTool.buildState(~isDragStart=true, ());
 
-            FloatInput.Method.handleDragDrop((send, state));
+            _handleDragDrop(~send, ~state, ());
 
             send |> expect |> toCalledWith([|FloatInput.Blur|]);
           });
