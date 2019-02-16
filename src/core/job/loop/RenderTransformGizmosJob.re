@@ -170,6 +170,7 @@ let renderJob = (_, engineState) => {
 
   IsTransformGizmoRenderSceneViewEditorService.isTransformGizmoRender(
     editorState,
+    engineState,
   ) ?
     {
       let currentSceneTreeNode =

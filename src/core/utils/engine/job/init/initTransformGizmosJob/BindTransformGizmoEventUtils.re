@@ -29,6 +29,7 @@ let _bindDragStartEvent = engineState =>
             let (editorState, engineState) =
               IsTransformGizmoRenderSceneViewEditorService.isTransformGizmoRender(
                 editorState,
+                engineState,
               ) ?
                 {
                   let currentSceneTreeNode =
