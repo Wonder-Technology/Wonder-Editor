@@ -353,35 +353,225 @@ let _ =
         )
       );
 
-      describe("test drag wdb to gameObject", () =>
-        testPromise("should add to target sceneTree node's children", () => {
+      describe("test drag wdb to be target gameObject sib", () => {
+        beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree,
+          )
+          |> ignore
+        );
+        describe("test drag gameObject before target gameObject", () => {
+          describe("test target gameObject isn't scene gameObject", () =>
+            testPromise("test snapshot", () =>
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=directionPointLightsAndCubeWDBArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId => {
+                   let engineState = StateEngineService.unsafeGetState();
+
+                   MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     ~targetGameObject=
+                       MainEditorSceneTool.getFirstCube(engineState),
+                     ~dragPosition=SceneTreeNodeType.DragBeforeTarget,
+                     (),
+                   );
+
+                   BuildComponentTool.buildSceneTree(
+                     TestTool.buildEmptyAppState(),
+                   )
+                   |> ReactTestTool.createSnapshotAndMatch
+                   |> resolve;
+                 })
+            )
+          );
+          /* testPromise("test scene children", () => {
+               let engineState = StateEngineService.unsafeGetState();
+               let (scene, (camera, cube1, cube2, directionLight)) =
+                 MainEditorSceneTool.getDefaultGameObjects(engineState);
+
+               MainEditorAssetUploadTool.loadOneWDB(
+                 ~arrayBuffer=directionPointLightsAndCubeWDBArrayBuffer^,
+                 (),
+               )
+               |> then_(uploadedWDBNodeId => {
+                    let wdbGameObject =
+                      StateEditorService.getState()
+                      |> OperateTreeAssetEditorService.unsafeFindNodeById(
+                           uploadedWDBNodeId,
+                         )
+                      |> WDBNodeAssetService.getWDBGameObject;
+
+                    Js.log(wdbGameObject);
+
+                    MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                      ~wdbNodeId=uploadedWDBNodeId,
+                      ~targetGameObject=
+                        MainEditorSceneTool.getFirstCube(engineState),
+                      ~dragPosition=SceneTreeNodeType.DragBeforeTarget,
+                      (),
+                    );
+
+                    HierarchyGameObjectEngineService.getChildren(
+                      scene,
+                      engineState,
+                    )
+                    |>
+                    expect == [|
+                                camera,
+                                wdbGameObject,
+                                cube1,
+                                cube2,
+                                directionLight,
+                              |]
+                    |> resolve;
+                  });
+             }); */
+
+          describe("test target gameObject is scene gameObject", () =>
+            describe("set dragged gameobject to be scene first child", () =>
+              testPromise("test snapshot", () =>
+                MainEditorAssetUploadTool.loadOneWDB(
+                  ~arrayBuffer=directionPointLightsAndCubeWDBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId => {
+                     let engineState = StateEngineService.unsafeGetState();
+
+                     MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                       ~wdbNodeId=uploadedWDBNodeId,
+                       ~targetGameObject=
+                         SceneEngineService.getSceneGameObject
+                         |> StateLogicService.getEngineStateToGetData,
+                       ~dragPosition=SceneTreeNodeType.DragBeforeTarget,
+                       (),
+                     );
+
+                     BuildComponentTool.buildSceneTree(
+                       TestTool.buildEmptyAppState(),
+                     )
+                     |> ReactTestTool.createSnapshotAndMatch
+                     |> resolve;
+                   })
+              )
+            )
+          );
+        });
+        describe("test drag gameObject into target gameObject", () => {
+          describe("test target gameObject isn't scene gameObject", () =>
+            testPromise("test snapshot", () =>
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=directionPointLightsAndCubeWDBArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId => {
+                   let engineState = StateEngineService.unsafeGetState();
+
+                   MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     ~targetGameObject=
+                       MainEditorSceneTool.getFirstCube(engineState),
+                     ~dragPosition=SceneTreeNodeType.DragIntoTarget,
+                     (),
+                   );
+
+                   BuildComponentTool.buildSceneTree(
+                     TestTool.buildEmptyAppState(),
+                   )
+                   |> ReactTestTool.createSnapshotAndMatch
+                   |> resolve;
+                 })
+            )
           );
 
-          MainEditorAssetUploadTool.loadOneWDB(
-            ~arrayBuffer=directionPointLightsAndCubeWDBArrayBuffer^,
-            (),
-          )
-          |> then_(uploadedWDBNodeId => {
-               let engineState = StateEngineService.unsafeGetState();
+          describe("test target gameObject is scene gameObject", () =>
+            describe("set dragged gameobject to be scene last child", () =>
+              testPromise("test snapshot", () =>
+                MainEditorAssetUploadTool.loadOneWDB(
+                  ~arrayBuffer=directionPointLightsAndCubeWDBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId => {
+                     let engineState = StateEngineService.unsafeGetState();
 
-               MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
-                 ~wdbNodeId=uploadedWDBNodeId,
-                 ~targetGameObject=
-                   MainEditorSceneTool.getFirstCube(engineState),
-                 (),
-               );
+                     MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                       ~wdbNodeId=uploadedWDBNodeId,
+                       ~targetGameObject=
+                         SceneEngineService.getSceneGameObject
+                         |> StateLogicService.getEngineStateToGetData,
+                       ~dragPosition=SceneTreeNodeType.DragIntoTarget,
+                       (),
+                     );
 
-               BuildComponentTool.buildSceneTree(
-                 TestTool.buildEmptyAppState(),
-               )
-               |> ReactTestTool.createSnapshotAndMatch
-               |> resolve;
-             });
-        })
-      );
+                     BuildComponentTool.buildSceneTree(
+                       TestTool.buildEmptyAppState(),
+                     )
+                     |> ReactTestTool.createSnapshotAndMatch
+                     |> resolve;
+                   })
+              )
+            )
+          );
+        });
+        describe("test drag gameObject after target gameObject", () => {
+          describe("test target gameObject isn't scene gameObject", () =>
+            testPromise("test snapshot", () =>
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=directionPointLightsAndCubeWDBArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId => {
+                   let engineState = StateEngineService.unsafeGetState();
+
+                   MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     ~targetGameObject=
+                       MainEditorSceneTool.getFirstCube(engineState),
+                     ~dragPosition=SceneTreeNodeType.DragAfterTarget,
+                     (),
+                   );
+
+                   BuildComponentTool.buildSceneTree(
+                     TestTool.buildEmptyAppState(),
+                   )
+                   |> ReactTestTool.createSnapshotAndMatch
+                   |> resolve;
+                 })
+            )
+          );
+
+          describe("test target gameObject is scene gameObject", () =>
+            describe("set dragged gameobject to be scene first child", () =>
+              testPromise("test snapshot", () =>
+                MainEditorAssetUploadTool.loadOneWDB(
+                  ~arrayBuffer=directionPointLightsAndCubeWDBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId => {
+                     let engineState = StateEngineService.unsafeGetState();
+
+                     MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                       ~wdbNodeId=uploadedWDBNodeId,
+                       ~targetGameObject=
+                         SceneEngineService.getSceneGameObject
+                         |> StateLogicService.getEngineStateToGetData,
+                       ~dragPosition=SceneTreeNodeType.DragAfterTarget,
+                       (),
+                     );
+
+                     BuildComponentTool.buildSceneTree(
+                       TestTool.buildEmptyAppState(),
+                     )
+                     |> ReactTestTool.createSnapshotAndMatch
+                     |> resolve;
+                   })
+              )
+            )
+          );
+        });
+      });
       /* describe("fix bug", () =>
            describe(
              "should remain other scene tree node's isShowChildren not change", () =>
