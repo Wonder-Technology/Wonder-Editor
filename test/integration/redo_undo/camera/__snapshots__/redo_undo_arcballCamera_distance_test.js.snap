@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`redo_undo: arcballCameraController distance and minDistance prepare first step: set currentSceneTreeNode to be camera test redo operate test redo one step undo step which from second to zero, redo step which from zero to first 1`] = `
+exports[`redo_undo: arcballCameraController distance and minDistance test change and blur distance and minDistance test redo operate test redo one step undo step which from second to zero, redo step which from zero to first 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -749,7 +749,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
 </article>
 `;
 
-exports[`redo_undo: arcballCameraController distance and minDistance prepare first step: set currentSceneTreeNode to be camera test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
+exports[`redo_undo: arcballCameraController distance and minDistance test change and blur distance and minDistance test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -1498,7 +1498,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
 </article>
 `;
 
-exports[`redo_undo: arcballCameraController distance and minDistance prepare first step: set currentSceneTreeNode to be camera test undo operate test not undo 1`] = `
+exports[`redo_undo: arcballCameraController distance and minDistance test change and blur distance and minDistance test undo operate test not undo 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -2247,7 +2247,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
 </article>
 `;
 
-exports[`redo_undo: arcballCameraController distance and minDistance prepare first step: set currentSceneTreeNode to be camera test undo operate test undo one step step which from second to first 1`] = `
+exports[`redo_undo: arcballCameraController distance and minDistance test change and blur distance and minDistance test undo operate test undo one step step which from second to first 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -2786,7 +2786,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
 </article>
 `;
 
-exports[`redo_undo: arcballCameraController distance and minDistance prepare first step: set currentSceneTreeNode to be camera test undo operate test undo two step step which from second to zero 1`] = `
+exports[`redo_undo: arcballCameraController distance and minDistance test change and blur distance and minDistance test undo operate test undo two step step which from second to zero 1`] = `
 <article
   className="wonder-inspector-component"
 >
