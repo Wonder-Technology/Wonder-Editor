@@ -36,6 +36,39 @@ let changeDistanceAndBlur =
   );
 };
 
+let dragDropArcballCameraDistance =
+    (
+      ~cameraController,
+      ~value,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorArcballCameraController.Method.dragDropArcballCameraDistance(
+    (uiState, dispatchFunc),
+    cameraController,
+    value,
+  );
+
+let changeDistanceAndDragDrop =
+    (
+      ~cameraController,
+      ~changeValue,
+      ~dragDropValue,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) => {
+  changeDistance(cameraController, changeValue);
+  dragDropArcballCameraDistance(
+    ~uiState,
+    ~dispatchFunc,
+    ~cameraController,
+    ~value=dragDropValue,
+    (),
+  );
+};
+
 let changeMinDistance = (cameraController, value) =>
   MainEditorArcballCameraController.Method.changeMinDistance(
     cameraController,

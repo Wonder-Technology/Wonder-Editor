@@ -96,6 +96,53 @@ let _ =
             });
           })
         );
+
+        describe("if drag drop", () =>
+          describe("refresh inspector", () => {
+            let _prepareAndExec = dispatchFuncStub => {
+              MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
+              MainEditorTransformTool.setLocalEulerAngleData();
+              let currentGameObjectArcballCamera =
+                GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
+              let value = 21.1;
+
+              let dispatchFuncCallCountBeforeChangeTarget =
+                dispatchFuncStub |> getCallCount;
+              MainEditorArcballCameraControllerTool.changeDistanceAndDragDrop(
+                ~cameraController=currentGameObjectArcballCamera,
+                ~changeValue=value,
+                ~dragDropValue=value,
+                (),
+              );
+
+              dispatchFuncCallCountBeforeChangeTarget;
+            };
+
+            test(
+              "should remove current scene tree node->local euler angle data",
+              () => {
+              _prepareAndExec(ReactTool.createDispatchFuncStub(sandbox));
+
+              MainEditorTransformTool.judgeShouldRemoveLocalEulerAngleData()
+              |> expect == true;
+            });
+            test("refresh inspector", () => {
+              let dispatchFuncStub =
+                ReactTool.createDispatchFuncStub(sandbox);
+
+              let dispatchFuncCallCountBeforeChangeTarget =
+                _prepareAndExec(dispatchFuncStub);
+
+              dispatchFuncStub
+              |> withOneArg(
+                   AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
+                 )
+              |> getCallCount
+              |> expect == dispatchFuncCallCountBeforeChangeTarget
+              + 1;
+            });
+          })
+        );
       });
 
       describe("test change arcballCameraController minDistance", () =>

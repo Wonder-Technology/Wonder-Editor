@@ -106,6 +106,18 @@ module Method = {
       ),
     );
 
+  let dragDropArcballCameraDistance =
+      ((uiState, dispatchFunc), arcballCameraController, distance) => {
+    blurArcballCameraDistance(
+      (uiState, dispatchFunc),
+      arcballCameraController,
+      distance,
+    );
+
+    TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
+    |> StateLogicService.getAndSetStateToGetData;
+  };
+
   let changeDistance = (arcballCameraController, value) =>
     ArcballCameraEngineService.setArcballCameraControllerDistance(
       value,
@@ -194,16 +206,12 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
         )
       )
       dragDropFunc=(
-        value => {
-          Method.blurArcballCameraDistance(
+        value =>
+          Method.dragDropArcballCameraDistance(
             (uiState, dispatchFunc),
             arcballCameraController,
             value,
-          );
-
-          TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
-          |> StateLogicService.getAndSetStateToGetData;
-        }
+          )
       )
     />
     <MainEditorFloatInputBaseComponent
