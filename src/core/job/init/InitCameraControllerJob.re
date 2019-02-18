@@ -17,7 +17,7 @@ let _handleTriggerRefreshInspectorEvent = engineState =>
       engineState |> StateEngineService.setState |> ignore;
 
       TransformUtils.refreshTransform
-      |> StateLogicService.getAndSetStateToGetData;
+      |> StateLogicService.getAndSetState;
 
       let engineState =
         StateEngineService.unsafeGetState() |> StateLogicService.renderWhenStop;

@@ -19,7 +19,7 @@ module Method = {
         value,
       );
   /* TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
-     |> StateLogicService.getAndSetStateToGetData; */
+     |> StateLogicService.getAndSetState; */
 
   let _blurArcballCameraTarget =
       (
@@ -43,7 +43,7 @@ module Method = {
         target,
       );
     /* TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
-       |> StateLogicService.getAndSetStateToGetData; */
+       |> StateLogicService.getAndSetState; */
   };
 
   let blurArcballCameraDistance =
@@ -115,7 +115,7 @@ module Method = {
     );
 
     TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
-    |> StateLogicService.getAndSetStateToGetData;
+    |> StateLogicService.getAndSetState;
   };
 
   let changeDistance = (arcballCameraController, value) =>
@@ -239,7 +239,7 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
           );
 
           TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
-          |> StateLogicService.getAndSetStateToGetData;
+          |> StateLogicService.getAndSetState;
         }
       )
     />
@@ -262,7 +262,7 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
           );
 
           TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
-          |> StateLogicService.getAndSetStateToGetData;
+          |> StateLogicService.getAndSetState;
         }
       )
       canBeZero=true
@@ -290,7 +290,7 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
           );
 
           TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
-          |> StateLogicService.getAndSetStateToGetData;
+          |> StateLogicService.getAndSetState;
         }
       )
     />
@@ -317,7 +317,7 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
           );
 
           TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
-          |> StateLogicService.getAndSetStateToGetData;
+          |> StateLogicService.getAndSetState;
         }
       )
     />
