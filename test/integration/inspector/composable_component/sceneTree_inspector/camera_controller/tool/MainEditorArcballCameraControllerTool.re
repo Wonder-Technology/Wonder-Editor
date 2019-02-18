@@ -186,6 +186,18 @@ let changeTargetX = (cameraController, value) =>
     value,
   );
 
+let changeTargetY = (cameraController, value) =>
+  MainEditorArcballCameraController.Method.changeTargetY(
+    cameraController,
+    value,
+  );
+
+let changeTargetZ = (cameraController, value) =>
+  MainEditorArcballCameraController.Method.changeTargetZ(
+    cameraController,
+    value,
+  );
+
 let blurArcballCameraTarget =
     (
       ~cameraController,
@@ -215,6 +227,56 @@ let changeTargetXAndBlur =
     |> StateLogicService.getEngineStateToGetData;
 
   changeTargetX(cameraController, value);
+
+  blurArcballCameraTarget(
+    ~uiState,
+    ~dispatchFunc,
+    ~cameraController,
+    ~value=oldTarget,
+    (),
+  );
+};
+
+let changeTargetYAndBlur =
+    (
+      ~cameraController,
+      ~value,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) => {
+  let oldTarget =
+    ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
+      cameraController,
+    )
+    |> StateLogicService.getEngineStateToGetData;
+
+  changeTargetY(cameraController, value);
+
+  blurArcballCameraTarget(
+    ~uiState,
+    ~dispatchFunc,
+    ~cameraController,
+    ~value=oldTarget,
+    (),
+  );
+};
+
+let changeTargetZAndBlur =
+    (
+      ~cameraController,
+      ~value,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) => {
+  let oldTarget =
+    ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
+      cameraController,
+    )
+    |> StateLogicService.getEngineStateToGetData;
+
+  changeTargetZ(cameraController, value);
 
   blurArcballCameraTarget(
     ~uiState,

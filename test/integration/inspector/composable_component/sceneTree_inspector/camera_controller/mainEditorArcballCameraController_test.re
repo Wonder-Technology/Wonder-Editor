@@ -31,6 +31,16 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
       });
 
+      test("test ui", () => {
+        MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
+
+        BuildComponentTool.buildInspectorComponent(
+          TestTool.buildEmptyAppState(),
+          InspectorTool.buildFakeAllShowComponentConfig(),
+        )
+        |> ReactTestTool.createSnapshotAndMatch;
+      });
+
       describe("test change arcballCameraController distance", () => {
         test("test change should set into engine", () => {
           MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
@@ -194,15 +204,15 @@ let _ =
           MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
           let currentGameObjectArcballCamera =
             GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
-          let value = 11.1;
+          let value = 2.0;
 
-          MainEditorArcballCameraControllerTool.changePhiAndBlur(
+          MainEditorArcballCameraControllerTool.changeThetaAndBlur(
             ~cameraController=currentGameObjectArcballCamera,
             ~value,
             (),
           );
 
-          ArcballCameraEngineService.unsafeGetArcballCameraControllerPhi(
+          ArcballCameraEngineService.unsafeGetArcballCameraControllerTheta(
             currentGameObjectArcballCamera,
           )
           |> StateLogicService.getEngineStateToGetData
@@ -212,24 +222,58 @@ let _ =
       );
 
       describe("test change arcballCameraController target", () => {
-        test("test change should set into engine", () => {
-          MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
-          let currentGameObjectArcballCamera =
-            GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
-          let value = 11.1;
+        describe("test change should set into engine", () => {
+          let _test = (changeAndBlurFunc, getTargetTargetFunc) => {
+            MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
+            let currentGameObjectArcballCamera =
+              GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
+            let value = 11.1;
 
-          MainEditorArcballCameraControllerTool.changeTargetXAndBlur(
-            ~cameraController=currentGameObjectArcballCamera,
-            ~value,
-            (),
+            changeAndBlurFunc(
+              ~cameraController=currentGameObjectArcballCamera,
+              ~value,
+              (),
+            );
+
+            ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
+              currentGameObjectArcballCamera,
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> Vector3Service.truncate(5)
+            |> expect == getTargetTargetFunc(value);
+            /* ; */
+          };
+
+          test("test change target x", () =>
+            _test(
+              MainEditorArcballCameraControllerTool.changeTargetXAndBlur(
+                ~uiState=TestTool.buildEmptyAppState(),
+                ~dispatchFunc=TestTool.getDispatch(),
+              ),
+              value =>
+              (value, 0., 0.)
+            )
           );
-
-          ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
-            currentGameObjectArcballCamera,
-          )
-          |> StateLogicService.getEngineStateToGetData
-          |> Vector3Service.truncate(5)
-          |> expect == (value, 0., 0.);
+          test("test change target y", () =>
+            _test(
+              MainEditorArcballCameraControllerTool.changeTargetYAndBlur(
+                ~uiState=TestTool.buildEmptyAppState(),
+                ~dispatchFunc=TestTool.getDispatch(),
+              ),
+              value =>
+              (0., value, 0.)
+            )
+          );
+          test("test change target z", () =>
+            _test(
+              MainEditorArcballCameraControllerTool.changeTargetZAndBlur(
+                ~uiState=TestTool.buildEmptyAppState(),
+                ~dispatchFunc=TestTool.getDispatch(),
+              ),
+              value =>
+              (0., 0., value)
+            )
+          );
         });
 
         describe("if blur", () =>
