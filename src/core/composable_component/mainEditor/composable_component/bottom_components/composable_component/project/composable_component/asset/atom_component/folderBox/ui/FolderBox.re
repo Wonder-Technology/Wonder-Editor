@@ -81,7 +81,7 @@ let render =
       (isWidget, checkNodeRelation),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
-  let id = "folder-" ++ string_of_int(folderId);
+  let id = {j|folder-$folderId|j};
   let className = "item-text " ++ (isSelected ? "item-active" : "");
 
   <article className="wonder-asset-folderBox" id style=state.style>

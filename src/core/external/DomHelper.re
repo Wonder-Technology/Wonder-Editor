@@ -55,6 +55,8 @@ let getDomClientRect = [%bs.raw
         return {
             top: (rect.top + win.pageYOffset) - docElem.clientTop,
             left: (rect.left + win.pageXOffset) - docElem.clientLeft,
+            offsetLeft: ele.offsetLeft,
+            offsetTop: ele.offsetTop,
             height: rect.height,
             width: rect.width,
         }
@@ -62,6 +64,15 @@ let getDomClientRect = [%bs.raw
 
     return rect;
   }
+  |}
+];
+
+let setScrollTopAndLeft = [%raw
+  {|
+    function (domElement, top, left) {
+      domElement.scrollTop = top;
+      domElement.scrollLeft = left;
+    }
   |}
 ];
 
