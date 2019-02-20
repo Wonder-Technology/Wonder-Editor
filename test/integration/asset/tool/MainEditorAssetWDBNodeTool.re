@@ -22,6 +22,11 @@ let addWDBNodeToRoot =
     editorState,
   );
 
+let getWDBName = (~nodeId, ~editorState=StateEditorService.getState(), ()) =>
+  NodeNameAssetLogicService.getWDBNodeName(
+    OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState),
+  );
+
 let getWDBNodeIdByName = (wdbGameObjectName, (editorState, engineState)) =>
   MainEditorAssetTreeTool.findNodeByName(
     wdbGameObjectName,

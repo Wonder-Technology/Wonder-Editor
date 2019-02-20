@@ -84,16 +84,37 @@ let _ =
     );
 
     describe("test name", () => {
-      test("test add the same name folder, the name should add postfix", () => {
+      test(
+        "test add the same name folder in the same dir, the name should add postfix",
+        () => {
         let assetTreeData =
           MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
 
-        MainEditorAssetHeaderOperateNodeTool.addFolder();
-        MainEditorAssetHeaderOperateNodeTool.addFolder();
+        let addedFolderNodeId1 = MainEditorAssetIdTool.getNewAssetId();
         MainEditorAssetHeaderOperateNodeTool.addFolder();
 
-        BuildComponentTool.buildAssetTree()
-        |> ReactTestTool.createSnapshotAndMatch;
+        let addedFolderNodeId2 = MainEditorAssetIdTool.getNewAssetId();
+        MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+        let addedFolderNodeId3 = MainEditorAssetIdTool.getNewAssetId();
+        MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+        let editorState = StateEditorService.getState();
+        (
+          MainEditorAssetFolderNodeTool.getFolderName(
+            addedFolderNodeId1,
+            editorState,
+          ),
+          MainEditorAssetFolderNodeTool.getFolderName(
+            addedFolderNodeId2,
+            editorState,
+          ),
+          MainEditorAssetFolderNodeTool.getFolderName(
+            addedFolderNodeId3,
+            editorState,
+          ),
+        )
+        |> expect == ("New Folder", "New Folder 1", "New Folder 2");
       });
       test(
         "test select folder and add the same name folder, the name should add postfix",

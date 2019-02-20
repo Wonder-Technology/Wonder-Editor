@@ -13,6 +13,18 @@ let getTextureComponent = (nodeId, editorState) => {
   textureComponent;
 };
 
+let getTextureName =
+    (
+      ~nodeId,
+      ~editorState=StateEditorService.getState(),
+      ~engineState=StateEngineService.unsafeGetState(),
+      (),
+    ) =>
+  OperateTextureLogicService.getName(
+    ~texture=getTextureComponent(nodeId, editorState),
+    ~engineState,
+  );
+
 let setTextureImageName = (nodeId, name, editorState) => {
   let textureComponent = getTextureComponent(nodeId, editorState);
 

@@ -5,8 +5,6 @@ module Method = {
       TransformUtils.getTransformPositionData(transformComponent)
       |> StateLogicService.getEngineStateToGetData;
 
-      WonderLog.Log.printJson(("new: ", (newX, newY, newZ), "old: ", (x, y, z))) |> ignore;
-
     Vector3Service.isEqual((x, y, z), (newX, newY, newZ)) ?
       () :
       PositionBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(

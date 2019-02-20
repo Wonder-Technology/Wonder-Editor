@@ -74,8 +74,8 @@ let _ =
         },
       );
 
-      describe("fix bug", () =>
-        test("if rename the same name, shouldn't warn", () => {
+      describe("fix bug", () => {
+        test("if rename to the same name, should warn", () => {
           ConsoleTool.notShowMessage();
 
           let warn =
@@ -110,8 +110,43 @@ let _ =
             (),
           );
 
-          warn |> expect |> not_ |> toCalled;
-        })
-      );
+          warn |> expect |> toCalledOnce;
+        });
+        test("if rename to the existed name in the same dir, should fail", () => {
+          let addedMaterialNodeId1 = MainEditorAssetIdTool.getNewAssetId();
+          MainEditorAssetHeaderOperateNodeTool.addMaterial();
+          let addedMaterialNodeId2 = MainEditorAssetIdTool.getNewAssetId();
+          MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+          let newName = "materialName";
+          AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+            ~nodeId=addedMaterialNodeId1,
+            ~name=newName,
+            (),
+          );
+          let material2OldName =
+            MainEditorAssetMaterialNodeTool.getMaterialName(
+              ~nodeId=addedMaterialNodeId2,
+              (),
+            );
+          AssetTreeInspectorTool.Rename.renameAssetMaterialNode(
+            ~nodeId=addedMaterialNodeId2,
+            ~name=newName,
+            (),
+          );
+
+          (
+            MainEditorAssetMaterialNodeTool.getMaterialName(
+              ~nodeId=addedMaterialNodeId1,
+              (),
+            ),
+            MainEditorAssetMaterialNodeTool.getMaterialName(
+              ~nodeId=addedMaterialNodeId2,
+              (),
+            ),
+          )
+          |> expect == (newName, material2OldName);
+        });
+      });
     });
   });

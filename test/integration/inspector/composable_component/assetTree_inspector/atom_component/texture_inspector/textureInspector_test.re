@@ -108,6 +108,49 @@ let _ =
                });
           },
         );
+
+        test("if rename to the existed name in the same dir, should fail", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.Texture.buildTwoTextureAssetTree();
+
+          let newName = "newTextureName";
+          let firstTextureNodeId =
+            MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+              assetTreeData,
+            );
+          let secondTextureNodeId =
+            MainEditorAssetTreeTool.BuildAssetTree.Texture.getSecondTextureNodeId(
+              assetTreeData,
+            );
+
+          AssetTreeInspectorTool.Rename.renameAssetTextureNode(
+            ~nodeId=firstTextureNodeId,
+            ~name=newName,
+            (),
+          );
+          let texture2OldName =
+            MainEditorAssetTextureNodeTool.getTextureName(
+              ~nodeId=secondTextureNodeId,
+              (),
+            );
+          AssetTreeInspectorTool.Rename.renameAssetTextureNode(
+            ~nodeId=secondTextureNodeId,
+            ~name=newName,
+            (),
+          );
+
+          (
+            MainEditorAssetTextureNodeTool.getTextureName(
+              ~nodeId=firstTextureNodeId,
+              (),
+            ),
+            MainEditorAssetTextureNodeTool.getTextureName(
+              ~nodeId=secondTextureNodeId,
+              (),
+            ),
+          )
+          |> expect == (newName, texture2OldName);
+        });
       });
 
       describe("test texture change wrap", () =>

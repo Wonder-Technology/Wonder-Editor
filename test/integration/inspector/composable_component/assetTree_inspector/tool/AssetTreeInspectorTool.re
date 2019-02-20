@@ -26,6 +26,16 @@ module Rename = {
       ) =>
     _renameAssetNode((uiState, dispatchFunc), nodeId, name);
 
+  let renameAssetWDBNode =
+      (
+        ~uiState=TestTool.buildEmptyAppState(),
+        ~dispatchFunc=TestTool.getDispatch(),
+        ~nodeId,
+        ~name,
+        (),
+      ) =>
+    _renameAssetNode((uiState, dispatchFunc), nodeId, name);
+
   let renameAssetFolderNode =
       (
         ~uiState=TestTool.buildEmptyAppState(),
