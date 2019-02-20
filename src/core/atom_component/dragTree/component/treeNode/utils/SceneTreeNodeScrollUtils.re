@@ -20,6 +20,26 @@ let _calcXScroll =
                                             ) :
       ();
 
+let _calcYScroll =
+    (
+      sceneTreeContainderJsObj,
+      sceneTreeNodeDomOffsetTop,
+      (sceneTreeContainerScrollTop, sceneTreeContainerOffsetHeight),
+    ) =>
+  sceneTreeNodeDomOffsetTop -. sceneTreeContainerScrollTop <= 30. ?
+    {
+      let distance =
+        sceneTreeNodeDomOffsetTop <= 100. ?
+          0.0 : sceneTreeNodeDomOffsetTop /. 2.;
+
+      sceneTreeContainderJsObj##scrollTop#=distance;
+    } :
+    sceneTreeNodeDomOffsetTop >= sceneTreeContainerScrollTop
+    +. sceneTreeContainerOffsetHeight
+    -. 45. ?
+      sceneTreeContainderJsObj##scrollTop#=(sceneTreeNodeDomOffsetTop -. 200.) :
+      ();
+
 let scrollCurrentSceneTreeNode = (isSelected, gameObject) =>
   isSelected ?
     {
@@ -48,6 +68,12 @@ let scrollCurrentSceneTreeNode = (isSelected, gameObject) =>
         sceneTreeContainderJsObj,
         sceneTreeNodeDomOffsetLeft,
         (sceneTreeContainerScrollLeft, sceneTreeContainerOffsetWidth),
+      );
+
+      _calcYScroll(
+        sceneTreeContainderJsObj,
+        sceneTreeNodeDomOffsetTop,
+        (sceneTreeContainerScrollTop, sceneTreeContainerOffsetHeight),
       );
     } :
     ();
