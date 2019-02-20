@@ -102,13 +102,13 @@ module Method = {
         checkNodeRelationFunc,
       );
 
-    relationResult
+    /* relationResult
     |> OptionService.handleSomeAndIgnore(relationResult =>
          relationResult
          |> Result.RelationResult.handleError(msg =>
               ConsoleUtils.error(msg, StateEditorService.getState())
             )
-       );
+       ); */
 
     isValid ?
       DragGameObject(gameObject, startId, dragPosition) :

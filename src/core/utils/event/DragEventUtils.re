@@ -57,7 +57,7 @@ let handleDrop =
       checkNodeRelationFunc,
     );
 
-  relationResult
+  /* relationResult
   |> OptionService.handleSomeAndIgnore(relationResult =>
        relationResult
        |> Result.RelationResult.handleError(msgOpt =>
@@ -66,7 +66,7 @@ let handleDrop =
               msgOpt,
             )
           )
-     );
+     ); */
 
   isValid ? dragDropActionFunc(id, startId) : dragLeaveAction;
 };
