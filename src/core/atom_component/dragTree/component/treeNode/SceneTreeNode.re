@@ -401,8 +401,17 @@ let make =
       self,
     ),
   didUpdate: _self =>
-    SceneTreeNodeScrollUtils.scrollCurrentSceneTreeNode(
-      isSelected,
-      gameObject,
-    ),
+    isSelected ?
+      {
+        let sceneTreeContainerDomEle =
+          DomHelper.getElementById("wonder-sceneTree-component");
+        let sceneTreeNodeDomEle =
+          DomHelper.getElementById({j|sceneTreeNode-$gameObject|j});
+
+        SceneTreeNodeScrollUtils.scrollCurrentSceneTreeNode(
+          sceneTreeContainerDomEle,
+          sceneTreeNodeDomEle,
+        );
+      } :
+      (),
 };
