@@ -293,6 +293,8 @@ let getBoxTexturedGeometryData = () => (
 module Truck = {
   let getTruckGameObjectName = () => "CesiumMilkTruck";
 
+  let getTruck0GameObjectName = () => "Cesium_Milk_Truck_0";
+
   let getTruck1GameObjectName = () => "Cesium_Milk_Truck_1";
 
   let getTruckGeometryData = () => {

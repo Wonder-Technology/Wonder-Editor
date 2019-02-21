@@ -41,6 +41,13 @@ let unsafeGetGameObjectName = GameObjectAPI.unsafeGetGameObjectName;
 let setGameObjectName = (name, gameObject, engineState) =>
   GameObjectAPI.setGameObjectName(gameObject, name, engineState);
 
+let getGameObjectIsRoot = (gameObject, engineState) =>
+  IsRootGameObjectMainService.getIsRoot(gameObject, engineState);
+
+let unsafeGetGameObjectIsRoot = GameObjectAPI.unsafeGetGameObjectIsRoot;
+
+let setGameObjectIsRoot = GameObjectAPI.setGameObjectIsRoot;
+
 let _getAllComponents =
     (allGameObjects, (hasComponentFunc, unsafeGetComponentFunc), engineState) =>
   allGameObjects

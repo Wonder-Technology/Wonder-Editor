@@ -1,45 +1,9 @@
-let prepareStateAndView = (~sandbox, ~viewWidth, ~viewHeight) => {
+let prepareStateAndView =
+    (~sandbox, ~viewWidth, ~viewHeight, ~noWorkerJobRecord) => {
   MainEditorSceneTool.initStateWithJob(
     ~sandbox,
     ~isInitJob=false,
-    ~noWorkerJobRecord=
-      NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-        ~initPipelines=
-          {|
-            [
-        {
-          "name": "default",
-          "jobs": [
-            {
-              "name": "init_event_for_editor"
-            },
-            {
-              "name": "init_camera"
-            },
-            {
-              "name": "init_picking"
-            }
-          ]
-        }
-      ]
-            |},
-        ~initJobs=
-          {j|
-    [
-
-        {
-              "name": "init_event_for_editor"
-        },
-            {
-              "name": "init_camera"
-            },
-            {
-              "name": "init_picking"
-            }
-    ]
-            |j},
-        (),
-      ),
+    ~noWorkerJobRecord,
     (),
   );
 
@@ -53,6 +17,7 @@ let prepareStateAndView = (~sandbox, ~viewWidth, ~viewHeight) => {
 let prepareMouseEvent =
     (
       ~sandbox,
+      ~noWorkerJobRecord,
       ~viewWidth,
       ~viewHeight,
       ~offsetLeft,
@@ -60,7 +25,7 @@ let prepareMouseEvent =
       ~offsetParent=Js.Nullable.undefined,
       (),
     ) => {
-  prepareStateAndView(~sandbox, ~viewWidth, ~viewHeight);
+  prepareStateAndView(~sandbox, ~viewWidth, ~viewHeight, ~noWorkerJobRecord);
 
   MouseEventTool.prepareWithState(
     ~sandbox,
@@ -205,16 +170,15 @@ let prepareGameObject =
        );
 
   /* let engineState =
-    engineState
-    |> TransformEngineService.setLocalPosition(
-         gameObjectPos,
-         gameObjectTransform,
-       )
-    |> TransformEngineService.setLocalEulerAngles(
-         gameObjectEulerAngles,
-         gameObjectTransform,
-       ); */
-
+     engineState
+     |> TransformEngineService.setLocalPosition(
+          gameObjectPos,
+          gameObjectTransform,
+        )
+     |> TransformEngineService.setLocalEulerAngles(
+          gameObjectEulerAngles,
+          gameObjectTransform,
+        ); */
 
   (engineState, gameObject);
 };
@@ -298,17 +262,39 @@ let notPick = () => {
   |> expect == true;
 };
 
-let prepareOneGameObject =
+let buildDefaultNoWorkerJobRecord = () =>
+  NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+    ~initPipelines=
+      {|
+            [
+        {
+          "name": "default",
+          "jobs": [
+            {
+              "name": "init_event_for_editor"
+            },
+            {
+              "name": "init_camera"
+            },
+            {
+              "name": "init_picking"
+            }
+          ]
+        }
+      ]
+            |},
+    (),
+  );
+
+let prepare =
     (
-      ~createGameObjectFunc=createSphere,
       ~sandbox,
       ~viewWidth,
       ~viewHeight,
       ~offsetLeft,
       ~offsetTop,
       ~cameraPos,
-      ~gameObjectPos,
-      ~gameObjectEulerAngles,
+      ~noWorkerJobRecord=buildDefaultNoWorkerJobRecord(),
       (),
     ) => {
   let ((viewWidth, viewHeight), (offsetLeft, offsetTop)) =
@@ -318,6 +304,7 @@ let prepareOneGameObject =
       ~viewHeight,
       ~offsetLeft,
       ~offsetTop,
+      ~noWorkerJobRecord,
       (),
     );
 
@@ -331,6 +318,53 @@ let prepareOneGameObject =
       (editorState, engineState),
     );
 
+  prepareState(sandbox, editorState, engineState);
+};
+
+let prepareOneGameObject =
+    (
+      ~createGameObjectFunc=createSphere,
+      ~sandbox,
+      ~viewWidth,
+      ~viewHeight,
+      ~offsetLeft,
+      ~offsetTop,
+      ~cameraPos,
+      ~gameObjectPos,
+      ~gameObjectEulerAngles,
+      (),
+    ) => {
+  /* let ((viewWidth, viewHeight), (offsetLeft, offsetTop)) =
+       prepareMouseEvent(
+         ~sandbox,
+         ~viewWidth,
+         ~viewHeight,
+         ~offsetLeft,
+         ~offsetTop,
+         (),
+       );
+
+     let editorState = StateEditorService.getState();
+     let engineState = StateEngineService.unsafeGetState();
+
+     let (editCamera, (editorState, engineState)) =
+       prepareCamera(
+         cameraPos,
+         (viewWidth, viewHeight),
+         (editorState, engineState),
+       ); */
+
+  prepare(
+    ~sandbox,
+    ~viewWidth,
+    ~viewHeight,
+    ~offsetLeft,
+    ~offsetTop,
+    ~cameraPos,
+    (),
+  );
+
+  let engineState = StateEngineService.unsafeGetState();
   let (engineState, gameObject1) =
     prepareGameObject(
       gameObjectPos,
@@ -339,15 +373,13 @@ let prepareOneGameObject =
       engineState,
     );
 
-  prepareState(sandbox, editorState, engineState);
+  /* prepareState(sandbox, editorState, engineState); */
 
   gameObject1;
 };
 
 let prepareTwoGameObjects =
     (
-      ~createGameObjectFunc1=createSphere,
-      ~createGameObjectFunc2=createSphere,
       ~sandbox,
       ~viewWidth,
       ~viewHeight,
@@ -358,6 +390,9 @@ let prepareTwoGameObjects =
       ~gameObject1EulerAngles,
       ~gameObject2Pos,
       ~gameObject2EulerAngles,
+      ~createGameObjectFunc1=createSphere,
+      ~createGameObjectFunc2=createSphere,
+      ~noWorkerJobRecord=buildDefaultNoWorkerJobRecord(),
       (),
     ) => {
   let ((viewWidth, viewHeight), (offsetLeft, offsetTop)) =
@@ -367,6 +402,7 @@ let prepareTwoGameObjects =
       ~viewHeight,
       ~offsetLeft,
       ~offsetTop,
+      ~noWorkerJobRecord,
       (),
     );
 

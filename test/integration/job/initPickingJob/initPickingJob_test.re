@@ -598,6 +598,116 @@ let _ =
         })
       );
 
+      describe("test find top parent gameObject which is root", () => {
+        open Js.Promise;
+
+        let truckGLBArrayBuffer = ref(Obj.magic(1));
+
+        let _prepare = () =>
+          InitPickingJobTool.prepare(
+            ~sandbox,
+            ~viewWidth=500,
+            ~viewHeight=200,
+            ~offsetLeft=0,
+            ~offsetTop=0,
+            ~cameraPos=(0., 2., 3.),
+            (),
+          );
+
+        beforeAll(() =>
+          truckGLBArrayBuffer := GLBTool.getGLBArrayBuffer("CesiumMilkTruck")
+        );
+
+        beforeEach(() => {
+          MainEditorAssetTool.buildFakeFileReader();
+          LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
+          LoadTool.buildFakeTextEncoder();
+          LoadTool.buildFakeURL(sandbox^);
+          LoadTool.buildFakeLoadImage(.);
+
+          _prepare();
+
+          MainEditorSceneTool.prepareScene(sandbox);
+
+          MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+          |> ignore;
+        });
+
+        describe("test glb", () => {
+          testPromise(
+            "pick glb rootGameObject->children should pick glb rootGameObject",
+            () => {
+            let glbName = "Truck";
+
+            MainEditorAssetUploadTool.loadOneGLB(
+              ~fileName=glbName,
+              ~arrayBuffer=truckGLBArrayBuffer^,
+              (),
+            )
+            |> then_(uploadedWDBNodeId => {
+                 MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                   ~wdbNodeId=uploadedWDBNodeId,
+                   (),
+                 );
+
+                 InitPickingJobTool.triggerPicking(
+                   ~sandbox,
+                   ~pageX=250,
+                   ~pageY=100,
+                   (),
+                 );
+
+                 InitPickingJobTool.pickOne(
+                   LoadWDBTool.findGameObjectByName(glbName)
+                   |> StateLogicService.getEngineStateToGetData,
+                 )
+                 |> resolve;
+               });
+          });
+          testPromise(
+            "if glb rootGameObject has parent gameObject p1 which is root, should pick p1",
+            () => {
+              let glbName = "Truck";
+
+              MainEditorAssetUploadTool.loadOneGLB(
+                ~fileName=glbName,
+                ~arrayBuffer=truckGLBArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId => {
+                   MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                     ~wdbNodeId=uploadedWDBNodeId,
+                     (),
+                   );
+
+                   let newGameObject = GameObjectTool.getNewGameObject();
+                   MainEditorLeftHeaderTool.addCube();
+                   GameObjectEngineService.setGameObjectIsRoot(
+                     newGameObject,
+                     true,
+                   )
+                   |> StateLogicService.getAndSetEngineState;
+
+                   let glbRootGameObject =
+                     LoadWDBTool.findGameObjectByName(glbName)
+                     |> StateLogicService.getEngineStateToGetData;
+                   GameObjectTool.addChild(newGameObject, glbRootGameObject)
+                   |> StateLogicService.getAndSetEngineState;
+
+                   InitPickingJobTool.triggerPicking(
+                     ~sandbox,
+                     ~pageX=250,
+                     ~pageY=100,
+                     (),
+                   );
+
+                   InitPickingJobTool.pickOne(newGameObject) |> resolve;
+                 });
+            },
+          );
+        });
+      });
+
       describe("isIntersectTriangle", () =>
         describe("test cull", () => {
           let _isIntersectTriangle =
@@ -616,6 +726,8 @@ let _ =
               ~sandbox,
               ~viewWidth,
               ~viewHeight,
+              ~noWorkerJobRecord=
+                InitPickingJobTool.buildDefaultNoWorkerJobRecord(),
             );
 
             let editorState = StateEditorService.getState();

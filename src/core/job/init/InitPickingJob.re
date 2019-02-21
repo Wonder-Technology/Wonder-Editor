@@ -57,6 +57,33 @@ let _getTopOne = (cameraGameObject, engineState, intersectedDatas) => {
   |> Js.Option.map((. (gameObject, _)) => gameObject);
 };
 
+let _findTopRootGameObject = (engineState, gameObjectOpt) => {
+  let rec _find = (gameObject, rootGameObject, engineState) =>
+    switch (
+      HierarchyGameObjectEngineService.getParentGameObject(
+        gameObject,
+        engineState,
+      )
+    ) {
+    | None => rootGameObject
+    | Some(parentGameObject) =>
+      _find(
+        parentGameObject,
+        GameObjectEngineService.unsafeGetGameObjectIsRoot(
+          parentGameObject,
+          engineState,
+        ) ?
+          parentGameObject : rootGameObject,
+        engineState,
+      )
+    };
+
+  gameObjectOpt
+  |> Js.Option.map((. gameObject) =>
+       _find(gameObject, gameObject, engineState)
+     );
+};
+
 let _getAllGameObjectData = engineState =>
   HierarchyGameObjectEngineService.getAllGameObjects(
     SceneEngineService.getSceneGameObject(engineState),
@@ -135,7 +162,8 @@ let _findPickedOne = (event, allGameObjectData, (editorState, engineState)) => {
   |> Js.Array.map(((gameObject, checkData)) =>
        (gameObject, OptionService.unsafeGet(checkData))
      )
-  |> _getTopOne(cameraGameObject, engineState);
+  |> _getTopOne(cameraGameObject, engineState)
+  |> _findTopRootGameObject(engineState);
 };
 
 let _isNotNeedPushToHistoryStack = pickedGameObjectOpt =>
