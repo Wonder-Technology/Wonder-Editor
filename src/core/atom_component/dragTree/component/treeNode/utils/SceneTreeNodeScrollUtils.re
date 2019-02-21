@@ -33,7 +33,7 @@ let _handleXAxisScrollRight =
   sceneTreeContainerJsObj##scrollLeft#=distance;
 };
 
-let _setXAxisScrollLeft =
+let _setXAxisScrollValue =
     (
       sceneTreeContainerJsObj,
       sceneTreeNodeDomOffsetLeft,
@@ -88,12 +88,12 @@ let _handleYAxisScrollBottom =
     (sceneTreeNodeDomOffsetTop, sceneTreeContainerJsObj) => {
   let distance =
     sceneTreeNodeDomOffsetTop
-    -. SceneTreeNodeScrollDataUtils.getXAxisScrollOffsetTop();
+    -. SceneTreeNodeScrollDataUtils.getYAxisScrollOffsetTop();
 
   sceneTreeContainerJsObj##scrollTop#=distance;
 };
 
-let _setYAxisScrollTop =
+let _setYAxisScrollValue =
     (
       sceneTreeContainerJsObj,
       sceneTreeNodeDomOffsetTop,
@@ -119,14 +119,8 @@ let _setYAxisScrollTop =
       ();
 
 let scrollCurrentSceneTreeNode =
-    (sceneTreeContainerDomEle, sceneTreeNodeDomEle) => {
-  let sceneTreeContainerJsObj =
-    sceneTreeContainerDomEle |> DomHelperType.convertDomElementToJsObj;
-
-  let sceneTreeNodeDomClientRect =
-    DomHelper.getDomClientRect(sceneTreeNodeDomEle);
-
-  _setXAxisScrollLeft(
+    (sceneTreeContainerJsObj, sceneTreeNodeDomClientRect) => {
+  _setXAxisScrollValue(
     sceneTreeContainerJsObj,
     sceneTreeNodeDomClientRect##offsetLeft,
     (
@@ -135,7 +129,9 @@ let scrollCurrentSceneTreeNode =
     ),
   );
 
-  _setYAxisScrollTop(
+
+
+  _setYAxisScrollValue(
     sceneTreeContainerJsObj,
     sceneTreeNodeDomClientRect##offsetTop,
     (

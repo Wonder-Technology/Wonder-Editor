@@ -403,14 +403,17 @@ let make =
   didUpdate: _self =>
     isSelected ?
       {
-        let sceneTreeContainerDomEle =
-          DomHelper.getElementById("wonder-sceneTree-component");
-        let sceneTreeNodeDomEle =
-          DomHelper.getElementById({j|sceneTreeNode-$gameObject|j});
+        let sceneTreeContainerJsObj =
+          DomHelper.getElementById("wonder-sceneTree-component")
+          |> DomHelperType.convertDomElementToJsObj;
+
+        let sceneTreeNodeDomClientRect =
+          DomHelper.getElementById({j|sceneTreeNode-$gameObject|j})
+          |> DomHelper.getDomClientRect;
 
         SceneTreeNodeScrollUtils.scrollCurrentSceneTreeNode(
-          sceneTreeContainerDomEle,
-          sceneTreeNodeDomEle,
+          sceneTreeContainerJsObj,
+          sceneTreeNodeDomClientRect,
         );
       } :
       (),

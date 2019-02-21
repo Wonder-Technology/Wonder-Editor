@@ -67,15 +67,6 @@ let getDomClientRect = [%bs.raw
   |}
 ];
 
-let setScrollTopAndLeft = [%raw
-  {|
-    function (domElement, top, left) {
-      domElement.scrollTop = top;
-      domElement.scrollLeft = left;
-    }
-  |}
-];
-
 let getRandomKey = () : string =>
   StringService.floatToString(Js.Date.now() *. Js.Math.random());
 

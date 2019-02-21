@@ -10,6 +10,6 @@ let getYAxisScrollTopBoundary = () => 30.;
 
 let getYAxisScrollBottomBoundary = () => 45.;
 
-let getXAxisScrollOffsetTop = () => 300.;
+let getYAxisScrollOffsetTop = () => 300.;
 
 let getYAxisScrollTopMinDistance = () => 300.;
