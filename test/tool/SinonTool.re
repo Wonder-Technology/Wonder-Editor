@@ -9,3 +9,12 @@ let calledWithArg3 = (stub, arg1, arg2, arg3) =>
 
 let calledWithArg4 = (stub, arg1, arg2, arg3, arg4) =>
   stub##calledWith(arg1, arg2, arg3, arg4);
+
+let createMethodStub = [%bs.raw
+  {| function(sandbox, obj, method) {
+    obj[method] =  sandbox.stub();
+
+    return obj[method];
+}
+|}
+];

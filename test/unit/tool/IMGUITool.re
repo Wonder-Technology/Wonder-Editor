@@ -51,34 +51,8 @@ let prepareImgui = () => {
 };
 
 let stubCanvasParentAndCanvas = sandbox => {
-  open Sinon;
-
-  let parentDom = {"offsetWidth": 300, "offsetHeight": 500} |> Obj.magic;
-  let canvasDom = BuildCanvasTool.getFakeCanvasDom("a", sandbox);
-  /* let runCanvasDom = BuildCanvasTool.getFakeCanvasDom("a", sandbox); */
-  let getElementStub =
-    createMethodStubWithJsObjSandbox(
-      sandbox,
-      BuildCanvasTool.documentToJsObj(BuildCanvasTool.document),
-      "getElementById",
-    );
-
-  getElementStub
-  |> withOneArg("canvasParent")
-  |> returns(parentDom)
-  |> ignore;
-
-  getElementStub
-  |> withOneArg("canvas")
-  |> returns(canvasDom)
-  |> stubToJsObj
-  |> ignore;
-
-  /* getElementStub
-     |> withOneArg("runCanvas")
-     |> returns(runCanvasDom)
-     |> stubToJsObj
-     |> ignore; */
+  let (parentDom, canvasDom) =
+    CanvasTool.stubCanvasParentAndCanvas(~sandbox, ());
 
   prepareImgui();
 

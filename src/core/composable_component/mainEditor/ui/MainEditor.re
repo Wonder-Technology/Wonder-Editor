@@ -1,58 +1,7 @@
 type retainedProps = {isEngineStart: bool};
 
 module Method = {
-  let _getCanvasParentSize = parent => (
-    parent##offsetWidth,
-    parent##offsetHeight,
-  );
-
-  /* let _setAllAspectsWhoseAspectBasedOnCanvasSize = engineState =>
-     GameObjectComponentEngineService.getAllPerspectiveCameraProjectionComponents(
-       engineState,
-     ); */
-
-  let _updateViewRect = (canvasWidth, canvasHeight) =>
-    StateEditorService.setState(
-      StateEditorService.getState()
-      |> SceneViewEditorService.updateViewRect((
-           0,
-           0,
-           canvasWidth / 2,
-           canvasHeight,
-         ))
-      |> GameViewEditorService.updateViewRect((
-           canvasWidth / 2,
-           0,
-           canvasWidth / 2,
-           canvasHeight,
-         )),
-    );
-
-  let resizeCanvasAndViewPort = () => {
-    let (width, height) =
-      DomHelper.getElementById("canvasParent")
-      |> DomHelperType.convertDomElementToJsObj
-      |> _getCanvasParentSize;
-
-    DomHelper.getElementById("canvas")
-    |> DomHelperType.convertDomElementToJsObj
-    |> ScreenEngineService.setScreenSize((width, height, width, height))
-    |> ignore;
-
-    DeviceManagerEngineService.getGl(StateEngineService.unsafeGetState())
-    |> Js.Option.isSome ?
-      {
-        _updateViewRect(width, height) |> ignore;
-
-        StateEngineService.unsafeGetState()
-        |> PerspectiveCameraProjectionEngineService.markAllPerspectiveCameraProjectionsDirty
-        |> DeviceManagerEngineService.setViewport((0, 0, width, height))
-        |> DirectorEngineService.loopBody(0.)
-        |> StateEngineService.setState
-        |> ignore;
-      } :
-      ();
-  };
+  let resizeCanvasAndViewPort = () => ResizeUtils.resizeScreen();
 
   let buildStartedRunWebglComponent = () =>
     SceneUtils.isSceneHaveNoActiveCamera() ?

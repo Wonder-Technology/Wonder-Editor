@@ -64,6 +64,12 @@ let _ =
     });
 
     describe("test stop", () => {
+      beforeEach(() => {
+        let (parentDom, canvasDom) =
+          CanvasTool.stubCanvasParentAndCanvas(~sandbox, ());
+        ResizeUtils.resizeScreen();
+      });
+
       describe("stop current loop", () => {
         test("the cancelAnimationFrame is called", () => {
           let cancel = createEmptyStubWithJsObjSandbox(sandbox);
@@ -136,4 +142,44 @@ let _ =
         })
       );
     });
+
+    describe("fix bug", () =>
+      test("if view size changed when run, resize screen when stop", () => {
+        ControllerTool.stubRequestAnimationFrame(
+          createEmptyStubWithJsObjSandbox(sandbox),
+        );
+        ControllerTool.stubCancelAnimationFrame(
+          createEmptyStubWithJsObjSandbox(sandbox),
+        );
+        let (parentDom, canvasDom) =
+          CanvasTool.stubCanvasParentAndCanvas(
+            ~sandbox,
+            ~offsetWidth=300,
+            ~offsetHeight=500,
+            (),
+          );
+        ResizeUtils.resizeScreen();
+
+        ControllerTool.run();
+        let (parentDom, canvasDom) =
+          CanvasTool.stubCanvasParentAndCanvas(
+            ~sandbox,
+            ~offsetWidth=400,
+            ~offsetHeight=500,
+            (),
+          );
+        ResizeUtils.resizeScreen();
+        let resizedViewport =
+          StateEngineService.unsafeGetState()
+          |> DeviceManagerEngineService.getViewport
+          |> OptionService.unsafeGet;
+        ControllerTool.stop();
+
+        let viewportAfterStop =
+          StateEngineService.unsafeGetState()
+          |> DeviceManagerEngineService.getViewport
+          |> OptionService.unsafeGet;
+        viewportAfterStop |> expect == resizedViewport;
+      })
+    );
   });

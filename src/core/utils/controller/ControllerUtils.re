@@ -35,4 +35,12 @@ let stop = dispatchFunc => {
   |> ArcballCameraControllerLogicService.unbindGameViewActiveCameraArcballCameraControllerEvent
   |> StateEngineService.setState
   |> ignore;
+
+  let editorState = StateEditorService.getState();
+  ResizeUtils.isViewSizeChange(
+    SceneViewEditorService.unsafeGetViewRect(editorState),
+    GameViewEditorService.unsafeGetViewRect(editorState),
+    ResizeUtils.getCanvasSize(),
+  ) ?
+    ResizeUtils.resizeScreen() : ();
 };

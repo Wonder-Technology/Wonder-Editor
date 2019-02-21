@@ -1,5 +1,6 @@
 let setViewRect = (~width=10, ~height=20, ()) =>
-  MainEditor.Method._updateViewRect(width, height);
+  ResizeUtils.updateViewRect((width, height))
+  |> StateLogicService.getAndSetEditorState;
 
 let prepare = prepareStateFunc => {
   prepareStateFunc();
