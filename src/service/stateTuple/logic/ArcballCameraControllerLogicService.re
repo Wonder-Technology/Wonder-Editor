@@ -187,13 +187,10 @@ let unbindGameViewActiveCameraArcballCameraControllerEvent = engineState =>
        StateEditorService.getStateIsDebug(),
      );
 
-let _getGameObjectPosition = (gameObject, engineState) =>
-  engineState
-  |> GameObjectComponentEngineService.unsafeGetTransformComponent(gameObject)
-  |. TransformEngineService.getPosition(engineState);
-
 let _setArcballCameraControllerFocusRelatedAttribute =
-    (arcballCameraController, (distance, target), engineState) =>
+    (arcballCameraController, (distance, target), engineState) => {
+  Js.log(distance);
+
   engineState
   |> ArcballCameraEngineService.setArcballCameraControllerTarget(
        arcballCameraController,
@@ -203,6 +200,7 @@ let _setArcballCameraControllerFocusRelatedAttribute =
        distance,
        arcballCameraController,
      );
+};
 
 let setEditorCameraFocusTargetGameObject =
     (targetGameObject, editorState, engineState) => {
@@ -237,21 +235,67 @@ let setEditorCameraFocusTargetGameObject =
     |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
          engineState,
        );
+  let targetGameObjectPosition =
+    engineState
+    |> GameObjectComponentEngineService.unsafeGetTransformComponent(
+         targetGameObject,
+       )
+    |. TransformEngineService.getPosition(engineState);
+
+  let maxDistanceofPointsToCenter =
+    engineState
+    |> HierarchyGameObjectEngineService.getAllGameObjects(targetGameObject)
+    |> Js.Array.map(gameObject =>
+         switch (
+           engineState
+           |> GameObjectComponentEngineService.getGeometryComponent(
+                gameObject,
+              )
+         ) {
+         | None => None
+         | Some(geometry) =>
+           engineState
+           |> GeometryEngineService.getGeometryVertices(geometry)
+           |. Some
+         }
+       )
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. maxValue, vertices) => {
+           let distanceOfPointsToCenter =
+             switch (vertices) {
+             | None => 0.
+             | Some(vertices) =>
+               SphereShapeUtils.findMaxDistanceOfPointsToCenter(
+                 (0., 0., 0.),
+                 vertices,
+               )
+             };
+
+           distanceOfPointsToCenter > maxValue ?
+             distanceOfPointsToCenter : maxValue;
+         },
+         0.,
+       )
+    |> Js.Math.sqrt;
+
+  Js.log2(targetGameObjectPosition, maxDistanceofPointsToCenter);
 
   engineState |> SceneEngineService.isSceneGameObject(targetGameObject) ?
     _setArcballCameraControllerFocusRelatedAttribute(
       editorCameraArcballControllerComponent,
       (
-        FocusDataUtils.getSceneGameObjectArcballCameraDistance(),
-        engineState |> _getGameObjectPosition(targetGameObject),
+        maxDistanceofPointsToCenter
+        +. FocusDataUtils.getSceneGameObjectArcballCameraDistance(),
+        targetGameObjectPosition,
       ),
       engineState,
     ) :
     _setArcballCameraControllerFocusRelatedAttribute(
       editorCameraArcballControllerComponent,
       (
-        FocusDataUtils.getSceneChildrenArcballCameraDistance(),
-        engineState |> _getGameObjectPosition(targetGameObject),
+        maxDistanceofPointsToCenter
+        +. FocusDataUtils.getSceneChildrenArcballCameraDistance(),
+        targetGameObjectPosition,
       ),
       engineState,
     );
