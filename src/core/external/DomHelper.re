@@ -55,6 +55,8 @@ let getDomClientRect = [%bs.raw
         return {
             top: (rect.top + win.pageYOffset) - docElem.clientTop,
             left: (rect.left + win.pageXOffset) - docElem.clientLeft,
+            offsetLeft: ele.offsetLeft,
+            offsetTop: ele.offsetTop,
             height: rect.height,
             width: rect.width,
         }

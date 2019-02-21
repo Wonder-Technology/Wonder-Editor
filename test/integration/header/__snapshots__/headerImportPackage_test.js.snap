@@ -2907,6 +2907,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
 exports[`header import package test import scene wdb should reset scene gameObject 1`] = `
 <article
   className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
 >
   <article
     className="wonder-tree"
@@ -2926,6 +2927,7 @@ exports[`header import package test import scene wdb should reset scene gameObje
         <div
           className="draggable-container  no-drag"
           draggable={false}
+          id="sceneTreeNode-8"
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
@@ -2947,6 +2949,7 @@ exports[`header import package test import scene wdb should reset scene gameObje
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-9"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -2969,6 +2972,7 @@ exports[`header import package test import scene wdb should reset scene gameObje
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-10"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -2991,6 +2995,7 @@ exports[`header import package test import scene wdb should reset scene gameObje
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-11"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -3013,6 +3018,7 @@ exports[`header import package test import scene wdb should reset scene gameObje
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-12"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -3035,6 +3041,7 @@ exports[`header import package test import scene wdb should reset scene gameObje
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-13"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}

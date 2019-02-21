@@ -3,6 +3,7 @@
 exports[`header load scene wdb test load scene wdb should clear current scene tree node 1`] = `
 <article
   className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
 >
   <article
     className="wonder-tree"
@@ -22,6 +23,7 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
         <div
           className="draggable-container  no-drag"
           draggable={false}
+          id="sceneTreeNode-7"
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
@@ -43,6 +45,7 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-8"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -65,6 +68,7 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-9"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -87,6 +91,7 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-10"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}

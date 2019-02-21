@@ -37,6 +37,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to folder node
 exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag wdb to be target gameObject sib test drag gameObject after target gameObject test target gameObject is scene gameObject set dragged gameobject to be scene first child test snapshot 1`] = `
 <article
   className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
 >
   <article
     className="wonder-tree"
@@ -56,6 +57,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
         <div
           className="draggable-container  no-drag"
           draggable={false}
+          id="sceneTreeNode-0"
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
@@ -82,6 +84,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-11"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -104,6 +107,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-6"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -126,6 +130,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-3"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -148,6 +153,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-4"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -170,6 +176,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-5"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -190,6 +197,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
 exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag wdb to be target gameObject sib test drag gameObject after target gameObject test target gameObject isn't scene gameObject test snapshot 1`] = `
 <article
   className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
 >
   <article
     className="wonder-tree"
@@ -209,6 +217,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
         <div
           className="draggable-container  no-drag"
           draggable={false}
+          id="sceneTreeNode-0"
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
@@ -230,6 +239,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-6"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -252,6 +262,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-3"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -279,6 +290,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-11"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -301,6 +313,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-4"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -323,6 +336,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-5"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -343,6 +357,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
 exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag wdb to be target gameObject sib test drag gameObject before target gameObject test target gameObject is scene gameObject set dragged gameobject to be scene first child test snapshot 1`] = `
 <article
   className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
 >
   <article
     className="wonder-tree"
@@ -362,6 +377,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
         <div
           className="draggable-container  no-drag"
           draggable={false}
+          id="sceneTreeNode-0"
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
@@ -388,6 +404,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-11"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -410,6 +427,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-6"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -432,6 +450,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-3"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -454,6 +473,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-4"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -476,6 +496,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-5"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -496,6 +517,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
 exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag wdb to be target gameObject sib test drag gameObject before target gameObject test target gameObject isn't scene gameObject test snapshot 1`] = `
 <article
   className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
 >
   <article
     className="wonder-tree"
@@ -515,6 +537,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
         <div
           className="draggable-container  no-drag"
           draggable={false}
+          id="sceneTreeNode-0"
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
@@ -536,6 +559,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-6"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -563,6 +587,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-11"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -585,6 +610,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-3"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -607,6 +633,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-4"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -629,6 +656,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-5"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -649,6 +677,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
 exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag wdb to be target gameObject sib test drag gameObject into target gameObject test target gameObject is scene gameObject set dragged gameobject to be scene last child test snapshot 1`] = `
 <article
   className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
 >
   <article
     className="wonder-tree"
@@ -668,6 +697,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
         <div
           className="draggable-container  no-drag"
           draggable={false}
+          id="sceneTreeNode-0"
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
@@ -689,6 +719,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-6"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -711,6 +742,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-3"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -733,6 +765,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-4"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -755,6 +788,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-5"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -782,6 +816,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-11"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -802,6 +837,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
 exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag wdb to be target gameObject sib test drag gameObject into target gameObject test target gameObject isn't scene gameObject test snapshot 1`] = `
 <article
   className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
 >
   <article
     className="wonder-tree"
@@ -821,6 +857,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
         <div
           className="draggable-container  no-drag"
           draggable={false}
+          id="sceneTreeNode-0"
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
@@ -842,6 +879,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-6"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -869,6 +907,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-3"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -895,6 +934,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             <div
               className="draggable-container  no-drag"
               draggable={true}
+              id="sceneTreeNode-11"
               onDragEnd={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
@@ -918,6 +958,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-4"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -940,6 +981,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-5"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}

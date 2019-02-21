@@ -3,6 +3,7 @@
 exports[`redo_undo:leftHeader dispose gameObject prepare first step: set currentSceneTreeNode test operate disposeGameObject(because the set currentSceneTreeNode operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test redo operate test redo one step undo step which from second to zero,redo step which from zero to first 1`] = `
 <article
   className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
 >
   <article
     className="wonder-tree"
@@ -22,6 +23,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
         <div
           className="draggable-container  no-drag"
           draggable={false}
+          id="sceneTreeNode-0"
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
@@ -43,6 +45,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-6"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -65,6 +68,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           <div
             className="draggable-container select-active no-drag"
             draggable={true}
+            id="sceneTreeNode-3"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -87,6 +91,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-5"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -107,6 +112,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
 exports[`redo_undo:leftHeader dispose gameObject prepare first step: set currentSceneTreeNode test operate disposeGameObject(because the set currentSceneTreeNode operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
 <article
   className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
 >
   <article
     className="wonder-tree"
@@ -126,6 +132,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
         <div
           className="draggable-container  no-drag"
           draggable={false}
+          id="sceneTreeNode-0"
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
@@ -147,6 +154,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-6"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -169,6 +177,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-5"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -189,6 +198,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
 exports[`redo_undo:leftHeader dispose gameObject prepare first step: set currentSceneTreeNode test operate disposeGameObject(because the set currentSceneTreeNode operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test undo operate test not undo 1`] = `
 <article
   className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
 >
   <article
     className="wonder-tree"
@@ -208,6 +218,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
         <div
           className="draggable-container  no-drag"
           draggable={false}
+          id="sceneTreeNode-0"
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
@@ -229,6 +240,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-6"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -251,6 +263,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-5"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -271,6 +284,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
 exports[`redo_undo:leftHeader dispose gameObject prepare first step: set currentSceneTreeNode test operate disposeGameObject(because the set currentSceneTreeNode operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test undo operate test undo one step test undo two step step which from second to zero 1`] = `
 <article
   className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
 >
   <article
     className="wonder-tree"
@@ -290,6 +304,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
         <div
           className="draggable-container  no-drag"
           draggable={false}
+          id="sceneTreeNode-0"
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
@@ -311,6 +326,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-6"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -333,6 +349,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-3"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -355,6 +372,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           <div
             className="draggable-container select-active no-drag"
             draggable={true}
+            id="sceneTreeNode-4"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -377,6 +395,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-5"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -397,6 +416,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
 exports[`redo_undo:leftHeader dispose gameObject prepare first step: set currentSceneTreeNode test operate disposeGameObject(because the set currentSceneTreeNode operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test undo operate test undo one step undo step which from second to first 1`] = `
 <article
   className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
 >
   <article
     className="wonder-tree"
@@ -416,6 +436,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
         <div
           className="draggable-container  no-drag"
           draggable={false}
+          id="sceneTreeNode-0"
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
@@ -437,6 +458,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-6"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -459,6 +481,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           <div
             className="draggable-container select-active no-drag"
             draggable={true}
+            id="sceneTreeNode-3"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -481,6 +504,7 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-5"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
