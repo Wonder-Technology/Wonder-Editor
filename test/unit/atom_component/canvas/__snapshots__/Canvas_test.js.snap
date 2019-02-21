@@ -3,6 +3,7 @@
 exports[`Canvas test drag wdb test drag wdb to gameObject should add to current sceneTree node's children 1`] = `
 <article
   className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
 >
   <article
     className="wonder-tree"
@@ -22,6 +23,7 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
         <div
           className="draggable-container  no-drag"
           draggable={false}
+          id="sceneTreeNode-0"
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
@@ -43,6 +45,7 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-6"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -70,6 +73,7 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
           <div
             className="draggable-container select-active no-drag"
             draggable={true}
+            id="sceneTreeNode-3"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -96,6 +100,7 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
             <div
               className="draggable-container  no-drag"
               draggable={true}
+              id="sceneTreeNode-9"
               onDragEnd={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
@@ -119,6 +124,7 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-4"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -141,6 +147,7 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-5"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -161,6 +168,7 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
 exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node is None, add to scene 1`] = `
 <article
   className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
 >
   <article
     className="wonder-tree"
@@ -180,6 +188,7 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
         <div
           className="draggable-container  no-drag"
           draggable={false}
+          id="sceneTreeNode-0"
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
@@ -201,6 +210,7 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-6"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -223,6 +233,7 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-3"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -245,6 +256,7 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-4"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -267,6 +279,7 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-5"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
@@ -294,6 +307,7 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-9"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}

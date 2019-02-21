@@ -109,6 +109,7 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
                test cloned gameObjects of the wdb asset cloned gameObjects shouldn't be removed 1`] = `
 <article
   className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
 >
   <article
     className="wonder-tree"
@@ -128,6 +129,7 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
         <div
           className="draggable-container  no-drag"
           draggable={false}
+          id="sceneTreeNode-0"
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
@@ -154,6 +156,7 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
           <div
             className="draggable-container  no-drag"
             draggable={true}
+            id="sceneTreeNode-3"
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
