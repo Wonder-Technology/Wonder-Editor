@@ -8,7 +8,8 @@ type state = {
 type action =
   | DragStart
   | Change(option(string))
-  | Blur;
+  | Blur
+  | DragDrop;
 
 module Method = {
   let _change = event => {
@@ -85,8 +86,6 @@ module Method = {
       )
     };
 
-  let _markDragDrop = state => {...state, isDragStart: false};
-
   let handleBlurAction = (state, (onChangeFunc, onBlurFunc), canBeZero) =>
     switch (state.inputValue) {
     | None
@@ -99,17 +98,17 @@ module Method = {
         (
           value =>
             ReasonReactUtils.updateWithSideEffects(
-              {...state, inputValue: Some(value)} |> _markDragDrop,
+              {...state, inputValue: Some(value)},
               _state => {
                 triggerOnChange(value, onChangeFunc);
                 triggerOnBlur(value, onBlurFunc);
               },
             ),
           value =>
-            ReasonReact.Update(
-              {...state, inputValue: Some(state.originValue)}
-              |> _markDragDrop,
-            ),
+            ReasonReact.Update({
+              ...state,
+              inputValue: Some(state.originValue),
+            }),
         ),
       )
     | Some("0")
@@ -121,7 +120,7 @@ module Method = {
         (
           value =>
             ReasonReactUtils.updateWithSideEffects(
-              {...state, inputValue: Some(value)} |> _markDragDrop, _state =>
+              {...state, inputValue: Some(value)}, _state =>
               triggerOnBlur(value, onBlurFunc)
             ),
           _value => {
@@ -137,7 +136,7 @@ module Method = {
       )
     | Some(value) =>
       ReasonReactUtils.updateWithSideEffects(
-        {...state, originValue: value} |> _markDragDrop, _state =>
+        {...state, originValue: value}, _state =>
         triggerOnBlur(value, onBlurFunc)
       )
     };
@@ -172,12 +171,16 @@ module Method = {
     ();
   };
 
-  let handleDragDrop = ((send, state)) =>
+  let handleDragDrop = (event, (send, state), onDragDropFunc) =>
     isDragStart(state) ?
       {
         Wonderjs.DomExtend.exitPointerLock();
 
-        send(Blur);
+        onDragDropFunc(
+          state.inputValue |> OptionService.unsafeGet |> float_of_string,
+        );
+
+        send(DragDrop);
 
         ();
       } :
@@ -205,7 +208,7 @@ module Method = {
       } :
       ();
 
-  let renderLabel = ((send, state), label) =>
+  let renderLabel = ((send, state), label, onDragDropFunc) =>
     switch (label) {
     | None => ReasonReact.null
     | Some(label) =>
@@ -213,7 +216,9 @@ module Method = {
         className="item-header component-label"
         onMouseDown=(event => handleDragStart(event, send))
         onMouseMove=(event => handleDragOver(event, (send, state)))
-        onMouseUp=(_event => handleDragDrop((send, state)))>
+        onMouseUp=(
+          event => handleDragDrop(event, (send, state), onDragDropFunc)
+        )>
         (DomHelper.textEl(label))
       </div>
     };
@@ -240,6 +245,7 @@ let component = ReasonReact.reducerComponent("FloatInput");
 let reducer = ((onChangeFunc, onBlurFunc), canBeZero, action, state) =>
   switch (action) {
   | DragStart => ReasonReact.Update({...state, isDragStart: true})
+  | DragDrop => ReasonReact.Update({...state, isDragStart: false})
   | Change(value) =>
     Method.handleChangeAction(state, onChangeFunc, canBeZero, value)
   | Blur =>
@@ -247,15 +253,20 @@ let reducer = ((onChangeFunc, onBlurFunc), canBeZero, action, state) =>
   };
 
 let render =
-    (label, onBlurFunc, {state, handle, send}: ReasonReact.self('a, 'b, 'c)) =>
+    (
+      label,
+      (onBlurFunc, onDragDropFunc),
+      {state, handle, send}: ReasonReact.self('a, 'b, 'c),
+    ) =>
   <article className="inspector-item wonder-float-input">
-    (Method.renderLabel((send, state), label))
+    (Method.renderLabel((send, state), label, onDragDropFunc))
     (Method.renderContent((send, state)))
   </article>;
 
 let make =
     (
       ~canBeZero: bool=true,
+      ~onDragDrop=_ => (),
       ~defaultValue: option(string)=?,
       ~label: option(string)=?,
       ~onChange: option(float => unit)=?,
@@ -279,5 +290,5 @@ let make =
       }
     },
   reducer: reducer((onChange, onBlur), canBeZero),
-  render: self => render(label, onBlur, self),
+  render: self => render(label, (onBlur, onDragDrop), self),
 };

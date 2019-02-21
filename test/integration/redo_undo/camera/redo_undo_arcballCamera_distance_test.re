@@ -10,25 +10,43 @@ let _ =
   describe("redo_undo: arcballCameraController distance and minDistance", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let _changeDistance = value =>
+    let _changeDistanceAndBlur = value =>
       MainEditorArcballCameraControllerTool.changeDistanceAndBlur(
-        ~cameraController=GameObjectTool.getCurrentSceneTreeNodeArcballCamera(),
-        ~value,
-        (),
-      );
-    let _changeMinDistance = value =>
-      MainEditorArcballCameraControllerTool.changeMinDistanceAndBlur(
-        ~cameraController=GameObjectTool.getCurrentSceneTreeNodeArcballCamera(),
+        ~cameraController=
+          GameObjectTool.getCurrentSceneTreeNodeArcballCamera(),
         ~value,
         (),
       );
 
-    let _simulateChangeDistanceAndChangeMinDistance = () => {
+    let _changeMinDistanceAndBlur = value =>
+      MainEditorArcballCameraControllerTool.changeMinDistanceAndBlur(
+        ~cameraController=
+          GameObjectTool.getCurrentSceneTreeNodeArcballCamera(),
+        ~value,
+        (),
+      );
+
+    let _simulateChangeAndBlurDistanceAndMinDistance = () => {
       let value1 = 23.11;
       let value2 = 12.12;
 
-      _changeDistance(value1);
-      _changeMinDistance(value2);
+      _changeDistanceAndBlur(value1);
+      _changeMinDistanceAndBlur(value2);
+    };
+
+    let _simulateDragDropDistance = () => {
+      let firstValue = 10.0;
+      let secondValue = 23.11;
+
+      MainEditorArcballCameraControllerTool.changeDistanceAndDragDrop(
+        ~cameraController=
+          GameObjectTool.getCurrentSceneTreeNodeArcballCamera(),
+        ~changeValue=secondValue,
+        ~dragDropValue=firstValue,
+        (),
+      );
+
+      (firstValue, secondValue);
     };
 
     let _beforeEach = () => {
@@ -57,8 +75,30 @@ let _ =
 
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,
-      "prepare first step: set currentSceneTreeNode to be camera",
-      (_simulateChangeDistanceAndChangeMinDistance, _beforeEach, () => ()),
+      "test change and blur distance and minDistance",
+      (_simulateChangeAndBlurDistanceAndMinDistance, _beforeEach, () => ()),
       BuildComponentForCurryTool.buildInspectorComponent,
     );
+
+    describe("test drag drop distance", () => {
+      beforeEach(() => _beforeEach());
+
+      describe("test undo operate", () =>
+        describe("test undo one step", () =>
+          test("step which from second to first", () => {
+            let (firstValue, secondValue) = _simulateDragDropDistance();
+            let currentSceneTreeNodeArcballCamera =
+              GameObjectTool.getCurrentSceneTreeNodeArcballCamera();
+
+            RedoUndoTool.undoHistoryState();
+
+            ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
+              currentSceneTreeNodeArcballCamera,
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == firstValue;
+          })
+        )
+      );
+    });
   });

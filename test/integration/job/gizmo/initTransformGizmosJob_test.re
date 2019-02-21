@@ -2575,7 +2575,9 @@ let _ =
                 let localEulerAngle =
                   TransformUtils.getTransformRotationData(
                     GameObjectTool.getCurrentSceneTreeNodeTransform(),
-                  );
+                  )
+                  |> StateLogicService.getEngineStateToGetData;
+
                 localEulerAngle
                 |> Vector3Service.truncate(3)
                 |> expect == (0., 0., (-21.94));

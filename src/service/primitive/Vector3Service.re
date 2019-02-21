@@ -77,3 +77,11 @@ let truncate = (digit, (x, y, z)) => (
   FloatService.truncateFloatValue(y, digit),
   FloatService.truncateFloatValue(z, digit),
 );
+
+let isEqual = ((x, y, z), (newX, newY, newZ)) =>
+  x
+  |> ValueService.isValueEqual(ValueType.Float, newX)
+  && y
+  |> ValueService.isValueEqual(ValueType.Float, newY)
+  && z
+  |> ValueService.isValueEqual(ValueType.Float, newZ);

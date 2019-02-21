@@ -82,6 +82,59 @@ let rec fold =
   };
 };
 
+let rec foldWithParentFolderNode =
+        (
+          ~folderNodeFunc,
+          ~acc,
+          ~tree,
+          ~seqFoldFunc=WonderCommonlib.ArrayService.reduceOneParam,
+          ~textureNodeFunc=(_, acc, _, _) => acc,
+          ~materialNodeFunc=(_, acc, _, _) => acc,
+          ~wdbNodeFunc=(_, acc, _, _) => acc,
+          ~parentFolderNode=None,
+          (),
+        )
+        : 'r => {
+  let recurse = (parentFolderNode, acc, children) =>
+    foldWithParentFolderNode(
+      ~acc,
+      ~tree=children,
+      ~textureNodeFunc,
+      ~materialNodeFunc,
+      ~wdbNodeFunc,
+      ~folderNodeFunc,
+      ~parentFolderNode,
+      (),
+    );
+
+  switch (tree) {
+  | TextureNode(nodeId, textureNodeData) =>
+    textureNodeFunc(parentFolderNode, acc, nodeId, textureNodeData)
+  | MaterialNode(nodeId, materialNodeData) =>
+    materialNodeFunc(parentFolderNode, acc, nodeId, materialNodeData)
+  | WDBNode(nodeId, wdbNodeData) =>
+    wdbNodeFunc(parentFolderNode, acc, nodeId, wdbNodeData)
+  | FolderNode(nodeId, folderNodeData, children) =>
+    let localAccum =
+      folderNodeFunc(parentFolderNode, acc, nodeId, folderNodeData, children);
+
+    UIStateAssetService.fold(
+      seqFoldFunc,
+      recurse(
+        Some(
+          FolderNodeAssetService.buildNodeByNodeData(
+            ~nodeId,
+            ~nodeData=folderNodeData,
+            ~children,
+          ),
+        ),
+      ),
+      localAccum,
+      children,
+    );
+  };
+};
+
 let rec foldWithHandleBeforeAndAfterFoldChildren =
         (
           ~acc,

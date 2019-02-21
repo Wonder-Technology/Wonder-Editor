@@ -9,7 +9,9 @@ let changePositionXAndBlur =
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
-  let oldPosition = TransformUtils.getTransformPositionData(transform);
+  let oldPosition =
+    TransformUtils.getTransformPositionData(transform)
+    |> StateLogicService.getEngineStateToGetData;
 
   changePositionX(transform, value);
 
@@ -31,7 +33,9 @@ let changePositionYAndBlur =
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
-  let oldPosition = TransformUtils.getTransformPositionData(transform);
+  let oldPosition =
+    TransformUtils.getTransformPositionData(transform)
+    |> StateLogicService.getEngineStateToGetData;
 
   changePositionY(transform, value);
 
@@ -62,7 +66,9 @@ let changeRotationYAndBlur =
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) => {
-  let oldRotation = TransformUtils.getTransformRotationData(transform);
+  let oldRotation =
+    TransformUtils.getTransformRotationData(transform)
+    |> StateLogicService.getEngineStateToGetData;
 
   changeRotationY(transform, value);
 
@@ -81,3 +87,33 @@ let changeScaleY = (transform, value) =>
 
 let changeScaleZ = (transform, value) =>
   MainEditorTransform.Method.changeScaleZ(transform, value);
+
+let setLocalEulerAngleData = () =>
+  StateEditorService.getState()
+  |> TransformEditorService.setLocalEulerAngleX(
+       GameObjectTool.getCurrentSceneTreeNodeTransform(),
+       10.,
+     )
+  |> TransformEditorService.setLocalEulerAngleY(
+       GameObjectTool.getCurrentSceneTreeNodeTransform(),
+       10.,
+     )
+  |> TransformEditorService.setLocalEulerAngleZ(
+       GameObjectTool.getCurrentSceneTreeNodeTransform(),
+       10.,
+     )
+  |> StateEditorService.setState
+  |> ignore;
+
+let judgeShouldRemoveLocalEulerAngleData = () => {
+  let localEulerAngle =
+    TransformUtils.getTransformRotationData(
+      GameObjectTool.getCurrentSceneTreeNodeTransform(),
+    )
+    |> StateLogicService.getEngineStateToGetData;
+
+  JudgeTool.isEqual(
+    localEulerAngle |> Vector3Service.truncate(3),
+    (0., 0., 0.),
+  );
+};

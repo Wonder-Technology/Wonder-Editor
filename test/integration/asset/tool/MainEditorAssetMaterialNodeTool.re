@@ -7,6 +7,24 @@ let getMaterialComponent =
   materialComponent;
 };
 
+let getMaterialName =
+    (
+      ~nodeId,
+      ~editorState=StateEditorService.getState(),
+      ~engineState=StateEngineService.unsafeGetState(),
+      (),
+    ) => {
+  let {materialComponent, type_}: NodeAssetType.materialNodeData =
+    OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
+    |> MaterialNodeAssetService.getNodeData;
+
+  NodeNameAssetLogicService.getMaterialNodeName(
+    ~material=materialComponent,
+    ~type_,
+    ~engineState,
+  );
+};
+
 let getMaterialType =
     (~nodeId, ~editorState=StateEditorService.getState(), ()) => {
   let {type_}: NodeAssetType.materialNodeData =

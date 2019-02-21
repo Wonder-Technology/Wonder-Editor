@@ -125,9 +125,7 @@ module Method = {
           StateEditorService.getIsRun() ?
             ControllerUtils.stop(dispatchFunc) : ControllerUtils.run(uiState);
 
-          dispatchFunc(
-            AppStore.UpdateAction(Update([|UpdateStore.Controller|])),
-          )
+          dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))
           |> ignore;
         }
       )>

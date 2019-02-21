@@ -132,7 +132,10 @@ let _ =
 
               let engineState =
                 engineState
-                |> HierarchyGameObjectEngineService.addChild(rootGameObject, gameObject1);
+                |> HierarchyGameObjectEngineService.addChild(
+                     rootGameObject,
+                     gameObject1,
+                   );
 
               (rootGameObject, (editorState, engineState));
             });
@@ -399,8 +402,14 @@ let _ =
 
                 let engineState =
                   engineState
-                  |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1)
-                  |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube2);
+                  |> HierarchyGameObjectEngineService.addChild(
+                       rootGameObject,
+                       cube1,
+                     )
+                  |> HierarchyGameObjectEngineService.addChild(
+                       rootGameObject,
+                       cube2,
+                     );
 
                 (rootGameObject, (editorState, engineState));
               });
@@ -748,9 +757,18 @@ let _ =
 
               let engineState =
                 engineState
-                |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1)
-                |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube2)
-                |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube3);
+                |> HierarchyGameObjectEngineService.addChild(
+                     rootGameObject,
+                     cube1,
+                   )
+                |> HierarchyGameObjectEngineService.addChild(
+                     rootGameObject,
+                     cube2,
+                   )
+                |> HierarchyGameObjectEngineService.addChild(
+                     rootGameObject,
+                     cube3,
+                   );
 
               (rootGameObject, (editorState, engineState));
             });
@@ -818,7 +836,11 @@ let _ =
               );
 
             let engineState =
-              engineState |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1);
+              engineState
+              |> HierarchyGameObjectEngineService.addChild(
+                   rootGameObject,
+                   cube1,
+                 );
 
             (rootGameObject, (editorState, engineState));
           });
@@ -938,7 +960,10 @@ let _ =
 
                 let engineState =
                   engineState
-                  |> HierarchyGameObjectEngineService.addChild(rootGameObject, directionLight1);
+                  |> HierarchyGameObjectEngineService.addChild(
+                       rootGameObject,
+                       directionLight1,
+                     );
 
                 (rootGameObject, (editorState, engineState));
               });

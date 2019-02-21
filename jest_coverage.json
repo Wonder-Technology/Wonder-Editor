@@ -29,8 +29,7 @@
     "<rootDir>/lib/es6_global/src/service/state/engine/LoopEngineService\\.js",
     "<rootDir>/lib/es6_global/src/service/atom/",
     "<rootDir>/lib/es6_global/src/core/Index\\.js",
-    "<rootDir>/lib/es6_global/src/core/atom_component/floatInput/FloatInput\\.js",
-    "<rootDir>/lib/es6_global/src/core/atom_component/fileInput/FileInput\\.js",
+    "<rootDir>/lib/es6_global/src/core/atom_component/",
     "<rootDir>/lib/es6_global/src/core/.+/MainEditorMaterialMap.js",
     "<rootDir>/lib/es6_global/src/core/.+/AssetTreeNode.js",
     "<rootDir>/lib/es6_global/src/core/.+/SceneTreeNode.js",
@@ -53,9 +52,9 @@
   ],
   "coverageThreshold": {
     "global": {
-      "lines": 86,
-      "statements": 86,
-      "branches": 74,
+      "lines": 87,
+      "statements": 87,
+      "branches": 77,
       "functions": 83
     }
   }

@@ -25,6 +25,7 @@ let _ =
     });
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
+
       StateEditorService.getState()
       |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
       |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree
@@ -32,165 +33,163 @@ let _ =
       |> ignore;
     });
 
-    describe("test set current node", () => {
-      test("click texture file to be current node", () => {
-        let assetTreeData =
-          MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
+    describe("test set current node", ()
+      =>
+        test("click texture file to be current node", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
 
-        MainEditorAssetChildrenNodeTool.selectTextureNode(
-          ~nodeId=
-            MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
-              assetTreeData,
-            ),
-          (),
+          MainEditorAssetChildrenNodeTool.selectTextureNode(
+            ~nodeId=
+              MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                assetTreeData,
+              ),
+            (),
+          );
+
+          let currentNodeId =
+            StateEditorService.getState()
+            |> MainEditorAssetNodeTool.unsafeGetCurrentNodeId;
+
+          currentNodeId
+          |>
+          expect == MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                      assetTreeData,
+                    );
+        })
+      );
+      /*
+        Jest.useFakeTimers will cause testPromise timeout(use Jest.useRealTimers not work)!!!
+
+        describe("test click folder", () =>
+          describe("test single click", () => {
+            test("test set folder to be current node", () => {
+              Jest.useFakeTimers();
+
+              let assetTreeData =
+                MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
+
+              let fakeDom =
+                EventListenerTool.buildFakeDom()
+                |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+
+              BuildComponentTool.buildAssetChildrenNode(~debounceTime=10, ());
+
+              EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
+
+              Jest.runAllTimers();
+
+              EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
+
+              let currentNodeId =
+                StateEditorService.getState()
+                |> MainEditorAssetNodeTool.unsafeGetCurrentNodeId;
+              currentNodeId
+              |>
+              expect == (
+                          assetTreeData
+                          |> MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId
+                        );
+            });
+            test("test snapshot", () => {
+              Jest.useFakeTimers();
+              let assetTreeData =
+                MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
+              let fakeDom =
+                EventListenerTool.buildFakeDom()
+                |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+              BuildComponentTool.buildAssetChildrenNode(~debounceTime=10, ());
+
+              EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
+              Jest.runAllTimers();
+              EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
+
+              BuildComponentTool.buildAssetComponent()
+              |> ReactTestTool.createSnapshotAndMatch;
+            });
+          })
         );
+       testPromise(
+            "double click folder, set folder to be currentAssetNodeParent and currentNode(are the same)",
+            () => {
+              Jest.useRealTimers();
+              /* Jest.useFakeTimers(); */
+              let assetTreeData =
+                MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
 
-        let currentNodeId =
-          StateEditorService.getState()
-          |> MainEditorAssetNodeTool.unsafeGetCurrentNodeId;
+              let fakeDom =
+                EventListenerTool.buildFakeDom()
+                |> EventListenerTool.stubGetElementByIdReturnFakeDom;
 
-        currentNodeId
-        |>
-        expect == MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
-                    assetTreeData,
-                  );
-      });
+              BuildComponentTool.buildAssetChildrenNode(~debounceTime=10, ());
 
-      /* test("click json file to be current node", () => {
-           let assetTreeData = MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+              EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
 
-           assetTreeData
-           |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
-           |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
+              /* Jest.runTimersToTime(5);
 
-           let {currentNodeId, nodeType} =
-             StateEditorService.getState()
-             |> CurrentNodeDataAssetEditorService.unsafeGetCurrentNodeData;
+                                   EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
 
-           (currentNodeId, nodeType)
-           |>
-           expect == (
-                       assetTreeData
-                       |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonNodeId,
-                       NodeAssetType.Json,
-                     );
-         }); */
 
-      describe("test click folder", () => {
-        describe("test single click", () => {
-          testPromise("test set folder to be current node", () => {
-            let assetTreeData =
-              MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
+                 Jest.runTimersToTime(20);
 
-            let fakeDom =
-              EventListenerTool.buildFakeDom()
-              |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+                                       EventListenerTool.triggerEvent(
+                                         fakeDom,
+                                         "mousedown",
+                                         {},
+                                       );
+                                           let editorState = StateEditorService.getState();
 
-            BuildComponentTool.buildAssetChildrenNode(~debounceTime=10, ());
+                                           NodeAssetService.isNodeEqualById(
+                                             ~sourceNode=
+                                               MainEditorAssetNodeTool.unsafeGetCurrentNode(
+                                                 editorState,
+                                               ),
+                                             ~targetNode=
+                                               MainEditorAssetNodeTool.unsafeGetSelectedFolderNodeInAssetTree(
+                                                 editorState,
+                                               ),
+                                           )
+                                           |> expect == true; */
 
-            EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
-            Js.Promise.make((~resolve, ~reject) =>
-              Timeout.setTimeout(
-                () => {
-                  EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
-                  resolve(.
-                    {
-                      let currentNodeId =
-                        StateEditorService.getState()
-                        |> MainEditorAssetNodeTool.unsafeGetCurrentNodeId;
+              Js.Promise.make((~resolve, ~reject) =>
+                TimeoutTool.setTimeout(
+                  () => {
+                    EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
+                    TimeoutTool.setTimeout(
+                      () => {
+                        EventListenerTool.triggerEvent(
+                          fakeDom,
+                          "mousedown",
+                          {},
+                        );
+                        resolve(.
+                          {
+                            let editorState = StateEditorService.getState();
 
-                      currentNodeId
-                      |>
-                      expect == (
-                                  assetTreeData
-                                  |> MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId
-                                );
-                    },
-                  );
-                },
-                20,
-              )
-            );
-          });
-          testPromise("test snapshot", () => {
-            let assetTreeData =
-              MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
-            let fakeDom =
-              EventListenerTool.buildFakeDom()
-              |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+                            NodeAssetService.isNodeEqualById(
+                              ~sourceNode=
+                                MainEditorAssetNodeTool.unsafeGetCurrentNode(
+                                  editorState,
+                                ),
+                              ~targetNode=
+                                MainEditorAssetNodeTool.unsafeGetSelectedFolderNodeInAssetTree(
+                                  editorState,
+                                ),
+                            )
+                            |> expect == true;
+                          },
+                        );
+                      },
+                      20,
+                    );
+                  },
+                  5,
+                )
+              );
+            },
+          ); */
 
-            BuildComponentTool.buildAssetChildrenNode(~debounceTime=10, ());
-
-            EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
-            Js.Promise.make((~resolve, ~reject) =>
-              Timeout.setTimeout(
-                () => {
-                  EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
-                  resolve(.
-                    BuildComponentTool.buildAssetComponent()
-                    |> ReactTestTool.createSnapshotAndMatch,
-                  );
-                },
-                20,
-              )
-            );
-          });
-        });
-
-        testPromise(
-          "double click folder, set folder to be currentAssetNodeParent and currentNode(are the same)",
-          () => {
-            let assetTreeData =
-              MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
-
-            let fakeDom =
-              EventListenerTool.buildFakeDom()
-              |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-
-            BuildComponentTool.buildAssetChildrenNode(~debounceTime=10, ());
-
-            EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
-            Js.Promise.make((~resolve, ~reject) =>
-              Timeout.setTimeout(
-                () => {
-                  EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
-                  Timeout.setTimeout(
-                    () => {
-                      EventListenerTool.triggerEvent(
-                        fakeDom,
-                        "mousedown",
-                        {},
-                      );
-                      resolve(.
-                        {
-                          let editorState = StateEditorService.getState();
-
-                          NodeAssetService.isNodeEqualById(
-                            ~sourceNode=
-                              MainEditorAssetNodeTool.unsafeGetCurrentNode(
-                                editorState,
-                              ),
-                            ~targetNode=
-                              MainEditorAssetNodeTool.unsafeGetSelectedFolderNodeInAssetTree(
-                                editorState,
-                              ),
-                          )
-                          |> expect == true;
-                        },
-                      );
-                    },
-                    20,
-                  );
-                },
-                5,
-              )
-            );
-          },
-        );
-      });
-    });
-
-    describe("test asse tree node->isShowChildren", () =>
+    describe("test asset tree node->isShowChildren", () =>
       describe("test double click folder", () =>
         test("folder->parent folder->isShowChildren should set to true", () => {
           let assetTreeData =

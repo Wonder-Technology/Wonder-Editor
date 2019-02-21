@@ -14,8 +14,16 @@ let _isCurrentGizmoTranslation = editorState =>
   | _ => false
   };
 
-let isTransformGizmoRender = editorState =>
-  SceneTreeEditorService.hasCurrentSceneTreeNode(editorState);
+let isTransformGizmoRender = (editorState, engineState) =>
+  switch (SceneTreeEditorService.getCurrentSceneTreeNode(editorState)) {
+  | None => false
+  | Some(currentSceneTreeNode) =>
+    !
+      GameObjectComponentEngineService.hasArcballCameraControllerComponent(
+        currentSceneTreeNode,
+        engineState,
+      )
+  };
 
 let isTranslationWholeGizmoRender = editorState =>
   SceneTreeEditorService.hasCurrentSceneTreeNode(editorState)

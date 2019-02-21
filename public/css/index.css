@@ -1165,6 +1165,12 @@ html, body {
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-float-input .component-label {
           cursor: move;
           user-select: none; }
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-three-float-input {
+          display: flex;
+          width: 100%; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-three-float-input .inspector-item .component-label {
+            margin-left: 0 !important;
+            justify-content: center; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree {
           padding-top: 5px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .sceneTree-name h1 {
@@ -1358,17 +1364,6 @@ html, body {
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform {
             width: 100%;
             position: relative; }
-            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform .wonder-transform-template {
-              display: flex;
-              width: 100%; }
-              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform .wonder-transform-template .inspector-item {
-                width: 100%; }
-                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform .wonder-transform-template .inspector-item .item-header {
-                  width: 30%;
-                  margin-left: 0px;
-                  justify-content: center; }
-                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform .wonder-transform-template .inspector-item .item-content {
-                  width: 70%; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform .transform-shade {
               background: rgba(195, 195, 195, 0.5);
               position: absolute;

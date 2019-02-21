@@ -7,32 +7,51 @@ let truncateTransformValue = ((x, y, z)) => {
   );
 };
 
-let getSceneTreeNodeLocalPosition = transformComponent =>
-  TransformEngineService.getLocalPosition(transformComponent)
-  |> StateLogicService.getEngineStateToGetData;
+let getSceneTreeNodeLocalPosition = (transformComponent, engineState) =>
+  TransformEngineService.getLocalPosition(transformComponent, engineState);
 
-let getTransformPositionData = transformComponent =>
-  getSceneTreeNodeLocalPosition(transformComponent) |> truncateTransformValue;
-
-let getTransformScaleData = transformComponent =>
-  TransformEngineService.getLocalScale(transformComponent)
-  |> StateLogicService.getEngineStateToGetData
+let getTransformPositionData = (transformComponent, engineState) =>
+  getSceneTreeNodeLocalPosition(transformComponent, engineState)
   |> truncateTransformValue;
 
-let getTransformRotationData = transformComponent => {
+let getTransformScaleData = (transformComponent, engineState) =>
+  TransformEngineService.getLocalScale(transformComponent, engineState)
+  |> truncateTransformValue;
+
+let getTransformRotationData = (transformComponent, engineState) => {
   let (data, editorState) =
-    TransformEditorService.getLocalEulerAngleAndInit(transformComponent)
-    |> StateLogicService.getStateToGetData;
+    TransformEditorService.getLocalEulerAngleAndInit(
+      transformComponent,
+      (StateEditorService.getState(), engineState),
+    );
 
   editorState |> StateEditorService.setState |> ignore;
 
   data |> truncateTransformValue;
 };
 
-let isTransformVec3Equal = ((x, y, z), (newX, newY, newZ)) =>
-  x
-  |> ValueService.isValueEqual(ValueType.Float, newX)
-  && y
-  |> ValueService.isValueEqual(ValueType.Float, newY)
-  && z
-  |> ValueService.isValueEqual(ValueType.Float, newZ);
+let refreshTransformWithDispatchFunc =
+    (dispatchFunc, (editorState, engineState)) => {
+  let editorState =
+    TransformEditorService.removeLocalEulerAngleData(
+      GameObjectComponentEngineService.unsafeGetTransformComponent(
+        SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
+        engineState,
+      ),
+      editorState,
+    );
+
+  editorState |> StateEditorService.setState |> ignore;
+  engineState |> StateEngineService.setState |> ignore;
+
+  dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
+  |> ignore;
+
+  (StateEditorService.getState(), StateEngineService.unsafeGetState());
+};
+
+let refreshTransform = ((editorState, engineState)) =>
+  refreshTransformWithDispatchFunc(
+    UIStateService.getDispatch(),
+    (editorState, engineState),
+  );

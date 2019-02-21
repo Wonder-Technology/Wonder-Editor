@@ -127,6 +127,11 @@ let _ =
       BrowserDetectToolEngine.setChrome();
     };
 
+    let _prepareViewAndInit = () => {
+      PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
+      StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
+    };
+
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
@@ -164,10 +169,7 @@ let _ =
 
         describe("bind mousedown event", () => {
           let _prepareAndExec = (pageX, pageY, target) => {
-            PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
-            StateLogicService.getAndSetEngineState(
-              MainUtils._handleEngineState,
-            );
+            _prepareViewAndInit();
 
             let (valueX, valueY) = (ref(0), ref(0));
 
@@ -358,10 +360,7 @@ let _ =
                 (movePageX, movePageY),
                 (locationInViewX, locationInViewY),
               ) => {
-            PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
-            StateLogicService.getAndSetEngineState(
-              MainUtils._handleEngineState,
-            );
+            _prepareViewAndInit();
 
             let (valueX, valueY) = (ref(0), ref(0));
 
@@ -463,10 +462,7 @@ let _ =
                 (dragOverLocationInViewX, dragOverLocationInViewY),
                 (dragDropLocationInViewX, dragDropLocationInViewY),
               ) => {
-            PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
-            StateLogicService.getAndSetEngineState(
-              MainUtils._handleEngineState,
-            );
+            _prepareViewAndInit();
 
             let (x1, y1, x2, y2, x3, y3) = (
               ref(0),
@@ -587,9 +583,7 @@ let _ =
                 keyboardDomEventName,
                 (clickPageX, clickPageY),
               ) => {
-            PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
-            MainUtils._handleEngineState
-            |> StateLogicService.getAndSetEngineState;
+            _prepareViewAndInit();
 
             let value = ref(0);
 
@@ -805,10 +799,7 @@ let _ =
     describe("bind dom event to trigger point event", () =>
       describe("bind mouse event to trigger point event", () => {
         let _prepareAndExec = (pointEventName, (pageX, pageY)) => {
-          PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
-          StateLogicService.getAndSetEngineState(
-            MainUtils._handleEngineState,
-          );
+          _prepareViewAndInit();
 
           let value = ref(0);
 
@@ -899,7 +890,7 @@ let _ =
                 );
 
               let gl = FakeGlToolEngine.getEngineStateGl();
-                gl##clearColor |> expect |> not_ |> toCalled;
+              gl##clearColor |> expect |> not_ |> toCalled;
             })
           );
 
@@ -968,6 +959,56 @@ let _ =
                })
              ); */
         });
+      })
+    );
+
+    describe("test handle error", () =>
+      test("throw error shouldn't unbind event", () => {
+        _prepareMouseEvent(~sandbox, ());
+        _prepareViewAndInit();
+        let value1 = ref(0);
+        let value2 = ref(0);
+
+        EventTool.onCustomGlobalEvent(
+          SceneViewEventEditorService.getPointScaleEventName(),
+          0,
+          (. event, state) => {
+            value1 := value1^ + 1;
+
+            WonderLog.Log.fatal(
+              LogUtils.buildFatalMessage(
+                ~description={j|throw fatal|j},
+                ~reason="",
+                ~solution={j||j},
+                ~params={j||j},
+              ),
+            );
+
+            value2 := value2^ + 1;
+
+            (state, event);
+          },
+        )
+        |> StateLogicService.getAndSetEngineState;
+
+        EventTool.triggerDomEvent(
+          "mousedown",
+          EventTool.getBody(),
+          MouseEventTool.buildMouseEvent(~pageX=10, ~pageY=20, ()),
+        );
+        EventTool.triggerDomEvent(
+          "mousewheel",
+          EventTool.getBody(),
+          MouseEventTool.buildMouseEvent(),
+        );
+        EventTool.triggerDomEvent(
+          "mousewheel",
+          EventTool.getBody(),
+          MouseEventTool.buildMouseEvent(),
+        );
+        EventTool.restore();
+
+        (value1^, value2^) |> expect == (2, 0);
       })
     );
   });

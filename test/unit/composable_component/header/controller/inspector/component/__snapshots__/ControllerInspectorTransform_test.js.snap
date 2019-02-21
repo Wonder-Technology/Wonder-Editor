@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditorTransform scale test change scale value changeX should set current gameObject->transform->value x set x value to floatInput 1`] = `
+exports[`controller inspector transform fix bug should refresh transform when stop 1`] = `
 <article
   className="wonder-inspector-transform"
 >
@@ -198,7 +198,7 @@ exports[`MainEditorTransform scale test change scale value changeX should set cu
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="-10.1213"
+            value="1"
           />
         </div>
       </article>

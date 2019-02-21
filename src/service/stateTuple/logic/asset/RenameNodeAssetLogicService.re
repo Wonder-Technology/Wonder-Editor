@@ -1,11 +1,3 @@
-let _renameTextureNode =
-    (name, {textureComponent}: NodeAssetType.textureNodeData, engineState) =>
-  OperateTextureLogicService.setName(
-    ~texture=textureComponent,
-    ~name,
-    ~engineState,
-  );
-
 let _isNameEqualDefaultMaterialName = (type_, name) => {
   open MaterialDataAssetType;
 
@@ -20,39 +12,15 @@ let _isNameEqualDefaultMaterialName = (type_, name) => {
   name === defaultName;
 };
 
-let _renameMaterialNode =
-    (
-      name,
-      {materialComponent, type_}: NodeAssetType.materialNodeData,
-      engineState,
-    )
-    : (Result.RelationResult.t, Wonderjs.StateDataMainType.state) =>
-  _isNameEqualDefaultMaterialName(type_, name) ?
-    (
-      Result.RelationResult.fail(
-        {j|material name:$name shouldn't equal default material name|j} |. Some,
-      ),
-      engineState,
-    ) :
-    (
-      Result.RelationResult.success(),
-      OperateMaterialLogicService.setName(
-        ~material=materialComponent,
-        ~type_,
-        ~name,
-        ~engineState,
-      ),
-    );
-
 let _checkParentNode =
-    (parentNode, updatedData, engineState, getNodeNameFunc)
+    (parentFolderNode, nodeName, engineState)
     : Result.RelationResult.t =>
-  switch (parentNode) {
+  switch (parentFolderNode) {
   | None => Result.RelationResult.success()
-  | Some(parentNode) =>
+  | Some(parentFolderNode) =>
     OperateTreeAssetLogicService.isNodeChildHasTargetName(
-      getNodeNameFunc(updatedData),
-      parentNode,
+      nodeName,
+      parentFolderNode,
       engineState,
     ) ?
       Result.RelationResult.fail(
@@ -64,74 +32,113 @@ let _checkParentNode =
 let _textureNodeFunc =
     (
       (targetNodeId, name),
-      (result, parentNode, tree, engineState),
+      parentFolderNode,
+      (result, tree, engineState),
       nodeId,
-      nodeData,
-    ) =>
-  result
-  |> Result.RelationResult.isSuccess
-  && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
-    {
-      let engineState = _renameTextureNode(name, nodeData, engineState);
-
-      (Result.RelationResult.success(), parentNode, tree, engineState);
-    } :
-    (result, parentNode, tree, engineState);
-
-let _materialNodeFunc =
-    (
-      (targetNodeId, name),
-      (result, parentNode, tree, engineState),
-      nodeId,
-      nodeData,
+      {textureComponent}: NodeAssetType.textureNodeData,
     ) =>
   result
   |> Result.RelationResult.isSuccess
   && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
     {
       let (result, engineState) =
-        _renameMaterialNode(name, nodeData, engineState);
+        switch (_checkParentNode(parentFolderNode, name, engineState)) {
+        | Success () as result => (
+            result,
+            OperateTextureLogicService.setName(
+              ~texture=textureComponent,
+              ~name,
+              ~engineState,
+            ),
+          )
+        | Fail(msg) as result => (result, engineState)
+        };
 
-      (result, parentNode, tree, engineState);
+      (result, tree, engineState);
     } :
-    (result, parentNode, tree, engineState);
+    (result, tree, engineState);
 
-let _wdbNodeFunc =
+let _materialNodeFunc =
     (
       (targetNodeId, name),
-      (result, parentNode, tree, engineState),
+      parentFolderNode,
+      (result, tree, engineState),
       nodeId,
-      nodeData,
+      {materialComponent, type_}: NodeAssetType.materialNodeData,
     ) =>
   result
   |> Result.RelationResult.isSuccess
   && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
     {
-      let updatedNodeData = WDBNodeAssetService.rename(~name, ~nodeData);
+      let (result, engineState) =
+        _isNameEqualDefaultMaterialName(type_, name) ?
+          (
+            Result.RelationResult.fail(
+              {j|material name:$name shouldn't equal default material name|j}
+              |. Some,
+            ),
+            engineState,
+          ) :
+          (
+            switch (_checkParentNode(parentFolderNode, name, engineState)) {
+            | Success () as result => (
+                result,
+                OperateMaterialLogicService.setName(
+                  ~material=materialComponent,
+                  ~type_,
+                  ~name,
+                  ~engineState,
+                ),
+              )
 
-      (
-        _checkParentNode(
-          parentNode,
-          updatedNodeData,
-          engineState,
-          WDBNodeAssetService.getNodeName,
-        ),
-        parentNode,
-        OperateTreeAssetService.updateNode(
-          nodeId,
-          updatedNodeData,
-          WDBNodeAssetService.buildNodeByNodeData,
-          tree,
-        ),
-        engineState,
-      );
+            | Fail(msg) as result => (result, engineState)
+            }
+          );
+
+      (result, tree, engineState);
     } :
-    (result, parentNode, tree, engineState);
+    (result, tree, engineState);
+
+let _wdbNodeFunc =
+    (
+      (targetNodeId, name),
+      parentFolderNode,
+      (result, tree, engineState),
+      nodeId,
+      nodeData,
+    ) => {
+  let (result, newTree, engineState) =
+    result
+    |> Result.RelationResult.isSuccess
+    && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
+      {
+        let (result, newTree) =
+          switch (_checkParentNode(parentFolderNode, name, engineState)) {
+          | Success () as result => (
+              result,
+              OperateTreeAssetService.updateNode(
+                nodeId,
+                WDBNodeAssetService.rename(~name, ~nodeData),
+                WDBNodeAssetService.buildNodeByNodeData,
+                tree,
+              ),
+            )
+
+          | Fail(msg) as result => (result, tree)
+          };
+
+        (result, newTree, engineState);
+      } :
+      (result, tree, engineState);
+
+  (result, newTree, engineState);
+};
 
 let _folderNodeFunc =
     (
       (targetNodeId, name),
-      (result, parentNode, tree, engineState),
+      parentFolderNode,
+      (result, tree, engineState),
       nodeId,
       nodeData,
       children,
@@ -140,31 +147,22 @@ let _folderNodeFunc =
   |> Result.RelationResult.isSuccess
   && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
     {
-      let updatedNodeData = FolderNodeAssetService.rename(~name, ~nodeData);
+      let (result, newTree) =
+        switch (_checkParentNode(parentFolderNode, name, engineState)) {
+        | Success () as result => (
+            result,
+            OperateTreeAssetService.updateNode(
+              nodeId,
+              FolderNodeAssetService.rename(~name, ~nodeData),
+              FolderNodeAssetService.buildNodeByNodeData(~children),
+              tree,
+            ),
+          )
 
-      let node =
-        FolderNodeAssetService.buildNodeByNodeData(
-          ~nodeId,
-          ~nodeData=updatedNodeData,
-          ~children,
-        );
+        | Fail(msg) as result => (result, tree)
+        };
 
-      (
-        _checkParentNode(
-          parentNode,
-          updatedNodeData,
-          engineState,
-          FolderNodeAssetService.getNodeName,
-        ),
-        node |. Some,
-        OperateTreeAssetService.updateNode(
-          nodeId,
-          updatedNodeData,
-          FolderNodeAssetService.buildNodeByNodeData(~children),
-          tree,
-        ),
-        engineState,
-      );
+      (result, newTree, engineState);
     } :
     {
       let node =
@@ -174,7 +172,7 @@ let _folderNodeFunc =
           ~children,
         );
 
-      (result, node |. Some, tree, engineState);
+      (result, tree, engineState);
     };
 
 let renameNode =
@@ -183,15 +181,15 @@ let renameNode =
         (EditorType.editorState, Wonderjs.StateDataMainType.state),
       ) => {
   let tree = TreeAssetEditorService.unsafeGetTree(editorState);
-  let parentNode = None;
 
-  let (result, _, updatedTree, engineState) =
-    IterateTreeAssetService.fold(
-      ~acc=(Result.RelationResult.success(), parentNode, tree, engineState),
+  let (result, updatedTree, engineState) =
+    IterateTreeAssetService.foldWithParentFolderNode(
+      ~acc=(Result.RelationResult.success(), tree, engineState),
       ~textureNodeFunc=_textureNodeFunc((targetNodeId, name)),
       ~materialNodeFunc=_materialNodeFunc((targetNodeId, name)),
       ~wdbNodeFunc=_wdbNodeFunc((targetNodeId, name)),
       ~folderNodeFunc=_folderNodeFunc((targetNodeId, name)),
+      ~parentFolderNode=None,
       ~tree,
       (),
     );

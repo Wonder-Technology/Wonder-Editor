@@ -1,0 +1,10 @@
+.wonder-three-float-input {
+    display: flex;
+    width: 100%;
+    .inspector-item {
+        .component-label {
+            margin-left: 0 !important;
+            justify-content: center;
+        }
+    }
+}

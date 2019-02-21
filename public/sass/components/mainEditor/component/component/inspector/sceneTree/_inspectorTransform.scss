@@ -1,21 +1,21 @@
 .wonder-inspector-transform{
     width:100%;
     position: relative;
-    .wonder-transform-template {
-        display: flex;
-        width:100%;
-        .inspector-item{
-            width:100%;
-            .item-header{
-                width:30%;
-                margin-left:0px;
-                justify-content: center;
-            }
-            .item-content{
-                width:70%;
-            }
-        }
-    }
+    // .wonder-transform-template {
+    //     display: flex;
+    //     width:100%;
+    //     .inspector-item{
+    //         width:100%;
+    //         .item-header{
+    //             width:30%;
+    //             margin-left:0px;
+    //             justify-content: center;
+    //         }
+    //         .item-content{
+    //             width:70%;
+    //         }
+    //     }
+    // }
     .transform-shade{
         background: rgba(195, 195, 195, 0.5);
         position: absolute;

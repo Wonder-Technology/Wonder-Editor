@@ -9,7 +9,7 @@ open Sinon;
 open EventType;
 
 let _ =
-  describe("test init camera controller", () => {
+  describe("test init camera controller job", () => {
     let sandbox = getSandboxDefaultVal();
 
     beforeEach(() => sandbox := createSandbox());
@@ -42,12 +42,25 @@ let _ =
            value; */
       };
 
+      let _judgeShouldRemoveLocalEulerAngleData = () => {
+        let localEulerAngle =
+          TransformUtils.getTransformRotationData(
+            GameObjectTool.getCurrentSceneTreeNodeTransform(),
+          )
+          |> StateLogicService.getEngineStateToGetData;
+
+        JudgeTool.isEqual(
+          localEulerAngle |> Vector3Service.truncate(3),
+          (0., 0., 0.),
+        );
+      };
+
       let _judgeRefreshInspector = dispatchFuncStub =>
         dispatchFuncStub
-        |> expect
-        |> toCalledWith([|
+        |> SinonTool.calledWith(
+             _,
              AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
-           |]);
+           );
 
       describe(
         "if current scene tree node has arcballCameraController component", () => {
@@ -99,28 +112,9 @@ let _ =
         };
 
         let _prepareAndExec = ((pageX, pageY), triggerFunc) => {
-          /* let value = _prepare(pointEventName); */
-
           _prepare();
 
           triggerFunc(pageX, pageY);
-          /* EventTool.triggerDomEvent(
-               "mousedown",
-               EventTool.getBody(),
-               MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
-             );
-             EventTool.triggerDomEvent(
-               "mousemove",
-               EventTool.getBody(),
-               MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
-             );
-             EventTool.triggerDomEvent(
-               "mouseup",
-               EventTool.getBody(),
-               MouseEventTool.buildMouseEvent(),
-             );
-             EventTool.restore(); */
-          /* value; */
         };
 
         describe("trigger refresh_inspector event", () => {
@@ -131,6 +125,8 @@ let _ =
             _prepareAndExec(
               (60, 20),
               (pageX, pageY) => {
+                MainEditorTransformTool.setLocalEulerAngleData();
+
                 EventTool.triggerDomEvent(
                   "mousedown",
                   EventTool.getBody(),
@@ -150,7 +146,11 @@ let _ =
               },
             );
 
-            _judgeRefreshInspector(dispatchFuncStub);
+            (
+              _judgeShouldRemoveLocalEulerAngleData(),
+              _judgeRefreshInspector(dispatchFuncStub),
+            )
+            |> expect == (true, true);
           });
           test("test bind point scale event", () => {
             let dispatchFuncStub = ReactTool.createDispatchFuncStub(sandbox);
@@ -159,6 +159,8 @@ let _ =
             _prepareAndExec(
               (60, 20),
               (pageX, pageY) => {
+                MainEditorTransformTool.setLocalEulerAngleData();
+
                 EventTool.triggerDomEvent(
                   "mousedown",
                   EventTool.getBody(),
@@ -173,7 +175,11 @@ let _ =
               },
             );
 
-            _judgeRefreshInspector(dispatchFuncStub);
+            (
+              _judgeShouldRemoveLocalEulerAngleData(),
+              _judgeRefreshInspector(dispatchFuncStub),
+            )
+            |> expect == (true, true);
           });
         });
       });
@@ -244,6 +250,7 @@ let _ =
           () => {
           let _prepareAndExec = ((pageX, pageY)) => {
             _prepare();
+            MainEditorTransformTool.setLocalEulerAngleData();
 
             EventTool.triggerDomEvent(
               "mousedown",
@@ -264,7 +271,11 @@ let _ =
 
             _prepareAndExec((60, 20));
 
-            _judgeRefreshInspector(dispatchFuncStub);
+            (
+              _judgeShouldRemoveLocalEulerAngleData(),
+              _judgeRefreshInspector(dispatchFuncStub),
+            )
+            |> expect == (true, true);
           });
         });
       });

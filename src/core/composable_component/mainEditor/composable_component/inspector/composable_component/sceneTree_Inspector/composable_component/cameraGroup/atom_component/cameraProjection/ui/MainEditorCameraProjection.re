@@ -82,6 +82,12 @@ module Method = {
           currentGameObjectPerspectiveCamera,
         )
       )
+      dragDropFunc=(
+        blurNearEvent(
+          (uiState, dispatchFunc),
+          currentGameObjectPerspectiveCamera,
+        )
+      )
     />;
 
   let buildFarComponent =
@@ -95,6 +101,12 @@ module Method = {
       )
       changeComponentValueFunc=(changeFar(currentGameObjectPerspectiveCamera))
       blurValueFunc=(
+        blurFarEvent(
+          (uiState, dispatchFunc),
+          currentGameObjectPerspectiveCamera,
+        )
+      )
+      dragDropFunc=(
         blurFarEvent(
           (uiState, dispatchFunc),
           currentGameObjectPerspectiveCamera,
@@ -140,6 +152,12 @@ module Method = {
           currentGameObjectPerspectiveCamera,
         )
       )
+      dragDropFunc=(
+        blurFovyEvent(
+          (uiState, dispatchFunc),
+          currentGameObjectPerspectiveCamera,
+        )
+      )
     />;
 };
 
@@ -154,7 +172,8 @@ let render = ((uiState, dispatchFunc), _self) => {
          |> StateLogicService.getEditorState,
        );
 
-  <article key="MainEditorCameraProjection" className="wonder-camera-projection">
+  <article
+    key="MainEditorCameraProjection" className="wonder-camera-projection">
     <Select
       label="Type"
       options=(MainEditorCameraProjectionUtils.getCameraProjectionOptions())

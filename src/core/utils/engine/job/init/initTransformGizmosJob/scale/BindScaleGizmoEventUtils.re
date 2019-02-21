@@ -52,7 +52,7 @@ let handleDragOverEvent = (event, (editorState, engineState)) => {
     );
 
   let (editorState, engineState) =
-    InitTransformGizmosUtils.refreshInspector(editorState, engineState);
+    TransformUtils.refreshTransform((editorState, engineState));
 
   let engineState = StateLogicService.renderWhenStop(engineState);
 

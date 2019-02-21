@@ -13,3 +13,12 @@ let getTimeoutFuncArr = [%bs.raw
         return window.timeoutFuncArr;
         |}
 ];
+
+
+let setTimeout = [%bs.raw
+  {|
+    function(func, time){
+        setTimeout(func, time)
+    }
+  |}
+];
