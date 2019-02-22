@@ -205,16 +205,6 @@ let _setArcballCameraControllerFocusRelatedAttribute =
 };
 
 let _getTargetGameObjectMaxScale = (targetGameObjectTransform, engineState) => {
-  let (scaleX, scaleY, scaleZ) =
-    engineState |> TransformEngineService.getScale(targetGameObjectTransform);
-
-  Js.Math.max_float(scaleX, scaleY) |> Js.Math.max_float(scaleZ);
-};
-
-let _calcGeometrySphereCenterAndRadius =
-    (targetGameObject, targetGameObjectTransform, engineState) => {
-  let pointsAndLocalToWolrdMatricesArray =
-    engineState
     |> HierarchyGameObjectEngineService.getAllGameObjects(targetGameObject)
     |> Js.Array.map(gameObject =>
          switch (
@@ -264,7 +254,6 @@ let _calcArcballCameraControllerDistance =
   *. distance
   *. 2.
   +. FocusDataUtils.getSmallGameObjectFocusDeviation();
-
 let setEditorCameraFocusTargetGameObject =
     (targetGameObject, editorState, engineState) => {
   WonderLog.Contract.requireCheck(
