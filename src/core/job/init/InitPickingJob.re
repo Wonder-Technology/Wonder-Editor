@@ -57,8 +57,15 @@ let _getTopOne = (cameraGameObject, engineState, intersectedDatas) => {
   |> Js.Option.map((. (gameObject, _)) => gameObject);
 };
 
-let _findTopRootGameObject = (engineState, gameObjectOpt) => {
-  let rec _find = (gameObject, rootGameObject, engineState) =>
+let _isCurrentSceneTreeNode = (gameObject, currentSceneTreeNodeOpt) =>
+  switch (currentSceneTreeNodeOpt) {
+  | None => false
+  | Some(currentSceneTreeNode) => gameObject == currentSceneTreeNode
+  };
+
+let _findTopRootGameObject = ((editorState, engineState), gameObjectOpt) => {
+  let rec _find =
+          (gameObject, rootGameObject, currentSceneTreeNodeOpt, engineState) =>
     switch (
       HierarchyGameObjectEngineService.getParentGameObject(
         gameObject,
@@ -67,20 +74,26 @@ let _findTopRootGameObject = (engineState, gameObjectOpt) => {
     ) {
     | None => rootGameObject
     | Some(parentGameObject) =>
-      _find(
-        parentGameObject,
-        GameObjectEngineService.unsafeGetGameObjectIsRoot(
+      _isCurrentSceneTreeNode(parentGameObject, currentSceneTreeNodeOpt) ?
+        rootGameObject :
+        _find(
           parentGameObject,
+          GameObjectEngineService.unsafeGetGameObjectIsRoot(
+            parentGameObject,
+            engineState,
+          ) ?
+            parentGameObject : rootGameObject,
+          currentSceneTreeNodeOpt,
           engineState,
-        ) ?
-          parentGameObject : rootGameObject,
-        engineState,
-      )
+        )
     };
+
+  let currentSceneTreeNodeOpt =
+    SceneTreeEditorService.getCurrentSceneTreeNode(editorState);
 
   gameObjectOpt
   |> Js.Option.map((. gameObject) =>
-       _find(gameObject, gameObject, engineState)
+       _find(gameObject, gameObject, currentSceneTreeNodeOpt, engineState)
      );
 };
 
@@ -163,7 +176,7 @@ let _findPickedOne = (event, allGameObjectData, (editorState, engineState)) => {
        (gameObject, OptionService.unsafeGet(checkData))
      )
   |> _getTopOne(cameraGameObject, engineState)
-  |> _findTopRootGameObject(engineState);
+  |> _findTopRootGameObject((editorState, engineState));
 };
 
 let _isNotNeedPushToHistoryStack = pickedGameObjectOpt =>

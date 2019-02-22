@@ -705,6 +705,100 @@ let _ =
                  });
             },
           );
+
+          describe("test pick the same one multiple times", () => {
+            testPromise(
+              {|pick glb child c1;
+            pick c1 again;
+
+            should pick c1;
+            |},
+              () => {
+                let glbName = "Truck";
+
+                MainEditorAssetUploadTool.loadOneGLB(
+                  ~fileName=glbName,
+                  ~arrayBuffer=truckGLBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId => {
+                     MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                       ~wdbNodeId=uploadedWDBNodeId,
+                       (),
+                     );
+
+                     InitPickingJobTool.triggerPicking(
+                       ~sandbox,
+                       ~pageX=250,
+                       ~pageY=100,
+                       (),
+                     );
+                     InitPickingJobTool.triggerPicking(
+                       ~sandbox,
+                       ~pageX=250,
+                       ~pageY=100,
+                       (),
+                     );
+
+                     InitPickingJobTool.pickOne(
+                       LoadWDBTool.findGameObjectByName(
+                         LoadWDBTool.Truck.getTruck0GameObjectName(),
+                       )
+                       |> StateLogicService.getEngineStateToGetData,
+                     )
+                     |> resolve;
+                   });
+              },
+            );
+            testPromise(
+              {|pick glb child c1;
+            pick c1 again;
+            pick c1 again;
+
+            should pick glb rootGameObject;
+            |},
+              () => {
+                let glbName = "Truck";
+
+                MainEditorAssetUploadTool.loadOneGLB(
+                  ~fileName=glbName,
+                  ~arrayBuffer=truckGLBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId => {
+                     MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                       ~wdbNodeId=uploadedWDBNodeId,
+                       (),
+                     );
+
+                     InitPickingJobTool.triggerPicking(
+                       ~sandbox,
+                       ~pageX=250,
+                       ~pageY=100,
+                       (),
+                     );
+                     InitPickingJobTool.triggerPicking(
+                       ~sandbox,
+                       ~pageX=250,
+                       ~pageY=100,
+                       (),
+                     );
+                     InitPickingJobTool.triggerPicking(
+                       ~sandbox,
+                       ~pageX=250,
+                       ~pageY=100,
+                       (),
+                     );
+
+                     InitPickingJobTool.pickOne(
+                       LoadWDBTool.findGameObjectByName(glbName)
+                       |> StateLogicService.getEngineStateToGetData,
+                     )
+                     |> resolve;
+                   });
+              },
+            );
+          });
         });
       });
 
