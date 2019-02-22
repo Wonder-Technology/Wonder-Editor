@@ -165,6 +165,13 @@ let _ =
               let editorState = StateEditorService.getState();
               let engineState = StateEngineService.unsafeGetState();
 
+              let engineState =
+                MainEditorSceneTool.unsafeGetScene()
+                |. GameObjectComponentEngineService.unsafeGetTransformComponent(
+                     engineState,
+                   )
+                |. TransformEngineService.setScale((3., 1., 1.), engineState);
+
               triggerFocusHotKeyEvent();
 
               editorState
@@ -175,30 +182,71 @@ let _ =
               |. ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
                    engineState,
                  )
-              |>
-              expect == FocusDataUtils.getSceneGameObjectArcballCameraDistance();
+              |> expect == 22.196152422706632;
             })
           );
 
           describe("else if the currentSceneTreeNode is scene children", () =>
-            test("key down f, test arcballCamera distance", () => {
-              MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
+            describe("key down f, test arcballCamera distance", () => {
+              test("test currentSceneTreeNode max scale is 1", () => {
+                MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
 
-              let editorState = StateEditorService.getState();
-              let engineState = StateEngineService.unsafeGetState();
+                let editorState = StateEditorService.getState();
+                let engineState = StateEngineService.unsafeGetState();
 
-              triggerFocusHotKeyEvent();
+                let engineState =
+                  engineState
+                  |> MainEditorSceneTool.getFirstCube
+                  |. GameObjectComponentEngineService.unsafeGetTransformComponent(
+                       engineState,
+                     )
+                  |. TransformEngineService.setScale(
+                       (1., 1., 1.),
+                       engineState,
+                     );
 
-              editorState
-              |> SceneViewEditorService.unsafeGetEditCamera
-              |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-                   engineState,
-                 )
-              |. ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
-                   engineState,
-                 )
-              |>
-              expect == FocusDataUtils.getSceneChildrenArcballCameraDistance();
+                triggerFocusHotKeyEvent();
+
+                editorState
+                |> SceneViewEditorService.unsafeGetEditCamera
+                |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+                     engineState,
+                   )
+                |. ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
+                     engineState,
+                   )
+                |> expect == 3.732050807568877;
+              });
+
+              test("test currentSceneTreeNode max scale is 55", () => {
+                MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
+
+                let editorState = StateEditorService.getState();
+                let engineState = StateEngineService.unsafeGetState();
+
+                let engineState =
+                  engineState
+                  |> MainEditorSceneTool.getFirstCube
+                  |. GameObjectComponentEngineService.unsafeGetTransformComponent(
+                       engineState,
+                     )
+                  |. TransformEngineService.setScale(
+                       (55., 5., 35.),
+                       engineState,
+                     );
+
+                triggerFocusHotKeyEvent();
+
+                editorState
+                |> SceneViewEditorService.unsafeGetEditCamera
+                |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+                     engineState,
+                   )
+                |. ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
+                     engineState,
+                   )
+                |> expect == 97.26279441628824;
+              });
             })
           );
         });
