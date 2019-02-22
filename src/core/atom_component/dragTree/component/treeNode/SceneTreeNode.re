@@ -103,12 +103,12 @@ module Method = {
       );
 
     /* relationResult
-    |> OptionService.handleSomeAndIgnore(relationResult =>
-         relationResult
-         |> Result.RelationResult.handleError(msg =>
-              ConsoleUtils.error(msg, StateEditorService.getState())
-            )
-       ); */
+       |> OptionService.handleSomeAndIgnore(relationResult =>
+            relationResult
+            |> Result.RelationResult.handleError(msg =>
+                 ConsoleUtils.error(msg, StateEditorService.getState())
+               )
+          ); */
 
     isValid ?
       DragGameObject(gameObject, startId, dragPosition) :
@@ -401,20 +401,13 @@ let make =
       self,
     ),
   didUpdate: _self =>
-    isSelected ?
-      {
-        let sceneTreeContainerJsObj =
-          DomHelper.getElementById("wonder-sceneTree-component")
-          |> DomHelperType.convertDomElementToJsObj;
-
-        let sceneTreeNodeDomClientRect =
-          DomHelper.getElementById({j|sceneTreeNode-$gameObject|j})
-          |> DomHelper.getDomClientRect;
-
-        SceneTreeNodeScrollUtils.scrollCurrentSceneTreeNode(
-          sceneTreeContainerJsObj,
-          sceneTreeNodeDomClientRect,
-        );
-      } :
-      (),
+    SceneTreeNodeScrollUtils.handleSelectedSceneTreeNodeScroll(
+      isSelected,
+      gameObject,
+    ),
+  didMount: _ =>
+    SceneTreeNodeScrollUtils.handleSelectedSceneTreeNodeScroll(
+      isSelected,
+      gameObject,
+    ),
 };

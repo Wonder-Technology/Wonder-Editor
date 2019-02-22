@@ -1,3 +1,5 @@
+open ShapeType;
+
 let _renderWhenStop = (event, handleFunc, engineState) => {
   let (engineState, event) = handleFunc(. event, engineState);
 
@@ -203,44 +205,65 @@ let _setArcballCameraControllerFocusRelatedAttribute =
 };
 
 let _getTargetGameObjectMaxScale = (targetGameObjectTransform, engineState) => {
-  let (xScale, yScale, zScale) =
+  let (scaleX, scaleY, scaleZ) =
     engineState |> TransformEngineService.getScale(targetGameObjectTransform);
 
-  Js.Math.max_float(xScale, yScale) |> Js.Math.max_float(zScale);
+  Js.Math.max_float(scaleX, scaleY) |> Js.Math.max_float(scaleZ);
 };
 
-let _getMaxDistanceOfPointsToCenter = (targetGameObject, engineState) =>
-  engineState
-  |> HierarchyGameObjectEngineService.getAllGameObjects(targetGameObject)
-  |> Js.Array.map(gameObject =>
-       switch (
-         engineState
-         |> GameObjectComponentEngineService.getGeometryComponent(gameObject)
-       ) {
-       | None => None
-       | Some(geometry) =>
-         engineState
-         |> GeometryEngineService.getGeometryVertices(geometry)
-         |. Some
-       }
-     )
-  |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. maxValue, vertices) => {
-         let distanceOfPointsToCenter =
-           switch (vertices) {
-           | None => 0.
-           | Some(vertices) =>
-             SphereShapeUtils.findMaxDistanceOfPointsToCenter(
-               (0., 0., 0.),
-               vertices,
-             )
-           };
+let _calcGeometrySphereCenterAndRadius =
+    (targetGameObject, targetGameObjectTransform, engineState) => {
+  let pointsAndLocalToWolrdMatricesArray =
+    engineState
+    |> HierarchyGameObjectEngineService.getAllGameObjects(targetGameObject)
+    |> Js.Array.map(gameObject =>
+         switch (
+           engineState
+           |> GameObjectComponentEngineService.getGeometryComponent(
+                gameObject,
+              )
+         ) {
+         | None => (None, None)
+         | Some(geometry) => (
+             engineState
+             |> GeometryEngineService.getGeometryVertices(geometry)
+             |. Some,
+             engineState
+             |> TransformEngineService.getLocalToWorldMatrixTypeArray(
+                  targetGameObjectTransform,
+                )
+             |. Some,
+           )
+         }
+       )
+    |> Js.Array.filter(((vertices, localToWolrdMatrices)) =>
+         vertices |> Js.Option.isSome
+       )
+    |> Js.Array.map(((vertices, localToWolrdMatrices)) =>
+         (
+           vertices |> OptionService.unsafeGet,
+           localToWolrdMatrices |> OptionService.unsafeGet,
+         )
+       );
 
-         Js.Math.max_float(distanceOfPointsToCenter, maxValue);
-       },
-       0.,
-     )
-  |> Js.Math.sqrt;
+  let {min, max} =
+    AABBShapeUtils.setFromAllPointsAndLocalToWolrdMatrices(
+      pointsAndLocalToWolrdMatricesArray,
+    );
+
+  /* TODO the min and max not change with position */
+  WonderLog.Log.print((min, max)) |> ignore;
+  let center = AABBShapeUtils.getCenter({min, max});
+
+  (center, AABBShapeUtils.calcRadiusOfAABB({min, max}, center));
+};
+
+let _calcArcballCameraControllerDistance =
+    (distance, targetGameObjectTransform, engineState) =>
+  _getTargetGameObjectMaxScale(targetGameObjectTransform, engineState)
+  *. distance
+  *. 2.
+  +. FocusDataUtils.getSmallGameObjectFocusDeviation();
 
 let setEditorCameraFocusTargetGameObject =
     (targetGameObject, editorState, engineState) => {
@@ -281,15 +304,16 @@ let setEditorCameraFocusTargetGameObject =
          targetGameObject,
        );
 
-  let targetGameObjectPosition =
+  let (center, radius) =
     engineState
-    |> TransformEngineService.getPosition(targetGameObjectTransform);
+    |> _calcGeometrySphereCenterAndRadius(
+         targetGameObject,
+         targetGameObjectTransform,
+       );
 
   let arcballCameraControllerDistance =
-    _getMaxDistanceOfPointsToCenter(targetGameObject, engineState)
-    *. _getTargetGameObjectMaxScale(targetGameObjectTransform, engineState)
-    *. 2.
-    +. FocusDataUtils.getSmallGameObjectFocusDeviation();
+    engineState
+    |> _calcArcballCameraControllerDistance(radius, targetGameObjectTransform);
 
   engineState |> SceneEngineService.isSceneGameObject(targetGameObject) ?
     _setArcballCameraControllerFocusRelatedAttribute(
@@ -297,13 +321,13 @@ let setEditorCameraFocusTargetGameObject =
       (
         arcballCameraControllerDistance
         +. FocusDataUtils.getSceneGameObjectArcballCameraDistance(),
-        targetGameObjectPosition,
+        center,
       ),
       engineState,
     ) :
     _setArcballCameraControllerFocusRelatedAttribute(
       editorCameraArcballControllerComponent,
-      (arcballCameraControllerDistance, targetGameObjectPosition),
+      (arcballCameraControllerDistance, center),
       engineState,
     );
 };

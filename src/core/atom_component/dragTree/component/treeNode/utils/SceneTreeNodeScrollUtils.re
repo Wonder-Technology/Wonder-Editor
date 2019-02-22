@@ -108,3 +108,21 @@ let scrollCurrentSceneTreeNode =
   | Some(value) => sceneTreeContainerJsObj##scrollTop#=value
   };
 };
+
+let handleSelectedSceneTreeNodeScroll = (isSelected, gameObject) =>
+  isSelected ?
+    {
+      let sceneTreeContainerJsObj =
+        DomHelper.getElementById("wonder-sceneTree-component")
+        |> DomHelperType.convertDomElementToJsObj;
+
+      let sceneTreeNodeDomClientRect =
+        DomHelper.getElementById({j|sceneTreeNode-$gameObject|j})
+        |> DomHelper.getDomClientRect;
+
+      scrollCurrentSceneTreeNode(
+        sceneTreeContainerJsObj,
+        sceneTreeNodeDomClientRect,
+      );
+    } :
+    ();
