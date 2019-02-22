@@ -5,6 +5,8 @@ let getViewRect = editorState => editorState.sceneViewRecord.viewRect;
 let unsafeGetViewRect = editorState =>
   getViewRect(editorState) |> OptionService.unsafeGet;
 
+let hasViewRect = editorState => getViewRect(editorState) |> Js.Option.isSome;
+
 let updateViewRect = ((x, y, width, height), editorState) => {
   ...editorState,
   sceneViewRecord: {

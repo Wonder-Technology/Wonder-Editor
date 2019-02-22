@@ -64,12 +64,6 @@ let _ =
     });
 
     describe("test stop", () => {
-      beforeEach(() => {
-        let (parentDom, canvasDom) =
-          CanvasTool.stubCanvasParentAndCanvas(~sandbox, ());
-        ResizeUtils.resizeScreen();
-      });
-
       describe("stop current loop", () => {
         test("the cancelAnimationFrame is called", () => {
           let cancel = createEmptyStubWithJsObjSandbox(sandbox);
