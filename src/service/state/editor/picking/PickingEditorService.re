@@ -33,3 +33,10 @@ let removeSphereShape = (geometry, {pickingRecord} as editorState) => {
       ),
   },
 };
+
+let clearSphereShape = editorState => {
+  ...editorState,
+  pickingRecord: {
+    sphereShapeMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+  },
+};

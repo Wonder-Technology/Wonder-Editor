@@ -19,7 +19,7 @@ let _ =
     let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
     let directionPointLightsAndCubeWDBArrayBuffer = ref(Obj.magic(1));
 
-    let _prepareFakeCanvas = () =>
+    let _prepareFakeCanvas = sandbox =>
       ImportPackageTool.prepareFakeCanvas(sandbox);
 
     beforeAll(() => {
@@ -39,10 +39,9 @@ let _ =
       LoadTool.buildFakeLoadImage();
       MainEditorAssetTool.buildFakeFileReader();
       MainEditorAssetTool.buildFakeImage();
+      /* MainEditorSceneTool.initState(~sandbox, ());
 
-      MainEditorSceneTool.initState(~sandbox, ());
-
-      MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
+         MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore; */
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
@@ -51,7 +50,6 @@ let _ =
         beforeEach(() => {
           MainEditorSceneTool.initStateWithJob(
             ~sandbox,
-            ~isBuildFakeDom=false,
             ~noWorkerJobRecord=
               NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
                 ~loopPipelines=
@@ -87,7 +85,7 @@ let _ =
           g1->geometry->select geometry group widget should have only one wdb geometry and be using it
           |},
             () => {
-              _prepareFakeCanvas() |> ignore;
+              _prepareFakeCanvas(sandbox) |> ignore;
 
               MainEditorAssetUploadTool.loadOneWDB(
                 ~arrayBuffer=boxTexturedWDBArrayBuffer^,
@@ -248,9 +246,11 @@ let _ =
 
       describe("dispose material assets", () => {
         beforeEach(() => {
+          MainEditorSceneTool.initState(~sandbox, ());
+
           MainEditorSceneTool.prepareScene(sandbox);
 
-          _prepareFakeCanvas() |> ignore;
+          _prepareFakeCanvas(sandbox) |> ignore;
         });
 
         testPromise(
@@ -302,7 +302,6 @@ let _ =
         beforeEach(() => {
           MainEditorSceneTool.initStateWithJob(
             ~sandbox,
-            ~isBuildFakeDom=false,
             ~buffer=
               SettingToolEngine.buildBufferConfigStr(
                 ~geometryPointCount=5000,
@@ -331,7 +330,7 @@ let _ =
 
           MainEditorSceneTool.prepareScene(sandbox);
 
-          _prepareFakeCanvas() |> ignore;
+          _prepareFakeCanvas(sandbox) |> ignore;
         });
 
         testPromise(
@@ -370,7 +369,6 @@ let _ =
       beforeEach(() => {
         MainEditorSceneTool.initStateWithJob(
           ~sandbox,
-          ~isBuildFakeDom=false,
           ~noWorkerJobRecord=
             NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(),
           (),
@@ -558,7 +556,7 @@ let _ =
           });
 
           describe("test with material and texture assets", () => {
-            let _prepareFakeCanvas = () => {
+            let _prepareFakeCanvas = sandbox => {
               let base64_1 = ImportPackageTool.buildBase64_1();
               let base64_2 = ImportPackageTool.buildBase64_2();
               let canvas1 =
@@ -593,7 +591,7 @@ let _ =
           g1->material should be m1;
           |},
               () => {
-                let (base64_1, _) = _prepareFakeCanvas();
+                let (base64_1, _) = _prepareFakeCanvas(sandbox);
                 let addedMaterialNodeId1 =
                   MainEditorAssetIdTool.getNewAssetId();
 
@@ -679,7 +677,7 @@ let _ =
              g2->material should be m2;
              |},
               () => {
-                let (base64_1, base64_2) = _prepareFakeCanvas();
+                let (base64_1, base64_2) = _prepareFakeCanvas(sandbox);
 
                 let addedMaterialNodeId1 =
                   MainEditorAssetIdTool.getNewAssetId();
@@ -816,7 +814,7 @@ let _ =
                  g2->material should be m2;
                  |},
               () => {
-                let (base64_1, base64_2) = _prepareFakeCanvas();
+                let (base64_1, base64_2) = _prepareFakeCanvas(sandbox);
 
                 let addedMaterialNodeId1 =
                   MainEditorAssetIdTool.getNewAssetId();
@@ -988,7 +986,6 @@ let _ =
       beforeEach(() => {
         MainEditorSceneTool.initStateWithJob(
           ~sandbox,
-          ~isBuildFakeDom=false,
           ~noWorkerJobRecord=
             NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
               ~loopPipelines=
@@ -1055,7 +1052,7 @@ let _ =
       );
 
       describe("test with wdb assets", () => {
-        beforeEach(() => _prepareFakeCanvas() |> ignore);
+        beforeEach(() => _prepareFakeCanvas(sandbox) |> ignore);
 
         describe("relate wdb asset gameObjects with default geometrys", () => {
           let cubeWDBArrayBuffer = ref(Obj.magic(1));
@@ -1308,6 +1305,8 @@ let _ =
     });
 
     describe("test import assets", () => {
+      beforeEach(() => MainEditorSceneTool.initState(~sandbox, ()));
+
       describe("test import material assets", () => {
         beforeEach(() => {
           MainEditorSceneTool.createDefaultScene(
@@ -1552,7 +1551,7 @@ let _ =
           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
           |> ignore;
 
-          _prepareFakeCanvas() |> ignore;
+          _prepareFakeCanvas(sandbox) |> ignore;
 
           LoadTool.clearBlobData(.);
           LoadTool.buildFakeBlob(.);
@@ -1657,7 +1656,6 @@ let _ =
         beforeEach(() => {
           MainEditorSceneTool.initStateWithJob(
             ~sandbox,
-            ~isBuildFakeDom=false,
             ~noWorkerJobRecord=
               NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
                 ~loopPipelines=
@@ -1765,8 +1763,6 @@ let _ =
         stoveWDBArrayBuffer := WDBTool.convertGLBToWDB("SuperLowPolyStove")
       );
 
-      beforeEach(() => _prepareFakeCanvas() |> ignore);
-
       testPromise(
         {|
             1.import package p1(error);
@@ -1777,7 +1773,6 @@ let _ =
         () => {
           MainEditorSceneTool.initState(
             ~sandbox,
-            ~isBuildFakeDom=false,
             ~buffer=
               SettingToolEngine.buildBufferConfigStr(
                 ~geometryPointCount=100000,
@@ -1786,6 +1781,7 @@ let _ =
               ),
             (),
           );
+          _prepareFakeCanvas(sandbox);
           MainEditorSceneTool.prepareScene(sandbox);
           ConsoleTool.notShowMessage();
 
@@ -1850,6 +1846,8 @@ let _ =
           let error = ref(Obj.magic(-1));
 
           beforeEach(() => {
+            MainEditorSceneTool.initState(~sandbox, ());
+
             error :=
               createMethodStubWithJsObjSandbox(
                 sandbox,
@@ -2140,5 +2138,98 @@ let _ =
           );
         },
       );
+
+      describe("test pick", () => {
+        let truckGLBArrayBuffer = ref(Obj.magic(1));
+
+        let _prepare = () =>
+          InitPickingJobTool.prepare(
+            ~sandbox,
+            ~viewWidth=500,
+            ~viewHeight=200,
+            ~offsetLeft=0,
+            ~offsetTop=0,
+            ~cameraPos=(0., 2., 3.),
+            (),
+          );
+
+        beforeAll(() =>
+          truckGLBArrayBuffer := GLBTool.getGLBArrayBuffer("CesiumMilkTruck")
+        );
+
+        beforeEach(() => {
+          _prepare();
+
+          MainEditorSceneTool.prepareScene(sandbox);
+
+          MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+          |> ignore;
+        });
+
+        testPromise(
+          {|
+          import glb;
+          drag the converted wdb to scene tree to be gameObject g1;
+          export wpk w1;
+          import w1;
+          pick g1;
+          import w1;
+          pick g1;
+
+          should pick g1;
+          |},
+          () => {
+            let glbName = "Wdb";
+
+            MainEditorAssetUploadTool.loadOneGLB(
+              ~fileName=glbName,
+              ~arrayBuffer=truckGLBArrayBuffer^,
+              (),
+            )
+            |> then_(uploadedWDBNodeId => {
+                 MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                   ~wdbNodeId=uploadedWDBNodeId,
+                   (),
+                 );
+
+                 let wpkArrayBuffer = ExportPackageTool.exportWPK();
+
+                 ImportPackageTool.testImportPackageWithoutExport(
+                   ~wpkArrayBuffer,
+                   ~testFunc=
+                     () => {
+                       InitPickingJobTool.triggerPicking(
+                         ~sandbox,
+                         ~pageX=250,
+                         ~pageY=100,
+                         (),
+                       );
+
+                       ImportPackageTool.testImportPackageWithoutExport(
+                         ~wpkArrayBuffer,
+                         ~testFunc=
+                           () => {
+                             InitPickingJobTool.triggerPicking(
+                               ~sandbox,
+                               ~pageX=250,
+                               ~pageY=100,
+                               (),
+                             );
+
+                             InitPickingJobTool.pickOne(
+                               LoadWDBTool.findGameObjectByName(glbName)
+                               |> StateLogicService.getEngineStateToGetData,
+                             )
+                             |> resolve;
+                           },
+                         (),
+                       );
+                     },
+                   (),
+                 );
+               });
+          },
+        );
+      });
     });
   });

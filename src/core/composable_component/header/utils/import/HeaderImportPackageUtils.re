@@ -3,9 +3,7 @@ open Js.Promise;
 open Js.Typed_array;
 
 let _disposeAssets = () =>
-  StateLogicService.getAndSetState(
-    DisposeTreeAssetLogicService.disposeTree,
-  );
+  StateLogicService.getAndSetState(DisposeTreeAssetLogicService.disposeTree);
 
 let _readHeader = dataView => {
   let (version, byteOffset) = DataViewUtils.getUint32_1(. 0, dataView);
@@ -237,6 +235,9 @@ let _import = result => {
 
   _initAssetTreeRoot();
 
+  PickingEditorService.clearSphereShape
+  |> StateLogicService.getAndSetEditorState;
+
   let wpk = result |> FileReader.convertResultToArrayBuffer;
 
   let dataView = DataViewUtils.create(wpk);
@@ -311,7 +312,8 @@ let _import = result => {
                           ),
                           () =>
                           _sceneGameObjectImageUint8ArrayDataMap
-                          |> WonderCommonlib.ImmutableSparseMapService.length == 0
+                          |>
+                          WonderCommonlib.ImmutableSparseMapService.length == 0
                         )
                       )
                     )
