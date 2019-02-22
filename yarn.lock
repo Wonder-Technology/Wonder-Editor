@@ -7196,9 +7196,13 @@ wonder-bs-sinon@0.1.7, wonder-bs-sinon@^0.1.7:
     sinon "^4.1.2"
     wonder-bs-jest latest
 
-wonder-commonlib@0.2.26, wonder-commonlib@^0.2.26:
+wonder-commonlib@0.2.26:
   version "0.2.26"
   resolved "https://registry.yarnpkg.com/wonder-commonlib/-/wonder-commonlib-0.2.26.tgz#31a3cef357b11ff55656dfa9155a27a992297954"
+
+wonder-commonlib@0.2.27, wonder-commonlib@^0.2.26:
+  version "0.2.27"
+  resolved "https://registry.yarnpkg.com/wonder-commonlib/-/wonder-commonlib-0.2.27.tgz#fe858a98c426ffc84613a1a2018c25535d919aea"
 
 wonder-hotkey@^0.0.1:
   version "0.0.1"
@@ -7230,9 +7234,9 @@ wonder-webgl@^0.0.2, wonder-webgl@^0.0.6:
   dependencies:
     wonder-log "^0.2.2"
 
-wonder.js@1.0.0-alpha.24.10:
-  version "1.0.0-alpha.24.10"
-  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.24.10.tgz#1cce6379bead3c70c7c6e13660c417c9578e7362"
+wonder.js@1.0.0-beta.1.1:
+  version "1.0.0-beta.1.1"
+  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-beta.1.1.tgz#74f52327ebe38bdc0257fd76c14c491895096550"
   dependencies:
     bs-fetch "^0.3.0"
     wonder-bs-json "^0.0.1"
