@@ -435,4 +435,38 @@ let _ =
         );
       });
     });
+
+    describe("test isRoot", () => {
+      beforeEach(() => {
+        LoadTool.buildFakeAtob();
+        LoadTool.buildFakeBtoa();
+        LoadTool.buildFakeTextEncoder();
+        LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
+        LoadTool.buildFakeURL(sandbox^);
+        LoadTool.buildFakeLoadImage();
+        MainEditorAssetTool.buildFakeFileReader();
+        MainEditorAssetTool.buildFakeImage();
+      });
+
+      testPromise("set scene gameObject->isRoot to false", () => {
+        let (engineState, sceneWDB) =
+          PublishLocalTool.exportScene(
+            StateEditorService.getState(),
+            StateEngineService.unsafeGetState(),
+          );
+
+        engineState |> StateEngineService.setState |> ignore;
+
+        MainEditorAssetUploadTool.loadOneWDB(~arrayBuffer=sceneWDB, ())
+        |> then_(uploadedWDBNodeId =>
+             GameObjectEngineService.getGameObjectIsRoot(
+               MainEditorAssetWDBNodeTool.getWDBGameObject(uploadedWDBNodeId)
+               |> StateLogicService.getEditorState,
+             )
+             |> StateLogicService.getEngineStateToGetData
+             |> expect == Some(false)
+             |> resolve
+           );
+      });
+    });
   });

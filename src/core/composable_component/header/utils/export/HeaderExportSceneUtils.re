@@ -1,3 +1,13 @@
+let _generateSceneWDB = (editorState, engineState) =>
+  HeaderExportSceneWDBUtils.generateSceneWDB(
+    true,
+    GenerateSceneGraphEngineService.generateWDB,
+    Js.Nullable.return(
+      Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(editorState),
+    ),
+    engineState,
+  );
+
 let exportScene = sceneName => {
   let editorState = StateEditorService.getState();
 
@@ -14,13 +24,7 @@ let exportScene = sceneName => {
       let engineState = StateEngineService.unsafeGetState();
 
       let (engineState, sceneGraphArrayBuffer) =
-        HeaderExportSceneWDBUtils.generateSceneWDB(
-          GenerateSceneGraphEngineService.generateWDB,
-          Js.Nullable.return(
-            Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(editorState),
-          ),
-          engineState,
-        );
+        _generateSceneWDB(editorState, engineState);
 
       engineState |> StateEngineService.setState |> ignore;
 

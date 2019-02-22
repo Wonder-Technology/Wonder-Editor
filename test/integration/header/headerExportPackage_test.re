@@ -41,7 +41,7 @@ let _ =
       })
     );
 
-    describe("optimize", () => {
+    describe("else", () => {
       beforeEach(() => {
         LoadTool.buildFakeAtob();
         LoadTool.buildFakeBtoa();
@@ -53,24 +53,51 @@ let _ =
         MainEditorAssetTool.buildFakeImage();
       });
 
-      testPromise("set builded image uint8Array to editorState", () =>
-        MainEditorAssetUploadTool.loadOneTexture()
-        |> then_(uploadedTextureNodeId => {
-             let wpkArrayBuffer = ExportPackageTool.exportWPK();
+      describe("optimize", () =>
+        testPromise("set builded image uint8Array to editorState", () =>
+          MainEditorAssetUploadTool.loadOneTexture()
+          |> then_(uploadedTextureNodeId => {
+               let wpkArrayBuffer = ExportPackageTool.exportWPK();
 
-             let editorState = StateEditorService.getState();
+               let editorState = StateEditorService.getState();
 
-             TextureNodeAssetEditorService.findAllTextureNodes(editorState)
-             |> Js.Array.filter(node => {
-                  let {uint8Array}: ImageDataType.imageData =
-                    ImageDataMapTool.getDataByTextureNode(node, editorState);
+               TextureNodeAssetEditorService.findAllTextureNodes(editorState)
+               |> Js.Array.filter(node => {
+                    let {uint8Array}: ImageDataType.imageData =
+                      ImageDataMapTool.getDataByTextureNode(
+                        node,
+                        editorState,
+                      );
 
-                  uint8Array |> Js.Option.isSome;
-                })
-             |> Js.Array.length
-             |> expect == 1
-             |> resolve;
-           })
+                    uint8Array |> Js.Option.isSome;
+                  })
+               |> Js.Array.length
+               |> expect == 1
+               |> resolve;
+             })
+        )
+      );
+
+      describe("test isRoot", () =>
+        testPromise("set scene gameObject->isRoot to false", () => {
+          let wpkArrayBuffer = ExportPackageTool.exportWPK();
+
+          ImportPackageTool.testImportPackageWithoutExport(
+            ~wpkArrayBuffer,
+            ~testFunc=
+              () => {
+                let engineState = StateEngineService.unsafeGetState();
+
+                GameObjectEngineService.getGameObjectIsRoot(
+                  SceneEngineService.getSceneGameObject(engineState),
+                  engineState,
+                )
+                |> expect == Some(false)
+                |> resolve;
+              },
+            (),
+          );
+        })
       );
     });
   });

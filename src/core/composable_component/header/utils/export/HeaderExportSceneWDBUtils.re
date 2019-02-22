@@ -1,11 +1,22 @@
 let generateWDB =
-    (rootGameObject, imageUint8ArrayMap, generateWDBFunc, engineState) => {
+    (
+      (rootGameObject, isRootGameObjectRoot, imageUint8ArrayMap),
+      generateWDBFunc,
+      engineState,
+    ) => {
   let isRun = StateEditorService.getIsRun();
   let engineState =
     isRun ?
       engineState :
       engineState
       |> ArcballCameraControllerLogicService.bindGameViewActiveCameraArcballCameraControllerEvent;
+
+  let engineState =
+    engineState
+    |> GameObjectEngineService.setGameObjectIsRoot(
+         rootGameObject,
+         isRootGameObjectRoot,
+       );
 
   let (engineState, _, wdbArrayBuffer) =
     generateWDBFunc(rootGameObject, imageUint8ArrayMap, engineState);
@@ -19,10 +30,14 @@ let generateWDB =
   (engineState, wdbArrayBuffer);
 };
 
-let generateSceneWDB = (generateWDBFunc, imageUint8ArrayMap, engineState) =>
+let generateSceneWDB =
+    (isSceneRoot, generateWDBFunc, imageUint8ArrayMap, engineState) =>
   generateWDB(
-    SceneEngineService.getSceneGameObject(engineState),
-    imageUint8ArrayMap,
+    (
+      SceneEngineService.getSceneGameObject(engineState),
+      isSceneRoot,
+      imageUint8ArrayMap,
+    ),
     generateWDBFunc,
     engineState,
   );

@@ -56,7 +56,10 @@ let _ =
       "fix bind arcballCameraController event bug: package should bind event if any basicCameraView is active",
       () => {
         let _getIsBindLength = (gameObject, engineState) =>
-          HierarchyGameObjectEngineService.getAllGameObjects(gameObject, engineState)
+          HierarchyGameObjectEngineService.getAllGameObjects(
+            gameObject,
+            engineState,
+          )
           |> GameObjectEngineService.getAllArcballCameraControllers(
                _,
                engineState,
@@ -68,6 +71,25 @@ let _ =
                )
              )
           |> Js.Array.length;
+
+        let _generateSceneWDB =
+            (
+              ~isSceneRoot=false,
+              ~generateWDBFunc=GenerateSceneGraphEngineService.generateWDB,
+              ~imageUint8ArrayMap=Js.Nullable.return(
+                                    Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(
+                                      StateEditorService.getState(),
+                                    ),
+                                  ),
+              ~engineState=StateEngineService.unsafeGetState(),
+              (),
+            ) =>
+          HeaderExportSceneWDBUtils.generateSceneWDB(
+            isSceneRoot,
+            generateWDBFunc,
+            imageUint8ArrayMap,
+            engineState,
+          );
 
         let _test = controlFunc => {
           MainEditorInspectorAddComponentTool.addArcballCameraControllerComponent();
@@ -83,16 +105,7 @@ let _ =
 
           controlFunc();
 
-          let (engineState, wdb) =
-            HeaderExportSceneWDBUtils.generateSceneWDB(
-              GenerateSceneGraphEngineService.generateWDB,
-              Js.Nullable.return(
-                Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(
-                  StateEditorService.getState(),
-                ),
-              ),
-              StateEngineService.unsafeGetState(),
-            );
+          let (engineState, wdb) = _generateSceneWDB();
 
           let isBind = ref(false);
 
@@ -137,16 +150,7 @@ let _ =
             ControllerTool.run();
             ControllerTool.stop();
 
-            let (engineState, wdb) =
-              HeaderExportSceneWDBUtils.generateSceneWDB(
-                GenerateSceneGraphEngineService.generateWDB,
-                Js.Nullable.return(
-                  Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(
-                    StateEditorService.getState(),
-                  ),
-                ),
-                StateEngineService.unsafeGetState(),
-              );
+            let (engineState, wdb) = _generateSceneWDB();
 
             _getIsBindLength(
               SceneEngineService.getSceneGameObject(engineState),

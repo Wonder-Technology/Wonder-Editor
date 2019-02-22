@@ -38,10 +38,7 @@ let _createStateTuple = () => {
   let engineState = StateEngineService.unsafeGetState();
 
   let engineState =
-    InitEditorJob.initEditorJob(
-      [||],
-      StateEngineService.unsafeGetState(),
-    );
+    InitEditorJob.initEditorJob([||], StateEngineService.unsafeGetState());
 
   let editorState = StateEditorService.getState();
 
@@ -113,9 +110,12 @@ let generateWDB = buildWDBGameObjectFunc => {
 
   let (engineState, wdbArrayBuffer) =
     HeaderExportSceneWDBUtils.generateWDB(
-      rootGameObject,
-      Js.Nullable.return(
-        Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(editorState),
+      (
+        rootGameObject,
+        true,
+        Js.Nullable.return(
+          Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(editorState),
+        ),
       ),
       GenerateSceneGraphEngineService.generateWDB,
       engineState,
@@ -125,6 +125,25 @@ let generateWDB = buildWDBGameObjectFunc => {
 
   wdbArrayBuffer;
 };
+
+/* let generateSceneWDB =
+     (
+       ~isSceneRoot=false,
+       ~generateWDBFunc=GenerateSceneGraphEngineService.generateWDB,
+       ~imageUint8ArrayMap=Js.Nullable.return(
+                             Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(
+                               StateEditorService.getState(),
+                             ),
+                           ),
+       ~engineState=StateEngineService.unsafeGetState(),
+       (),
+     ) =>
+   HeaderExportSceneWDBUtils.generateSceneWDB(
+     isSceneRoot,
+     generateWDBFunc,
+     imageUint8ArrayMap,
+     engineState,
+   ); */
 
 let buildSource = (~width=1, ~height=2, ~name="image.png", ()) =>
   {"width": width, "height": height, "name": name} |> Obj.magic;
@@ -155,7 +174,10 @@ let generateDirectionPointLightsAndCubeWDB = () =>
     let engineState =
       engineState
       |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1)
-      |> HierarchyGameObjectEngineService.addChild(rootGameObject, directionLight)
+      |> HierarchyGameObjectEngineService.addChild(
+           rootGameObject,
+           directionLight,
+         )
       |> HierarchyGameObjectEngineService.addChild(rootGameObject, pointLight);
 
     (rootGameObject, (editorState, engineState));
@@ -247,7 +269,10 @@ let generateSceneWDB = () =>
       engineState
       |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1)
       |> HierarchyGameObjectEngineService.addChild(rootGameObject, camera)
-      |> HierarchyGameObjectEngineService.addChild(rootGameObject, directionLight);
+      |> HierarchyGameObjectEngineService.addChild(
+           rootGameObject,
+           directionLight,
+         );
     /* |> HierarchyGameObjectEngineService.addChild(rootGameObject, pointLight); */
 
     (rootGameObject, (editorState, engineState));

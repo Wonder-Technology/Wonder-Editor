@@ -49,6 +49,7 @@ let _export = () => {
 
   let (engineState, sceneGraphArrayBuffer) =
     HeaderExportSceneWDBUtils.generateSceneWDB(
+      false,
       GenerateSceneGraphEngineService.generateWDBForWPK,
       Js.Nullable.return(imageUint8ArrayMap),
       engineState,
