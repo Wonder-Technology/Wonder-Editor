@@ -57,7 +57,8 @@ let _getHandleFuncByHotKeyAction = hotKeyAction => {
         switch (editorState |> SceneTreeEditorService.getCurrentSceneTreeNode) {
         | None => ()
         | Some(currentSceneTreeNode) =>
-          ArcballCameraControllerLogicService.setEditorCameraFocusTargetGameObject(
+          FocusUtils.setEditorCameraFocusTargetGameObject(
+            editorState |> SceneViewEditorService.unsafeGetEditCamera,
             currentSceneTreeNode,
             editorState,
             StateEngineService.unsafeGetState(),
