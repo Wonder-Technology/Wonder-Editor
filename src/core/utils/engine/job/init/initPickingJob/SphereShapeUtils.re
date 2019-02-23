@@ -24,7 +24,7 @@ let _forEachVertices = (vertices, verticesCount, func) => {
   maxRadiusSqRef^;
 };
 
-let _findMaxDistanceOfPointsToCenter = (center, vertices) =>
+let calcMaxDistanceOfPointsToCenter = (center, vertices) =>
   _forEachVertices(
     vertices,
     Js.Typed_array.Float32Array.length(vertices),
@@ -42,7 +42,7 @@ let setFromPoints = vertices => {
   {
     center,
     radius:
-      _findMaxDistanceOfPointsToCenter(center, vertices) |> Js.Math.sqrt,
+      calcMaxDistanceOfPointsToCenter(center, vertices) |> Js.Math.sqrt,
   };
 };
 

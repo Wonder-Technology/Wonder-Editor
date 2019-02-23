@@ -1,3 +1,5 @@
+open ShapeType;
+
 let _renderWhenStop = (event, handleFunc, engineState) => {
   let (engineState, event) = handleFunc(. event, engineState);
 
@@ -187,13 +189,10 @@ let unbindGameViewActiveCameraArcballCameraControllerEvent = engineState =>
        StateEditorService.getStateIsDebug(),
      );
 
-let _getGameObjectPosition = (gameObject, engineState) =>
-  engineState
-  |> GameObjectComponentEngineService.unsafeGetTransformComponent(gameObject)
-  |. TransformEngineService.getPosition(engineState);
-
 let _setArcballCameraControllerFocusRelatedAttribute =
-    (arcballCameraController, (distance, target), engineState) =>
+    (arcballCameraController, (distance, target), engineState) => {
+  Js.log(distance);
+
   engineState
   |> ArcballCameraEngineService.setArcballCameraControllerTarget(
        arcballCameraController,
@@ -203,7 +202,58 @@ let _setArcballCameraControllerFocusRelatedAttribute =
        distance,
        arcballCameraController,
      );
+};
 
+let _getTargetGameObjectMaxScale = (targetGameObjectTransform, engineState) => {
+    |> HierarchyGameObjectEngineService.getAllGameObjects(targetGameObject)
+    |> Js.Array.map(gameObject =>
+         switch (
+           engineState
+           |> GameObjectComponentEngineService.getGeometryComponent(
+                gameObject,
+              )
+         ) {
+         | None => (None, None)
+         | Some(geometry) => (
+             engineState
+             |> GeometryEngineService.getGeometryVertices(geometry)
+             |. Some,
+             engineState
+             |> TransformEngineService.getLocalToWorldMatrixTypeArray(
+                  targetGameObjectTransform,
+                )
+             |. Some,
+           )
+         }
+       )
+    |> Js.Array.filter(((vertices, localToWolrdMatrices)) =>
+         vertices |> Js.Option.isSome
+       )
+    |> Js.Array.map(((vertices, localToWolrdMatrices)) =>
+         (
+           vertices |> OptionService.unsafeGet,
+           localToWolrdMatrices |> OptionService.unsafeGet,
+         )
+       );
+
+  let {min, max} =
+    AABBShapeUtils.setFromAllPointsAndLocalToWolrdMatrices(
+      pointsAndLocalToWolrdMatricesArray,
+    );
+
+  /* TODO the min and max not change with position */
+  WonderLog.Log.print((min, max)) |> ignore;
+  let center = AABBShapeUtils.getCenter({min, max});
+
+  (center, AABBShapeUtils.calcRadiusOfAABB({min, max}, center));
+};
+
+let _calcArcballCameraControllerDistance =
+    (distance, targetGameObjectTransform, engineState) =>
+  _getTargetGameObjectMaxScale(targetGameObjectTransform, engineState)
+  *. distance
+  *. 2.
+  +. FocusDataUtils.getSmallGameObjectFocusDeviation();
 let setEditorCameraFocusTargetGameObject =
     (targetGameObject, editorState, engineState) => {
   WonderLog.Contract.requireCheck(
@@ -237,22 +287,36 @@ let setEditorCameraFocusTargetGameObject =
     |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
          engineState,
        );
+  let targetGameObjectTransform =
+    engineState
+    |> GameObjectComponentEngineService.unsafeGetTransformComponent(
+         targetGameObject,
+       );
+
+  let (center, radius) =
+    engineState
+    |> _calcGeometrySphereCenterAndRadius(
+         targetGameObject,
+         targetGameObjectTransform,
+       );
+
+  let arcballCameraControllerDistance =
+    engineState
+    |> _calcArcballCameraControllerDistance(radius, targetGameObjectTransform);
 
   engineState |> SceneEngineService.isSceneGameObject(targetGameObject) ?
     _setArcballCameraControllerFocusRelatedAttribute(
       editorCameraArcballControllerComponent,
       (
-        FocusDataUtils.getSceneGameObjectArcballCameraDistance(),
-        engineState |> _getGameObjectPosition(targetGameObject),
+        arcballCameraControllerDistance
+        +. FocusDataUtils.getSceneGameObjectArcballCameraDistance(),
+        center,
       ),
       engineState,
     ) :
     _setArcballCameraControllerFocusRelatedAttribute(
       editorCameraArcballControllerComponent,
-      (
-        FocusDataUtils.getSceneChildrenArcballCameraDistance(),
-        engineState |> _getGameObjectPosition(targetGameObject),
-      ),
+      (arcballCameraControllerDistance, center),
       engineState,
     );
 };

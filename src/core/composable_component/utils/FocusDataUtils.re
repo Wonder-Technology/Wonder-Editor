@@ -1,3 +1,3 @@
-let getSceneGameObjectArcballCameraDistance = () => 20.0;
+let getSceneGameObjectArcballCameraDistance = () => 15.;
 
-let getSceneChildrenArcballCameraDistance = () => 6.0;
+let getSmallGameObjectFocusDeviation = () => 2.;

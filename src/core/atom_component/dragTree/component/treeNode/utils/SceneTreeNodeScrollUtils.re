@@ -14,26 +14,7 @@ let _isXAxisNeedScrollRight =
   +. sceneTreeContainerOffsetWidth
   -. SceneTreeNodeScrollDataUtils.getXAxisScrollRightBoundary();
 
-let _handleXAxisScrollLeft =
-    (sceneTreeNodeDomOffsetLeft, sceneTreeContainerJsObj) => {
-  let distance =
-    sceneTreeNodeDomOffsetLeft
-    <= SceneTreeNodeScrollDataUtils.getXAxisScrollLeftMinDistance() ?
-      0.0 : sceneTreeNodeDomOffsetLeft /. 2.;
-
-  sceneTreeContainerJsObj##scrollLeft#=distance;
-};
-
-let _handleXAxisScrollRight =
-    (sceneTreeNodeDomOffsetLeft, sceneTreeContainerJsObj) => {
-  let distance =
-    sceneTreeNodeDomOffsetLeft
-    -. SceneTreeNodeScrollDataUtils.getXAxisScrollOffsetLeft();
-
-  sceneTreeContainerJsObj##scrollLeft#=distance;
-};
-
-let _setXAxisScrollValue =
+let _calcXAxisScrollValue =
     (
       sceneTreeContainerJsObj,
       sceneTreeNodeDomOffsetLeft,
@@ -43,20 +24,19 @@ let _setXAxisScrollValue =
     sceneTreeNodeDomOffsetLeft,
     sceneTreeContainerScrollLeft,
   ) ?
-    _handleXAxisScrollLeft(
-      sceneTreeNodeDomOffsetLeft,
-      sceneTreeContainerJsObj,
-    ) :
+    sceneTreeNodeDomOffsetLeft
+    <= SceneTreeNodeScrollDataUtils.getXAxisScrollLeftMinDistance() ?
+      Some(0.0) : Some(sceneTreeNodeDomOffsetLeft /. 2.) :
     _isXAxisNeedScrollRight(
       sceneTreeNodeDomOffsetLeft,
       sceneTreeContainerScrollLeft,
       sceneTreeContainerOffsetWidth,
     ) ?
-      _handleXAxisScrollRight(
-        sceneTreeNodeDomOffsetLeft,
-        sceneTreeContainerJsObj,
+      Some(
+        sceneTreeNodeDomOffsetLeft
+        -. SceneTreeNodeScrollDataUtils.getXAxisScrollOffsetLeft(),
       ) :
-      ();
+      None;
 
 let _isYAxisNeedScrollTop =
     (sceneTreeNodeDomOffsetTop, sceneTreeContainerScrollTop) =>
@@ -74,26 +54,7 @@ let _isYAxisNeedScrollBottom =
   +. sceneTreeContainerOffsetHeight
   -. SceneTreeNodeScrollDataUtils.getYAxisScrollBottomBoundary();
 
-let _handleYAxisScrollTop =
-    (sceneTreeNodeDomOffsetTop, sceneTreeContainerJsObj) => {
-  let distance =
-    sceneTreeNodeDomOffsetTop
-    <= SceneTreeNodeScrollDataUtils.getYAxisScrollTopMinDistance() ?
-      0.0 : sceneTreeNodeDomOffsetTop /. 2.;
-
-  sceneTreeContainerJsObj##scrollTop#=distance;
-};
-
-let _handleYAxisScrollBottom =
-    (sceneTreeNodeDomOffsetTop, sceneTreeContainerJsObj) => {
-  let distance =
-    sceneTreeNodeDomOffsetTop
-    -. SceneTreeNodeScrollDataUtils.getYAxisScrollOffsetTop();
-
-  sceneTreeContainerJsObj##scrollTop#=distance;
-};
-
-let _setYAxisScrollValue =
+let _calcYAxisScrollValue =
     (
       sceneTreeContainerJsObj,
       sceneTreeNodeDomOffsetTop,
@@ -103,40 +64,65 @@ let _setYAxisScrollValue =
     sceneTreeNodeDomOffsetTop,
     sceneTreeContainerScrollTop,
   ) ?
-    _handleYAxisScrollTop(
-      sceneTreeNodeDomOffsetTop,
-      sceneTreeContainerJsObj,
-    ) :
+    sceneTreeNodeDomOffsetTop
+    <= SceneTreeNodeScrollDataUtils.getYAxisScrollTopMinDistance() ?
+      Some(0.0) : Some(sceneTreeNodeDomOffsetTop /. 2.) :
     _isYAxisNeedScrollBottom(
       sceneTreeNodeDomOffsetTop,
       sceneTreeContainerScrollTop,
       sceneTreeContainerOffsetHeight,
     ) ?
-      _handleYAxisScrollBottom(
-        sceneTreeNodeDomOffsetTop,
-        sceneTreeContainerJsObj,
+      Some(
+        sceneTreeNodeDomOffsetTop
+        -. SceneTreeNodeScrollDataUtils.getYAxisScrollOffsetTop(),
       ) :
-      ();
+      None;
 
 let scrollCurrentSceneTreeNode =
     (sceneTreeContainerJsObj, sceneTreeNodeDomClientRect) => {
-  _setXAxisScrollValue(
-    sceneTreeContainerJsObj,
-    sceneTreeNodeDomClientRect##offsetLeft,
-    (
-      sceneTreeContainerJsObj##scrollLeft,
-      sceneTreeContainerJsObj##offsetWidth,
-    ),
-  );
+  switch (
+    _calcXAxisScrollValue(
+      sceneTreeContainerJsObj,
+      sceneTreeNodeDomClientRect##offsetLeft,
+      (
+        sceneTreeContainerJsObj##scrollLeft,
+        sceneTreeContainerJsObj##offsetWidth,
+      ),
+    )
+  ) {
+  | None => ()
+  | Some(value) => sceneTreeContainerJsObj##scrollLeft#=value
+  };
 
-
-
-  _setYAxisScrollValue(
-    sceneTreeContainerJsObj,
-    sceneTreeNodeDomClientRect##offsetTop,
-    (
-      sceneTreeContainerJsObj##scrollTop,
-      sceneTreeContainerJsObj##offsetHeight,
-    ),
-  );
+  switch (
+    _calcYAxisScrollValue(
+      sceneTreeContainerJsObj,
+      sceneTreeNodeDomClientRect##offsetTop,
+      (
+        sceneTreeContainerJsObj##scrollTop,
+        sceneTreeContainerJsObj##offsetHeight,
+      ),
+    )
+  ) {
+  | None => ()
+  | Some(value) => sceneTreeContainerJsObj##scrollTop#=value
+  };
 };
+
+let handleSelectedSceneTreeNodeScroll = (isSelected, gameObject) =>
+  isSelected ?
+    {
+      let sceneTreeContainerJsObj =
+        DomHelper.getElementById("wonder-sceneTree-component")
+        |> DomHelperType.convertDomElementToJsObj;
+
+      let sceneTreeNodeDomClientRect =
+        DomHelper.getElementById({j|sceneTreeNode-$gameObject|j})
+        |> DomHelper.getDomClientRect;
+
+      scrollCurrentSceneTreeNode(
+        sceneTreeContainerJsObj,
+        sceneTreeNodeDomClientRect,
+      );
+    } :
+    ();
