@@ -41,17 +41,12 @@ let _activeGameViewCamera = engineState => {
   engineState;
 };
 
-let _setIMGUIFunc = engineState => {
-  let statsIMGUIFunc = StatsIMGUIUtils.buildIMGUIFunc();
-
+let _setEmptyIMGUIFunc = engineState =>
   engineState
   |> ManageIMGUIEngineService.setIMGUIFunc(
        Obj.magic(-1),
-       Obj.magic((. _, apiJsObj, engineState) =>
-         statsIMGUIFunc(. _, apiJsObj, engineState)
-       ),
+       Obj.magic((. _, apiJsObj, engineState) => engineState),
      );
-};
 
 let prepareRenderGameViewJob = (_, engineState) => {
   let editorState = StateEditorService.getState();
@@ -84,7 +79,7 @@ let prepareRenderGameViewJob = (_, engineState) => {
                  ),
                ),
           ) :
-          (editorState, _setIMGUIFunc(engineState))
+          (editorState, _setEmptyIMGUIFunc(engineState))
     );
 
   StateEditorService.setState(editorState) |> ignore;
