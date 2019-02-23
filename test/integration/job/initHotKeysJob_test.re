@@ -160,7 +160,7 @@ let _ =
           {|
           calc currentSceneTreeNode's all children and its self->aabb;
           use aabb's center as arcball camera controller target;
-          use aabb's radius * max scale of target gameObject * factor as arcball camera controller distance;
+          use aabb's radius * factor as arcball camera controller distance;
           |},
           () => {
             let _getDistance = ((editorState, engineState)) =>
@@ -218,7 +218,7 @@ let _ =
                 _getDistance |> StateLogicService.getStateToGetData,
                 _getTarget |> StateLogicService.getStateToGetData,
               )
-              |> expect == (67.708, ((-1.5), 0., 0.));
+              |> expect == (22.569, ((-1.5), 0., 0.));
             });
 
             test("test the currentSceneTreeNode is scene children", () => {
@@ -254,7 +254,7 @@ let _ =
                 _getDistance |> StateLogicService.getStateToGetData,
                 _getTarget |> StateLogicService.getStateToGetData,
               )
-              |> expect == (12.437, (2., 0., 0.));
+              |> expect == (4.146, (2., 0., 0.));
             });
           },
         )
