@@ -62,7 +62,7 @@ let removeLightMaterialSpecularMap = LightMaterialAPI.removeLightMaterialSpecula
 
 let reInitMaterials = LightMaterialAPI.reInitMaterials;
 
-let reInitAllLightMaterialsAndClearShaderCache = (materials, engineState) =>
+let reInitLightMaterialsAndClearShaderCache = (materials, engineState) =>
   engineState
   |> reInitMaterials(materials)
   |> ShaderEngineService.clearInitShaderCache;

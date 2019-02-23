@@ -29,7 +29,7 @@ let setAlpha = BasicMaterialAPI.setBasicMaterialAlpha;
 
 let reInitMaterials = BasicMaterialAPI.reInitMaterials;
 
-let reInitAllBasicMaterialsAndClearShaderCache = (materials, engineState) =>
+let reInitBasicMaterialsAndClearShaderCache = (materials, engineState) =>
   engineState
   |> reInitMaterials(materials)
   |> ShaderEngineService.clearInitShaderCache;

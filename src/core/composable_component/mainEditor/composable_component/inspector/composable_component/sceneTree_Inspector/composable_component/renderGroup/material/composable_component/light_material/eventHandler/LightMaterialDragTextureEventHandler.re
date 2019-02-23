@@ -18,7 +18,7 @@ module CustomEventHandler = {
         (materialComponent, textureComponent),
         (
           LightMaterialEngineService.setLightMaterialDiffuseMap,
-          LightMaterialEngineService.reInitAllLightMaterialsAndClearShaderCache,
+          LightMaterialEngineService.reInitLightMaterialsAndClearShaderCache,
         ),
         engineState,
       )

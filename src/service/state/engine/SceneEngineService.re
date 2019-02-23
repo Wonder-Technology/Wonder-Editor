@@ -73,7 +73,7 @@ let getSceneAllLightMaterials = engineState =>
   );
 
 let clearShaderCacheAndReInitAllLightMaterials = engineState =>
-  LightMaterialEngineService.reInitAllLightMaterialsAndClearShaderCache(
+  LightMaterialEngineService.reInitLightMaterialsAndClearShaderCache(
     LightMaterialEngineService.getAllLightMaterials(engineState),
     engineState,
   );

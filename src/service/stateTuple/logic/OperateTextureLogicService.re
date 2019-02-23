@@ -50,25 +50,25 @@ let changeTextureMapAndRefreshEngineState =
 let _handleMapAndUpdateShaderAndRefreshEngineState =
     (
       material,
-      (handleMapFunc, reInitAllMaterialsAndClearShaderCacheFunc),
+      (handleMapFunc, reInitMaterialsAndClearShaderCacheFunc),
       engineState,
     ) =>
   engineState
   |> handleMapFunc(material)
-  |> reInitAllMaterialsAndClearShaderCacheFunc([|material|])
+  |> reInitMaterialsAndClearShaderCacheFunc([|material|])
   |> StateLogicService.refreshEngineStateAndReturnEngineState;
 
 let handleMaterialComponentFromNoMapToHasMap =
     (
       (material, textureComponent),
-      (setMapFunc, reInitAllMaterialsAndClearShaderCacheFunc),
+      (setMapFunc, reInitMaterialsAndClearShaderCacheFunc),
       engineState,
     ) =>
   _handleMapAndUpdateShaderAndRefreshEngineState(
     material,
     (
       setMapFunc(textureComponent),
-      reInitAllMaterialsAndClearShaderCacheFunc,
+      reInitMaterialsAndClearShaderCacheFunc,
     ),
     engineState,
   );
@@ -76,12 +76,12 @@ let handleMaterialComponentFromNoMapToHasMap =
 let handleMaterialComponentFromHasMapToNoMap =
     (
       material,
-      (removeMapFunc, reInitAllMaterialsAndClearShaderCacheFunc),
+      (removeMapFunc, reInitMaterialsAndClearShaderCacheFunc),
       engineState,
     ) =>
   _handleMapAndUpdateShaderAndRefreshEngineState(
     material,
-    (removeMapFunc, reInitAllMaterialsAndClearShaderCacheFunc),
+    (removeMapFunc, reInitMaterialsAndClearShaderCacheFunc),
     engineState,
   );
 
@@ -91,7 +91,7 @@ let handleLightMaterialComponentFromHasDiffuseMapToNoMap =
     material,
     (
       LightMaterialEngineService.removeLightMaterialDiffuseMap,
-      LightMaterialEngineService.reInitAllLightMaterialsAndClearShaderCache,
+      LightMaterialEngineService.reInitLightMaterialsAndClearShaderCache,
     ),
     engineState,
   );
