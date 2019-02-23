@@ -67,10 +67,6 @@ let handleSelfLogic =
     }
   );
 
-  /* dispatchFunc(
-    AppStore.UpdateAction(
-      Update([|UpdateStore.Project, UpdateStore.Inspector|]),
-    ),
-  )
-  |> ignore; */
+  dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
+  |> ignore;
 };
