@@ -155,7 +155,29 @@ let _ =
         })
       );
 
-      describe("test bind focus hot-key", () =>
+      describe("test bind focus hot-key", () => {
+        let _getDistance = ((editorState, engineState)) =>
+          editorState
+          |> SceneViewEditorService.unsafeGetEditCamera
+          |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+               engineState,
+             )
+          |. ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
+               engineState,
+             )
+          |> FloatService.truncateFloatValue(_, 3);
+
+        let _getTarget = ((editorState, engineState)) =>
+          editorState
+          |> SceneViewEditorService.unsafeGetEditCamera
+          |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+               engineState,
+             )
+          |. ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
+               engineState,
+             )
+          |> Vector3Service.truncate(3);
+
         describe(
           {|
           calc currentSceneTreeNode's all children and its self->aabb;
@@ -163,28 +185,6 @@ let _ =
           use aabb's radius * factor as arcball camera controller distance;
           |},
           () => {
-            let _getDistance = ((editorState, engineState)) =>
-              editorState
-              |> SceneViewEditorService.unsafeGetEditCamera
-              |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-                   engineState,
-                 )
-              |. ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
-                   engineState,
-                 )
-              |> FloatService.truncateFloatValue(_, 3);
-
-            let _getTarget = ((editorState, engineState)) =>
-              editorState
-              |> SceneViewEditorService.unsafeGetEditCamera
-              |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-                   engineState,
-                 )
-              |. ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
-                   engineState,
-                 )
-              |> Vector3Service.truncate(3);
-
             test("test the currentSceneTreeNode is scene gameObject", () => {
               MainEditorSceneTool.unsafeGetScene()
               |> GameObjectTool.setCurrentSceneTreeNode;
@@ -257,7 +257,54 @@ let _ =
               |> expect == (4.146, (2., 0., 0.));
             });
           },
-        )
-      );
+        );
+
+        describe("fix bug", () =>
+          describe(
+            "if currentSceneTreeNode and its all children has no geometry component",
+            () => {
+            let _prepareAndExec = () => {
+              GameObjectTool.setCurrentSceneTreeNode(
+                MainEditorSceneTool.getCameraInDefaultScene
+                |> StateLogicService.getEngineStateToGetData,
+              );
+
+              let engineState = StateEngineService.unsafeGetState();
+
+              let camera =
+                MainEditorSceneTool.getCameraInDefaultScene(engineState);
+
+              let pos = (2., 0., 0.);
+              let engineState =
+                engineState
+                |> TransformGameObjectEngineService.setLocalPosition(
+                     camera,
+                     pos,
+                   );
+              engineState |> StateEngineService.setState |> ignore;
+
+              triggerFocusHotKeyEvent();
+
+              pos;
+            };
+
+            test("use currentSceneTreeNode->position as target", () => {
+              let pos = _prepareAndExec();
+
+              _getTarget
+              |> StateLogicService.getStateToGetData
+              |> expect == pos;
+            });
+
+            test("use fixed value as distance", () => {
+              let _ = _prepareAndExec();
+
+              _getDistance
+              |> StateLogicService.getStateToGetData
+              |> expect == 3.;
+            });
+          })
+        );
+      });
     });
   });

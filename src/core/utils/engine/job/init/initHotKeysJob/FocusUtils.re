@@ -35,18 +35,30 @@ let _buildAllPointsAndLocalToWolrdMatrices = (targetGameObject, engineState) =>
        );
      });
 
-let _calcGeometrySphereCenterAndRadius = (targetGameObject, engineState) => {
-  let aabb =
-    AABBShapeUtils.setFromAllPointsAndLocalToWolrdMatrices(
-      _buildAllPointsAndLocalToWolrdMatrices(targetGameObject, engineState),
-    );
+let _getFixedDistance = () => 3.;
 
-  let center = AABBShapeUtils.getCenter(aabb);
+let _calcCenterAndDistance = (targetGameObject, engineState) =>
+  switch (
+    _buildAllPointsAndLocalToWolrdMatrices(targetGameObject, engineState)
+  ) {
+  | allPointsAndLocalToWolrdMatrices
+      when Js.Array.length(allPointsAndLocalToWolrdMatrices) === 0 => (
+      TransformGameObjectEngineService.getPosition(
+        targetGameObject,
+        engineState,
+      ),
+      _getFixedDistance(),
+    )
+  | allPointsAndLocalToWolrdMatrices =>
+    let aabb =
+      AABBShapeUtils.setFromAllPointsAndLocalToWolrdMatrices(
+        _buildAllPointsAndLocalToWolrdMatrices(targetGameObject, engineState),
+      );
 
-  (center, AABBShapeUtils.calcRadiusOfAABB(aabb, center));
-};
+    let center = AABBShapeUtils.getCenter(aabb);
 
-let _calcArcballCameraControllerDistance = distance => distance *. 2.5;
+    (center, AABBShapeUtils.calcRadiusOfAABB(aabb, center) *. 2.5);
+  };
 
 let setEditorCameraFocusTargetGameObject =
     (editCamera, targetGameObject, editorState, engineState) => {
@@ -85,12 +97,12 @@ let setEditorCameraFocusTargetGameObject =
          targetGameObject,
        );
 
-  let (center, radius) =
-    engineState |> _calcGeometrySphereCenterAndRadius(targetGameObject);
+  let (center, distance) =
+    engineState |> _calcCenterAndDistance(targetGameObject);
 
   _setArcballCameraControllerFocusRelatedAttribute(
     editorCameraArcballControllerComponent,
-    (_calcArcballCameraControllerDistance(radius), center),
+    (distance, center),
     engineState,
   );
 };
