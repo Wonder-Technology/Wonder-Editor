@@ -81,16 +81,17 @@ let _ =
           "if selected sceneTreeNode dom Beyond a certain range on the right of the parent container",
           () =>
           test(
-            "set scroll left to be the selected sceneTreeNode dom offset left - (the x axis scroll offset left)",
+            "set scroll left to be the selected sceneTreeNode dom offset left - (the half of the sceneTree container dom offsetWidth)",
             () => {
+              let offsetLeft = 345.;
+              let offsetWidth = 230.;
+
               let sceneTreeContainerJsObj =
                 MainEditorSceneTreeScrollTool.buildSceneTreeContainerJsObj(
                   ~scrollLeft=145.,
-                  ~offsetWidth=230.,
+                  ~offsetWidth,
                   (),
                 );
-
-              let offsetLeft = 345.;
 
               let sceneTreeNodeDomClientRect =
                 MainEditorSceneTreeScrollTool.buildSceneTreeNodeDomClientRect(
@@ -104,7 +105,8 @@ let _ =
               );
 
               expect(sceneTreeContainerJsObj##scrollLeft) == offsetLeft
-              -. SceneTreeNodeScrollDataUtils.getXAxisScrollOffsetLeft();
+              -. offsetWidth
+              /. 2.;
             },
           )
         )
@@ -173,16 +175,17 @@ let _ =
           "if selected sceneTreeNode dom Beyond a certain range on the bottom of the parent container",
           () =>
           test(
-            "set scroll top to be the selected sceneTreeNode dom offset top - (the y axis scroll offset top)",
+            "set scroll top to be the selected sceneTreeNode dom offset top - (the half of the sceneTree container dom offsetHeight)",
             () => {
+              let offsetHeight = 330.;
+              let offsetTop = 445.;
+
               let sceneTreeContainerJsObj =
                 MainEditorSceneTreeScrollTool.buildSceneTreeContainerJsObj(
                   ~scrollTop=145.,
                   ~offsetHeight=330.,
                   (),
                 );
-
-              let offsetTop = 445.;
 
               let sceneTreeNodeDomClientRect =
                 MainEditorSceneTreeScrollTool.buildSceneTreeNodeDomClientRect(
@@ -196,7 +199,8 @@ let _ =
               );
 
               expect(sceneTreeContainerJsObj##scrollTop) == offsetTop
-              -. SceneTreeNodeScrollDataUtils.getYAxisScrollOffsetTop();
+              -. offsetHeight
+              /. 2.;
             },
           )
         )
