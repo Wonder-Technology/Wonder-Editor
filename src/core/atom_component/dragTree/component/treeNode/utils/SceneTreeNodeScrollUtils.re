@@ -33,8 +33,7 @@ let _calcXAxisScrollValue =
       sceneTreeContainerOffsetWidth,
     ) ?
       Some(
-        sceneTreeNodeDomOffsetLeft
-        -. SceneTreeNodeScrollDataUtils.getXAxisScrollOffsetLeft(),
+        sceneTreeNodeDomOffsetLeft -. sceneTreeContainerOffsetWidth /. 2.,
       ) :
       None;
 
@@ -73,8 +72,7 @@ let _calcYAxisScrollValue =
       sceneTreeContainerOffsetHeight,
     ) ?
       Some(
-        sceneTreeNodeDomOffsetTop
-        -. SceneTreeNodeScrollDataUtils.getYAxisScrollOffsetTop(),
+        sceneTreeNodeDomOffsetTop -. sceneTreeContainerOffsetHeight /. 2.,
       ) :
       None;
 
