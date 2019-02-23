@@ -1,4 +1,4 @@
-let getEngineStateCustomData = (editorState, engineState) => Obj.magic(-1);
+let buildCustomData = (editorState, engineState) => Obj.magic(-1);
 
 let _convertAnchorFromTopLeftToCenter = ((width, height), (x, y)) => (
   x -. width /. 2.,
@@ -230,7 +230,7 @@ let _drawSceneCamera =
     _getSceneCameras(scene, allGameObjects, engineState),
   );
 
-let getEngineStateIMGUIFunc = () =>
+let buildIMGUIFunc = () =>
   Obj.magic((. _, apiJsObj, engineState) => {
     let editorState = StateEditorService.getState();
     let scene = engineState |> SceneEngineService.getSceneGameObject;

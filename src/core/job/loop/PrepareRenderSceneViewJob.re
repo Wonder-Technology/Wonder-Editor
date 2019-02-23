@@ -26,8 +26,8 @@ let _activeSceneViewCamera = engineState => {
 
 let _setSceneViewIMGUIFunc = (editorState, engineState) => {
   let engineStateCustomData =
-    EditIMGUIFuncUtils.getEngineStateCustomData(editorState, engineState);
-  let engineStateImguiFunc = EditIMGUIFuncUtils.getEngineStateIMGUIFunc();
+    SceneViewIMGUIUtils.buildCustomData(editorState, engineState);
+  let engineStateImguiFunc = SceneViewIMGUIUtils.buildIMGUIFunc();
   let engineState =
     switch (IMGUIEditorService.getGameViewIMGUIFunc(editorState)) {
     | None =>
