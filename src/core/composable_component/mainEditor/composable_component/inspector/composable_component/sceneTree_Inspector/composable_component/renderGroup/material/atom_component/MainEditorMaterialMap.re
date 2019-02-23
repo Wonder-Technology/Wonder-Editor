@@ -12,7 +12,6 @@ type action =
   | Nothing
   | DragEnter
   | DragLeave
-  | DragDrop(int)
   | SetTextureToEngine(int, int)
   | ShowTextureGroup
   | HideTextureGroup;
@@ -54,14 +53,20 @@ module Method = {
     ReactEventType.convertReactMouseEventToJsEvent(event)
     |> EventHelper.preventDefault;
 
-  let handleSetTextureToEngine = (isWidgetFunc, isTypeValidFunc, event) => {
+  let handleDragDrop = (isWidgetFunc, isTypeValidFunc, event) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     let startNodeId = e |> DragUtils.getDragedId;
 
     EventHelper.preventDefault(e);
 
     _isTriggerAction(isWidgetFunc, isTypeValidFunc) ?
-      DragDrop(startNodeId) : DragLeave;
+      SetTextureToEngine(
+        startNodeId,
+        OperateTreeAssetEditorService.unsafeFindNodeById(startNodeId)
+        |> StateLogicService.getEditorState
+        |> TextureNodeAssetService.getTextureComponent,
+      ) :
+      DragLeave;
   };
 
   let showMapComponent = currentTextureComponent =>
@@ -221,10 +226,6 @@ let reducer =
           state.style,
         ),
     })
-  | DragDrop(startNodeId) =>
-    ReasonReactUtils.sideEffects(() =>
-      onDropFunc((uiState, dispatchFunc), materialComponent, startNodeId)
-    )
   | SetTextureToEngine(textureNodeId, textureComponent) =>
     _handleSetTextureToEngine(
       (textureNodeId, textureComponent),
@@ -263,11 +264,7 @@ let _renderDragableImage =
       onDrop=(
         _e =>
           send(
-            Method.handleSetTextureToEngine(
-              Method.isWidget,
-              Method.isTypeValid,
-              _e,
-            ),
+            Method.handleDragDrop(Method.isWidget, Method.isTypeValid, _e),
           )
       )
     />
