@@ -12,12 +12,12 @@ let findPickedIMGUIGameObject =
   let {locationInView}: EventType.pointEvent =
     EventType.userDataToPointEvent(event.userData |> OptionService.unsafeGet);
 
-  EditIMGUIFuncUtils.getIMGUIGameObjects(
+  SceneViewIMGUIUtils.getIMGUIGameObjects(
     SceneEngineService.getSceneGameObject(engineState),
     engineState,
   )
   |> Js.Array.filter(imguiGameObject =>
-       EditIMGUIFuncUtils.computePositionAndSize(
+       SceneViewIMGUIUtils.computePositionAndSize(
          imguiGameObject,
          editorState,
          engineState,
