@@ -15,6 +15,7 @@ module.exports = {
   ],
 
   scopes: [
+    { name: "focus" },
     { name: "scene-view" },
     { name: "scene-tree" },
     { name: "left-header" },
