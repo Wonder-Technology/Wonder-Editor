@@ -36,6 +36,9 @@ let _ =
         sandbox,
         MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
+
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     };
 
     beforeEach(() => sandbox := createSandbox());
