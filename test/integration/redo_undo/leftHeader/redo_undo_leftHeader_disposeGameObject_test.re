@@ -51,6 +51,9 @@ let _ =
           sandbox,
           MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
+
+        EventListenerTool.buildFakeDom()
+        |> EventListenerTool.stubGetElementByIdReturnFakeDom;
       });
 
       describe(
@@ -60,9 +63,7 @@ let _ =
             test("test not undo", () => {
               _simulateTwiceDisposeGameObject();
 
-              BuildComponentTool.buildSceneTree(
-                TestTool.buildEmptyAppState(),
-              )
+              BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
               |> ReactTestTool.createSnapshotAndMatch;
             });
             describe("test undo one step", () => {
