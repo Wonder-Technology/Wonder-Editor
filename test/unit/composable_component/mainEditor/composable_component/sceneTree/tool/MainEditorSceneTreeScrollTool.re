@@ -3,7 +3,7 @@ let buildSceneTreeContainerJsObj =
   {
     "scrollLeft": scrollLeft,
     "scrollTop": scrollTop,
-    "offsetWidth": offsetHeight,
+    "offsetWidth": offsetWidth,
     "offsetHeight": offsetHeight,
   }
   |> Obj.magic;
