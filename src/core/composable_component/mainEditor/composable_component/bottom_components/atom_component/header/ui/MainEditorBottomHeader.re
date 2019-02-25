@@ -31,8 +31,10 @@ module Method = {
       {
         let count =
           editorState |> CheckedCountConsoleEditorService.unreadConsoleMessage;
+        let maxMessageCount = ConsoleDataUtils.getMaxMessageCount();
 
-        count >= 99 ? "99" : count |> string_of_int;
+        count >= maxMessageCount ?
+          maxMessageCount |> string_of_int : count |> string_of_int;
       };
 };
 
@@ -71,7 +73,8 @@ let _renderConsole = (currentComponentType, dispatchFunc) => {
 };
 
 let render = (uiState, dispatchFunc, _self) => {
-  let currentComponentType = uiState |> StoreUtils.getBottomCurrentComponentType;
+  let currentComponentType =
+    uiState |> StoreUtils.getBottomCurrentComponentType;
 
   <article className="bottom-header" key="MainEditorBottomHeader">
     <div className="bottom-widget-category">

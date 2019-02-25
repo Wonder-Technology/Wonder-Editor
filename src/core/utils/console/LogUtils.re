@@ -72,7 +72,11 @@ let buildDebugMessage = (~description, ~params, ()) => {
 
 let _stringify = msg => Js.Json.stringify(msg |> Obj.magic) |> Obj.magic;
 
-let print = msg => msg |> _stringify |> WonderLog.Log.print;
+let print = msg => {
+  msg |> _stringify |> WonderLog.Log.print |> ignore;
+
+  msg;
+};
 
 let printJson = json => WonderLog.Log.printJson(json);
 

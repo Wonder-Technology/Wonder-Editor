@@ -22,8 +22,19 @@ module Method = {
     |> ignore;
   };
 
+  let _sliceLastMaxMessages = consoleMessageArr =>
+    consoleMessageArr
+    |> Js.Array.sliceFrom(
+         Js.Math.max_int(
+           0,
+           Js.Array.length(consoleMessageArr)
+           - ConsoleDataUtils.getMaxMessageCount(),
+         ),
+       );
+
   let showConsoleMsgComponent = consoleMessageArr =>
     consoleMessageArr
+    |> _sliceLastMaxMessages
     |> Js.Array.map(({message, consoleType, traceInfo}) =>
          switch (consoleType) {
          | Error =>
