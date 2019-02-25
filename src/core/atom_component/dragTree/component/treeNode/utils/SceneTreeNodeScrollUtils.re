@@ -24,9 +24,7 @@ let _calcXAxisScrollValue =
     sceneTreeNodeDomOffsetLeft,
     sceneTreeContainerScrollLeft,
   ) ?
-    sceneTreeNodeDomOffsetLeft
-    <= SceneTreeNodeScrollDataUtils.getXAxisScrollLeftMinDistance() ?
-      Some(0.0) : Some(sceneTreeNodeDomOffsetLeft /. 2.) :
+    Some(sceneTreeNodeDomOffsetLeft -. sceneTreeContainerOffsetWidth /. 2.) :
     _isXAxisNeedScrollRight(
       sceneTreeNodeDomOffsetLeft,
       sceneTreeContainerScrollLeft,
@@ -63,9 +61,7 @@ let _calcYAxisScrollValue =
     sceneTreeNodeDomOffsetTop,
     sceneTreeContainerScrollTop,
   ) ?
-    sceneTreeNodeDomOffsetTop
-    <= SceneTreeNodeScrollDataUtils.getYAxisScrollTopMinDistance() ?
-      Some(0.0) : Some(sceneTreeNodeDomOffsetTop /. 2.) :
+    Some(sceneTreeNodeDomOffsetTop -. sceneTreeContainerOffsetHeight /. 2.) :
     _isYAxisNeedScrollBottom(
       sceneTreeNodeDomOffsetTop,
       sceneTreeContainerScrollTop,

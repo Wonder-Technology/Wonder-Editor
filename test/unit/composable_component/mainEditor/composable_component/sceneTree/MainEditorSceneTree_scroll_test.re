@@ -21,58 +21,35 @@ let _ =
       describe("test x axis scroll left", () =>
         describe(
           "if selected sceneTreeNode dom Beyond a certain range on the left of the parent container",
-          () => {
-            test(
-              "if the selected sceneTreeNode dom offset left <= min distance, set scroll left to be 0.",
-              () => {
-                let sceneTreeContainerJsObj =
-                  MainEditorSceneTreeScrollTool.buildSceneTreeContainerJsObj(
-                    ~scrollLeft=41.,
-                    (),
-                  );
+          () =>
+          test(
+            "set scroll left to be half of the sceneTree container dom offset width",
+            () => {
+            let offsetLeft = 150.;
+            let offsetWidth = 230.;
 
-                let sceneTreeNodeDomClientRect =
-                  MainEditorSceneTreeScrollTool.buildSceneTreeNodeDomClientRect(
-                    ~offsetLeft=50.,
-                    (),
-                  );
+            let sceneTreeContainerJsObj =
+              MainEditorSceneTreeScrollTool.buildSceneTreeContainerJsObj(
+                ~scrollLeft=145.,
+                ~offsetWidth,
+                (),
+              );
 
-                SceneTreeNodeScrollUtils.scrollCurrentSceneTreeNode(
-                  sceneTreeContainerJsObj,
-                  sceneTreeNodeDomClientRect,
-                );
+            let sceneTreeNodeDomClientRect =
+              MainEditorSceneTreeScrollTool.buildSceneTreeNodeDomClientRect(
+                ~offsetLeft,
+                (),
+              );
 
-                expect(sceneTreeContainerJsObj##scrollLeft) == 0.;
-              },
+            SceneTreeNodeScrollUtils.scrollCurrentSceneTreeNode(
+              sceneTreeContainerJsObj,
+              sceneTreeNodeDomClientRect,
             );
 
-            test(
-              "else, set scroll left to be half of the selected sceneTreeNode dom offset left",
-              () => {
-                let sceneTreeContainerJsObj =
-                  MainEditorSceneTreeScrollTool.buildSceneTreeContainerJsObj(
-                    ~scrollLeft=145.,
-                    (),
-                  );
-
-                let offsetLeft = 150.;
-
-                let sceneTreeNodeDomClientRect =
-                  MainEditorSceneTreeScrollTool.buildSceneTreeNodeDomClientRect(
-                    ~offsetLeft,
-                    (),
-                  );
-
-                SceneTreeNodeScrollUtils.scrollCurrentSceneTreeNode(
-                  sceneTreeContainerJsObj,
-                  sceneTreeNodeDomClientRect,
-                );
-
-                expect(sceneTreeContainerJsObj##scrollLeft) == offsetLeft
-                /. 2.;
-              },
-            );
-          },
+            expect(sceneTreeContainerJsObj##scrollLeft) == offsetLeft
+            -. offsetWidth
+            /. 2.;
+          })
         )
       );
 
@@ -117,56 +94,35 @@ let _ =
       describe("test y axis scroll top", () =>
         describe(
           "if selected sceneTreeNode dom Beyond a certain range on the top of the parent container",
-          () => {
-            test(
-              "if the selected sceneTreeNode dom offset top <= min distance, set scroll top to be 0.",
-              () => {
-                let sceneTreeContainerJsObj =
-                  MainEditorSceneTreeScrollTool.buildSceneTreeContainerJsObj(
-                    ~scrollTop=38.,
-                    (),
-                  );
+          () =>
+          test(
+            "set scroll top to be half of the sceneTree container dom offset height",
+            () => {
+            let offsetHeight = 330.;
+            let offsetTop = 565.;
 
-                let sceneTreeNodeDomClientRect =
-                  MainEditorSceneTreeScrollTool.buildSceneTreeNodeDomClientRect(
-                    ~offsetTop=60.,
-                    (),
-                  );
-
-                SceneTreeNodeScrollUtils.scrollCurrentSceneTreeNode(
-                  sceneTreeContainerJsObj,
-                  sceneTreeNodeDomClientRect,
-                );
-
-                expect(sceneTreeContainerJsObj##scrollTop) == 0.;
-              },
-            );
-
-            test(
-              "else, set scroll top to be half of the selected sceneTreeNode dom offset top",
-              () => {
-              let sceneTreeContainerJsObj =
-                MainEditorSceneTreeScrollTool.buildSceneTreeContainerJsObj(
-                  ~scrollTop=545.,
-                  (),
-                );
-
-              let offsetTop = 565.;
-
-              let sceneTreeNodeDomClientRect =
-                MainEditorSceneTreeScrollTool.buildSceneTreeNodeDomClientRect(
-                  ~offsetTop,
-                  (),
-                );
-
-              SceneTreeNodeScrollUtils.scrollCurrentSceneTreeNode(
-                sceneTreeContainerJsObj,
-                sceneTreeNodeDomClientRect,
+            let sceneTreeContainerJsObj =
+              MainEditorSceneTreeScrollTool.buildSceneTreeContainerJsObj(
+                ~scrollTop=545.,
+                ~offsetHeight,
+                (),
               );
 
-              expect(sceneTreeContainerJsObj##scrollTop) == offsetTop /. 2.;
-            });
-          },
+            let sceneTreeNodeDomClientRect =
+              MainEditorSceneTreeScrollTool.buildSceneTreeNodeDomClientRect(
+                ~offsetTop,
+                (),
+              );
+
+            SceneTreeNodeScrollUtils.scrollCurrentSceneTreeNode(
+              sceneTreeContainerJsObj,
+              sceneTreeNodeDomClientRect,
+            );
+
+            expect(sceneTreeContainerJsObj##scrollTop) == offsetTop
+            -. offsetHeight
+            /. 2.;
+          })
         )
       );
 
