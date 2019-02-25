@@ -70,7 +70,11 @@ exports[`MainEditorConsole test stub console console.debug should add the messag
           <div
             className="header-message"
           >
-            debug
+            <p
+              className="multi-line-str"
+            >
+              debug
+            </p>
           </div>
         </div>
       </article>
@@ -149,7 +153,11 @@ exports[`MainEditorConsole test stub console console.error should add the messag
           <div
             className="header-message"
           >
-            message
+            <p
+              className="multi-line-str"
+            >
+              message
+            </p>
           </div>
         </div>
       </article>
@@ -225,7 +233,11 @@ exports[`MainEditorConsole test stub console console.info should add the message
           <div
             className="header-message"
           >
-            message
+            <p
+              className="multi-line-str"
+            >
+              "message"
+            </p>
           </div>
         </div>
       </article>
@@ -301,7 +313,11 @@ exports[`MainEditorConsole test stub console console.log should add the message 
           <div
             className="header-message"
           >
-            message
+            <p
+              className="multi-line-str"
+            >
+              "message"
+            </p>
           </div>
         </div>
       </article>
@@ -377,7 +393,11 @@ exports[`MainEditorConsole test stub console console.warn should add the message
           <div
             className="header-message"
           >
-            message
+            <p
+              className="multi-line-str"
+            >
+              message
+            </p>
           </div>
         </div>
       </article>

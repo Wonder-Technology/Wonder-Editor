@@ -74,14 +74,14 @@ module Method = {
 let component =
   ReasonReact.statelessComponentWithRetainedProps("MainEditorConsole");
 
-let log11 = () => WonderLog.Log.print("log message") |> ignore;
+let log = () => WonderLog.Log.print("log message") |> ignore;
 
-let info = () => WonderLog.Log.info({j|info message|j});
+let info = () => LogUtils.info({j|info message|j});
 
-let warn11 = () => WonderLog.Log.warn({j|warn message|j});
+let warn = () => LogUtils.warn({j|warn message|j});
 
 let debug = () =>
-  WonderLog.Log.debug(
+  LogUtils.debug(
     LogUtils.buildDebugMessage(
       ~description={j|create test debug|j},
       ~params={j||j},
@@ -105,13 +105,13 @@ let fatal = () =>
 
 let _renderDebugButton = () =>
   <div className="debug-button">
-    <button className="" onClick=(_e => log11())>
+    <button className="" onClick=(_e => log())>
       (DomHelper.textEl("add log"))
     </button>
     <button className="" onClick=(_e => info())>
       (DomHelper.textEl("add info"))
     </button>
-    <button className="" onClick=(_e => warn11())>
+    <button className="" onClick=(_e => warn())>
       (DomHelper.textEl("add warn"))
     </button>
     <button className="" onClick=(_e => debug())>

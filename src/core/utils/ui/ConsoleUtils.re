@@ -13,21 +13,21 @@ let warn = (message, editorState) =>
   _console(
     message,
     editorState,
-    (messageObj => messageObj##warn(message, 4), WonderLog.Log.warn),
+    (messageObj => messageObj##warn(message, 4), LogUtils.warn),
   );
 
 let log = (message, editorState) =>
   _console(
     message,
     editorState,
-    (messageObj => messageObj##log(message, 4), WonderLog.Log.log),
+    (messageObj => messageObj##log(message, 4), LogUtils.log),
   );
 
 let info = (message, editorState) =>
   _console(
     message,
     editorState,
-    (messageObj => messageObj##info(message, 4), WonderLog.Log.info),
+    (messageObj => messageObj##info(message, 4), LogUtils.info),
   );
 
 let debug = (buildMessageFunc, isDebug, editorState) => {
@@ -38,14 +38,14 @@ let debug = (buildMessageFunc, isDebug, editorState) => {
     |> (messageObj => messageObj##info(buildMessageFunc(), 4))
     |> ignore;
 
-  WonderLog.Log.debug(buildMessageFunc, isDebug);
+  LogUtils.debug(buildMessageFunc, isDebug);
 };
 
 let error = (message, editorState) =>
   _console(
     message,
     editorState,
-    (messageObj => messageObj##error(message, 4), WonderLog.Log.error),
+    (messageObj => messageObj##error(message, 4), LogUtils.error),
   );
 
-let logStack = stack => WonderLog.Log.log(stack);
+let logStack = stack => LogUtils.logStr(stack);
