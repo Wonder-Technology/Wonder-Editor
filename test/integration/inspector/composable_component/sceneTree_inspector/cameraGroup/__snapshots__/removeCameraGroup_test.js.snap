@@ -771,6 +771,7 @@ exports[`test remove camera group test still has other camera groups after remov
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -973,6 +974,7 @@ exports[`test remove camera group test still has other camera groups after remov
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>

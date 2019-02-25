@@ -23,6 +23,7 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Cube
         </div>
@@ -620,6 +621,7 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Texture
                     </div>

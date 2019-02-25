@@ -1313,6 +1313,7 @@ exports[`AddableComponent add component test camera add component test add geome
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>
@@ -2005,6 +2006,7 @@ exports[`AddableComponent add component test camera add component test add rende
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -2625,6 +2627,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -2827,6 +2830,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>
@@ -3519,6 +3523,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -3721,6 +3726,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>

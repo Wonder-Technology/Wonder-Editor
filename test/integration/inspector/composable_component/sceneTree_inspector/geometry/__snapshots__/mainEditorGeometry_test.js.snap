@@ -24,6 +24,7 @@ exports[`MainEditorGeometry component test select geometry group->show order
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Cube
         </div>
@@ -118,6 +119,7 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Cube
         </div>
@@ -155,6 +157,7 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Cube
         </div>
@@ -225,6 +228,7 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Cube
         </div>
@@ -301,6 +305,7 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test load as
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Cube
         </div>

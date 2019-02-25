@@ -20,6 +20,7 @@ exports[`redo_undo: change geometry prepare first step: set currentSceneTreeNode
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Sphere
         </div>
@@ -57,6 +58,7 @@ exports[`redo_undo: change geometry prepare first step: set currentSceneTreeNode
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Sphere
         </div>
@@ -94,6 +96,7 @@ exports[`redo_undo: change geometry prepare first step: set currentSceneTreeNode
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Cube
         </div>

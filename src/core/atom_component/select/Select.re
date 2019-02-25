@@ -1,4 +1,5 @@
 open SelectType;
+
 type state = {selectedKey: int};
 
 type action =

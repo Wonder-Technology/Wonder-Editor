@@ -224,7 +224,7 @@ let _renderSelectMaterial = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
     <div className="item-header"> (DomHelper.textEl("Material")) </div>
     <div className="item-content">
       <div className="inspector-select">
-        <div className="select-name">
+        <div className="select-name" onClick=(_e => send(ShowMaterialGroup))>
           (
             DomHelper.textEl(
               NodeNameAssetLogicService.getMaterialNodeName(

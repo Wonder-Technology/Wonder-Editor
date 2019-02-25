@@ -443,6 +443,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -645,6 +646,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>
@@ -1248,6 +1250,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -1450,6 +1453,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>
@@ -2053,6 +2057,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -2255,6 +2260,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>

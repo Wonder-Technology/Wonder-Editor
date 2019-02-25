@@ -27,6 +27,7 @@ exports[`header import package dispose assets dispose material assets
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Texture
         </div>
@@ -247,6 +248,7 @@ exports[`header import package dispose assets dispose wdb assets dispose geometr
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Mesh
         </div>
@@ -328,6 +330,7 @@ exports[`header import package test geometry
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Cube
         </div>
@@ -405,6 +408,7 @@ exports[`header import package test geometry test with wdb assets relate wdb ass
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Cube
         </div>
@@ -482,6 +486,7 @@ exports[`header import package test geometry test with wdb assets relate wdb ass
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Cube
         </div>
@@ -560,6 +565,7 @@ exports[`header import package test geometry test with wdb assets relate wdb ass
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Cube
         </div>
@@ -1304,6 +1310,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       New Material
                     </div>
@@ -1503,6 +1510,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>
@@ -1984,6 +1992,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -2186,6 +2195,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>
@@ -2667,6 +2677,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       New Material
                     </div>
@@ -2866,6 +2877,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>

@@ -443,6 +443,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -1063,6 +1064,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -1683,6 +1685,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -1885,6 +1888,7 @@ exports[`redo_undo: remove geometry component prepare first step: set currentSce
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>

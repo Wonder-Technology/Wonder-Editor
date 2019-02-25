@@ -644,6 +644,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -846,6 +847,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>

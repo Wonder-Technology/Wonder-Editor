@@ -169,7 +169,8 @@ let render =
       <div className="item-header"> (DomHelper.textEl("Geometry")) </div>
       <div className="item-content">
         <div className="inspector-select">
-          <div className="select-name">
+          <div
+            className="select-name" onClick=(_e => send(ShowGeometryGroup))>
             (
               DomHelper.textEl(
                 MainEditorGeometryUtils.getName(state.currentGeometry)
@@ -205,5 +206,6 @@ let make =
     currentGeometry: geometryComponent,
   },
   reducer: reducer((uiState, dispatchFunc), currentSceneTreeNode),
-  render: self => render((uiState, dispatchFunc), currentSceneTreeNode, self),
+  render: self =>
+    render((uiState, dispatchFunc), currentSceneTreeNode, self),
 };

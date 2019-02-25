@@ -24,6 +24,7 @@ exports[`MainEditorMaterial test select material group->show order
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Light-Material
         </div>
@@ -242,6 +243,7 @@ exports[`MainEditorMaterial test set currentSceneTreeNode test change material t
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Light-Material
         </div>

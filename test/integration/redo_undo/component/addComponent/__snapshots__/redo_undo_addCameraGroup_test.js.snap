@@ -443,6 +443,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -645,6 +646,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>
@@ -1337,6 +1339,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -1539,6 +1542,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>
@@ -2231,6 +2235,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -2433,6 +2438,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>

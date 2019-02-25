@@ -20,6 +20,7 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Light-Material
         </div>
@@ -131,6 +132,7 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Light-Material
         </div>
@@ -242,6 +244,7 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Light-Material
         </div>

@@ -443,6 +443,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -648,6 +649,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>
@@ -1129,6 +1131,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -1331,6 +1334,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>
@@ -1812,6 +1816,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -2017,6 +2022,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>
@@ -2498,6 +2504,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -2700,6 +2707,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>
@@ -3181,6 +3189,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Wonder-Default-Light-Material
                     </div>
@@ -3383,6 +3392,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>

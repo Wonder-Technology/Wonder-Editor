@@ -506,6 +506,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                   >
                     <div
                       className="select-name"
+                      onClick={[Function]}
                     >
                       Texture
                     </div>
@@ -708,6 +709,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Mesh
               </div>

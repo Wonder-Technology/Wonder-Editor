@@ -564,6 +564,7 @@ exports[`redo_undo: add geometry component prepare first step: set currentSceneT
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>
@@ -1166,6 +1167,7 @@ exports[`redo_undo: add geometry component prepare first step: set currentSceneT
             >
               <div
                 className="select-name"
+                onClick={[Function]}
               >
                 Wonder-Default-Cube
               </div>

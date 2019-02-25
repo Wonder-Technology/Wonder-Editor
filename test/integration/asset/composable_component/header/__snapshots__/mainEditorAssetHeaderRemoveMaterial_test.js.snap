@@ -25,6 +25,7 @@ exports[`MainEditorAssetHeader->remove material
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Light-Material
         </div>
@@ -236,6 +237,7 @@ exports[`MainEditorAssetHeader->remove material
       >
         <div
           className="select-name"
+          onClick={[Function]}
         >
           Wonder-Default-Light-Material
         </div>
