@@ -169,7 +169,7 @@ let _ =
                 EventTool.triggerDomEvent(
                   "mousewheel",
                   EventTool.getBody(),
-                  MouseEventTool.buildMouseEvent(),
+                  MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
                 );
                 EventTool.restore();
               },
