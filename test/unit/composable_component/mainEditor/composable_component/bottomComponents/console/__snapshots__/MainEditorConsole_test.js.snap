@@ -16,36 +16,40 @@ exports[`MainEditorConsole test stub console console.debug should add the messag
       >
         clear
       </button>
-      <button
-        className=""
-        onClick={[Function]}
+      <div
+        className="debug-button"
       >
-        add log
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add info
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add warn
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add debug
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add fatal
-      </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add log
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add info
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add warn
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add debug
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add fatal
+        </button>
+      </div>
     </div>
     <div
       className="console-content"
@@ -91,36 +95,40 @@ exports[`MainEditorConsole test stub console console.error should add the messag
       >
         clear
       </button>
-      <button
-        className=""
-        onClick={[Function]}
+      <div
+        className="debug-button"
       >
-        add log
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add info
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add warn
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add debug
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add fatal
-      </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add log
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add info
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add warn
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add debug
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add fatal
+        </button>
+      </div>
     </div>
     <div
       className="console-content"
@@ -166,36 +174,40 @@ exports[`MainEditorConsole test stub console console.info should add the message
       >
         clear
       </button>
-      <button
-        className=""
-        onClick={[Function]}
+      <div
+        className="debug-button"
       >
-        add log
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add info
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add warn
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add debug
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add fatal
-      </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add log
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add info
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add warn
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add debug
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add fatal
+        </button>
+      </div>
     </div>
     <div
       className="console-content"
@@ -238,36 +250,40 @@ exports[`MainEditorConsole test stub console console.log should add the message 
       >
         clear
       </button>
-      <button
-        className=""
-        onClick={[Function]}
+      <div
+        className="debug-button"
       >
-        add log
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add info
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add warn
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add debug
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add fatal
-      </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add log
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add info
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add warn
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add debug
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add fatal
+        </button>
+      </div>
     </div>
     <div
       className="console-content"
@@ -310,36 +326,40 @@ exports[`MainEditorConsole test stub console console.warn should add the message
       >
         clear
       </button>
-      <button
-        className=""
-        onClick={[Function]}
+      <div
+        className="debug-button"
       >
-        add log
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add info
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add warn
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add debug
-      </button>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        add fatal
-      </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add log
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add info
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add warn
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add debug
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+        >
+          add fatal
+        </button>
+      </div>
     </div>
     <div
       className="console-content"

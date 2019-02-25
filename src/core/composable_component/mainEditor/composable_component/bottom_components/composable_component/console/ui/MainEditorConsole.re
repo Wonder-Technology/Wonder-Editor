@@ -103,13 +103,8 @@ let fatal = () =>
     e => Console.throwFatal(e),
   );
 
-let _renderHeader = dispatchFunc =>
-  <div className="console-header">
-    <button
-      className=""
-      onClick=(_e => Method.clearAllConsoleMessage(dispatchFunc))>
-      (DomHelper.textEl("clear"))
-    </button>
+let _renderDebugButton = () =>
+  <div className="debug-button">
     <button className="" onClick=(_e => log11())>
       (DomHelper.textEl("add log"))
     </button>
@@ -127,6 +122,19 @@ let _renderHeader = dispatchFunc =>
     </button>
   </div>;
 
+let _renderHeader = dispatchFunc =>
+  <div className="console-header">
+    <button
+      className=""
+      onClick=(_e => Method.clearAllConsoleMessage(dispatchFunc))>
+      (DomHelper.textEl("clear"))
+    </button>
+    (
+      StateEditorService.getStateIsDebug() ?
+        _renderDebugButton() : ReasonReact.null
+    )
+  </div>;
+
 let render = (uiState, dispatchFunc, _self) => {
   let consoleMessageArray =
     StateEditorService.getState()
@@ -140,10 +148,7 @@ let render = (uiState, dispatchFunc, _self) => {
 
   <article key="console" className="wonder-bottom-console">
     <article className="wonder-console-component">
-      (
-        StateEditorService.getStateIsDebug() ?
-          _renderHeader(dispatchFunc) : ReasonReact.null
-      )
+      (_renderHeader(dispatchFunc))
       <div className="console-content">
         (
           consoleMessageArray |> ArrayService.hasItem ?
