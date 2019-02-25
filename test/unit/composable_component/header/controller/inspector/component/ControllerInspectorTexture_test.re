@@ -71,8 +71,10 @@ let _ =
 
         MainEditorAssetChildrenNodeTool.selectTextureNode(~nodeId, ());
         TextureInspectorTool.changeWrapS(
-          MainEditorAssetNodeTool.getTextureComponentFromNodeId(nodeId),
-          wrapRepeatType,
+          ~textureComponent=
+            MainEditorAssetNodeTool.getTextureComponentFromNodeId(nodeId),
+          ~value=wrapRepeatType,
+          (),
         );
 
         let textureComponent =

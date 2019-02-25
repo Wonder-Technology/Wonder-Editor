@@ -165,12 +165,14 @@ let _ =
               );
 
             TextureInspectorTool.changeWrapS(
-              MainEditorAssetNodeTool.getTextureComponentFromNodeId(
-                MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
-                  assetTreeData,
+              ~textureComponent=
+                MainEditorAssetNodeTool.getTextureComponentFromNodeId(
+                  MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                    assetTreeData,
+                  ),
                 ),
-              ),
-              wrapRepeatType,
+              ~value=wrapRepeatType,
+              (),
             );
 
             (
@@ -222,11 +224,13 @@ let _ =
               );
 
             TextureInspectorTool.changeMagFilter(
-              MainEditorAssetTextureNodeTool.getTextureComponent(
-                nodeId,
-                StateEditorService.getState(),
-              ),
-              filterNearestType,
+              ~textureComponent=
+                MainEditorAssetTextureNodeTool.getTextureComponent(
+                  nodeId,
+                  StateEditorService.getState(),
+                ),
+              ~value=filterNearestType,
+              (),
             );
 
             (
@@ -268,12 +272,14 @@ let _ =
               );
 
             TextureInspectorTool.changeMinFilter(
-              MainEditorAssetNodeTool.getTextureComponentFromNodeId(
-                MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
-                  assetTreeData,
+              ~textureComponent=
+                MainEditorAssetNodeTool.getTextureComponentFromNodeId(
+                  MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
+                    assetTreeData,
+                  ),
                 ),
-              ),
-              filterLinearMipmapLinearType,
+              ~value=filterLinearMipmapLinearType,
+              (),
             );
 
             (

@@ -75,3 +75,5 @@ let setIsNeedUpdate = (isNeedUpdate, texture, state) =>
 
 let initTexture = (texture, state) =>
   InitSourceTextureMainService.initTexture(texture |. Some, state);
+
+let getAllTextures = BasicSourceTextureAPI.getAllTextures;

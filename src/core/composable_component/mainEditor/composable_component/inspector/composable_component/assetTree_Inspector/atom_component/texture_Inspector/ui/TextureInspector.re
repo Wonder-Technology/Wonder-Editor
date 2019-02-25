@@ -1,5 +1,5 @@
 module Method = {
-  let renderWrapSSelect = textureComponent =>
+  let renderWrapSSelect = (dispatchFunc, textureComponent) =>
     <Select
       label="WrapS"
       options=(TextureWrapUtils.getWrapOptions())
@@ -8,10 +8,17 @@ module Method = {
         |> StateLogicService.getEngineStateToGetData
         |> TextureTypeUtils.convertWrapToInt
       )
-      onChange=(TextureWrapUtils.changeWrapS(textureComponent))
+      onChange=(
+        value =>
+          InspectorChangeTextureWrapSEventHandler.MakeEventHandler.pushUndoStackWithTwoHandleFunc(
+            (UIStateService.getState(), dispatchFunc),
+            (),
+            (textureComponent, value),
+          )
+      )
     />;
 
-  let renderWrapTSelect = textureComponent =>
+  let renderWrapTSelect = (dispatchFunc, textureComponent) =>
     <Select
       label="WrapT"
       options=(TextureWrapUtils.getWrapOptions())
@@ -20,9 +27,16 @@ module Method = {
         |> StateLogicService.getEngineStateToGetData
         |> TextureTypeUtils.convertWrapToInt
       )
-      onChange=(TextureWrapUtils.changeWrapT(textureComponent))
+      onChange=(
+        value =>
+          InspectorChangeTextureWrapTEventHandler.MakeEventHandler.pushUndoStackWithTwoHandleFunc(
+            (UIStateService.getState(), dispatchFunc),
+            (),
+            (textureComponent, value),
+          )
+      )
     />;
-  let renderMagFilterSelect = textureComponent =>
+  let renderMagFilterSelect = (dispatchFunc, textureComponent) =>
     <Select
       label="Mag Filter"
       options=(TextureFilterUtils.getMagFilterOptions())
@@ -31,10 +45,17 @@ module Method = {
         |> StateLogicService.getEngineStateToGetData
         |> TextureTypeUtils.convertFilterToInt
       )
-      onChange=(TextureFilterUtils.changeMagFilter(textureComponent))
+      onChange=(
+        value =>
+          InspectorChangeTextureMagFilterEventHandler.MakeEventHandler.pushUndoStackWithTwoHandleFunc(
+            (UIStateService.getState(), dispatchFunc),
+            (),
+            (textureComponent, value),
+          )
+      )
     />;
 
-  let renderMinFilterSelect = textureComponent =>
+  let renderMinFilterSelect = (dispatchFunc, textureComponent) =>
     <Select
       label="Min Filter"
       options=(TextureFilterUtils.getMinFilterOptions())
@@ -43,7 +64,14 @@ module Method = {
         |> StateLogicService.getEngineStateToGetData
         |> TextureTypeUtils.convertFilterToInt
       )
-      onChange=(TextureFilterUtils.changeMinFilter(textureComponent))
+      onChange=(
+        value =>
+          InspectorChangeTextureMinFilterEventHandler.MakeEventHandler.pushUndoStackWithTwoHandleFunc(
+            (UIStateService.getState(), dispatchFunc),
+            (),
+            (textureComponent, value),
+          )
+      )
     />;
 };
 
@@ -59,14 +87,21 @@ let render = ((dispatchFunc, renameFunc), name, textureComponent, _self) =>
       onBlur=renameFunc
       canBeNull=false
     />
-    (Method.renderWrapSSelect(textureComponent))
-    (Method.renderWrapTSelect(textureComponent))
-    (Method.renderMagFilterSelect(textureComponent))
-    (Method.renderMinFilterSelect(textureComponent))
+    (Method.renderWrapSSelect(dispatchFunc, textureComponent))
+    (Method.renderWrapTSelect(dispatchFunc, textureComponent))
+    (Method.renderMagFilterSelect(dispatchFunc, textureComponent))
+    (Method.renderMinFilterSelect(dispatchFunc, textureComponent))
   </article>;
 
 let make =
-    (~uiState, ~dispatchFunc, ~name, ~textureComponent, ~renameFunc, _children) => {
+    (
+      ~uiState,
+      ~dispatchFunc,
+      ~name,
+      ~textureComponent,
+      ~renameFunc,
+      _children,
+    ) => {
   ...component,
   render: self =>
     render((dispatchFunc, renameFunc), name, textureComponent, self),

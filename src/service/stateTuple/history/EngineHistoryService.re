@@ -15,7 +15,7 @@ let undo = (historyState, currentState) =>
       engineUndoStack: Stack.removeFirstOrRaise(historyState.engineUndoStack),
     }
   )
-  |> StateEngineService.restoreState(currentState);
+  |> RestoreStateEngineService.restoreState(currentState);
 
 let redo = (historyState, currentState) =>
   OperateStateHistoryService.operateHistory(
@@ -30,7 +30,7 @@ let redo = (historyState, currentState) =>
       engineRedoStack: Stack.removeFirstOrRaise(historyState.engineRedoStack),
     }
   )
-  |> StateEngineService.restoreState(currentState);
+  |> RestoreStateEngineService.restoreState(currentState);
 
 let storeHasCopyState = (maxStackSize, currentState, historyState) => {
   ...historyState,

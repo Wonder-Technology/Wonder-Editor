@@ -1,5 +1,8 @@
 open NodeAssetType;
 
+let getWrapClampType = () =>
+  Wonderjs.SourceTextureType.Clamp_to_edge |> TextureTypeUtils.convertWrapToInt;
+
 let getWrapRepeatType = () =>
   Wonderjs.SourceTextureType.Repeat |> TextureTypeUtils.convertWrapToInt;
 
@@ -29,17 +32,61 @@ let getTextureComponentFromCurrentNodeData = () => {
   textureComponent;
 };
 
-let changeWrapS = (textureComponent, value) =>
-  TextureWrapUtils.changeWrapS(textureComponent, value);
+let changeWrapS =
+    (
+      ~textureComponent,
+      ~value,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  InspectorChangeTextureWrapSEventHandler.MakeEventHandler.pushUndoStackWithTwoHandleFunc(
+    (uiState, dispatchFunc),
+    (),
+    (textureComponent, value),
+  );
 
-let changeWrapT = (textureComponent, value) =>
-  TextureWrapUtils.changeWrapT(textureComponent, value);
+let changeWrapT =
+    (
+      ~textureComponent,
+      ~value,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  InspectorChangeTextureWrapTEventHandler.MakeEventHandler.pushUndoStackWithTwoHandleFunc(
+    (uiState, dispatchFunc),
+    (),
+    (textureComponent, value),
+  );
 
-let changeMagFilter = (textureComponent, value) =>
-  TextureFilterUtils.changeMagFilter(textureComponent, value);
+let changeMagFilter =
+    (
+      ~textureComponent,
+      ~value,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  InspectorChangeTextureMagFilterEventHandler.MakeEventHandler.pushUndoStackWithTwoHandleFunc(
+    (uiState, dispatchFunc),
+    (),
+    (textureComponent, value),
+  );
 
-let changeMinFilter = (textureComponent, value) =>
-  TextureFilterUtils.changeMinFilter(textureComponent, value);
+let changeMinFilter =
+    (
+      ~textureComponent,
+      ~value,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  InspectorChangeTextureMinFilterEventHandler.MakeEventHandler.pushUndoStackWithTwoHandleFunc(
+    (uiState, dispatchFunc),
+    (),
+    (textureComponent, value),
+  );
 
 let getMagFilterOptions = TextureFilterUtils.getMagFilterOptions;
 

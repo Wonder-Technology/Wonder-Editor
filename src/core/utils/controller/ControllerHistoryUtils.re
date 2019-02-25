@@ -35,7 +35,7 @@ let restoreHistoryStack =
 
     (
       lastEditorState,
-      lastEngineState |> StateEngineService.restoreState(engineState),
+      lastEngineState |> RestoreStateEngineService.restoreState(engineState),
     )
     |> StateHistoryService.refreshStateForHistory;
 
