@@ -153,7 +153,7 @@ module Method = {
           |> StateLogicService.getEngineStateToGetData
         )
       )
-      onMouseDown=(event => onSelectFunc(gameObject))
+      onClick=(event => onSelectFunc(gameObject))
       onDragStart=(
         e => send(handleDragStart(gameObject, widget, (dragImg, "move"), e))
       )

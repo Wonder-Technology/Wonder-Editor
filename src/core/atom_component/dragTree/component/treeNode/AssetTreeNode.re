@@ -34,7 +34,7 @@ module Method = {
       )
       style=state.style
       draggable=true
-      onMouseDown=(_event => onSelectFunc(id))
+      onClick=(_event => onSelectFunc(id))
       onDragStart=(
         _e =>
           send(

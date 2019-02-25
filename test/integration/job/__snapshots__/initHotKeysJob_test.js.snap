@@ -24,12 +24,12 @@ exports[`init hotKeys job bind document hotKeys event test bind clone hot-key ke
           className="draggable-container  no-drag"
           draggable={false}
           id="sceneTreeNode-0"
+          onClick={[Function]}
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
-          onMouseDown={[Function]}
           style={Object {}}
         >
           Scene
@@ -46,12 +46,12 @@ exports[`init hotKeys job bind document hotKeys event test bind clone hot-key ke
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-6"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Camera
@@ -69,12 +69,12 @@ exports[`init hotKeys job bind document hotKeys event test bind clone hot-key ke
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-3"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube
@@ -92,12 +92,12 @@ exports[`init hotKeys job bind document hotKeys event test bind clone hot-key ke
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-4"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube
@@ -115,12 +115,12 @@ exports[`init hotKeys job bind document hotKeys event test bind clone hot-key ke
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-5"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Direction Light
@@ -156,12 +156,12 @@ exports[`init hotKeys job bind document hotKeys event test bind delete hot-key k
           className="draggable-container  no-drag"
           draggable={false}
           id="sceneTreeNode-0"
+          onClick={[Function]}
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
-          onMouseDown={[Function]}
           style={Object {}}
         >
           Scene
@@ -178,12 +178,12 @@ exports[`init hotKeys job bind document hotKeys event test bind delete hot-key k
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-6"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Camera
@@ -201,12 +201,12 @@ exports[`init hotKeys job bind document hotKeys event test bind delete hot-key k
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-4"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube
@@ -224,12 +224,12 @@ exports[`init hotKeys job bind document hotKeys event test bind delete hot-key k
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-5"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Direction Light
@@ -265,12 +265,12 @@ exports[`init hotKeys job bind document hotKeys event test bind redo hot-key key
           className="draggable-container  no-drag"
           draggable={false}
           id="sceneTreeNode-0"
+          onClick={[Function]}
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
-          onMouseDown={[Function]}
           style={Object {}}
         >
           Scene
@@ -287,12 +287,12 @@ exports[`init hotKeys job bind document hotKeys event test bind redo hot-key key
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-6"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Camera
@@ -310,12 +310,12 @@ exports[`init hotKeys job bind document hotKeys event test bind redo hot-key key
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-3"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube
@@ -333,12 +333,12 @@ exports[`init hotKeys job bind document hotKeys event test bind redo hot-key key
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-4"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube
@@ -356,12 +356,12 @@ exports[`init hotKeys job bind document hotKeys event test bind redo hot-key key
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-5"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Direction Light
@@ -379,12 +379,12 @@ exports[`init hotKeys job bind document hotKeys event test bind redo hot-key key
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-7"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             GameObject
@@ -420,12 +420,12 @@ exports[`init hotKeys job bind document hotKeys event test bind undo hot-key key
           className="draggable-container  no-drag"
           draggable={false}
           id="sceneTreeNode-0"
+          onClick={[Function]}
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
-          onMouseDown={[Function]}
           style={Object {}}
         >
           Scene
@@ -442,12 +442,12 @@ exports[`init hotKeys job bind document hotKeys event test bind undo hot-key key
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-6"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Camera
@@ -465,12 +465,12 @@ exports[`init hotKeys job bind document hotKeys event test bind undo hot-key key
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-3"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube
@@ -488,12 +488,12 @@ exports[`init hotKeys job bind document hotKeys event test bind undo hot-key key
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-4"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube
@@ -511,12 +511,12 @@ exports[`init hotKeys job bind document hotKeys event test bind undo hot-key key
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-5"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Direction Light

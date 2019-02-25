@@ -24,12 +24,12 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
           className="draggable-container  no-drag"
           draggable={false}
           id="sceneTreeNode-0"
+          onClick={[Function]}
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
-          onMouseDown={[Function]}
           style={Object {}}
         >
           scene
@@ -46,12 +46,12 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-6"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Camera
@@ -69,12 +69,12 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-3"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube
@@ -92,12 +92,12 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-4"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube
@@ -115,12 +115,12 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-5"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Direction Light
@@ -138,12 +138,12 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-7"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube
@@ -179,12 +179,12 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
           className="draggable-container  no-drag"
           draggable={false}
           id="sceneTreeNode-0"
+          onClick={[Function]}
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
-          onMouseDown={[Function]}
           style={Object {}}
         >
           scene
@@ -201,12 +201,12 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-6"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Camera
@@ -224,12 +224,12 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-3"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube
@@ -247,12 +247,12 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-4"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube
@@ -270,12 +270,12 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-5"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Direction Light
@@ -293,12 +293,12 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-7"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             GameObject
@@ -334,12 +334,12 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
           className="draggable-container  no-drag"
           draggable={false}
           id="sceneTreeNode-0"
+          onClick={[Function]}
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
-          onMouseDown={[Function]}
           style={Object {}}
         >
           scene
@@ -356,12 +356,12 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-6"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Camera
@@ -379,12 +379,12 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-3"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube
@@ -402,12 +402,12 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-4"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube
@@ -425,12 +425,12 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-5"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Direction Light
@@ -448,12 +448,12 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-7"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Sphere

@@ -443,13 +443,13 @@ exports[`MainEditorAssetHeader->remove material
       <div
         className="draggable-container select-not-active"
         draggable={true}
+        onClick={[Function]}
         onDragEnd={[Function]}
         onDragEnter={[Function]}
         onDragLeave={[Function]}
         onDragOver={[Function]}
         onDragStart={[Function]}
         onDrop={[Function]}
-        onMouseDown={[Function]}
         style={Object {}}
       >
         Assets

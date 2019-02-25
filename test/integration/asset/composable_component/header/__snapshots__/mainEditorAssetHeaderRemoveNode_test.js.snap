@@ -74,13 +74,13 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
           <div
             className="draggable-container"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Assets
@@ -100,13 +100,13 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
             <div
               className="draggable-container select-active"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               NoName Folder
@@ -193,13 +193,13 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
           <div
             className="draggable-container select-not-active"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Assets
@@ -283,13 +283,13 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
           <div
             className="draggable-container select-not-active"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Assets
@@ -373,13 +373,13 @@ exports[`MainEditorAssetHeader->remove node test remove tree node if not select 
           <div
             className="draggable-container select-not-active"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Assets

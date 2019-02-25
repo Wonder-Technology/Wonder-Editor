@@ -2928,12 +2928,12 @@ exports[`header import package test import scene wdb should reset scene gameObje
           className="draggable-container  no-drag"
           draggable={false}
           id="sceneTreeNode-8"
+          onClick={[Function]}
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
-          onMouseDown={[Function]}
           style={Object {}}
         >
           Scene
@@ -2950,12 +2950,12 @@ exports[`header import package test import scene wdb should reset scene gameObje
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-9"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Camera
@@ -2973,12 +2973,12 @@ exports[`header import package test import scene wdb should reset scene gameObje
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-10"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube
@@ -2996,12 +2996,12 @@ exports[`header import package test import scene wdb should reset scene gameObje
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-11"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube
@@ -3019,12 +3019,12 @@ exports[`header import package test import scene wdb should reset scene gameObje
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-12"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Direction Light
@@ -3042,12 +3042,12 @@ exports[`header import package test import scene wdb should reset scene gameObje
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-13"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube

@@ -23,13 +23,13 @@ exports[`MainEditorAssetHeader->add material else add material into specific tre
       <div
         className="draggable-container"
         draggable={true}
+        onClick={[Function]}
         onDragEnd={[Function]}
         onDragEnter={[Function]}
         onDragLeave={[Function]}
         onDragOver={[Function]}
         onDragStart={[Function]}
         onDrop={[Function]}
-        onMouseDown={[Function]}
         style={Object {}}
       >
         Assets
@@ -54,13 +54,13 @@ exports[`MainEditorAssetHeader->add material else add material into specific tre
         <div
           className="draggable-container select-active"
           draggable={true}
+          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
-          onMouseDown={[Function]}
           style={Object {}}
         >
           NoName Folder
@@ -86,13 +86,13 @@ exports[`MainEditorAssetHeader->add material else add material into specific tre
         <div
           className="draggable-container"
           draggable={true}
+          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
-          onMouseDown={[Function]}
           style={Object {}}
         >
           NoName Folder 1
@@ -112,13 +112,13 @@ exports[`MainEditorAssetHeader->add material else add material into specific tre
           <div
             className="draggable-container"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             NoName Folder
@@ -139,13 +139,13 @@ exports[`MainEditorAssetHeader->add material else add material into specific tre
           <div
             className="draggable-container"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             NoName Folder 1
@@ -231,13 +231,13 @@ exports[`MainEditorAssetHeader->add material if not select specific treeNode sho
           <div
             className="draggable-container select-not-active"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Assets
@@ -438,13 +438,13 @@ exports[`MainEditorAssetHeader->add material test name test default name 1`] = `
           <div
             className="draggable-container select-not-active"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Assets

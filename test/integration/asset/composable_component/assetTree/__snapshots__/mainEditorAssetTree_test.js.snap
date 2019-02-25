@@ -74,13 +74,13 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
           <div
             className="draggable-container select-not-active"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Assets
@@ -100,13 +100,13 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
             <div
               className="draggable-container"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               NoName Folder
@@ -231,13 +231,13 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
           <div
             className="draggable-container select-not-active"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Assets
@@ -257,13 +257,13 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
             <div
               className="draggable-container"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               NoName Folder
@@ -337,13 +337,13 @@ exports[`MainEditorAssetTree test asse tree node->isShowChildren default node->i
       <div
         className="draggable-container select-active"
         draggable={true}
+        onClick={[Function]}
         onDragEnd={[Function]}
         onDragEnter={[Function]}
         onDragLeave={[Function]}
         onDragOver={[Function]}
         onDragStart={[Function]}
         onDrop={[Function]}
-        onMouseDown={[Function]}
         style={Object {}}
       >
         Assets
@@ -368,13 +368,13 @@ exports[`MainEditorAssetTree test asse tree node->isShowChildren default node->i
         <div
           className="draggable-container"
           draggable={true}
+          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
-          onMouseDown={[Function]}
           style={Object {}}
         >
           New Folder
@@ -408,13 +408,13 @@ exports[`MainEditorAssetTree test asse tree node->isShowChildren test add treeNo
       <div
         className="draggable-container select-active"
         draggable={true}
+        onClick={[Function]}
         onDragEnd={[Function]}
         onDragEnter={[Function]}
         onDragLeave={[Function]}
         onDragOver={[Function]}
         onDragStart={[Function]}
         onDrop={[Function]}
-        onMouseDown={[Function]}
         style={Object {}}
       >
         Assets
@@ -439,13 +439,13 @@ exports[`MainEditorAssetTree test asse tree node->isShowChildren test add treeNo
         <div
           className="draggable-container"
           draggable={true}
+          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
-          onMouseDown={[Function]}
           style={Object {}}
         >
           New Folder
@@ -530,13 +530,13 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
           <div
             className="draggable-container"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Assets
@@ -561,13 +561,13 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
             <div
               className="draggable-container select-active"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               NoName Folder
@@ -587,13 +587,13 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
               <div
                 className="draggable-container"
                 draggable={true}
+                onClick={[Function]}
                 onDragEnd={[Function]}
                 onDragEnter={[Function]}
                 onDragLeave={[Function]}
                 onDragOver={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
-                onMouseDown={[Function]}
                 style={Object {}}
               >
                 NoName Folder
@@ -620,13 +620,13 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
             <div
               className="draggable-container"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               NoName Folder 1
@@ -646,13 +646,13 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
               <div
                 className="draggable-container"
                 draggable={true}
+                onClick={[Function]}
                 onDragEnd={[Function]}
                 onDragEnter={[Function]}
                 onDragLeave={[Function]}
                 onDragOver={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
-                onMouseDown={[Function]}
                 style={Object {}}
               >
                 NoName Folder 1
@@ -825,13 +825,13 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
           <div
             className="draggable-container"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Assets
@@ -856,13 +856,13 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
             <div
               className="draggable-container"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               NoName Folder
@@ -888,13 +888,13 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
             <div
               className="draggable-container"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               NoName Folder 1
@@ -919,13 +919,13 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
               <div
                 className="draggable-container select-active"
                 draggable={true}
+                onClick={[Function]}
                 onDragEnd={[Function]}
                 onDragEnter={[Function]}
                 onDragLeave={[Function]}
                 onDragOver={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
-                onMouseDown={[Function]}
                 style={Object {}}
               >
                 NoName Folder
@@ -946,13 +946,13 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
               <div
                 className="draggable-container"
                 draggable={true}
+                onClick={[Function]}
                 onDragEnd={[Function]}
                 onDragEnter={[Function]}
                 onDragLeave={[Function]}
                 onDragOver={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
-                onMouseDown={[Function]}
                 style={Object {}}
               >
                 NoName Folder 1
@@ -1111,13 +1111,13 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
           <div
             className="draggable-container select-not-active"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Assets
@@ -1137,13 +1137,13 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
             <div
               className="draggable-container"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               NoName Folder
@@ -1169,13 +1169,13 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
             <div
               className="draggable-container"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               NoName Folder 1
@@ -1195,13 +1195,13 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
               <div
                 className="draggable-container"
                 draggable={true}
+                onClick={[Function]}
                 onDragEnd={[Function]}
                 onDragEnter={[Function]}
                 onDragLeave={[Function]}
                 onDragOver={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
-                onMouseDown={[Function]}
                 style={Object {}}
               >
                 NoName Folder
@@ -1222,13 +1222,13 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
               <div
                 className="draggable-container"
                 draggable={true}
+                onClick={[Function]}
                 onDragEnd={[Function]}
                 onDragEnter={[Function]}
                 onDragLeave={[Function]}
                 onDragOver={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
-                onMouseDown={[Function]}
                 style={Object {}}
               >
                 NoName Folder 1
@@ -1337,13 +1337,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       <div
         className="draggable-container"
         draggable={true}
+        onClick={[Function]}
         onDragEnd={[Function]}
         onDragEnter={[Function]}
         onDragLeave={[Function]}
         onDragOver={[Function]}
         onDragStart={[Function]}
         onDrop={[Function]}
-        onMouseDown={[Function]}
         style={Object {}}
       >
         Assets
@@ -1368,13 +1368,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
         <div
           className="draggable-container select-active"
           draggable={true}
+          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
-          onMouseDown={[Function]}
           style={Object {}}
         >
           NoName Folder
@@ -1394,13 +1394,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           <div
             className="draggable-container"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             NoName Folder 1
@@ -1486,13 +1486,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           <div
             className="draggable-container select-not-active"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Assets
@@ -1512,13 +1512,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             <div
               className="draggable-container"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               NoName Folder
@@ -1643,13 +1643,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           <div
             className="draggable-container select-not-active"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Assets
@@ -1669,13 +1669,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             <div
               className="draggable-container"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               a1
@@ -1696,13 +1696,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             <div
               className="draggable-container"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               NoName Folder
@@ -1728,13 +1728,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             <div
               className="draggable-container"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               NoName Folder 1
@@ -1754,13 +1754,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
               <div
                 className="draggable-container"
                 draggable={true}
+                onClick={[Function]}
                 onDragEnd={[Function]}
                 onDragEnter={[Function]}
                 onDragLeave={[Function]}
                 onDragOver={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
-                onMouseDown={[Function]}
                 style={Object {}}
               >
                 NoName Folder 1
@@ -1954,13 +1954,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           <div
             className="draggable-container select-not-active"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Assets
@@ -1980,13 +1980,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             <div
               className="draggable-container"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               NoName Folder
@@ -2012,13 +2012,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
             <div
               className="draggable-container"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               NoName Folder 1
@@ -2038,13 +2038,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
               <div
                 className="draggable-container"
                 draggable={true}
+                onClick={[Function]}
                 onDragEnd={[Function]}
                 onDragEnter={[Function]}
                 onDragLeave={[Function]}
                 onDragOver={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
-                onMouseDown={[Function]}
                 style={Object {}}
               >
                 NoName Folder
@@ -2065,13 +2065,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
               <div
                 className="draggable-container"
                 draggable={true}
+                onClick={[Function]}
                 onDragEnd={[Function]}
                 onDragEnter={[Function]}
                 onDragLeave={[Function]}
                 onDragOver={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
-                onMouseDown={[Function]}
                 style={Object {}}
               >
                 NoName Folder 1
@@ -2180,13 +2180,13 @@ exports[`MainEditorAssetTree test show order sort the same layer folder by first
       <div
         className="draggable-container"
         draggable={true}
+        onClick={[Function]}
         onDragEnd={[Function]}
         onDragEnter={[Function]}
         onDragLeave={[Function]}
         onDragOver={[Function]}
         onDragStart={[Function]}
         onDrop={[Function]}
-        onMouseDown={[Function]}
         style={Object {}}
       >
         Assets
@@ -2211,13 +2211,13 @@ exports[`MainEditorAssetTree test show order sort the same layer folder by first
         <div
           className="draggable-container select-active"
           draggable={true}
+          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
-          onMouseDown={[Function]}
           style={Object {}}
         >
           BFolder
@@ -2237,13 +2237,13 @@ exports[`MainEditorAssetTree test show order sort the same layer folder by first
           <div
             className="draggable-container"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             AFolder
@@ -2264,13 +2264,13 @@ exports[`MainEditorAssetTree test show order sort the same layer folder by first
           <div
             className="draggable-container"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             ZFolder
@@ -2292,13 +2292,13 @@ exports[`MainEditorAssetTree test show order sort the same layer folder by first
         <div
           className="draggable-container"
           draggable={true}
+          onClick={[Function]}
           onDragEnd={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
-          onMouseDown={[Function]}
           style={Object {}}
         >
           FFolder

@@ -130,12 +130,12 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
           className="draggable-container  no-drag"
           draggable={false}
           id="sceneTreeNode-0"
+          onClick={[Function]}
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
-          onMouseDown={[Function]}
           style={Object {}}
         >
           scene
@@ -157,12 +157,12 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-3"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Wdb
@@ -877,13 +877,13 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
           <div
             className="draggable-container select-not-active"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Assets
@@ -908,13 +908,13 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
             <div
               className="draggable-container"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               Materials
@@ -940,13 +940,13 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
             <div
               className="draggable-container"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               Textures

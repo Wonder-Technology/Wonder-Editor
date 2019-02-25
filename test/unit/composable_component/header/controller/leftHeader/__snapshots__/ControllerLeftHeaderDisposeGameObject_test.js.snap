@@ -24,12 +24,12 @@ exports[`controller leftHeader dispose gameObject test scene tree dispose curren
           className="draggable-container  no-drag"
           draggable={false}
           id="sceneTreeNode-0"
+          onClick={[Function]}
           onDragEnd={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDragStart={[Function]}
           onDrop={[Function]}
-          onMouseDown={[Function]}
           style={Object {}}
         >
           scene
@@ -46,12 +46,12 @@ exports[`controller leftHeader dispose gameObject test scene tree dispose curren
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-6"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Camera
@@ -69,12 +69,12 @@ exports[`controller leftHeader dispose gameObject test scene tree dispose curren
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-4"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Cube
@@ -92,12 +92,12 @@ exports[`controller leftHeader dispose gameObject test scene tree dispose curren
             className="draggable-container  no-drag"
             draggable={true}
             id="sceneTreeNode-5"
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Direction Light

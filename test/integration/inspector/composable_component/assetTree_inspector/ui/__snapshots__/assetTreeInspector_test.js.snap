@@ -323,13 +323,13 @@ exports[`assetTree inspector prepare currentSelectSource test rename folder node
           <div
             className="draggable-container"
             draggable={true}
+            onClick={[Function]}
             onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDragStart={[Function]}
             onDrop={[Function]}
-            onMouseDown={[Function]}
             style={Object {}}
           >
             Assets
@@ -349,13 +349,13 @@ exports[`assetTree inspector prepare currentSelectSource test rename folder node
             <div
               className="draggable-container select-active"
               draggable={true}
+              onClick={[Function]}
               onDragEnd={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDragStart={[Function]}
               onDrop={[Function]}
-              onMouseDown={[Function]}
               style={Object {}}
             >
               folder.aaa
