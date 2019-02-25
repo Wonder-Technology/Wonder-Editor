@@ -204,3 +204,8 @@ let buildController = () =>
       dispatchFunc=(TestTool.getDispatch())
     />,
   );
+
+/* let buildUIArray = uiArr =>
+   ReactTestRenderer.create(ReasonReact.array(uiArr)); */
+
+let buildUI = ui => ReactTestRenderer.create(ui);
