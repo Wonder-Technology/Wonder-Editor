@@ -1,5 +1,137 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test rename gameObject test rename scene ui->scene tree->scene node->name should be updated 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          gameObjectNewName
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container select-active no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
 exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test show Scene inspector should show component ui 1`] = `
 <article
   className="wonder-inspector-component"
