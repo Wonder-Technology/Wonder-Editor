@@ -449,7 +449,9 @@ module DomEvent = {
        ),
     _fromPointDomEvent("mousewheel", engineState)
     |> WonderBsMost.Most.tap(event =>
-         _mapAndExecMouseEventHandle(MouseWheel, event)
+         _setEventTarget(_convertDomEventToMouseEvent(MouseWheel, event))
+         |> _mapMouseEventToView
+         |> _execMouseEventHandle
        ),
     _fromPointDomEvent("mousedown", engineState)
     |> WonderBsMost.Most.tap(event =>

@@ -167,6 +167,48 @@ let _ =
           })
         );
 
+        describe("bind mousewheel event", () => {
+          let _prepareAndExec = (pageX, pageY, target) => {
+            _prepareViewAndInit();
+
+            let (valueX, valueY) = (ref(0), ref(0));
+
+            EventTool.onMouseEvent(
+              MouseDown,
+              0,
+              (. event: mouseEvent, state) => {
+                let (x, y) = event.locationInView;
+                valueX := x;
+                valueY := y;
+                state;
+              },
+            )
+            |> StateLogicService.getAndSetEngineState;
+
+            EventTool.triggerDomEvent(
+              "mousewheel",
+              EventTool.getBody(),
+              MouseEventTool.buildMouseEvent(~pageX, ~pageY, ~target, ()),
+            );
+            EventTool.restore();
+
+            (valueX, valueY);
+          };
+
+          describe("set event target", () =>
+            test("if event->target isn't canvas, set to Other", () => {
+              _prepareMouseEvent(~sandbox, ());
+
+              let _ = _prepareAndExec(10, 20, EventTool.buildBodyTarget());
+
+              TargetEventEditorService.getEventTarget(
+                StateEditorService.getState(),
+              )
+              |> expect == EventType.Other;
+            })
+          );
+        });
+
         describe("bind mousedown event", () => {
           let _prepareAndExec = (pageX, pageY, target) => {
             _prepareViewAndInit();
@@ -203,7 +245,7 @@ let _ =
             |> expect == (locationInViewX, locationInViewY);
           };
 
-          describe("test set eventTarget to Other", () => {
+          describe("test set event target to Other", () => {
             test("if event->target isn't canvas, set to Other", () => {
               _prepareMouseEvent(~sandbox, ());
 
@@ -400,7 +442,7 @@ let _ =
             |> expect == (locationInViewX, locationInViewY);
           };
 
-          describe("test eventTarget is scene view", () =>
+          describe("test event target is scene view", () =>
             describe("test locationInView", () =>
               describe("test view has no offsetParent", () => {
                 test("test trigger in scene view", () => {
@@ -426,7 +468,7 @@ let _ =
             )
           );
 
-          describe("test eventTarget is game view", () =>
+          describe("test event target is game view", () =>
             describe("test locationInView", () =>
               describe("test view has no offsetParent", () => {
                 test("test trigger in scene view", () => {
@@ -546,7 +588,7 @@ let _ =
                       );
           };
 
-          describe("test eventTarget is game view", () =>
+          describe("test event target is game view", () =>
             describe("test locationInView", () =>
               describe("test view has no offsetParent", () =>
                 test(
@@ -647,7 +689,7 @@ let _ =
             gl##clearColor |> expect |> not_ |> toCalled;
           });
 
-          describe("test eventTarget is other", () =>
+          describe("test event target is other", () =>
             describe("do nothing", () => {
               describe("test loopBody", () =>
                 test("if is stop, not loopBody", () => {
@@ -689,7 +731,7 @@ let _ =
             })
           );
 
-          describe("test eventTarget is scene view", () => {
+          describe("test event target is scene view", () => {
             describe("test loopBody", () => {
               test("if not run, not loopBody", () => {
                 _prepareMouseEvent(~sandbox, ());
@@ -728,7 +770,7 @@ let _ =
             });
           });
 
-          describe("test eventTarget is game view", () => {
+          describe("test event target is game view", () => {
             describe("test loopBody", () => {
               test("if not run, not loopBody", () => {
                 _prepareMouseEvent(~sandbox, ());
@@ -821,7 +863,7 @@ let _ =
           EventTool.triggerDomEvent(
             "mousewheel",
             EventTool.getBody(),
-            MouseEventTool.buildMouseEvent(),
+            MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
           );
           EventTool.restore();
 
@@ -834,7 +876,7 @@ let _ =
           value^ |> expect == 1;
         };
 
-        describe("test eventTarget is other", () => {
+        describe("test event target is other", () => {
           describe("test loopBody", () =>
             test("if is stop, not loopBody", () => {
               _prepareMouseEvent(~sandbox, ());
@@ -877,7 +919,7 @@ let _ =
           });
         });
 
-        describe("test eventTarget is scene view", () => {
+        describe("test event target is scene view", () => {
           describe("test loopBody", () =>
             test("if is stop, not loopBody", () => {
               _prepareMouseEvent(~sandbox, ());
@@ -904,7 +946,7 @@ let _ =
           });
         });
 
-        describe("test eventTarget is game view", () => {
+        describe("test event target is game view", () => {
           describe("test loopBody", () =>
             test("if is stop, not loopBody", () => {
               _prepareMouseEvent(~sandbox, ());
@@ -999,7 +1041,7 @@ let _ =
         EventTool.triggerDomEvent(
           "mousewheel",
           EventTool.getBody(),
-          MouseEventTool.buildMouseEvent(),
+          MouseEventTool.buildMouseEvent(~pageX=10, ~pageY=20, ()),
         );
         EventTool.triggerDomEvent(
           "mousewheel",
