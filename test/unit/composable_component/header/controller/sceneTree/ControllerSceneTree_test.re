@@ -18,6 +18,9 @@ let _ =
         MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
 
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+
       ControllerTool.stubRequestAnimationFrame(
         createEmptyStubWithJsObjSandbox(sandbox),
       );
@@ -27,9 +30,7 @@ let _ =
 
     describe("test set parent in engine", () => {
       test("no drag", () =>
-        BuildComponentTool.buildSceneTree(
-          TestTool.buildEmptyAppState(),
-        )
+        BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
         |> ReactTestTool.createSnapshotAndMatch
       );
       test(

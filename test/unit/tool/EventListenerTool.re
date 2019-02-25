@@ -27,6 +27,12 @@ let buildFakeDom = [%bs.raw
         eventDataMap[eventName].push(handleFunc);
       },
       removeEventListener: function(eventName){
+      },
+      getClientRects:function(){
+        return []
+      },
+      getBoundingClientRect:function(){
+        return {}
       }
     }
   }
