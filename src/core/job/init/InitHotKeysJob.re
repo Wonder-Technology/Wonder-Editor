@@ -4,6 +4,9 @@ open SettingType;
 
 let _getHotKeyAction = hotKeyName =>
   switch (hotKeyName) {
+  | "translation" => Translation
+  | "rotation" => Rotation
+  | "scale" => Scale
   | "redo" => Redo
   | "undo" => Undo
   | "duplicate" => Duplicate
@@ -19,6 +22,27 @@ let _getHandleFuncByHotKeyAction = hotKeyAction => {
     |> StateLogicService.getStateToGetData;
 
   switch (hotKeyAction) {
+  | Translation => (
+      () =>
+        Controller.Method.handleChangeCurrentTransformGizmoType(
+          dispatch,
+          SceneViewType.Translation,
+        )
+    )
+  | Rotation => (
+      () =>
+        Controller.Method.handleChangeCurrentTransformGizmoType(
+          dispatch,
+          SceneViewType.Rotation,
+        )
+    )
+  | Scale => (
+      () =>
+        Controller.Method.handleChangeCurrentTransformGizmoType(
+          dispatch,
+          SceneViewType.Scale,
+        )
+    )
   | Undo => (() => AllHistoryService.handleUndo(uiState, dispatch))
   | Redo => (
       () =>
