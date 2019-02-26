@@ -49,8 +49,7 @@ var filesToCache = [
     '/public/img/rotation.png',
     '/public/img/scale.png',
     '/public/img/translation.png',
-    '/public/css/index.css',
-    '/public/css/antd.css'
+    '/public/css/index.css'
 ];
 
 self.addEventListener('install', function (e) {

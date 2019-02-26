@@ -1,13 +1,13 @@
-let _console = (message, editorState, (messageConsoleFunc, logConsoleFunc)) => {
-  DebugSettingEditorService.isNotShowMessage(editorState) ?
-    () :
-    Antd.Message.message
-    |> Antd.Message.convertToJsObj
-    |> messageConsoleFunc
-    |> ignore;
-
-  logConsoleFunc(message);
-};
+let _console = (message, editorState, (messageConsoleFunc, logConsoleFunc)) =>
+  /* DebugSettingEditorService.isNotShowMessage(editorState) ?
+     () :
+     Antd.Message.message
+     |> Antd.Message.convertToJsObj
+     |> messageConsoleFunc
+     |> ignore; */
+  logConsoleFunc(
+    message,
+  );
 
 let warn = (message, editorState) =>
   _console(
@@ -30,16 +30,17 @@ let info = (message, editorState) =>
     (messageObj => messageObj##info(message, 4), LogUtils.info),
   );
 
-let debug = (buildMessageFunc, isDebug, editorState) => {
-  DebugSettingEditorService.isNotShowMessage(editorState) ?
-    () :
-    Antd.Message.message
-    |> Antd.Message.convertToJsObj
-    |> (messageObj => messageObj##info(buildMessageFunc(), 4))
-    |> ignore;
-
-  LogUtils.debug(buildMessageFunc, isDebug);
-};
+let debug = (buildMessageFunc, isDebug, editorState) =>
+  /* DebugSettingEditorService.isNotShowMessage(editorState) ?
+     () :
+     Antd.Message.message
+     |> Antd.Message.convertToJsObj
+     |> (messageObj => messageObj##info(buildMessageFunc(), 4))
+     |> ignore; */
+  LogUtils.debug(
+    buildMessageFunc,
+    isDebug,
+  );
 
 let error = (message, editorState) =>
   _console(
