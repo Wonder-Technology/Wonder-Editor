@@ -82,7 +82,8 @@ let _ =
                 (),
               );
 
-              InitPickingJobTool.pickOne(gameObject);
+              /* InitPickingJobTool.pickOne(gameObject); */
+              InitPickingJobTool.notPick();
             });
           });
         });

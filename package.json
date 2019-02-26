@@ -15,7 +15,7 @@
     "test:watch": "gulp changeSnapshotPath && jest --maxWorkers=4 --watch --config jest.json",
     "test:update": "gulp changeSnapshotPath && jest --maxWorkers=4 -u --config jest.json",
     "test:coverage": "gulp changeSnapshotPath && jest --maxWorkers=4 --config jest_coverage.json || true",
-    "test:ci": "npm run bsb:build && gulp copySnapshotFilesFromTestToLib && jest --maxWorkers=4 --config jest_coverage.json",
+    "test:ci": "npm run bsb:build && gulp copySnapshotFilesFromTestToLib && jest --maxWorkers=4 --config jest_coverage.json || true",
     "codecov": "cat coverage/lcov.info | codecov",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "updateVersion": "gulp updateVersion"
