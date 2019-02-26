@@ -1,0 +1,363 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorGeometry component test select geometry group->show order 
+        order should be:
+        1)default geometry is in the end;
+        2)sort geometry assets by firstname alphabetically
+         1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="select-item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="select-item-body"
+      >
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Cesium_Milk_Truck_0
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Cesium_Milk_Truck_1
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Cesium_Milk_Truck_2
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wheels
+        </div>
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Sphere
+        </div>
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;
+
+exports[`MainEditorGeometry component test set currentSceneTreeNode test change geometry test snapshot test hide select geometry group widget 1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+`;
+
+exports[`MainEditorGeometry component test set currentSceneTreeNode test change geometry test snapshot test show select geometry group widget else, select geometry group should only contain geometry which has texCoord 1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="select-item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="select-item-body"
+      >
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Sphere
+        </div>
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;
+
+exports[`MainEditorGeometry component test set currentSceneTreeNode test change geometry test snapshot test show select geometry group widget if current material has no map, select geometry group should contain geometry which has texCoord or no texCoord 1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="select-item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="select-item-body"
+      >
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          geometryNoTexCoord
+        </div>
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Sphere
+        </div>
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;
+
+exports[`MainEditorGeometry component test set currentSceneTreeNode test load asset wdb test select geometry group widget should show all geometry 1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="select-item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="select-item-body"
+      >
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Mesh
+        </div>
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Sphere
+        </div>
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;
