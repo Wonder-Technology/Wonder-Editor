@@ -45,6 +45,7 @@
     "gulp": "^3.9.1",
     "gulp-sass": "^3.1.0",
     "gulp-sync": "^0.1.4",
+    "gulp-clean": "^0.4.0",
     "jest": "23.6.0",
     "jszip": "^3.1.5",
     "react-addons-css-transition-group": "^15.6.0",
