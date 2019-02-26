@@ -176,9 +176,9 @@ gulp.task("jestCoverage", function (done) {
     _safeExec("jest --maxWorkers=4 --config jest_coverage.json", (err, done) => {
         console.log("err: ", err);
 
-        _safeExec("gulp moveSnapshotFilesFromLibToTest", (err) => { throw err }, (done) => done(), done);
+        _safeExec("gulp moveSnapshotFilesFromLibToTest", (err, done) => { throw err }, (done) => done(), done);
     }, (done) => {
-        _safeExec("gulp moveSnapshotFilesFromLibToTest", (err) => { throw err }, (done) => done(), done);
+        _safeExec("gulp moveSnapshotFilesFromLibToTest", (err, done) => { throw err }, (done) => done(), done);
     }, done);
 });
 
