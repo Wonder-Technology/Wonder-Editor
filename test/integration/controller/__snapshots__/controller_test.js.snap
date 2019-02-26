@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`controller test TransformGizmoCoordinateSystemSwitch if current gizmo type is scale, disable ui 1`] = `
+<article
+  className="wonder-controller-component"
+>
+  <div
+    className="header-controller"
+  >
+    <div
+      className="controller-ambient"
+    >
+      <div
+        className="header-item"
+      >
+        <div
+          className="component-item"
+        >
+          <article
+            className="inspector-item"
+          >
+            <div
+              className="item-header"
+            >
+              Ambient Color : 
+            </div>
+            <div
+              className="item-content item-color"
+            >
+              <div
+                className="color-hex"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "background": "#000000",
+                  }
+                }
+              />
+              <div
+                className="color-select"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/color.png"
+                />
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+    <div
+      className="controller-transform"
+    >
+      <div
+        className="header-item"
+      >
+        <div
+          className="component-item"
+        >
+          <article
+            className="transform-gizmo-switch"
+          >
+            <div
+              className="translation not-select"
+              onClick={[Function]}
+            />
+            <div
+              className="rotation not-select"
+              onClick={[Function]}
+            />
+            <div
+              className="scale select"
+              onClick={[Function]}
+            />
+          </article>
+          <article
+            className="transform-gizmo-coordinate-system-switch"
+          >
+            <button
+              disabled={true}
+              onClick={[Function]}
+            >
+              World
+            </button>
+          </article>
+        </div>
+      </div>
+    </div>
+    <div
+      className="controller-runAndStop"
+      onClick={[Function]}
+    >
+      <img
+        src="./public/img/run.png"
+      />
+    </div>
+    <div
+      className="controller-other"
+    />
+  </div>
+</article>
+`;

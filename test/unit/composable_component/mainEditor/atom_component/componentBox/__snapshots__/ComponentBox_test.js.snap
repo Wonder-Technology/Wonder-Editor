@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`componentBox test component arguments build componentBox component which can't be disposed should has no 'x' 1`] = `
+<article
+  className="componentBox-component"
+>
+  <div
+    className="header"
+  >
+    <div
+      className="header-triangle"
+      onClick={[Function]}
+    >
+      <span
+        className="triangle-bottom"
+      />
+    </div>
+    <div
+      className="header-title"
+    >
+      newCube
+    </div>
+  </div>
+  <div>
+    simulate div component
+  </div>
+</article>
+`;
+
+exports[`componentBox test component arguments build disposable componentBox component should has 'x' 1`] = `
+<article
+  className="componentBox-component"
+>
+  <div
+    className="header"
+  >
+    <div
+      className="header-triangle"
+      onClick={[Function]}
+    >
+      <span
+        className="triangle-bottom"
+      />
+    </div>
+    <div
+      className="header-title"
+    >
+      newCube
+    </div>
+    <div
+      className="header-close"
+    >
+      <img
+        onClick={[Function]}
+        src="./public/img/close.png"
+      />
+    </div>
+  </div>
+  <div>
+    simulate div component
+  </div>
+</article>
+`;
