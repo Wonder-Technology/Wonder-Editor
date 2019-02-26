@@ -308,7 +308,7 @@ module Method = {
             title="About Wonder"
             closeFunc=(() => send(HideHelpVersionModal))
             content=[|
-              <div className="content-field">
+              <div className="content-field" key="aboutWonder">
                 <div className="field-title">
                   (DomHelper.textEl("Version"))
                 </div>
