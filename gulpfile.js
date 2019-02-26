@@ -82,6 +82,17 @@ gulp.task("changeSnapshotPath", function (done) {
     replaceSnapshotPath(filePath, done)
 });
 
+
+gulp.task("copySnapshotFilesFromTestToLib", function () {
+    var files = [
+        "./test/**/*.js.snap"
+    ];
+
+    return gulp.src(files, { base: "./" })
+        .pipe(gulp.dest("lib/es6_global"));
+});
+
+
 gulp.task("webpack", function (done) {
     _safeExec("npm run webpack", done);
 });
