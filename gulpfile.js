@@ -4,14 +4,17 @@ var gulpSync = require("gulp-sync")(gulp);
 var path = require("path");
 var exec = require('child_process').exec;
 var sass = require("gulp-sass");
+var clean = require("gulp-clean");
 
 
-var _safeExec = (commandStr, done) => exec(commandStr, { maxBuffer: 1024 * 500 }, function (err, stdout, stderr) {
+var _safeExec = (commandStr, handleErrFunc, handleSuccessFunc, done) => exec(commandStr, { maxBuffer: 1024 * 500 }, function (err, stdout, stderr) {
     if (err) {
-        throw err;
+        handleErrFunc(err, done);
+
+        return;
     }
 
-    done();
+    handleSuccessFunc(done);
 });
 
 
@@ -35,6 +38,13 @@ gulp.task("updateVersion", function (done) {
 
     done();
 });
+
+
+gulp.task("sass", function () {
+    return gulp.src('./public/sass/**/*.scss')
+        .pipe(sass()).pipe(gulp.dest('./public/css'));
+});
+
 
 function replaceSnapshotPath(filePath, done) {
     fs.readFile(filePath, "utf8", function (err, data) {
@@ -71,15 +81,52 @@ function replaceSnapshotPath(filePath, done) {
     });
 };
 
-gulp.task("sass", function () {
-    return gulp.src('./public/sass/**/*.scss')
-        .pipe(sass()).pipe(gulp.dest('./public/css'));
-});
 
 gulp.task("changeSnapshotPath", function (done) {
     const filePath = path.join(__dirname, 'node_modules/jest-snapshot/build/utils.js');
 
     replaceSnapshotPath(filePath, done)
+});
+
+
+function restoreSnapshotPath(filePath, done) {
+    fs.readFile(filePath, "utf8", function (err, data) {
+        if (err) {
+            console.log(err);
+
+            done();
+
+            return;
+        }
+
+
+        var result = data.replace(/const\sgetSnapshotPath[\w\W]+?;/img, `
+const getSnapshotPath = (exports.getSnapshotPath = testPath =>
+  _path2.default.join(
+    _path2.default.join(_path2.default.dirname(testPath), '__snapshots__'),
+    _path2.default.basename(testPath) + '.' + SNAPSHOT_EXTENSION
+  ));`
+        );
+
+        fs.writeFile(filePath, result, "utf8", function (err) {
+            if (err) {
+                console.log(err);
+
+                done();
+
+                return;
+            }
+
+            done();
+        });
+    });
+};
+
+
+gulp.task("restoreSnapshotPath", function (done) {
+    const filePath = path.join(__dirname, 'node_modules/jest-snapshot/build/utils.js');
+
+    restoreSnapshotPath(filePath, done)
 });
 
 
@@ -93,8 +140,55 @@ gulp.task("copySnapshotFilesFromTestToLib", function () {
 });
 
 
+gulp.task("copySnapshotFilesFromLibToTest", function () {
+    var files = [
+        "./lib/es6_global/test/**/*.js.snap"
+    ];
+
+    return gulp.src(files, { base: "./lib/es6_global/test" })
+        .pipe(gulp.dest("test"));
+});
+
+
+
+gulp.task("moveSnapshotFilesFromTestToLib", ["copySnapshotFilesFromTestToLib"], function () {
+    var files = [
+        "./test/**/*.js.snap"
+    ];
+
+    return gulp.src(files, { read: false })
+        .pipe(clean());
+});
+
+
+gulp.task("moveSnapshotFilesFromLibToTest", ["copySnapshotFilesFromLibToTest"], function () {
+    var files = [
+        "./lib/es6_global/**/*.js.snap"
+    ];
+
+    return gulp.src(files, { read: false })
+        .pipe(clean());
+});
+
+
+
+gulp.task("jestCoverage", function (done) {
+    _safeExec("jest --maxWorkers=4 --config jest_coverage.json", (err, done) => {
+        console.log("err: ", err);
+
+        _safeExec("gulp moveSnapshotFilesFromLibToTest", (err) => { throw err }, (done) => done(), done);
+    }, (done) => {
+        _safeExec("gulp moveSnapshotFilesFromLibToTest", (err) => { throw err }, (done) => done(), done);
+    }, done);
+});
+
+
+
+gulp.task("testCoverage", gulpSync.sync(["restoreSnapshotPath", "moveSnapshotFilesFromTestToLib", "jestCoverage", "moveSnapshotFilesFromLibToTest"]));
+
+
 gulp.task("webpack", function (done) {
-    _safeExec("npm run webpack", done);
+    _safeExec("npm run webpack", (err, done) => { throw err }, (done) => done(), done);
 });
 
 
