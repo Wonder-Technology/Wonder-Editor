@@ -1,3 +1,75 @@
+<a name="1.0.0-beta.2"></a>
+# [1.0.0-beta.2](https://github.com/Wonder-Technology/Wonder-Editor/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2019-02-26)
+
+
+### Bug Fixes
+
+* **asset:** fix "drag texture to be material asset->map->refresh inspector" bug (refer to [#44](https://github.com/Wonder-Technology/Wonder-Editor/issues/44)beeb) ([fe3fe5b](https://github.com/Wonder-Technology/Wonder-Editor/commit/fe3fe5b))
+* **asset:** fix "drag texture to be material asset->map" bug ([61bfc2c](https://github.com/Wonder-Technology/Wonder-Editor/commit/61bfc2c))
+* **asset:** fix "rename asset": if rename to the existed name in the same dir, should fail ([c360aa6](https://github.com/Wonder-Technology/Wonder-Editor/commit/c360aa6))
+* **camera:** if blur/drag drop camera controller->distance/minDistance, should refresh transform ([2500231](https://github.com/Wonder-Technology/Wonder-Editor/commit/2500231))
+* **camera:** if change arcballCameraController's gameObject's parent, should update the component ([c9fa3a8](https://github.com/Wonder-Technology/Wonder-Editor/commit/c9fa3a8))
+* **camera:** when move game view->arcball camera, should update inspector->rotation ([5eac3ad](https://github.com/Wonder-Technology/Wonder-Editor/commit/5eac3ad))
+* **console:** should only show 99 messages at max ([77daf60](https://github.com/Wonder-Technology/Wonder-Editor/commit/77daf60))
+* **controller:** if view size changed when run, should resize screen when stop ([810f49e](https://github.com/Wonder-Technology/Wonder-Editor/commit/810f49e))
+* **dragWdb:** fix drag wdb before/after scene gameObject, throw error ([d12342b](https://github.com/Wonder-Technology/Wonder-Editor/commit/d12342b))
+* **event:** throw error shouldn't unbind event ([c134151](https://github.com/Wonder-Technology/Wonder-Editor/commit/c134151))
+* **left-header:** fix "clone gameObject": add "check light count before clone" ([1b0a997](https://github.com/Wonder-Technology/Wonder-Editor/commit/1b0a997))
+* **left-header:** fix "dispose gameObject shouldn't dispose gameObject->material component" ([4eab2f6](https://github.com/Wonder-Technology/Wonder-Editor/commit/4eab2f6))
+* **left-header:** fix "dispose gameObject" bug: dispose gameObject shouldn't cause update_transform_gizmos job error ([ab2bd61](https://github.com/Wonder-Technology/Wonder-Editor/commit/ab2bd61))
+* **lightMaterial:** now should re-init all light material components(include material assets which type is lightMaterial) if light change ([18117c7](https://github.com/Wonder-Technology/Wonder-Editor/commit/18117c7))
+* **picking:** fix "import package"->pick bug ([1a377cc](https://github.com/Wonder-Technology/Wonder-Editor/commit/1a377cc))
+* **redo-undo:** change textureInspector->wrap,filter should add to redo-undo ([db459eb](https://github.com/Wonder-Technology/Wonder-Editor/commit/db459eb))
+* **redo-undo:** fix redo-undo->rotation: transform inspector ui->rotation should undo ([dfcd287](https://github.com/Wonder-Technology/Wonder-Editor/commit/dfcd287))
+* **redo-undo:** now drag drop FloatInput->label should add to undo stack ([5bfc35f](https://github.com/Wonder-Technology/Wonder-Editor/commit/5bfc35f))
+* fix "clone gameObject" and "drag wdb" bug refer to #ab2bd6 ([37fceb9](https://github.com/Wonder-Technology/Wonder-Editor/commit/37fceb9)), closes [#ab2bd6](https://github.com/Wonder-Technology/Wonder-Editor/issues/ab2bd6)
+* **scene-tree:** fix "drag scene-tree->gameObject": now refresh engine state ([7e1d670](https://github.com/Wonder-Technology/Wonder-Editor/commit/7e1d670))
+* **scene-view:** if current scene tree node has arcballCameraController component, not render gizmo ([7eeb4f1](https://github.com/Wonder-Technology/Wonder-Editor/commit/7eeb4f1))
+* **scroll:** fix bug scroll sceneTree, not move scroll bar ([3790b27](https://github.com/Wonder-Technology/Wonder-Editor/commit/3790b27))
+* **scroll:** re-calc scroll top and scroll left value ([11b989d](https://github.com/Wonder-Technology/Wonder-Editor/commit/11b989d))
+* **scroll:** re-calc scroll top and scroll left value ([2d8c05a](https://github.com/Wonder-Technology/Wonder-Editor/commit/2d8c05a))
+* **scroll:** re-calc scroll top and scroll left value ([836f9fc](https://github.com/Wonder-Technology/Wonder-Editor/commit/836f9fc))
+* **ui:** fix Header->Controls: now show focus ([a3321c5](https://github.com/Wonder-Technology/Wonder-Editor/commit/a3321c5))
+
+
+### Features
+
+* **camera:** fix floatInput->drag mouse to select value to label; shouldn't cancel select! ([2d0d3bf](https://github.com/Wonder-Technology/Wonder-Editor/commit/2d0d3bf))
+* **camera:** inspector->arcballCameraController add "phi", "theta" field ([991c460](https://github.com/Wonder-Technology/Wonder-Editor/commit/991c460))
+* **camera:** inspector->arcballCameraController add "target" field ([61effea](https://github.com/Wonder-Technology/Wonder-Editor/commit/61effea))
+* **camera:** now blur inspector->arcballCameraController->field not refresh inspector! ([eb04161](https://github.com/Wonder-Technology/Wonder-Editor/commit/eb04161))
+* **console:** asset node/scene tree node->"check relation when drag drop" not not error ([10ee2c5](https://github.com/Wonder-Technology/Wonder-Editor/commit/10ee2c5))
+* **console:** now format message ([a4e2679](https://github.com/Wonder-Technology/Wonder-Editor/commit/a4e2679))
+* **controls:** add Header->File->Controls to show shortcut keys ([672e115](https://github.com/Wonder-Technology/Wonder-Editor/commit/672e115))
+* **engine:** update wonder.js version ([a8b4657](https://github.com/Wonder-Technology/Wonder-Editor/commit/a8b4657))
+* **engine:** update wonder.js version to 1.0.0-beta.2 ([f203874](https://github.com/Wonder-Technology/Wonder-Editor/commit/f203874))
+* **event:** arcball camera controller->keydown: if is combined key, not set target ([46a2a94](https://github.com/Wonder-Technology/Wonder-Editor/commit/46a2a94))
+* **event:** mousewheel now set target ([bbebdaa](https://github.com/Wonder-Technology/Wonder-Editor/commit/bbebdaa))
+* **focus:** add focus hotkey ([52a4d33](https://github.com/Wonder-Technology/Wonder-Editor/commit/52a4d33))
+* **focus:** calc focus distance with geometry ([9938c58](https://github.com/Wonder-Technology/Wonder-Editor/commit/9938c58))
+* **focus:** calc focus distance with geometry ([4811419](https://github.com/Wonder-Technology/Wonder-Editor/commit/4811419))
+* **focus:** finish add hotKey "f" to set camera focus target gameObject ([7078ea1](https://github.com/Wonder-Technology/Wonder-Editor/commit/7078ea1))
+* **focus:** finish focus scene gameObject and scene children ([1677157](https://github.com/Wonder-Technology/Wonder-Editor/commit/1677157))
+* **focus:** fix currentSceneTreeNode and its all children has no geometry component ([30d534b](https://github.com/Wonder-Technology/Wonder-Editor/commit/30d534b))
+* **focus:** fix currentSceneTreeNode and its all children has no geometry component ([c1b980d](https://github.com/Wonder-Technology/Wonder-Editor/commit/c1b980d))
+* **focus:** now calc currentSceneTreeNode's all children and its self->aabb ([5e96641](https://github.com/Wonder-Technology/Wonder-Editor/commit/5e96641))
+* **focus:** now distance not affected by scale ([8af3e39](https://github.com/Wonder-Technology/Wonder-Editor/commit/8af3e39))
+* **focus:** now distance not affected by scale ([5d6c5e6](https://github.com/Wonder-Technology/Wonder-Editor/commit/5d6c5e6))
+* **focus:** now distance not affected by scale ([c476be3](https://github.com/Wonder-Technology/Wonder-Editor/commit/c476be3))
+* **isRoot:** export package/publish local mark scene gameObject->isRoot to false;export scene mark it to true; ([c2a29f3](https://github.com/Wonder-Technology/Wonder-Editor/commit/c2a29f3))
+* **picking:** add "pick the same one multiple times to pick the next root gameObject" logic ([bc1a73b](https://github.com/Wonder-Technology/Wonder-Editor/commit/bc1a73b))
+* **picking:** find top parent gameObject which is root ([72ff774](https://github.com/Wonder-Technology/Wonder-Editor/commit/72ff774))
+* **publish:** update engine files ([de7f675](https://github.com/Wonder-Technology/Wonder-Editor/commit/de7f675))
+* **scene-tree:** scene should be common gameObject after import package; change scene gameObject->name from "scene" to "Scene" after import package ([7ea5315](https://github.com/Wonder-Technology/Wonder-Editor/commit/7ea5315)), closes [#a6466](https://github.com/Wonder-Technology/Wonder-Editor/issues/a6466)
+* **scene-tree:** scene should be common gameObject(e.g. can add component) ([a646618](https://github.com/Wonder-Technology/Wonder-Editor/commit/a646618))
+* **scrollSceneTree:** calc scroll scene tree x axis ([fdbfddb](https://github.com/Wonder-Technology/Wonder-Editor/commit/fdbfddb))
+* **scrollSceneTree:** calc scroll scene tree y axis ([5774ba6](https://github.com/Wonder-Technology/Wonder-Editor/commit/5774ba6))
+* **ui:** console:should show clear button when not debug ([6395b60](https://github.com/Wonder-Technology/Wonder-Editor/commit/6395b60))
+* **ui:** now click select material/geometry name can show group ([c1c8764](https://github.com/Wonder-Technology/Wonder-Editor/commit/c1c8764))
+* **ui:** the draged tree node to other one don't to be current tree node ([50f493d](https://github.com/Wonder-Technology/Wonder-Editor/commit/50f493d))
+
+
+
 <a name="1.0.0-beta.1"></a>
 # [1.0.0-beta.1](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.14.0...v1.0.0-beta.1) (2019-02-14)
 

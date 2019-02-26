@@ -8,14 +8,17 @@ type action =
   | ToggleShowTrace;
 
 module Method = {
-  let buildTraceComponent = traceString =>
-    traceString
-    |> Js.String.split(" at ")
+  let buildMultiLineStringComponent = str =>
+    str
+    |> Js.String.split("\n")
     |> Js.Array.mapi((info, i) =>
-         <p key=("info" ++ (i |> string_of_int)) className="trace-info">
+         <p key=("info" ++ (i |> string_of_int)) className="multi-line-str">
            (DomHelper.textEl(info))
          </p>
        );
+
+  let buildTraceComponent = traceString =>
+    traceString |> buildMultiLineStringComponent;
 };
 
 let component = ReasonReact.reducerComponent("ConsoleBaseComponent");
@@ -36,7 +39,13 @@ let render =
     <div className="console-header" onClick=(_e => send(ToggleShowTrace))>
       <img src=imageSrc />
       (state.hasTrace ? <img src="./public/img/more.png" /> : ReasonReact.null)
-      <div className="header-message"> (DomHelper.textEl(message)) </div>
+      <div className="header-message">
+        (
+          ReasonReact.arrayToElement(
+            Method.buildMultiLineStringComponent(message),
+          )
+        )
+      </div>
     </div>
     (
       state.hasTrace && state.isShowTrace ?

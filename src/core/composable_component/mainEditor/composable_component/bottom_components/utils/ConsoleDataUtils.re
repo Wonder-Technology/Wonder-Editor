@@ -1,0 +1,1 @@
+let getMaxMessageCount = () => 99;

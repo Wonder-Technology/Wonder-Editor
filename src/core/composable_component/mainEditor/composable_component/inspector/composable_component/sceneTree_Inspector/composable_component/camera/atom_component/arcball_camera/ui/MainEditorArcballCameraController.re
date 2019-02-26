@@ -182,13 +182,9 @@ module Method = {
 
     _setTarget(arcballCameraController, (x, y, value));
   };
-};
 
-let component =
-  ReasonReact.statelessComponent("MainEditorArcballCameraController");
-
-let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
-  <article className="wonder-inspector-arcballCameraController">
+  let renderDistanceField =
+      ((uiState, dispatchFunc) as uiStoreDataTuple, arcballCameraController) =>
     <MainEditorFloatInputBaseComponent
       label="Distance"
       getComponentValueFunc=(
@@ -196,24 +192,22 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
           arcballCameraController,
         )
       )
-      changeComponentValueFunc=(
-        Method.changeDistance(arcballCameraController)
-      )
+      changeComponentValueFunc=(changeDistance(arcballCameraController))
       blurValueFunc=(
-        Method.blurArcballCameraDistance(
-          (uiState, dispatchFunc),
-          arcballCameraController,
-        )
+        blurArcballCameraDistance(uiStoreDataTuple, arcballCameraController)
       )
       dragDropFunc=(
         value =>
-          Method.dragDropArcballCameraDistance(
-            (uiState, dispatchFunc),
+          dragDropArcballCameraDistance(
+            uiStoreDataTuple,
             arcballCameraController,
             value,
           )
       )
-    />
+    />;
+
+  let renderMinDistanceField =
+      ((uiState, dispatchFunc) as uiStoreDataTuple, arcballCameraController) =>
     <MainEditorFloatInputBaseComponent
       label="Min Distance"
       getComponentValueFunc=(
@@ -221,19 +215,17 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
           arcballCameraController,
         )
       )
-      changeComponentValueFunc=(
-        Method.changeMinDistance(arcballCameraController)
-      )
+      changeComponentValueFunc=(changeMinDistance(arcballCameraController))
       blurValueFunc=(
-        Method.blurArcballCameraMinDistance(
-          (uiState, dispatchFunc),
+        blurArcballCameraMinDistance(
+          uiStoreDataTuple,
           arcballCameraController,
         )
       )
       dragDropFunc=(
         value => {
-          Method.blurArcballCameraMinDistance(
-            (uiState, dispatchFunc),
+          blurArcballCameraMinDistance(
+            uiStoreDataTuple,
             arcballCameraController,
             value,
           );
@@ -242,20 +234,22 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
           |> StateLogicService.getAndSetState;
         }
       )
-    />
+    />;
+
+  let renderTargetField = ((uiState, dispatchFunc), arcballCameraController) =>
     <ThreeFloatInput
       uiState
       dispatchFunc
       label="Target"
       gameObjectComponent=arcballCameraController
-      changeXFunc=Method.changeTargetX
-      changeYFunc=Method.changeTargetY
-      changeZFunc=Method.changeTargetZ
+      changeXFunc=changeTargetX
+      changeYFunc=changeTargetY
+      changeZFunc=changeTargetZ
       getDataFunc=ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget
-      blurEventFunc=Method.blurArcballCameraTarget
+      blurEventFunc=blurArcballCameraTarget
       dragDropFunc=(
         ((uiState, dispatchFunc), arcballCameraController, target) => {
-          Method.blurArcballCameraTarget(
+          blurArcballCameraTarget(
             (uiState, dispatchFunc),
             arcballCameraController,
             target,
@@ -266,7 +260,10 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
         }
       )
       canBeZero=true
-    />
+    />;
+
+  let renderPhiField =
+      ((uiState, dispatchFunc) as uiStoreDataTuple, arcballCameraController) =>
     <MainEditorFloatInputBaseComponent
       label="Phi"
       getComponentValueFunc=(
@@ -274,17 +271,14 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
           arcballCameraController,
         )
       )
-      changeComponentValueFunc=(Method.changePhi(arcballCameraController))
+      changeComponentValueFunc=(changePhi(arcballCameraController))
       blurValueFunc=(
-        Method.blurArcballCameraPhi(
-          (uiState, dispatchFunc),
-          arcballCameraController,
-        )
+        blurArcballCameraPhi(uiStoreDataTuple, arcballCameraController)
       )
       dragDropFunc=(
         value => {
-          Method.blurArcballCameraPhi(
-            (uiState, dispatchFunc),
+          blurArcballCameraPhi(
+            uiStoreDataTuple,
             arcballCameraController,
             value,
           );
@@ -293,7 +287,10 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
           |> StateLogicService.getAndSetState;
         }
       )
-    />
+    />;
+
+  let renderThetaField =
+      ((uiState, dispatchFunc) as uiStoreDataTuple, arcballCameraController) =>
     <MainEditorFloatInputBaseComponent
       label="Theta"
       getComponentValueFunc=(
@@ -301,17 +298,14 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
           arcballCameraController,
         )
       )
-      changeComponentValueFunc=(Method.changeTheta(arcballCameraController))
+      changeComponentValueFunc=(changeTheta(arcballCameraController))
       blurValueFunc=(
-        Method.blurArcballCameraTheta(
-          (uiState, dispatchFunc),
-          arcballCameraController,
-        )
+        blurArcballCameraTheta(uiStoreDataTuple, arcballCameraController)
       )
       dragDropFunc=(
         value => {
-          Method.blurArcballCameraTheta(
-            (uiState, dispatchFunc),
+          blurArcballCameraTheta(
+            uiStoreDataTuple,
             arcballCameraController,
             value,
           );
@@ -320,7 +314,24 @@ let render = ((uiState, dispatchFunc), arcballCameraController, _self) =>
           |> StateLogicService.getAndSetState;
         }
       )
-    />
+    />;
+};
+
+let component =
+  ReasonReact.statelessComponent("MainEditorArcballCameraController");
+
+let render =
+    (
+      (uiState, dispatchFunc) as uiStoreDataTuple,
+      arcballCameraController,
+      _self,
+    ) =>
+  <article className="wonder-inspector-arcballCameraController">
+    (Method.renderDistanceField(uiStoreDataTuple, arcballCameraController))
+    (Method.renderMinDistanceField(uiStoreDataTuple, arcballCameraController))
+    (Method.renderTargetField(uiStoreDataTuple, arcballCameraController))
+    (Method.renderPhiField(uiStoreDataTuple, arcballCameraController))
+    (Method.renderThetaField(uiStoreDataTuple, arcballCameraController))
   </article>;
 
 let make = (~uiState, ~dispatchFunc, ~arcballCameraController, _children) => {

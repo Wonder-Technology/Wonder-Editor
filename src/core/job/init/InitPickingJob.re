@@ -63,31 +63,34 @@ let _isCurrentSceneTreeNode = (gameObject, currentSceneTreeNodeOpt) =>
   | Some(currentSceneTreeNode) => gameObject == currentSceneTreeNode
   };
 
-let _findTopRootGameObject = ((editorState, engineState), gameObjectOpt) => {
-  let rec _find =
-          (gameObject, rootGameObject, currentSceneTreeNodeOpt, engineState) =>
-    switch (
-      HierarchyGameObjectEngineService.getParentGameObject(
-        gameObject,
+let _findRootGameObject = (parentGameObject, rootGameObject, engineState) =>
+  GameObjectEngineService.unsafeGetGameObjectIsRoot(
+    parentGameObject,
+    engineState,
+  ) ?
+    parentGameObject : rootGameObject;
+
+let rec _find =
+        (gameObject, rootGameObject, currentSceneTreeNodeOpt, engineState) =>
+  switch (
+    HierarchyGameObjectEngineService.getParentGameObject(
+      gameObject,
+      engineState,
+    )
+  ) {
+  | None => rootGameObject
+  | Some(parentGameObject) =>
+    _isCurrentSceneTreeNode(parentGameObject, currentSceneTreeNodeOpt) ?
+      rootGameObject :
+      _find(
+        parentGameObject,
+        _findRootGameObject(parentGameObject, rootGameObject, engineState),
+        currentSceneTreeNodeOpt,
         engineState,
       )
-    ) {
-    | None => rootGameObject
-    | Some(parentGameObject) =>
-      _isCurrentSceneTreeNode(parentGameObject, currentSceneTreeNodeOpt) ?
-        rootGameObject :
-        _find(
-          parentGameObject,
-          GameObjectEngineService.unsafeGetGameObjectIsRoot(
-            parentGameObject,
-            engineState,
-          ) ?
-            parentGameObject : rootGameObject,
-          currentSceneTreeNodeOpt,
-          engineState,
-        )
-    };
+  };
 
+let _findTopRootGameObject = ((editorState, engineState), gameObjectOpt) => {
   let currentSceneTreeNodeOpt =
     SceneTreeEditorService.getCurrentSceneTreeNode(editorState);
 

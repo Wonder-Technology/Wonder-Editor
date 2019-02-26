@@ -64,5 +64,20 @@ let _ =
 
         errorObj##captureStackTrace |> expect |> toCalledOnce;
       });
+
+      describe("limit showed messages' count", () => {
+        let _log = count => {};
+
+        test("limit max 99", () => {
+          WonderCommonlib.ArrayService.range(0, 100)
+          |> Js.Array.forEach(_ =>
+               ConsoleUtils.log({j|message|j})
+               |> StateLogicService.getEditorState
+             );
+
+          BuildComponentTool.buildConsole()
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
+      });
     });
   });

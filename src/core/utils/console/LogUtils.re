@@ -69,3 +69,52 @@ let buildDebugMessage = (~description, ~params, ()) => {
 
   message;
 };
+
+let _stringify = msg => Js.Json.stringify(msg |> Obj.magic) |> Obj.magic;
+
+let print = msg => {
+  msg |> _stringify |> WonderLog.Log.print |> ignore;
+
+  msg;
+};
+
+let printJson = json => WonderLog.Log.printJson(json);
+
+let info = msg => msg |> _stringify |> WonderLog.Log.info;
+
+let warn = (msg: string) => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect={j|msg be string|j},
+                ~actual={j|not|j},
+              ),
+              () =>
+              TypeUtils.isString(msg) |> assertTrue
+            )
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
+  msg |> WonderLog.Log.warn;
+};
+
+let logStr = str => str |> WonderLog.Log.log;
+
+let log = msg => msg |> _stringify |> WonderLog.Log.log;
+
+let logVar = msg => msg |> _stringify |> WonderLog.Log.logVar;
+
+let logJson = json => json |> WonderLog.Log.logJson;
+
+let debug = WonderLog.Log.debug;
+
+let error = WonderLog.Log.error;
+
+let fatal = WonderLog.Log.fatal;

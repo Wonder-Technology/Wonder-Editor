@@ -55,6 +55,25 @@ module CustomEventHandler = {
     engineState;
   };
 
+  let _cloneLightGameObject = (targetGameObject, (editorState, engineState)) => {
+    let (message, isMaxCount) =
+      MainEditorLightUtils.isLightExceedMaxCountByType(
+        MainEditorLightUtils.getLightTypeByGameObject(
+          targetGameObject,
+          engineState,
+        ),
+        engineState,
+      );
+
+    isMaxCount ?
+      {
+        ConsoleUtils.warn(message, editorState);
+
+        engineState;
+      } :
+      _clone(targetGameObject, editorState, engineState);
+  };
+
   let handleSelfLogic = ((uiState, dispatchFunc), (), ()) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
@@ -67,24 +86,10 @@ module CustomEventHandler = {
                targetGameObject,
                engineState,
              ) ?
-               {
-                 let (message, isMaxCount) =
-                   MainEditorLightUtils.isLightExceedMaxCountByType(
-                     MainEditorLightUtils.getLightTypeByGameObject(
-                       targetGameObject,
-                       engineState,
-                     ),
-                     engineState,
-                   );
-
-                 isMaxCount ?
-                   {
-                     ConsoleUtils.warn(message, editorState);
-
-                     engineState;
-                   } :
-                   _clone(targetGameObject, editorState, engineState);
-               } :
+               _cloneLightGameObject(
+                 targetGameObject,
+                 (editorState, engineState),
+               ) :
                _clone(targetGameObject, editorState, engineState),
            errorMsg => {
              ConsoleUtils.error(errorMsg, editorState);

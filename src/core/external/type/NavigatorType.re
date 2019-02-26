@@ -1,0 +1,1 @@
+type navigator = {. "platform": string};

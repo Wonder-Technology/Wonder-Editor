@@ -47,6 +47,41 @@ let _checkLightCount = (gameObject, (editorState, engineState)) => {
   (engineState, result);
 };
 
+let _cloneWDBGameObject = (wdbGameObject, engineState) => {
+  let (cloneGameObjectArr, engineState) =
+    engineState
+    |> GameObjectEngineService.cloneGameObject(wdbGameObject, 1, true);
+
+  let allClonedGameObjectArr =
+    cloneGameObjectArr |> CloneGameObjectLogicService.getAllClonedGameObjectArr;
+
+  let clonedWDBGameObject =
+    cloneGameObjectArr |> CloneGameObjectLogicService.getClonedGameObject;
+
+  (clonedWDBGameObject, allClonedGameObjectArr, engineState);
+};
+
+let _drag =
+    (
+      (wdbGameObject, targetGameObject, clonedWDBGameObject),
+      dragPosition,
+      engineState,
+    ) =>
+  SceneEngineService.isSceneGameObject(targetGameObject)
+  |> StateLogicService.getEngineStateToGetData ?
+    DragGameObjectUtils.handleDragToBeSceneGameObjectChild(
+      dragPosition,
+      targetGameObject,
+      clonedWDBGameObject,
+      engineState,
+    ) :
+    DragGameObjectUtils.handleDragToBeTargetGameObjectSib(
+      dragPosition,
+      targetGameObject,
+      clonedWDBGameObject,
+      engineState,
+    );
+
 let dragWDB =
     (
       wdbGameObject,
@@ -57,32 +92,15 @@ let dragWDB =
   switch (_checkLightCount(wdbGameObject, (editorState, engineState))) {
   | (engineState, false) => (false, (editorState, engineState))
   | (engineState, true) =>
-    let (cloneGameObjectArr, engineState) =
-      engineState
-      |> GameObjectEngineService.cloneGameObject(wdbGameObject, 1, true);
-
-    let allClonedGameObjectArr =
-      cloneGameObjectArr
-      |> CloneGameObjectLogicService.getAllClonedGameObjectArr;
-
-    let clonedWDBGameObject =
-      cloneGameObjectArr |> CloneGameObjectLogicService.getClonedGameObject;
+    let (clonedWDBGameObject, allClonedGameObjectArr, engineState) =
+      _cloneWDBGameObject(wdbGameObject, engineState);
 
     let engineState =
-      SceneEngineService.isSceneGameObject(targetGameObject)
-      |> StateLogicService.getEngineStateToGetData ?
-        DragGameObjectUtils.handleDragToBeSceneGameObjectChild(
-          dragPosition,
-          targetGameObject,
-          clonedWDBGameObject,
-          engineState,
-        ) :
-        DragGameObjectUtils.handleDragToBeTargetGameObjectSib(
-          dragPosition,
-          targetGameObject,
-          clonedWDBGameObject,
-          engineState,
-        );
+      _drag(
+        (wdbGameObject, targetGameObject, clonedWDBGameObject),
+        dragPosition,
+        engineState,
+      );
 
     let engineState =
       SceneEngineService.isNeedReInitAllLightMaterials(

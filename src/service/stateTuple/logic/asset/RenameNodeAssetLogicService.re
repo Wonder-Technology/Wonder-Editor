@@ -58,45 +58,58 @@ let _textureNodeFunc =
     } :
     (result, tree, engineState);
 
+let _renameMaterialNode =
+    (
+      (targetNodeId, name),
+      parentFolderNode,
+      (tree, engineState),
+      {materialComponent, type_}: NodeAssetType.materialNodeData,
+    ) => {
+  let (result, engineState) =
+    _isNameEqualDefaultMaterialName(type_, name) ?
+      (
+        Result.RelationResult.fail(
+          {j|material name:$name shouldn't equal default material name|j}
+          |. Some,
+        ),
+        engineState,
+      ) :
+      (
+        switch (_checkParentNode(parentFolderNode, name, engineState)) {
+        | Success () as result => (
+            result,
+            OperateMaterialLogicService.setName(
+              ~material=materialComponent,
+              ~type_,
+              ~name,
+              ~engineState,
+            ),
+          )
+
+        | Fail(msg) as result => (result, engineState)
+        }
+      );
+
+  (result, tree, engineState);
+};
+
 let _materialNodeFunc =
     (
       (targetNodeId, name),
       parentFolderNode,
       (result, tree, engineState),
       nodeId,
-      {materialComponent, type_}: NodeAssetType.materialNodeData,
+      nodeData,
     ) =>
   result
   |> Result.RelationResult.isSuccess
   && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
-    {
-      let (result, engineState) =
-        _isNameEqualDefaultMaterialName(type_, name) ?
-          (
-            Result.RelationResult.fail(
-              {j|material name:$name shouldn't equal default material name|j}
-              |. Some,
-            ),
-            engineState,
-          ) :
-          (
-            switch (_checkParentNode(parentFolderNode, name, engineState)) {
-            | Success () as result => (
-                result,
-                OperateMaterialLogicService.setName(
-                  ~material=materialComponent,
-                  ~type_,
-                  ~name,
-                  ~engineState,
-                ),
-              )
-
-            | Fail(msg) as result => (result, engineState)
-            }
-          );
-
-      (result, tree, engineState);
-    } :
+    _renameMaterialNode(
+      (targetNodeId, name),
+      parentFolderNode,
+      (tree, engineState),
+      nodeData,
+    ) :
     (result, tree, engineState);
 
 let _wdbNodeFunc =
@@ -164,16 +177,7 @@ let _folderNodeFunc =
 
       (result, newTree, engineState);
     } :
-    {
-      let node =
-        FolderNodeAssetService.buildNodeByNodeData(
-          ~nodeId,
-          ~nodeData,
-          ~children,
-        );
-
-      (result, tree, engineState);
-    };
+    (result, tree, engineState);
 
 let renameNode =
     (targetNodeId, name, (editorState, engineState))

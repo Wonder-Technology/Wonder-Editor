@@ -46,6 +46,12 @@ module Method = {
        });
   };
 
+  let _handleRedo = (uiState, dispatchFunc) =>
+    OperateStateHistoryService.hasRedoState(AllStateData.getHistoryState()) ?
+      AllHistoryService.redoHistoryState(uiState, dispatchFunc)
+      |> StateHistoryService.getAndRefreshStateForHistory :
+      ();
+
   let _buildFileComponentSelectNav = (send, uiState, dispatchFunc) =>
     <div className="item-content">
       <div
@@ -55,15 +61,7 @@ module Method = {
       </div>
       <div
         className="content-section"
-        onClick=(
-          _e =>
-            OperateStateHistoryService.hasRedoState(
-              AllStateData.getHistoryState(),
-            ) ?
-              AllHistoryService.redoHistoryState(uiState, dispatchFunc)
-              |> StateHistoryService.getAndRefreshStateForHistory :
-              ()
-        )>
+        onClick=(_e => _handleRedo(uiState, dispatchFunc))>
         <span className="section-header"> (DomHelper.textEl("Redo")) </span>
       </div>
       <div
@@ -74,6 +72,31 @@ module Method = {
         </span>
       </div>
     </div>;
+
+  let _handleHotKeyValueByOS = values => {
+    let isMac = DetectOSUtils.isMac();
+
+    values
+    |> Js.Array.filter(value =>
+         isMac ? true : ! (value |> Js.String.includes("command"))
+       );
+  };
+
+  let _buildControlModalContent = () =>
+    HotKeysSettingEditorService.getHotKeys
+    |> StateLogicService.getEditorState
+    |> Js.Array.mapi(({name, values}: SettingType.hotKey, i) =>
+         <div key=(i |> string_of_int) className="content-field">
+           <div className="field-title"> (DomHelper.textEl(name)) </div>
+           <div className="field-content">
+             (
+               DomHelper.textEl(
+                 _handleHotKeyValueByOS(values) |> Js.Array.joinWith("|"),
+               )
+             )
+           </div>
+         </div>
+       );
 
   let buildFileComponent = (state, send, uiState, dispatchFunc) => {
     let className =
@@ -99,40 +122,7 @@ module Method = {
           <Modal
             title="Controls"
             closeFunc=(() => send(HideFileControlsModal))
-            content=[|
-              <div className="content-field">
-                <div className="field-title">
-                  (DomHelper.textEl("Redo"))
-                </div>
-                <div className="field-content">
-                  (DomHelper.textEl("Ctrl + y"))
-                </div>
-              </div>,
-              <div className="content-field">
-                <div className="field-title">
-                  (DomHelper.textEl("Undo"))
-                </div>
-                <div className="field-content">
-                  (DomHelper.textEl("Ctrl + z"))
-                </div>
-              </div>,
-              <div className="content-field">
-                <div className="field-title">
-                  (DomHelper.textEl("Duplicate GameObject"))
-                </div>
-                <div className="field-content">
-                  (DomHelper.textEl("Ctrl + d"))
-                </div>
-              </div>,
-              <div className="content-field">
-                <div className="field-title">
-                  (DomHelper.textEl("Delete Selected"))
-                </div>
-                <div className="field-content">
-                  (DomHelper.textEl("Delete"))
-                </div>
-              </div>,
-            |]
+            content=(_buildControlModalContent())
           /> :
           ReasonReact.null
       )
