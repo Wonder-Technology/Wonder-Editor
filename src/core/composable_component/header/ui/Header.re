@@ -46,6 +46,12 @@ module Method = {
        });
   };
 
+  let _handleRedo = (uiState, dispatchFunc) =>
+    OperateStateHistoryService.hasRedoState(AllStateData.getHistoryState()) ?
+      AllHistoryService.redoHistoryState(uiState, dispatchFunc)
+      |> StateHistoryService.getAndRefreshStateForHistory :
+      ();
+
   let _buildFileComponentSelectNav = (send, uiState, dispatchFunc) =>
     <div className="item-content">
       <div
@@ -55,15 +61,7 @@ module Method = {
       </div>
       <div
         className="content-section"
-        onClick=(
-          _e =>
-            OperateStateHistoryService.hasRedoState(
-              AllStateData.getHistoryState(),
-            ) ?
-              AllHistoryService.redoHistoryState(uiState, dispatchFunc)
-              |> StateHistoryService.getAndRefreshStateForHistory :
-              ()
-        )>
+        onClick=(_e => _handleRedo(uiState, dispatchFunc))>
         <span className="section-header"> (DomHelper.textEl("Redo")) </span>
       </div>
       <div

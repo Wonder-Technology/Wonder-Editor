@@ -56,6 +56,7 @@ module.exports = {
       { name: "rename" },
       { name: "duplicate" },
       { name: "dead-code" },
+      { name: "code-climate" },
       { name: "rewrite" }
     ],
     chore: [
