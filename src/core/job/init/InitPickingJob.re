@@ -63,6 +63,13 @@ let _isCurrentSceneTreeNode = (gameObject, currentSceneTreeNodeOpt) =>
   | Some(currentSceneTreeNode) => gameObject == currentSceneTreeNode
   };
 
+let _findRootGameObject = (parentGameObject, rootGameObject, engineState) =>
+  GameObjectEngineService.unsafeGetGameObjectIsRoot(
+    parentGameObject,
+    engineState,
+  ) ?
+    parentGameObject : rootGameObject;
+
 let rec _find =
         (gameObject, rootGameObject, currentSceneTreeNodeOpt, engineState) =>
   switch (
@@ -77,11 +84,7 @@ let rec _find =
       rootGameObject :
       _find(
         parentGameObject,
-        GameObjectEngineService.unsafeGetGameObjectIsRoot(
-          parentGameObject,
-          engineState,
-        ) ?
-          parentGameObject : rootGameObject,
+        _findRootGameObject(parentGameObject, rootGameObject, engineState),
         currentSceneTreeNodeOpt,
         engineState,
       )
