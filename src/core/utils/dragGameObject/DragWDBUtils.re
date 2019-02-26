@@ -58,7 +58,7 @@ let _cloneWDBGameObject = (wdbGameObject, engineState) => {
   let clonedWDBGameObject =
     cloneGameObjectArr |> CloneGameObjectLogicService.getClonedGameObject;
 
-  (clonedWDBGameObject, allClonedGameObjectArr);
+  (clonedWDBGameObject, allClonedGameObjectArr, engineState);
 };
 
 let _drag =
@@ -92,7 +92,7 @@ let dragWDB =
   switch (_checkLightCount(wdbGameObject, (editorState, engineState))) {
   | (engineState, false) => (false, (editorState, engineState))
   | (engineState, true) =>
-    let (clonedWDBGameObject, allClonedGameObjectArr) =
+    let (clonedWDBGameObject, allClonedGameObjectArr, engineState) =
       _cloneWDBGameObject(wdbGameObject, engineState);
 
     let engineState =
