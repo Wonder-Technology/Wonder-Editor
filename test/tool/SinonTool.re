@@ -18,3 +18,19 @@ let createMethodStub = [%bs.raw
 }
 |}
 ];
+
+let createOneLengthStub = [%bs.raw
+  {| function(sandbox) {
+    var stub =  sandbox.stub();
+
+    Object.defineProperty(stub, "length", {
+        enumerable: true,
+        configurable: true,
+        writable: false,
+        value: 1
+      });
+
+    return stub;
+}
+|}
+];

@@ -14,7 +14,7 @@ let stubGetElementByIdReturnFakeDom = [%bs.raw
 
 let buildFakeDom = [%bs.raw
   {|
-  function(){
+  function(param){
     return {
       eventDataMap: {},
       addEventListener: function(eventName, handleFunc) {

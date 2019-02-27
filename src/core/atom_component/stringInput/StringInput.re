@@ -77,7 +77,7 @@ let render = (label, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
     <div className="item-content">
       <input
         className="input-component float-input"
-        _type="text"
+        type_="text"
         value=state.inputValue
         onChange=(_e => send(Method.change(_e)))
         onBlur=(_e => send(Blur))

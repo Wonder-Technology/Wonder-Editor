@@ -1,7 +1,5 @@
 open GameObjectAllComponentParseType;
 
-open Antd;
-
 type state = {
   isShowAddableComponent: bool,
   streamSubscription: option(WonderBsMost.Most.subscription),
@@ -26,12 +24,8 @@ module Method = {
       currentSceneTreeNode,
     )
     |> StateLogicService.getStateToGetData ?
-      Message.message
-      |> Message.convertToJsObj
-      |> (
-        messageObj =>
-          messageObj##warn("the game object already have this component !", 4)
-      ) :
+      ConsoleUtils.warn("the game object already have this component !")
+      |> StateLogicService.getEditorState :
       AddableComponentAddComponentEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
         (uiState, dispatchFunc),
         currentSceneTreeNode,

@@ -40,7 +40,7 @@ let render = ((uiState, dispatchFunc), _self) => {
       <div className="item-header"> (DomHelper.textEl("CurrentCamera")) </div>
       <div className="item-content">
         <input
-          _type="checkbox"
+          type_="checkbox"
           defaultChecked=isCurrentCamera
           onClick=(
             Method.setCurrentCamera(

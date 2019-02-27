@@ -84,7 +84,7 @@ let _ =
               str,
               [
                 {|
-                function (_, _$1, engineState) {
+                function (param, apiJsObj, engineState) {
                   return engineState;
                 }
       |}

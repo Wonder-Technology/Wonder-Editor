@@ -134,7 +134,7 @@ module Method = {
       <div className="content-section">
         <input
           className="section-fileLoad"
-          _type="file"
+          type_="file"
           multiple=false
           onChange=(
             e =>
@@ -261,7 +261,7 @@ module Method = {
                 HeaderPublishLocalUtils.Publish.publishZip(
                   (zipName, useWorker),
                   WonderBsJszip.Zip.create,
-                  Fetch.fetch,
+                  FetchUtils.fetch,
                 );
 
                 send(HidePublishLocalModal);

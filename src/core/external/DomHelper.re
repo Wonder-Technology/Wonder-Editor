@@ -14,7 +14,7 @@ external getElementsByClassName : string => array(Dom.element) =
 
 [@bs.val] external alert : string => unit = "alert";
 
-let getBody = [%raw () => "
+let getBody = [%raw (param) => "
   return document.body
 "];
 

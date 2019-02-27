@@ -69,7 +69,7 @@ let render =
         <div>
           <textarea
             className="input-component file-input"
-            _type="text"
+            type_="text"
             value=state.inputValue
             onChange=(_e => send(Method.change(_e)))
           />

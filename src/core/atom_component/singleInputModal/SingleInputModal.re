@@ -27,7 +27,7 @@ let _renderContent = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
       <div className="field-content">
         <input
           className="input-component"
-          _type="text"
+          type_="text"
           value=state.inputValue
           onChange=(_e => send(Method.change(_e)))
         />
