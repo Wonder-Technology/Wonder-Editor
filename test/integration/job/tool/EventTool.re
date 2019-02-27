@@ -126,7 +126,7 @@ let triggerDomEvent = [%raw
 
 let buildFakeDocumentSetToWindow = [%raw
   {|
-    function(){
+    function(param){
         function _getOrCreateEventQueue(type){
             if(window.eventQueueMap === undefined){
                 window.eventQueueMap = {};
@@ -236,7 +236,7 @@ let buildFakeCanvasWithSize = [%raw
 ];
 
 let _clearEventQueueMap = [%raw
-  (.) => {|
+  param => {|
     window.eventQueueMap = {};
     |}
 ];
@@ -249,7 +249,7 @@ let restore = () => {
 };
 
 let restoreHotKeys = () => {
-  _clearEventQueueMap(.);
+  _clearEventQueueMap();
 
   HotKeysJs.setIsBind(false);
   HotKeysJs.removeHandlers();

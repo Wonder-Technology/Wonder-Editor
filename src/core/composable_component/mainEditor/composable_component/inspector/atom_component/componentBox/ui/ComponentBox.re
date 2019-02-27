@@ -9,7 +9,9 @@ type action =
 module Method = {
   let removeComponent = AddableComponentRemoveComponentEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let changeShowComponentByType = ((uiState, dispatchFunc), type_, value) =>
+  let changeShowComponentByType = ((uiState, dispatchFunc), type_, value) =>{
+    WonderLog.Log.print(dispatchFunc) |> ignore;
+
     dispatchFunc(
       AppStore.InspectorAction(
         SetShowComponent(
@@ -18,6 +20,7 @@ module Method = {
         ),
       ),
     );
+  }
 };
 
 let component = ReasonReact.reducerComponent("ComponentBox");

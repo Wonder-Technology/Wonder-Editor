@@ -190,7 +190,7 @@ let _ =
                    )
                    |>
                    expect == (
-                               {|function(_,apiJsObj,engineState){
+                               {|function(param,apiJsObj,engineState){
         var label = apiJsObj.label;
         return label(/*tuple*/[100,30,300,200], "imgui", 0, engineState);
                                }|}

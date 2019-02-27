@@ -34,12 +34,12 @@ let buildMouseEvent =
   "target": target,
 };
 
-let setPointerLocked = [%raw () => {|
+let setPointerLocked = [%raw (param) => {|
  document.pointerLockElement = {};
   |}];
 
 let setNotPointerLocked = [%raw
-  () => {|
+  (param) => {|
  document.pointerLockElement = undefined;
   |}
 ];

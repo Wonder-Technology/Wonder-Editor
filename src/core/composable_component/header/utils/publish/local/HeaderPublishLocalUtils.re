@@ -4,7 +4,7 @@ module LoadData = {
   open WonderBsJszip;
 
   let loadAndWriteIndexJsData = (useWorker, fetchFunc, zip) =>
-    fetchFunc("./publish/wd.min.js")
+    fetchFunc(. "./publish/wd.min.js")
     |> then_(response =>
          response
          |> Fetch.Response.text
@@ -12,7 +12,7 @@ module LoadData = {
               zip |. Zip.write("wd.min.js", `str(jsStr));
 
               useWorker ?
-                fetchFunc("./publish/wd.render.worker.js")
+                fetchFunc(. "./publish/wd.render.worker.js")
                 |> then_(response =>
                      response
                      |> Fetch.Response.text
@@ -38,7 +38,7 @@ module LoadData = {
 
   let loadAndWriteIndexHtmlData =
       (useWorker, sceneGraphArrayBuffer, fetchFunc, zip) =>
-    fetchFunc(
+    fetchFunc(.
       useWorker ? "./publish/index_worker.html" : "./publish/index.html",
     )
     |> then_(response =>
@@ -56,7 +56,7 @@ module LoadData = {
 
   let _loadAndWriteSingleResArrayBufferData =
       (~name, ~fetchFunc, ~zip, ~dirname="./publish/res/loading", ()) =>
-    fetchFunc({j|$dirname/$name|j})
+    fetchFunc(. {j|$dirname/$name|j})
     |> then_(response =>
          response
          |> Fetch.Response.arrayBuffer
@@ -76,7 +76,7 @@ module LoadData = {
 
   let loadAndWriteResData = (fetchFunc, zip) =>
     WonderBsMost.Most.mergeArray([|
-      /* fetchFunc({j|./publish/res/loading/Lato-Regular-64.fnt|j})
+      /* fetchFunc(.{j|./publish/res/loading/Lato-Regular-64.fnt|j})
          |> then_(response =>
               response
               |> Fetch.Response.text
@@ -116,7 +116,7 @@ module LoadData = {
 
   let _loadAndWriteSingleConfigDataWithTargetFileNamePath =
       (fileNamePath, targetFileNamePath, fetchFunc, zip) =>
-    fetchFunc({j|./publish/config/$fileNamePath|j})
+    fetchFunc(. {j|./publish/config/$fileNamePath|j})
     |> then_(response =>
          response
          |> Fetch.Response.text

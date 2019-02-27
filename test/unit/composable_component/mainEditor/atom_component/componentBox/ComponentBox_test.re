@@ -76,7 +76,7 @@ let _ =
           () => {
             open ComponentBox;
 
-            let dispatchFunc = createEmptyStubWithJsObjSandbox(sandbox);
+            let dispatchFunc = SinonTool.createOneLengthStub(sandbox^);
 
             let state = {isShowComponent: true, triangleDirection: ""};
 

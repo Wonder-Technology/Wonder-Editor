@@ -261,7 +261,7 @@ module Method = {
                 HeaderPublishLocalUtils.Publish.publishZip(
                   (zipName, useWorker),
                   WonderBsJszip.Zip.create,
-                  Fetch.fetch,
+                  FetchUtils.fetch,
                 );
 
                 send(HidePublishLocalModal);
