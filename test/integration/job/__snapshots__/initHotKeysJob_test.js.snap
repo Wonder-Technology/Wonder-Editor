@@ -527,3 +527,2115 @@ exports[`init hotKeys job bind document hotKeys event test bind undo hot-key key
   </article>
 </article>
 `;
+
+exports[`init hotKeys job bind document hotKeys event, need add hot-key into SettingTool test bind clone hot-key key down ctrl+d, should execute clone operate 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          Scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init hotKeys job bind document hotKeys event, need add hot-key into SettingTool test bind delete hot-key key down delete,if has currentSceneTreeNode, should delete it 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          Scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init hotKeys job bind document hotKeys event, need add hot-key into SettingTool test bind redo hot-key key down ctrl+y, should execute redo operate 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          Scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-36"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            GameObject
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init hotKeys job bind document hotKeys event, need add hot-key into SettingTool test bind undo hot-key key down ctrl+z, should execute undo operate 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          Scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init hotKeys job bind document hotKeys event, need add key code into SettingTool test bind clone hot-key key down ctrl+d, should execute clone operate 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          Scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init hotKeys job bind document hotKeys event, need add key code into SettingTool test bind delete hot-key key down delete,if has currentSceneTreeNode, should delete it 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          Scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init hotKeys job bind document hotKeys event, need add key code into SettingTool test bind redo hot-key key down ctrl+y, should execute redo operate 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          Scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-36"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            GameObject
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init hotKeys job bind document hotKeys event, need add key code into SettingTool test bind undo hot-key key down ctrl+z, should execute undo operate 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          Scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init hotKeys job bind document hotKeys event, need add key code test bind clone hot-key key down ctrl+d, should execute clone operate 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          Scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init hotKeys job bind document hotKeys event, need add key code test bind delete hot-key key down delete,if has currentSceneTreeNode, should delete it 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          Scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init hotKeys job bind document hotKeys event, need add key code test bind redo hot-key key down ctrl+y, should execute redo operate 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          Scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-36"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            GameObject
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init hotKeys job bind document hotKeys event, need add key code test bind undo hot-key key down ctrl+z, should execute undo operate 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          Scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init hotKeys job bind document hotKeys event, need add key into SettingTool test bind clone hot-key key down ctrl+d, should execute clone operate 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          Scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init hotKeys job bind document hotKeys event, need add key into SettingTool test bind delete hot-key key down delete,if has currentSceneTreeNode, should delete it 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          Scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init hotKeys job bind document hotKeys event, need add key into SettingTool test bind redo hot-key key down ctrl+y, should execute redo operate 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          Scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-36"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            GameObject
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init hotKeys job bind document hotKeys event, need add key into SettingTool test bind undo hot-key key down ctrl+z, should execute undo operate 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          Scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
