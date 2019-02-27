@@ -18,7 +18,8 @@
     "test:ci": "npm run bsb:build && gulp restoreSnapshotPath && gulp moveSnapshotFilesFromTestToLib && jest --maxWorkers=4 --config jest_coverage.json",
     "codecov": "cat coverage/lcov.info | codecov",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
-    "updateVersion": "gulp updateVersion"
+    "updatePwaCacheVersion": "gulp updatePwaCacheVersion",
+    "updateCopyRightVersion": "gulp updateCopyRightVersion"
   },
   "config": {
     "commitizen": {
