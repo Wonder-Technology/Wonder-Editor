@@ -6,6 +6,14 @@ html, body {
   position: relative; }
   html ul, body ul {
     list-style-type: none; }
+  html a, body a {
+    text-decoration: none; }
+    html a:visited, body a:visited {
+      text-decoration: none; }
+    html a:hover, body a:hover {
+      text-decoration: none; }
+    html a:active, body a:active {
+      text-decoration: none; }
   html .inline-component, body .inline-component {
     display: inline-block; }
   html .block-component, body .block-component {

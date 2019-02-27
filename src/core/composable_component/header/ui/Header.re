@@ -56,19 +56,19 @@ module Method = {
     <div className="item-content">
       <div
         className="content-section"
-        onClick=(_e => AllHistoryService.handleUndo(uiState, dispatchFunc))>
-        <span className="section-header"> (DomHelper.textEl("Undo")) </span>
+        onClick={_e => AllHistoryService.handleUndo(uiState, dispatchFunc)}>
+        <span className="section-header"> {DomHelper.textEl("Undo")} </span>
       </div>
       <div
         className="content-section"
-        onClick=(_e => _handleRedo(uiState, dispatchFunc))>
-        <span className="section-header"> (DomHelper.textEl("Redo")) </span>
+        onClick={_e => _handleRedo(uiState, dispatchFunc)}>
+        <span className="section-header"> {DomHelper.textEl("Redo")} </span>
       </div>
       <div
         className="content-section"
-        onClick=(_e => send(ShowFileControlsModal))>
+        onClick={_e => send(ShowFileControlsModal)}>
         <span className="section-header">
-          (DomHelper.textEl("Controls"))
+          {DomHelper.textEl("Controls")}
         </span>
       </div>
     </div>;
@@ -78,7 +78,7 @@ module Method = {
 
     values
     |> Js.Array.filter(value =>
-         isMac ? true : ! (value |> Js.String.includes("command"))
+         isMac ? true : !(value |> Js.String.includes("command"))
        );
   };
 
@@ -86,14 +86,14 @@ module Method = {
     HotKeysSettingEditorService.getHotKeys
     |> StateLogicService.getEditorState
     |> Js.Array.mapi(({name, values}: SettingType.hotKey, i) =>
-         <div key=(i |> string_of_int) className="content-field">
-           <div className="field-title"> (DomHelper.textEl(name)) </div>
+         <div key={i |> string_of_int} className="content-field">
+           <div className="field-title"> {DomHelper.textEl(name)} </div>
            <div className="field-content">
-             (
+             {
                DomHelper.textEl(
                  _handleHotKeyValueByOS(values) |> Js.Array.joinWith("|"),
                )
-             )
+             }
            </div>
          </div>
        );
@@ -107,25 +107,25 @@ module Method = {
       <div className="component-item">
         <span
           className
-          onClick=(e => send(ToggleShowNav(File)))
-          onMouseOver=(e => send(HoverNav(File)))>
-          (DomHelper.textEl("File"))
+          onClick={e => send(ToggleShowNav(File))}
+          onMouseOver={e => send(HoverNav(File))}>
+          {DomHelper.textEl("File")}
         </span>
       </div>
-      (
+      {
         state.currentSelectNav === File ?
           _buildFileComponentSelectNav(send, uiState, dispatchFunc) :
           ReasonReact.null
-      )
-      (
+      }
+      {
         state.isShowFileControlsModal ?
           <Modal
             title="Controls"
-            closeFunc=(() => send(HideFileControlsModal))
-            content=(_buildControlModalContent())
+            closeFunc={() => send(HideFileControlsModal)}
+            content={_buildControlModalContent()}
           /> :
           ReasonReact.null
-      )
+      }
     </div>;
   };
 
@@ -136,28 +136,28 @@ module Method = {
           className="section-fileLoad"
           type_="file"
           multiple=false
-          onChange=(
+          onChange={
             e =>
               importPackage((uiState, dispatchFunc), (send, BlurNav), e)
               |> ignore
-          )
+          }
         />
         <span className="section-header">
-          (DomHelper.textEl("Import Package"))
+          {DomHelper.textEl("Import Package")}
         </span>
       </div>
       <div
         className="content-section"
-        onClick=(_e => send(ShowEditExportPackageModal))>
+        onClick={_e => send(ShowEditExportPackageModal)}>
         <span className="section-header">
-          (DomHelper.textEl("Export Package"))
+          {DomHelper.textEl("Export Package")}
         </span>
       </div>
       <div
         className="content-section"
-        onClick=(_e => send(ShowEditExportSceneModal))>
+        onClick={_e => send(ShowEditExportSceneModal)}>
         <span className="section-header">
-          (DomHelper.textEl("Export Scene"))
+          {DomHelper.textEl("Export Scene")}
         </span>
       </div>
     </div>;
@@ -170,51 +170,51 @@ module Method = {
       <div className="component-item">
         <span
           className
-          onClick=(
+          onClick={
             e =>
               state.isSelectNav ? send(BlurNav) : send(ToggleShowNav(Edit))
-          )
-          onMouseOver=(e => send(HoverNav(Edit)))>
-          (DomHelper.textEl("Edit"))
+          }
+          onMouseOver={e => send(HoverNav(Edit))}>
+          {DomHelper.textEl("Edit")}
         </span>
       </div>
-      (
+      {
         state.currentSelectNav === Edit ?
           _buildEditComponentSelectNav(send, uiState, dispatchFunc) :
           ReasonReact.null
-      )
-      (
+      }
+      {
         state.isShowEditExportPackageModal ?
           <SingleInputModal
             title="Export Package"
             defaultValue="WonderPackage"
-            closeFunc=(() => send(HideEditExportPackageModal))
-            submitFunc=(
+            closeFunc={() => send(HideEditExportPackageModal)}
+            submitFunc={
               packageName => {
                 HeaderExportPackageUtils.exportPackage(packageName);
 
                 send(HideEditExportPackageModal);
               }
-            )
+            }
           /> :
           ReasonReact.null
-      )
-      (
+      }
+      {
         state.isShowEditExportSceneModal ?
           <SingleInputModal
             title="Export Scene"
             defaultValue="WonderScene"
-            closeFunc=(() => send(HideEditExportSceneModal))
-            submitFunc=(
+            closeFunc={() => send(HideEditExportSceneModal)}
+            submitFunc={
               sceneName => {
                 HeaderExportSceneUtils.exportScene(sceneName);
 
                 send(HideEditExportSceneModal);
               }
-            )
+            }
           /> :
           ReasonReact.null
-      )
+      }
     </div>;
   };
 
@@ -222,8 +222,8 @@ module Method = {
     <div className="item-content">
       <div
         className="content-section"
-        onClick=(_e => send(ShowPublishLocalModal))>
-        <span className="section-header"> (DomHelper.textEl("Local")) </span>
+        onClick={_e => send(ShowPublishLocalModal)}>
+        <span className="section-header"> {DomHelper.textEl("Local")} </span>
       </div>
     </div>;
 
@@ -236,27 +236,27 @@ module Method = {
       <div className="component-item">
         <span
           className
-          onClick=(
+          onClick={
             e =>
               state.isSelectNav ?
                 send(BlurNav) : send(ToggleShowNav(Publish))
-          )
-          onMouseOver=(e => send(HoverNav(Publish)))>
-          (DomHelper.textEl("Publish"))
+          }
+          onMouseOver={e => send(HoverNav(Publish))}>
+          {DomHelper.textEl("Publish")}
         </span>
       </div>
-      (
+      {
         state.currentSelectNav === Publish ?
           _buildPublishComponentSelectNav(send) : ReasonReact.null
-      )
-      (
+      }
+      {
         state.isShowPublishLocalModal ?
           <PublishLocalModal
             title="Local"
             defaultName="WonderLocal"
             defaultUseWorker=false
-            closeFunc=(() => send(HidePublishLocalModal))
-            submitFunc=(
+            closeFunc={() => send(HidePublishLocalModal)}
+            submitFunc={
               (zipName, useWorker) => {
                 HeaderPublishLocalUtils.Publish.publishZip(
                   (zipName, useWorker),
@@ -266,10 +266,10 @@ module Method = {
 
                 send(HidePublishLocalModal);
               }
-            )
+            }
           /> :
           ReasonReact.null
-      )
+      }
     </div>;
   };
 
@@ -277,10 +277,8 @@ module Method = {
     <div className="item-content item-help">
       <div
         className="content-section"
-        onClick=(_e => send(ShowHelpVersionModal))>
-        <span className="section-header">
-          (DomHelper.textEl("Version"))
-        </span>
+        onClick={_e => send(ShowHelpVersionModal)}>
+        <span className="section-header"> {DomHelper.textEl("About")} </span>
       </div>
     </div>;
 
@@ -293,33 +291,77 @@ module Method = {
       <div className="component-item">
         <span
           className
-          onClick=(e => send(ToggleShowNav(Help)))
-          onMouseOver=(e => send(HoverNav(Help)))>
-          (DomHelper.textEl("Help"))
+          onClick={e => send(ToggleShowNav(Help))}
+          onMouseOver={e => send(HoverNav(Help))}>
+          {DomHelper.textEl("Help")}
         </span>
       </div>
-      (
+      {
         state.currentSelectNav === Help ?
           _buildHelpComponentSelectNav(send) : ReasonReact.null
-      )
-      (
+      }
+      {
         state.isShowHelpVersionModal ?
           <Modal
             title="About Wonder"
-            closeFunc=(() => send(HideHelpVersionModal))
+            closeFunc={() => send(HideHelpVersionModal)}
             content=[|
               <div className="content-field" key="aboutWonder">
                 <div className="field-title">
-                  (DomHelper.textEl("Version"))
+                  {DomHelper.textEl("Version")}
                 </div>
                 <div className="field-content">
-                  (DomHelper.textEl(Copyright.getVersion()))
+                  {DomHelper.textEl(Copyright.getVersion())}
+                </div>
+              </div>,
+              <div className="content-field" key="aboutWonder">
+                <div className="field-title">
+                  {DomHelper.textEl("Website")}
+                </div>
+                <div className="field-content">
+                  <a href="http://www.wonder-3d.com/" target="view_window">
+                    {DomHelper.textEl("click this page")}
+                  </a>
+                </div>
+              </div>,
+              <div className="content-field" key="aboutWonder">
+                <div className="field-title">
+                  {DomHelper.textEl("Feedback")}
+                </div>
+                <div className="field-content">
+                  <a href="http://forum.wonder-3d.com/" target="view_window">
+                    {DomHelper.textEl("click this page")}
+                  </a>
+                </div>
+              </div>,
+              <div className="content-field" key="aboutWonder">
+                <div className="field-title">
+                  {DomHelper.textEl("Editor Github")}
+                </div>
+                <div className="field-content">
+                  <a
+                    href="https://github.com/Wonder-Technology/Wonder-Editor"
+                    target="view_window">
+                    {DomHelper.textEl("click this page")}
+                  </a>
+                </div>
+              </div>,
+              <div className="content-field" key="aboutWonder">
+                <div className="field-title">
+                  {DomHelper.textEl("Engine Github")}
+                </div>
+                <div className="field-content">
+                  <a
+                    href="https://github.com/Wonder-Technology/Wonder.js"
+                    target="view_window">
+                    {DomHelper.textEl("click this page")}
+                  </a>
                 </div>
               </div>,
             |]
           /> :
           ReasonReact.null
-      )
+      }
     </div>;
   };
 
@@ -400,10 +442,10 @@ let render =
     ) =>
   <article key="header" className="wonder-header-component">
     <div className="header-nav">
-      (Method.buildFileComponent(state, send, uiState, dispatchFunc))
-      (Method.buildEditComponent(state, send, uiState, dispatchFunc))
-      (Method.buildPublishComponent(state, send, uiState, dispatchFunc))
-      (Method.buildHelpComponent(state, send, uiState, dispatchFunc))
+      {Method.buildFileComponent(state, send, uiState, dispatchFunc)}
+      {Method.buildEditComponent(state, send, uiState, dispatchFunc)}
+      {Method.buildPublishComponent(state, send, uiState, dispatchFunc)}
+      {Method.buildHelpComponent(state, send, uiState, dispatchFunc)}
     </div>
   </article>;
 
