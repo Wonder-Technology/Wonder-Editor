@@ -41,7 +41,7 @@ let _renderContent = (state, send) =>
       <div className="field-content">
         <input
           className="input-component"
-          _type="text"
+          type_="text"
           value=state.name
           onChange=(_e => send(Method.changeName(_e)))
         />
@@ -51,7 +51,7 @@ let _renderContent = (state, send) =>
       <div className="field-title"> (DomHelper.textEl("useWorker")) </div>
       <div className="field-content">
         <input
-          _type="checkbox"
+          type_="checkbox"
           defaultChecked=state.useWorker
           onClick=(_e => send(Method.changeUseWorker(_e)))
         />

@@ -94,7 +94,7 @@ let render =
         <img src="./public/img/load.png" />
         <input
           className="asset-fileLoad"
-          _type="file"
+          type_="file"
           multiple=false
           onChange=(
             e =>

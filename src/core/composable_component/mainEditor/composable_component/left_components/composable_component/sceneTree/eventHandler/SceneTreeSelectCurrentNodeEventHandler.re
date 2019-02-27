@@ -68,6 +68,7 @@ module CustomEventHandler = {
       StateLogicService.getAndRefreshEngineStateWhenStop();
     };
 
+
     dispatchFunc(
       AppStore.UpdateAction(Update([|SceneTree, Inspector, Project|])),
     )
