@@ -26,6 +26,9 @@ let _ =
                     "jobs": [
                       {
                         "name": "init_hotkeys"
+                      },
+                      {
+                         "name": "init_transform_gizmos"
                       }
                     ]
                   }
@@ -37,6 +40,9 @@ let _ =
 
                     {
                        "name": "init_hotkeys"
+                    },
+                    {
+                       "name": "init_transform_gizmos"
                     }
                 ]
             |j},
@@ -61,7 +67,8 @@ let _ =
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("bind document hotKeys event", () => {
+    describe(
+      "bind document hotKeys event, need add hot-key into SettingTool", () => {
       let _execKeyboardEvent =
           (
             keyboardDomEventName,
@@ -97,6 +104,15 @@ let _ =
 
       let triggerFocusHotKeyEvent = () =>
         _execKeyboardEvent("keydown", 70, ()) |> ignore;
+
+      let triggerTranslationHotKeyEvent = () =>
+        _execKeyboardEvent("keydown", 49, ()) |> ignore;
+
+      let triggerRotationHotKeyEvent = () =>
+        _execKeyboardEvent("keydown", 50, ()) |> ignore;
+
+      let triggerScaleHotKeyEvent = () =>
+        _execKeyboardEvent("keydown", 51, ()) |> ignore;
 
       beforeEach(() => {
         _prepareKeyboardEvent(~sandbox, ());
@@ -306,5 +322,57 @@ let _ =
           })
         );
       });
+
+      describe("test bind translation hot-key", () =>
+        test(
+          "key down 1, should set current transform gizmo type is translation",
+          () => {
+          StateEditorService.getState()
+          |> CurrentTransformGizmoSceneViewEditorService.mark(
+               SceneViewType.Scale,
+             )
+          |> StateEditorService.setState;
+
+          triggerTranslationHotKeyEvent();
+
+          StateEditorService.getState()
+          |> CurrentTransformGizmoSceneViewEditorService.getCurrentGizmoType
+          |> expect == SceneViewType.Translation;
+        })
+      );
+
+      describe("test bind rotation hot-key", () =>
+        test(
+          "key down 2, should set current transform gizmo type is rotation", () => {
+          StateEditorService.getState()
+          |> CurrentTransformGizmoSceneViewEditorService.mark(
+               SceneViewType.Scale,
+             )
+          |> StateEditorService.setState;
+
+          triggerRotationHotKeyEvent();
+
+          StateEditorService.getState()
+          |> CurrentTransformGizmoSceneViewEditorService.getCurrentGizmoType
+          |> expect == SceneViewType.Rotation;
+        })
+      );
+
+      describe("test bind scale hot-key", () =>
+        test(
+          "key down 3, should set current transform gizmo type is scale", () => {
+          StateEditorService.getState()
+          |> CurrentTransformGizmoSceneViewEditorService.mark(
+               SceneViewType.Translation,
+             )
+          |> StateEditorService.setState;
+
+          triggerScaleHotKeyEvent();
+
+          StateEditorService.getState()
+          |> CurrentTransformGizmoSceneViewEditorService.getCurrentGizmoType
+          |> expect == SceneViewType.Scale;
+        })
+      );
     });
   });

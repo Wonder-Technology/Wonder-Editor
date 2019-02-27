@@ -8,6 +8,24 @@
     },
     "hotkeys": [
         {
+            "name": "translation",
+            "values": [
+                "1"
+            ]
+        },
+        {
+            "name": "rotation",
+            "values": [
+                "2"
+            ]
+        },
+        {
+            "name": "scale",
+            "values": [
+                "3"
+            ]
+        },
+        {
             "name": "redo",
             "values": [
                 "ctrl+y",

@@ -42,7 +42,7 @@ module Method = {
       </div>
     </div>;
 
-  let _handleChangeCurrentTransformGizmoType = (dispatchFunc, type_) => {
+  let handleChangeCurrentTransformGizmoType = (dispatchFunc, type_) => {
     open SceneViewType;
 
     StateEditorService.getState()
@@ -93,17 +93,17 @@ module Method = {
             {
               type_: SceneViewType.Translation,
               onChangeFunc:
-                _handleChangeCurrentTransformGizmoType(dispatchFunc),
+                handleChangeCurrentTransformGizmoType(dispatchFunc),
             },
             {
               type_: SceneViewType.Rotation,
               onChangeFunc:
-                _handleChangeCurrentTransformGizmoType(dispatchFunc),
+                handleChangeCurrentTransformGizmoType(dispatchFunc),
             },
             {
               type_: SceneViewType.Scale,
               onChangeFunc:
-                _handleChangeCurrentTransformGizmoType(dispatchFunc),
+                handleChangeCurrentTransformGizmoType(dispatchFunc),
             },
           |]
           defaultType=(_getCurrentTransformGizmoType())
@@ -145,7 +145,7 @@ let render =
       dispatchFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
-  <article key="header" className="wonder-controller-component">
+  <article key="controller" className="wonder-controller-component">
     <div className="header-controller">
       <div className="controller-ambient">
         (Method.buildAmbientLightComponent(uiState, dispatchFunc))
