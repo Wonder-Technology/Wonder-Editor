@@ -9,9 +9,9 @@ let testImportPackageWithoutExport =
       ~fileName="Wpk",
       (),
     ) =>
-  Header.Method.importPackage(
+  HeaderEdit.Method.importPackage(
     (uiState, dispatchFunc),
-    (_ => (), Obj.magic(-1)),
+    _ => (),
     BaseEventTool.buildPackageFileEvent(fileName, wpkArrayBuffer),
   )
   |> then_(_ => testFunc());
@@ -139,9 +139,8 @@ let prepareFakeCanvas = sandbox => {
 
   let canvas = buildFakeCanvas(sandbox, buildBase64_2(), 0);
 
-  let createElementStub = BuildCanvasTool.documentToJsObj(
-                            BuildCanvasTool.document,
-                          )##createElement;
+  let createElementStub =
+    BuildCanvasTool.documentToJsObj(BuildCanvasTool.document)##createElement;
 
   createElementStub |> withOneArg("canvas") |> returns(canvas) |> ignore;
 

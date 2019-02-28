@@ -11,7 +11,7 @@ open Header;
 open Js.Promise;
 
 let _ =
-  describe("Header", () => {
+  describe("Header File", () => {
     let sandbox = getSandboxDefaultVal();
 
     beforeEach(() => {
@@ -26,7 +26,6 @@ let _ =
       describe("test Controls", () =>
         describe("test modal content", () => {
           open Header;
-          open HeaderType;
 
           let _test = setOSFunc => {
             setOSFunc();
@@ -37,10 +36,15 @@ let _ =
                 {name: "undo", values: [|"ctrl+z", "command+z"|]},
               |],
               (),
-            ) |> StateEditorService.setState;
+            )
+            |> StateEditorService.setState;
 
             HeaderTool.buildFileComponent(
-              ~state=HeaderTool.buildState(~isShowFileControlsModal=true, ()),
+              ~state=
+                HeaderTool.buildHeaderFileState(
+                  ~isShowControlsModal=true,
+                  (),
+                ),
               ~send=createEmptyStubWithJsObjSandbox(sandbox),
               (),
             )

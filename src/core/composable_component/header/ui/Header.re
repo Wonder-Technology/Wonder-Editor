@@ -1,14 +1,19 @@
-open HeaderType;
+type navType =
+  | None
+  | File
+  | Edit
+  | Publish
+  | Help;
 
 type state = {
   isSelectNav: bool,
   currentSelectNav: navType,
-  isShowFileControlsModal: bool,
-  isShowEditExportPackageModal: bool,
-  isShowEditExportSceneModal: bool,
-  isShowPublishLocalModal: bool,
-  isShowHelpAboutWonderModal: bool,
 };
+
+type action =
+  | HoverNav(navType)
+  | ToggleShowNav(navType)
+  | BlurNav;
 
 module Method = {
   let getWelComeUserKey = () => "welcomeUser";
@@ -18,323 +23,6 @@ module Method = {
 
      let addExtension = text =>
        AppExtensionUtils.setExtension(getStorageParentKey(), text); */
-
-  let importPackage = ((uiState, dispatchFunc), (send, blurNav), event) => {
-    StateHistoryService.getStateForHistory()
-    |> StoreHistoryUtils.storeHistoryStateWithNoCopyEngineState(uiState);
-
-    HeaderImportPackageUtils.importPackage(dispatchFunc, event)
-    |> Js.Promise.then_(_ => send(blurNav) |> Js.Promise.resolve)
-    |> Js.Promise.catch(e => {
-         let e = Obj.magic(e);
-         let editorState = StateEditorService.getState();
-
-         let message = e##message;
-         let stack = e##stack;
-
-         ConsoleUtils.error(
-           LogUtils.buildErrorMessage(
-             ~description={j|$message|j},
-             ~reason="",
-             ~solution={j||j},
-             ~params={j||j},
-           ),
-           editorState,
-         );
-         ConsoleUtils.logStack(stack) |> ignore;
-
-         AllHistoryService.handleUndo(uiState, dispatchFunc)
-         |> Js.Promise.resolve;
-       });
-  };
-
-  let _handleRedo = (uiState, dispatchFunc) =>
-    OperateStateHistoryService.hasRedoState(AllStateData.getHistoryState()) ?
-      AllHistoryService.redoHistoryState(uiState, dispatchFunc)
-      |> StateHistoryService.getAndRefreshStateForHistory :
-      ();
-
-  let _buildFileComponentSelectNav = (send, uiState, dispatchFunc) =>
-    <div className="item-content">
-      <div
-        className="content-section"
-        onClick={_e => AllHistoryService.handleUndo(uiState, dispatchFunc)}>
-        <span className="section-header"> {DomHelper.textEl("Undo")} </span>
-      </div>
-      <div
-        className="content-section"
-        onClick={_e => _handleRedo(uiState, dispatchFunc)}>
-        <span className="section-header"> {DomHelper.textEl("Redo")} </span>
-      </div>
-      <div
-        className="content-section"
-        onClick={_e => send(ShowFileControlsModal)}>
-        <span className="section-header">
-          {DomHelper.textEl("Controls")}
-        </span>
-      </div>
-    </div>;
-
-  let _handleHotKeyValueByOS = values => {
-    let isMac = DetectOSUtils.isMac();
-
-    values
-    |> Js.Array.filter(value =>
-         isMac ? true : !(value |> Js.String.includes("command"))
-       );
-  };
-
-  let _buildControlModalContent = () =>
-    HotKeysSettingEditorService.getHotKeys
-    |> StateLogicService.getEditorState
-    |> Js.Array.mapi(({name, values}: SettingType.hotKey, i) =>
-         <div key={i |> string_of_int} className="content-field">
-           <div className="field-title"> {DomHelper.textEl(name)} </div>
-           <div className="field-content">
-             {
-               DomHelper.textEl(
-                 _handleHotKeyValueByOS(values) |> Js.Array.joinWith("|"),
-               )
-             }
-           </div>
-         </div>
-       );
-
-  let buildFileComponent = (state, send, uiState, dispatchFunc) => {
-    let className =
-      state.currentSelectNav === File ?
-        "item-title item-active" : "item-title";
-
-    <div className="header-item">
-      <div className="component-item">
-        <span
-          className
-          onClick={e => send(ToggleShowNav(File))}
-          onMouseOver={e => send(HoverNav(File))}>
-          {DomHelper.textEl("File")}
-        </span>
-      </div>
-      {
-        state.currentSelectNav === File ?
-          _buildFileComponentSelectNav(send, uiState, dispatchFunc) :
-          ReasonReact.null
-      }
-      {
-        state.isShowFileControlsModal ?
-          <Modal
-            title="Controls"
-            closeFunc={() => send(HideFileControlsModal)}
-            content={_buildControlModalContent()}
-          /> :
-          ReasonReact.null
-      }
-    </div>;
-  };
-
-  let _buildEditComponentSelectNav = (send, uiState, dispatchFunc) =>
-    <div className="item-content item-edit">
-      <div className="content-section">
-        <input
-          className="section-fileLoad"
-          type_="file"
-          multiple=false
-          onChange={
-            e =>
-              importPackage((uiState, dispatchFunc), (send, BlurNav), e)
-              |> ignore
-          }
-        />
-        <span className="section-header">
-          {DomHelper.textEl("Import Package")}
-        </span>
-      </div>
-      <div
-        className="content-section"
-        onClick={_e => send(ShowEditExportPackageModal)}>
-        <span className="section-header">
-          {DomHelper.textEl("Export Package")}
-        </span>
-      </div>
-      <div
-        className="content-section"
-        onClick={_e => send(ShowEditExportSceneModal)}>
-        <span className="section-header">
-          {DomHelper.textEl("Export Scene")}
-        </span>
-      </div>
-    </div>;
-
-  let buildEditComponent = (state, send, uiState, dispatchFunc) => {
-    let className =
-      state.currentSelectNav === Edit ?
-        "item-title item-active" : "item-title";
-    <div className="header-item">
-      <div className="component-item">
-        <span
-          className
-          onClick={
-            e =>
-              state.isSelectNav ? send(BlurNav) : send(ToggleShowNav(Edit))
-          }
-          onMouseOver={e => send(HoverNav(Edit))}>
-          {DomHelper.textEl("Edit")}
-        </span>
-      </div>
-      {
-        state.currentSelectNav === Edit ?
-          _buildEditComponentSelectNav(send, uiState, dispatchFunc) :
-          ReasonReact.null
-      }
-      {
-        state.isShowEditExportPackageModal ?
-          <SingleInputModal
-            title="Export Package"
-            defaultValue="WonderPackage"
-            closeFunc={() => send(HideEditExportPackageModal)}
-            submitFunc={
-              packageName => {
-                HeaderExportPackageUtils.exportPackage(packageName);
-
-                send(HideEditExportPackageModal);
-              }
-            }
-          /> :
-          ReasonReact.null
-      }
-      {
-        state.isShowEditExportSceneModal ?
-          <SingleInputModal
-            title="Export Scene"
-            defaultValue="WonderScene"
-            closeFunc={() => send(HideEditExportSceneModal)}
-            submitFunc={
-              sceneName => {
-                HeaderExportSceneUtils.exportScene(sceneName);
-
-                send(HideEditExportSceneModal);
-              }
-            }
-          /> :
-          ReasonReact.null
-      }
-    </div>;
-  };
-
-  let _buildPublishComponentSelectNav = send =>
-    <div className="item-content">
-      <div
-        className="content-section"
-        onClick={_e => send(ShowPublishLocalModal)}>
-        <span className="section-header"> {DomHelper.textEl("Local")} </span>
-      </div>
-    </div>;
-
-  let buildPublishComponent = (state, send, uiState, dispatchFunc) => {
-    let className =
-      state.currentSelectNav === Publish ?
-        "item-title item-active" : "item-title";
-
-    <div className="header-item">
-      <div className="component-item">
-        <span
-          className
-          onClick={
-            e =>
-              state.isSelectNav ?
-                send(BlurNav) : send(ToggleShowNav(Publish))
-          }
-          onMouseOver={e => send(HoverNav(Publish))}>
-          {DomHelper.textEl("Publish")}
-        </span>
-      </div>
-      {
-        state.currentSelectNav === Publish ?
-          _buildPublishComponentSelectNav(send) : ReasonReact.null
-      }
-      {
-        state.isShowPublishLocalModal ?
-          <PublishLocalModal
-            title="Local"
-            defaultName="WonderLocal"
-            defaultUseWorker=false
-            closeFunc={() => send(HidePublishLocalModal)}
-            submitFunc={
-              (zipName, useWorker) => {
-                HeaderPublishLocalUtils.Publish.publishZip(
-                  (zipName, useWorker),
-                  WonderBsJszip.Zip.create,
-                  FetchUtils.fetch,
-                );
-
-                send(HidePublishLocalModal);
-              }
-            }
-          /> :
-          ReasonReact.null
-      }
-    </div>;
-  };
-
-  let _buildHelpComponentSelectNav = send =>
-    <div className="item-content item-help">
-      <div
-        className="content-section"
-        onClick={_e => send(ShowHelpAboutWonderModal)}>
-        <span className="section-header"> {DomHelper.textEl("About")} </span>
-      </div>
-    </div>;
-
-  let _getAboutWonderModalArray = () => [|
-    ("Version", Copyright.getVersion(), false, ""),
-    ("Website", "www.wonder-3d.com/", true, "http://www.wonder-3d.com/"),
-    ("Feedback", "forum.wonder-3d.com/", true, "http://forum.wonder-3d.com/"),
-    (
-      "Editor Github",
-      "github.com/Wonder-Technology/Wonder-Editor",
-      true,
-      "https://github.com/Wonder-Technology/Wonder-Editor",
-    ),
-    (
-      "Engine Github",
-      "github.com/Wonder-Technology/Wonder.js",
-      true,
-      "https://github.com/Wonder-Technology/Wonder.js",
-    ),
-  |];
-
-  let buildHelpComponent = (state, send, uiState, dispatchFunc) => {
-    let className =
-      state.currentSelectNav === Help ?
-        "item-title item-active" : "item-title";
-
-    <div className="header-item">
-      <div className="component-item">
-        <span
-          className
-          onClick={e => send(ToggleShowNav(Help))}
-          onMouseOver={e => send(HoverNav(Help))}>
-          {DomHelper.textEl("Help")}
-        </span>
-      </div>
-      {
-        state.currentSelectNav === Help ?
-          _buildHelpComponentSelectNav(send) : ReasonReact.null
-      }
-      {
-        state.isShowHelpAboutWonderModal ?
-          <Modal
-            title="About Wonder"
-            closeFunc={() => send(HideHelpAboutWonderModal)}
-            content={
-              ModalUtils.iterateModalArrayBuildComponent(
-                _getAboutWonderModalArray(),
-              )
-            }
-          /> :
-          ReasonReact.null
-      }
-    </div>;
-  };
 
   let isHeaderDom = target =>
     DomUtils.isSpecificDomChildrenHasTargetDom(
@@ -373,36 +61,6 @@ let reducer = (action, state) =>
     state.isSelectNav ?
       ReasonReact.Update({...state, currentSelectNav: selectNav}) :
       ReasonReact.NoUpdate
-
-  | ShowFileControlsModal =>
-    ReasonReact.Update({...state, isShowFileControlsModal: true})
-
-  | HideFileControlsModal =>
-    ReasonReact.Update({...state, isShowFileControlsModal: false})
-
-  | ShowHelpAboutWonderModal =>
-    ReasonReact.Update({...state, isShowHelpAboutWonderModal: true})
-
-  | HideHelpAboutWonderModal =>
-    ReasonReact.Update({...state, isShowHelpAboutWonderModal: false})
-
-  | ShowEditExportPackageModal =>
-    ReasonReact.Update({...state, isShowEditExportPackageModal: true})
-
-  | HideEditExportPackageModal =>
-    ReasonReact.Update({...state, isShowEditExportPackageModal: false})
-
-  | ShowEditExportSceneModal =>
-    ReasonReact.Update({...state, isShowEditExportSceneModal: true})
-
-  | ShowPublishLocalModal =>
-    ReasonReact.Update({...state, isShowPublishLocalModal: true})
-
-  | HidePublishLocalModal =>
-    ReasonReact.Update({...state, isShowPublishLocalModal: false})
-
-  | HideEditExportSceneModal =>
-    ReasonReact.Update({...state, isShowEditExportSceneModal: false})
   };
 
 let render =
@@ -413,31 +71,41 @@ let render =
     ) =>
   <article key="header" className="wonder-header-component">
     <div className="header-nav">
-      {Method.buildFileComponent(state, send, uiState, dispatchFunc)}
-      {Method.buildEditComponent(state, send, uiState, dispatchFunc)}
-      {Method.buildPublishComponent(state, send, uiState, dispatchFunc)}
-      {Method.buildHelpComponent(state, send, uiState, dispatchFunc)}
+      <HeaderFile
+        uiState
+        dispatchFunc
+        isFileNav={state.currentSelectNav === File}
+        toggleShowNavFunc={() => send(ToggleShowNav(File))}
+        hoverNavFunc={() => send(HoverNav(File))}
+      />
+      <HeaderEdit
+        uiState
+        dispatchFunc
+        isEditNav={state.currentSelectNav === Edit}
+        toggleShowNavFunc={() => send(ToggleShowNav(Edit))}
+        hoverNavFunc={() => send(HoverNav(Edit))}
+        closeNavFunc={() => send(BlurNav)}
+      />
+      <HeaderPublish
+        uiState
+        dispatchFunc
+        isPublishNav={state.currentSelectNav === Publish}
+        toggleShowNavFunc={() => send(ToggleShowNav(Publish))}
+        hoverNavFunc={() => send(HoverNav(Publish))}
+      />
+      <HeaderHelp
+        uiState
+        dispatchFunc
+        isHelpNav={state.currentSelectNav === Help}
+        toggleShowNavFunc={() => send(ToggleShowNav(Help))}
+        hoverNavFunc={() => send(HoverNav(Help))}
+      />
     </div>
   </article>;
 
 let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
-  initialState: () => {
-    isSelectNav: false,
-    currentSelectNav: None,
-    isShowFileControlsModal: false,
-    isShowHelpAboutWonderModal:
-      switch (LocalStorage.getValue(Method.getWelComeUserKey())) {
-      | None =>
-        LocalStorage.setValue(Method.getWelComeUserKey(), "ok");
-        true;
-
-      | Some(value) => false
-      },
-    isShowEditExportPackageModal: false,
-    isShowEditExportSceneModal: false,
-    isShowPublishLocalModal: false,
-  },
+  initialState: () => {isSelectNav: false, currentSelectNav: None},
   reducer,
   didMount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
     EventHelper.addEventListener(
