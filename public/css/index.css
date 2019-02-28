@@ -129,6 +129,7 @@ html, body {
       color: #000;
       height: 213px;
       overflow-y: auto;
+      overflow-x: hidden;
       width: 90%;
       margin-left: 5%;
       padding-top: 10px;
@@ -163,6 +164,8 @@ html, body {
           text-align: left;
           height: 26px;
           line-height: 26px; }
+          .wonder-modal .modal-item .modal-item-content .content-field .field-content a {
+            white-space: nowrap; }
     .wonder-modal .modal-item .modal-item-footer {
       height: 50px;
       border-bottom-left-radius: 5px;
@@ -274,6 +277,8 @@ html, body {
           text-align: center;
           height: 24px;
           line-height: 24px; }
+          .wonder-singleInput-modal .modal-item .modal-item-content .content-field .field-content a {
+            white-space: nowrap; }
     .wonder-singleInput-modal .modal-item .modal-item-footer {
       height: 50px;
       border-bottom-left-radius: 5px;

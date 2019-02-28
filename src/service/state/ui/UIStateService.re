@@ -1,4 +1,4 @@
-let _getDispathForTest = [%bs.raw
+let _getDispathForTest = [%raw
   dispatchFunc => {|
     if (typeof window.dispathFuncStub_wonder_editor !== "undefined") {
         return window.dispathFuncStub_wonder_editor;

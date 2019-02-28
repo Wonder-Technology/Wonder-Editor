@@ -13,7 +13,7 @@ open Js.Promise;
 /* by makeglb
    https://github.com/sbtron/makeglb
     */
-let _convert = [%bs.raw
+let _convert = [%raw
   (gltf, outerDataMap, getBaseNameFunc) => {|
         var gltfMimeTypes = {
             'image/png': ['png'],

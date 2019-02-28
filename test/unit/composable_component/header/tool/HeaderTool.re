@@ -82,7 +82,7 @@ let buildState =
       ~isShowEditExportPackageModal=false,
       ~isShowEditExportSceneModal=false,
       ~isShowPublishLocalModal=false,
-      ~isShowHelpVersionModal=false,
+      ~isShowHelpAboutWonderModal=false,
       (),
     )
     : Header.state => {
@@ -92,5 +92,5 @@ let buildState =
   isShowEditExportPackageModal,
   isShowEditExportSceneModal,
   isShowPublishLocalModal,
-  isShowHelpVersionModal,
+  isShowHelpAboutWonderModal,
 };

@@ -2,7 +2,7 @@ open DomHelper;
 
 open ExtensionParseType;
 
-let func = [%bs.raw
+let func = [%raw
   {| function(extensionText) {
     return (new Function(extensionText))();
   }

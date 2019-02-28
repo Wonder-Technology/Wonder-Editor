@@ -43,6 +43,7 @@
             color: #000;
             height: 213px;
             overflow-y: auto;
+            overflow-x: hidden;
             width: 90%;
             margin-left: 5%;
             padding-top: 10px;
@@ -65,6 +66,9 @@
                     text-align: left;
                     height: 26px;
                     line-height: 26px;
+                    a{
+                        white-space: nowrap;
+                    }
                 }
             }
         }

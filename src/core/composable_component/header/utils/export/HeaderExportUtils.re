@@ -24,7 +24,7 @@ let writeUint8ArrayToArrayBufferWithEmptyData =
   (resultByteOffset, uint8Array, dataView);
 };
 
-let download = [%bs.raw
+let download = [%raw
   (content, filename, mimeType) => {|
    var blob = null;
 

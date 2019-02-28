@@ -6,7 +6,7 @@ let _renderFooter = submitFunc =>
   | Some(submitFunc) =>
     <div className="modal-item-footer">
       <button className="footer-submit" onClick=(_e => submitFunc())>
-        (DomHelper.textEl("Submit"))
+        {DomHelper.textEl("Submit")}
       </button>
     </div>
   };
@@ -15,11 +15,11 @@ let render = (title, content, (closeFunc, submitFunc), _self) =>
   <article className="wonder-modal">
     <div className="modal-item">
       <div className="modal-item-header">
-        (DomHelper.textEl(title))
-        <img src="./public/img/close.png" onClick=(_e => closeFunc()) />
+        {DomHelper.textEl(title)}
+        <img src="./public/img/close.png" onClick={_e => closeFunc()} />
       </div>
-      <div className="modal-item-content"> (ReasonReact.array(content)) </div>
-      (_renderFooter(submitFunc))
+      <div className="modal-item-content"> {ReasonReact.array(content)} </div>
+      {_renderFooter(submitFunc)}
     </div>
   </article>;
 

@@ -86,7 +86,7 @@ let _handleEngineState = engineState => {
   |> StateEngineService.setState;
 };
 
-let _hideLoading = [%bs.raw
+let _hideLoading = [%raw
   loadingDomId => {|
                         document.querySelector("#" + loadingDomId).style.display = "none";
   |}

@@ -7,10 +7,12 @@ type state = {
   isShowEditExportPackageModal: bool,
   isShowEditExportSceneModal: bool,
   isShowPublishLocalModal: bool,
-  isShowHelpVersionModal: bool,
+  isShowHelpAboutWonderModal: bool,
 };
 
 module Method = {
+  let getWelComeUserKey = () => "welcomeUser";
+
   /* let getStorageParentKey = () => "userExtension";
      /* todo use extension names instead of the name */
 
@@ -277,10 +279,28 @@ module Method = {
     <div className="item-content item-help">
       <div
         className="content-section"
-        onClick={_e => send(ShowHelpVersionModal)}>
+        onClick={_e => send(ShowHelpAboutWonderModal)}>
         <span className="section-header"> {DomHelper.textEl("About")} </span>
       </div>
     </div>;
+
+  let _getAboutWonderModalArray = () => [|
+    ("Version", Copyright.getVersion(), false, ""),
+    ("Website", "www.wonder-3d.com/", true, "http://www.wonder-3d.com/"),
+    ("Feedback", "forum.wonder-3d.com/", true, "http://forum.wonder-3d.com/"),
+    (
+      "Editor Github",
+      "github.com/Wonder-Technology/Wonder-Editor",
+      true,
+      "https://github.com/Wonder-Technology/Wonder-Editor",
+    ),
+    (
+      "Engine Github",
+      "github.com/Wonder-Technology/Wonder.js",
+      true,
+      "https://github.com/Wonder-Technology/Wonder.js",
+    ),
+  |];
 
   let buildHelpComponent = (state, send, uiState, dispatchFunc) => {
     let className =
@@ -301,64 +321,15 @@ module Method = {
           _buildHelpComponentSelectNav(send) : ReasonReact.null
       }
       {
-        state.isShowHelpVersionModal ?
+        state.isShowHelpAboutWonderModal ?
           <Modal
             title="About Wonder"
-            closeFunc={() => send(HideHelpVersionModal)}
-            content=[|
-              <div className="content-field" key="aboutWonder">
-                <div className="field-title">
-                  {DomHelper.textEl("Version")}
-                </div>
-                <div className="field-content">
-                  {DomHelper.textEl(Copyright.getVersion())}
-                </div>
-              </div>,
-              <div className="content-field" key="aboutWonder">
-                <div className="field-title">
-                  {DomHelper.textEl("Website")}
-                </div>
-                <div className="field-content">
-                  <a href="http://www.wonder-3d.com/" target="view_window">
-                    {DomHelper.textEl("click this page")}
-                  </a>
-                </div>
-              </div>,
-              <div className="content-field" key="aboutWonder">
-                <div className="field-title">
-                  {DomHelper.textEl("Feedback")}
-                </div>
-                <div className="field-content">
-                  <a href="http://forum.wonder-3d.com/" target="view_window">
-                    {DomHelper.textEl("click this page")}
-                  </a>
-                </div>
-              </div>,
-              <div className="content-field" key="aboutWonder">
-                <div className="field-title">
-                  {DomHelper.textEl("Editor Github")}
-                </div>
-                <div className="field-content">
-                  <a
-                    href="https://github.com/Wonder-Technology/Wonder-Editor"
-                    target="view_window">
-                    {DomHelper.textEl("click this page")}
-                  </a>
-                </div>
-              </div>,
-              <div className="content-field" key="aboutWonder">
-                <div className="field-title">
-                  {DomHelper.textEl("Engine Github")}
-                </div>
-                <div className="field-content">
-                  <a
-                    href="https://github.com/Wonder-Technology/Wonder.js"
-                    target="view_window">
-                    {DomHelper.textEl("click this page")}
-                  </a>
-                </div>
-              </div>,
-            |]
+            closeFunc={() => send(HideHelpAboutWonderModal)}
+            content={
+              ModalUtils.iterateModalArrayBuildComponent(
+                _getAboutWonderModalArray(),
+              )
+            }
           /> :
           ReasonReact.null
       }
@@ -409,11 +380,11 @@ let reducer = (action, state) =>
   | HideFileControlsModal =>
     ReasonReact.Update({...state, isShowFileControlsModal: false})
 
-  | ShowHelpVersionModal =>
-    ReasonReact.Update({...state, isShowHelpVersionModal: true})
+  | ShowHelpAboutWonderModal =>
+    ReasonReact.Update({...state, isShowHelpAboutWonderModal: true})
 
-  | HideHelpVersionModal =>
-    ReasonReact.Update({...state, isShowHelpVersionModal: false})
+  | HideHelpAboutWonderModal =>
+    ReasonReact.Update({...state, isShowHelpAboutWonderModal: false})
 
   | ShowEditExportPackageModal =>
     ReasonReact.Update({...state, isShowEditExportPackageModal: true})
@@ -455,7 +426,14 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
     isSelectNav: false,
     currentSelectNav: None,
     isShowFileControlsModal: false,
-    isShowHelpVersionModal: false,
+    isShowHelpAboutWonderModal:
+      switch (LocalStorage.getValue(Method.getWelComeUserKey())) {
+      | None =>
+        LocalStorage.setValue(Method.getWelComeUserKey(), "ok");
+        true;
+
+      | Some(value) => false
+      },
     isShowEditExportPackageModal: false,
     isShowEditExportSceneModal: false,
     isShowPublishLocalModal: false,

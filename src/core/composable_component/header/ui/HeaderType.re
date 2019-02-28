@@ -17,5 +17,5 @@ type action =
   | HideEditExportSceneModal
   | ShowPublishLocalModal
   | HidePublishLocalModal
-  | ShowHelpVersionModal
-  | HideHelpVersionModal;
+  | ShowHelpAboutWonderModal
+  | HideHelpAboutWonderModal;

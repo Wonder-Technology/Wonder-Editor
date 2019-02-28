@@ -1,5 +1,5 @@
-let isString = [%bs.raw
-  str => {|
-    return Object.prototype.toString.call(str).toLowerCase() === "[object string]";
+let isString = [%raw
+  param => {|
+    return Object.prototype.toString.call(param).toLowerCase() === "[object string]";
     |}
 ];
