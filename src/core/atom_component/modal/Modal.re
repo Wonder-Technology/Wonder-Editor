@@ -1,8 +1,13 @@
 let component = ReasonReact.statelessComponent("Modal");
 
-let _renderFooter = submitFunc =>
+let _renderFooter = (closeFunc, submitFunc) =>
   switch (submitFunc) {
-  | None => ReasonReact.null
+  | None =>
+    <div className="modal-item-footer">
+      <button className="footer-submit" onClick=(_e => closeFunc())>
+        {DomHelper.textEl("OK")}
+      </button>
+    </div>
   | Some(submitFunc) =>
     <div className="modal-item-footer">
       <button className="footer-submit" onClick=(_e => submitFunc())>
@@ -19,15 +24,15 @@ let render = (title, content, (closeFunc, submitFunc), _self) =>
         <img src="./public/img/close.png" onClick={_e => closeFunc()} />
       </div>
       <div className="modal-item-content"> {ReasonReact.array(content)} </div>
-      {_renderFooter(submitFunc)}
+      {_renderFooter(closeFunc, submitFunc)}
     </div>
   </article>;
 
 let make =
     (
-      ~closeFunc,
       ~title,
       ~content,
+      ~closeFunc,
       ~submitFunc: option(unit => unit)=?,
       _children,
     ) => {

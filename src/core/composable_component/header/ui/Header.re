@@ -16,8 +16,6 @@ type action =
   | BlurNav;
 
 module Method = {
-  let getWelComeUserKey = () => "welcomeUser";
-
   /* let getStorageParentKey = () => "userExtension";
      /* todo use extension names instead of the name */
 
@@ -100,6 +98,7 @@ let render =
         toggleShowNavFunc={() => send(ToggleShowNav(Help))}
         hoverNavFunc={() => send(HoverNav(Help))}
       />
+      <HeaderNotice uiState dispatchFunc />
     </div>
   </article>;
 
