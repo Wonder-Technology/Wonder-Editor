@@ -7,7 +7,10 @@
   "transformIgnorePatterns": [
     "<rootDir>/node_modules/(?!(.*bs-)|reason-react|immutable-re|wonder-commonlib|wonder.js|wonder-log|wonder-most-animation-frame|wonder-webgl|wonder-imgui)"
   ],
-  "setupTestFrameworkScriptFile": "<rootDir>/test/helper/jest/specHelper.js",
+  "snapshotResolver": "<rootDir>/customSnapshotResolver.js",
+  "setupFilesAfterEnv": [
+    "<rootDir>/test/helper/jest/specHelper.js"
+  ],
   "notify": false,
   "verbose": true,
   "collectCoverage": true,
