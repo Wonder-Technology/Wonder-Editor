@@ -49,7 +49,7 @@
     "<rootDir>/lib/es6_global/src/module/"
   ],
   "collectCoverageFrom": [
-    "lib/es6_global/src/**/*.{js}",
+    "lib/es6_global/src/**/*.js",
     "!**/node_modules/**",
     "!**/vendor/**"
   ],
