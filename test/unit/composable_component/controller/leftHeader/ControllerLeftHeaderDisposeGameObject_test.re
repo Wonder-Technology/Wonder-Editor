@@ -14,7 +14,7 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test dispose gameObject", () => {
-      beforeEach(() =>
+      beforeEach(() => {
         MainEditorSceneTool.initStateWithJob(
           ~sandbox,
           ~noWorkerJobRecord=
@@ -35,8 +35,14 @@ let _ =
               (),
             ),
           (),
-        )
-      );
+        );
+
+        LocalStorage.setValue(HeaderNotice.Method.getWelComeUserKey(), "ok");
+        LocalStorage.setValue(
+          HeaderNotice.Method.getVersionKey(),
+          Copyright.getVersion(),
+        );
+      });
 
       describe("gameObject should remove from engineState", () =>
         describe("test dispose current gameObject", () => {
@@ -123,7 +129,6 @@ let _ =
 
                            let glShaderSourceCallCountBeforeDispose =
                              glShaderSource |> getCallCount;
-
 
                            MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
 

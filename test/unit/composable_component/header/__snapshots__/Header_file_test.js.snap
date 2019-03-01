@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header test File test Controls test modal content else, shouldn't show command hot keys 1`] = `
+exports[`Header File test File test Controls test modal content else, shouldn't show command hot keys 1`] = `
 <div
   className="header-item"
 >
@@ -96,12 +96,22 @@ exports[`Header test File test Controls test modal content else, shouldn't show 
           </div>
         </div>
       </div>
+      <div
+        className="modal-item-footer"
+      >
+        <button
+          className="footer-submit"
+          onClick={[Function]}
+        >
+          OK
+        </button>
+      </div>
     </div>
   </article>
 </div>
 `;
 
-exports[`Header test File test Controls test modal content if os is mac, should show command hot keys 1`] = `
+exports[`Header File test File test Controls test modal content if os is mac, should show command hot keys 1`] = `
 <div
   className="header-item"
 >
@@ -196,6 +206,16 @@ exports[`Header test File test Controls test modal content if os is mac, should 
             ctrl+z|command+z
           </div>
         </div>
+      </div>
+      <div
+        className="modal-item-footer"
+      >
+        <button
+          className="footer-submit"
+          onClick={[Function]}
+        >
+          OK
+        </button>
       </div>
     </div>
   </article>

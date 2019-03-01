@@ -67,6 +67,9 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
         </span>
       </div>
     </div>
+    <div
+      className="header-item"
+    />
   </div>
 </article>
 `;
@@ -138,6 +141,9 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
         </span>
       </div>
     </div>
+    <div
+      className="header-item"
+    />
   </div>
 </article>
 `;
@@ -209,6 +215,9 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
         </span>
       </div>
     </div>
+    <div
+      className="header-item"
+    />
   </div>
 </article>
 `;
@@ -280,6 +289,9 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
         </span>
       </div>
     </div>
+    <div
+      className="header-item"
+    />
   </div>
 </article>
 `;
@@ -351,6 +363,9 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
         </span>
       </div>
     </div>
+    <div
+      className="header-item"
+    />
   </div>
 </article>
 `;

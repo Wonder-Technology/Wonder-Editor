@@ -176,6 +176,9 @@ exports[`controller leftHeader dispose gameObject test scene tree if not set cur
         </span>
       </div>
     </div>
+    <div
+      className="header-item"
+    />
   </div>
 </article>
 `;
@@ -247,6 +250,9 @@ exports[`controller leftHeader dispose gameObject test scene tree if set current
         </span>
       </div>
     </div>
+    <div
+      className="header-item"
+    />
   </div>
 </article>
 `;

@@ -13,19 +13,19 @@ module Method = {
   let getVersionKey = () => "version";
 
   let buildWelComeUserModalContent = () => [|
-    <div className="content-text">
+    <div className="content-text" key="text1">
       {
         DomHelper.textEl(
-          {js| 欢迎来到Wonder，你可以通过访问我们的|js},
+          {j| 欢迎来到Wonder，你可以通过访问我们的|j},
         )
       }
       <a href="http://www.wonder-3d.com/" target="view_window">
         {DomHelper.textEl({j|官方网站|j})}
       </a>
-      {DomHelper.textEl({js|, 查看我们能为你提供什么服务|js})}
+      {DomHelper.textEl({j| , 查看我们能为你提供什么服务|j})}
     </div>,
-    <div className="content-white" />,
-    <div className="content-text">
+    <div className="content-white" key="text2" />,
+    <div className="content-text" key="text3">
       {DomHelper.textEl({j|Wonder 科技为你服务|j})}
     </div>,
   |];
@@ -71,7 +71,7 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
         LocalStorage.setValue(Method.getWelComeUserKey(), "ok");
         true;
 
-      | Some(value) => false
+      | Some(value) => value !== "ok"
       },
     isShowVersionUpgradeModal:
       switch (LocalStorage.getValue(Method.getVersionKey())) {

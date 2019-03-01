@@ -36,6 +36,12 @@ let _ =
 
       MainEditorSceneTool.initState(~sandbox, ());
 
+      LocalStorage.setValue(HeaderNotice.Method.getWelComeUserKey(), "ok");
+      LocalStorage.setValue(
+        HeaderNotice.Method.getVersionKey(),
+        Copyright.getVersion(),
+      );
+
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
