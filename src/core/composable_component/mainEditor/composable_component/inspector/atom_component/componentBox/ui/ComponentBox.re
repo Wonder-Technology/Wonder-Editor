@@ -9,9 +9,7 @@ type action =
 module Method = {
   let removeComponent = AddableComponentRemoveComponentEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let changeShowComponentByType = ((uiState, dispatchFunc), type_, value) =>{
-    WonderLog.Log.print(dispatchFunc) |> ignore;
-
+  let changeShowComponentByType = ((uiState, dispatchFunc), type_, value) =>
     dispatchFunc(
       AppStore.InspectorAction(
         SetShowComponent(
@@ -20,7 +18,6 @@ module Method = {
         ),
       ),
     );
-  }
 };
 
 let component = ReasonReact.reducerComponent("ComponentBox");
@@ -49,24 +46,24 @@ let render =
   <article className="componentBox-component">
     <div className="header">
       <div
-        className="header-triangle" onClick=(_e => send(ToggleShowComponent))>
-        <span className=state.triangleDirection />
+        className="header-triangle" onClick={_e => send(ToggleShowComponent)}>
+        <span className={state.triangleDirection} />
       </div>
-      <div className="header-title"> (DomHelper.textEl(header)) </div>
-      (
+      <div className="header-title"> {DomHelper.textEl(header)} </div>
+      {
         isDisposable ?
           <div className="header-close">
             <img
               src="./public/img/close.png"
-              onClick=(
+              onClick={
                 _e => Method.removeComponent(reduxTuple, gameObject, type_)
-              )
+              }
             />
           </div> :
           ReasonReact.null
-      )
+      }
     </div>
-    (state.isShowComponent ? gameObjectUIComponent : ReasonReact.null)
+    {state.isShowComponent ? gameObjectUIComponent : ReasonReact.null}
   </article>;
 
 let make =
