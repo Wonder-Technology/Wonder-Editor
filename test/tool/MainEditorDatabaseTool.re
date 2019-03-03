@@ -8,14 +8,4 @@ let buildFakeLocalStorage = () => {
   window##_localStorage #= fakeLocalStorage;
 };
 
-let removeFakeLocalStorageItem = key => {
-  let localStorage =
-    WonderCommonlib.MutableHashMapService.deleteVal(
-      key,
-      window##localStorage,
-    );
-
-  window##localStorage #= localStorage;
-};
-
 let getExtensionTestKey = () => "databaseTest";

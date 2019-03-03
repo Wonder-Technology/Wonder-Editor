@@ -46,6 +46,10 @@
     "<rootDir>/lib/es6_global/src/core/.+/PublishLocalModal.js",
     "<rootDir>/lib/es6_global/src/core/.+/Canvas.js",
     "<rootDir>/lib/es6_global/src/core/.+/SingleInputModal.js",
+    "<rootDir>/lib/es6_global/src/core/.+/HeaderFile.js",
+    "<rootDir>/lib/es6_global/src/core/.+/HeaderEdit.js",
+    "<rootDir>/lib/es6_global/src/core/.+/HeaderPublish.js",
+    "<rootDir>/lib/es6_global/src/core/.+/HeaderHelp.js",
     "<rootDir>/lib/es6_global/src/module/"
   ],
   "collectCoverageFrom": [
