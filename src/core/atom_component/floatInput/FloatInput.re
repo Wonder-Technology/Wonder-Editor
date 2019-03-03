@@ -227,7 +227,7 @@ module Method = {
     <div className="item-content">
       <input
         className="input-component float-input"
-        _type="text"
+        type_="text"
         value=(
           switch (state.inputValue) {
           | None => ""

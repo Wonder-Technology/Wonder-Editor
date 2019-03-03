@@ -64,9 +64,10 @@ let _ =
 
         errorObj##captureStackTrace |> expect |> toCalledOnce;
       });
+      
 
       describe("limit showed messages' count", () => {
-        let _log = count => {};
+        let _log = count => ();
 
         test("limit max 99", () => {
           WonderCommonlib.ArrayService.range(0, 100)

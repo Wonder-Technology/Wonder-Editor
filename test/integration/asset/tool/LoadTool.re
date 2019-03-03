@@ -1,5 +1,5 @@
 let buildFakeLoadImage = [%raw
-  () => {|
+  param => {|
         window.loadImageBase64_wonder = function(base64Str, resolve, reject){
             resolve(base64Str)
         }
@@ -40,10 +40,8 @@ let buildFakeTextDecoder = [%raw
   |}
 ];
 
-let buildFakeTextEncoder =
-  [@bs]
-  [%raw
-    () => {|
+let buildFakeTextEncoder = [%raw
+  param => {|
        var TextEncoder = function(){
        };
 
@@ -55,7 +53,7 @@ let buildFakeTextEncoder =
 
        window.TextEncoder = TextEncoder;
    |}
-  ];
+];
 
 let buildFakeURL = [%raw
   sandbox => {|
@@ -77,7 +75,7 @@ let buildFakeURL = [%raw
 ];
 
 let buildFakeAtob = [%raw
-  () => {|
+  param => {|
     window.atob = (a) => {
         return new Buffer(a, 'base64').toString('binary');
     }
@@ -85,7 +83,7 @@ let buildFakeAtob = [%raw
 ];
 
 let buildFakeBtoa = [%raw
-  () => {|
+  param => {|
     window.btoa = (b) => {
         return new Buffer(b).toString('base64');
     }
@@ -93,7 +91,7 @@ let buildFakeBtoa = [%raw
 ];
 
 let buildFakeBlob = [%raw
-  (.) => {|
+  param => {|
 var Blob = function(arrayBufferArr, param){
 if( typeof window.blobData_wonder_forTest === "undefined"){
 window.blobData_wonder_forTest = [
@@ -110,10 +108,12 @@ window.Blob = Blob;
 |}
 ];
 
-let getBlobData = [%raw (.) => {|
+let getBlobData = [%raw param => {|
 return window.blobData_wonder_forTest;
 |}];
 
-let clearBlobData = [%raw (.) => {|
+let clearBlobData = [%raw
+  param => {|
 delete window.blobData_wonder_forTest;
-|}];
+|}
+];

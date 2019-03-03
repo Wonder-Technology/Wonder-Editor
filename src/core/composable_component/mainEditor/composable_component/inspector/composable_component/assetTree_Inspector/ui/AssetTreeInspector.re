@@ -34,7 +34,7 @@ module Method = {
         <div className="item-content">
           <input
             className="input-component float-input"
-            _type="text"
+            type_="text"
             value=state.inputValue
             disabled=(
               NodeAssetService.isIdEqual(
@@ -94,7 +94,7 @@ module Method = {
         <div className="item-content">
           <input
             className="input-component float-input"
-            _type="text"
+            type_="text"
             value=state.inputValue
             onChange=(_e => send(change(_e)))
             onBlur=(_e => send(Blur))

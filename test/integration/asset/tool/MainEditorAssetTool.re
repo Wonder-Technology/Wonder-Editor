@@ -8,7 +8,7 @@ open NodeAssetType;
 
 let buildFakeFileReader = [%bs.raw
   {|
-     function (){
+     function (param){
        window.FileReader = function(){
          this.result = null;
          this.onload = null;
@@ -31,7 +31,7 @@ let buildFakeFileReader = [%bs.raw
 
 let buildFakeImage = [%bs.raw
   {|
-     function (){
+     function (param){
        window.Image = function(){
          this.src = null;
          this.onload = null;

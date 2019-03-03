@@ -151,7 +151,7 @@ let _ =
             EventTool.triggerDomEvent(
               "contextmenu",
               EventTool.getBody(),
-              MouseEventTool.buildMouseEvent(
+              MouseEventTool.buildMouseDomEvent(
                 ~preventDefaultFunc,
                 ~stopPropagationFunc,
                 (),
@@ -188,7 +188,7 @@ let _ =
             EventTool.triggerDomEvent(
               "mousewheel",
               EventTool.getBody(),
-              MouseEventTool.buildMouseEvent(~pageX, ~pageY, ~target, ()),
+              MouseEventTool.buildMouseDomEvent(~pageX, ~pageY, ~target, ()),
             );
             EventTool.restore();
 
@@ -230,7 +230,7 @@ let _ =
             EventTool.triggerDomEvent(
               "mousedown",
               EventTool.getBody(),
-              MouseEventTool.buildMouseEvent(~pageX, ~pageY, ~target, ()),
+              MouseEventTool.buildMouseDomEvent(~pageX, ~pageY, ~target, ()),
             );
             EventTool.restore();
 
@@ -421,7 +421,7 @@ let _ =
             EventTool.triggerDomEvent(
               "mousedown",
               EventTool.getBody(),
-              MouseEventTool.buildMouseEvent(
+              MouseEventTool.buildMouseDomEvent(
                 ~pageX=clickPageX,
                 ~pageY=clickPageY,
                 (),
@@ -430,7 +430,7 @@ let _ =
             EventTool.triggerDomEvent(
               "mousemove",
               EventTool.getBody(),
-              MouseEventTool.buildMouseEvent(
+              MouseEventTool.buildMouseDomEvent(
                 ~pageX=movePageX,
                 ~pageY=movePageY,
                 (),
@@ -553,7 +553,7 @@ let _ =
             EventTool.triggerDomEvent(
               "mousedown",
               EventTool.getBody(),
-              MouseEventTool.buildMouseEvent(
+              MouseEventTool.buildMouseDomEvent(
                 ~pageX=clickPageX,
                 ~pageY=clickPageY,
                 (),
@@ -562,7 +562,7 @@ let _ =
             EventTool.triggerDomEvent(
               "mousemove",
               EventTool.getBody(),
-              MouseEventTool.buildMouseEvent(
+              MouseEventTool.buildMouseDomEvent(
                 ~pageX=movePageX,
                 ~pageY=movePageY,
                 (),
@@ -571,7 +571,7 @@ let _ =
             EventTool.triggerDomEvent(
               "mouseup",
               EventTool.getBody(),
-              MouseEventTool.buildMouseEvent(
+              MouseEventTool.buildMouseDomEvent(
                 ~pageX=dropPageX,
                 ~pageY=dropPageY,
                 (),
@@ -642,7 +642,7 @@ let _ =
             EventTool.triggerDomEvent(
               "mousedown",
               EventTool.getBody(),
-              MouseEventTool.buildMouseEvent(
+              MouseEventTool.buildMouseDomEvent(
                 ~pageX=clickPageX,
                 ~pageY=clickPageY,
                 (),
@@ -651,7 +651,7 @@ let _ =
             EventTool.triggerDomEvent(
               {j|$keyboardDomEventName|j},
               EventTool.getKeyboardEventBindedDom(),
-              KeyboardEventTool.buildKeyboardEvent(),
+              KeyboardEventTool.buildKeyboardDomEvent(),
             );
             EventTool.restore();
 
@@ -858,12 +858,12 @@ let _ =
           EventTool.triggerDomEvent(
             "mousedown",
             EventTool.getBody(),
-            MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+            MouseEventTool.buildMouseDomEvent(~pageX, ~pageY, ()),
           );
           EventTool.triggerDomEvent(
             "mousewheel",
             EventTool.getBody(),
-            MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+            MouseEventTool.buildMouseDomEvent(~pageX, ~pageY, ()),
           );
           EventTool.restore();
 
@@ -1036,17 +1036,17 @@ let _ =
         EventTool.triggerDomEvent(
           "mousedown",
           EventTool.getBody(),
-          MouseEventTool.buildMouseEvent(~pageX=10, ~pageY=20, ()),
+          MouseEventTool.buildMouseDomEvent(~pageX=10, ~pageY=20, ()),
         );
         EventTool.triggerDomEvent(
           "mousewheel",
           EventTool.getBody(),
-          MouseEventTool.buildMouseEvent(~pageX=10, ~pageY=20, ()),
+          MouseEventTool.buildMouseDomEvent(~pageX=10, ~pageY=20, ()),
         );
         EventTool.triggerDomEvent(
           "mousewheel",
           EventTool.getBody(),
-          MouseEventTool.buildMouseEvent(),
+          MouseEventTool.buildMouseDomEvent(),
         );
         EventTool.restore();
 

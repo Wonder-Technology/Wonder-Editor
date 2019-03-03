@@ -56,7 +56,7 @@ let _ =
     };
 
     let _resize = sandbox => {
-      let dispatchFunc = createEmptyStubWithJsObjSandbox(sandbox);
+      let dispatchFunc = SinonTool.createOneLengthStub(sandbox^);
 
       MainEditor.Method.resizeCanvasAndViewPort(dispatchFunc);
 

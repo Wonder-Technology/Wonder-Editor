@@ -111,70 +111,44 @@ exports[`controller leftHeader dispose gameObject test scene tree dispose curren
 
 exports[`controller leftHeader dispose gameObject test scene tree if not set currentSceneTreeNode, disposed button's disabled props should == true 1`] = `
 <article
-  className="wonder-header-component"
+  className="wonder-left-components-header"
 >
   <div
-    className="header-nav"
+    className="sceneTree-header-item"
+    onClick={[Function]}
   >
     <div
-      className="header-item"
+      className="item-canBeClick"
     >
-      <div
-        className="component-item"
-      >
-        <span
-          className="item-title"
-          onClick={[Function]}
-          onMouseOver={[Function]}
-        >
-          File
-        </span>
-      </div>
+      <img
+        src="./public/img/add.png"
+      />
     </div>
+  </div>
+  <div
+    className="sceneTree-header-item"
+    onClick={[Function]}
+    title="remove"
+  >
     <div
-      className="header-item"
+      className="item-canBeClick"
     >
-      <div
-        className="component-item"
-      >
-        <span
-          className="item-title"
-          onClick={[Function]}
-          onMouseOver={[Function]}
-        >
-          Edit
-        </span>
-      </div>
+      <img
+        src="./public/img/notRemove.png"
+      />
     </div>
+  </div>
+  <div
+    className="sceneTree-header-item"
+    onClick={[Function]}
+    title="clone"
+  >
     <div
-      className="header-item"
+      className="item-canBeClick"
     >
-      <div
-        className="component-item"
-      >
-        <span
-          className="item-title"
-          onClick={[Function]}
-          onMouseOver={[Function]}
-        >
-          Publish
-        </span>
-      </div>
-    </div>
-    <div
-      className="header-item"
-    >
-      <div
-        className="component-item"
-      >
-        <span
-          className="item-title"
-          onClick={[Function]}
-          onMouseOver={[Function]}
-        >
-          Help
-        </span>
-      </div>
+      <img
+        src="./public/img/notClone.png"
+      />
     </div>
   </div>
 </article>
@@ -182,70 +156,44 @@ exports[`controller leftHeader dispose gameObject test scene tree if not set cur
 
 exports[`controller leftHeader dispose gameObject test scene tree if set currentSceneTreeNode, disposed button's disabled props should == false 1`] = `
 <article
-  className="wonder-header-component"
+  className="wonder-left-components-header"
 >
   <div
-    className="header-nav"
+    className="sceneTree-header-item"
+    onClick={[Function]}
   >
     <div
-      className="header-item"
+      className="item-canBeClick"
     >
-      <div
-        className="component-item"
-      >
-        <span
-          className="item-title"
-          onClick={[Function]}
-          onMouseOver={[Function]}
-        >
-          File
-        </span>
-      </div>
+      <img
+        src="./public/img/add.png"
+      />
     </div>
+  </div>
+  <div
+    className="sceneTree-header-item"
+    onClick={[Function]}
+    title="remove"
+  >
     <div
-      className="header-item"
+      className="item-notBeClick"
     >
-      <div
-        className="component-item"
-      >
-        <span
-          className="item-title"
-          onClick={[Function]}
-          onMouseOver={[Function]}
-        >
-          Edit
-        </span>
-      </div>
+      <img
+        src="./public/img/remove.png"
+      />
     </div>
+  </div>
+  <div
+    className="sceneTree-header-item"
+    onClick={[Function]}
+    title="clone"
+  >
     <div
-      className="header-item"
+      className="item-notBeClick"
     >
-      <div
-        className="component-item"
-      >
-        <span
-          className="item-title"
-          onClick={[Function]}
-          onMouseOver={[Function]}
-        >
-          Publish
-        </span>
-      </div>
-    </div>
-    <div
-      className="header-item"
-    >
-      <div
-        className="component-item"
-      >
-        <span
-          className="item-title"
-          onClick={[Function]}
-          onMouseOver={[Function]}
-        >
-          Help
-        </span>
-      </div>
+      <img
+        src="./public/img/clone.png"
+      />
     </div>
   </div>
 </article>

@@ -57,3 +57,13 @@ let setPosition = (gameObject, pos, engineState) =>
     pos,
     engineState,
   );
+
+let setLocalRotation = (gameObject, localRotation, engineState) =>
+  TransformEngineService.setLocalRotation(
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      gameObject,
+      engineState,
+    ),
+    localRotation,
+    engineState,
+  );

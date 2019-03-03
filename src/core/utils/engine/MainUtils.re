@@ -86,7 +86,7 @@ let _handleEngineState = engineState => {
   |> StateEngineService.setState;
 };
 
-let _hideLoading = [%bs.raw
+let _hideLoading = [%raw
   loadingDomId => {|
                         document.querySelector("#" + loadingDomId).style.display = "none";
   |}
@@ -97,8 +97,8 @@ let init = () =>
     _getLoadData()
     |> WonderBsMost.Most.flatMap(engineState =>
          LoaderManagerEngineService.loadIMGUIAsset(
-           "./public/font/Lato-Regular-64.fnt",
-           "./public/font/lato.png",
+           "./public/font/empty.fnt",
+           "./public/font/empty.png",
            Js.Nullable.return([|
              ("./public/img/camera.png", "camera"),
              ("./public/img/sun.png", "directionLight"),

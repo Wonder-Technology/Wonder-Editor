@@ -1,20 +1,20 @@
 open DomHelperType;
 
-[@bs.val] external document : document = "";
+[@bs.val] external document: document = "";
 
 [@bs.val] [@bs.scope "document"]
-external createElement : string => document = "createElement";
+external createElement: string => document = "createElement";
 
 [@bs.val] [@bs.scope "document"]
-external getElementById : string => Dom.element = "getElementById";
+external getElementById: string => Dom.element = "getElementById";
 
 [@bs.val] [@bs.scope "document"]
-external getElementsByClassName : string => array(Dom.element) =
+external getElementsByClassName: string => array(Dom.element) =
   "getElementsByClassName";
 
-[@bs.val] external alert : string => unit = "alert";
+[@bs.val] external alert: string => unit = "alert";
 
-let getBody = [%raw () => "
+let getBody = [%raw param => "
   return document.body
 "];
 
@@ -22,7 +22,7 @@ let getAttribute = [%raw (dom, prop) => "
   return dom.getAttribute(prop);
 "];
 
-let apply = [%bs.raw
+let apply = [%raw
   {|
     function(dataArray, func) {
       return func.apply(null, dataArray);
@@ -39,7 +39,7 @@ let deleteKeyInMap = [%raw
   |}
 ];
 
-let getDomClientRect = [%bs.raw
+let getDomClientRect = [%raw
   {|
   function(ele){
     if (!ele.getClientRects().length) {
@@ -67,7 +67,7 @@ let getDomClientRect = [%bs.raw
   |}
 ];
 
-let getRandomKey = () : string =>
+let getRandomKey = (): string =>
   StringService.floatToString(Js.Date.now() *. Js.Math.random());
 
 let intEl = n => ReasonReact.string(string_of_int(n));

@@ -18,8 +18,8 @@ let _ =
         open FloatInput;
         let state = FloatInputTool.buildState();
 
-        let onChangeFunc = createEmptyStubWithJsObjSandbox(sandbox);
-        let onBlurFunc = createEmptyStubWithJsObjSandbox(sandbox);
+        let onChangeFunc = SinonTool.createOneLengthStub(sandbox^);
+        let onBlurFunc = SinonTool.createOneLengthStub(sandbox^);
 
         let state =
           FloatInputTool.reducer(
@@ -64,7 +64,7 @@ let _ =
       let _buildFakeEvent = (~movementX=0, ~movementY=0, ~sandbox, ()) =>
         {
           "target": {
-            "requestPointerLock": createEmptyStubWithJsObjSandbox(sandbox),
+            "requestPointerLock": SinonTool.createOneLengthStub(sandbox^),
           },
           "movementX": movementX,
           "movementY": movementY,
@@ -73,7 +73,7 @@ let _ =
 
       describe("test drag start", () => {
         test("request target pointerLock", () => {
-          let send = createEmptyStubWithJsObjSandbox(sandbox);
+          let send = SinonTool.createOneLengthStub(sandbox^);
           let event = _buildFakeEvent(~sandbox, ());
 
           FloatInput.Method.handleDragStart(event, send);
@@ -82,7 +82,7 @@ let _ =
         });
         describe("send DragStart", () => {
           test("test send", () => {
-            let send = createEmptyStubWithJsObjSandbox(sandbox);
+            let send = SinonTool.createOneLengthStub(sandbox^);
             let event = _buildFakeEvent(~sandbox, ());
 
             FloatInput.Method.handleDragStart(event, send);
@@ -104,7 +104,7 @@ let _ =
 
       describe("test drag over", () => {
         test("if not drag start, do nothing", () => {
-          let send = createEmptyStubWithJsObjSandbox(sandbox);
+          let send = SinonTool.createOneLengthStub(sandbox^);
           let event = _buildFakeEvent(~sandbox, ());
           let state = FloatInputTool.buildState(~isDragStart=false, ());
 
@@ -127,7 +127,7 @@ let _ =
                 ~canBeZero=true,
                 (),
               ) => {
-            let send = createEmptyStubWithJsObjSandbox(sandbox);
+            let send = SinonTool.createOneLengthStub(sandbox^);
             let event = _buildFakeEvent(~sandbox, ~movementX, ~movementY, ());
             let state =
               FloatInputTool.buildState(
@@ -206,15 +206,15 @@ let _ =
               ~send,
               ~state,
               ~event=_buildFakeEvent(~sandbox, ()),
-              ~onDragDrop=createEmptyStubWithJsObjSandbox(sandbox),
+              ~onDragDrop=SinonTool.createOneLengthStub(sandbox^),
               (),
             ) =>
           FloatInput.Method.handleDragDrop(event, (send, state), onDragDrop);
 
         describe("if not drag start", () =>
           test("not exec onDragDrop", () => {
-            let onDragDrop = createEmptyStubWithJsObjSandbox(sandbox);
-            let send = createEmptyStubWithJsObjSandbox(sandbox);
+            let onDragDrop = SinonTool.createOneLengthStub(sandbox^);
+            let send = SinonTool.createOneLengthStub(sandbox^);
             let state = FloatInputTool.buildState(~isDragStart=false, ());
 
             _handleDragDrop(~send, ~state, ~onDragDrop, ());
@@ -237,8 +237,8 @@ let _ =
           beforeEach(() => document := _prepareDocument(sandbox^));
 
           test("exec onDragDrop", () => {
-            let onDragDrop = createEmptyStubWithJsObjSandbox(sandbox);
-            let send = createEmptyStubWithJsObjSandbox(sandbox);
+            let onDragDrop = SinonTool.createOneLengthStub(sandbox^);
+            let send = SinonTool.createOneLengthStub(sandbox^);
             let state = FloatInputTool.buildState(~isDragStart=true, ());
 
             _handleDragDrop(~send, ~state, ~onDragDrop, ());
@@ -246,7 +246,7 @@ let _ =
             onDragDrop |> expect |> toCalledOnce;
           });
           test("exit pointer lock", () => {
-            let send = createEmptyStubWithJsObjSandbox(sandbox);
+            let send = SinonTool.createOneLengthStub(sandbox^);
             let state = FloatInputTool.buildState(~isDragStart=true, ());
 
             _handleDragDrop(~send, ~state, ());
@@ -254,7 +254,7 @@ let _ =
             Obj.magic(document^)##exitPointerLock |> expect |> toCalledOnce;
           });
           test("send DragDrop", () => {
-            let send = createEmptyStubWithJsObjSandbox(sandbox);
+            let send = SinonTool.createOneLengthStub(sandbox^);
             let state = FloatInputTool.buildState(~isDragStart=true, ());
 
             _handleDragDrop(~send, ~state, ());

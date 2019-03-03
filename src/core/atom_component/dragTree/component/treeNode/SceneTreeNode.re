@@ -138,28 +138,28 @@ module Method = {
         ),
       ) =>
     <div
-      className=(
+      className={
         ClassNameService.buildMultipleClassName([|
           "draggable-container",
           isSelected ? isActive ? "select-active" : "select-not-active" : "",
           state.dragGapClass,
         |])
-      )
+      }
       id={j|sceneTreeNode-$gameObject|j}
-      style=state.style
-      draggable=(
-        ! (
+      style={state.style}
+      draggable={
+        !(
           SceneEngineService.isSceneGameObject(gameObject)
           |> StateLogicService.getEngineStateToGetData
         )
-      )
-      onClick=(event => onSelectFunc(gameObject))
-      onDragStart=(
+      }
+      onClick={event => onSelectFunc(gameObject)}
+      onDragStart={
         e => send(handleDragStart(gameObject, widget, (dragImg, "move"), e))
-      )
-      onDragEnd=(_e => send(handleDragEnd(_e)))
-      onDragLeave=(_e => send(handleDragLeave(gameObject, _e)))
-      onDragOver=(
+      }
+      onDragEnd={_e => send(handleDragEnd(_e))}
+      onDragLeave={_e => send(handleDragLeave(gameObject, _e))}
+      onDragOver={
         e =>
           send(
             handleDragOver(
@@ -168,8 +168,8 @@ module Method = {
               e,
             ),
           )
-      )
-      onDrop=(
+      }
+      onDrop={
         _e =>
           send(
             handleDrop(
@@ -179,8 +179,8 @@ module Method = {
               _e,
             ),
           )
-      )>
-      (DomHelper.textEl(name))
+      }>
+      {DomHelper.textEl(name)}
     </div>;
 
   let _renderContent =
@@ -205,7 +205,7 @@ module Method = {
         ),
       ) =>
     <li>
-      (
+      {
         isHasChildren ?
           TreeNodeUtils.renderChildren(
             gameObject,
@@ -214,14 +214,14 @@ module Method = {
             TogggleChildren(gameObject),
           ) :
           <div className="item-triangle" />
-      )
-      (
+      }
+      {
         switch (icon) {
         | None => ReasonReact.null
         | Some(icon) => <img src=icon className="treeNode-icon" />
         }
-      )
-      (
+      }
+      {
         _renderDragableText(
           (state, send),
           (
@@ -240,7 +240,7 @@ module Method = {
             isAssetWDBFileFunc,
           ),
         )
-      )
+      }
     </li>;
 };
 
@@ -256,7 +256,7 @@ let reducer =
   switch (action) {
   | TogggleChildren(targetUid) =>
     ReasonReactUtils.sideEffects(() =>
-      handleToggleShowTreeChildren(targetUid, ! isShowChildren)
+      handleToggleShowTreeChildren(targetUid, !isShowChildren)
     )
 
   | DragStart =>

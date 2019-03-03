@@ -7,7 +7,10 @@
   "transformIgnorePatterns": [
     "<rootDir>/node_modules/(?!(.*bs-)|reason-react|immutable-re|wonder-commonlib|wonder.js|wonder-log|wonder-most-animation-frame|wonder-webgl|wonder-imgui)"
   ],
-  "setupTestFrameworkScriptFile": "<rootDir>/test/helper/jest/specHelper.js",
+  "snapshotResolver": "<rootDir>/customSnapshotResolver.js",
+  "setupFilesAfterEnv": [
+    "<rootDir>/test/helper/jest/specHelper.js"
+  ],
   "notify": false,
   "verbose": true,
   "collectCoverage": true,
@@ -43,10 +46,14 @@
     "<rootDir>/lib/es6_global/src/core/.+/PublishLocalModal.js",
     "<rootDir>/lib/es6_global/src/core/.+/Canvas.js",
     "<rootDir>/lib/es6_global/src/core/.+/SingleInputModal.js",
+    "<rootDir>/lib/es6_global/src/core/.+/HeaderFile.js",
+    "<rootDir>/lib/es6_global/src/core/.+/HeaderEdit.js",
+    "<rootDir>/lib/es6_global/src/core/.+/HeaderPublish.js",
+    "<rootDir>/lib/es6_global/src/core/.+/HeaderHelp.js",
     "<rootDir>/lib/es6_global/src/module/"
   ],
   "collectCoverageFrom": [
-    "lib/es6_global/src/**/*.{js}",
+    "lib/es6_global/src/**/*.js",
     "!**/node_modules/**",
     "!**/vendor/**"
   ],

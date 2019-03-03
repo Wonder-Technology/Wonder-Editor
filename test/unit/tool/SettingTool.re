@@ -8,6 +8,9 @@ let setSetting =
       ~debug=Some({isDebug: true, showMessage: true}),
       ~redoUndo=Some({maxStackSize: 50}),
       ~hotKeys=[|
+                 {name: "translation", values: [|"1"|]},
+                 {name: "rotation", values: [|"2"|]},
+                 {name: "scale", values: [|"3"|]},
                  {name: "focus", values: [|"f"|]},
                  {name: "redo", values: [|"ctrl+y"|]},
                  {name: "undo", values: [|"ctrl+z"|]},

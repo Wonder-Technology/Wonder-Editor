@@ -2,7 +2,7 @@ open ImageType;
 
 [@bs.new] external create : unit => htmlImage = "Image";
 
-let onload: (string, htmlImage => unit) => unit = [%bs.raw
+let onload: (string, htmlImage => unit) => unit = [%raw
   {|
     function (url, handleFunc) {
         var image = new Image()

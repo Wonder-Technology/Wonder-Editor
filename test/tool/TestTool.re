@@ -41,7 +41,7 @@ let initScene = () => {
 };
 
 let _buildFakeConsole = [%bs.raw
-  () => {|
+  (param) => {|
   window.console.profile = (_) => {};
   window.console.profileEnd = () => {};
   |}

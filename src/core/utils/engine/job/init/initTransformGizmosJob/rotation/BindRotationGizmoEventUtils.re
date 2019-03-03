@@ -1,12 +1,33 @@
+let _toFixRotateOnAxisBug =
+    (currentSceneTreeNodeLocalEulerAngles, editorState, engineState) =>
+  TransformEngineService.setLocalEulerAngles(
+    currentSceneTreeNodeLocalEulerAngles,
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState),
+      engineState,
+    ),
+    engineState,
+  );
+
 let handleDragStartEvent = (event, (editorState, engineState)) => {
+  let currentSceneTreeNodeLocalEulerAngles =
+    InitTransformGizmosUtils.getCurrentSceneTreeNodeLocalEulerAngles(
+      editorState,
+      engineState,
+    );
+
   let editorState =
     editorState
     |> OperateRotationGizmoSceneViewEditorService.setCurrentSceneTreeNodeStartLocalEulerAngles(
-         InitTransformGizmosUtils.getCurrentSceneTreeNodeLocalEulerAngles(
-           editorState,
-           engineState,
-         ),
+         currentSceneTreeNodeLocalEulerAngles,
        );
+
+  let engineState =
+    _toFixRotateOnAxisBug(
+      currentSceneTreeNodeLocalEulerAngles,
+      editorState,
+      engineState,
+    );
 
   SelectRotationGizmoUtils.selectRotationGizmo(
     event,

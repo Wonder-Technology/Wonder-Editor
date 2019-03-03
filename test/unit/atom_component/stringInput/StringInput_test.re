@@ -15,8 +15,8 @@ let _ =
 
       let state = {inputValue: "", originalName: "origin"};
 
-      let onChangeFunc = createEmptyStubWithJsObjSandbox(sandbox);
-      let onBlurFunc = createEmptyStubWithJsObjSandbox(sandbox);
+      let onChangeFunc = SinonTool.createOneLengthStub(sandbox^);
+      let onBlurFunc = SinonTool.createOneLengthStub(sandbox^);
 
       (state, onChangeFunc, onBlurFunc);
     };

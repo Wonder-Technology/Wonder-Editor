@@ -15,6 +15,8 @@ module.exports = {
   ],
 
   scopes: [
+    { name: "pwa" },
+    { name: "hotkey" },
     { name: "focus" },
     { name: "scene-view" },
     { name: "scene-tree" },
@@ -67,6 +69,7 @@ module.exports = {
       { name: "publish" },
       { name: "bumped" },
       { name: "readme" },
+      { name: "webpack" },
       { name: "version" }
     ]
   },

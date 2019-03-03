@@ -46,24 +46,24 @@ let render =
   <article className="componentBox-component">
     <div className="header">
       <div
-        className="header-triangle" onClick=(_e => send(ToggleShowComponent))>
-        <span className=state.triangleDirection />
+        className="header-triangle" onClick={_e => send(ToggleShowComponent)}>
+        <span className={state.triangleDirection} />
       </div>
-      <div className="header-title"> (DomHelper.textEl(header)) </div>
-      (
+      <div className="header-title"> {DomHelper.textEl(header)} </div>
+      {
         isDisposable ?
           <div className="header-close">
             <img
               src="./public/img/close.png"
-              onClick=(
+              onClick={
                 _e => Method.removeComponent(reduxTuple, gameObject, type_)
-              )
+              }
             />
           </div> :
           ReasonReact.null
-      )
+      }
     </div>
-    (state.isShowComponent ? gameObjectUIComponent : ReasonReact.null)
+    {state.isShowComponent ? gameObjectUIComponent : ReasonReact.null}
   </article>;
 
 let make =

@@ -4,6 +4,9 @@ open SettingType;
 
 let _getHotKeyAction = hotKeyName =>
   switch (hotKeyName) {
+  | "translation" => Translation
+  | "rotation" => Rotation
+  | "scale" => Scale
   | "redo" => Redo
   | "undo" => Undo
   | "duplicate" => Duplicate
@@ -19,6 +22,27 @@ let _getHandleFuncByHotKeyAction = hotKeyAction => {
     |> StateLogicService.getStateToGetData;
 
   switch (hotKeyAction) {
+  | Translation => (
+      () =>
+        Controller.Method.handleChangeCurrentTransformGizmoType(
+          dispatch,
+          SceneViewType.Translation,
+        )
+    )
+  | Rotation => (
+      () =>
+        Controller.Method.handleChangeCurrentTransformGizmoType(
+          dispatch,
+          SceneViewType.Rotation,
+        )
+    )
+  | Scale => (
+      () =>
+        Controller.Method.handleChangeCurrentTransformGizmoType(
+          dispatch,
+          SceneViewType.Scale,
+        )
+    )
   | Undo => (() => AllHistoryService.handleUndo(uiState, dispatch))
   | Redo => (
       () =>
@@ -48,7 +72,14 @@ let _getHandleFuncByHotKeyAction = hotKeyAction => {
             (),
             (),
           ) :
-          ()
+          CurrentNodeIdAssetEditorService.couldRemoveCurrentNode
+          |> StateLogicService.getEditorState ?
+            MainEditorAssetHeader.Method.removeAssetNode(
+              (uiState, dispatch),
+              (),
+              (),
+            ) :
+            ()
     )
   | Focus => (
       () => {
@@ -79,15 +110,16 @@ let _preventBrowserHotKeys = event => {
 let _handleHotKeyFunc = hotKeyDataArray =>
   hotKeyDataArray
   |> Js.Array.forEach(((hotKeys, hotKeyAction)) =>
-       hotKeys
-       |> Js.Array.joinWith(",")
-       |. HotKeysJs.hotkeys((e, handler) => {
-            _preventBrowserHotKeys(e);
+       (hotKeys |> Js.Array.joinWith(","))
+       ->(
+           HotKeysJs.hotkeys((e, handler) => {
+             _preventBrowserHotKeys(e);
 
-            let handleFunc = _getHandleFuncByHotKeyAction(hotKeyAction);
+             let handleFunc = _getHandleFuncByHotKeyAction(hotKeyAction);
 
-            handleFunc();
-          })
+             handleFunc();
+           })
+         )
      );
 
 let initHotKeysForEditorJob = (_, engineState) => {

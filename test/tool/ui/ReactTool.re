@@ -29,7 +29,7 @@ let isNoUpdate = reducerResult =>
   };
 
 let createDispatchFuncStub = sandbox => {
-  let stub = Sinon.createEmptyStubWithJsObjSandbox(sandbox);
+  let stub = SinonTool.createOneLengthStub(sandbox^);
 
   Wonderjs.Root.root##dispathFuncStub_wonder_editor#=stub;
 

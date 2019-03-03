@@ -45,7 +45,7 @@ let _ =
           open FileInput;
 
           let inputValue = "you can click submit after input value";
-          let onSubmitFunc = createEmptyStubWithJsObjSandbox(sandbox);
+          let onSubmitFunc = SinonTool.createOneLengthStub(sandbox^);
           let state = {inputValue, isShowInput: true};
 
           FileInput.reducer(Some(onSubmitFunc), FileInput.Submit, state)
@@ -56,7 +56,7 @@ let _ =
         test("submit trimed inputValue", () => {
           open FileInput;
 
-          let onSubmitFunc = createEmptyStubWithJsObjSandbox(sandbox);
+          let onSubmitFunc = SinonTool.createOneLengthStub(sandbox^);
           let state = {inputValue: " aaa ", isShowInput: true};
 
           FileInput.reducer(onSubmitFunc, FileInput.Submit, state) |> ignore;
@@ -72,7 +72,7 @@ let _ =
         () => {
         open FileInput;
 
-        let onSubmitFunc = createEmptyStubWithJsObjSandbox(sandbox);
+        let onSubmitFunc = SinonTool.createOneLengthStub(sandbox^);
         let state = {inputValue: "", isShowInput: true};
 
         FileInput.reducer(Some(onSubmitFunc), FileInput.Submit, state)

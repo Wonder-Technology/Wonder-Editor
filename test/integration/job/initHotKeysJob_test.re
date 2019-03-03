@@ -26,6 +26,9 @@ let _ =
                     "jobs": [
                       {
                         "name": "init_hotkeys"
+                      },
+                      {
+                         "name": "init_transform_gizmos"
                       }
                     ]
                   }
@@ -37,6 +40,9 @@ let _ =
 
                     {
                        "name": "init_hotkeys"
+                    },
+                    {
+                       "name": "init_transform_gizmos"
                     }
                 ]
             |j},
@@ -61,7 +67,8 @@ let _ =
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("bind document hotKeys event", () => {
+    describe(
+      "bind document hotKeys event, need add hot-key into SettingTool", () => {
       let _execKeyboardEvent =
           (
             keyboardDomEventName,
@@ -74,7 +81,7 @@ let _ =
         EventTool.triggerDomEvent(
           keyboardDomEventName,
           EventTool.getDocument(),
-          KeyboardEventTool.buildKeyboardEvent(
+          KeyboardEventTool.buildKeyboardDomEvent(
             ~ctrlKey,
             ~altKey,
             ~shiftKey,
@@ -97,6 +104,15 @@ let _ =
 
       let triggerFocusHotKeyEvent = () =>
         _execKeyboardEvent("keydown", 70, ()) |> ignore;
+
+      let triggerTranslationHotKeyEvent = () =>
+        _execKeyboardEvent("keydown", 49, ()) |> ignore;
+
+      let triggerRotationHotKeyEvent = () =>
+        _execKeyboardEvent("keydown", 50, ()) |> ignore;
+
+      let triggerScaleHotKeyEvent = () =>
+        _execKeyboardEvent("keydown", 51, ()) |> ignore;
 
       beforeEach(() => {
         _prepareKeyboardEvent(~sandbox, ());
@@ -144,38 +160,62 @@ let _ =
       );
 
       describe("test bind delete hot-key", () =>
-        test(
-          "key down delete,if has currentSceneTreeNode, should delete it", () => {
-          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
+        describe("key down delete", () => {
+          test("if has currentSceneTreeNode, should delete it", () => {
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
 
-          triggerDeleteHotKeyEvent();
+            triggerDeleteHotKeyEvent();
 
-          BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
-          |> ReactTestTool.createSnapshotAndMatch;
+            BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
+          test("else if has current asset tree node, should delete it", () => {
+            GameObjectTool.clearCurrentSceneTreeNode();
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
+            MainEditorAssetTreeTool.Select.selectFolderNode(
+              ~nodeId=
+                MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId(
+                  assetTreeData,
+                ),
+              (),
+            );
+
+            triggerDeleteHotKeyEvent();
+
+            BuildComponentTool.buildAssetTree()
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
         })
       );
 
       describe("test bind focus hot-key", () => {
         let _getDistance = ((editorState, engineState)) =>
-          editorState
-          |> SceneViewEditorService.unsafeGetEditCamera
-          |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-               engineState,
-             )
-          |. ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
-               engineState,
-             )
+          (editorState |> SceneViewEditorService.unsafeGetEditCamera)
+          ->(
+              GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+                engineState,
+              )
+            )
+          ->(
+              ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
+                engineState,
+              )
+            )
           |> FloatService.truncateFloatValue(_, 3);
 
         let _getTarget = ((editorState, engineState)) =>
-          editorState
-          |> SceneViewEditorService.unsafeGetEditCamera
-          |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-               engineState,
-             )
-          |. ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
-               engineState,
-             )
+          (editorState |> SceneViewEditorService.unsafeGetEditCamera)
+          ->(
+              GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+                engineState,
+              )
+            )
+          ->(
+              ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
+                engineState,
+              )
+            )
           |> Vector3Service.truncate(3);
 
         describe(
@@ -193,10 +233,14 @@ let _ =
 
               let engineState =
                 MainEditorSceneTool.unsafeGetScene()
-                |. GameObjectComponentEngineService.unsafeGetTransformComponent(
-                     engineState,
-                   )
-                |. TransformEngineService.setScale((3., 1., 1.), engineState);
+                ->(
+                    GameObjectComponentEngineService.unsafeGetTransformComponent(
+                      engineState,
+                    )
+                  )
+                ->(
+                    TransformEngineService.setScale((3., 1., 1.), engineState)
+                  );
               let firstChild = MainEditorSceneTool.getFirstCube(engineState);
               let secondChild =
                 MainEditorSceneTool.getSecondCube(engineState);
@@ -232,10 +276,14 @@ let _ =
 
               let engineState =
                 firstChild
-                |. GameObjectComponentEngineService.unsafeGetTransformComponent(
-                     engineState,
-                   )
-                |. TransformEngineService.setScale((3., 1., 1.), engineState);
+                ->(
+                    GameObjectComponentEngineService.unsafeGetTransformComponent(
+                      engineState,
+                    )
+                  )
+                ->(
+                    TransformEngineService.setScale((3., 1., 1.), engineState)
+                  );
               let engineState =
                 engineState
                 |> TransformGameObjectEngineService.setLocalPosition(
@@ -306,5 +354,57 @@ let _ =
           })
         );
       });
+
+      describe("test bind translation hot-key", () =>
+        test(
+          "key down 1, should set current transform gizmo type is translation",
+          () => {
+          StateEditorService.getState()
+          |> CurrentTransformGizmoSceneViewEditorService.mark(
+               SceneViewType.Scale,
+             )
+          |> StateEditorService.setState;
+
+          triggerTranslationHotKeyEvent();
+
+          StateEditorService.getState()
+          |> CurrentTransformGizmoSceneViewEditorService.getCurrentGizmoType
+          |> expect == SceneViewType.Translation;
+        })
+      );
+
+      describe("test bind rotation hot-key", () =>
+        test(
+          "key down 2, should set current transform gizmo type is rotation", () => {
+          StateEditorService.getState()
+          |> CurrentTransformGizmoSceneViewEditorService.mark(
+               SceneViewType.Scale,
+             )
+          |> StateEditorService.setState;
+
+          triggerRotationHotKeyEvent();
+
+          StateEditorService.getState()
+          |> CurrentTransformGizmoSceneViewEditorService.getCurrentGizmoType
+          |> expect == SceneViewType.Rotation;
+        })
+      );
+
+      describe("test bind scale hot-key", () =>
+        test(
+          "key down 3, should set current transform gizmo type is scale", () => {
+          StateEditorService.getState()
+          |> CurrentTransformGizmoSceneViewEditorService.mark(
+               SceneViewType.Translation,
+             )
+          |> StateEditorService.setState;
+
+          triggerScaleHotKeyEvent();
+
+          StateEditorService.getState()
+          |> CurrentTransformGizmoSceneViewEditorService.getCurrentGizmoType
+          |> expect == SceneViewType.Scale;
+        })
+      );
     });
   });
