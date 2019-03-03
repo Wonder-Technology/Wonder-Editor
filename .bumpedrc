@@ -1,17 +1,17 @@
 files:
 - package.json
 plugins:
-prerelease:
-  test:
-    plugin: bumped-terminal
-    command: 'npm run bsb:build && npm run test:coverage'
-postrelease:
-  Generating CHANGELOG file:
-    plugin: bumped-terminal
-    command: 'npm run version'
-  Committing new version:
-    plugin: bumped-terminal
-    command: 'npm run updatePwaCacheVersion && npm run updateCopyRightVersion && git add CHANGELOG.md package.json src/Copyright.re && git commit -m "chore(release): v$newVersion"'
-  Publishing tag to GitHub:
-    plugin: bumped-terminal
-    command: 'git tag v$newVersion && git push origin master:master && git push origin v$newVersion'
+  prerelease:
+    test:
+      plugin: bumped-terminal
+      command: 'npm run bsb:build && npm run test:coverage'
+  postrelease:
+    Generating CHANGELOG file:
+      plugin: bumped-terminal
+      command: 'npm run version'
+    Committing new version:
+      plugin: bumped-terminal
+      command: 'npm run updatePwaCacheVersion && npm run updateCopyRightVersion && git add CHANGELOG.md package.json src/Copyright.re && git commit -m "chore(release): v$newVersion"'
+    Publishing tag to GitHub:
+      plugin: bumped-terminal
+      command: 'git tag v$newVersion && git push origin master:master && git push origin v$newVersion'
