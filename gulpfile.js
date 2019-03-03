@@ -4,6 +4,9 @@ var gulpSync = require("gulp-sync")(gulp);
 var path = require("path");
 var exec = require('child_process').exec;
 var sass = require("gulp-sass");
+var concat = require('gulp-concat'), //合并文件 
+    cssnano = require('gulp-cssnano'), //CSS压缩
+    autoprefixer = require('gulp-autoprefixer'); //后编译，自动添加css兼容前缀
 
 
 var _safeExec = (commandStr, handleErrFunc, handleSuccessFunc, done) => exec(commandStr, { maxBuffer: 1024 * 500 }, function (err, stdout, stderr) {
@@ -66,6 +69,13 @@ gulp.task("webpack", function (done) {
 });
 
 
+gulp.task('compressCss', function () {
+    return gulp.src('./public/css/index.css')  //读取待src/css 目录下所有的css文件
+        .pipe(concat('index.min.css'))
+        .pipe(cssnano()) //压缩 CSS
+        .pipe(gulp.dest('./public/css'))  //最后输出到 dist/css 目录下
+});
+
 gulp.task("watchProject", function () {
     var reFilePaths = [
         path.join(process.cwd(), "lib/es6_global/**/*.js"),
@@ -75,6 +85,6 @@ gulp.task("watchProject", function () {
     gulp.watch("public/sass/**/*.scss", ["sass"]);
 });
 
-gulp.task("build", gulpSync.sync(["sass", "webpack"]));
+gulp.task("build", gulpSync.sync(["sass", "webpack", "compressCss"]));
 
 gulp.task("watch", gulpSync.sync(["webpack", "watchProject"]));
