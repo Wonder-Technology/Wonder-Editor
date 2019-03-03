@@ -6,9 +6,10 @@ module Method = {
     /* todo use extension names instead of the name */
     AppExtensionUtils.setExtension(getStorageParentKey(), text);
 
-  let showComponent = (uiState, dispatchFunc) =>
+  let showComponent =
+      (uiState, dispatchFunc, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
     <article key="app" className="wonder-app-component">
-      (
+      {
         AppExtensionUtils.getExtension(getStorageParentKey())
         |> (
           value =>
@@ -24,28 +25,33 @@ module Method = {
               )
             }
         )
-      )
-      (
+      }
+      {
         uiState.isEditorAndEngineStart ?
           <Header uiState dispatchFunc /> : ReasonReact.null
-      )
-      (
+      }
+      {
         uiState.isEditorAndEngineStart ?
           <Controller uiState dispatchFunc /> : ReasonReact.null
-      )
+      }
       <MainEditor uiState dispatchFunc />
     </article>;
 };
 
 let component = ReasonReact.statelessComponent("App");
 
-let render = ((uiState: AppStore.appState, dispatchFunc), _self) =>
+let render =
+    (
+      (uiState: AppStore.appState, dispatchFunc),
+      ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
+    ) =>
   uiState.isDidMounted ?
-    Method.showComponent(uiState, dispatchFunc) :
+    Method.showComponent(uiState, dispatchFunc, self) :
     <article key="app" className="app-component" />;
 
 let make = (~state as uiState: AppStore.appState, ~dispatch, _children) => {
   ...component,
+  render: self => render((uiState, dispatch), self),
   didMount: _self => {
     ServiceWorker.registerServiceWorker();
 
@@ -64,5 +70,4 @@ let make = (~state as uiState: AppStore.appState, ~dispatch, _children) => {
     );
     dispatch(AppStore.IsDidMounted);
   },
-  render: self => render((uiState, dispatch), self),
 };

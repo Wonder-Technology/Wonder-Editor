@@ -124,7 +124,6 @@ let _ =
                            let glShaderSourceCallCountBeforeDispose =
                              glShaderSource |> getCallCount;
 
-
                            MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
 
                            (glShaderSource |> getCallCount)
@@ -284,7 +283,7 @@ let _ =
           SceneTreeEditorService.clearCurrentSceneTreeNode
           |> StateLogicService.getAndSetEditorState;
 
-          BuildComponentTool.buildHeader(TestTool.buildEmptyAppState())
+          BuildComponentTool.buildLeftHeader()
           |> ReactTestTool.createSnapshotAndMatch;
         },
       );
@@ -295,7 +294,7 @@ let _ =
             sandbox,
             MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
           );
-          BuildComponentTool.buildHeader(TestTool.buildEmptyAppState())
+          BuildComponentTool.buildLeftHeader()
           |> ReactTestTool.createSnapshotAndMatch;
         },
       );

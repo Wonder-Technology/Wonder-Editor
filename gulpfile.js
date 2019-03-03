@@ -16,14 +16,30 @@ var _safeExec = (commandStr, handleErrFunc, handleSuccessFunc, done) => exec(com
     handleSuccessFunc(done);
 });
 
+gulp.task("updatePwaCacheVersion", function (done) {
+    const packageJsonFilePath = path.join(__dirname, "package.json");
+    const serviceWorkerFilePath = path.join(__dirname, "service-worker.js");
 
-gulp.task("updateVersion", function (done) {
+    var packageJson = JSON.parse(fs.readFileSync(packageJsonFilePath, "utf8"));
+
+    var data = fs.readFileSync(serviceWorkerFilePath, "utf8");
+
+    var result = data.replace(/(var\scacheName\s=\s')(.+)'/img, function (match, p1, p2) {
+        return p1 + "wonder-editor-cache-" + packageJson.version + "\'";
+    });
+
+    fs.writeFileSync(
+        serviceWorkerFilePath, result, "utf8"
+    );
+
+    done();
+});
+
+gulp.task("updateCopyRightVersion", function (done) {
     const packageJsonFilePath = path.join(__dirname, "package.json");
     const copyrightFilePath = path.join(__dirname, "src/Copyright.re");
 
     var packageJson = JSON.parse(fs.readFileSync(packageJsonFilePath, "utf8"));
-
-
 
     var data = fs.readFileSync(copyrightFilePath, "utf8");
 

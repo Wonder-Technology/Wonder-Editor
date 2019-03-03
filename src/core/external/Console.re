@@ -1,4 +1,4 @@
-let stubConsole = [%bs.raw
+let stubConsole = [%raw
   {|
     function(errorFunc, infoFunc, warnFunc, debugFunc, traceFunc, logFunc ) {
         window.wonder_console.error = errorFunc;
@@ -28,7 +28,7 @@ let stubConsole = [%bs.raw
   |}
 ];
 
-let tryCatch = [%bs.raw
+let tryCatch = [%raw
   {|
     function(tryFunc, catchFunc ) {
 

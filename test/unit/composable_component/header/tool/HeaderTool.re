@@ -72,25 +72,12 @@ let buildFileComponent =
       ~dispatchFunc=TestTool.getDispatch(),
       (),
     ) =>
-  Header.Method.buildFileComponent(state, send, uiState, dispatchFunc);
+  HeaderFile.Method.buildFileComponent(
+    (state, send),
+    (uiState, dispatchFunc),
+    (true, () => (), () => ()),
+  );
 
-let buildState =
-    (
-      ~isSelectNav=false,
-      ~currentSelectNav=HeaderType.File,
-      ~isShowFileControlsModal=false,
-      ~isShowEditExportPackageModal=false,
-      ~isShowEditExportSceneModal=false,
-      ~isShowPublishLocalModal=false,
-      ~isShowHelpVersionModal=false,
-      (),
-    )
-    : Header.state => {
-  isSelectNav,
-  currentSelectNav,
-  isShowFileControlsModal,
-  isShowEditExportPackageModal,
-  isShowEditExportSceneModal,
-  isShowPublishLocalModal,
-  isShowHelpVersionModal,
+let buildHeaderFileState = (~isShowControlsModal=false, ()): HeaderFile.state => {
+  isShowControlsModal: isShowControlsModal,
 };

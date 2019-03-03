@@ -1,5 +1,5 @@
 var dataCacheName = 'wonder-editor';
-var cacheName = 'wonder-editor-1';
+var cacheName = 'wonder-editor-cache-1.0.0-beta.2';
 var filesToCache = [
     '/',
     '/index.html',
@@ -88,7 +88,7 @@ self.addEventListener('activate', function (e) {
 });
 
 self.addEventListener('fetch', function (e) {
-    console.log('[Service Worker] Fetch', e.request.url);
+    // console.log('[Service Worker] Fetch', e.request.url);
     var dataUrl = 'https://query.yahooapis.com/v1/public/yql';
     if (e.request.url.indexOf(dataUrl) > -1) {
         /*

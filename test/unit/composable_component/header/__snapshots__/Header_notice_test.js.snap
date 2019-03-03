@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Notice test show notice else else, if localStorage version !== current version show version upgrade notice 1`] = `
+<div
+  className="header-item"
+>
+  <article
+    className="wonder-modal"
+  >
+    <div
+      className="modal-item"
+    >
+      <div
+        className="modal-item-header"
+      >
+        Version Upgrade
+        <img
+          onClick={[Function]}
+          src="./public/img/close.png"
+        />
+      </div>
+      <div
+        className="modal-item-content"
+      >
+        <div
+          className="content-text"
+        >
+           欢迎来到Wonder，你可以通过访问我们的
+          <a
+            href="http://www.wonder-3d.com/"
+            target="view_window"
+          >
+            官方网站
+          </a>
+           , 查看我们能为你提供什么服务
+        </div>
+        <div
+          className="content-white"
+        />
+        <div
+          className="content-text"
+        >
+          Wonder 科技为你服务
+        </div>
+      </div>
+      <div
+        className="modal-item-footer"
+      >
+        <button
+          className="footer-submit"
+          onClick={[Function]}
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </article>
+</div>
+`;
+
+exports[`Header Notice test show notice else if localStorage have no version key show version upgrade notice 1`] = `
+<div
+  className="header-item"
+>
+  <article
+    className="wonder-modal"
+  >
+    <div
+      className="modal-item"
+    >
+      <div
+        className="modal-item-header"
+      >
+        Version Upgrade
+        <img
+          onClick={[Function]}
+          src="./public/img/close.png"
+        />
+      </div>
+      <div
+        className="modal-item-content"
+      >
+        <div
+          className="content-text"
+        >
+           欢迎来到Wonder，你可以通过访问我们的
+          <a
+            href="http://www.wonder-3d.com/"
+            target="view_window"
+          >
+            官方网站
+          </a>
+           , 查看我们能为你提供什么服务
+        </div>
+        <div
+          className="content-white"
+        />
+        <div
+          className="content-text"
+        >
+          Wonder 科技为你服务
+        </div>
+      </div>
+      <div
+        className="modal-item-footer"
+      >
+        <button
+          className="footer-submit"
+          onClick={[Function]}
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </article>
+</div>
+`;
+
+exports[`Header Notice test show notice if localStorage have no welcomeUser key show welcome user notice, should not show version upgrade notice 1`] = `
+<div
+  className="header-item"
+>
+  <article
+    className="wonder-modal"
+  >
+    <div
+      className="modal-item"
+    >
+      <div
+        className="modal-item-header"
+      >
+        Welcome to Wonder
+        <img
+          onClick={[Function]}
+          src="./public/img/close.png"
+        />
+      </div>
+      <div
+        className="modal-item-content"
+      >
+        <div
+          className="content-text"
+        >
+           欢迎来到Wonder，你可以通过访问我们的
+          <a
+            href="http://www.wonder-3d.com/"
+            target="view_window"
+          >
+            官方网站
+          </a>
+           , 查看我们能为你提供什么服务
+        </div>
+        <div
+          className="content-white"
+        />
+        <div
+          className="content-text"
+        >
+          Wonder 科技为你服务
+        </div>
+      </div>
+      <div
+        className="modal-item-footer"
+      >
+        <button
+          className="footer-submit"
+          onClick={[Function]}
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </article>
+</div>
+`;

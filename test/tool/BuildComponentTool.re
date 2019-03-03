@@ -1,11 +1,27 @@
 let buildHeader = uiState =>
   ReactTestRenderer.create(
-    <Header uiState dispatchFunc=(TestTool.getDispatch()) />,
+    <Header uiState dispatchFunc={TestTool.getDispatch()} />,
+  );
+
+let buildHeaderNotice = () =>
+  ReactTestRenderer.create(
+    <HeaderNotice
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
+    />,
+  );
+
+let buildLeftHeader = () =>
+  ReactTestRenderer.create(
+    <MainEditorLeftHeader
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
+    />,
   );
 
 let buildSceneTree = uiState =>
   ReactTestRenderer.create(
-    <MainEditorSceneTree uiState dispatchFunc=(TestTool.getDispatch()) />,
+    <MainEditorSceneTree uiState dispatchFunc={TestTool.getDispatch()} />,
   );
 
 let buildConsole =
@@ -37,27 +53,27 @@ let buildBottomHeader =
 let buildCameraProjection = () =>
   ReactTestRenderer.create(
     <MainEditorCameraProjection
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
     />,
   );
 
 let buildCameraView = uiState =>
   ReactTestRenderer.create(
-    <MainEditorCameraView uiState dispatchFunc=(TestTool.getDispatch()) />,
+    <MainEditorCameraView uiState dispatchFunc={TestTool.getDispatch()} />,
   );
 let buildInspectorComponent = (uiState, addableComponentConfig) =>
   ReactTestRenderer.create(
     <MainEditorInspector
       uiState
-      dispatchFunc=(TestTool.getDispatch())
+      dispatchFunc={TestTool.getDispatch()}
       addableComponentConfig
     />,
   );
 
 let buildMeshRenderer = uiState =>
   ReactTestRenderer.create(
-    <MainEditorMeshRenderer uiState dispatchFunc=(TestTool.getDispatch()) />,
+    <MainEditorMeshRenderer uiState dispatchFunc={TestTool.getDispatch()} />,
   );
 
 let buildGeometry =
@@ -83,8 +99,8 @@ let buildMainEditorTransformComponent = (uiState, transformComponent) =>
   ReactTestRenderer.create(
     <MainEditorTransform
       uiState
-      dispatchFunc=(TestTool.getDispatch())
-      gameObject=(GameObjectTool.unsafeGetCurrentSceneTreeNode())
+      dispatchFunc={TestTool.getDispatch()}
+      gameObject={GameObjectTool.unsafeGetCurrentSceneTreeNode()}
       transformComponent
     />,
   );
@@ -99,9 +115,9 @@ let buildMaterial =
     ) =>
   ReactTestRenderer.create(
     <MainEditorMaterial
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
-      currentSceneTreeNode=(GameObjectTool.unsafeGetCurrentSceneTreeNode())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
+      currentSceneTreeNode={GameObjectTool.unsafeGetCurrentSceneTreeNode()}
       isShowMaterialGroup
     />,
   );
@@ -130,8 +146,8 @@ let buildMaterialMap =
 let buildBasicMaterial = materialComponent =>
   ReactTestRenderer.create(
     <MainEditorBasicMaterial
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
       materialComponent
     />,
   );
@@ -139,8 +155,8 @@ let buildBasicMaterial = materialComponent =>
 let buildLightMaterial = materialComponent =>
   ReactTestRenderer.create(
     <MainEditorLightMaterial
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
       materialComponent
     />,
   );
@@ -148,16 +164,16 @@ let buildLightMaterial = materialComponent =>
 let buildLight = () =>
   ReactTestRenderer.create(
     <MainEditorLight
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
     />,
   );
 
 let buildDirectionLight = lightComponent =>
   ReactTestRenderer.create(
     <MainEditorDirectionLight
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
       lightComponent
     />,
   );
@@ -165,8 +181,8 @@ let buildDirectionLight = lightComponent =>
 let buildPointLight = lightComponent =>
   ReactTestRenderer.create(
     <MainEditorPointLight
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
       lightComponent
     />,
   );
@@ -174,25 +190,25 @@ let buildPointLight = lightComponent =>
 let buildAssetComponent = () =>
   ReactTestRenderer.create(
     <MainEditorAsset
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
     />,
   );
 
 let buildAssetTree = () =>
   ReactTestRenderer.create(
     <MainEditorAssetTree
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
-      dragImg=(DomHelper.createElement("img"))
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
+      dragImg={DomHelper.createElement("img")}
     />,
   );
 let buildAssetChildrenNode = (~debounceTime=10, ()) =>
   ReactTestRenderer.create(
     <MainEditorAssetChildrenNode
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
-      dragImg=(DomHelper.createElement("img"))
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
+      dragImg={DomHelper.createElement("img")}
       debounceTime
     />,
   );
@@ -200,8 +216,8 @@ let buildAssetChildrenNode = (~debounceTime=10, ()) =>
 let buildController = () =>
   ReactTestRenderer.create(
     <Controller
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
     />,
   );
 

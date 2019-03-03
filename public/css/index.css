@@ -6,6 +6,14 @@ html, body {
   position: relative; }
   html ul, body ul {
     list-style-type: none; }
+  html a, body a {
+    text-decoration: none; }
+    html a:visited, body a:visited {
+      text-decoration: none; }
+    html a:hover, body a:hover {
+      text-decoration: none; }
+    html a:active, body a:active {
+      text-decoration: none; }
   html .inline-component, body .inline-component {
     display: inline-block; }
   html .block-component, body .block-component {
@@ -98,9 +106,8 @@ html, body {
     z-index: 150; }
     .wonder-modal .modal-item .modal-item-header {
       width: 100%;
-      height: 30px;
-      line-height: 30px;
-      font-size: 14px;
+      height: 22px;
+      line-height: 22px;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
       text-align: center;
@@ -112,7 +119,7 @@ html, body {
       position: relative; }
       .wonder-modal .modal-item .modal-item-header img {
         position: absolute;
-        top: 10px;
+        top: 8px;
         cursor: hand;
         right: 20px;
         width: 15px;
@@ -121,6 +128,7 @@ html, body {
       color: #000;
       height: 213px;
       overflow-y: auto;
+      overflow-x: hidden;
       width: 90%;
       margin-left: 5%;
       padding-top: 10px;
@@ -139,6 +147,11 @@ html, body {
         border-radius: 4px; }
         .wonder-modal .modal-item .modal-item-content::-webkit-scrollbar-thumb:hover {
           background: #fc7100; }
+      .wonder-modal .modal-item .modal-item-content .content-text {
+        width: 100%; }
+      .wonder-modal .modal-item .modal-item-content .content-white {
+        width: 100%;
+        height: 30px; }
       .wonder-modal .modal-item .modal-item-content .content-field {
         width: 100%;
         height: 26px;
@@ -155,17 +168,25 @@ html, body {
           text-align: left;
           height: 26px;
           line-height: 26px; }
+          .wonder-modal .modal-item .modal-item-content .content-field .field-content a {
+            white-space: nowrap; }
     .wonder-modal .modal-item .modal-item-footer {
       height: 50px;
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
       position: relative; }
       .wonder-modal .modal-item .modal-item-footer .footer-submit {
-        width: 100px;
+        background: #db7d35;
+        border: 1px solid #f3c9a9;
+        color: #555;
+        font-weight: normal;
+        width: 80px;
         position: absolute;
-        top: 5px;
+        top: 12px;
         right: 30px;
         padding-top: 5px; }
+        .wonder-modal .modal-item .modal-item-footer .footer-submit:hover {
+          color: #000; }
 
 .wonder-singleInput-modal {
   position: fixed;
@@ -210,8 +231,8 @@ html, body {
     z-index: 150; }
     .wonder-singleInput-modal .modal-item .modal-item-header {
       width: 100%;
-      height: 30px;
-      line-height: 30px;
+      height: 22px;
+      line-height: 22px;
       font-size: 14px;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
@@ -224,7 +245,7 @@ html, body {
       position: relative; }
       .wonder-singleInput-modal .modal-item .modal-item-header img {
         position: absolute;
-        top: 10px;
+        top: 8px;
         cursor: hand;
         right: 20px;
         width: 15px;
@@ -266,6 +287,8 @@ html, body {
           text-align: center;
           height: 24px;
           line-height: 24px; }
+          .wonder-singleInput-modal .modal-item .modal-item-content .content-field .field-content a {
+            white-space: nowrap; }
     .wonder-singleInput-modal .modal-item .modal-item-footer {
       height: 50px;
       border-bottom-left-radius: 5px;
@@ -353,7 +376,7 @@ html, body {
               color: #cfcdcd;
               text-align: center; }
         .wonder-app-component .wonder-header-component .header-nav .header-item .modal-item-content {
-          padding-top: 50px; }
+          padding-top: 25px; }
   .wonder-app-component .wonder-controller-component {
     width: 100%;
     height: 45px; }

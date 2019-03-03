@@ -5,7 +5,7 @@ let getExtName = fileName => {
     "" : fileName |> Js.String.substringToEnd(~from=lastIndex);
 };
 
-let getBaseName = [%bs.raw
+let getBaseName = [%raw
   fileName => {|
 var base = new String(fileName).substring(fileName.lastIndexOf('/') + 1);
     if(base.lastIndexOf(".") !== -1)

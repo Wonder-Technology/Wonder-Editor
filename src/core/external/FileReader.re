@@ -12,7 +12,7 @@ open FileType;
 
 type resultType;
 
-let onload: (fileReader, resultType => unit) => unit = [%bs.raw
+let onload: (fileReader, resultType => unit) => unit = [%raw
   {|
       function (reader,handleFunc) {
           reader.onload = function() {
