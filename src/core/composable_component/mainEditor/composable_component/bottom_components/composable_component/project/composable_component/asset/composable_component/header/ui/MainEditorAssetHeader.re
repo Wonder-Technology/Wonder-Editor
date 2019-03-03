@@ -51,16 +51,16 @@ let _renderRemoveItem =
       _e =>
         CurrentNodeIdAssetEditorService.couldRemoveCurrentNode
         |> StateLogicService.getEditorState ?
-          () : Method.removeAssetNode((uiState, dispatchFunc), (), ())
+          Method.removeAssetNode((uiState, dispatchFunc), (), ()) : ()
     }>
     {
       CurrentNodeIdAssetEditorService.couldRemoveCurrentNode
       |> StateLogicService.getEditorState ?
-        <div className="item-notBeClick">
-          <img src="./public/img/notRemove.png" />
-        </div> :
         <div className="item-canBeClick">
           <img src="./public/img/remove.png" />
+        </div> :
+        <div className="item-notBeClick">
+          <img src="./public/img/notRemove.png" />
         </div>
     }
   </div>;
