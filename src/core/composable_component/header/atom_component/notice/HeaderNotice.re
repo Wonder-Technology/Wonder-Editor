@@ -36,10 +36,18 @@ let component = ReasonReact.reducerComponent("HeaderNotice");
 let reducer = (action, state) =>
   switch (action) {
   | HideWelComeUserModal =>
-    ReasonReact.Update({...state, isShowWelComeUserModal: false})
+    ReasonReact.Update({
+      ...state,
+      isShowWelComeUserModal: false,
+      isShowVersionUpgradeModal: false,
+    })
 
   | HideVersionUpgradeModal =>
-    ReasonReact.Update({...state, isShowVersionUpgradeModal: false})
+    ReasonReact.Update({
+      ...state,
+      isShowWelComeUserModal: false,
+      isShowVersionUpgradeModal: false,
+    })
   };
 
 let render =
