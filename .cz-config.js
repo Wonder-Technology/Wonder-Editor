@@ -67,6 +67,7 @@ module.exports = {
       { name: "publish" },
       { name: "bumped" },
       { name: "readme" },
+      { name: "webpack" },
       { name: "version" }
     ]
   },
