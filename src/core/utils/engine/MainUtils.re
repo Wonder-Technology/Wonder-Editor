@@ -1,10 +1,10 @@
 open Js.Promise;
 
 let _getLoadData = () => {
-  let engineConfigDir = "./src/config/engine/";
+  let engineConfigDir = "./config/engine/";
 
   AssetEngineService.loadConfig(
-    [|"./src/config/engine/setting.json", engineConfigDir|],
+    [|"./config/engine/setting.json", engineConfigDir|],
     StateDataEngineService.getEngineStateData(),
   );
 };
@@ -114,7 +114,7 @@ let init = () =>
          ();
        })
     |> WonderBsMost.Most.flatMap(engineState =>
-         Fetch.fetch("./src/config/editor/setting.json")
+         Fetch.fetch("./config/editor/setting.json")
          |> then_(response =>
               response
               |> Fetch.Response.json

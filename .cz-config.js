@@ -55,6 +55,7 @@ module.exports = {
       { name: "coverage" }
     ],
     refactor: [
+      { name: "move" },
       { name: "rename" },
       { name: "duplicate" },
       { name: "dead-code" },
