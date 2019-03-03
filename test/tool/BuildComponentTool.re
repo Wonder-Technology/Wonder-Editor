@@ -11,6 +11,14 @@ let buildHeaderNotice = () =>
     />,
   );
 
+let buildLeftHeader = () =>
+  ReactTestRenderer.create(
+    <MainEditorLeftHeader
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
+    />,
+  );
+
 let buildSceneTree = uiState =>
   ReactTestRenderer.create(
     <MainEditorSceneTree uiState dispatchFunc={TestTool.getDispatch()} />,

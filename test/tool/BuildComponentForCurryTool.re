@@ -2,7 +2,7 @@ let buildInspectorComponent = (uiState, addableComponentConfig, ()) =>
   ReactTestRenderer.create(
     <MainEditorInspector
       uiState
-      dispatchFunc=(TestTool.getDispatch())
+      dispatchFunc={TestTool.getDispatch()}
       addableComponentConfig
     />,
   );
@@ -10,120 +10,125 @@ let buildInspectorComponent = (uiState, addableComponentConfig, ()) =>
 let buildCameraView = () =>
   ReactTestRenderer.create(
     <MainEditorCameraView
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
     />,
   );
 
 let buildSceneTree = () =>
   ReactTestRenderer.create(
     <MainEditorSceneTree
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
     />,
   );
 
 let buildLight = () =>
   ReactTestRenderer.create(
     <MainEditorLight
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
     />,
   );
 
 let buildGeometry = () =>
   ReactTestRenderer.create(
     <MainEditorGeometry
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
-      currentSceneTreeNode=(GameObjectTool.unsafeGetCurrentSceneTreeNode())
-      geometryComponent=(GameObjectTool.getCurrentSceneTreeNodeGeometry())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
+      currentSceneTreeNode={GameObjectTool.unsafeGetCurrentSceneTreeNode()}
+      geometryComponent={GameObjectTool.getCurrentSceneTreeNodeGeometry()}
       isShowGeometryGroup=false
     />,
   );
 let buildMeshRenderer = () =>
   ReactTestRenderer.create(
     <MainEditorMeshRenderer
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
     />,
   );
 let buildMaterial = () =>
   ReactTestRenderer.create(
     <MainEditorMaterial
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
-      currentSceneTreeNode=(GameObjectTool.unsafeGetCurrentSceneTreeNode())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
+      currentSceneTreeNode={GameObjectTool.unsafeGetCurrentSceneTreeNode()}
     />,
   );
 let buildBasicMaterial = () =>
   ReactTestRenderer.create(
     <MainEditorBasicMaterial
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
-      materialComponent=(GameObjectTool.getCurrentSceneTreeNodeBasicMaterial())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
+      materialComponent={GameObjectTool.getCurrentSceneTreeNodeBasicMaterial()}
     />,
   );
 
 let buildLightMaterial = () =>
   ReactTestRenderer.create(
     <MainEditorLightMaterial
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
-      materialComponent=(GameObjectTool.getCurrentSceneTreeNodeLightMaterial())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
+      materialComponent={GameObjectTool.getCurrentSceneTreeNodeLightMaterial()}
     />,
   );
 
 let buildInspectorComponent = () =>
   ReactTestRenderer.create(
     <MainEditorInspector
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
-      addableComponentConfig=(InspectorTool.buildFakeAllShowComponentConfig())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
+      addableComponentConfig={InspectorTool.buildFakeAllShowComponentConfig()}
     />,
   );
 
 let buildMainEditorTransformComponent = () =>
   ReactTestRenderer.create(
     <MainEditorTransform
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
-      gameObject=(GameObjectTool.unsafeGetCurrentSceneTreeNode())
-      transformComponent=(GameObjectTool.getCurrentSceneTreeNodeTransform())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
+      gameObject={GameObjectTool.unsafeGetCurrentSceneTreeNode()}
+      transformComponent={GameObjectTool.getCurrentSceneTreeNodeTransform()}
     />,
   );
 
 let buildDirectionLight = () =>
   ReactTestRenderer.create(
     <MainEditorDirectionLight
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
-      lightComponent=(
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
+      lightComponent={
         GameObjectTool.getCurrentSceneTreeNodeDirectionLightComponent()
-      )
+      }
     />,
   );
 
 let buildCameraProjection = () =>
   ReactTestRenderer.create(
     <MainEditorCameraProjection
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
     />,
   );
 let buildPointLight = () =>
   ReactTestRenderer.create(
     <MainEditorPointLight
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
-      lightComponent=(GameObjectTool.getCurrentSceneTreeNodePointLightComponent())
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
+      lightComponent={
+        GameObjectTool.getCurrentSceneTreeNodePointLightComponent()
+      }
     />,
   );
 
-let buildHeader = () =>
+let buildController = () => {
+  Js.log("controller");
+
   ReactTestRenderer.create(
-    <Header
-      uiState=(TestTool.buildEmptyAppState())
-      dispatchFunc=(TestTool.getDispatch())
+    <Controller
+      uiState={TestTool.buildEmptyAppState()}
+      dispatchFunc={TestTool.getDispatch()}
     />,
   );
+};

@@ -34,13 +34,32 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
 
-      MainEditorSceneTool.initState(~sandbox, ());
-
-      LocalStorage.setValue(HeaderNotice.Method.getWelComeUserKey(), "ok");
-      LocalStorage.setValue(
-        HeaderNotice.Method.getVersionKey(),
-        Copyright.getVersion(),
+      MainEditorSceneTool.initStateWithJob(
+        ~sandbox,
+        ~isInitJob=false,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+            ~initPipelines=
+              {|
+               [
+           {
+             "name": "default",
+             "jobs": [
+               {
+                 "name": "init_transform_gizmos"
+               }
+             ]
+           }
+         ]
+               |},
+            (),
+          ),
+        (),
       );
+
+      MainEditorSceneTool.prepareGl(sandbox);
+
+      StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
 
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
@@ -51,6 +70,6 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateTwiceChangeAmbientLight, _beforeEach, () => ()),
-      BuildComponentForCurryTool.buildHeader,
+      BuildComponentForCurryTool.buildController,
     );
   });
