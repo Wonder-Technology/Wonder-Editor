@@ -126,14 +126,13 @@
 	    var args = _args;
 	    var f = _f;
 	    var arity = f.length;
-	    var arity$1 = arity === 0 ? 1 : arity;
 	    var len = args.length;
-	    var d = arity$1 - len | 0;
+	    var d = arity - len | 0;
 	    if (d === 0) {
 	      return f.apply(null, args);
 	    } else if (d < 0) {
-	      _args = caml_array_sub(args, arity$1, -d | 0);
-	      _f = f.apply(null, caml_array_sub(args, 0, arity$1));
+	      _args = caml_array_sub(args, arity, -d | 0);
+	      _f = f.apply(null, caml_array_sub(args, 0, arity));
 	      continue ;
 	    } else {
 	      return (function(f,args){
@@ -146,39 +145,35 @@
 	}
 
 	function curry_1(o, a0, arity) {
-	  if (arity > 7 || arity < 0) {
-	    return app(o, /* array */[a0]);
-	  } else {
-	    switch (arity) {
-	      case 0 : 
-	      case 1 : 
-	          return o(a0);
-	      case 2 : 
-	          return (function (param) {
-	              return o(a0, param);
-	            });
-	      case 3 : 
-	          return (function (param, param$1) {
-	              return o(a0, param, param$1);
-	            });
-	      case 4 : 
-	          return (function (param, param$1, param$2) {
-	              return o(a0, param, param$1, param$2);
-	            });
-	      case 5 : 
-	          return (function (param, param$1, param$2, param$3) {
-	              return o(a0, param, param$1, param$2, param$3);
-	            });
-	      case 6 : 
-	          return (function (param, param$1, param$2, param$3, param$4) {
-	              return o(a0, param, param$1, param$2, param$3, param$4);
-	            });
-	      case 7 : 
-	          return (function (param, param$1, param$2, param$3, param$4, param$5) {
-	              return o(a0, param, param$1, param$2, param$3, param$4, param$5);
-	            });
-	      
-	    }
+	  switch (arity) {
+	    case 1 : 
+	        return o(a0);
+	    case 2 : 
+	        return (function (param) {
+	            return o(a0, param);
+	          });
+	    case 3 : 
+	        return (function (param, param$1) {
+	            return o(a0, param, param$1);
+	          });
+	    case 4 : 
+	        return (function (param, param$1, param$2) {
+	            return o(a0, param, param$1, param$2);
+	          });
+	    case 5 : 
+	        return (function (param, param$1, param$2, param$3) {
+	            return o(a0, param, param$1, param$2, param$3);
+	          });
+	    case 6 : 
+	        return (function (param, param$1, param$2, param$3, param$4) {
+	            return o(a0, param, param$1, param$2, param$3, param$4);
+	          });
+	    case 7 : 
+	        return (function (param, param$1, param$2, param$3, param$4, param$5) {
+	            return o(a0, param, param$1, param$2, param$3, param$4, param$5);
+	          });
+	    default:
+	      return app(o, /* array */[a0]);
 	  }
 	}
 
@@ -192,40 +187,36 @@
 	}
 
 	function curry_2(o, a0, a1, arity) {
-	  if (arity > 7 || arity < 0) {
-	    return app(o, /* array */[
-	                a0,
-	                a1
-	              ]);
-	  } else {
-	    switch (arity) {
-	      case 0 : 
-	      case 1 : 
-	          return app(o(a0), /* array */[a1]);
-	      case 2 : 
-	          return o(a0, a1);
-	      case 3 : 
-	          return (function (param) {
-	              return o(a0, a1, param);
-	            });
-	      case 4 : 
-	          return (function (param, param$1) {
-	              return o(a0, a1, param, param$1);
-	            });
-	      case 5 : 
-	          return (function (param, param$1, param$2) {
-	              return o(a0, a1, param, param$1, param$2);
-	            });
-	      case 6 : 
-	          return (function (param, param$1, param$2, param$3) {
-	              return o(a0, a1, param, param$1, param$2, param$3);
-	            });
-	      case 7 : 
-	          return (function (param, param$1, param$2, param$3, param$4) {
-	              return o(a0, a1, param, param$1, param$2, param$3, param$4);
-	            });
-	      
-	    }
+	  switch (arity) {
+	    case 1 : 
+	        return app(o(a0), /* array */[a1]);
+	    case 2 : 
+	        return o(a0, a1);
+	    case 3 : 
+	        return (function (param) {
+	            return o(a0, a1, param);
+	          });
+	    case 4 : 
+	        return (function (param, param$1) {
+	            return o(a0, a1, param, param$1);
+	          });
+	    case 5 : 
+	        return (function (param, param$1, param$2) {
+	            return o(a0, a1, param, param$1, param$2);
+	          });
+	    case 6 : 
+	        return (function (param, param$1, param$2, param$3) {
+	            return o(a0, a1, param, param$1, param$2, param$3);
+	          });
+	    case 7 : 
+	        return (function (param, param$1, param$2, param$3, param$4) {
+	            return o(a0, a1, param, param$1, param$2, param$3, param$4);
+	          });
+	    default:
+	      return app(o, /* array */[
+	                  a0,
+	                  a1
+	                ]);
 	  }
 	}
 
@@ -239,49 +230,39 @@
 	}
 
 	function curry_3(o, a0, a1, a2, arity) {
-	  var exit = 0;
-	  if (arity > 7 || arity < 0) {
-	    return app(o, /* array */[
-	                a0,
-	                a1,
-	                a2
-	              ]);
-	  } else {
-	    switch (arity) {
-	      case 0 : 
-	      case 1 : 
-	          exit = 1;
-	          break;
-	      case 2 : 
-	          return app(o(a0, a1), /* array */[a2]);
-	      case 3 : 
-	          return o(a0, a1, a2);
-	      case 4 : 
-	          return (function (param) {
-	              return o(a0, a1, a2, param);
-	            });
-	      case 5 : 
-	          return (function (param, param$1) {
-	              return o(a0, a1, a2, param, param$1);
-	            });
-	      case 6 : 
-	          return (function (param, param$1, param$2) {
-	              return o(a0, a1, a2, param, param$1, param$2);
-	            });
-	      case 7 : 
-	          return (function (param, param$1, param$2, param$3) {
-	              return o(a0, a1, a2, param, param$1, param$2, param$3);
-	            });
-	      
-	    }
+	  switch (arity) {
+	    case 1 : 
+	        return app(o(a0), /* array */[
+	                    a1,
+	                    a2
+	                  ]);
+	    case 2 : 
+	        return app(o(a0, a1), /* array */[a2]);
+	    case 3 : 
+	        return o(a0, a1, a2);
+	    case 4 : 
+	        return (function (param) {
+	            return o(a0, a1, a2, param);
+	          });
+	    case 5 : 
+	        return (function (param, param$1) {
+	            return o(a0, a1, a2, param, param$1);
+	          });
+	    case 6 : 
+	        return (function (param, param$1, param$2) {
+	            return o(a0, a1, a2, param, param$1, param$2);
+	          });
+	    case 7 : 
+	        return (function (param, param$1, param$2, param$3) {
+	            return o(a0, a1, a2, param, param$1, param$2, param$3);
+	          });
+	    default:
+	      return app(o, /* array */[
+	                  a0,
+	                  a1,
+	                  a2
+	                ]);
 	  }
-	  if (exit === 1) {
-	    return app(o(a0), /* array */[
-	                a1,
-	                a2
-	              ]);
-	  }
-	  
 	}
 
 	function _3(o, a0, a1, a2) {
@@ -294,52 +275,42 @@
 	}
 
 	function curry_4(o, a0, a1, a2, a3, arity) {
-	  var exit = 0;
-	  if (arity > 7 || arity < 0) {
-	    return app(o, /* array */[
-	                a0,
-	                a1,
-	                a2,
-	                a3
-	              ]);
-	  } else {
-	    switch (arity) {
-	      case 0 : 
-	      case 1 : 
-	          exit = 1;
-	          break;
-	      case 2 : 
-	          return app(o(a0, a1), /* array */[
-	                      a2,
-	                      a3
-	                    ]);
-	      case 3 : 
-	          return app(o(a0, a1, a2), /* array */[a3]);
-	      case 4 : 
-	          return o(a0, a1, a2, a3);
-	      case 5 : 
-	          return (function (param) {
-	              return o(a0, a1, a2, a3, param);
-	            });
-	      case 6 : 
-	          return (function (param, param$1) {
-	              return o(a0, a1, a2, a3, param, param$1);
-	            });
-	      case 7 : 
-	          return (function (param, param$1, param$2) {
-	              return o(a0, a1, a2, a3, param, param$1, param$2);
-	            });
-	      
-	    }
+	  switch (arity) {
+	    case 1 : 
+	        return app(o(a0), /* array */[
+	                    a1,
+	                    a2,
+	                    a3
+	                  ]);
+	    case 2 : 
+	        return app(o(a0, a1), /* array */[
+	                    a2,
+	                    a3
+	                  ]);
+	    case 3 : 
+	        return app(o(a0, a1, a2), /* array */[a3]);
+	    case 4 : 
+	        return o(a0, a1, a2, a3);
+	    case 5 : 
+	        return (function (param) {
+	            return o(a0, a1, a2, a3, param);
+	          });
+	    case 6 : 
+	        return (function (param, param$1) {
+	            return o(a0, a1, a2, a3, param, param$1);
+	          });
+	    case 7 : 
+	        return (function (param, param$1, param$2) {
+	            return o(a0, a1, a2, a3, param, param$1, param$2);
+	          });
+	    default:
+	      return app(o, /* array */[
+	                  a0,
+	                  a1,
+	                  a2,
+	                  a3
+	                ]);
 	  }
-	  if (exit === 1) {
-	    return app(o(a0), /* array */[
-	                a1,
-	                a2,
-	                a3
-	              ]);
-	  }
-	  
 	}
 
 	function _4(o, a0, a1, a2, a3) {
@@ -4628,13 +4599,13 @@
 
 	var id$1 = /* record */[/* contents */0];
 
-	function get_id() {
+	function caml_fresh_oo_id(param) {
 	  id$1[0] += 1;
 	  return id$1[0];
 	}
 
 	function create$1(str) {
-	  var v_001 = get_id(/* () */0);
+	  var v_001 = caml_fresh_oo_id(/* () */0);
 	  var v = /* tuple */[
 	    str,
 	    v_001
@@ -4646,7 +4617,7 @@
 
 	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	var Check_fail = create$1("Exception-WonderLog.Check_fail");
 
@@ -4658,45 +4629,51 @@
 
 	/* throw Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 
-	var debug$1 = function (msg){
+
+
+
+
+
+
+	function debug$1 (msg){
 	    if (typeof window === "undefined" || typeof window.wonder_console === "undefined") {
 	      return;
 	    }
 
 	    window.wonder_console.debug(msg);
-	  };
+	  }
 
-	var error$3 = function (msg){
+	function error$3 (msg){
 	    if (typeof window === "undefined" || typeof window.wonder_console === "undefined") {
 	      return;
 	    }
 
 	    window.wonder_console.error(msg);
-	  };
+	  }
 
-	var warn$1 = function (msg){
+	function warn$1 (msg){
 	    if (typeof window === "undefined" || typeof window.wonder_console === "undefined") {
 	      return;
 	    }
 
 	    window.wonder_console.warn(msg);
-	  };
+	  }
 
-	var trace = function (func){
+	function trace (func){
 	    if (typeof window === "undefined" || typeof window.wonder_console === "undefined") {
 	      return;
 	    }
 
 	    window.wonder_console.trace(func);
-	  };
+	  }
 
 
 	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function _warn(msg) {
 	  console.warn(msg);
@@ -4727,7 +4704,7 @@
 	  return _warn("" + (String(msg) + ""));
 	}
 
-	function buildDebugMessage(description, params, _) {
+	function buildDebugMessage(description, params, param) {
 	  return "\n  Debug:\n\n  description\n  " + (String(description) + ("\n\n  params\n  " + (String(params) + "\n\n  ")));
 	}
 
@@ -4748,7 +4725,7 @@
 	  }
 	}
 
-	function buildDebugJsonMessage(description, $$var, _) {
+	function buildDebugJsonMessage(description, $$var, param) {
 	  var varStr = JSON.stringify($$var);
 	  return "\n  DebugJson:\n\n  description\n  " + (String(description) + ("\n\n  variable value\n  " + (String(varStr) + "\n  ")));
 	}
@@ -4787,7 +4764,7 @@
 	/* Exception-WonderLog Not a pure module */
 
 	var getSelf = (
-	    function(){
+	    function(param){
 	      if(typeof window !== "undefined"){
 	        if(typeof window.fake_self_wonder !== "undefined"){
 	          return window.fake_self_wonder;
@@ -4805,6 +4782,80 @@
 
 
 	/* getSelf Not a pure module */
+
+	function isInMap(value) {
+	  return value !== undefined;
+	}
+
+
+	/* No side effect */
+
+	var undefinedHeader = /* array */[];
+
+	function some(x) {
+	  if (x === undefined) {
+	    var block = /* tuple */[
+	      undefinedHeader,
+	      0
+	    ];
+	    block.tag = 256;
+	    return block;
+	  } else if (x !== null && x[0] === undefinedHeader) {
+	    var nid = x[1] + 1 | 0;
+	    var block$1 = /* tuple */[
+	      undefinedHeader,
+	      nid
+	    ];
+	    block$1.tag = 256;
+	    return block$1;
+	  } else {
+	    return x;
+	  }
+	}
+
+	function nullable_to_opt(x) {
+	  if (x === null || x === undefined) {
+	    return undefined;
+	  } else {
+	    return some(x);
+	  }
+	}
+
+	function undefined_to_opt(x) {
+	  if (x === undefined) {
+	    return undefined;
+	  } else {
+	    return some(x);
+	  }
+	}
+
+	function valFromOption(x) {
+	  if (x !== null && x[0] === undefinedHeader) {
+	    var depth = x[1];
+	    if (depth === 0) {
+	      return undefined;
+	    } else {
+	      return /* tuple */[
+	              undefinedHeader,
+	              depth - 1 | 0
+	            ];
+	    }
+	  } else {
+	    return x;
+	  }
+	}
+
+
+	/* No side effect */
+
+	function get$2(dict, k) {
+	  if ((k in dict)) {
+	    return some(dict[k]);
+	  }
+	  
+	}
+
+
 
 	function values(dict) {
 	  var keys = Object.keys(dict);
@@ -4833,64 +4884,6 @@
 	}
 
 
-	/* unsafeDeleteKey Not a pure module */
-
-	var undefinedHeader = /* array */[];
-
-	function some$1(x) {
-	  if (x === undefined) {
-	    var block = /* tuple */[
-	      undefinedHeader,
-	      0
-	    ];
-	    block.tag = 256;
-	    return block;
-	  } else if (x !== null && x[0] === undefinedHeader) {
-	    var nid = x[1] + 1 | 0;
-	    var block$1 = /* tuple */[
-	      undefinedHeader,
-	      nid
-	    ];
-	    block$1.tag = 256;
-	    return block$1;
-	  } else {
-	    return x;
-	  }
-	}
-
-	function nullable_to_opt(x) {
-	  if (x === null || x === undefined) {
-	    return undefined;
-	  } else {
-	    return some$1(x);
-	  }
-	}
-
-	function undefined_to_opt(x) {
-	  if (x === undefined) {
-	    return undefined;
-	  } else {
-	    return some$1(x);
-	  }
-	}
-
-	function valFromOption(x) {
-	  if (x !== null && x[0] === undefinedHeader) {
-	    var depth = x[1];
-	    if (depth === 0) {
-	      return undefined;
-	    } else {
-	      return /* tuple */[
-	              undefinedHeader,
-	              depth - 1 | 0
-	            ];
-	    }
-	  } else {
-	    return x;
-	  }
-	}
-
-
 	/* No side effect */
 
 	function isSome(param) {
@@ -4908,7 +4901,7 @@
 
 	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 
 	function reduceOneParam(func, param, arr) {
@@ -4922,14 +4915,14 @@
 
 	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
-	function createEmpty$1() {
+	function createEmpty$1(param) {
 	  return { };
 	}
 
 	function get$1(key, map) {
-	  return undefined_to_opt(map[key]);
+	  return get$2(map, key);
 	}
 
 	function unsafeGet$1(key, map) {
@@ -4939,9 +4932,9 @@
 	var fromList$1 = fromList$2;
 
 
-	/* Js_dict Not a pure module */
+	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function set(key, value, map) {
 	  map[key] = value;
@@ -4957,9 +4950,15 @@
 	var fromList = fromList$1;
 
 
-	/* HashMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
-	var $$Error = create$1("Js_exn.Error");
+	function fastGet(key, map) {
+	  var value = unsafeGet(key, map);
+	  return /* tuple */[
+	          isInMap(value),
+	          value
+	        ];
+	}
 
 
 	/* No side effect */
@@ -5003,9 +5002,9 @@
 
 	/* No side effect */
 
-	var for_in = function (o,foo){
+	function for_in (o,foo){
 	        for (var x in o) { foo(x); }
-	      };
+	      }
 
 	function caml_compare(_a, _b) {
 	  while(true) {
@@ -5369,7 +5368,12 @@
 
 	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	var $$Error = create$1("Caml_js_exceptions.Error");
+
+
+	/* No side effect */
+
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function _assert(result, msg) {
 	  if (result) {
@@ -5382,13 +5386,15 @@
 	  }
 	}
 
-	var test = function (message,func){
+	function test (message,func){
 	  try{
 	  func();
 	  } catch(e){
 	    throw new Error(JSON.stringify(message));
 	  }
-	  };
+	  }
+
+
 
 	function requireCheck(f, isTest) {
 	  if (isTest) {
@@ -5407,7 +5413,7 @@
 	  }
 	}
 
-	function assertPass() {
+	function assertPass(param) {
 	  return /* () */0;
 	}
 
@@ -5445,7 +5451,7 @@
 	  return "\"expect to be " + (String(target) + (", but actual is " + (String(source) + "\"")));
 	}
 
-	function assertEqual(_, source, target) {
+	function assertEqual(kind, source, target) {
 	  return _assert(caml_equal(source, target), _getEqualMessage(source, target));
 	}
 
@@ -5453,23 +5459,23 @@
 	  return "\"expect not to be " + (String(target) + (", but actual is " + (String(source) + "\"")));
 	}
 
-	function assertNotEqual(_, source, target) {
+	function assertNotEqual(kind, source, target) {
 	  return _assert(caml_notequal(source, target), _getNotEqualMessage(source, target));
 	}
 
-	function assertGt(_, source, target) {
+	function assertGt(kind, source, target) {
 	  return _assert(caml_greaterthan(source, target), "expect " + (String(source) + (" > " + (String(target) + ", but actual isn\'t"))));
 	}
 
-	function assertGte(_, source, target) {
+	function assertGte(kind, source, target) {
 	  return _assert(caml_greaterequal(source, target), "expect " + (String(source) + (" >= " + (String(target) + ", but actual isn\'t"))));
 	}
 
-	function assertLt(_, source, target) {
+	function assertLt(kind, source, target) {
 	  return _assert(caml_lessthan(source, target), "expect " + (String(source) + (" < " + (String(target) + ", but actual isn\'t"))));
 	}
 
-	function assertLte(_, source, target) {
+	function assertLte(kind, source, target) {
 	  return _assert(caml_lessequal(source, target), "expect " + (String(source) + (" <= " + (String(target) + ", but actual isn\'t"))));
 	}
 
@@ -5544,7 +5550,7 @@
 
 	/* _isNullableExist Not a pure module */
 
-	function createStateData() {
+	function createStateData(param) {
 	  return /* record */[
 	          /* state */undefined,
 	          /* isDebug */false
@@ -5571,9 +5577,9 @@
 
 	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
-	function createEmpty$2() {
+	function createEmpty$2(param) {
 	  return /* array */[];
 	}
 
@@ -5610,7 +5616,7 @@
 	var reduceOneParam$1 = reduceOneParam;
 
 
-	/* MutableHashMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
 	var _isFromEventStream = (
 	  function(stream) {
@@ -5632,15 +5638,15 @@
 	}
 
 	function concatStreamFuncArray(stateData$$1, streamFuncArr) {
-	  requireCheck((function () {
+	  requireCheck((function (param) {
 	          var count = streamFuncArr.length;
-	          test(buildAssertMessage("stream count >= 2", "is " + (String(count) + "")), (function () {
+	          test(buildAssertMessage("stream count >= 2", "is " + (String(count) + "")), (function (param) {
 	                  return Operators[/* >= */7](count, 2);
 	                }));
-	          test("the first stream should be fromEvent stream", (function () {
+	          test("the first stream should be fromEvent stream", (function (param) {
 	                  return assertJsTrue(_1(_isFromEventStream, caml_array_get(streamFuncArr, 0)));
 	                }));
-	          return test("only the first stream should be fromEvent stream", (function () {
+	          return test("only the first stream should be fromEvent stream", (function (param) {
 	                        return forEach((function (stream) {
 	                                      return assertJsFalse(_1(_isFromEventStream, stream));
 	                                    }), streamFuncArr.slice(1));
@@ -5678,7 +5684,7 @@
 	function unsafeFindFirst(arr, targetValue, func) {
 	  return ensureCheck((function (first) {
 	                var arrJson = getJsonStr(arr);
-	                return test(buildAssertMessage("find " + (String(targetValue) + (" in " + (String(arrJson) + ""))), "not"), (function () {
+	                return test(buildAssertMessage("find " + (String(targetValue) + (" in " + (String(arrJson) + ""))), "not"), (function (param) {
 	                              return assertNullableExist(first);
 	                            }));
 	              }), getIsDebug(stateData), arr.find(func));
@@ -5688,8 +5694,8 @@
 	/* Log-WonderLog Not a pure module */
 
 	function unsafeGet$2(optionData) {
-	  requireCheck((function () {
-	          return test(buildAssertMessage("data exist(get by getExn)", "not"), (function () {
+	  requireCheck((function (param) {
+	          return test(buildAssertMessage("data exist(get by getExn)", "not"), (function (param) {
 	                        return assertExist(optionData);
 	                      }));
 	        }), getIsDebug(stateData));
@@ -5711,7 +5717,7 @@
 
 	var filterTargetName = caml_equal;
 
-	function _throwJobFlagsShouldBeDefined() {
+	function _throwJobFlagsShouldBeDefined(param) {
 	  return fatal(buildFatalMessage("throwJobFlagsShouldBeDefined", "jobFlags should be defined", "", "", ""));
 	}
 
@@ -5760,7 +5766,9 @@
 
 	/* Log-WonderLog Not a pure module */
 
-	/* node_std_output Not a pure module */
+	/* No side effect */
+
+	/* No side effect */
 
 	/* No side effect */
 
@@ -5772,11 +5780,11 @@
 
 	/* imul Not a pure module */
 
-	/* repeat Not a pure module */
+	/* No side effect */
 
-	/* two_ptr_32_dbl Not a pure module */
+	/* Caml_int32 Not a pure module */
 
-	/* float_of_string Not a pure module */
+	/* No side effect */
 
 	/* No side effect */
 
@@ -5805,7 +5813,7 @@
 	}
 
 
-	/* MutableHashMapService-WonderCommonlib Not a pure module */
+	/* OperateRenderWorkerJobService-Wonderjs Not a pure module */
 
 	var renderWorkerStateData = /* record */[/* state */undefined];
 
@@ -5822,7 +5830,7 @@
 	var createJobHandleMap = fromList;
 
 
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
 	var hexFloat_of_string = (
 	function(str) {
@@ -5851,8 +5859,8 @@
 
 	function unsafeGetGl(record) {
 	  var gl = record[/* gl */0];
-	  requireCheck((function () {
-	          return test(buildAssertMessage("gl exist", "not"), (function () {
+	  requireCheck((function (param) {
+	          return test(buildAssertMessage("gl exist", "not"), (function (param) {
 	                        return assertExist(gl);
 	                      }));
 	        }), getIsDebug(stateData));
@@ -5861,7 +5869,7 @@
 
 	function setGl(gl, record) {
 	  return /* record */[
-	          /* gl */some$1(gl),
+	          /* gl */some(gl),
 	          /* colorWrite */record[/* colorWrite */1],
 	          /* depthWrite */record[/* depthWrite */2],
 	          /* clearColor */record[/* clearColor */3],
@@ -6097,8 +6105,8 @@
 
 	/* OptionService-Wonderjs Not a pure module */
 
-	function execJob$2(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$2(flags, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var gl = unsafeGetGl(state[/* deviceManagerRecord */4]);
 	                commit(gl);
@@ -6113,7 +6121,7 @@
 
 	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 
 	function isEmpty(value) {
@@ -6127,9 +6135,9 @@
 
 	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
-	function createEmpty$4() {
+	function createEmpty$4(param) {
 	  return /* array */[];
 	}
 
@@ -6137,13 +6145,13 @@
 	  return map[key];
 	}
 
-	function get$5(key, map) {
+	function get$7(key, map) {
 	  var value = map[key];
 	  var match = isEmpty(value);
 	  if (match) {
 	    return undefined;
 	  } else {
-	    return some$1(value);
+	    return some(value);
 	  }
 	}
 
@@ -6168,9 +6176,9 @@
 	}
 
 
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function set$1(key, value, map) {
 	  map[key] = value;
@@ -6186,7 +6194,7 @@
 
 	var unsafeGet$3 = unsafeGet$4;
 
-	var get$4 = get$5;
+	var get$6 = get$7;
 
 	var length$3 = length$4;
 
@@ -6195,7 +6203,7 @@
 	var reduceiValid = reduceiValid$1;
 
 
-	/* SparseMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
 	/* ArrayService-Wonderjs Not a pure module */
 
@@ -6211,7 +6219,7 @@
 
 	/* OptionService-Wonderjs Not a pure module */
 
-	/* MutableSparseMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
 	/* _isSupportSharedArrayBuffer Not a pure module */
 
@@ -6219,7 +6227,7 @@
 	  return (count << 4);
 	}
 
-	function getLocalToWorldMatricesOffset() {
+	function getLocalToWorldMatricesOffset(count) {
 	  return 0;
 	}
 
@@ -6301,13 +6309,13 @@
 	}
 
 	function _checkNotExceedBound(index, typeArray, getLengthFunc) {
-	  return test(buildAssertMessage("not exceed bound", "exceed"), (function () {
+	  return test(buildAssertMessage("not exceed bound", "exceed"), (function (param) {
 	                return Operators[/* < */9](index, _1(getLengthFunc, typeArray));
 	              }));
 	}
 
 	function setUint8_1(index, value, typeArray) {
-	  requireCheck((function () {
+	  requireCheck((function (param) {
 	          return _checkNotExceedBound(index, typeArray, (function (prim) {
 	                        return prim.length;
 	                      }));
@@ -6317,7 +6325,7 @@
 	}
 
 	function setUint32_1(index, value, typeArray) {
-	  requireCheck((function () {
+	  requireCheck((function (param) {
 	          return _checkNotExceedBound(index, typeArray, (function (prim) {
 	                        return prim.length;
 	                      }));
@@ -6378,7 +6386,7 @@
 
 	/* ComponentMapService-Wonderjs Not a pure module */
 
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* HierachyTransformService-Wonderjs Not a pure module */
 
 	/* BindDomEventMainService-Wonderjs Not a pure module */
 
@@ -6401,17 +6409,17 @@
 
 	/* No side effect */
 
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* HandlePointDomEventMainService-Wonderjs Not a pure module */
 
 	/* No side effect */
 
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
 	/* most Not a pure module */
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 
 	var vs = "\nprecision mediump float;\n\nattribute vec2 a_position;\nattribute vec3 a_color;\nattribute vec2 a_texCoord;\n\nuniform mat4 u_projectionMat;\n\nvarying vec3 v_color;\nvarying vec2 v_texCoord;\n\nvoid main() {\n  gl_Position = u_projectionMat * vec4(a_position, 0, 1);\n  v_color = a_color;\n  v_texCoord = a_texCoord;\n}\n    ";
@@ -6421,7 +6429,7 @@
 
 	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function range$2(a, b) {
 	  var result = createEmpty$2(/* () */0);
@@ -6437,13 +6445,13 @@
 	}
 
 
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function unsafeGet$5(optionData) {
-	  requireCheck((function () {
-	          return test(buildAssertMessage("data exist(get by getExn)", "not"), (function () {
+	  requireCheck((function (param) {
+	          return test(buildAssertMessage("data exist(get by getExn)", "not"), (function (param) {
 	                        return assertExist(optionData);
 	                      }));
 	        }), true);
@@ -6453,10 +6461,10 @@
 
 	/* Log-WonderLog Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 
-	function createIdentityMatrix4() {
+	function createIdentityMatrix4(param) {
 	  return new Float32Array(/* array */[
 	              1,
 	              0,
@@ -6503,12 +6511,12 @@
 
 	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function _compileShader(gl, glslSource, shader) {
 	  gl.shaderSource(shader, glslSource);
 	  gl.compileShader(shader);
-	  debugWithFunc((function () {
+	  debugWithFunc((function (param) {
 	          var match = gl.getShaderParameter(shader, gl.COMPILE_STATUS) === false;
 	          if (match) {
 	            var message = gl.getShaderInfoLog(shader);
@@ -6529,7 +6537,7 @@
 
 	function _linkProgram(program, gl) {
 	  gl.linkProgram(program);
-	  debugWithFunc((function () {
+	  debugWithFunc((function (param) {
 	          var match = gl.getProgramParameter(program, gl.LINK_STATUS) === false;
 	          if (match) {
 	            var message = gl.getProgramInfoLog(program);
@@ -6556,13 +6564,17 @@
 
 	/* Log-WonderLog Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
+
+
+
+
 
 
 
 	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function clamp$1(num, below, up) {
 	  var match = caml_lessthan(num, below);
@@ -6581,22 +6593,26 @@
 
 	/* convertStringToInt Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
+
+
 
 
 	/* most Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 
 	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
+
+
 
 
 	/* most Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function unsafeGetWebglData(record) {
 	  return unsafeGet$5(record[/* webglData */3]);
@@ -6641,13 +6657,15 @@
 
 	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
+
+
 
 
 
 	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function buildKerningHashMapKey(first, second) {
 	  return imul(first, 1000) + second | 0;
@@ -6656,12 +6674,12 @@
 
 	/* Log-WonderLog Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 
 	/* most Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function getFntData(record) {
 	  var assetData = record[/* assetData */1];
@@ -6748,7 +6766,7 @@
 
 	/* most Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function addPoints(points, pointArr) {
 	  return reduceOneParam$1((function (arr, point) {
@@ -6756,18 +6774,18 @@
 	              }), pointArr, points);
 	}
 
-	var concatArrays = function (arrays){
+	function concatArrays (arrays){
 	  return [].concat.apply([], arrays);  
-	  };
+	  }
 
 	function getBaseIndex(verticeArr) {
 	  return verticeArr.length / 2 | 0;
 	}
 
 
-	/* ArrayService-WonderImgui Not a pure module */
+	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function _bufferArrayBufferData(param, gl) {
 	  var $$location = param[2];
@@ -6860,9 +6878,9 @@
 	}
 
 
-	/* ArrayService-WonderImgui Not a pure module */
+	/* RecordIMGUIService-WonderImgui Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function beginGroup(position, record) {
 	  var groupData = record[/* layoutData */8][/* groupData */0];
@@ -6945,9 +6963,9 @@
 	}
 
 
-	/* ArrayService-WonderImgui Not a pure module */
+	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 
 	function convertIntRectToFloatRect(param) {
@@ -6969,7 +6987,7 @@
 
 	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function draw(param, color, record) {
 	  var height = param[3];
@@ -7035,10 +7053,10 @@
 
 	/* RecordIMGUIService-WonderImgui Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function getKerning(fntData, left, right) {
-	  var match = get$4(buildKerningHashMapKey(left, right), fntData[/* kerningMap */5]);
+	  var match = get$6(buildKerningHashMapKey(left, right), fntData[/* kerningMap */5]);
 	  if (match !== undefined) {
 	    return match;
 	  } else {
@@ -7049,11 +7067,11 @@
 
 	/* ParseFntIMGUIService-WonderImgui Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function _getGlyphById(fntData, id) {
 	  var dict = fntData[/* fontDefDictionary */4];
-	  return get$4(id, dict);
+	  return get$6(id, dict);
 	}
 
 	function getGlyph(param, fntData, id) {
@@ -7121,18 +7139,20 @@
 	}
 
 
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function hasFontDefDictionaryData(param) {
 	  return length$3(param[/* fontDefDictionary */4]) > 0;
 	}
 
 
-	/* MutableSparseMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
+
+
 
 	function _computeMetrics(fntData, text, letterSpacing, start, end_, width, hasFontDefDictionaryDataFunc, getGlyphFunc, getKerningFunc) {
 	  var match = !_1(hasFontDefDictionaryDataFunc, fntData);
@@ -7204,7 +7224,7 @@
 	  return (/\s/).test($$char);
 	}
 
-	var _greedy = function (fntData,text,letterSpacing,start,end_,width,hasFontDefDictionaryDataFunc,getGlyphFunc,getKerningFunc){
+	function _greedy (fntData,text,letterSpacing,start,end_,width,hasFontDefDictionaryDataFunc,getGlyphFunc,getKerningFunc){
 	             /* A greedy word wrapper based on LibGDX algorithm
 	            https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/g2d/BitmapFontCache.java */
 	    const NEWLINE_CHAR = '\n';
@@ -7273,7 +7293,7 @@
 	            return lines
 
 
-	            };
+	            }
 
 	function getLines(fntData, text, param, fallbackGlyphTuple) {
 	  return _greedy(fntData, text, param[0], param[2], param[3], param[1], hasFontDefDictionaryData, (function (param, param$1) {
@@ -7282,16 +7302,16 @@
 	}
 
 
-	/* FontService-WonderImgui Not a pure module */
+	/* BitmapFontParserIMGUIService-WonderImgui Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function _computeYForCenterYAlignment(totalHeight, lineHeight, lines) {
 	  var linesHeight = imul(lines.length, lineHeight);
 	  return (totalHeight - linesHeight | 0) / 2 | 0;
 	}
 
-	function getLayoutData(text, param, fntData, _) {
+	function getLayoutData(text, param, fntData, record) {
 	  var align = param[4];
 	  var letterSpacing = param[3];
 	  var width = param[0];
@@ -7367,9 +7387,9 @@
 	}
 
 
-	/* ArrayService-WonderImgui Not a pure module */
+	/* BitmapFontParserIMGUIService-WonderImgui Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function _generateVertices(posX, posY, param, verticeArr) {
 	  var position = param[/* position */0];
@@ -7489,7 +7509,7 @@
 
 	/* Log-WonderLog Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function _getOrCreateCustomTextureDrawData(id, record) {
 	  var match = get(id, getCustomTextureDrawDataMap(record));
@@ -7498,7 +7518,7 @@
 	  } else {
 	    return /* record */[
 	            /* drawType : CustomTexture */1,
-	            /* customTexture */some$1(unsafeGetCustomTexture(id, record)),
+	            /* customTexture */some(unsafeGetCustomTexture(id, record)),
 	            /* verticeArr : array */[],
 	            /* colorArr : array */[],
 	            /* texCoordArr : array */[],
@@ -7591,7 +7611,7 @@
 
 	/* AssetIMGUIService-WonderImgui Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 
 	function isInBox(param, param$1) {
@@ -7620,7 +7640,7 @@
 
 	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function isClick(record) {
 	  var match = getIOData$1(record);
@@ -7634,7 +7654,7 @@
 
 	/* RecordIMGUIService-WonderImgui Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function button$1(rect, str, record) {
 	  var match = getSetting$1(record)[/* buttonSetting */2];
@@ -7671,7 +7691,7 @@
 
 	/* IOIMGUIService-WonderImgui Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function _addIndex(record) {
 	  var init = record[/* controlData */6];
@@ -7697,7 +7717,7 @@
 	}
 
 	function _getValue(index, defaultValue, record) {
-	  var match = get$4(index, record[/* controlData */6][/* sliderData */2][/* valueMap */1]);
+	  var match = get$6(index, record[/* controlData */6][/* sliderData */2][/* valueMap */1]);
 	  if (match !== undefined) {
 	    return match;
 	  } else {
@@ -7833,7 +7853,7 @@
 
 	/* NumberService-WonderImgui Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function _addIndex$1(record) {
 	  var init = record[/* controlData */6];
@@ -7859,7 +7879,7 @@
 	}
 
 	function _getIsSelectedByDefaultAndMap(index, defaultIsSelected, record) {
-	  var match = get$4(index, record[/* controlData */6][/* checkboxData */1][/* isSelectedMap */1]);
+	  var match = get$6(index, record[/* controlData */6][/* checkboxData */1][/* isSelectedMap */1]);
 	  if (match !== undefined) {
 	    return match;
 	  } else {
@@ -7926,7 +7946,7 @@
 
 	/* IOIMGUIService-WonderImgui Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function _drawCircle(_param, _theta, _curIndex, _param$1) {
 	  while(true) {
@@ -8042,9 +8062,9 @@
 	}
 
 
-	/* ArrayService-WonderImgui Not a pure module */
+	/* RecordIMGUIService-WonderImgui Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function _getSelectIndex(defaultSelectIndex, group$$1, record) {
 	  var match = get(group$$1, getRadioButtonData(record)[/* isSelectedMap */0]);
@@ -8126,8 +8146,8 @@
 	}
 
 	function radioButton$1(groupDataArr, defaultSelectIndex, group$$1, record) {
-	  requireCheck((function () {
-	          return test(buildAssertMessage("defaultSelectIndex < radioButton count", "not"), (function () {
+	  requireCheck((function (param) {
+	          return test(buildAssertMessage("defaultSelectIndex < radioButton count", "not"), (function (param) {
 	                        return Operators[/* < */9](defaultSelectIndex, groupDataArr.length);
 	                      }));
 	        }), true);
@@ -8191,7 +8211,7 @@
 
 	/* Log-WonderLog Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function label(rect, str, align, record) {
 	  return draw$1(convertIntRectToFloatRect(computeRectBasedOnTopLeftOfView(rect, record)), str, align, record);
@@ -8245,7 +8265,7 @@
 
 	/* DrawBoxIMGUIService-WonderImgui Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function _createArrayBuffer(gl) {
 	  var buffer = gl.createBuffer();
@@ -8336,7 +8356,7 @@
 	  }
 	}
 
-	function _createEmptyDrawData() {
+	function _createEmptyDrawData(param) {
 	  return /* record */[
 	          /* fontTextureDrawData : record */[
 	            /* drawType : FontTexture */0,
@@ -8551,8 +8571,8 @@
 	              /* webglData */record[/* webglData */3],
 	              /* drawData */record[/* drawData */4],
 	              /* imguiFuncData : record */[
-	                /* imguiFunc */some$1(func),
-	                /* customDataForIMGUIFunc */some$1(customData),
+	                /* imguiFunc */some(func),
+	                /* customDataForIMGUIFunc */some(customData),
 	                /* apiJsObj */init[/* apiJsObj */2]
 	              ],
 	              /* controlData */record[/* controlData */6],
@@ -8561,7 +8581,7 @@
 	            ]);
 	}
 
-	function _buildAPIJsObj() {
+	function _buildAPIJsObj(param) {
 	  return {
 	          label: label,
 	          image: image,
@@ -8604,7 +8624,7 @@
 	  }
 	}
 
-	function createRecord() {
+	function createRecord(param) {
 	  return /* record */[
 	          /* setting : record */[
 	            /* textColor : array */[
@@ -8752,7 +8772,7 @@
 	}
 
 
-	/* Js_dict Not a pure module */
+	/* OptionService-WonderImgui Not a pure module */
 
 	/* ManageIMGUIService-WonderImgui Not a pure module */
 
@@ -8788,8 +8808,8 @@
 
 	/* No side effect */
 
-	function execJob$5(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$5(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var gl = createGl(convertContextConfigDataToJsObj(data.contextConfig), data.canvas);
@@ -8827,7 +8847,7 @@
 	  if (tmp == null) {
 	    return undefined;
 	  } else {
-	    return some$1(tmp);
+	    return some(tmp);
 	  }
 	}
 
@@ -8880,7 +8900,7 @@
 	function _getTextureCapability(gl, textureCountPerMaterial, record) {
 	  return ensureCheck((function (param) {
 	                var maxTextureUnit = unsafeGet$2(param[/* maxTextureUnit */3]);
-	                return test(buildAssertMessage("maxTextureUnit:" + (String(maxTextureUnit) + (" >= textureCountPerMaterial:" + (String(textureCountPerMaterial) + ""))), "not"), (function () {
+	                return test(buildAssertMessage("maxTextureUnit:" + (String(maxTextureUnit) + (" >= textureCountPerMaterial:" + (String(textureCountPerMaterial) + ""))), "not"), (function (param) {
 	                              return Operators[/* >= */7](maxTextureUnit, textureCountPerMaterial);
 	                            }));
 	              }), getIsDebug(stateData), /* record */[
@@ -8902,8 +8922,8 @@
 	var hasExtension = isSome;
 
 	function unsafeGetInstanceExtension(record) {
-	  requireCheck((function () {
-	          return test(buildAssertMessage("extensionInstancedArrays exist", "not"), (function () {
+	  requireCheck((function (param) {
+	          return test(buildAssertMessage("extensionInstancedArrays exist", "not"), (function (param) {
 	                        return assertExist(record[/* extensionInstancedArrays */0]);
 	                      }));
 	        }), getIsDebug(stateData));
@@ -8913,8 +8933,8 @@
 
 	/* Log-WonderLog Not a pure module */
 
-	function execJob$6(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$6(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                state[/* gpuDetectRecord */3] = detect$1(unsafeGetGl(state[/* deviceManagerRecord */4]), data.bufferData.textureCountPerMaterial, state[/* gpuDetectRecord */3]);
@@ -8930,7 +8950,7 @@
 
 	/* No side effect */
 
-	function createIdentityMatrix3() {
+	function createIdentityMatrix3(param) {
 	  return new Float32Array(/* array */[
 	              1,
 	              0,
@@ -8944,7 +8964,7 @@
 	            ]);
 	}
 
-	function createEmptyMatrix3() {
+	function createEmptyMatrix3(param) {
 	  return new Float32Array(/* array */[
 	              0,
 	              0,
@@ -8974,7 +8994,7 @@
 
 	/* No side effect */
 
-	function sub$1(_, param, param$1) {
+	function sub$1(kind, param, param$1) {
 	  return /* tuple */[
 	          param[0] - param$1[0],
 	          param[1] - param$1[1],
@@ -8995,6 +9015,8 @@
 	          x1 * y2 - x2 * y1
 	        ];
 	}
+
+
 
 
 	/* No side effect */
@@ -9052,7 +9074,7 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	var setFntData$1 = setFntData;
 
@@ -9063,7 +9085,7 @@
 
 	/* AssetIMGUIService-WonderImgui Not a pure module */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	function setSetting$2(settingJsObj, record) {
 	  var buttonSettingJsObj = settingJsObj.buttonSetting;
@@ -9144,13 +9166,13 @@
 
 	/* OptionService-Wonderjs Not a pure module */
 
-	var _createImageBitmapForChrome = function (imageData,config){
+	function _createImageBitmapForChrome (imageData,config){
 	        return createImageBitmap(imageData, config)
-	    };
+	    }
 
-	var _createImageBitmapForFirefox = function (imageData){
+	function _createImageBitmapForFirefox (imageData){
 	        return createImageBitmap(imageData)
-	    };
+	    }
 
 	function createImageBitmapFromImageData(param, getFlipYFunc, state) {
 	  var imageData = new ImageData(new Uint8ClampedArray(param[0]), param[1], param[2]);
@@ -9180,11 +9202,11 @@
 
 	/* No side effect */
 
-	function _getFlipY() {
+	function _getFlipY(state) {
 	  return false;
 	}
 
-	function execJob$8(_, e, stateData) {
+	function execJob$8(param, e, stateData) {
 	  var data = getRecord$1(e);
 	  var imguiData = data.imguiData;
 	  var match = isJsonSerializedValueNone(imguiData.fntData) || isJsonSerializedValueNone(imguiData.bitmapImageData);
@@ -9192,7 +9214,7 @@
 	    return of(e);
 	  } else {
 	    var state = unsafeGetState$1(stateData);
-	    return map$2((function () {
+	    return map$2((function (param) {
 	                  return e;
 	                }), fromPromise(createImageBitmapFromImageData(unsafeGetJsonSerializedValue(imguiData.bitmapImageData), _getFlipY, state).then((function (imageBitmap) {
 	                            var state = unsafeGetState$1(stateData);
@@ -9232,8 +9254,8 @@
 
 	/* DeviceManagerService-Wonderjs Not a pure module */
 
-	function execJob$9(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$9(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                state[/* deviceManagerRecord */4] = execJob$10(state[/* deviceManagerRecord */4]);
 	                setState$1(stateData, state);
@@ -9314,7 +9336,7 @@
 	/* ColorService-Wonderjs Not a pure module */
 
 	function execJob$12(flags, e, stateData) {
-	  return callFunc((function () {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                state[/* deviceManagerRecord */4] = execJob$13(flags, state[/* deviceManagerRecord */4]);
 	                setState$1(stateData, state);
@@ -9357,7 +9379,7 @@
 	}
 
 	function _addBufferToPool(geometryIndex, bufferMap, pool) {
-	  var match = get$4(geometryIndex, bufferMap);
+	  var match = get$6(geometryIndex, bufferMap);
 	  if (match !== undefined) {
 	    return push(valFromOption(match), pool);
 	  } else {
@@ -9379,7 +9401,7 @@
 	}
 
 	function addInstanceBufferToPool(sourceInstanceIndex, record) {
-	  var match = get$4(sourceInstanceIndex, record[/* matrixInstanceBufferMap */4]);
+	  var match = get$6(sourceInstanceIndex, record[/* matrixInstanceBufferMap */4]);
 	  if (match !== undefined) {
 	    return /* record */[
 	            /* geometryVertexBufferMap */record[/* geometryVertexBufferMap */0],
@@ -9453,10 +9475,10 @@
 	}
 
 
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* PoolVboBufferService-Wonderjs Not a pure module */
 
-	function execJob$15(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$15(flags, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                state[/* vboBufferRecord */23] = disposeSourceInstanceVboBuffer(data.sourceInstanceNeedDisposeVboBufferArr, disposeGeometryVboBuffer(data.geometryNeedDisposeVboBufferArr, state[/* vboBufferRecord */23]));
@@ -9474,10 +9496,21 @@
 
 	/* No side effect */
 
+	function fastGet$1(key, map) {
+	  var value = unsafeGet$3(key, map);
+	  return /* tuple */[
+	          isInMap(value),
+	          value
+	        ];
+	}
+
+
+	/* No side effect */
+
 	function getLocalToWorldMatrixTypeArray$1(transform, localToWorldMatrices, localToWorldMatrixCacheMap) {
-	  var match = get$4(transform, localToWorldMatrixCacheMap);
-	  if (match !== undefined) {
-	    return valFromOption(match);
+	  var match = fastGet$1(transform, localToWorldMatrixCacheMap);
+	  if (match[0]) {
+	    return match[1];
 	  } else {
 	    var matrix = getLocalToWorldMatrixTypeArray(transform, localToWorldMatrices);
 	    set$1(transform, matrix, localToWorldMatrixCacheMap);
@@ -9491,9 +9524,9 @@
 
 	function getNormalMatrixTypeArray(transform, localToWorldMatrices, param) {
 	  var normalMatrixCacheMap = param[1];
-	  var match = get$4(transform, normalMatrixCacheMap);
-	  if (match !== undefined) {
-	    return valFromOption(match);
+	  var match = fastGet$1(transform, normalMatrixCacheMap);
+	  if (match[0]) {
+	    return match[1];
 	  } else {
 	    var matrix = _getNormalMatrixTypeArray(transform, localToWorldMatrices, /* tuple */[
 	          param[0],
@@ -9562,7 +9595,7 @@
 	/* Log-WonderLog Not a pure module */
 
 	function execJob$17(flags, e, stateData) {
-	  return callFunc((function () {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var gl = unsafeGetGl(state[/* deviceManagerRecord */4]);
 	                state[/* deviceManagerRecord */4] = clearBuffer(gl, getBit(gl, unsafeGetFlags(flags)), state[/* deviceManagerRecord */4]);
@@ -9592,11 +9625,11 @@
 
 	/* PMatrixService-Wonderjs Not a pure module */
 
-	function getDefaultShaderIndex() {
+	function getDefaultShaderIndex(param) {
 	  return 429496729;
 	}
 
-	function getDefaultSourceInstance() {
+	function getDefaultSourceInstance(param) {
 	  return 429496729;
 	}
 
@@ -9607,7 +9640,7 @@
 	  return (count << 0);
 	}
 
-	function getTransformIndicesOffset() {
+	function getTransformIndicesOffset(count) {
 	  return 0;
 	}
 
@@ -9663,7 +9696,7 @@
 	}
 
 
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* RenderObjectBufferTypeArrayService-Wonderjs Not a pure module */
 
 	/* Worker-Wonderjs Not a pure module */
 
@@ -9675,7 +9708,7 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	var getTexture = get$4;
+	var getTexture = get$6;
 
 	var setTexture = set$1;
 
@@ -9700,7 +9733,7 @@
 	var initTextures = initTexturesWithIndexArray;
 
 
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* OperateGlTextureMapService-Wonderjs Not a pure module */
 
 	function unsafeGetInstanceBuffer(param) {
 	  return unsafeGet$2(param[/* instanceBuffer */1]);
@@ -9748,43 +9781,43 @@
 
 	/* No side effect */
 
-	function getWrapSsSize() {
+	function getWrapSsSize(param) {
 	  return 1;
 	}
 
-	function getWrapTsSize() {
+	function getWrapTsSize(param) {
 	  return 1;
 	}
 
-	function getMagFiltersSize() {
+	function getMagFiltersSize(param) {
 	  return 1;
 	}
 
-	function getMinFiltersSize() {
+	function getMinFiltersSize(param) {
 	  return 1;
 	}
 
-	function getFormatsSize() {
+	function getFormatsSize(param) {
 	  return 1;
 	}
 
-	function getTypesSize() {
+	function getTypesSize(param) {
 	  return 1;
 	}
 
-	function getIsNeedUpdatesSize() {
+	function getIsNeedUpdatesSize(param) {
 	  return 1;
 	}
 
-	function getFlipYsSize() {
+	function getFlipYsSize(param) {
 	  return 1;
 	}
 
-	function getWidthsSize() {
+	function getWidthsSize(param) {
 	  return 1;
 	}
 
-	function getHeightsSize() {
+	function getHeightsSize(param) {
 	  return 1;
 	}
 
@@ -9795,25 +9828,25 @@
 	  return imul(basicSourceTextureCount, imul(Uint8Array.BYTES_PER_ELEMENT, ((((((getWrapSsSize(/* () */0) + getWrapTsSize(/* () */0) | 0) + getMagFiltersSize(/* () */0) | 0) + getMinFiltersSize(/* () */0) | 0) + getFormatsSize(/* () */0) | 0) + getTypesSize(/* () */0) | 0) + getIsNeedUpdatesSize(/* () */0) | 0) + getFlipYsSize(/* () */0) | 0));
 	}
 
-	function getBasicSourceTextureOffset() {
+	function getBasicSourceTextureOffset(param) {
 	  return 0;
 	}
 
 	var getArrayBufferViewSourceTextureOffset = _getBasicSourceTotalByteLength;
 
-	function getNeedUpdate() {
+	function getNeedUpdate(param) {
 	  return /* NeedUpdate */1;
 	}
 
-	function getNotNeedUpdate() {
+	function getNotNeedUpdate(param) {
 	  return /* Not_needUpdate */0;
 	}
 
-	function getDefaultIsNeedUpdate$1() {
+	function getDefaultIsNeedUpdate$1(param) {
 	  return /* NeedUpdate */1;
 	}
 
-	function getFlipY() {
+	function getFlipY(param) {
 	  return /* Flipy */1;
 	}
 
@@ -9828,7 +9861,7 @@
 	  return imul(basicSourceTextureCount, getWrapSsSize(/* () */0));
 	}
 
-	function getWrapSsOffset() {
+	function getWrapSsOffset(basicSourceTextureCount) {
 	  return getBasicSourceTextureOffset(/* () */0) + 0 | 0;
 	}
 
@@ -9946,12 +9979,12 @@
 
 	/* OptionService-Wonderjs Not a pure module */
 
-	var getSource$3 = get$4;
+	var getSource$3 = get$6;
 
 	var addSource = set$1;
 
 
-	/* MutableSparseMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
 	function getWrapS(index, typeArr) {
 	  return getUint8_1(getWrapSIndex(index), typeArr);
@@ -10023,7 +10056,7 @@
 	  return imul(arrayBufferViewSourceTextureCount, getWrapSsSize(/* () */0));
 	}
 
-	function getWrapSsOffset$1(basicSourceTextureCount, _) {
+	function getWrapSsOffset$1(basicSourceTextureCount, arrayBufferViewSourceTextureCount) {
 	  return getArrayBufferViewSourceTextureOffset(basicSourceTextureCount) + 0 | 0;
 	}
 
@@ -10219,30 +10252,30 @@
 	function _createTypeArrays(buffer, basicSourceTextureCount, arrayBufferViewSourceTextureCount, state) {
 	  var match = createTypeArrays$2(buffer, basicSourceTextureCount);
 	  state[/* basicSourceTextureRecord */15] = /* record */[
-	    /* wrapSs */some$1(match[0]),
-	    /* wrapTs */some$1(match[1]),
-	    /* magFilters */some$1(match[2]),
-	    /* minFilters */some$1(match[3]),
-	    /* formats */some$1(match[4]),
-	    /* types */some$1(match[5]),
-	    /* isNeedUpdates */some$1(match[6]),
-	    /* flipYs */some$1(match[7]),
+	    /* wrapSs */some(match[0]),
+	    /* wrapTs */some(match[1]),
+	    /* magFilters */some(match[2]),
+	    /* minFilters */some(match[3]),
+	    /* formats */some(match[4]),
+	    /* types */some(match[5]),
+	    /* isNeedUpdates */some(match[6]),
+	    /* flipYs */some(match[7]),
 	    /* sourceMap */createEmpty$3(/* () */0),
 	    /* glTextureMap */createEmpty$3(/* () */0),
 	    /* bindTextureUnitCacheMap */createEmpty$3(/* () */0)
 	  ];
 	  var match$1 = createTypeArrays$3(buffer, basicSourceTextureCount, arrayBufferViewSourceTextureCount);
 	  state[/* arrayBufferViewSourceTextureRecord */16] = /* record */[
-	    /* wrapSs */some$1(match$1[0]),
-	    /* wrapTs */some$1(match$1[1]),
-	    /* magFilters */some$1(match$1[2]),
-	    /* minFilters */some$1(match$1[3]),
-	    /* formats */some$1(match$1[4]),
-	    /* types */some$1(match$1[5]),
-	    /* isNeedUpdates */some$1(match$1[6]),
-	    /* flipYs */some$1(match$1[7]),
-	    /* widths */some$1(match$1[8]),
-	    /* heights */some$1(match$1[9]),
+	    /* wrapSs */some(match$1[0]),
+	    /* wrapTs */some(match$1[1]),
+	    /* magFilters */some(match$1[2]),
+	    /* minFilters */some(match$1[3]),
+	    /* formats */some(match$1[4]),
+	    /* types */some(match$1[5]),
+	    /* isNeedUpdates */some(match$1[6]),
+	    /* flipYs */some(match$1[7]),
+	    /* widths */some(match$1[8]),
+	    /* heights */some(match$1[9]),
 	    /* sourceMap */undefined,
 	    /* glTextureMap */createEmpty$3(/* () */0),
 	    /* bindTextureUnitCacheMap */createEmpty$3(/* () */0)
@@ -10251,7 +10284,7 @@
 	}
 
 	function _buildCreateTypeArraysStream(e, stateData) {
-	  return callFunc((function () {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var settingRecord = state[/* settingRecord */1];
 	                var data = getRecord$1(e);
@@ -10263,7 +10296,7 @@
 	}
 
 	function _buildAddArrayBufferViewSourceStream(e, stateData) {
-	  return callFunc((function () {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var textureData = data.textureData;
@@ -10273,7 +10306,7 @@
 	}
 
 	function _buildInitTextureStream(e, stateData) {
-	  return callFunc((function () {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var textureData = data.textureData;
@@ -10311,7 +10344,7 @@
 	              }));
 	}
 
-	function execJob$21(_, e, stateData) {
+	function execJob$21(param, e, stateData) {
 	  var state = unsafeGetState$1(stateData);
 	  var data = getRecord$1(e);
 	  var textureData = data.textureData;
@@ -10323,7 +10356,7 @@
 	                        addSourceFromImageDataStream(textureData.basicSourceTextureData.needAddedImageDataArray, state),
 	                        _buildAddArrayBufferViewSourceStream(e, stateData),
 	                        _buildInitTextureStream(e, stateData)
-	                      ])).then((function () {
+	                      ])).then((function (param) {
 	                    return Promise.resolve(e);
 	                  })));
 	}
@@ -10332,8 +10365,8 @@
 	/* most Not a pure module */
 
 	function isRender(data) {
-	  requireCheck((function () {
-	          return test(buildAssertMessage("data##renderData exist", "not"), (function () {
+	  requireCheck((function (param) {
+	          return test(buildAssertMessage("data##renderData exist", "not"), (function (param) {
 	                        return assertNullableExist(data.renderData);
 	                      }));
 	        }), getIsDebug(stateData));
@@ -10394,7 +10427,7 @@
 	}
 
 	function getAttributeLocationMap(shaderIndex, glslLocationRecord) {
-	  return get$4(shaderIndex, glslLocationRecord[/* attributeLocationMap */0]);
+	  return get$6(shaderIndex, glslLocationRecord[/* attributeLocationMap */0]);
 	}
 
 	function setAttributeLocationMap(shaderIndex, attributeLocationMap, glslLocationRecord) {
@@ -10403,7 +10436,7 @@
 	}
 
 	function getUniformLocationMap(shaderIndex, glslLocationRecord) {
-	  return get$4(shaderIndex, glslLocationRecord[/* uniformLocationMap */1]);
+	  return get$6(shaderIndex, glslLocationRecord[/* uniformLocationMap */1]);
 	}
 
 	function setUniformLocationMap(shaderIndex, uniformLocationMap, glslLocationRecord) {
@@ -10420,14 +10453,12 @@
 	}
 
 
-	/* MutableHashMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
-	function unsafeGetIndicesType$1(index, indicesTypeMap) {
-	  return unsafeGet$2(get$4(index, indicesTypeMap));
-	}
+	var unsafeGetIndicesType$1 = unsafeGet$3;
 
 
-	/* OptionService-Wonderjs Not a pure module */
+	/* No side effect */
 
 	function unsafeGetIndicesType(geometry, param) {
 	  return unsafeGetIndicesType$1(geometry, param[/* geometryRecord */5][/* indicesTypeMap */9]);
@@ -10442,7 +10473,7 @@
 	  }
 	}
 
-	function getIndexTypeSize(_, geometry, state) {
+	function getIndexTypeSize(gl, geometry, state) {
 	  var match = unsafeGetIndicesType(geometry, state);
 	  if (match) {
 	    return Uint32Array.BYTES_PER_ELEMENT;
@@ -10452,12 +10483,12 @@
 	}
 
 
-	/* IndicesTypeGeometryType-Wonderjs Not a pure module */
+	/* No side effect */
 
 	function _compileShader$1(gl, glslSource, shader) {
 	  gl.shaderSource(shader, glslSource);
 	  gl.compileShader(shader);
-	  debugWithFunc((function () {
+	  debugWithFunc((function (param) {
 	          var match = gl.getShaderParameter(shader, gl.COMPILE_STATUS) === false;
 	          if (match) {
 	            var message = gl.getShaderInfoLog(shader);
@@ -10478,7 +10509,7 @@
 
 	function _linkProgram$1(program, gl) {
 	  gl.linkProgram(program);
-	  debugWithFunc((function () {
+	  debugWithFunc((function (param) {
 	          var match = gl.getProgramParameter(program, gl.LINK_STATUS) === false;
 	          if (match) {
 	            var message = gl.getProgramInfoLog(program);
@@ -10504,7 +10535,7 @@
 
 	function unsafeGetProgram(shaderIndex, param) {
 	  return ensureCheck((function (program) {
-	                return test(buildAssertMessage("program exist", "not"), (function () {
+	                return test(buildAssertMessage("program exist", "not"), (function (param) {
 	                              return assertNullableExist(program);
 	                            }));
 	              }), getIsDebug(stateData), unsafeGet$3(shaderIndex, param[/* programMap */0]));
@@ -10528,7 +10559,7 @@
 	    exit = 1;
 	  }
 	  if (exit === 1) {
-	    programRecord[/* lastUsedProgram */1] = some$1(program);
+	    programRecord[/* lastUsedProgram */1] = some(program);
 	    gl.useProgram(program);
 	    return state;
 	  }
@@ -10546,9 +10577,9 @@
 	function getOrCreateBuffer$1(gl, param, param$1, state) {
 	  var bufferMap = param[1];
 	  var geometryIndex = param[0];
-	  var match = get$4(geometryIndex, bufferMap);
-	  if (match !== undefined) {
-	    return valFromOption(match);
+	  var match = fastGet$1(geometryIndex, bufferMap);
+	  if (match[0]) {
+	    return match[1];
 	  } else {
 	    var buffer = param$1[0](gl, param$1[1](geometryIndex, state), state);
 	    set$1(geometryIndex, buffer, bufferMap);
@@ -10559,9 +10590,9 @@
 	function getOrCreateIndexBuffer(gl, param, createBufferFunc, state) {
 	  var bufferMap = param[1];
 	  var geometryIndex = param[0];
-	  var match = get$4(geometryIndex, bufferMap);
-	  if (match !== undefined) {
-	    return valFromOption(match);
+	  var match = fastGet$1(geometryIndex, bufferMap);
+	  if (match[0]) {
+	    return match[1];
 	  } else {
 	    var buffer = createBufferFunc(gl, param[2], state);
 	    set$1(geometryIndex, buffer, bufferMap);
@@ -10570,7 +10601,7 @@
 	}
 
 
-	/* MutableSparseMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
 	function createBuffer$2(gl, data, state) {
 	  var buffer = getArrayBuffer(gl, state[/* vboBufferRecord */1]);
@@ -10597,7 +10628,7 @@
 	  return (meshRendererCount << 0);
 	}
 
-	function getDrawModesOffset() {
+	function getDrawModesOffset(meshRendererCount) {
 	  return 0;
 	}
 
@@ -10690,7 +10721,7 @@
 	  return (geometryPointCount << 1);
 	}
 
-	function getVerticesOffset() {
+	function getVerticesOffset(geometryPointCount) {
 	  return 0;
 	}
 
@@ -10761,11 +10792,11 @@
 	  return ensureCheck((function (param) {
 	                var endIndex = param[1];
 	                var startIndex = param[0];
-	                test(buildAssertMessage("has info data", "not"), (function () {
+	                test(buildAssertMessage("has info data", "not"), (function (param) {
 	                        assertNullableExist(startIndex);
 	                        return assertNullableExist(endIndex);
 	                      }));
-	                return test(buildAssertMessage("endIndex >= startIndex", "is " + (String(endIndex) + "")), (function () {
+	                return test(buildAssertMessage("endIndex >= startIndex", "is " + (String(endIndex) + "")), (function (param) {
 	                              return Operators[/* >= */7](endIndex, startIndex);
 	                            }));
 	              }), getIsDebug(stateData), /* tuple */[
@@ -10933,7 +10964,7 @@
 	}
 
 
-	/* GeometryRenderService-Wonderjs Not a pure module */
+	/* GetGeometryIndicesRenderService-Wonderjs Not a pure module */
 
 	function _getNormals(index, param) {
 	  var geometryRecord = param[/* geometryRecord */5];
@@ -10954,7 +10985,7 @@
 
 	function unsafeGetAttributeSendData(shaderIndex, glslSenderRecord) {
 	  return ensureCheck((function (sendData) {
-	                return test(buildAssertMessage("attribute send record exist", "not"), (function () {
+	                return test(buildAssertMessage("attribute send record exist", "not"), (function (param) {
 	                              return assertNullableExist(sendData);
 	                            }));
 	              }), getIsDebug(stateData), unsafeGet$3(shaderIndex, glslSenderRecord[/* attributeSendDataMap */0]));
@@ -10962,7 +10993,7 @@
 
 	function unsafeGetInstanceAttributeSendData(shaderIndex, param) {
 	  return ensureCheck((function (sendData) {
-	                return test(buildAssertMessage("instance attribute send record exist", "not"), (function () {
+	                return test(buildAssertMessage("instance attribute send record exist", "not"), (function (param) {
 	                              return assertNullableExist(sendData);
 	                            }));
 	              }), getIsDebug(stateData), unsafeGet$3(shaderIndex, param[/* instanceAttributeSendDataMap */1]));
@@ -11011,7 +11042,7 @@
 	  return /* () */0;
 	}
 
-	var getCacheMap = get$4;
+	var getCacheMap = get$6;
 
 	function _queryIsNotCacheWithCache(cache, x, y, z) {
 	  var isNotCached = false;
@@ -11034,9 +11065,9 @@
 	  var z = param[2];
 	  var y = param[1];
 	  var x = param[0];
-	  var match = get(name, shaderCacheMap);
-	  if (match !== undefined) {
-	    return _queryIsNotCacheWithCache(match, x, y, z);
+	  var match = fastGet(name, shaderCacheMap);
+	  if (match[0]) {
+	    return _queryIsNotCacheWithCache(match[1], x, y, z);
 	  } else {
 	    set(name, /* array */[
 	          x,
@@ -11048,8 +11079,9 @@
 	}
 
 	function _isNotCacheNumberAndSetCache(shaderCacheMap, name, value) {
-	  var match = get(name, shaderCacheMap);
-	  if (match !== undefined && valFromOption(match) === value) {
+	  var match = fastGet(name, shaderCacheMap);
+	  var match$1 = match[0] && match[1] === value;
+	  if (match$1) {
 	    return false;
 	  } else {
 	    set(name, value, shaderCacheMap);
@@ -11076,8 +11108,8 @@
 	}
 
 	function sendFloat3(gl, shaderCacheMap, param, valueArr) {
-	  requireCheck((function () {
-	          return test(buildAssertMessage("valueArr.length === 3", "not"), (function () {
+	  requireCheck((function (param) {
+	          return test(buildAssertMessage("valueArr.length === 3", "not"), (function (param) {
 	                        return Operators[/* = */0](valueArr.length, 3);
 	                      }));
 	        }), getIsDebug(stateData));
@@ -11139,7 +11171,7 @@
 
 	function unsafeGetUniformSendData$1(shaderIndex, map) {
 	  return ensureCheck((function (sendData) {
-	                return test(buildAssertMessage("uniform send record exist", "not"), (function () {
+	                return test(buildAssertMessage("uniform send record exist", "not"), (function (param) {
 	                              return assertNullableExist(sendData);
 	                            }));
 	              }), getIsDebug(stateData), unsafeGet$3(shaderIndex, map));
@@ -11340,7 +11372,22 @@
 	  return state;
 	}
 
-	var sendAttributeData = _directlySendAttributeData;
+	function sendAttributeData(gl, indexTuple, sendRenderDataSubState, state) {
+	  var geometryIndex = indexTuple[1];
+	  var record = state[/* glslSenderRecord */3];
+	  var lastSendGeometryData = record[/* lastSendGeometryData */12];
+	  var exit = 0;
+	  if (lastSendGeometryData !== undefined && lastSendGeometryData === geometryIndex) {
+	    return state;
+	  } else {
+	    exit = 1;
+	  }
+	  if (exit === 1) {
+	    record[/* lastSendGeometryData */12] = geometryIndex;
+	    return _directlySendAttributeData(gl, indexTuple, sendRenderDataSubState, state);
+	  }
+	  
+	}
 
 	function sendUniformRenderObjectModelData(gl, param, param$1) {
 	  var getRenderDataSubState = param$1[0];
@@ -11429,7 +11476,7 @@
 	  return (count << 0);
 	}
 
-	function getShaderIndicesOffset() {
+	function getShaderIndicesOffset(count) {
 	  return 0;
 	}
 
@@ -11465,7 +11512,7 @@
 	  return imul(index, 3);
 	}
 
-	function getTextureIndicesOffset(basicMaterialCount, _) {
+	function getTextureIndicesOffset(basicMaterialCount, textureCountPerMaterial) {
 	  return getColorsOffset(basicMaterialCount) + imul(imul(basicMaterialCount, 3), Float32Array.BYTES_PER_ELEMENT) | 0;
 	}
 
@@ -11546,7 +11593,7 @@
 	/* No side effect */
 
 	function isCached(unit, texture, bindTextureUnitCacheMap) {
-	  var match = get$4(unit, bindTextureUnitCacheMap);
+	  var match = get$6(unit, bindTextureUnitCacheMap);
 	  if (match !== undefined) {
 	    return valFromOption(match) === texture;
 	  } else {
@@ -11555,8 +11602,8 @@
 	}
 
 	function addActiveTexture(unit, texture, bindTextureUnitCacheMap) {
-	  requireCheck((function () {
-	          return test(buildAssertMessage("not cached", ""), (function () {
+	  requireCheck((function (param) {
+	          return test(buildAssertMessage("not cached", ""), (function (param) {
 	                        return assertFalse(isCached(unit, texture, bindTextureUnitCacheMap));
 	                      }));
 	        }), getIsDebug(stateData));
@@ -11572,7 +11619,7 @@
 
 	function getArrayBufferViewSourceTextureIndexInTypeArray(arrayBufferViewSourceTextureIndex, arrayBufferViewSourceTextureIndexOffset) {
 	  return ensureCheck((function (index) {
-	                return test(buildAssertMessage("index should >= 0", "is " + (String(index) + "")), (function () {
+	                return test(buildAssertMessage("index should >= 0", "is " + (String(index) + "")), (function (param) {
 	                              return Operators[/* >= */7](index, 0);
 	                            }));
 	              }), getIsDebug(stateData), arrayBufferViewSourceTextureIndex - arrayBufferViewSourceTextureIndexOffset | 0);
@@ -11593,8 +11640,8 @@
 	function _bind(gl, unit, texture, dataTuple) {
 	  var glTextureMap = dataTuple[1];
 	  var bindTextureUnitCacheMap = dataTuple[0];
-	  requireCheck((function () {
-	          return test(buildAssertMessage("unit should >= 0", "is " + (String(unit) + "")), (function () {
+	  requireCheck((function (param) {
+	          return test(buildAssertMessage("unit should >= 0", "is " + (String(unit) + "")), (function (param) {
 	                        return Operators[/* >= */7](unit, 0);
 	                      }));
 	        }), getIsDebug(stateData));
@@ -11639,8 +11686,8 @@
 	}
 
 	function bind$4(gl, unit, texture, state) {
-	  requireCheck((function () {
-	          return test(buildAssertMessage("unit should >= 0", "is " + (String(unit) + "")), (function () {
+	  requireCheck((function (param) {
+	          return test(buildAssertMessage("unit should >= 0", "is " + (String(unit) + "")), (function (param) {
 	                        return Operators[/* >= */7](unit, 0);
 	                      }));
 	        }), getIsDebug(stateData));
@@ -11817,7 +11864,7 @@
 	  return /* () */0;
 	}
 
-	function isNeedUpdate$1(textureInTypeArray, _, isNeedUpdates, getIsNeedUpdateFunc) {
+	function isNeedUpdate$1(textureInTypeArray, defaultIsNeedUpdate, isNeedUpdates, getIsNeedUpdateFunc) {
 	  return getIsNeedUpdateFunc(textureInTypeArray, isNeedUpdates) === getNeedUpdate(/* () */0);
 	}
 
@@ -11897,7 +11944,7 @@
 	}
 
 
-	/* TextureSourceMapService-Wonderjs Not a pure module */
+	/* BufferBasicSourceTextureService-Wonderjs Not a pure module */
 
 	function getWrapS$1(index, typeArr) {
 	  return getUint8_1(getWrapSIndex$1(index), typeArr);
@@ -11946,8 +11993,8 @@
 	  var height = param$1[1];
 	  var width = param$1[0];
 	  var glFormat = param[3];
-	  requireCheck((function () {
-	          return test(buildAssertMessage("width/height shouldn\'t be 0", "width is " + (String(width) + ("; height is " + (String(height) + "")))), (function () {
+	  requireCheck((function (param) {
+	          return test(buildAssertMessage("width/height shouldn\'t be 0", "width is " + (String(width) + ("; height is " + (String(height) + "")))), (function (param) {
 	                        Operators[/* <>= */3](width, 0);
 	                        return Operators[/* <>= */3](height, 0);
 	                      }));
@@ -12156,7 +12203,7 @@
 
 	function getShaderIndex$1(materialIndex, getShaderIndexFunc, renderState) {
 	  return ensureCheck((function (shaderIndex) {
-	                return test(buildAssertMessage("shaderIndex should exist", "not"), (function () {
+	                return test(buildAssertMessage("shaderIndex should exist", "not"), (function (param) {
 	                              return Operators[/* <>= */3](shaderIndex, getDefaultShaderIndex(/* () */0));
 	                            }));
 	              }), getIsDebug(stateData), getShaderIndexFunc(materialIndex, renderState));
@@ -12189,7 +12236,7 @@
 
 	var getObjectInstanceTransformCollectionsLength = imul;
 
-	function getObjectInstanceTransformCollectionsOffset(_, _$1) {
+	function getObjectInstanceTransformCollectionsOffset(sourceInstanceCount, objectInstanceCountPerSourceInstance) {
 	  return 0;
 	}
 
@@ -12221,10 +12268,10 @@
 	  return ensureCheck((function (param) {
 	                var endIndex = param[1];
 	                var startIndex = param[0];
-	                test(buildAssertMessage("endIndex should <= objectInstanceTransformCollections->length", "not"), (function () {
+	                test(buildAssertMessage("endIndex should <= objectInstanceTransformCollections->length", "not"), (function (param) {
 	                        return Operators[/* <= */11](endIndex, objectInstanceTransformCollections.length);
 	                      }));
-	                return test(buildAssertMessage("endIndex + 1 should >= startIndex", "not"), (function () {
+	                return test(buildAssertMessage("endIndex + 1 should >= startIndex", "not"), (function (param) {
 	                              return Operators[/* >= */7](endIndex + 1 | 0, startIndex);
 	                            }));
 	              }), getIsDebug(stateData), /* tuple */[
@@ -12327,7 +12374,7 @@
 	}
 
 	function _addTypeArrayToPool(count, typeArray, maxSize, map) {
-	  var match = get$4(count, map);
+	  var match = get$6(count, map);
 	  if (match !== undefined) {
 	    var arr = match;
 	    var len = arr.length;
@@ -12347,7 +12394,7 @@
 	}
 
 	function _getTypeArrayFromPool(count, map) {
-	  var match = get$4(count, map);
+	  var match = get$6(count, map);
 	  if (match !== undefined) {
 	    var arr = match;
 	    var match$1 = arr.length;
@@ -12365,7 +12412,7 @@
 	}
 
 
-	/* MutableSparseMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
 	function createBuffer$7(gl, capacity, state) {
 	  var buffer = getInstanceBuffer(gl, state[/* vboBufferRecord */1]);
@@ -12375,8 +12422,8 @@
 	}
 
 	function _getFloat32InstanceArraySize(capacity) {
-	  requireCheck((function () {
-	          return test(buildAssertMessage("capacity should be a multiplier of 4", "is " + (String(capacity) + "")), (function () {
+	  requireCheck((function (param) {
+	          return test(buildAssertMessage("capacity should be a multiplier of 4", "is " + (String(capacity) + "")), (function (param) {
 	                        return Operators[/* = */0](capacity % 4, 0);
 	                      }));
 	        }), getIsDebug(stateData));
@@ -12384,7 +12431,7 @@
 	}
 
 	function _getCapacity(sourceInstance, defaultCapacity, capacityMap) {
-	  var match = get$4(sourceInstance, capacityMap);
+	  var match = get$6(sourceInstance, capacityMap);
 	  if (match !== undefined) {
 	    return valFromOption(match);
 	  } else {
@@ -12400,7 +12447,7 @@
 	function getOrCreateBuffer$2(param, param$1, state) {
 	  var bufferMap = param$1[1];
 	  var sourceInstance = param[1];
-	  var match = get$4(sourceInstance, bufferMap);
+	  var match = get$6(sourceInstance, bufferMap);
 	  if (match !== undefined) {
 	    return valFromOption(match);
 	  } else {
@@ -12413,7 +12460,7 @@
 	function getOrCreateMatrixFloat32Array(sourceInstance, defaultCapacity, param, state) {
 	  var matrixFloat32ArrayMap = param[1];
 	  var capacity = _getCapacity(sourceInstance, defaultCapacity, param[0]);
-	  var match = get$4(sourceInstance, matrixFloat32ArrayMap);
+	  var match = get$6(sourceInstance, matrixFloat32ArrayMap);
 	  if (match !== undefined) {
 	    return valFromOption(match);
 	  } else {
@@ -12483,7 +12530,7 @@
 	var markIsSendTransformMatrixData$1 = set$1;
 
 	function isSendTransformMatrixData(sourceInstance, isSendTransformMatrixDataMap) {
-	  var match = get$4(sourceInstance, isSendTransformMatrixDataMap);
+	  var match = get$6(sourceInstance, isSendTransformMatrixDataMap);
 	  if (match !== undefined) {
 	    return match;
 	  } else {
@@ -12492,7 +12539,7 @@
 	}
 
 
-	/* MutableSparseMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
 	function isTransformStatic(sourceInstance, param) {
 	  return isTransformStatic$1(sourceInstance, param[/* isTransformStatics */2]);
@@ -12995,7 +13042,7 @@
 
 	/* OptionService-Wonderjs Not a pure module */
 
-	function create$10() {
+	function create$10(param) {
 	  return /* record */[
 	          /* objectInstanceTransformIndexMap */undefined,
 	          /* objectInstanceTransformCollections */undefined,
@@ -13179,8 +13226,8 @@
 	  }
 	}
 
-	function execJob$22(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$22(flags, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var match = isRender(getRecord$1(e));
 	                if (match) {
@@ -13196,11 +13243,13 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	var deserializeFunction = function (funcStr){
+	function deserializeFunction (funcStr){
 	    return eval('(' + funcStr + ')');
-	    };
+	    }
 
-	var deserializeValueWithFunction = function (value){
+
+
+	function deserializeValueWithFunction (value){
 	    return JSON.parse(value, (key, value) => {
 	      if (typeof value != "string") {
 	        return value;
@@ -13208,7 +13257,7 @@
 
 	      return (value.substring(0, 8) == "function") ? eval('(' + value + ')') : value;
 	    });
-	    };
+	    }
 
 
 	/* No side effect */
@@ -13258,14 +13307,14 @@
 
 	/* No side effect */
 
-	// Generated by BUCKLESCRIPT VERSION 4.0.0, PLEASE EDIT WITH CARE
+	// Generated by BUCKLESCRIPT VERSION 4.0.18, PLEASE EDIT WITH CARE
 
 	var beginGroup$2 = beginGroup;
 
 	var endGroup$2 = endGroup;
 
 
-	/* GroupLayoutIMGUIService-WonderImgui Not a pure module */
+	/* No side effect */
 
 	var getRecord$17 = getRecord$3;
 
@@ -13364,13 +13413,13 @@
 	}
 
 
-	/* GroupLayoutIMGUIAPI-WonderImgui Not a pure module */
+	/* FixedLayoutControlIMGUIService-WonderImgui Not a pure module */
 
 	function getAPIJsObj$1(state) {
 	  return state[/* apiRecord */28][/* apiJsObj */0];
 	}
 
-	function create$11() {
+	function create$11(param) {
 	  return /* record */[/* apiJsObj */{
 	            label: label$1,
 	            image: image$1,
@@ -13393,8 +13442,8 @@
 
 	/* FixedLayoutControlIMGUIRenderWorkerService-Wonderjs Not a pure module */
 
-	function execJob$23(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$23(flags, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var imguiData = data.imguiData;
@@ -13417,8 +13466,8 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function execJob$25(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$25(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var viewportData = data.viewportData;
@@ -13465,8 +13514,8 @@
 	  return state;
 	}
 
-	function execJob$26(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$26(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var geometryData = data.geometryData;
@@ -13500,8 +13549,8 @@
 	  var init = state[/* sourceInstanceRecord */11];
 	  state[/* sourceInstanceRecord */11] = /* record */[
 	    /* objectInstanceTransformIndexMap */init[/* objectInstanceTransformIndexMap */0],
-	    /* objectInstanceTransformCollections */some$1(match[0]),
-	    /* isTransformStatics */some$1(match[1]),
+	    /* objectInstanceTransformCollections */some(match[0]),
+	    /* isTransformStatics */some(match[1]),
 	    /* matrixInstanceBufferCapacityMap */init[/* matrixInstanceBufferCapacityMap */3],
 	    /* matrixFloat32ArrayMap */init[/* matrixFloat32ArrayMap */4],
 	    /* isSendTransformMatrixDataMap */init[/* isSendTransformMatrixDataMap */5]
@@ -13509,8 +13558,8 @@
 	  return state;
 	}
 
-	function execJob$27(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$27(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var settingRecord = state[/* settingRecord */1];
 	                var data = getRecord$1(e);
@@ -13540,9 +13589,9 @@
 	/* No side effect */
 
 	function addValueWithoutDuplicate(key, value, arrayMap) {
-	  var match = get$4(key, arrayMap);
-	  if (match !== undefined) {
-	    var valueArr = match;
+	  var match = fastGet$1(key, arrayMap);
+	  var valueArr = match[1];
+	  if (match[0]) {
 	    var match$1 = valueArr.includes(value);
 	    if (match$1) {
 	      return arrayMap;
@@ -13555,13 +13604,13 @@
 	  }
 	}
 
-	function checkDuplicate(expectedMessage, key, _, arrayMap) {
-	  return test(buildAssertMessage(expectedMessage, "not"), (function () {
-	                var match = get$4(key, arrayMap);
+	function checkDuplicate(expectedMessage, key, value, arrayMap) {
+	  return test(buildAssertMessage(expectedMessage, "not"), (function (param) {
+	                var match = get$6(key, arrayMap);
 	                if (match !== undefined) {
 	                  var match$1 = reduceOneParam$1((function (param, value) {
 	                          var map = param[0];
-	                          var match = get$4(value, map);
+	                          var match = get$6(value, map);
 	                          if (match !== undefined) {
 	                            return /* tuple */[
 	                                    map,
@@ -13593,7 +13642,7 @@
 
 	/* Log-WonderLog Not a pure module */
 
-	function getBufferMaxCount() {
+	function getBufferMaxCount(param) {
 	  return 4;
 	}
 
@@ -13601,7 +13650,7 @@
 	  return imul(index, 3);
 	}
 
-	function getColorsOffset$1() {
+	function getColorsOffset$1(count) {
 	  return 0;
 	}
 
@@ -13693,11 +13742,11 @@
 
 	/* OptionService-Wonderjs Not a pure module */
 
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* RecordTransformMainService-Wonderjs Not a pure module */
 
 	/* OptionService-Wonderjs Not a pure module */
 
-	function getDefaultColor$1() {
+	function getDefaultColor$1(param) {
 	  return /* array */[
 	          0,
 	          0,
@@ -13748,7 +13797,7 @@
 
 	/* GameObjectMapService-Wonderjs Not a pure module */
 
-	/* MutableSparseMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
 	/* HasComponentGameObjectService-Wonderjs Not a pure module */
 
@@ -13808,7 +13857,7 @@
 	  return (index << 0);
 	}
 
-	function getTextureIndicesOffset$1(lightMaterialCount, _) {
+	function getTextureIndicesOffset$1(lightMaterialCount, textureCountPerMaterial) {
 	  return getShininessOffset(lightMaterialCount) + imul((lightMaterialCount << 0), Float32Array.BYTES_PER_ELEMENT) | 0;
 	}
 
@@ -13883,7 +13932,7 @@
 
 	/* OptionService-Wonderjs Not a pure module */
 
-	function getBufferMaxCount$1() {
+	function getBufferMaxCount$1(param) {
 	  return 4;
 	}
 
@@ -13895,7 +13944,7 @@
 	  return (index << 0);
 	}
 
-	function getColorsOffset$2() {
+	function getColorsOffset$2(count) {
 	  return 0;
 	}
 
@@ -13977,7 +14026,7 @@
 
 	/* GameObjectMapService-Wonderjs Not a pure module */
 
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* RecordTransformMainService-Wonderjs Not a pure module */
 
 	/* drawImage Not a pure module */
 
@@ -13987,8 +14036,8 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function execJob$29(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$29(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var match = data.renderData.camera;
@@ -14005,8 +14054,8 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function execJob$30(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$30(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var state$1 = setCustomDataFromMainWorkerToRenderWorker(data.customData, state);
@@ -14026,14 +14075,14 @@
 
 	function createGetMainWorkerDataStream(flags, target) {
 	  return map$2((function (e) {
-	                return some$1(e);
+	                return some(e);
 	              }), _createGetWorkerDataStream(flags, target));
 	}
 
 
 	/* most Not a pure module */
 
-	function execJob$31(flags, _, _$1) {
+	function execJob$31(flags, param, stateData) {
 	  return createGetMainWorkerDataStream(flags, _1(getSelf, /* () */0));
 	}
 
@@ -14053,8 +14102,8 @@
 	  return state;
 	}
 
-	function execJob$32(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$32(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var transformData = data.transformData;
@@ -14072,15 +14121,15 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function execJob$35(flags, _, _$1) {
+	function execJob$35(flags, param, stateData) {
 	  return createGetMainWorkerDataStream(flags, _1(getSelf, /* () */0));
 	}
 
 
 	/* WorkerService-Wonderjs Not a pure module */
 
-	function execJob$36(_, e, _$1) {
-	  return callFunc((function () {
+	function execJob$36(param, e, stateData$$1) {
+	  return callFunc((function (param) {
 	                var data = getRecord$1(e);
 	                setIsDebug(stateData, data.isDebug);
 	                return e;
@@ -14090,8 +14139,8 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function execJob$37(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$37(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var gpuData = data.gpuData;
@@ -14150,8 +14199,8 @@
 	  return state;
 	}
 
-	function execJob$38(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$38(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var settingRecord = state[/* settingRecord */1];
 	                var data = getRecord$1(e);
@@ -14181,7 +14230,7 @@
 	        ];
 	}
 
-	function create$26() {
+	function create$26(param) {
 	  return /* record */[/* chunkMap */set("webgl1_basic_map_fragment", _buildChunk(/* tuple */[
 	                    "\n\n",
 	                    "\n\n"
@@ -14450,7 +14499,7 @@
 	}
 
 
-	/* MutableHashMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
 	function getPrecisionSource(gpuDetectRecord, glslChunkRecord) {
 	  var $$default = getChunk("highp_fragment", glslChunkRecord)[/* top */0];
@@ -14471,10 +14520,10 @@
 	}
 
 
-	/* ShaderChunkSystem-Wonderjs Not a pure module */
+	/* No side effect */
 
-	function execJob$39(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$39(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                state[/* glslRecord */7][/* precision */0] = getPrecisionSource(state[/* gpuDetectRecord */3], state[/* glslChunkRecord */10]);
 	                setState$1(stateData, state);
@@ -14485,8 +14534,8 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function execJob$40(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$40(flags, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var geometryData = data.renderData.geometryData;
@@ -14512,8 +14561,8 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function execJob$41(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$41(flags, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var sourceInstanceData = data.renderData.sourceInstance;
@@ -14534,8 +14583,8 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function execJob$42(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$42(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var basicMaterialData = data.basicMaterialData;
@@ -14710,8 +14759,8 @@
 	  }
 	}
 
-	function execJob$43(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$43(flags, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var match = isRender(getRecord$1(e));
 	                if (match) {
@@ -14736,8 +14785,8 @@
 	  return state;
 	}
 
-	function execJob$44(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$44(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var meshRendererData = data.meshRendererData;
@@ -14780,15 +14829,15 @@
 
 	/* most Not a pure module */
 
-	function execJob$47(flags, _, _$1) {
+	function execJob$47(flags, param, stateData) {
 	  return createGetMainWorkerDataStream(flags, _1(getSelf, /* () */0));
 	}
 
 
 	/* WorkerService-Wonderjs Not a pure module */
 
-	function execJob$48(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$48(flags, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var pointLightData = data.pointLightData;
@@ -14844,8 +14893,8 @@
 	  var disposedIndexArray = param$1[1];
 	  var isSupportInstance = param[1];
 	  var isSourceInstanceMap = param[0];
-	  requireCheck((function () {
-	          return test(buildAssertMessage("not dispose any material before init", "do"), (function () {
+	  requireCheck((function (param) {
+	          return test(buildAssertMessage("not dispose any material before init", "do"), (function (param) {
 	                        return assertTrue(isNotDisposed(disposedIndexArray));
 	                      }));
 	        }), getIsDebug(stateData));
@@ -14950,7 +14999,7 @@
 	  record[/* index */0] = index + 1 | 0;
 	  return ensureCheck((function (r) {
 	                var defaultShaderIndex = getDefaultShaderIndex(/* () */0);
-	                return test(buildAssertMessage("not equal default shader index:" + (String(defaultShaderIndex) + " "), "equal"), (function () {
+	                return test(buildAssertMessage("not equal default shader index:" + (String(defaultShaderIndex) + " "), "equal"), (function (param) {
 	                              return Operators[/* <>= */3](r, defaultShaderIndex);
 	                            }));
 	              }), getIsDebug(stateData), index);
@@ -14982,7 +15031,7 @@
 	}
 
 
-	/* MutableHashMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
 	function _join(array) {
 	  var output = "";
@@ -15375,7 +15424,7 @@
 	}
 
 
-	/* MutableHashMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
 	/* No side effect */
 
@@ -15515,7 +15564,7 @@
 
 	/* Log-WonderLog Not a pure module */
 
-	function bindElementArrayBuffer(gl, _, buffer, _$1) {
+	function bindElementArrayBuffer(gl, param, buffer, state) {
 	  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffer);
 	  return /* () */0;
 	}
@@ -15537,7 +15586,7 @@
 	}
 
 
-	/* GLSLLocationService-Wonderjs Not a pure module */
+	/* SendGLSLDataService-Wonderjs Not a pure module */
 
 	function addModelMatrixInstanceArrayBufferSendData(param, param$1) {
 	  return /* tuple */[
@@ -15598,7 +15647,7 @@
 	            ], shaderLibDataArr);
 	}
 
-	function _setToAttributeSendMap(shaderIndex, _, glslSenderRecord, param) {
+	function _setToAttributeSendMap(shaderIndex, attributeLocationMap, glslSenderRecord, param) {
 	  set$1(shaderIndex, param[0], glslSenderRecord[/* attributeSendDataMap */0]);
 	  set$1(shaderIndex, param[1], glslSenderRecord[/* instanceAttributeSendDataMap */1]);
 	  return glslSenderRecord;
@@ -16165,12 +16214,12 @@
 	  var match = createTypeArrays$8(buffer, basicMaterialCount, textureCountPerMaterial);
 	  var basicMaterialRecord = getRecord$14(state);
 	  state[/* basicMaterialRecord */12] = /* record */[
-	    /* shaderIndices */some$1(match[0]),
-	    /* colors */some$1(match[1]),
-	    /* textureIndices */some$1(match[2]),
-	    /* mapUnits */some$1(match[3]),
-	    /* isDepthTests */some$1(match[4]),
-	    /* alphas */some$1(match[5]),
+	    /* shaderIndices */some(match[0]),
+	    /* colors */some(match[1]),
+	    /* textureIndices */some(match[2]),
+	    /* mapUnits */some(match[3]),
+	    /* isDepthTests */some(match[4]),
+	    /* alphas */some(match[5]),
 	    /* index */basicMaterialRecord[/* index */6],
 	    /* disposedIndexArray */basicMaterialRecord[/* disposedIndexArray */7],
 	    /* isSourceInstanceMap */basicMaterialRecord[/* isSourceInstanceMap */8]
@@ -16178,8 +16227,8 @@
 	  return state;
 	}
 
-	function execJob$49(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$49(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var basicMaterialData = data.basicMaterialData;
@@ -16196,10 +16245,10 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function checkNotExceedMaxCount$1(count, _) {
-	  requireCheck((function () {
+	function checkNotExceedMaxCount$1(count, maxCount) {
+	  requireCheck((function (param) {
 	          var maxCount = getBufferMaxCount$1(/* () */0);
-	          return test(buildAssertMessage("light count: " + (String(count) + (" <= max count: " + (String(maxCount) + ""))), "not"), (function () {
+	          return test(buildAssertMessage("light count: " + (String(count) + (" <= max count: " + (String(maxCount) + ""))), "not"), (function (param) {
 	                        return assertLte(/* Int */0, count, maxCount);
 	                      }));
 	        }), getIsDebug(stateData));
@@ -16265,7 +16314,7 @@
 	var getPosition$2 = unsafeGet$3;
 
 
-	/* MutableSparseMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
 	function getColor$5(mappedIndex, param) {
 	  return getColor$1(mappedIndex, param[/* colors */1]);
@@ -16294,7 +16343,7 @@
 
 	/* RecordPointLightMainService-Wonderjs Not a pure module */
 
-	function getLightGLSLDataStructureMemberNameArr() {
+	function getLightGLSLDataStructureMemberNameArr(param) {
 	  return /* array */[
 	          /* record */[
 	            /* position */"u_pointLights[0].position",
@@ -16368,9 +16417,9 @@
 	  var uniformLocationMap = param[2];
 	  var uniformCacheMap = param[1];
 	  var program = param[0];
-	  requireCheck((function () {
+	  requireCheck((function (param) {
 	          var maxCount = getBufferMaxCount(/* () */0);
-	          return test(buildAssertMessage("max buffer count === 4", "is " + (String(maxCount) + "")), (function () {
+	          return test(buildAssertMessage("max buffer count === 4", "is " + (String(maxCount) + "")), (function (param) {
 	                        return Operators[/* = */0](maxCount, 4);
 	                      }));
 	        }), getIsDebug(stateData));
@@ -16422,12 +16471,12 @@
 	}
 
 
-	/* GLSLLocationService-Wonderjs Not a pure module */
+	/* SendGLSLDataService-Wonderjs Not a pure module */
 
 	var getDirection$1 = unsafeGet$3;
 
 
-	/* MutableSparseMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
 	function getColor$7(mappedIndex, param) {
 	  return getColor$2(mappedIndex, param[/* colors */1]);
@@ -16445,9 +16494,9 @@
 	  var uniformLocationMap = param[2];
 	  var uniformCacheMap = param[1];
 	  var program = param[0];
-	  requireCheck((function () {
+	  requireCheck((function (param) {
 	          var maxCount = getBufferMaxCount$1(/* () */0);
-	          return test(buildAssertMessage("max buffer count === 4", "is " + (String(maxCount) + "")), (function () {
+	          return test(buildAssertMessage("max buffer count === 4", "is " + (String(maxCount) + "")), (function (param) {
 	                        return Operators[/* = */0](maxCount, 4);
 	                      }));
 	        }), getIsDebug(stateData));
@@ -16900,13 +16949,13 @@
 	  var match = createTypeArrays$9(buffer, lightMaterialCount, textureCountPerMaterial);
 	  var lightMaterialRecord = getRecord$15(state);
 	  state[/* lightMaterialRecord */13] = /* record */[
-	    /* shaderIndices */some$1(match[0]),
-	    /* diffuseColors */some$1(match[1]),
-	    /* specularColors */some$1(match[2]),
-	    /* shininess */some$1(match[3]),
-	    /* textureIndices */some$1(match[4]),
-	    /* diffuseMapUnits */some$1(match[5]),
-	    /* specularMapUnits */some$1(match[6]),
+	    /* shaderIndices */some(match[0]),
+	    /* diffuseColors */some(match[1]),
+	    /* specularColors */some(match[2]),
+	    /* shininess */some(match[3]),
+	    /* textureIndices */some(match[4]),
+	    /* diffuseMapUnits */some(match[5]),
+	    /* specularMapUnits */some(match[6]),
 	    /* index */lightMaterialRecord[/* index */7],
 	    /* disposedIndexArray */lightMaterialRecord[/* disposedIndexArray */8],
 	    /* isSourceInstanceMap */lightMaterialRecord[/* isSourceInstanceMap */9]
@@ -16914,8 +16963,8 @@
 	  return state;
 	}
 
-	function execJob$50(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$50(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var lightMaterialData = data.lightMaterialData;
@@ -16938,19 +16987,11 @@
 
 	/* Log-WonderLog Not a pure module */
 
-	/* GameObjectsMapService-Wonderjs Not a pure module */
-
-	/* GroupService-Wonderjs Not a pure module */
-
-	/* GameObjectsMapService-Wonderjs Not a pure module */
-
 	/* Log-WonderLog Not a pure module */
 
-	/* Log-WonderLog Not a pure module */
+	/* No side effect */
 
-	/* MutableSparseMapService-WonderCommonlib Not a pure module */
-
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
 	/* QueryCPUMemoryService-Wonderjs Not a pure module */
 
@@ -16986,8 +17027,8 @@
 	  return state;
 	}
 
-	function execJob$56(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$56(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var settingRecord = state[/* settingRecord */1];
 	                var data = getRecord$1(e);
@@ -17002,8 +17043,8 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function execJob$57(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$57(flags, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var ambientLightData = data.ambientLightData;
@@ -17026,8 +17067,8 @@
 
 	/* No side effect */
 
-	function execJob$58(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$58(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var renderConfigData = data.renderConfigData;
@@ -17043,8 +17084,8 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function execJob$59(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$59(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var workerDetectData = data.workerDetectData;
@@ -17057,8 +17098,8 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function execJob$60(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$60(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var browserDetectData = data.browserDetectData;
@@ -17072,7 +17113,7 @@
 	/* MostUtils-Wonderjs Not a pure module */
 
 	function _buildAddArrayBufferViewSourceStream$1(e, stateData) {
-	  return callFunc((function () {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var initData = data.initData;
@@ -17082,7 +17123,7 @@
 	}
 
 	function _buildInitTextureStream$1(e, stateData) {
-	  return callFunc((function () {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var initData = data.initData;
@@ -17121,7 +17162,7 @@
 	              }));
 	}
 
-	function execJob$61(_, e, stateData) {
+	function execJob$61(flags, e, stateData) {
 	  var state = unsafeGetState$1(stateData);
 	  var data = getRecord$1(e);
 	  var initData = data.initData;
@@ -17133,7 +17174,7 @@
 	                        addSourceFromImageDataStream(textureData.basicSourceTextureData.needAddedImageDataArray, state),
 	                        _buildAddArrayBufferViewSourceStream$1(e, stateData),
 	                        _buildInitTextureStream$1(e, stateData)
-	                      ])).then((function () {
+	                      ])).then((function (param) {
 	                    return Promise.resolve(e);
 	                  })));
 	}
@@ -17142,7 +17183,7 @@
 	/* most Not a pure module */
 
 	function execJob$62(flags, e, stateData) {
-	  return callFunc((function () {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                postMessage({
 	                      operateType: getOperateType(flags),
@@ -17156,7 +17197,7 @@
 	/* MostUtils-Wonderjs Not a pure module */
 
 	function disposeMatrixFloat32ArrayMap(sourceInstance, maxBigTypeArrayPoolSize, matrixFloat32ArrayMap, typeArrayPoolRecord) {
-	  var match = get$4(sourceInstance, matrixFloat32ArrayMap);
+	  var match = get$6(sourceInstance, matrixFloat32ArrayMap);
 	  if (match !== undefined) {
 	    addFloat32TypeArrayToPool(valFromOption(match), maxBigTypeArrayPoolSize, getFloat32ArrayPoolMap(typeArrayPoolRecord));
 	  }
@@ -17168,7 +17209,7 @@
 	var disposeIsSendTransformMatrixDataMap = disposeSparseMapData;
 
 
-	/* TypeArrayPoolService-Wonderjs Not a pure module */
+	/* DisposeComponentService-Wonderjs Not a pure module */
 
 	function getMaxBigTypeArrayPoolSize$1(record) {
 	  return unsafeGetMemory$1(record)[/* maxBigTypeArrayPoolSize */0];
@@ -17177,8 +17218,8 @@
 
 	/* OperateRenderWorkerSettingService-Wonderjs Not a pure module */
 
-	function execJob$63(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$63(flags, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var settingRecord = state[/* settingRecord */1];
 	                var sourceInstanceRecord = state[/* sourceInstanceRecord */11];
@@ -17211,8 +17252,8 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function execJob$64(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$64(flags, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var directionLightData = data.directionLightData;
@@ -17258,8 +17299,8 @@
 	  return state;
 	}
 
-	function execJob$66(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$66(flags, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var initData = data.initData;
@@ -17276,8 +17317,8 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function execJob$68(flags, e, _) {
-	  return callFunc((function () {
+	function execJob$68(flags, e, stateData) {
+	  return callFunc((function (param) {
 	                postMessage({
 	                      operateType: getOperateType(flags)
 	                    }, _1(getSelf, /* () */0));
@@ -17360,10 +17401,10 @@
 	}
 
 
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* DeviceManagerService-Wonderjs Not a pure module */
 
-	function execJob$70(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$70(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var match = isRender(getRecord$1(e));
 	                if (match) {
@@ -17392,15 +17433,16 @@
 	          /* uniformInstanceSendNoCachableDataMap */glslSenderRecord[/* uniformInstanceSendNoCachableDataMap */8],
 	          /* uniformNoMaterialShaderSendCachableDataMap */glslSenderRecord[/* uniformNoMaterialShaderSendCachableDataMap */9],
 	          /* vertexAttribHistoryArray */glslSenderRecord[/* vertexAttribHistoryArray */10],
-	          /* lastSendMaterialData */undefined
+	          /* lastSendMaterialData */undefined,
+	          /* lastSendGeometryData */undefined
 	        ];
 	}
 
 
 	/* No side effect */
 
-	function execJob$72(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$72(flags, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                state[/* glslSenderRecord */8] = execJob$73(state[/* glslSenderRecord */8]);
 	                setState$1(stateData, state);
@@ -17411,23 +17453,31 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
-	/* ArrayService-WonderCommonlib Not a pure module */
-
-	/* GroupService-Wonderjs Not a pure module */
-
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* GameObjectsMapService-Wonderjs Not a pure module */
 
 	/* GroupService-Wonderjs Not a pure module */
 
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* GroupGeometryService-Wonderjs Not a pure module */
+
+	/* GroupService-Wonderjs Not a pure module */
+
+	/* GroupBasicMaterialService-Wonderjs Not a pure module */
+
+	/* GroupService-Wonderjs Not a pure module */
+
+	/* GroupLightMaterialService-Wonderjs Not a pure module */
 
 	/* ComponentMapService-Wonderjs Not a pure module */
 
 	/* No side effect */
 
 	/* Contract-WonderLog Not a pure module */
+
+	/* GameObjectsMapService-Wonderjs Not a pure module */
+
+	/* Log-WonderLog Not a pure module */
 
 	/* Contract-WonderLog Not a pure module */
 
@@ -17469,7 +17519,7 @@
 
 	/* ComponentMapService-Wonderjs Not a pure module */
 
-	/* ArrayService-Wonderjs Not a pure module */
+	/* ArrayMapService-Wonderjs Not a pure module */
 
 	/* ArrayService-Wonderjs Not a pure module */
 
@@ -17492,8 +17542,8 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function execJob$81(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$81(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var match = isRender(data);
@@ -17519,8 +17569,8 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function execJob$82(_, e, stateData) {
-	  return callFunc((function () {
+	function execJob$82(param, e, stateData) {
+	  return callFunc((function (param) {
 	                var state = unsafeGetState$1(stateData);
 	                var data = getRecord$1(e);
 	                var match = isRender(data);
@@ -17546,7 +17596,7 @@
 
 	/* MostUtils-Wonderjs Not a pure module */
 
-	function _getWorkerJobHandles() {
+	function _getWorkerJobHandles(param) {
 	  return /* :: */[
 	          /* tuple */[
 	            "send_finish_send_job_data",
@@ -17850,7 +17900,7 @@
 	        ];
 	}
 
-	function createWorkerJobHandleMap() {
+	function createWorkerJobHandleMap(param) {
 	  return createJobHandleMap(_getWorkerJobHandles(/* () */0));
 	}
 
@@ -17868,14 +17918,14 @@
 
 	/* JobService-Wonderjs Not a pure module */
 
-	function create$28() {
+	function create$28(param) {
 	  return /* record */[/* precision */undefined];
 	}
 
 
 	/* No side effect */
 
-	function create$29() {
+	function create$29(param) {
 	  return /* record */[
 	          /* index */0,
 	          /* noMaterialShaderIndexMap */createEmpty(/* () */0),
@@ -17885,9 +17935,9 @@
 	}
 
 
-	/* CopyTypeArrayService-Wonderjs Not a pure module */
+	/* No side effect */
 
-	function create$30() {
+	function create$30(param) {
 	  return /* record */[/* outlineData : record */[
 	            /* outlineColor : array */[
 	              1.0,
@@ -17901,7 +17951,7 @@
 
 	/* No side effect */
 
-	function create$31() {
+	function create$31(param) {
 	  return /* record */[
 	          /* programMap */createEmpty$3(/* () */0),
 	          /* lastUsedProgram */undefined
@@ -17909,9 +17959,9 @@
 	}
 
 
-	/* MutableSparseMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
-	function create$32() {
+	function create$32(param) {
 	  return /* record */[
 	          /* geometryVertexBufferMap */createEmpty$3(/* () */0),
 	          /* geometryTexCoordBufferMap */createEmpty$3(/* () */0),
@@ -17925,9 +17975,9 @@
 	}
 
 
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
-	function create$33() {
+	function create$33(param) {
 	  return /* record */[
 	          /* float16Array1 */new Float32Array(/* array */[
 	                1,
@@ -17964,7 +18014,7 @@
 
 	/* No side effect */
 
-	function create$34() {
+	function create$34(param) {
 	  return /* record */[
 	          /* attributeLocationMap */createEmpty$3(/* () */0),
 	          /* uniformLocationMap */createEmpty$3(/* () */0)
@@ -17972,9 +18022,9 @@
 	}
 
 
-	/* MutableSparseMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
-	function create$35() {
+	function create$35(param) {
 	  return /* record */[
 	          /* gl */undefined,
 	          /* colorWrite */undefined,
@@ -17991,7 +18041,7 @@
 
 	/* No side effect */
 
-	function create$36() {
+	function create$36(param) {
 	  return /* record */[
 	          /* attributeSendDataMap */createEmpty$3(/* () */0),
 	          /* instanceAttributeSendDataMap */createEmpty$3(/* () */0),
@@ -18004,14 +18054,15 @@
 	          /* uniformInstanceSendNoCachableDataMap */createEmpty$3(/* () */0),
 	          /* uniformNoMaterialShaderSendCachableDataMap */createEmpty$3(/* () */0),
 	          /* vertexAttribHistoryArray */createEmpty$2(/* () */0),
-	          /* lastSendMaterialData */undefined
+	          /* lastSendMaterialData */undefined,
+	          /* lastSendGeometryData */undefined
 	        ];
 	}
 
 
-	/* ArrayService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
-	function create$37() {
+	function create$37(param) {
 	  return /* record */[
 	          /* float32ArrayPoolMap */createEmpty$3(/* () */0),
 	          /* uint16ArrayPoolMap */createEmpty$3(/* () */0)
@@ -18019,16 +18070,16 @@
 	}
 
 
-	/* MutableSparseMapService-WonderCommonlib Not a pure module */
+	/* No side effect */
 
-	function create$38() {
+	function create$38(param) {
 	  return /* record */[/* ambientLight : record */[/* color */getDefaultColor$1(/* () */0)]];
 	}
 
 
 	/* No side effect */
 
-	function create$39() {
+	function create$39(param) {
 	  return /* record */[
 	          /* customDataInRenderWorker */-1,
 	          /* customDataFromRenderWorkerToMainWorker */-1,
@@ -18039,7 +18090,7 @@
 
 	/* No side effect */
 
-	function create$40() {
+	function create$40(param) {
 	  return /* record */[
 	          /* basicRenderObjectRecord */undefined,
 	          /* lightRenderObjectRecord */undefined,
@@ -18050,7 +18101,7 @@
 
 	/* No side effect */
 
-	function create$41() {
+	function create$41(param) {
 	  return /* record */[
 	          /* gpu */undefined,
 	          /* instanceBuffer */undefined,
@@ -18066,7 +18117,7 @@
 
 	/* No side effect */
 
-	function createState$2() {
+	function createState$2(param) {
 	  return /* record */[
 	          /* sceneRecord */create$38(/* () */0),
 	          /* settingRecord */create$41(/* () */0),
@@ -18114,7 +18165,7 @@
 	  return error$2(buildErrorMessage("render worker error", "" + (String(msg) + ""), "", "", "fileName:" + (String(fileName) + ("\n        lineno:" + (String(lineno) + "")))));
 	}
 
-	function _createAndSetWorkerState() {
+	function _createAndSetWorkerState(param) {
 	  setState$1(renderWorkerStateData, createState$2(/* () */0));
 	  return /* () */0;
 	}
@@ -18132,7 +18183,7 @@
 	/*  Not a pure module */
 
 	var defineOnError = (
-	       function() {
+	       function(param) {
 	           onerror = (msg, fileName, lineno) => {
 	onerrorHandler(msg, fileName, lineno);
 	           };
