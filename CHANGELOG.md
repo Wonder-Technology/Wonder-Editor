@@ -1,3 +1,13 @@
+<a name="1.0.0-beta.3.1"></a>
+# [1.0.0-beta.3.1](https://github.com/Wonder-Technology/Wonder-Editor/compare/v1.0.0-beta.3...v1.0.0-beta.3.1) (2019-03-03)
+
+
+### Features
+
+* **pwa:** update service-worker.js->cacheName ([161a5f3](https://github.com/Wonder-Technology/Wonder-Editor/commit/161a5f3))
+
+
+
 <a name="1.0.0-beta.3"></a>
 # [1.0.0-beta.3](https://github.com/Wonder-Technology/Wonder-Editor/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2019-03-03)
 
