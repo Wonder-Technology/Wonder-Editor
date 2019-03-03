@@ -15,6 +15,7 @@ module.exports = {
   ],
 
   scopes: [
+    { name: "hotkey" },
     { name: "focus" },
     { name: "scene-view" },
     { name: "scene-tree" },

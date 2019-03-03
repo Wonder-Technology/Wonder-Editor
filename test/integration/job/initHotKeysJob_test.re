@@ -160,38 +160,62 @@ let _ =
       );
 
       describe("test bind delete hot-key", () =>
-        test(
-          "key down delete,if has currentSceneTreeNode, should delete it", () => {
-          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
+        describe("key down delete", () => {
+          test("if has currentSceneTreeNode, should delete it", () => {
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
 
-          triggerDeleteHotKeyEvent();
+            triggerDeleteHotKeyEvent();
 
-          BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
-          |> ReactTestTool.createSnapshotAndMatch;
+            BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
+          test("else if has current asset tree node, should delete it", () => {
+            GameObjectTool.clearCurrentSceneTreeNode();
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
+            MainEditorAssetTreeTool.Select.selectFolderNode(
+              ~nodeId=
+                MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId(
+                  assetTreeData,
+                ),
+              (),
+            );
+
+            triggerDeleteHotKeyEvent();
+
+            BuildComponentTool.buildAssetTree()
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
         })
       );
 
       describe("test bind focus hot-key", () => {
         let _getDistance = ((editorState, engineState)) =>
-          editorState
-          |> SceneViewEditorService.unsafeGetEditCamera
-          |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-               engineState,
-             )
-          |. ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
-               engineState,
-             )
+          (editorState |> SceneViewEditorService.unsafeGetEditCamera)
+          ->(
+              GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+                engineState,
+              )
+            )
+          ->(
+              ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
+                engineState,
+              )
+            )
           |> FloatService.truncateFloatValue(_, 3);
 
         let _getTarget = ((editorState, engineState)) =>
-          editorState
-          |> SceneViewEditorService.unsafeGetEditCamera
-          |. GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-               engineState,
-             )
-          |. ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
-               engineState,
-             )
+          (editorState |> SceneViewEditorService.unsafeGetEditCamera)
+          ->(
+              GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+                engineState,
+              )
+            )
+          ->(
+              ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
+                engineState,
+              )
+            )
           |> Vector3Service.truncate(3);
 
         describe(
@@ -209,10 +233,14 @@ let _ =
 
               let engineState =
                 MainEditorSceneTool.unsafeGetScene()
-                |. GameObjectComponentEngineService.unsafeGetTransformComponent(
-                     engineState,
-                   )
-                |. TransformEngineService.setScale((3., 1., 1.), engineState);
+                ->(
+                    GameObjectComponentEngineService.unsafeGetTransformComponent(
+                      engineState,
+                    )
+                  )
+                ->(
+                    TransformEngineService.setScale((3., 1., 1.), engineState)
+                  );
               let firstChild = MainEditorSceneTool.getFirstCube(engineState);
               let secondChild =
                 MainEditorSceneTool.getSecondCube(engineState);
@@ -248,10 +276,14 @@ let _ =
 
               let engineState =
                 firstChild
-                |. GameObjectComponentEngineService.unsafeGetTransformComponent(
-                     engineState,
-                   )
-                |. TransformEngineService.setScale((3., 1., 1.), engineState);
+                ->(
+                    GameObjectComponentEngineService.unsafeGetTransformComponent(
+                      engineState,
+                    )
+                  )
+                ->(
+                    TransformEngineService.setScale((3., 1., 1.), engineState)
+                  );
               let engineState =
                 engineState
                 |> TransformGameObjectEngineService.setLocalPosition(

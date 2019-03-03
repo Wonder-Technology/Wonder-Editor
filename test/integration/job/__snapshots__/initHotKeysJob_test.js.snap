@@ -132,7 +132,41 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
 </article>
 `;
 
-exports[`init hotKeys job bind document hotKeys event, need add hot-key into SettingTool test bind delete hot-key key down delete,if has currentSceneTreeNode, should delete it 1`] = `
+exports[`init hotKeys job bind document hotKeys event, need add hot-key into SettingTool test bind delete hot-key key down delete else if has current asset tree node, should delete it 1`] = `
+<article
+  className="wonder-asset-assetTree"
+>
+  <ul
+    className="wonder-tree-node"
+  >
+    <li>
+      <div
+        className="item-triangle"
+      />
+      <img
+        className="treeNode-icon"
+        src="./public/img/package.png"
+      />
+      <div
+        className="draggable-container select-not-active"
+        draggable={true}
+        onClick={[Function]}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+        style={Object {}}
+      >
+        Assets
+      </div>
+    </li>
+  </ul>
+</article>
+`;
+
+exports[`init hotKeys job bind document hotKeys event, need add hot-key into SettingTool test bind delete hot-key key down delete if has currentSceneTreeNode, should delete it 1`] = `
 <article
   className="wonder-sceneTree-component"
   id="wonder-sceneTree-component"

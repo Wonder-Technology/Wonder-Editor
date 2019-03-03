@@ -9,16 +9,6 @@ type action =
   | BlurNav;
 
 module Method = {
-  let isCurrentNodeEqualRootNode = editorState =>
-    switch (editorState |> CurrentNodeIdAssetEditorService.getCurrentNodeId) {
-    | None => true
-    | Some(currentNodeId) =>
-      NodeAssetService.isIdEqual(
-        currentNodeId,
-        RootTreeAssetEditorService.getRootNode(editorState)
-        |> NodeAssetService.getNodeId(~node=_),
-      )
-    };
   let addFolder = AssetHeaderAddFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let removeAssetNode = AssetHeaderRemoveNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
@@ -39,13 +29,13 @@ let _renderSelectNav =
   <div className="item-content">
     <div
       className="content-section"
-      onClick=(_e => Method.addFolder((uiState, dispatchFunc), (), ()))>
-      <span className="section-header"> (DomHelper.textEl("Folder")) </span>
+      onClick={_e => Method.addFolder((uiState, dispatchFunc), (), ())}>
+      <span className="section-header"> {DomHelper.textEl("Folder")} </span>
     </div>
     <div
       className="content-section"
-      onClick=(_e => Method.addMaterial((uiState, dispatchFunc), (), ()))>
-      <div className="section-header"> (DomHelper.textEl("Material")) </div>
+      onClick={_e => Method.addMaterial((uiState, dispatchFunc), (), ())}>
+      <div className="section-header"> {DomHelper.textEl("Material")} </div>
     </div>
   </div>;
 
@@ -57,20 +47,22 @@ let _renderRemoveItem =
     ) =>
   <div
     className="asset-header-item"
-    onClick=(
+    onClick={
       _e =>
-        Method.isCurrentNodeEqualRootNode |> StateLogicService.getEditorState ?
+        CurrentNodeIdAssetEditorService.couldRemoveCurrentNode
+        |> StateLogicService.getEditorState ?
           () : Method.removeAssetNode((uiState, dispatchFunc), (), ())
-    )>
-    (
-      Method.isCurrentNodeEqualRootNode |> StateLogicService.getEditorState ?
+    }>
+    {
+      CurrentNodeIdAssetEditorService.couldRemoveCurrentNode
+      |> StateLogicService.getEditorState ?
         <div className="item-notBeClick">
           <img src="./public/img/notRemove.png" />
         </div> :
         <div className="item-canBeClick">
           <img src="./public/img/remove.png" />
         </div>
-    )
+    }
   </div>;
 
 let render =
@@ -79,16 +71,16 @@ let render =
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) =>
   <article key="assetHeader" className="wonder-asset-header">
-    <div className="asset-header-item" onClick=(_e => send(ToggleShowNav))>
+    <div className="asset-header-item" onClick={_e => send(ToggleShowNav)}>
       <div className="item-canBeClick">
         <img src="./public/img/add.png" />
       </div>
-      (
+      {
         state.isSelectNav ?
           _renderSelectNav(uiState, dispatchFunc, self) : ReasonReact.null
-      )
+      }
     </div>
-    (_renderRemoveItem(uiState, dispatchFunc, self))
+    {_renderRemoveItem(uiState, dispatchFunc, self)}
     <div className="asset-header-item">
       <div className="item-canBeClick">
         <img src="./public/img/load.png" />
@@ -96,7 +88,7 @@ let render =
           className="asset-fileLoad"
           type_="file"
           multiple=false
-          onChange=(
+          onChange={
             e =>
               Method.fileLoad(
                 (uiState, dispatchFunc),
@@ -104,7 +96,7 @@ let render =
                 e,
               )
               |> ignore
-          )
+          }
         />
       </div>
     </div>
