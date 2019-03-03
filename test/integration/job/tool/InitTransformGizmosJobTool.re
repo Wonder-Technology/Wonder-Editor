@@ -143,6 +143,20 @@ let getCurrentSceneTreeNodePosition = () => {
   |> Vector3Service.truncate(3);
 };
 
+let getGameObjectLocalRotation = gameObject => {
+  let editorState = StateEditorService.getState();
+  let engineState = StateEngineService.unsafeGetState();
+
+  TransformEngineService.getLocalRotation(
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      gameObject,
+      engineState,
+    ),
+    engineState,
+  )
+  |> TranasformToolEngine.truncateRotation(~rotation=_, ());
+};
+
 let getGameObjectEulerAngles = gameObject => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
@@ -189,6 +203,12 @@ let getCurrentSceneTreeNodeEulerAngles = () => {
   let editorState = StateEditorService.getState();
   SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState)
   |> getGameObjectEulerAngles;
+};
+
+let getCurrentSceneTreeNodeLocalRotation = () => {
+  let editorState = StateEditorService.getState();
+  SceneTreeEditorService.unsafeGetCurrentSceneTreeNode(editorState)
+  |> getGameObjectLocalRotation;
 };
 
 let getCurrentSceneTreeNodeLocalScale = () => {

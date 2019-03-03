@@ -1,0 +1,1 @@
+let add = Wonderjs.Vector3Service.add;

@@ -130,17 +130,17 @@ let _ =
                 EventTool.triggerDomEvent(
                   "mousedown",
                   EventTool.getBody(),
-                  MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+                  MouseEventTool.buildMouseDomEvent(~pageX, ~pageY, ()),
                 );
                 EventTool.triggerDomEvent(
                   "mousemove",
                   EventTool.getBody(),
-                  MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+                  MouseEventTool.buildMouseDomEvent(~pageX, ~pageY, ()),
                 );
                 EventTool.triggerDomEvent(
                   "mouseup",
                   EventTool.getBody(),
-                  MouseEventTool.buildMouseEvent(),
+                  MouseEventTool.buildMouseDomEvent(),
                 );
                 EventTool.restore();
               },
@@ -164,12 +164,12 @@ let _ =
                 EventTool.triggerDomEvent(
                   "mousedown",
                   EventTool.getBody(),
-                  MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+                  MouseEventTool.buildMouseDomEvent(~pageX, ~pageY, ()),
                 );
                 EventTool.triggerDomEvent(
                   "mousewheel",
                   EventTool.getBody(),
-                  MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+                  MouseEventTool.buildMouseDomEvent(~pageX, ~pageY, ()),
                 );
                 EventTool.restore();
               },
@@ -255,12 +255,12 @@ let _ =
             EventTool.triggerDomEvent(
               "mousedown",
               EventTool.getBody(),
-              MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+              MouseEventTool.buildMouseDomEvent(~pageX, ~pageY, ()),
             );
             EventTool.triggerDomEvent(
               "keydown",
               EventTool.getKeyboardEventBindedDom(),
-              KeyboardEventTool.buildKeyboardEvent(),
+              KeyboardEventTool.buildKeyboardDomEvent(),
             );
             EventTool.restore();
           };

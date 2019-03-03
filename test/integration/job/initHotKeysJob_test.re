@@ -81,7 +81,7 @@ let _ =
         EventTool.triggerDomEvent(
           keyboardDomEventName,
           EventTool.getDocument(),
-          KeyboardEventTool.buildKeyboardEvent(
+          KeyboardEventTool.buildKeyboardDomEvent(
             ~ctrlKey,
             ~altKey,
             ~shiftKey,
