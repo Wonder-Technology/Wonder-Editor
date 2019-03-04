@@ -204,7 +204,7 @@ let _mergeTreeByFolderNodeName =
   let _folderNodeFunc =
       ((parentFolderNodeInNewTree, newTree), nodeId, nodeData, children) =>
     switch (parentFolderNodeInNewTree) {
-    | None => (RootTreeAssetService.getRootNode(newTree) |. Some, newTree)
+    | None => (RootTreeAssetService.getRootNode(newTree)->Some, newTree)
     | Some(parentFolderNodeInNewTree) =>
       let node =
         FolderNodeAssetService.buildNodeByNodeData(
@@ -222,7 +222,7 @@ let _mergeTreeByFolderNodeName =
           newTree,
         )
       | None => (
-          node |. Some,
+          node->Some,
           insertNode(
             NodeAssetService.getNodeId(~node=parentFolderNodeInNewTree),
             node,
@@ -232,15 +232,14 @@ let _mergeTreeByFolderNodeName =
       };
     };
 
-  let (_, newTree) =
-    IterateTreeAssetService.fold(
-      ~acc=(None, tree1),
-      ~tree=onlyFolderNodeTree,
-      ~folderNodeFunc=_folderNodeFunc,
-      (),
-    );
-
-  newTree;
+  /* let (parentFolderNodeInNewTree, newTree) = */
+  IterateTreeAssetService.fold(
+    ~acc=(None, tree1),
+    ~tree=onlyFolderNodeTree,
+    ~folderNodeFunc=_folderNodeFunc,
+    (),
+  );
+  /* newTree; */
 };
 
 let _unsafeFindFolderNodeByName = (targetFolderNodeName, tree) =>
@@ -259,12 +258,8 @@ let _unsafeFindFolderNodeByName = (targetFolderNodeName, tree) =>
 let addFolderNodesToTreeByPath = (path, isNodeEqualByName, tree, index) => {
   let pathArr = path |> _getFolderPathArr;
   let (newTree, newIndex) = _buildTreeByFolderPath(pathArr, index);
-  let newTree = _mergeTreeByFolderNodeName(isNodeEqualByName, tree, newTree);
+  let (parentFolderNodeInNewTree, newTree) =
+    _mergeTreeByFolderNodeName(isNodeEqualByName, tree, newTree);
 
-  (
-    newTree,
-    newIndex,
-    ArrayService.unsafeGetLast(pathArr)
-    |> _unsafeFindFolderNodeByName(_, newTree),
-  );
+  (newTree, newIndex, parentFolderNodeInNewTree |> OptionService.unsafeGet);
 };

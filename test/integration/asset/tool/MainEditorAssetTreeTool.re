@@ -20,6 +20,30 @@ let findNodeIdByName = (targetNodeName, (editorState, engineState)) =>
   findNodeByName(targetNodeName, (editorState, engineState))
   |> Js.Option.map((. node) => NodeAssetService.getNodeId(~node));
 
+let findNodesByName = (targetNodeName, (editorState, engineState)) => {
+  let predNodeFunc = node =>
+    NodeNameAssetLogicService.isTargetNameNode(
+      ~node,
+      ~name=targetNodeName,
+      ~engineState,
+    );
+
+  IterateTreeAssetService.find(
+    ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
+    ~predTextureNodeFunc=predNodeFunc,
+    ~predMaterialNodeFunc=predNodeFunc,
+    ~predWDBNodeFunc=predNodeFunc,
+    ~predFolderNodeFunc=predNodeFunc,
+    (),
+  );
+};
+
+let findNodeIdsByName = (targetNodeName, (editorState, engineState)) =>
+  findNodesByName(targetNodeName, (editorState, engineState))
+  |> Js.Option.map((. nodes) =>
+       nodes |> List.map(node => NodeAssetService.getNodeId(~node))
+     );
+
 let findNodeParent = OperateTreeAssetEditorService.findNodeParent;
 
 let findNodeParentId = OperateTreeAssetEditorService.findNodeParentId;

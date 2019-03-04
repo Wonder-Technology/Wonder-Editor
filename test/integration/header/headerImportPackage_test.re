@@ -2377,5 +2377,79 @@ let _ =
           )
         );
       });
+
+      describe("test material assets after import", () => {
+        let truckWDBArrayBuffer = ref(Obj.magic(1));
+
+        beforeAll(() =>
+          truckWDBArrayBuffer := WDBTool.convertGLBToWDB("CesiumMilkTruck")
+        );
+
+        beforeEach(() => {
+          MainEditorSceneTool.initState(~sandbox, ());
+          MainEditorSceneTool.prepareScene(sandbox);
+
+          MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+          |> ignore;
+        });
+
+        testPromise(
+          {|
+          load wdb w1;
+          add folder f1 to root;
+          enter f1;
+          load wdb w2;
+          export;
+          import;
+          enter f1->Materials folder;
+
+          should show w2->materials;
+          |},
+          () =>
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            (),
+          )
+          |> then_(_ => {
+               let addedFolderNodeId = MainEditorAssetIdTool.getNewAssetId();
+
+               MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+               MainEditorAssetTreeTool.Select.selectFolderNode(
+                 ~nodeId=addedFolderNodeId,
+                 (),
+               );
+
+               MainEditorAssetUploadTool.loadOneWDB(
+                 ~arrayBuffer=truckWDBArrayBuffer^,
+                 (),
+               )
+               |> then_(_ =>
+                    ImportPackageTool.testImportPackage(
+                      ~testFunc=
+                        () => {
+                          let truckMaterialsFolderId =
+                            MainEditorAssetTreeTool.findNodeIdsByName(
+                              "Materials",
+                            )
+                            |> StateLogicService.getStateToGetData
+                            |> OptionService.unsafeGet
+                            |> List.nth(_, 1);
+
+                          MainEditorAssetTreeTool.Select.selectFolderNode(
+                            ~nodeId=truckMaterialsFolderId,
+                            (),
+                          );
+
+                          BuildComponentTool.buildAssetChildrenNode()
+                          |> ReactTestTool.createSnapshotAndMatch
+                          |> resolve;
+                        },
+                      (),
+                    )
+                  );
+             })
+        );
+      });
     });
   });

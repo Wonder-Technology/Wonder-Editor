@@ -67,9 +67,13 @@ let buildImageData =
            IndexAssetEditorService.generateImageDataMapIndex(editorState);
 
          (
-           imageMap |> WonderCommonlib.ImmutableSparseMapService.set(imageIndex, image),
+           imageMap
+           |> WonderCommonlib.ImmutableSparseMapService.set(imageIndex, image),
            imageDataIndexMap
-           |> WonderCommonlib.ImmutableSparseMapService.set(imageIndex, imageDataIndex),
+           |> WonderCommonlib.ImmutableSparseMapService.set(
+                imageIndex,
+                imageDataIndex,
+              ),
            editorState
            |> ImageDataMapAssetEditorService.setData(
                 imageDataIndex,
@@ -147,7 +151,9 @@ let buildTextureData =
               )
            |> BasicSourceTextureEngineService.setSource(
                 imageMap
-                |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(source)
+                |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
+                     source,
+                   )
                 |> ImageType.convertDomToImageElement,
                 texture,
               );
@@ -170,7 +176,9 @@ let buildTextureData =
                   ~textureComponent=texture,
                   ~imageDataIndex=
                     imageDataIndexMap
-                    |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(source),
+                    |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
+                         source,
+                       ),
                 ),
               );
 
@@ -207,7 +215,10 @@ let buildTextureData =
 
          (
            textureMap
-           |> WonderCommonlib.ImmutableSparseMapService.set(textureIndex, texture),
+           |> WonderCommonlib.ImmutableSparseMapService.set(
+                textureIndex,
+                texture,
+              ),
            (editorState, engineState),
          );
        },
@@ -265,7 +276,10 @@ let _buildBasicMaterialData = (basicMaterials, (editorState, engineState)) =>
 
          (
            basicMaterialMap
-           |> WonderCommonlib.ImmutableSparseMapService.set(materialIndex, material),
+           |> WonderCommonlib.ImmutableSparseMapService.set(
+                materialIndex,
+                material,
+              ),
            (editorState, engineState),
          );
        },
@@ -309,7 +323,9 @@ let _buildLightMaterialData =
                engineState
                |> LightMaterialEngineService.setLightMaterialDiffuseMap(
                     textureMap
-                    |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(diffuseMap),
+                    |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
+                         diffuseMap,
+                       ),
                     material,
                   );
              };
@@ -324,7 +340,10 @@ let _buildLightMaterialData =
 
          (
            lightMaterialMap
-           |> WonderCommonlib.ImmutableSparseMapService.set(materialIndex, material),
+           |> WonderCommonlib.ImmutableSparseMapService.set(
+                materialIndex,
+                material,
+              ),
            (editorState, engineState),
          );
        },
@@ -353,25 +372,25 @@ let buildMaterialData =
 };
 
 /* let addExtractedMateriialAssetDataToMaterialData =
-    (extractedMaterialAssetDataArr, (basicMaterialMap, lightMaterialMap)) =>
-  extractedMaterialAssetDataArr
-  |> WonderCommonlib.ArrayService.reduceOneParam(
-       (.
-         (basicMaterialMap, lightMaterialMap),
-         ((material, materialType), _),
-       ) =>
-         switch (materialType) {
-         | MaterialDataAssetType.BasicMaterial => (
-             basicMaterialMap |> WonderCommonlib.ImmutableSparseMapService.push(material),
-             lightMaterialMap,
-           )
-         | MaterialDataAssetType.LightMaterial => (
-             basicMaterialMap,
-             lightMaterialMap |> WonderCommonlib.ImmutableSparseMapService.push(material),
-           )
-         },
-       (basicMaterialMap, lightMaterialMap),
-     ); */
+     (extractedMaterialAssetDataArr, (basicMaterialMap, lightMaterialMap)) =>
+   extractedMaterialAssetDataArr
+   |> WonderCommonlib.ArrayService.reduceOneParam(
+        (.
+          (basicMaterialMap, lightMaterialMap),
+          ((material, materialType), _),
+        ) =>
+          switch (materialType) {
+          | MaterialDataAssetType.BasicMaterial => (
+              basicMaterialMap |> WonderCommonlib.ImmutableSparseMapService.push(material),
+              lightMaterialMap,
+            )
+          | MaterialDataAssetType.LightMaterial => (
+              basicMaterialMap,
+              lightMaterialMap |> WonderCommonlib.ImmutableSparseMapService.push(material),
+            )
+          },
+        (basicMaterialMap, lightMaterialMap),
+      ); */
 
 let _mergeImageUint8ArrayDataMap =
     (totalImageUint8ArrayDataMap, targetImageUint8ArrayDataMap) => {
@@ -461,7 +480,8 @@ let buildWDBData =
                         ),
                         () =>
                         _wdbImageUint8ArrayDataMap
-                        |> WonderCommonlib.ImmutableSparseMapService.length == 0
+                        |> WonderCommonlib.ImmutableSparseMapService.length
+                        == 0
                       )
                     )
                   )
