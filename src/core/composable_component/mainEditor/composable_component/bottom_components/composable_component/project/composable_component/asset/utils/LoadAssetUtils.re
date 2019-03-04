@@ -9,6 +9,7 @@ let getUploadAssetType = name => {
   | ".wdb" => LoadWDB
   | ".glb" => LoadGLB
   | ".jpg"
+  | ".jpeg"
   | ".png" => LoadTexture
   | ".zip" => LoadGLTFZip
   | _ =>
