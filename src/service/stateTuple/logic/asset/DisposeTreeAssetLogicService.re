@@ -94,6 +94,7 @@ let _disposeWDBGameObjects = (wdbGameObjects, (editorState, engineState)) =>
 let _disposeTextureNodeEngineData = ({textureComponent}, engineState) =>
   engineState |> _disposeTextureFromAllLightMaterials(textureComponent);
 
+
 let _disposeMaterialNodeEngineData =
     ({materialComponent, type_}, (editorState, engineState)) => {
   let (defaultMaterial, defaultMaterialType) =

@@ -56,9 +56,18 @@ let setGeometryIndices32 = GeometryAPI.setGeometryIndices32;
 let hasGeometryTexCoords = (geometry, engineState) =>
   getGeometryTexCoords(geometry, engineState) |> Float32Array.length > 0;
 
-/* let getAllGeometrys = GeometryAPI.getAllGeometrys; */
+let getAllGeometrys = GeometryAPI.getAllGeometrys;
 
 let unsafeGetGeometryGameObjects = Wonderjs.GeometryAPI.unsafeGetGeometryGameObjects;
+
+let getBasicMaterialGameObjects = (geometry, engineState) =>
+  GameObjectGeometryService.getGameObjects(
+    geometry,
+    RecordGeometryMainService.getRecord(engineState),
+  );
+
+let hasGeometryGameObjects = (geometry, engineState) =>
+  getBasicMaterialGameObjects(geometry, engineState) |> Js.Option.isSome;
 
 let rec _generateGridPlanePoints =
         ((size, step, y), (num, index), vertices, indices) =>

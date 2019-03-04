@@ -27,9 +27,12 @@ let _isGeometryVertexDataEqual = (geometry1, geometry2, engineState) =>
 
 let isGeometryEqualDefaultGeometryData =
     (geometry, defaultGeometry, defaultGeometryName, engineState) =>
-  GeometryEngineService.unsafeGetGeometryName(geometry, engineState)
-  == defaultGeometryName
-  && _isGeometryVertexDataEqual(geometry, defaultGeometry, engineState);
+  switch (GeometryEngineService.getGeometryName(geometry, engineState)) {
+  | None => false
+  | Some(name) =>
+    name == defaultGeometryName
+    && _isGeometryVertexDataEqual(geometry, defaultGeometry, engineState)
+  };
 
 let isDefaultGeometry = (geometry, (editorState, engineState)) => {
   let (defaultCubeGeometry, defaultCubeGeometryName) = (
@@ -60,7 +63,7 @@ let isDefaultGeometry = (geometry, (editorState, engineState)) => {
 };
 
 let isGeometryAsset = (geometry, (editorState, engineState)) =>
-  ! isDefaultGeometry(geometry, (editorState, engineState));
+  !isDefaultGeometry(geometry, (editorState, engineState));
 
 let getAllWDBGameObjects = (editorState, engineState) =>
   editorState

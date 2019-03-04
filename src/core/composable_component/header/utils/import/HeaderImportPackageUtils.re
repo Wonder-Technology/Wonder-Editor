@@ -72,14 +72,11 @@ let _reInitDefaultMaterials = (editorState, engineState) => {
 };
 
 let _checkMaterial = (gameObjectMaterials, type_, (editorState, engineState)) => {
-  gameObjectMaterials |> Js.Array.sortInPlace;
-
   let materialAssets =
     MaterialNodeAssetEditorService.getMaterialComponentsByType(
       type_,
       editorState,
     );
-  materialAssets |> Js.Array.sortInPlace;
 
   gameObjectMaterials
   |> Js.Array.filter(gameObjectMaterial =>
@@ -312,8 +309,8 @@ let _import = result => {
                           ),
                           () =>
                           _sceneGameObjectImageUint8ArrayDataMap
-                          |>
-                          WonderCommonlib.ImmutableSparseMapService.length == 0
+                          |> WonderCommonlib.ImmutableSparseMapService.length
+                          == 0
                         )
                       )
                     )
