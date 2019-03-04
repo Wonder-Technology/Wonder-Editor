@@ -56,10 +56,12 @@ let _handleAssetWDBType =
   WDBAssetLogicService.importAssetWDB(
     (
       FileNameService.getBaseName(fileName)
-      |. OperateTreeAssetLogicService.getUniqueNodeName(
-           selectedFolderNodeInAssetTree,
-           engineState,
-         ),
+      ->(
+          OperateTreeAssetLogicService.getUniqueNodeName(
+            selectedFolderNodeInAssetTree,
+            engineState,
+          )
+        ),
       wdbArrayBuffer,
     ),
     (wdbNodeId, selectedFolderNodeInAssetTree),
@@ -166,11 +168,12 @@ let _handleTextureType =
 
   let (textureComponent, engineState) =
     TextureUtils.createAndInitTexture(
-      baseName
-      |. OperateTreeAssetLogicService.getUniqueNodeName(
-           selectedFolderNodeInAssetTree,
-           engineState,
-         ),
+      OperateTreeAssetLogicService.getUniqueNodeName(
+        baseName,
+        selectedFolderNodeInAssetTree,
+        engineState,
+      ),
+      extName,
       StateEngineService.unsafeGetState(),
     );
 

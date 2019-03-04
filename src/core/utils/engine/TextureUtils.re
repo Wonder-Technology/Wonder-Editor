@@ -1,6 +1,22 @@
 open NodeAssetType;
 
-let createAndInitTexture = (textureName, engineState) => {
+let _getFormat = extName =>
+  switch (extName) {
+  | ".jpg"
+  | ".jpeg" => Wonderjs.SourceTextureType.Rgb
+  | ".png" => Wonderjs.SourceTextureType.Rgba
+  | _ =>
+    WonderLog.Log.fatal(
+      WonderLog.Log.buildFatalMessage(
+        ~description={j|unknown extName:$extName|j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j||j},
+      ),
+    )
+  };
+
+let createAndInitTexture = (textureName, extName, engineState) => {
   let (engineState, texture) =
     engineState |> BasicSourceTextureEngineService.create;
 
@@ -8,6 +24,10 @@ let createAndInitTexture = (textureName, engineState) => {
     engineState
     |> BasicSourceTextureEngineService.setBasicSourceTextureName(
          textureName,
+         texture,
+       )
+    |> BasicSourceTextureEngineService.setFormat(
+         _getFormat(extName),
          texture,
        )
     |> BasicSourceTextureEngineService.initTexture(texture);

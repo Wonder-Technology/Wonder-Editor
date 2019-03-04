@@ -63,5 +63,40 @@ let _ =
              Obj.magic(source)##name |> expect == imgName |> resolve;
            });
       });
+
+      describe("set source format", () => {
+        let _test = (imgName, targetFormat) => {
+          MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+          |> ignore;
+
+          MainEditorAssetUploadTool.loadOneTexture(~imgName, ())
+          |> then_(uploadedTextureNodeId => {
+               let editorState = StateEditorService.getState();
+               let textureComponent =
+                 MainEditorAssetTextureNodeTool.getTextureComponent(
+                   uploadedTextureNodeId,
+                   editorState,
+                 );
+               let engineState = StateEngineService.unsafeGetState();
+
+               BasicSourceTextureEngineService.getFormat(
+                 textureComponent,
+                 engineState,
+               )
+               |> expect == targetFormat
+               |> resolve;
+             });
+        };
+
+        testPromise("set jpg texture to rgb format", () =>
+          _test("1.jpg", Wonderjs.SourceTextureType.Rgb)
+        );
+        testPromise("set jpeg texture to rgb format", () =>
+          _test("1.jpeg", Wonderjs.SourceTextureType.Rgb)
+        );
+        testPromise("set png texture to rgba format", () =>
+          _test("1.png", Wonderjs.SourceTextureType.Rgba)
+        );
+      });
     });
   });
