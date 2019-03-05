@@ -1,5 +1,12 @@
+let _calcMoveSpeed = distance => distance /. 100.;
+
+let _calcWheelSpeed = distance => distance /. 100.;
+
 let _setArcballCameraControllerFocusRelatedAttribute =
-    (arcballCameraController, (distance, target), engineState) =>
+    (arcballCameraController, (distance, target), engineState) => {
+  let moveSpeed = _calcMoveSpeed(distance);
+  let wheelSpeed = _calcWheelSpeed(distance);
+
   engineState
   |> ArcballCameraEngineService.setArcballCameraControllerTarget(
        arcballCameraController,
@@ -8,7 +15,20 @@ let _setArcballCameraControllerFocusRelatedAttribute =
   |> ArcballCameraEngineService.setArcballCameraControllerDistance(
        distance,
        arcballCameraController,
+     )
+  |> ArcballCameraEngineService.setArcballCameraControllerMoveSpeedX(
+       arcballCameraController,
+       moveSpeed,
+     )
+  |> ArcballCameraEngineService.setArcballCameraControllerMoveSpeedY(
+       arcballCameraController,
+       moveSpeed,
+     )
+  |> ArcballCameraEngineService.setArcballCameraControllerWheelSpeed(
+       arcballCameraController,
+       wheelSpeed,
      );
+};
 
 let _buildAllPointsAndLocalToWolrdMatrices = (targetGameObject, engineState) =>
   engineState

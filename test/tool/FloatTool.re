@@ -1,0 +1,1 @@
+let truncateFloatValue = value => FloatService.truncateFloatValue(value, 3);
