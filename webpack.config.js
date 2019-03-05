@@ -1,7 +1,6 @@
 const path = require('path');
 
 const isProd = process.env.NODE_ENV === 'production';
-// const isProd = true;
 
 module.exports = {
   entry: {
@@ -10,6 +9,7 @@ module.exports = {
   mode: isProd ? 'production' : 'development',
   output: {
     path: path.join(__dirname, "dist"),
-    filename: 'index.min.js',
+    // TODO use index.min.js whe prod
+    filename: 'index.js',
   },
 };

@@ -4,7 +4,7 @@ var filesToCache = [
     './',
     './index.html',
     './manifest.json',
-    './dist/index.min.js',
+    './dist/index.js',
     './config/engine/render/shader/shader_libs.json',
     './config/engine/render/shader/shaders.json',
     './config/engine/no_worker/pipeline/loop_pipelines.json',
