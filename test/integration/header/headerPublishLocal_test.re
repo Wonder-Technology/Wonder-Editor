@@ -181,7 +181,7 @@ let _ =
           );
 
         testPromise("export index.html", () => _testText(0, "index.html"));
-        testPromise("export wd.min.js", () => _testText(1, "wd.min.js"));
+        testPromise("export wd.js", () => _testText(1, "wd.js"));
 
         describe("export res data", () => {
           testPromise("export logo", () =>
