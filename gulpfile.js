@@ -4,9 +4,9 @@ var gulpSync = require("gulp-sync")(gulp);
 var path = require("path");
 var exec = require('child_process').exec;
 var sass = require("gulp-sass");
-var concat = require('gulp-concat'), //合并文件 
-    cssnano = require('gulp-cssnano'), //CSS压缩
-    autoprefixer = require('gulp-autoprefixer'); //后编译，自动添加css兼容前缀
+var concat = require('gulp-concat'),
+    cssnano = require('gulp-cssnano'),
+    autoprefixer = require('gulp-autoprefixer');
 
 
 var _safeExec = (commandStr, handleErrFunc, handleSuccessFunc, done) => exec(commandStr, { maxBuffer: 1024 * 500 }, function (err, stdout, stderr) {
@@ -64,27 +64,35 @@ gulp.task("sass", function () {
 });
 
 
-gulp.task("webpack", function (done) {
-    _safeExec("npm run webpack", (err, done) => { throw err }, (done) => done(), done);
+gulp.task("webpack:dev", function (done) {
+    _safeExec("npm run webpack:dev", (err, done) => { throw err }, (done) => done(), done);
 });
 
 
-gulp.task('compressCss', function () {
-    return gulp.src('./public/css/index.css')  //读取待src/css 目录下所有的css文件
-        .pipe(concat('index.min.css'))
-        .pipe(cssnano()) //压缩 CSS
-        .pipe(gulp.dest('./public/css'))  //最后输出到 dist/css 目录下
+gulp.task("webpack:prod", function (done) {
+    _safeExec("npm run webpack:prod", (err, done) => { throw err }, (done) => done(), done);
+});
+
+
+gulp.task("compressCss", function () {
+    return gulp.src("./public/css/index.css")
+        // TODO use index.min.css
+        .pipe(concat("index.css"))
+        .pipe(cssnano())
+        .pipe(gulp.dest("./public/css"))
 });
 
 gulp.task("watchProject", function () {
     var reFilePaths = [
         path.join(process.cwd(), "lib/es6_global/**/*.js"),
     ];
-    gulp.watch(reFilePaths, gulpSync.sync(["compileSass", "webpack"]))
+    gulp.watch(reFilePaths, gulpSync.sync(["compileSass", "webpack:dev"]))
 
     gulp.watch("public/sass/**/*.scss", ["sass"]);
 });
 
-gulp.task("build", gulpSync.sync(["sass", "webpack", "compressCss"]));
+gulp.task("build", gulpSync.sync(["sass", "webpack:dev"]));
 
-gulp.task("watch", gulpSync.sync(["webpack", "watchProject"]));
+gulp.task("buildProd", gulpSync.sync(["sass", "webpack:prod", "compressCss"]));
+
+gulp.task("watch", gulpSync.sync(["webpack:dev", "watchProject"]));

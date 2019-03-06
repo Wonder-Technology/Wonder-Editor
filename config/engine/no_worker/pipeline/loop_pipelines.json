@@ -1,0 +1,97 @@
+[
+    {
+        "name": "default",
+        "jobs": [
+            {
+                "name": "tick"
+            },
+            {
+                "name": "dispose"
+            },
+            {
+                "name": "reallocate_cpu_memory"
+            },
+            {
+                "name": "update_camera"
+            },
+            {
+                "name": "update_transform_gizmos"
+            },
+            {
+                "name": "update_transform"
+            },
+            {
+                "name": "clear_color"
+            },
+            {
+                "name": "clear_buffer"
+            },
+            {
+                "name": "prepare_render_scene_view"
+            },
+            {
+                "name": "get_camera_data"
+            },
+            {
+                "name": "create_basic_render_object_buffer"
+            },
+            {
+                "name": "create_light_render_object_buffer"
+            },
+            {
+                "name": "clear_last_send_component"
+            },
+            {
+                "name": "send_uniform_shader_data"
+            },
+            {
+                "name": "render_basic"
+            },
+            {
+                "name": "front_render_light"
+            },
+            {
+                "name": "set_outline_data"
+            },
+            {
+                "name": "draw_outline"
+            },
+            {
+                "name": "render_imgui"
+            },
+            {
+                "name": "render_transform_gizmos"
+            },
+            {
+                "name": "prepare_render_game_view"
+            },
+            {
+                "name": "get_camera_data"
+            },
+            {
+                "name": "create_basic_render_object_buffer"
+            },
+            {
+                "name": "create_light_render_object_buffer"
+            },
+            {
+                "name": "clear_last_send_component"
+            },
+            {
+                "name": "send_uniform_shader_data"
+            },
+            {
+                "name": "render_basic"
+            },
+            {
+                "name": "front_render_light"
+            },
+            {
+                "name": "render_imgui"
+            },
+            {
+                "name": "restore"
+            }
+        ]
+    }
+]

@@ -201,7 +201,7 @@ let triggerPicking = (~eventButton=1, ~sandbox, ~pageX, ~pageY, ()) => {
   EventTool.triggerDomEvent(
     "mousedown",
     EventTool.getBody(),
-    MouseEventTool.buildMouseEvent(
+    MouseEventTool.buildMouseDomEvent(
       ~pageX,
       ~pageY,
       ~target,
@@ -212,7 +212,7 @@ let triggerPicking = (~eventButton=1, ~sandbox, ~pageX, ~pageY, ()) => {
   EventTool.triggerDomEvent(
     "mouseup",
     EventTool.getBody(),
-    MouseEventTool.buildMouseEvent(
+    MouseEventTool.buildMouseDomEvent(
       ~pageX,
       ~pageY,
       ~target,
@@ -223,7 +223,7 @@ let triggerPicking = (~eventButton=1, ~sandbox, ~pageX, ~pageY, ()) => {
   EventTool.triggerDomEvent(
     "click",
     EventTool.getBody(),
-    MouseEventTool.buildMouseEvent(
+    MouseEventTool.buildMouseDomEvent(
       ~pageX,
       ~pageY,
       ~target,

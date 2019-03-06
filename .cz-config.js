@@ -15,6 +15,8 @@ module.exports = {
   ],
 
   scopes: [
+    { name: "pwa" },
+    { name: "hotkey" },
     { name: "focus" },
     { name: "scene-view" },
     { name: "scene-tree" },
@@ -53,6 +55,7 @@ module.exports = {
       { name: "coverage" }
     ],
     refactor: [
+      { name: "move" },
       { name: "rename" },
       { name: "duplicate" },
       { name: "dead-code" },
@@ -67,6 +70,7 @@ module.exports = {
       { name: "publish" },
       { name: "bumped" },
       { name: "readme" },
+      { name: "webpack" },
       { name: "version" }
     ]
   },

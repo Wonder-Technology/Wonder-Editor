@@ -4,7 +4,7 @@ let triggerMouseDown = (~eventButton=1, ~sandbox, ~pageX, ~pageY, ()) => {
   EventTool.triggerDomEvent(
     "mousedown",
     EventTool.getBody(),
-    MouseEventTool.buildMouseEvent(
+    MouseEventTool.buildMouseDomEvent(
       ~pageX,
       ~pageY,
       ~target,
@@ -20,7 +20,7 @@ let triggerMouseMove = (~eventButton=1, ~sandbox, ~pageX, ~pageY, ()) => {
   EventTool.triggerDomEvent(
     "mousemove",
     EventTool.getBody(),
-    MouseEventTool.buildMouseEvent(
+    MouseEventTool.buildMouseDomEvent(
       ~pageX,
       ~pageY,
       ~target,
@@ -36,7 +36,7 @@ let triggerMouseUp = (~eventButton=1, ~pageX=0, ~pageY=0, ~sandbox, ()) => {
   EventTool.triggerDomEvent(
     "mouseup",
     EventTool.getBody(),
-    MouseEventTool.buildMouseEvent(
+    MouseEventTool.buildMouseDomEvent(
       ~pageX,
       ~pageY,
       ~target,

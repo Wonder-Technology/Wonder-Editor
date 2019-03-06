@@ -4,12 +4,12 @@ module LoadData = {
   open WonderBsJszip;
 
   let loadAndWriteIndexJsData = (useWorker, fetchFunc, zip) =>
-    fetchFunc(. "./publish/wd.min.js")
+    fetchFunc(. "./publish/wd.js")
     |> then_(response =>
          response
          |> Fetch.Response.text
          |> then_(jsStr => {
-              zip |. Zip.write("wd.min.js", `str(jsStr));
+              zip |. Zip.write("wd.js", `str(jsStr));
 
               useWorker ?
                 fetchFunc(. "./publish/wd.render.worker.js")

@@ -10,6 +10,12 @@ let getLightMaterialGameObjects = (material, engineState) =>
     RecordLightMaterialMainService.getRecord(engineState),
   );
 
+let hasLightMaterialGameObjects = (material, engineState) =>
+  switch (getLightMaterialGameObjects(material, engineState)) {
+  | None => false
+  | Some(gameObjects) => Js.Array.length(gameObjects) > 0
+  };
+
 let getLightMaterialName = NameLightMaterialMainService.getName;
 
 let unsafeGetLightMaterialName = LightMaterialAPI.unsafeGetLightMaterialName;
@@ -68,3 +74,5 @@ let reInitLightMaterialsAndClearShaderCache = (materials, engineState) =>
   |> ShaderEngineService.clearInitShaderCache;
 
 let getAllLightMaterials = LightMaterialAPI.getAllLightMaterials;
+
+let batchDisposeLightMaterial = LightMaterialAPI.batchDisposeLightMaterial;

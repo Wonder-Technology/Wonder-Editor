@@ -1,3 +1,73 @@
+<a name="1.0.0-rc.1"></a>
+# [1.0.0-rc.1](https://github.com/Wonder-Technology/Wonder-Editor/compare/v1.0.0-beta.3.1...v1.0.0-rc.1) (2019-03-05)
+
+
+### Bug Fixes
+
+* **asset:** fix "load texture asset": now set format ([73397e5](https://github.com/Wonder-Technology/Wonder-Editor/commit/73397e5))
+* **package:** fix "dispose renderGroup component before export and import package cause check error" bug ([f5abd59](https://github.com/Wonder-Technology/Wonder-Editor/commit/f5abd59))
+* **package:** fix "material assets after import" bug ([5c6fec4](https://github.com/Wonder-Technology/Wonder-Editor/commit/5c6fec4))
+
+
+### Features
+
+* commit dist/index.js, public/css/index.css; remove index.min.css ([f4d1e77](https://github.com/Wonder-Technology/Wonder-Editor/commit/f4d1e77))
+* **asset:** texture asset: support load jpeg ([c0b019c](https://github.com/Wonder-Technology/Wonder-Editor/commit/c0b019c))
+* **engine:** update wonder.js to 1.0.0-rc.1 ([a1cdedb](https://github.com/Wonder-Technology/Wonder-Editor/commit/a1cdedb))
+* **engine:** update wonder.js version ([aa87847](https://github.com/Wonder-Technology/Wonder-Editor/commit/aa87847))
+* **focus:** set edit camera->arcball move and wheel speed ([a8192ca](https://github.com/Wonder-Technology/Wonder-Editor/commit/a8192ca))
+* **publish:** update engine files ([48d21e3](https://github.com/Wonder-Technology/Wonder-Editor/commit/48d21e3))
+
+
+
+<a name="1.0.0-beta.3.1"></a>
+# [1.0.0-beta.3.1](https://github.com/Wonder-Technology/Wonder-Editor/compare/v1.0.0-beta.3...v1.0.0-beta.3.1) (2019-03-03)
+
+
+### Features
+
+* **pwa:** update service-worker.js->cacheName ([161a5f3](https://github.com/Wonder-Technology/Wonder-Editor/commit/161a5f3))
+
+
+
+<a name="1.0.0-beta.3"></a>
+# [1.0.0-beta.3](https://github.com/Wonder-Technology/Wonder-Editor/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2019-03-03)
+
+
+### Bug Fixes
+
+* **scene-view:** fix "rotation gizmo"->rotate on axis bug ([120257d](https://github.com/Wonder-Technology/Wonder-Editor/commit/120257d))
+
+
+### Features
+
+* **engine:** update wonder.js to 1.0.0-beta.3 ([4c0816f](https://github.com/Wonder-Technology/Wonder-Editor/commit/4c0816f))
+* **engine:** update wonder.js version ([84eba2a](https://github.com/Wonder-Technology/Wonder-Editor/commit/84eba2a))
+* **engine:** update wonder.js version ([9a2a890](https://github.com/Wonder-Technology/Wonder-Editor/commit/9a2a890))
+* **header:** add header notice component, notice welcome user and version upgrade ([ae66c64](https://github.com/Wonder-Technology/Wonder-Editor/commit/ae66c64))
+* **hotkey:** add transform hotkeys ([2cbf4bb](https://github.com/Wonder-Technology/Wonder-Editor/commit/2cbf4bb))
+* **hotkey:** delete now can remove asset ([05c98b5](https://github.com/Wonder-Technology/Wonder-Editor/commit/05c98b5))
+* **hotkey:** fix asset header->remove caused by 05c98b5fc1c3c769098b888120c1011724c5f29d ([0d5fba1](https://github.com/Wonder-Technology/Wonder-Editor/commit/0d5fba1))
+* **modal:** add welcome user modal ([77a6605](https://github.com/Wonder-Technology/Wonder-Editor/commit/77a6605))
+* **publish:** update engine files ([1b7c679](https://github.com/Wonder-Technology/Wonder-Editor/commit/1b7c679))
+* **pwa:** add pwa service worker and homescreen ([bb2ed89](https://github.com/Wonder-Technology/Wonder-Editor/commit/bb2ed89))
+* **pwa:** add pwa service worker and homescreen ([7bb4825](https://github.com/Wonder-Technology/Wonder-Editor/commit/7bb4825))
+* **pwa:** fix manifest.json-worker.js->start_url ([2749203](https://github.com/Wonder-Technology/Wonder-Editor/commit/2749203))
+* **pwa:** fix service-worker.js->filesToCache ([8d97aca](https://github.com/Wonder-Technology/Wonder-Editor/commit/8d97aca))
+* **pwa:** update service-worker.js->filesToCache ([6ece121](https://github.com/Wonder-Technology/Wonder-Editor/commit/6ece121))
+* **pwa:** update service-worker.js->filesToCache ([ecfed72](https://github.com/Wonder-Technology/Wonder-Editor/commit/ecfed72))
+* update bs-platform to 4.0.18 ([69434c9](https://github.com/Wonder-Technology/Wonder-Editor/commit/69434c9))
+* update jest to 24.1.0 ([71b13fe](https://github.com/Wonder-Technology/Wonder-Editor/commit/71b13fe))
+* update react to 16.8.3 ([427a7dc](https://github.com/Wonder-Technology/Wonder-Editor/commit/427a7dc))
+
+
+### Performance Improvements
+
+* **css:** compress css ([d5fcdcd](https://github.com/Wonder-Technology/Wonder-Editor/commit/d5fcdcd))
+* **imgui:** now load small font fnt,png ([c2c2b07](https://github.com/Wonder-Technology/Wonder-Editor/commit/c2c2b07))
+
+
+
 <a name="1.0.0-beta.2"></a>
 # [1.0.0-beta.2](https://github.com/Wonder-Technology/Wonder-Editor/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2019-02-26)
 

@@ -126,12 +126,12 @@ let _ =
       /* EventTool.triggerDomEvent(
            "click",
            EventTool.getBody(),
-           MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+           MouseEventTool.buildMouseDomEvent(~pageX, ~pageY, ()),
          ); */
       EventTool.triggerDomEvent(
         "mousedown",
         EventTool.getBody(),
-        MouseEventTool.buildMouseEvent(
+        MouseEventTool.buildMouseDomEvent(
           ~pageX,
           ~pageY,
           ~which=eventButton,
@@ -147,12 +147,12 @@ let _ =
       EventTool.triggerDomEvent(
         "mousedown",
         EventTool.getBody(),
-        MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+        MouseEventTool.buildMouseDomEvent(~pageX, ~pageY, ()),
       );
       EventTool.triggerDomEvent(
         "keydown",
         EventTool.getKeyboardEventBindedDom(),
-        KeyboardEventTool.buildKeyboardEvent(~keyCode, ()),
+        KeyboardEventTool.buildKeyboardDomEvent(~keyCode, ()),
       );
       EventTool.restore();
     };

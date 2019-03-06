@@ -637,7 +637,6 @@ html, body {
                 .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .wonder-left-components .wonder-sceneTree-component .wonder-tree .wonder-tree-node li {
                   width: 100%;
                   height: 22px;
-                  padding-top: 3px;
                   display: flex;
                   align-items: center; }
                   .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .wonder-left-components .wonder-sceneTree-component .wonder-tree .wonder-tree-node li:hover {
@@ -909,7 +908,6 @@ html, body {
                   .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .asset-tree .wonder-asset-assetTree .wonder-tree-node li {
                     width: 100%;
                     height: 22px;
-                    padding-top: 3px;
                     display: flex;
                     align-items: center; }
                     .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .asset-tree .wonder-asset-assetTree .wonder-tree-node li:hover {

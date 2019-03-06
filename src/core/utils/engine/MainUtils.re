@@ -1,10 +1,10 @@
 open Js.Promise;
 
 let _getLoadData = () => {
-  let engineConfigDir = "./src/config/engine/";
+  let engineConfigDir = "./config/engine/";
 
   AssetEngineService.loadConfig(
-    [|"./src/config/engine/setting.json", engineConfigDir|],
+    [|"./config/engine/setting.json", engineConfigDir|],
     StateDataEngineService.getEngineStateData(),
   );
 };
@@ -97,8 +97,8 @@ let init = () =>
     _getLoadData()
     |> WonderBsMost.Most.flatMap(engineState =>
          LoaderManagerEngineService.loadIMGUIAsset(
-           "./public/font/Lato-Regular-64.fnt",
-           "./public/font/lato.png",
+           "./public/font/empty.fnt",
+           "./public/font/empty.png",
            Js.Nullable.return([|
              ("./public/img/camera.png", "camera"),
              ("./public/img/sun.png", "directionLight"),
@@ -114,7 +114,7 @@ let init = () =>
          ();
        })
     |> WonderBsMost.Most.flatMap(engineState =>
-         Fetch.fetch("./src/config/editor/setting.json")
+         Fetch.fetch("./config/editor/setting.json")
          |> then_(response =>
               response
               |> Fetch.Response.json

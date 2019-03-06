@@ -54,7 +54,7 @@ let insertTextureNode =
       (editorState, engineState),
     ) => {
   let (textureComponent, engineState) =
-    TextureUtils.createAndInitTexture(textureName, engineState);
+    TextureUtils.createAndInitTexture(textureName, ".png", engineState);
   let imageSrc = textureName ++ "img";
 
   let engineState =
@@ -101,13 +101,15 @@ let insertFolderNode =
          ~nodeId=folderNodeId,
          ~name=
            MainEditorAssetFolderNodeTool.getNoNameFolderName()
-           |. OperateTreeAssetLogicService.getUniqueNodeName(
-                OperateTreeAssetEditorService.unsafeFindNodeById(
-                  parentFolderNodeId,
-                  editorState,
-                ),
-                engineState,
-              ),
+           ->(
+               OperateTreeAssetLogicService.getUniqueNodeName(
+                 OperateTreeAssetEditorService.unsafeFindNodeById(
+                   parentFolderNodeId,
+                   editorState,
+                 ),
+                 engineState,
+               )
+             ),
          ~children=UIStateAssetService.build(~isShowChildren=true, ()),
          (),
        ),

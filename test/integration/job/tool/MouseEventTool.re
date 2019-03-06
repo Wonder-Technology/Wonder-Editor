@@ -8,7 +8,7 @@
 
     */
 
-let buildMouseEvent =
+let buildMouseDomEvent =
     (
       ~pageX=10,
       ~pageY=20,
@@ -17,16 +17,20 @@ let buildMouseEvent =
       ~movementY=2,
       ~detail=Js.Nullable.undefined,
       ~wheelDelta=Js.Nullable.undefined,
-      ~preventDefaultFunc=() => (),
-      ~stopPropagationFunc=() => (),
+      ~preventDefaultFunc=(.) => (),
+      ~stopPropagationFunc=(.) => (),
       ~target={"tagName": "CANVAS"},
       (),
     ) => {
   "pageX": pageX,
   "pageY": pageY,
   "which": which,
-  "movementX": movementX,
-  "movementY": movementY,
+  "movementX": Js.Nullable.return(movementX),
+  "movementY": Js.Nullable.return(movementY),
+  "webkitMovementX": Js.Nullable.return(movementX),
+  "mozMovementX": Js.Nullable.return(movementX),
+  "webkitMovementY": Js.Nullable.return(movementY),
+  "mozMovementY": Js.Nullable.return(movementY),
   "detail": detail,
   "wheelDelta": wheelDelta,
   "preventDefault": preventDefaultFunc,
@@ -34,12 +38,36 @@ let buildMouseEvent =
   "target": target,
 };
 
-let setPointerLocked = [%raw (param) => {|
+let buildMouseEvent =
+    (
+      ~eventName=EventType.Click
+                 |> EventType.editorDomEventNameToEngineDomEventName,
+      ~location=(0, 0),
+      ~locationInView=(0, 0),
+      ~button=Wonderjs.EventType.Left,
+      ~wheel=0,
+      ~movementDelta=(1, 2),
+      ~event=buildMouseDomEvent() |> Obj.magic,
+      (),
+    )
+    : EventType.mouseEvent => {
+  name: eventName,
+  location,
+  locationInView,
+  button,
+  wheel,
+  movementDelta,
+  event,
+};
+
+let setPointerLocked = [%raw
+  param => {|
  document.pointerLockElement = {};
-  |}];
+  |}
+];
 
 let setNotPointerLocked = [%raw
-  (param) => {|
+  param => {|
  document.pointerLockElement = undefined;
   |}
 ];
@@ -82,7 +110,7 @@ let prepareForPointerLock = sandbox => {
     ViewEngineService.unsafeGetCanvas(StateEngineService.unsafeGetState())
     |> Obj.magic;
   let requestPointerLockStub = createEmptyStubWithJsObjSandbox(sandbox);
-  canvas##requestPointerLock#=requestPointerLockStub;
+  canvas##requestPointerLock #= requestPointerLockStub;
 
   requestPointerLockStub;
 };

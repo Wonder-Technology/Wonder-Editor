@@ -564,9 +564,8 @@ let _ =
               let canvas2 =
                 ImportPackageTool.buildFakeCanvas(sandbox, base64_2, 1);
 
-              let createElementStub = BuildCanvasTool.documentToJsObj(
-                                        BuildCanvasTool.document,
-                                      )##createElement;
+              let createElementStub =
+                BuildCanvasTool.documentToJsObj(BuildCanvasTool.document)##createElement;
 
               createElementStub
               |> withOneArg("canvas")
@@ -650,8 +649,8 @@ let _ =
                                engineState,
                              ),
                            |]
-                           |>
-                           expect == ImportPackageTool.getImporteMaterialAssetMaterialComponents()
+                           |> expect
+                           == ImportPackageTool.getImporteMaterialAssetMaterialComponents()
                            |> resolve;
                          },
                        (),
@@ -786,8 +785,8 @@ let _ =
                                     engineState,
                                   ),
                                 |]
-                                |>
-                                expect == ImportPackageTool.getImporteMaterialAssetMaterialComponents()
+                                |> expect
+                                == ImportPackageTool.getImporteMaterialAssetMaterialComponents()
                                 |> resolve;
                               },
                             (),
@@ -925,11 +924,11 @@ let _ =
                                ),
                              |],
                            )
-                           |>
-                           expect == (
-                                       ImportPackageTool.getImporteMaterialAssetLightMaterialComponents(),
-                                       ImportPackageTool.getImporteMaterialAssetBasicMaterialComponents(),
-                                     )
+                           |> expect
+                           == (
+                                ImportPackageTool.getImporteMaterialAssetLightMaterialComponents(),
+                                ImportPackageTool.getImporteMaterialAssetBasicMaterialComponents(),
+                              )
                            |> resolve;
                          },
                        (),
@@ -1990,12 +1989,12 @@ let _ =
                                 engineState,
                               ),
                          )
-                         |>
-                         expect == (
-                                     0,
-                                     materialComponent1Name,
-                                     boxTexturedMeshDiffuseMapName,
-                                   )
+                         |> expect
+                         == (
+                              0,
+                              materialComponent1Name,
+                              boxTexturedMeshDiffuseMapName,
+                            )
                          |> resolve;
                        },
                      (),
@@ -2120,14 +2119,14 @@ let _ =
                                      engineState,
                                    ),
                               )
-                              |>
-                              expect == (
-                                          0,
-                                          wdbMaterialName,
-                                          MainEditorAssetTextureNodeTool.buildTextureAssetName(
-                                            imgName1,
-                                          ),
-                                        )
+                              |> expect
+                              == (
+                                   0,
+                                   wdbMaterialName,
+                                   MainEditorAssetTextureNodeTool.buildTextureAssetName(
+                                     imgName1,
+                                   ),
+                                 )
                               |> resolve;
                             },
                           (),
@@ -2229,6 +2228,227 @@ let _ =
                  );
                });
           },
+        );
+      });
+
+      describe("test dispose renderGroup component", () => {
+        beforeEach(() => {
+          MainEditorSceneTool.initStateWithJob(
+            ~sandbox,
+            ~noWorkerJobRecord=
+              NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                ~loopPipelines=
+                  {|
+                   [
+                       {
+                           "name": "default",
+                           "jobs": [
+                               {
+                                   "name": "dispose"
+                               }
+                           ]
+                       }
+                   ]
+               |},
+                (),
+              ),
+            (),
+          );
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
+          );
+
+          MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+          |> ignore;
+        });
+
+        testPromise(
+          {|
+          add gameObject g1 to scene tree;
+          g1->add default light material component;
+          g1->dispose renderGroup component;
+          export wpk w1;
+          import w1;
+
+          g1 should has no meshRenderer and lightMaterial component;
+          |},
+          () => {
+            let gameObjectName = "g1";
+
+            GameObjectEngineService.setGameObjectName(
+              gameObjectName,
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getAndSetEngineState;
+
+            MainEditorInspectorRemoveComponentTool.removeRenderGroupComponent();
+
+            let wpkArrayBuffer = ExportPackageTool.exportWPK();
+
+            ImportPackageTool.testImportPackageWithoutExport(
+              ~wpkArrayBuffer,
+              ~testFunc=
+                () => {
+                  let engineState = StateEngineService.unsafeGetState();
+                  let g1 =
+                    LoadWDBTool.findGameObjectByName(
+                      gameObjectName,
+                      engineState,
+                    );
+
+                  (
+                    GameObjectComponentEngineService.hasMeshRendererComponent(
+                      g1,
+                      engineState,
+                    ),
+                    GameObjectComponentEngineService.hasLightMaterialComponent(
+                      g1,
+                      engineState,
+                    ),
+                  )
+                  |> expect == (false, false)
+                  |> resolve;
+                },
+              (),
+            );
+          },
+        );
+
+        describe("removed material asset should exist after import", () =>
+          testPromise(
+            {|
+          add gameObject g1 to scene tree;
+          add material asset m1;
+          g1->add m1 lightMaterial component;
+          g1->dispose renderGroup component;
+          export wpk w1;
+          import w1;
+
+          m1 should alive;
+          |},
+            () => {
+              let g1 = GameObjectTool.unsafeGetCurrentSceneTreeNode();
+
+              let addedMaterialNodeId = MainEditorAssetIdTool.getNewAssetId();
+              MainEditorAssetHeaderOperateNodeTool.addMaterial();
+              let removedMaterialComponent =
+                MainEditorAssetMaterialNodeTool.getMaterialComponent(
+                  ~nodeId=addedMaterialNodeId,
+                  (),
+                );
+              MainEditorMaterialTool.changeMaterial(
+                ~sourceMaterial=
+                  GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                    g1,
+                  )
+                  |> StateLogicService.getEngineStateToGetData,
+                ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
+                ~targetMaterial=removedMaterialComponent,
+                ~targetMaterialType=MaterialDataAssetType.LightMaterial,
+                ~gameObject=g1,
+                ~materialNodeId=Some(addedMaterialNodeId),
+                (),
+              );
+              MainEditorInspectorRemoveComponentTool.removeRenderGroupComponent();
+              let wpkArrayBuffer = ExportPackageTool.exportWPK();
+              ImportPackageTool.testImportPackageWithoutExport(
+                ~wpkArrayBuffer,
+                ~testFunc=
+                  () => {
+                    let engineState = StateEngineService.unsafeGetState();
+
+                    (
+                      LightMaterialToolEngine.isAlive(
+                        removedMaterialComponent,
+                        engineState,
+                      ),
+                      LightMaterialEngineService.hasLightMaterialGameObjects(
+                        removedMaterialComponent,
+                        engineState,
+                      ),
+                    )
+                    |> expect == (true, false)
+                    |> resolve;
+                  },
+                (),
+              );
+            },
+          )
+        );
+      });
+
+      describe("test material assets after import", () => {
+        let truckWDBArrayBuffer = ref(Obj.magic(1));
+
+        beforeAll(() =>
+          truckWDBArrayBuffer := WDBTool.convertGLBToWDB("CesiumMilkTruck")
+        );
+
+        beforeEach(() => {
+          MainEditorSceneTool.initState(~sandbox, ());
+          MainEditorSceneTool.prepareScene(sandbox);
+
+          MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+          |> ignore;
+        });
+
+        testPromise(
+          {|
+          load wdb w1;
+          add folder f1 to root;
+          enter f1;
+          load wdb w2;
+          export;
+          import;
+          enter f1->Materials folder;
+
+          should show w2->materials;
+          |},
+          () =>
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            (),
+          )
+          |> then_(_ => {
+               let addedFolderNodeId = MainEditorAssetIdTool.getNewAssetId();
+
+               MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+               MainEditorAssetTreeTool.Select.selectFolderNode(
+                 ~nodeId=addedFolderNodeId,
+                 (),
+               );
+
+               MainEditorAssetUploadTool.loadOneWDB(
+                 ~arrayBuffer=truckWDBArrayBuffer^,
+                 (),
+               )
+               |> then_(_ =>
+                    ImportPackageTool.testImportPackage(
+                      ~testFunc=
+                        () => {
+                          let truckMaterialsFolderId =
+                            MainEditorAssetTreeTool.findNodeIdsByName(
+                              "Materials",
+                            )
+                            |> StateLogicService.getStateToGetData
+                            |> OptionService.unsafeGet
+                            |> List.nth(_, 1);
+
+                          MainEditorAssetTreeTool.Select.selectFolderNode(
+                            ~nodeId=truckMaterialsFolderId,
+                            (),
+                          );
+
+                          BuildComponentTool.buildAssetChildrenNode()
+                          |> ReactTestTool.createSnapshotAndMatch
+                          |> resolve;
+                        },
+                      (),
+                    )
+                  );
+             })
         );
       });
     });

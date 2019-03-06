@@ -1,6 +1,6 @@
 /* open StateDataMainType; */
 
-let buildKeyboardEvent =
+let buildKeyboardDomEvent =
     (
       ~ctrlKey=false,
       ~altKey=false,

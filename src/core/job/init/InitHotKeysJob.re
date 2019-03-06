@@ -72,7 +72,14 @@ let _getHandleFuncByHotKeyAction = hotKeyAction => {
             (),
             (),
           ) :
-          ()
+          CurrentNodeIdAssetEditorService.couldRemoveCurrentNode
+          |> StateLogicService.getEditorState ?
+            MainEditorAssetHeader.Method.removeAssetNode(
+              (uiState, dispatch),
+              (),
+              (),
+            ) :
+            ()
     )
   | Focus => (
       () => {
@@ -103,15 +110,16 @@ let _preventBrowserHotKeys = event => {
 let _handleHotKeyFunc = hotKeyDataArray =>
   hotKeyDataArray
   |> Js.Array.forEach(((hotKeys, hotKeyAction)) =>
-       hotKeys
-       |> Js.Array.joinWith(",")
-       |. HotKeysJs.hotkeys((e, handler) => {
-            _preventBrowserHotKeys(e);
+       (hotKeys |> Js.Array.joinWith(","))
+       ->(
+           HotKeysJs.hotkeys((e, handler) => {
+             _preventBrowserHotKeys(e);
 
-            let handleFunc = _getHandleFuncByHotKeyAction(hotKeyAction);
+             let handleFunc = _getHandleFuncByHotKeyAction(hotKeyAction);
 
-            handleFunc();
-          })
+             handleFunc();
+           })
+         )
      );
 
 let initHotKeysForEditorJob = (_, engineState) => {

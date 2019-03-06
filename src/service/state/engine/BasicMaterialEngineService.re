@@ -12,6 +12,12 @@ let getBasicMaterialGameObjects = (material, engineState) =>
     RecordBasicMaterialMainService.getRecord(engineState),
   );
 
+let hasBasicMaterialGameObjects = (material, engineState) =>
+  switch (getBasicMaterialGameObjects(material, engineState)) {
+  | None => false
+  | Some(gameObjects) => Js.Array.length(gameObjects) > 0
+  };
+
 let getBasicMaterialName = NameBasicMaterialMainService.getName;
 
 let unsafeGetBasicMaterialName = BasicMaterialAPI.unsafeGetBasicMaterialName;
@@ -34,4 +40,6 @@ let reInitBasicMaterialsAndClearShaderCache = (materials, engineState) =>
   |> reInitMaterials(materials)
   |> ShaderEngineService.clearInitShaderCache;
 
-/* let getAllBasicMaterials = BasicMaterialAPI.getAllBasicMaterials; */
+let getAllBasicMaterials = BasicMaterialAPI.getAllBasicMaterials;
+
+let batchDisposeBasicMaterial = BasicMaterialAPI.batchDisposeBasicMaterial;

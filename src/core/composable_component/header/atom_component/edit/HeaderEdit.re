@@ -38,24 +38,25 @@ module Method = {
          |> Js.Promise.resolve;
        });
   };
-  let buildEditComponentSelectNav =
-      ((uiState, dispatchFunc), send, closeNavFunc) =>
-    <div className="item-content item-edit">
-      <div className="content-section">
-        <input
-          className="section-fileLoad"
-          type_="file"
-          multiple=false
-          onChange={
-            e =>
-              importPackage((uiState, dispatchFunc), closeNavFunc, e)
-              |> ignore
-          }
-        />
-        <span className="section-header">
-          {DomHelper.textEl("Import Package")}
-        </span>
-      </div>
+
+  let _buildImportUI = ((uiState, dispatchFunc), closeNavFunc) =>
+    <div className="content-section">
+      <input
+        className="section-fileLoad"
+        type_="file"
+        multiple=false
+        onChange={
+          e =>
+            importPackage((uiState, dispatchFunc), closeNavFunc, e) |> ignore
+        }
+      />
+      <span className="section-header">
+        {DomHelper.textEl("Import Package")}
+      </span>
+    </div>;
+
+  let _buildExportUI = send =>
+    <>
       <div
         className="content-section"
         onClick={_e => send(ShowExportPackageModal)}>
@@ -70,6 +71,13 @@ module Method = {
           {DomHelper.textEl("Export Scene")}
         </span>
       </div>
+    </>;
+
+  let buildEditComponentSelectNav =
+      ((uiState, dispatchFunc), send, closeNavFunc) =>
+    <div className="item-content item-edit">
+      {_buildImportUI((uiState, dispatchFunc), closeNavFunc)}
+      {_buildExportUI(send)}
     </div>;
 };
 
