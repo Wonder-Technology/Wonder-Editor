@@ -53,6 +53,7 @@ let make = (~state as uiState: AppStore.appState, ~dispatch, _children) => {
   ...component,
   render: self => render((uiState, dispatch), self),
   didMount: _self => {
+    ServiceWorker.loadImgs();
     ServiceWorker.registerServiceWorker();
 
     WonderLog.Wonder_Console.makeObjInToWindow();
