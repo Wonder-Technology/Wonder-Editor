@@ -1,3 +1,25 @@
+<a name="1.0.0-rc.1"></a>
+# [1.0.0-rc.1](https://github.com/Wonder-Technology/Wonder-Editor/compare/v1.0.0-beta.3.1...v1.0.0-rc.1) (2019-03-05)
+
+
+### Bug Fixes
+
+* **asset:** fix "load texture asset": now set format ([73397e5](https://github.com/Wonder-Technology/Wonder-Editor/commit/73397e5))
+* **package:** fix "dispose renderGroup component before export and import package cause check error" bug ([f5abd59](https://github.com/Wonder-Technology/Wonder-Editor/commit/f5abd59))
+* **package:** fix "material assets after import" bug ([5c6fec4](https://github.com/Wonder-Technology/Wonder-Editor/commit/5c6fec4))
+
+
+### Features
+
+* commit dist/index.js, public/css/index.css; remove index.min.css ([f4d1e77](https://github.com/Wonder-Technology/Wonder-Editor/commit/f4d1e77))
+* **asset:** texture asset: support load jpeg ([c0b019c](https://github.com/Wonder-Technology/Wonder-Editor/commit/c0b019c))
+* **engine:** update wonder.js to 1.0.0-rc.1 ([a1cdedb](https://github.com/Wonder-Technology/Wonder-Editor/commit/a1cdedb))
+* **engine:** update wonder.js version ([aa87847](https://github.com/Wonder-Technology/Wonder-Editor/commit/aa87847))
+* **focus:** set edit camera->arcball move and wheel speed ([a8192ca](https://github.com/Wonder-Technology/Wonder-Editor/commit/a8192ca))
+* **publish:** update engine files ([48d21e3](https://github.com/Wonder-Technology/Wonder-Editor/commit/48d21e3))
+
+
+
 <a name="1.0.0-beta.3.1"></a>
 # [1.0.0-beta.3.1](https://github.com/Wonder-Technology/Wonder-Editor/compare/v1.0.0-beta.3...v1.0.0-beta.3.1) (2019-03-03)
 
