@@ -149,6 +149,9 @@ html, body {
           background: #fc7100; }
       .wonder-modal .modal-item .modal-item-content .content-text {
         width: 100%; }
+      .wonder-modal .modal-item .modal-item-content .content-small-white {
+        width: 100%;
+        height: 10px; }
       .wonder-modal .modal-item .modal-item-content .content-white {
         width: 100%;
         height: 30px; }

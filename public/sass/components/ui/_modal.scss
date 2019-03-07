@@ -48,12 +48,16 @@
             padding-top: 10px;
             box-sizing: border-box;
             font-size: 16px;
-            .content-text{
-                width:100%;
+            .content-text {
+                width: 100%;
             }
-            .content-white{
-                width:100%;
-                height:30px;
+            .content-small-white {
+                width: 100%;
+                height: 10px;
+            }
+            .content-white {
+                width: 100%;
+                height: 30px;
             }
             .content-field {
                 width: 100%;
@@ -72,7 +76,7 @@
                     text-align: left;
                     height: 26px;
                     line-height: 26px;
-                    a{
+                    a {
                         white-space: nowrap;
                     }
                 }
@@ -85,11 +89,11 @@
             position: relative;
             .footer-submit {
                 background: rgb(219, 125, 53);
-                border:1px solid rgb(243, 201, 169);
-                color:#555;
+                border: 1px solid rgb(243, 201, 169);
+                color: #555;
                 font-weight: normal;
-                &:hover{
-                    color:#000;
+                &:hover {
+                    color: #000;
                 }
                 width: 80px;
                 position: absolute;

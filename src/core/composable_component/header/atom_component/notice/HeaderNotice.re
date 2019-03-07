@@ -12,23 +12,79 @@ module Method = {
 
   let getVersionKey = () => "version";
 
+  let getVersion = () => LocalStorage.getValue(getVersionKey());
+
   let buildWelComeUserModalContent = () => [|
     <div className="content-text" key="text1">
       {
         DomHelper.textEl(
-          {j| 欢迎来到Wonder，你可以通过访问我们的|j},
+          {j|欢迎使用Wonder编辑器，我们为您服务～|j},
         )
       }
-      <a href="http://www.wonder-3d.com/" target="view_window">
-        {DomHelper.textEl({j|官方网站|j})}
-      </a>
-      {DomHelper.textEl({j| , 查看我们能为你提供什么服务|j})}
     </div>,
     <div className="content-white" key="text2" />,
-    <div className="content-text" key="text3">
-      {DomHelper.textEl({j|Wonder 科技为你服务|j})}
+    <div className="content-text" key="text1">
+      <a href="https://www.wonder-3d.com/" target="view_window">
+        {DomHelper.textEl({j|官方网站|j})}
+      </a>
+    </div>,
+    <div className="content-small-white" key="text2" />,
+    <div className="content-text" key="text1">
+      <a href="https://forum.wonder-3d.com/" target="view_window">
+        {DomHelper.textEl({j|论坛|j})}
+      </a>
+    </div>,
+    <div className="content-small-white" key="text2" />,
+    <div className="content-text" key="text1">
+      <a
+        href="https://www.wonder-3d.com/docs/docs/doc1-1/"
+        target="view_window">
+        {DomHelper.textEl({j|文档|j})}
+      </a>
+    </div>,
+    <div className="content-small-white" key="text2" />,
+    <div className="content-text" key="text1">
+      <a href="https://github.com/Wonder-Technology" target="view_window">
+        {DomHelper.textEl({j|Github|j})}
+      </a>
     </div>,
   |];
+
+  let buildVersionUpgradeModalContent = () => {
+    let newVersion = Copyright.getVersion();
+
+    [|
+      <div className="content-text" key="text1">
+        {DomHelper.textEl({j|已为您升级为$newVersion版本。|j})}
+      </div>,
+      <div className="content-white" key="text2" />,
+      <div className="content-text" key="text1">
+        <a href="https://www.wonder-3d.com/" target="view_window">
+          {DomHelper.textEl({j|官方网站|j})}
+        </a>
+      </div>,
+      <div className="content-small-white" key="text2" />,
+      <div className="content-text" key="text1">
+        <a href="https://forum.wonder-3d.com/" target="view_window">
+          {DomHelper.textEl({j|论坛|j})}
+        </a>
+      </div>,
+      <div className="content-small-white" key="text2" />,
+      <div className="content-text" key="text1">
+        <a
+          href="https://www.wonder-3d.com/docs/docs/doc1-1/"
+          target="view_window">
+          {DomHelper.textEl({j|文档|j})}
+        </a>
+      </div>,
+      <div className="content-small-white" key="text2" />,
+      <div className="content-text" key="text1">
+        <a href="https://github.com/Wonder-Technology" target="view_window">
+          {DomHelper.textEl({j|Github|j})}
+        </a>
+      </div>,
+    |];
+  };
 };
 
 let component = ReasonReact.reducerComponent("HeaderNotice");
@@ -64,7 +120,7 @@ let render =
           <Modal
             title="Version Upgrade"
             closeFunc={() => send(HideVersionUpgradeModal)}
-            content={Method.buildWelComeUserModalContent()}
+            content={Method.buildVersionUpgradeModalContent()}
           /> :
           ReasonReact.null
     }
@@ -82,7 +138,7 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
       | Some(value) => value !== "ok"
       },
     isShowVersionUpgradeModal:
-      switch (LocalStorage.getValue(Method.getVersionKey())) {
+      switch (Method.getVersion()) {
       | None =>
         LocalStorage.setValue(Method.getVersionKey(), Copyright.getVersion());
         true;
