@@ -86,12 +86,6 @@ let _handleEngineState = engineState => {
   |> StateEngineService.setState;
 };
 
-let _hideLoading = [%raw
-  loadingDomId => {|
-                        document.querySelector("#" + loadingDomId).style.display = "none";
-  |}
-];
-
 let init = () =>
   Wonderjs.StateDataMainType.(
     _getLoadData()
@@ -109,10 +103,6 @@ let init = () =>
          )
          |> WonderBsMost.Most.fromPromise
        )
-    |> WonderBsMost.Most.tap(_ => {
-         _hideLoading("loading");
-         ();
-       })
     |> WonderBsMost.Most.flatMap(engineState =>
          Fetch.fetch("./config/editor/setting.json")
          |> then_(response =>

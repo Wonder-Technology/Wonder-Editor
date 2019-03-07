@@ -1,3 +1,11 @@
+module Method = {
+  let hideLoading = [%raw
+    loadingDomId => {|
+                          document.querySelector("#" + loadingDomId).style.display = "none";
+    |}
+  ];
+};
+
 let component = ReasonReact.statelessComponent("AppShell");
 
 let render = _self =>
@@ -21,4 +29,8 @@ let render = _self =>
     </div>
   </article>;
 
-let make = _children => {...component, render: self => render(self)};
+let make = _children => {
+  ...component,
+  render: self => render(self),
+  didMount: self => Method.hideLoading("loading"),
+};
