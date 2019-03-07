@@ -1,0 +1,72 @@
+.wonder-app-shell{
+    width:100%;
+    height:100%;
+    .shell-header{
+        width: 100%;
+        height: 27px;
+        background-color: #333333;
+    }
+    .shell-controller{
+        width: 100%;
+        height: 45px;
+        background-color: #444444;
+    }
+    .shell-mainEditor{
+        width: 100%;
+        height: 100%;
+        display: flex;
+
+        .right-component {
+            height: 100%;
+            width: 20%;
+            flex: initial;
+            min-width: 250px;
+            background: #666666;
+        }
+
+        .left-component {
+            display: flex;
+            flex: initial;
+            height: 100%;
+            width: 80%;
+            flex-direction: column;
+            .top-widget {
+                flex: initial;
+                width: 100%;
+                height: 71%;
+                display: flex;
+                .shell-scene-tree {
+                    flex: initial;
+                    width: 17%;
+                    height: 100%;
+                    background: #666666;
+                    order: 10;
+                }
+                .webgl-parent {
+                    flex: 1;
+                    order: 20;
+                    position: relative;
+                }
+            }
+            .bottom-widget {
+                flex: initial;
+                width: 100%;
+                height: 29%;
+                .wonder-bottom-component {
+                    width: 100%;
+                    height: 100%;
+                    background-color: #333333;
+                    display: flex;
+                    flex-direction: column;
+                    .bottom-header {
+                        height: 10%;
+                        min-height: 20px;
+                    }
+                    .wonder-bottom-project {
+                        height: 90%;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -32,7 +32,7 @@ module Method = {
             <Header uiState dispatchFunc />
             <Controller uiState dispatchFunc />
           </div> :
-          <div className="header-fck" />
+          <AppShell />
       }
       <MainEditor uiState dispatchFunc />
     </article>;
