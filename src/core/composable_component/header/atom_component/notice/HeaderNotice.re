@@ -19,7 +19,7 @@ module Method = {
           {j| 欢迎来到Wonder，你可以通过访问我们的|j},
         )
       }
-      <a href="http://www.wonder-3d.com/" target="view_window">
+      <a href="http://www.wonder-3d.com/" target="_blank">
         {DomHelper.textEl({j|官方网站|j})}
       </a>
       {DomHelper.textEl({j| , 查看我们能为你提供什么服务|j})}

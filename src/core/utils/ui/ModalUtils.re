@@ -6,7 +6,7 @@ let iterateModalArrayBuildComponent = modalArray =>
          <div className="field-content">
            {
              isLink ?
-               <a href=link target="view_window">
+               <a href=link target="_blank">
                  {DomHelper.textEl(content)}
                </a> :
                DomHelper.textEl(content)
