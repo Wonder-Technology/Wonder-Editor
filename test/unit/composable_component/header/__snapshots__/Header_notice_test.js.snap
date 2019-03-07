@@ -28,7 +28,7 @@ exports[`Header Notice test show notice else else, if localStorage version !== c
            欢迎来到Wonder，你可以通过访问我们的
           <a
             href="http://www.wonder-3d.com/"
-            target="view_window"
+            target="_blank"
           >
             官方网站
           </a>
@@ -86,7 +86,7 @@ exports[`Header Notice test show notice else if localStorage have no version key
            欢迎来到Wonder，你可以通过访问我们的
           <a
             href="http://www.wonder-3d.com/"
-            target="view_window"
+            target="_blank"
           >
             官方网站
           </a>
@@ -144,7 +144,7 @@ exports[`Header Notice test show notice if localStorage have no welcomeUser key 
            欢迎来到Wonder，你可以通过访问我们的
           <a
             href="http://www.wonder-3d.com/"
-            target="view_window"
+            target="_blank"
           >
             官方网站
           </a>
