@@ -25,14 +25,7 @@ exports[`Header Notice test show notice else else, if localStorage version !== c
         <div
           className="content-text"
         >
-           欢迎来到Wonder，你可以通过访问我们的
-          <a
-            href="http://www.wonder-3d.com/"
-            target="_blank"
-          >
-            官方网站
-          </a>
-           , 查看我们能为你提供什么服务
+          Upgrade to 1.0.0-rc.1 Version, We are here to serve you~ Thanks for your trust~
         </div>
         <div
           className="content-white"
@@ -40,7 +33,51 @@ exports[`Header Notice test show notice else else, if localStorage version !== c
         <div
           className="content-text"
         >
-          Wonder 科技为你服务
+          <a
+            href="https://www.wonder-3d.com/"
+            target="view_window"
+          >
+            Website
+          </a>
+        </div>
+        <div
+          className="content-small-white"
+        />
+        <div
+          className="content-text"
+        >
+          <a
+            href="https://forum.wonder-3d.com/"
+            target="view_window"
+          >
+            Forum
+          </a>
+        </div>
+        <div
+          className="content-small-white"
+        />
+        <div
+          className="content-text"
+        >
+          <a
+            href="https://www.wonder-3d.com/docs/docs/doc1-1/"
+            target="view_window"
+          >
+            Doc
+          </a>
+        </div>
+        <div
+          className="content-small-white"
+        />
+        <div
+          className="content-text"
+        >
+          <a
+            href="https://github.com/Wonder-Technology"
+            target="view_window"
+          >
+            Github
+          </a>
         </div>
       </div>
       <div
@@ -83,14 +120,7 @@ exports[`Header Notice test show notice else if localStorage have no version key
         <div
           className="content-text"
         >
-           欢迎来到Wonder，你可以通过访问我们的
-          <a
-            href="http://www.wonder-3d.com/"
-            target="_blank"
-          >
-            官方网站
-          </a>
-           , 查看我们能为你提供什么服务
+          Upgrade to 1.0.0-rc.1 Version, We are here to serve you~ Thanks for your trust~
         </div>
         <div
           className="content-white"
@@ -98,7 +128,51 @@ exports[`Header Notice test show notice else if localStorage have no version key
         <div
           className="content-text"
         >
-          Wonder 科技为你服务
+          <a
+            href="https://www.wonder-3d.com/"
+            target="view_window"
+          >
+            Website
+          </a>
+        </div>
+        <div
+          className="content-small-white"
+        />
+        <div
+          className="content-text"
+        >
+          <a
+            href="https://forum.wonder-3d.com/"
+            target="view_window"
+          >
+            Forum
+          </a>
+        </div>
+        <div
+          className="content-small-white"
+        />
+        <div
+          className="content-text"
+        >
+          <a
+            href="https://www.wonder-3d.com/docs/docs/doc1-1/"
+            target="view_window"
+          >
+            Doc
+          </a>
+        </div>
+        <div
+          className="content-small-white"
+        />
+        <div
+          className="content-text"
+        >
+          <a
+            href="https://github.com/Wonder-Technology"
+            target="view_window"
+          >
+            Github
+          </a>
         </div>
       </div>
       <div
@@ -141,14 +215,7 @@ exports[`Header Notice test show notice if localStorage have no welcomeUser key 
         <div
           className="content-text"
         >
-           欢迎来到Wonder，你可以通过访问我们的
-          <a
-            href="http://www.wonder-3d.com/"
-            target="_blank"
-          >
-            官方网站
-          </a>
-           , 查看我们能为你提供什么服务
+          Welcome to use Wonder editor, We are here to serve you~ Thanks for your trust~
         </div>
         <div
           className="content-white"
@@ -156,7 +223,51 @@ exports[`Header Notice test show notice if localStorage have no welcomeUser key 
         <div
           className="content-text"
         >
-          Wonder 科技为你服务
+          <a
+            href="https://www.wonder-3d.com/"
+            target="view_window"
+          >
+            Website
+          </a>
+        </div>
+        <div
+          className="content-small-white"
+        />
+        <div
+          className="content-text"
+        >
+          <a
+            href="https://forum.wonder-3d.com/"
+            target="view_window"
+          >
+            Forum
+          </a>
+        </div>
+        <div
+          className="content-small-white"
+        />
+        <div
+          className="content-text"
+        >
+          <a
+            href="https://www.wonder-3d.com/docs/docs/doc1-1/"
+            target="view_window"
+          >
+            Doc
+          </a>
+        </div>
+        <div
+          className="content-small-white"
+        />
+        <div
+          className="content-text"
+        >
+          <a
+            href="https://github.com/Wonder-Technology"
+            target="view_window"
+          >
+            Github
+          </a>
         </div>
       </div>
       <div

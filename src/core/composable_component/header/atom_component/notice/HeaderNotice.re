@@ -12,23 +12,59 @@ module Method = {
 
   let getVersionKey = () => "version";
 
-  let buildWelComeUserModalContent = () => [|
-    <div className="content-text" key="text1">
-      {
-        DomHelper.textEl(
-          {j| 欢迎来到Wonder，你可以通过访问我们的|j},
-        )
-      }
-      <a href="http://www.wonder-3d.com/" target="_blank">
-        {DomHelper.textEl({j|官方网站|j})}
-      </a>
-      {DomHelper.textEl({j| , 查看我们能为你提供什么服务|j})}
-    </div>,
+  let getVersion = () => LocalStorage.getValue(getVersionKey());
+
+  let _buildLinkContent = () => [|
     <div className="content-white" key="text2" />,
-    <div className="content-text" key="text3">
-      {DomHelper.textEl({j|Wonder 科技为你服务|j})}
+    <div className="content-text" key="text1">
+      <a href="https://www.wonder-3d.com/" target="view_window">
+        {DomHelper.textEl({j|Website|j})}
+      </a>
+    </div>,
+    <div className="content-small-white" key="text2" />,
+    <div className="content-text" key="text1">
+      <a href="https://forum.wonder-3d.com/" target="view_window">
+        {DomHelper.textEl({j|Forum|j})}
+      </a>
+    </div>,
+    <div className="content-small-white" key="text2" />,
+    <div className="content-text" key="text1">
+      <a
+        href="https://www.wonder-3d.com/docs/docs/doc1-1/"
+        target="view_window">
+        {DomHelper.textEl({j|Doc|j})}
+      </a>
+    </div>,
+    <div className="content-small-white" key="text2" />,
+    <div className="content-text" key="text1">
+      <a href="https://github.com/Wonder-Technology" target="view_window">
+        {DomHelper.textEl({j|Github|j})}
+      </a>
     </div>,
   |];
+
+  let buildWelComeUserModalContent = () =>
+    [|
+      <div className="content-text" key="text1">
+        {
+          DomHelper.textEl(
+            {j|Welcome to use Wonder editor, We are here to serve you~ Thanks for your trust~|j},
+          )
+        }
+      </div>,
+    |]
+    |> ArrayService.fastConcat(_, _buildLinkContent());
+
+  let buildVersionUpgradeModalContent = () => {
+    let newVersion = Copyright.getVersion();
+
+    [|
+      <div className="content-text" key="text1">
+        {DomHelper.textEl({j|Upgrade to $newVersion Version, We are here to serve you~ Thanks for your trust~|j})}
+      </div>,
+    |]
+    |> ArrayService.fastConcat(_, _buildLinkContent());
+  };
 };
 
 let component = ReasonReact.reducerComponent("HeaderNotice");
@@ -64,7 +100,7 @@ let render =
           <Modal
             title="Version Upgrade"
             closeFunc={() => send(HideVersionUpgradeModal)}
-            content={Method.buildWelComeUserModalContent()}
+            content={Method.buildVersionUpgradeModalContent()}
           /> :
           ReasonReact.null
     }
@@ -82,7 +118,7 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
       | Some(value) => value !== "ok"
       },
     isShowVersionUpgradeModal:
-      switch (LocalStorage.getValue(Method.getVersionKey())) {
+      switch (Method.getVersion()) {
       | None =>
         LocalStorage.setValue(Method.getVersionKey(), Copyright.getVersion());
         true;
