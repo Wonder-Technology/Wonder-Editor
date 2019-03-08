@@ -25,7 +25,7 @@ exports[`Header Notice test show notice else else, if localStorage version !== c
         <div
           className="content-text"
         >
-          已为您升级为1.0.0-rc.1版本。
+          Upgrade to 1.0.0-rc.1 Version, We are here to serve you~ Thanks for your trust~
         </div>
         <div
           className="content-white"
@@ -37,7 +37,7 @@ exports[`Header Notice test show notice else else, if localStorage version !== c
             href="https://www.wonder-3d.com/"
             target="view_window"
           >
-            官方网站
+            Website
           </a>
         </div>
         <div
@@ -50,7 +50,7 @@ exports[`Header Notice test show notice else else, if localStorage version !== c
             href="https://forum.wonder-3d.com/"
             target="view_window"
           >
-            论坛
+            Forum
           </a>
         </div>
         <div
@@ -63,7 +63,7 @@ exports[`Header Notice test show notice else else, if localStorage version !== c
             href="https://www.wonder-3d.com/docs/docs/doc1-1/"
             target="view_window"
           >
-            文档
+            Doc
           </a>
         </div>
         <div
@@ -120,7 +120,7 @@ exports[`Header Notice test show notice else if localStorage have no version key
         <div
           className="content-text"
         >
-          已为您升级为1.0.0-rc.1版本。
+          Upgrade to 1.0.0-rc.1 Version, We are here to serve you~ Thanks for your trust~
         </div>
         <div
           className="content-white"
@@ -132,7 +132,7 @@ exports[`Header Notice test show notice else if localStorage have no version key
             href="https://www.wonder-3d.com/"
             target="view_window"
           >
-            官方网站
+            Website
           </a>
         </div>
         <div
@@ -145,7 +145,7 @@ exports[`Header Notice test show notice else if localStorage have no version key
             href="https://forum.wonder-3d.com/"
             target="view_window"
           >
-            论坛
+            Forum
           </a>
         </div>
         <div
@@ -158,7 +158,7 @@ exports[`Header Notice test show notice else if localStorage have no version key
             href="https://www.wonder-3d.com/docs/docs/doc1-1/"
             target="view_window"
           >
-            文档
+            Doc
           </a>
         </div>
         <div
@@ -215,7 +215,7 @@ exports[`Header Notice test show notice if localStorage have no welcomeUser key 
         <div
           className="content-text"
         >
-          欢迎使用Wonder编辑器，我们为您服务～
+          Welcome to use Wonder editor, We are here to serve you~ Thanks for your trust~
         </div>
         <div
           className="content-white"
@@ -227,7 +227,7 @@ exports[`Header Notice test show notice if localStorage have no welcomeUser key 
             href="https://www.wonder-3d.com/"
             target="view_window"
           >
-            官方网站
+            Website
           </a>
         </div>
         <div
@@ -240,7 +240,7 @@ exports[`Header Notice test show notice if localStorage have no welcomeUser key 
             href="https://forum.wonder-3d.com/"
             target="view_window"
           >
-            论坛
+            Forum
           </a>
         </div>
         <div
@@ -253,7 +253,7 @@ exports[`Header Notice test show notice if localStorage have no welcomeUser key 
             href="https://www.wonder-3d.com/docs/docs/doc1-1/"
             target="view_window"
           >
-            文档
+            Doc
           </a>
         </div>
         <div

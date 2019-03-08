@@ -14,24 +14,17 @@ module Method = {
 
   let getVersion = () => LocalStorage.getValue(getVersionKey());
 
-  let buildWelComeUserModalContent = () => [|
-    <div className="content-text" key="text1">
-      {
-        DomHelper.textEl(
-          {j|欢迎使用Wonder编辑器，我们为您服务～|j},
-        )
-      }
-    </div>,
+  let _buildLinkContent = () => [|
     <div className="content-white" key="text2" />,
     <div className="content-text" key="text1">
       <a href="https://www.wonder-3d.com/" target="view_window">
-        {DomHelper.textEl({j|官方网站|j})}
+        {DomHelper.textEl({j|Website|j})}
       </a>
     </div>,
     <div className="content-small-white" key="text2" />,
     <div className="content-text" key="text1">
       <a href="https://forum.wonder-3d.com/" target="view_window">
-        {DomHelper.textEl({j|论坛|j})}
+        {DomHelper.textEl({j|Forum|j})}
       </a>
     </div>,
     <div className="content-small-white" key="text2" />,
@@ -39,7 +32,7 @@ module Method = {
       <a
         href="https://www.wonder-3d.com/docs/docs/doc1-1/"
         target="view_window">
-        {DomHelper.textEl({j|文档|j})}
+        {DomHelper.textEl({j|Doc|j})}
       </a>
     </div>,
     <div className="content-small-white" key="text2" />,
@@ -50,40 +43,27 @@ module Method = {
     </div>,
   |];
 
+  let buildWelComeUserModalContent = () =>
+    [|
+      <div className="content-text" key="text1">
+        {
+          DomHelper.textEl(
+            {j|Welcome to use Wonder editor, We are here to serve you~ Thanks for your trust~|j},
+          )
+        }
+      </div>,
+    |]
+    |> ArrayService.fastConcat(_, _buildLinkContent());
+
   let buildVersionUpgradeModalContent = () => {
     let newVersion = Copyright.getVersion();
 
     [|
       <div className="content-text" key="text1">
-        {DomHelper.textEl({j|已为您升级为$newVersion版本。|j})}
+        {DomHelper.textEl({j|Upgrade to $newVersion Version, We are here to serve you~ Thanks for your trust~|j})}
       </div>,
-      <div className="content-white" key="text2" />,
-      <div className="content-text" key="text1">
-        <a href="https://www.wonder-3d.com/" target="view_window">
-          {DomHelper.textEl({j|官方网站|j})}
-        </a>
-      </div>,
-      <div className="content-small-white" key="text2" />,
-      <div className="content-text" key="text1">
-        <a href="https://forum.wonder-3d.com/" target="view_window">
-          {DomHelper.textEl({j|论坛|j})}
-        </a>
-      </div>,
-      <div className="content-small-white" key="text2" />,
-      <div className="content-text" key="text1">
-        <a
-          href="https://www.wonder-3d.com/docs/docs/doc1-1/"
-          target="view_window">
-          {DomHelper.textEl({j|文档|j})}
-        </a>
-      </div>,
-      <div className="content-small-white" key="text2" />,
-      <div className="content-text" key="text1">
-        <a href="https://github.com/Wonder-Technology" target="view_window">
-          {DomHelper.textEl({j|Github|j})}
-        </a>
-      </div>,
-    |];
+    |]
+    |> ArrayService.fastConcat(_, _buildLinkContent());
   };
 };
 
