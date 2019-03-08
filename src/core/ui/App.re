@@ -28,11 +28,11 @@ module Method = {
       }
       {
         uiState.isEditorAndEngineStart ?
-          <Header uiState dispatchFunc /> : ReasonReact.null
-      }
-      {
-        uiState.isEditorAndEngineStart ?
-          <Controller uiState dispatchFunc /> : ReasonReact.null
+          <div className="">
+            <Header uiState dispatchFunc />
+            <Controller uiState dispatchFunc />
+          </div> :
+          <AppShell />
       }
       <MainEditor uiState dispatchFunc />
     </article>;
@@ -45,9 +45,7 @@ let render =
       (uiState: AppStore.appState, dispatchFunc),
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) =>
-  uiState.isDidMounted ?
-    Method.showComponent(uiState, dispatchFunc, self) :
-    <article key="app" className="app-component" />;
+  Method.showComponent(uiState, dispatchFunc, self);
 
 let make = (~state as uiState: AppStore.appState, ~dispatch, _children) => {
   ...component,
@@ -56,18 +54,17 @@ let make = (~state as uiState: AppStore.appState, ~dispatch, _children) => {
     ServiceWorker.registerServiceWorker();
 
     WonderLog.Wonder_Console.makeObjInToWindow();
+    /*
+     AppExtensionUtils.getExtension(Method.getStorageParentKey())
+     |> (
+       value =>
+         switch (value) {
+         | None => ()
+         | Some(value) =>
+           let componentsMap = ExtensionParseUtils.createComponentMap(value);
 
-    AppExtensionUtils.getExtension(Method.getStorageParentKey())
-    |> (
-      value =>
-        switch (value) {
-        | None => ()
-        | Some(value) =>
-          let componentsMap = ExtensionParseUtils.createComponentMap(value);
-
-          dispatch(AppStore.MapAction(StoreMap(Some(componentsMap))));
-        }
-    );
-    dispatch(AppStore.IsDidMounted);
+           dispatch(AppStore.MapAction(StoreMap(Some(componentsMap))));
+         }
+     ); */
   },
 };

@@ -50,6 +50,7 @@
     "<rootDir>/lib/es6_global/src/core/.+/HeaderEdit.js",
     "<rootDir>/lib/es6_global/src/core/.+/HeaderPublish.js",
     "<rootDir>/lib/es6_global/src/core/.+/HeaderHelp.js",
+    "<rootDir>/lib/es6_global/src/core/.+/AppShell.js",
     "<rootDir>/lib/es6_global/src/module/"
   ],
   "collectCoverageFrom": [

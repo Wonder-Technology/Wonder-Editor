@@ -17,7 +17,12 @@ module Method = {
   let getAboutWonderModalArray = () => [|
     ("Version", Copyright.getVersion(), false, ""),
     ("Website", "www.wonder-3d.com/", true, "http://www.wonder-3d.com/"),
-    ("Feedback", "forum.wonder-3d.com/", true, "http://forum.wonder-3d.com/"),
+    (
+      "Feedback",
+      "forum.wonder-3d.com/",
+      true,
+      "https://forum.wonder-3d.com/",
+    ),
     (
       "Editor Github",
       "github.com/Wonder-Technology/Wonder-Editor",

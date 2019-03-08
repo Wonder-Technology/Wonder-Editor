@@ -2627,6 +2627,63 @@ html, body {
               margin-left: 15px;
               align-items: center;
               justify-content: center; }
+  .wonder-app-component .wonder-app-shell {
+    width: 100%;
+    height: 100%; }
+    .wonder-app-component .wonder-app-shell .shell-header {
+      width: 100%;
+      height: 27px;
+      background-color: #333333; }
+    .wonder-app-component .wonder-app-shell .shell-controller {
+      width: 100%;
+      height: 45px;
+      background-color: #444444; }
+    .wonder-app-component .wonder-app-shell .shell-mainEditor {
+      width: 100%;
+      height: 100%;
+      display: flex; }
+      .wonder-app-component .wonder-app-shell .shell-mainEditor .right-component {
+        height: 100%;
+        width: 20%;
+        flex: initial;
+        min-width: 250px;
+        background: #666666; }
+      .wonder-app-component .wonder-app-shell .shell-mainEditor .left-component {
+        display: flex;
+        flex: initial;
+        height: 100%;
+        width: 80%;
+        flex-direction: column; }
+        .wonder-app-component .wonder-app-shell .shell-mainEditor .left-component .top-widget {
+          flex: initial;
+          width: 100%;
+          height: 71%;
+          display: flex; }
+          .wonder-app-component .wonder-app-shell .shell-mainEditor .left-component .top-widget .shell-scene-tree {
+            flex: initial;
+            width: 17%;
+            height: 100%;
+            background: #666666;
+            order: 10; }
+          .wonder-app-component .wonder-app-shell .shell-mainEditor .left-component .top-widget .webgl-parent {
+            flex: 1;
+            order: 20;
+            position: relative; }
+        .wonder-app-component .wonder-app-shell .shell-mainEditor .left-component .bottom-widget {
+          flex: initial;
+          width: 100%;
+          height: 29%; }
+          .wonder-app-component .wonder-app-shell .shell-mainEditor .left-component .bottom-widget .wonder-bottom-component {
+            width: 100%;
+            height: 100%;
+            background-color: #333333;
+            display: flex;
+            flex-direction: column; }
+            .wonder-app-component .wonder-app-shell .shell-mainEditor .left-component .bottom-widget .wonder-bottom-component .bottom-header {
+              height: 10%;
+              min-height: 20px; }
+            .wonder-app-component .wonder-app-shell .shell-mainEditor .left-component .bottom-widget .wonder-bottom-component .wonder-bottom-project {
+              height: 90%; }
 
 .color-pick-content {
   position: fixed;
