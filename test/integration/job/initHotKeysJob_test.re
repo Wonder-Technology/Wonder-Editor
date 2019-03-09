@@ -345,7 +345,7 @@ let _ =
             )
             |> StateLogicService.getEngineStateToGetData
             |> FloatTool.truncateFloatValue
-            |> expect == 0.226;
+            |> expect == 0.451;
           });
         });
 

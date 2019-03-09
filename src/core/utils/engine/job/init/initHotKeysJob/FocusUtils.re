@@ -1,6 +1,6 @@
 let _calcMoveSpeed = distance => distance /. 100.;
 
-let _calcWheelSpeed = distance => distance /. 100.;
+let _calcWheelSpeed = distance => distance /. 50.;
 
 let _setArcballCameraControllerFocusRelatedAttribute =
     (arcballCameraController, (distance, target), engineState) => {
