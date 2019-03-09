@@ -117,7 +117,6 @@ let extensionPanelComponent = (componentName, extensionText, uiState) => {
       | 0 => [||]
       | _ =>
         panelArray
-        |> WonderLog.Log.print
         |> Js.Array.map(panelObj => panelObj |> _convertdRecord)
         |> Js.Array.map(record =>
              <PanelExtension

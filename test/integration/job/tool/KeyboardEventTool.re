@@ -7,6 +7,7 @@ let buildKeyboardDomEvent =
       ~shiftKey=false,
       ~metaKey=false,
       ~keyCode=8,
+      ~preventDefaultFunc=() => (),
       (),
     ) => {
   "ctrlKey": ctrlKey,
@@ -14,4 +15,5 @@ let buildKeyboardDomEvent =
   "shiftKey": shiftKey,
   "metaKey": metaKey,
   "keyCode": keyCode,
+  "preventDefault": preventDefaultFunc,
 };

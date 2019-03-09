@@ -68,11 +68,13 @@ let unbindArcballCameraControllerEventIfHasComponentForGameView =
   |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
        gameObject,
      ) ?
-    engineState
-    |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-         gameObject,
-       )
-    |. unbindArcballCameraControllerEventForGameView(engineState) :
+    (
+      engineState
+      |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+           gameObject,
+         )
+    )
+    ->(unbindArcballCameraControllerEventForGameView(engineState)) :
     engineState;
 
 let bindArcballCameraControllerEventIfHasComponentForGameView =
@@ -81,9 +83,13 @@ let bindArcballCameraControllerEventIfHasComponentForGameView =
   |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
        gameObject,
      ) ?
-    engineState
-    |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-         gameObject,
-       )
-    |. bindArcballCameraControllerEventForGameView(engineState) :
+    (
+      engineState
+      |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+           gameObject,
+         )
+    )
+    ->(bindArcballCameraControllerEventForGameView(engineState)) :
     engineState;
+
+let isTriggerKeydownEventHandler = EventArcballCameraControllerMainService.isTriggerKeydownEventHandler;

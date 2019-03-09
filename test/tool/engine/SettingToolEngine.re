@@ -78,8 +78,8 @@ let buildFakeDomForNotPassCanvasId = sandbox => {
 let buildBufferConfigStr =
     (
       ~geometryPointCount=30000,
-      ~geometryCount=30,
-      ~transformCount=50,
+      ~geometryCount=60,
+      ~transformCount=100,
       ~basicMaterialCount=50,
       ~lightMaterialCount=50,
       ~directionLightCount=50,

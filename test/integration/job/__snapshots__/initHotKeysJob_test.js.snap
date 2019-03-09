@@ -127,6 +127,29 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
           </div>
         </li>
       </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container select-active no-drag"
+            draggable={true}
+            id="sceneTreeNode-36"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
     </ul>
   </article>
 </article>

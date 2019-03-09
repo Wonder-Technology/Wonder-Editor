@@ -34,18 +34,6 @@ let _ =
                   }
                 ]
             |},
-            ~initJobs=
-              {j|
-                [
-
-                    {
-                       "name": "init_hotkeys"
-                    },
-                    {
-                       "name": "init_transform_gizmos"
-                    }
-                ]
-            |j},
             ~loopPipelines=
               {|
                      [
@@ -138,6 +126,10 @@ let _ =
 
       describe("test bind clone hot-key", () =>
         test("key down ctrl+d, should execute clone operate", () => {
+          EventListenerTool.buildFakeDom()
+          |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
+
           triggerCloneHotKeyEvent();
 
           BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())

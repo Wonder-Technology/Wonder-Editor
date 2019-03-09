@@ -822,6 +822,7 @@ let _ =
               ~viewHeight,
               ~noWorkerJobRecord=
                 InitPickingJobTool.buildDefaultNoWorkerJobRecord(),
+              (),
             );
 
             let editorState = StateEditorService.getState();

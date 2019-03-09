@@ -199,5 +199,5 @@ let isCurrentSceneTreeNodeSceneChildren = ((editorState, engineState)) =>
   switch (editorState |> SceneTreeEditorService.getCurrentSceneTreeNode) {
   | None => false
   | Some(gameObject) =>
-    ! (engineState |> SceneEngineService.isSceneGameObject(gameObject))
+    !(engineState |> SceneEngineService.isSceneGameObject(gameObject))
   };

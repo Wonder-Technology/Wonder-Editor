@@ -143,7 +143,15 @@ let _ =
       judgeFunc(requestPointerLockStub);
     };
 
-    let _execKeydownEvent = (~pageX, ~pageY, ~keyCode) => {
+    let _execKeydownEvent =
+        (
+          ~pageX,
+          ~pageY,
+          ~keyCode,
+          ~ctrlKey=false,
+          ~preventDefaultFunc=createEmptyStubWithJsObjSandbox(sandbox),
+          (),
+        ) => {
       EventTool.triggerDomEvent(
         "mousedown",
         EventTool.getBody(),
@@ -152,7 +160,12 @@ let _ =
       EventTool.triggerDomEvent(
         "keydown",
         EventTool.getKeyboardEventBindedDom(),
-        KeyboardEventTool.buildKeyboardDomEvent(~keyCode, ()),
+        KeyboardEventTool.buildKeyboardDomEvent(
+          ~keyCode,
+          ~ctrlKey,
+          ~preventDefaultFunc,
+          (),
+        ),
       );
       EventTool.restore();
     };
@@ -166,18 +179,15 @@ let _ =
       let (cameraController, (moveSpeedX, moveSpeedY), (posX, posY, posZ)) =
         prepareMouseEventFunc(~sandbox, ());
 
-      _execKeydownEvent(~pageX, ~pageY, ~keyCode=65);
+      _execKeydownEvent(~pageX, ~pageY, ~ctrlKey=false, ~keyCode=65, ());
 
       let engineState = StateEngineService.unsafeGetState();
       engineState
       |> ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget(
            cameraController,
          )
-      |>
-      expect == getResultTargetFunc(
-                  (moveSpeedX, moveSpeedY),
-                  (posX, posY, posZ),
-                );
+      |> expect
+      == getResultTargetFunc((moveSpeedX, moveSpeedY), (posX, posY, posZ));
     };
 
     beforeEach(() => sandbox := createSandbox());
@@ -224,36 +234,83 @@ let _ =
             (),
           );
 
-        describe("if key affect arcballCameraController, loop when stop", () => {
-          beforeEach(() => ControllerTool.setIsRun(false));
+        beforeEach(() => ControllerTool.setIsRun(false));
 
-          test("if key is a, loop when stop", () => {
-            let (
-              cameraController,
-              (moveSpeedX, moveSpeedY),
-              (posX, posY, posZ),
-            ) =
-              _prepareMouseEvent(~sandbox, ());
+        test("if is combined key, not prevent default", () => {
+          let (
+            cameraController,
+            (moveSpeedX, moveSpeedY),
+            (posX, posY, posZ),
+          ) =
+            _prepareMouseEvent(~sandbox, ());
+          let preventDefaultFunc = createEmptyStubWithJsObjSandbox(sandbox);
 
-            _execKeydownEvent(~pageX=10, ~pageY=20, ~keyCode=65);
+          _execKeydownEvent(
+            ~pageX=10,
+            ~pageY=20,
+            ~ctrlKey=true,
+            ~keyCode=65,
+            ~preventDefaultFunc,
+            (),
+          );
 
-            let gl = FakeGlToolEngine.getEngineStateGl();
-            gl##clearColor |> expect |> toCalled;
-          });
-          test("if key is e, not loop", () => {
-            let (
-              cameraController,
-              (moveSpeedX, moveSpeedY),
-              (posX, posY, posZ),
-            ) =
-              _prepareMouseEvent(~sandbox, ());
-
-            _execKeydownEvent(~pageX=10, ~pageY=20, ~keyCode=69);
-
-            let gl = FakeGlToolEngine.getEngineStateGl();
-            gl##clearColor |> expect |> not_ |> toCalled;
-          });
+          preventDefaultFunc |> expect |> not_ |> toCalled;
         });
+
+        describe("else", () =>
+          describe("if key affect arcballCameraController", () => {
+            test("prevent default", () => {
+              let (
+                cameraController,
+                (moveSpeedX, moveSpeedY),
+                (posX, posY, posZ),
+              ) =
+                _prepareMouseEvent(~sandbox, ());
+              let preventDefaultFunc =
+                createEmptyStubWithJsObjSandbox(sandbox);
+
+              _execKeydownEvent(
+                ~pageX=10,
+                ~pageY=20,
+                ~ctrlKey=false,
+                ~keyCode=65,
+                ~preventDefaultFunc,
+                (),
+              );
+
+              preventDefaultFunc |> expect |> toCalled;
+            });
+
+            describe("loop when stop", () => {
+              test("if key is a, loop when stop", () => {
+                let (
+                  cameraController,
+                  (moveSpeedX, moveSpeedY),
+                  (posX, posY, posZ),
+                ) =
+                  _prepareMouseEvent(~sandbox, ());
+
+                _execKeydownEvent(~pageX=10, ~pageY=20, ~keyCode=65, ());
+
+                let gl = FakeGlToolEngine.getEngineStateGl();
+                gl##clearColor |> expect |> toCalled;
+              });
+              test("if key is e, not loop", () => {
+                let (
+                  cameraController,
+                  (moveSpeedX, moveSpeedY),
+                  (posX, posY, posZ),
+                ) =
+                  _prepareMouseEvent(~sandbox, ());
+
+                _execKeydownEvent(~pageX=10, ~pageY=20, ~keyCode=69, ());
+
+                let gl = FakeGlToolEngine.getEngineStateGl();
+                gl##clearColor |> expect |> not_ |> toCalled;
+              });
+            });
+          })
+        );
 
         describe("test set target", () => {
           test("if eventTarget is scene view, move", () =>

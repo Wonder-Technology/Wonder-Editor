@@ -1,11 +1,20 @@
 let prepareStateAndView =
-    (~sandbox, ~viewWidth, ~viewHeight, ~noWorkerJobRecord) => {
-  MainEditorSceneTool.initStateWithJob(
-    ~sandbox,
-    ~isInitJob=false,
-    ~noWorkerJobRecord,
-    (),
-  );
+    (
+      ~sandbox,
+      ~viewWidth,
+      ~viewHeight,
+      ~noWorkerJobRecord,
+      ~isInitState=true,
+      (),
+    ) => {
+  isInitState ?
+    MainEditorSceneTool.initStateWithJob(
+      ~sandbox,
+      ~isInitJob=false,
+      ~noWorkerJobRecord,
+      (),
+    ) :
+    ();
 
   PrepareRenderViewJobTool.setViewRect(
     ~width=viewWidth * 2,
@@ -23,9 +32,17 @@ let prepareMouseEvent =
       ~offsetLeft,
       ~offsetTop,
       ~offsetParent=Js.Nullable.undefined,
+      ~isInitState=true,
       (),
     ) => {
-  prepareStateAndView(~sandbox, ~viewWidth, ~viewHeight, ~noWorkerJobRecord);
+  prepareStateAndView(
+    ~sandbox,
+    ~viewWidth,
+    ~viewHeight,
+    ~noWorkerJobRecord,
+    ~isInitState,
+    (),
+  );
 
   MouseEventTool.prepareWithState(
     ~sandbox,
@@ -286,7 +303,7 @@ let buildDefaultNoWorkerJobRecord = () =>
     (),
   );
 
-let prepare =
+let prepareWithoutState =
     (
       ~sandbox,
       ~viewWidth,
@@ -294,6 +311,7 @@ let prepare =
       ~offsetLeft,
       ~offsetTop,
       ~cameraPos,
+      ~isInitState=true,
       ~noWorkerJobRecord=buildDefaultNoWorkerJobRecord(),
       (),
     ) => {
@@ -305,6 +323,7 @@ let prepare =
       ~offsetLeft,
       ~offsetTop,
       ~noWorkerJobRecord,
+      ~isInitState,
       (),
     );
 
@@ -316,6 +335,34 @@ let prepare =
       cameraPos,
       (viewWidth, viewHeight),
       (editorState, engineState),
+    );
+
+  (editorState, engineState);
+};
+
+let prepare =
+    (
+      ~sandbox,
+      ~viewWidth,
+      ~viewHeight,
+      ~offsetLeft,
+      ~offsetTop,
+      ~cameraPos,
+      ~isInitState=true,
+      ~noWorkerJobRecord=buildDefaultNoWorkerJobRecord(),
+      (),
+    ) => {
+  let (editorState, engineState) =
+    prepareWithoutState(
+      ~sandbox,
+      ~viewWidth,
+      ~viewHeight,
+      ~offsetLeft,
+      ~offsetTop,
+      ~cameraPos,
+      ~isInitState=true,
+      ~noWorkerJobRecord=buildDefaultNoWorkerJobRecord(),
+      (),
     );
 
   prepareState(sandbox, editorState, engineState);
@@ -334,26 +381,6 @@ let prepareOneGameObject =
       ~gameObjectEulerAngles,
       (),
     ) => {
-  /* let ((viewWidth, viewHeight), (offsetLeft, offsetTop)) =
-       prepareMouseEvent(
-         ~sandbox,
-         ~viewWidth,
-         ~viewHeight,
-         ~offsetLeft,
-         ~offsetTop,
-         (),
-       );
-
-     let editorState = StateEditorService.getState();
-     let engineState = StateEngineService.unsafeGetState();
-
-     let (editCamera, (editorState, engineState)) =
-       prepareCamera(
-         cameraPos,
-         (viewWidth, viewHeight),
-         (editorState, engineState),
-       ); */
-
   prepare(
     ~sandbox,
     ~viewWidth,

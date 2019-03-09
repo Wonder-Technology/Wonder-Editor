@@ -18,7 +18,8 @@ let _isKeyAffectedArballCameraController = ({key}: EventType.keyboardEvent) =>
   };
 
 let _handleKeyDownForSceneView = (event, keydownHandleFunc, engineState) =>
-  _isKeyAffectedArballCameraController(event) ?
+  _isKeyAffectedArballCameraController(event)
+  && ArcballCameraEngineService.isTriggerKeydownEventHandler(event) ?
     {
       HandleDomEventEngineService.preventDefault(
         event.event |> EventType.keyboardDomEventToDomEvent,
