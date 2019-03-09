@@ -138,16 +138,35 @@ let _ =
             |> StateLogicService.getEngineStateToGetData
             |> expect == true
           );
-          test(
-            "test click remove geometry component, current gameObject shouldn't has it",
-            () => {
-            MainEditorInspectorRemoveComponentTool.removeGeometryComponent();
 
-            GameObjectComponentEngineService.hasGeometryComponent(
-              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-            )
-            |> StateLogicService.getEngineStateToGetData
-            |> expect == false;
+          describe("test click remove geometry component", () => {
+            test("current gameObject shouldn't has it", () => {
+              MainEditorInspectorRemoveComponentTool.removeGeometryComponent();
+
+              GameObjectComponentEngineService.hasGeometryComponent(
+                GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+              )
+              |> StateLogicService.getEngineStateToGetData
+              |> expect == false;
+            });
+
+            describe("if remove geometry from all its gameObjects", () =>
+              test("geometry component shouldn't be disposed", () => {
+                let geometry =
+                  GameObjectTool.getCurrentSceneTreeNodeGeometry();
+                let secondCube =
+                  MainEditorSceneTool.getSecondCube
+                  |> StateLogicService.getEngineStateToGetData;
+
+                MainEditorInspectorRemoveComponentTool.removeGeometryComponent();
+                GameObjectTool.setCurrentSceneTreeNode(secondCube);
+                MainEditorInspectorRemoveComponentTool.removeGeometryComponent();
+
+                GeometryToolEngine.isGeometryDisposed(geometry)
+                |> StateLogicService.getEngineStateToGetData
+                |> expect == false;
+              })
+            );
           });
         });
       });

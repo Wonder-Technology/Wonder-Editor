@@ -115,7 +115,7 @@ let disposeRenderGroup =
   |> InspectorRenderGroupUtils.disposeRenderGroup(gameObject, materialType),
 );
 
-let disposeGeometry =
+let removeGeometry =
     (gameObject, geometryComponent, (editorState, engineState)) => (
   editorState
   |> InspectorEditorService.removeComponentTypeToMap(
@@ -123,7 +123,7 @@ let disposeGeometry =
        InspectorComponentType.Geometry,
      ),
   engineState
-  |> GameObjectComponentEngineService.disposeGeometryComponent(
+  |> GameObjectComponentEngineService.removeGeometryComponent(
        gameObject,
        geometryComponent,
      ),
