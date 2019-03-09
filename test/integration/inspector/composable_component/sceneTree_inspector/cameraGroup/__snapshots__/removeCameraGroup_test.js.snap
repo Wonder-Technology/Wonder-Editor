@@ -850,6 +850,7 @@ exports[`test remove camera group test still has other camera groups after remov
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"

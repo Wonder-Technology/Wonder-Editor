@@ -62,11 +62,12 @@ let render = ((uiState, dispatchFunc), materialComponent, _self) =>
   <article className="wonder-light-material">
     <PickColorComponent
       label="Diffcuse color"
-      getColorFunc=(Method.getColor(materialComponent))
-      changeColorFunc=(Method.changeColor(materialComponent))
-      closeColorPickFunc=(
+      title="diffuse color"
+      getColorFunc={Method.getColor(materialComponent)}
+      changeColorFunc={Method.changeColor(materialComponent)}
+      closeColorPickFunc={
         Method.closeColorPick((uiState, dispatchFunc), materialComponent)
-      )
+      }
     />
     <MainEditorMaterialMap
       uiState
@@ -80,18 +81,18 @@ let render = ((uiState, dispatchFunc), materialComponent, _self) =>
     />
     <MainEditorFloatInputBaseComponent
       label="Shininess"
-      getComponentValueFunc=(
+      getComponentValueFunc={
         LightMaterialEngineService.getLightMaterialShininess(
           materialComponent,
         )
-      )
-      changeComponentValueFunc=(Method.changeShininess(materialComponent))
-      blurValueFunc=(
+      }
+      changeComponentValueFunc={Method.changeShininess(materialComponent)}
+      blurValueFunc={
         Method.blurShininessEvent((uiState, dispatchFunc), materialComponent)
-      )
-      dragDropFunc=(
+      }
+      dragDropFunc={
         Method.blurShininessEvent((uiState, dispatchFunc), materialComponent)
-      )
+      }
     />
   </article>;
 

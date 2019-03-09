@@ -47,6 +47,7 @@ let _renderRemoveItem =
     ) =>
   <div
     className="asset-header-item"
+    title="remove asset"
     onClick={
       _e =>
         CurrentNodeIdAssetEditorService.couldRemoveCurrentNode
@@ -71,7 +72,10 @@ let render =
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) =>
   <article key="assetHeader" className="wonder-asset-header">
-    <div className="asset-header-item" onClick={_e => send(ToggleShowNav)}>
+    <div
+      className="asset-header-item"
+      title="add asset"
+      onClick={_e => send(ToggleShowNav)}>
       <div className="item-canBeClick">
         <img src="./public/img/add.png" />
       </div>
@@ -82,7 +86,7 @@ let render =
     </div>
     {_renderRemoveItem(uiState, dispatchFunc, self)}
     <div className="asset-header-item">
-      <div className="item-canBeClick">
+      <div className="item-canBeClick" title="load asset">
         <img src="./public/img/load.png" />
         <input
           className="asset-fileLoad"

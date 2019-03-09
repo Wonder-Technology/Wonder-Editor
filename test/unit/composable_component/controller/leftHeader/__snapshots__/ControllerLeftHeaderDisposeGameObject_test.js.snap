@@ -119,6 +119,7 @@ exports[`controller leftHeader dispose gameObject test scene tree if not set cur
   >
     <div
       className="item-canBeClick"
+      title="add gameObject"
     >
       <img
         src="./public/img/add.png"
@@ -128,7 +129,7 @@ exports[`controller leftHeader dispose gameObject test scene tree if not set cur
   <div
     className="sceneTree-header-item"
     onClick={[Function]}
-    title="remove"
+    title="remove gameObject"
   >
     <div
       className="item-canBeClick"
@@ -141,7 +142,7 @@ exports[`controller leftHeader dispose gameObject test scene tree if not set cur
   <div
     className="sceneTree-header-item"
     onClick={[Function]}
-    title="clone"
+    title="clone gameObject"
   >
     <div
       className="item-canBeClick"
@@ -164,6 +165,7 @@ exports[`controller leftHeader dispose gameObject test scene tree if set current
   >
     <div
       className="item-canBeClick"
+      title="add gameObject"
     >
       <img
         src="./public/img/add.png"
@@ -173,7 +175,7 @@ exports[`controller leftHeader dispose gameObject test scene tree if set current
   <div
     className="sceneTree-header-item"
     onClick={[Function]}
-    title="remove"
+    title="remove gameObject"
   >
     <div
       className="item-notBeClick"
@@ -186,7 +188,7 @@ exports[`controller leftHeader dispose gameObject test scene tree if set current
   <div
     className="sceneTree-header-item"
     onClick={[Function]}
-    title="clone"
+    title="clone gameObject"
   >
     <div
       className="item-notBeClick"

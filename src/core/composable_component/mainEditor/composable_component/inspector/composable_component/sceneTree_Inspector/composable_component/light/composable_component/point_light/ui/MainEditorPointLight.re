@@ -22,137 +22,138 @@ module Method = {
   let buildColorPickComponent = ((uiState, dispatchFunc), lightComponent) =>
     <PickColorComponent
       label="Color"
-      getColorFunc=(getColor(lightComponent))
-      changeColorFunc=(changeColor(lightComponent))
-      closeColorPickFunc=(
+      title="color"
+      getColorFunc={getColor(lightComponent)}
+      changeColorFunc={changeColor(lightComponent)}
+      closeColorPickFunc={
         closeColorPick((uiState, dispatchFunc), lightComponent)
-      )
+      }
     />;
 
   let buildIntensityComponent = ((uiState, dispatchFunc), lightComponent) =>
     <MainEditorFloatInputBaseComponent
       label="Intensity"
-      getComponentValueFunc=(
+      getComponentValueFunc={
         PointLightEngineService.getPointLightIntensity(lightComponent)
-      )
-      changeComponentValueFunc=(
+      }
+      changeComponentValueFunc={
         MainEditorPointLightUtils.changeIntensity(lightComponent)
-      )
-      blurValueFunc=(
+      }
+      blurValueFunc={
         MainEditorPointLightUtils.blurIntensityEvent(
           (uiState, dispatchFunc),
           lightComponent,
         )
-      )
-      dragDropFunc=(
+      }
+      dragDropFunc={
         MainEditorPointLightUtils.blurIntensityEvent(
           (uiState, dispatchFunc),
           lightComponent,
         )
-      )
+      }
     />;
 
   let buildConstantComponent = ((uiState, dispatchFunc), lightComponent) =>
     <MainEditorFloatInputBaseComponent
       label="Constant"
-      getComponentValueFunc=(
+      getComponentValueFunc={
         PointLightEngineService.getPointLightConstant(lightComponent)
-      )
-      changeComponentValueFunc=(
+      }
+      changeComponentValueFunc={
         MainEditorPointLightUtils.changeConstant(lightComponent)
-      )
-      blurValueFunc=(
+      }
+      blurValueFunc={
         MainEditorPointLightUtils.blurConstantEvent(
           (uiState, dispatchFunc),
           lightComponent,
         )
-      )
-      dragDropFunc=(
+      }
+      dragDropFunc={
         MainEditorPointLightUtils.blurConstantEvent(
           (uiState, dispatchFunc),
           lightComponent,
         )
-      )
+      }
     />;
 
   let buildLinearComponent = ((uiState, dispatchFunc), lightComponent) =>
     <MainEditorFloatInputBaseComponent
       label="Linear"
-      getComponentValueFunc=(
+      getComponentValueFunc={
         PointLightEngineService.getPointLightLinear(lightComponent)
-      )
-      changeComponentValueFunc=(
+      }
+      changeComponentValueFunc={
         MainEditorPointLightUtils.changeLinear(lightComponent)
-      )
-      blurValueFunc=(
+      }
+      blurValueFunc={
         MainEditorPointLightUtils.blurLinearEvent(
           (uiState, dispatchFunc),
           lightComponent,
         )
-      )
-      dragDropFunc=(
+      }
+      dragDropFunc={
         MainEditorPointLightUtils.blurLinearEvent(
           (uiState, dispatchFunc),
           lightComponent,
         )
-      )
+      }
     />;
 
   let buildQuadraticComponent = ((uiState, dispatchFunc), lightComponent) =>
     <MainEditorFloatInputBaseComponent
       label="Quadratic"
-      getComponentValueFunc=(
+      getComponentValueFunc={
         PointLightEngineService.getPointLightQuadratic(lightComponent)
-      )
-      changeComponentValueFunc=(
+      }
+      changeComponentValueFunc={
         MainEditorPointLightUtils.changeQuadratic(lightComponent)
-      )
-      blurValueFunc=(
+      }
+      blurValueFunc={
         MainEditorPointLightUtils.blurQuadraticEvent(
           (uiState, dispatchFunc),
           lightComponent,
         )
-      )
-      dragDropFunc=(
+      }
+      dragDropFunc={
         MainEditorPointLightUtils.blurQuadraticEvent(
           (uiState, dispatchFunc),
           lightComponent,
         )
-      )
+      }
     />;
 
   let buildRangeComponent = ((uiState, dispatchFunc), lightComponent) =>
     <MainEditorFloatInputBaseComponent
       label="Range"
-      getComponentValueFunc=(
+      getComponentValueFunc={
         PointLightEngineService.getPointLightRange(lightComponent)
-      )
-      changeComponentValueFunc=(
+      }
+      changeComponentValueFunc={
         MainEditorPointLightUtils.changeRange(lightComponent)
-      )
-      blurValueFunc=(
+      }
+      blurValueFunc={
         MainEditorPointLightUtils.blurRangeEvent(
           (uiState, dispatchFunc),
           lightComponent,
         )
-      )
-      dragDropFunc=(
+      }
+      dragDropFunc={
         MainEditorPointLightUtils.blurRangeEvent(
           (uiState, dispatchFunc),
           lightComponent,
         )
-      )
+      }
     />;
 };
 
 let render = ((uiState, dispatchFunc), lightComponent, _self) =>
   <article className="wonder-point-light">
-    (Method.buildColorPickComponent((uiState, dispatchFunc), lightComponent))
-    (Method.buildIntensityComponent((uiState, dispatchFunc), lightComponent))
-    (Method.buildConstantComponent((uiState, dispatchFunc), lightComponent))
-    (Method.buildLinearComponent((uiState, dispatchFunc), lightComponent))
-    (Method.buildQuadraticComponent((uiState, dispatchFunc), lightComponent))
-    (Method.buildRangeComponent((uiState, dispatchFunc), lightComponent))
+    {Method.buildColorPickComponent((uiState, dispatchFunc), lightComponent)}
+    {Method.buildIntensityComponent((uiState, dispatchFunc), lightComponent)}
+    {Method.buildConstantComponent((uiState, dispatchFunc), lightComponent)}
+    {Method.buildLinearComponent((uiState, dispatchFunc), lightComponent)}
+    {Method.buildQuadraticComponent((uiState, dispatchFunc), lightComponent)}
+    {Method.buildRangeComponent((uiState, dispatchFunc), lightComponent)}
   </article>;
 
 let make =

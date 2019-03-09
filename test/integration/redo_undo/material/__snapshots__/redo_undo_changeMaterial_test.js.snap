@@ -99,6 +99,7 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
             <div
               className="color-select"
               onClick={[Function]}
+              title="color"
             >
               <img
                 src="./public/img/color.png"
@@ -211,6 +212,7 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
             <div
               className="color-select"
               onClick={[Function]}
+              title="color"
             >
               <img
                 src="./public/img/color.png"
@@ -323,6 +325,7 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
             <div
               className="color-select"
               onClick={[Function]}
+              title="diffuse color"
             >
               <img
                 src="./public/img/color.png"

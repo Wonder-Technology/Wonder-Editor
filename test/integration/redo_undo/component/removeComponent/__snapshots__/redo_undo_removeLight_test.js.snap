@@ -1051,6 +1051,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
               <div
                 className="color-select"
                 onClick={[Function]}
+                title="color"
               >
                 <img
                   src="./public/img/color.png"

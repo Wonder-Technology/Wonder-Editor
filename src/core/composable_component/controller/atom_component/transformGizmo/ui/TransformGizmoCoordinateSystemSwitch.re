@@ -12,7 +12,7 @@ module Method = {
     | Local => "Local"
     };
 
-  let _getReverse = (coordinateSystem: coordinateSystem) : coordinateSystem =>
+  let _getReverse = (coordinateSystem: coordinateSystem): coordinateSystem =>
     switch (coordinateSystem) {
     | World => Local
     | Local => World
@@ -46,8 +46,9 @@ let render =
     className="transform-gizmo-coordinate-system-switch">
     <button
       disabled=isDisable
-      onClick=(_e => Method.change((state, send), onChangeFunc))>
-      (DomHelper.textEl(Method.getText(state.selectedCoordinateSystem)))
+      title="switch coordinate system"
+      onClick={_e => Method.change((state, send), onChangeFunc)}>
+      {DomHelper.textEl(Method.getText(state.selectedCoordinateSystem))}
     </button>
   </article>;
 

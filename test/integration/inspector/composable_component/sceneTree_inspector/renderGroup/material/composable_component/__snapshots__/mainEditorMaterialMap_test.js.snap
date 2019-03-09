@@ -585,6 +585,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"

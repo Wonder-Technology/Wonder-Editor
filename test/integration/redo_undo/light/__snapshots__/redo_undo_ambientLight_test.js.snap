@@ -39,6 +39,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
               <div
                 className="color-select"
                 onClick={[Function]}
+                title="ambient color"
               >
                 <img
                   src="./public/img/color.png"
@@ -64,14 +65,17 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <div
               className="translation select"
               onClick={[Function]}
+              title="translation"
             />
             <div
               className="rotation not-select"
               onClick={[Function]}
+              title="rotation"
             />
             <div
               className="scale not-select"
               onClick={[Function]}
+              title="scale"
             />
           </article>
           <article
@@ -80,6 +84,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <button
               disabled={false}
               onClick={[Function]}
+              title="switch coordinate system"
             >
               World
             </button>
@@ -90,6 +95,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
     <div
       className="controller-runAndStop"
       onClick={[Function]}
+      title="run/stop"
     >
       <img
         src="./public/img/run.png"
@@ -141,6 +147,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
               <div
                 className="color-select"
                 onClick={[Function]}
+                title="ambient color"
               >
                 <img
                   src="./public/img/color.png"
@@ -166,14 +173,17 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <div
               className="translation select"
               onClick={[Function]}
+              title="translation"
             />
             <div
               className="rotation not-select"
               onClick={[Function]}
+              title="rotation"
             />
             <div
               className="scale not-select"
               onClick={[Function]}
+              title="scale"
             />
           </article>
           <article
@@ -182,6 +192,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <button
               disabled={false}
               onClick={[Function]}
+              title="switch coordinate system"
             >
               World
             </button>
@@ -192,6 +203,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
     <div
       className="controller-runAndStop"
       onClick={[Function]}
+      title="run/stop"
     >
       <img
         src="./public/img/run.png"
@@ -243,6 +255,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
               <div
                 className="color-select"
                 onClick={[Function]}
+                title="ambient color"
               >
                 <img
                   src="./public/img/color.png"
@@ -268,14 +281,17 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <div
               className="translation select"
               onClick={[Function]}
+              title="translation"
             />
             <div
               className="rotation not-select"
               onClick={[Function]}
+              title="rotation"
             />
             <div
               className="scale not-select"
               onClick={[Function]}
+              title="scale"
             />
           </article>
           <article
@@ -284,6 +300,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <button
               disabled={false}
               onClick={[Function]}
+              title="switch coordinate system"
             >
               World
             </button>
@@ -294,6 +311,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
     <div
       className="controller-runAndStop"
       onClick={[Function]}
+      title="run/stop"
     >
       <img
         src="./public/img/run.png"
@@ -345,6 +363,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
               <div
                 className="color-select"
                 onClick={[Function]}
+                title="ambient color"
               >
                 <img
                   src="./public/img/color.png"
@@ -370,14 +389,17 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <div
               className="translation select"
               onClick={[Function]}
+              title="translation"
             />
             <div
               className="rotation not-select"
               onClick={[Function]}
+              title="rotation"
             />
             <div
               className="scale not-select"
               onClick={[Function]}
+              title="scale"
             />
           </article>
           <article
@@ -386,6 +408,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <button
               disabled={false}
               onClick={[Function]}
+              title="switch coordinate system"
             >
               World
             </button>
@@ -396,6 +419,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
     <div
       className="controller-runAndStop"
       onClick={[Function]}
+      title="run/stop"
     >
       <img
         src="./public/img/run.png"
@@ -447,6 +471,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
               <div
                 className="color-select"
                 onClick={[Function]}
+                title="ambient color"
               >
                 <img
                   src="./public/img/color.png"
@@ -472,14 +497,17 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <div
               className="translation select"
               onClick={[Function]}
+              title="translation"
             />
             <div
               className="rotation not-select"
               onClick={[Function]}
+              title="rotation"
             />
             <div
               className="scale not-select"
               onClick={[Function]}
+              title="scale"
             />
           </article>
           <article
@@ -488,6 +516,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <button
               disabled={false}
               onClick={[Function]}
+              title="switch coordinate system"
             >
               World
             </button>
@@ -498,6 +527,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
     <div
       className="controller-runAndStop"
       onClick={[Function]}
+      title="run/stop"
     >
       <img
         src="./public/img/run.png"

@@ -2085,6 +2085,7 @@ exports[`AddableComponent add component test camera add component test add rende
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -2706,6 +2707,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -3602,6 +3604,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -3832,6 +3835,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
               <div
                 className="color-select"
                 onClick={[Function]}
+                title="color"
               >
                 <img
                   src="./public/img/color.png"

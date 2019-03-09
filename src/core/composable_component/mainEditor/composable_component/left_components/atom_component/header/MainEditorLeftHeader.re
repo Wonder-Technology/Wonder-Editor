@@ -56,83 +56,85 @@ let _renderSelectNav = ((uiState, dispatchFunc), state, send) =>
   <div className="item-content">
     <div
       className="content-section"
-      onClick=(
+      onClick={
         _e =>
           Method.addGameObjectByType(
             (uiState, dispatchFunc),
             AddGameObjectType.EmptyGameObject,
             (),
           )
-      )>
+      }>
       <span className="section-header">
-        (DomHelper.textEl("Create Empty"))
+        {DomHelper.textEl("Create Empty")}
       </span>
     </div>
     <div
       className="content-section"
-      onMouseOver=(e => send(HoverItem(GameObject)))>
+      onMouseOver={e => send(HoverItem(GameObject))}>
       <div className="section-header">
-        (DomHelper.textEl("3D GameObject"))
+        {DomHelper.textEl("3D GameObject")}
       </div>
       <div className="section-tail"> <div className="tail-triangle" /> </div>
-      (
+      {
         state.currentSelectItem === GameObject ?
           <div className="section-childLayer">
             <div
               className="content-section"
-              onClick=(
+              onClick={
                 _e =>
                   Method.addGameObjectByType(
                     (uiState, dispatchFunc),
                     AddGameObjectType.Cube,
                     (),
                   )
-              )>
+              }>
               <span className="section-header">
-                (DomHelper.textEl("Cube"))
+                {DomHelper.textEl("Cube")}
               </span>
             </div>
             <div
               className="content-section"
-              onClick=(
+              onClick={
                 _e =>
                   Method.addGameObjectByType(
                     (uiState, dispatchFunc),
                     AddGameObjectType.Sphere,
                     (),
                   )
-              )>
+              }>
               <span className="section-header">
-                (DomHelper.textEl("Sphere"))
+                {DomHelper.textEl("Sphere")}
               </span>
             </div>
           </div> :
           ReasonReact.null
-      )
+      }
     </div>
   </div>;
 
 let _renderAddGameObjectComponent = ((uiState, dispatchFunc), state, send) =>
-  <div className="sceneTree-header-item" onClick=(_e => send(ToggleShowNav))>
-    <div className="item-canBeClick"> <img src="./public/img/add.png" /> </div>
-    (
+  <div className="sceneTree-header-item" onClick={_e => send(ToggleShowNav)}>
+    <div className="item-canBeClick" title="add gameObject">
+      <img src="./public/img/add.png" />
+    </div>
+    {
       state.isSelectNav ?
         _renderSelectNav((uiState, dispatchFunc), state, send) :
         ReasonReact.null
-    )
+    }
   </div>;
 
 let _renderRemoveGameObjectComponent =
     (reduxTuple, isCurrentSceneTreeNodeSceneChildren) =>
   <div
     className="sceneTree-header-item"
-    title="remove"
-    onClick=(
+    title="remove gameObject"
+    onClick={
       _e =>
         isCurrentSceneTreeNodeSceneChildren ?
           Method.disposeCurrentSceneTreeNode(reduxTuple, (), ()) : ()
-    )>
-    (
+    }>
+    {
       isCurrentSceneTreeNodeSceneChildren ?
         <div className="item-notBeClick">
           <img src="./public/img/remove.png" />
@@ -140,20 +142,20 @@ let _renderRemoveGameObjectComponent =
         <div className="item-canBeClick">
           <img src="./public/img/notRemove.png" />
         </div>
-    )
+    }
   </div>;
 
 let _renderCloneGameObjectComponent =
     (reduxTuple, isCurrentSceneTreeNodeSceneChildren) =>
   <div
     className="sceneTree-header-item"
-    title="clone"
-    onClick=(
+    title="clone gameObject"
+    onClick={
       _e =>
         isCurrentSceneTreeNodeSceneChildren ?
           Method.cloneCurrentSceneTreeNode(reduxTuple, (), ()) : ()
-    )>
-    (
+    }>
+    {
       isCurrentSceneTreeNodeSceneChildren ?
         <div className="item-notBeClick">
           <img src="./public/img/clone.png" />
@@ -161,7 +163,7 @@ let _renderCloneGameObjectComponent =
         <div className="item-canBeClick">
           <img src="./public/img/notClone.png" />
         </div>
-    )
+    }
   </div>;
 
 let render =
@@ -172,19 +174,19 @@ let render =
 
   <article
     key="mainEditorScenetreeHeader" className="wonder-left-components-header">
-    (_renderAddGameObjectComponent(reduxTuple, state, send))
-    (
+    {_renderAddGameObjectComponent(reduxTuple, state, send)}
+    {
       _renderRemoveGameObjectComponent(
         reduxTuple,
         isCurrentSceneTreeNodeSceneChildren,
       )
-    )
-    (
+    }
+    {
       _renderCloneGameObjectComponent(
         reduxTuple,
         isCurrentSceneTreeNodeSceneChildren,
       )
-    )
+    }
   </article>;
 };
 

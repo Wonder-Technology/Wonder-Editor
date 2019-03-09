@@ -27,6 +27,7 @@ exports[`redo_undo: directionLight intensity prepare first step: set currentScen
       <div
         className="color-select"
         onClick={[Function]}
+        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -87,6 +88,7 @@ exports[`redo_undo: directionLight intensity prepare first step: set currentScen
       <div
         className="color-select"
         onClick={[Function]}
+        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -147,6 +149,7 @@ exports[`redo_undo: directionLight intensity prepare first step: set currentScen
       <div
         className="color-select"
         onClick={[Function]}
+        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -207,6 +210,7 @@ exports[`redo_undo: directionLight intensity prepare first step: set currentScen
       <div
         className="color-select"
         onClick={[Function]}
+        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -267,6 +271,7 @@ exports[`redo_undo: directionLight intensity prepare first step: set currentScen
       <div
         className="color-select"
         onClick={[Function]}
+        title="color"
       >
         <img
           src="./public/img/color.png"

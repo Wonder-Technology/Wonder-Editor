@@ -13,6 +13,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -25,6 +26,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-notBeClick"
@@ -39,6 +41,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"
@@ -170,6 +173,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -182,6 +186,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-notBeClick"
@@ -196,6 +201,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"
@@ -606,6 +612,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -618,6 +625,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-canBeClick"
@@ -632,6 +640,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"
@@ -901,6 +910,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -913,6 +923,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-canBeClick"
@@ -927,6 +938,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"
@@ -1177,6 +1189,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -1189,6 +1202,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-notBeClick"
@@ -1203,6 +1217,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"
@@ -1552,6 +1567,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -1564,6 +1580,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-notBeClick"
@@ -1578,6 +1595,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"
@@ -1709,6 +1727,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -1721,6 +1740,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-notBeClick"
@@ -1735,6 +1755,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"
@@ -2020,6 +2041,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -2032,6 +2054,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-notBeClick"
@@ -2046,6 +2069,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"

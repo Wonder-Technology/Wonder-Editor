@@ -15,18 +15,28 @@ module Method = {
       }
     );
 
+  let _getTitle = type_ =>
+    SceneViewType.(
+      switch (type_) {
+      | Translation => "translation"
+      | Rotation => "rotation"
+      | Scale => "scale"
+      }
+    );
+
   let renderContent = ((state, send), data) =>
     data
     |> Js.Array.map(({type_, onChangeFunc}) =>
          <div
-           key=(DomHelper.getRandomKey())
-           className=(
+           key={DomHelper.getRandomKey()}
+           title={_getTitle(type_)}
+           className={
              ClassNameService.buildMultipleClassName([|
                _getTypeClassName(type_),
                type_ == state.selectedType ? "select" : "not-select",
              |])
-           )
-           onClick=(_e => send(Change(type_, onChangeFunc)))
+           }
+           onClick={_e => send(Change(type_, onChangeFunc))}
          />
        );
 };
@@ -43,7 +53,7 @@ let reducer = (action, state) =>
 
 let render = (data, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article key="TransformGizmoSwitch" className="transform-gizmo-switch">
-    (ReasonReact.array(Method.renderContent((state, send), data)))
+    {ReasonReact.array(Method.renderContent((state, send), data))}
   </article>;
 
 let make = (~data, ~defaultType, _children) => {

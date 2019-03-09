@@ -39,6 +39,7 @@ exports[`controller test TransformGizmoCoordinateSystemSwitch if current gizmo t
               <div
                 className="color-select"
                 onClick={[Function]}
+                title="ambient color"
               >
                 <img
                   src="./public/img/color.png"
@@ -64,14 +65,17 @@ exports[`controller test TransformGizmoCoordinateSystemSwitch if current gizmo t
             <div
               className="translation not-select"
               onClick={[Function]}
+              title="translation"
             />
             <div
               className="rotation not-select"
               onClick={[Function]}
+              title="rotation"
             />
             <div
               className="scale select"
               onClick={[Function]}
+              title="scale"
             />
           </article>
           <article
@@ -80,6 +84,7 @@ exports[`controller test TransformGizmoCoordinateSystemSwitch if current gizmo t
             <button
               disabled={true}
               onClick={[Function]}
+              title="switch coordinate system"
             >
               World
             </button>
@@ -90,6 +95,7 @@ exports[`controller test TransformGizmoCoordinateSystemSwitch if current gizmo t
     <div
       className="controller-runAndStop"
       onClick={[Function]}
+      title="run/stop"
     >
       <img
         src="./public/img/run.png"

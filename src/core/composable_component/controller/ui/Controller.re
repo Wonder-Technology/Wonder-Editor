@@ -33,11 +33,12 @@ module Method = {
     <div className="header-item">
       <div className="component-item">
         <PickColorComponent
-          key=(DomHelper.getRandomKey())
+          key={DomHelper.getRandomKey()}
           label="Ambient Color : "
+          title="ambient color"
           getColorFunc=getColor
           changeColorFunc=changeColor
-          closeColorPickFunc=(closeColorPick((uiState, dispatchFunc), ()))
+          closeColorPickFunc={closeColorPick((uiState, dispatchFunc), ())}
         />
       </div>
     </div>;
@@ -88,7 +89,7 @@ module Method = {
     <div className="header-item">
       <div className="component-item">
         <TransformGizmoSwitch
-          key=(DomHelper.getRandomKey())
+          key={DomHelper.getRandomKey()}
           data=[|
             {
               type_: SceneViewType.Translation,
@@ -106,13 +107,13 @@ module Method = {
                 handleChangeCurrentTransformGizmoType(dispatchFunc),
             },
           |]
-          defaultType=(_getCurrentTransformGizmoType())
+          defaultType={_getCurrentTransformGizmoType()}
         />
         <TransformGizmoCoordinateSystemSwitch
-          key=(DomHelper.getRandomKey())
+          key={DomHelper.getRandomKey()}
           onChange=_handleChangeCurrentTransformGizmoCoordinateSystem
-          defaultCoordinateSystem=(_getCurrentTransformGizmoCoordinateSystem())
-          isDisable=(_isTransformGizmoCoordinateSystemSwitchDisable())
+          defaultCoordinateSystem={_getCurrentTransformGizmoCoordinateSystem()}
+          isDisable={_isTransformGizmoCoordinateSystemSwitchDisable()}
         />
       </div>
     </div>;
@@ -120,7 +121,8 @@ module Method = {
   let renderRunAndStop = (uiState, dispatchFunc) =>
     <div
       className="controller-runAndStop"
-      onClick=(
+      title="run/stop"
+      onClick={
         _e => {
           StateEditorService.getIsRun() ?
             ControllerUtils.stop(dispatchFunc) : ControllerUtils.run(uiState);
@@ -128,12 +130,12 @@ module Method = {
           dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))
           |> ignore;
         }
-      )>
-      (
+      }>
+      {
         StateEditorService.getIsRun() ?
           <img src="./public/img/stop.png" /> :
           <img src="./public/img/run.png" />
-      )
+      }
     </div>;
 };
 
@@ -148,12 +150,12 @@ let render =
   <article key="controller" className="wonder-controller-component">
     <div className="header-controller">
       <div className="controller-ambient">
-        (Method.buildAmbientLightComponent(uiState, dispatchFunc))
+        {Method.buildAmbientLightComponent(uiState, dispatchFunc)}
       </div>
       <div className="controller-transform">
-        (Method.buildTransformComponent(uiState, dispatchFunc))
+        {Method.buildTransformComponent(uiState, dispatchFunc)}
       </div>
-      (Method.renderRunAndStop(uiState, dispatchFunc))
+      {Method.renderRunAndStop(uiState, dispatchFunc)}
       <div className="controller-other" />
     </div>
   </article>;

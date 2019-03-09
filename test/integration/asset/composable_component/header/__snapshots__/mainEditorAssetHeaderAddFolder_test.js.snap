@@ -111,6 +111,7 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -123,6 +124,7 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-notBeClick"
@@ -137,6 +139,7 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"

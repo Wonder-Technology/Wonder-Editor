@@ -1306,6 +1306,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"

@@ -522,6 +522,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -1210,6 +1211,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -1895,6 +1897,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -2583,6 +2586,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -3268,6 +3272,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"

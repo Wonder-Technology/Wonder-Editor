@@ -522,6 +522,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -1418,6 +1419,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -2314,6 +2316,7 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"

@@ -62,6 +62,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
         <div
           className="color-select"
           onClick={[Function]}
+          title="color"
         >
           <img
             src="./public/img/color.png"
@@ -158,6 +159,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
         <div
           className="color-select"
           onClick={[Function]}
+          title="color"
         >
           <img
             src="./public/img/color.png"
@@ -346,6 +348,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
         <div
           className="color-select"
           onClick={[Function]}
+          title="color"
         >
           <img
             src="./public/img/color.png"

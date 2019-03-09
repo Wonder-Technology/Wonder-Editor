@@ -13,6 +13,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -25,6 +26,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-canBeClick"
@@ -39,6 +41,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"
@@ -137,6 +140,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -149,6 +153,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-notBeClick"
@@ -163,6 +168,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"
@@ -227,6 +233,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -239,6 +246,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-notBeClick"
@@ -253,6 +261,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"
@@ -317,6 +326,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node if not select 
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -329,6 +339,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node if not select 
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-notBeClick"
@@ -343,6 +354,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node if not select 
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"

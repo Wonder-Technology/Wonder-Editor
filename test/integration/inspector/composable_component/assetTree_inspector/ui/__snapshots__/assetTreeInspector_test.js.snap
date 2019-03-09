@@ -262,6 +262,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename folder node
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -274,6 +275,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename folder node
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-canBeClick"
@@ -288,6 +290,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename folder node
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"

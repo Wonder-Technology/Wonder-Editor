@@ -137,6 +137,7 @@ exports[`MainEditorAssetHeader->remove material
             <div
               className="color-select"
               onClick={[Function]}
+              title="diffuse color"
             >
               <img
                 src="./public/img/color.png"
@@ -349,6 +350,7 @@ exports[`MainEditorAssetHeader->remove material
             <div
               className="color-select"
               onClick={[Function]}
+              title="diffuse color"
             >
               <img
                 src="./public/img/color.png"

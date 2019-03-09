@@ -27,6 +27,7 @@ exports[`redo_undo: pointLight intensity prepare first step: set currentSceneTre
       <div
         className="color-select"
         onClick={[Function]}
+        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -179,6 +180,7 @@ exports[`redo_undo: pointLight intensity prepare first step: set currentSceneTre
       <div
         className="color-select"
         onClick={[Function]}
+        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -331,6 +333,7 @@ exports[`redo_undo: pointLight intensity prepare first step: set currentSceneTre
       <div
         className="color-select"
         onClick={[Function]}
+        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -483,6 +486,7 @@ exports[`redo_undo: pointLight intensity prepare first step: set currentSceneTre
       <div
         className="color-select"
         onClick={[Function]}
+        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -635,6 +639,7 @@ exports[`redo_undo: pointLight intensity prepare first step: set currentSceneTre
       <div
         className="color-select"
         onClick={[Function]}
+        title="color"
       >
         <img
           src="./public/img/color.png"

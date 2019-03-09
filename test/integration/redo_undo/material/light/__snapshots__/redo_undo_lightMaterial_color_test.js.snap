@@ -27,6 +27,7 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       <div
         className="color-select"
         onClick={[Function]}
+        title="diffuse color"
       >
         <img
           src="./public/img/color.png"
@@ -123,6 +124,7 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       <div
         className="color-select"
         onClick={[Function]}
+        title="diffuse color"
       >
         <img
           src="./public/img/color.png"
@@ -219,6 +221,7 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       <div
         className="color-select"
         onClick={[Function]}
+        title="diffuse color"
       >
         <img
           src="./public/img/color.png"
@@ -315,6 +318,7 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       <div
         className="color-select"
         onClick={[Function]}
+        title="diffuse color"
       >
         <img
           src="./public/img/color.png"
@@ -411,6 +415,7 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       <div
         className="color-select"
         onClick={[Function]}
+        title="diffuse color"
       >
         <img
           src="./public/img/color.png"

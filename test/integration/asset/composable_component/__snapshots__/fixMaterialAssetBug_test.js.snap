@@ -101,6 +101,7 @@ exports[`fix material asset bug fix bug
             <div
               className="color-select"
               onClick={[Function]}
+              title="diffuse color"
             >
               <img
                 src="./public/img/color.png"
@@ -274,6 +275,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
             <div
               className="color-select"
               onClick={[Function]}
+              title="color"
             >
               <img
                 src="./public/img/color.png"
@@ -387,6 +389,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
             <div
               className="color-select"
               onClick={[Function]}
+              title="color"
             >
               <img
                 src="./public/img/color.png"
@@ -504,6 +507,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
             <div
               className="color-select"
               onClick={[Function]}
+              title="diffuse color"
             >
               <img
                 src="./public/img/color.png"
@@ -676,6 +680,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
             <div
               className="color-select"
               onClick={[Function]}
+              title="color"
             >
               <img
                 src="./public/img/color.png"

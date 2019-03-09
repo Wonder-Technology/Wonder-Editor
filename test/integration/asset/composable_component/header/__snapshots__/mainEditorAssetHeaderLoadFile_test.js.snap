@@ -13,6 +13,7 @@ exports[`MainEditorAssetHeader->load file test load file test logic test should 
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -25,6 +26,7 @@ exports[`MainEditorAssetHeader->load file test load file test logic test should 
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-notBeClick"
@@ -39,6 +41,7 @@ exports[`MainEditorAssetHeader->load file test load file test logic test should 
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"
@@ -124,6 +127,7 @@ exports[`MainEditorAssetHeader->load file test load file test snapshot if not se
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -136,6 +140,7 @@ exports[`MainEditorAssetHeader->load file test load file test snapshot if not se
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-notBeClick"
@@ -150,6 +155,7 @@ exports[`MainEditorAssetHeader->load file test load file test snapshot if not se
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"

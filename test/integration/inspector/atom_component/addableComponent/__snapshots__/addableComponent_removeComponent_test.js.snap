@@ -522,6 +522,7 @@ exports[`AddableComponent remove component test remove box gameObject component 
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"

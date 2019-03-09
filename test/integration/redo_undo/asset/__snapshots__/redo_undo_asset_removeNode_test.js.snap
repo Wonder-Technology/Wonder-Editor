@@ -13,6 +13,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -25,6 +26,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-canBeClick"
@@ -39,6 +41,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"
@@ -170,6 +173,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -182,6 +186,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-notBeClick"
@@ -196,6 +201,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"
@@ -260,6 +266,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -272,6 +279,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-notBeClick"
@@ -286,6 +294,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"
@@ -350,6 +359,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -362,6 +372,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-canBeClick"
@@ -376,6 +387,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"
@@ -507,6 +519,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -519,6 +532,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-canBeClick"
@@ -533,6 +547,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"

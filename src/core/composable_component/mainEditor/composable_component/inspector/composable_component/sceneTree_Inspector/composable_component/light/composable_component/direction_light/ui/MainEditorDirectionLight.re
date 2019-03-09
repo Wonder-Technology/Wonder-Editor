@@ -43,24 +43,25 @@ let render = ((uiState, dispatchFunc), lightComponent, _self) =>
   <article className="wonder-direction-light">
     <PickColorComponent
       label="Color"
-      getColorFunc=(Method.getColor(lightComponent))
-      changeColorFunc=(Method.changeColor(lightComponent))
-      closeColorPickFunc=(
+      title="color"
+      getColorFunc={Method.getColor(lightComponent)}
+      changeColorFunc={Method.changeColor(lightComponent)}
+      closeColorPickFunc={
         Method.closeColorPick((uiState, dispatchFunc), lightComponent)
-      )
+      }
     />
     <MainEditorFloatInputBaseComponent
       label="Intensity"
-      getComponentValueFunc=(
+      getComponentValueFunc={
         DirectionLightEngineService.getDirectionLightIntensity(lightComponent)
-      )
-      changeComponentValueFunc=(Method.changeIntensity(lightComponent))
-      blurValueFunc=(
+      }
+      changeComponentValueFunc={Method.changeIntensity(lightComponent)}
+      blurValueFunc={
         Method.blurIntensityEvent((uiState, dispatchFunc), lightComponent)
-      )
-      dragDropFunc=(
+      }
+      dragDropFunc={
         Method.blurIntensityEvent((uiState, dispatchFunc), lightComponent)
-      )
+      }
     />
   </article>;
 

@@ -700,6 +700,7 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -818,6 +819,7 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -830,6 +832,7 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-notBeClick"
@@ -844,6 +847,7 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"

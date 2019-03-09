@@ -24,16 +24,22 @@ let render = ((uiState, dispatchFunc), materialComponent, _self) =>
   <article className="wonder-basic-material">
     <PickColorComponent
       label="Color"
-      getColorFunc=(Method.getColor(materialComponent))
-      changeColorFunc=(Method.changeColor(materialComponent))
-      closeColorPickFunc=(
+      title="color"
+      getColorFunc={Method.getColor(materialComponent)}
+      changeColorFunc={Method.changeColor(materialComponent)}
+      closeColorPickFunc={
         Method.closeColorPick((uiState, dispatchFunc), materialComponent)
-      )
+      }
     />
   </article>;
 
 let make =
-    (~uiState: AppStore.appState, ~dispatchFunc, ~materialComponent, _children) => {
+    (
+      ~uiState: AppStore.appState,
+      ~dispatchFunc,
+      ~materialComponent,
+      _children,
+    ) => {
   ...component,
   render: self => render((uiState, dispatchFunc), materialComponent, self),
 };

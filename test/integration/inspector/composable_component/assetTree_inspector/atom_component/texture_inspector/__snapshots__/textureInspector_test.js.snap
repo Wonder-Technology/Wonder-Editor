@@ -226,6 +226,7 @@ exports[`texture inspector prepare currentSelectSource test texture rename test 
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="add asset"
       >
         <div
           className="item-canBeClick"
@@ -238,6 +239,7 @@ exports[`texture inspector prepare currentSelectSource test texture rename test 
       <div
         className="asset-header-item"
         onClick={[Function]}
+        title="remove asset"
       >
         <div
           className="item-notBeClick"
@@ -252,6 +254,7 @@ exports[`texture inspector prepare currentSelectSource test texture rename test 
       >
         <div
           className="item-canBeClick"
+          title="load asset"
         >
           <img
             src="./public/img/load.png"

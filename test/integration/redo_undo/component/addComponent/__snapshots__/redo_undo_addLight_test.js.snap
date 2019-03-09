@@ -522,6 +522,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -752,6 +753,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               <div
                 className="color-select"
                 onClick={[Function]}
+                title="color"
               >
                 <img
                   src="./public/img/color.png"
@@ -1329,6 +1331,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -1559,6 +1562,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               <div
                 className="color-select"
                 onClick={[Function]}
+                title="color"
               >
                 <img
                   src="./public/img/color.png"
@@ -2136,6 +2140,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"

@@ -68,7 +68,7 @@ exports[`test console unread count should show unread count in bottom header if 
       <div
         className="name-tail"
       >
-        3
+        1
       </div>
     </div>
     <span

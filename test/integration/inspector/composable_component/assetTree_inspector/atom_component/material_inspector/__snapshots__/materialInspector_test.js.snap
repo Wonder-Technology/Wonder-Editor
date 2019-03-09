@@ -96,6 +96,7 @@ exports[`material inspector test rename material if type is basicMaterial, renam
             <div
               className="color-select"
               onClick={[Function]}
+              title="color"
             >
               <img
                 src="./public/img/color.png"
@@ -205,6 +206,7 @@ exports[`material inspector test rename material if type is lightMaterial, renam
             <div
               className="color-select"
               onClick={[Function]}
+              title="diffuse color"
             >
               <img
                 src="./public/img/color.png"

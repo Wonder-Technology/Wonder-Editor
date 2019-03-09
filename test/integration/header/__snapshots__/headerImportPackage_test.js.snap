@@ -145,6 +145,7 @@ exports[`header import package dispose assets dispose material assets
             <div
               className="color-select"
               onClick={[Function]}
+              title="diffuse color"
             >
               <img
                 src="./public/img/color.png"
@@ -818,6 +819,7 @@ exports[`header import package test import assets test import material assets fi
             <div
               className="color-select"
               onClick={[Function]}
+              title="diffuse color"
             >
               <img
                 src="./public/img/color.png"
@@ -1486,6 +1488,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -2168,6 +2171,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -2853,6 +2857,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                         <div
                           className="color-select"
                           onClick={[Function]}
+                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
