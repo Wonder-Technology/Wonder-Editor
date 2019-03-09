@@ -897,12 +897,7 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
           <li>
             <div
               className="item-triangle"
-              onMouseDown={[Function]}
-            >
-              <img
-                src="./public/img/right.png"
-              />
-            </div>
+            />
             <img
               className="treeNode-icon"
               src="./public/img/package.png"
@@ -929,12 +924,7 @@ exports[`MainEditorAssetHeader->remove wdb load BoxTextured.wdb;
           <li>
             <div
               className="item-triangle"
-              onMouseDown={[Function]}
-            >
-              <img
-                src="./public/img/right.png"
-              />
-            </div>
+            />
             <img
               className="treeNode-icon"
               src="./public/img/package.png"

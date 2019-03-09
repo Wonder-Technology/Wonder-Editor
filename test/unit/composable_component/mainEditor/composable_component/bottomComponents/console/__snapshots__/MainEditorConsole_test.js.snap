@@ -55,6 +55,48 @@ exports[`MainEditorConsole test stub console console.debug should add the messag
       className="console-content"
     >
       <article
+        className="console-log"
+      >
+        <div
+          className="console-header"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/log.png"
+          />
+          <div
+            className="header-message"
+          >
+            <p
+              className="multi-line-str"
+            >
+              []
+            </p>
+          </div>
+        </div>
+      </article>
+      <article
+        className="console-log"
+      >
+        <div
+          className="console-header"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/log.png"
+          />
+          <div
+            className="header-message"
+          >
+            <p
+              className="multi-line-str"
+            >
+              false
+            </p>
+          </div>
+        </div>
+      </article>
+      <article
         className="console-debug"
       >
         <div
@@ -138,6 +180,48 @@ exports[`MainEditorConsole test stub console console.error should add the messag
       className="console-content"
     >
       <article
+        className="console-log"
+      >
+        <div
+          className="console-header"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/log.png"
+          />
+          <div
+            className="header-message"
+          >
+            <p
+              className="multi-line-str"
+            >
+              []
+            </p>
+          </div>
+        </div>
+      </article>
+      <article
+        className="console-log"
+      >
+        <div
+          className="console-header"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/log.png"
+          />
+          <div
+            className="header-message"
+          >
+            <p
+              className="multi-line-str"
+            >
+              false
+            </p>
+          </div>
+        </div>
+      </article>
+      <article
         className="console-error"
       >
         <div
@@ -220,6 +304,48 @@ exports[`MainEditorConsole test stub console console.info should add the message
     <div
       className="console-content"
     >
+      <article
+        className="console-log"
+      >
+        <div
+          className="console-header"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/log.png"
+          />
+          <div
+            className="header-message"
+          >
+            <p
+              className="multi-line-str"
+            >
+              []
+            </p>
+          </div>
+        </div>
+      </article>
+      <article
+        className="console-log"
+      >
+        <div
+          className="console-header"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/log.png"
+          />
+          <div
+            className="header-message"
+          >
+            <p
+              className="multi-line-str"
+            >
+              false
+            </p>
+          </div>
+        </div>
+      </article>
       <article
         className="console-info"
       >
@@ -316,6 +442,48 @@ exports[`MainEditorConsole test stub console console.log should add the message 
             <p
               className="multi-line-str"
             >
+              []
+            </p>
+          </div>
+        </div>
+      </article>
+      <article
+        className="console-log"
+      >
+        <div
+          className="console-header"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/log.png"
+          />
+          <div
+            className="header-message"
+          >
+            <p
+              className="multi-line-str"
+            >
+              false
+            </p>
+          </div>
+        </div>
+      </article>
+      <article
+        className="console-log"
+      >
+        <div
+          className="console-header"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/log.png"
+          />
+          <div
+            className="header-message"
+          >
+            <p
+              className="multi-line-str"
+            >
               "message"
             </p>
           </div>
@@ -380,6 +548,48 @@ exports[`MainEditorConsole test stub console console.warn should add the message
     <div
       className="console-content"
     >
+      <article
+        className="console-log"
+      >
+        <div
+          className="console-header"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/log.png"
+          />
+          <div
+            className="header-message"
+          >
+            <p
+              className="multi-line-str"
+            >
+              []
+            </p>
+          </div>
+        </div>
+      </article>
+      <article
+        className="console-log"
+      >
+        <div
+          className="console-header"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/log.png"
+          />
+          <div
+            className="header-message"
+          >
+            <p
+              className="multi-line-str"
+            >
+              false
+            </p>
+          </div>
+        </div>
+      </article>
       <article
         className="console-warn"
       >

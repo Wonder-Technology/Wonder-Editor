@@ -54,6 +54,11 @@ module Method = {
          |> NumberType.convertFloatToInt
        );
 
+  let _doesFolderNodeHasNotFolderChildren = folderNode =>
+    FolderNodeAssetService.getChildrenNodes(folderNode)
+    |> Js.Array.filter(FolderNodeAssetService.isFolderNode)
+    |> Js.Array.length > 0;
+
   let rec _build =
           (
             (selectedFolderNodeIdInAssetTree, currentNodeId),
@@ -72,32 +77,32 @@ module Method = {
            );
 
          <AssetTreeNode
-           key=(StringService.intToString(nodeId))
+           key={StringService.intToString(nodeId)}
            id=nodeId
            name
-           isSelected=(_isSelected(selectedFolderNodeIdInAssetTree, nodeId))
-           isActive=(
+           isSelected={_isSelected(selectedFolderNodeIdInAssetTree, nodeId)}
+           isActive={
              _isActive(
                selectedFolderNodeIdInAssetTree,
                currentNodeId,
                editorState,
              )
-           )
+           }
            dragImg
-           widget=(AssetWidgetService.getWidget())
+           widget={AssetWidgetService.getWidget()}
            icon="./public/img/package.png"
            onSelect=onSelectFunc
            onDrop=onDropFunc
            isWidget=AssetWidgetService.isWidget
-           isShowChildren=(
+           isShowChildren={
              FolderNodeAssetService.getIsShowChildren(folderNode)
-           )
-           isHasChildren=(FolderNodeAssetService.hasChildren(folderNode))
-           handleToggleShowTreeChildren=(
+           }
+           isHasChildren={_doesFolderNodeHasNotFolderChildren(folderNode)}
+           handleToggleShowTreeChildren={
              handleToggleShowTreeChildren(uiState, dispatchFunc)
-           )
+           }
            checkNodeRelation=OperateTreeAssetLogicService.checkNodeRelation
-           treeChildren=(
+           treeChildren={
              _build(
                (selectedFolderNodeIdInAssetTree, currentNodeId),
                FolderNodeAssetService.getChildrenNodes(folderNode)
@@ -108,7 +113,7 @@ module Method = {
                (onSelectFunc, onDropFunc),
                editorState,
              )
-           )
+           }
          />;
        });
 
@@ -139,7 +144,7 @@ let render = ((uiState, dispatchFunc), dragImg, _self) => {
   let editorState = StateEditorService.getState();
 
   <article key="assetTreeRoot" className="wonder-asset-assetTree">
-    (
+    {
       ReasonReact.array(
         editorState
         |> Method.buildAssetTreeArray(
@@ -153,7 +158,7 @@ let render = ((uiState, dispatchFunc), dragImg, _self) => {
              ),
            ),
       )
-    )
+    }
   </article>;
 };
 

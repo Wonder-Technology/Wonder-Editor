@@ -314,6 +314,143 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
 </article>
 `;
 
+exports[`MainEditorAssetTree fix bug fix show children arrow else, show arrow 1`] = `
+<article
+  className="wonder-asset-assetTree"
+>
+  <ul
+    className="wonder-tree-node"
+  >
+    <li>
+      <div
+        className="item-triangle"
+        onMouseDown={[Function]}
+      >
+        <img
+          src="./public/img/down.png"
+        />
+      </div>
+      <img
+        className="treeNode-icon"
+        src="./public/img/package.png"
+      />
+      <div
+        className="draggable-container"
+        draggable={true}
+        onClick={[Function]}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+        style={Object {}}
+      >
+        Assets
+      </div>
+    </li>
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/right.png"
+          />
+        </div>
+        <img
+          className="treeNode-icon"
+          src="./public/img/package.png"
+        />
+        <div
+          className="draggable-container select-active"
+          draggable={true}
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          New Folder
+        </div>
+      </li>
+    </ul>
+  </ul>
+</article>
+`;
+
+exports[`MainEditorAssetTree fix bug fix show children arrow if node->children has no folder node, not show arrow 1`] = `
+<article
+  className="wonder-asset-assetTree"
+>
+  <ul
+    className="wonder-tree-node"
+  >
+    <li>
+      <div
+        className="item-triangle"
+        onMouseDown={[Function]}
+      >
+        <img
+          src="./public/img/down.png"
+        />
+      </div>
+      <img
+        className="treeNode-icon"
+        src="./public/img/package.png"
+      />
+      <div
+        className="draggable-container"
+        draggable={true}
+        onClick={[Function]}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+        style={Object {}}
+      >
+        Assets
+      </div>
+    </li>
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+        />
+        <img
+          className="treeNode-icon"
+          src="./public/img/package.png"
+        />
+        <div
+          className="draggable-container select-active"
+          draggable={true}
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          New Folder
+        </div>
+      </li>
+    </ul>
+  </ul>
+</article>
+`;
+
 exports[`MainEditorAssetTree test asse tree node->isShowChildren default node->isShowChildren should be false except root node 1`] = `
 <article
   className="wonder-asset-assetTree"
@@ -843,12 +980,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
           <li>
             <div
               className="item-triangle"
-              onMouseDown={[Function]}
-            >
-              <img
-                src="./public/img/down.png"
-              />
-            </div>
+            />
             <img
               className="treeNode-icon"
               src="./public/img/package.png"
@@ -906,12 +1038,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
             <li>
               <div
                 className="item-triangle"
-                onMouseDown={[Function]}
-              >
-                <img
-                  src="./public/img/down.png"
-                />
-              </div>
+              />
               <img
                 className="treeNode-icon"
                 src="./public/img/package.png"

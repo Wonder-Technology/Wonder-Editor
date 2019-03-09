@@ -467,4 +467,40 @@ let _ =
         |> ReactTestTool.createSnapshotAndMatch;
       });
     });
+
+    describe("fix bug", () =>
+      describe("fix show children arrow", () => {
+        test("if node->children has no folder node, not show arrow", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+
+          let addedFolderNodeId1 = MainEditorAssetIdTool.getNewAssetId();
+          MainEditorAssetHeaderOperateNodeTool.addFolder();
+          MainEditorAssetTreeTool.Select.selectFolderNode(
+            ~nodeId=addedFolderNodeId1,
+            (),
+          );
+          MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+          BuildComponentTool.buildAssetTree()
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
+        test("else, show arrow", () => {
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+
+          let addedFolderNodeId1 = MainEditorAssetIdTool.getNewAssetId();
+          MainEditorAssetHeaderOperateNodeTool.addFolder();
+          MainEditorAssetTreeTool.Select.selectFolderNode(
+            ~nodeId=addedFolderNodeId1,
+            (),
+          );
+          MainEditorAssetHeaderOperateNodeTool.addMaterial();
+          MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+          BuildComponentTool.buildAssetTree()
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
+      })
+    );
   });

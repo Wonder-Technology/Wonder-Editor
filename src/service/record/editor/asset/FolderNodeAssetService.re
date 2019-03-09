@@ -41,7 +41,7 @@ let getChildren = folderNode =>
 let getChildrenNodes = folderNode =>
   getChildren(folderNode) |> UIStateAssetService.get;
 
-let rename = (~name, ~nodeData) : folderNodeData => {...nodeData, name};
+let rename = (~name, ~nodeData): folderNodeData => {...nodeData, name};
 
 let getNodeName = ({name}: folderNodeData) => name;
 
@@ -64,8 +64,8 @@ let clearChildren = folderNode =>
   | _ => _fatalShouldBeFolderNode()
   };
 
-let hasChildren = folderNode =>
-  folderNode |> getChildren |> UIStateAssetService.hasChildren;
+/* let hasChildren = folderNode =>
+   folderNode |> getChildren |> UIStateAssetService.hasChildren; */
 
 let filterChildrenById = (targetNodeId, children) =>
   children
@@ -83,3 +83,9 @@ let findChild = (folderNode, targetNode) =>
   |> UIStateAssetService.find(Js.Array.find, childNode =>
        NodeAssetService.isNodeEqualById(~sourceNode=childNode, ~targetNode)
      );
+
+let isFolderNode = node =>
+  switch (node) {
+  | FolderNode(_, _, _) => true
+  | _ => false
+  };

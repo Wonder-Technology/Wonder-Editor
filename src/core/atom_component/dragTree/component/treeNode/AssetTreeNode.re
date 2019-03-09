@@ -96,7 +96,7 @@ module Method = {
       ) =>
     <li>
       (
-        isHasChildren ?
+        isHasChildren?
           TreeNodeUtils.renderChildren(
             id,
             isShowChildren,

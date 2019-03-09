@@ -41,12 +41,7 @@ exports[`MainEditorAssetHeader->add material else add material into specific tre
       <li>
         <div
           className="item-triangle"
-          onMouseDown={[Function]}
-        >
-          <img
-            src="./public/img/down.png"
-          />
-        </div>
+        />
         <img
           className="treeNode-icon"
           src="./public/img/package.png"
@@ -218,12 +213,7 @@ exports[`MainEditorAssetHeader->add material if not select specific treeNode sho
         <li>
           <div
             className="item-triangle"
-            onMouseDown={[Function]}
-          >
-            <img
-              src="./public/img/down.png"
-            />
-          </div>
+          />
           <img
             className="treeNode-icon"
             src="./public/img/package.png"
@@ -425,12 +415,7 @@ exports[`MainEditorAssetHeader->add material test name test default name 1`] = `
         <li>
           <div
             className="item-triangle"
-            onMouseDown={[Function]}
-          >
-            <img
-              src="./public/img/down.png"
-            />
-          </div>
+          />
           <img
             className="treeNode-icon"
             src="./public/img/package.png"
