@@ -28,10 +28,10 @@ module Method = {
       }
       {
         uiState.isEditorAndEngineStart ?
-          <div className="">
+          <>
             <Header uiState dispatchFunc />
             <Controller uiState dispatchFunc />
-          </div> :
+          </> :
           <AppShell />
       }
       <MainEditor uiState dispatchFunc />
