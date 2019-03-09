@@ -38,6 +38,14 @@ let setPointLightRangeLevel = PointLightAPI.setPointLightRangeLevel;
 
 let isMaxCount = PointLightAPI.isMaxCount;
 
+let getCurrentCount = engineState =>
+  RecordPointLightMainService.getRecord(engineState).renderLightArr
+  |> CountLightService.getLightCount;
+
+let isMaxCountByCount = (count, engineState) =>
+  getCurrentCount(engineState)
+  + count > BufferPointLightService.getBufferMaxCount();
+
 let setPointLightIsRender = PointLightAPI.setPointLightIsRender;
 
 let getBufferMaxCount = BufferPointLightService.getBufferMaxCount;

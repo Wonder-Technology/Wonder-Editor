@@ -24,6 +24,14 @@ let setDirectionLightIntensity = (intensity, lightComponent, engineState) =>
 
 let isMaxCount = DirectionLightAPI.isMaxCount;
 
+let getCurrentCount = engineState =>
+  RecordDirectionLightMainService.getRecord(engineState).renderLightArr
+  |> CountLightService.getLightCount;
+
+let isMaxCountByCount = (count, engineState) =>
+  getCurrentCount(engineState)
+  + count > BufferDirectionLightService.getBufferMaxCount();
+
 let setDirectionLightIsRender = DirectionLightAPI.setDirectionLightIsRender;
 
 let getBufferMaxCount = BufferDirectionLightService.getBufferMaxCount;

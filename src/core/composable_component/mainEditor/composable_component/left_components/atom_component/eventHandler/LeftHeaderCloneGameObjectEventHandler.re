@@ -55,13 +55,11 @@ module CustomEventHandler = {
     engineState;
   };
 
-  let _cloneLightGameObject = (targetGameObject, (editorState, engineState)) => {
+  let _limitMaxLightCountAndClone =
+      (targetGameObject, (editorState, engineState)) => {
     let (message, isMaxCount) =
-      MainEditorLightUtils.isLightExceedMaxCountByType(
-        MainEditorLightUtils.getLightTypeByGameObject(
-          targetGameObject,
-          engineState,
-        ),
+      MainEditorLightUtils.isLightExceedMaxCountByCount(
+        MainEditorLightUtils.getLightCount(targetGameObject, engineState),
         engineState,
       );
 
@@ -82,15 +80,10 @@ module CustomEventHandler = {
       LeftHeaderGameObjectResultUtils.getTargetGameObject()
       |> Result.Result.either(
            targetGameObject =>
-             MainEditorLightUtils.isLightGameObject(
+             _limitMaxLightCountAndClone(
                targetGameObject,
-               engineState,
-             ) ?
-               _cloneLightGameObject(
-                 targetGameObject,
-                 (editorState, engineState),
-               ) :
-               _clone(targetGameObject, editorState, engineState),
+               (editorState, engineState),
+             ),
            errorMsg => {
              ConsoleUtils.error(errorMsg, editorState);
 

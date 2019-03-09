@@ -70,6 +70,34 @@ let isLightExceedMaxCountByType = (targetLightType, engineState) =>
     )
   };
 
+let isLightExceedMaxCountByCount =
+    ((directionLightCount, pointLightCount), engineState) =>
+  DirectionLightEngineService.isMaxCountByCount(
+    directionLightCount,
+    engineState,
+  ) ?
+    (getDirectionLightExceedMaxCountMessage(), true) :
+    PointLightEngineService.isMaxCountByCount(pointLightCount, engineState) ?
+      (getPointLightExceedMaxCountMessage(), true) : ("", false);
+
+let getLightCount = (gameObject, engineState) =>
+  HierarchyGameObjectEngineService.getAllGameObjects(gameObject, engineState)
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. (directionLightCount, pointLightCount), gameObject) => (
+         GameObjectComponentEngineService.hasDirectionLightComponent(
+           gameObject,
+           engineState,
+         ) ?
+           directionLightCount |> succ : directionLightCount,
+         GameObjectComponentEngineService.hasPointLightComponent(
+           gameObject,
+           engineState,
+         ) ?
+           pointLightCount |> succ : pointLightCount,
+       ),
+       (0, 0),
+     );
+
 let _getOperateSourceLightFunc = (lightType, gameObject, engineState) =>
   switch (lightType) {
   | DirectionLight => (

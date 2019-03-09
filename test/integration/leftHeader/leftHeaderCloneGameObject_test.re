@@ -67,84 +67,224 @@ let _ =
         };
 
         describe("test direction light", () =>
-          test("test exceed", () =>
-            _test(
-              (editorState, engineState) => {
-                let (editorState, engineState, directionLight1) =
-                  PrimitiveLogicService.createDirectionLight(
-                    editorState,
-                    engineState,
-                  );
-                let (editorState, engineState, directionLight2) =
-                  PrimitiveLogicService.createDirectionLight(
-                    editorState,
-                    engineState,
+          describe("test exceed", () => {
+            let _createLights = (editorState, engineState) => {
+              let (editorState, engineState, directionLight1) =
+                PrimitiveLogicService.createDirectionLight(
+                  editorState,
+                  engineState,
+                );
+              let (editorState, engineState, directionLight2) =
+                PrimitiveLogicService.createDirectionLight(
+                  editorState,
+                  engineState,
+                );
+
+              let (editorState, engineState, directionLight3) =
+                PrimitiveLogicService.createDirectionLight(
+                  editorState,
+                  engineState,
+                );
+
+              (editorState, engineState);
+            };
+
+            test("test clone gameObject has direction light component", () =>
+              _test(
+                (editorState, engineState) => {
+                  let (editorState, engineState) =
+                    _createLights(editorState, engineState);
+
+                  editorState |> StateEditorService.setState |> ignore;
+                  MainEditorSceneTool.setDirectionLightGameObjectToBeCurrentSceneTreeNode();
+
+                  (StateEditorService.getState(), engineState);
+                },
+                warn =>
+                  ConsoleTool.getMessage(warn)
+                  |> expect
+                  |> toContain(
+                       MainEditorLightUtils.getDirectionLightExceedMaxCountMessage(),
+                     ),
+              )
+            );
+            test(
+              "test clone gameObject whose children has direction light component",
+              () =>
+              _test(
+                (editorState, engineState) => {
+                  let (editorState, engineState) =
+                    _createLights(editorState, engineState);
+
+                  StateLogicService.setState((editorState, engineState));
+
+                  let newGameObject = GameObjectTool.getNewGameObject();
+
+                  MainEditorLeftHeaderTool.addEmptyGameObject();
+
+                  let directionLightGameObject =
+                    MainEditorSceneTool.getDirectionLightInDefaultScene
+                    |> StateLogicService.getEngineStateToGetData;
+
+                  MainEditorSceneTreeTool.Drag.dragGameObjectToBeTargetSib(
+                    ~sourceGameObject=directionLightGameObject,
+                    ~targetGameObject=newGameObject,
+                    (),
                   );
 
-                let (editorState, engineState, directionLight3) =
-                  PrimitiveLogicService.createDirectionLight(
-                    editorState,
-                    engineState,
+                  GameObjectTool.setCurrentSceneTreeNode(newGameObject);
+
+                  (
+                    StateEditorService.getState(),
+                    StateEngineService.unsafeGetState(),
                   );
+                },
+                warn =>
+                  ConsoleTool.getMessage(warn)
+                  |> expect
+                  |> toContain(
+                       MainEditorLightUtils.getDirectionLightExceedMaxCountMessage(),
+                     ),
+              )
+            );
+            test(
+              "clone gameObject not has direction light component shouldn't warn",
+              () =>
+              _test(
+                (editorState, engineState) => {
+                  let (editorState, engineState) =
+                    _createLights(editorState, engineState);
 
-                editorState |> StateEditorService.setState |> ignore;
-                MainEditorSceneTool.setDirectionLightGameObjectToBeCurrentSceneTreeNode();
+                  StateLogicService.setState((editorState, engineState));
 
-                (StateEditorService.getState(), engineState);
-              },
-              warn =>
-                ConsoleTool.getMessage(warn)
-                |> expect
-                |> toContain(
-                     MainEditorLightUtils.getDirectionLightExceedMaxCountMessage(),
-                   ),
-            )
-          )
+                  MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
+
+                  (
+                    StateEditorService.getState(),
+                    StateEngineService.unsafeGetState(),
+                  );
+                },
+                warn => warn |> expect |> not_ |> toCalled,
+              )
+            );
+          })
         );
 
         describe("test point light", () =>
-          test("test exceed", () =>
-            _test(
-              (editorState, engineState) => {
-                let (editorState, engineState, pointLight1) =
-                  MainEditorPointLightTool.createPointLight(
-                    editorState,
-                    engineState,
+          describe("test exceed", () => {
+            let _createLights = (editorState, engineState) => {
+              let (editorState, engineState, pointLight1) =
+                MainEditorPointLightTool.createPointLight(
+                  editorState,
+                  engineState,
+                );
+              let (editorState, engineState, pointLight2) =
+                MainEditorPointLightTool.createPointLight(
+                  editorState,
+                  engineState,
+                );
+
+              let (editorState, engineState, pointLight3) =
+                MainEditorPointLightTool.createPointLight(
+                  editorState,
+                  engineState,
+                );
+
+              let (editorState, engineState, pointLight4) =
+                MainEditorPointLightTool.createPointLight(
+                  editorState,
+                  engineState,
+                );
+
+              (editorState, engineState, pointLight1);
+            };
+
+            test("test clone gameObject has point light component", () =>
+              _test(
+                (editorState, engineState) => {
+                  let (editorState, engineState, pointLight1) =
+                    _createLights(editorState, engineState);
+
+                  let engineState =
+                    SceneEngineService.addSceneChild(
+                      pointLight1,
+                      engineState,
+                    );
+
+                  editorState |> StateEditorService.setState |> ignore;
+                  GameObjectTool.setCurrentSceneTreeNode(pointLight1);
+
+                  (StateEditorService.getState(), engineState);
+                },
+                warn =>
+                  ConsoleTool.getMessage(warn)
+                  |> expect
+                  |> toContain(
+                       MainEditorLightUtils.getPointLightExceedMaxCountMessage(),
+                     ),
+              )
+            );
+            test(
+              "test clone gameObject whose children has point light component",
+              () =>
+              _test(
+                (editorState, engineState) => {
+                  let (editorState, engineState, pointLight1) =
+                    _createLights(editorState, engineState);
+
+                  let (engineState, parent, _) =
+                    GameObjectToolEngine.createGameObject(engineState);
+
+                  let engineState =
+                    GameObjectTool.addChild(parent, pointLight1, engineState);
+
+                  let engineState =
+                    SceneEngineService.addSceneChild(parent, engineState);
+
+                  StateLogicService.setState((editorState, engineState));
+
+                  GameObjectTool.setCurrentSceneTreeNode(parent);
+
+                  (
+                    StateEditorService.getState(),
+                    StateEngineService.unsafeGetState(),
                   );
-                let (editorState, engineState, pointLight2) =
-                  MainEditorPointLightTool.createPointLight(
-                    editorState,
-                    engineState,
+                },
+                warn =>
+                  ConsoleTool.getMessage(warn)
+                  |> expect
+                  |> toContain(
+                       MainEditorLightUtils.getPointLightExceedMaxCountMessage(),
+                     ),
+              )
+            );
+            test(
+              "clone gameObject not has point light component shouldn't warn",
+              () =>
+              _test(
+                (editorState, engineState) => {
+                  let (editorState, engineState, pointLight1) =
+                    _createLights(editorState, engineState);
+
+                  let engineState =
+                    SceneEngineService.addSceneChild(
+                      pointLight1,
+                      engineState,
+                    );
+
+                  StateLogicService.setState((editorState, engineState));
+
+                  MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
+
+                  (
+                    StateEditorService.getState(),
+                    StateEngineService.unsafeGetState(),
                   );
-
-                let (editorState, engineState, pointLight3) =
-                  MainEditorPointLightTool.createPointLight(
-                    editorState,
-                    engineState,
-                  );
-
-                let (editorState, engineState, pointLight4) =
-                  MainEditorPointLightTool.createPointLight(
-                    editorState,
-                    engineState,
-                  );
-
-                let engineState =
-                  SceneEngineService.addSceneChild(pointLight1, engineState);
-
-                editorState |> StateEditorService.setState |> ignore;
-                GameObjectTool.setCurrentSceneTreeNode(pointLight1);
-
-                (StateEditorService.getState(), engineState);
-              },
-              warn =>
-                ConsoleTool.getMessage(warn)
-                |> expect
-                |> toContain(
-                     MainEditorLightUtils.getPointLightExceedMaxCountMessage(),
-                   ),
-            )
-          )
+                },
+                warn => warn |> expect |> not_ |> toCalled,
+              )
+            );
+          })
         );
       })
     );
