@@ -1,6 +1,11 @@
+let _getFixedDistance = () => 3.;
+
+let _isFixedDistance = distance => distance === _getFixedDistance();
+
 let _calcMoveSpeed = distance => distance /. 100.;
 
-let _calcWheelSpeed = distance => distance /. 50.;
+let _calcWheelSpeed = distance =>
+  _isFixedDistance(distance) ? 0.5 : distance /. 50.;
 
 let _setArcballCameraControllerFocusRelatedAttribute =
     (arcballCameraController, (distance, target), engineState) => {
@@ -54,8 +59,6 @@ let _buildAllPointsAndLocalToWolrdMatrices = (targetGameObject, engineState) =>
             ),
        );
      });
-
-let _getFixedDistance = () => 3.;
 
 let _calcCenterAndDistance = (targetGameObject, engineState) =>
   switch (

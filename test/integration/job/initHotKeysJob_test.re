@@ -337,11 +337,9 @@ let _ =
 
             triggerFocusHotKeyEvent();
 
-            let cameraController =
-              _unsafeGetEditCameraArcballCameraController
-              |> StateLogicService.getStateToGetData;
             ArcballCameraEngineService.unsafeGetArcballCameraControllerWheelSpeed(
-              cameraController,
+              _unsafeGetEditCameraArcballCameraController
+              |> StateLogicService.getStateToGetData,
             )
             |> StateLogicService.getEngineStateToGetData
             |> FloatTool.truncateFloatValue
@@ -392,6 +390,17 @@ let _ =
               _getDistance
               |> StateLogicService.getStateToGetData
               |> expect == 3.;
+            });
+            test("set wheel speed to 0.5", () => {
+              let _ = _prepareAndExec();
+
+              ArcballCameraEngineService.unsafeGetArcballCameraControllerWheelSpeed(
+                _unsafeGetEditCameraArcballCameraController
+                |> StateLogicService.getStateToGetData,
+              )
+              |> StateLogicService.getEngineStateToGetData
+              |> FloatTool.truncateFloatValue
+              |> expect == 0.5;
             });
           })
         );
