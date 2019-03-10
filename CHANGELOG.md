@@ -1,3 +1,42 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/Wonder-Technology/Wonder-Editor/compare/v1.0.0-rc.1...v1.0.0) (2019-03-10)
+
+
+### Bug Fixes
+
+* **hotkey:** fix "if event target is scene view, ctrl+d not clone!" bug ([6c734f3](https://github.com/Wonder-Technology/Wonder-Editor/commit/6c734f3))
+* **inspector:** fix "remove geometry component": remove instead of dispose geometry ([c108770](https://github.com/Wonder-Technology/Wonder-Editor/commit/c108770))
+* **left-header:** fix clone->test clone gameObject whose children has light component ([b7a3470](https://github.com/Wonder-Technology/Wonder-Editor/commit/b7a3470))
+* **ui:** fix "asset tree":if node->children has no folder node, not show arrow ([54a5acf](https://github.com/Wonder-Technology/Wonder-Editor/commit/54a5acf))
+* fix welcome and version upgrade modal ([554cdd8](https://github.com/Wonder-Technology/Wonder-Editor/commit/554cdd8))
+* **pwa:** fix "add to homescreen"->icon 404 ([6599269](https://github.com/Wonder-Technology/Wonder-Editor/commit/6599269))
+
+
+### Features
+
+* **appShell:** add appShell ([6134a9a](https://github.com/Wonder-Technology/Wonder-Editor/commit/6134a9a))
+* **engine:** update wonder.js to 1.0.0 ([c4955d5](https://github.com/Wonder-Technology/Wonder-Editor/commit/c4955d5))
+* **engine:** update wonder.js version ([cf59389](https://github.com/Wonder-Technology/Wonder-Editor/commit/cf59389))
+* **focus:** increase gameObject which has no geometry->wheel speed ([76cdcac](https://github.com/Wonder-Technology/Wonder-Editor/commit/76cdcac))
+* **focus:** increase wheel speed ([409fb60](https://github.com/Wonder-Technology/Wonder-Editor/commit/409fb60))
+* **img:** preload imgs, code in this ([19927a6](https://github.com/Wonder-Technology/Wonder-Editor/commit/19927a6))
+* **publish:** update engine files ([f3e749b](https://github.com/Wonder-Technology/Wonder-Editor/commit/f3e749b))
+* **ui:** main button add title ([784c2ad](https://github.com/Wonder-Technology/Wonder-Editor/commit/784c2ad))
+* welcome and version upgrade modal now use english ([803177e](https://github.com/Wonder-Technology/Wonder-Editor/commit/803177e))
+
+
+### Performance Improvements
+
+* **img:** preload imgs ([3975218](https://github.com/Wonder-Technology/Wonder-Editor/commit/3975218))
+* **imgs:** comprss imgs ([711563a](https://github.com/Wonder-Technology/Wonder-Editor/commit/711563a))
+
+
+### Reverts
+
+* **preload:** revert preload imgs ([2ba5edd](https://github.com/Wonder-Technology/Wonder-Editor/commit/2ba5edd))
+
+
+
 <a name="1.0.0-rc.1"></a>
 # [1.0.0-rc.1](https://github.com/Wonder-Technology/Wonder-Editor/compare/v1.0.0-beta.3.1...v1.0.0-rc.1) (2019-03-05)
 
