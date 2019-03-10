@@ -12,7 +12,7 @@
 
 
 
-Wonder-Editor is a [online web 3D editor](https://editor.wonder-3d.com) based on PWA.
+Wonder-Editor is a [PWA online web 3D editor](https://editor.wonder-3d.com) which use [Wonder.js](https://github.com/Wonder-Technology/Wonder.js) engine.
 
 
 
@@ -35,14 +35,19 @@ Wonder-Editor is a [online web 3D editor](https://editor.wonder-3d.com) based on
 - Publish
 
 
-# Useful links
+# Document
 
-- [official site](https://www.wonder-3d.com/)
-- [online editor](https://editor.wonder-3d.com/)
-- [document](https://www.wonder-3d.com/docs/docs/doc1-1/)
-- [forum](https://forum.wonder-3d.com/)
-- [Github](https://github.com/Wonder-Technology)
+- [Document](https://www.wonder-3d.com/docs/docs/doc1-1/)
 
+# Getting Help
+
+- [Official Site](https://www.wonder-3d.com/)
+- [Forum](https://forum.wonder-3d.com/)
+
+
+# Usage
+
+- [Online Editor](https://editor.wonder-3d.com/)
 
 
 ## Support Environment
