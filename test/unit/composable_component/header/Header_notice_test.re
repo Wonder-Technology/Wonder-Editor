@@ -30,7 +30,7 @@ let _ =
           |> ReactTestTool.createSnapshotAndMatch
         )
       );
-      describe("else", () => {
+      /* describe("else", () => {
         describe("if localStorage have no version key", () =>
           test("show version upgrade notice", () => {
             LocalStorage.setValue(
@@ -58,6 +58,6 @@ let _ =
             |> ReactTestTool.createSnapshotAndMatch;
           })
         );
-      });
+      }); */
     });
   });
