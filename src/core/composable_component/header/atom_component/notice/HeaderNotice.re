@@ -16,27 +16,27 @@ module Method = {
 
   let _buildLinkContent = () => [|
     <div className="content-white" key="text2" />,
-    <div className="content-text" key="text1">
+    <div className="content-text" key="text3">
       <a href="https://www.wonder-3d.com/" target="view_window">
         {DomHelper.textEl({j|Website|j})}
       </a>
     </div>,
-    <div className="content-small-white" key="text2" />,
-    <div className="content-text" key="text1">
+    <div className="content-small-white" key="text4" />,
+    <div className="content-text" key="text5">
       <a href="https://forum.wonder-3d.com/" target="view_window">
         {DomHelper.textEl({j|Forum|j})}
       </a>
     </div>,
-    <div className="content-small-white" key="text2" />,
-    <div className="content-text" key="text1">
+    <div className="content-small-white" key="text6" />,
+    <div className="content-text" key="text7">
       <a
         href="https://www.wonder-3d.com/docs/docs/doc1-1/"
         target="view_window">
         {DomHelper.textEl({j|Doc|j})}
       </a>
     </div>,
-    <div className="content-small-white" key="text2" />,
-    <div className="content-text" key="text1">
+    <div className="content-small-white" key="text8" />,
+    <div className="content-text" key="text9">
       <a href="https://github.com/Wonder-Technology" target="view_window">
         {DomHelper.textEl({j|Github|j})}
       </a>
@@ -60,7 +60,11 @@ module Method = {
 
     [|
       <div className="content-text" key="text1">
-        {DomHelper.textEl({j|Upgrade to $newVersion Version, We are here to serve you~ Thanks for your trust~|j})}
+        {
+          DomHelper.textEl(
+            {j|Upgrade to $newVersion Version, We are here to serve you~ Thanks for your trust~|j},
+          )
+        }
       </div>,
     |]
     |> ArrayService.fastConcat(_, _buildLinkContent());
