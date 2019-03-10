@@ -8,4 +8,71 @@
 [![GitHub Release Date](https://img.shields.io/github/release-date/Wonder-Technology/Wonder-Editor.svg)](https://github.com/Wonder-Technology/Wonder-Editor/releases) 
 
 
-[Demo](https://wonder-technology.github.io/wonder-demo.github.io/)
+[![editor](https://www.wonder-3d.com/img/editor.jpg) ](https://editor.wonder-3d.com) 
+
+
+
+Wonder-Editor is a [online web 3D editor](https://editor.wonder-3d.com) based on PWA.
+
+
+
+
+
+
+
+
+# Feature
+
+- PWA
+- Scene Tree
+- Run/Stop
+- Transform Gizmo
+- Hotkey
+- Redo/Undo
+- Console
+- Asset
+- Import/Export
+- Publish
+
+
+# Useful links
+
+- [official site](https://www.wonder-3d.com/)
+- [online editor](https://editor.wonder-3d.com/)
+- [document](https://www.wonder-3d.com/docs/docs/doc1-1/)
+- [forum](https://forum.wonder-3d.com/)
+- [Github](https://github.com/Wonder-Technology)
+
+
+
+## Support Environment
+
+### PC
+
+- Chrome
+
+- 360 browser(v10.0)
+
+- qq browser(v10.4)
+
+
+
+# How to build
+
+
+```js
+sudo yarn install //execute in project root dir
+```
+
+## for Chinese users
+
+```js
+npm install -g cyarn --registry=https://registry.npm.taobao.org
+
+cyarn install //execute in project root dir
+```
+
+
+
+# License
+Apache 2.0 Licence
