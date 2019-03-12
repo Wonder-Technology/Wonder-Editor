@@ -9,9 +9,8 @@ type action =
 
 module Method = {
   let change = event => {
-    let inputVal = ReactDOMRe.domElementToObj(
-                     ReactEventRe.Form.target(event),
-                   )##value;
+    let inputVal =
+      ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
     Change(inputVal);
   };
   let triggerOnChange = (value, onChangeFunc) =>
@@ -28,14 +27,16 @@ module Method = {
   let handleBlurAction = (state, canBeNull, onBlurFunc) =>
     switch (canBeNull) {
     | None =>
-      triggerOnBlur(state.inputValue, onBlurFunc);
-      ReasonReact.NoUpdate;
+      ReasonReactUtils.updateWithSideEffects(
+        {...state, originalName: state.inputValue}, _state =>
+        triggerOnBlur(state.inputValue, onBlurFunc)
+      )
     | Some(canBeNull) =>
       canBeNull ?
-        {
-          triggerOnBlur(state.inputValue, onBlurFunc);
-          ReasonReact.NoUpdate;
-        } :
+        ReasonReactUtils.updateWithSideEffects(
+          {...state, originalName: state.inputValue}, _state =>
+          triggerOnBlur(state.inputValue, onBlurFunc)
+        ) :
         (
           switch (state.inputValue) {
           | "" =>
@@ -65,22 +66,22 @@ let reducer = ((onChangeFunc, onBlurFunc), canBeNull, action, state) =>
 
 let render = (label, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="inspector-item">
-    (
+    {
       switch (label) {
       | None => ReasonReact.null
       | Some(value) =>
         <div className="item-header">
-          <span className="component-label"> (DomHelper.textEl(value)) </span>
+          <span className="component-label"> {DomHelper.textEl(value)} </span>
         </div>
       }
-    )
+    }
     <div className="item-content">
       <input
         className="input-component float-input"
         type_="text"
-        value=state.inputValue
-        onChange=(_e => send(Method.change(_e)))
-        onBlur=(_e => send(Blur))
+        value={state.inputValue}
+        onChange={_e => send(Method.change(_e))}
+        onBlur={_e => send(Blur)}
       />
     </div>
   </article>;

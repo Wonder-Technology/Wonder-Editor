@@ -12,17 +12,17 @@ module Method = {
       );
 
   let _buildNameFunc = ((uiState, dispatchFunc), gameObject) =>
-    <div key=(DomHelper.getRandomKey()) className="sceneTree-name">
+    <div key={DomHelper.getRandomKey()} className="sceneTree-name">
       <StringInput
         label="Name"
-        defaultValue=(
+        defaultValue={
           GameObjectEngineService.unsafeGetGameObjectName(gameObject)
           |> StateLogicService.getEngineStateToGetData
-        )
-        onBlur=(
+        }
+        onBlur={
           reNameGameObjectBlurEvent((uiState, dispatchFunc), gameObject)
-        )
-        canBeNull=false
+        }
+        canBeNull=true
       />
     </div>;
 
@@ -54,7 +54,7 @@ module Method = {
          )
       |> ArrayService.push(
            <AddableComponent
-             key=(DomHelper.getRandomKey())
+             key={DomHelper.getRandomKey()}
              reduxTuple=(uiState, dispatchFunc)
              currentSceneTreeNode=gameObject
              addableComponentList=addableComponentConfig
@@ -73,7 +73,7 @@ let render =
       _self,
     ) =>
   <article key="SceneTreeInspector" className="wonder-inspector-sceneTree">
-    (
+    {
       ReasonReact.array(
         Method.buildCurrentSceneTreeNodeComponent(
           (uiState, dispatchFunc),
@@ -81,7 +81,7 @@ let render =
           currentSceneTreeNode,
         ),
       )
-    )
+    }
   </article>;
 
 let make =
