@@ -32,6 +32,10 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test rename
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           gameObjectNewName
         </div>
       </li>
@@ -54,6 +58,10 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test rename
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -77,6 +85,10 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test rename
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -100,6 +112,10 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test rename
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -123,6 +139,10 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test rename
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>

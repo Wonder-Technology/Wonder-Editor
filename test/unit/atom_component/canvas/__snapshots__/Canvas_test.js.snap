@@ -32,6 +32,10 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -54,6 +58,10 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -82,6 +90,10 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -109,6 +121,10 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
               onDrop={[Function]}
               style={Object {}}
             >
+              <img
+                className="treeNode-icon"
+                src="./public/img/gameObjectIcon.png"
+              />
               Wdb
             </div>
           </li>
@@ -133,6 +149,10 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -156,6 +176,10 @@ exports[`Canvas test drag wdb test drag wdb to gameObject should add to current 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -197,6 +221,10 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -219,6 +247,10 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -242,6 +274,10 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -265,6 +301,10 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -288,6 +328,10 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -316,6 +360,10 @@ exports[`Canvas test drag wdb test drag wdb to scene if current sceneTree node i
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Wdb
           </div>
         </li>

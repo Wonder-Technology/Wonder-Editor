@@ -57,6 +57,87 @@ let _ =
       );
     });
 
+    describe("test sceneTree node icon", () => {
+      describe("test set first cube to be current gameObject", () => {
+        beforeEach(() => {
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
+          );
+
+          CurrentSelectSourceEditorService.setCurrentSelectSource(
+            SceneTreeWidgetService.getWidget(),
+          )
+          |> StateLogicService.getAndSetEditorState;
+        });
+
+        test(
+          "test add light component, the sceneTree node icon should be lightIcon",
+          () => {
+          MainEditorInspectorAddComponentTool.addDirectionLightComponent();
+
+          BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
+        test(
+          "test add cameraGroup component, the sceneTree node icon should be cameraIcon",
+          () => {
+          MainEditorInspectorAddComponentTool.addCameraGroupComponent();
+
+          BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
+      });
+
+      describe("test set first camera to be current gameObject", () => {
+        beforeEach(() => {
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
+          );
+
+          CurrentSelectSourceEditorService.setCurrentSelectSource(
+            SceneTreeWidgetService.getWidget(),
+          )
+          |> StateLogicService.getAndSetEditorState;
+        });
+
+        test(
+          "test remove camera component, the sceneTree node icon should be gameObjectIcon",
+          () => {
+            MainEditorInspectorRemoveComponentTool.removeCameraGroupComponent();
+
+            BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
+            |> ReactTestTool.createSnapshotAndMatch;
+          },
+        );
+      });
+
+      describe("test set direction light to be current gameObject", () => {
+        beforeEach(() => {
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setDirectionLightGameObjectToBeCurrentSceneTreeNode,
+          );
+
+          CurrentSelectSourceEditorService.setCurrentSelectSource(
+            SceneTreeWidgetService.getWidget(),
+          )
+          |> StateLogicService.getAndSetEditorState;
+        });
+
+        test(
+          "test remove camera component, the sceneTree node icon should be gameObjectIcon",
+          () => {
+            MainEditorInspectorRemoveComponentTool.removeDirectionLightComponent();
+
+            BuildComponentTool.buildSceneTree(TestTool.buildEmptyAppState())
+            |> ReactTestTool.createSnapshotAndMatch;
+          },
+        );
+      });
+    });
+
     describe("test drag", () => {
       describe("handleDragOver", () => {
         let _buildDragOverResult =
@@ -160,19 +241,18 @@ let _ =
               (result, (sourceGameObject, targetGameObject));
 
               result
-              |>
-              expect == SceneTreeNode.DragGameObject(
-                          targetGameObject,
-                          sourceGameObject,
-                          SceneTreeNodeType.DragIntoTarget,
-                        );
+              |> expect
+              == SceneTreeNode.DragGameObject(
+                   targetGameObject,
+                   sourceGameObject,
+                   SceneTreeNodeType.DragIntoTarget,
+                 );
             },
           )
         );
       });
 
       describe("test drag gameObject to be target gameObject sib", () => {
-
         describe("test drag gameObject before target gameObject", () => {
           beforeEach(() =>
             MainEditorSceneTool.createDefaultScene(
@@ -225,12 +305,12 @@ let _ =
                   engineState,
                 ),
               )
-              |>
-              expect == (
-                          [|cube1, cube2, camera, directionLight|],
-                          Some(scene),
-                          Some(scene),
-                        );
+              |> expect
+              == (
+                   [|cube1, cube2, camera, directionLight|],
+                   Some(scene),
+                   Some(scene),
+                 );
             });
           });
 
@@ -493,10 +573,10 @@ let _ =
           );
 
           GameObjectTool.unsafeGetCurrentSceneTreeNode()
-          |>
-          expect == MainEditorSceneTool.getFirstCube(
-                      StateEngineService.unsafeGetState(),
-                    );
+          |> expect
+          == MainEditorSceneTool.getFirstCube(
+               StateEngineService.unsafeGetState(),
+             );
         });
       });
 

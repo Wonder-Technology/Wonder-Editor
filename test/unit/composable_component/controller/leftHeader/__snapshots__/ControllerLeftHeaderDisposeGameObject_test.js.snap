@@ -32,6 +32,10 @@ exports[`controller leftHeader dispose gameObject test scene tree dispose curren
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -54,6 +58,10 @@ exports[`controller leftHeader dispose gameObject test scene tree dispose curren
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -77,6 +85,10 @@ exports[`controller leftHeader dispose gameObject test scene tree dispose curren
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -100,6 +112,10 @@ exports[`controller leftHeader dispose gameObject test scene tree dispose curren
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>

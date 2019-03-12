@@ -33,6 +33,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -55,6 +59,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -78,6 +86,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -101,6 +113,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -124,6 +140,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -147,6 +167,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -189,6 +213,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -211,6 +239,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -234,6 +266,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -257,6 +293,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -280,6 +320,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -303,6 +347,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -326,6 +374,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             GameObject
           </div>
         </li>
@@ -368,6 +420,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -390,6 +446,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -413,6 +473,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -436,6 +500,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -459,6 +527,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -482,6 +554,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -505,6 +581,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             GameObject
           </div>
         </li>
@@ -547,6 +627,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -569,6 +653,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -592,6 +680,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -615,6 +707,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -638,6 +734,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -661,6 +761,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -703,6 +807,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -725,6 +833,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -748,6 +860,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -771,6 +887,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -794,6 +914,10 @@ exports[`redo_undo:leftHeader add gameObject add cube and empty gameObject;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -836,6 +960,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -858,6 +986,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -881,6 +1013,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -904,6 +1040,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -927,6 +1067,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -950,6 +1094,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Sphere
           </div>
         </li>
@@ -992,6 +1140,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -1014,6 +1166,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -1037,6 +1193,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -1060,6 +1220,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -1083,6 +1247,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -1106,6 +1274,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Sphere
           </div>
         </li>
@@ -1129,6 +1301,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Sphere
           </div>
         </li>
@@ -1171,6 +1347,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -1193,6 +1373,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -1216,6 +1400,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -1239,6 +1427,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -1262,6 +1454,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -1285,6 +1481,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Sphere
           </div>
         </li>
@@ -1308,6 +1508,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Sphere
           </div>
         </li>
@@ -1350,6 +1554,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -1372,6 +1580,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -1395,6 +1607,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -1418,6 +1634,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -1441,6 +1661,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -1464,6 +1688,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Sphere
           </div>
         </li>
@@ -1506,6 +1734,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -1528,6 +1760,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -1551,6 +1787,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -1574,6 +1814,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -1597,6 +1841,10 @@ exports[`redo_undo:leftHeader add gameObject add sphere;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>

@@ -1,5 +1,3 @@
-
-
 open InspectorComponentType;
 
 module CustomEventHandler = {
@@ -8,7 +6,8 @@ module CustomEventHandler = {
   type dataTuple = componentType;
   type return = unit;
 
-  let handleSelfLogic = ((uiState, dispatchFunc), currentSceneTreeNode, type_) => {
+  let handleSelfLogic =
+      ((uiState, dispatchFunc), currentSceneTreeNode, type_) => {
     let (editorState, engineState) =
       (StateEditorService.getState(), StateEngineService.unsafeGetState())
       |> InspectorAddComponentUtils.addComponentByType(
@@ -22,8 +21,15 @@ module CustomEventHandler = {
     GameObjectEngineService.initGameObject(currentSceneTreeNode)
     |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
-    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
-    |> ignore;
+    AddableComponentUtils.isNeedUpdateSceneTree(type_) ?
+      dispatchFunc(
+        AppStore.UpdateAction(
+          Update([|UpdateStore.Inspector, UpdateStore.SceneTree|]),
+        ),
+      )
+      |> ignore :
+      dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
+      |> ignore;
   };
 };
 

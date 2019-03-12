@@ -66,6 +66,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -93,6 +97,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Wdb
           </div>
         </li>
@@ -116,6 +124,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -139,6 +151,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -162,6 +178,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -185,6 +205,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -226,6 +250,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -248,6 +276,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -271,6 +303,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -299,6 +335,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Wdb
           </div>
         </li>
@@ -322,6 +362,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -345,6 +389,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -386,6 +434,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -413,6 +465,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Wdb
           </div>
         </li>
@@ -436,6 +492,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -459,6 +519,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -482,6 +546,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -505,6 +573,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -546,6 +618,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -568,6 +644,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -596,6 +676,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Wdb
           </div>
         </li>
@@ -619,6 +703,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -642,6 +730,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -665,6 +757,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -706,6 +802,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -728,6 +828,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -751,6 +855,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -774,6 +882,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -797,6 +909,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -825,6 +941,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Wdb
           </div>
         </li>
@@ -866,6 +986,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -888,6 +1012,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -916,6 +1044,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -943,6 +1075,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
               onDrop={[Function]}
               style={Object {}}
             >
+              <img
+                className="treeNode-icon"
+                src="./public/img/gameObjectIcon.png"
+              />
               Wdb
             </div>
           </li>
@@ -967,6 +1103,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -990,6 +1130,10 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag w
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>

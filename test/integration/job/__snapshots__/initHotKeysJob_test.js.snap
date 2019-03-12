@@ -32,6 +32,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           Scene
         </div>
       </li>
@@ -54,6 +58,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -77,6 +85,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -100,6 +112,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -123,6 +139,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -146,6 +166,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -221,6 +245,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           Scene
         </div>
       </li>
@@ -243,6 +271,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -266,6 +298,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -289,6 +325,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -330,6 +370,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           Scene
         </div>
       </li>
@@ -352,6 +396,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -375,6 +423,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -398,6 +450,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -421,6 +477,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -444,6 +504,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             GameObject
           </div>
         </li>
@@ -485,6 +549,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           Scene
         </div>
       </li>
@@ -507,6 +575,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -530,6 +602,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -553,6 +629,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -576,6 +656,10 @@ exports[`init hotKeys job bind document hotKeys event, need add hot-key into Set
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
