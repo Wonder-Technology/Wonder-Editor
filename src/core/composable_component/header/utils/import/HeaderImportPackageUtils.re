@@ -2,8 +2,22 @@ open Js.Promise;
 
 open Js.Typed_array;
 
-let _disposeAssets = () =>
-  StateLogicService.getAndSetState(DisposeTreeAssetLogicService.disposeTree);
+let _disposeAssets = () => {
+  let (editorState, engineState) =
+    DisposeTreeAssetLogicService.disposeTree((
+      StateEditorService.getState(),
+      StateEngineService.unsafeGetState(),
+    ));
+
+  editorState
+  |> ImageDataMapAssetEditorService.clearMap
+  |> StateEditorService.setState
+  |> ignore;
+
+  engineState |> StateEngineService.setState |> ignore;
+
+  ();
+};
 
 let _readHeader = dataView => {
   let (version, byteOffset) = DataViewUtils.getUint32_1(. 0, dataView);
@@ -417,6 +431,10 @@ let importPackage = (dispatchFunc, event) => {
              StackHistoryService.clearAllStack(
                AllStateData.getHistoryState(),
              );
+
+             let engineState: Wonderjs.StateDataMainType.state =
+               StateEngineService.unsafeGetState();
+             let editorState = StateEditorService.getState();
 
              _dispatch(dispatchFunc) |> resolve;
            });

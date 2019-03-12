@@ -10,6 +10,14 @@ let setMap = (map, editorState) => {
   },
 };
 
+let clearMap = editorState => {
+  ...editorState,
+  assetRecord: {
+    ...editorState.assetRecord,
+    imageDataMap: WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+  },
+};
+
 let unsafeGetData = (index, editorState) =>
   ImageDataMapAssetService.unsafeGetData(index, editorState.assetRecord);
 

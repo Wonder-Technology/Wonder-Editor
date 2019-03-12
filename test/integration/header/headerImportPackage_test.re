@@ -295,6 +295,32 @@ let _ =
              })
         );
       });
+
+      testPromise("clear imageData map", () => {
+        MainEditorSceneTool.initState(~sandbox, ());
+        MainEditorSceneTool.prepareScene(sandbox);
+
+        MainEditorAssetUploadTool.loadOneWDB(
+          ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+          (),
+        )
+        |> then_(uploadedWDBNodeId =>
+             ImportPackageTool.testImportPackage(
+               ~testFunc=
+                 () =>
+                   ImportPackageTool.testImportPackage(
+                     ~testFunc=
+                       () =>
+                         ImageDataMapTool.getMapValidLength
+                         |> StateLogicService.getEditorState
+                         |> expect == 1
+                         |> resolve,
+                     (),
+                   ),
+               (),
+             )
+           );
+      });
     });
 
     describe("reallocate", () =>
