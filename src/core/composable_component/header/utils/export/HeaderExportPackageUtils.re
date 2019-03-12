@@ -32,7 +32,7 @@ let _buildImageNodeUint8Array = editorState =>
                  }
                }
              )
-             |. Some,
+             ->Some,
          }
        )
      )

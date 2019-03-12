@@ -169,9 +169,11 @@ let _getTextureIndexFromMap = (textureComponent, textureIndexMap) =>
   switch (textureComponent) {
   | None => None
   | Some(textureComponent) =>
-    textureIndexMap
-    |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(textureComponent)
-    |. Some
+    (
+      textureIndexMap
+      |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(textureComponent)
+    )
+    ->Some
   };
 
 let _buildMaterialData = (textureIndexMap, (editorState, engineState)) =>
