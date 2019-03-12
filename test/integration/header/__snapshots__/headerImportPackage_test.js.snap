@@ -3050,6 +3050,10 @@ exports[`header import package test import scene wdb should reset scene gameObje
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           Scene
         </div>
       </li>
@@ -3072,6 +3076,10 @@ exports[`header import package test import scene wdb should reset scene gameObje
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -3095,6 +3103,10 @@ exports[`header import package test import scene wdb should reset scene gameObje
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -3118,6 +3130,10 @@ exports[`header import package test import scene wdb should reset scene gameObje
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -3141,6 +3157,10 @@ exports[`header import package test import scene wdb should reset scene gameObje
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -3164,6 +3184,10 @@ exports[`header import package test import scene wdb should reset scene gameObje
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>

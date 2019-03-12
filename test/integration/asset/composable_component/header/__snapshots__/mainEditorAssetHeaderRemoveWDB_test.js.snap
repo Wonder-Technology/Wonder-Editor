@@ -139,6 +139,10 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -166,6 +170,10 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Wdb
           </div>
         </li>

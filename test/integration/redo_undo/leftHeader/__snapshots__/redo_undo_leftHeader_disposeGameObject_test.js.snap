@@ -32,6 +32,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -54,6 +58,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -77,6 +85,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -100,6 +112,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -141,6 +157,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -163,6 +183,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -186,6 +210,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -227,6 +255,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -249,6 +281,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -272,6 +308,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -313,6 +353,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -335,6 +379,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -358,6 +406,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -381,6 +433,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -404,6 +460,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -445,6 +505,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -467,6 +531,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -490,6 +558,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -513,6 +585,10 @@ exports[`redo_undo:leftHeader dispose gameObject prepare first step: set current
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>

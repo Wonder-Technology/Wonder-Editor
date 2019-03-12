@@ -32,6 +32,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -59,6 +63,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -81,6 +89,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
               onDrop={[Function]}
               style={Object {}}
             >
+              <img
+                className="treeNode-icon"
+                src="./public/img/gameObjectIcon.png"
+              />
               Cube
             </div>
           </li>
@@ -105,6 +117,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -128,6 +144,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -169,6 +189,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -196,6 +220,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -218,6 +246,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
               onDrop={[Function]}
               style={Object {}}
             >
+              <img
+                className="treeNode-icon"
+                src="./public/img/gameObjectIcon.png"
+              />
               Cube
             </div>
           </li>
@@ -241,6 +273,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
               onDrop={[Function]}
               style={Object {}}
             >
+              <img
+                className="treeNode-icon"
+                src="./public/img/gameObjectIcon.png"
+              />
               Cube
             </div>
           </li>
@@ -265,6 +301,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -306,6 +346,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -333,6 +377,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -355,6 +403,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
               onDrop={[Function]}
               style={Object {}}
             >
+              <img
+                className="treeNode-icon"
+                src="./public/img/gameObjectIcon.png"
+              />
               Cube
             </div>
           </li>
@@ -378,6 +430,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
               onDrop={[Function]}
               style={Object {}}
             >
+              <img
+                className="treeNode-icon"
+                src="./public/img/gameObjectIcon.png"
+              />
               Cube
             </div>
           </li>
@@ -402,6 +458,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -443,6 +503,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -470,6 +534,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -492,6 +560,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
               onDrop={[Function]}
               style={Object {}}
             >
+              <img
+                className="treeNode-icon"
+                src="./public/img/gameObjectIcon.png"
+              />
               Cube
             </div>
           </li>
@@ -516,6 +588,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -539,6 +615,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -580,6 +660,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -602,6 +686,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -625,6 +713,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -648,6 +740,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -671,6 +767,10 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>

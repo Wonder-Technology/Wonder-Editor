@@ -32,6 +32,10 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -54,6 +58,10 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -77,6 +85,10 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -100,6 +112,10 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -123,6 +139,10 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -146,6 +166,10 @@ exports[`controller leftHeader add gameObject test add cube test scene tree snap
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -187,6 +211,10 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -209,6 +237,10 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -232,6 +264,10 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -255,6 +291,10 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -278,6 +318,10 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -301,6 +345,10 @@ exports[`controller leftHeader add gameObject test add emptyGameObject test scen
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             GameObject
           </div>
         </li>
@@ -342,6 +390,10 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
           onDrop={[Function]}
           style={Object {}}
         >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
           scene
         </div>
       </li>
@@ -364,6 +416,10 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/cameraIcon.png"
+            />
             Camera
           </div>
         </li>
@@ -387,6 +443,10 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -410,6 +470,10 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Cube
           </div>
         </li>
@@ -433,6 +497,10 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/lightIcon.png"
+            />
             Direction Light
           </div>
         </li>
@@ -456,6 +524,10 @@ exports[`controller leftHeader add gameObject test add sphere test scene tree sn
             onDrop={[Function]}
             style={Object {}}
           >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
             Sphere
           </div>
         </li>

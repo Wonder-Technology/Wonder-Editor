@@ -118,6 +118,13 @@ module Method = {
 
   let buildNotDragableUl = TreeNodeUtils.buildNotDragableUl;
 
+  let _showGameObjectIcon = (gameObject, engineState) =>
+    engineState |> LightEngineService.hasLightComponent(gameObject) ?
+      <img src="./public/img/lightIcon.png" className="treeNode-icon" /> :
+      engineState |> CameraEngineService.hasCameraGroup(gameObject) ?
+        <img src="./public/img/cameraIcon.png" className="treeNode-icon" /> :
+        <img src="./public/img/gameObjectIcon.png" className="treeNode-icon" />;
+
   let _renderDragableText =
       (
         (state, send),
@@ -180,6 +187,10 @@ module Method = {
             ),
           )
       }>
+      {
+        _showGameObjectIcon(gameObject)
+        |> StateLogicService.getEngineStateToGetData
+      }
       {DomHelper.textEl(name)}
     </div>;
 
@@ -188,7 +199,6 @@ module Method = {
         (state, send),
         (
           gameObject,
-          icon,
           widget,
           dragImg,
           name,
@@ -214,12 +224,6 @@ module Method = {
             TogggleChildren(gameObject),
           ) :
           <div className="item-triangle" />
-      }
-      {
-        switch (icon) {
-        | None => ReasonReact.null
-        | Some(icon) => <img src=icon className="treeNode-icon" />
-        }
       }
       {
         _renderDragableText(
@@ -313,7 +317,6 @@ let render =
         name,
         widget,
         dragImg,
-        icon,
         isShowChildren,
         isHasChildren,
         isSelected,
@@ -330,7 +333,6 @@ let render =
       (state, send),
       (
         gameObject,
-        icon,
         widget,
         dragImg,
         name,
@@ -351,7 +353,6 @@ let make =
       ~isActive,
       ~dragImg,
       ~widget,
-      ~icon: option(string)=?,
       ~onSelect,
       ~dragGameObject,
       ~dragWDB,
@@ -382,7 +383,6 @@ let make =
         name,
         widget,
         dragImg,
-        icon,
         isShowChildren,
         isHasChildren,
         isSelected,

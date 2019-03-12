@@ -31,8 +31,15 @@ module CustomEventHandler = {
 
     StateLogicService.getAndRefreshEngineState();
 
-    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
-    |> ignore;
+    AddableComponentUtils.isNeedUpdateSceneTree(type_) ?
+      dispatchFunc(
+        AppStore.UpdateAction(
+          Update([|UpdateStore.Inspector, UpdateStore.SceneTree|]),
+        ),
+      )
+      |> ignore :
+      dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
+      |> ignore;
   };
 };
 
