@@ -88,9 +88,8 @@ let _ =
             onChangeFunc |> SinonTool.calledWith(_, ""),
             onBlurFunc |> SinonTool.calledWith(_, ""),
             state.inputValue,
-            ReactTool.isNoUpdate(result),
           )
-          |> expect == (1, 1, true, true, "", true);
+          |> expect == (1, 1, true, true, "");
         },
       );
       test(
