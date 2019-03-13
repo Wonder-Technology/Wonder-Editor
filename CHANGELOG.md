@@ -1,3 +1,20 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/Wonder-Technology/Wonder-Editor/compare/v1.0.0...v1.0.1) (2019-03-13)
+
+
+### Bug Fixes
+
+* **package:** fix "import package": now clear imageData map when dispose assets ([6fcab64](https://github.com/Wonder-Technology/Wonder-Editor/commit/6fcab64))
+
+
+### Features
+
+* **pwa:** finish pwa update data ([04a2320](https://github.com/Wonder-Technology/Wonder-Editor/commit/04a2320))
+* **rename:** rename gameObject name, should can be set "" ([e399371](https://github.com/Wonder-Technology/Wonder-Editor/commit/e399371))
+* **sceneTree:** add sceneTree node icon ([e3eef18](https://github.com/Wonder-Technology/Wonder-Editor/commit/e3eef18))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/Wonder-Technology/Wonder-Editor/compare/v1.0.0-rc.1...v1.0.0) (2019-03-10)
 
