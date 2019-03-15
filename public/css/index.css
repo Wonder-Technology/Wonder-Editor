@@ -477,7 +477,22 @@ html, body {
       .wonder-app-component .wonder-controller-component .header-controller .controller-other {
         flex: initial;
         width: 48%;
-        height: 100%; }
+        height: 100%;
+        display: flex;
+        align-items: center;
+        position: relative; }
+        .wonder-app-component .wonder-controller-component .header-controller .controller-other .other-language {
+          flex: 1;
+          position: absolute;
+          right: 30px;
+          width: 60px;
+          height: 25px;
+          line-height: 25px;
+          text-align: center;
+          border-radius: 5px;
+          border: 1px solid #fff; }
+          .wonder-app-component .wonder-controller-component .header-controller .controller-other .other-language:hover {
+            cursor: pointer; }
   .wonder-app-component .wonder-mainEditor-component {
     width: 100%;
     height: 100%;
@@ -719,38 +734,38 @@ html, body {
           display: flex;
           flex-direction: column; }
           .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .bottom-header {
-            height: 10%;
-            min-height: 20px; }
-          .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .bottom-widget-category {
-            width: 100%;
-            height: 100%;
-            border-bottom: 1px solid #fff;
-            display: flex;
-            flex-direction: row; }
-            .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .bottom-widget-category .category-name {
-              width: 80px;
-              font-size: 13px;
-              height: 99%;
-              margin-right: 0 5px;
-              display: flex; }
-              .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .bottom-widget-category .category-name .name-header {
-                width: 100%;
-                height: 100%;
+            height: 27px; }
+            .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .bottom-header .bottom-widget-category {
+              width: 100%;
+              height: 100%;
+              border-bottom: 1px solid #fff;
+              display: flex;
+              flex-direction: row; }
+              .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .bottom-header .bottom-widget-category .category-name {
+                width: 80px;
+                font-size: 12px;
+                height: 99%;
+                margin-right: 0 5px;
                 display: flex;
-                justify-content: center;
-                align-items: center; }
-              .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .bottom-widget-category .category-name .name-tail {
-                margin-left: 2px;
-                margin-top: 2px;
-                border-radius: 5px;
-                background: red;
-                width: 20px;
-                height: 14px;
-                display: flex;
-                justify-content: center;
-                align-items: center; }
-            .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .bottom-widget-category .category-active {
-              background: #555555; }
+                padding: 0 4px; }
+                .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .bottom-header .bottom-widget-category .category-name .name-header {
+                  width: 100%;
+                  height: 100%;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center; }
+                .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .bottom-header .bottom-widget-category .category-name .name-tail {
+                  margin-left: 2px;
+                  margin-top: 2px;
+                  border-radius: 5px;
+                  background: red;
+                  width: 20px;
+                  height: 14px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center; }
+              .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .bottom-header .bottom-widget-category .category-active {
+                background: #555555; }
           .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-bottom-project {
             height: 90%; }
           .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-bottom-console {

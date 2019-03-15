@@ -14,17 +14,31 @@ module Method = {
 
   let getVersion = () => LocalStorage.getValue(getVersionKey());
 
-  let _buildLinkContent = () => [|
+  let _buildLinkContent = languageType => [|
     <div className="content-white" key="text2" />,
     <div className="content-text" key="text3">
       <a href="https://www.wonder-3d.com/" target="view_window">
-        {DomHelper.textEl({j|Website|j})}
+        {
+          DomHelper.textEl(
+            LanguageUtils.getHeaderLanguageDataByType(
+              "notice-website",
+              languageType,
+            ),
+          )
+        }
       </a>
     </div>,
     <div className="content-small-white" key="text4" />,
     <div className="content-text" key="text5">
       <a href="https://forum.wonder-3d.com/" target="view_window">
-        {DomHelper.textEl({j|Forum|j})}
+        {
+          DomHelper.textEl(
+            LanguageUtils.getHeaderLanguageDataByType(
+              "notice-forum",
+              languageType,
+            ),
+          )
+        }
       </a>
     </div>,
     <div className="content-small-white" key="text6" />,
@@ -32,7 +46,14 @@ module Method = {
       <a
         href="https://www.wonder-3d.com/docs/docs/doc1-1/"
         target="view_window">
-        {DomHelper.textEl({j|Doc|j})}
+        {
+          DomHelper.textEl(
+            LanguageUtils.getHeaderLanguageDataByType(
+              "notice-doc",
+              languageType,
+            ),
+          )
+        }
       </a>
     </div>,
     <div className="content-small-white" key="text8" />,
@@ -43,31 +64,37 @@ module Method = {
     </div>,
   |];
 
-  let buildWelComeUserModalContent = () =>
+  let buildWelComeUserModalContent = languageType =>
     [|
       <div className="content-text" key="text1">
         {
           DomHelper.textEl(
-            {j|Welcome to use Wonder editor, We are here to serve you~ Thanks for your trust~|j},
+            LanguageUtils.getHeaderLanguageDataByType(
+              "welcome-content",
+              languageType,
+            ),
           )
         }
       </div>,
     |]
-    |> ArrayService.fastConcat(_, _buildLinkContent());
+    |> ArrayService.fastConcat(_, _buildLinkContent(languageType));
 
-  let buildVersionUpgradeModalContent = () => {
+  let buildVersionUpgradeModalContent = languageType => {
     let newVersion = Copyright.getVersion();
 
     [|
       <div className="content-text" key="text1">
         {
           DomHelper.textEl(
-            {j|Upgrade to $newVersion Version, We are here to serve you~ Thanks for your trust~|j},
+            LanguageUtils.getHeaderLanguageDataByType(
+              "version-content",
+              languageType,
+            ),
           )
         }
       </div>,
     |]
-    |> ArrayService.fastConcat(_, _buildLinkContent());
+    |> ArrayService.fastConcat(_, _buildLinkContent(languageType));
   };
 };
 
@@ -91,24 +118,38 @@ let reducer = (action, state) =>
   };
 
 let render =
-    ((uiState, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    ((uiState, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) => {
+  let languageType =
+    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+
   <div className="header-item">
     {
       state.isShowWelComeUserModal ?
         <Modal
-          title="Welcome to Wonder"
+          title={
+            LanguageUtils.getHeaderLanguageDataByType(
+              "notice-welcome",
+              languageType,
+            )
+          }
           closeFunc={() => send(HideWelComeUserModal)}
-          content={Method.buildWelComeUserModalContent()}
+          content={Method.buildWelComeUserModalContent(languageType)}
         /> :
         state.isShowVersionUpgradeModal ?
           <Modal
-            title="Version Upgrade"
+            title={
+              LanguageUtils.getHeaderLanguageDataByType(
+                "notice-version",
+                languageType,
+              )
+            }
             closeFunc={() => send(HideVersionUpgradeModal)}
-            content={Method.buildVersionUpgradeModalContent()}
+            content={Method.buildVersionUpgradeModalContent(languageType)}
           /> :
           ReasonReact.null
     }
   </div>;
+};
 
 let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,

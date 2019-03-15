@@ -1,3 +1,5 @@
+open LanguageType;
+
 open ColorType;
 
 open Color;
@@ -14,6 +16,15 @@ module Method = {
          />
        </div>
      </div>; */
+  let changeLanguage = languageType =>
+    switch (languageType) {
+    | EN =>
+      LocalStorage.setValue("language", "ZH");
+      DomHelper.locationReload(.);
+    | ZH =>
+      LocalStorage.setValue("language", "EN");
+      DomHelper.locationReload(.);
+    };
 
   let changeColor = value =>
     value
@@ -29,12 +40,17 @@ module Method = {
 
   let closeColorPick = ControllerAmbientLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 
-  let buildAmbientLightComponent = (uiState, dispatchFunc) =>
+  let buildAmbientLightComponent = (uiState, dispatchFunc, languageType) =>
     <div className="header-item">
       <div className="component-item">
         <PickColorComponent
           key={DomHelper.getRandomKey()}
-          label="Ambient Color : "
+          label={
+            LanguageUtils.getControllerLanguageDataByType(
+              "controller-light",
+              languageType,
+            )
+          }
           title="ambient color"
           getColorFunc=getColor
           changeColorFunc=changeColor
@@ -146,19 +162,40 @@ let render =
       uiState: AppStore.appState,
       dispatchFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
-    ) =>
+    ) => {
+  let languageType =
+    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+
   <article key="controller" className="wonder-controller-component">
     <div className="header-controller">
       <div className="controller-ambient">
-        {Method.buildAmbientLightComponent(uiState, dispatchFunc)}
+        {
+          Method.buildAmbientLightComponent(
+            uiState,
+            dispatchFunc,
+            languageType,
+          )
+        }
       </div>
       <div className="controller-transform">
         {Method.buildTransformComponent(uiState, dispatchFunc)}
       </div>
       {Method.renderRunAndStop(uiState, dispatchFunc)}
-      <div className="controller-other" />
+      <div className="controller-other">
+        <div
+          className="other-language"
+          onClick={_e => Method.changeLanguage(languageType)}>
+          {
+            switch (languageType) {
+            | EN => DomHelper.textEl({j|中文|j})
+            | ZH => DomHelper.textEl({j|English|j})
+            }
+          }
+        </div>
+      </div>
     </div>
   </article>;
+};
 
 let shouldUpdate =
     ({newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>

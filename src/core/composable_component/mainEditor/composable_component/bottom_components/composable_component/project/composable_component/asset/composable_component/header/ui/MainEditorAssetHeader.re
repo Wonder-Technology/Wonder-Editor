@@ -24,18 +24,37 @@ let _renderSelectNav =
     (
       uiState: AppStore.appState,
       dispatchFunc,
+      languageType,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <div className="item-content">
     <div
       className="content-section"
       onClick={_e => Method.addFolder((uiState, dispatchFunc), (), ())}>
-      <span className="section-header"> {DomHelper.textEl("Folder")} </span>
+      <span className="section-header">
+        {
+          DomHelper.textEl(
+            LanguageUtils.getAssetLanguageDataByType(
+              "asset-folder",
+              languageType,
+            ),
+          )
+        }
+      </span>
     </div>
     <div
       className="content-section"
       onClick={_e => Method.addMaterial((uiState, dispatchFunc), (), ())}>
-      <div className="section-header"> {DomHelper.textEl("Material")} </div>
+      <div className="section-header">
+        {
+          DomHelper.textEl(
+            LanguageUtils.getAssetLanguageDataByType(
+              "asset-material",
+              languageType,
+            ),
+          )
+        }
+      </div>
     </div>
   </div>;
 
@@ -70,7 +89,10 @@ let render =
     (
       (uiState, dispatchFunc),
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
-    ) =>
+    ) => {
+  let languageType =
+    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+
   <article key="assetHeader" className="wonder-asset-header">
     <div
       className="asset-header-item"
@@ -81,7 +103,8 @@ let render =
       </div>
       {
         state.isSelectNav ?
-          _renderSelectNav(uiState, dispatchFunc, self) : ReasonReact.null
+          _renderSelectNav(uiState, dispatchFunc, languageType, self) :
+          ReasonReact.null
       }
     </div>
     {_renderRemoveItem(uiState, dispatchFunc, self)}
@@ -105,6 +128,7 @@ let render =
       </div>
     </div>
   </article>;
+};
 
 let reducer = (action, state) =>
   switch (action) {
