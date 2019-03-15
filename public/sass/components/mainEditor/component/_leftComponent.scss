@@ -64,42 +64,42 @@
             display: flex;
             flex-direction: column;
             .bottom-header {
-                height: 10%;
-                min-height: 20px;
-            }
-            .bottom-widget-category {
-                width: 100%;
-                height: 100%;
-                border-bottom: 1px solid #fff;
-                display: flex;
-                flex-direction: row;
-                .category-name {
-                    width: 80px;
-                    font-size: 13px;
-                    height: 99%;
-                    margin-right: 0 5px;
+                height: 27px;
+                .bottom-widget-category {
+                    width: 100%;
+                    height: 100%;
+                    border-bottom: 1px solid #fff;
                     display: flex;
-                    .name-header {
-                        width: 100%;
-                        height: 100%;
+                    flex-direction: row;
+                    .category-name {
+                        width: 80px;
+                        font-size: 12px;
+                        height: 99%;
+                        margin-right: 0 5px;
                         display: flex;
-                        justify-content: center;
-                        align-items: center;
+                        padding:0 4px;
+                        .name-header {
+                            width: 100%;
+                            height: 100%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                        .name-tail {
+                            margin-left: 2px;
+                            margin-top: 2px;
+                            border-radius: 5px;
+                            background: red;
+                            width: 20px;
+                            height: 14px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
                     }
-                    .name-tail {
-                        margin-left: 2px;
-                        margin-top: 2px;
-                        border-radius: 5px;
-                        background: red;
-                        width: 20px;
-                        height: 14px;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
+                    .category-active {
+                        background: #555555;
                     }
-                }
-                .category-active {
-                    background: #555555;
                 }
             }
             .wonder-bottom-project {

@@ -5,12 +5,21 @@ type action =
   | HideAboutWonderModal;
 
 module Method = {
-  let buildHelpComponentSelectNav = send =>
+  let buildHelpComponentSelectNav = (send, languageType) =>
     <div className="item-content item-help">
       <div
         className="content-section"
         onClick={_e => send(ShowAboutWonderModal)}>
-        <span className="section-header"> {DomHelper.textEl("About")} </span>
+        <span className="section-header">
+          {
+            DomHelper.textEl(
+              LanguageUtils.getHeaderLanguageDataByType(
+                "help-about",
+                languageType,
+              ),
+            )
+          }
+        </span>
       </div>
     </div>;
 
@@ -58,6 +67,8 @@ let render =
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
   let className = isHelpNav ? "item-title item-active" : "item-title";
+  let languageType =
+    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
 
   <div className="header-item">
     <div className="component-item">
@@ -65,14 +76,30 @@ let render =
         className
         onClick={e => toggleShowNavFunc()}
         onMouseOver={e => hoverNavFunc()}>
-        {DomHelper.textEl("Help")}
+        {
+          DomHelper.textEl(
+            LanguageUtils.getHeaderLanguageDataByType(
+              "header-help",
+              languageType,
+            ),
+          )
+        }
       </span>
     </div>
-    {isHelpNav ? Method.buildHelpComponentSelectNav(send) : ReasonReact.null}
+    {
+      isHelpNav ?
+        Method.buildHelpComponentSelectNav(send, languageType) :
+        ReasonReact.null
+    }
     {
       state.isShowAboutWonderModal ?
         <Modal
-          title="About Wonder"
+          title={
+            LanguageUtils.getHeaderLanguageDataByType(
+              "help-about",
+              languageType,
+            )
+          }
           closeFunc={() => send(HideAboutWonderModal)}
           content={
             ModalUtils.iterateModalArrayBuildComponent(

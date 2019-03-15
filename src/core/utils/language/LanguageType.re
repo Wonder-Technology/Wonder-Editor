@@ -1,0 +1,3 @@
+type languageType =
+  | ZH
+  | EN;
