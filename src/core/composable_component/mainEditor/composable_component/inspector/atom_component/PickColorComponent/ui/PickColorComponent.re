@@ -45,14 +45,14 @@ let render =
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) =>
   <article className="inspector-item">
-    <div className="item-header"> {DomHelper.textEl(label)} </div>
+    <div className="item-header" title> {DomHelper.textEl(label)} </div>
     <div className="item-content item-color">
       <div
         className="color-hex"
         style={ReactDOMRe.Style.make(~background=state.colorHex, ())}
         onClick={_e => send(ShowColorPick)}
       />
-      <div title className="color-select" onClick={_e => send(ShowColorPick)}>
+      <div className="color-select" onClick={_e => send(ShowColorPick)}>
         <img src="./public/img/color.png" />
       </div>
     </div>

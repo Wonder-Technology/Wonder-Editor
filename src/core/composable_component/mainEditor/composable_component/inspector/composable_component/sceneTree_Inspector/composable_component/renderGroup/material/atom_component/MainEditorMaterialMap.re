@@ -108,18 +108,18 @@ module Method = {
       ((className, nodeId, textureComponent, imgSrc), send, engineState) =>
     <div
       className
-      key=(DomHelper.getRandomKey())
-      onClick=(_e => send(SetTextureToEngine(nodeId, textureComponent)))>
+      key={DomHelper.getRandomKey()}
+      onClick={_e => send(SetTextureToEngine(nodeId, textureComponent))}>
       <img src=imgSrc className="imgContent-img" />
       <div className="imgContent-text">
-        (
+        {
           DomHelper.textEl(
             NodeNameAssetLogicService.getTextureNodeName(
               ~texture=textureComponent,
               ~engineState,
             ),
           )
-        )
+        }
       </div>
     </div>;
 
@@ -244,80 +244,93 @@ let _renderDragableImage =
     (uiState, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <div
     className="texture-img"
-    onClick=(_e => send(ShowTextureGroup))
-    style=state.style>
+    onClick={_e => send(ShowTextureGroup)}
+    style={state.style}>
     <div
       className="img-dragBg"
-      onDragEnter=(
+      onDragEnter={
         _e =>
           send(
             Method.handleDragEnter(Method.isWidget, Method.isTypeValid, _e),
           )
-      )
-      onDragLeave=(
+      }
+      onDragLeave={
         _e =>
           send(
             Method.handleDragLeave(Method.isWidget, Method.isTypeValid, _e),
           )
-      )
+      }
       onDragOver=Method.handleDragOver
-      onDrop=(
+      onDrop={
         _e =>
           send(
             Method.handleDragDrop(Method.isWidget, Method.isTypeValid, _e),
           )
-      )
+      }
     />
-    (Method.showMapComponent(state.currentTextureComponent))
+    {Method.showMapComponent(state.currentTextureComponent)}
   </div>;
 
 let _renderTextureGroup = (state, send) =>
   <div className="select-component-content">
     <div className="select-component-item">
       <div className="select-item-header">
-        (DomHelper.textEl("Texture"))
+        {DomHelper.textEl("Texture")}
       </div>
       <div className="select-item-imgBody">
         <div className="imgBody-content">
-          (
+          {
             ReasonReact.array(
               Method.showTextureAssets(state, send) |> ResultUtils.handleError,
             )
-          )
+          }
         </div>
       </div>
     </div>
     <div
       className="select-component-bg"
-      onClick=(_e => send(HideTextureGroup))
+      onClick={_e => send(HideTextureGroup)}
     />
   </div>;
 
 let render =
     (
       (uiState, dispatchFunc),
-      (materialComponent, label),
+      (materialComponent, label, title),
       (getMapFunc, removeTextureFunc),
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
-    ) =>
+    ) => {
+  let languageType =
+    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+
   <article className="inspector-item">
-    <div className="item-header"> (DomHelper.textEl(label)) </div>
+    <div
+      className="item-header"
+      title={
+        switch (title) {
+        | None => ""
+        | Some(title) => title
+        }
+      }>
+      {DomHelper.textEl(label)}
+    </div>
     <div className="item-content item-texture">
-      (_renderDragableImage(uiState, self))
+      {_renderDragableImage(uiState, self)}
       <button
         className="texture-remove"
-        onClick=(
+        onClick={
           e =>
             removeTextureFunc((uiState, dispatchFunc), (), materialComponent)
-        )>
-        (DomHelper.textEl("Remove"))
+        }>
+        {DomHelper.textEl("Remove")}
       </button>
     </div>
-    (
+    {
       state.isShowTextureGroup ?
         _renderTextureGroup(state, send) : ReasonReact.null
-    )
+    }
   </article>;
+};
 
 let make =
     (
@@ -329,6 +342,7 @@ let make =
       ~onDropFunc,
       ~removeTextureFunc,
       ~isShowTextureGroup,
+      ~title: option(string)=?,
       _children,
     ) => {
   ...component,
@@ -344,7 +358,7 @@ let make =
   render: self =>
     render(
       (uiState, dispatchFunc),
-      (materialComponent, label),
+      (materialComponent, label, title),
       (getMapFunc, removeTextureFunc),
       self,
     ),

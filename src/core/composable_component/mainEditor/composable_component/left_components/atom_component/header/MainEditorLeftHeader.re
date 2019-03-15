@@ -112,9 +112,17 @@ let _renderSelectNav = ((uiState, dispatchFunc), state, send) =>
     </div>
   </div>;
 
-let _renderAddGameObjectComponent = ((uiState, dispatchFunc), state, send) =>
+let _renderAddGameObjectComponent =
+    ((uiState, dispatchFunc), state, send, languageType) =>
   <div className="sceneTree-header-item" onClick={_e => send(ToggleShowNav)}>
-    <div className="item-canBeClick" title="add gameObject">
+    <div
+      className="item-canBeClick"
+      title={
+        LanguageUtils.getSceneTreeLanguageDataByType(
+          "scene-tree-add",
+          languageType,
+        )
+      }>
       <img src="./public/img/add.png" />
     </div>
     {
@@ -125,10 +133,15 @@ let _renderAddGameObjectComponent = ((uiState, dispatchFunc), state, send) =>
   </div>;
 
 let _renderRemoveGameObjectComponent =
-    (reduxTuple, isCurrentSceneTreeNodeSceneChildren) =>
+    (reduxTuple, isCurrentSceneTreeNodeSceneChildren, languageType) =>
   <div
     className="sceneTree-header-item"
-    title="remove gameObject"
+    title={
+      LanguageUtils.getSceneTreeLanguageDataByType(
+        "scene-tree-remove",
+        languageType,
+      )
+    }
     onClick={
       _e =>
         isCurrentSceneTreeNodeSceneChildren ?
@@ -146,10 +159,15 @@ let _renderRemoveGameObjectComponent =
   </div>;
 
 let _renderCloneGameObjectComponent =
-    (reduxTuple, isCurrentSceneTreeNodeSceneChildren) =>
+    (reduxTuple, isCurrentSceneTreeNodeSceneChildren, languageType) =>
   <div
     className="sceneTree-header-item"
-    title="clone gameObject"
+    title={
+      LanguageUtils.getSceneTreeLanguageDataByType(
+        "scene-tree-clone",
+        languageType,
+      )
+    }
     onClick={
       _e =>
         isCurrentSceneTreeNodeSceneChildren ?
@@ -171,20 +189,24 @@ let render =
   let isCurrentSceneTreeNodeSceneChildren =
     GameObjectLogicService.isCurrentSceneTreeNodeSceneChildren
     |> StateLogicService.getStateToGetData;
+  let languageType =
+    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
 
   <article
     key="mainEditorScenetreeHeader" className="wonder-left-components-header">
-    {_renderAddGameObjectComponent(reduxTuple, state, send)}
+    {_renderAddGameObjectComponent(reduxTuple, state, send, languageType)}
     {
       _renderRemoveGameObjectComponent(
         reduxTuple,
         isCurrentSceneTreeNodeSceneChildren,
+        languageType,
       )
     }
     {
       _renderCloneGameObjectComponent(
         reduxTuple,
         isCurrentSceneTreeNodeSceneChildren,
+        languageType,
       )
     }
   </article>;

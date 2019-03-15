@@ -64,13 +64,20 @@ let reducer = ((onChangeFunc, onBlurFunc), canBeNull, action, state) =>
   | Blur => Method.handleBlurAction(state, canBeNull, onBlurFunc)
   };
 
-let render = (label, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+let render = (label, title, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="inspector-item">
     {
       switch (label) {
       | None => ReasonReact.null
       | Some(value) =>
-        <div className="item-header">
+        <div
+          className="item-header"
+          title={
+            switch (title) {
+            | None => ""
+            | Some(title) => title
+            }
+          }>
           <span className="component-label"> {DomHelper.textEl(value)} </span>
         </div>
       }
@@ -90,6 +97,7 @@ let make =
     (
       ~defaultValue: option(string)=?,
       ~label: option(string)=?,
+      ~title: option(string)=?,
       ~onChange: option(string => unit)=?,
       ~onBlur: option(string => unit)=?,
       ~canBeNull: option(bool)=?,
@@ -102,5 +110,5 @@ let make =
     | Some(value) => {inputValue: value, originalName: value}
     },
   reducer: reducer((onChange, onBlur), canBeNull),
-  render: self => render(label, self),
+  render: self => render(label, title, self),
 };

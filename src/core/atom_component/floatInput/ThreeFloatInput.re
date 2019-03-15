@@ -80,35 +80,44 @@ let reducer =
 let render =
     (
       (uiState, dispatchFunc),
-      (gameObjectComponent, label, canBeZero),
+      (gameObjectComponent, label, canBeZero, title),
       (changeXFunc, changeYFunc, changeZFunc),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="inspector-item wonder-three-float-input">
-    <div className="item-header"> (DomHelper.textEl(label)) </div>
+    <div
+      className="item-header"
+      title={
+        switch (title) {
+        | None => ""
+        | Some(title) => title
+        }
+      }>
+      {DomHelper.textEl(label)}
+    </div>
     <div className="item-content">
       <FloatInput
         label="X"
-        defaultValue=(state.x |> StringService.floatToString)
-        onChange=(changeXFunc(gameObjectComponent))
-        onBlur=(value => send(BlurX(value)))
-        onDragDrop=(value => send(DragDropX(value)))
+        defaultValue={state.x |> StringService.floatToString}
+        onChange={changeXFunc(gameObjectComponent)}
+        onBlur={value => send(BlurX(value))}
+        onDragDrop={value => send(DragDropX(value))}
         canBeZero
       />
       <FloatInput
         label="Y"
-        defaultValue=(state.y |> StringService.floatToString)
-        onChange=(changeYFunc(gameObjectComponent))
-        onBlur=(value => send(BlurY(value)))
-        onDragDrop=(value => send(DragDropY(value)))
+        defaultValue={state.y |> StringService.floatToString}
+        onChange={changeYFunc(gameObjectComponent)}
+        onBlur={value => send(BlurY(value))}
+        onDragDrop={value => send(DragDropY(value))}
         canBeZero
       />
       <FloatInput
         label="Z"
-        defaultValue=(state.z |> StringService.floatToString)
-        onChange=(changeZFunc(gameObjectComponent))
-        onBlur=(value => send(BlurZ(value)))
-        onDragDrop=(value => send(DragDropZ(value)))
+        defaultValue={state.z |> StringService.floatToString}
+        onChange={changeZFunc(gameObjectComponent)}
+        onBlur={value => send(BlurZ(value))}
+        onDragDrop={value => send(DragDropZ(value))}
         canBeZero
       />
     </div>
@@ -127,6 +136,7 @@ let make =
       ~blurEventFunc,
       ~dragDropFunc,
       ~canBeZero,
+      ~title: option(string)=?,
       _children,
     ) => {
   ...component,
@@ -145,7 +155,7 @@ let make =
   render: self =>
     render(
       (uiState, dispatchFunc),
-      (gameObjectComponent, label, canBeZero),
+      (gameObjectComponent, label, canBeZero, title),
       (changeXFunc, changeYFunc, changeZFunc),
       self,
     ),

@@ -93,14 +93,14 @@ module Method = {
 
          <div
            className
-           key=(DomHelper.getRandomKey())
-           onClick=(_e => send(ChangeGeometry(geometry)))>
-           (
+           key={DomHelper.getRandomKey()}
+           onClick={_e => send(ChangeGeometry(geometry))}>
+           {
              DomHelper.textEl(
                MainEditorGeometryUtils.getName(geometry)
                |> StateLogicService.getEngineStateToGetData,
              )
-           )
+           }
          </div>;
        });
   };
@@ -138,10 +138,10 @@ let _renderGeometryGroup =
   <div className="select-component-content">
     <div className="select-component-item">
       <div className="select-item-header">
-        (DomHelper.textEl("Geometry"))
+        {DomHelper.textEl("Geometry")}
       </div>
       <div className="select-item-body">
-        (
+        {
           ReasonReact.array(
             Method.showGeometryAssets(
               send,
@@ -149,12 +149,12 @@ let _renderGeometryGroup =
               state.currentGeometry,
             ),
           )
-        )
+        }
       </div>
     </div>
     <div
       className="select-component-bg"
-      onClick=(_e => send(HideGeometryGroup))
+      onClick={_e => send(HideGeometryGroup)}
     />
   </div>;
 
@@ -163,33 +163,46 @@ let render =
       (uiState, dispatchFunc),
       currentSceneTreeNode,
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
-    ) =>
+    ) => {
+  let languageType =
+    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+
   <article key="MainEditorGeometry" className="wonder-inspector-geometry">
     <div className="inspector-item">
-      <div className="item-header"> (DomHelper.textEl("Geometry")) </div>
+      <div
+        className="item-header"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "geometry-describe",
+            languageType,
+          )
+        }>
+        {DomHelper.textEl("Geometry")}
+      </div>
       <div className="item-content">
         <div className="inspector-select">
           <div
-            className="select-name" onClick=(_e => send(ShowGeometryGroup))>
-            (
+            className="select-name" onClick={_e => send(ShowGeometryGroup)}>
+            {
               DomHelper.textEl(
                 MainEditorGeometryUtils.getName(state.currentGeometry)
                 |> StateLogicService.getEngineStateToGetData,
               )
-            )
+            }
           </div>
-          <div className="select-img" onClick=(_e => send(ShowGeometryGroup))>
+          <div className="select-img" onClick={_e => send(ShowGeometryGroup)}>
             <img src="./public/img/select.png" />
           </div>
         </div>
       </div>
     </div>
-    (
+    {
       state.isShowGeometryGroup ?
         _renderGeometryGroup(uiState, currentSceneTreeNode, self) :
         ReasonReact.null
-    )
+    }
   </article>;
+};
 
 let make =
     (
