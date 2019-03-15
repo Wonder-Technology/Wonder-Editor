@@ -65,53 +65,73 @@ module Method = {
     |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
   let buildNearComponent =
-      ((uiState, dispatchFunc), currentGameObjectPerspectiveCamera) =>
+      (
+        (uiState, dispatchFunc),
+        currentGameObjectPerspectiveCamera,
+        languageType,
+      ) =>
     <MainEditorFloatInputBaseComponent
       label="Near"
-      getComponentValueFunc=(
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "projection-near-describe",
+          languageType,
+        )
+      }
+      getComponentValueFunc={
         PerspectiveCameraProjectionEngineService.getPerspectiveCameraNear(
           currentGameObjectPerspectiveCamera,
         )
-      )
-      changeComponentValueFunc=(
+      }
+      changeComponentValueFunc={
         changeNear(currentGameObjectPerspectiveCamera)
-      )
-      blurValueFunc=(
+      }
+      blurValueFunc={
         blurNearEvent(
           (uiState, dispatchFunc),
           currentGameObjectPerspectiveCamera,
         )
-      )
-      dragDropFunc=(
+      }
+      dragDropFunc={
         blurNearEvent(
           (uiState, dispatchFunc),
           currentGameObjectPerspectiveCamera,
         )
-      )
+      }
     />;
 
   let buildFarComponent =
-      ((uiState, dispatchFunc), currentGameObjectPerspectiveCamera) =>
+      (
+        (uiState, dispatchFunc),
+        currentGameObjectPerspectiveCamera,
+        languageType,
+      ) =>
     <MainEditorFloatInputBaseComponent
       label="Far"
-      getComponentValueFunc=(
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "projection-far-describe",
+          languageType,
+        )
+      }
+      getComponentValueFunc={
         PerspectiveCameraProjectionEngineService.getPerspectiveCameraFar(
           currentGameObjectPerspectiveCamera,
         )
-      )
-      changeComponentValueFunc=(changeFar(currentGameObjectPerspectiveCamera))
-      blurValueFunc=(
+      }
+      changeComponentValueFunc={changeFar(currentGameObjectPerspectiveCamera)}
+      blurValueFunc={
         blurFarEvent(
           (uiState, dispatchFunc),
           currentGameObjectPerspectiveCamera,
         )
-      )
-      dragDropFunc=(
+      }
+      dragDropFunc={
         blurFarEvent(
           (uiState, dispatchFunc),
           currentGameObjectPerspectiveCamera,
         )
-      )
+      }
     />;
 
   /* let buildAspectComponent =
@@ -135,29 +155,39 @@ module Method = {
      />; */
 
   let buildFovyComponent =
-      ((uiState, dispatchFunc), currentGameObjectPerspectiveCamera) =>
+      (
+        (uiState, dispatchFunc),
+        currentGameObjectPerspectiveCamera,
+        languageType,
+      ) =>
     <MainEditorFloatInputBaseComponent
       label="Fovy"
-      getComponentValueFunc=(
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "projection-fovy-describe",
+          languageType,
+        )
+      }
+      getComponentValueFunc={
         PerspectiveCameraProjectionEngineService.getPerspectiveCameraFovy(
           currentGameObjectPerspectiveCamera,
         )
-      )
-      changeComponentValueFunc=(
+      }
+      changeComponentValueFunc={
         changeFovy(currentGameObjectPerspectiveCamera)
-      )
-      blurValueFunc=(
+      }
+      blurValueFunc={
         blurFovyEvent(
           (uiState, dispatchFunc),
           currentGameObjectPerspectiveCamera,
         )
-      )
-      dragDropFunc=(
+      }
+      dragDropFunc={
         blurFovyEvent(
           (uiState, dispatchFunc),
           currentGameObjectPerspectiveCamera,
         )
-      )
+      }
     />;
 };
 
@@ -171,39 +201,50 @@ let render = ((uiState, dispatchFunc), _self) => {
          SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
          |> StateLogicService.getEditorState,
        );
+  let languageType =
+    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
 
   <article
     key="MainEditorCameraProjection" className="wonder-camera-projection">
     <Select
       label="Type"
-      options=(MainEditorCameraProjectionUtils.getCameraProjectionOptions())
-      onChange=(value => ())
-      selectedKey=(PerspectiveCamera |> convertCameraProjectionTypeToInt)
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "projection-type-describe",
+          languageType,
+        )
+      }
+      options={MainEditorCameraProjectionUtils.getCameraProjectionOptions()}
+      onChange={value => ()}
+      selectedKey={PerspectiveCamera |> convertCameraProjectionTypeToInt}
     />
-    (
+    {
       Method.buildNearComponent(
         (uiState, dispatchFunc),
         currentGameObjectPerspectiveCamera,
+        languageType,
       )
-    )
-    (
+    }
+    {
       Method.buildFarComponent(
         (uiState, dispatchFunc),
         currentGameObjectPerspectiveCamera,
+        languageType,
       )
-    )
+    }
     /* (
          Method.buildAspectComponent(
            (uiState, dispatchFunc),
            currentGameObjectPerspectiveCamera,
          )
        ) */
-    (
+    {
       Method.buildFovyComponent(
         (uiState, dispatchFunc),
         currentGameObjectPerspectiveCamera,
+        languageType,
       )
-    )
+    }
   </article>;
 };
 

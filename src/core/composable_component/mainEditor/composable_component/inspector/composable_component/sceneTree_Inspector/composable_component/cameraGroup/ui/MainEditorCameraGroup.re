@@ -1,17 +1,36 @@
 let component = ReasonReact.statelessComponent("MainEditorCameraGroup");
 
-let render = ((uiState, dispatchFunc), _self) =>
+let render = ((uiState, dispatchFunc), _self) => {
+  let languageType =
+    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+
   <article key="MainEditorCameraGroup" className="wonder-camera-group">
     <div className="inspector-component">
-      <div className="component-title"> (DomHelper.textEl("CameView")) </div>
+      <div
+        className="component-title"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "camera-view-describe",
+            languageType,
+          )
+        }>
+        {DomHelper.textEl("Camera View")}
+      </div>
       <hr />
       <div className="component-content">
         <MainEditorCameraView uiState dispatchFunc />
       </div>
     </div>
     <div className="inspector-component">
-      <div className="component-title">
-        (DomHelper.textEl("Projection"))
+      <div
+        className="component-title"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "camera-projection-describe",
+            languageType,
+          )
+        }>
+        {DomHelper.textEl("Projection")}
       </div>
       <hr />
       <div className="component-content">
@@ -19,6 +38,7 @@ let render = ((uiState, dispatchFunc), _self) =>
       </div>
     </div>
   </article>;
+};
 
 let make = (~uiState, ~dispatchFunc, _children) => {
   ...component,
