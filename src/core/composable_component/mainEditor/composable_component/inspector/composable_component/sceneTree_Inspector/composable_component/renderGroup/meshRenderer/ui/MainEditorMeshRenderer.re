@@ -27,26 +27,40 @@ let reducer = ((uiState, dispatchFunc), action, state) =>
   };
 
 let render =
-    ((uiState, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    ((uiState, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) => {
+  let languageType =
+    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+
   <article key="MainEditorMeshRenderer" className="wonder-mesh-renderer">
     <Select
-      label="Draw mode"
-      options=(MainEditorMeshRendererUtils.getDrawModeOptions())
-      selectedKey=state.drawMode
-      onChange=(value => send(ChangeMode(value)))
+      label="Draw Mode"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "draw-mode-describe",
+          languageType,
+        )
+      }
+      options={MainEditorMeshRendererUtils.getDrawModeOptions()}
+      selectedKey={state.drawMode}
+      onChange={value => send(ChangeMode(value))}
     />
   </article>;
+};
 
 let make = (~uiState, ~dispatchFunc, _children) => {
   ...component,
   initialState: () => {
     let engineState = StateEngineService.unsafeGetState();
     let meshRenderer =
-      StateEditorService.getState()
-      |> SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
-      |. GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
-           engineState,
-         );
+      (
+        StateEditorService.getState()
+        |> SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
+      )
+      ->(
+          GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
+            engineState,
+          )
+        );
     {
       meshRenderer,
       drawMode:

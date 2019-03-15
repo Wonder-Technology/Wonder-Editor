@@ -26,12 +26,12 @@ module Method = {
     <MainEditorBasicMaterial
       uiState
       dispatchFunc
-      materialComponent=(
+      materialComponent={
         GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
           gameObject,
         )
         |> StateLogicService.getEngineStateToGetData
-      )
+      }
     />;
   };
 
@@ -43,12 +43,12 @@ module Method = {
     <MainEditorLightMaterial
       uiState
       dispatchFunc
-      materialComponent=(
+      materialComponent={
         GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
           gameObject,
         )
         |> StateLogicService.getEngineStateToGetData
-      )
+      }
     />;
   };
 
@@ -108,14 +108,14 @@ module Method = {
 
          <div
            className
-           key=(DomHelper.getRandomKey())
-           onClick=(
+           key={DomHelper.getRandomKey()}
+           onClick={
              _e =>
                send(
                  ChangeMaterial(materialNodeId, (material, materialType)),
                )
-           )>
-           (
+           }>
+           {
              DomHelper.textEl(
                NodeNameAssetLogicService.getMaterialNodeName(
                  ~material,
@@ -123,7 +123,7 @@ module Method = {
                  ~engineState,
                ),
              )
-           )
+           }
          </div>;
        });
   };
@@ -219,13 +219,23 @@ let reducer =
     )
   };
 
-let _renderSelectMaterial = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
+let _renderSelectMaterial =
+    (languageType, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <div className="inspector-item">
-    <div className="item-header"> (DomHelper.textEl("Material")) </div>
+    <div
+      className="item-header"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "material-describe",
+          languageType,
+        )
+      }>
+      {DomHelper.textEl("Material")}
+    </div>
     <div className="item-content">
       <div className="inspector-select">
-        <div className="select-name" onClick=(_e => send(ShowMaterialGroup))>
-          (
+        <div className="select-name" onClick={_e => send(ShowMaterialGroup)}>
+          {
             DomHelper.textEl(
               NodeNameAssetLogicService.getMaterialNodeName(
                 ~material=state.currentMaterial,
@@ -233,9 +243,9 @@ let _renderSelectMaterial = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
                 ~engineState=StateEngineService.unsafeGetState(),
               ),
             )
-          )
+          }
         </div>
-        <div className="select-img" onClick=(_e => send(ShowMaterialGroup))>
+        <div className="select-img" onClick={_e => send(ShowMaterialGroup)}>
           <img src="./public/img/select.png" />
         </div>
       </div>
@@ -247,10 +257,10 @@ let _renderMaterialGroup =
   <div className="select-component-content">
     <div className="select-component-item">
       <div className="select-item-header">
-        (DomHelper.textEl("Material"))
+        {DomHelper.textEl("Material")}
       </div>
       <div className="select-item-body">
-        (
+        {
           ReasonReact.array(
             Method.showMaterialAssets(
               send,
@@ -259,12 +269,12 @@ let _renderMaterialGroup =
               state.materialType,
             ),
           )
-        )
+        }
       </div>
     </div>
     <div
       className="select-component-bg"
-      onClick=(_e => send(HideMaterialGroup))
+      onClick={_e => send(HideMaterialGroup)}
     />
   </div>;
 
@@ -273,24 +283,33 @@ let render =
       (uiState, dispatchFunc),
       currentSceneTreeNode,
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
-    ) =>
+    ) => {
+  let languageType =
+    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+
   <article key="MainEditorMaterial" className="wonder-inspector-material">
-    (_renderSelectMaterial(self))
-    (
+    {_renderSelectMaterial(languageType, self)}
+    {
       state.isShowMaterialGroup ?
         _renderMaterialGroup(currentSceneTreeNode, self) : ReasonReact.null
-    )
+    }
     <div className="material-value">
       <Select
         label="Type"
-        options=(MainEditorMaterialUtils.getMaterialOptions())
-        selectedKey=(
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "material-type-describe",
+            languageType,
+          )
+        }
+        options={MainEditorMaterialUtils.getMaterialOptions()}
+        selectedKey={
           state.materialType |> MainEditorMaterialType.convertMaterialTypeToInt
-        )
-        onChange=(value => send(ChangeMaterialType(value)))
+        }
+        onChange={value => send(ChangeMaterialType(value))}
       />
       <div className="">
-        (
+        {
           MainEditorMaterialUtils.handleSpecificFuncByMaterialType(
             state.materialType,
             (
@@ -298,11 +317,12 @@ let render =
               Method.renderLightMaterial((uiState, dispatchFunc)),
             ),
           )
-        )
+        }
       </div>
-      (Method.buildShadeComponent(state.currentMaterial, state.materialType))
+      {Method.buildShadeComponent(state.currentMaterial, state.materialType)}
     </div>
   </article>;
+};
 
 let make =
     (

@@ -23,10 +23,24 @@ let asset_language_array = [|
     },
   },
   {
-    title: "asset-material",
+    title: "asset-add",
     language: {
-      zh: {j|材质|j},
-      en: "Material",
+      zh: {j|文件夹|j},
+      en: "add asset",
+    },
+  },
+  {
+    title: "asset-remove",
+    language: {
+      zh: {j|文件夹|j},
+      en: "remove asset",
+    },
+  },
+  {
+    title: "asset-load",
+    language: {
+      zh: {j|文件夹|j},
+      en: "upload asset",
     },
   },
 |];

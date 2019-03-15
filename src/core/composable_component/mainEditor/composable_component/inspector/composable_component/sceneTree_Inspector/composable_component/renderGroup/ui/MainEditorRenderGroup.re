@@ -1,10 +1,20 @@
 let component = ReasonReact.statelessComponent("MainEditorRenderGroup");
 
-let render = ((uiState, dispatchFunc), currentSceneTreeNode, _self) =>
+let render = ((uiState, dispatchFunc), currentSceneTreeNode, _self) => {
+  let languageType =
+    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+
   <article key="MainEditorRenderGroup" className="wonder-render-group">
     <div className="inspector-component">
-      <div className="component-title">
-        (DomHelper.textEl("MeshRender"))
+      <div
+        className="component-title"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "mesh-render-describe",
+            languageType,
+          )
+        }>
+        {DomHelper.textEl("Mesh Render")}
       </div>
       <hr />
       <div className="component-content">
@@ -12,15 +22,26 @@ let render = ((uiState, dispatchFunc), currentSceneTreeNode, _self) =>
       </div>
     </div>
     <div className="inspector-component">
-      <div className="component-title"> (DomHelper.textEl("Material")) </div>
+      <div
+        className="component-title"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "material-type-describe",
+            languageType,
+          )
+        }>
+        {DomHelper.textEl("Material Type")}
+      </div>
       <hr />
       <div className="component-content">
         <MainEditorMaterial uiState dispatchFunc currentSceneTreeNode />
       </div>
     </div>
   </article>;
+};
 
 let make = (~uiState, ~dispatchFunc, ~currentSceneTreeNode, _children) => {
   ...component,
-  render: self => render((uiState, dispatchFunc), currentSceneTreeNode, self),
+  render: self =>
+    render((uiState, dispatchFunc), currentSceneTreeNode, self),
 };

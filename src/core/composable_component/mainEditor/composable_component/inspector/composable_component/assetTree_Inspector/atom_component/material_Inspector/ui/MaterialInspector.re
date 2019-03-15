@@ -37,25 +37,40 @@ let render =
       (name, type_, materialComponent),
       renameFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
-    ) =>
+    ) => {
+  let languageType =
+    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+
   <article key="MaterialInspector" className="wonder-material-inspector">
-    <h1> (DomHelper.textEl("Material")) </h1>
+    <h1> {DomHelper.textEl("Material")} </h1>
     <hr />
     <StringInput
       label="Name"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "material-name-describe",
+          languageType,
+        )
+      }
       defaultValue=name
       onBlur=renameFunc
       canBeNull=false
     />
     <Select
       label="Type"
-      options=(MainEditorMaterialUtils.getMaterialOptions())
-      selectedKey=(
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "material-type-describe",
+          languageType,
+        )
+      }
+      options={MainEditorMaterialUtils.getMaterialOptions()}
+      selectedKey={
         state.materialType |> MainEditorMaterialType.convertMaterialTypeToInt
-      )
-      onChange=(value => send(ChangeMaterialType(value)))
+      }
+      onChange={value => send(ChangeMaterialType(value))}
     />
-    (
+    {
       switch (state.materialType) {
       | BasicMaterial =>
         <MainEditorBasicMaterial uiState dispatchFunc materialComponent />
@@ -63,8 +78,9 @@ let render =
       | LightMaterial =>
         <MainEditorLightMaterial uiState dispatchFunc materialComponent />
       }
-    )
+    }
   </article>;
+};
 
 let make =
     (

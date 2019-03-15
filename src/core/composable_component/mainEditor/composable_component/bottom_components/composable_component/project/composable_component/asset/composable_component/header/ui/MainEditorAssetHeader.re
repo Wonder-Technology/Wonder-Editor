@@ -45,16 +45,7 @@ let _renderSelectNav =
     <div
       className="content-section"
       onClick={_e => Method.addMaterial((uiState, dispatchFunc), (), ())}>
-      <div className="section-header">
-        {
-          DomHelper.textEl(
-            LanguageUtils.getAssetLanguageDataByType(
-              "asset-material",
-              languageType,
-            ),
-          )
-        }
-      </div>
+      <div className="section-header"> {DomHelper.textEl("Material")} </div>
     </div>
   </div>;
 
@@ -62,11 +53,14 @@ let _renderRemoveItem =
     (
       uiState: AppStore.appState,
       dispatchFunc,
+      languageType,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <div
     className="asset-header-item"
-    title="remove asset"
+    title={
+      LanguageUtils.getAssetLanguageDataByType("asset-remove", languageType)
+    }
     onClick={
       _e =>
         CurrentNodeIdAssetEditorService.couldRemoveCurrentNode
@@ -96,7 +90,9 @@ let render =
   <article key="assetHeader" className="wonder-asset-header">
     <div
       className="asset-header-item"
-      title="add asset"
+      title={
+        LanguageUtils.getAssetLanguageDataByType("asset-add", languageType)
+      }
       onClick={_e => send(ToggleShowNav)}>
       <div className="item-canBeClick">
         <img src="./public/img/add.png" />
@@ -107,9 +103,16 @@ let render =
           ReasonReact.null
       }
     </div>
-    {_renderRemoveItem(uiState, dispatchFunc, self)}
+    {_renderRemoveItem(uiState, dispatchFunc, languageType, self)}
     <div className="asset-header-item">
-      <div className="item-canBeClick" title="load asset">
+      <div
+        className="item-canBeClick"
+        title={
+          LanguageUtils.getAssetLanguageDataByType(
+            "asset-load",
+            languageType,
+          )
+        }>
         <img src="./public/img/load.png" />
         <input
           className="asset-fileLoad"

@@ -32,3 +32,11 @@ let getControllerLanguageDataByType = (itemName, type_) =>
 let getAssetLanguageDataByType = (itemName, type_) =>
   LanguageAssetData.asset_language_array
   ->(_getLanguageDataByType(itemName, type_));
+
+let getSceneTreeLanguageDataByType = (itemName, type_) =>
+  LanguageSceneTreeData.sceneTree_language_array
+  ->(_getLanguageDataByType(itemName, type_));
+
+let getInspectorLanguageDataByType = (itemName, type_) =>
+  LanguageInspectorData.inspector_language_array
+  ->(_getLanguageDataByType(itemName, type_));

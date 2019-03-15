@@ -16,6 +16,10 @@
                 display: flex;
                 align-items: center;
                 margin-left:15px;
+                &:hover{
+                    color: #00c1de;
+                    cursor: pointer;
+                } 
             }
             .item-content{
                 flex:initial;

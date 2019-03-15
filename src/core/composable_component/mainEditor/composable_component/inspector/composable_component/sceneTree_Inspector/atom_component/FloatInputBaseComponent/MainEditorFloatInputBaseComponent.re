@@ -22,15 +22,22 @@ let reducer = ((blurValueFunc, dragDropFunc), action, state) =>
 let render =
     (
       label,
+      title,
       changeComponentValueFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <FloatInput
-    defaultValue=(state.componentValueForUndo |> StringService.floatToString)
+    defaultValue={state.componentValueForUndo |> StringService.floatToString}
     label
+    title={
+      switch (title) {
+      | None => ""
+      | Some(title) => title
+      }
+    }
     onChange=changeComponentValueFunc
-    onBlur=(value => send(TriggerBlur(value)))
-    onDragDrop=(value => send(TriggerDragDrop(value)))
+    onBlur={value => send(TriggerBlur(value))}
+    onDragDrop={value => send(TriggerDragDrop(value))}
   />;
 
 let make =
@@ -40,15 +47,15 @@ let make =
       ~getComponentValueFunc,
       ~changeComponentValueFunc,
       ~blurValueFunc,
+      ~title: option(string)=?,
       _children,
     ) => {
   ...component,
   initialState: () => {
     componentValueForUndo:
-      getComponentValueFunc
-      |> StateLogicService.getEngineStateToGetData
-      |. FloatService.truncateFloatValue(5),
+      (getComponentValueFunc |> StateLogicService.getEngineStateToGetData)
+      ->(FloatService.truncateFloatValue(5)),
   },
   reducer: reducer((blurValueFunc, dragDropFunc)),
-  render: self => render(label, changeComponentValueFunc, self),
+  render: self => render(label, title, changeComponentValueFunc, self),
 };

@@ -4,6 +4,10 @@
     .component-title{
         font-size:14px;
         margin-left:5%;
+        &:hover{
+            color: #00c1de;
+            cursor: pointer;
+        } 
     }
     hr{
         border: 0;
