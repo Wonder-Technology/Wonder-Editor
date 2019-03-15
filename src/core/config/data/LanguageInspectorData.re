@@ -149,7 +149,7 @@ let inspector_language_array = [|
     },
   },
   {
-    title: "projection-describe",
+    title: "camera-projection-describe",
     language: {
       zh: {j|自定义名词|j},
       en: "name for yourself",
