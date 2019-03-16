@@ -22,11 +22,9 @@ let getAttribute = [%raw (dom, prop) => "
   return dom.getAttribute(prop);
 "];
 
-let locationReload = [%raw
-  param => "
-window.location.href = location.href+'?time='+((new Date()).getTime());
-"
-];
+let locationReload = [%raw param => "
+  window.location.reload(true);
+"];
 
 let apply = [%raw
   {|
