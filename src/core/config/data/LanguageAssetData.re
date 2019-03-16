@@ -5,7 +5,7 @@ let asset_language_array = [|
     title: "bottom-project",
     language: {
       zh: {j|资源管理器|j},
-      en: "Assets",
+      en: "Project",
     },
   },
   {
@@ -25,21 +25,21 @@ let asset_language_array = [|
   {
     title: "asset-add",
     language: {
-      zh: {j|文件夹|j},
+      zh: {j|加入资产|j},
       en: "add asset",
     },
   },
   {
     title: "asset-remove",
     language: {
-      zh: {j|文件夹|j},
+      zh: {j|删除资产|j},
       en: "remove asset",
     },
   },
   {
     title: "asset-load",
     language: {
-      zh: {j|文件夹|j},
+      zh: {j|加载资产|j},
       en: "upload asset",
     },
   },

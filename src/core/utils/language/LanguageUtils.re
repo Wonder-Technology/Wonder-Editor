@@ -18,6 +18,12 @@ let getHeaderLanguageDataByType = (itemName, type_) =>
   LanguageHeaderData.header_language_array
   ->(_getLanguageDataByType(itemName, type_));
 
+let getHeaderVersionUpgradeContentLanguageDataByType = (newVersion, type_) =>
+  switch (type_) {
+  | EN => {j|Upgrade to $newVersion Version, We are here to serve you~ Thanks for your trust~|j}
+  | ZH => {j|升级到$newVersion版本，我们为您服务～感谢您的信任和支持～|j}
+  };
+
 let getControllerLanguageDataByType = (itemName, type_) =>
   LanguageControllerData.controller_language_array
   ->(_getLanguageDataByType(itemName, type_));

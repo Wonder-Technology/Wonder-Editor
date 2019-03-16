@@ -147,11 +147,11 @@ let buildComponentUIComponent =
     |> buildComponentBox(
          (uiState, dispatchFunc),
          (
-           "Geometry Type",
+           "Geometry",
            type_,
            gameObject,
            LanguageUtils.getInspectorLanguageDataByType(
-             "geometry-type-describe",
+             "geometry-describe",
              languageType,
            ),
          ),
@@ -195,11 +195,11 @@ let buildComponentUIComponent =
     |> buildComponentBox(
          (uiState, dispatchFunc),
          (
-           "ArcballCamera Controller",
+           "ArcballCameraController",
            type_,
            gameObject,
            LanguageUtils.getInspectorLanguageDataByType(
-             "arcball-camera-describe",
+             "arcball-cameraController-describe",
              languageType,
            ),
          ),

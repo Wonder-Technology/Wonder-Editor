@@ -173,7 +173,7 @@ let render =
         className="item-header"
         title={
           LanguageUtils.getInspectorLanguageDataByType(
-            "geometry-describe",
+            "geometry-geometry-describe",
             languageType,
           )
         }>

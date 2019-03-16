@@ -47,11 +47,16 @@ module Method = {
           key={DomHelper.getRandomKey()}
           label={
             LanguageUtils.getControllerLanguageDataByType(
-              "controller-light",
+              "controller-ambient",
               languageType,
             )
           }
-          title="ambient color"
+          title={
+            LanguageUtils.getControllerLanguageDataByType(
+              "ambient-describe",
+              languageType,
+            )
+          }
           getColorFunc=getColor
           changeColorFunc=changeColor
           closeColorPickFunc={closeColorPick((uiState, dispatchFunc), ())}
@@ -101,7 +106,7 @@ module Method = {
     | _ => false
     };
 
-  let buildTransformComponent = (uiState, dispatchFunc) =>
+  let buildTransformComponent = (uiState, dispatchFunc, languageType) =>
     <div className="header-item">
       <div className="component-item">
         <TransformGizmoSwitch
@@ -134,10 +139,15 @@ module Method = {
       </div>
     </div>;
 
-  let renderRunAndStop = (uiState, dispatchFunc) =>
+  let renderRunAndStop = (uiState, dispatchFunc, languageType) =>
     <div
       className="controller-runAndStop"
-      title="run/stop"
+      title={
+        LanguageUtils.getControllerLanguageDataByType(
+          "run-describe",
+          languageType,
+        )
+      }
       onClick={
         _e => {
           StateEditorService.getIsRun() ?
@@ -178,9 +188,9 @@ let render =
         }
       </div>
       <div className="controller-transform">
-        {Method.buildTransformComponent(uiState, dispatchFunc)}
+        {Method.buildTransformComponent(uiState, dispatchFunc, languageType)}
       </div>
-      {Method.renderRunAndStop(uiState, dispatchFunc)}
+      {Method.renderRunAndStop(uiState, dispatchFunc, languageType)}
       <div className="controller-other">
         <div
           className="other-language"

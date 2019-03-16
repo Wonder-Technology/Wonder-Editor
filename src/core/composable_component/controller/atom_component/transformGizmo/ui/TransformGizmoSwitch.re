@@ -15,21 +15,33 @@ module Method = {
       }
     );
 
-  let _getTitle = type_ =>
+  let _getTitle = (type_, languageType) =>
     SceneViewType.(
       switch (type_) {
-      | Translation => "translation"
-      | Rotation => "rotation"
-      | Scale => "scale"
+      | Translation =>
+        LanguageUtils.getControllerLanguageDataByType(
+          "translation-gizmo-describe",
+          languageType,
+        )
+      | Rotation =>
+        LanguageUtils.getControllerLanguageDataByType(
+          "rotation-gizmo-describe",
+          languageType,
+        )
+      | Scale =>
+        LanguageUtils.getControllerLanguageDataByType(
+          "scale-gizmo-describe",
+          languageType,
+        )
       }
     );
 
-  let renderContent = ((state, send), data) =>
+  let renderContent = ((state, send), languageType, data) =>
     data
     |> Js.Array.map(({type_, onChangeFunc}) =>
          <div
            key={DomHelper.getRandomKey()}
-           title={_getTitle(type_)}
+           title={_getTitle(type_, languageType)}
            className={
              ClassNameService.buildMultipleClassName([|
                _getTypeClassName(type_),
@@ -51,10 +63,18 @@ let reducer = (action, state) =>
     )
   };
 
-let render = (data, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+let render = (data, {state, send}: ReasonReact.self('a, 'b, 'c)) => {
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
+
   <article key="TransformGizmoSwitch" className="transform-gizmo-switch">
-    {ReasonReact.array(Method.renderContent((state, send), data))}
+    {
+      ReasonReact.array(
+        Method.renderContent((state, send), languageType, data),
+      )
+    }
   </article>;
+};
 
 let make = (~data, ~defaultType, _children) => {
   ...component,

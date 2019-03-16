@@ -26,11 +26,11 @@ let render = ((uiState, dispatchFunc), currentSceneTreeNode, _self) => {
         className="component-title"
         title={
           LanguageUtils.getInspectorLanguageDataByType(
-            "material-type-describe",
+            "material-describe",
             languageType,
           )
         }>
-        {DomHelper.textEl("Material Type")}
+        {DomHelper.textEl("Material")}
       </div>
       <hr />
       <div className="component-content">
