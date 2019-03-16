@@ -1,3 +1,20 @@
+<a name="1.0.2"></a>
+## [1.0.2](https://github.com/Wonder-Technology/Wonder-Editor/compare/v1.0.1...v1.0.2) (2019-03-16)
+
+
+### Features
+
+* **engine:** update wonder.js to 1.0.2 ([aa4ace3](https://github.com/Wonder-Technology/Wonder-Editor/commit/aa4ace3))
+* **language:** add arcball camera and light language ([4ebe5d4](https://github.com/Wonder-Technology/Wonder-Editor/commit/4ebe5d4))
+* **language:** add asset and inspector language ([9ef009d](https://github.com/Wonder-Technology/Wonder-Editor/commit/9ef009d))
+* **language:** add camera group language ([4fb0700](https://github.com/Wonder-Technology/Wonder-Editor/commit/4fb0700))
+* **language:** change header-edit->zh ([9d9eb51](https://github.com/Wonder-Technology/Wonder-Editor/commit/9d9eb51))
+* **language:** finish header and controller language ([2f49251](https://github.com/Wonder-Technology/Wonder-Editor/commit/2f49251))
+* **language:** fix language data ([836aaf6](https://github.com/Wonder-Technology/Wonder-Editor/commit/836aaf6))
+* **language:** restore DomHelper->locationReload to use reload ([6fc6ee4](https://github.com/Wonder-Technology/Wonder-Editor/commit/6fc6ee4))
+
+
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/Wonder-Technology/Wonder-Editor/compare/v1.0.0...v1.0.1) (2019-03-13)
 

@@ -1,5 +1,5 @@
 var dataCacheName = 'wonder-editor';
-var cacheName = 'wonder-editor-cache-1.0.1';
+var cacheName = 'wonder-editor-cache-1.0.2';
 var filesToCache = [
     './',
     './index.html',
