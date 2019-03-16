@@ -15,6 +15,7 @@ module.exports = {
   ],
 
   scopes: [
+    { name: "language" },
     { name: "pwa" },
     { name: "hotkey" },
     { name: "focus" },
