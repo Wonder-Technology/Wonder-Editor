@@ -2,13 +2,6 @@ open LanguageType;
 
 open LanguageDataType;
 
-let getLanguageType = language =>
-  switch (language) {
-  | "ZH" => ZH
-  | "EN" => EN
-  | _ => EN
-  };
-
 let _getLanguageDataByType = (languageDataArray, itemName, type_) => {
   let {language} =
     languageDataArray

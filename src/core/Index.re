@@ -3,7 +3,7 @@ module IndexStoreProvider = {
 };
 
 LanguageEditorService.setType(
-  Window.getLanguage(.) |> LanguageUtils.getLanguageType,
+  Window.getLanguage(.) |> LanguageEditorService.convertToType,
 )
 |> StateLogicService.getAndSetEditorState;
 
