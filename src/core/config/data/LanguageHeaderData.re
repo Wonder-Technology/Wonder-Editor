@@ -25,7 +25,7 @@ let header_language_array = [|
   {
     title: "file-controls",
     language: {
-      zh: {j|快捷键|j},
+      zh: {j|控制|j},
       en: "Controls",
     },
   },
