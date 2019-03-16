@@ -120,7 +120,7 @@ let reducer = (action, state) =>
 let render =
     ((uiState, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) => {
   let languageType =
-    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <div className="header-item">
     {

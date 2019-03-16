@@ -39,7 +39,7 @@ let render =
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
   let languageType =
-    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article key="MaterialInspector" className="wonder-material-inspector">
     <h1> {DomHelper.textEl("Material")} </h1>

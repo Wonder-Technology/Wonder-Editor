@@ -30,7 +30,7 @@ let render = ((uiState, dispatchFunc), _self) => {
     );
 
   let languageType =
-    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article key="MainEditorCameraView" className="wonder-camera-view">
     <Select

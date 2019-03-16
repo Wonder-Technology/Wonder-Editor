@@ -189,7 +189,7 @@ module Method = {
 
 let render = ((uiState, dispatchFunc), lightComponent, _self) => {
   let languageType =
-    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article className="wonder-point-light">
     {

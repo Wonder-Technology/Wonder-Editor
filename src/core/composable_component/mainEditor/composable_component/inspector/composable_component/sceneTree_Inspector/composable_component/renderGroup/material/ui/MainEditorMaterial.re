@@ -285,7 +285,7 @@ let render =
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) => {
   let languageType =
-    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article key="MainEditorMaterial" className="wonder-inspector-material">
     {_renderSelectMaterial(languageType, self)}

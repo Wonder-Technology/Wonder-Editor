@@ -37,4 +37,5 @@ type editorState = {
   currentDragSource: (option(widgetType), option(int)),
   currentSelectSource: option(widgetType),
   loopId: int,
+  languageType: option(LanguageType.languageType),
 };

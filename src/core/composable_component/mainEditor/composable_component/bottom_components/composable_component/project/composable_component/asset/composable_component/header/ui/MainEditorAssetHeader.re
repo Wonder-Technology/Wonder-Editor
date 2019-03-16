@@ -85,7 +85,7 @@ let render =
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) => {
   let languageType =
-    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article key="assetHeader" className="wonder-asset-header">
     <div

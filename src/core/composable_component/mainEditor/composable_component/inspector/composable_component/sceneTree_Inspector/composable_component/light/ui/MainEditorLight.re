@@ -62,7 +62,7 @@ let reducer = ((uiState, dispatchFunc), action, state) =>
 let render =
     ((uiState, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) => {
   let languageType =
-    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article key="MainEditorLight" className="wonder-inspector-light">
     <Select

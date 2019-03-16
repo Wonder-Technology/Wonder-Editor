@@ -374,7 +374,7 @@ let render =
       _self,
     ) => {
   let languageType =
-    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article className="wonder-inspector-arcballCameraController">
     {

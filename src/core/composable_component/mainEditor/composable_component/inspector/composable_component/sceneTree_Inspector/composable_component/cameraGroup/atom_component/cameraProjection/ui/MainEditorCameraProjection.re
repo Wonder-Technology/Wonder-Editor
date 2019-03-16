@@ -202,7 +202,7 @@ let render = ((uiState, dispatchFunc), _self) => {
          |> StateLogicService.getEditorState,
        );
   let languageType =
-    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article
     key="MainEditorCameraProjection" className="wonder-camera-projection">

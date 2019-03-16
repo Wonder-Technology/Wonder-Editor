@@ -86,7 +86,7 @@ let render =
       _self,
     ) => {
   let languageType =
-    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article key="SceneTreeInspector" className="wonder-inspector-sceneTree">
     {
