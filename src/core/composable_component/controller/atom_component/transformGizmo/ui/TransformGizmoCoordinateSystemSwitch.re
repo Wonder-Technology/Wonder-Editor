@@ -40,17 +40,26 @@ let render =
       isDisable,
       onChangeFunc,
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
-    ) =>
+    ) => {
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
+
   <article
     key="TransformGizmoCoordinateSystemSwitch"
     className="transform-gizmo-coordinate-system-switch">
     <button
       disabled=isDisable
-      title="switch coordinate system"
+      title={
+        LanguageUtils.getControllerLanguageDataByType(
+          "coordinate-system-describe",
+          languageType,
+        )
+      }
       onClick={_e => Method.change((state, send), onChangeFunc)}>
       {DomHelper.textEl(Method.getText(state.selectedCoordinateSystem))}
     </button>
   </article>;
+};
 
 let make = (~defaultCoordinateSystem, ~isDisable, ~onChange, _children) => {
   ...component,

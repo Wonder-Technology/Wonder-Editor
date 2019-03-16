@@ -67,7 +67,7 @@ let render = ((uiState, dispatchFunc), materialComponent, _self) => {
       label="Diffuse Color"
       title={
         LanguageUtils.getInspectorLanguageDataByType(
-          "material-color-describe",
+          "material-diffuseColor-describe",
           languageType,
         )
       }
@@ -84,7 +84,7 @@ let render = ((uiState, dispatchFunc), materialComponent, _self) => {
       label="Diffuse Map"
       title={
         LanguageUtils.getInspectorLanguageDataByType(
-          "rotation-describe",
+          "material-diffuseMap-describe",
           languageType,
         )
       }

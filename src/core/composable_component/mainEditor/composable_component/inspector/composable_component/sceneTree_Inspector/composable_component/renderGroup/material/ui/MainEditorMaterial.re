@@ -226,7 +226,7 @@ let _renderSelectMaterial =
       className="item-header"
       title={
         LanguageUtils.getInspectorLanguageDataByType(
-          "material-describe",
+          "material-material-describe",
           languageType,
         )
       }>

@@ -14,7 +14,7 @@ let render = ((uiState, dispatchFunc), _self) => {
             languageType,
           )
         }>
-        {DomHelper.textEl("Camera View")}
+        {DomHelper.textEl("CameraView")}
       </div>
       <hr />
       <div className="component-content">

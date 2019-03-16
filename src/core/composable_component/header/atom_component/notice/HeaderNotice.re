@@ -86,8 +86,8 @@ module Method = {
       <div className="content-text" key="text1">
         {
           DomHelper.textEl(
-            LanguageUtils.getHeaderLanguageDataByType(
-              "version-content",
+            LanguageUtils.getHeaderVersionUpgradeContentLanguageDataByType(
+              newVersion,
               languageType,
             ),
           )
