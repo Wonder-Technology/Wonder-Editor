@@ -39,11 +39,19 @@ module Method = {
     |> StateLogicService.getAndRefreshEngineStateWithFunc;
 };
 
-let render = ((uiState, dispatchFunc), lightComponent, _self) =>
+let render = ((uiState, dispatchFunc), lightComponent, _self) => {
+  let languageType =
+    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+
   <article className="wonder-direction-light">
     <PickColorComponent
       label="Color"
-      title="color"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "light-color-describe",
+          languageType,
+        )
+      }
       getColorFunc={Method.getColor(lightComponent)}
       changeColorFunc={Method.changeColor(lightComponent)}
       closeColorPickFunc={
@@ -52,6 +60,12 @@ let render = ((uiState, dispatchFunc), lightComponent, _self) =>
     />
     <MainEditorFloatInputBaseComponent
       label="Intensity"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "light-intensity-describe",
+          languageType,
+        )
+      }
       getComponentValueFunc={
         DirectionLightEngineService.getDirectionLightIntensity(lightComponent)
       }
@@ -64,6 +78,7 @@ let render = ((uiState, dispatchFunc), lightComponent, _self) =>
       }
     />
   </article>;
+};
 
 let make =
     (~uiState: AppStore.appState, ~dispatchFunc, ~lightComponent, _children) => {
