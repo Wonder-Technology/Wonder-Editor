@@ -9,6 +9,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
   >
     <div
       className="item-header"
+      title="light's color"
     >
       Color
     </div>
@@ -27,7 +28,6 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       <div
         className="color-select"
         onClick={[Function]}
-        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -43,6 +43,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="light's intensity"
     >
       Intensity
     </div>
@@ -66,6 +67,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="relevant attributes of point light source attenuation"
     >
       Constant
     </div>
@@ -89,6 +91,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="relevant attributes of point light source attenuation"
     >
       Linear
     </div>
@@ -112,6 +115,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="relevant attributes of point light source attenuation"
     >
       Quadratic
     </div>
@@ -135,6 +139,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="point light's range"
     >
       Range
     </div>
@@ -162,6 +167,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
   >
     <div
       className="item-header"
+      title="light's color"
     >
       Color
     </div>
@@ -180,7 +186,6 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       <div
         className="color-select"
         onClick={[Function]}
-        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -196,6 +201,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="light's intensity"
     >
       Intensity
     </div>
@@ -219,6 +225,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="relevant attributes of point light source attenuation"
     >
       Constant
     </div>
@@ -242,6 +249,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="relevant attributes of point light source attenuation"
     >
       Linear
     </div>
@@ -265,6 +273,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="relevant attributes of point light source attenuation"
     >
       Quadratic
     </div>
@@ -288,6 +297,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="point light's range"
     >
       Range
     </div>
@@ -315,6 +325,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
   >
     <div
       className="item-header"
+      title="light's color"
     >
       Color
     </div>
@@ -333,7 +344,6 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       <div
         className="color-select"
         onClick={[Function]}
-        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -349,6 +359,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="light's intensity"
     >
       Intensity
     </div>
@@ -372,6 +383,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="relevant attributes of point light source attenuation"
     >
       Constant
     </div>
@@ -395,6 +407,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="relevant attributes of point light source attenuation"
     >
       Linear
     </div>
@@ -418,6 +431,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="relevant attributes of point light source attenuation"
     >
       Quadratic
     </div>
@@ -441,6 +455,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="point light's range"
     >
       Range
     </div>
@@ -468,6 +483,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
   >
     <div
       className="item-header"
+      title="light's color"
     >
       Color
     </div>
@@ -486,7 +502,6 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       <div
         className="color-select"
         onClick={[Function]}
-        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -502,6 +517,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="light's intensity"
     >
       Intensity
     </div>
@@ -525,6 +541,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="relevant attributes of point light source attenuation"
     >
       Constant
     </div>
@@ -548,6 +565,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="relevant attributes of point light source attenuation"
     >
       Linear
     </div>
@@ -571,6 +589,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="relevant attributes of point light source attenuation"
     >
       Quadratic
     </div>
@@ -594,6 +613,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="point light's range"
     >
       Range
     </div>
@@ -621,6 +641,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
   >
     <div
       className="item-header"
+      title="light's color"
     >
       Color
     </div>
@@ -639,7 +660,6 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       <div
         className="color-select"
         onClick={[Function]}
-        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -655,6 +675,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="light's intensity"
     >
       Intensity
     </div>
@@ -678,6 +699,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="relevant attributes of point light source attenuation"
     >
       Constant
     </div>
@@ -701,6 +723,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="relevant attributes of point light source attenuation"
     >
       Linear
     </div>
@@ -724,6 +747,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="relevant attributes of point light source attenuation"
     >
       Quadratic
     </div>
@@ -747,6 +771,7 @@ exports[`redo_undo: pointLight color prepare first step: set currentSceneTreeNod
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="point light's range"
     >
       Range
     </div>

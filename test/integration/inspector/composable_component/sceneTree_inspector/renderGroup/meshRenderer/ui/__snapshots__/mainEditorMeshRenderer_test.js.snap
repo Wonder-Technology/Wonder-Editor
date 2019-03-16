@@ -9,11 +9,12 @@ exports[`mainEditor meshRenderer test meshRenderer change drawMode test set draw
   >
     <div
       className="item-header"
+      title="draw mode"
     >
       <span
         className=""
       >
-        Draw mode
+        Draw Mode
       </span>
     </div>
     <div
@@ -73,11 +74,12 @@ exports[`mainEditor meshRenderer test meshRenderer change drawMode test set draw
   >
     <div
       className="item-header"
+      title="draw mode"
     >
       <span
         className=""
       >
-        Draw mode
+        Draw Mode
       </span>
     </div>
     <div
@@ -137,11 +139,12 @@ exports[`mainEditor meshRenderer test meshRenderer change drawMode test set draw
   >
     <div
       className="item-header"
+      title="draw mode"
     >
       <span
         className=""
       >
-        Draw mode
+        Draw Mode
       </span>
     </div>
     <div

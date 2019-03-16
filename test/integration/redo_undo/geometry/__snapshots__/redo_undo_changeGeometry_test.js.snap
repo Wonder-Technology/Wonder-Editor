@@ -9,6 +9,7 @@ exports[`redo_undo: change geometry prepare first step: set currentSceneTreeNode
   >
     <div
       className="item-header"
+      title="geometry in use which is default or model's geometry"
     >
       Geometry
     </div>
@@ -47,6 +48,7 @@ exports[`redo_undo: change geometry prepare first step: set currentSceneTreeNode
   >
     <div
       className="item-header"
+      title="geometry in use which is default or model's geometry"
     >
       Geometry
     </div>
@@ -85,6 +87,7 @@ exports[`redo_undo: change geometry prepare first step: set currentSceneTreeNode
   >
     <div
       className="item-header"
+      title="geometry in use which is default or model's geometry"
     >
       Geometry
     </div>

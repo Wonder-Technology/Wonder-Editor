@@ -15,6 +15,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -51,6 +52,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -63,6 +65,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -77,6 +80,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -100,6 +104,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -123,6 +128,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -145,6 +151,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -159,6 +166,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -182,6 +190,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -205,6 +214,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -227,6 +237,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -241,6 +252,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -264,6 +276,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -287,6 +300,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -322,6 +336,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         </div>
         <div
           className="header-title"
+          title="Camera Group set the gameObject's camera related components"
         >
           Camera Group
         </div>
@@ -342,8 +357,9 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         >
           <div
             className="component-title"
+            title="CameraView"
           >
-            CameView
+            CameraView
           </div>
           <hr />
           <div
@@ -357,6 +373,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
               >
                 <div
                   className="item-header"
+                  title="type"
                 >
                   <span
                     className=""
@@ -384,6 +401,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
               >
                 <div
                   className="item-header"
+                  title="set the camera currently in use. only one camera can be used in the scene. after setting, other cameras will be cancelled."
                 >
                   CurrentCamera
                 </div>
@@ -406,6 +424,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         >
           <div
             className="component-title"
+            title="Projection component, responsible for perspective matrix's attributes."
           >
             Projection
           </div>
@@ -421,6 +440,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
               >
                 <div
                   className="item-header"
+                  title="perspective matrix's type"
                 >
                   <span
                     className=""
@@ -451,6 +471,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="up near-plane distance"
                 >
                   Near
                 </div>
@@ -474,6 +495,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="up far-plane distance"
                 >
                   Far
                 </div>
@@ -497,6 +519,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="define the vertical viewing range of the lens in terms of angle"
                 >
                   Fovy
                 </div>
@@ -554,6 +577,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -590,6 +614,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -602,6 +627,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -616,6 +642,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -639,6 +666,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -662,6 +690,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -684,6 +713,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -698,6 +728,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -721,6 +752,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -744,6 +776,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -766,6 +799,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -780,6 +814,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -803,6 +838,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -826,6 +862,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -861,6 +898,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         </div>
         <div
           className="header-title"
+          title="Camera Group set the gameObject's camera related components"
         >
           Camera Group
         </div>
@@ -881,8 +919,9 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         >
           <div
             className="component-title"
+            title="CameraView"
           >
-            CameView
+            CameraView
           </div>
           <hr />
           <div
@@ -896,6 +935,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
               >
                 <div
                   className="item-header"
+                  title="type"
                 >
                   <span
                     className=""
@@ -923,6 +963,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
               >
                 <div
                   className="item-header"
+                  title="set the camera currently in use. only one camera can be used in the scene. after setting, other cameras will be cancelled."
                 >
                   CurrentCamera
                 </div>
@@ -945,6 +986,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         >
           <div
             className="component-title"
+            title="Projection component, responsible for perspective matrix's attributes."
           >
             Projection
           </div>
@@ -960,6 +1002,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
               >
                 <div
                   className="item-header"
+                  title="perspective matrix's type"
                 >
                   <span
                     className=""
@@ -990,6 +1033,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="up near-plane distance"
                 >
                   Near
                 </div>
@@ -1013,6 +1057,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="up far-plane distance"
                 >
                   Far
                 </div>
@@ -1036,6 +1081,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="define the vertical viewing range of the lens in terms of angle"
                 >
                   Fovy
                 </div>
@@ -1093,6 +1139,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -1129,6 +1176,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -1141,6 +1189,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -1155,6 +1204,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1178,6 +1228,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1201,6 +1252,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1223,6 +1275,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -1237,6 +1290,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1260,6 +1314,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1283,6 +1338,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1305,6 +1361,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -1319,6 +1376,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1342,6 +1400,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1365,6 +1424,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1403,6 +1463,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         </div>
         <div
           className="header-title"
+          title="Camera Group set the gameObject's camera related components"
         >
           Camera Group
         </div>
@@ -1423,8 +1484,9 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         >
           <div
             className="component-title"
+            title="CameraView"
           >
-            CameView
+            CameraView
           </div>
           <hr />
           <div
@@ -1438,6 +1500,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
               >
                 <div
                   className="item-header"
+                  title="type"
                 >
                   <span
                     className=""
@@ -1465,6 +1528,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
               >
                 <div
                   className="item-header"
+                  title="set the camera currently in use. only one camera can be used in the scene. after setting, other cameras will be cancelled."
                 >
                   CurrentCamera
                 </div>
@@ -1487,6 +1551,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         >
           <div
             className="component-title"
+            title="Projection component, responsible for perspective matrix's attributes."
           >
             Projection
           </div>
@@ -1502,6 +1567,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
               >
                 <div
                   className="item-header"
+                  title="perspective matrix's type"
                 >
                   <span
                     className=""
@@ -1532,6 +1598,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="up near-plane distance"
                 >
                   Near
                 </div>
@@ -1555,6 +1622,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="up far-plane distance"
                 >
                   Far
                 </div>
@@ -1578,6 +1646,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="define the vertical viewing range of the lens in terms of angle"
                 >
                   Fovy
                 </div>
@@ -1614,6 +1683,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         </div>
         <div
           className="header-title"
+          title="arcball camera controller"
         >
           ArcballCameraController
         </div>
@@ -1637,6 +1707,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
+            title="distance between camera and target"
           >
             Distance
           </div>
@@ -1660,6 +1731,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
+            title="min distance between camera and target"
           >
             Min Distance
           </div>
@@ -1680,6 +1752,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
         >
           <div
             className="item-header"
+            title="target"
           >
             Target
           </div>
@@ -1694,6 +1767,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1717,6 +1791,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1740,6 +1815,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1765,6 +1841,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
+            title="horizontal radian"
           >
             Phi
           </div>
@@ -1788,6 +1865,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
+            title="vertical radian"
           >
             Theta
           </div>

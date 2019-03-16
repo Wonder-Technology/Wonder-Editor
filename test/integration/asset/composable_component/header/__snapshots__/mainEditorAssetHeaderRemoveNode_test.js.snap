@@ -41,7 +41,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -168,7 +168,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -261,7 +261,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else test sele
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -354,7 +354,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node if not select 
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"

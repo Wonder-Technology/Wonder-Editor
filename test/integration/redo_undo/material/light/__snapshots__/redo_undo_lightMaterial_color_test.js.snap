@@ -9,8 +9,9 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
   >
     <div
       className="item-header"
+      title="material's diffuse color"
     >
-      Diffcuse color
+      Diffuse Color
     </div>
     <div
       className="item-content item-color"
@@ -27,7 +28,6 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       <div
         className="color-select"
         onClick={[Function]}
-        title="diffuse color"
       >
         <img
           src="./public/img/color.png"
@@ -40,8 +40,9 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
   >
     <div
       className="item-header"
+      title="material's diffuse map"
     >
-      Diffuse map
+      Diffuse Map
     </div>
     <div
       className="item-content item-texture"
@@ -79,6 +80,7 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="material's shininess"
     >
       Shininess
     </div>
@@ -106,8 +108,9 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
   >
     <div
       className="item-header"
+      title="material's diffuse color"
     >
-      Diffcuse color
+      Diffuse Color
     </div>
     <div
       className="item-content item-color"
@@ -124,7 +127,6 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       <div
         className="color-select"
         onClick={[Function]}
-        title="diffuse color"
       >
         <img
           src="./public/img/color.png"
@@ -137,8 +139,9 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
   >
     <div
       className="item-header"
+      title="material's diffuse map"
     >
-      Diffuse map
+      Diffuse Map
     </div>
     <div
       className="item-content item-texture"
@@ -176,6 +179,7 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="material's shininess"
     >
       Shininess
     </div>
@@ -203,8 +207,9 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
   >
     <div
       className="item-header"
+      title="material's diffuse color"
     >
-      Diffcuse color
+      Diffuse Color
     </div>
     <div
       className="item-content item-color"
@@ -221,7 +226,6 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       <div
         className="color-select"
         onClick={[Function]}
-        title="diffuse color"
       >
         <img
           src="./public/img/color.png"
@@ -234,8 +238,9 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
   >
     <div
       className="item-header"
+      title="material's diffuse map"
     >
-      Diffuse map
+      Diffuse Map
     </div>
     <div
       className="item-content item-texture"
@@ -273,6 +278,7 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="material's shininess"
     >
       Shininess
     </div>
@@ -300,8 +306,9 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
   >
     <div
       className="item-header"
+      title="material's diffuse color"
     >
-      Diffcuse color
+      Diffuse Color
     </div>
     <div
       className="item-content item-color"
@@ -318,7 +325,6 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       <div
         className="color-select"
         onClick={[Function]}
-        title="diffuse color"
       >
         <img
           src="./public/img/color.png"
@@ -331,8 +337,9 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
   >
     <div
       className="item-header"
+      title="material's diffuse map"
     >
-      Diffuse map
+      Diffuse Map
     </div>
     <div
       className="item-content item-texture"
@@ -370,6 +377,7 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="material's shininess"
     >
       Shininess
     </div>
@@ -397,8 +405,9 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
   >
     <div
       className="item-header"
+      title="material's diffuse color"
     >
-      Diffcuse color
+      Diffuse Color
     </div>
     <div
       className="item-content item-color"
@@ -415,7 +424,6 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       <div
         className="color-select"
         onClick={[Function]}
-        title="diffuse color"
       >
         <img
           src="./public/img/color.png"
@@ -428,8 +436,9 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
   >
     <div
       className="item-header"
+      title="material's diffuse map"
     >
-      Diffuse map
+      Diffuse Map
     </div>
     <div
       className="item-content item-texture"
@@ -467,6 +476,7 @@ exports[`redo_undo: lightMaterial color prepare first step: set currentSceneTree
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="material's shininess"
     >
       Shininess
     </div>

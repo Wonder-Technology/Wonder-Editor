@@ -24,6 +24,7 @@ exports[`fix material asset bug fix bug
       >
         <div
           className="item-header"
+          title="material's name"
         >
           <span
             className="component-label"
@@ -48,6 +49,7 @@ exports[`fix material asset bug fix bug
       >
         <div
           className="item-header"
+          title="material's type"
         >
           <span
             className=""
@@ -83,8 +85,9 @@ exports[`fix material asset bug fix bug
         >
           <div
             className="item-header"
+            title="material's diffuse color"
           >
-            Diffcuse color
+            Diffuse Color
           </div>
           <div
             className="item-content item-color"
@@ -101,7 +104,6 @@ exports[`fix material asset bug fix bug
             <div
               className="color-select"
               onClick={[Function]}
-              title="diffuse color"
             >
               <img
                 src="./public/img/color.png"
@@ -114,8 +116,9 @@ exports[`fix material asset bug fix bug
         >
           <div
             className="item-header"
+            title="material's diffuse map"
           >
-            Diffuse map
+            Diffuse Map
           </div>
           <div
             className="item-content item-texture"
@@ -153,6 +156,7 @@ exports[`fix material asset bug fix bug
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
+            title="material's shininess"
           >
             Shininess
           </div>
@@ -198,6 +202,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
       >
         <div
           className="item-header"
+          title="material's name"
         >
           <span
             className="component-label"
@@ -222,6 +227,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
       >
         <div
           className="item-header"
+          title="material's type"
         >
           <span
             className=""
@@ -257,6 +263,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
         >
           <div
             className="item-header"
+            title="color"
           >
             Color
           </div>
@@ -275,7 +282,6 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
             <div
               className="color-select"
               onClick={[Function]}
-              title="color"
             >
               <img
                 src="./public/img/color.png"
@@ -312,6 +318,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
       >
         <div
           className="item-header"
+          title="material's name"
         >
           <span
             className="component-label"
@@ -336,6 +343,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
       >
         <div
           className="item-header"
+          title="material's type"
         >
           <span
             className=""
@@ -371,6 +379,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
         >
           <div
             className="item-header"
+            title="color"
           >
             Color
           </div>
@@ -389,7 +398,6 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
             <div
               className="color-select"
               onClick={[Function]}
-              title="color"
             >
               <img
                 src="./public/img/color.png"
@@ -430,6 +438,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
       >
         <div
           className="item-header"
+          title="material's name"
         >
           <span
             className="component-label"
@@ -454,6 +463,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
       >
         <div
           className="item-header"
+          title="material's type"
         >
           <span
             className=""
@@ -489,8 +499,9 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
         >
           <div
             className="item-header"
+            title="material's diffuse color"
           >
-            Diffcuse color
+            Diffuse Color
           </div>
           <div
             className="item-content item-color"
@@ -507,7 +518,6 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
             <div
               className="color-select"
               onClick={[Function]}
-              title="diffuse color"
             >
               <img
                 src="./public/img/color.png"
@@ -520,8 +530,9 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
         >
           <div
             className="item-header"
+            title="material's diffuse map"
           >
-            Diffuse map
+            Diffuse Map
           </div>
           <div
             className="item-content item-texture"
@@ -559,6 +570,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
+            title="material's shininess"
           >
             Shininess
           </div>
@@ -603,6 +615,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
       >
         <div
           className="item-header"
+          title="material's name"
         >
           <span
             className="component-label"
@@ -627,6 +640,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
       >
         <div
           className="item-header"
+          title="material's type"
         >
           <span
             className=""
@@ -662,6 +676,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
         >
           <div
             className="item-header"
+            title="color"
           >
             Color
           </div>
@@ -680,7 +695,6 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
             <div
               className="color-select"
               onClick={[Function]}
-              title="color"
             >
               <img
                 src="./public/img/color.png"

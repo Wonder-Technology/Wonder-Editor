@@ -15,6 +15,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -51,6 +52,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -63,6 +65,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -77,6 +80,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -100,6 +104,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -123,6 +128,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -145,6 +151,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -159,6 +166,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -182,6 +190,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -205,6 +214,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -227,6 +237,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -241,6 +252,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -264,6 +276,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -287,6 +300,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -343,6 +357,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -379,6 +394,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -391,6 +407,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -405,6 +422,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -428,6 +446,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -451,6 +470,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -473,6 +493,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -487,6 +508,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -510,6 +532,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -533,6 +556,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -555,6 +579,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -569,6 +594,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -592,6 +618,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -615,6 +642,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -671,6 +699,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -707,6 +736,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -719,6 +749,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -733,6 +764,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -756,6 +788,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -779,6 +812,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -801,6 +835,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -815,6 +850,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -838,6 +874,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -861,6 +898,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -883,6 +921,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -897,6 +936,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -920,6 +960,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -943,6 +984,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -978,6 +1020,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
         </div>
         <div
           className="header-title"
+          title="Light"
         >
           Light
         </div>
@@ -998,6 +1041,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
         >
           <div
             className="item-header"
+            title="light type"
           >
             <span
               className=""
@@ -1033,6 +1077,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
           >
             <div
               className="item-header"
+              title="light's color"
             >
               Color
             </div>
@@ -1051,7 +1096,6 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
               <div
                 className="color-select"
                 onClick={[Function]}
-                title="color"
               >
                 <img
                   src="./public/img/color.png"
@@ -1067,6 +1111,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
               onMouseDown={[Function]}
               onMouseMove={[Function]}
               onMouseUp={[Function]}
+              title="light's intensity"
             >
               Intensity
             </div>

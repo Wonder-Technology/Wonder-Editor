@@ -9,6 +9,7 @@ exports[`redo_undo: directionLight color prepare first step: set currentSceneTre
   >
     <div
       className="item-header"
+      title="light's color"
     >
       Color
     </div>
@@ -27,7 +28,6 @@ exports[`redo_undo: directionLight color prepare first step: set currentSceneTre
       <div
         className="color-select"
         onClick={[Function]}
-        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -43,6 +43,7 @@ exports[`redo_undo: directionLight color prepare first step: set currentSceneTre
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="light's intensity"
     >
       Intensity
     </div>
@@ -70,6 +71,7 @@ exports[`redo_undo: directionLight color prepare first step: set currentSceneTre
   >
     <div
       className="item-header"
+      title="light's color"
     >
       Color
     </div>
@@ -88,7 +90,6 @@ exports[`redo_undo: directionLight color prepare first step: set currentSceneTre
       <div
         className="color-select"
         onClick={[Function]}
-        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -104,6 +105,7 @@ exports[`redo_undo: directionLight color prepare first step: set currentSceneTre
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="light's intensity"
     >
       Intensity
     </div>
@@ -131,6 +133,7 @@ exports[`redo_undo: directionLight color prepare first step: set currentSceneTre
   >
     <div
       className="item-header"
+      title="light's color"
     >
       Color
     </div>
@@ -149,7 +152,6 @@ exports[`redo_undo: directionLight color prepare first step: set currentSceneTre
       <div
         className="color-select"
         onClick={[Function]}
-        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -165,6 +167,7 @@ exports[`redo_undo: directionLight color prepare first step: set currentSceneTre
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="light's intensity"
     >
       Intensity
     </div>
@@ -192,6 +195,7 @@ exports[`redo_undo: directionLight color prepare first step: set currentSceneTre
   >
     <div
       className="item-header"
+      title="light's color"
     >
       Color
     </div>
@@ -210,7 +214,6 @@ exports[`redo_undo: directionLight color prepare first step: set currentSceneTre
       <div
         className="color-select"
         onClick={[Function]}
-        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -226,6 +229,7 @@ exports[`redo_undo: directionLight color prepare first step: set currentSceneTre
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="light's intensity"
     >
       Intensity
     </div>
@@ -253,6 +257,7 @@ exports[`redo_undo: directionLight color prepare first step: set currentSceneTre
   >
     <div
       className="item-header"
+      title="light's color"
     >
       Color
     </div>
@@ -271,7 +276,6 @@ exports[`redo_undo: directionLight color prepare first step: set currentSceneTre
       <div
         className="color-select"
         onClick={[Function]}
-        title="color"
       >
         <img
           src="./public/img/color.png"
@@ -287,6 +291,7 @@ exports[`redo_undo: directionLight color prepare first step: set currentSceneTre
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="light's intensity"
     >
       Intensity
     </div>

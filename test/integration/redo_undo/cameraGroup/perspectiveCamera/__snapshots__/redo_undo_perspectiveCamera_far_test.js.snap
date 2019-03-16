@@ -9,6 +9,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
   >
     <div
       className="item-header"
+      title="perspective matrix's type"
     >
       <span
         className=""
@@ -39,6 +40,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="up near-plane distance"
     >
       Near
     </div>
@@ -62,6 +64,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="up far-plane distance"
     >
       Far
     </div>
@@ -85,6 +88,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="define the vertical viewing range of the lens in terms of angle"
     >
       Fovy
     </div>
@@ -112,6 +116,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
   >
     <div
       className="item-header"
+      title="perspective matrix's type"
     >
       <span
         className=""
@@ -142,6 +147,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="up near-plane distance"
     >
       Near
     </div>
@@ -165,6 +171,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="up far-plane distance"
     >
       Far
     </div>
@@ -188,6 +195,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="define the vertical viewing range of the lens in terms of angle"
     >
       Fovy
     </div>
@@ -215,6 +223,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
   >
     <div
       className="item-header"
+      title="perspective matrix's type"
     >
       <span
         className=""
@@ -245,6 +254,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="up near-plane distance"
     >
       Near
     </div>
@@ -268,6 +278,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="up far-plane distance"
     >
       Far
     </div>
@@ -291,6 +302,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="define the vertical viewing range of the lens in terms of angle"
     >
       Fovy
     </div>
@@ -318,6 +330,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
   >
     <div
       className="item-header"
+      title="perspective matrix's type"
     >
       <span
         className=""
@@ -348,6 +361,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="up near-plane distance"
     >
       Near
     </div>
@@ -371,6 +385,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="up far-plane distance"
     >
       Far
     </div>
@@ -394,6 +409,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="define the vertical viewing range of the lens in terms of angle"
     >
       Fovy
     </div>
@@ -421,6 +437,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
   >
     <div
       className="item-header"
+      title="perspective matrix's type"
     >
       <span
         className=""
@@ -451,6 +468,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="up near-plane distance"
     >
       Near
     </div>
@@ -474,6 +492,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="up far-plane distance"
     >
       Far
     </div>
@@ -497,6 +516,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       onMouseDown={[Function]}
       onMouseMove={[Function]}
       onMouseUp={[Function]}
+      title="define the vertical viewing range of the lens in terms of angle"
     >
       Fovy
     </div>

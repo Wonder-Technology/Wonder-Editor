@@ -139,7 +139,7 @@ exports[`MainEditorAssetHeader->add folder if not select specific treeNode, add 
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
