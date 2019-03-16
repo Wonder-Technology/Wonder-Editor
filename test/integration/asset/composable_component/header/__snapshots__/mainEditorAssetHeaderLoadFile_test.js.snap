@@ -41,7 +41,7 @@ exports[`MainEditorAssetHeader->load file test load file test logic test should 
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -155,7 +155,7 @@ exports[`MainEditorAssetHeader->load file test load file test snapshot if not se
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"

@@ -41,13 +41,13 @@ let initScene = () => {
 };
 
 let _buildFakeConsole = [%bs.raw
-  (param) => {|
+  param => {|
   window.console.profile = (_) => {};
   window.console.profileEnd = () => {};
   |}
 ];
 
-let initEditorAndEngineStateAndInitSceneWithJob =
+let initEngineStateAndInitSceneWithJob =
     (
       ~sandbox,
       ~buffer,
@@ -84,3 +84,7 @@ let closeContractCheck = () => {
   StateEditorService.setStateIsDebug(false);
   StateEngineService.setIsDebug(false) |> ignore;
 };
+
+let setLanguageTypeToEn = () =>
+  LanguageEditorService.setType(LanguageType.EN)
+  |> StateLogicService.getAndSetEditorState;

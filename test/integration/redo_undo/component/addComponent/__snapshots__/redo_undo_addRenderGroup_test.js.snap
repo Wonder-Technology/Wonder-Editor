@@ -15,6 +15,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -51,6 +52,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -63,6 +65,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -77,6 +80,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -100,6 +104,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -123,6 +128,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -145,6 +151,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -159,6 +166,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -182,6 +190,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -205,6 +214,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -227,6 +237,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -241,6 +252,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -264,6 +276,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -287,6 +300,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -322,6 +336,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         </div>
         <div
           className="header-title"
+          title="Camera Group set the gameObject's camera related components"
         >
           Camera Group
         </div>
@@ -342,8 +357,9 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="component-title"
+            title="CameraView"
           >
-            CameView
+            CameraView
           </div>
           <hr />
           <div
@@ -357,6 +373,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
               >
                 <div
                   className="item-header"
+                  title="type"
                 >
                   <span
                     className=""
@@ -384,6 +401,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
               >
                 <div
                   className="item-header"
+                  title="set the camera currently in use. only one camera can be used in the scene. after setting, other cameras will be cancelled."
                 >
                   CurrentCamera
                 </div>
@@ -406,6 +424,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="component-title"
+            title="Projection component, responsible for perspective matrix's attributes."
           >
             Projection
           </div>
@@ -421,6 +440,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
               >
                 <div
                   className="item-header"
+                  title="perspective matrix's type"
                 >
                   <span
                     className=""
@@ -451,6 +471,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="up near-plane distance"
                 >
                   Near
                 </div>
@@ -474,6 +495,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="up far-plane distance"
                 >
                   Far
                 </div>
@@ -497,6 +519,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="define the vertical viewing range of the lens in terms of angle"
                 >
                   Fovy
                 </div>
@@ -533,8 +556,9 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         </div>
         <div
           className="header-title"
+          title="Render Group decide how to render the gameObject and whether to render it or not "
         >
-          RenderGroup
+          Render Group
         </div>
         <div
           className="header-close"
@@ -553,8 +577,9 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="component-title"
+            title="MeshRenderer"
           >
-            MeshRender
+            Mesh Render
           </div>
           <hr />
           <div
@@ -568,11 +593,12 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
               >
                 <div
                   className="item-header"
+                  title="draw mode"
                 >
                   <span
                     className=""
                   >
-                    Draw mode
+                    Draw Mode
                   </span>
                 </div>
                 <div
@@ -628,6 +654,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="component-title"
+            title="Material"
           >
             Material
           </div>
@@ -643,6 +670,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
               >
                 <div
                   className="item-header"
+                  title="material in use which is default or material asset"
                 >
                   Material
                 </div>
@@ -677,6 +705,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 >
                   <div
                     className="item-header"
+                    title="material's type"
                   >
                     <span
                       className=""
@@ -715,8 +744,9 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse color"
                       >
-                        Diffcuse color
+                        Diffuse Color
                       </div>
                       <div
                         className="item-content item-color"
@@ -733,7 +763,6 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                         <div
                           className="color-select"
                           onClick={[Function]}
-                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -746,8 +775,9 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse map"
                       >
-                        Diffuse map
+                        Diffuse Map
                       </div>
                       <div
                         className="item-content item-texture"
@@ -785,6 +815,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                         onMouseDown={[Function]}
                         onMouseMove={[Function]}
                         onMouseUp={[Function]}
+                        title="material's shininess"
                       >
                         Shininess
                       </div>
@@ -848,6 +879,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -884,6 +916,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -896,6 +929,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -910,6 +944,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -933,6 +968,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -956,6 +992,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -978,6 +1015,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -992,6 +1030,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1015,6 +1054,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1038,6 +1078,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1060,6 +1101,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -1074,6 +1116,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1097,6 +1140,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1120,6 +1164,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1155,6 +1200,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         </div>
         <div
           className="header-title"
+          title="Camera Group set the gameObject's camera related components"
         >
           Camera Group
         </div>
@@ -1175,8 +1221,9 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="component-title"
+            title="CameraView"
           >
-            CameView
+            CameraView
           </div>
           <hr />
           <div
@@ -1190,6 +1237,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
               >
                 <div
                   className="item-header"
+                  title="type"
                 >
                   <span
                     className=""
@@ -1217,6 +1265,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
               >
                 <div
                   className="item-header"
+                  title="set the camera currently in use. only one camera can be used in the scene. after setting, other cameras will be cancelled."
                 >
                   CurrentCamera
                 </div>
@@ -1239,6 +1288,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="component-title"
+            title="Projection component, responsible for perspective matrix's attributes."
           >
             Projection
           </div>
@@ -1254,6 +1304,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
               >
                 <div
                   className="item-header"
+                  title="perspective matrix's type"
                 >
                   <span
                     className=""
@@ -1284,6 +1335,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="up near-plane distance"
                 >
                   Near
                 </div>
@@ -1307,6 +1359,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="up far-plane distance"
                 >
                   Far
                 </div>
@@ -1330,6 +1383,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="define the vertical viewing range of the lens in terms of angle"
                 >
                   Fovy
                 </div>
@@ -1366,8 +1420,9 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         </div>
         <div
           className="header-title"
+          title="Render Group decide how to render the gameObject and whether to render it or not "
         >
-          RenderGroup
+          Render Group
         </div>
         <div
           className="header-close"
@@ -1386,8 +1441,9 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="component-title"
+            title="MeshRenderer"
           >
-            MeshRender
+            Mesh Render
           </div>
           <hr />
           <div
@@ -1401,11 +1457,12 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
               >
                 <div
                   className="item-header"
+                  title="draw mode"
                 >
                   <span
                     className=""
                   >
-                    Draw mode
+                    Draw Mode
                   </span>
                 </div>
                 <div
@@ -1461,6 +1518,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="component-title"
+            title="Material"
           >
             Material
           </div>
@@ -1476,6 +1534,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
               >
                 <div
                   className="item-header"
+                  title="material in use which is default or material asset"
                 >
                   Material
                 </div>
@@ -1510,6 +1569,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 >
                   <div
                     className="item-header"
+                    title="material's type"
                   >
                     <span
                       className=""
@@ -1548,8 +1608,9 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse color"
                       >
-                        Diffcuse color
+                        Diffuse Color
                       </div>
                       <div
                         className="item-content item-color"
@@ -1566,7 +1627,6 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                         <div
                           className="color-select"
                           onClick={[Function]}
-                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -1579,8 +1639,9 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse map"
                       >
-                        Diffuse map
+                        Diffuse Map
                       </div>
                       <div
                         className="item-content item-texture"
@@ -1618,6 +1679,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                         onMouseDown={[Function]}
                         onMouseMove={[Function]}
                         onMouseUp={[Function]}
+                        title="material's shininess"
                       >
                         Shininess
                       </div>
@@ -1681,6 +1743,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -1717,6 +1780,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -1729,6 +1793,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -1743,6 +1808,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1766,6 +1832,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1789,6 +1856,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1811,6 +1879,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -1825,6 +1894,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1848,6 +1918,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1871,6 +1942,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1893,6 +1965,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -1907,6 +1980,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1930,6 +2004,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1953,6 +2028,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1988,6 +2064,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         </div>
         <div
           className="header-title"
+          title="Camera Group set the gameObject's camera related components"
         >
           Camera Group
         </div>
@@ -2008,8 +2085,9 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="component-title"
+            title="CameraView"
           >
-            CameView
+            CameraView
           </div>
           <hr />
           <div
@@ -2023,6 +2101,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
               >
                 <div
                   className="item-header"
+                  title="type"
                 >
                   <span
                     className=""
@@ -2050,6 +2129,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
               >
                 <div
                   className="item-header"
+                  title="set the camera currently in use. only one camera can be used in the scene. after setting, other cameras will be cancelled."
                 >
                   CurrentCamera
                 </div>
@@ -2072,6 +2152,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
         >
           <div
             className="component-title"
+            title="Projection component, responsible for perspective matrix's attributes."
           >
             Projection
           </div>
@@ -2087,6 +2168,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
               >
                 <div
                   className="item-header"
+                  title="perspective matrix's type"
                 >
                   <span
                     className=""
@@ -2117,6 +2199,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="up near-plane distance"
                 >
                   Near
                 </div>
@@ -2140,6 +2223,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="up far-plane distance"
                 >
                   Far
                 </div>
@@ -2163,6 +2247,7 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                   onMouseDown={[Function]}
                   onMouseMove={[Function]}
                   onMouseUp={[Function]}
+                  title="define the vertical viewing range of the lens in terms of angle"
                 >
                   Fovy
                 </div>

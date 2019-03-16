@@ -5,10 +5,19 @@ type action =
   | HideLocalModal;
 
 module Method = {
-  let buildPublishComponentSelectNav = send =>
+  let buildPublishComponentSelectNav = (send, languageType) =>
     <div className="item-content">
       <div className="content-section" onClick={_e => send(ShowLocalModal)}>
-        <span className="section-header"> {DomHelper.textEl("Local")} </span>
+        <span className="section-header">
+          {
+            DomHelper.textEl(
+              LanguageUtils.getHeaderLanguageDataByType(
+                "publish-local",
+                languageType,
+              ),
+            )
+          }
+        </span>
       </div>
     </div>;
 };
@@ -29,6 +38,8 @@ let render =
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
   let className = isPublishNav ? "item-title item-active" : "item-title";
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <div className="header-item">
     <div className="component-item">
@@ -36,17 +47,30 @@ let render =
         className
         onClick={e => toggleShowNavFunc()}
         onMouseOver={e => hoverNavFunc()}>
-        {DomHelper.textEl("Publish")}
+        {
+          DomHelper.textEl(
+            LanguageUtils.getHeaderLanguageDataByType(
+              "header-publish",
+              languageType,
+            ),
+          )
+        }
       </span>
     </div>
     {
       isPublishNav ?
-        Method.buildPublishComponentSelectNav(send) : ReasonReact.null
+        Method.buildPublishComponentSelectNav(send, languageType) :
+        ReasonReact.null
     }
     {
       state.isShowLocalModal ?
         <PublishLocalModal
-          title="Local"
+          title={
+            LanguageUtils.getHeaderLanguageDataByType(
+              "publish-local",
+              languageType,
+            )
+          }
           defaultName="WonderLocal"
           defaultUseWorker=false
           closeFunc={() => send(HideLocalModal)}

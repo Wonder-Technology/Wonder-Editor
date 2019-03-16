@@ -14,6 +14,7 @@ exports[`MainEditorAssetHeader->remove material
   >
     <div
       className="item-header"
+      title="material in use which is default or material asset"
     >
       Material
     </div>
@@ -81,6 +82,7 @@ exports[`MainEditorAssetHeader->remove material
     >
       <div
         className="item-header"
+        title="material's type"
       >
         <span
           className=""
@@ -119,8 +121,9 @@ exports[`MainEditorAssetHeader->remove material
         >
           <div
             className="item-header"
+            title="material's diffuse color"
           >
-            Diffcuse color
+            Diffuse Color
           </div>
           <div
             className="item-content item-color"
@@ -137,7 +140,6 @@ exports[`MainEditorAssetHeader->remove material
             <div
               className="color-select"
               onClick={[Function]}
-              title="diffuse color"
             >
               <img
                 src="./public/img/color.png"
@@ -150,8 +152,9 @@ exports[`MainEditorAssetHeader->remove material
         >
           <div
             className="item-header"
+            title="material's diffuse map"
           >
-            Diffuse map
+            Diffuse Map
           </div>
           <div
             className="item-content item-texture"
@@ -189,6 +192,7 @@ exports[`MainEditorAssetHeader->remove material
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
+            title="material's shininess"
           >
             Shininess
           </div>
@@ -227,6 +231,7 @@ exports[`MainEditorAssetHeader->remove material
   >
     <div
       className="item-header"
+      title="material in use which is default or material asset"
     >
       Material
     </div>
@@ -294,6 +299,7 @@ exports[`MainEditorAssetHeader->remove material
     >
       <div
         className="item-header"
+        title="material's type"
       >
         <span
           className=""
@@ -332,8 +338,9 @@ exports[`MainEditorAssetHeader->remove material
         >
           <div
             className="item-header"
+            title="material's diffuse color"
           >
-            Diffcuse color
+            Diffuse Color
           </div>
           <div
             className="item-content item-color"
@@ -350,7 +357,6 @@ exports[`MainEditorAssetHeader->remove material
             <div
               className="color-select"
               onClick={[Function]}
-              title="diffuse color"
             >
               <img
                 src="./public/img/color.png"
@@ -363,8 +369,9 @@ exports[`MainEditorAssetHeader->remove material
         >
           <div
             className="item-header"
+            title="material's diffuse map"
           >
-            Diffuse map
+            Diffuse Map
           </div>
           <div
             className="item-content item-texture"
@@ -402,6 +409,7 @@ exports[`MainEditorAssetHeader->remove material
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
+            title="material's shininess"
           >
             Shininess
           </div>

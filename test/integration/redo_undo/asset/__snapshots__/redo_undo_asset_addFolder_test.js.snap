@@ -41,7 +41,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -262,7 +262,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -544,7 +544,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -826,7 +826,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -1047,7 +1047,7 @@ exports[`redo_undo: asset add folder prepare first step: set currentSceneTreeNod
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"

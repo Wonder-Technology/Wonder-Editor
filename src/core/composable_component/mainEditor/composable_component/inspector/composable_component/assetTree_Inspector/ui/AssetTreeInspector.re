@@ -15,37 +15,45 @@ type action =
 
 module Method = {
   let change = event => {
-    let inputVal = ReactDOMRe.domElementToObj(
-                     ReactEventRe.Form.target(event),
-                   )##value;
+    let inputVal =
+      ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
     Change(inputVal);
   };
 
   let renameAssetTreeNode = AssetRenameNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let buildFolderComponent = (state, send, currentNodeId, _, _) =>
+  let buildFolderComponent = (state, send, languageType, currentNodeId, _, _) =>
     <div className="inspector-asset-folder">
-      <h1> (DomHelper.textEl("Folder")) </h1>
+      <h1>
+        {
+          DomHelper.textEl(
+            LanguageUtils.getAssetLanguageDataByType(
+              "asset-folder",
+              languageType,
+            ),
+          )
+        }
+      </h1>
       <hr />
       <div className="inspector-item">
         <div className="item-header">
-          <span> (DomHelper.textEl("Name")) </span>
+          <span> {DomHelper.textEl("Name")} </span>
         </div>
         <div className="item-content">
           <input
             className="input-component float-input"
             type_="text"
-            value=state.inputValue
-            disabled=(
+            value={state.inputValue}
+            disabled={
               NodeAssetService.isIdEqual(
                 RootTreeAssetEditorService.getRootNode
                 |> StateLogicService.getEditorState
                 |> NodeAssetService.getNodeId(~node=_),
                 currentNodeId,
               )
-            )
-            onChange=(_e => send(change(_e)))
-            onBlur=(_e => send(Blur))
+            }
+            onChange={_e => send(change(_e))}
+            onBlur={_e => send(Blur)}
           />
         </div>
       </div>
@@ -61,9 +69,11 @@ module Method = {
     <TextureInspector
       uiState
       dispatchFunc
-      name=state.inputValue
+      name={state.inputValue}
       textureComponent
-      renameFunc=(renameAssetTreeNode((uiState, dispatchFunc), currentNodeId))
+      renameFunc={
+        renameAssetTreeNode((uiState, dispatchFunc), currentNodeId)
+      }
     />;
 
   let buildMaterialComponent =
@@ -77,40 +87,47 @@ module Method = {
       uiState
       dispatchFunc
       currentNodeId
-      name=state.inputValue
+      name={state.inputValue}
       type_
       materialComponent
-      renameFunc=(renameAssetTreeNode((uiState, dispatchFunc), currentNodeId))
+      renameFunc={
+        renameAssetTreeNode((uiState, dispatchFunc), currentNodeId)
+      }
     />;
 
   let buildWDBComponent = (state, send, _, _) =>
     <div className="inspector-asset-wdb">
-      <h1> (DomHelper.textEl("Model")) </h1>
+      <h1> {DomHelper.textEl("Model")} </h1>
       <hr />
       <div className="inspector-item">
         <div className="item-header">
-          <span className=""> (DomHelper.textEl("Name:")) </span>
+          <span className=""> {DomHelper.textEl("Name:")} </span>
         </div>
         <div className="item-content">
           <input
             className="input-component float-input"
             type_="text"
-            value=state.inputValue
-            onChange=(_e => send(change(_e)))
-            onBlur=(_e => send(Blur))
+            value={state.inputValue}
+            onChange={_e => send(change(_e))}
+            onBlur={_e => send(Blur)}
           />
         </div>
       </div>
     </div>;
 
   let showAssetNodeComponent =
-      (reduxTuple, currentNode, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+      (
+        reduxTuple,
+        currentNode,
+        languageType,
+        {state, send}: ReasonReact.self('a, 'b, 'c),
+      ) =>
     NodeAssetService.handleNode(
       ~node=currentNode,
       ~textureNodeFunc=buildTextureComponent(reduxTuple, state),
       ~materialNodeFunc=buildMaterialComponent(reduxTuple, state),
       ~wdbNodeFunc=buildWDBComponent(state, send),
-      ~folderNodeFunc=buildFolderComponent(state, send),
+      ~folderNodeFunc=buildFolderComponent(state, send, languageType),
     );
 
   let initFolderName = (currentNodeId, currentNodeData, _) => {
@@ -179,12 +196,24 @@ let reducer = ((uiState, dispatchFunc), currentNode, action) =>
     )
   };
 
-let render = ((uiState, dispatchFunc), currentNode, self) =>
-  <article key="AssetTreeInspector" className="wonder-inspector-assetTree">
-    (Method.showAssetNodeComponent((uiState, dispatchFunc), currentNode, self))
-  </article>;
+let render = ((uiState, dispatchFunc), currentNode, self) => {
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
-let make = (~uiState: AppStore.appState, ~dispatchFunc, ~currentNode, _children) => {
+  <article key="AssetTreeInspector" className="wonder-inspector-assetTree">
+    {
+      Method.showAssetNodeComponent(
+        (uiState, dispatchFunc),
+        currentNode,
+        languageType,
+        self,
+      )
+    }
+  </article>;
+};
+
+let make =
+    (~uiState: AppStore.appState, ~dispatchFunc, ~currentNode, _children) => {
   ...component,
   initialState: () => {
     let editorState = StateEditorService.getState();

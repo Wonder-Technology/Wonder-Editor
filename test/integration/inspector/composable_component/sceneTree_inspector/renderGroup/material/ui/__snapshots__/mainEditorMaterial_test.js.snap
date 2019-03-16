@@ -13,6 +13,7 @@ exports[`MainEditorMaterial test select material group->show order
   >
     <div
       className="item-header"
+      title="material in use which is default or material asset"
     >
       Material
     </div>
@@ -92,6 +93,7 @@ exports[`MainEditorMaterial test select material group->show order
     >
       <div
         className="item-header"
+        title="material's type"
       >
         <span
           className=""
@@ -130,8 +132,9 @@ exports[`MainEditorMaterial test select material group->show order
         >
           <div
             className="item-header"
+            title="material's diffuse color"
           >
-            Diffcuse color
+            Diffuse Color
           </div>
           <div
             className="item-content item-color"
@@ -148,7 +151,6 @@ exports[`MainEditorMaterial test select material group->show order
             <div
               className="color-select"
               onClick={[Function]}
-              title="diffuse color"
             >
               <img
                 src="./public/img/color.png"
@@ -161,8 +163,9 @@ exports[`MainEditorMaterial test select material group->show order
         >
           <div
             className="item-header"
+            title="material's diffuse map"
           >
-            Diffuse map
+            Diffuse Map
           </div>
           <div
             className="item-content item-texture"
@@ -200,6 +203,7 @@ exports[`MainEditorMaterial test select material group->show order
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
+            title="material's shininess"
           >
             Shininess
           </div>
@@ -233,6 +237,7 @@ exports[`MainEditorMaterial test set currentSceneTreeNode test change material t
   >
     <div
       className="item-header"
+      title="material in use which is default or material asset"
     >
       Material
     </div>
@@ -267,6 +272,7 @@ exports[`MainEditorMaterial test set currentSceneTreeNode test change material t
     >
       <div
         className="item-header"
+        title="material's type"
       >
         <span
           className=""
@@ -305,8 +311,9 @@ exports[`MainEditorMaterial test set currentSceneTreeNode test change material t
         >
           <div
             className="item-header"
+            title="material's diffuse color"
           >
-            Diffcuse color
+            Diffuse Color
           </div>
           <div
             className="item-content item-color"
@@ -323,7 +330,6 @@ exports[`MainEditorMaterial test set currentSceneTreeNode test change material t
             <div
               className="color-select"
               onClick={[Function]}
-              title="diffuse color"
             >
               <img
                 src="./public/img/color.png"
@@ -336,8 +342,9 @@ exports[`MainEditorMaterial test set currentSceneTreeNode test change material t
         >
           <div
             className="item-header"
+            title="material's diffuse map"
           >
-            Diffuse map
+            Diffuse Map
           </div>
           <div
             className="item-content item-texture"
@@ -375,6 +382,7 @@ exports[`MainEditorMaterial test set currentSceneTreeNode test change material t
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
+            title="material's shininess"
           >
             Shininess
           </div>

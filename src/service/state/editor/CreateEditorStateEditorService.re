@@ -60,4 +60,5 @@ let create = () => {
   currentDragSource: (None, None),
   currentSelectSource: None,
   loopId: (-1),
+  languageType: None,
 };

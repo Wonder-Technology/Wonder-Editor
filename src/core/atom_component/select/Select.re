@@ -16,8 +16,8 @@ module Method = {
   let renderContent = (options, state) =>
     options
     |> Js.Array.map(({key, value}) =>
-         <option key=value value=(key |> string_of_int)>
-           (DomHelper.textEl(value))
+         <option key=value value={key |> string_of_int}>
+           {DomHelper.textEl(value)}
          </option>
        );
 };
@@ -35,22 +35,30 @@ let reducer = (onChange, action) =>
     )
   };
 
-let render = (label, options, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+let render =
+    (label, options, title, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article key="Select" className="inspector-item">
-    (
+    {
       switch (label) {
       | None => ReasonReact.null
       | Some(label) =>
-        <div className="item-header">
-          <span className=""> (DomHelper.textEl(label)) </span>
+        <div
+          className="item-header"
+          title={
+            switch (title) {
+            | None => ""
+            | Some(title) => title
+            }
+          }>
+          <span className=""> {DomHelper.textEl(label)} </span>
         </div>
       }
-    )
+    }
     <div className="item-content">
       <select
-        onChange=(e => send(Method.change(e)))
-        value=(state.selectedKey |> string_of_int)>
-        (ReasonReact.array(Method.renderContent(options, state)))
+        onChange={e => send(Method.change(e))}
+        value={state.selectedKey |> string_of_int}>
+        {ReasonReact.array(Method.renderContent(options, state))}
       </select>
     </div>
   </article>;
@@ -61,10 +69,11 @@ let make =
       ~options: array(optionItem),
       ~selectedKey: int,
       ~onChange: int => unit,
+      ~title: option(string)=?,
       _children,
     ) => {
   ...component,
   initialState: () => {selectedKey: selectedKey},
   reducer: reducer(onChange),
-  render: self => render(label, options, self),
+  render: self => render(label, options, title, self),
 };

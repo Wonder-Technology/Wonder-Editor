@@ -41,7 +41,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -201,7 +201,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -640,7 +640,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -938,7 +938,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -1217,7 +1217,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -1595,7 +1595,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -1755,7 +1755,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -2069,7 +2069,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"

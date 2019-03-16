@@ -24,13 +24,23 @@ let _renderSelectNav =
     (
       uiState: AppStore.appState,
       dispatchFunc,
+      languageType,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <div className="item-content">
     <div
       className="content-section"
       onClick={_e => Method.addFolder((uiState, dispatchFunc), (), ())}>
-      <span className="section-header"> {DomHelper.textEl("Folder")} </span>
+      <span className="section-header">
+        {
+          DomHelper.textEl(
+            LanguageUtils.getAssetLanguageDataByType(
+              "asset-folder",
+              languageType,
+            ),
+          )
+        }
+      </span>
     </div>
     <div
       className="content-section"
@@ -43,11 +53,14 @@ let _renderRemoveItem =
     (
       uiState: AppStore.appState,
       dispatchFunc,
+      languageType,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <div
     className="asset-header-item"
-    title="remove asset"
+    title={
+      LanguageUtils.getAssetLanguageDataByType("asset-remove", languageType)
+    }
     onClick={
       _e =>
         CurrentNodeIdAssetEditorService.couldRemoveCurrentNode
@@ -70,23 +83,36 @@ let render =
     (
       (uiState, dispatchFunc),
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
-    ) =>
+    ) => {
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
+
   <article key="assetHeader" className="wonder-asset-header">
     <div
       className="asset-header-item"
-      title="add asset"
+      title={
+        LanguageUtils.getAssetLanguageDataByType("asset-add", languageType)
+      }
       onClick={_e => send(ToggleShowNav)}>
       <div className="item-canBeClick">
         <img src="./public/img/add.png" />
       </div>
       {
         state.isSelectNav ?
-          _renderSelectNav(uiState, dispatchFunc, self) : ReasonReact.null
+          _renderSelectNav(uiState, dispatchFunc, languageType, self) :
+          ReasonReact.null
       }
     </div>
-    {_renderRemoveItem(uiState, dispatchFunc, self)}
+    {_renderRemoveItem(uiState, dispatchFunc, languageType, self)}
     <div className="asset-header-item">
-      <div className="item-canBeClick" title="load asset">
+      <div
+        className="item-canBeClick"
+        title={
+          LanguageUtils.getAssetLanguageDataByType(
+            "asset-load",
+            languageType,
+          )
+        }>
         <img src="./public/img/load.png" />
         <input
           className="asset-fileLoad"
@@ -105,6 +131,7 @@ let render =
       </div>
     </div>
   </article>;
+};
 
 let reducer = (action, state) =>
   switch (action) {

@@ -39,7 +39,7 @@ module Method = {
        });
   };
 
-  let _buildImportUI = ((uiState, dispatchFunc), closeNavFunc) =>
+  let _buildImportUI = ((uiState, dispatchFunc), closeNavFunc, languageType) =>
     <div className="content-section">
       <input
         className="section-fileLoad"
@@ -51,33 +51,54 @@ module Method = {
         }
       />
       <span className="section-header">
-        {DomHelper.textEl("Import Package")}
+        {
+          DomHelper.textEl(
+            LanguageUtils.getHeaderLanguageDataByType(
+              "edit-import-package",
+              languageType,
+            ),
+          )
+        }
       </span>
     </div>;
 
-  let _buildExportUI = send =>
+  let _buildExportUI = (send, languageType) =>
     <>
       <div
         className="content-section"
         onClick={_e => send(ShowExportPackageModal)}>
         <span className="section-header">
-          {DomHelper.textEl("Export Package")}
+          {
+            DomHelper.textEl(
+              LanguageUtils.getHeaderLanguageDataByType(
+                "edit-export-package",
+                languageType,
+              ),
+            )
+          }
         </span>
       </div>
       <div
         className="content-section"
         onClick={_e => send(ShowExportSceneModal)}>
         <span className="section-header">
-          {DomHelper.textEl("Export Scene")}
+          {
+            DomHelper.textEl(
+              LanguageUtils.getHeaderLanguageDataByType(
+                "edit-export-scene",
+                languageType,
+              ),
+            )
+          }
         </span>
       </div>
     </>;
 
   let buildEditComponentSelectNav =
-      ((uiState, dispatchFunc), send, closeNavFunc) =>
+      ((uiState, dispatchFunc), send, closeNavFunc, languageType) =>
     <div className="item-content item-edit">
-      {_buildImportUI((uiState, dispatchFunc), closeNavFunc)}
-      {_buildExportUI(send)}
+      {_buildImportUI((uiState, dispatchFunc), closeNavFunc, languageType)}
+      {_buildExportUI(send, languageType)}
     </div>;
 };
 
@@ -105,6 +126,8 @@ let render =
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
   let className = isEditNav ? "item-title item-active" : "item-title";
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <div className="header-item">
     <div className="component-item">
@@ -112,7 +135,14 @@ let render =
         className
         onClick={e => toggleShowNavFunc()}
         onMouseOver={e => hoverNavFunc()}>
-        {DomHelper.textEl("Edit")}
+        {
+          DomHelper.textEl(
+            LanguageUtils.getHeaderLanguageDataByType(
+              "header-edit",
+              languageType,
+            ),
+          )
+        }
       </span>
     </div>
     {
@@ -121,13 +151,19 @@ let render =
           (uiState, dispatchFunc),
           send,
           closeNavFunc,
+          languageType,
         ) :
         ReasonReact.null
     }
     {
       state.isShowExportPackageModal ?
         <SingleInputModal
-          title="Export Package"
+          title={
+            LanguageUtils.getHeaderLanguageDataByType(
+              "edit-export-package",
+              languageType,
+            )
+          }
           defaultValue="WonderPackage"
           closeFunc={() => send(HideExportPackageModal)}
           submitFunc={
@@ -143,7 +179,12 @@ let render =
     {
       state.isShowExportSceneModal ?
         <SingleInputModal
-          title="Export Scene"
+          title={
+            LanguageUtils.getHeaderLanguageDataByType(
+              "edit-export-scene",
+              languageType,
+            )
+          }
           defaultValue="WonderScene"
           closeFunc={() => send(HideExportSceneModal)}
           submitFunc={

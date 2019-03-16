@@ -58,11 +58,19 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorLightMaterial");
 
-let render = ((uiState, dispatchFunc), materialComponent, _self) =>
+let render = ((uiState, dispatchFunc), materialComponent, _self) => {
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
+
   <article className="wonder-light-material">
     <PickColorComponent
-      label="Diffcuse color"
-      title="diffuse color"
+      label="Diffuse Color"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "material-diffuseColor-describe",
+          languageType,
+        )
+      }
       getColorFunc={Method.getColor(materialComponent)}
       changeColorFunc={Method.changeColor(materialComponent)}
       closeColorPickFunc={
@@ -73,7 +81,13 @@ let render = ((uiState, dispatchFunc), materialComponent, _self) =>
       uiState
       dispatchFunc
       materialComponent
-      label="Diffuse map"
+      label="Diffuse Map"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "material-diffuseMap-describe",
+          languageType,
+        )
+      }
       getMapFunc=LightMaterialEngineService.getLightMaterialDiffuseMap
       removeTextureFunc=Method.removeTexture
       onDropFunc=Method.onDrop
@@ -81,6 +95,12 @@ let render = ((uiState, dispatchFunc), materialComponent, _self) =>
     />
     <MainEditorFloatInputBaseComponent
       label="Shininess"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "material-shininess-describe",
+          languageType,
+        )
+      }
       getComponentValueFunc={
         LightMaterialEngineService.getLightMaterialShininess(
           materialComponent,
@@ -95,6 +115,7 @@ let render = ((uiState, dispatchFunc), materialComponent, _self) =>
       }
     />
   </article>;
+};
 
 let make =
     (

@@ -11,22 +11,48 @@ module Method = {
       |> StateHistoryService.getAndRefreshStateForHistory :
       ();
 
-  let buildFileComponentSelectNav = (send, uiState, dispatchFunc) =>
+  let buildFileComponentSelectNav =
+      (send, uiState, dispatchFunc, languageType) =>
     <div className="item-content">
       <div
         className="content-section"
         onClick={_e => AllHistoryService.handleUndo(uiState, dispatchFunc)}>
-        <span className="section-header"> {DomHelper.textEl("Undo")} </span>
+        <span className="section-header">
+          {
+            DomHelper.textEl(
+              LanguageUtils.getHeaderLanguageDataByType(
+                "file-undo",
+                languageType,
+              ),
+            )
+          }
+        </span>
       </div>
       <div
         className="content-section"
         onClick={_e => _handleRedo(uiState, dispatchFunc)}>
-        <span className="section-header"> {DomHelper.textEl("Redo")} </span>
+        <span className="section-header">
+          {
+            DomHelper.textEl(
+              LanguageUtils.getHeaderLanguageDataByType(
+                "file-redo",
+                languageType,
+              ),
+            )
+          }
+        </span>
       </div>
       <div
         className="content-section" onClick={_e => send(ShowControlsModal)}>
         <span className="section-header">
-          {DomHelper.textEl("Controls")}
+          {
+            DomHelper.textEl(
+              LanguageUtils.getHeaderLanguageDataByType(
+                "file-controls",
+                languageType,
+              ),
+            )
+          }
         </span>
       </div>
     </div>;
@@ -63,6 +89,8 @@ module Method = {
         (isFileNav, toggleShowNavFunc, hoverNavFunc),
       ) => {
     let className = isFileNav ? "item-title item-active" : "item-title";
+    let languageType =
+      LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
     <div className="header-item">
       <div className="component-item">
@@ -70,18 +98,35 @@ module Method = {
           className
           onClick={e => toggleShowNavFunc()}
           onMouseOver={e => hoverNavFunc()}>
-          {DomHelper.textEl("File")}
+          {
+            DomHelper.textEl(
+              LanguageUtils.getHeaderLanguageDataByType(
+                "header-file",
+                languageType,
+              ),
+            )
+          }
         </span>
       </div>
       {
         isFileNav ?
-          buildFileComponentSelectNav(send, uiState, dispatchFunc) :
+          buildFileComponentSelectNav(
+            send,
+            uiState,
+            dispatchFunc,
+            languageType,
+          ) :
           ReasonReact.null
       }
       {
         state.isShowControlsModal ?
           <Modal
-            title="Controls"
+            title={
+              LanguageUtils.getHeaderLanguageDataByType(
+                "file-controls",
+                languageType,
+              )
+            }
             closeFunc={() => send(HideControlsModal)}
             content={buildControlModalContent()}
           /> :

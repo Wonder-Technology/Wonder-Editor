@@ -25,7 +25,7 @@ exports[`Header Notice test show notice if localStorage have no welcomeUser key 
         <div
           className="content-text"
         >
-          Welcome to use Wonder editor, We are here to serve you~ Thanks for your trust~
+          Welcome to Wonder, We are here to serve you~ Thanks for your trust~
         </div>
         <div
           className="content-white"
@@ -63,7 +63,7 @@ exports[`Header Notice test show notice if localStorage have no welcomeUser key 
             href="https://www.wonder-3d.com/docs/docs/doc1-1/"
             target="view_window"
           >
-            Doc
+            Document
           </a>
         </div>
         <div

@@ -148,12 +148,21 @@ module Method = {
 let component = ReasonReact.statelessComponent("MainEditorTransform");
 
 let render =
-    ((uiState, dispatchFunc), (transformComponent, gameObject), _self) =>
+    ((uiState, dispatchFunc), (transformComponent, gameObject), _self) => {
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
+
   <article className="wonder-inspector-transform">
     <ThreeFloatInput
       uiState
       dispatchFunc
       label="Position"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "position-describe",
+          languageType,
+        )
+      }
       gameObjectComponent=transformComponent
       changeXFunc=Method.changePositionX
       changeYFunc=Method.changePositionY
@@ -167,6 +176,12 @@ let render =
       uiState
       dispatchFunc
       label="Rotation"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "rotation-describe",
+          languageType,
+        )
+      }
       gameObjectComponent=transformComponent
       changeXFunc=Method.changeRotationX
       changeYFunc=Method.changeRotationY
@@ -180,6 +195,12 @@ let render =
       uiState
       dispatchFunc
       label="Scale"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "scale-describe",
+          languageType,
+        )
+      }
       gameObjectComponent=transformComponent
       changeXFunc=Method.changeScaleX
       changeYFunc=Method.changeScaleY
@@ -189,8 +210,9 @@ let render =
       dragDropFunc=Method.blurScaleEvent
       canBeZero=true
     />
-    (Method.buildShadeComponent(gameObject))
+    {Method.buildShadeComponent(gameObject)}
   </article>;
+};
 
 let make =
     (

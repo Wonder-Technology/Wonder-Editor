@@ -5,9 +5,8 @@ type action =
 
 module Method = {
   let change = event => {
-    let inputVal = ReactDOMRe.domElementToObj(
-                     ReactEventRe.Form.target(event),
-                   )##value;
+    let inputVal =
+      ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
 
     Change(inputVal);
   };
@@ -23,13 +22,13 @@ let reducer = (action, state) =>
 let _renderContent = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <div className="modal-item-content">
     <div className="content-field">
-      <div className="field-title"> (DomHelper.textEl("name")) </div>
+      <div className="field-title"> {DomHelper.textEl("name")} </div>
       <div className="field-content">
         <input
           className="input-component"
           type_="text"
-          value=state.inputValue
-          onChange=(_e => send(Method.change(_e)))
+          value={state.inputValue}
+          onChange={_e => send(Method.change(_e))}
         />
       </div>
     </div>
@@ -44,15 +43,15 @@ let render =
   <article className="wonder-singleInput-modal">
     <div className="modal-item">
       <div className="modal-item-header">
-        (DomHelper.textEl(title))
-        <img src="./public/img/close.png" onClick=(_e => closeFunc()) />
+        {DomHelper.textEl(title)}
+        <img src="./public/img/close.png" onClick={_e => closeFunc()} />
       </div>
-      (_renderContent(self))
+      {_renderContent(self)}
       <div className="modal-item-footer">
         <button
           className="footer-submit"
-          onClick=(_e => submitFunc(state.inputValue))>
-          (DomHelper.textEl("Submit"))
+          onClick={_e => submitFunc(state.inputValue)}>
+          {DomHelper.textEl("Submit")}
         </button>
       </div>
     </div>

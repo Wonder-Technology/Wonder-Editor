@@ -2,6 +2,10 @@
     .item-header{
         margin-left:5px;
         width:40%;
+        &:hover{
+            color: #00c1de;
+            cursor: pointer;
+        }
     }
     .item-content{
         width:60%;

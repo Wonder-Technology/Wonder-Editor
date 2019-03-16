@@ -184,45 +184,65 @@ module Method = {
   };
 
   let renderDistanceField =
-      ((uiState, dispatchFunc) as uiStoreDataTuple, arcballCameraController) =>
+      (
+        (uiState, dispatchFunc) as uiStoreDataTuple,
+        arcballCameraController,
+        languageType,
+      ) =>
     <MainEditorFloatInputBaseComponent
       label="Distance"
-      getComponentValueFunc=(
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "arcball-distance-describe",
+          languageType,
+        )
+      }
+      getComponentValueFunc={
         ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
           arcballCameraController,
         )
-      )
-      changeComponentValueFunc=(changeDistance(arcballCameraController))
-      blurValueFunc=(
+      }
+      changeComponentValueFunc={changeDistance(arcballCameraController)}
+      blurValueFunc={
         blurArcballCameraDistance(uiStoreDataTuple, arcballCameraController)
-      )
-      dragDropFunc=(
+      }
+      dragDropFunc={
         value =>
           dragDropArcballCameraDistance(
             uiStoreDataTuple,
             arcballCameraController,
             value,
           )
-      )
+      }
     />;
 
   let renderMinDistanceField =
-      ((uiState, dispatchFunc) as uiStoreDataTuple, arcballCameraController) =>
+      (
+        (uiState, dispatchFunc) as uiStoreDataTuple,
+        arcballCameraController,
+        languageType,
+      ) =>
     <MainEditorFloatInputBaseComponent
       label="Min Distance"
-      getComponentValueFunc=(
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "arcball-min-distance-describe",
+          languageType,
+        )
+      }
+      getComponentValueFunc={
         ArcballCameraEngineService.unsafeGetArcballCameraControllerMinDistance(
           arcballCameraController,
         )
-      )
-      changeComponentValueFunc=(changeMinDistance(arcballCameraController))
-      blurValueFunc=(
+      }
+      changeComponentValueFunc={changeMinDistance(arcballCameraController)}
+      blurValueFunc={
         blurArcballCameraMinDistance(
           uiStoreDataTuple,
           arcballCameraController,
         )
-      )
-      dragDropFunc=(
+      }
+      dragDropFunc={
         value => {
           blurArcballCameraMinDistance(
             uiStoreDataTuple,
@@ -233,21 +253,28 @@ module Method = {
           TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
           |> StateLogicService.getAndSetState;
         }
-      )
+      }
     />;
 
-  let renderTargetField = ((uiState, dispatchFunc), arcballCameraController) =>
+  let renderTargetField =
+      ((uiState, dispatchFunc), arcballCameraController, languageType) =>
     <ThreeFloatInput
       uiState
       dispatchFunc
       label="Target"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "arcball-target-describe",
+          languageType,
+        )
+      }
       gameObjectComponent=arcballCameraController
       changeXFunc=changeTargetX
       changeYFunc=changeTargetY
       changeZFunc=changeTargetZ
       getDataFunc=ArcballCameraEngineService.unsafeGetArcballCameraControllerTarget
       blurEventFunc=blurArcballCameraTarget
-      dragDropFunc=(
+      dragDropFunc={
         ((uiState, dispatchFunc), arcballCameraController, target) => {
           blurArcballCameraTarget(
             (uiState, dispatchFunc),
@@ -258,24 +285,34 @@ module Method = {
           TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
           |> StateLogicService.getAndSetState;
         }
-      )
+      }
       canBeZero=true
     />;
 
   let renderPhiField =
-      ((uiState, dispatchFunc) as uiStoreDataTuple, arcballCameraController) =>
+      (
+        (uiState, dispatchFunc) as uiStoreDataTuple,
+        arcballCameraController,
+        languageType,
+      ) =>
     <MainEditorFloatInputBaseComponent
       label="Phi"
-      getComponentValueFunc=(
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "arcball-phi-describe",
+          languageType,
+        )
+      }
+      getComponentValueFunc={
         ArcballCameraEngineService.unsafeGetArcballCameraControllerPhi(
           arcballCameraController,
         )
-      )
-      changeComponentValueFunc=(changePhi(arcballCameraController))
-      blurValueFunc=(
+      }
+      changeComponentValueFunc={changePhi(arcballCameraController)}
+      blurValueFunc={
         blurArcballCameraPhi(uiStoreDataTuple, arcballCameraController)
-      )
-      dragDropFunc=(
+      }
+      dragDropFunc={
         value => {
           blurArcballCameraPhi(
             uiStoreDataTuple,
@@ -286,23 +323,33 @@ module Method = {
           TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
           |> StateLogicService.getAndSetState;
         }
-      )
+      }
     />;
 
   let renderThetaField =
-      ((uiState, dispatchFunc) as uiStoreDataTuple, arcballCameraController) =>
+      (
+        (uiState, dispatchFunc) as uiStoreDataTuple,
+        arcballCameraController,
+        languageType,
+      ) =>
     <MainEditorFloatInputBaseComponent
       label="Theta"
-      getComponentValueFunc=(
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "arcball-theta-describe",
+          languageType,
+        )
+      }
+      getComponentValueFunc={
         ArcballCameraEngineService.unsafeGetArcballCameraControllerTheta(
           arcballCameraController,
         )
-      )
-      changeComponentValueFunc=(changeTheta(arcballCameraController))
-      blurValueFunc=(
+      }
+      changeComponentValueFunc={changeTheta(arcballCameraController)}
+      blurValueFunc={
         blurArcballCameraTheta(uiStoreDataTuple, arcballCameraController)
-      )
-      dragDropFunc=(
+      }
+      dragDropFunc={
         value => {
           blurArcballCameraTheta(
             uiStoreDataTuple,
@@ -313,7 +360,7 @@ module Method = {
           TransformUtils.refreshTransformWithDispatchFunc(dispatchFunc)
           |> StateLogicService.getAndSetState;
         }
-      )
+      }
     />;
 };
 
@@ -325,14 +372,48 @@ let render =
       (uiState, dispatchFunc) as uiStoreDataTuple,
       arcballCameraController,
       _self,
-    ) =>
+    ) => {
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
+
   <article className="wonder-inspector-arcballCameraController">
-    (Method.renderDistanceField(uiStoreDataTuple, arcballCameraController))
-    (Method.renderMinDistanceField(uiStoreDataTuple, arcballCameraController))
-    (Method.renderTargetField(uiStoreDataTuple, arcballCameraController))
-    (Method.renderPhiField(uiStoreDataTuple, arcballCameraController))
-    (Method.renderThetaField(uiStoreDataTuple, arcballCameraController))
+    {
+      Method.renderDistanceField(
+        uiStoreDataTuple,
+        arcballCameraController,
+        languageType,
+      )
+    }
+    {
+      Method.renderMinDistanceField(
+        uiStoreDataTuple,
+        arcballCameraController,
+        languageType,
+      )
+    }
+    {
+      Method.renderTargetField(
+        uiStoreDataTuple,
+        arcballCameraController,
+        languageType,
+      )
+    }
+    {
+      Method.renderPhiField(
+        uiStoreDataTuple,
+        arcballCameraController,
+        languageType,
+      )
+    }
+    {
+      Method.renderThetaField(
+        uiStoreDataTuple,
+        arcballCameraController,
+        languageType,
+      )
+    }
   </article>;
+};
 
 let make = (~uiState, ~dispatchFunc, ~arcballCameraController, _children) => {
   ...component,

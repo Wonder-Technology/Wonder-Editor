@@ -29,25 +29,43 @@ let render = ((uiState, dispatchFunc), _self) => {
       StateEditorService.getState(),
     );
 
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
+
   <article key="MainEditorCameraView" className="wonder-camera-view">
     <Select
       label="Type"
-      options=(MainEditorCameraViewUtils.getCameraViewOptions())
-      selectedKey=(BasicCameraView |> convertCameraViewTypeToInt)
-      onChange=(value => ())
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "view-type-describe",
+          languageType,
+        )
+      }
+      options={MainEditorCameraViewUtils.getCameraViewOptions()}
+      selectedKey={BasicCameraView |> convertCameraViewTypeToInt}
+      onChange={value => ()}
     />
     <div className="inspector-item">
-      <div className="item-header"> (DomHelper.textEl("CurrentCamera")) </div>
+      <div
+        className="item-header"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "current-camera-describe",
+            languageType,
+          )
+        }>
+        {DomHelper.textEl("CurrentCamera")}
+      </div>
       <div className="item-content">
         <input
           type_="checkbox"
           defaultChecked=isCurrentCamera
-          onClick=(
+          onClick={
             Method.setCurrentCamera(
               (uiState, dispatchFunc),
               currentSceneTreeNodeBasicCameraViewComponent,
             )
-          )
+          }
           disabled=isCurrentCamera
         />
       </div>

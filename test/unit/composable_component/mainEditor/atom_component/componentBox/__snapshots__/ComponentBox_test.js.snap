@@ -17,6 +17,7 @@ exports[`componentBox test component arguments build componentBox component whic
     </div>
     <div
       className="header-title"
+      title=""
     >
       newCube
     </div>
@@ -44,6 +45,7 @@ exports[`componentBox test component arguments build disposable componentBox com
     </div>
     <div
       className="header-title"
+      title=""
     >
       newCube
     </div>

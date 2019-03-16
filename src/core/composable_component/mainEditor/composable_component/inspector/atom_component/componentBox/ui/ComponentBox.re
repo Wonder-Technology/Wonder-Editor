@@ -40,7 +40,7 @@ let render =
     (
       reduxTuple,
       (header, isDisposable),
-      (gameObject, gameObjectUIComponent, type_),
+      (gameObject, gameObjectUIComponent, type_, title),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="componentBox-component">
@@ -49,7 +49,16 @@ let render =
         className="header-triangle" onClick={_e => send(ToggleShowComponent)}>
         <span className={state.triangleDirection} />
       </div>
-      <div className="header-title"> {DomHelper.textEl(header)} </div>
+      <div
+        className="header-title"
+        title={
+          switch (title) {
+          | None => ""
+          | Some(title) => title
+          }
+        }>
+        {DomHelper.textEl(header)}
+      </div>
       {
         isDisposable ?
           <div className="header-close">
@@ -75,6 +84,7 @@ let make =
       ~gameObjectUIComponent,
       ~isShowComponent,
       ~type_,
+      ~title: option(string)=?,
       _children,
     ) => {
   ...component,
@@ -87,7 +97,7 @@ let make =
     render(
       reduxTuple,
       (header, isDisposable),
-      (gameObject, gameObjectUIComponent, type_),
+      (gameObject, gameObjectUIComponent, type_, title),
       self,
     ),
 };

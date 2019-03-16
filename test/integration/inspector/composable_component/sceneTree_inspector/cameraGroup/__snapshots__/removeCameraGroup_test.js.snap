@@ -15,6 +15,7 @@ exports[`test remove camera group test has no camera group after remove  test re
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -51,6 +52,7 @@ exports[`test remove camera group test has no camera group after remove  test re
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -63,6 +65,7 @@ exports[`test remove camera group test has no camera group after remove  test re
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -77,6 +80,7 @@ exports[`test remove camera group test has no camera group after remove  test re
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -100,6 +104,7 @@ exports[`test remove camera group test has no camera group after remove  test re
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -123,6 +128,7 @@ exports[`test remove camera group test has no camera group after remove  test re
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -145,6 +151,7 @@ exports[`test remove camera group test has no camera group after remove  test re
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -159,6 +166,7 @@ exports[`test remove camera group test has no camera group after remove  test re
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -182,6 +190,7 @@ exports[`test remove camera group test has no camera group after remove  test re
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -205,6 +214,7 @@ exports[`test remove camera group test has no camera group after remove  test re
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -227,6 +237,7 @@ exports[`test remove camera group test has no camera group after remove  test re
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -241,6 +252,7 @@ exports[`test remove camera group test has no camera group after remove  test re
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -264,6 +276,7 @@ exports[`test remove camera group test has no camera group after remove  test re
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -287,6 +300,7 @@ exports[`test remove camera group test has no camera group after remove  test re
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -343,6 +357,7 @@ exports[`test remove camera group test still has other camera groups after remov
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -379,6 +394,7 @@ exports[`test remove camera group test still has other camera groups after remov
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -391,6 +407,7 @@ exports[`test remove camera group test still has other camera groups after remov
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -405,6 +422,7 @@ exports[`test remove camera group test still has other camera groups after remov
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -428,6 +446,7 @@ exports[`test remove camera group test still has other camera groups after remov
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -451,6 +470,7 @@ exports[`test remove camera group test still has other camera groups after remov
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -473,6 +493,7 @@ exports[`test remove camera group test still has other camera groups after remov
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -487,6 +508,7 @@ exports[`test remove camera group test still has other camera groups after remov
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -510,6 +532,7 @@ exports[`test remove camera group test still has other camera groups after remov
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -533,6 +556,7 @@ exports[`test remove camera group test still has other camera groups after remov
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -555,6 +579,7 @@ exports[`test remove camera group test still has other camera groups after remov
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -569,6 +594,7 @@ exports[`test remove camera group test still has other camera groups after remov
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -592,6 +618,7 @@ exports[`test remove camera group test still has other camera groups after remov
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -615,6 +642,7 @@ exports[`test remove camera group test still has other camera groups after remov
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -650,8 +678,9 @@ exports[`test remove camera group test still has other camera groups after remov
         </div>
         <div
           className="header-title"
+          title="Render Group decide how to render the gameObject and whether to render it or not "
         >
-          RenderGroup
+          Render Group
         </div>
         <div
           className="header-close"
@@ -670,8 +699,9 @@ exports[`test remove camera group test still has other camera groups after remov
         >
           <div
             className="component-title"
+            title="MeshRenderer"
           >
-            MeshRender
+            Mesh Render
           </div>
           <hr />
           <div
@@ -685,11 +715,12 @@ exports[`test remove camera group test still has other camera groups after remov
               >
                 <div
                   className="item-header"
+                  title="draw mode"
                 >
                   <span
                     className=""
                   >
-                    Draw mode
+                    Draw Mode
                   </span>
                 </div>
                 <div
@@ -745,6 +776,7 @@ exports[`test remove camera group test still has other camera groups after remov
         >
           <div
             className="component-title"
+            title="Material"
           >
             Material
           </div>
@@ -760,6 +792,7 @@ exports[`test remove camera group test still has other camera groups after remov
               >
                 <div
                   className="item-header"
+                  title="material in use which is default or material asset"
                 >
                   Material
                 </div>
@@ -794,6 +827,7 @@ exports[`test remove camera group test still has other camera groups after remov
                 >
                   <div
                     className="item-header"
+                    title="material's type"
                   >
                     <span
                       className=""
@@ -832,8 +866,9 @@ exports[`test remove camera group test still has other camera groups after remov
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse color"
                       >
-                        Diffcuse color
+                        Diffuse Color
                       </div>
                       <div
                         className="item-content item-color"
@@ -850,7 +885,6 @@ exports[`test remove camera group test still has other camera groups after remov
                         <div
                           className="color-select"
                           onClick={[Function]}
-                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -863,8 +897,9 @@ exports[`test remove camera group test still has other camera groups after remov
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse map"
                       >
-                        Diffuse map
+                        Diffuse Map
                       </div>
                       <div
                         className="item-content item-texture"
@@ -902,6 +937,7 @@ exports[`test remove camera group test still has other camera groups after remov
                         onMouseDown={[Function]}
                         onMouseMove={[Function]}
                         onMouseUp={[Function]}
+                        title="material's shininess"
                       >
                         Shininess
                       </div>
@@ -944,6 +980,7 @@ exports[`test remove camera group test still has other camera groups after remov
         </div>
         <div
           className="header-title"
+          title="Geometry"
         >
           Geometry
         </div>
@@ -964,6 +1001,7 @@ exports[`test remove camera group test still has other camera groups after remov
         >
           <div
             className="item-header"
+            title="geometry in use which is default or model's geometry"
           >
             Geometry
           </div>

@@ -22,6 +22,10 @@ let getAttribute = [%raw (dom, prop) => "
   return dom.getAttribute(prop);
 "];
 
+let locationReload = [%raw param => "
+  window.location.reload(true);
+"];
+
 let apply = [%raw
   {|
     function(dataArray, func) {

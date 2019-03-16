@@ -39,6 +39,10 @@
             height:30px;
             line-height: 30px;
             font-size:15px;
+            &:hover{
+                color: #00c1de;
+                cursor: pointer;
+            }
         }
         .header-close{
             flex:initial;

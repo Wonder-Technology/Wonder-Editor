@@ -14,6 +14,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
   >
     <div
       className="item-header"
+      title="position in local coordinate system"
     >
       Position
     </div>
@@ -28,6 +29,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           X
         </div>
@@ -51,6 +53,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Y
         </div>
@@ -74,6 +77,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Z
         </div>
@@ -96,6 +100,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
   >
     <div
       className="item-header"
+      title="euler angle in local coordinate system"
     >
       Rotation
     </div>
@@ -110,6 +115,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           X
         </div>
@@ -133,6 +139,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Y
         </div>
@@ -156,6 +163,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Z
         </div>
@@ -178,6 +186,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
   >
     <div
       className="item-header"
+      title="scale in local coordinate system"
     >
       Scale
     </div>
@@ -192,6 +201,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           X
         </div>
@@ -215,6 +225,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Y
         </div>
@@ -238,6 +249,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Z
         </div>
@@ -272,6 +284,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
   >
     <div
       className="item-header"
+      title="position in local coordinate system"
     >
       Position
     </div>
@@ -286,6 +299,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           X
         </div>
@@ -309,6 +323,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Y
         </div>
@@ -332,6 +347,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Z
         </div>
@@ -354,6 +370,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
   >
     <div
       className="item-header"
+      title="euler angle in local coordinate system"
     >
       Rotation
     </div>
@@ -368,6 +385,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           X
         </div>
@@ -391,6 +409,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Y
         </div>
@@ -414,6 +433,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Z
         </div>
@@ -436,6 +456,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
   >
     <div
       className="item-header"
+      title="scale in local coordinate system"
     >
       Scale
     </div>
@@ -450,6 +471,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           X
         </div>
@@ -473,6 +495,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Y
         </div>
@@ -496,6 +519,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Z
         </div>
@@ -525,6 +549,7 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
   >
     <div
       className="item-header"
+      title="position in local coordinate system"
     >
       Position
     </div>
@@ -539,6 +564,7 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           X
         </div>
@@ -562,6 +588,7 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Y
         </div>
@@ -585,6 +612,7 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Z
         </div>
@@ -607,6 +635,7 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
   >
     <div
       className="item-header"
+      title="euler angle in local coordinate system"
     >
       Rotation
     </div>
@@ -621,6 +650,7 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           X
         </div>
@@ -644,6 +674,7 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Y
         </div>
@@ -667,6 +698,7 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Z
         </div>
@@ -689,6 +721,7 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
   >
     <div
       className="item-header"
+      title="scale in local coordinate system"
     >
       Scale
     </div>
@@ -703,6 +736,7 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           X
         </div>
@@ -726,6 +760,7 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Y
         </div>
@@ -749,6 +784,7 @@ exports[`MainEditorTransform rotation test change rotation value test change loc
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Z
         </div>

@@ -9,6 +9,7 @@ exports[`redo_undo: cameraView set currentCamera prepare first step: set current
   >
     <div
       className="item-header"
+      title="type"
     >
       <span
         className=""
@@ -36,6 +37,7 @@ exports[`redo_undo: cameraView set currentCamera prepare first step: set current
   >
     <div
       className="item-header"
+      title="set the camera currently in use. only one camera can be used in the scene. after setting, other cameras will be cancelled."
     >
       CurrentCamera
     </div>
@@ -62,6 +64,7 @@ exports[`redo_undo: cameraView set currentCamera prepare first step: set current
   >
     <div
       className="item-header"
+      title="type"
     >
       <span
         className=""
@@ -89,6 +92,7 @@ exports[`redo_undo: cameraView set currentCamera prepare first step: set current
   >
     <div
       className="item-header"
+      title="set the camera currently in use. only one camera can be used in the scene. after setting, other cameras will be cancelled."
     >
       CurrentCamera
     </div>
@@ -115,6 +119,7 @@ exports[`redo_undo: cameraView set currentCamera prepare first step: set current
   >
     <div
       className="item-header"
+      title="type"
     >
       <span
         className=""
@@ -142,6 +147,7 @@ exports[`redo_undo: cameraView set currentCamera prepare first step: set current
   >
     <div
       className="item-header"
+      title="set the camera currently in use. only one camera can be used in the scene. after setting, other cameras will be cancelled."
     >
       CurrentCamera
     </div>

@@ -11,10 +11,16 @@ module Method = {
         newName,
       );
 
-  let _buildNameFunc = ((uiState, dispatchFunc), gameObject) =>
+  let _buildNameFunc = ((uiState, dispatchFunc), gameObject, languageType) =>
     <div key={DomHelper.getRandomKey()} className="sceneTree-name">
       <StringInput
         label="Name"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "name-describe",
+            languageType,
+          )
+        }
         defaultValue={
           GameObjectEngineService.unsafeGetGameObjectName(gameObject)
           |> StateLogicService.getEngineStateToGetData
@@ -27,22 +33,28 @@ module Method = {
     </div>;
 
   let _buildGameObjectAllShowComponent =
-      ((uiState, dispatchFunc), gameObject, componentTypeArr) =>
+      ((uiState, dispatchFunc), gameObject, languageType, componentTypeArr) =>
     componentTypeArr
     |> Js.Array.map((componentType: InspectorComponentType.componentType) =>
          InspectorGameObjectUtils.buildComponentUIComponent(
            (uiState, dispatchFunc),
            componentType,
            gameObject,
+           languageType,
          )
        );
 
   let buildCurrentSceneTreeNodeComponent =
-      ((uiState, dispatchFunc), addableComponentConfig, currentSceneTreeNode) =>
+      (
+        (uiState, dispatchFunc),
+        addableComponentConfig,
+        currentSceneTreeNode,
+        languageType,
+      ) =>
     switch (currentSceneTreeNode) {
     | None => [||]
     | Some(gameObject) =>
-      [|_buildNameFunc((uiState, dispatchFunc), gameObject)|]
+      [|_buildNameFunc((uiState, dispatchFunc), gameObject, languageType)|]
       |> Js.Array.concat(
            StateEditorService.getState()
            |> InspectorEditorService.getComponentTypeMap
@@ -50,6 +62,7 @@ module Method = {
            |> _buildGameObjectAllShowComponent(
                 (uiState, dispatchFunc),
                 gameObject,
+                languageType,
               ),
          )
       |> ArrayService.push(
@@ -71,7 +84,10 @@ let render =
       addableComponentConfig,
       currentSceneTreeNode,
       _self,
-    ) =>
+    ) => {
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
+
   <article key="SceneTreeInspector" className="wonder-inspector-sceneTree">
     {
       ReasonReact.array(
@@ -79,10 +95,12 @@ let render =
           (uiState, dispatchFunc),
           addableComponentConfig,
           currentSceneTreeNode,
+          languageType,
         ),
       )
     }
   </article>;
+};
 
 let make =
     (

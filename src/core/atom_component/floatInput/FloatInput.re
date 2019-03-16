@@ -13,9 +13,8 @@ type action =
 
 module Method = {
   let _change = event => {
-    let inputVal = ReactDOMRe.domElementToObj(
-                     ReactEventRe.Form.target(event),
-                   )##value;
+    let inputVal =
+      ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
 
     switch (inputVal) {
     | "" => Change(Some(""))
@@ -208,7 +207,7 @@ module Method = {
       } :
       ();
 
-  let renderLabel = ((send, state), label, onDragDropFunc) =>
+  let renderLabel = ((send, state), label, title, onDragDropFunc) =>
     switch (label) {
     | None => ReasonReact.null
     | Some(label) =>
@@ -218,8 +217,14 @@ module Method = {
         onMouseMove=(event => handleDragOver(event, (send, state)))
         onMouseUp=(
           event => handleDragDrop(event, (send, state), onDragDropFunc)
-        )>
-        (DomHelper.textEl(label))
+        )
+        title={
+          switch (title) {
+          | None => ""
+          | Some(title) => title
+          }
+        }>
+        {DomHelper.textEl(label)}
       </div>
     };
 
@@ -228,14 +233,14 @@ module Method = {
       <input
         className="input-component float-input"
         type_="text"
-        value=(
+        value={
           switch (state.inputValue) {
           | None => ""
           | Some(value) => value
           }
-        )
-        onChange=(_e => send(_change(_e)))
-        onBlur=(_e => send(Blur))
+        }
+        onChange={_e => send(_change(_e))}
+        onBlur={_e => send(Blur)}
       />
     </div>;
 };
@@ -255,12 +260,13 @@ let reducer = ((onChangeFunc, onBlurFunc), canBeZero, action, state) =>
 let render =
     (
       label,
+      title,
       (onBlurFunc, onDragDropFunc),
       {state, handle, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="inspector-item wonder-float-input">
-    (Method.renderLabel((send, state), label, onDragDropFunc))
-    (Method.renderContent((send, state)))
+    {Method.renderLabel((send, state), label, title, onDragDropFunc)}
+    {Method.renderContent((send, state))}
   </article>;
 
 let make =
@@ -271,6 +277,7 @@ let make =
       ~label: option(string)=?,
       ~onChange: option(float => unit)=?,
       ~onBlur: option(float => unit)=?,
+      ~title: option(string)=?,
       _children,
     ) => {
   ...component,
@@ -290,5 +297,5 @@ let make =
       }
     },
   reducer: reducer((onChange, onBlur), canBeZero),
-  render: self => render(label, (onBlur, onDragDrop), self),
+  render: self => render(label, title, (onBlur, onDragDrop), self),
 };

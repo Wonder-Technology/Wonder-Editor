@@ -1,97 +1,143 @@
 module Method = {
-  let renderWrapSSelect = (dispatchFunc, textureComponent) =>
+  let renderWrapSSelect = (dispatchFunc, textureComponent, languageType) =>
     <Select
       label="WrapS"
-      options=(TextureWrapUtils.getWrapOptions())
-      selectedKey=(
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "texture-wraps-describe",
+          languageType,
+        )
+      }
+      options={TextureWrapUtils.getWrapOptions()}
+      selectedKey={
         BasicSourceTextureEngineService.getWrapS(textureComponent)
         |> StateLogicService.getEngineStateToGetData
         |> TextureTypeUtils.convertWrapToInt
-      )
-      onChange=(
+      }
+      onChange={
         value =>
           InspectorChangeTextureWrapSEventHandler.MakeEventHandler.pushUndoStackWithTwoHandleFunc(
             (UIStateService.getState(), dispatchFunc),
             (),
             (textureComponent, value),
           )
-      )
+      }
     />;
 
-  let renderWrapTSelect = (dispatchFunc, textureComponent) =>
+  let renderWrapTSelect = (dispatchFunc, textureComponent, languageType) =>
     <Select
       label="WrapT"
-      options=(TextureWrapUtils.getWrapOptions())
-      selectedKey=(
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "texture-wrapt-describe",
+          languageType,
+        )
+      }
+      options={TextureWrapUtils.getWrapOptions()}
+      selectedKey={
         BasicSourceTextureEngineService.getWrapT(textureComponent)
         |> StateLogicService.getEngineStateToGetData
         |> TextureTypeUtils.convertWrapToInt
-      )
-      onChange=(
+      }
+      onChange={
         value =>
           InspectorChangeTextureWrapTEventHandler.MakeEventHandler.pushUndoStackWithTwoHandleFunc(
             (UIStateService.getState(), dispatchFunc),
             (),
             (textureComponent, value),
           )
-      )
+      }
     />;
-  let renderMagFilterSelect = (dispatchFunc, textureComponent) =>
+  let renderMagFilterSelect = (dispatchFunc, textureComponent, languageType) =>
     <Select
       label="Mag Filter"
-      options=(TextureFilterUtils.getMagFilterOptions())
-      selectedKey=(
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "texture-mag-filter-describe",
+          languageType,
+        )
+      }
+      options={TextureFilterUtils.getMagFilterOptions()}
+      selectedKey={
         BasicSourceTextureEngineService.getMagFilter(textureComponent)
         |> StateLogicService.getEngineStateToGetData
         |> TextureTypeUtils.convertFilterToInt
-      )
-      onChange=(
+      }
+      onChange={
         value =>
           InspectorChangeTextureMagFilterEventHandler.MakeEventHandler.pushUndoStackWithTwoHandleFunc(
             (UIStateService.getState(), dispatchFunc),
             (),
             (textureComponent, value),
           )
-      )
+      }
     />;
 
-  let renderMinFilterSelect = (dispatchFunc, textureComponent) =>
+  let renderMinFilterSelect = (dispatchFunc, textureComponent, languageType) =>
     <Select
       label="Min Filter"
-      options=(TextureFilterUtils.getMinFilterOptions())
-      selectedKey=(
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "texture-min-filter-describe",
+          languageType,
+        )
+      }
+      options={TextureFilterUtils.getMinFilterOptions()}
+      selectedKey={
         BasicSourceTextureEngineService.getMinFilter(textureComponent)
         |> StateLogicService.getEngineStateToGetData
         |> TextureTypeUtils.convertFilterToInt
-      )
-      onChange=(
+      }
+      onChange={
         value =>
           InspectorChangeTextureMinFilterEventHandler.MakeEventHandler.pushUndoStackWithTwoHandleFunc(
             (UIStateService.getState(), dispatchFunc),
             (),
             (textureComponent, value),
           )
-      )
+      }
     />;
 };
 
 let component = ReasonReact.statelessComponent("TextureInspector");
 
-let render = ((dispatchFunc, renameFunc), name, textureComponent, _self) =>
+let render = ((dispatchFunc, renameFunc), name, textureComponent, _self) => {
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
+
   <article key="TextureInspector" className="wonder-texture-assetTree">
-    <h1> (DomHelper.textEl("Texture")) </h1>
+    <h1> {DomHelper.textEl("Texture")} </h1>
     <hr />
     <StringInput
       label="Name"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "texture-name-describe",
+          languageType,
+        )
+      }
       defaultValue=name
       onBlur=renameFunc
       canBeNull=false
     />
-    (Method.renderWrapSSelect(dispatchFunc, textureComponent))
-    (Method.renderWrapTSelect(dispatchFunc, textureComponent))
-    (Method.renderMagFilterSelect(dispatchFunc, textureComponent))
-    (Method.renderMinFilterSelect(dispatchFunc, textureComponent))
+    {Method.renderWrapSSelect(dispatchFunc, textureComponent, languageType)}
+    {Method.renderWrapTSelect(dispatchFunc, textureComponent, languageType)}
+    {
+      Method.renderMagFilterSelect(
+        dispatchFunc,
+        textureComponent,
+        languageType,
+      )
+    }
+    {
+      Method.renderMinFilterSelect(
+        dispatchFunc,
+        textureComponent,
+        languageType,
+      )
+    }
   </article>;
+};
 
 let make =
     (

@@ -3,54 +3,59 @@ open InspectorComponentType;
 let buildComponentBox =
     (
       (uiState, dispatchFunc),
-      (name, type_, gameObject),
+      (name, type_, gameObject, title),
       (isDisposable, isShowComponent),
       buildComponentFunc,
     ) =>
   <ComponentBox
-    key=(DomHelper.getRandomKey())
+    key={DomHelper.getRandomKey()}
     reduxTuple=(uiState, dispatchFunc)
     header=name
     isDisposable
     isShowComponent
     type_
+    title
     gameObject
-    gameObjectUIComponent=(
+    gameObjectUIComponent={
       buildComponentFunc((uiState, dispatchFunc), gameObject)
-    )
+    }
   />;
 let _buildTransformFunc = ((uiState, dispatchFunc), gameObject) =>
   <MainEditorTransform
-    key=(DomHelper.getRandomKey())
+    key={DomHelper.getRandomKey()}
     uiState
     dispatchFunc
     gameObject
-    transformComponent=(
+    transformComponent={
       GameObjectComponentEngineService.unsafeGetTransformComponent(gameObject)
       |> StateLogicService.getEngineStateToGetData
-    )
+    }
   />;
 
 let _buildLightFunc = ((uiState, dispatchFunc), gameObject) =>
-  <MainEditorLight key=(DomHelper.getRandomKey()) uiState dispatchFunc />;
+  <MainEditorLight key={DomHelper.getRandomKey()} uiState dispatchFunc />;
 
 let _buildSouceInstanceFunc = ((uiState, dispatchFunc), gameObject) =>
-  <div key=(DomHelper.getRandomKey())>
-    (DomHelper.textEl("simulate source instance"))
+  <div key={DomHelper.getRandomKey()}>
+    {DomHelper.textEl("simulate source instance")}
   </div>;
 
 let _buildRenderGroupFunc = ((uiState, dispatchFunc), gameObject) =>
-  <MainEditorRenderGroup uiState dispatchFunc currentSceneTreeNode=gameObject />;
+  <MainEditorRenderGroup
+    uiState
+    dispatchFunc
+    currentSceneTreeNode=gameObject
+  />;
 
 let _buildGeometryFunc = ((uiState, dispatchFunc), gameObject) =>
   <MainEditorGeometry
     uiState
     dispatchFunc
     currentSceneTreeNode=gameObject
-    geometryComponent=(
+    geometryComponent={
       GameObjectComponentEngineService.unsafeGetGeometryComponent(gameObject)
       |> StateLogicService.getEngineStateToGetData
-    )
+    }
     isShowGeometryGroup=false
   />;
 
@@ -61,20 +66,29 @@ let _buildArcballCamera = ((uiState, dispatchFunc), gameObject) =>
   <MainEditorArcballCameraController
     uiState
     dispatchFunc
-    arcballCameraController=(
+    arcballCameraController={
       GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
         gameObject,
       )
       |> StateLogicService.getEngineStateToGetData
-    )
+    }
   />;
-let buildComponentUIComponent = ((uiState, dispatchFunc), type_, gameObject) =>
+let buildComponentUIComponent =
+    ((uiState, dispatchFunc), type_, gameObject, languageType) =>
   switch (type_) {
   | Transform =>
     _buildTransformFunc
     |> buildComponentBox(
          (uiState, dispatchFunc),
-         ("Transform", type_, gameObject),
+         (
+           "Transform",
+           type_,
+           gameObject,
+           LanguageUtils.getInspectorLanguageDataByType(
+             "transform-describe",
+             languageType,
+           ),
+         ),
          (
            false,
            StoreUtils.geGameObjectisShowComponentFromStore(
@@ -88,7 +102,15 @@ let buildComponentUIComponent = ((uiState, dispatchFunc), type_, gameObject) =>
     _buildLightFunc
     |> buildComponentBox(
          (uiState, dispatchFunc),
-         ("Light", type_, gameObject),
+         (
+           "Light",
+           type_,
+           gameObject,
+           LanguageUtils.getInspectorLanguageDataByType(
+             "light-describe",
+             languageType,
+           ),
+         ),
          (
            true,
            StoreUtils.geGameObjectisShowComponentFromStore(
@@ -102,7 +124,15 @@ let buildComponentUIComponent = ((uiState, dispatchFunc), type_, gameObject) =>
     _buildRenderGroupFunc
     |> buildComponentBox(
          (uiState, dispatchFunc),
-         ("RenderGroup", type_, gameObject),
+         (
+           "Render Group",
+           type_,
+           gameObject,
+           LanguageUtils.getInspectorLanguageDataByType(
+             "render-group-describe",
+             languageType,
+           ),
+         ),
          (
            true,
            StoreUtils.geGameObjectisShowComponentFromStore(
@@ -116,7 +146,15 @@ let buildComponentUIComponent = ((uiState, dispatchFunc), type_, gameObject) =>
     _buildGeometryFunc
     |> buildComponentBox(
          (uiState, dispatchFunc),
-         ("Geometry", type_, gameObject),
+         (
+           "Geometry",
+           type_,
+           gameObject,
+           LanguageUtils.getInspectorLanguageDataByType(
+             "geometry-describe",
+             languageType,
+           ),
+         ),
          (
            true,
            StoreUtils.geGameObjectisShowComponentFromStore(
@@ -134,7 +172,15 @@ let buildComponentUIComponent = ((uiState, dispatchFunc), type_, gameObject) =>
     _buildCameraGroupFunc
     |> buildComponentBox(
          (uiState, dispatchFunc),
-         ("Camera Group", type_, gameObject),
+         (
+           "Camera Group",
+           type_,
+           gameObject,
+           LanguageUtils.getInspectorLanguageDataByType(
+             "camera-group-describe",
+             languageType,
+           ),
+         ),
          (
            true,
            StoreUtils.geGameObjectisShowComponentFromStore(
@@ -148,7 +194,15 @@ let buildComponentUIComponent = ((uiState, dispatchFunc), type_, gameObject) =>
     _buildArcballCamera
     |> buildComponentBox(
          (uiState, dispatchFunc),
-         ("ArcballCameraController", type_, gameObject),
+         (
+           "ArcballCameraController",
+           type_,
+           gameObject,
+           LanguageUtils.getInspectorLanguageDataByType(
+             "arcball-cameraController-describe",
+             languageType,
+           ),
+         ),
          (
            true,
            StoreUtils.geGameObjectisShowComponentFromStore(
