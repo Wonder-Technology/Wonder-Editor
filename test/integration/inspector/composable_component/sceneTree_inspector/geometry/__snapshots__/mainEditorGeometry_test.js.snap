@@ -13,6 +13,7 @@ exports[`MainEditorGeometry component test select geometry group->show order
   >
     <div
       className="item-header"
+      title="geometry in use which is default or model's geometry"
     >
       Geometry
     </div>
@@ -108,6 +109,7 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
   >
     <div
       className="item-header"
+      title="geometry in use which is default or model's geometry"
     >
       Geometry
     </div>
@@ -146,6 +148,7 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
   >
     <div
       className="item-header"
+      title="geometry in use which is default or model's geometry"
     >
       Geometry
     </div>
@@ -217,6 +220,7 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test change 
   >
     <div
       className="item-header"
+      title="geometry in use which is default or model's geometry"
     >
       Geometry
     </div>
@@ -294,6 +298,7 @@ exports[`MainEditorGeometry component test set currentSceneTreeNode test load as
   >
     <div
       className="item-header"
+      title="geometry in use which is default or model's geometry"
     >
       Geometry
     </div>

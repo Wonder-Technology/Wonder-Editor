@@ -61,6 +61,7 @@ exports[`assetTree inspector prepare currentSelectSource test component snapshot
       >
         <div
           className="item-header"
+          title="texture's name"
         >
           <span
             className="component-label"
@@ -85,6 +86,7 @@ exports[`assetTree inspector prepare currentSelectSource test component snapshot
       >
         <div
           className="item-header"
+          title="repetitive pattern in horizontal direction of texture"
         >
           <span
             className=""
@@ -122,6 +124,7 @@ exports[`assetTree inspector prepare currentSelectSource test component snapshot
       >
         <div
           className="item-header"
+          title="repetitive pattern in vertical direction of texture"
         >
           <span
             className=""
@@ -159,6 +162,7 @@ exports[`assetTree inspector prepare currentSelectSource test component snapshot
       >
         <div
           className="item-header"
+          title="defines how textures are sampled when a texel covers multiple pixels"
         >
           <span
             className=""
@@ -191,6 +195,7 @@ exports[`assetTree inspector prepare currentSelectSource test component snapshot
       >
         <div
           className="item-header"
+          title="defines how textures are sampled when a texel is insufficient to cover a single pixel"
         >
           <span
             className=""
@@ -290,7 +295,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename folder node
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -477,6 +482,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename texture nod
       >
         <div
           className="item-header"
+          title="texture's name"
         >
           <span
             className="component-label"
@@ -501,6 +507,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename texture nod
       >
         <div
           className="item-header"
+          title="repetitive pattern in horizontal direction of texture"
         >
           <span
             className=""
@@ -538,6 +545,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename texture nod
       >
         <div
           className="item-header"
+          title="repetitive pattern in vertical direction of texture"
         >
           <span
             className=""
@@ -575,6 +583,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename texture nod
       >
         <div
           className="item-header"
+          title="defines how textures are sampled when a texel covers multiple pixels"
         >
           <span
             className=""
@@ -607,6 +616,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename texture nod
       >
         <div
           className="item-header"
+          title="defines how textures are sampled when a texel is insufficient to cover a single pixel"
         >
           <span
             className=""

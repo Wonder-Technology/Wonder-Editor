@@ -15,6 +15,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -51,6 +52,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -63,6 +65,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -77,6 +80,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -100,6 +104,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -123,6 +128,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -145,6 +151,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -159,6 +166,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -182,6 +190,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -205,6 +214,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -227,6 +237,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -241,6 +252,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -264,6 +276,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -287,6 +300,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -322,8 +336,9 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         </div>
         <div
           className="header-title"
+          title="Render Group decide how to render the gameObject and whether to render it or not "
         >
-          RenderGroup
+          Render Group
         </div>
         <div
           className="header-close"
@@ -342,8 +357,9 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="component-title"
+            title="MeshRenderer"
           >
-            MeshRender
+            Mesh Render
           </div>
           <hr />
           <div
@@ -357,11 +373,12 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               >
                 <div
                   className="item-header"
+                  title="draw mode"
                 >
                   <span
                     className=""
                   >
-                    Draw mode
+                    Draw Mode
                   </span>
                 </div>
                 <div
@@ -417,6 +434,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="component-title"
+            title="Material"
           >
             Material
           </div>
@@ -432,6 +450,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               >
                 <div
                   className="item-header"
+                  title="material in use which is default or material asset"
                 >
                   Material
                 </div>
@@ -466,6 +485,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 >
                   <div
                     className="item-header"
+                    title="material's type"
                   >
                     <span
                       className=""
@@ -504,8 +524,9 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse color"
                       >
-                        Diffcuse color
+                        Diffuse Color
                       </div>
                       <div
                         className="item-content item-color"
@@ -522,7 +543,6 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                         <div
                           className="color-select"
                           onClick={[Function]}
-                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -535,8 +555,9 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse map"
                       >
-                        Diffuse map
+                        Diffuse Map
                       </div>
                       <div
                         className="item-content item-texture"
@@ -574,6 +595,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                         onMouseDown={[Function]}
                         onMouseMove={[Function]}
                         onMouseUp={[Function]}
+                        title="material's shininess"
                       >
                         Shininess
                       </div>
@@ -616,6 +638,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         </div>
         <div
           className="header-title"
+          title="Geometry"
         >
           Geometry
         </div>
@@ -636,6 +659,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="item-header"
+            title="geometry in use which is default or model's geometry"
           >
             Geometry
           </div>
@@ -680,6 +704,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         </div>
         <div
           className="header-title"
+          title="Light"
         >
           Light
         </div>
@@ -700,6 +725,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="item-header"
+            title="light type"
           >
             <span
               className=""
@@ -735,6 +761,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
           >
             <div
               className="item-header"
+              title="light's color"
             >
               Color
             </div>
@@ -753,7 +780,6 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               <div
                 className="color-select"
                 onClick={[Function]}
-                title="color"
               >
                 <img
                   src="./public/img/color.png"
@@ -769,6 +795,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               onMouseDown={[Function]}
               onMouseMove={[Function]}
               onMouseUp={[Function]}
+              title="light's intensity"
             >
               Intensity
             </div>
@@ -824,6 +851,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -860,6 +888,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -872,6 +901,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -886,6 +916,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -909,6 +940,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -932,6 +964,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -954,6 +987,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -968,6 +1002,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -991,6 +1026,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1014,6 +1050,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1036,6 +1073,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -1050,6 +1088,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1073,6 +1112,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1096,6 +1136,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1131,8 +1172,9 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         </div>
         <div
           className="header-title"
+          title="Render Group decide how to render the gameObject and whether to render it or not "
         >
-          RenderGroup
+          Render Group
         </div>
         <div
           className="header-close"
@@ -1151,8 +1193,9 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="component-title"
+            title="MeshRenderer"
           >
-            MeshRender
+            Mesh Render
           </div>
           <hr />
           <div
@@ -1166,11 +1209,12 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               >
                 <div
                   className="item-header"
+                  title="draw mode"
                 >
                   <span
                     className=""
                   >
-                    Draw mode
+                    Draw Mode
                   </span>
                 </div>
                 <div
@@ -1226,6 +1270,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="component-title"
+            title="Material"
           >
             Material
           </div>
@@ -1241,6 +1286,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               >
                 <div
                   className="item-header"
+                  title="material in use which is default or material asset"
                 >
                   Material
                 </div>
@@ -1275,6 +1321,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 >
                   <div
                     className="item-header"
+                    title="material's type"
                   >
                     <span
                       className=""
@@ -1313,8 +1360,9 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse color"
                       >
-                        Diffcuse color
+                        Diffuse Color
                       </div>
                       <div
                         className="item-content item-color"
@@ -1331,7 +1379,6 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                         <div
                           className="color-select"
                           onClick={[Function]}
-                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -1344,8 +1391,9 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse map"
                       >
-                        Diffuse map
+                        Diffuse Map
                       </div>
                       <div
                         className="item-content item-texture"
@@ -1383,6 +1431,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                         onMouseDown={[Function]}
                         onMouseMove={[Function]}
                         onMouseUp={[Function]}
+                        title="material's shininess"
                       >
                         Shininess
                       </div>
@@ -1425,6 +1474,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         </div>
         <div
           className="header-title"
+          title="Geometry"
         >
           Geometry
         </div>
@@ -1445,6 +1495,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="item-header"
+            title="geometry in use which is default or model's geometry"
           >
             Geometry
           </div>
@@ -1489,6 +1540,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         </div>
         <div
           className="header-title"
+          title="Light"
         >
           Light
         </div>
@@ -1509,6 +1561,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="item-header"
+            title="light type"
           >
             <span
               className=""
@@ -1544,6 +1597,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
           >
             <div
               className="item-header"
+              title="light's color"
             >
               Color
             </div>
@@ -1562,7 +1616,6 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               <div
                 className="color-select"
                 onClick={[Function]}
-                title="color"
               >
                 <img
                   src="./public/img/color.png"
@@ -1578,6 +1631,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               onMouseDown={[Function]}
               onMouseMove={[Function]}
               onMouseUp={[Function]}
+              title="light's intensity"
             >
               Intensity
             </div>
@@ -1633,6 +1687,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -1669,6 +1724,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -1681,6 +1737,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -1695,6 +1752,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1718,6 +1776,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1741,6 +1800,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1763,6 +1823,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -1777,6 +1838,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1800,6 +1862,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1823,6 +1886,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1845,6 +1909,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -1859,6 +1924,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1882,6 +1948,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1905,6 +1972,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1940,8 +2008,9 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         </div>
         <div
           className="header-title"
+          title="Render Group decide how to render the gameObject and whether to render it or not "
         >
-          RenderGroup
+          Render Group
         </div>
         <div
           className="header-close"
@@ -1960,8 +2029,9 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="component-title"
+            title="MeshRenderer"
           >
-            MeshRender
+            Mesh Render
           </div>
           <hr />
           <div
@@ -1975,11 +2045,12 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               >
                 <div
                   className="item-header"
+                  title="draw mode"
                 >
                   <span
                     className=""
                   >
-                    Draw mode
+                    Draw Mode
                   </span>
                 </div>
                 <div
@@ -2035,6 +2106,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="component-title"
+            title="Material"
           >
             Material
           </div>
@@ -2050,6 +2122,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
               >
                 <div
                   className="item-header"
+                  title="material in use which is default or material asset"
                 >
                   Material
                 </div>
@@ -2084,6 +2157,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                 >
                   <div
                     className="item-header"
+                    title="material's type"
                   >
                     <span
                       className=""
@@ -2122,8 +2196,9 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse color"
                       >
-                        Diffcuse color
+                        Diffuse Color
                       </div>
                       <div
                         className="item-content item-color"
@@ -2140,7 +2215,6 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                         <div
                           className="color-select"
                           onClick={[Function]}
-                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -2153,8 +2227,9 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse map"
                       >
-                        Diffuse map
+                        Diffuse Map
                       </div>
                       <div
                         className="item-content item-texture"
@@ -2192,6 +2267,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
                         onMouseDown={[Function]}
                         onMouseMove={[Function]}
                         onMouseUp={[Function]}
+                        title="material's shininess"
                       >
                         Shininess
                       </div>
@@ -2234,6 +2310,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         </div>
         <div
           className="header-title"
+          title="Geometry"
         >
           Geometry
         </div>
@@ -2254,6 +2331,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           <div
             className="item-header"
+            title="geometry in use which is default or model's geometry"
           >
             Geometry
           </div>

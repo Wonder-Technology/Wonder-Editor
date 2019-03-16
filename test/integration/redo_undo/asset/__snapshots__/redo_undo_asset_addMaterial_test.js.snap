@@ -41,7 +41,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -155,7 +155,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -289,7 +289,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -423,7 +423,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -537,7 +537,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"

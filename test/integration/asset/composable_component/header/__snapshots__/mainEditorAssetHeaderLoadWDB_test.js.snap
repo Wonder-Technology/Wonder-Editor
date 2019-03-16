@@ -338,6 +338,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb fix bug fix geometry bug
   >
     <div
       className="item-header"
+      title="geometry in use which is default or model's geometry"
     >
       Geometry
     </div>
@@ -438,6 +439,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb relate wdb asset gameObje
   >
     <div
       className="item-header"
+      title="geometry in use which is default or model's geometry"
     >
       Geometry
     </div>

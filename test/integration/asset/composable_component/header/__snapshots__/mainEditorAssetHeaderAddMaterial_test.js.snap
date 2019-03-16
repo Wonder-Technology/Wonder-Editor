@@ -193,7 +193,7 @@ exports[`MainEditorAssetHeader->add material if not select specific treeNode sho
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -398,7 +398,7 @@ exports[`MainEditorAssetHeader->add material test name test default name 1`] = `
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"

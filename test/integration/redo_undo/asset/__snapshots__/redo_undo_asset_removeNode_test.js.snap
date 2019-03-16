@@ -41,7 +41,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -201,7 +201,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -294,7 +294,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -387,7 +387,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"
@@ -547,7 +547,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"

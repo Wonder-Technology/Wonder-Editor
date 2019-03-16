@@ -15,6 +15,7 @@ exports[`redo_undo: transform rotation fix bug
   >
     <div
       className="item-header"
+      title="position in local coordinate system"
     >
       Position
     </div>
@@ -29,6 +30,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           X
         </div>
@@ -52,6 +54,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Y
         </div>
@@ -75,6 +78,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Z
         </div>
@@ -97,6 +101,7 @@ exports[`redo_undo: transform rotation fix bug
   >
     <div
       className="item-header"
+      title="euler angle in local coordinate system"
     >
       Rotation
     </div>
@@ -111,6 +116,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           X
         </div>
@@ -134,6 +140,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Y
         </div>
@@ -157,6 +164,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Z
         </div>
@@ -179,6 +187,7 @@ exports[`redo_undo: transform rotation fix bug
   >
     <div
       className="item-header"
+      title="scale in local coordinate system"
     >
       Scale
     </div>
@@ -193,6 +202,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           X
         </div>
@@ -216,6 +226,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Y
         </div>
@@ -239,6 +250,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Z
         </div>
@@ -274,6 +286,7 @@ exports[`redo_undo: transform rotation fix bug
   >
     <div
       className="item-header"
+      title="position in local coordinate system"
     >
       Position
     </div>
@@ -288,6 +301,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           X
         </div>
@@ -311,6 +325,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Y
         </div>
@@ -334,6 +349,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Z
         </div>
@@ -356,6 +372,7 @@ exports[`redo_undo: transform rotation fix bug
   >
     <div
       className="item-header"
+      title="euler angle in local coordinate system"
     >
       Rotation
     </div>
@@ -370,6 +387,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           X
         </div>
@@ -393,6 +411,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Y
         </div>
@@ -416,6 +435,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Z
         </div>
@@ -438,6 +458,7 @@ exports[`redo_undo: transform rotation fix bug
   >
     <div
       className="item-header"
+      title="scale in local coordinate system"
     >
       Scale
     </div>
@@ -452,6 +473,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           X
         </div>
@@ -475,6 +497,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Y
         </div>
@@ -498,6 +521,7 @@ exports[`redo_undo: transform rotation fix bug
           onMouseDown={[Function]}
           onMouseMove={[Function]}
           onMouseUp={[Function]}
+          title=""
         >
           Z
         </div>

@@ -78,6 +78,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -114,6 +115,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -126,6 +128,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -140,6 +143,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -163,6 +167,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -186,6 +191,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -208,6 +214,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -222,6 +229,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -245,6 +253,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -268,6 +277,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -290,6 +300,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -304,6 +315,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -327,6 +339,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -350,6 +363,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -385,8 +399,9 @@ exports[`test MainEditorMaterialMap load asset wdb;
         </div>
         <div
           className="header-title"
+          title="Render Group decide how to render the gameObject and whether to render it or not "
         >
-          RenderGroup
+          Render Group
         </div>
         <div
           className="header-close"
@@ -405,8 +420,9 @@ exports[`test MainEditorMaterialMap load asset wdb;
         >
           <div
             className="component-title"
+            title="MeshRenderer"
           >
-            MeshRender
+            Mesh Render
           </div>
           <hr />
           <div
@@ -420,11 +436,12 @@ exports[`test MainEditorMaterialMap load asset wdb;
               >
                 <div
                   className="item-header"
+                  title="draw mode"
                 >
                   <span
                     className=""
                   >
-                    Draw mode
+                    Draw Mode
                   </span>
                 </div>
                 <div
@@ -480,6 +497,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
         >
           <div
             className="component-title"
+            title="Material"
           >
             Material
           </div>
@@ -495,6 +513,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
               >
                 <div
                   className="item-header"
+                  title="material in use which is default or material asset"
                 >
                   Material
                 </div>
@@ -529,6 +548,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                 >
                   <div
                     className="item-header"
+                    title="material's type"
                   >
                     <span
                       className=""
@@ -567,8 +587,9 @@ exports[`test MainEditorMaterialMap load asset wdb;
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse color"
                       >
-                        Diffcuse color
+                        Diffuse Color
                       </div>
                       <div
                         className="item-content item-color"
@@ -585,7 +606,6 @@ exports[`test MainEditorMaterialMap load asset wdb;
                         <div
                           className="color-select"
                           onClick={[Function]}
-                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -598,8 +618,9 @@ exports[`test MainEditorMaterialMap load asset wdb;
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse map"
                       >
-                        Diffuse map
+                        Diffuse Map
                       </div>
                       <div
                         className="item-content item-texture"
@@ -640,6 +661,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
                         onMouseDown={[Function]}
                         onMouseMove={[Function]}
                         onMouseUp={[Function]}
+                        title="material's shininess"
                       >
                         Shininess
                       </div>
@@ -679,6 +701,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
         </div>
         <div
           className="header-title"
+          title="Geometry"
         >
           Geometry
         </div>
@@ -699,6 +722,7 @@ exports[`test MainEditorMaterialMap load asset wdb;
         >
           <div
             className="item-header"
+            title="geometry in use which is default or model's geometry"
           >
             Geometry
           </div>
@@ -758,6 +782,7 @@ exports[`test MainEditorMaterialMap test select texture group -> show order
 >
   <div
     className="item-header"
+    title=""
   >
     Diffuse map
   </div>

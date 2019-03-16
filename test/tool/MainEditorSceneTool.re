@@ -86,7 +86,7 @@ let initStateWithJob =
       ~context=TestToolEngine.getDefaultContext(),
       (),
     ) => {
-  TestTool.initEditorAndEngineStateAndInitSceneWithJob(
+  TestTool.initEngineStateAndInitSceneWithJob(
     ~sandbox,
     ~buffer,
     ~noWorkerJobRecord,
@@ -109,6 +109,8 @@ let initStateWithJob =
     |> TreeAssetEditorService.createTree,
   )
   |> ignore;
+
+  TestTool.setLanguageTypeToEn();
 
   ConsoleTool.notShowMessage();
 };

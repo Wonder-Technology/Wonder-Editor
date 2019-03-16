@@ -19,6 +19,7 @@ exports[`material inspector test rename material if type is basicMaterial, renam
       >
         <div
           className="item-header"
+          title="material's name"
         >
           <span
             className="component-label"
@@ -43,6 +44,7 @@ exports[`material inspector test rename material if type is basicMaterial, renam
       >
         <div
           className="item-header"
+          title="material's type"
         >
           <span
             className=""
@@ -78,6 +80,7 @@ exports[`material inspector test rename material if type is basicMaterial, renam
         >
           <div
             className="item-header"
+            title="color"
           >
             Color
           </div>
@@ -96,7 +99,6 @@ exports[`material inspector test rename material if type is basicMaterial, renam
             <div
               className="color-select"
               onClick={[Function]}
-              title="color"
             >
               <img
                 src="./public/img/color.png"
@@ -129,6 +131,7 @@ exports[`material inspector test rename material if type is lightMaterial, renam
       >
         <div
           className="item-header"
+          title="material's name"
         >
           <span
             className="component-label"
@@ -153,6 +156,7 @@ exports[`material inspector test rename material if type is lightMaterial, renam
       >
         <div
           className="item-header"
+          title="material's type"
         >
           <span
             className=""
@@ -188,8 +192,9 @@ exports[`material inspector test rename material if type is lightMaterial, renam
         >
           <div
             className="item-header"
+            title="material's diffuse color"
           >
-            Diffcuse color
+            Diffuse Color
           </div>
           <div
             className="item-content item-color"
@@ -206,7 +211,6 @@ exports[`material inspector test rename material if type is lightMaterial, renam
             <div
               className="color-select"
               onClick={[Function]}
-              title="diffuse color"
             >
               <img
                 src="./public/img/color.png"
@@ -219,8 +223,9 @@ exports[`material inspector test rename material if type is lightMaterial, renam
         >
           <div
             className="item-header"
+            title="material's diffuse map"
           >
-            Diffuse map
+            Diffuse Map
           </div>
           <div
             className="item-content item-texture"
@@ -258,6 +263,7 @@ exports[`material inspector test rename material if type is lightMaterial, renam
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
+            title="material's shininess"
           >
             Shininess
           </div>

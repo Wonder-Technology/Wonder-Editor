@@ -21,8 +21,9 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
           >
             <div
               className="item-header"
+              title="set ambient color which is global."
             >
-              Ambient Color : 
+              AmbientColor:
             </div>
             <div
               className="item-content item-color"
@@ -39,7 +40,6 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
               <div
                 className="color-select"
                 onClick={[Function]}
-                title="ambient color"
               >
                 <img
                   src="./public/img/color.png"
@@ -65,17 +65,17 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <div
               className="translation select"
               onClick={[Function]}
-              title="translation"
+              title="set to translation gizmo"
             />
             <div
               className="rotation not-select"
               onClick={[Function]}
-              title="rotation"
+              title="set to rotation gizmo"
             />
             <div
               className="scale not-select"
               onClick={[Function]}
-              title="scale"
+              title="set to scale gizmo"
             />
           </article>
           <article
@@ -84,7 +84,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <button
               disabled={false}
               onClick={[Function]}
-              title="switch coordinate system"
+              title="switch gizmo's coordinate system"
             >
               World
             </button>
@@ -95,7 +95,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
     <div
       className="controller-runAndStop"
       onClick={[Function]}
-      title="run/stop"
+      title="run/stop scene"
     >
       <img
         src="./public/img/run.png"
@@ -103,7 +103,14 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
     </div>
     <div
       className="controller-other"
-    />
+    >
+      <div
+        className="other-language"
+        onClick={[Function]}
+      >
+        中文
+      </div>
+    </div>
   </div>
 </article>
 `;
@@ -129,8 +136,9 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
           >
             <div
               className="item-header"
+              title="set ambient color which is global."
             >
-              Ambient Color : 
+              AmbientColor:
             </div>
             <div
               className="item-content item-color"
@@ -147,7 +155,6 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
               <div
                 className="color-select"
                 onClick={[Function]}
-                title="ambient color"
               >
                 <img
                   src="./public/img/color.png"
@@ -173,17 +180,17 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <div
               className="translation select"
               onClick={[Function]}
-              title="translation"
+              title="set to translation gizmo"
             />
             <div
               className="rotation not-select"
               onClick={[Function]}
-              title="rotation"
+              title="set to rotation gizmo"
             />
             <div
               className="scale not-select"
               onClick={[Function]}
-              title="scale"
+              title="set to scale gizmo"
             />
           </article>
           <article
@@ -192,7 +199,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <button
               disabled={false}
               onClick={[Function]}
-              title="switch coordinate system"
+              title="switch gizmo's coordinate system"
             >
               World
             </button>
@@ -203,7 +210,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
     <div
       className="controller-runAndStop"
       onClick={[Function]}
-      title="run/stop"
+      title="run/stop scene"
     >
       <img
         src="./public/img/run.png"
@@ -211,7 +218,14 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
     </div>
     <div
       className="controller-other"
-    />
+    >
+      <div
+        className="other-language"
+        onClick={[Function]}
+      >
+        中文
+      </div>
+    </div>
   </div>
 </article>
 `;
@@ -237,8 +251,9 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
           >
             <div
               className="item-header"
+              title="set ambient color which is global."
             >
-              Ambient Color : 
+              AmbientColor:
             </div>
             <div
               className="item-content item-color"
@@ -255,7 +270,6 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
               <div
                 className="color-select"
                 onClick={[Function]}
-                title="ambient color"
               >
                 <img
                   src="./public/img/color.png"
@@ -281,17 +295,17 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <div
               className="translation select"
               onClick={[Function]}
-              title="translation"
+              title="set to translation gizmo"
             />
             <div
               className="rotation not-select"
               onClick={[Function]}
-              title="rotation"
+              title="set to rotation gizmo"
             />
             <div
               className="scale not-select"
               onClick={[Function]}
-              title="scale"
+              title="set to scale gizmo"
             />
           </article>
           <article
@@ -300,7 +314,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <button
               disabled={false}
               onClick={[Function]}
-              title="switch coordinate system"
+              title="switch gizmo's coordinate system"
             >
               World
             </button>
@@ -311,7 +325,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
     <div
       className="controller-runAndStop"
       onClick={[Function]}
-      title="run/stop"
+      title="run/stop scene"
     >
       <img
         src="./public/img/run.png"
@@ -319,7 +333,14 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
     </div>
     <div
       className="controller-other"
-    />
+    >
+      <div
+        className="other-language"
+        onClick={[Function]}
+      >
+        中文
+      </div>
+    </div>
   </div>
 </article>
 `;
@@ -345,8 +366,9 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
           >
             <div
               className="item-header"
+              title="set ambient color which is global."
             >
-              Ambient Color : 
+              AmbientColor:
             </div>
             <div
               className="item-content item-color"
@@ -363,7 +385,6 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
               <div
                 className="color-select"
                 onClick={[Function]}
-                title="ambient color"
               >
                 <img
                   src="./public/img/color.png"
@@ -389,17 +410,17 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <div
               className="translation select"
               onClick={[Function]}
-              title="translation"
+              title="set to translation gizmo"
             />
             <div
               className="rotation not-select"
               onClick={[Function]}
-              title="rotation"
+              title="set to rotation gizmo"
             />
             <div
               className="scale not-select"
               onClick={[Function]}
-              title="scale"
+              title="set to scale gizmo"
             />
           </article>
           <article
@@ -408,7 +429,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <button
               disabled={false}
               onClick={[Function]}
-              title="switch coordinate system"
+              title="switch gizmo's coordinate system"
             >
               World
             </button>
@@ -419,7 +440,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
     <div
       className="controller-runAndStop"
       onClick={[Function]}
-      title="run/stop"
+      title="run/stop scene"
     >
       <img
         src="./public/img/run.png"
@@ -427,7 +448,14 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
     </div>
     <div
       className="controller-other"
-    />
+    >
+      <div
+        className="other-language"
+        onClick={[Function]}
+      >
+        中文
+      </div>
+    </div>
   </div>
 </article>
 `;
@@ -453,8 +481,9 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
           >
             <div
               className="item-header"
+              title="set ambient color which is global."
             >
-              Ambient Color : 
+              AmbientColor:
             </div>
             <div
               className="item-content item-color"
@@ -471,7 +500,6 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
               <div
                 className="color-select"
                 onClick={[Function]}
-                title="ambient color"
               >
                 <img
                   src="./public/img/color.png"
@@ -497,17 +525,17 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <div
               className="translation select"
               onClick={[Function]}
-              title="translation"
+              title="set to translation gizmo"
             />
             <div
               className="rotation not-select"
               onClick={[Function]}
-              title="rotation"
+              title="set to rotation gizmo"
             />
             <div
               className="scale not-select"
               onClick={[Function]}
-              title="scale"
+              title="set to scale gizmo"
             />
           </article>
           <article
@@ -516,7 +544,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
             <button
               disabled={false}
               onClick={[Function]}
-              title="switch coordinate system"
+              title="switch gizmo's coordinate system"
             >
               World
             </button>
@@ -527,7 +555,7 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
     <div
       className="controller-runAndStop"
       onClick={[Function]}
-      title="run/stop"
+      title="run/stop scene"
     >
       <img
         src="./public/img/run.png"
@@ -535,7 +563,14 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
     </div>
     <div
       className="controller-other"
-    />
+    >
+      <div
+        className="other-language"
+        onClick={[Function]}
+      >
+        中文
+      </div>
+    </div>
   </div>
 </article>
 `;

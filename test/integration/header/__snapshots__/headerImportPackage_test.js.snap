@@ -16,6 +16,7 @@ exports[`header import package dispose assets dispose material assets
   >
     <div
       className="item-header"
+      title="material in use which is default or material asset"
     >
       Material
     </div>
@@ -89,6 +90,7 @@ exports[`header import package dispose assets dispose material assets
     >
       <div
         className="item-header"
+        title="material's type"
       >
         <span
           className=""
@@ -127,8 +129,9 @@ exports[`header import package dispose assets dispose material assets
         >
           <div
             className="item-header"
+            title="material's diffuse color"
           >
-            Diffcuse color
+            Diffuse Color
           </div>
           <div
             className="item-content item-color"
@@ -145,7 +148,6 @@ exports[`header import package dispose assets dispose material assets
             <div
               className="color-select"
               onClick={[Function]}
-              title="diffuse color"
             >
               <img
                 src="./public/img/color.png"
@@ -158,8 +160,9 @@ exports[`header import package dispose assets dispose material assets
         >
           <div
             className="item-header"
+            title="material's diffuse map"
           >
-            Diffuse map
+            Diffuse Map
           </div>
           <div
             className="item-content item-texture"
@@ -200,6 +203,7 @@ exports[`header import package dispose assets dispose material assets
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
+            title="material's shininess"
           >
             Shininess
           </div>
@@ -238,6 +242,7 @@ exports[`header import package dispose assets dispose wdb assets dispose geometr
   >
     <div
       className="item-header"
+      title="geometry in use which is default or model's geometry"
     >
       Geometry
     </div>
@@ -417,6 +422,7 @@ exports[`header import package test geometry
   >
     <div
       className="item-header"
+      title="geometry in use which is default or model's geometry"
     >
       Geometry
     </div>
@@ -495,6 +501,7 @@ exports[`header import package test geometry test with wdb assets relate wdb ass
   >
     <div
       className="item-header"
+      title="geometry in use which is default or model's geometry"
     >
       Geometry
     </div>
@@ -573,6 +580,7 @@ exports[`header import package test geometry test with wdb assets relate wdb ass
   >
     <div
       className="item-header"
+      title="geometry in use which is default or model's geometry"
     >
       Geometry
     </div>
@@ -652,6 +660,7 @@ exports[`header import package test geometry test with wdb assets relate wdb ass
   >
     <div
       className="item-header"
+      title="geometry in use which is default or model's geometry"
     >
       Geometry
     </div>
@@ -742,6 +751,7 @@ exports[`header import package test import assets test import material assets fi
       >
         <div
           className="item-header"
+          title="material's name"
         >
           <span
             className="component-label"
@@ -766,6 +776,7 @@ exports[`header import package test import assets test import material assets fi
       >
         <div
           className="item-header"
+          title="material's type"
         >
           <span
             className=""
@@ -801,8 +812,9 @@ exports[`header import package test import assets test import material assets fi
         >
           <div
             className="item-header"
+            title="material's diffuse color"
           >
-            Diffcuse color
+            Diffuse Color
           </div>
           <div
             className="item-content item-color"
@@ -819,7 +831,6 @@ exports[`header import package test import assets test import material assets fi
             <div
               className="color-select"
               onClick={[Function]}
-              title="diffuse color"
             >
               <img
                 src="./public/img/color.png"
@@ -832,8 +843,9 @@ exports[`header import package test import assets test import material assets fi
         >
           <div
             className="item-header"
+            title="material's diffuse map"
           >
-            Diffuse map
+            Diffuse Map
           </div>
           <div
             className="item-content item-texture"
@@ -871,6 +883,7 @@ exports[`header import package test import assets test import material assets fi
             onMouseDown={[Function]}
             onMouseMove={[Function]}
             onMouseUp={[Function]}
+            title="material's shininess"
           >
             Shininess
           </div>
@@ -981,6 +994,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -1017,6 +1031,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -1029,6 +1044,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -1043,6 +1059,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1066,6 +1083,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1089,6 +1107,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1111,6 +1130,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -1125,6 +1145,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1148,6 +1169,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1171,6 +1193,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1193,6 +1216,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -1207,6 +1231,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1230,6 +1255,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1253,6 +1279,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1288,8 +1315,9 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         </div>
         <div
           className="header-title"
+          title="Render Group decide how to render the gameObject and whether to render it or not "
         >
-          RenderGroup
+          Render Group
         </div>
         <div
           className="header-close"
@@ -1308,8 +1336,9 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="component-title"
+            title="MeshRenderer"
           >
-            MeshRender
+            Mesh Render
           </div>
           <hr />
           <div
@@ -1323,11 +1352,12 @@ exports[`header import package test import scene wdb relate scene gameObjects an
               >
                 <div
                   className="item-header"
+                  title="draw mode"
                 >
                   <span
                     className=""
                   >
-                    Draw mode
+                    Draw Mode
                   </span>
                 </div>
                 <div
@@ -1383,6 +1413,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="component-title"
+            title="Material"
           >
             Material
           </div>
@@ -1398,6 +1429,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
               >
                 <div
                   className="item-header"
+                  title="material in use which is default or material asset"
                 >
                   Material
                 </div>
@@ -1432,6 +1464,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 >
                   <div
                     className="item-header"
+                    title="material's type"
                   >
                     <span
                       className=""
@@ -1470,8 +1503,9 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse color"
                       >
-                        Diffcuse color
+                        Diffuse Color
                       </div>
                       <div
                         className="item-content item-color"
@@ -1488,7 +1522,6 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                         <div
                           className="color-select"
                           onClick={[Function]}
-                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -1501,8 +1534,9 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse map"
                       >
-                        Diffuse map
+                        Diffuse Map
                       </div>
                       <div
                         className="item-content item-texture"
@@ -1540,6 +1574,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                         onMouseDown={[Function]}
                         onMouseMove={[Function]}
                         onMouseUp={[Function]}
+                        title="material's shininess"
                       >
                         Shininess
                       </div>
@@ -1579,6 +1614,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         </div>
         <div
           className="header-title"
+          title="Geometry"
         >
           Geometry
         </div>
@@ -1599,6 +1635,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="item-header"
+            title="geometry in use which is default or model's geometry"
           >
             Geometry
           </div>
@@ -1664,6 +1701,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -1700,6 +1738,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -1712,6 +1751,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -1726,6 +1766,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1749,6 +1790,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1772,6 +1814,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1794,6 +1837,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -1808,6 +1852,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1831,6 +1876,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1854,6 +1900,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1876,6 +1923,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -1890,6 +1938,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -1913,6 +1962,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -1936,6 +1986,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -1971,8 +2022,9 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         </div>
         <div
           className="header-title"
+          title="Render Group decide how to render the gameObject and whether to render it or not "
         >
-          RenderGroup
+          Render Group
         </div>
         <div
           className="header-close"
@@ -1991,8 +2043,9 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="component-title"
+            title="MeshRenderer"
           >
-            MeshRender
+            Mesh Render
           </div>
           <hr />
           <div
@@ -2006,11 +2059,12 @@ exports[`header import package test import scene wdb relate scene gameObjects an
               >
                 <div
                   className="item-header"
+                  title="draw mode"
                 >
                   <span
                     className=""
                   >
-                    Draw mode
+                    Draw Mode
                   </span>
                 </div>
                 <div
@@ -2066,6 +2120,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="component-title"
+            title="Material"
           >
             Material
           </div>
@@ -2081,6 +2136,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
               >
                 <div
                   className="item-header"
+                  title="material in use which is default or material asset"
                 >
                   Material
                 </div>
@@ -2115,6 +2171,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 >
                   <div
                     className="item-header"
+                    title="material's type"
                   >
                     <span
                       className=""
@@ -2153,8 +2210,9 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse color"
                       >
-                        Diffcuse color
+                        Diffuse Color
                       </div>
                       <div
                         className="item-content item-color"
@@ -2171,7 +2229,6 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                         <div
                           className="color-select"
                           onClick={[Function]}
-                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -2184,8 +2241,9 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse map"
                       >
-                        Diffuse map
+                        Diffuse Map
                       </div>
                       <div
                         className="item-content item-texture"
@@ -2223,6 +2281,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                         onMouseDown={[Function]}
                         onMouseMove={[Function]}
                         onMouseUp={[Function]}
+                        title="material's shininess"
                       >
                         Shininess
                       </div>
@@ -2265,6 +2324,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         </div>
         <div
           className="header-title"
+          title="Geometry"
         >
           Geometry
         </div>
@@ -2285,6 +2345,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="item-header"
+            title="geometry in use which is default or model's geometry"
           >
             Geometry
           </div>
@@ -2350,6 +2411,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -2386,6 +2448,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -2398,6 +2461,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -2412,6 +2476,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -2435,6 +2500,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -2458,6 +2524,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -2480,6 +2547,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -2494,6 +2562,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -2517,6 +2586,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -2540,6 +2610,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -2562,6 +2633,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -2576,6 +2648,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -2599,6 +2672,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -2622,6 +2696,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -2657,8 +2732,9 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         </div>
         <div
           className="header-title"
+          title="Render Group decide how to render the gameObject and whether to render it or not "
         >
-          RenderGroup
+          Render Group
         </div>
         <div
           className="header-close"
@@ -2677,8 +2753,9 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="component-title"
+            title="MeshRenderer"
           >
-            MeshRender
+            Mesh Render
           </div>
           <hr />
           <div
@@ -2692,11 +2769,12 @@ exports[`header import package test import scene wdb relate scene gameObjects an
               >
                 <div
                   className="item-header"
+                  title="draw mode"
                 >
                   <span
                     className=""
                   >
-                    Draw mode
+                    Draw Mode
                   </span>
                 </div>
                 <div
@@ -2752,6 +2830,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="component-title"
+            title="Material"
           >
             Material
           </div>
@@ -2767,6 +2846,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
               >
                 <div
                   className="item-header"
+                  title="material in use which is default or material asset"
                 >
                   Material
                 </div>
@@ -2801,6 +2881,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                 >
                   <div
                     className="item-header"
+                    title="material's type"
                   >
                     <span
                       className=""
@@ -2839,8 +2920,9 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse color"
                       >
-                        Diffcuse color
+                        Diffuse Color
                       </div>
                       <div
                         className="item-content item-color"
@@ -2857,7 +2939,6 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                         <div
                           className="color-select"
                           onClick={[Function]}
-                          title="diffuse color"
                         >
                           <img
                             src="./public/img/color.png"
@@ -2870,8 +2951,9 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     >
                       <div
                         className="item-header"
+                        title="material's diffuse map"
                       >
-                        Diffuse map
+                        Diffuse Map
                       </div>
                       <div
                         className="item-content item-texture"
@@ -2909,6 +2991,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                         onMouseDown={[Function]}
                         onMouseMove={[Function]}
                         onMouseUp={[Function]}
+                        title="material's shininess"
                       >
                         Shininess
                       </div>
@@ -2948,6 +3031,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         </div>
         <div
           className="header-title"
+          title="Geometry"
         >
           Geometry
         </div>
@@ -2968,6 +3052,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
         >
           <div
             className="item-header"
+            title="geometry in use which is default or model's geometry"
           >
             Geometry
           </div>
@@ -3212,6 +3297,7 @@ exports[`header import package test import scene wdb test show Scene inspector s
       >
         <div
           className="item-header"
+          title="gameObject's name"
         >
           <span
             className="component-label"
@@ -3248,6 +3334,7 @@ exports[`header import package test import scene wdb test show Scene inspector s
         </div>
         <div
           className="header-title"
+          title="Transform"
         >
           Transform
         </div>
@@ -3260,6 +3347,7 @@ exports[`header import package test import scene wdb test show Scene inspector s
         >
           <div
             className="item-header"
+            title="position in local coordinate system"
           >
             Position
           </div>
@@ -3274,6 +3362,7 @@ exports[`header import package test import scene wdb test show Scene inspector s
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -3297,6 +3386,7 @@ exports[`header import package test import scene wdb test show Scene inspector s
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -3320,6 +3410,7 @@ exports[`header import package test import scene wdb test show Scene inspector s
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -3342,6 +3433,7 @@ exports[`header import package test import scene wdb test show Scene inspector s
         >
           <div
             className="item-header"
+            title="euler angle in local coordinate system"
           >
             Rotation
           </div>
@@ -3356,6 +3448,7 @@ exports[`header import package test import scene wdb test show Scene inspector s
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -3379,6 +3472,7 @@ exports[`header import package test import scene wdb test show Scene inspector s
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -3402,6 +3496,7 @@ exports[`header import package test import scene wdb test show Scene inspector s
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>
@@ -3424,6 +3519,7 @@ exports[`header import package test import scene wdb test show Scene inspector s
         >
           <div
             className="item-header"
+            title="scale in local coordinate system"
           >
             Scale
           </div>
@@ -3438,6 +3534,7 @@ exports[`header import package test import scene wdb test show Scene inspector s
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 X
               </div>
@@ -3461,6 +3558,7 @@ exports[`header import package test import scene wdb test show Scene inspector s
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Y
               </div>
@@ -3484,6 +3582,7 @@ exports[`header import package test import scene wdb test show Scene inspector s
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
                 onMouseUp={[Function]}
+                title=""
               >
                 Z
               </div>

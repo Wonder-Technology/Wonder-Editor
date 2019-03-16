@@ -31,6 +31,7 @@ exports[`texture inspector prepare currentSelectSource test texture inspector->s
       >
         <div
           className="item-header"
+          title="texture's name"
         >
           <span
             className="component-label"
@@ -55,6 +56,7 @@ exports[`texture inspector prepare currentSelectSource test texture inspector->s
       >
         <div
           className="item-header"
+          title="repetitive pattern in horizontal direction of texture"
         >
           <span
             className=""
@@ -92,6 +94,7 @@ exports[`texture inspector prepare currentSelectSource test texture inspector->s
       >
         <div
           className="item-header"
+          title="repetitive pattern in vertical direction of texture"
         >
           <span
             className=""
@@ -129,6 +132,7 @@ exports[`texture inspector prepare currentSelectSource test texture inspector->s
       >
         <div
           className="item-header"
+          title="defines how textures are sampled when a texel covers multiple pixels"
         >
           <span
             className=""
@@ -161,6 +165,7 @@ exports[`texture inspector prepare currentSelectSource test texture inspector->s
       >
         <div
           className="item-header"
+          title="defines how textures are sampled when a texel is insufficient to cover a single pixel"
         >
           <span
             className=""
@@ -254,7 +259,7 @@ exports[`texture inspector prepare currentSelectSource test texture rename test 
       >
         <div
           className="item-canBeClick"
-          title="load asset"
+          title="upload asset"
         >
           <img
             src="./public/img/load.png"

@@ -9,6 +9,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
   >
     <div
       className="item-header"
+      title="light type"
     >
       <span
         className=""
@@ -44,6 +45,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
     >
       <div
         className="item-header"
+        title="light's color"
       >
         Color
       </div>
@@ -62,7 +64,6 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
         <div
           className="color-select"
           onClick={[Function]}
-          title="color"
         >
           <img
             src="./public/img/color.png"
@@ -78,6 +79,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
         onMouseDown={[Function]}
         onMouseMove={[Function]}
         onMouseUp={[Function]}
+        title="light's intensity"
       >
         Intensity
       </div>
@@ -106,6 +108,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
   >
     <div
       className="item-header"
+      title="light type"
     >
       <span
         className=""
@@ -141,6 +144,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
     >
       <div
         className="item-header"
+        title="light's color"
       >
         Color
       </div>
@@ -159,7 +163,6 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
         <div
           className="color-select"
           onClick={[Function]}
-          title="color"
         >
           <img
             src="./public/img/color.png"
@@ -175,6 +178,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
         onMouseDown={[Function]}
         onMouseMove={[Function]}
         onMouseUp={[Function]}
+        title="light's intensity"
       >
         Intensity
       </div>
@@ -198,6 +202,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
         onMouseDown={[Function]}
         onMouseMove={[Function]}
         onMouseUp={[Function]}
+        title="relevant attributes of point light source attenuation"
       >
         Constant
       </div>
@@ -221,6 +226,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
         onMouseDown={[Function]}
         onMouseMove={[Function]}
         onMouseUp={[Function]}
+        title="relevant attributes of point light source attenuation"
       >
         Linear
       </div>
@@ -244,6 +250,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
         onMouseDown={[Function]}
         onMouseMove={[Function]}
         onMouseUp={[Function]}
+        title="relevant attributes of point light source attenuation"
       >
         Quadratic
       </div>
@@ -267,6 +274,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
         onMouseDown={[Function]}
         onMouseMove={[Function]}
         onMouseUp={[Function]}
+        title="point light's range"
       >
         Range
       </div>
@@ -295,6 +303,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
   >
     <div
       className="item-header"
+      title="light type"
     >
       <span
         className=""
@@ -330,6 +339,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
     >
       <div
         className="item-header"
+        title="light's color"
       >
         Color
       </div>
@@ -348,7 +358,6 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
         <div
           className="color-select"
           onClick={[Function]}
-          title="color"
         >
           <img
             src="./public/img/color.png"
@@ -364,6 +373,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
         onMouseDown={[Function]}
         onMouseMove={[Function]}
         onMouseUp={[Function]}
+        title="light's intensity"
       >
         Intensity
       </div>
