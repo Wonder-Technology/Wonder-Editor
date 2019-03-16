@@ -198,7 +198,7 @@ let reducer = ((uiState, dispatchFunc), currentNode, action) =>
 
 let render = ((uiState, dispatchFunc), currentNode, self) => {
   let languageType =
-    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article key="AssetTreeInspector" className="wonder-inspector-assetTree">
     {

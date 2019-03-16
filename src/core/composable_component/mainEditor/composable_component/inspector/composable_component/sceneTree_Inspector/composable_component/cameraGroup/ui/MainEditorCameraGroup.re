@@ -2,7 +2,7 @@ let component = ReasonReact.statelessComponent("MainEditorCameraGroup");
 
 let render = ((uiState, dispatchFunc), _self) => {
   let languageType =
-    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article key="MainEditorCameraGroup" className="wonder-camera-group">
     <div className="inspector-component">

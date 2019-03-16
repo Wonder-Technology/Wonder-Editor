@@ -190,7 +190,7 @@ let render =
     GameObjectLogicService.isCurrentSceneTreeNodeSceneChildren
     |> StateLogicService.getStateToGetData;
   let languageType =
-    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article
     key="mainEditorScenetreeHeader" className="wonder-left-components-header">

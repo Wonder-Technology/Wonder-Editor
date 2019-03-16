@@ -2,7 +2,10 @@ module IndexStoreProvider = {
   let make = Reductive.Provider.createMake(IndexStore.store);
 };
 
-Window.setLanguage(.);
+LanguageEditorService.setType(
+  Window.getLanguage(.) |> LanguageUtils.getLanguageType,
+)
+|> StateLogicService.getAndSetEditorState;
 
 ReactDOMRe.renderToElementWithId(
   <IndexStoreProvider component=App.make />,

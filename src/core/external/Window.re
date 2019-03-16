@@ -1,4 +1,5 @@
-let setLanguage = [%raw param => "
+let getLanguage = [%raw
+  param => "
     function getLanguageFromBrower() {
         var Browser_Agent = navigator.userAgent;
         if (Browser_Agent.toLowerCase().indexOf('msie') != -1) {
@@ -19,8 +20,9 @@ let setLanguage = [%raw param => "
     let language = window.localStorage['language'];
 
     if (language === undefined || language === null) {
-        window.wonderLanguage = getLanguageFromBrower();
+        return getLanguageFromBrower();
     } else {
-        window.wonderLanguage = language
+        return language
     }
-"];
+"
+];

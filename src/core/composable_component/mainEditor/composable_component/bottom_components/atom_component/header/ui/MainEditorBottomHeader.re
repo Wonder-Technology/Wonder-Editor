@@ -85,7 +85,7 @@ let render = (uiState, dispatchFunc, _self) => {
   let currentComponentType =
     uiState |> StoreUtils.getBottomCurrentComponentType;
   let languageType =
-    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article className="bottom-header" key="MainEditorBottomHeader">
     <div className="bottom-widget-category">

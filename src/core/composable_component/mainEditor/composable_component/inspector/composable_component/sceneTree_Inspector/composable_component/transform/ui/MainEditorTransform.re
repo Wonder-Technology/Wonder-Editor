@@ -150,7 +150,7 @@ let component = ReasonReact.statelessComponent("MainEditorTransform");
 let render =
     ((uiState, dispatchFunc), (transformComponent, gameObject), _self) => {
   let languageType =
-    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article className="wonder-inspector-transform">
     <ThreeFloatInput

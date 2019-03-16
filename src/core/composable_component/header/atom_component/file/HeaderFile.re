@@ -90,7 +90,7 @@ module Method = {
       ) => {
     let className = isFileNav ? "item-title item-active" : "item-title";
     let languageType =
-      LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+      LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
     <div className="header-item">
       <div className="component-item">

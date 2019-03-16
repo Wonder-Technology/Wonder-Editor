@@ -60,7 +60,7 @@ let component = ReasonReact.statelessComponent("MainEditorLightMaterial");
 
 let render = ((uiState, dispatchFunc), materialComponent, _self) => {
   let languageType =
-    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article className="wonder-light-material">
     <PickColorComponent

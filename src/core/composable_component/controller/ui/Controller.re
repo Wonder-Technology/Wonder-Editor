@@ -164,7 +164,7 @@ let render =
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
   let languageType =
-    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article key="controller" className="wonder-controller-component">
     <div className="header-controller">
