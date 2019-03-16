@@ -12,24 +12,24 @@ module Method = {
     <MainEditorDirectionLight
       uiState
       dispatchFunc
-      lightComponent=(
+      lightComponent={
         GameObjectComponentEngineService.unsafeGetDirectionLightComponent(
           gameObject,
         )
         |> StateLogicService.getEngineStateToGetData
-      )
+      }
     />;
 
   let renderPointLight = ((uiState, dispatchFunc), gameObject) =>
     <MainEditorPointLight
       uiState
       dispatchFunc
-      lightComponent=(
+      lightComponent={
         GameObjectComponentEngineService.unsafeGetPointLightComponent(
           gameObject,
         )
         |> StateLogicService.getEngineStateToGetData
-      )
+      }
     />;
 };
 
@@ -60,15 +60,24 @@ let reducer = ((uiState, dispatchFunc), action, state) =>
   };
 
 let render =
-    ((uiState, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    ((uiState, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) => {
+  let languageType =
+    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+
   <article key="MainEditorLight" className="wonder-inspector-light">
     <Select
       label="Type"
-      options=(MainEditorLightUtils.getLightOptions())
-      selectedKey=(state.lightType |> convertLightTypeToInt)
-      onChange=(value => send(ChangeLight(value)))
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "light-type-describe",
+          languageType,
+        )
+      }
+      options={MainEditorLightUtils.getLightOptions()}
+      selectedKey={state.lightType |> convertLightTypeToInt}
+      onChange={value => send(ChangeLight(value))}
     />
-    (
+    {
       MainEditorLightUtils.handleSpecificFuncByLightType(
         state.lightType,
         (
@@ -76,8 +85,9 @@ let render =
           Method.renderPointLight((uiState, dispatchFunc)),
         ),
       )
-    )
+    }
   </article>;
+};
 
 let make = (~uiState, ~dispatchFunc, _children) => {
   ...component,

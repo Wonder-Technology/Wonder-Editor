@@ -19,10 +19,16 @@ module Method = {
 
   let closeColorPick = PointLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 
-  let buildColorPickComponent = ((uiState, dispatchFunc), lightComponent) =>
+  let buildColorPickComponent =
+      ((uiState, dispatchFunc), lightComponent, languageType) =>
     <PickColorComponent
       label="Color"
-      title="color"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "light-color-describe",
+          languageType,
+        )
+      }
       getColorFunc={getColor(lightComponent)}
       changeColorFunc={changeColor(lightComponent)}
       closeColorPickFunc={
@@ -30,9 +36,16 @@ module Method = {
       }
     />;
 
-  let buildIntensityComponent = ((uiState, dispatchFunc), lightComponent) =>
+  let buildIntensityComponent =
+      ((uiState, dispatchFunc), lightComponent, languageType) =>
     <MainEditorFloatInputBaseComponent
       label="Intensity"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "light-intensity-describe",
+          languageType,
+        )
+      }
       getComponentValueFunc={
         PointLightEngineService.getPointLightIntensity(lightComponent)
       }
@@ -53,9 +66,16 @@ module Method = {
       }
     />;
 
-  let buildConstantComponent = ((uiState, dispatchFunc), lightComponent) =>
+  let buildConstantComponent =
+      ((uiState, dispatchFunc), lightComponent, languageType) =>
     <MainEditorFloatInputBaseComponent
       label="Constant"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "light-constant-describe",
+          languageType,
+        )
+      }
       getComponentValueFunc={
         PointLightEngineService.getPointLightConstant(lightComponent)
       }
@@ -76,9 +96,16 @@ module Method = {
       }
     />;
 
-  let buildLinearComponent = ((uiState, dispatchFunc), lightComponent) =>
+  let buildLinearComponent =
+      ((uiState, dispatchFunc), lightComponent, languageType) =>
     <MainEditorFloatInputBaseComponent
       label="Linear"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "light-linear-describe",
+          languageType,
+        )
+      }
       getComponentValueFunc={
         PointLightEngineService.getPointLightLinear(lightComponent)
       }
@@ -99,9 +126,16 @@ module Method = {
       }
     />;
 
-  let buildQuadraticComponent = ((uiState, dispatchFunc), lightComponent) =>
+  let buildQuadraticComponent =
+      ((uiState, dispatchFunc), lightComponent, languageType) =>
     <MainEditorFloatInputBaseComponent
       label="Quadratic"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "light-quadratic-describe",
+          languageType,
+        )
+      }
       getComponentValueFunc={
         PointLightEngineService.getPointLightQuadratic(lightComponent)
       }
@@ -122,9 +156,16 @@ module Method = {
       }
     />;
 
-  let buildRangeComponent = ((uiState, dispatchFunc), lightComponent) =>
+  let buildRangeComponent =
+      ((uiState, dispatchFunc), lightComponent, languageType) =>
     <MainEditorFloatInputBaseComponent
       label="Range"
+      title={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "light-range-describe",
+          languageType,
+        )
+      }
       getComponentValueFunc={
         PointLightEngineService.getPointLightRange(lightComponent)
       }
@@ -146,15 +187,55 @@ module Method = {
     />;
 };
 
-let render = ((uiState, dispatchFunc), lightComponent, _self) =>
+let render = ((uiState, dispatchFunc), lightComponent, _self) => {
+  let languageType =
+    LanguageUtils.getLanguageType(WindowType.window##wonderLanguage);
+
   <article className="wonder-point-light">
-    {Method.buildColorPickComponent((uiState, dispatchFunc), lightComponent)}
-    {Method.buildIntensityComponent((uiState, dispatchFunc), lightComponent)}
-    {Method.buildConstantComponent((uiState, dispatchFunc), lightComponent)}
-    {Method.buildLinearComponent((uiState, dispatchFunc), lightComponent)}
-    {Method.buildQuadraticComponent((uiState, dispatchFunc), lightComponent)}
-    {Method.buildRangeComponent((uiState, dispatchFunc), lightComponent)}
+    {
+      Method.buildColorPickComponent(
+        (uiState, dispatchFunc),
+        lightComponent,
+        languageType,
+      )
+    }
+    {
+      Method.buildIntensityComponent(
+        (uiState, dispatchFunc),
+        lightComponent,
+        languageType,
+      )
+    }
+    {
+      Method.buildConstantComponent(
+        (uiState, dispatchFunc),
+        lightComponent,
+        languageType,
+      )
+    }
+    {
+      Method.buildLinearComponent(
+        (uiState, dispatchFunc),
+        lightComponent,
+        languageType,
+      )
+    }
+    {
+      Method.buildQuadraticComponent(
+        (uiState, dispatchFunc),
+        lightComponent,
+        languageType,
+      )
+    }
+    {
+      Method.buildRangeComponent(
+        (uiState, dispatchFunc),
+        lightComponent,
+        languageType,
+      )
+    }
   </article>;
+};
 
 let make =
     (~uiState: AppStore.appState, ~dispatchFunc, ~lightComponent, _children) => {
