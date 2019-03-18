@@ -70,11 +70,6 @@ let initEngineStateAndInitSceneWithJob =
   _buildFakeConsole(.);
 };
 
-let initEditorAndEngineStateAndInitScene = (~sandbox, ~buffer, ()) => {
-  TestToolEngine.createAndSetEngineState(~sandbox, ~buffer, ());
-  initScene();
-};
-
 let openContractCheck = () => {
   StateEditorService.setStateIsDebug(true);
   StateEngineService.setIsDebug(true) |> ignore;

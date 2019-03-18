@@ -1,41 +1,46 @@
 open DomHelper;
 
 module Method = {
-  let getStorageParentKey = () => "userExtension";
+  /* let getStorageParentKey = () => "userExtension";
   let addExtension = text =>
     /* todo use extension names instead of the name */
-    AppExtensionUtils.setExtension(getStorageParentKey(), text);
+    AppExtensionUtils.setExtension(getStorageParentKey(), text); */
 
   let showComponent =
-      (uiState, dispatchFunc, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+      (
+        uiState: AppStore.appState,
+        dispatchFunc,
+        {state, send}: ReasonReact.self('a, 'b, 'c),
+      ) =>
     <article key="app" className="wonder-app-component">
-      {
-        AppExtensionUtils.getExtension(getStorageParentKey())
-        |> (
-          value =>
-            switch (value) {
-            | None => ReasonReact.null
-            | Some(value) =>
-              ReasonReact.array(
-                ExtensionParseUtils.extensionPanelComponent(
-                  "App",
-                  value,
-                  uiState,
-                ),
-              )
-            }
-        )
-      }
-      {
-        uiState.isEditorAndEngineStart ?
-          <>
-            <Header uiState dispatchFunc />
-            <Controller uiState dispatchFunc />
-          </> :
-          <AppShell />
-      }
-      <MainEditor uiState dispatchFunc />
-    </article>;
+      /* {
+           AppExtensionUtils.getExtension(getStorageParentKey())
+           |> (
+             value =>
+               switch (value) {
+               | None => ReasonReact.null
+               | Some(value) =>
+                 ReasonReact.array(
+                   ExtensionParseUtils.extensionPanelComponent(
+                     "App",
+                     value,
+                     uiState,
+                   ),
+                 )
+               }
+           )
+         } */
+
+        {
+          uiState.isEditorAndEngineStart ?
+            <>
+              <Header uiState dispatchFunc />
+              <Controller uiState dispatchFunc />
+            </> :
+            <AppShell />
+        }
+        <MainEditor uiState dispatchFunc />
+      </article>;
 };
 
 let component = ReasonReact.statelessComponent("App");
