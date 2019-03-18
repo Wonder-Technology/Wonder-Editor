@@ -1,0 +1,1000 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorAssetHeader->drag wdb test drag wdb to folder node 
+        1.load wdb asset w1;
+        2.add folder f1;
+        3.drag w1 to f1;
+        4.select f1;
+
+        asset children should show w1
+         1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/wdb.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        Wdb
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag wdb to be target gameObject sib test drag gameObject after target gameObject test target gameObject is scene gameObject set dragged gameobject to be scene first child test snapshot 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+            onMouseDown={[Function]}
+          >
+            <img
+              src="./public/img/right.png"
+            />
+          </div>
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-11"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Wdb
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag wdb to be target gameObject sib test drag gameObject after target gameObject test target gameObject isn't scene gameObject test snapshot 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+            onMouseDown={[Function]}
+          >
+            <img
+              src="./public/img/right.png"
+            />
+          </div>
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-11"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Wdb
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag wdb to be target gameObject sib test drag gameObject before target gameObject test target gameObject is scene gameObject set dragged gameobject to be scene first child test snapshot 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+            onMouseDown={[Function]}
+          >
+            <img
+              src="./public/img/right.png"
+            />
+          </div>
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-11"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Wdb
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag wdb to be target gameObject sib test drag gameObject before target gameObject test target gameObject isn't scene gameObject test snapshot 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+            onMouseDown={[Function]}
+          >
+            <img
+              src="./public/img/right.png"
+            />
+          </div>
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-11"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Wdb
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag wdb to be target gameObject sib test drag gameObject into target gameObject test target gameObject is scene gameObject set dragged gameobject to be scene last child test snapshot 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+            onMouseDown={[Function]}
+          >
+            <img
+              src="./public/img/right.png"
+            />
+          </div>
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-11"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Wdb
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->drag wdb test drag wdb to scene tree test drag wdb to be target gameObject sib test drag gameObject into target gameObject test target gameObject isn't scene gameObject test snapshot 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-6"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Camera
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+            onMouseDown={[Function]}
+          >
+            <img
+              src="./public/img/down.png"
+            />
+          </div>
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-3"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
+            <div
+              className="item-triangle"
+              onMouseDown={[Function]}
+            >
+              <img
+                src="./public/img/right.png"
+              />
+            </div>
+            <div
+              className="draggable-container  no-drag"
+              draggable={true}
+              id="sceneTreeNode-11"
+              onClick={[Function]}
+              onDragEnd={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDragStart={[Function]}
+              onDrop={[Function]}
+              style={Object {}}
+            >
+              Wdb
+            </div>
+          </li>
+        </ul>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-4"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Cube
+          </div>
+        </li>
+      </ul>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-5"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            Direction Light
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
