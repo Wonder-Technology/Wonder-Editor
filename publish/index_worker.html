@@ -182,9 +182,6 @@
             }
 
 
-            var totalWDBByteLength = $totalWDBByteLength;
-            var totalByteLength = totalWDBByteLength;
-
             if (
                 AssetTool.isSupportStreamLoad()
             ) {
@@ -199,7 +196,7 @@
                     function (totalLoadedByteLength, contentLength, wdbPath) {
                         AssetTool.showOrCreateLoadingInfo(
                             totalLoadedByteLength,
-                            totalByteLength
+                            contentLength
                         );
                     },
                     function (state, gameObject) {
