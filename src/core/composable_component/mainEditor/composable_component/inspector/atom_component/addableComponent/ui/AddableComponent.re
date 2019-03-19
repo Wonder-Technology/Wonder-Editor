@@ -38,15 +38,15 @@ module Method = {
     componentArr
     |> Js.Array.map(({type_, components}: componentCategory) =>
          <AddableComponentBox
-           key=(DomHelper.getRandomKey())
+           key={DomHelper.getRandomKey()}
            categoryType=type_
            componentArr=components
-           addSpecificComponent=(
+           addSpecificComponent={
              addSpecificComponent(
                (uiState, dispatchFunc),
                currentSceneTreeNode,
              )
-           )
+           }
          />
        );
 };
@@ -60,7 +60,7 @@ let reducer = (action, state) =>
   | ToggleAddableComponent =>
     ReasonReact.Update({
       ...state,
-      isShowAddableComponent: ! state.isShowAddableComponent,
+      isShowAddableComponent: !state.isShowAddableComponent,
     })
   | HideAddableComponent =>
     ReasonReact.Update({...state, isShowAddableComponent: false})
@@ -72,21 +72,31 @@ let render =
       currentSceneTreeNode,
       addableComponentList,
       {state, send}: ReasonReact.self('a, 'b, 'c),
-    ) =>
+    ) => {
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
+
   <article className="wonder-addable-component">
     <div className="addable-component-content">
       <div className="content-btn">
         <button
           className="addable-btn"
-          onClick=(_e => send(ToggleAddableComponent))>
-          (DomHelper.textEl("Add Component"))
+          onClick={_e => send(ToggleAddableComponent)}>
+          {
+            DomHelper.textEl(
+              LanguageUtils.getInspectorLanguageDataByType(
+                "add-component",
+                languageType,
+              ),
+            )
+          }
         </button>
       </div>
-      (
+      {
         state.isShowAddableComponent ?
           <div className="content-components">
             <div className="component-list">
-              (
+              {
                 ReasonReact.array(
                   addableComponentList
                   |> Method.buildGameObjectAddableComponent(
@@ -94,13 +104,14 @@ let render =
                        currentSceneTreeNode,
                      ),
                 )
-              )
+              }
             </div>
           </div> :
           ReasonReact.null
-      )
+      }
     </div>
   </article>;
+};
 
 let make =
     (~reduxTuple, ~currentSceneTreeNode, ~addableComponentList, _children) => {
