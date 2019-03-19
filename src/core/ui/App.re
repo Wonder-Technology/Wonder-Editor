@@ -32,7 +32,7 @@ module Method = {
          } */
 
         {
-          uiState.isEditorAndEngineStart ?
+          uiState.isInitEngine ?
             <>
               <Header uiState dispatchFunc />
               <Controller uiState dispatchFunc />

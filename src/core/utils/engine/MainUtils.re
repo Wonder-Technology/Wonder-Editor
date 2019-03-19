@@ -86,7 +86,7 @@ let _handleEngineState = engineState => {
   |> StateEngineService.setState;
 };
 
-let init = () =>
+let initEngine = () =>
   Wonderjs.StateDataMainType.(
     _getLoadData()
     |> WonderBsMost.Most.flatMap(engineState =>
@@ -126,5 +126,3 @@ let init = () =>
     |> WonderBsMost.Most.map(engineState => engineState |> _handleEngineState)
     |> WonderBsMost.Most.drain
   );
-
-let start = () => init();

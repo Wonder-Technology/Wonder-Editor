@@ -7,7 +7,7 @@ open MainEditorInspectorStore;
 open BottomShowComponentStore;
 
 type appState = {
-  isEditorAndEngineStart: bool,
+  isInitEngine: bool,
   mapState,
   updateState,
   inspectorState,
@@ -18,14 +18,14 @@ type ReduxThunk.thunk('a) +=
   | ReplaceState('a);
 
 type ReduxThunk.thunk(_) +=
-  | StartEngineAction
+  | InitEngineAction
   | MapAction(mapAction(componentsMap))
   | InspectorAction(inspectorAction(int, bool))
   | UpdateAction(updateAction(updateComponentTypeArr))
   | ShowComponentAction(showComponentAction(bottomComponentType));
 
 let state: appState = {
-  isEditorAndEngineStart: false,
+  isInitEngine: false,
   mapState: {
     componentsMap: None,
   },
@@ -42,7 +42,7 @@ let state: appState = {
 
 let appReducter = (state: appState, action) =>
   switch (action) {
-  | StartEngineAction => {...state, isEditorAndEngineStart: true}
+  | InitEngineAction => {...state, isInitEngine: true}
   | MapAction(action) => {
       ...state,
       mapState: mapReducer(state.mapState, action),

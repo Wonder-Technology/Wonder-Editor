@@ -1,9 +1,9 @@
-type retainedProps = {isEngineStart: bool};
+type retainedProps = {isInitEngine: bool};
 
 module Method = {
   let resizeCanvasAndViewPort = () => ResizeUtils.resizeScreen();
 
-  let buildStartedRunWebglComponent = () =>
+  let buildNoCameraElement = () =>
     SceneUtils.isSceneHaveNoActiveCamera() ?
       switch (
         GameViewEditorService.getViewRect(StateEditorService.getState())
@@ -12,7 +12,7 @@ module Method = {
       | Some(_) =>
         <div className="gameViewNoCamera">
           <span className="gameViewNoCamera-text">
-            (DomHelper.textEl("No Camera !"))
+            {DomHelper.textEl("No Camera !")}
           </span>
         </div>
       } :
@@ -23,7 +23,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
 
-let _buildNotStartElement = (uiState, dispatchFunc) =>
+let _buildElementBeforeInitEngine = (uiState, dispatchFunc) =>
   <article key="mainEditor" className="wonder-mainEditor-component">
     <div key="leftComponent" className="left-component">
       <div className="top-widget">
@@ -31,7 +31,7 @@ let _buildNotStartElement = (uiState, dispatchFunc) =>
           <Canvas
             key="webgl"
             domId="canvas"
-            dragWDB=(Method.dragWDB((uiState, dispatchFunc), ()))
+            dragWDB={Method.dragWDB((uiState, dispatchFunc), ())}
             isWDBAssetFile=WDBNodeAssetEditorService.isWDBAssetFile
           />
         </div>
@@ -41,17 +41,17 @@ let _buildNotStartElement = (uiState, dispatchFunc) =>
     <div key="rightComponent" className="right-component" />
   </article>;
 
-let _buildStartedElement = (uiState, dispatchFunc) =>
+let _buildElementAfterInitEngine = (uiState, dispatchFunc) =>
   <article key="mainEditor" className="wonder-mainEditor-component">
     <div key="leftComponent" className="left-component">
       <div className="top-widget">
         <MainEditorLeftComponents uiState dispatchFunc />
         <div id="canvasParent" key="webglParent" className="webgl-parent">
-          (Method.buildStartedRunWebglComponent())
+          {Method.buildNoCameraElement()}
           <Canvas
             key="webgl"
             domId="canvas"
-            dragWDB=(Method.dragWDB((uiState, dispatchFunc), ()))
+            dragWDB={Method.dragWDB((uiState, dispatchFunc), ())}
             isWDBAssetFile=WDBNodeAssetEditorService.isWDBAssetFile
           />
         </div>
@@ -65,32 +65,31 @@ let _buildStartedElement = (uiState, dispatchFunc) =>
         <MainEditorInspector
           uiState
           dispatchFunc
-          addableComponentConfig=(
+          addableComponentConfig={
             GameObjectAllComponentParseUtils.getGameObjectAllComponentConfig()
-          )
+          }
         />
       </div>
     </div>
   </article>;
 
 let render = (uiState: AppStore.appState, dispatchFunc, _self) =>
-  uiState.isEditorAndEngineStart ?
-    _buildStartedElement(uiState, dispatchFunc) :
-    _buildNotStartElement(uiState, dispatchFunc);
+  uiState.isInitEngine ?
+    _buildElementAfterInitEngine(uiState, dispatchFunc) :
+    _buildElementBeforeInitEngine(uiState, dispatchFunc);
 
 let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
   retainedProps: {
-    isEngineStart: uiState.isEditorAndEngineStart,
+    isInitEngine: uiState.isInitEngine,
   },
   didUpdate:
     ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
-    uiState.isEditorAndEngineStart
-    && oldSelf.retainedProps != newSelf.retainedProps ?
+    oldSelf.retainedProps != newSelf.retainedProps ?
       Method.resizeCanvasAndViewPort() : (),
   didMount: _self => {
     Js.Promise.(
-      MainUtils.start()
+      MainUtils.initEngine()
       |> then_(_ => {
            (
              editorState =>
@@ -100,7 +99,7 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
            )
            |> StateLogicService.getAndSetEditorState;
 
-           dispatchFunc(AppStore.StartEngineAction) |> resolve;
+           dispatchFunc(AppStore.InitEngineAction) |> resolve;
          })
       |> ignore
     );
