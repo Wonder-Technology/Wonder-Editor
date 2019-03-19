@@ -1,7 +1,8 @@
 open MessageType;
 
 type uiRecord = {
-  index: int,
+  messageIndex: int,
   intervalId: int,
+  isHasMessage: bool,
   messageArray: array(message),
 };

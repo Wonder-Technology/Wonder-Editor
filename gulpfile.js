@@ -82,12 +82,7 @@ gulp.task("compressCss", function () {
         .pipe(gulp.dest("./public/css"))
 });
 
-gulp.task("watchProject", function () {
-    var reFilePaths = [
-        path.join(process.cwd(), "lib/es6_global/**/*.js"),
-    ];
-    gulp.watch(reFilePaths, gulpSync.sync(["compileSass", "webpack:dev"]))
-
+gulp.task("watchSass", function () {
     gulp.watch("public/sass/**/*.scss", ["sass"]);
 });
 

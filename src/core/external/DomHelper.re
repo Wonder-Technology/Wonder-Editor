@@ -18,9 +18,26 @@ let getBody = [%raw param => "
   return document.body
 "];
 
+let appendChild = [%raw (parent, child) => "
+  parent.appendChild(child);
+"];
+
+let removeChild = [%raw (parent, child) => "
+  parent.removeChild(child);
+"];
+
+let innerHtml = [%raw (dom, html) => "
+  dom.innerHTML = html;
+"];
 let getAttribute = [%raw (dom, prop) => "
   return dom.getAttribute(prop);
 "];
+
+let setAttribute = [%raw
+  (dom, prop, value) => "
+  dom.setAttribute(prop,value);
+"
+];
 
 let locationReload = [%raw param => "
   window.location.reload(true);
