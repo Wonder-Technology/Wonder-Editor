@@ -5,6 +5,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    @import "message/message";
     @import "header/header";
     @import "controller/controller";
     @import "mainEditor/mainEditor";

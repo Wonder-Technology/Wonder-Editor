@@ -128,7 +128,7 @@ let unsafeGetNth = (index, arr) =>
        StateEditorService.getStateIsDebug(),
      );
 
-let hasItem = arr => arr |> Js.Array.length > 0 ? true : false;
+let hasItem = arr => arr |> Js.Array.length > 0;
 
 let unshift = (item, arr) => {
   arr |> Js.Array.unshift(item) |> ignore;

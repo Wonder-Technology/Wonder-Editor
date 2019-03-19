@@ -26,6 +26,7 @@ module Method = {
             }
         )
       }
+      <div className="wonder-app-message" id="appMessage" />
       {
         uiState.isEditorAndEngineStart ?
           <>
