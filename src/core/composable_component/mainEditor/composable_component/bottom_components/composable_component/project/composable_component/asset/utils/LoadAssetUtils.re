@@ -15,7 +15,12 @@ let getUploadAssetType = name => {
   | _ =>
     ConsoleUtils.error(
       LogUtils.buildErrorMessage(
-        ~description={j|the loaded asset type is error|j},
+        ~description=
+          LanguageUtils.getMessageLanguageDataByType(
+            "load-asset-file",
+            LanguageEditorService.unsafeGetType
+            |> StateLogicService.getEditorState,
+          ),
         ~reason="",
         ~solution={j||j},
         ~params={j||j},
@@ -35,7 +40,12 @@ let getUploadPackageType = name => {
   | _ =>
     ConsoleUtils.error(
       LogUtils.buildErrorMessage(
-        ~description={j|the loaded package type is error|j},
+        ~description=
+          LanguageUtils.getMessageLanguageDataByType(
+            "load-asset-package",
+            LanguageEditorService.unsafeGetType
+            |> StateLogicService.getEditorState,
+          ),
         ~reason="",
         ~solution={j||j},
         ~params={j||j},

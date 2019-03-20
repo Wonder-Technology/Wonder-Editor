@@ -24,7 +24,13 @@ module Method = {
       currentSceneTreeNode,
     )
     |> StateLogicService.getStateToGetData ?
-      ConsoleUtils.warn("the game object already have this component !")
+      ConsoleUtils.warn(
+        LanguageUtils.getMessageLanguageDataByType(
+          "add-component-duplicate",
+          LanguageEditorService.unsafeGetType
+          |> StateLogicService.getEditorState,
+        ),
+      )
       |> StateLogicService.getEditorState :
       AddableComponentAddComponentEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
         (uiState, dispatchFunc),

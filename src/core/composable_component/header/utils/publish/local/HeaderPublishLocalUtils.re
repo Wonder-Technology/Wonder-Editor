@@ -9,7 +9,7 @@ module LoadData = {
          response
          |> Fetch.Response.text
          |> then_(jsStr => {
-              zip |. Zip.write("wd.js", `str(jsStr));
+              zip->(Zip.write("wd.js", `str(jsStr)));
 
               useWorker ?
                 fetchFunc(. "./publish/wd.render.worker.js")
@@ -18,7 +18,7 @@ module LoadData = {
                      |> Fetch.Response.text
                      |> then_(jsStr => {
                           zip
-                          |. Zip.write("wd.render.worker.js", `str(jsStr));
+                          ->(Zip.write("wd.render.worker.js", `str(jsStr)));
 
                           resolve(zip);
                         })
@@ -46,10 +46,12 @@ module LoadData = {
          |> Fetch.Response.text
          |> then_(htmlStr =>
               zip
-              |. Zip.write(
-                   "index.html",
-                   `str(_replaceIndexHtml(htmlStr, sceneGraphArrayBuffer)),
-                 )
+              ->(
+                  Zip.write(
+                    "index.html",
+                    `str(_replaceIndexHtml(htmlStr, sceneGraphArrayBuffer)),
+                  )
+                )
               |> resolve
             )
        );
@@ -62,13 +64,15 @@ module LoadData = {
          |> Fetch.Response.arrayBuffer
          |> then_(arrayBuffer =>
               zip
-              |. Zip.write(
-                   ~options=Options.makeWriteOptions(~binary=true, ()),
-                   {j|res/loading/$name|j},
-                   `trustme(
-                     arrayBuffer |> TypeArrayType.newBlobFromArrayBuffer,
-                   ),
-                 )
+              ->(
+                  Zip.write(
+                    ~options=Options.makeWriteOptions(~binary=true, ()),
+                    {j|res/loading/$name|j},
+                    `trustme(
+                      arrayBuffer |> TypeArrayType.newBlobFromArrayBuffer,
+                    ),
+                  )
+                )
               |> resolve
             )
        )
@@ -121,8 +125,7 @@ module LoadData = {
          response
          |> Fetch.Response.text
          |> then_(str =>
-              zip
-              |. Zip.write({j|config/$targetFileNamePath|j}, `str(str))
+              zip->(Zip.write({j|config/$targetFileNamePath|j}, `str(str)))
               |> resolve
             )
        )
@@ -283,7 +286,10 @@ module Publish = {
     StateEditorService.getIsRun() ?
       {
         ConsoleUtils.warn(
-          "should publish local when stop, but now is run!",
+          LanguageUtils.getMessageLanguageDataByType(
+            "header-publish-local",
+            LanguageEditorService.unsafeGetType(editorState),
+          ),
           editorState,
         );
 
@@ -300,15 +306,17 @@ module Publish = {
         |> _loadData(useWorker, sceneGraphArrayBuffer, fetchFunc)
         |> WonderBsMost.Most.tap(zip =>
              zip
-             |. Zip.write(
-                  ~options=Options.makeWriteOptions(~binary=true, ()),
-                  "Scene.wdb",
-                  `trustme(
-                    sceneGraphArrayBuffer
-                    |> TypeArrayType.newBlobFromArrayBuffer,
-                  ),
-                )
-             |. Zip.generateAsyncBlob(Zip.makeAsyncBlobOptions())
+             ->(
+                 Zip.write(
+                   ~options=Options.makeWriteOptions(~binary=true, ()),
+                   "Scene.wdb",
+                   `trustme(
+                     sceneGraphArrayBuffer
+                     |> TypeArrayType.newBlobFromArrayBuffer,
+                   ),
+                 )
+               )
+             ->(Zip.generateAsyncBlob(Zip.makeAsyncBlobOptions()))
              |> Js.Promise.then_(content =>
                   FileSaver.saveAs(content, zipName ++ ".zip")
                   |> Js.Promise.resolve

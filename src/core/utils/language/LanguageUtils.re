@@ -39,3 +39,7 @@ let getSceneTreeLanguageDataByType = (itemName, type_) =>
 let getInspectorLanguageDataByType = (itemName, type_) =>
   LanguageInspectorData.inspector_language_array
   ->(_getLanguageDataByType(itemName, type_));
+
+let getMessageLanguageDataByType = (itemName, type_) =>
+  LanguageMessageData.message_language_array
+  ->(_getLanguageDataByType(itemName, type_));

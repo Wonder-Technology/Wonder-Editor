@@ -10,11 +10,16 @@ let _generateSceneWDB = (editorState, engineState) =>
 
 let exportScene = sceneName => {
   let editorState = StateEditorService.getState();
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   StateEditorService.getIsRun() ?
     {
       ConsoleUtils.warn(
-        "should export scene when stop, but now is run!",
+        LanguageUtils.getMessageLanguageDataByType(
+          "header-export-scene",
+          languageType,
+        ),
         editorState,
       );
 
