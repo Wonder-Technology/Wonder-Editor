@@ -35,4 +35,19 @@ let addMessageIntoSpecificDom = message => {
 };
 
 let showMessageWithinTime = message =>
-  Timeout.setTimeout(() => message.isActive = false, message.time);
+  Timeout.setTimeout(
+    () => {
+      let editorState = StateEditorService.getState();
+
+      (
+        editorState
+        |> MessageArrayUIEditorService.getMessageArray
+        |> Js.Array.map(item =>
+             item == message ? {...message, isActive: false} : item
+           )
+      )
+      ->MessageArrayUIEditorService.setMessageArray(editorState)
+      |> StateEditorService.setState;
+    },
+    message.time,
+  );

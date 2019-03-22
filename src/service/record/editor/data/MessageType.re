@@ -9,5 +9,5 @@ type message = {
   type_: messageType,
   info: string,
   time: int,
-  mutable isActive: bool,
+  isActive: bool,
 };
