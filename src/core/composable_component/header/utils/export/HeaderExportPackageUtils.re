@@ -72,11 +72,16 @@ let _export = () => {
 
 let exportPackage = packageName => {
   let editorState = StateEditorService.getState();
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   StateEditorService.getIsRun() ?
     {
       ConsoleUtils.warn(
-        "should export package when stop, but now is run!",
+        LanguageUtils.getMessageLanguageDataByType(
+          "header-export-package",
+          languageType,
+        ),
         editorState,
       );
 

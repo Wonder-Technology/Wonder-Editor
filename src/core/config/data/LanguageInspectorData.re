@@ -316,4 +316,11 @@ let inspector_language_array = [|
       en: "defines how textures are sampled when a texel is insufficient to cover a single pixel",
     },
   },
+  {
+    title: "add-component",
+    language: {
+      zh: {j|添加组件|j},
+      en: "Add Component",
+    },
+  },
 |];

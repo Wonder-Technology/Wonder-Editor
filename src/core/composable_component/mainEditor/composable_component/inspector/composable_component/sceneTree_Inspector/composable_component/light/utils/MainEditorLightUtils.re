@@ -53,9 +53,17 @@ let handleSpecificFuncByLightType =
   };
 };
 
-let getDirectionLightExceedMaxCountMessage = () => "the direction light count is exceed max count!";
+let getDirectionLightExceedMaxCountMessage = () =>
+  LanguageUtils.getMessageLanguageDataByType(
+    "direction-light-exceed",
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState,
+  );
 
-let getPointLightExceedMaxCountMessage = () => "the point light count is exceed max count!";
+let getPointLightExceedMaxCountMessage = () =>
+  LanguageUtils.getMessageLanguageDataByType(
+    "point-light-exceed",
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState,
+  );
 
 let isLightExceedMaxCountByType = (targetLightType, engineState) =>
   switch (targetLightType) {

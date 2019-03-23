@@ -85,7 +85,7 @@ module Method = {
       )
     };
 
-  let handleBlurAction = (state, (onChangeFunc, onBlurFunc), canBeZero) =>
+  let handleBlurAction = (state, (onChangeFunc, onBlurFunc), canBeZero,languageType) =>
     switch (state.inputValue) {
     | None
     | Some("-")
@@ -123,7 +123,12 @@ module Method = {
               triggerOnBlur(value, onBlurFunc)
             ),
           _value => {
-            ConsoleUtils.warn("the value can't be 0 !")
+            ConsoleUtils.warn(
+              LanguageUtils.getMessageLanguageDataByType(
+                "position-describe",
+                languageType,
+              ),
+            )
             |> StateLogicService.getEditorState;
 
             ReasonReact.Update({
@@ -247,15 +252,19 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("FloatInput");
 
-let reducer = ((onChangeFunc, onBlurFunc), canBeZero, action, state) =>
+let reducer = ((onChangeFunc, onBlurFunc), canBeZero, action, state) => {
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
+
   switch (action) {
   | DragStart => ReasonReact.Update({...state, isDragStart: true})
   | DragDrop => ReasonReact.Update({...state, isDragStart: false})
   | Change(value) =>
     Method.handleChangeAction(state, onChangeFunc, canBeZero, value)
   | Blur =>
-    Method.handleBlurAction(state, (onChangeFunc, onBlurFunc), canBeZero)
+    Method.handleBlurAction(state, (onChangeFunc, onBlurFunc), canBeZero,languageType)
   };
+}
 
 let render =
     (
