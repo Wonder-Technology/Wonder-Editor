@@ -13,8 +13,7 @@ let _isNameEqualDefaultMaterialName = (type_, name) => {
 };
 
 let _checkParentNode =
-    (parentFolderNode, nodeName, engineState)
-    : Result.RelationResult.t =>
+    (parentFolderNode, nodeName, engineState): Result.RelationResult.t =>
   switch (parentFolderNode) {
   | None => Result.RelationResult.success()
   | Some(parentFolderNode) =>
@@ -24,7 +23,12 @@ let _checkParentNode =
       engineState,
     ) ?
       Result.RelationResult.fail(
-        "parent node shouldn't has the child with the same name" |. Some,
+        LanguageUtils.getMessageLanguageDataByType(
+          "asset-rename-node",
+          LanguageEditorService.unsafeGetType
+          |> StateLogicService.getEditorState,
+        )
+        ->Some,
       ) :
       Result.RelationResult.success()
   };
@@ -69,8 +73,12 @@ let _renameMaterialNode =
     _isNameEqualDefaultMaterialName(type_, name) ?
       (
         Result.RelationResult.fail(
-          {j|material name:$name shouldn't equal default material name|j}
-          |. Some,
+          LanguageUtils.getMessageLanguageDataByType(
+            "asset-rename-material",
+            LanguageEditorService.unsafeGetType
+            |> StateLogicService.getEditorState,
+          )
+          ->Some,
         ),
         engineState,
       ) :

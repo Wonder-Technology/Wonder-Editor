@@ -22,7 +22,10 @@ open WidgetType;
 
 open PickingType;
 
+open UIType;
+
 type editorState = {
+  uiRecord,
   settingRecord,
   sceneTreeRecord,
   assetRecord,

@@ -24,43 +24,4 @@ let _ =
         MainEditorTransformTool.changeScaleZ,
       ),
     );
-
-    describe("deal with specific case", () => {
-      beforeEach(() => {
-        MainEditorSceneTool.initStateWithJob(
-          ~sandbox,
-          ~noWorkerJobRecord=
-            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
-          (),
-        );
-
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
-        );
-        DirectorToolEngine.prepareAndInitAllEnginState();
-      });
-
-      describe("the scale value in engineState can't be 0", () =>
-        test("if input 0, set origin value to engineState instead of 0", () => {
-          open FloatInput;
-
-          let currentGameObjectTransform =
-            GameObjectTool.getCurrentSceneTreeNodeTransform();
-          let value = 0.;
-          let state =
-            FloatInputTool.buildState(
-              ~inputValue=Some("0."),
-              ~originValue="1.0",
-              (),
-            );
-
-          let reasonStateUpdate =
-            FloatInputTool.reducer(~canBeZero=false, ~action=Blur, ~state, ())
-            |> ReactTool.getUpdateState;
-
-          reasonStateUpdate.inputValue |> expect == Some("1.0");
-        })
-      );
-    });
   });

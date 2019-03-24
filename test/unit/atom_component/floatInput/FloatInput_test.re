@@ -10,7 +10,10 @@ let _ =
   describe("FloatInput", () => {
     let sandbox = getSandboxDefaultVal();
 
-    beforeEach(() => sandbox := createSandbox());
+    beforeEach(() => {
+      sandbox := createSandbox();
+      MainEditorSceneTool.initState(~sandbox, ());
+    });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test FloatInput component set float value", () => {

@@ -22,6 +22,12 @@ let create = () => {
       defaultLightMaterialData: None,
     },
   },
+  uiRecord: {
+    messageIndex: 0,
+    intervalId: 0,
+    isHasMessage: false,
+    messageArray: [||],
+  },
   consoleRecord: {
     consoleMessageArray: [||],
     consoleCheckedCount: 0,

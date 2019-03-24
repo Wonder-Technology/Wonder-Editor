@@ -270,7 +270,10 @@ module Publish = {
     StateEditorService.getIsRun() ?
       {
         ConsoleUtils.warn(
-          "should publish local when stop, but now is run!",
+          LanguageUtils.getMessageLanguageDataByType(
+            "header-publish-local",
+            LanguageEditorService.unsafeGetType(editorState),
+          ),
           editorState,
         );
 

@@ -363,9 +363,12 @@ let _import = result => {
      );
 };
 
-let _handleIsRun = (dispatchFunc, editorState) => {
+let _handleIsRun = (dispatchFunc, languageType, editorState) => {
   ConsoleUtils.warn(
-    "should import package when stop, but now is run!",
+    LanguageUtils.getMessageLanguageDataByType(
+      "header-import-package",
+      languageType,
+    ),
     editorState,
   );
 
@@ -397,9 +400,11 @@ let _dispatch = dispatchFunc =>
 
 let importPackage = (dispatchFunc, event) => {
   let editorState = StateEditorService.getState();
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   StateEditorService.getIsRun() ?
-    _handleIsRun(dispatchFunc, editorState) :
+    _handleIsRun(dispatchFunc, languageType, editorState) :
     {
       let e = ReactEventType.convertReactFormEventToJsEvent(event);
       EventHelper.preventDefault(e);
