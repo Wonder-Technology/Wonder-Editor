@@ -102,7 +102,7 @@ let isViewSizeChange =
       (_, _, gameViewWidth, gameViewHeight),
       (canvasWidth, canvasHeight),
     ) =>
-  ! isSizeEqual(getViewWidth(sceneViewWidth, gameViewWidth), canvasWidth)
+  !isSizeEqual(getViewWidth(sceneViewWidth, gameViewWidth), canvasWidth)
   || !
        isSizeEqual(
          getViewHeight(sceneViewHeight, gameViewHeight),
@@ -111,19 +111,23 @@ let isViewSizeChange =
 
 let resizeScreen = () => {
   let canvasParentSize = getCanvasParentSize();
+  let engineState = StateEngineService.unsafeGetState();
+  let inspectorEngineState = StateInspectorEngineService.unsafeGetState();
 
   resizeCanvas(canvasParentSize);
 
-  DeviceManagerEngineService.getGl(StateEngineService.unsafeGetState())
-  |> Js.Option.isSome ?
+  engineState |> DeviceManagerEngineService.getGl |> Js.Option.isSome ?
     {
       updateViewRect(canvasParentSize)
       |> StateLogicService.getAndSetEditorState;
 
-      StateEngineService.unsafeGetState()
+      engineState
       |> resizeViewport(canvasParentSize)
       |> StateLogicService.refreshEngineState
       |> ignore;
     } :
     ();
+
+  inspectorEngineState |> DeviceManagerEngineService.getGl |> Js.Option.isSome ?
+    inspectorEngineState |> StateLogicService.refreshEngineState |> ignore : ();
 };

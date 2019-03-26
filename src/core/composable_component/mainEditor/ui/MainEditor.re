@@ -38,7 +38,13 @@ let _buildElementBeforeInitEngine = (uiState, dispatchFunc) =>
       </div>
       <div className="bottom-widget" />
     </div>
-    <div key="rightComponent" className="right-component" />
+    <div key="rightComponent" className="right-component">
+      <div className="inline-component inspector-parent">
+        <article key="inspector" className="wonder-inspector-component">
+          <canvas id="inspector-canvas" key="inspectorCanvas" />
+        </article>
+      </div>
+    </div>
   </article>;
 
 let _buildElementAfterInitEngine = (uiState, dispatchFunc) =>

@@ -52,7 +52,7 @@ let render = ((uiState, dispatchFunc), addableComponentConfig, _self) => {
         ),
       )
     }
-    <canvas id="asset-canvas" key="assetCanvas" />
+    <canvas id="inspector-canvas" key="inspectorCanvas" />
   </article>;
 };
 
@@ -75,31 +75,31 @@ let make =
   shouldUpdate,
   render: self =>
     render((uiState, dispatchFunc), addableComponentConfig, self),
-  didUpdate: self => {
-    let assetCanvas = DomHelper.getElementById("asset-canvas");
-    let editorState = StateEditorService.getState();
+  /* didUpdate: self => {
+       let inspectorCanvas = DomHelper.getElementById("inspector-canvas");
+       let editorState = StateEditorService.getState();
 
-    Js.log("did update");
+       Js.log("did update");
 
-    switch (
-      CurrentSelectSourceEditorService.getCurrentSelectSource(editorState)
-    ) {
-    | None
-    | Some(SceneTree) => DomHelper.hideCanvas(assetCanvas)
-    | Some(Asset) =>
-      switch (OperateTreeAssetEditorService.getCurrentNode(editorState)) {
-      | None => DomHelper.hideCanvas(assetCanvas)
-      | Some(currentNode) =>
-        switch (currentNode) {
-        | TextureNode(nodeId, textureNodeData) =>
-          DomHelper.hideCanvas(assetCanvas)
-        | FolderNode(nodeId, folderNodeData, children) =>
-          DomHelper.hideCanvas(assetCanvas)
-        | MaterialNode(nodeId, materialNodeData) =>
-          DomHelper.showCanvas(assetCanvas)
-        | WDBNode(nodeId, wdbNodeData) => DomHelper.showCanvas(assetCanvas)
-        }
-      }
-    };
-  },
+       switch (
+         CurrentSelectSourceEditorService.getCurrentSelectSource(editorState)
+       ) {
+       | None
+       | Some(SceneTree) => DomHelper.hideCanvas(inspectorCanvas)
+       | Some(Asset) =>
+         switch (OperateTreeAssetEditorService.getCurrentNode(editorState)) {
+         | None => DomHelper.hideCanvas(inspectorCanvas)
+         | Some(currentNode) =>
+           switch (currentNode) {
+           | TextureNode(nodeId, textureNodeData) =>
+             DomHelper.hideCanvas(inspectorCanvas)
+           | FolderNode(nodeId, folderNodeData, children) =>
+             DomHelper.hideCanvas(inspectorCanvas)
+           | MaterialNode(nodeId, materialNodeData) =>
+             DomHelper.showCanvas(inspectorCanvas)
+           | WDBNode(nodeId, wdbNodeData) => DomHelper.showCanvas(inspectorCanvas)
+           }
+         }
+       };
+     }, */
 };
