@@ -1253,6 +1253,11 @@ html, body {
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-three-float-input .inspector-item .component-label {
             margin-left: 0 !important;
             justify-content: center; }
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component canvas {
+          margin-top: 50px;
+          width: 100%;
+          height: 200px;
+          border: 1px solid red; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree {
           padding-top: 5px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .sceneTree-name h1 {

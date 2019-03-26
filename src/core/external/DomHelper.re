@@ -51,6 +51,22 @@ let apply = [%raw
   |}
 ];
 
+let showCanvas = [%raw
+  {|
+    function(canvas) {
+      canvas.style.display = "block";
+    }
+  |}
+];
+
+let hideCanvas = [%raw
+  {|
+    function(canvas) {
+      canvas.style.display = "none";
+    }
+  |}
+];
+
 let deleteKeyInMap = [%raw
   {|
     function (key,map) {

@@ -60,6 +60,8 @@ let make = (~state as uiState: AppStore.appState, ~dispatch, _children) => {
     ServiceWorker.registerServiceWorker();
 
     WonderLog.Wonder_Console.makeObjInToWindow();
+
+
     /*
      AppExtensionUtils.getExtension(Method.getStorageParentKey())
      |> (

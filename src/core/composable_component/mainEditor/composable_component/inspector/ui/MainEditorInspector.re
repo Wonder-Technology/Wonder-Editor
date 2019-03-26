@@ -1,5 +1,7 @@
 open WidgetType;
 
+open TreeAssetType;
+
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
 module Method = {
@@ -23,7 +25,7 @@ module Method = {
       | None => ReasonReact.null
       | Some(currentNode) =>
         <AssetTreeInspector
-          key=(DomHelper.getRandomKey())
+          key={DomHelper.getRandomKey()}
           uiState
           dispatchFunc
           currentNode
@@ -37,8 +39,9 @@ let component =
 
 let render = ((uiState, dispatchFunc), addableComponentConfig, _self) => {
   let editorState = StateEditorService.getState();
+
   <article key="inspector" className="wonder-inspector-component">
-    (
+    {
       Method.showInspectorBySourceType(
         (uiState, dispatchFunc),
         addableComponentConfig,
@@ -48,7 +51,8 @@ let render = ((uiState, dispatchFunc), addableComponentConfig, _self) => {
           OperateTreeAssetEditorService.getCurrentNode(editorState),
         ),
       )
-    )
+    }
+    <canvas id="asset-canvas" key="assetCanvas" />
   </article>;
 };
 
@@ -71,4 +75,31 @@ let make =
   shouldUpdate,
   render: self =>
     render((uiState, dispatchFunc), addableComponentConfig, self),
+  didUpdate: self => {
+    let assetCanvas = DomHelper.getElementById("asset-canvas");
+    let editorState = StateEditorService.getState();
+
+    Js.log("did update");
+
+    switch (
+      CurrentSelectSourceEditorService.getCurrentSelectSource(editorState)
+    ) {
+    | None
+    | Some(SceneTree) => DomHelper.hideCanvas(assetCanvas)
+    | Some(Asset) =>
+      switch (OperateTreeAssetEditorService.getCurrentNode(editorState)) {
+      | None => DomHelper.hideCanvas(assetCanvas)
+      | Some(currentNode) =>
+        switch (currentNode) {
+        | TextureNode(nodeId, textureNodeData) =>
+          DomHelper.hideCanvas(assetCanvas)
+        | FolderNode(nodeId, folderNodeData, children) =>
+          DomHelper.hideCanvas(assetCanvas)
+        | MaterialNode(nodeId, materialNodeData) =>
+          DomHelper.showCanvas(assetCanvas)
+        | WDBNode(nodeId, wdbNodeData) => DomHelper.showCanvas(assetCanvas)
+        }
+      }
+    };
+  },
 };
