@@ -150,9 +150,10 @@ let initEngine = () =>
          ();
        })
     |> WonderBsMost.Most.merge(
+         /* _, */
          _getLoadInspectorEngineData()
          |> WonderBsMost.Most.tap(inspectorEngineState => {
-              Js.log("inspctor data ");
+              Js.log("inspector data ");
               Js.log((
                 inspectorEngineState,
                 StateDataInspectorEngineService.getStateData(),
@@ -163,7 +164,5 @@ let initEngine = () =>
               ();
             }),
        )
-    /* |> WonderBsMost.Most.flatMap(engineState =>
-       ) */
     |> WonderBsMost.Most.drain
   );
