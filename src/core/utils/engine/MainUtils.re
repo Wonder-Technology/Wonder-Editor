@@ -169,11 +169,11 @@ let initEngine = () =>
     |> WonderBsMost.Most.tap(engineState =>
          engineState |> _handleEngineState |> ignore
        )
-    /* |> WonderBsMost.Most.flatMap(_ =>
+    |> WonderBsMost.Most.merge(
          _getLoadInspectorEngineData()
          |> WonderBsMost.Most.tap(inspectorEngineState =>
               inspectorEngineState |> _handleInspectorEngineState |> ignore
-            )
-       ) */
+            ),
+       )
     |> WonderBsMost.Most.drain
   );
