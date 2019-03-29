@@ -31,4 +31,12 @@ type materialNodeData = {
   materialComponent: int,
 };
 
+
+
+type scriptNodeData = {
+  type_: MaterialDataAssetType.materialType,
+  name:string
+};
+
+
 type folderNodeData = {name: string};
