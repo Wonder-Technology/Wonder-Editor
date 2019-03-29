@@ -1,6 +1,7 @@
 open Js.Promise;
 
 let _getLoadEngineData = () => {
+  Js.log("load engine");
   let engineConfigDir = "./config/engine/";
 
   AssetEngineService.loadConfig(
@@ -10,6 +11,7 @@ let _getLoadEngineData = () => {
 };
 
 let _getLoadInspectorEngineData = () => {
+  Js.log("load inspector enigne");
   let engineConfigDir = "./config/inspectorEngine/";
 
   AssetEngineService.loadConfig(
@@ -18,7 +20,7 @@ let _getLoadInspectorEngineData = () => {
   );
 };
 
-let _registerJob = engineState =>
+let _registerJobForEngine = engineState =>
   engineState
   |> JobEngineService.registerNoWorkerInitJob(
        "init_editor",
@@ -81,11 +83,11 @@ let _registerJob = engineState =>
        RestoreJob.restoreJob,
      );
 
-let _registerJobForInspector = engineState =>
+let _registerJobForInspectorEngine = engineState =>
   engineState
   |> JobEngineService.registerNoWorkerInitJob(
-       "init_camera_controller",
-       InitCameraControllerJob.initJob,
+       "init_inspector_engine",
+       InitInspectorEngineJob.initInspectorEngineJob
      )
   |> JobEngineService.registerNoWorkerLoopJob(
        "reallocate_cpu_memory",
@@ -96,20 +98,12 @@ let _registerJobForInspector = engineState =>
        UpdateCameraJob.updateJob,
      )
   |> JobEngineService.registerNoWorkerLoopJob(
-       "prepare_render_scene_view",
-       PrepareRenderSceneViewJob.prepareRenderSceneViewJob,
-     )
-  |> JobEngineService.registerNoWorkerLoopJob(
-       "prepare_render_game_view",
-       PrepareRenderGameViewJob.prepareRenderGameViewJob,
-     )
-  |> JobEngineService.registerNoWorkerLoopJob(
        "restore",
        RestoreJob.restoreJob,
      );
 
 let _handleEngineState = engineState => {
-  let engineState = _registerJob(engineState);
+  let engineState = _registerJobForEngine(engineState);
   let scene = engineState |> SceneEngineService.getSceneGameObject;
 
   engineState
@@ -122,7 +116,7 @@ let _handleEngineState = engineState => {
 };
 
 let _handleInspectorEngineState = inspectorEngineState => {
-  let inspectorEngineState = _registerJobForInspector(inspectorEngineState);
+  let inspectorEngineState = _registerJobForInspectorEngine(inspectorEngineState);
 
   inspectorEngineState
   |> DirectorEngineService.init
@@ -169,11 +163,11 @@ let initEngine = () =>
     |> WonderBsMost.Most.tap(engineState =>
          engineState |> _handleEngineState |> ignore
        )
-    |> WonderBsMost.Most.merge(
+    |> WonderBsMost.Most.flatMap(_ =>
          _getLoadInspectorEngineData()
          |> WonderBsMost.Most.tap(inspectorEngineState =>
               inspectorEngineState |> _handleInspectorEngineState |> ignore
-            ),
+            )
        )
     |> WonderBsMost.Most.drain
   );

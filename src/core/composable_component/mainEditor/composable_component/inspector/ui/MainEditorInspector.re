@@ -52,7 +52,6 @@ let render = ((uiState, dispatchFunc), addableComponentConfig, _self) => {
         ),
       )
     }
-    <canvas id="inspector-canvas" key="inspectorCanvas" />
   </article>;
 };
 

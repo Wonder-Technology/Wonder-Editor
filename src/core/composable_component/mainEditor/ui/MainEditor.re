@@ -40,9 +40,12 @@ let _buildElementBeforeInitEngine = (uiState, dispatchFunc) =>
     </div>
     <div key="rightComponent" className="right-component">
       <div className="inline-component inspector-parent">
-        <article key="inspector" className="wonder-inspector-component">
+        <div
+          id="inspectorCanvasParent"
+          key="inspectorCanvasParent"
+          className="inspector-parent">
           <canvas id="inspector-canvas" key="inspectorCanvas" />
-        </article>
+        </div>
       </div>
     </div>
   </article>;
@@ -68,6 +71,12 @@ let _buildElementAfterInitEngine = (uiState, dispatchFunc) =>
     </div>
     <div key="rightComponent" className="right-component">
       <div className="inline-component inspector-parent">
+        <div
+          id="inspectorCanvasParent"
+          key="inspectorCanvasParent"
+          className="inspector-canvas-parent">
+          <canvas id="inspector-canvas" key="inspectorCanvas" />
+        </div>
         <MainEditorInspector
           uiState
           dispatchFunc

@@ -24,8 +24,8 @@ let _getCanvasParentSize = parent => (
   parent##offsetHeight,
 );
 
-let getCanvasParentSize = () =>
-  DomHelper.getElementById("canvasParent")
+let getCanvasParentSize = canvasParentDom =>
+  canvasParentDom
   |> DomHelperType.convertDomElementToJsObj
   |> _getCanvasParentSize;
 
@@ -37,8 +37,8 @@ let getCanvasSize = () => {
   (canvas##width, canvas##height);
 };
 
-let resizeCanvas = ((width, height)) =>
-  DomHelper.getElementById("canvas")
+let resizeCanvas = (canvasDom, (width, height)) =>
+  canvasDom
   |> DomHelperType.convertDomElementToJsObj
   |> ScreenEngineService.setScreenSize((width, height, width, height))
   |> ignore;
@@ -110,11 +110,18 @@ let isViewSizeChange =
        );
 
 let resizeScreen = () => {
-  let canvasParentSize = getCanvasParentSize();
   let engineState = StateEngineService.unsafeGetState();
-  /* let inspectorEngineState = StateInspectorEngineService.unsafeGetState(); */
+  let inspectorEngineState = StateInspectorEngineService.unsafeGetState();
 
-  resizeCanvas(canvasParentSize);
+  let canvasParentSize =
+    DomHelper.getElementById("canvasParent") |> getCanvasParentSize;
+  let inspectorCanvasParentSize =
+    DomHelper.getElementById("inspectorCanvasParent") |> getCanvasParentSize;
+
+  canvasParentSize |> resizeCanvas(DomHelper.getElementById("canvas"));
+
+  inspectorCanvasParentSize
+  |> resizeCanvas(DomHelper.getElementById("inspector-canvas"));
 
   engineState |> DeviceManagerEngineService.getGl |> Js.Option.isSome ?
     {
@@ -127,6 +134,12 @@ let resizeScreen = () => {
       |> ignore;
     } :
     ();
-  /* inspectorEngineState |> DeviceManagerEngineService.getGl |> Js.Option.isSome ?
-     inspectorEngineState |> StateLogicService.refreshEngineState |> ignore : (); */
+
+  inspectorEngineState |> DeviceManagerEngineService.getGl |> Js.Option.isSome ?
+    inspectorEngineState
+    |> resizeViewport(inspectorCanvasParentSize)
+    |> DirectorEngineService.loopBody(0.)
+    |> StateInspectorEngineService.setState
+    |> ignore :
+    ();
 };
