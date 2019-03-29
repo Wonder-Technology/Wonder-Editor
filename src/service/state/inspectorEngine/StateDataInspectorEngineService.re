@@ -1,7 +1,11 @@
 open Wonderjs;
 
-let getStateData = () =>
+let createStateData = () =>
   CreateInspectorEngineStateDataService.createStateData();
+
+let stateData = CreateInspectorEngineStateDataService.createStateData();
+
+let getStateData = () => stateData;
 
 let unsafeGetState = () =>
   StateDataMainService.unsafeGetState(getStateData());

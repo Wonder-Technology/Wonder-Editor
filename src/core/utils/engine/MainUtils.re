@@ -81,9 +81,35 @@ let _registerJob = engineState =>
        RestoreJob.restoreJob,
      );
 
+let _registerJobForInspector = engineState =>
+  engineState
+  |> JobEngineService.registerNoWorkerInitJob(
+       "init_camera_controller",
+       InitCameraControllerJob.initJob,
+     )
+  |> JobEngineService.registerNoWorkerLoopJob(
+       "reallocate_cpu_memory",
+       ReallocateCPUMemoryJob.reallocateJob,
+     )
+  |> JobEngineService.registerNoWorkerLoopJob(
+       "update_camera",
+       UpdateCameraJob.updateJob,
+     )
+  |> JobEngineService.registerNoWorkerLoopJob(
+       "prepare_render_scene_view",
+       PrepareRenderSceneViewJob.prepareRenderSceneViewJob,
+     )
+  |> JobEngineService.registerNoWorkerLoopJob(
+       "prepare_render_game_view",
+       PrepareRenderGameViewJob.prepareRenderGameViewJob,
+     )
+  |> JobEngineService.registerNoWorkerLoopJob(
+       "restore",
+       RestoreJob.restoreJob,
+     );
+
 let _handleEngineState = engineState => {
   let engineState = _registerJob(engineState);
-
   let scene = engineState |> SceneEngineService.getSceneGameObject;
 
   engineState
@@ -96,15 +122,11 @@ let _handleEngineState = engineState => {
 };
 
 let _handleInspectorEngineState = inspectorEngineState => {
-  let inspectorEngineState = _registerJob(inspectorEngineState);
+  let inspectorEngineState = _registerJobForInspector(inspectorEngineState);
 
   inspectorEngineState
   |> DirectorEngineService.init
   |> StateInspectorEngineService.setState;
-
-  Js.log(StateDataInspectorEngineService.getStateData());
-
-  StateInspectorEngineService.unsafeGetState() |> Js.log;
 };
 
 let initEngine = () =>
@@ -144,26 +166,14 @@ let initEngine = () =>
             )
          |> WonderBsMost.Most.fromPromise
        )
-    |> WonderBsMost.Most.tap(engineState => {
-         engineState |> _handleEngineState |> ignore;
-
-         ();
-       })
-    |> WonderBsMost.Most.merge(
-         _getLoadInspectorEngineData()
-         |> WonderBsMost.Most.tap(inspectorEngineState => {
-              Js.log("inspctor data ");
-              Js.log((
-                inspectorEngineState,
-                StateDataInspectorEngineService.getStateData(),
-              ));
-
-              inspectorEngineState |> _handleInspectorEngineState |> ignore;
-
-              ();
-            }),
+    |> WonderBsMost.Most.tap(engineState =>
+         engineState |> _handleEngineState |> ignore
        )
-    /* |> WonderBsMost.Most.flatMap(engineState =>
+    /* |> WonderBsMost.Most.flatMap(_ =>
+         _getLoadInspectorEngineData()
+         |> WonderBsMost.Most.tap(inspectorEngineState =>
+              inspectorEngineState |> _handleInspectorEngineState |> ignore
+            )
        ) */
     |> WonderBsMost.Most.drain
   );

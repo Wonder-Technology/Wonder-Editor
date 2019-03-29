@@ -112,7 +112,7 @@ let isViewSizeChange =
 let resizeScreen = () => {
   let canvasParentSize = getCanvasParentSize();
   let engineState = StateEngineService.unsafeGetState();
-  let inspectorEngineState = StateInspectorEngineService.unsafeGetState();
+  /* let inspectorEngineState = StateInspectorEngineService.unsafeGetState(); */
 
   resizeCanvas(canvasParentSize);
 
@@ -127,7 +127,6 @@ let resizeScreen = () => {
       |> ignore;
     } :
     ();
-
-  inspectorEngineState |> DeviceManagerEngineService.getGl |> Js.Option.isSome ?
-    inspectorEngineState |> StateLogicService.refreshEngineState |> ignore : ();
+  /* inspectorEngineState |> DeviceManagerEngineService.getGl |> Js.Option.isSome ?
+     inspectorEngineState |> StateLogicService.refreshEngineState |> ignore : (); */
 };
