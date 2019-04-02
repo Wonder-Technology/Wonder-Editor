@@ -12,35 +12,26 @@ module CustomEventHandler = {
       editorState
       |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree;
 
-    let materialName =
-      OperateMaterialLogicService.getNewMaterilaName()
+    let scriptEventFunctionName =
+      ScriptEventFunctionNodeNameAssetService.getNewName()
       ->(
-          OperateTreeAssetLogicService.getUniqueNodeName(
+          OperateTreeAssetLogicService.getUniqueScriptEventFunctionNodeName(
             targetTreeNode,
-            engineState,
+            (editorState, engineState),
           )
         );
 
-    let (newMaterial, engineState) =
-      OperateLightMaterialLogicService.createLightMaterialAndSetName(
-        materialName,
-        engineState,
-      );
-
     let editorState =
-      MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
+      ScriptEventFunctionNodeAssetEditorService.addScriptNodeToAssetTree(
         targetTreeNode,
-        MaterialNodeAssetService.buildNode(
+        ScriptEventFunctionNodeAssetService.buildNode(
           ~nodeId=newNodeId,
-          ~type_=MaterialDataAssetType.LightMaterial,
-          ~materialComponent=newMaterial,
+          ~name=scriptEventFunctionName,
+          ~eventFunctionData=
+            ScriptEventFunctionEngineService.createEmptyScriptEventFunctionData(),
         ),
         editorState,
       );
-
-    /* let targetTreeNode =
-       editorState
-       |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree; */
 
     editorState |> StateEditorService.setState |> ignore;
 

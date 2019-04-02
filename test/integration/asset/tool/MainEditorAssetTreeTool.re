@@ -171,6 +171,21 @@ module BuildAssetTree = {
        materialNodeIdArr |> ArrayService.unsafeGetNth(1); */
   };
 
+
+  module ScriptEventFunction = {
+    /* type assetTreeData = {
+      root: int,
+      materialNodeIdArr: array(int),
+    };
+
+    let getRootNodeId = ({root}) => root;
+
+    let getFirstMaterialNodeId = ({root, materialNodeIdArr}) =>
+      materialNodeIdArr |> ArrayService.unsafeGetFirst;
+    /* let getSecondMaterialNodeId = ({root, materialNodeIdArr}) =>
+       materialNodeIdArr |> ArrayService.unsafeGetNth(1); */ */
+  };
+
   module WDB = {
     type assetTreeData = {
       root: int,

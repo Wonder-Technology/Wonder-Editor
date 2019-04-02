@@ -68,7 +68,21 @@ let message_language_array = [|
     title: "asset-rename-material",
     language: {
       zh: {j|材质名称不能与默认名称重复 ！|j},
-      en: "material name shouldn't equal default material name",
+      en: "material's name shouldn't equal default material name",
+    },
+  },
+  {
+    title: "asset-rename-scriptEventFunction",
+    language: {
+      zh: {j|eventFunction脚本名称不能与其他eventFunction脚本名称重复 ！|j},
+      en: "script event function's name shouldn't equal other ones' name",
+    },
+  },
+  {
+    title: "asset-rename-scriptAttribute",
+    language: {
+      zh: {j|attribute脚本名称不能与其他attribute脚本名称重复 ！|j},
+      en: "script attribute's name shouldn't equal other ones' name",
     },
   },
   {

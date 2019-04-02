@@ -31,12 +31,14 @@ type materialNodeData = {
   materialComponent: int,
 };
 
-
-
-type scriptNodeData = {
-  type_: MaterialDataAssetType.materialType,
-  name:string
+type scriptEventFunctionNodeData = {
+  name: string,
+  eventFunctionData: Wonderjs.StateDataMainType.eventFunctionData,
 };
 
+type scriptAttributeNodeData = {
+  name: string,
+  attribute: Wonderjs.ScriptAttributeType.scriptAttribute,
+};
 
 type folderNodeData = {name: string};

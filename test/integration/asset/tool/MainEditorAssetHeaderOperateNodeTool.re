@@ -65,3 +65,27 @@ let addMaterial =
       (),
     ) =>
   MainEditorAssetHeader.Method.addMaterial((uiState, dispatchFunc), (), ());
+
+let addScriptEventFunction =
+    (
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorAssetHeader.Method.addScriptEventFunction(
+    (uiState, dispatchFunc),
+    (),
+    (),
+  );
+
+let addScriptAttribute =
+    (
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  MainEditorAssetHeader.Method.addScriptAttribute(
+    (uiState, dispatchFunc),
+    (),
+    (),
+  );

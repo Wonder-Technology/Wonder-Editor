@@ -120,6 +120,113 @@ let _materialNodeFunc =
     ) :
     (result, tree, engineState);
 
+let _scriptEventFunctionNodeFunc =
+    (
+      (targetNodeId, name),
+      parentFolderNode,
+      (result, tree, engineState),
+      nodeId,
+      nodeData,
+    ) => {
+  let (result, newTree, engineState) =
+    result
+    |> Result.RelationResult.isSuccess
+    && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
+      {
+        let (result, newTree) =
+          /* TODO need test */
+          switch (
+            _checkParentNode(parentFolderNode, name, engineState)
+            |> Result.RelationResult.handleSuccess(() =>
+                 ScriptEventFunctionNodeNameAssetService.isTreeScriptEventFunctionNodesHasTargetName(
+                   name,
+                   tree,
+                 ) ?
+                   Result.RelationResult.fail(
+                     LanguageUtils.getMessageLanguageDataByType(
+                       "asset-rename-scriptEventFunction",
+                       LanguageEditorService.unsafeGetType
+                       |> StateLogicService.getEditorState,
+                     )
+                     ->Some,
+                   ) :
+                   Result.RelationResult.success()
+               )
+          ) {
+          | Success () as result => (
+              result,
+              OperateTreeAssetService.updateNode(
+                nodeId,
+                ScriptEventFunctionNodeNameAssetService.rename(
+                  ~name,
+                  ~nodeData,
+                ),
+                ScriptEventFunctionNodeAssetService.buildNodeByNodeData,
+                tree,
+              ),
+            )
+          | Fail(msg) as result => (result, tree)
+          };
+
+        (result, newTree, engineState);
+      } :
+      (result, tree, engineState);
+
+  (result, newTree, engineState);
+};
+
+let _scriptAttributeNodeFunc =
+    (
+      (targetNodeId, name),
+      parentFolderNode,
+      (result, tree, engineState),
+      nodeId,
+      nodeData,
+    ) => {
+  let (result, newTree, engineState) =
+    result
+    |> Result.RelationResult.isSuccess
+    && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
+      {
+        let (result, newTree) =
+          /* TODO need test */
+          switch (
+            _checkParentNode(parentFolderNode, name, engineState)
+            |> Result.RelationResult.handleSuccess(() =>
+                 ScriptAttributeNodeNameAssetService.isTreeScriptAttributeNodesHasTargetName(
+                   name,
+                   tree,
+                 ) ?
+                   Result.RelationResult.fail(
+                     LanguageUtils.getMessageLanguageDataByType(
+                       "asset-rename-scriptAttribute",
+                       LanguageEditorService.unsafeGetType
+                       |> StateLogicService.getEditorState,
+                     )
+                     ->Some,
+                   ) :
+                   Result.RelationResult.success()
+               )
+          ) {
+          | Success () as result => (
+              result,
+              OperateTreeAssetService.updateNode(
+                nodeId,
+                ScriptAttributeNodeNameAssetService.rename(~name, ~nodeData),
+                ScriptAttributeNodeAssetService.buildNodeByNodeData,
+                tree,
+              ),
+            )
+          | Fail(msg) as result => (result, tree)
+          };
+
+        (result, newTree, engineState);
+      } :
+      (result, tree, engineState);
+
+  (result, newTree, engineState);
+};
+
 let _wdbNodeFunc =
     (
       (targetNodeId, name),
@@ -199,6 +306,9 @@ let renameNode =
       ~acc=(Result.RelationResult.success(), tree, engineState),
       ~textureNodeFunc=_textureNodeFunc((targetNodeId, name)),
       ~materialNodeFunc=_materialNodeFunc((targetNodeId, name)),
+      ~scriptEventFunctionNodeFunc=
+        _scriptEventFunctionNodeFunc((targetNodeId, name)),
+      ~scriptAttributeNodeFunc=_scriptAttributeNodeFunc((targetNodeId, name)),
       ~wdbNodeFunc=_wdbNodeFunc((targetNodeId, name)),
       ~folderNodeFunc=_folderNodeFunc((targetNodeId, name)),
       ~parentFolderNode=None,

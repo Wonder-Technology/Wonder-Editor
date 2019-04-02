@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`script attribute inspector test snapshot test add one field 1`] = `
+<article
+  className="wonder-scriptAttribute-inspector"
+>
+  <h1>
+    ScriptAttribute
+  </h1>
+  <hr />
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+      title="script attribute's name"
+    >
+      <span
+        className="component-label"
+      >
+        Attribute Name
+      </span>
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="New Script Attribute"
+      />
+    </div>
+  </article>
+  <div
+    className="scriptAttribute-data"
+  >
+    <div
+      className="fields"
+    >
+      <div
+        className="field"
+      >
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+            title="script attribute's field's name"
+          >
+            <span
+              className="component-label"
+            >
+              Field Name
+            </span>
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="New Script Attribute Field"
+            />
+          </div>
+        </article>
+        <article
+          className="wonder-file-input"
+        >
+          <button
+            onClick={[Function]}
+          >
+            Set Field Data
+          </button>
+        </article>
+        <button
+          className="scriptAttribute-field-remove"
+          onClick={[Function]}
+        >
+          Remove
+        </button>
+      </div>
+    </div>
+    <button
+      className="addable-btn"
+      onClick={[Function]}
+    >
+      Add script attribute's field
+    </button>
+  </div>
+</article>
+`;
