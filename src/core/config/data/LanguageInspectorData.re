@@ -310,6 +310,27 @@ let inspector_language_array = [|
     },
   },
   {
+    title: "script-describe",
+    language: {
+      zh: {j|Script|j},
+      en: "Script",
+    },
+  },
+  {
+    title: "script-add-scriptEventFunction",
+    language: {
+      zh: {j|添加Script Event Function|j},
+      en: "Add script event function",
+    },
+  },
+  {
+    title: "script-use-scriptEventFunction-describe",
+    language: {
+      zh: {j|使用的script event function资产|j},
+      en: "script event function asset in use",
+    },
+  },
+  {
     title: "texture-name-describe",
     language: {
       zh: {j|纹理的名字|j},
@@ -333,7 +354,7 @@ let inspector_language_array = [|
   {
     title: "texture-mag-filter-describe",
     language: {
-      zh: {j|定义当一个纹理单元（texel）覆盖多个像素点时纹理如何采样|j},
+      zh: {j|定义当一个纹理单元（texel）覆盖多个像素点时纹理如何��样|j},
       en: "defines how textures are sampled when a texel covers multiple pixels",
     },
   },

@@ -1,8 +1,8 @@
-open Wonderjs;
+/* open Wonderjs; */
 
 let createGameObject = ((editorState, engineState)) => {
   let (engineState, gameObject) =
-    engineState |> GameObjectAPI.createGameObject;
+    engineState |> GameObjectEngineService.create;
 
   (
     editorState
@@ -40,7 +40,7 @@ let addGeometry = (gameObject, component, (editorState, engineState)) => (
        gameObject,
        InspectorComponentType.Geometry,
      ),
-  GameObjectAPI.addGameObjectGeometryComponent(
+  GameObjectComponentEngineService.addGeometryComponent(
     gameObject,
     component,
     engineState,
@@ -58,8 +58,8 @@ let addCameraGroup = (gameObject, cameraGroup, (editorState, engineState)) => (
        gameObject,
        cameraGroup,
        (
-         GameObjectAPI.addGameObjectBasicCameraViewComponent,
-         GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent,
+         GameObjectComponentEngineService.addBasicCameraViewComponent,
+         GameObjectComponentEngineService.addPerspectiveCameraProjectionComponent,
        ),
      ),
 );
@@ -70,7 +70,7 @@ let addDirectionLight = (gameObject, component, (editorState, engineState)) => (
        gameObject,
        InspectorComponentType.Light,
      ),
-  GameObjectAPI.addGameObjectDirectionLightComponent(
+  GameObjectComponentEngineService.addDirectionLightComponent(
     gameObject,
     component,
     engineState,
@@ -83,7 +83,20 @@ let addPointLight = (gameObject, component, (editorState, engineState)) => (
        gameObject,
        InspectorComponentType.Light,
      ),
-  GameObjectAPI.addGameObjectPointLightComponent(
+  GameObjectComponentEngineService.addPointLightComponent(
+    gameObject,
+    component,
+    engineState,
+  ),
+);
+
+let addScript = (gameObject, component, (editorState, engineState)) => (
+  editorState
+  |> InspectorEditorService.addComponentTypeToMap(
+       gameObject,
+       InspectorComponentType.Script,
+     ),
+  GameObjectComponentEngineService.addScriptComponent(
     gameObject,
     component,
     engineState,
@@ -97,7 +110,7 @@ let addArcballCameraController =
        gameObject,
        InspectorComponentType.ArcballCameraController,
      ),
-  GameObjectAPI.addGameObjectArcballCameraControllerComponent(
+  GameObjectComponentEngineService.addArcballCameraControllerComponent(
     gameObject,
     component,
     engineState,
@@ -141,8 +154,8 @@ let disposeCameraGroup =
        gameObject,
        cameraGroup,
        (
-         GameObjectAPI.disposeGameObjectBasicCameraViewComponent,
-         GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent,
+         GameObjectComponentEngineService.disposeBasicCameraViewComponent,
+         GameObjectComponentEngineService.disposePerspectiveCameraProjectionComponent,
        ),
      ),
 );
@@ -154,7 +167,7 @@ let disposeDirectionLight =
        gameObject,
        InspectorComponentType.Light,
      ),
-  GameObjectAPI.disposeGameObjectDirectionLightComponent(
+  GameObjectComponentEngineService.disposeDirectionLightComponent(
     gameObject,
     component,
     engineState,
@@ -167,7 +180,7 @@ let disposePointLight = (gameObject, component, (editorState, engineState)) => (
        gameObject,
        InspectorComponentType.Light,
      ),
-  GameObjectAPI.disposeGameObjectPointLightComponent(
+  GameObjectComponentEngineService.disposePointLightComponent(
     gameObject,
     component,
     engineState,
@@ -181,7 +194,7 @@ let disposeArcballCameraController =
        gameObject,
        InspectorComponentType.ArcballCameraController,
      ),
-  GameObjectAPI.disposeGameObjectArcballCameraControllerComponent(
+  GameObjectComponentEngineService.disposeArcballCameraControllerComponent(
     gameObject,
     component,
     engineState,

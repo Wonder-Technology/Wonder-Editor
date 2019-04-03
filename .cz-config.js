@@ -35,6 +35,7 @@ module.exports = {
     { name: "event" },
     { name: "engine" },
     { name: "camera" },
+    { name: "script-component" },
     { name: "transform" },
     { name: "state" },
     { name: "component" },

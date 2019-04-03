@@ -22,7 +22,7 @@ module CustomEventHandler = {
         );
 
     let editorState =
-      ScriptAttributeNodeAssetEditorService.addScriptNodeToAssetTree(
+      ScriptAttributeNodeAssetEditorService.addScriptAttributeNodeToAssetTree(
         targetTreeNode,
         ScriptAttributeNodeAssetService.buildNode(
           ~nodeId=newNodeId,

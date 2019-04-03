@@ -177,6 +177,66 @@ module Method = {
         )
       );
   };
+
+  let renderSelectMaterial =
+      (languageType, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    <div className="inspector-item">
+      <div
+        className="item-header"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "material-material-describe",
+            languageType,
+          )
+        }>
+        {DomHelper.textEl("Material")}
+      </div>
+      <div className="item-content">
+        <div className="inspector-select">
+          <div
+            className="select-name" onClick={_e => send(ShowMaterialGroup)}>
+            {
+              DomHelper.textEl(
+                NodeNameAssetLogicService.getMaterialNodeName(
+                  ~material=state.currentMaterial,
+                  ~type_=state.materialType,
+                  ~engineState=StateEngineService.unsafeGetState(),
+                ),
+              )
+            }
+          </div>
+          <div className="select-img" onClick={_e => send(ShowMaterialGroup)}>
+            <img src="./public/img/select.png" />
+          </div>
+        </div>
+      </div>
+    </div>;
+
+  let renderMaterialGroup =
+      (currentSceneTreeNode, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    <div className="select-component-content">
+      <div className="select-component-item">
+        <div className="select-item-header">
+          {DomHelper.textEl("Material")}
+        </div>
+        <div className="select-item-body">
+          {
+            ReasonReact.array(
+              showMaterialAssets(
+                send,
+                currentSceneTreeNode,
+                state.currentMaterial,
+                state.materialType,
+              ),
+            )
+          }
+        </div>
+      </div>
+      <div
+        className="select-component-bg"
+        onClick={_e => send(HideMaterialGroup)}
+      />
+    </div>;
 };
 
 let component = ReasonReact.reducerComponent("MainEditorMaterial");
@@ -219,65 +279,6 @@ let reducer =
     )
   };
 
-let _renderSelectMaterial =
-    (languageType, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
-  <div className="inspector-item">
-    <div
-      className="item-header"
-      title={
-        LanguageUtils.getInspectorLanguageDataByType(
-          "material-material-describe",
-          languageType,
-        )
-      }>
-      {DomHelper.textEl("Material")}
-    </div>
-    <div className="item-content">
-      <div className="inspector-select">
-        <div className="select-name" onClick={_e => send(ShowMaterialGroup)}>
-          {
-            DomHelper.textEl(
-              NodeNameAssetLogicService.getMaterialNodeName(
-                ~material=state.currentMaterial,
-                ~type_=state.materialType,
-                ~engineState=StateEngineService.unsafeGetState(),
-              ),
-            )
-          }
-        </div>
-        <div className="select-img" onClick={_e => send(ShowMaterialGroup)}>
-          <img src="./public/img/select.png" />
-        </div>
-      </div>
-    </div>
-  </div>;
-
-let _renderMaterialGroup =
-    (currentSceneTreeNode, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
-  <div className="select-component-content">
-    <div className="select-component-item">
-      <div className="select-item-header">
-        {DomHelper.textEl("Material")}
-      </div>
-      <div className="select-item-body">
-        {
-          ReasonReact.array(
-            Method.showMaterialAssets(
-              send,
-              currentSceneTreeNode,
-              state.currentMaterial,
-              state.materialType,
-            ),
-          )
-        }
-      </div>
-    </div>
-    <div
-      className="select-component-bg"
-      onClick={_e => send(HideMaterialGroup)}
-    />
-  </div>;
-
 let render =
     (
       (uiState, dispatchFunc),
@@ -288,10 +289,11 @@ let render =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article key="MainEditorMaterial" className="wonder-inspector-material">
-    {_renderSelectMaterial(languageType, self)}
+    {Method.renderSelectMaterial(languageType, self)}
     {
       state.isShowMaterialGroup ?
-        _renderMaterialGroup(currentSceneTreeNode, self) : ReasonReact.null
+        Method.renderMaterialGroup(currentSceneTreeNode, self) :
+        ReasonReact.null
     }
     <div className="material-value">
       <Select

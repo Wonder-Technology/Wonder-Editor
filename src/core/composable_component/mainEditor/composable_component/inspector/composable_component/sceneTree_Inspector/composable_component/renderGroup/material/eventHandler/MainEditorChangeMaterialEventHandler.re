@@ -22,17 +22,6 @@ module CustomEventHandler = {
       ) => {
     let editorState = StateEditorService.getState();
 
-    /* let editorState =
-       switch (materialNodeId) {
-       | None => editorState
-       | Some(materialNodeId) =>
-         MaterialNodeIdMapAssetEditorService.setNodeId(
-           targetMaterial,
-           materialNodeId,
-           editorState,
-         )
-       }; */
-
     let editorState =
       materialNodeId
       |> OptionService.eitherWithNoData(

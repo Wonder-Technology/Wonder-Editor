@@ -6,7 +6,8 @@ let setNodeData = (nodeId, nodeData, editorState) =>
     editorState,
   );
 
-let addScriptNodeToAssetTree = (targetTreeNode, newNode, editorState) =>
+let addScriptEventFunctionNodeToAssetTree =
+    (targetTreeNode, newNode, editorState) =>
   NodeAssetEditorService.addNodeToAssetTree(
     targetTreeNode,
     newNode,
@@ -19,4 +20,20 @@ let isTreeScriptEventFunctionNodesHasTargetName = (name, editorState) =>
     TreeAssetEditorService.unsafeGetTree(editorState),
   );
 
-let setEventFunctionData = (name, eventFunctionData, editorState) => {};
+let findAllScriptEventFunctionNodes = editorState =>
+  IterateTreeAssetEditorService.filter(
+    ~acc=[||],
+    ~pushNodeFunc=(node, acc) => acc |> ArrayService.push(node),
+    ~editorState,
+    ~predScriptEventFunctionNodeFunc=node => true,
+    (),
+  );
+
+let getNameAndData = (nodeId, editorState) => {
+  let {name, eventFunctionData}: NodeAssetType.scriptEventFunctionNodeData =
+    OperateTreeAssetEditorService.unsafeFindNodeById(nodeId)
+    |> StateLogicService.getEditorState
+    |> ScriptEventFunctionNodeAssetService.getNodeData;
+
+  (name, eventFunctionData);
+};

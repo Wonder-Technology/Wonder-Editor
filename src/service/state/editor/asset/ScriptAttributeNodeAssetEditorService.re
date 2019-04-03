@@ -6,7 +6,7 @@ let setNodeData = (nodeId, nodeData, editorState) =>
     editorState,
   );
 
-let addScriptNodeToAssetTree = (targetTreeNode, newNode, editorState) =>
+let addScriptAttributeNodeToAssetTree = (targetTreeNode, newNode, editorState) =>
   NodeAssetEditorService.addNodeToAssetTree(
     targetTreeNode,
     newNode,

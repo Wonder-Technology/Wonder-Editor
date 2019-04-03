@@ -1,48 +1,10 @@
-let findNodeByName = (targetNodeName, (editorState, engineState)) => {
-  let predNodeFunc = node =>
-    NodeNameAssetLogicService.isTargetNameNode(
-      ~node,
-      ~name=targetNodeName,
-      ~engineState,
-    );
+let findNodeByName = OperateTreeAssetLogicService.findNodeByName;
 
-  IterateTreeAssetService.findOne(
-    ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
-    ~predTextureNodeFunc=predNodeFunc,
-    ~predMaterialNodeFunc=predNodeFunc,
-    ~predWDBNodeFunc=predNodeFunc,
-    ~predFolderNodeFunc=predNodeFunc,
-    (),
-  );
-};
+let findNodeIdByName = OperateTreeAssetLogicService.findNodeIdByName;
 
-let findNodeIdByName = (targetNodeName, (editorState, engineState)) =>
-  findNodeByName(targetNodeName, (editorState, engineState))
-  |> Js.Option.map((. node) => NodeAssetService.getNodeId(~node));
+let findNodesByName = OperateTreeAssetLogicService.findNodesByName;
 
-let findNodesByName = (targetNodeName, (editorState, engineState)) => {
-  let predNodeFunc = node =>
-    NodeNameAssetLogicService.isTargetNameNode(
-      ~node,
-      ~name=targetNodeName,
-      ~engineState,
-    );
-
-  IterateTreeAssetService.find(
-    ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
-    ~predTextureNodeFunc=predNodeFunc,
-    ~predMaterialNodeFunc=predNodeFunc,
-    ~predWDBNodeFunc=predNodeFunc,
-    ~predFolderNodeFunc=predNodeFunc,
-    (),
-  );
-};
-
-let findNodeIdsByName = (targetNodeName, (editorState, engineState)) =>
-  findNodesByName(targetNodeName, (editorState, engineState))
-  |> Js.Option.map((. nodes) =>
-       nodes |> List.map(node => NodeAssetService.getNodeId(~node))
-     );
+let findNodeIdsByName = OperateTreeAssetLogicService.findNodeIdsByName;
 
 let findNodeParent = OperateTreeAssetEditorService.findNodeParent;
 
@@ -171,19 +133,18 @@ module BuildAssetTree = {
        materialNodeIdArr |> ArrayService.unsafeGetNth(1); */
   };
 
-
   module ScriptEventFunction = {
     /* type assetTreeData = {
-      root: int,
-      materialNodeIdArr: array(int),
-    };
+         root: int,
+         materialNodeIdArr: array(int),
+       };
 
-    let getRootNodeId = ({root}) => root;
+       let getRootNodeId = ({root}) => root;
 
-    let getFirstMaterialNodeId = ({root, materialNodeIdArr}) =>
-      materialNodeIdArr |> ArrayService.unsafeGetFirst;
-    /* let getSecondMaterialNodeId = ({root, materialNodeIdArr}) =>
-       materialNodeIdArr |> ArrayService.unsafeGetNth(1); */ */
+       let getFirstMaterialNodeId = ({root, materialNodeIdArr}) =>
+         materialNodeIdArr |> ArrayService.unsafeGetFirst;
+       /* let getSecondMaterialNodeId = ({root, materialNodeIdArr}) =>
+          materialNodeIdArr |> ArrayService.unsafeGetNth(1); */ */
   };
 
   module WDB = {

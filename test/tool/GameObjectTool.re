@@ -124,6 +124,12 @@ let getCurrentSceneTreeNodeMeshRenderer = () =>
   )
   |> StateLogicService.getEngineStateToGetData;
 
+let getCurrentSceneTreeNodeScript = () =>
+  GameObjectComponentEngineService.unsafeGetScriptComponent(
+    unsafeGetCurrentSceneTreeNode(),
+  )
+  |> StateLogicService.getEngineStateToGetData;
+
 let getCurrentSceneTreeNode = () =>
   SceneTreeEditorService.getCurrentSceneTreeNode
   |> StateLogicService.getEditorState;
