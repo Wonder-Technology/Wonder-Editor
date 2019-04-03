@@ -24,9 +24,6 @@
                 "name": "clear_buffer"
             },
             {
-                "name": "prepare_render_scene_view"
-            },
-            {
                 "name": "get_camera_data"
             },
             {
@@ -48,31 +45,7 @@
                 "name": "front_render_light"
             },
             {
-                "name": "prepare_render_game_view"
-            },
-            {
-                "name": "get_camera_data"
-            },
-            {
-                "name": "create_basic_render_object_buffer"
-            },
-            {
-                "name": "create_light_render_object_buffer"
-            },
-            {
-                "name": "clear_last_send_component"
-            },
-            {
-                "name": "send_uniform_shader_data"
-            },
-            {
-                "name": "render_basic"
-            },
-            {
-                "name": "front_render_light"
-            },
-            {
-                "name": "restore"
+                "name": "restoreInspectorEngineJob"
             }
         ]
     }

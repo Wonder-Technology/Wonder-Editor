@@ -73,10 +73,20 @@ let render =
     {
       switch (state.materialType) {
       | BasicMaterial =>
-        <MainEditorBasicMaterial uiState dispatchFunc materialComponent />
+        <MainEditorBasicMaterial
+          uiState
+          dispatchFunc
+          materialComponent
+          isShowInspectorCanvas=true
+        />
 
       | LightMaterial =>
-        <MainEditorLightMaterial uiState dispatchFunc materialComponent />
+        <MainEditorLightMaterial
+          uiState
+          dispatchFunc
+          materialComponent
+          isShowInspectorCanvas=true
+        />
       }
     }
   </article>;
@@ -104,4 +114,12 @@ let make =
       renameFunc,
       self,
     ),
+  didMount: _self =>
+    MaterialInspectorEngineUtils.createMaterialSphereInInspectorCanvas(
+      type_,
+      materialComponent,
+    ),
+  willUnmount: _self =>
+    StateInspectorEngineService.unsafeGetState()
+    |> InspectorEngineUtils.removeInspectorEngineSceneAllChildren,
 };

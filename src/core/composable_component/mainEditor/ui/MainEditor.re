@@ -114,6 +114,8 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
            )
            |> StateLogicService.getAndSetEditorState;
 
+           /* LoopEngineService.loopTest() |> ignore; */
+
            dispatchFunc(AppStore.InitEngineAction) |> resolve;
          })
       |> ignore

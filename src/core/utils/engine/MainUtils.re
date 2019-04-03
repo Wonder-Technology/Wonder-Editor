@@ -1,7 +1,6 @@
 open Js.Promise;
 
 let _getLoadEngineData = () => {
-  Js.log("load engine");
   let engineConfigDir = "./config/engine/";
 
   AssetEngineService.loadConfig(
@@ -11,7 +10,6 @@ let _getLoadEngineData = () => {
 };
 
 let _getLoadInspectorEngineData = () => {
-  Js.log("load inspector enigne");
   let engineConfigDir = "./config/inspectorEngine/";
 
   AssetEngineService.loadConfig(
@@ -87,7 +85,7 @@ let _registerJobForInspectorEngine = engineState =>
   engineState
   |> JobEngineService.registerNoWorkerInitJob(
        "init_inspector_engine",
-       InitInspectorEngineJob.initInspectorEngineJob
+       InitInspectorEngineJob.initInspectorEngineJob,
      )
   |> JobEngineService.registerNoWorkerLoopJob(
        "reallocate_cpu_memory",
@@ -98,8 +96,8 @@ let _registerJobForInspectorEngine = engineState =>
        UpdateCameraJob.updateJob,
      )
   |> JobEngineService.registerNoWorkerLoopJob(
-       "restore",
-       RestoreJob.restoreJob,
+       "restoreInspectorEngineJob",
+       RestoreInspectorEngineJob.restoreInspectorEngineJob
      );
 
 let _handleEngineState = engineState => {
@@ -116,7 +114,8 @@ let _handleEngineState = engineState => {
 };
 
 let _handleInspectorEngineState = inspectorEngineState => {
-  let inspectorEngineState = _registerJobForInspectorEngine(inspectorEngineState);
+  let inspectorEngineState =
+    _registerJobForInspectorEngine(inspectorEngineState);
 
   inspectorEngineState
   |> DirectorEngineService.init

@@ -5,7 +5,7 @@ let createLightMaterialAndSetName = (materialName, engineState) => {
   (
     material,
     engineState
-    |> LightMaterialEngineService.setLightMaterialName(material, materialName),
+    |> LightMaterialEngineService.setLightMaterialName(materialName, material),
   );
 };
 

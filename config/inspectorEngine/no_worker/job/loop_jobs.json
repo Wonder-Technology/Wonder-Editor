@@ -20,7 +20,7 @@
     {
         "name": "clear_color",
         "flags": [
-            "#AAAAAA"
+            "#555555"
         ]
     },
     {
@@ -50,12 +50,6 @@
         "name": "reallocate_cpu_memory"
     },
     {
-        "name": "prepare_render_scene_view"
-    },
-    {
-        "name": "prepare_render_game_view"
-    },
-    {
-        "name": "restore"
+        "name": "restoreInspectorEngineJob"
     }
 ]

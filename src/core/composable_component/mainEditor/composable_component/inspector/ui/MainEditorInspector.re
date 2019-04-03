@@ -40,7 +40,7 @@ let component =
 let render = ((uiState, dispatchFunc), addableComponentConfig, _self) => {
   let editorState = StateEditorService.getState();
 
-  <article key="inspector" className="wonder-inspector-component">
+  <article key="mainEditorInspector" className="wonder-inspector-component">
     {
       Method.showInspectorBySourceType(
         (uiState, dispatchFunc),
@@ -78,7 +78,6 @@ let make =
        let inspectorCanvas = DomHelper.getElementById("inspector-canvas");
        let editorState = StateEditorService.getState();
 
-       Js.log("did update");
 
        switch (
          CurrentSelectSourceEditorService.getCurrentSelectSource(editorState)

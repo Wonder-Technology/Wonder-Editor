@@ -138,8 +138,7 @@ let resizeScreen = () => {
   inspectorEngineState |> DeviceManagerEngineService.getGl |> Js.Option.isSome ?
     inspectorEngineState
     |> resizeViewport(inspectorCanvasParentSize)
-    |> DirectorEngineService.loopBody(0.)
-    |> StateInspectorEngineService.setState
+    |> StateLogicService.refreshInspectorEngineState
     |> ignore :
     ();
 };

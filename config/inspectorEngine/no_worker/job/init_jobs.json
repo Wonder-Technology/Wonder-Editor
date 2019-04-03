@@ -3,6 +3,9 @@
         "name": "create_canvas"
     },
     {
+        "name": "init_inspector_engine"
+    },
+    {
         "name": "create_gl"
     },
     {
@@ -13,9 +16,6 @@
     },
     {
         "name": "detect_gl"
-    },
-    {
-        "name": "init_camera_controller"
     },
     {
         "name": "init_camera"

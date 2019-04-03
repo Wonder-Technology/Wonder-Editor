@@ -32,6 +32,7 @@ module Method = {
         )
         |> StateLogicService.getEngineStateToGetData
       }
+      isShowInspectorCanvas=true
     />;
   };
 
@@ -49,6 +50,7 @@ module Method = {
         )
         |> StateLogicService.getEngineStateToGetData
       }
+      isShowInspectorCanvas=false
     />;
   };
 

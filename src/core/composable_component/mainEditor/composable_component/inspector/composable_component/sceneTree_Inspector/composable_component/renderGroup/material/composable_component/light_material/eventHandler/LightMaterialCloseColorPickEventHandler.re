@@ -1,5 +1,3 @@
-
-
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = Wonderjs.MaterialType.material;

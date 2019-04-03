@@ -20,7 +20,8 @@ let getLightMaterialName = NameLightMaterialMainService.getName;
 
 let unsafeGetLightMaterialName = LightMaterialAPI.unsafeGetLightMaterialName;
 
-let setLightMaterialName = LightMaterialAPI.setLightMaterialName;
+let setLightMaterialName = (name, material, engineState) =>
+  engineState |> LightMaterialAPI.setLightMaterialName(material, name);
 
 let getLightMaterialDiffuseColor = LightMaterialAPI.getLightMaterialDiffuseColor;
 
@@ -47,10 +48,6 @@ let setLightMaterialDiffuseMap = (map, material, engineState) =>
 let hasLightMaterialDiffuseMap = LightMaterialAPI.hasLightMaterialDiffuseMap;
 
 let removeLightMaterialDiffuseMap = LightMaterialAPI.removeLightMaterialDiffuseMap;
-
-let unsafeGetLightMaterialName = LightMaterialAPI.unsafeGetLightMaterialName;
-
-let setLightMaterialName = LightMaterialAPI.setLightMaterialName;
 
 let hasLightMaterialSpecularMap = LightMaterialAPI.hasLightMaterialSpecularMap;
 
