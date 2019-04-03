@@ -34,15 +34,31 @@ module Method = {
   let updateEventFunctionData = (nodeId, name, eventFunctionJsObjStr) =>
     /* TODO check eventFunctionJsObjStr: should be valid */
     /* TODO update script component->event function data of the name */
-    ScriptEventFunctionNodeAssetEditorService.setNodeData(
-      nodeId,
-      ScriptEventFunctionNodeAssetService.buildNodeData(
-        ~name,
-        ~eventFunctionData=
-          _convertEventFunctionJsObjStrToData(eventFunctionJsObjStr),
-      ),
-    )
-    |> StateLogicService.getAndSetEditorState;
+    Console.tryCatch(
+      () =>
+        ScriptEventFunctionNodeAssetEditorService.setNodeData(
+          nodeId,
+          ScriptEventFunctionNodeAssetService.buildNodeData(
+            ~name,
+            ~eventFunctionData=
+              _convertEventFunctionJsObjStrToData(eventFunctionJsObjStr),
+          ),
+        )
+        |> StateLogicService.getAndSetEditorState,
+      e => {
+        let message = e##message;
+
+        ConsoleUtils.error(
+          LogUtils.buildErrorMessage(
+            ~description={j|$message|j},
+            ~reason="",
+            ~solution={j||j},
+            ~params={j||j},
+          ),
+        )
+        |> StateLogicService.getEditorState;
+      },
+    );
 };
 
 let component =

@@ -86,6 +86,13 @@ let message_language_array = [|
     },
   },
   {
+    title: "asset-rename-scriptAttribute-field",
+    language: {
+      zh: {j|field名称不能与attribute的其他field名称重复 ！|j},
+      en: "field's name shouldn't equal other ones' name of the same attribute",
+    },
+  },
+  {
     title: "direction-light-exceed",
     language: {
       zh: {j|方向光(Direction Light)数量超出了最大限制 ！|j},

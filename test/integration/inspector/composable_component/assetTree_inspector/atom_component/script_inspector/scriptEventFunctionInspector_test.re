@@ -61,5 +61,33 @@ let _ =
         |> StateLogicService.getEditorState
         |> expect == jsObjStr;
       });
+
+      describe("handle error", () =>
+        test("if eventFunctionJsObjStr is wrong data, error", () => {
+          let error =
+            createMethodStubWithJsObjSandbox(
+              sandbox,
+              ConsoleTool.console,
+              "error",
+            );
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+          let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
+          MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
+
+          let editorState = StateEditorService.getState();
+          let jsObjStr = "aaa";
+          ScriptEventFunctionInspectorTool.updateEventFunctionData(
+            addedNodeId,
+            ScriptEventFunctionInspectorTool.getEventFunctionName(
+              addedNodeId,
+              editorState,
+            ),
+            jsObjStr,
+          );
+
+          error |> expect |> toCalledWith([|"aaa is not defined"|]);
+        })
+      );
     });
   });

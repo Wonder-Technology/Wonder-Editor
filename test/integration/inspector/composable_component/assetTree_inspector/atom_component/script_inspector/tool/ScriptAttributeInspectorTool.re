@@ -64,3 +64,24 @@ let buildField =
   defaultValue: defaultValue |> Obj.magic,
   value: defaultValue |> Obj.magic,
 };
+
+let renameField =
+    (
+      ~sandbox,
+      ~nodeId,
+      ~oldName,
+      ~newName,
+      ~send=SinonTool.createOneLengthStub(sandbox^),
+      (),
+    ) => {
+  let languageType =
+    LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
+
+  ScriptAttributeInspector.Method._renameField(
+    languageType,
+    send,
+    nodeId,
+    oldName,
+    newName,
+  );
+};

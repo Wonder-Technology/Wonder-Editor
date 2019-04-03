@@ -24,22 +24,40 @@ module Method = {
     );
 
   let _updateScriptAttributeNodeByReplaceFieldData =
-      (nodeId, (fieldName, newFieldDataJsObjStr), editorState) => {
-    let (attributeName, attribute) =
-      ScriptAttributeNodeAssetEditorService.getNameAndAttribute(nodeId)
-      |> StateLogicService.getEditorState;
+      (nodeId, (fieldName, newFieldDataJsObjStr), editorState) =>
+    Console.tryCatch(
+      () => {
+        let (attributeName, attribute) =
+          ScriptAttributeNodeAssetEditorService.getNameAndAttribute(nodeId)
+          |> StateLogicService.getEditorState;
 
-    _updateScriptAttributeNode(
-      nodeId,
-      attributeName,
-      ScriptAttributeEngineService.replaceScriptAttributeField(
-        fieldName,
-        newFieldDataJsObjStr |> Js.Json.parseExn |> Obj.magic,
-        attribute,
-      ),
-      editorState,
+        _updateScriptAttributeNode(
+          nodeId,
+          attributeName,
+          ScriptAttributeEngineService.replaceScriptAttributeField(
+            fieldName,
+            newFieldDataJsObjStr |> Js.Json.parseExn |> Obj.magic,
+            attribute,
+          ),
+          editorState,
+        );
+      },
+      e => {
+        let message = e##message;
+
+        ConsoleUtils.error(
+          LogUtils.buildErrorMessage(
+            ~description={j|$message|j},
+            ~reason="",
+            ~solution={j||j},
+            ~params={j||j},
+          ),
+        )
+        |> StateLogicService.getEditorState;
+
+        editorState;
+      },
     );
-  };
 
   let _updateScriptAttributeNodeByRemoveFieldData =
       (nodeId, fieldName, editorState) => {
@@ -135,30 +153,56 @@ module Method = {
     |> Js.Json.stringify;
   };
 
-  let _renameField = (send, nodeId, oldFieldName, newFieldName) => {
+  let _renameField = (languageType, send, nodeId, oldFieldName, newFieldName) =>
     /* TODO refactor */
     /* TODO update script component */
+    oldFieldName === newFieldName ?
+      () :
+      {
+        let (attributeName, attribute) =
+          ScriptAttributeNodeAssetEditorService.getNameAndAttribute(nodeId)
+          |> StateLogicService.getEditorState;
 
-    let (attributeName, attribute) =
-      ScriptAttributeNodeAssetEditorService.getNameAndAttribute(nodeId)
-      |> StateLogicService.getEditorState;
+        ScriptAttributeEngineService.hasScriptAttributeField(
+          newFieldName,
+          attribute,
+        ) ?
+          {
+            ConsoleUtils.warn(
+              LanguageUtils.getMessageLanguageDataByType(
+                "asset-rename-scriptAttribute-field",
+                languageType,
+              ),
+            )
+            |> StateLogicService.getEditorState;
 
-    let newAttribute =
-      ScriptAttributeEngineService.renameScriptAttributeField(
-        oldFieldName,
-        newFieldName,
-        attribute,
-      );
+            send(UpdateAttributeEntries(attribute));
+          } :
+          {
+            let newAttribute =
+              ScriptAttributeEngineService.renameScriptAttributeField(
+                oldFieldName,
+                newFieldName,
+                attribute,
+              );
 
-    _updateScriptAttributeNode(nodeId, attributeName, newAttribute)
-    |> StateLogicService.getAndSetEditorState;
+            _updateScriptAttributeNode(nodeId, attributeName, newAttribute)
+            |> StateLogicService.getAndSetEditorState;
 
-    send(UpdateAttributeEntries(newAttribute));
-  };
+            send(UpdateAttributeEntries(newAttribute));
+          };
+      };
+
+  let _sortAttributeEntries = attributeEntries =>
+    attributeEntries
+    |> Js.Array.sortInPlaceWith(((fieldName1, _), (fieldName2, _)) =>
+         SortService.buildSortByNameFunc(fieldName1, fieldName2)
+       );
 
   let getAttributeAllFieldsDomArr =
       (send, (languageType, nodeId), attributeEntries) =>
     attributeEntries
+    |> _sortAttributeEntries
     |> Js.Array.mapi(((fieldName, field), i) =>
          <div key={DomHelper.getRandomKey()} className="field">
            <StringInput
@@ -170,7 +214,7 @@ module Method = {
                )
              }
              defaultValue=fieldName
-             onBlur={_renameField(send, nodeId, fieldName)}
+             onBlur={_renameField(languageType, send, nodeId, fieldName)}
              canBeNull=false
            />
            <FileInput
