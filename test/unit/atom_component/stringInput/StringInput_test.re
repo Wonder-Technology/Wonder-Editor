@@ -13,7 +13,7 @@ let _ =
     let _prepare = () => {
       open StringInput;
 
-      let state = {inputValue: "", originalName: "origin"};
+      let state = {inputValue: "", originValue: "origin"};
 
       let onChangeFunc = SinonTool.createOneLengthStub(sandbox^);
       let onBlurFunc = SinonTool.createOneLengthStub(sandbox^);
@@ -97,7 +97,7 @@ let _ =
         () => {
           open StringInput;
           let (state, onChangeFunc, onBlurFunc) = _prepare();
-          let originName = state.originalName;
+          let originName = state.originValue;
 
           let state =
             StringInput.reducer(
@@ -126,5 +126,42 @@ let _ =
           |> expect == (1, 0, true, originName);
         },
       );
+
+      describe("test value not change", () => {
+        let _test = canBeNull => {
+          open StringInput;
+          let (state, onChangeFunc, onBlurFunc) = _prepare();
+          let originName = state.originValue;
+
+          let state =
+            StringInput.reducer(
+              (onChangeFunc, onBlurFunc),
+              Some(canBeNull),
+              Change(originName),
+              state,
+            )
+            |> ReactTool.getUpdateState;
+
+          StringInput.reducer(
+            (onChangeFunc, onBlurFunc),
+            Some(false),
+            Blur,
+            state,
+          )
+          |> ReactTool.isNoUpdate
+          |> expect == true;
+        };
+
+        test(
+          "if canBeNull == true and value not change, trigger onBlur, shouldn't update",
+          () =>
+          _test(true)
+        );
+        test(
+          "if canBeNull == false and value not change, trigger onBlur, shouldn't update",
+          () =>
+          _test(false)
+        );
+      });
     });
   });
