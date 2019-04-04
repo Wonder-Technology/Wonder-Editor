@@ -440,27 +440,17 @@ let reducer = ((uiState, dispatchFunc) as reduxTuple, action, state) =>
       unUsedScriptEventFunctionNodeIds,
     })
   | HideScriptEventFunctionGroupForAdd =>
-    ReasonReactUtils.updateWithSideEffects(
-      {
-        ...state,
-        isShowScriptEventFunctionGroupForAdd: false,
-        lastScriptEventFunctionNodeIdForAdd: None,
-      },
-      _state =>
-      dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
-      |> ignore
-    )
+    ReasonReact.Update({
+      ...state,
+      isShowScriptEventFunctionGroupForAdd: false,
+      lastScriptEventFunctionNodeIdForAdd: None,
+    })
   | HideScriptEventFunctionGroupForChange =>
-    ReasonReactUtils.updateWithSideEffects(
-      {
-        ...state,
-        isShowScriptEventFunctionGroupForChange: false,
-        lastScriptEventFunctionNodeIdForChange: None,
-      },
-      _state =>
-      dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
-      |> ignore
-    )
+    ReasonReact.Update({
+      ...state,
+      isShowScriptEventFunctionGroupForChange: false,
+      lastScriptEventFunctionNodeIdForChange: None,
+    })
   };
 
 let render =
