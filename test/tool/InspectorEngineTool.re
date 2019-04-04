@@ -33,3 +33,31 @@ let getSceneAllChild = engineState =>
 
 let getSceneEmptyGameObject = engineState =>
   engineState |> getSceneAllChild |> ArrayService.unsafeGetLast;
+
+let getMaterialSphere = InspectorEngineGameObjectLogicService.getMaterialSphere;
+
+let getWDBGameObject = InspectorEngineGameObjectLogicService.getWDBGameObject;
+
+let getMaterialSphereLightMaterial = (editorState, engineState) => {
+  let materialSphere =
+    (editorState, engineState)
+    |> InspectorEngineGameObjectLogicService.getMaterialSphere
+    |> OptionService.unsafeGet;
+  
+
+  engineState 
+  |> GameObjectComponentEngineService.getLightMaterialComponent(materialSphere)
+  |> OptionService.unsafeGet;
+};
+
+let getMaterialSphereBasicMaterial = (editorState, engineState) => {
+  let materialSphere =
+    (editorState, engineState)
+    |> InspectorEngineGameObjectLogicService.getMaterialSphere
+    |> OptionService.unsafeGet;
+  
+
+  engineState 
+  |> GameObjectComponentEngineService.getBasicMaterialComponent(materialSphere)
+  |> OptionService.unsafeGet;
+};

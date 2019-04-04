@@ -115,7 +115,7 @@ let make =
       self,
     ),
   didMount: _self =>
-    MaterialInspectorEngineUtils.createMaterialSphereInInspectorCanvas(
+    MaterialInspectorEngineUtils.createMaterialSphereInToInspectorCanvas(
       type_,
       materialComponent,
     ),

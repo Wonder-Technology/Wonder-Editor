@@ -9,7 +9,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("init editor job", () => {
+  describe("init inspector engine job", () => {
     let sandbox = getSandboxDefaultVal();
 
     let _prepareState = () => {
@@ -122,7 +122,7 @@ let _ =
       );
 
       describe("add one empty gameObject", () =>
-        test("add the empoty gameObject to editor state", () => {
+        test("add the empty gameObject to editorState", () => {
           let editorState = StateEditorService.getState();
           let inspectorEngineState =
             StateInspectorEngineService.unsafeGetState();
