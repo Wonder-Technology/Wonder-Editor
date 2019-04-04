@@ -201,6 +201,19 @@ let disposeArcballCameraController =
   ),
 );
 
+let disposeScript = (gameObject, component, (editorState, engineState)) => (
+  editorState
+  |> InspectorEditorService.removeComponentTypeToMap(
+       gameObject,
+       InspectorComponentType.Script,
+     ),
+  GameObjectComponentEngineService.disposeScriptComponent(
+    gameObject,
+    component,
+    engineState,
+  ),
+);
+
 let isCurrentSceneTreeNodeSceneGameObject = ((editorState, engineState)) =>
   switch (editorState |> SceneTreeEditorService.getCurrentSceneTreeNode) {
   | None => false
