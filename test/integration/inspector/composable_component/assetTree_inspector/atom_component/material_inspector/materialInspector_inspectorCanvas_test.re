@@ -41,33 +41,36 @@ let _ =
             ~loopPipelines=
               {|
              [
-         {
-           "name": "default",
-           "jobs": [
-            {
-                "name": "get_camera_data"
-            },
-            {
-                "name": "create_basic_render_object_buffer"
-            },
-            {
-                "name": "create_light_render_object_buffer"
-            },
-            {
-                "name": "clear_last_send_component"
-            },
-            {
-                "name": "send_uniform_shader_data"
-            },
-            {
-                "name": "render_basic"
-            },
-            {
-                "name": "front_render_light"
-            }
-           ]
-         }
-       ]
+                {
+                  "name": "default",
+                  "jobs": [
+                    {
+                        "name": "dispose"
+                    },
+                    {
+                        "name": "get_camera_data"
+                    },
+                    {
+                        "name": "create_basic_render_object_buffer"
+                    },
+                    {
+                        "name": "create_light_render_object_buffer"
+                    },
+                    {
+                        "name": "clear_last_send_component"
+                    },
+                    {
+                        "name": "send_uniform_shader_data"
+                    },
+                    {
+                        "name": "render_basic"
+                    },
+                    {
+                        "name": "front_render_light"
+                    }
+                  ]
+                }
+              ]
              |},
             (),
           ),
@@ -87,10 +90,10 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test create new material into asset", () =>
-      describe("test creat material sphere", () => {
-        describe("test material is light material", () =>
-          describe("clone the new material", () =>
+    describe("test create material sphere into parent gameObject", () =>
+      describe("test create new material into asset", () => {
+        describe("test clone the new material", () => {
+          describe("test material is light material", () =>
             describe("cloned material's data should equal to source one", () => {
               test("test cloned-material's color", () =>
                 MaterialInspectorCanvasTool.judgeClonedAndSourceLightMaterialAttributeIsEqual(
@@ -175,11 +178,9 @@ let _ =
                 );
               });
             })
-          )
-        );
+          );
 
-        describe("test material is basic material", () =>
-          describe("clone the new material", () =>
+          describe("test material is basic material", () =>
             describe("cloned material's data should equal to source one", () => {
               test("test cloned-material's color", () =>
                 MaterialInspectorCanvasTool.judgeClonedAndSourceBasicMaterialAttributeIsEqual(
@@ -193,53 +194,83 @@ let _ =
                 )
               );
             })
-          )
-        );
+          );
+        });
+
+        describe("test create material sphere gameObject", () => {
+          test(
+            "create material sphere gameObject add to parent gameObject", () => {
+            let inspectorEngineState =
+              StateInspectorEngineService.unsafeGetState();
+            let editorState = StateEditorService.getState();
+            let (addedMaterialNodeId, materialComponent) =
+              MaterialInspectorCanvasTool.createNewMaterial();
+            let newGameObject =
+              GameObjectTool.getNewGameObject(
+                ~engineState=inspectorEngineState,
+                (),
+              );
+
+            MaterialInspectorTool.createMaterialSphereInToInspectorCanvas(
+              MaterialDataAssetType.LightMaterial,
+              materialComponent,
+            );
+
+            let materialSphere =
+              (editorState, inspectorEngineState)
+              |> InspectorEngineGameObjectLogicService.getMaterialSphere
+              |> OptionService.unsafeGet;
+
+            materialSphere |> expect == newGameObject;
+          });
+          describe("test render material sphere", () =>
+            test("test draw once", () => {
+              let gl = FakeGlToolEngine.getInspectorEngineStateGl();
+              let drawElements = gl##drawElements;
+
+              let inspectorEngineState =
+                StateInspectorEngineService.unsafeGetState();
+              let (addedMaterialNodeId, materialComponent) =
+                MaterialInspectorCanvasTool.createNewMaterial();
+
+              MaterialInspectorTool.createMaterialSphereInToInspectorCanvas(
+                MaterialDataAssetType.LightMaterial,
+                materialComponent,
+              );
+
+              drawElements |> expect |> toCalledOnce;
+            })
+          );
+        });
       })
     );
 
-    describe("test create material sphere gameObject", () => {
-      test("create material sphere gameObject add to parent gameObject", () => {
+    describe("test dispose parent gameObject all child", () =>
+      test("the parent gameObject children array should be empty", () => {
         let inspectorEngineState =
           StateInspectorEngineService.unsafeGetState();
         let editorState = StateEditorService.getState();
+
         let (addedMaterialNodeId, materialComponent) =
           MaterialInspectorCanvasTool.createNewMaterial();
-        let newGameObject =
-          GameObjectTool.getNewGameObject(
-            ~engineState=inspectorEngineState,
-            (),
-          );
 
         MaterialInspectorTool.createMaterialSphereInToInspectorCanvas(
           MaterialDataAssetType.LightMaterial,
           materialComponent,
         );
 
-        let materialSphere =
-          (editorState, inspectorEngineState)
-          |> InspectorEngineGameObjectLogicService.getMaterialSphere
-          |> OptionService.unsafeGet;
+        (editorState, inspectorEngineState)
+        |> InspectorEngineGameObjectLogicService.disposeInspectorEngineParentGameObjectAllChild;
 
-        materialSphere |> expect == newGameObject;
-      });
-      describe("test render material sphere", () =>
-        test("test draw once", () => {
-          let gl = FakeGlToolEngine.getInspectorEngineStateGl();
-          let drawElements = gl##drawElements;
-
-          let inspectorEngineState =
-            StateInspectorEngineService.unsafeGetState();
-          let (addedMaterialNodeId, materialComponent) =
-            MaterialInspectorCanvasTool.createNewMaterial();
-
-          MaterialInspectorTool.createMaterialSphereInToInspectorCanvas(
-            MaterialDataAssetType.LightMaterial,
-            materialComponent,
+        let parentGameObject =
+          ParentGameObjectInspectorCanvasEditorService.unsafeGetParentGameObject(
+            editorState,
           );
 
-          drawElements |> expect |> toCalledOnce;
-        })
-      );
-    });
+        inspectorEngineState
+        |> HierarchyGameObjectEngineService.getChildren(parentGameObject)
+        |> Js.Array.length
+        |> expect == 0;
+      })
+    );
   });

@@ -13,16 +13,3 @@ let loop = () => {
 };
 
 let stopLoop = loopId => AnimationFrame.cancelAnimationFrame(loopId);
-
-let loopTest = () => {
-  let rec _loopRequest = time =>
-    AnimationFrame.requestAnimationFrame(time => {
-      StateInspectorEngineService.unsafeGetState()
-      |> StateLogicService.refreshInspectorEngineState
-      |> ignore;
-
-      _loopRequest(time);
-    })
-    |> _loopSetLoopId;
-  _loopRequest(0.) |> ignore;
-};

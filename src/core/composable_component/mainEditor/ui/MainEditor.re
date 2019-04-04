@@ -3,6 +3,34 @@ type retainedProps = {isInitEngine: bool};
 module Method = {
   let resizeCanvasAndViewPort = () => ResizeUtils.resizeScreen();
 
+  let toggleShowInspectorCanvasDom = () => {
+    let inspectorCanvasParent =
+      DomHelper.getElementById("inspectorCanvasParent");
+    let editorState = StateEditorService.getState();
+
+    switch (
+      CurrentSelectSourceEditorService.getCurrentSelectSource(editorState)
+    ) {
+    | None
+    | Some(SceneTree) => DomHelper.hideCanvas(inspectorCanvasParent)
+    | Some(Asset) =>
+      switch (OperateTreeAssetEditorService.getCurrentNode(editorState)) {
+      | None => DomHelper.hideCanvas(inspectorCanvasParent)
+      | Some(currentNode) =>
+        switch (currentNode) {
+        | TextureNode(nodeId, textureNodeData) =>
+          DomHelper.hideCanvas(inspectorCanvasParent)
+        | FolderNode(nodeId, folderNodeData, children) =>
+          DomHelper.hideCanvas(inspectorCanvasParent)
+        | MaterialNode(nodeId, materialNodeData) =>
+          DomHelper.showCanvas(inspectorCanvasParent)
+        | WDBNode(nodeId, wdbNodeData) =>
+          DomHelper.showCanvas(inspectorCanvasParent)
+        }
+      }
+    };
+  };
+
   let buildNoCameraElement = () =>
     SceneUtils.isSceneHaveNoActiveCamera() ?
       switch (
@@ -99,9 +127,13 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
     isInitEngine: uiState.isInitEngine,
   },
   didUpdate:
-    ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
+    ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) => {
     oldSelf.retainedProps != newSelf.retainedProps ?
-      Method.resizeCanvasAndViewPort() : (),
+      Method.resizeCanvasAndViewPort() : ();
+
+    newSelf.retainedProps.isInitEngine ?
+      Method.toggleShowInspectorCanvasDom() : ();
+  },
   didMount: _self => {
     Js.Promise.(
       MainUtils.initEngine()
@@ -113,8 +145,6 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
                |> StateEditorService.setState
            )
            |> StateLogicService.getAndSetEditorState;
-
-           /* LoopEngineService.loopTest() |> ignore; */
 
            dispatchFunc(AppStore.InitEngineAction) |> resolve;
          })

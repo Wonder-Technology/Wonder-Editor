@@ -74,30 +74,4 @@ let make =
   shouldUpdate,
   render: self =>
     render((uiState, dispatchFunc), addableComponentConfig, self),
-  /* didUpdate: self => {
-       let inspectorCanvas = DomHelper.getElementById("inspector-canvas");
-       let editorState = StateEditorService.getState();
-
-
-       switch (
-         CurrentSelectSourceEditorService.getCurrentSelectSource(editorState)
-       ) {
-       | None
-       | Some(SceneTree) => DomHelper.hideCanvas(inspectorCanvas)
-       | Some(Asset) =>
-         switch (OperateTreeAssetEditorService.getCurrentNode(editorState)) {
-         | None => DomHelper.hideCanvas(inspectorCanvas)
-         | Some(currentNode) =>
-           switch (currentNode) {
-           | TextureNode(nodeId, textureNodeData) =>
-             DomHelper.hideCanvas(inspectorCanvas)
-           | FolderNode(nodeId, folderNodeData, children) =>
-             DomHelper.hideCanvas(inspectorCanvas)
-           | MaterialNode(nodeId, materialNodeData) =>
-             DomHelper.showCanvas(inspectorCanvas)
-           | WDBNode(nodeId, wdbNodeData) => DomHelper.showCanvas(inspectorCanvas)
-           }
-         }
-       };
-     }, */
 };

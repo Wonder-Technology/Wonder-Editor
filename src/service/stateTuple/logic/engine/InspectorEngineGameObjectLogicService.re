@@ -12,7 +12,7 @@ let _disposeParentGameObjectAllChild =
        inspectorEngineState,
      );
 
-let removeInspectorEngineParentGameObjectAllChild =
+let disposeInspectorEngineParentGameObjectAllChild =
     ((editorState, inspectorEngineState)) => {
   let parentGameObject =
     ParentGameObjectInspectorCanvasEditorService.getParentGameObject(

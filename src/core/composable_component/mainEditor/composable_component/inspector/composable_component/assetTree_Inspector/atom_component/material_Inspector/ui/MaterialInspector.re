@@ -124,5 +124,5 @@ let make =
       StateEditorService.getState(),
       StateInspectorEngineService.unsafeGetState(),
     )
-    |> InspectorEngineGameObjectLogicService.removeInspectorEngineParentGameObjectAllChild,
+    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineParentGameObjectAllChild,
 };
