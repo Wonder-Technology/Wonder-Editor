@@ -38,6 +38,37 @@ let _ =
                 {"name": "init_inspector_engine" }
              ]
              |},
+            ~loopPipelines=
+              {|
+             [
+         {
+           "name": "default",
+           "jobs": [
+            {
+                "name": "get_camera_data"
+            },
+            {
+                "name": "create_basic_render_object_buffer"
+            },
+            {
+                "name": "create_light_render_object_buffer"
+            },
+            {
+                "name": "clear_last_send_component"
+            },
+            {
+                "name": "send_uniform_shader_data"
+            },
+            {
+                "name": "render_basic"
+            },
+            {
+                "name": "front_render_light"
+            }
+           ]
+         }
+       ]
+             |},
             (),
           ),
         (),
@@ -167,7 +198,7 @@ let _ =
       })
     );
 
-    describe("test create material sphere gameObject", () =>
+    describe("test create material sphere gameObject", () => {
       test("create material sphere gameObject add to parent gameObject", () => {
         let inspectorEngineState =
           StateInspectorEngineService.unsafeGetState();
@@ -191,6 +222,24 @@ let _ =
           |> OptionService.unsafeGet;
 
         materialSphere |> expect == newGameObject;
-      })
-    );
+      });
+      describe("test render material sphere", () =>
+        test("test draw once", () => {
+          let gl = FakeGlToolEngine.getInspectorEngineStateGl();
+          let drawElements = gl##drawElements;
+
+          let inspectorEngineState =
+            StateInspectorEngineService.unsafeGetState();
+          let (addedMaterialNodeId, materialComponent) =
+            MaterialInspectorCanvasTool.createNewMaterial();
+
+          MaterialInspectorTool.createMaterialSphereInToInspectorCanvas(
+            MaterialDataAssetType.LightMaterial,
+            materialComponent,
+          );
+
+          drawElements |> expect |> toCalledOnce;
+        })
+      );
+    });
   });

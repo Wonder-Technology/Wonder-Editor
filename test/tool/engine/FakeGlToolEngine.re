@@ -258,6 +258,9 @@ let getGl = state =>
 
 let getEngineStateGl = () => getGl(StateEngineService.unsafeGetState());
 
+let getInspectorEngineStateGl = () =>
+  getGl(StateInspectorEngineService.unsafeGetState());
+
 let setLines = [%bs.raw
   (lines, gl) => {|
         gl.LINES = lines;
