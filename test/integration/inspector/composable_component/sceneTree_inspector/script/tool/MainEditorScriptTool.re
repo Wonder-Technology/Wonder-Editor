@@ -208,3 +208,14 @@ let removeScriptAttribute =
     attributeName,
     dispatchFunc,
   );
+
+let changeScriptAttributeFieldDefaultValue =
+    (script, attributeName, fieldName, attribute, defaultValue, engineState) =>
+  MainEditorScript.Method._changeScriptAttributeFieldDefaultValue(
+    script,
+    attributeName,
+    fieldName,
+    attribute,
+    defaultValue,
+    engineState,
+  );

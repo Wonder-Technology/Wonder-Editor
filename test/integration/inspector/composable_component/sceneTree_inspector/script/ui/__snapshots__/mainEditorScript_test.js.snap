@@ -75,11 +75,14 @@ exports[`MainEditorScript test set currentSceneTreeNode test script attribute te
       </div>
     </div>
     <button
-      className="scriptAttribute-field-remove"
+      className="scriptAttribute-remove"
       onClick={[Function]}
     >
       Remove
     </button>
+    <div
+      className="scriptAttribute-fields"
+    />
   </div>
   <button
     className="addable-btn"
@@ -165,11 +168,14 @@ exports[`MainEditorScript test set currentSceneTreeNode test script attribute te
       </div>
     </div>
     <button
-      className="scriptAttribute-field-remove"
+      className="scriptAttribute-remove"
       onClick={[Function]}
     >
       Remove
     </button>
+    <div
+      className="scriptAttribute-fields"
+    />
   </div>
   <button
     className="addable-btn"
@@ -261,11 +267,252 @@ exports[`MainEditorScript test set currentSceneTreeNode test script attribute te
       </div>
     </div>
     <button
-      className="scriptAttribute-field-remove"
+      className="scriptAttribute-remove"
       onClick={[Function]}
     >
       Remove
     </button>
+    <div
+      className="scriptAttribute-fields"
+    />
+  </div>
+  <button
+    className="addable-btn"
+    onClick={[Function]}
+  >
+    Add script attribute
+  </button>
+</article>
+`;
+
+exports[`MainEditorScript test set currentSceneTreeNode test script attribute test script attribute field show attribute's fields 1`] = `
+<article
+  className="wonder-inspector-script"
+>
+  <button
+    className="addable-btn"
+    onClick={[Function]}
+  >
+    Add script event function
+  </button>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+      title="script attribute asset in use"
+    >
+      Script Attribute
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+          onClick={[Function]}
+        >
+          New Script Attribute
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+    <button
+      className="scriptAttribute-remove"
+      onClick={[Function]}
+    >
+      Remove
+    </button>
+    <div
+      className="scriptAttribute-fields"
+    >
+      <div
+        className="scriptAttribute-field"
+      >
+        <div
+          className="text"
+        >
+          <span
+            className="text-header"
+            title="field's name"
+          >
+            Field Name
+          </span>
+          <span
+            className="text-body"
+          >
+            New Script Attribute Field
+          </span>
+        </div>
+        <div
+          className="text"
+        >
+          <span
+            className="text-header"
+            title="field's type"
+          >
+            Type
+          </span>
+          <span
+            className="text-body"
+          >
+            float
+          </span>
+        </div>
+        <article
+          className="inspector-item wonder-float-input"
+        >
+          <div
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
+            title="field's default value"
+          >
+            Default Value
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="0"
+            />
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+  <button
+    className="addable-btn"
+    onClick={[Function]}
+  >
+    Add script attribute
+  </button>
+</article>
+`;
+
+exports[`MainEditorScript test set currentSceneTreeNode test script attribute test script attribute field test set field's defaultValue test show attribute's fields 1`] = `
+<article
+  className="wonder-inspector-script"
+>
+  <button
+    className="addable-btn"
+    onClick={[Function]}
+  >
+    Add script event function
+  </button>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+      title="script attribute asset in use"
+    >
+      Script Attribute
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+          onClick={[Function]}
+        >
+          New Script Attribute
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+    <button
+      className="scriptAttribute-remove"
+      onClick={[Function]}
+    >
+      Remove
+    </button>
+    <div
+      className="scriptAttribute-fields"
+    >
+      <div
+        className="scriptAttribute-field"
+      >
+        <div
+          className="text"
+        >
+          <span
+            className="text-header"
+            title="field's name"
+          >
+            Field Name
+          </span>
+          <span
+            className="text-body"
+          >
+            New Script Attribute Field
+          </span>
+        </div>
+        <div
+          className="text"
+        >
+          <span
+            className="text-header"
+            title="field's type"
+          >
+            Type
+          </span>
+          <span
+            className="text-body"
+          >
+            float
+          </span>
+        </div>
+        <article
+          className="inspector-item wonder-float-input"
+        >
+          <div
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
+            title="field's default value"
+          >
+            Default Value
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="1.1"
+            />
+          </div>
+        </article>
+      </div>
+    </div>
   </div>
   <button
     className="addable-btn"
@@ -345,7 +592,7 @@ exports[`MainEditorScript test set currentSceneTreeNode test script event functi
       </div>
     </div>
     <button
-      className="scriptEventFunction-field-remove"
+      className="scriptEventFunction-remove"
       onClick={[Function]}
     >
       Remove
@@ -435,7 +682,7 @@ exports[`MainEditorScript test set currentSceneTreeNode test script event functi
       </div>
     </div>
     <button
-      className="scriptEventFunction-field-remove"
+      className="scriptEventFunction-remove"
       onClick={[Function]}
     >
       Remove
@@ -531,7 +778,7 @@ exports[`MainEditorScript test set currentSceneTreeNode test script event functi
       </div>
     </div>
     <button
-      className="scriptEventFunction-field-remove"
+      className="scriptEventFunction-remove"
       onClick={[Function]}
     >
       Remove

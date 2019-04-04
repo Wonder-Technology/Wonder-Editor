@@ -46,8 +46,9 @@ module Method = {
           languageType,
         )
       }
-      getComponentValueFunc={
+      defaultValue={
         PointLightEngineService.getPointLightIntensity(lightComponent)
+        |> StateLogicService.getEngineStateToGetData
       }
       changeComponentValueFunc={
         MainEditorPointLightUtils.changeIntensity(lightComponent)
@@ -76,8 +77,9 @@ module Method = {
           languageType,
         )
       }
-      getComponentValueFunc={
+      defaultValue={
         PointLightEngineService.getPointLightConstant(lightComponent)
+        |> StateLogicService.getEngineStateToGetData
       }
       changeComponentValueFunc={
         MainEditorPointLightUtils.changeConstant(lightComponent)
@@ -106,8 +108,9 @@ module Method = {
           languageType,
         )
       }
-      getComponentValueFunc={
+      defaultValue={
         PointLightEngineService.getPointLightLinear(lightComponent)
+        |> StateLogicService.getEngineStateToGetData
       }
       changeComponentValueFunc={
         MainEditorPointLightUtils.changeLinear(lightComponent)
@@ -136,8 +139,9 @@ module Method = {
           languageType,
         )
       }
-      getComponentValueFunc={
+      defaultValue={
         PointLightEngineService.getPointLightQuadratic(lightComponent)
+        |> StateLogicService.getEngineStateToGetData
       }
       changeComponentValueFunc={
         MainEditorPointLightUtils.changeQuadratic(lightComponent)
@@ -166,8 +170,9 @@ module Method = {
           languageType,
         )
       }
-      getComponentValueFunc={
+      defaultValue={
         PointLightEngineService.getPointLightRange(lightComponent)
+        |> StateLogicService.getEngineStateToGetData
       }
       changeComponentValueFunc={
         MainEditorPointLightUtils.changeRange(lightComponent)

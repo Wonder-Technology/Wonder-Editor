@@ -101,10 +101,11 @@ let render = ((uiState, dispatchFunc), materialComponent, _self) => {
           languageType,
         )
       }
-      getComponentValueFunc={
+      defaultValue={
         LightMaterialEngineService.getLightMaterialShininess(
           materialComponent,
         )
+        |> StateLogicService.getEngineStateToGetData
       }
       changeComponentValueFunc={Method.changeShininess(materialComponent)}
       blurValueFunc={

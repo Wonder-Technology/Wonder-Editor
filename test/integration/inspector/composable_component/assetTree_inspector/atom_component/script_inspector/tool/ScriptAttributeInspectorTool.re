@@ -85,3 +85,9 @@ let renameField =
     newName,
   );
 };
+
+let getScriptAttributeFieldDefaultValue = (nodeId, fieldName, editorState) =>
+  ScriptAttributeEngineService.unsafeGetScriptAttributeFieldDefaultValue(
+    fieldName,
+    getAttribute(nodeId, editorState),
+  );

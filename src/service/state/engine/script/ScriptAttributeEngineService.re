@@ -30,7 +30,8 @@ let replaceScriptAttributeField = (fieldName, attributeFieldJsObj, attribute) =>
        attributeFieldJsObj,
      );
 
-let _unsafeGetScriptAttributeField = (fieldName, attribute) =>
+let _unsafeGetScriptAttributeField =
+    (fieldName, attribute): ScriptAttributeType.scriptAttributeField =>
   OperateScriptAttributeDataMainService.getScriptAttributeField(
     fieldName,
     attribute,
@@ -44,12 +45,21 @@ let _addScriptAttributeField = (fieldName, attributeField, attribute) =>
 /* TODO rename Wonderjs->OperateScriptAttributeDataMainService->addScriptAttributeField to addScriptAttributeFieldJsObj */
 
 let renameScriptAttributeField = (oldFieldName, newFieldName, attribute) => {
-  let attributeFieldJsObj =
+  let attributeField =
     _unsafeGetScriptAttributeField(oldFieldName, attribute);
 
   OperateScriptAttributeDataMainService.removeScriptAttributeField(
     oldFieldName,
     attribute,
   )
-  |> _addScriptAttributeField(newFieldName, attributeFieldJsObj);
+  |> _addScriptAttributeField(newFieldName, attributeField);
 };
+
+let unsafeGetScriptAttributeFieldType = (fieldName, attribute) =>
+  _unsafeGetScriptAttributeField(fieldName, attribute).type_;
+
+let unsafeGetScriptAttributeFieldDefaultValue = (fieldName, attribute) =>
+  OperateScriptAttributeDataMainService.unsafeGetScriptAttributeFieldDefaultValue(
+    fieldName,
+    attribute,
+  );

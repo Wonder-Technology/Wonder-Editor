@@ -345,6 +345,27 @@ let inspector_language_array = [|
     },
   },
   {
+    title: "script-scriptAttribute-field-name-describe",
+    language: {
+      zh: {j|field的名称|j},
+      en: "field's name",
+    },
+  },
+  {
+    title: "script-scriptAttribute-field-type-describe",
+    language: {
+      zh: {j|field的类型|j},
+      en: "field's type",
+    },
+  },
+  {
+    title: "script-scriptAttribute-field-defaultValue-describe",
+    language: {
+      zh: {j|field的默认值|j},
+      en: "field's default value",
+    },
+  },
+  {
     title: "texture-name-describe",
     language: {
       zh: {j|纹理的名字|j},

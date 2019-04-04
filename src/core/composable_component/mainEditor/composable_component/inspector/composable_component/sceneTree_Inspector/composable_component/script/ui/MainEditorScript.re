@@ -594,12 +594,15 @@ module Method = {
         editorState,
       );
 
+    let scriptAllAttributeEntries =
+      ScriptEngineService.getScriptAllAttributeEntries(script, engineState);
+
     let allAttributeNames =
-      ScriptEngineService.getScriptAllAttributeEntries(script, engineState)
+      scriptAllAttributeEntries
       |> Js.Array.map(((eventFunctionName, _)) => eventFunctionName);
 
     ArrayService.excludeWithFunc(
-      ScriptEngineService.getScriptAllAttributeEntries(script, engineState),
+      scriptAllAttributeEntries,
       (scriptAllAttributeEntries, scriptAttributeNode) =>
         allAttributeNames
         |> Js.Array.includes(
@@ -638,6 +641,138 @@ module Method = {
     |> ignore;
   };
 
+  let _changeScriptAttributeFieldDefaultValue =
+      (script, attributeName, fieldName, attribute, defaultValue, engineState) =>
+    ScriptEngineService.setScriptAttributeFieldDefaultValueAndValue(
+      script,
+      attributeName,
+      fieldName,
+      defaultValue |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue,
+      engineState,
+    );
+
+  let _renderScriptAttributeFieldDefaultValue =
+      (languageType, script, attributeName, fieldName, type_, attribute) =>
+    Wonderjs.(
+      ScriptAttributeType.
+        /* TODO handle Int: add MainEditorIntInputBaseComponent */
+        (
+          switch (type_) {
+          | Float =>
+            <MainEditorFloatInputBaseComponent
+              label="Default Value"
+              title={
+                LanguageUtils.getInspectorLanguageDataByType(
+                  "script-scriptAttribute-field-defaultValue-describe",
+                  languageType,
+                )
+              }
+              defaultValue={
+                ScriptAttributeEngineService.unsafeGetScriptAttributeFieldDefaultValue(
+                  fieldName,
+                  attribute,
+                )
+                |> Wonderjs.ScriptAttributeType.scriptAttributeValueToFloat
+              }
+              changeComponentValueFunc=(
+                value =>
+                  _changeScriptAttributeFieldDefaultValue(
+                    script,
+                    attributeName,
+                    fieldName,
+                    attribute,
+                    value,
+                  )
+                  |> StateLogicService.getAndSetEngineState
+              )
+              blurValueFunc=(
+                value =>
+                  /* TODO redo-undo */
+                  ()
+              )
+              dragDropFunc=(
+                value =>
+                  /* TODO redo-undo */
+                  ()
+              )
+            />
+          | type_ =>
+            WonderLog.Log.fatal(
+              WonderLog.Log.buildFatalMessage(
+                ~description={j|unknown field type: $type_|j},
+                ~reason="",
+                ~solution={j||j},
+                ~params={j||j},
+              ),
+            )
+          }
+        )
+    );
+
+  let _renderScriptAttributeFields =
+      (languageType, script, attributeName, attribute) =>
+    ReasonReact.array(
+      ScriptAttributeEngineService.getScriptAttributeEntries(attribute)
+      /* TODO extract text ui */
+      |> Js.Array.map(((fieldName, field)) => {
+           let type_ =
+             ScriptAttributeEngineService.unsafeGetScriptAttributeFieldType(
+               fieldName,
+               attribute,
+             );
+
+           <div
+             key={DomHelper.getRandomKey()} className="scriptAttribute-field">
+             <div className="text">
+               <span
+                 className="text-header"
+                 title={
+                   LanguageUtils.getInspectorLanguageDataByType(
+                     "script-scriptAttribute-field-name-describe",
+                     languageType,
+                   )
+                 }>
+                 {DomHelper.textEl("Field Name")}
+               </span>
+               <span className="text-body">
+                 {DomHelper.textEl(fieldName)}
+               </span>
+             </div>
+             <div className="text">
+               <span
+                 className="text-header"
+                 title={
+                   LanguageUtils.getInspectorLanguageDataByType(
+                     "script-scriptAttribute-field-type-describe",
+                     languageType,
+                   )
+                 }>
+                 {DomHelper.textEl("Type")}
+               </span>
+               <span className="text-body">
+                 {
+                   DomHelper.textEl(
+                     ScriptAttributeTypeService.convertFieldTypeToJsObjStr(
+                       type_,
+                     ),
+                   )
+                 }
+               </span>
+             </div>
+             {
+               _renderScriptAttributeFieldDefaultValue(
+                 languageType,
+                 script,
+                 attributeName,
+                 fieldName,
+                 type_,
+                 attribute,
+               )
+             }
+           </div>;
+         }),
+    );
+
   /* TODO refactor: extract select asset ui component(e.g. select scriptAttribute/geometry) */
   let renderScriptAllAttributes =
       (
@@ -645,27 +780,21 @@ module Method = {
         dispatchFunc,
         {state, send}: ReasonReact.self('a, 'b, 'c),
       ) => {
-    let editorState = StateEditorService.getState();
-    let engineState = StateEngineService.unsafeGetState();
+    /* let editorState = StateEditorService.getState();
+       let engineState = StateEngineService.unsafeGetState(); */
 
     let {currentScript} = state;
 
     let unUsedScriptAttributeNodeIds =
-      _getUnUsedScriptAttributeNodeIds(
-        currentScript,
-        (editorState, engineState),
-      );
+      _getUnUsedScriptAttributeNodeIds(currentScript)
+      |> StateLogicService.getStateToGetData;
 
-    ScriptEngineService.getScriptAllAttributeEntries(
-      currentScript,
-      engineState,
-    )
-    |> Js.Array.map(((name, _)) => {
+    ScriptEngineService.getScriptAllAttributeEntries(currentScript)
+    |> StateLogicService.getEngineStateToGetData
+    |> Js.Array.map(((name, attribute)) => {
          let scriptAttributeNodeId =
-           OperateTreeAssetLogicService.findNodeIdByName(
-             name,
-             (editorState, engineState),
-           )
+           OperateTreeAssetLogicService.findNodeIdByName(name)
+           |> StateLogicService.getStateToGetData
            |> OptionService.unsafeGet;
 
          <div key={DomHelper.getRandomKey()} className="inspector-item">
@@ -716,6 +845,16 @@ module Method = {
              }>
              {DomHelper.textEl("Remove")}
            </button>
+           <div className="scriptAttribute-fields">
+             {
+               _renderScriptAttributeFields(
+                 languageType,
+                 currentScript,
+                 name,
+                 attribute,
+               )
+             }
+           </div>
          </div>;
        });
   };

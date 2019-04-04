@@ -100,9 +100,9 @@ module Method = {
           attribute,
         ),
         {
-          "type": "int",
+          "type": "float",
           "defaultValue":
-            0 |> Wonderjs.ScriptAttributeType.intToScriptAttributeValue,
+            0.0 |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue,
         },
         attribute,
       );
@@ -114,26 +114,6 @@ module Method = {
     send(UpdateAttributeEntries(attribute));
   };
 
-  let _convertFieldTypeToJsObjStr = type_ =>
-    Wonderjs.(
-      ScriptAttributeType.(
-        switch (type_) {
-        | Int => "int"
-        | Float => "float"
-        | type_ =>
-          WonderLog.Log.fatal(
-            WonderLog.Log.buildFatalMessage(
-              ~title="_convertFieldTypeToJsObjStr",
-              ~description={j|unknown type: $type_|j},
-              ~reason="",
-              ~solution={j||j},
-              ~params={j||j},
-            ),
-          )
-        }
-      )
-    );
-
   let _convertFieldToJsObjStr =
       (
         {type_, defaultValue}: Wonderjs.ScriptAttributeType.scriptAttributeField,
@@ -143,7 +123,7 @@ module Method = {
     map
     |> WonderCommonlib.MutableHashMapService.set(
          "type",
-         _convertFieldTypeToJsObjStr(type_),
+         ScriptAttributeTypeService.convertFieldTypeToJsObjStr(type_),
        )
     |> WonderCommonlib.MutableHashMapService.set(
          "defaultValue",

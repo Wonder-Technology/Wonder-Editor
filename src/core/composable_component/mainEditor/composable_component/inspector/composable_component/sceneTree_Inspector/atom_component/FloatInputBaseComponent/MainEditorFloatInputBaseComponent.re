@@ -1,4 +1,4 @@
-type state = {componentValueForUndo: float};
+type state = {componentValue: float};
 
 type action =
   | TriggerBlur(float)
@@ -10,13 +10,13 @@ let component =
 let reducer = ((blurValueFunc, dragDropFunc), action, state) =>
   switch (action) {
   | TriggerBlur(value) =>
-    blurValueFunc(state.componentValueForUndo);
+    blurValueFunc(state.componentValue);
 
-    ReasonReact.Update({...state, componentValueForUndo: value});
+    ReasonReact.Update({...state, componentValue: value});
   | TriggerDragDrop(value) =>
-    dragDropFunc(state.componentValueForUndo);
+    dragDropFunc(state.componentValue);
 
-    ReasonReact.Update({...state, componentValueForUndo: value});
+    ReasonReact.Update({...state, componentValue: value});
   };
 
 let render =
@@ -27,7 +27,7 @@ let render =
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <FloatInput
-    defaultValue={state.componentValueForUndo |> StringService.floatToString}
+    defaultValue={state.componentValue |> StringService.floatToString}
     label
     title={
       switch (title) {
@@ -44,7 +44,7 @@ let make =
     (
       ~dragDropFunc=_ => (),
       ~label,
-      ~getComponentValueFunc,
+      ~defaultValue,
       ~changeComponentValueFunc,
       ~blurValueFunc,
       ~title: option(string)=?,
@@ -52,9 +52,7 @@ let make =
     ) => {
   ...component,
   initialState: () => {
-    componentValueForUndo:
-      (getComponentValueFunc |> StateLogicService.getEngineStateToGetData)
-      ->(FloatService.truncateFloatValue(5)),
+    componentValue: defaultValue->(FloatService.truncateFloatValue(5)),
   },
   reducer: reducer((blurValueFunc, dragDropFunc)),
   render: self => render(label, title, changeComponentValueFunc, self),
