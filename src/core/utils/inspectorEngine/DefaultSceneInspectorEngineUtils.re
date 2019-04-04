@@ -25,7 +25,7 @@ let _initDirectionLightAddToSceneGameObject =
        ),
      )
   |> TransformEngineService.setTransformLocalEulerAngles(
-       (75., 65., (-60.)),
+       (145., 15., 0.),
        GameObjectComponentEngineService.unsafeGetTransformComponent(
          directionLight,
          inspectorEngineState,

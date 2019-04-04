@@ -97,7 +97,7 @@ let _prepareEngineState =
        ),
      )
   |> TransformEngineService.setTransformLocalEulerAngles(
-       (45., 135., 0.),
+       (145., 15., 0.),
        GameObjectComponentEngineService.unsafeGetTransformComponent(
          directionLight,
          engineState,
