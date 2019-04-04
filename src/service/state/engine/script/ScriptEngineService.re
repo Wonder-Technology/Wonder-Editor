@@ -38,6 +38,20 @@ let removeScriptAttribute = ScriptAPI.removeScriptAttribute;
 
 /* let replaceScriptAttribute = OperateScriptDataMainService.replaceScriptAttribute; */
 
+let replaceScriptAttribute =
+    (
+      script,
+      (sourceScriptAttributeName, targetScriptAttributeName),
+      targetScriptAttribute,
+      state,
+    ) =>
+  removeScriptAttribute(script, sourceScriptAttributeName, state)
+  |> addScriptAttribute(
+       script,
+       targetScriptAttributeName,
+       targetScriptAttribute,
+     );
+
 let unsafeGetScriptAttributeEntries = ScriptAPI.unsafeGetScriptAttributeEntries;
 
 let unsafeGetScriptAttribute = ScriptAPI.unsafeGetScriptAttribute;
@@ -72,6 +86,38 @@ let hasScriptEventFunctionData =
   |> Js.Option.andThen((. eventFunctionDataMap) =>
        eventFunctionDataMap
        |> WonderCommonlib.ImmutableHashMapService.has(scriptEventFunctionName) ?
+         Some() : None
+     )
+  |> Js.Option.isSome;
+};
+
+let getScriptAllAttributeEntries =
+    (script, ({scriptRecord}: StateDataMainType.state) as engineState) => {
+  let {scriptAttributeMap}: StateDataMainType.scriptRecord = scriptRecord;
+
+  switch (
+    scriptAttributeMap
+    |> WonderCommonlib.ImmutableSparseMapService.get(script)
+  ) {
+  | None => WonderCommonlib.ArrayService.createEmpty()
+  | Some(attributeMap) =>
+    attributeMap |> WonderCommonlib.ImmutableHashMapService.getValidEntries
+  };
+};
+
+let hasScriptAttributeData =
+    (
+      script,
+      scriptAttributeName,
+      ({scriptRecord}: StateDataMainType.state) as engineState,
+    ) => {
+  let {scriptAttributeMap}: StateDataMainType.scriptRecord = scriptRecord;
+
+  scriptAttributeMap
+  |> WonderCommonlib.ImmutableSparseMapService.get(script)
+  |> Js.Option.andThen((. attributeMap) =>
+       attributeMap
+       |> WonderCommonlib.ImmutableHashMapService.has(scriptAttributeName) ?
          Some() : None
      )
   |> Js.Option.isSome;

@@ -106,12 +106,18 @@ let message_language_array = [|
       en: "the point light count is exceed max count!",
     },
   },
-
   {
     title: "need-add-scriptEventFunction",
     language: {
       zh: {j|请添加ScriptEventFunction资产|j},
       en: "please add script event function asset",
+    },
+  },
+  {
+    title: "need-add-scriptAttribute",
+    language: {
+      zh: {j|请添加ScriptAttribute资产|j},
+      en: "please add script attribute asset",
     },
   },
 |];

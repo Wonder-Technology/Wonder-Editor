@@ -319,7 +319,7 @@ let inspector_language_array = [|
   {
     title: "script-add-scriptEventFunction",
     language: {
-      zh: {j|添加Script Event Function|j},
+      zh: {j|添加script event function|j},
       en: "Add script event function",
     },
   },
@@ -328,6 +328,20 @@ let inspector_language_array = [|
     language: {
       zh: {j|使用的script event function资产|j},
       en: "script event function asset in use",
+    },
+  },
+  {
+    title: "script-add-scriptAttribute",
+    language: {
+      zh: {j|添加script attribute|j},
+      en: "Add script attribute",
+    },
+  },
+  {
+    title: "script-use-scriptAttribute-describe",
+    language: {
+      zh: {j|使用的script attribute资产|j},
+      en: "script attribute asset in use",
     },
   },
   {

@@ -27,3 +27,12 @@ let getNameAndAttribute = (nodeId, editorState) => {
 
   (name, attribute);
 };
+
+let findAllScriptAttributeNodes = editorState =>
+  IterateTreeAssetEditorService.filter(
+    ~acc=[||],
+    ~pushNodeFunc=(node, acc) => acc |> ArrayService.push(node),
+    ~editorState,
+    ~predScriptAttributeNodeFunc=node => true,
+    (),
+  );
