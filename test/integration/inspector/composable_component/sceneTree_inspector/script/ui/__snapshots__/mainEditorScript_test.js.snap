@@ -1,0 +1,241 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorScript test set currentSceneTreeNode test add script event function show script event function group for add show all unused ones 1`] = `
+<article
+  className="wonder-inspector-script"
+>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="select-item-header"
+      >
+        Add Script Event Function
+      </div>
+      <div
+        className="select-item-body"
+      >
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          New Script EventFunction
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          New Script EventFunction 1
+        </div>
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+      title="script event function asset in use"
+    >
+      Script Event Function
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+          onClick={[Function]}
+        >
+          New Script EventFunction
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <button
+    className="addable-btn"
+    onClick={[Function]}
+  >
+    Add script event function
+  </button>
+</article>
+`;
+
+exports[`MainEditorScript test set currentSceneTreeNode test change script event function show script event function group for change should contain self and all unused ones 1`] = `
+<article
+  className="wonder-inspector-script"
+>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="select-item-header"
+      >
+        Change Script Event Function
+      </div>
+      <div
+        className="select-item-body"
+      >
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          New Script EventFunction
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          New Script EventFunction 1
+        </div>
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+      title="script event function asset in use"
+    >
+      Script Event Function
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+          onClick={[Function]}
+        >
+          New Script EventFunction
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <button
+    className="addable-btn"
+    onClick={[Function]}
+  >
+    Add script event function
+  </button>
+</article>
+`;
+
+exports[`MainEditorScript test set currentSceneTreeNode test change script event function test change script event function group should be sorted 1`] = `
+<article
+  className="wonder-inspector-script"
+>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="select-item-header"
+      >
+        Change Script Event Function
+      </div>
+      <div
+        className="select-item-body"
+      >
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          New Script EventFunction
+        </div>
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          New Script EventFunction 1
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          New Script EventFunction 2
+        </div>
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+      title="script event function asset in use"
+    >
+      Script Event Function
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+          onClick={[Function]}
+        >
+          New Script EventFunction 1
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <button
+    className="addable-btn"
+    onClick={[Function]}
+  >
+    Add script event function
+  </button>
+</article>
+`;

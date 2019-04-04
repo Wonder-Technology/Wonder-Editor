@@ -8,8 +8,14 @@ type state = {
 };
 
 type action =
-  | ChangeScriptEventFunctionForAdd(NodeAssetType.nodeId)
-  | ChangeScriptEventFunctionForChange(NodeAssetType.nodeId)
+  | ChangeScriptEventFunctionForAdd(
+      NodeAssetType.nodeId,
+      array(NodeAssetType.nodeId),
+    )
+  | ChangeScriptEventFunctionForChange(
+      NodeAssetType.nodeId,
+      array(NodeAssetType.nodeId),
+    )
   | ShowScriptEventFunctionGroupForAdd(
       NodeAssetType.nodeId,
       array(NodeAssetType.nodeId),
@@ -127,6 +133,28 @@ module Method = {
     );
   };
 
+  let _getUnUsedScriptEventFunctionNodeIds =
+      (script, (editorState, engineState)) =>
+    _getUnUsedScriptEventFunctionNodes(script, (editorState, engineState))
+    |> Js.Array.map(node => NodeAssetService.getNodeId(~node));
+
+  let _sendShowScriptEventFunctionGroupForChange =
+      (
+        currentScript,
+        scriptEventFunctionNodeId,
+        send,
+        (editorState, engineState),
+      ) =>
+    send(
+      ShowScriptEventFunctionGroupForChange(
+        scriptEventFunctionNodeId,
+        _getUnUsedScriptEventFunctionNodeIds(
+          currentScript,
+          (editorState, engineState),
+        ),
+      ),
+    );
+
   /* TODO refactor: extract select asset ui component(e.g. select scriptEventFunction/geometry) */
   let renderScriptAllEventFunctions =
       (languageType, {state, send}: ReasonReact.self('a, 'b, 'c)) => {
@@ -136,11 +164,10 @@ module Method = {
     let {currentScript} = state;
 
     let unUsedScriptEventFunctionNodeIds =
-      _getUnUsedScriptEventFunctionNodes(
+      _getUnUsedScriptEventFunctionNodeIds(
         currentScript,
         (editorState, engineState),
-      )
-      |> Js.Array.map(node => NodeAssetService.getNodeId(~node));
+      );
 
     ScriptEngineService.getScriptAllEventFunctionEntries(
       currentScript,
@@ -163,7 +190,7 @@ module Method = {
                  languageType,
                )
              }>
-             {DomHelper.textEl("ScriptEventFunction")}
+             {DomHelper.textEl("Script Event Function")}
            </div>
            <div className="item-content">
              <div className="inspector-select">
@@ -171,12 +198,12 @@ module Method = {
                  className="select-name"
                  onClick={
                    _e =>
-                     send(
-                       ShowScriptEventFunctionGroupForChange(
-                         scriptEventFunctionNodeId,
-                         unUsedScriptEventFunctionNodeIds,
-                       ),
+                     _sendShowScriptEventFunctionGroupForChange(
+                       currentScript,
+                       scriptEventFunctionNodeId,
+                       send,
                      )
+                     |> StateLogicService.getStateToGetData
                  }>
                  {DomHelper.textEl(name)}
                </div>
@@ -184,12 +211,12 @@ module Method = {
                  className="select-img"
                  onClick={
                    _e =>
-                     send(
-                       ShowScriptEventFunctionGroupForChange(
-                         scriptEventFunctionNodeId,
-                         unUsedScriptEventFunctionNodeIds,
-                       ),
+                     _sendShowScriptEventFunctionGroupForChange(
+                       currentScript,
+                       scriptEventFunctionNodeId,
+                       send,
                      )
+                     |> StateLogicService.getStateToGetData
                  }>
                  <img src="./public/img/select.png" />
                </div>
@@ -199,14 +226,39 @@ module Method = {
        });
   };
 
+  let _sortScriptEventFunctionNodeIds = scriptEventFunctionNodeIds =>
+    scriptEventFunctionNodeIds |> Js.Array.sortInPlace;
+
   let showScriptEventFunctionAssets =
       (
         unUsedScriptEventFunctionNodeIds,
-        /* isNodeIdEqualFunc, */
         currentScriptEventFunctionNodeId,
         changeScriptEventFunctionFunc,
-      ) =>
-    unUsedScriptEventFunctionNodeIds
+      ) => {
+    WonderLog.Contract.requireCheck(
+      () =>
+        WonderLog.(
+          Contract.(
+            Operators.(
+              test(
+                Log.buildAssertMessage(
+                  ~expect={j|currentScriptEventFunctionNodeId|j},
+                  ~actual={j|not|j},
+                ),
+                () =>
+                currentScriptEventFunctionNodeId |> assertExist
+              )
+            )
+          )
+        ),
+      StateEditorService.getStateIsDebug(),
+    );
+
+    ArrayService.fastConcat(
+      [|currentScriptEventFunctionNodeId |> OptionService.unsafeGet|],
+      unUsedScriptEventFunctionNodeIds,
+    )
+    |> _sortScriptEventFunctionNodeIds
     |> Js.Array.map(scriptEventFunctionNodeId => {
          let className =
            _isNodeIdEqual(
@@ -235,10 +287,11 @@ module Method = {
            }
          </div>;
        });
+  };
 
   let _handleChangeScriptEventFunction =
       (
-        state,
+        script,
         sendFunc,
         currentScriptEventFunctionNodeId,
         targetScriptEventFunctionNodeId,
@@ -269,14 +322,18 @@ module Method = {
       () :
       {
         _changeScriptEventFunction(
-          state.currentScript,
+          script,
           currentScriptEventFunctionNodeId,
           targetScriptEventFunctionNodeId,
         )
         |> StateLogicService.getStateToGetData
         |> StateEngineService.setState;
 
-        sendFunc(targetScriptEventFunctionNodeId);
+        sendFunc(
+          targetScriptEventFunctionNodeId,
+          _getUnUsedScriptEventFunctionNodeIds(script)
+          |> StateLogicService.getStateToGetData,
+        );
       };
   };
 
@@ -285,7 +342,7 @@ module Method = {
     <div className="select-component-content">
       <div className="select-component-item">
         <div className="select-item-header">
-          {DomHelper.textEl("Script Event Function")}
+          {DomHelper.textEl("Change Script Event Function")}
         </div>
         <div className="select-item-body">
           {
@@ -294,10 +351,15 @@ module Method = {
                 state.unUsedScriptEventFunctionNodeIds,
                 state.lastScriptEventFunctionNodeIdForChange,
                 _handleChangeScriptEventFunction(
-                  state, targetScriptEventFunctionNodeId =>
+                  state.currentScript,
+                  (
+                    targetScriptEventFunctionNodeId,
+                    unUsedScriptEventFunctionNodeIds,
+                  ) =>
                   send(
                     ChangeScriptEventFunctionForChange(
                       targetScriptEventFunctionNodeId,
+                      unUsedScriptEventFunctionNodeIds,
                     ),
                   )
                 ),
@@ -317,7 +379,7 @@ module Method = {
     <div className="select-component-content">
       <div className="select-component-item">
         <div className="select-item-header">
-          {DomHelper.textEl("Script Event Function")}
+          {DomHelper.textEl("Add Script Event Function")}
         </div>
         <div className="select-item-body">
           {
@@ -326,10 +388,15 @@ module Method = {
                 state.unUsedScriptEventFunctionNodeIds,
                 state.lastScriptEventFunctionNodeIdForAdd,
                 _handleChangeScriptEventFunction(
-                  state, targetScriptEventFunctionNodeId =>
+                  state.currentScript,
+                  (
+                    targetScriptEventFunctionNodeId,
+                    unUsedScriptEventFunctionNodeIds,
+                  ) =>
                   send(
                     ChangeScriptEventFunctionForAdd(
                       targetScriptEventFunctionNodeId,
+                      unUsedScriptEventFunctionNodeIds,
                     ),
                   )
                 ),
@@ -344,10 +411,7 @@ module Method = {
       />
     </div>;
 
-  let addScriptEventFunction =
-      (languageType, ({state, send}: ReasonReact.self('a, 'b, 'c)) as self) => {
-    /* TODO test */
-
+  let addScriptEventFunction = (languageType, (state, send)) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
@@ -365,8 +429,11 @@ module Method = {
           unUsedScriptEventFunctionNodes
           |> Js.Array.map(node => NodeAssetService.getNodeId(~node));
 
-        let lastScriptEventFunctionNodeIdForAdd =
-          unUsedScriptEventFunctionNodeIds |> ArrayService.unsafeGetFirst;
+        let (
+          lastScriptEventFunctionNodeIdForAdd,
+          unUsedScriptEventFunctionNodeIds,
+        ) =
+          unUsedScriptEventFunctionNodeIds |> ArrayService.removeFirst;
 
         let (name, data) =
           ScriptEventFunctionNodeAssetEditorService.getNameAndData(
@@ -403,19 +470,27 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("MainEditorScript");
 
-let reducer = ((uiState, dispatchFunc) as reduxTuple, action, state) =>
+let reducer = (action, state) =>
   switch (action) {
-  | ChangeScriptEventFunctionForAdd(targetScriptEventFunctionNodeId) =>
+  | ChangeScriptEventFunctionForAdd(
+      targetScriptEventFunctionNodeId,
+      unUsedScriptEventFunctionNodeIds,
+    ) =>
     ReasonReact.Update({
       ...state,
       lastScriptEventFunctionNodeIdForAdd:
         Some(targetScriptEventFunctionNodeId),
+      unUsedScriptEventFunctionNodeIds,
     })
-  | ChangeScriptEventFunctionForChange(targetScriptEventFunctionNodeId) =>
+  | ChangeScriptEventFunctionForChange(
+      targetScriptEventFunctionNodeId,
+      unUsedScriptEventFunctionNodeIds,
+    ) =>
     ReasonReact.Update({
       ...state,
       lastScriptEventFunctionNodeIdForChange:
         Some(targetScriptEventFunctionNodeId),
+      unUsedScriptEventFunctionNodeIds,
     })
   | ShowScriptEventFunctionGroupForAdd(
       lastScriptEventFunctionNodeIdForAdd,
@@ -453,11 +528,7 @@ let reducer = ((uiState, dispatchFunc) as reduxTuple, action, state) =>
     })
   };
 
-let render =
-    (
-      (uiState, dispatchFunc),
-      ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
-    ) => {
+let render = (({state, send}: ReasonReact.self('a, 'b, 'c)) as self) => {
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
@@ -478,7 +549,9 @@ let render =
     }
     <button
       className="addable-btn"
-      onClick={_e => Method.addScriptEventFunction(languageType, self)}>
+      onClick={
+        _e => Method.addScriptEventFunction(languageType, (state, send))
+      }>
       {
         DomHelper.textEl(
           LanguageUtils.getInspectorLanguageDataByType(
@@ -510,6 +583,6 @@ let make =
     unUsedScriptEventFunctionNodeIds:
       WonderCommonlib.ArrayService.createEmpty(),
   },
-  reducer: reducer((uiState, dispatchFunc)),
-  render: self => render((uiState, dispatchFunc), self),
+  reducer,
+  render: self => render(self),
 };

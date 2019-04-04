@@ -104,7 +104,8 @@ let removeFirst = arr => {
       ),
     StateEditorService.getStateIsDebug(),
   );
-  arr |> Js.Array.shift |> OptionService.unsafeGet;
+
+  (arr |> Js.Array.shift |> OptionService.unsafeGet, arr);
 };
 
 let unsafeGetNth = (index, arr) =>

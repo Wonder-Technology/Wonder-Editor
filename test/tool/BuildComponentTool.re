@@ -250,3 +250,9 @@ let buildScriptAttributeInspectorComponent =
       renameFunc
     />,
   );
+
+let renderScriptComponent =
+    (~state, ~sandbox, ~send=SinonTool.createOneLengthStub(sandbox^), ()) =>
+  ReactTestRenderer.create(
+    MainEditorScript.render(ReactTool.buildFakeSelf(state, send)),
+  );
