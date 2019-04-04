@@ -345,7 +345,7 @@ module Method = {
     </div>;
 
   let addScriptEventFunction =
-      (({state, send}: ReasonReact.self('a, 'b, 'c)) as self) => {
+      (languageType, ({state, send}: ReasonReact.self('a, 'b, 'c)) as self) => {
     /* TODO test */
 
     let editorState = StateEditorService.getState();
@@ -391,7 +391,13 @@ module Method = {
           ),
         );
       } :
-      ();
+      ConsoleUtils.warn(
+        LanguageUtils.getMessageLanguageDataByType(
+          "need-add-scriptEventFunction",
+          languageType,
+        ),
+      )
+      |> StateLogicService.getEditorState;
   };
 };
 
@@ -482,7 +488,7 @@ let render =
     }
     <button
       className="addable-btn"
-      onClick={_e => Method.addScriptEventFunction(self)}>
+      onClick={_e => Method.addScriptEventFunction(languageType, self)}>
       {
         DomHelper.textEl(
           LanguageUtils.getInspectorLanguageDataByType(
