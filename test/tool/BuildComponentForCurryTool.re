@@ -62,6 +62,7 @@ let buildBasicMaterial = () =>
       uiState={TestTool.buildEmptyAppState()}
       dispatchFunc={TestTool.getDispatch()}
       materialComponent={GameObjectTool.getCurrentSceneTreeNodeBasicMaterial()}
+      isShowInspectorCanvas=false
     />,
   );
 
@@ -71,6 +72,7 @@ let buildLightMaterial = () =>
       uiState={TestTool.buildEmptyAppState()}
       dispatchFunc={TestTool.getDispatch()}
       materialComponent={GameObjectTool.getCurrentSceneTreeNodeLightMaterial()}
+      isShowInspectorCanvas=false
     />,
   );
 

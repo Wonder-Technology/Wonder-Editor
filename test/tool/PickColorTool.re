@@ -26,7 +26,8 @@ let testOperateColorPickToChangeColor =
                 getColorFunc(currentGameObjectComponent)
                 |> StateLogicService.getEngineStateToGetData
                 |> Color.getHexString
-                |> expect == newColor##hex;
+                |> expect ==
+                newColor##hex;
               })
             )
           )

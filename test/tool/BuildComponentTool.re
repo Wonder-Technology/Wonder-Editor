@@ -138,7 +138,7 @@ let buildMaterialMap =
       label="Diffuse map"
       getMapFunc=LightMaterialEngineService.getLightMaterialDiffuseMap
       removeTextureFunc=MainEditorLightMaterial.Method.removeTexture
-      onDropFunc=MainEditorLightMaterial.Method.onDrop
+      onDropFunc=MainEditorLightMaterial.Method.dragToSetMaterialTexture
       isShowTextureGroup
     />,
   );
@@ -149,6 +149,7 @@ let buildBasicMaterial = materialComponent =>
       uiState={TestTool.buildEmptyAppState()}
       dispatchFunc={TestTool.getDispatch()}
       materialComponent
+      isShowInspectorCanvas=false
     />,
   );
 
@@ -158,6 +159,7 @@ let buildLightMaterial = materialComponent =>
       uiState={TestTool.buildEmptyAppState()}
       dispatchFunc={TestTool.getDispatch()}
       materialComponent
+      isShowInspectorCanvas=false
     />,
   );
 

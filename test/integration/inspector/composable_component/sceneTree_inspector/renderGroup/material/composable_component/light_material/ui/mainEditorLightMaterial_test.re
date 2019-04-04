@@ -50,7 +50,7 @@ let _ =
           BuildComponentForCurryTool.buildLightMaterial,
           (
             GameObjectTool.getCurrentSceneTreeNodeLightMaterial,
-            MainEditorLightMaterialTool.changeColor,
+            MainEditorLightMaterialTool.changeColor(false),
             LightMaterialEngineService.getLightMaterialDiffuseColor,
           ),
         );
@@ -291,6 +291,7 @@ let _ =
                 };
 
                 MainEditorLightMaterialTool.changeColor(
+                  false,
                   currentGameObjectMaterial,
                   newColor,
                 );
@@ -458,4 +459,5 @@ let _ =
         );
       });
     });
+
   });

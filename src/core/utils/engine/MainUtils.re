@@ -97,7 +97,7 @@ let _registerJobForInspectorEngine = engineState =>
      )
   |> JobEngineService.registerNoWorkerLoopJob(
        "restoreInspectorEngineJob",
-       RestoreInspectorEngineJob.restoreInspectorEngineJob
+       RestoreInspectorEngineJob.restoreInspectorEngineJob,
      );
 
 let _handleEngineState = engineState => {

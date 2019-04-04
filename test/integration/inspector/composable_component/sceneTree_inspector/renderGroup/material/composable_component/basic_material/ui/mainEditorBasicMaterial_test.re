@@ -33,7 +33,7 @@ let _ =
         BuildComponentForCurryTool.buildBasicMaterial,
         (
           GameObjectTool.getCurrentSceneTreeNodeBasicMaterial,
-          MainEditorBasicMaterialTool.changeColor,
+          MainEditorBasicMaterialTool.changeColor(false),
           BasicMaterialEngineService.getColor,
         ),
       );

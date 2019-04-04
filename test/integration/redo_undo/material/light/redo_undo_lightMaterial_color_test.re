@@ -22,7 +22,11 @@ let _ =
       let sourceColor =
         MainEditorLightMaterialTool.getColor(materialComponent);
 
-      MainEditorLightMaterialTool.changeColor(materialComponent, color);
+      MainEditorLightMaterialTool.changeColor(
+        false,
+        materialComponent,
+        color,
+      );
 
       MainEditorLightMaterialTool.closeColorPicker(
         ~material=materialComponent,

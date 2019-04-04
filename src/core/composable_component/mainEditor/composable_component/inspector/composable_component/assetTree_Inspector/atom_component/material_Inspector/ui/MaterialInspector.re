@@ -120,6 +120,9 @@ let make =
       materialComponent,
     ),
   willUnmount: _self =>
-    StateInspectorEngineService.unsafeGetState()
-    |> InspectorEngineUtils.removeInspectorEngineSceneAllChildren,
+    (
+      StateEditorService.getState(),
+      StateInspectorEngineService.unsafeGetState(),
+    )
+    |> InspectorEngineGameObjectLogicService.removeInspectorEngineParentGameObjectAllChild,
 };

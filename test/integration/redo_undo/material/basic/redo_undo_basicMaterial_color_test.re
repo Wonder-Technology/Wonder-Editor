@@ -17,7 +17,11 @@ let _ =
       let sourceColor =
         MainEditorBasicMaterialTool.getColor(materialComponent);
 
-      MainEditorBasicMaterialTool.changeColor(materialComponent, color);
+      MainEditorBasicMaterialTool.changeColor(
+        false,
+        materialComponent,
+        color,
+      );
 
       MainEditorBasicMaterialTool.closeColorPicker(
         ~material=materialComponent,

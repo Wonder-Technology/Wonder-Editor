@@ -48,7 +48,18 @@ let stubCanvasParentAndCanvas =
   |> ignore;
 
   getElementStub
+  |> withOneArg("inspectorCanvasParent")
+  |> returns(parentDom)
+  |> ignore;
+
+  getElementStub
   |> withOneArg("canvas")
+  |> returns(canvasDom)
+  |> stubToJsObj
+  |> ignore;
+
+  getElementStub
+  |> withOneArg("inspector-canvas")
   |> returns(canvasDom)
   |> stubToJsObj
   |> ignore;

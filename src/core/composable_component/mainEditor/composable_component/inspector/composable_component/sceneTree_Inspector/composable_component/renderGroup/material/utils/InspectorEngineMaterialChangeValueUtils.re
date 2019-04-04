@@ -1,7 +1,8 @@
 let changeMaterialValue =
     (value, (getMaterialFunc, setValueFunc), inspectorEngineState) =>
   switch (
-    inspectorEngineState |> SceneInspectorEngineService.getMaterialSphere
+    (StateEditorService.getState(), inspectorEngineState)
+    |> InspectorEngineGameObjectLogicService.getMaterialSphere
   ) {
   | None => ()
   | Some(gameObject) =>

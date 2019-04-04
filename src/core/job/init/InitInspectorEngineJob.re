@@ -1,10 +1,13 @@
 let initInspectorEngineJob = (_, inspectorEngineState) => {
-  let (inspectorEngineState, camera) =
-    PrimitiveEngineService.createCamera(inspectorEngineState);
-  /* let (inspectorEngineState, sphere) =
-    PrimitiveEngineService.createSphereTest(inspectorEngineState); */
-  let (inspectorEngineState, directionLight) =
-    PrimitiveEngineService.createDirectionLight(inspectorEngineState);
+  let editorState = StateEditorService.getState();
+  let (emptyGameObject, inspectorEngineState) =
+    inspectorEngineState |> DefaultSceneInspectorEngineUtils.createDefaultScene;
 
-  inspectorEngineState
+  editorState
+  |> ParentGameObjectInspectorCanvasEditorService.setParentGameObject(
+       emptyGameObject,
+     )
+  |> StateEditorService.setState;
+
+  inspectorEngineState;
 };

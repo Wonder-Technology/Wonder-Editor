@@ -1,0 +1,1 @@
+type inspectorCanvasRecord = {parentGameObject: option(int)};

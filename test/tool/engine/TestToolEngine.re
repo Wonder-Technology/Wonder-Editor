@@ -25,25 +25,15 @@ let initWithoutBuildFakeDom =
 let initWithJobConfigWithoutBuildFakeDom =
     (
       ~sandbox,
-      ~isDebug="true",
-      ~canvasId=None,
-      ~context=getDefaultContext(),
-      ~useHardwareInstance="true",
-      ~buffer=SettingToolEngine.buildBufferConfigStr(),
       ~noWorkerJobRecord=NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
       ~renderConfigRecord=RenderConfigToolEngine.buildRenderConfig(),
       ~isInitJob=true,
+      ~engineState,
       (),
     ) => {
   SharedArrayBufferToolEngine.setSharedArrayBufferToBeArrayBuffer(.);
-  SettingToolEngine.createStateAndSetToStateData(
-    ~isDebug,
-    ~canvasId,
-    ~context,
-    ~useHardwareInstance,
-    ~buffer,
-    (),
-  )
+
+  engineState
   |> NoWorkerJobConfigToolEngine.create(noWorkerJobRecord)
   |> (
     state =>
@@ -62,10 +52,13 @@ let createAndSetEngineState =
     (
       ~sandbox,
       ~noWorkerJobRecord=NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(),
-      ~buffer=SettingToolEngine.buildBufferConfigStr(),
       ~isBuildFakeDom=true,
       ~isInitJob=true,
+      ~isDebug="true",
+      ~canvasId=None,
       ~context=getDefaultContext(),
+      ~useHardwareInstance="true",
+      ~buffer=SettingToolEngine.buildBufferConfigStr(),
       (),
     ) => {
   isBuildFakeDom ?
@@ -74,30 +67,57 @@ let createAndSetEngineState =
   initWithJobConfigWithoutBuildFakeDom(
     ~sandbox,
     ~noWorkerJobRecord,
-    ~buffer,
     ~isInitJob,
-    ~context,
+    ~engineState=
+      SettingToolEngine.createStateAndSetToStateData(
+        ~isDebug,
+        ~canvasId,
+        ~context,
+        ~useHardwareInstance,
+        ~buffer,
+        (),
+      ),
     (),
   )
   |> StateEngineService.setState
   |> ignore;
-  /* initWithJobConfigWithoutBuildFakeDom(
-       ~sandbox,
-       ~noWorkerJobRecord,
-       ~buffer,
-       (),
-     )
-     |> StateLogicService.setRunEngineState; */
 };
+
+let createAndSetInspectorEngineState =
+    (
+      ~sandbox,
+      ~noWorkerJobRecord=NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(),
+      ~buffer=SettingToolEngine.buildBufferConfigStr(),
+      ~isInitJob=true,
+      ~context=getDefaultContext(),
+      ~isDebug="true",
+      ~canvasId=None,
+      ~useHardwareInstance="true",
+      (),
+    ) =>
+  initWithJobConfigWithoutBuildFakeDom(
+    ~sandbox,
+    ~noWorkerJobRecord,
+    ~isInitJob,
+    ~engineState=
+      SettingToolEngine.createStateAndSetToInspectorStateData(
+        ~isDebug,
+        ~canvasId,
+        ~context,
+        ~useHardwareInstance,
+        ~buffer,
+        (),
+      ),
+    (),
+  )
+  |> StateInspectorEngineService.setState
+  |> ignore;
 
 let initEngineState = () =>
   StateEngineService.unsafeGetState()
   |> DirectorEngineService.init
   |> StateEngineService.setState
   |> ignore;
-/* StateEngineService.unsafeGetState();
-   |> DirectorEngineService.init
-   |> StateLogicService.setRunEngineState; */
 
 let setFakeGl = (gl, engineState) =>
   engineState |> FakeGlToolEngine.setFakeGl(gl);

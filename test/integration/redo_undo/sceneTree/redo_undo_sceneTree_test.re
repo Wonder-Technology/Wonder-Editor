@@ -52,8 +52,10 @@ let _ =
     );
 
     describe("fix bug", () => {
-      let execChangeMaterialColorWork = (currentGameObjectMaterial, newColor) =>
+      let execChangeMaterialColorWork =
+          (isShowInspectorCanvas, currentGameObjectMaterial, newColor) =>
         MainEditorLightMaterialTool.changeColor(
+          isShowInspectorCanvas,
           currentGameObjectMaterial,
           newColor,
         );
@@ -79,7 +81,11 @@ let _ =
             GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
           let newColor = PickColorTool.buildColor1();
 
-          execChangeMaterialColorWork(currentGameObjectMaterial, newColor);
+          execChangeMaterialColorWork(
+            false,
+            currentGameObjectMaterial,
+            newColor,
+          );
           execChangeTransformWork();
 
           RedoUndoTool.undoHistoryState();
@@ -89,7 +95,8 @@ let _ =
           )
           |> StateLogicService.getEngineStateToGetData
           |> Color.getHexString
-          |> expect == newColor##hex;
+          |> expect ==
+          newColor##hex;
         },
       );
     });

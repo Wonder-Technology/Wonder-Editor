@@ -50,12 +50,14 @@ module PointEvent = {
                 ManageEventEngineService.triggerCustomGlobalEvent(
                   CreateCustomEventEngineService.create(
                     customEventName,
-                    convertDomEventToPointEventFunc(
-                      pointEventName,
-                      mouseEvent,
+                    (
+                      convertDomEventToPointEventFunc(
+                        pointEventName,
+                        mouseEvent,
+                      )
+                      |> pointEventToUserData
                     )
-                    |> pointEventToUserData
-                    |. Some,
+                    ->Some,
                   ),
                   engineState,
                 );
@@ -380,7 +382,10 @@ module DomEvent = {
     let editorState = StateEditorService.getState();
 
     let (gx, gy, _, _) =
-      GameViewEditorService.unsafeGetViewRect(editorState);
+      switch (GameViewEditorService.getViewRect(editorState)) {
+      | None => (0, 0, 0, 0)
+      | Some(value) => value
+      };
 
     let (locationInViewX, locationInViewY) = locationInView;
 

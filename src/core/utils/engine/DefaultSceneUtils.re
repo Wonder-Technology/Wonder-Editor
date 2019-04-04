@@ -76,10 +76,12 @@ let prepareSpecificGameObjects = (editorState, engineState) => {
 let _prepareEngineState =
     ((camera, directionLight, cube1, cube2), engineState) =>
   engineState
-  |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-       camera,
+  |> BasicCameraViewEngineService.activeBasicCameraView(
+       engineState
+       |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
+            camera,
+          ),
      )
-  |. BasicCameraViewEngineService.activeBasicCameraView(engineState)
   |> TransformEngineService.setLocalPosition(
        (0., 0., 4.),
        GameObjectComponentEngineService.unsafeGetTransformComponent(

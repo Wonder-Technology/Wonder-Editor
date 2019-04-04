@@ -17,8 +17,12 @@ let changeMaterialTypeToBeBasicMaterial =
 let getColor = material =>
   MainEditorBasicMaterial.Method.getColor(material, ());
 
-let changeColor = (material, color) =>
-  MainEditorBasicMaterial.Method.changeColor(material, color);
+let changeColor = (isShowInspectorCanvas, material, color) =>
+  MainEditorBasicMaterial.Method.changeColor(
+    isShowInspectorCanvas,
+    material,
+    color,
+  );
 
 let closeColorPicker =
     (

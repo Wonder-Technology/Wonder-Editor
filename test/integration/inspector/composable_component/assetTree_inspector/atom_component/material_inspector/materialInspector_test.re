@@ -15,6 +15,12 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
+      MainEditorSceneTool.initInspectorEngineState(
+        ~sandbox,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
+        (),
+      );
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 

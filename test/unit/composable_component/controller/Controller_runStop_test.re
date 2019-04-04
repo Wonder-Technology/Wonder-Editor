@@ -14,6 +14,13 @@ let _ =
       sandbox := createSandbox();
       TestTool.closeContractCheck();
       MainEditorSceneTool.initState(~sandbox, ());
+      MainEditorSceneTool.initInspectorEngineState(
+        ~sandbox,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
+        (),
+      );
+
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,

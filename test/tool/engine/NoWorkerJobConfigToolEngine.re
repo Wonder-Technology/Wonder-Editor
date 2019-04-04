@@ -231,9 +231,9 @@ let buildNoWorkerJobConfig =
                      {
                          "name":"init_texture"
                      },
-        {
-          "name": "init_imgui"
-        }
+                     {
+                        "name": "init_imgui"
+                     }
                    ]
                  }
                ]

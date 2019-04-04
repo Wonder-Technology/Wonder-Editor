@@ -49,6 +49,12 @@ let _ =
         (),
       );
 
+      MainEditorSceneTool.initInspectorEngineState(
+        ~sandbox,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
+        (),
+      );
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
@@ -69,7 +75,7 @@ let _ =
     describe("resizeCanvasAndViewPort", () => {
       describe("set canvas size", () =>
         test(
-          "canvan's width and height should == parent's width and height", () => {
+          "canvas's width and height should == parent's width and height", () => {
           _prepareState();
           let (parentDom, canvasDom) =
             IMGUITool.stubCanvasParentAndCanvas(sandbox);
@@ -135,11 +141,8 @@ let _ =
             SceneViewEditorService.unsafeGetViewRect(editorState),
             GameViewEditorService.unsafeGetViewRect(editorState),
           )
-          |>
-          expect == (
-                      (0, 0, width / 2, height),
-                      (width / 2, 0, width / 2, height),
-                    );
+          |> expect
+          == ((0, 0, width / 2, height), (width / 2, 0, width / 2, height));
         })
       );
 
