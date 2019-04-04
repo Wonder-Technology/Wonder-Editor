@@ -252,7 +252,17 @@ let buildScriptAttributeInspectorComponent =
   );
 
 let renderScriptComponent =
-    (~state, ~sandbox, ~send=SinonTool.createOneLengthStub(sandbox^), ()) =>
+    (
+      ~state,
+      ~sandbox,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~send=SinonTool.createOneLengthStub(sandbox^),
+      (),
+    ) =>
   ReactTestRenderer.create(
-    MainEditorScript.render(ReactTool.buildFakeSelf(state, send)),
+    MainEditorScript.render(
+      (uiState, dispatchFunc),
+      ReactTool.buildFakeSelf(state, send),
+    ),
   );

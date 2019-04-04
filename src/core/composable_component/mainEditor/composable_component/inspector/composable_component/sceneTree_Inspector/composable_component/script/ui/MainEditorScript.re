@@ -155,9 +155,24 @@ module Method = {
       ),
     );
 
+  let _removeScriptEventFunction = (script, eventFunctionName, dispatchFunc) => {
+    ScriptEngineService.removeScriptEventFunctionData(
+      script,
+      eventFunctionName,
+    )
+    |> StateLogicService.getAndSetEngineState;
+
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
+    |> ignore;
+  };
+
   /* TODO refactor: extract select asset ui component(e.g. select scriptEventFunction/geometry) */
   let renderScriptAllEventFunctions =
-      (languageType, {state, send}: ReasonReact.self('a, 'b, 'c)) => {
+      (
+        languageType,
+        dispatchFunc,
+        {state, send}: ReasonReact.self('a, 'b, 'c),
+      ) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
@@ -222,6 +237,14 @@ module Method = {
                </div>
              </div>
            </div>
+           <button
+             className="scriptEventFunction-field-remove"
+             onClick={
+               e =>
+                 _removeScriptEventFunction(currentScript, name, dispatchFunc)
+             }>
+             {DomHelper.textEl("Remove")}
+           </button>
          </div>;
        });
   };
@@ -528,7 +551,11 @@ let reducer = (action, state) =>
     })
   };
 
-let render = (({state, send}: ReasonReact.self('a, 'b, 'c)) as self) => {
+let render =
+    (
+      (uiState, dispatchFunc),
+      ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
+    ) => {
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
@@ -544,7 +571,11 @@ let render = (({state, send}: ReasonReact.self('a, 'b, 'c)) as self) => {
     }
     {
       ReasonReact.array(
-        Method.renderScriptAllEventFunctions(languageType, self),
+        Method.renderScriptAllEventFunctions(
+          languageType,
+          dispatchFunc,
+          self,
+        ),
       )
     }
     <button
@@ -584,5 +615,5 @@ let make =
       WonderCommonlib.ArrayService.createEmpty(),
   },
   reducer,
-  render: self => render(self),
+  render: self => render((uiState, dispatchFunc), self),
 };

@@ -97,7 +97,6 @@ let handleChangeScriptEventFunction =
     ) =>
   MainEditorScript.Method._handleChangeScriptEventFunction(
     script,
-    /* send, */
     (targetScriptEventFunctionNodeId, unUsedScriptEventFunctionNodeIds) =>
       send(
         MainEditorScript.ChangeScriptEventFunctionForAdd(
@@ -107,4 +106,12 @@ let handleChangeScriptEventFunction =
       ),
     currentScriptEventFunctionNodeId,
     targetScriptEventFunctionNodeId,
+  );
+
+let removeScriptEventFunction =
+    (~script, ~eventFunctionName, ~dispatchFunc=TestTool.getDispatch(), ()) =>
+  MainEditorScript.Method._removeScriptEventFunction(
+    script,
+    eventFunctionName,
+    dispatchFunc,
   );

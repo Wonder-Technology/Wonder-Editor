@@ -43,3 +43,13 @@ let buildFakeSelf = (state, send): ReasonReact.self('a, 'b, 'c) => {
   send,
   onUnmount: Obj.magic(-1),
 };
+
+let getDispatchUpdateActionArr = dispatchedAction =>
+  switch (dispatchedAction) {
+  | AppStore.UpdateAction(action) =>
+    switch (action) {
+    | Update(arr) => arr
+    | _ => [||]
+    }
+  | _ => [||]
+  };

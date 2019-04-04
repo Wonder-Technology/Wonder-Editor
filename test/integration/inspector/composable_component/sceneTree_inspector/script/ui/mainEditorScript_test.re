@@ -96,6 +96,63 @@ let _ =
             |> ReactTestTool.createSnapshotAndMatch;
           })
         );
+
+        describe("test remove script event function", () => {
+          let _prepare = () => {
+            let script = GameObjectTool.getCurrentSceneTreeNodeScript();
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+            let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
+            MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
+
+            MainEditorScriptTool.addScriptEventFunction(
+              ~script,
+              ~send=SinonTool.createOneLengthStub(sandbox^),
+              (),
+            );
+
+            let eventFunctionName =
+              ScriptEventFunctionInspectorTool.getEventFunctionName(
+                addedNodeId,
+              )
+              |> StateLogicService.getEditorState;
+
+            (script, eventFunctionName);
+          };
+
+          test("remove from script", () => {
+            let (script, eventFunctionName) = _prepare();
+
+            MainEditorScriptTool.removeScriptEventFunction(
+              ~script,
+              ~eventFunctionName,
+              (),
+            );
+
+            ScriptEngineService.hasScriptEventFunctionData(
+              script,
+              eventFunctionName,
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == false;
+          });
+          test("dispatch inspector", () => {
+            let (script, eventFunctionName) = _prepare();
+            let dispatchFunc = SinonTool.createOneLengthStub(sandbox^);
+
+            MainEditorScriptTool.removeScriptEventFunction(
+              ~script,
+              ~eventFunctionName,
+              ~dispatchFunc,
+              (),
+            );
+
+            let dispatchedAction =
+              dispatchFunc |> getCall(0) |> getArgs |> List.hd;
+            ReactTool.getDispatchUpdateActionArr(dispatchedAction)
+            |> expect == [|UpdateStore.Inspector|];
+          });
+        });
       });
 
       describe("test change script event function", () => {
@@ -188,21 +245,6 @@ let _ =
             |> ReactTestTool.createSnapshotAndMatch;
           })
         );
-        /* describe
-                   ("fix bug",
-                   (
-                   () => {
-           test(
-           {|
-
-               |},
-           (
-           () => {
-
-           })
-           );
-                   })
-                   ); */
       });
     });
   });
