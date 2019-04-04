@@ -52,6 +52,36 @@ let replaceScriptAttribute =
        targetScriptAttribute,
      );
 
+let updateAttributeInAllScriptComponents =
+    (
+      attributeName,
+      newAttribute,
+      ({scriptRecord}: StateDataMainType.state) as engineState,
+    ) => {
+  let {scriptAttributeMap}: StateDataMainType.scriptRecord = scriptRecord;
+
+  let scriptAttributeMap =
+    scriptAttributeMap
+    |> WonderCommonlib.ImmutableSparseMapService.mapValid((. attributeMap) =>
+         attributeMap
+         |> WonderCommonlib.ImmutableHashMapService.has(attributeName) ?
+           attributeMap
+           |> WonderCommonlib.ImmutableHashMapService.set(
+                attributeName,
+                newAttribute,
+              ) :
+           attributeMap
+       );
+
+  {
+    ...engineState,
+    scriptRecord: {
+      ...scriptRecord,
+      scriptAttributeMap,
+    },
+  };
+};
+
 let unsafeGetScriptAttributeEntries = ScriptAPI.unsafeGetScriptAttributeEntries;
 
 let unsafeGetScriptAttribute = ScriptAPI.unsafeGetScriptAttribute;

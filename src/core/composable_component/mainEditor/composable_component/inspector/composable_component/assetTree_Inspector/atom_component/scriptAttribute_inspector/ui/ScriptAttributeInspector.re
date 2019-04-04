@@ -23,24 +23,74 @@ module Method = {
       editorState,
     );
 
+  let _isOnlyFieldDefaultValueChange =
+      (
+        (
+          {type_, defaultValue}: Wonderjs.ScriptAttributeType.scriptAttributeField
+        ) as oldAttributeField,
+        newAttributeFieldJsObj,
+      ) => {
+    let newType =
+      ScriptAttributeTypeService.getTypeFromJsObj(newAttributeFieldJsObj);
+
+    let newDefaultValue = newAttributeFieldJsObj##defaultValue;
+
+    type_
+    |> ScriptAttributeTypeService.convertFieldTypeToJsObjStr === newType
+    && defaultValue !== newDefaultValue;
+  };
+
   let _updateScriptAttributeNodeByReplaceFieldData =
-      (nodeId, (fieldName, newFieldDataJsObjStr), editorState) =>
+      (
+        nodeId,
+        (fieldName, newFieldDataJsObjStr),
+        (editorState, engineState),
+      ) =>
     Console.tryCatch(
       () => {
         let (attributeName, attribute) =
           ScriptAttributeNodeAssetEditorService.getNameAndAttribute(nodeId)
           |> StateLogicService.getEditorState;
 
-        _updateScriptAttributeNode(
-          nodeId,
-          attributeName,
+        let newAttributeFieldJsObj =
+          newFieldDataJsObjStr |> Js.Json.parseExn |> Obj.magic;
+
+        let isOnlyFieldDefaultValueChange =
+          _isOnlyFieldDefaultValueChange(
+            ScriptAttributeEngineService.unsafeGetScriptAttributeField(
+              fieldName,
+              attribute,
+            ),
+            newAttributeFieldJsObj,
+          );
+
+        let newAttribute =
           ScriptAttributeEngineService.replaceScriptAttributeField(
             fieldName,
-            newFieldDataJsObjStr |> Js.Json.parseExn |> Obj.magic,
+            newAttributeFieldJsObj,
             attribute,
-          ),
-          editorState,
-        );
+          );
+
+        let editorState =
+          _updateScriptAttributeNode(
+            nodeId,
+            attributeName,
+            newAttribute,
+            editorState,
+          );
+
+        isOnlyFieldDefaultValueChange ?
+          (editorState, engineState) :
+          {
+            let engineState =
+              ScriptEngineService.updateAttributeInAllScriptComponents(
+                attributeName,
+                newAttribute,
+                engineState,
+              );
+
+            (editorState, engineState);
+          };
       },
       e => {
         let message = e##message;
@@ -55,12 +105,12 @@ module Method = {
         )
         |> StateLogicService.getEditorState;
 
-        editorState;
+        (editorState, engineState);
       },
     );
 
   let _updateScriptAttributeNodeByRemoveFieldData =
-      (nodeId, fieldName, editorState) => {
+      (nodeId, fieldName, (editorState, engineState)) => {
     let (attributeName, attribute) =
       ScriptAttributeNodeAssetEditorService.getNameAndAttribute(
         nodeId,
@@ -73,21 +123,29 @@ module Method = {
         attribute,
       );
 
-    (
-      _updateScriptAttributeNode(
-        nodeId,
+    let editorState =
+      editorState
+      |> _updateScriptAttributeNode(nodeId, attributeName, newAttribute);
+
+    let engineState =
+      ScriptEngineService.updateAttributeInAllScriptComponents(
         attributeName,
         newAttribute,
-        editorState,
-      ),
-      newAttribute,
-    );
+        engineState,
+      );
+
+    ((editorState, engineState), newAttribute);
   };
 
   let _getAttributeNodeData = (nodeId, editorState) =>
     OperateTreeAssetEditorService.unsafeFindNodeById(nodeId)
     |> StateLogicService.getEditorState
     |> ScriptAttributeNodeAssetService.getNodeData;
+
+  let _getDefaultFieldType = () => "float";
+
+  let _getDefaultFieldDefaultValue = () =>
+    0.0 |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue;
 
   let addDefaultField = (send, nodeId) => {
     let {name as attributeName, attribute}: NodeAssetType.scriptAttributeNodeData =
@@ -100,16 +158,20 @@ module Method = {
           attribute,
         ),
         {
-          "type": "float",
-          "defaultValue":
-            0.0 |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue,
+          "type": _getDefaultFieldType(),
+          "defaultValue": _getDefaultFieldDefaultValue(),
         },
         attribute,
       );
 
-    /* TODO update script component */
     _updateScriptAttributeNode(nodeId, attributeName, attribute)
     |> StateLogicService.getAndSetEditorState;
+
+    ScriptEngineService.updateAttributeInAllScriptComponents(
+      attributeName,
+      attribute,
+    )
+    |> StateLogicService.getAndSetEngineState;
 
     send(UpdateAttributeEntries(attribute));
   };
@@ -135,7 +197,6 @@ module Method = {
 
   let _renameField = (languageType, send, nodeId, oldFieldName, newFieldName) =>
     /* TODO refactor */
-    /* TODO update script component */
     oldFieldName === newFieldName ?
       () :
       {
@@ -168,6 +229,12 @@ module Method = {
 
             _updateScriptAttributeNode(nodeId, attributeName, newAttribute)
             |> StateLogicService.getAndSetEditorState;
+
+            ScriptEngineService.updateAttributeInAllScriptComponents(
+              attributeName,
+              newAttribute,
+            )
+            |> StateLogicService.getAndSetEngineState;
 
             send(UpdateAttributeEntries(newAttribute));
           };
@@ -202,28 +269,26 @@ module Method = {
              inputValue={_convertFieldToJsObjStr(field)}
              onSubmit={
                value =>
-                 /* TODO update script component */
                  _updateScriptAttributeNodeByReplaceFieldData(
                    nodeId,
                    (fieldName, value),
                  )
-                 |> StateLogicService.getAndSetEditorState
+                 |> StateLogicService.getAndSetState
              }
            />
            <button
              className="scriptAttribute-field-remove"
              onClick={
                e => {
-                 /* TODO update script component */
-
-                 let (editorState, newAttribute) =
+                 let ((editorState, engineState), newAttribute) =
                    _updateScriptAttributeNodeByRemoveFieldData(
                      nodeId,
                      fieldName,
                    )
-                   |> StateLogicService.getEditorState;
+                   |> StateLogicService.getStateToGetData;
 
                  editorState |> StateEditorService.setState |> ignore;
+                 engineState |> StateEngineService.setState |> ignore;
 
                  send(UpdateAttributeEntries(newAttribute));
                }

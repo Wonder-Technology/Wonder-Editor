@@ -17,3 +17,7 @@ let convertFieldTypeToJsObjStr = type_ =>
       }
     )
   );
+
+let getTypeFromJsObj = [%bs.raw jsObj => {|
+      return jsObj.type;
+      |}];

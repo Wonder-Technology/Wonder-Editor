@@ -9,5 +9,14 @@ let getScriptAttributeFieldDefaultValue =
        fieldName,
      );
 
+let getScriptAttributeFieldType =
+    (script, scriptAttributeName, fieldName, engineState) =>
+  ScriptEngineService.unsafeGetScriptAttribute(
+    script,
+    scriptAttributeName,
+    engineState,
+  )
+  |> ScriptAttributeEngineService.unsafeGetScriptAttributeFieldType(fieldName);
+
 let buildFloatValue = value =>
   value |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue;

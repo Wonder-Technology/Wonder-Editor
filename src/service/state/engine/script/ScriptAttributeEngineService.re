@@ -30,7 +30,7 @@ let replaceScriptAttributeField = (fieldName, attributeFieldJsObj, attribute) =>
        attributeFieldJsObj,
      );
 
-let _unsafeGetScriptAttributeField =
+let unsafeGetScriptAttributeField =
     (fieldName, attribute): ScriptAttributeType.scriptAttributeField =>
   OperateScriptAttributeDataMainService.getScriptAttributeField(
     fieldName,
@@ -46,7 +46,7 @@ let _addScriptAttributeField = (fieldName, attributeField, attribute) =>
 
 let renameScriptAttributeField = (oldFieldName, newFieldName, attribute) => {
   let attributeField =
-    _unsafeGetScriptAttributeField(oldFieldName, attribute);
+    unsafeGetScriptAttributeField(oldFieldName, attribute);
 
   OperateScriptAttributeDataMainService.removeScriptAttributeField(
     oldFieldName,
@@ -56,7 +56,7 @@ let renameScriptAttributeField = (oldFieldName, newFieldName, attribute) => {
 };
 
 let unsafeGetScriptAttributeFieldType = (fieldName, attribute) =>
-  _unsafeGetScriptAttributeField(fieldName, attribute).type_;
+  unsafeGetScriptAttributeField(fieldName, attribute).type_;
 
 let unsafeGetScriptAttributeFieldDefaultValue = (fieldName, attribute) =>
   OperateScriptAttributeDataMainService.unsafeGetScriptAttributeFieldDefaultValue(

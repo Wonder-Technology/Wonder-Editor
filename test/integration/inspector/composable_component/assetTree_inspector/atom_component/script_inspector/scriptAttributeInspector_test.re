@@ -46,7 +46,7 @@ let _ =
       })
     );
 
-    describe("test add field", () =>
+    describe("test add field", () => {
       test("test add two field", () => {
         let assetTreeData =
           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
@@ -69,8 +69,38 @@ let _ =
         |> StateLogicService.getEditorState
         |> Js.Array.length
         |> expect == 2;
-      })
-    );
+      });
+
+      describe("test update script attribute in all script components", () => {
+        beforeEach(() =>
+          ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.createDefaultSceneAndAddScriptComponent(
+            sandbox,
+          )
+        );
+
+        test("test update one script component", () => {
+          let (script, addedNodeId, fieldName) =
+            ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.prepareForOneScriptComponent(
+              sandbox,
+            );
+
+          ScriptAttributeInspectorTool.addDefaultField(
+            ~sandbox,
+            ~nodeId=addedNodeId,
+            (),
+          );
+
+          let attributeName =
+            ScriptAttributeInspectorTool.getAttributeName(addedNodeId)
+            |> StateLogicService.getEditorState;
+
+          ScriptToolEngine.getScriptAttributeEntries(script, attributeName)
+          |> StateLogicService.getEngineStateToGetData
+          |> Js.Array.length
+          |> expect == 2;
+        });
+      });
+    });
 
     describe("test set field data", () => {
       test("test change field type from int to float", () => {
@@ -98,7 +128,7 @@ let _ =
             ),
           ),
         )
-        |> StateLogicService.getAndSetEditorState;
+        |> StateLogicService.getAndSetState;
 
         ScriptAttributeInspectorTool.getAttributeEntries(addedNodeId)
         |> StateLogicService.getEditorState
@@ -139,14 +169,127 @@ let _ =
             addedNodeId,
             (fieldName, "aaa"),
           )
-          |> StateLogicService.getAndSetEditorState;
+          |> StateLogicService.getAndSetState;
 
           error |> expect |> toCalled;
         })
       );
+
+      describe("test update script attribute in all script components", () => {
+        beforeEach(() =>
+          ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.createDefaultSceneAndAddScriptComponent(
+            sandbox,
+          )
+        );
+
+        test("if only change field default value, not update", () => {
+          let (script, addedNodeId, fieldName) =
+            ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.prepareForOneScriptComponent(
+              sandbox,
+            );
+
+          ScriptAttributeInspectorTool.updateScriptAttributeNodeByReplaceFieldData(
+            addedNodeId,
+            (
+              fieldName,
+              ScriptAttributeInspectorTool.buildFieldJsObjStr(
+                ~type_=ScriptAttributeInspectorTool.getDefaultFieldType(),
+                ~defaultValue=0.1,
+              ),
+            ),
+          )
+          |> StateLogicService.getAndSetState;
+
+          let attributeName =
+            ScriptAttributeInspectorTool.getAttributeName(addedNodeId)
+            |> StateLogicService.getEditorState;
+          ScriptAttributeFieldTool.getScriptAttributeFieldDefaultValue(
+            script,
+            attributeName,
+            fieldName,
+          )
+          |> StateLogicService.getEngineStateToGetData
+          |> expect
+          == ScriptAttributeInspectorTool.getDefaultFieldDefaultValue();
+        });
+
+        describe("if change field type, update", () => {
+          test("test update one script component", () => {
+            let (script, addedNodeId, fieldName) =
+              ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.prepareForOneScriptComponent(
+                sandbox,
+              );
+
+            ScriptAttributeInspectorTool.updateScriptAttributeNodeByReplaceFieldData(
+              addedNodeId,
+              (
+                fieldName,
+                ScriptAttributeInspectorTool.buildFieldJsObjStr(
+                  ~type_="int",
+                  ~defaultValue=0,
+                ),
+              ),
+            )
+            |> StateLogicService.getAndSetState;
+
+            let attributeName =
+              ScriptAttributeInspectorTool.getAttributeName(addedNodeId)
+              |> StateLogicService.getEditorState;
+            ScriptAttributeFieldTool.getScriptAttributeFieldType(
+              script,
+              attributeName,
+              fieldName,
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == Wonderjs.ScriptAttributeType.Int;
+          });
+          test("test update two script components", () => {
+            let ((script1, script2), addedNodeId, fieldName) =
+              ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.prepareForTwoScriptComponents(
+                sandbox,
+              );
+
+            ScriptAttributeInspectorTool.updateScriptAttributeNodeByReplaceFieldData(
+              addedNodeId,
+              (
+                fieldName,
+                ScriptAttributeInspectorTool.buildFieldJsObjStr(
+                  ~type_="int",
+                  ~defaultValue=0,
+                ),
+              ),
+            )
+            |> StateLogicService.getAndSetState;
+
+            let attributeName =
+              ScriptAttributeInspectorTool.getAttributeName(addedNodeId)
+              |> StateLogicService.getEditorState;
+
+            (
+              ScriptAttributeFieldTool.getScriptAttributeFieldType(
+                script1,
+                attributeName,
+                fieldName,
+              )
+              |> StateLogicService.getEngineStateToGetData,
+              ScriptAttributeFieldTool.getScriptAttributeFieldType(
+                script2,
+                attributeName,
+                fieldName,
+              )
+              |> StateLogicService.getEngineStateToGetData,
+            )
+            |> expect
+            == (
+                 Wonderjs.ScriptAttributeType.Int,
+                 Wonderjs.ScriptAttributeType.Int,
+               );
+          });
+        });
+      });
     });
 
-    describe("test remove field", () =>
+    describe("test remove field", () => {
       test("test remove one field", () => {
         let assetTreeData =
           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
@@ -171,14 +314,44 @@ let _ =
           addedNodeId,
           fieldName,
         )
-        |> StateLogicService.getAndSetEditorState;
+        |> StateLogicService.getAndSetState;
 
         ScriptAttributeInspectorTool.getAttributeEntries(addedNodeId)
         |> StateLogicService.getEditorState
         |> Js.Array.length
         |> expect == 1;
-      })
-    );
+      });
+
+      describe("test update script attribute in all script components", () => {
+        beforeEach(() =>
+          ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.createDefaultSceneAndAddScriptComponent(
+            sandbox,
+          )
+        );
+
+        test("test update one script component", () => {
+          let (script, addedNodeId, fieldName) =
+            ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.prepareForOneScriptComponent(
+              sandbox,
+            );
+
+          ScriptAttributeInspectorTool.updateScriptAttributeNodeByRemoveFieldData(
+            addedNodeId,
+            fieldName,
+          )
+          |> StateLogicService.getAndSetState;
+
+          let attributeName =
+            ScriptAttributeInspectorTool.getAttributeName(addedNodeId)
+            |> StateLogicService.getEditorState;
+
+          ScriptToolEngine.getScriptAttributeEntries(script, attributeName)
+          |> StateLogicService.getEngineStateToGetData
+          |> Js.Array.length
+          |> expect == 0;
+        });
+      });
+    });
 
     describe("test rename field", () => {
       let _prepare = sandbox => {
@@ -288,5 +461,38 @@ let _ =
         )
         |> ReactTestTool.createSnapshotAndMatch;
       });
+
+      describe("test update script attribute in all script components", () =>
+        test("test update one script component", () => {
+          ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.createDefaultSceneAndAddScriptComponent(
+            sandbox,
+          );
+          let script = GameObjectTool.getCurrentSceneTreeNodeScript();
+          let (addedNodeId, field1Name, field2Name, warn) =
+            _prepare(sandbox);
+          MainEditorScriptTool.addScriptAttribute(
+            ~script,
+            ~send=SinonTool.createOneLengthStub(sandbox^),
+            (),
+          );
+          let newName = "zzz";
+
+          ScriptAttributeInspectorTool.renameField(
+            ~sandbox,
+            ~nodeId=addedNodeId,
+            ~oldName=field1Name,
+            ~newName,
+            (),
+          );
+
+          let attributeName =
+            ScriptAttributeInspectorTool.getAttributeName(addedNodeId)
+            |> StateLogicService.getEditorState;
+          ScriptToolEngine.getScriptAttributeFieldNames(script, attributeName)
+          |> StateLogicService.getEngineStateToGetData
+          |> Js.Array.sortInPlace
+          |> expect == ([|newName, field2Name|] |> Js.Array.sortInPlace);
+        })
+      );
     });
   });
