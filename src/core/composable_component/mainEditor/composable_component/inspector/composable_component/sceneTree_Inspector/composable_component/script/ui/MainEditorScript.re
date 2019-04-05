@@ -558,7 +558,6 @@ module Method = {
       (languageType, script, attributeName, attribute) =>
     ReasonReact.array(
       ScriptAttributeEngineService.getScriptAttributeEntries(attribute)
-      /* TODO extract text ui */
       |> Js.Array.map(((fieldName, field)) => {
            let type_ =
              ScriptAttributeEngineService.unsafeGetScriptAttributeFieldType(
@@ -568,42 +567,28 @@ module Method = {
 
            <div
              key={DomHelper.getRandomKey()} className="scriptAttribute-field">
-             <div className="text">
-               <span
-                 className="text-header"
-                 title={
-                   LanguageUtils.getInspectorLanguageDataByType(
-                     "script-scriptAttribute-field-name-describe",
-                     languageType,
-                   )
-                 }>
-                 {DomHelper.textEl("Field Name")}
-               </span>
-               <span className="text-body">
-                 {DomHelper.textEl(fieldName)}
-               </span>
-             </div>
-             <div className="text">
-               <span
-                 className="text-header"
-                 title={
-                   LanguageUtils.getInspectorLanguageDataByType(
-                     "script-scriptAttribute-field-type-describe",
-                     languageType,
-                   )
-                 }>
-                 {DomHelper.textEl("Type")}
-               </span>
-               <span className="text-body">
-                 {
-                   DomHelper.textEl(
-                     ScriptAttributeTypeService.convertFieldTypeToJsObjStr(
-                       type_,
-                     ),
-                   )
-                 }
-               </span>
-             </div>
+             <Text
+               headerText="Field Name"
+               headerTitle={
+                 LanguageUtils.getInspectorLanguageDataByType(
+                   "script-scriptAttribute-field-name-describe",
+                   languageType,
+                 )
+               }
+               bodyText=fieldName
+             />
+             <Text
+               headerText="Type"
+               headerTitle={
+                 LanguageUtils.getInspectorLanguageDataByType(
+                   "script-scriptAttribute-field-type-describe",
+                   languageType,
+                 )
+               }
+               bodyText={
+                 ScriptAttributeTypeService.convertFieldTypeToJsObjStr(type_)
+               }
+             />
              {
                _renderScriptAttributeFieldDefaultValue(
                  languageType,
