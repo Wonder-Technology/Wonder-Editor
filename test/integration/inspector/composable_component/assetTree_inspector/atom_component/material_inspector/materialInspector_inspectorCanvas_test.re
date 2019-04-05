@@ -11,8 +11,7 @@ open Sinon;
 open Js.Promise;
 
 let _ =
-  /* TODO fix: fix insepctor to inspector */
-  describe("materialInspector: insepctor canvas", () => {
+  describe("materialInspector: inspector canvas", () => {
     let sandbox = getSandboxDefaultVal();
 
     let _prepareState = () => {
@@ -91,8 +90,8 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    /* TODO refactor: rename parent gameObject to container gameObject */
-    describe("test create material sphere into parent gameObject", () =>
+    /* TODO refactor: rename container gameObject to container gameObject */
+    describe("test create material sphere into container gameObject", () =>
       describe("test create new material into asset", () => {
         describe("test select the new material", ()
           /* TODO test: rewrite this case. e.g.:
@@ -107,11 +106,11 @@ let _ =
                    (),
                  ); */
 
-                 MainEditor.didUpdate(fakeOldNewSelf); //hide canvas parent
+                 MainEditor.didUpdate(fakeOldNewSelf); //hide canvas container
 
-                 MaterialInspector.didMount(fakeSelf); //show canvas parent
+                 MaterialInspector.didMount(fakeSelf); //show canvas container
 
-                 isShowDom(get canvas parent) |> expect == true;
+                 isShowDom(get canvas container) |> expect == true;
                });
 
                test("unMount the MaterialInspector should hide inspector canvas", () => {
@@ -123,13 +122,13 @@ let _ =
                    (),
                  ); */
 
-                 MainEditor.didUpdate(fakeOldNewSelf); //hide canvas parent
+                 MainEditor.didUpdate(fakeOldNewSelf); //hide canvas container
 
-                 MaterialInspector.didMount(fakeSelf); //show canvas parent
+                 MaterialInspector.didMount(fakeSelf); //show canvas container
 
-                 MaterialInspector.willUnmount(fakeSelf); //hide canvas parent
+                 MaterialInspector.willUnmount(fakeSelf); //hide canvas container
 
-                 isShowDom(get canvas parent) |> expect == false;
+                 isShowDom(get canvas container) |> expect == false;
                })
 
              */
@@ -254,7 +253,7 @@ let _ =
 
         describe("test create material sphere gameObject", () => {
           test(
-            "create material sphere gameObject add to parent gameObject", () => {
+            "create material sphere gameObject add to container gameObject", () => {
             let inspectorEngineState =
               StateInspectorEngineService.unsafeGetState();
             let editorState = StateEditorService.getState();
@@ -298,8 +297,8 @@ let _ =
       })
     );
 
-    describe("test dispose parent gameObject all child", () =>
-      test("the parent gameObject children array should be empty", () => {
+    describe("test dispose container gameObject all child", () =>
+      test("the container gameObject children array should be empty", () => {
         let inspectorEngineState =
           StateInspectorEngineService.unsafeGetState();
         let editorState = StateEditorService.getState();

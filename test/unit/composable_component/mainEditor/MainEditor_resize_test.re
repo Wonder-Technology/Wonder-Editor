@@ -3,8 +3,6 @@ open Expect;
 open Expect.Operators;
 open Sinon;
 
-/* TODO test: add test inspectorCanvas */
-
 let _ =
   describe("test mainEditor->resize", () => {
     let sandbox = getSandboxDefaultVal();
@@ -74,7 +72,7 @@ let _ =
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("resizeCanvasAndViewPort", () => {
+    describe("resize canvas and viewPort", () => {
       describe("set canvas size", () =>
         test(
           "canvas's width and height should == parent's width and height", () => {
@@ -226,5 +224,54 @@ let _ =
           },
         );
       });
+    });
+
+    describe("resize inspector-canvas and viewPort", () => {
+      describe("set inspector-canvas size", () =>
+        test(
+          "inspector-canvas's width and height should == parent's width and height",
+          () => {
+          _prepareState();
+
+          let (parentDom, canvasDom) =
+            CanvasTool.stubCanvasParentAndCanvas(
+              ~sandbox,
+              ~offsetWidth=200,
+              ~offsetHeight=200,
+              (),
+            );
+
+          _resize(sandbox) |> ignore;
+
+          (canvasDom##width, canvasDom##height)
+          |> expect == (parentDom##offsetWidth, parentDom##offsetHeight);
+        })
+      );
+
+      describe("set viewport", () =>
+        test(
+          "inspector-canvas's viewport should == canvas parent's width and height",
+          () => {
+          _prepareState();
+
+          let (parentDom, canvasDom) =
+            CanvasTool.stubCanvasParentAndCanvas(
+              ~sandbox,
+              ~offsetWidth=200,
+              ~offsetHeight=200,
+              (),
+            );
+
+          _resize(sandbox) |> ignore;
+
+          let (_, _, width, height) =
+            StateInspectorEngineService.unsafeGetState()
+            |> DeviceManagerEngineService.getViewport
+            |> OptionService.unsafeGet;
+
+          (width, height)
+          |> expect == (parentDom##offsetWidth, parentDom##offsetHeight);
+        })
+      );
     });
   });

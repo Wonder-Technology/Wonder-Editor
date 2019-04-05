@@ -112,16 +112,16 @@ let isViewSizeChange =
 let resizeScreen = () => {
   let engineState = StateEngineService.unsafeGetState();
   let inspectorEngineState = StateInspectorEngineService.unsafeGetState();
-
   let canvasParentSize =
     DomHelper.getElementById("canvasParent") |> getCanvasParentSize;
   let inspectorCanvasParentSize =
     DomHelper.getElementById("inspectorCanvasParent") |> getCanvasParentSize;
 
-  canvasParentSize |> resizeCanvas(DomHelper.getElementById("canvas"));
-
-  inspectorCanvasParentSize
-  |> resizeCanvas(DomHelper.getElementById("inspector-canvas"));
+  resizeCanvas(DomHelper.getElementById("canvas"), canvasParentSize);
+  resizeCanvas(
+    DomHelper.getElementById("inspector-canvas"),
+    inspectorCanvasParentSize,
+  );
 
   engineState |> DeviceManagerEngineService.getGl |> Js.Option.isSome ?
     {
