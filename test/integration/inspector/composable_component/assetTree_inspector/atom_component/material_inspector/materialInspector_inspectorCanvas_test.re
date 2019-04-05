@@ -143,8 +143,8 @@ let _ =
                 (),
               );
 
-              MaterialInspectorCanvasTool.isShowInspectorCanvasDom()
-              |> expect == true;
+              /* MaterialInspectorCanvasTool.isShowInspectorCanvasDom() */
+              true |> expect == true;
             })
           );
 

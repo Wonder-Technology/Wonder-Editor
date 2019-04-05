@@ -3,29 +3,6 @@ type retainedProps = {isInitEngine: bool};
 module Method = {
   let resizeCanvasAndViewPort = () => ResizeUtils.resizeScreen();
 
-  /* TODO refactor: remove */
-  let isShowInspectorCanvasDom = () => {
-    let editorState = StateEditorService.getState();
-
-    switch (
-      CurrentSelectSourceEditorService.getCurrentSelectSource(editorState)
-    ) {
-    | None
-    | Some(SceneTree) => false
-    | Some(Asset) =>
-      switch (OperateTreeAssetEditorService.getCurrentNode(editorState)) {
-      | None => false
-      | Some(currentNode) =>
-        switch (currentNode) {
-        | TextureNode(nodeId, textureNodeData) => false
-        | FolderNode(nodeId, folderNodeData, children) => false
-        | MaterialNode(nodeId, materialNodeData) => true
-        | WDBNode(nodeId, wdbNodeData) => true
-        }
-      }
-    };
-  };
-
   let buildNoCameraElement = () =>
     SceneUtils.isSceneHaveNoActiveCamera() ?
       switch (
@@ -131,24 +108,19 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   didUpdate:
     (
       ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) as oldNewSelf,
-    ) => {
+    ) =>
     Method.execFuncOnlyOnceInDidUpdate(
       oldNewSelf,
       () => {
         Method.resizeCanvasAndViewPort();
 
-        DomHelper.toggleShowDom(
+        DomHelper.setDomDisplay(
           DomHelper.getElementById("inspectorCanvasParent"),
           false,
         );
       },
-    );
-
-    Js.log({j|didUpdate maineditor|j}) |> ignore;
-  },
+    ),
   didMount: _self => {
-    Js.log({j|didMount maineditor|j}) |> ignore;
-
     Js.Promise.(
       MainUtils.initEngine()
       |> then_(_ => {
@@ -159,8 +131,6 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
                |> StateEditorService.setState
            )
            |> StateLogicService.getAndSetEditorState;
-
-           WonderLog.Log.log({j|before dispatch InitEngineAction|j});
 
            dispatchFunc(AppStore.InitEngineAction) |> resolve;
          })
