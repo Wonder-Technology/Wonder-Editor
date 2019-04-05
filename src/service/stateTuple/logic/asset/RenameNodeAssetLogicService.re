@@ -134,7 +134,6 @@ let _scriptEventFunctionNodeFunc =
     && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
       {
         let (result, newTree) =
-          /* TODO need test */
           switch (
             _checkParentNode(parentFolderNode, name, engineState)
             |> Result.RelationResult.handleSuccess(() =>
@@ -189,7 +188,6 @@ let _scriptAttributeNodeFunc =
     && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
       {
         let (result, newTree) =
-          /* TODO need test */
           switch (
             _checkParentNode(parentFolderNode, name, engineState)
             |> Result.RelationResult.handleSuccess(() =>

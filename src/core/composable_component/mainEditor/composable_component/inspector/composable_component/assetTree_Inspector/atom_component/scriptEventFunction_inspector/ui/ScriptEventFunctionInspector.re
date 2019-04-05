@@ -32,7 +32,6 @@ module Method = {
     |> ScriptEventFunctionEngineService.createScriptEventFunctionData;
 
   let updateEventFunctionData = (nodeId, name, eventFunctionJsObjStr) =>
-    /* TODO update script component->event function data of the name */
     Console.tryCatch(
       () => {
         let newEventFunctionData =

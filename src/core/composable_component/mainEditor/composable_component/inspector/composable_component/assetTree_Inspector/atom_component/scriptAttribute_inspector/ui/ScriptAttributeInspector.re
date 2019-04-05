@@ -196,7 +196,6 @@ module Method = {
   };
 
   let _renameField = (languageType, send, nodeId, oldFieldName, newFieldName) =>
-    /* TODO refactor */
     oldFieldName === newFieldName ?
       () :
       {
