@@ -52,36 +52,6 @@ let replaceScriptAttribute =
        targetScriptAttribute,
      );
 
-let updateAttributeInAllScriptComponents =
-    (
-      attributeName,
-      newAttribute,
-      ({scriptRecord}: StateDataMainType.state) as engineState,
-    ) => {
-  let {scriptAttributeMap}: StateDataMainType.scriptRecord = scriptRecord;
-
-  let scriptAttributeMap =
-    scriptAttributeMap
-    |> WonderCommonlib.ImmutableSparseMapService.mapValid((. attributeMap) =>
-         attributeMap
-         |> WonderCommonlib.ImmutableHashMapService.has(attributeName) ?
-           attributeMap
-           |> WonderCommonlib.ImmutableHashMapService.set(
-                attributeName,
-                newAttribute,
-              ) :
-           attributeMap
-       );
-
-  {
-    ...engineState,
-    scriptRecord: {
-      ...scriptRecord,
-      scriptAttributeMap,
-    },
-  };
-};
-
 let unsafeGetScriptAttributeEntries = ScriptAPI.unsafeGetScriptAttributeEntries;
 
 let unsafeGetScriptAttribute = ScriptAPI.unsafeGetScriptAttribute;
@@ -151,4 +121,58 @@ let hasScriptAttributeData =
          Some() : None
      )
   |> Js.Option.isSome;
+};
+
+let _updateScriptDataMapInAllScriptComponents =
+    (dataName, newData, scriptDataMap) =>
+  scriptDataMap
+  |> WonderCommonlib.ImmutableSparseMapService.mapValid((. dataMap) =>
+       dataMap |> WonderCommonlib.ImmutableHashMapService.has(dataName) ?
+         dataMap
+         |> WonderCommonlib.ImmutableHashMapService.set(dataName, newData) :
+         dataMap
+     );
+
+let updateAttributeInAllScriptComponents =
+    (
+      attributeName,
+      newAttribute,
+      ({scriptRecord}: StateDataMainType.state) as engineState,
+    ) => {
+  let {scriptAttributeMap}: StateDataMainType.scriptRecord = scriptRecord;
+
+  {
+    ...engineState,
+    scriptRecord: {
+      ...scriptRecord,
+      scriptAttributeMap:
+        _updateScriptDataMapInAllScriptComponents(
+          attributeName,
+          newAttribute,
+          scriptAttributeMap,
+        ),
+    },
+  };
+};
+
+let updateEventFunctionInAllScriptComponents =
+    (
+      eventFunctionName,
+      newEventFunctionData,
+      ({scriptRecord}: StateDataMainType.state) as engineState,
+    ) => {
+  let {scriptEventFunctionDataMap}: StateDataMainType.scriptRecord = scriptRecord;
+
+  {
+    ...engineState,
+    scriptRecord: {
+      ...scriptRecord,
+      scriptEventFunctionDataMap:
+        _updateScriptDataMapInAllScriptComponents(
+          eventFunctionName,
+          newEventFunctionData,
+          scriptEventFunctionDataMap,
+        ),
+    },
+  };
 };

@@ -32,19 +32,27 @@ module Method = {
     |> ScriptEventFunctionEngineService.createScriptEventFunctionData;
 
   let updateEventFunctionData = (nodeId, name, eventFunctionJsObjStr) =>
-    /* TODO check eventFunctionJsObjStr: should be valid */
     /* TODO update script component->event function data of the name */
     Console.tryCatch(
-      () =>
+      () => {
+        let newEventFunctionData =
+          _convertEventFunctionJsObjStrToData(eventFunctionJsObjStr);
+
         ScriptEventFunctionNodeAssetEditorService.setNodeData(
           nodeId,
           ScriptEventFunctionNodeAssetService.buildNodeData(
             ~name,
-            ~eventFunctionData=
-              _convertEventFunctionJsObjStrToData(eventFunctionJsObjStr),
+            ~eventFunctionData=newEventFunctionData,
           ),
         )
-        |> StateLogicService.getAndSetEditorState,
+        |> StateLogicService.getAndSetEditorState;
+
+        ScriptEngineService.updateEventFunctionInAllScriptComponents(
+          name,
+          newEventFunctionData,
+        )
+        |> StateLogicService.getAndSetEngineState;
+      },
       e => {
         let message = e##message;
 

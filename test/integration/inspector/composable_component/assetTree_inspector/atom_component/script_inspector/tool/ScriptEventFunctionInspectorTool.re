@@ -41,3 +41,30 @@ let buildEventFunctionDataJsObjStr =
     dispose: disposeFunc,
   })
   |> StringTool.removeNewLinesAndSpaces;
+
+module TestUpdateScriptEventFunctionInAllScriptComponents = {
+  let createDefaultSceneAndAddScriptComponent = sandbox => {
+    MainEditorSceneTool.createDefaultScene(
+      sandbox,
+      MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
+    );
+
+    MainEditorInspectorAddComponentTool.addScriptComponent();
+  };
+
+  let prepareForOneScriptComponent = sandbox => {
+    let script = GameObjectTool.getCurrentSceneTreeNodeScript();
+    let assetTreeData =
+      MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+    let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
+    MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
+
+    MainEditorScriptTool.addScriptEventFunction(
+      ~script,
+      ~send=SinonTool.createOneLengthStub(sandbox^),
+      (),
+    );
+
+    (script, addedNodeId);
+  };
+};

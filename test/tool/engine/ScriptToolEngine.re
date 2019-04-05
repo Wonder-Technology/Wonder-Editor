@@ -9,3 +9,11 @@ let getScriptAttributeEntries = (script, attributeName, engineState) =>
 let getScriptAttributeFieldNames = (script, attributeName, engineState) =>
   getScriptAttributeEntries(script, attributeName, engineState)
   |> Js.Array.map(((name, _)) => name);
+
+let unsafeGetScriptEventFunctionData =
+    (script, eventFunctionName, engineState) =>
+  Wonderjs.OperateScriptDataMainService.unsafeGetScriptAllEventFunctionData(
+    script,
+    engineState,
+  )
+  |> WonderCommonlib.ImmutableHashMapService.unsafeGet(eventFunctionName);
