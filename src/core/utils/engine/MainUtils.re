@@ -90,16 +90,6 @@ let _registerJobForInspectorEngine = engineState =>
   |> JobEngineService.registerNoWorkerLoopJob(
        "reallocate_cpu_memory",
        ReallocateCPUMemoryJob.reallocateJob,
-     )
-  /* TODO refactor:remove */
-  |> JobEngineService.registerNoWorkerLoopJob(
-       "update_camera",
-       UpdateCameraJob.updateJob,
-     )
-  /* TODO refactor:remove */
-  |> JobEngineService.registerNoWorkerLoopJob(
-       "restoreInspectorEngineJob",
-       RestoreInspectorEngineJob.restoreInspectorEngineJob,
      );
 
 let _handleEngineState = engineState => {
