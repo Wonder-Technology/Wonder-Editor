@@ -119,7 +119,7 @@ module TestUpdateScriptAttributeInAllScriptComponents = {
     MainEditorAssetHeaderOperateNodeTool.addScriptAttribute();
     addDefaultField(~sandbox, ~nodeId=addedNodeId, ());
 
-    MainEditorScriptTool.addScriptAttribute(
+    MainEditorScriptAttributeTool.addScriptAttribute(
       ~script,
       ~send=SinonTool.createOneLengthStub(sandbox^),
       (),
@@ -143,18 +143,14 @@ module TestUpdateScriptAttributeInAllScriptComponents = {
       MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
     let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
     MainEditorAssetHeaderOperateNodeTool.addScriptAttribute();
-    addDefaultField(
-      ~sandbox,
-      ~nodeId=addedNodeId,
-      (),
-    );
+    addDefaultField(~sandbox, ~nodeId=addedNodeId, ());
 
-    MainEditorScriptTool.addScriptAttribute(
+    MainEditorScriptAttributeTool.addScriptAttribute(
       ~script=script1,
       ~send=SinonTool.createOneLengthStub(sandbox^),
       (),
     );
-    MainEditorScriptTool.addScriptAttribute(
+    MainEditorScriptAttributeTool.addScriptAttribute(
       ~script=script2,
       ~send=SinonTool.createOneLengthStub(sandbox^),
       (),

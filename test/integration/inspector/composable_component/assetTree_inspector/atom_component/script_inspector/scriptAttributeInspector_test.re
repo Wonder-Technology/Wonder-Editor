@@ -470,7 +470,7 @@ let _ =
           let script = GameObjectTool.getCurrentSceneTreeNodeScript();
           let (addedNodeId, field1Name, field2Name, warn) =
             _prepare(sandbox);
-          MainEditorScriptTool.addScriptAttribute(
+          MainEditorScriptAttributeTool.addScriptAttribute(
             ~script,
             ~send=SinonTool.createOneLengthStub(sandbox^),
             (),

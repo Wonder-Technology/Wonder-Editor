@@ -59,7 +59,7 @@ module TestUpdateScriptEventFunctionInAllScriptComponents = {
     let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
     MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
 
-    MainEditorScriptTool.addScriptEventFunction(
+    MainEditorScriptEventFunctionTool.addScriptEventFunction(
       ~script,
       ~send=SinonTool.createOneLengthStub(sandbox^),
       (),

@@ -37,7 +37,7 @@ let _ =
                 "warn",
               );
 
-            MainEditorScriptTool.addScriptEventFunction(
+            MainEditorScriptEventFunctionTool.addScriptEventFunction(
               ~script=GameObjectTool.getCurrentSceneTreeNodeScript(),
               ~send=SinonTool.createOneLengthStub(sandbox^),
               (),
@@ -57,12 +57,12 @@ let _ =
             let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
             MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
 
-            MainEditorScriptTool.addScriptEventFunction(
+            MainEditorScriptEventFunctionTool.addScriptEventFunction(
               ~script=GameObjectTool.getCurrentSceneTreeNodeScript(),
               ~send=SinonTool.createOneLengthStub(sandbox^),
               (),
             );
-            MainEditorScriptTool.addScriptEventFunction(
+            MainEditorScriptEventFunctionTool.addScriptEventFunction(
               ~script=GameObjectTool.getCurrentSceneTreeNodeScript(),
               ~send=SinonTool.createOneLengthStub(sandbox^),
               (),
@@ -79,21 +79,25 @@ let _ =
               MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
 
               let state =
-                MainEditorScriptTool.getUpdateState(
+                MainEditorScriptEventFunctionTool.getUpdateState(
                   ~state=
-                    MainEditorScriptTool.buildState(
+                    MainEditorScriptEventFunctionTool.buildState(
                       ~currentScript=
                         GameObjectTool.getCurrentSceneTreeNodeScript(),
                       (),
                     ),
                   ~func=
-                    MainEditorScriptTool.addScriptEventFunction(
+                    MainEditorScriptEventFunctionTool.addScriptEventFunction(
                       ~script=GameObjectTool.getCurrentSceneTreeNodeScript(),
                       (),
                     ),
                 );
 
-              BuildComponentTool.renderScriptComponent(~state, ~sandbox, ())
+              BuildComponentTool.renderScriptEventFunctionComponent(
+                ~state,
+                ~sandbox,
+                (),
+              )
               |> ReactTestTool.createSnapshotAndMatch;
             })
           );
@@ -106,7 +110,7 @@ let _ =
               let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
               MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
 
-              MainEditorScriptTool.addScriptEventFunction(
+              MainEditorScriptEventFunctionTool.addScriptEventFunction(
                 ~script,
                 ~send=SinonTool.createOneLengthStub(sandbox^),
                 (),
@@ -124,7 +128,7 @@ let _ =
             test("remove from script", () => {
               let (script, eventFunctionName) = _prepare();
 
-              MainEditorScriptTool.removeScriptEventFunction(
+              MainEditorScriptEventFunctionTool.removeScriptEventFunction(
                 ~script,
                 ~eventFunctionName,
                 (),
@@ -141,7 +145,7 @@ let _ =
               let (script, eventFunctionName) = _prepare();
               let dispatchFunc = SinonTool.createOneLengthStub(sandbox^);
 
-              MainEditorScriptTool.removeScriptEventFunction(
+              MainEditorScriptEventFunctionTool.removeScriptEventFunction(
                 ~script,
                 ~eventFunctionName,
                 ~dispatchFunc,
@@ -165,21 +169,21 @@ let _ =
               MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
               MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
 
-              MainEditorScriptTool.addScriptEventFunction(
+              MainEditorScriptEventFunctionTool.addScriptEventFunction(
                 ~script,
                 ~send=SinonTool.createOneLengthStub(sandbox^),
                 (),
               );
 
               let state =
-                MainEditorScriptTool.getUpdateState(
+                MainEditorScriptEventFunctionTool.getUpdateState(
                   ~state=
-                    MainEditorScriptTool.buildState(
+                    MainEditorScriptEventFunctionTool.buildState(
                       ~currentScript=script,
                       (),
                     ),
                   ~func=
-                    MainEditorScriptTool.sendShowScriptEventFunctionGroupForChange(
+                    MainEditorScriptEventFunctionTool.sendShowScriptEventFunctionGroupForChange(
                       ~scriptEventFunctionNodeId=
                         MainEditorScriptTool.getScriptAllEventFunctionNodeIds(
                           script,
@@ -191,7 +195,11 @@ let _ =
                     ),
                 );
 
-              BuildComponentTool.renderScriptComponent(~state, ~sandbox, ())
+              BuildComponentTool.renderScriptEventFunctionComponent(
+                ~state,
+                ~sandbox,
+                (),
+              )
               |> ReactTestTool.createSnapshotAndMatch;
             })
           );
@@ -205,28 +213,28 @@ let _ =
               MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
               MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
 
-              MainEditorScriptTool.addScriptEventFunction(
+              MainEditorScriptEventFunctionTool.addScriptEventFunction(
                 ~script,
                 ~send=SinonTool.createOneLengthStub(sandbox^),
                 (),
               );
 
               let targetScriptEventFunctionNodeId =
-                MainEditorScriptTool.getUnUsedScriptEventFunctionNodeIds(
+                MainEditorScriptEventFunctionTool.getUnUsedScriptEventFunctionNodeIds(
                   script,
                 )
                 |> StateLogicService.getStateToGetData
                 |> ArrayService.unsafeGetFirst;
 
               let state =
-                MainEditorScriptTool.getUpdateState(
+                MainEditorScriptEventFunctionTool.getUpdateState(
                   ~state=
-                    MainEditorScriptTool.buildState(
+                    MainEditorScriptEventFunctionTool.buildState(
                       ~currentScript=script,
                       (),
                     ),
                   ~func=
-                    MainEditorScriptTool.handleChangeScriptEventFunction(
+                    MainEditorScriptEventFunctionTool.handleChangeScriptEventFunction(
                       ~script,
                       ~currentScriptEventFunctionNodeId=
                         MainEditorScriptTool.getScriptAllEventFunctionNodeIds(
@@ -239,21 +247,25 @@ let _ =
                 );
 
               let state =
-                MainEditorScriptTool.getUpdateState(
+                MainEditorScriptEventFunctionTool.getUpdateState(
                   ~state=
-                    MainEditorScriptTool.buildState(
+                    MainEditorScriptEventFunctionTool.buildState(
                       ~currentScript=script,
                       (),
                     ),
                   ~func=
-                    MainEditorScriptTool.sendShowScriptEventFunctionGroupForChange(
+                    MainEditorScriptEventFunctionTool.sendShowScriptEventFunctionGroupForChange(
                       ~scriptEventFunctionNodeId=targetScriptEventFunctionNodeId,
                       ~script,
                       (),
                     ),
                 );
 
-              BuildComponentTool.renderScriptComponent(~state, ~sandbox, ())
+              BuildComponentTool.renderScriptEventFunctionComponent(
+                ~state,
+                ~sandbox,
+                (),
+              )
               |> ReactTestTool.createSnapshotAndMatch;
             })
           );
@@ -270,7 +282,7 @@ let _ =
                 "warn",
               );
 
-            MainEditorScriptTool.addScriptAttribute(
+            MainEditorScriptAttributeTool.addScriptAttribute(
               ~script=GameObjectTool.getCurrentSceneTreeNodeScript(),
               ~send=SinonTool.createOneLengthStub(sandbox^),
               (),
@@ -290,12 +302,12 @@ let _ =
             let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
             MainEditorAssetHeaderOperateNodeTool.addScriptAttribute();
 
-            MainEditorScriptTool.addScriptAttribute(
+            MainEditorScriptAttributeTool.addScriptAttribute(
               ~script=GameObjectTool.getCurrentSceneTreeNodeScript(),
               ~send=SinonTool.createOneLengthStub(sandbox^),
               (),
             );
-            MainEditorScriptTool.addScriptAttribute(
+            MainEditorScriptAttributeTool.addScriptAttribute(
               ~script=GameObjectTool.getCurrentSceneTreeNodeScript(),
               ~send=SinonTool.createOneLengthStub(sandbox^),
               (),
@@ -312,21 +324,25 @@ let _ =
               MainEditorAssetHeaderOperateNodeTool.addScriptAttribute();
 
               let state =
-                MainEditorScriptTool.getUpdateState(
+                MainEditorScriptAttributeTool.getUpdateState(
                   ~state=
-                    MainEditorScriptTool.buildState(
+                    MainEditorScriptAttributeTool.buildState(
                       ~currentScript=
                         GameObjectTool.getCurrentSceneTreeNodeScript(),
                       (),
                     ),
                   ~func=
-                    MainEditorScriptTool.addScriptAttribute(
+                    MainEditorScriptAttributeTool.addScriptAttribute(
                       ~script=GameObjectTool.getCurrentSceneTreeNodeScript(),
                       (),
                     ),
                 );
 
-              BuildComponentTool.renderScriptComponent(~state, ~sandbox, ())
+              BuildComponentTool.renderScriptAttributeComponent(
+                ~state,
+                ~sandbox,
+                (),
+              )
               |> ReactTestTool.createSnapshotAndMatch;
             })
           );
@@ -339,7 +355,7 @@ let _ =
               let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
               MainEditorAssetHeaderOperateNodeTool.addScriptAttribute();
 
-              MainEditorScriptTool.addScriptAttribute(
+              MainEditorScriptAttributeTool.addScriptAttribute(
                 ~script,
                 ~send=SinonTool.createOneLengthStub(sandbox^),
                 (),
@@ -355,7 +371,7 @@ let _ =
             test("remove from script", () => {
               let (script, attributeName) = _prepare();
 
-              MainEditorScriptTool.removeScriptAttribute(
+              MainEditorScriptAttributeTool.removeScriptAttribute(
                 ~script,
                 ~attributeName,
                 (),
@@ -372,7 +388,7 @@ let _ =
               let (script, attributeName) = _prepare();
               let dispatchFunc = SinonTool.createOneLengthStub(sandbox^);
 
-              MainEditorScriptTool.removeScriptAttribute(
+              MainEditorScriptAttributeTool.removeScriptAttribute(
                 ~script,
                 ~attributeName,
                 ~dispatchFunc,
@@ -396,21 +412,21 @@ let _ =
               MainEditorAssetHeaderOperateNodeTool.addScriptAttribute();
               MainEditorAssetHeaderOperateNodeTool.addScriptAttribute();
 
-              MainEditorScriptTool.addScriptAttribute(
+              MainEditorScriptAttributeTool.addScriptAttribute(
                 ~script,
                 ~send=SinonTool.createOneLengthStub(sandbox^),
                 (),
               );
 
               let state =
-                MainEditorScriptTool.getUpdateState(
+                MainEditorScriptAttributeTool.getUpdateState(
                   ~state=
-                    MainEditorScriptTool.buildState(
+                    MainEditorScriptAttributeTool.buildState(
                       ~currentScript=script,
                       (),
                     ),
                   ~func=
-                    MainEditorScriptTool.sendShowScriptAttributeGroupForChange(
+                    MainEditorScriptAttributeTool.sendShowScriptAttributeGroupForChange(
                       ~scriptAttributeNodeId=
                         MainEditorScriptTool.getScriptAllAttributeNodeIds(
                           script,
@@ -422,7 +438,11 @@ let _ =
                     ),
                 );
 
-              BuildComponentTool.renderScriptComponent(~state, ~sandbox, ())
+              BuildComponentTool.renderScriptAttributeComponent(
+                ~state,
+                ~sandbox,
+                (),
+              )
               |> ReactTestTool.createSnapshotAndMatch;
             })
           );
@@ -436,7 +456,7 @@ let _ =
               MainEditorAssetHeaderOperateNodeTool.addScriptAttribute();
               MainEditorAssetHeaderOperateNodeTool.addScriptAttribute();
 
-              MainEditorScriptTool.addScriptAttribute(
+              MainEditorScriptAttributeTool.addScriptAttribute(
                 ~script,
                 ~send=SinonTool.createOneLengthStub(sandbox^),
                 (),
@@ -448,14 +468,14 @@ let _ =
                 |> ArrayService.unsafeGetFirst;
 
               let state =
-                MainEditorScriptTool.getUpdateState(
+                MainEditorScriptAttributeTool.getUpdateState(
                   ~state=
-                    MainEditorScriptTool.buildState(
+                    MainEditorScriptAttributeTool.buildState(
                       ~currentScript=script,
                       (),
                     ),
                   ~func=
-                    MainEditorScriptTool.handleChangeScriptAttribute(
+                    MainEditorScriptAttributeTool.handleChangeScriptAttribute(
                       ~script,
                       ~currentScriptAttributeNodeId=
                         MainEditorScriptTool.getScriptAllAttributeNodeIds(
@@ -468,21 +488,25 @@ let _ =
                 );
 
               let state =
-                MainEditorScriptTool.getUpdateState(
+                MainEditorScriptAttributeTool.getUpdateState(
                   ~state=
-                    MainEditorScriptTool.buildState(
+                    MainEditorScriptAttributeTool.buildState(
                       ~currentScript=script,
                       (),
                     ),
                   ~func=
-                    MainEditorScriptTool.sendShowScriptAttributeGroupForChange(
+                    MainEditorScriptAttributeTool.sendShowScriptAttributeGroupForChange(
                       ~scriptAttributeNodeId=targetScriptAttributeNodeId,
                       ~script,
                       (),
                     ),
                 );
 
-              BuildComponentTool.renderScriptComponent(~state, ~sandbox, ())
+              BuildComponentTool.renderScriptAttributeComponent(
+                ~state,
+                ~sandbox,
+                (),
+              )
               |> ReactTestTool.createSnapshotAndMatch;
             })
           );
@@ -500,7 +524,7 @@ let _ =
               (),
             );
 
-            MainEditorScriptTool.addScriptAttribute(
+            MainEditorScriptAttributeTool.addScriptAttribute(
               ~script=GameObjectTool.getCurrentSceneTreeNodeScript(),
               ~send=SinonTool.createOneLengthStub(sandbox^),
               (),
@@ -524,7 +548,7 @@ let _ =
                 (),
               );
 
-              MainEditorScriptTool.addScriptAttribute(
+              MainEditorScriptAttributeTool.addScriptAttribute(
                 ~script=GameObjectTool.getCurrentSceneTreeNodeScript(),
                 ~send=SinonTool.createOneLengthStub(sandbox^),
                 (),
@@ -572,7 +596,7 @@ let _ =
                 _prepare();
 
               let engineState =
-                MainEditorScriptTool.changeScriptAttributeFieldDefaultValue(
+                MainEditorScriptAttributeTool.changeScriptAttributeFieldDefaultValue(
                   script,
                   attributeName,
                   fieldName,
