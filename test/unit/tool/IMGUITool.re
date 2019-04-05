@@ -50,11 +50,11 @@ let prepareImgui = () => {
   TestToolEngine.initEngineState();
 };
 
-let stubCanvasParentAndCanvas = sandbox => {
-  let (parentDom, canvasDom) =
-    CanvasTool.stubCanvasParentAndCanvas(~sandbox, ());
+let stubCanvasAndInspectorCanvasDom = sandbox => {
+  let (parentDom, canvasDom, inspectorParentDom, inspectorCanvasDom) =
+    CanvasTool.stubCanvasAndInspectorCanvasDom(~sandbox, ());
 
   prepareImgui();
 
-  (parentDom, canvasDom);
+  (parentDom, canvasDom, inspectorParentDom, inspectorCanvasDom);
 };

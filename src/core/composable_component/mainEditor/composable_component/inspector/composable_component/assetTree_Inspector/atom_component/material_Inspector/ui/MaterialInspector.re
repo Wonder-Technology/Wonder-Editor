@@ -5,6 +5,31 @@ type action =
 
 module Method = {
   let changeMaterialType = InspectorChangeMaterialTypeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let didMount = (type_, materialComponent) => {
+    DomHelper.setDomDisplay(
+      DomHelper.getElementById("inspectorCanvasParent"),
+      true,
+    );
+
+    MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
+      type_,
+      materialComponent,
+    );
+  };
+
+  let willUnmount = () => {
+    DomHelper.setDomDisplay(
+      DomHelper.getElementById("inspectorCanvasParent"),
+      false,
+    );
+
+    (
+      StateEditorService.getState(),
+      StateInspectorEngineService.unsafeGetState(),
+    )
+    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChild;
+  };
 };
 
 let component = ReasonReact.reducerComponent("MaterialInspector");
@@ -114,27 +139,6 @@ let make =
       renameFunc,
       self,
     ),
-  didMount: _self => {
-    DomHelper.setDomDisplay(
-      DomHelper.getElementById("inspectorCanvasParent"),
-      true,
-    );
-
-    MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
-      type_,
-      materialComponent,
-    );
-  },
-  willUnmount: _self => {
-    DomHelper.setDomDisplay(
-      DomHelper.getElementById("inspectorCanvasParent"),
-      false,
-    );
-
-    (
-      StateEditorService.getState(),
-      StateInspectorEngineService.unsafeGetState(),
-    )
-    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChild;
-  },
+  didMount: _self => Method.didMount(type_, materialComponent),
+  willUnmount: _self => Method.willUnmount(),
 };

@@ -90,62 +90,70 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    /* TODO refactor: rename container gameObject to container gameObject */
     describe("test create material sphere into container gameObject", () =>
       describe("test create new material into asset", () => {
-        describe("test select the new material", ()
-          /* TODO test: rewrite this case. e.g.:
+        describe("test select the new material", () => {
+          open MainEditor;
+          test(
+            "not select asset material, the inspector canvas should be hide",
+            () => {
+            let (_, _, inspectorParentDom, _) =
+              CanvasTool.stubCanvasAndInspectorCanvasDom(~sandbox, ());
 
+            MainEditorTool.mainEditorDidUpdate(
+              OldNewSelfTool.buildOldAndNewSelf(
+                {isInitEngine: false},
+                {isInitEngine: true},
+              ),
+            );
 
-               test("mount the MaterialInspector should show inspector canvas", () => {
-                 let (addedMaterialNodeId, materialComponent) =
-                   MaterialInspectorCanvasTool.createNewMaterial();
+            inspectorParentDom##style##display |> expect == "none";
+          });
+          test("mount the MaterialInspector should show inspector canvas", () => {
+            let (_, _, inspectorParentDom, _) =
+              CanvasTool.stubCanvasAndInspectorCanvasDom(~sandbox, ());
 
-                 /* MainEditorAssetChildrenNodeTool.selectMaterialNode(
-                   ~nodeId=addedMaterialNodeId,
-                   (),
-                 ); */
+            let (addedMaterialNodeId, materialComponent) =
+              MaterialInspectorCanvasTool.createNewMaterial();
 
-                 MainEditor.didUpdate(fakeOldNewSelf); //hide canvas container
+            MainEditorTool.mainEditorDidUpdate(
+              OldNewSelfTool.buildOldAndNewSelf(
+                {isInitEngine: false},
+                {isInitEngine: true},
+              ),
+            );
 
-                 MaterialInspector.didMount(fakeSelf); //show canvas container
+            MaterialInspectorTool.didMount(
+              MaterialDataAssetType.LightMaterial,
+              materialComponent,
+            );
 
-                 isShowDom(get canvas container) |> expect == true;
-               });
+            inspectorParentDom##style##display |> expect == "block";
+          });
+          test(
+            "unMount the MaterialInspector should hide inspector canvas", () => {
+            let (_, _, inspectorParentDom, _) =
+              CanvasTool.stubCanvasAndInspectorCanvasDom(~sandbox, ());
 
-               test("unMount the MaterialInspector should hide inspector canvas", () => {
-                 let (addedMaterialNodeId, materialComponent) =
-                   MaterialInspectorCanvasTool.createNewMaterial();
+            let (addedMaterialNodeId, materialComponent) =
+              MaterialInspectorCanvasTool.createNewMaterial();
 
-                 /* MainEditorAssetChildrenNodeTool.selectMaterialNode(
-                   ~nodeId=addedMaterialNodeId,
-                   (),
-                 ); */
+            MainEditorTool.mainEditorDidUpdate(
+              OldNewSelfTool.buildOldAndNewSelf(
+                {isInitEngine: false},
+                {isInitEngine: true},
+              ),
+            );
 
-                 MainEditor.didUpdate(fakeOldNewSelf); //hide canvas container
+            MaterialInspectorTool.didMount(
+              MaterialDataAssetType.LightMaterial,
+              materialComponent,
+            );
+            MaterialInspectorTool.willUnmount();
 
-                 MaterialInspector.didMount(fakeSelf); //show canvas container
-
-                 MaterialInspector.willUnmount(fakeSelf); //hide canvas container
-
-                 isShowDom(get canvas container) |> expect == false;
-               })
-
-             */
-          =>
-            test("select the new material should show inspector canvas", () => {
-              let (addedMaterialNodeId, materialComponent) =
-                MaterialInspectorCanvasTool.createNewMaterial();
-
-              MainEditorAssetChildrenNodeTool.selectMaterialNode(
-                ~nodeId=addedMaterialNodeId,
-                (),
-              );
-
-              /* MaterialInspectorCanvasTool.isShowInspectorCanvasDom() */
-              true |> expect == true;
-            })
-          );
+            inspectorParentDom##style##display |> expect == "none";
+          });
+        });
 
         describe("test clone the new material", () => {
           describe("test material is light material", () =>

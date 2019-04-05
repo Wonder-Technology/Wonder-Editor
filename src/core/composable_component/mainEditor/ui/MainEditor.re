@@ -18,6 +18,26 @@ module Method = {
       } :
       ReasonReact.null;
 
+  let execFuncOnlyOnceInDidUpdate =
+      (
+        {oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c),
+        func,
+      ) =>
+    oldSelf.retainedProps != newSelf.retainedProps ? func() : ();
+
+  let didUpdate = oldNewSelf =>
+    execFuncOnlyOnceInDidUpdate(
+      oldNewSelf,
+      () => {
+        resizeCanvasAndViewPort();
+
+        DomHelper.setDomDisplay(
+          DomHelper.getElementById("inspectorCanvasParent"),
+          false,
+        );
+      },
+    );
+
   let dragWDB = MainEditorDragWDBEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let buildElementBeforeInitEngine = (uiState, dispatchFunc) =>
@@ -84,13 +104,6 @@ module Method = {
         </div>
       </div>
     </article>;
-
-  let execFuncOnlyOnceInDidUpdate =
-      (
-        {oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c),
-        func,
-      ) =>
-    oldSelf.retainedProps != newSelf.retainedProps ? func() : ();
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
@@ -105,21 +118,7 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   retainedProps: {
     isInitEngine: uiState.isInitEngine,
   },
-  didUpdate:
-    (
-      ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) as oldNewSelf,
-    ) =>
-    Method.execFuncOnlyOnceInDidUpdate(
-      oldNewSelf,
-      () => {
-        Method.resizeCanvasAndViewPort();
-
-        DomHelper.setDomDisplay(
-          DomHelper.getElementById("inspectorCanvasParent"),
-          false,
-        );
-      },
-    ),
+  didUpdate: oldNewSelf => Method.didUpdate(oldNewSelf),
   didMount: _self => {
     Js.Promise.(
       MainUtils.initEngine()

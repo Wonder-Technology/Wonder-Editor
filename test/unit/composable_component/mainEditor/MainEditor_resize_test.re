@@ -77,8 +77,8 @@ let _ =
         test(
           "canvas's width and height should == parent's width and height", () => {
           _prepareState();
-          let (parentDom, canvasDom) =
-            IMGUITool.stubCanvasParentAndCanvas(sandbox);
+          let (parentDom, canvasDom, _, _) =
+            IMGUITool.stubCanvasAndInspectorCanvasDom(sandbox);
 
           let _ = _resize(sandbox);
 
@@ -91,7 +91,7 @@ let _ =
            test("test", () => {
              _prepareState();
              let (parentDom, canvasDom) =
-               IMGUITool.stubCanvasParentAndCanvas(sandbox);
+               IMGUITool.stubCanvasAndInspectorCanvasDom(sandbox);
              let gl = FakeGlToolEngine.getEngineStateGl();
              let pos1 = 10;
              gl##getUniformLocation
@@ -111,8 +111,8 @@ let _ =
         test(
           "canvas's viewport should == canvas parent's width and height", () => {
           _prepareState();
-          let (parentDom, canvasDom) =
-            IMGUITool.stubCanvasParentAndCanvas(sandbox);
+          let (parentDom, canvasDom, _, _) =
+            IMGUITool.stubCanvasAndInspectorCanvasDom(sandbox);
 
           let _ = _resize(sandbox);
 
@@ -129,8 +129,8 @@ let _ =
       describe("update view rect", () =>
         test("update scene view and game view rect", () => {
           _prepareState();
-          let (parentDom, canvasDom) =
-            IMGUITool.stubCanvasParentAndCanvas(sandbox);
+          let (parentDom, canvasDom, _, _) =
+            IMGUITool.stubCanvasAndInspectorCanvasDom(sandbox);
           let width = parentDom##offsetWidth;
           let height = parentDom##offsetHeight;
 
@@ -204,8 +204,8 @@ let _ =
           "test resize twice(the first resize is to mark all cameraProjections not dirty)",
           () => {
             _setFakeCanvasd(200., 200.);
-            let (parentDom, canvasDom) =
-              IMGUITool.stubCanvasParentAndCanvas(sandbox);
+            let (parentDom, canvasDom, _, _) =
+              IMGUITool.stubCanvasAndInspectorCanvasDom(sandbox);
 
             let _ = _resize(sandbox);
             _setFakeCanvasd(100., 200.);
@@ -233,8 +233,8 @@ let _ =
           () => {
           _prepareState();
 
-          let (parentDom, canvasDom) =
-            CanvasTool.stubCanvasParentAndCanvas(
+          let (parentDom, canvasDom, _, _) =
+            CanvasTool.stubCanvasAndInspectorCanvasDom(
               ~sandbox,
               ~offsetWidth=200,
               ~offsetHeight=200,
@@ -254,8 +254,8 @@ let _ =
           () => {
           _prepareState();
 
-          let (parentDom, canvasDom) =
-            CanvasTool.stubCanvasParentAndCanvas(
+          let (parentDom, canvasDom, _, _) =
+            CanvasTool.stubCanvasAndInspectorCanvasDom(
               ~sandbox,
               ~offsetWidth=200,
               ~offsetHeight=200,

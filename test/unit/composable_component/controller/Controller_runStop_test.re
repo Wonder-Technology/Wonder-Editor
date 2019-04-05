@@ -152,8 +152,8 @@ let _ =
         ControllerTool.stubCancelAnimationFrame(
           createEmptyStubWithJsObjSandbox(sandbox),
         );
-        let (parentDom, canvasDom) =
-          CanvasTool.stubCanvasParentAndCanvas(
+        let (parentDom, canvasDom, _, _) =
+          CanvasTool.stubCanvasAndInspectorCanvasDom(
             ~sandbox,
             ~offsetWidth=300,
             ~offsetHeight=500,
@@ -162,8 +162,8 @@ let _ =
         ResizeUtils.resizeScreen();
 
         ControllerTool.run();
-        let (parentDom, canvasDom) =
-          CanvasTool.stubCanvasParentAndCanvas(
+        let (parentDom, canvasDom, _, _) =
+          CanvasTool.stubCanvasAndInspectorCanvasDom(
             ~sandbox,
             ~offsetWidth=400,
             ~offsetHeight=500,

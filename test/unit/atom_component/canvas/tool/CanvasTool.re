@@ -24,17 +24,28 @@ module Drag = {
       |> WDBNodeAssetService.getWDBGameObject;
 
     MainEditor.Method.dragWDB((uiState, dispatchFunc), (), wdbGameObject);
-    /* DragEventUtils.handleDragEnd(event); */
   };
 };
 
-let stubCanvasParentAndCanvas =
+let _getParentDom = (offsetWidth, offsetHeight) =>
+  {
+    "offsetWidth": offsetWidth,
+    "offsetHeight": offsetHeight,
+    "style": {
+      "display": "block",
+    },
+  }
+  |> Obj.magic;
+
+let stubCanvasAndInspectorCanvasDom =
     (~sandbox, ~offsetWidth=300, ~offsetHeight=500, ()) => {
   open Sinon;
 
-  let parentDom =
-    {"offsetWidth": offsetWidth, "offsetHeight": offsetHeight} |> Obj.magic;
+  let parentDom = _getParentDom(offsetWidth, offsetHeight);
   let canvasDom = BuildCanvasTool.getFakeCanvasDom("a", sandbox);
+
+  let inspectorParentDom = _getParentDom(offsetWidth, offsetHeight);
+  let inspectorCanvasDom = BuildCanvasTool.getFakeCanvasDom("a", sandbox);
   let getElementStub =
     SinonTool.createMethodStub(
       sandbox^,
@@ -49,7 +60,7 @@ let stubCanvasParentAndCanvas =
 
   getElementStub
   |> withOneArg("inspectorCanvasParent")
-  |> returns(parentDom)
+  |> returns(inspectorParentDom)
   |> ignore;
 
   getElementStub
@@ -60,9 +71,9 @@ let stubCanvasParentAndCanvas =
 
   getElementStub
   |> withOneArg("inspector-canvas")
-  |> returns(canvasDom)
+  |> returns(inspectorCanvasDom)
   |> stubToJsObj
   |> ignore;
 
-  (parentDom, canvasDom);
+  (parentDom, canvasDom, inspectorParentDom, inspectorCanvasDom);
 };
