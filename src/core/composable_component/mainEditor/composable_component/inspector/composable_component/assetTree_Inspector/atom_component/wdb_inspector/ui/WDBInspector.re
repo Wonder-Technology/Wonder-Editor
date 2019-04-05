@@ -36,5 +36,5 @@ let make = (~name, ~onChangeFunc, ~onBlurFunc, _children) => {
       StateEditorService.getState(),
       StateInspectorEngineService.unsafeGetState(),
     )
-    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineParentGameObjectAllChild,
+    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChild,
 };

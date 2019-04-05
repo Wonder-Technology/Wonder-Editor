@@ -4,7 +4,7 @@ let initInspectorEngineJob = (_, inspectorEngineState) => {
     inspectorEngineState |> DefaultSceneInspectorEngineUtils.createDefaultScene;
 
   editorState
-  |> ParentGameObjectInspectorCanvasEditorService.setParentGameObject(
+  |> ContainerGameObjectInspectorCanvasEditorService.setContainerGameObject(
        emptyGameObject,
      )
   |> StateEditorService.setState;

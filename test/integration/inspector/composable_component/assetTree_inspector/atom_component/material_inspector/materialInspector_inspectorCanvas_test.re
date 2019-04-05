@@ -271,12 +271,12 @@ let _ =
               materialComponent,
             );
 
-            let parentGameObjectFirstChild =
+            let containerGameObjectFirstChild =
               (editorState, inspectorEngineState)
               |> InspectorEngineTool.getMaterialSphere
               |> OptionService.unsafeGet;
 
-            parentGameObjectFirstChild |> expect == newGameObject;
+            containerGameObjectFirstChild |> expect == newGameObject;
           });
           describe("test render material sphere", () =>
             test("test draw once", () => {
@@ -313,15 +313,15 @@ let _ =
         );
 
         (editorState, inspectorEngineState)
-        |> InspectorEngineTool.disposeInspectorEngineParentGameObjectAllChild;
+        |> InspectorEngineTool.disposeInspectorEngineContainerGameObjectAllChild;
 
-        let parentGameObject =
-          ParentGameObjectInspectorCanvasEditorService.unsafeGetParentGameObject(
+        let containerGameObject =
+          ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject(
             editorState,
           );
 
         inspectorEngineState
-        |> HierarchyGameObjectEngineService.getChildren(parentGameObject)
+        |> HierarchyGameObjectEngineService.getChildren(containerGameObject)
         |> Js.Array.length
         |> expect == 0;
       })

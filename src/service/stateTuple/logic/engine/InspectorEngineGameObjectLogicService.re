@@ -1,7 +1,7 @@
-let _disposeParentGameObjectAllChild =
-    (parentGameObject, inspectorEngineState) =>
+let _disposeContainerGameObjectAllChild =
+    (containerGameObject, inspectorEngineState) =>
   inspectorEngineState
-  |> HierarchyGameObjectEngineService.getAllGameObjects(parentGameObject)
+  |> HierarchyGameObjectEngineService.getAllGameObjects(containerGameObject)
   |> Js.Array.sliceFrom(1)
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. inspectorEngineState, gameObject) =>
@@ -12,40 +12,40 @@ let _disposeParentGameObjectAllChild =
        inspectorEngineState,
      );
 
-let disposeInspectorEngineParentGameObjectAllChild =
+let disposeInspectorEngineContainerGameObjectAllChild =
     ((editorState, inspectorEngineState)) => {
-  let parentGameObject =
-    ParentGameObjectInspectorCanvasEditorService.getParentGameObject(
+  let containerGameObject =
+    ContainerGameObjectInspectorCanvasEditorService.getContainerGameObject(
       editorState,
     );
 
-  switch (parentGameObject) {
+  switch (containerGameObject) {
   | None => ()
   | Some(gameObject) =>
     inspectorEngineState
-    |> _disposeParentGameObjectAllChild(gameObject)
+    |> _disposeContainerGameObjectAllChild(gameObject)
     |> JobEngineService.execDisposeJob
     |> StateLogicService.refreshInspectorEngineState
     |> ignore
   };
 };
 
-let _getParentGameObjectFirstChild = ((editorState, inspectorEngineState)) => {
-  let parentGameObject =
+let _getContainerGameObjectFirstChild = ((editorState, inspectorEngineState)) => {
+  let containerGameObject =
     editorState
-    |> ParentGameObjectInspectorCanvasEditorService.unsafeGetParentGameObject;
+    |> ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject;
 
   inspectorEngineState
-  |> HierarchyGameObjectEngineService.hasChildren(parentGameObject) ?
+  |> HierarchyGameObjectEngineService.hasChildren(containerGameObject) ?
     (
       inspectorEngineState
-      |> HierarchyGameObjectEngineService.getChildren(parentGameObject)
+      |> HierarchyGameObjectEngineService.getChildren(containerGameObject)
       |> ArrayService.unsafeGetFirst
     )
     ->Some :
     None;
 };
 
-let getMaterialSphere = _getParentGameObjectFirstChild;
+let getMaterialSphere = _getContainerGameObjectFirstChild;
 
-let getWDBGameObject = _getParentGameObjectFirstChild;
+let getWDBGameObject = _getContainerGameObjectFirstChild;

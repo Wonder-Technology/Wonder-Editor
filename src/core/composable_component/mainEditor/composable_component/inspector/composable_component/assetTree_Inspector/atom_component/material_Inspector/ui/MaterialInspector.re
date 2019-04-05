@@ -135,6 +135,6 @@ let make =
       StateEditorService.getState(),
       StateInspectorEngineService.unsafeGetState(),
     )
-    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineParentGameObjectAllChild;
+    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChild;
   },
 };

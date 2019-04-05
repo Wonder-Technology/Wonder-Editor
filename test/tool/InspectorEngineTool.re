@@ -41,7 +41,7 @@ let getMaterialSphere = InspectorEngineGameObjectLogicService.getMaterialSphere;
 
 let getWDBGameObject = InspectorEngineGameObjectLogicService.getWDBGameObject;
 
-let disposeInspectorEngineParentGameObjectAllChild = InspectorEngineGameObjectLogicService.disposeInspectorEngineParentGameObjectAllChild;
+let disposeInspectorEngineContainerGameObjectAllChild = InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChild;
 
 let getMaterialSphereLightMaterial = (editorState, engineState) => {
   let materialSphere =

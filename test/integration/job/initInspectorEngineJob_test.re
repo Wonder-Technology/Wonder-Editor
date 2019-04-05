@@ -146,7 +146,7 @@ let _ =
             StateInspectorEngineService.unsafeGetState();
 
           editorState
-          |> ParentGameObjectInspectorCanvasEditorService.getParentGameObject
+          |> ContainerGameObjectInspectorCanvasEditorService.getContainerGameObject
           |> expect
           == (
                inspectorEngineState

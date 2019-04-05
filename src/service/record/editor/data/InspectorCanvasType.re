@@ -1,4 +1,4 @@
-/* TODO refactor: rename parentGameObject to containerGameObject
-TODO rename ParentGameObjectXXX to ContainerGameObjectXXX
+/* TODO refactor: rename containerGameObject to containerGameObject
+TODO rename ContainerGameObjectXXX to ContainerGameObjectXXX
 */
-type inspectorCanvasRecord = {parentGameObject: option(int)};
+type inspectorCanvasRecord = {containerGameObject: option(int)};
