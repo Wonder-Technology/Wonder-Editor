@@ -43,34 +43,36 @@ exports[`MainEditorScript test set currentSceneTreeNode test script attribute te
       onClick={[Function]}
     />
   </div>
-  <div
-    className="inspector-item"
-  >
+  <div>
     <div
-      className="item-header"
-      title="script attribute asset in use"
-    >
-      Script Attribute
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
+        className="item-header"
+        title="script attribute asset in use"
+      >
+        Script Attribute
+      </div>
+      <div
+        className="item-content"
       >
         <div
-          className="select-name"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          New Script Attribute
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            New Script Attribute
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -136,34 +138,36 @@ exports[`MainEditorScript test set currentSceneTreeNode test script attribute te
       onClick={[Function]}
     />
   </div>
-  <div
-    className="inspector-item"
-  >
+  <div>
     <div
-      className="item-header"
-      title="script attribute asset in use"
-    >
-      Script Attribute
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
+        className="item-header"
+        title="script attribute asset in use"
+      >
+        Script Attribute
+      </div>
+      <div
+        className="item-content"
       >
         <div
-          className="select-name"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          New Script Attribute
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            New Script Attribute
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -235,34 +239,36 @@ exports[`MainEditorScript test set currentSceneTreeNode test script attribute te
       onClick={[Function]}
     />
   </div>
-  <div
-    className="inspector-item"
-  >
+  <div>
     <div
-      className="item-header"
-      title="script attribute asset in use"
-    >
-      Script Attribute
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
+        className="item-header"
+        title="script attribute asset in use"
+      >
+        Script Attribute
+      </div>
+      <div
+        className="item-content"
       >
         <div
-          className="select-name"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          New Script Attribute 1
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            New Script Attribute 1
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -295,34 +301,36 @@ exports[`MainEditorScript test set currentSceneTreeNode test script attribute te
   >
     Add script event function
   </button>
-  <div
-    className="inspector-item"
-  >
+  <div>
     <div
-      className="item-header"
-      title="script attribute asset in use"
-    >
-      Script Attribute
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
+        className="item-header"
+        title="script attribute asset in use"
+      >
+        Script Attribute
+      </div>
+      <div
+        className="item-content"
       >
         <div
-          className="select-name"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          New Script Attribute
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            New Script Attribute
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -414,34 +422,36 @@ exports[`MainEditorScript test set currentSceneTreeNode test script attribute te
   >
     Add script event function
   </button>
-  <div
-    className="inspector-item"
-  >
+  <div>
     <div
-      className="item-header"
-      title="script attribute asset in use"
-    >
-      Script Attribute
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
+        className="item-header"
+        title="script attribute asset in use"
+      >
+        Script Attribute
+      </div>
+      <div
+        className="item-content"
       >
         <div
-          className="select-name"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          New Script Attribute
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            New Script Attribute
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -536,7 +546,7 @@ exports[`MainEditorScript test set currentSceneTreeNode test script event functi
       <div
         className="select-item-header"
       >
-        Add Script Event Function
+        Add Script eventFunction
       </div>
       <div
         className="select-item-body"
@@ -560,34 +570,36 @@ exports[`MainEditorScript test set currentSceneTreeNode test script event functi
       onClick={[Function]}
     />
   </div>
-  <div
-    className="inspector-item"
-  >
+  <div>
     <div
-      className="item-header"
-      title="script event function asset in use"
-    >
-      Script Event Function
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
+        className="item-header"
+        title="script event function asset in use"
+      >
+        Script Event Function
+      </div>
+      <div
+        className="item-content"
       >
         <div
-          className="select-name"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          New Script EventFunction
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            New Script EventFunction
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -626,7 +638,7 @@ exports[`MainEditorScript test set currentSceneTreeNode test script event functi
       <div
         className="select-item-header"
       >
-        Change Script Event Function
+        Change Script eventFunction
       </div>
       <div
         className="select-item-body"
@@ -650,34 +662,36 @@ exports[`MainEditorScript test set currentSceneTreeNode test script event functi
       onClick={[Function]}
     />
   </div>
-  <div
-    className="inspector-item"
-  >
+  <div>
     <div
-      className="item-header"
-      title="script event function asset in use"
-    >
-      Script Event Function
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
+        className="item-header"
+        title="script event function asset in use"
+      >
+        Script Event Function
+      </div>
+      <div
+        className="item-content"
       >
         <div
-          className="select-name"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          New Script EventFunction
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            New Script EventFunction
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -716,7 +730,7 @@ exports[`MainEditorScript test set currentSceneTreeNode test script event functi
       <div
         className="select-item-header"
       >
-        Change Script Event Function
+        Change Script eventFunction
       </div>
       <div
         className="select-item-body"
@@ -746,34 +760,36 @@ exports[`MainEditorScript test set currentSceneTreeNode test script event functi
       onClick={[Function]}
     />
   </div>
-  <div
-    className="inspector-item"
-  >
+  <div>
     <div
-      className="item-header"
-      title="script event function asset in use"
-    >
-      Script Event Function
-    </div>
-    <div
-      className="item-content"
+      className="inspector-item"
     >
       <div
-        className="inspector-select"
+        className="item-header"
+        title="script event function asset in use"
+      >
+        Script Event Function
+      </div>
+      <div
+        className="item-content"
       >
         <div
-          className="select-name"
-          onClick={[Function]}
+          className="inspector-select"
         >
-          New Script EventFunction 1
-        </div>
-        <div
-          className="select-img"
-          onClick={[Function]}
-        >
-          <img
-            src="./public/img/select.png"
-          />
+          <div
+            className="select-name"
+            onClick={[Function]}
+          >
+            New Script EventFunction 1
+          </div>
+          <div
+            className="select-img"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/select.png"
+            />
+          </div>
         </div>
       </div>
     </div>

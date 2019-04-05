@@ -32,4 +32,4 @@ let changeGeometry =
   );
 
 let getAllShowGeometrys = (gameObject, engineState) =>
-  MainEditorGeometry.Method._getAllShowGeometrys(gameObject, engineState);
+  MainEditorGeometry.Method.getAllShowGeometrys(gameObject, engineState);

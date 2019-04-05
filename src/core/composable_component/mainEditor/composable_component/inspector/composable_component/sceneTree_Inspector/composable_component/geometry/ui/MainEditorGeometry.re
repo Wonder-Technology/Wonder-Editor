@@ -71,39 +71,13 @@ module Method = {
       ),
     );
 
-  let _getAllShowGeometrys = (gameObject, (editorState, engineState)) =>
+  let getAllShowGeometrys = (gameObject, (editorState, engineState)) =>
     _isGameObjectMaterialComponentHasMap(gameObject, engineState) ?
       _getAllGeometryAssetsAndDefaultGeometrys(editorState, engineState)
       |> Js.Array.filter(geometry =>
            GeometryEngineService.hasGeometryTexCoords(geometry, engineState)
          ) :
       _getAllGeometryAssetsAndDefaultGeometrys(editorState, engineState);
-
-  let showGeometryAssets = (send, currentSceneTreeNode, currentGeometry) => {
-    let editorState = StateEditorService.getState();
-    let engineState = StateEngineService.unsafeGetState();
-    let allGeometrys =
-      _getAllShowGeometrys(currentSceneTreeNode, (editorState, engineState));
-
-    allGeometrys
-    |> Js.Array.map(geometry => {
-         let className =
-           geometry === currentGeometry ?
-             "select-item-content select-item-active" : "select-item-content";
-
-         <div
-           className
-           key={DomHelper.getRandomKey()}
-           onClick={_e => send(ChangeGeometry(geometry))}>
-           {
-             DomHelper.textEl(
-               MainEditorGeometryUtils.getName(geometry)
-               |> StateLogicService.getEngineStateToGetData,
-             )
-           }
-         </div>;
-       });
-  };
 };
 
 let component = ReasonReact.reducerComponent("MainEditorGeometry");
@@ -129,35 +103,6 @@ let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
     ReasonReact.Update({...state, isShowGeometryGroup: false})
   };
 
-let _renderGeometryGroup =
-    (
-      uiState,
-      currentSceneTreeNode,
-      {state, send}: ReasonReact.self('a, 'b, 'c),
-    ) =>
-  <div className="select-component-content">
-    <div className="select-component-item">
-      <div className="select-item-header">
-        {DomHelper.textEl("Geometry")}
-      </div>
-      <div className="select-item-body">
-        {
-          ReasonReact.array(
-            Method.showGeometryAssets(
-              send,
-              currentSceneTreeNode,
-              state.currentGeometry,
-            ),
-          )
-        }
-      </div>
-    </div>
-    <div
-      className="select-component-bg"
-      onClick={_e => send(HideGeometryGroup)}
-    />
-  </div>;
-
 let render =
     (
       (uiState, dispatchFunc),
@@ -168,37 +113,54 @@ let render =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   <article key="MainEditorGeometry" className="wonder-inspector-geometry">
-    <div className="inspector-item">
-      <div
-        className="item-header"
-        title={
-          LanguageUtils.getInspectorLanguageDataByType(
-            "geometry-geometry-describe",
-            languageType,
-          )
-        }>
-        {DomHelper.textEl("Geometry")}
-      </div>
-      <div className="item-content">
-        <div className="inspector-select">
-          <div
-            className="select-name" onClick={_e => send(ShowGeometryGroup)}>
-            {
-              DomHelper.textEl(
-                MainEditorGeometryUtils.getName(state.currentGeometry)
-                |> StateLogicService.getEngineStateToGetData,
-              )
-            }
-          </div>
-          <div className="select-img" onClick={_e => send(ShowGeometryGroup)}>
-            <img src="./public/img/select.png" />
-          </div>
-        </div>
-      </div>
-    </div>
+    <SelectAssetGroupBar
+      headerText="Geometry"
+      headerTitle={
+        LanguageUtils.getInspectorLanguageDataByType(
+          "geometry-geometry-describe",
+          languageType,
+        )
+      }
+      itemText={
+        MainEditorGeometryUtils.getName(state.currentGeometry)
+        |> StateLogicService.getEngineStateToGetData
+      }
+      selectItemFunc={send => send(ShowGeometryGroup)}
+      sendFunc=send
+    />
     {
       state.isShowGeometryGroup ?
-        _renderGeometryGroup(uiState, currentSceneTreeNode, self) :
+        <SelectAssetGroupWidget
+          headerText="Geometry"
+          sendFunc=send
+          clickHideGroupButtonFunc={send => send(HideGeometryGroup)}
+          getAllItemsFunc={
+            () => {
+              let editorState = StateEditorService.getState();
+              let engineState = StateEngineService.unsafeGetState();
+
+              Method.getAllShowGeometrys(
+                currentSceneTreeNode,
+                (editorState, engineState),
+              );
+            }
+          }
+          isItemFunc={
+            geometry => {
+              let currentGeometry = state.currentGeometry;
+
+              geometry === currentGeometry;
+            }
+          }
+          changeItemFunc={
+            (geometry, send) => send(ChangeGeometry(geometry))
+          }
+          getTextFunc={
+            geometry =>
+              MainEditorGeometryUtils.getName(geometry)
+              |> StateLogicService.getEngineStateToGetData
+          }
+        /> :
         ReasonReact.null
     }
   </article>;

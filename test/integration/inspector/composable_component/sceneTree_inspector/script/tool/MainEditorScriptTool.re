@@ -105,7 +105,7 @@ let handleChangeScriptEventFunction =
       ~currentScriptEventFunctionNodeId,
       ~targetScriptEventFunctionNodeId,
     ) =>
-  MainEditorScript.Method._handleChangeScriptEventFunction(
+  MainEditorScript.Method.handleChangeScriptEventFunction(
     script,
     (targetScriptEventFunctionNodeId, unUsedScriptEventFunctionNodeIds) =>
       send(
@@ -188,7 +188,7 @@ let handleChangeScriptAttribute =
       ~currentScriptAttributeNodeId,
       ~targetScriptAttributeNodeId,
     ) =>
-  MainEditorScript.Method._handleChangeScriptAttribute(
+  MainEditorScript.Method.handleChangeScriptAttribute(
     script,
     (targetScriptAttributeNodeId, unUsedScriptAttributeNodeIds) =>
       send(
