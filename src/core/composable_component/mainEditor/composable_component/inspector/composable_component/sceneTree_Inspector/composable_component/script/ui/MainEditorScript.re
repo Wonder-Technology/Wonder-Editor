@@ -780,6 +780,43 @@ module Method = {
       )
       |> StateLogicService.getEditorState;
   };
+
+  let getAllScriptEventFunctions =
+      (currentScriptEventFunctionNodeId, unUsedScriptEventFunctionNodeIds) =>
+    ArrayService.fastConcat(
+      [|currentScriptEventFunctionNodeId |> OptionService.unsafeGet|],
+      unUsedScriptEventFunctionNodeIds,
+    )
+    |> sortScriptEventFunctionNodeIds;
+
+  let isScriptEventFunction =
+      (currentScriptEventFunctionNodeId, scriptEventFunctionNodeId) =>
+    isNodeIdEqual(
+      currentScriptEventFunctionNodeId,
+      scriptEventFunctionNodeId,
+    );
+
+  let getSelectScriptEventFunctionGroupWidgetText = scriptEventFunctionNodeId =>
+    OperateTreeAssetLogicService.unsafeGetNodeNameById(
+      scriptEventFunctionNodeId,
+    )
+    |> StateLogicService.getStateToGetData;
+
+  let getAllScriptAttributes =
+      (currentScriptAttributeNodeId, unUsedScriptAttributeNodeIds) =>
+    ArrayService.fastConcat(
+      [|currentScriptAttributeNodeId |> OptionService.unsafeGet|],
+      unUsedScriptAttributeNodeIds,
+    )
+    |> sortScriptAttributeNodeIds;
+
+  let isScriptAttribute =
+      (currentScriptAttributeNodeId, scriptAttributeNodeId) =>
+    isNodeIdEqual(currentScriptAttributeNodeId, scriptAttributeNodeId);
+
+  let getSelectScriptAttributeGroupWidgetText = scriptAttributeNodeId =>
+    OperateTreeAssetLogicService.unsafeGetNodeNameById(scriptAttributeNodeId)
+    |> StateLogicService.getStateToGetData;
 };
 
 let component = ReasonReact.reducerComponent("MainEditorScript");
@@ -906,41 +943,31 @@ let render =
     {
       state.isShowScriptEventFunctionGroupForAdd ?
         <SelectAssetGroupWidget
-          headerText="Add Script eventFunction"
+          headerText="Add Script Event Function"
           sendFunc=send
           clickHideGroupButtonFunc={
             send => send(HideScriptEventFunctionGroupForAdd)
           }
           getAllItemsFunc={
-            () => {
-              let currentScriptEventFunctionNodeId =
-                state.lastScriptEventFunctionNodeIdForAdd;
-
-              let unUsedScriptEventFunctionNodeIds =
-                state.unUsedScriptEventFunctionNodeIds;
-
-              ArrayService.fastConcat(
-                [|
-                  currentScriptEventFunctionNodeId |> OptionService.unsafeGet,
-                |],
-                unUsedScriptEventFunctionNodeIds,
+            () =>
+              Method.getAllScriptEventFunctions(
+                state.lastScriptEventFunctionNodeIdForAdd,
+                state.unUsedScriptEventFunctionNodeIds,
               )
-              |> Method.sortScriptEventFunctionNodeIds;
-            }
           }
           isItemFunc={
-            scripteventFunctionNodeId => {
+            scriptEventFunctionNodeId => {
               let currentScriptEventFunctionNodeId =
                 state.lastScriptEventFunctionNodeIdForAdd;
 
-              Method.isNodeIdEqual(
+              Method.isScriptEventFunction(
                 currentScriptEventFunctionNodeId,
-                scripteventFunctionNodeId,
+                scriptEventFunctionNodeId,
               );
             }
           }
           changeItemFunc={
-            (scripteventFunctionNodeId, send) => {
+            (scriptEventFunctionNodeId, send) => {
               let currentScriptEventFunctionNodeId =
                 state.lastScriptEventFunctionNodeIdForAdd;
 
@@ -957,58 +984,42 @@ let render =
                     ),
                   ),
                 currentScriptEventFunctionNodeId,
-                scripteventFunctionNodeId,
+                scriptEventFunctionNodeId,
               );
             }
           }
-          getTextFunc={
-            scriptAttributeNodeId =>
-              OperateTreeAssetLogicService.unsafeGetNodeNameById(
-                scriptAttributeNodeId,
-              )
-              |> StateLogicService.getStateToGetData
-          }
+          getTextFunc=Method.getSelectScriptEventFunctionGroupWidgetText
         /> :
         ReasonReact.null
     }
     {
       state.isShowScriptEventFunctionGroupForChange ?
         <SelectAssetGroupWidget
-          headerText="Change Script eventFunction"
+          headerText="Change Script Event Function"
           sendFunc=send
           clickHideGroupButtonFunc={
             send => send(HideScriptEventFunctionGroupForChange)
           }
           getAllItemsFunc={
-            () => {
-              let currentScriptEventFunctionNodeId =
-                state.lastScriptEventFunctionNodeIdForChange;
-
-              let unUsedScriptEventFunctionNodeIds =
-                state.unUsedScriptEventFunctionNodeIds;
-
-              ArrayService.fastConcat(
-                [|
-                  currentScriptEventFunctionNodeId |> OptionService.unsafeGet,
-                |],
-                unUsedScriptEventFunctionNodeIds,
+            () =>
+              Method.getAllScriptEventFunctions(
+                state.lastScriptEventFunctionNodeIdForChange,
+                state.unUsedScriptEventFunctionNodeIds,
               )
-              |> Method.sortScriptEventFunctionNodeIds;
-            }
           }
           isItemFunc={
-            scripteventFunctionNodeId => {
+            scriptEventFunctionNodeId => {
               let currentScriptEventFunctionNodeId =
                 state.lastScriptEventFunctionNodeIdForChange;
 
-              Method.isNodeIdEqual(
+              Method.isScriptEventFunction(
                 currentScriptEventFunctionNodeId,
-                scripteventFunctionNodeId,
+                scriptEventFunctionNodeId,
               );
             }
           }
           changeItemFunc={
-            (scripteventFunctionNodeId, send) => {
+            (scriptEventFunctionNodeId, send) => {
               let currentScriptEventFunctionNodeId =
                 state.lastScriptEventFunctionNodeIdForChange;
 
@@ -1025,17 +1036,11 @@ let render =
                     ),
                   ),
                 currentScriptEventFunctionNodeId,
-                scripteventFunctionNodeId,
+                scriptEventFunctionNodeId,
               );
             }
           }
-          getTextFunc={
-            scriptAttributeNodeId =>
-              OperateTreeAssetLogicService.unsafeGetNodeNameById(
-                scriptAttributeNodeId,
-              )
-              |> StateLogicService.getStateToGetData
-          }
+          getTextFunc=Method.getSelectScriptEventFunctionGroupWidgetText
         /> :
         ReasonReact.null
     }
@@ -1071,26 +1076,18 @@ let render =
             send => send(HideScriptAttributeGroupForAdd)
           }
           getAllItemsFunc={
-            () => {
-              let currentScriptAttributeNodeId =
-                state.lastScriptAttributeNodeIdForAdd;
-
-              let unUsedScriptAttributeNodeIds =
-                state.unUsedScriptAttributeNodeIds;
-
-              ArrayService.fastConcat(
-                [|currentScriptAttributeNodeId |> OptionService.unsafeGet|],
-                unUsedScriptAttributeNodeIds,
+            () =>
+              Method.getAllScriptAttributes(
+                state.lastScriptAttributeNodeIdForAdd,
+                state.unUsedScriptAttributeNodeIds,
               )
-              |> Method.sortScriptAttributeNodeIds;
-            }
           }
           isItemFunc={
             scriptAttributeNodeId => {
               let currentScriptAttributeNodeId =
                 state.lastScriptAttributeNodeIdForAdd;
 
-              Method.isNodeIdEqual(
+              Method.isScriptAttribute(
                 currentScriptAttributeNodeId,
                 scriptAttributeNodeId,
               );
@@ -1115,18 +1112,11 @@ let render =
               );
             }
           }
-          getTextFunc={
-            scriptAttributeNodeId =>
-              OperateTreeAssetLogicService.unsafeGetNodeNameById(
-                scriptAttributeNodeId,
-              )
-              |> StateLogicService.getStateToGetData
-          }
+          getTextFunc=Method.getSelectScriptAttributeGroupWidgetText
         /> :
         ReasonReact.null
     }
     {
-      /* TODO refactor: extract duplicate with ForAdd */
       state.isShowScriptAttributeGroupForChange ?
         <SelectAssetGroupWidget
           headerText="Change Script Attribute"
@@ -1135,26 +1125,18 @@ let render =
             send => send(HideScriptAttributeGroupForChange)
           }
           getAllItemsFunc={
-            () => {
-              let currentScriptAttributeNodeId =
-                state.lastScriptAttributeNodeIdForChange;
-
-              let unUsedScriptAttributeNodeIds =
-                state.unUsedScriptAttributeNodeIds;
-
-              ArrayService.fastConcat(
-                [|currentScriptAttributeNodeId |> OptionService.unsafeGet|],
-                unUsedScriptAttributeNodeIds,
+            () =>
+              Method.getAllScriptAttributes(
+                state.lastScriptAttributeNodeIdForChange,
+                state.unUsedScriptAttributeNodeIds,
               )
-              |> Method.sortScriptAttributeNodeIds;
-            }
           }
           isItemFunc={
             scriptAttributeNodeId => {
               let currentScriptAttributeNodeId =
                 state.lastScriptAttributeNodeIdForChange;
 
-              Method.isNodeIdEqual(
+              Method.isScriptAttribute(
                 currentScriptAttributeNodeId,
                 scriptAttributeNodeId,
               );
@@ -1179,13 +1161,7 @@ let render =
               );
             }
           }
-          getTextFunc={
-            scriptAttributeNodeId =>
-              OperateTreeAssetLogicService.unsafeGetNodeNameById(
-                scriptAttributeNodeId,
-              )
-              |> StateLogicService.getStateToGetData
-          }
+          getTextFunc=Method.getSelectScriptAttributeGroupWidgetText
         /> :
         ReasonReact.null
     }

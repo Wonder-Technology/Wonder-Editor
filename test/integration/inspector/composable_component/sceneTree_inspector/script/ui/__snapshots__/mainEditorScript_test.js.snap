@@ -546,7 +546,7 @@ exports[`MainEditorScript test set currentSceneTreeNode test script event functi
       <div
         className="select-item-header"
       >
-        Add Script eventFunction
+        Add Script Event Function
       </div>
       <div
         className="select-item-body"
@@ -638,7 +638,7 @@ exports[`MainEditorScript test set currentSceneTreeNode test script event functi
       <div
         className="select-item-header"
       >
-        Change Script eventFunction
+        Change Script Event Function
       </div>
       <div
         className="select-item-body"
@@ -730,7 +730,7 @@ exports[`MainEditorScript test set currentSceneTreeNode test script event functi
       <div
         className="select-item-header"
       >
-        Change Script eventFunction
+        Change Script Event Function
       </div>
       <div
         className="select-item-body"
