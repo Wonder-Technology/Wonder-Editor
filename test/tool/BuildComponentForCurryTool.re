@@ -124,13 +124,10 @@ let buildPointLight = () =>
     />,
   );
 
-let buildController = () => {
-  Js.log("controller");
-
+let buildController = () =>
   ReactTestRenderer.create(
     <Controller
       uiState={TestTool.buildEmptyAppState()}
       dispatchFunc={TestTool.getDispatch()}
     />,
   );
-};

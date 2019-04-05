@@ -3,6 +3,8 @@ open Expect;
 open Expect.Operators;
 open Sinon;
 
+/* TODO test: add test inspectorCanvas */
+
 let _ =
   describe("test mainEditor->resize", () => {
     let sandbox = getSandboxDefaultVal();

@@ -105,6 +105,7 @@ let _ =
 
           inspectorEngineState
           |> TransformEngineService.getLocalPosition(transform)
+          /* TODO add |> Vector3Service.truncate(2) */
           |> expect == (0., 0., 1.100000023841858);
         });
       });
@@ -119,6 +120,7 @@ let _ =
           |> Js.Array.length
           |> expect == 1;
         })
+        /* TODO test: add test local euler angles */
       );
 
       describe("add one empty gameObject", () =>

@@ -14,4 +14,4 @@ let changeMaterialType =
     (sourceMaterialType, targetMaterialType),
   );
 
-let createMaterialSphereInToInspectorCanvas = MaterialInspectorEngineUtils.createMaterialSphereInToInspectorCanvas;
+let createMaterialSphereInToInspectorCanvas = MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas;

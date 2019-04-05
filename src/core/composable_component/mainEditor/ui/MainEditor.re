@@ -3,6 +3,7 @@ type retainedProps = {isInitEngine: bool};
 module Method = {
   let resizeCanvasAndViewPort = () => ResizeUtils.resizeScreen();
 
+  /* TODO refactor: remove */
   let isShowInspectorCanvasDom = () => {
     let editorState = StateEditorService.getState();
 
@@ -41,79 +42,86 @@ module Method = {
       ReasonReact.null;
 
   let dragWDB = MainEditorDragWDBEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let buildElementBeforeInitEngine = (uiState, dispatchFunc) =>
+    <article key="mainEditor" className="wonder-mainEditor-component">
+      <div key="leftComponent" className="left-component">
+        <div className="top-widget">
+          <div id="canvasParent" key="webglParent" className="webgl-parent">
+            <Canvas
+              key="webgl"
+              domId="canvas"
+              dragWDB={dragWDB((uiState, dispatchFunc), ())}
+              isWDBAssetFile=WDBNodeAssetEditorService.isWDBAssetFile
+            />
+          </div>
+        </div>
+        <div className="bottom-widget" />
+      </div>
+      <div key="rightComponent" className="right-component">
+        <div className="inline-component inspector-parent">
+          <div
+            id="inspectorCanvasParent"
+            key="inspectorCanvasParent"
+            className="inspector-parent">
+            <canvas id="inspector-canvas" key="inspectorCanvas" />
+          </div>
+        </div>
+      </div>
+    </article>;
+
+  let buildElementAfterInitEngine = (uiState, dispatchFunc) =>
+    <article key="mainEditor" className="wonder-mainEditor-component">
+      <div key="leftComponent" className="left-component">
+        <div className="top-widget">
+          <MainEditorLeftComponents uiState dispatchFunc />
+          <div id="canvasParent" key="webglParent" className="webgl-parent">
+            {buildNoCameraElement()}
+            <Canvas
+              key="webgl"
+              domId="canvas"
+              dragWDB={dragWDB((uiState, dispatchFunc), ())}
+              isWDBAssetFile=WDBNodeAssetEditorService.isWDBAssetFile
+            />
+          </div>
+        </div>
+        <div className="bottom-widget">
+          <MainEditorBottomComponents uiState dispatchFunc />
+        </div>
+      </div>
+      <div key="rightComponent" className="right-component">
+        <div className="inline-component inspector-parent">
+          <div
+            id="inspectorCanvasParent"
+            key="inspectorCanvasParent"
+            className="inspector-canvas-parent">
+            <canvas id="inspector-canvas" key="inspectorCanvas" />
+          </div>
+          <MainEditorInspector
+            uiState
+            dispatchFunc
+            addableComponentConfig={
+              GameObjectAllComponentParseUtils.getGameObjectAllComponentConfig()
+            }
+          />
+        </div>
+      </div>
+    </article>;
+
+  let execFuncOnlyOnceInDidUpdate =
+      (
+        {oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c),
+        func,
+      ) =>
+    oldSelf.retainedProps != newSelf.retainedProps ? func() : ();
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
 
-let _buildElementBeforeInitEngine = (uiState, dispatchFunc) =>
-  <article key="mainEditor" className="wonder-mainEditor-component">
-    <div key="leftComponent" className="left-component">
-      <div className="top-widget">
-        <div id="canvasParent" key="webglParent" className="webgl-parent">
-          <Canvas
-            key="webgl"
-            domId="canvas"
-            dragWDB={Method.dragWDB((uiState, dispatchFunc), ())}
-            isWDBAssetFile=WDBNodeAssetEditorService.isWDBAssetFile
-          />
-        </div>
-      </div>
-      <div className="bottom-widget" />
-    </div>
-    <div key="rightComponent" className="right-component">
-      <div className="inline-component inspector-parent">
-        <div
-          id="inspectorCanvasParent"
-          key="inspectorCanvasParent"
-          className="inspector-parent">
-          <canvas id="inspector-canvas" key="inspectorCanvas" />
-        </div>
-      </div>
-    </div>
-  </article>;
-
-let _buildElementAfterInitEngine = (uiState, dispatchFunc) =>
-  <article key="mainEditor" className="wonder-mainEditor-component">
-    <div key="leftComponent" className="left-component">
-      <div className="top-widget">
-        <MainEditorLeftComponents uiState dispatchFunc />
-        <div id="canvasParent" key="webglParent" className="webgl-parent">
-          {Method.buildNoCameraElement()}
-          <Canvas
-            key="webgl"
-            domId="canvas"
-            dragWDB={Method.dragWDB((uiState, dispatchFunc), ())}
-            isWDBAssetFile=WDBNodeAssetEditorService.isWDBAssetFile
-          />
-        </div>
-      </div>
-      <div className="bottom-widget">
-        <MainEditorBottomComponents uiState dispatchFunc />
-      </div>
-    </div>
-    <div key="rightComponent" className="right-component">
-      <div className="inline-component inspector-parent">
-        <div
-          id="inspectorCanvasParent"
-          key="inspectorCanvasParent"
-          className="inspector-canvas-parent">
-          <canvas id="inspector-canvas" key="inspectorCanvas" />
-        </div>
-        <MainEditorInspector
-          uiState
-          dispatchFunc
-          addableComponentConfig={
-            GameObjectAllComponentParseUtils.getGameObjectAllComponentConfig()
-          }
-        />
-      </div>
-    </div>
-  </article>;
-
 let render = (uiState: AppStore.appState, dispatchFunc, _self) =>
   uiState.isInitEngine ?
-    _buildElementAfterInitEngine(uiState, dispatchFunc) :
-    _buildElementBeforeInitEngine(uiState, dispatchFunc);
+    Method.buildElementAfterInitEngine(uiState, dispatchFunc) :
+    Method.buildElementBeforeInitEngine(uiState, dispatchFunc);
 
 let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
@@ -121,18 +129,26 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
     isInitEngine: uiState.isInitEngine,
   },
   didUpdate:
-    ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) => {
-    oldSelf.retainedProps != newSelf.retainedProps ?
-      Method.resizeCanvasAndViewPort() : ();
+    (
+      ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) as oldNewSelf,
+    ) => {
+    Method.execFuncOnlyOnceInDidUpdate(
+      oldNewSelf,
+      () => {
+        Method.resizeCanvasAndViewPort();
 
-    newSelf.retainedProps.isInitEngine ?
-      DomHelper.toggleShowDom(
-        DomHelper.getElementById("inspectorCanvasParent"),
-        Method.isShowInspectorCanvasDom(),
-      ) :
-      ();
+        DomHelper.toggleShowDom(
+          DomHelper.getElementById("inspectorCanvasParent"),
+          false,
+        );
+      },
+    );
+
+    Js.log({j|didUpdate maineditor|j}) |> ignore;
   },
   didMount: _self => {
+    Js.log({j|didMount maineditor|j}) |> ignore;
+
     Js.Promise.(
       MainUtils.initEngine()
       |> then_(_ => {
@@ -143,6 +159,8 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
                |> StateEditorService.setState
            )
            |> StateLogicService.getAndSetEditorState;
+
+           WonderLog.Log.log({j|before dispatch InitEngineAction|j});
 
            dispatchFunc(AppStore.InitEngineAction) |> resolve;
          })

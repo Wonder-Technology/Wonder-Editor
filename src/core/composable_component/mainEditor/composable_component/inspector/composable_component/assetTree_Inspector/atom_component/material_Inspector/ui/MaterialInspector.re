@@ -114,15 +114,30 @@ let make =
       renameFunc,
       self,
     ),
-  didMount: _self =>
-    MaterialInspectorEngineUtils.createMaterialSphereInToInspectorCanvas(
+  didMount: _self => {
+
+    DomHelper.toggleShowDom(
+      DomHelper.getElementById("inspectorCanvasParent"),
+      true,
+    );
+
+    MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
       type_,
       materialComponent,
-    ),
-  willUnmount: _self =>
+    );
+  },
+  willUnmount: _self => {
+
+
+    DomHelper.toggleShowDom(
+      DomHelper.getElementById("inspectorCanvasParent"),
+      false,
+    );
+
     (
       StateEditorService.getState(),
       StateInspectorEngineService.unsafeGetState(),
     )
-    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineParentGameObjectAllChild,
+    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineParentGameObjectAllChild;
+  },
 };

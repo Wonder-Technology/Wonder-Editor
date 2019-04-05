@@ -3,7 +3,7 @@ module Method = {};
 let component = ReasonReact.statelessComponent("WDBInspector");
 
 let render = (name, (onChangeFunc, onBlurFunc), _self) =>
-  <div className="inspector-asset-wdb">
+  <article className="inspector-asset-wdb">
     <h1> {DomHelper.textEl("Model")} </h1>
     <hr />
     <div className="inspector-item">
@@ -20,7 +20,7 @@ let render = (name, (onChangeFunc, onBlurFunc), _self) =>
         />
       </div>
     </div>
-  </div>;
+  </article>;
 
 let make = (~name, ~onChangeFunc, ~onBlurFunc, _children) => {
   ...component,

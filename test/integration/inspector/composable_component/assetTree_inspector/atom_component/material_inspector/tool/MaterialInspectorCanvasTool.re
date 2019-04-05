@@ -31,7 +31,7 @@ let judgeClonedAndSourceLightMaterialAttributeIsEqual = getAttributeFunc => {
   let engineState = StateEngineService.unsafeGetState();
   let (addedMaterialNodeId, materialComponent) = createNewMaterial();
 
-  MaterialInspectorTool.createMaterialSphereInToInspectorCanvas(
+  MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
     MaterialDataAssetType.LightMaterial,
     materialComponent,
   );
@@ -60,7 +60,7 @@ let judgeClonedAndSourceBasicMaterialAttributeIsEqual = getAttributeFunc => {
     (),
   );
 
-  MaterialInspectorTool.createMaterialSphereInToInspectorCanvas(
+  MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
     MaterialDataAssetType.BasicMaterial,
     materialComponent,
   );
@@ -96,7 +96,7 @@ let judgeClonedAndSourceTextureAttributeIsEqual = getAttributeFunc => {
          (),
        );
 
-       MaterialInspectorTool.createMaterialSphereInToInspectorCanvas(
+       MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
          MaterialDataAssetType.LightMaterial,
          materialComponent,
        );

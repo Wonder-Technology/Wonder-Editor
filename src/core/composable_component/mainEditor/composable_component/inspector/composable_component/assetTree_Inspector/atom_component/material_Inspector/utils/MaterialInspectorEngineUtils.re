@@ -45,7 +45,7 @@ let _createLightMaterialSphere =
      );
 };
 
-let createMaterialSphereInToInspectorCanvas = (type_, materialComponent) => {
+let createMaterialSphereIntoInspectorCanvas = (type_, materialComponent) => {
   let engineState = StateEngineService.unsafeGetState();
   let inspectorEngineState = StateInspectorEngineService.unsafeGetState();
   let parentGameObject =

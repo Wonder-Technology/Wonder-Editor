@@ -11,6 +11,7 @@ open Sinon;
 open Js.Promise;
 
 let _ =
+  /* TODO fix: fix insepctor to inspector */
   describe("materialInspector: insepctor canvas", () => {
     let sandbox = getSandboxDefaultVal();
 
@@ -90,22 +91,62 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
+    /* TODO refactor: rename parent gameObject to container gameObject */
     describe("test create material sphere into parent gameObject", () =>
       describe("test create new material into asset", () => {
-        describe("test select the new material", () =>
-          test("select the new material should show inspector canvas", () => {
-            let (addedMaterialNodeId, materialComponent) =
-              MaterialInspectorCanvasTool.createNewMaterial();
+        describe("test select the new material", ()
+          /* TODO test: rewrite this case. e.g.:
 
-            MainEditorAssetChildrenNodeTool.selectMaterialNode(
-              ~nodeId=addedMaterialNodeId,
-              (),
-            );
 
-            MaterialInspectorCanvasTool.isShowInspectorCanvasDom()
-            |> expect == true;
-          })
-        );
+               test("mount the MaterialInspector should show inspector canvas", () => {
+                 let (addedMaterialNodeId, materialComponent) =
+                   MaterialInspectorCanvasTool.createNewMaterial();
+
+                 /* MainEditorAssetChildrenNodeTool.selectMaterialNode(
+                   ~nodeId=addedMaterialNodeId,
+                   (),
+                 ); */
+
+                 MainEditor.didUpdate(fakeOldNewSelf); //hide canvas parent
+
+                 MaterialInspector.didMount(fakeSelf); //show canvas parent
+
+                 isShowDom(get canvas parent) |> expect == true;
+               });
+
+               test("unMount the MaterialInspector should hide inspector canvas", () => {
+                 let (addedMaterialNodeId, materialComponent) =
+                   MaterialInspectorCanvasTool.createNewMaterial();
+
+                 /* MainEditorAssetChildrenNodeTool.selectMaterialNode(
+                   ~nodeId=addedMaterialNodeId,
+                   (),
+                 ); */
+
+                 MainEditor.didUpdate(fakeOldNewSelf); //hide canvas parent
+
+                 MaterialInspector.didMount(fakeSelf); //show canvas parent
+
+                 MaterialInspector.willUnmount(fakeSelf); //hide canvas parent
+
+                 isShowDom(get canvas parent) |> expect == false;
+               })
+
+             */
+          =>
+            test("select the new material should show inspector canvas", () => {
+              let (addedMaterialNodeId, materialComponent) =
+                MaterialInspectorCanvasTool.createNewMaterial();
+
+              MainEditorAssetChildrenNodeTool.selectMaterialNode(
+                ~nodeId=addedMaterialNodeId,
+                (),
+              );
+
+              MaterialInspectorCanvasTool.isShowInspectorCanvasDom()
+              |> expect == true;
+            })
+          );
 
         describe("test clone the new material", () => {
           describe("test material is light material", () =>
@@ -225,7 +266,7 @@ let _ =
                 (),
               );
 
-            MaterialInspectorTool.createMaterialSphereInToInspectorCanvas(
+            MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
               MaterialDataAssetType.LightMaterial,
               materialComponent,
             );
@@ -245,7 +286,7 @@ let _ =
               let (addedMaterialNodeId, materialComponent) =
                 MaterialInspectorCanvasTool.createNewMaterial();
 
-              MaterialInspectorTool.createMaterialSphereInToInspectorCanvas(
+              MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
                 MaterialDataAssetType.LightMaterial,
                 materialComponent,
               );
@@ -266,7 +307,7 @@ let _ =
         let (addedMaterialNodeId, materialComponent) =
           MaterialInspectorCanvasTool.createNewMaterial();
 
-        MaterialInspectorTool.createMaterialSphereInToInspectorCanvas(
+        MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
           MaterialDataAssetType.LightMaterial,
           materialComponent,
         );

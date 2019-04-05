@@ -51,6 +51,7 @@ let apply = [%raw
   |}
 ];
 
+/* TODO refactor: rename to setDomDisplay */
 let toggleShowDom = [%raw
   {|
     function(domEle, isShow) {
