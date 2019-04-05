@@ -3,29 +3,23 @@ type retainedProps = {isInitEngine: bool};
 module Method = {
   let resizeCanvasAndViewPort = () => ResizeUtils.resizeScreen();
 
-  let toggleShowInspectorCanvasDom = () => {
-    let inspectorCanvasParent =
-      DomHelper.getElementById("inspectorCanvasParent");
+  let isShowInspectorCanvasDom = () => {
     let editorState = StateEditorService.getState();
 
     switch (
       CurrentSelectSourceEditorService.getCurrentSelectSource(editorState)
     ) {
     | None
-    | Some(SceneTree) => DomHelper.hideCanvas(inspectorCanvasParent)
+    | Some(SceneTree) => false
     | Some(Asset) =>
       switch (OperateTreeAssetEditorService.getCurrentNode(editorState)) {
-      | None => DomHelper.hideCanvas(inspectorCanvasParent)
+      | None => false
       | Some(currentNode) =>
         switch (currentNode) {
-        | TextureNode(nodeId, textureNodeData) =>
-          DomHelper.hideCanvas(inspectorCanvasParent)
-        | FolderNode(nodeId, folderNodeData, children) =>
-          DomHelper.hideCanvas(inspectorCanvasParent)
-        | MaterialNode(nodeId, materialNodeData) =>
-          DomHelper.showCanvas(inspectorCanvasParent)
-        | WDBNode(nodeId, wdbNodeData) =>
-          DomHelper.showCanvas(inspectorCanvasParent)
+        | TextureNode(nodeId, textureNodeData) => false
+        | FolderNode(nodeId, folderNodeData, children) => false
+        | MaterialNode(nodeId, materialNodeData) => true
+        | WDBNode(nodeId, wdbNodeData) => true
         }
       }
     };
@@ -132,7 +126,11 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
       Method.resizeCanvasAndViewPort() : ();
 
     newSelf.retainedProps.isInitEngine ?
-      Method.toggleShowInspectorCanvasDom() : ();
+      DomHelper.toggleShowDom(
+        DomHelper.getElementById("inspectorCanvasParent"),
+        Method.isShowInspectorCanvasDom(),
+      ) :
+      ();
   },
   didMount: _self => {
     Js.Promise.(

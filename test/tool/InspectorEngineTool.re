@@ -38,15 +38,18 @@ let getMaterialSphere = InspectorEngineGameObjectLogicService.getMaterialSphere;
 
 let getWDBGameObject = InspectorEngineGameObjectLogicService.getWDBGameObject;
 
+let disposeInspectorEngineParentGameObjectAllChild = InspectorEngineGameObjectLogicService.disposeInspectorEngineParentGameObjectAllChild;
+
 let getMaterialSphereLightMaterial = (editorState, engineState) => {
   let materialSphere =
     (editorState, engineState)
     |> InspectorEngineGameObjectLogicService.getMaterialSphere
     |> OptionService.unsafeGet;
-  
 
-  engineState 
-  |> GameObjectComponentEngineService.getLightMaterialComponent(materialSphere)
+  engineState
+  |> GameObjectComponentEngineService.getLightMaterialComponent(
+       materialSphere,
+     )
   |> OptionService.unsafeGet;
 };
 
@@ -55,9 +58,10 @@ let getMaterialSphereBasicMaterial = (editorState, engineState) => {
     (editorState, engineState)
     |> InspectorEngineGameObjectLogicService.getMaterialSphere
     |> OptionService.unsafeGet;
-  
 
-  engineState 
-  |> GameObjectComponentEngineService.getBasicMaterialComponent(materialSphere)
+  engineState
+  |> GameObjectComponentEngineService.getBasicMaterialComponent(
+       materialSphere,
+     )
   |> OptionService.unsafeGet;
 };

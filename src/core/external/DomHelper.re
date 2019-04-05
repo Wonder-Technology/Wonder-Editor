@@ -51,18 +51,11 @@ let apply = [%raw
   |}
 ];
 
-let showCanvas = [%raw
+let toggleShowDom = [%raw
   {|
-    function(canvas) {
-      canvas.style.display = "block";
-    }
-  |}
-];
-
-let hideCanvas = [%raw
-  {|
-    function(canvas) {
-      canvas.style.display = "none";
+    function(domEle, isShow) {
+      isShow ?
+        domEle.style.display = "block" : domEle.style.display = "none"
     }
   |}
 ];

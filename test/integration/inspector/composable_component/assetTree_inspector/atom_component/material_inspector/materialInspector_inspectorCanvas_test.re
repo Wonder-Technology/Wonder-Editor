@@ -92,6 +92,21 @@ let _ =
 
     describe("test create material sphere into parent gameObject", () =>
       describe("test create new material into asset", () => {
+        describe("test select the new material", () =>
+          test("select the new material should show inspector canvas", () => {
+            let (addedMaterialNodeId, materialComponent) =
+              MaterialInspectorCanvasTool.createNewMaterial();
+
+            MainEditorAssetChildrenNodeTool.selectMaterialNode(
+              ~nodeId=addedMaterialNodeId,
+              (),
+            );
+
+            MaterialInspectorCanvasTool.isShowInspectorCanvasDom()
+            |> expect == true;
+          })
+        );
+
         describe("test clone the new material", () => {
           describe("test material is light material", () =>
             describe("cloned material's data should equal to source one", () => {
@@ -114,7 +129,6 @@ let _ =
               describe("if the light material has texture", () => {
                 beforeEach(() => {
                   MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
-
                   MainEditorAssetTool.buildFakeFileReader();
                   MainEditorAssetTool.buildFakeImage();
 
@@ -216,20 +230,18 @@ let _ =
               materialComponent,
             );
 
-            let materialSphere =
+            let parentGameObjectFirstChild =
               (editorState, inspectorEngineState)
-              |> InspectorEngineGameObjectLogicService.getMaterialSphere
+              |> InspectorEngineTool.getMaterialSphere
               |> OptionService.unsafeGet;
 
-            materialSphere |> expect == newGameObject;
+            parentGameObjectFirstChild |> expect == newGameObject;
           });
           describe("test render material sphere", () =>
             test("test draw once", () => {
               let gl = FakeGlToolEngine.getInspectorEngineStateGl();
               let drawElements = gl##drawElements;
 
-              let inspectorEngineState =
-                StateInspectorEngineService.unsafeGetState();
               let (addedMaterialNodeId, materialComponent) =
                 MaterialInspectorCanvasTool.createNewMaterial();
 
@@ -260,7 +272,7 @@ let _ =
         );
 
         (editorState, inspectorEngineState)
-        |> InspectorEngineGameObjectLogicService.disposeInspectorEngineParentGameObjectAllChild;
+        |> InspectorEngineTool.disposeInspectorEngineParentGameObjectAllChild;
 
         let parentGameObject =
           ParentGameObjectInspectorCanvasEditorService.unsafeGetParentGameObject(

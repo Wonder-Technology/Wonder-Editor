@@ -17,6 +17,7 @@ module Method = {
   let change = event => {
     let inputVal =
       ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
+
     Change(inputVal);
   };
 
@@ -96,24 +97,11 @@ module Method = {
     />;
 
   let buildWDBComponent = (state, send, _, _) =>
-    <div className="inspector-asset-wdb">
-      <h1> {DomHelper.textEl("Model")} </h1>
-      <hr />
-      <div className="inspector-item">
-        <div className="item-header">
-          <span className=""> {DomHelper.textEl("Name:")} </span>
-        </div>
-        <div className="item-content">
-          <input
-            className="input-component float-input"
-            type_="text"
-            value={state.inputValue}
-            onChange={_e => send(change(_e))}
-            onBlur={_e => send(Blur)}
-          />
-        </div>
-      </div>
-    </div>;
+    <WDBInspector
+      name={state.inputValue}
+      onChangeFunc={_e => send(change(_e))}
+      onBlurFunc={_e => send(Blur)}
+    />;
 
   let showAssetNodeComponent =
       (

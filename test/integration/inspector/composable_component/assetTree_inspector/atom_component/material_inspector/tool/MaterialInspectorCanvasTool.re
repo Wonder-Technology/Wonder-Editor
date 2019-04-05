@@ -117,3 +117,5 @@ let judgeClonedAndSourceTextureAttributeIsEqual = getAttributeFunc => {
        |> resolve;
      });
 };
+
+let isShowInspectorCanvasDom = MainEditor.Method.isShowInspectorCanvasDom;
