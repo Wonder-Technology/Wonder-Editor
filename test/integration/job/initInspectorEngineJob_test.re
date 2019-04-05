@@ -1,5 +1,3 @@
-open Wonderjs;
-
 open Wonder_jest;
 
 open Expect;
@@ -76,15 +74,15 @@ let _ =
                  inspectorEngineState,
                );
           (
-            PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraNear(
+            PerspectiveCameraProjectionEngineService.getPerspectiveCameraNear(
               cameraProjection,
               inspectorEngineState,
             ),
-            PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraFar(
+            PerspectiveCameraProjectionEngineService.getPerspectiveCameraFar(
               cameraProjection,
               inspectorEngineState,
             ),
-            PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraFovy(
+            PerspectiveCameraProjectionEngineService.getPerspectiveCameraFovy(
               cameraProjection,
               inspectorEngineState,
             ),
@@ -105,12 +103,12 @@ let _ =
 
           inspectorEngineState
           |> TransformEngineService.getLocalPosition(transform)
-          /* TODO add |> Vector3Service.truncate(2) */
-          |> expect == (0., 0., 1.100000023841858);
+          |> WonderEditor.Vector3Service.truncate(2)
+          |> expect == (0., 0., 1.1);
         });
       });
 
-      describe("add one direction light", () =>
+      describe("add one direction light", () => {
         test("scene gameObject children should has one direction light", () => {
           let inspectorEngineState =
             StateInspectorEngineService.unsafeGetState();
@@ -119,9 +117,27 @@ let _ =
           |> InspectorEngineTool.getSceneDirectionLights
           |> Js.Array.length
           |> expect == 1;
-        })
-        /* TODO test: add test local euler angles */
-      );
+        });
+
+        test("set directio-light's local euler angles", () => {
+          let inspectorEngineState =
+            StateInspectorEngineService.unsafeGetState();
+          let directionLightTransform =
+            inspectorEngineState
+            |> InspectorEngineTool.unsafeGetSceneFirstDirectionLight
+            |> GameObjectComponentEngineService.unsafeGetTransformComponent(
+                 _,
+                 inspectorEngineState,
+               );
+
+          inspectorEngineState
+          |> TransformEngineService.getLocalEulerAngles(
+               directionLightTransform,
+             )
+          |> WonderEditor.Vector3Service.truncate(1)
+          |> expect == (145., 15., (-0.));
+        });
+      });
 
       describe("add one empty gameObject", () =>
         test("add the empty gameObject to editorState", () => {

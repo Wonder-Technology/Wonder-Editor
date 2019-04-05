@@ -115,7 +115,6 @@ let make =
       self,
     ),
   didMount: _self => {
-
     DomHelper.toggleShowDom(
       DomHelper.getElementById("inspectorCanvasParent"),
       true,
@@ -127,8 +126,6 @@ let make =
     );
   },
   willUnmount: _self => {
-
-
     DomHelper.toggleShowDom(
       DomHelper.getElementById("inspectorCanvasParent"),
       false,

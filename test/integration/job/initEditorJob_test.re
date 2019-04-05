@@ -1,5 +1,3 @@
-open Wonderjs;
-
 open Wonder_jest;
 
 open Expect;
@@ -220,16 +218,17 @@ let _ =
                  _,
                  engineState,
                );
+
           (
-            PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraNear(
+            PerspectiveCameraProjectionEngineService.getPerspectiveCameraNear(
               cameraProjection,
               engineState,
             ),
-            PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraFar(
+            PerspectiveCameraProjectionEngineService.getPerspectiveCameraFar(
               cameraProjection,
               engineState,
             ),
-            PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraFovy(
+            PerspectiveCameraProjectionEngineService.getPerspectiveCameraFovy(
               cameraProjection,
               engineState,
             ),
@@ -241,9 +240,12 @@ let _ =
           let gameObject = _getCamera() |> OptionService.unsafeGet;
           let transform =
             engineState
-            |> GameObjectAPI.unsafeGetGameObjectTransformComponent(gameObject);
+            |> GameObjectComponentEngineService.unsafeGetTransformComponent(
+                 gameObject,
+               );
+
           engineState
-          |> TransformAPI.getTransformLocalPosition(transform)
+          |> TransformEngineService.getLocalPosition(transform)
           |> expect == (0., 0., 4.);
         });
       });

@@ -17,14 +17,6 @@ let _initCameraAddToSceneGameObject = (camera, inspectorEngineState) =>
 let _initDirectionLightAddToSceneGameObject =
     (directionLight, inspectorEngineState) =>
   inspectorEngineState
-  /* TODO refactor: remove set local position */
-  |> TransformEngineService.setLocalPosition(
-       (3., 4., 1.),
-       GameObjectComponentEngineService.unsafeGetTransformComponent(
-         directionLight,
-         inspectorEngineState,
-       ),
-     )
   |> TransformEngineService.setTransformLocalEulerAngles(
        (145., 15., 0.),
        GameObjectComponentEngineService.unsafeGetTransformComponent(

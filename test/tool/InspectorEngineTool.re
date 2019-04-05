@@ -25,6 +25,9 @@ let getSceneDirectionLights = engineState =>
        )
      );
 
+let unsafeGetSceneFirstDirectionLight = engineState =>
+  getSceneDirectionLights(engineState) |> ArrayService.unsafeGetFirst;
+
 let getSceneAllChild = engineState =>
   engineState
   |> HierarchyGameObjectEngineService.getChildren(
