@@ -23,22 +23,16 @@ module CustomEventHandler = {
       )
     };
 
-  let _clearCurrentData = editorState =>
-    editorState
-    |> CurrentNodeIdAssetEditorService.clearCurrentNodeId
-    |> CurrentSelectSourceEditorService.clearCurrentSelectSource
-    |> SceneTreeEditorService.clearCurrentSceneTreeNode;
-
   let handleSelfLogic = ((uiState, dispatchFunc), (), gameObjectOpt) => {
     switch (gameObjectOpt) {
     | None =>
       StateEditorService.getState()
-      |> _clearCurrentData
+      |> SceneTreeSelectCurrentNodeUtils.clearCurrentData
       |> StateEditorService.setState
       |> ignore
     | Some(gameObject) =>
       StateEditorService.getState()
-      |> _clearCurrentData
+      |> SceneTreeSelectCurrentNodeUtils.clearCurrentData
       |> StateEditorService.setState
       |> ignore;
 
@@ -67,7 +61,6 @@ module CustomEventHandler = {
 
       StateLogicService.getAndRefreshEngineStateWhenStop();
     };
-
 
     dispatchFunc(
       AppStore.UpdateAction(Update([|SceneTree, Inspector, Project|])),

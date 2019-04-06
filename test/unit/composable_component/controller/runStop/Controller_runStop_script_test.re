@@ -39,7 +39,8 @@ let _ =
          {
            "name": "default",
            "jobs": [
-{"name": "init_editor" }
+{"name": "init_editor" },
+{"name": "init_script_api" }
            ]
          }
        ]
@@ -47,7 +48,8 @@ let _ =
         ~initJobs=
           {|
              [
-{"name": "init_editor" }
+{"name": "init_editor" },
+{"name": "init_script_api" }
              ]
              |},
         ~loopPipelines=
@@ -78,7 +80,8 @@ let _ =
          {
            "name": "default",
            "jobs": [
-{"name": "init_editor" }
+{"name": "init_editor" },
+{"name": "init_script_api" }
            ]
          }
        ]
@@ -86,7 +89,8 @@ let _ =
         ~initJobs=
           {|
              [
-{"name": "init_editor" }
+{"name": "init_editor" },
+{"name": "init_script_api" }
              ]
              |},
         ~loopPipelines=
@@ -134,13 +138,19 @@ let _ =
             editorState,
           );
 
+        let script = GameObjectTool.getCurrentSceneTreeNodeScript();
+
+        let gameObject =
+          ScriptEngineService.unsafeGetScriptGameObject(script)
+          |> StateLogicService.getEngineStateToGetData;
+
         MainEditorScriptEventFunctionTool.addScriptEventFunction(
           ~script=GameObjectTool.getCurrentSceneTreeNodeScript(),
           ~send=SinonTool.createOneLengthStub(sandbox^),
           (),
         );
 
-        (addedNodeId, eventFunctionName);
+        (script, gameObject, addedNodeId, eventFunctionName);
       };
 
       let _prepareTwoScriptEventFunctions = () => {
@@ -209,7 +219,7 @@ let _ =
           _prepareWithNoWorkerJobRecord(
             _buildNoWorkerJobConfigOnlyWithUpdateScript(),
           );
-          let (addedNodeId, eventFunctionName) =
+          let (script, gameObject, addedNodeId, eventFunctionName) =
             _prepareOneScriptEventFunction();
           ScriptEventFunctionInspectorTool.updateEventFunctionData(
             addedNodeId,
@@ -238,7 +248,7 @@ let _ =
             _prepareWithNoWorkerJobRecord(
               _buildNoWorkerJobConfigOnlyWithUpdateScript(),
             );
-            let (addedNodeId, eventFunctionName) =
+            let (script, gameObject, addedNodeId, eventFunctionName) =
               _prepareOneScriptEventFunction();
             ScriptEventFunctionInspectorTool.updateEventFunctionData(
               addedNodeId,
@@ -385,7 +395,7 @@ let _ =
           _prepareWithNoWorkerJobRecord(
             _buildNoWorkerJobConfigOnlyWithUpdateScript(),
           );
-          let (addedNodeId, eventFunctionName) =
+          let (script, gameObject, addedNodeId, eventFunctionName) =
             _prepareOneScriptEventFunction();
           ScriptEventFunctionInspectorTool.updateEventFunctionData(
             addedNodeId,
@@ -410,6 +420,74 @@ let _ =
           StateEngineService.unsafeGetState().arcballCameraControllerRecord
           |> expect !== Obj.magic(-1);
         })
+      );
+
+      describe("script api should update editor", () =>
+        describe("test disposeGameObject api", () =>
+          test("should update scene tree", () => {
+            _prepareWithNoWorkerJobRecord(
+              _buildNoWorkerJobConfigWithDispose(),
+            );
+            let (script, gameObject, addedNodeId, eventFunctionName) =
+              _prepareOneScriptEventFunction();
+            let name = "secondCube";
+            let engineState = StateEngineService.unsafeGetState();
+            engineState
+            |> GameObjectEngineService.setGameObjectName(
+                 name,
+                 MainEditorSceneTool.getSecondCube(engineState),
+               )
+            |> StateEngineService.setState
+            |> ignore;
+            ScriptEventFunctionInspectorTool.updateEventFunctionData(
+              addedNodeId,
+              eventFunctionName,
+              ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr(
+                ~updateFunc=
+                  Some(
+                    (. script, api, state: Wonderjs.StateDataMainType.state) => {
+                      let disposeGameObject = api##disposeGameObject;
+                      let findGameObjectsByName = api##findGameObjectsByName;
+
+                      let gameObjects =
+                        findGameObjectsByName(. "secondCube", state);
+
+                      let state =
+                        switch (gameObjects |> Js.Array.length) {
+                        | 0 => state
+                        | _ =>
+                          let secondCubeGameObject =
+                            Array.unsafe_get(
+                              findGameObjectsByName(. "secondCube", state),
+                              0,
+                            );
+
+                          disposeGameObject(. secondCubeGameObject, state);
+                        };
+
+                      state;
+                    },
+                  ),
+                (),
+              ),
+            );
+            let dispatchFuncStub = ReactTool.createDispatchFuncStub(sandbox);
+
+            ControllerTool.run();
+            LoopTool.getAndRefreshEngineStateForRunLoop();
+
+            let engineState = StateEngineService.unsafeGetState();
+
+            dispatchFuncStub
+            |> withOneArg(
+                 AppStore.UpdateAction(
+                   Update([|UpdateStore.SceneTree, UpdateStore.Inspector|]),
+                 ),
+               )
+            |> getCallCount
+            |> expect == 1;
+          })
+        )
       );
     });
   });
