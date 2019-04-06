@@ -4759,18 +4759,26 @@ exports[`AddableComponent add component test gameObject add component workflow t
       <article
         className="wonder-inspector-script"
       >
-        <button
-          className="addable-btn"
-          onClick={[Function]}
+        <article
+          className="wonder-inspector-script"
         >
-          Add script event function
-        </button>
-        <button
-          className="addable-btn"
-          onClick={[Function]}
+          <button
+            className="addable-btn"
+            onClick={[Function]}
+          >
+            Add script event function
+          </button>
+        </article>
+        <article
+          className="wonder-inspector-script"
         >
-          Add script attribute
-        </button>
+          <button
+            className="addable-btn"
+            onClick={[Function]}
+          >
+            Add script attribute
+          </button>
+        </article>
       </article>
     </article>
     <article
