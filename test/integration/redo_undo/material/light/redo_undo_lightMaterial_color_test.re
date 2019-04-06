@@ -22,11 +22,7 @@ let _ =
       let sourceColor =
         MainEditorLightMaterialTool.getColor(materialComponent);
 
-      MainEditorLightMaterialTool.changeColor(
-        false,
-        materialComponent,
-        color,
-      );
+      MainEditorLightMaterialTool.changeColor(materialComponent, color);
 
       MainEditorLightMaterialTool.closeColorPicker(
         ~material=materialComponent,
@@ -42,7 +38,9 @@ let _ =
         GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
 
       let component =
-        BuildComponentTool.buildLightMaterial(currentGameObjectMaterial);
+        BuildComponentTool.buildLightMaterialForGameObject(
+          currentGameObjectMaterial,
+        );
 
       let color1 = PickColorTool.buildColor1();
       let color2 = PickColorTool.buildColor2();
@@ -69,6 +67,6 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateTwiceChangeColor, _beforeEach, _afterEach),
-      BuildComponentForCurryTool.buildLightMaterial,
+      BuildComponentForCurryTool.buildLightMaterialForGameObject,
     );
   });

@@ -1,8 +1,6 @@
-/* TODO refactor:rename to _disposeContainerGameObjectAllChildren */
 let _disposeContainerGameObjectAllChildren =
     (containerGameObject, inspectorEngineState) =>
   inspectorEngineState
-  /* TODO refactor: use getAllChildren and remove Js.Array.sliceFrom(1) */
   |> HierarchyGameObjectEngineService.getAllChildren(containerGameObject)
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. inspectorEngineState, gameObject) =>
@@ -14,14 +12,10 @@ let _disposeContainerGameObjectAllChildren =
             use LightMaterialToolEngine.isAlive
 
             */
-         |> GameObjectEngineService.disposeGameObject(
-              gameObject,
-            ),
+         |> GameObjectEngineService.disposeGameObject(gameObject),
        inspectorEngineState,
      );
 
-/* TODO refactor:rename to disposeInspectorEngineContainerGameObjectAllChildren */
-/* TODO refactor: inject and return state */
 let disposeInspectorEngineContainerGameObjectAllChildren =
     ((editorState, inspectorEngineState)) => {
   let containerGameObject =
@@ -30,12 +24,9 @@ let disposeInspectorEngineContainerGameObjectAllChildren =
     );
 
   switch (containerGameObject) {
-  | None => ()
+  | None => inspectorEngineState
   | Some(gameObject) =>
-    inspectorEngineState
-    |> _disposeContainerGameObjectAllChildren(gameObject)
-    |> JobEngineService.execDisposeJob
-    |> ignore
+    inspectorEngineState |> _disposeContainerGameObjectAllChildren(gameObject)
   };
 };
 

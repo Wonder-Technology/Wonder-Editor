@@ -17,11 +17,7 @@ let _ =
       let sourceColor =
         MainEditorBasicMaterialTool.getColor(materialComponent);
 
-      MainEditorBasicMaterialTool.changeColor(
-        false,
-        materialComponent,
-        color,
-      );
+      MainEditorBasicMaterialTool.changeColor(materialComponent, color);
 
       MainEditorBasicMaterialTool.closeColorPicker(
         ~material=materialComponent,
@@ -80,6 +76,6 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateTwiceChangeColor, _beforeEach, _afterEach),
-      BuildComponentForCurryTool.buildBasicMaterial,
+      BuildComponentForCurryTool.buildBasicMaterialForGameObject,
     );
   });

@@ -139,6 +139,8 @@ let initInspectorEngineState =
     (),
   );
 
+  StateInspectorEngineService.setIsDebug(true) |> ignore;
+
   AllMaterialToolEngine.prepareForInitInspectorEngineState();
 
   SettingToolEngine.setFakeCanvasToInspectorEngineState();

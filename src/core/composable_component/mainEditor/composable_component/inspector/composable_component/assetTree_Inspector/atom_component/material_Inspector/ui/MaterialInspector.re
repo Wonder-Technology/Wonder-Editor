@@ -31,7 +31,10 @@ module Method = {
       StateEditorService.getState(),
       StateInspectorEngineService.unsafeGetState(),
     )
-    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren;
+    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
+    |> JobEngineService.execDisposeJob
+    |> StateInspectorEngineService.setState
+    |> ignore;
   };
 };
 
@@ -101,19 +104,17 @@ let render =
     {
       switch (state.materialType) {
       | BasicMaterial =>
-        <MainEditorBasicMaterial
+        <MainEditorBasicMaterialForAsset
           uiState
           dispatchFunc
           materialComponent
-          isShowInspectorCanvas=true
         />
 
       | LightMaterial =>
-        <MainEditorLightMaterial
+        <MainEditorLightMaterialForAsset
           uiState
           dispatchFunc
           materialComponent
-          isShowInspectorCanvas=true
         />
       }
     }

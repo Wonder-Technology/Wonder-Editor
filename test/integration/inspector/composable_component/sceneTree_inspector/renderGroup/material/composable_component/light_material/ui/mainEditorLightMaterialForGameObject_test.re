@@ -49,7 +49,7 @@ let _ =
           sandbox,
           (
             GameObjectTool.getCurrentSceneTreeNodeLightMaterial,
-            MainEditorLightMaterialTool.changeColor(false),
+            MainEditorLightMaterialTool.changeColor,
             LightMaterialEngineService.getLightMaterialDiffuseColor,
           ),
         );
@@ -298,7 +298,6 @@ let _ =
                 };
 
                 MainEditorLightMaterialTool.changeColor(
-                  false,
                   currentGameObjectMaterial,
                   newColor,
                 );
@@ -440,7 +439,7 @@ let _ =
             let currentGameObjectMaterial =
               GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
             let component =
-              BuildComponentTool.buildLightMaterial(
+              BuildComponentTool.buildLightMaterialForGameObject(
                 currentGameObjectMaterial,
               );
             let value = 1.1;
@@ -467,122 +466,5 @@ let _ =
           })
         );
       });
-    });
-
-    /* TODO refactor move out to MainEditorLightMaterialForAsset_test */
-    describe("test change inspectorEngine value", () => {
-      beforeEach(() => {
-        MainEditorSceneTool.initInspectorEngineState(
-          ~sandbox,
-          ~isInitJob=false,
-          ~noWorkerJobRecord=
-            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-              ~initPipelines=
-                {|
-             [
-              {
-                "name": "default",
-                "jobs": [
-                    {"name": "init_inspector_engine" }
-                ]
-              }
-            ]
-             |},
-              ~initJobs=
-                {|
-             [
-                {"name": "init_inspector_engine" }
-             ]
-             |},
-              (),
-            ),
-          (),
-        );
-
-        StateInspectorEngineService.unsafeGetState()
-        |> MainUtils._handleInspectorEngineState
-        |> StateInspectorEngineService.setState
-        |> ignore;
-
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
-        );
-      });
-      let _getMaterialSphereLightMaterial = inspectorEngineState => {
-        let (addedMaterialNodeId, materialComponent) =
-          MaterialInspectorCanvasTool.createNewMaterial();
-
-        let inspectorEngine =
-          MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
-            MaterialDataAssetType.LightMaterial,
-            materialComponent,
-            (
-              StateEditorService.getState(),
-              StateEngineService.unsafeGetState(),
-            ),
-          );
-
-        InspectorEngineTool.getMaterialSphereLightMaterial(
-          StateEditorService.getState(),
-          inspectorEngineState,
-        );
-      };
-      describe(
-        "test change currentSceneTreeNode's lightMaterial value should change materialSphere's  lightMaterial value",
-        () => {
-          test("test change color", () => {
-            let inspectorEngineState =
-              StateInspectorEngineService.unsafeGetState();
-
-            let materialSphereLightMaterial =
-              _getMaterialSphereLightMaterial(inspectorEngineState);
-
-            let newColor = {
-              "hex": "#7df1e8",
-              "rgb": {
-                "r": 125,
-                "g": 241,
-                "b": 232,
-              },
-            };
-
-            MainEditorLightMaterialTool.changeColor(
-              true,
-              GameObjectTool.getCurrentSceneTreeNodeLightMaterial(),
-              newColor,
-            );
-
-            inspectorEngineState
-            |> LightMaterialEngineService.getLightMaterialDiffuseColor(
-                 materialSphereLightMaterial,
-               )
-            |> Color.getHexString
-            |> expect ==
-            newColor##hex;
-          });
-          test("test change shininess", () => {
-            let inspectorEngineState =
-              StateInspectorEngineService.unsafeGetState();
-            let shininessValue = 20.5;
-
-            let materialSphereLightMaterial =
-              _getMaterialSphereLightMaterial(inspectorEngineState);
-
-            MainEditorLightMaterialTool.changeShininess(
-              ~material=GameObjectTool.getCurrentSceneTreeNodeLightMaterial(),
-              ~value=shininessValue,
-              ~isShowInspectorCanvas=true,
-              (),
-            );
-
-            inspectorEngineState
-            |> LightMaterialEngineService.getLightMaterialShininess(
-                 materialSphereLightMaterial,
-               )
-            |> expect == shininessValue;
-          });
-        },
-      );
     });
   });

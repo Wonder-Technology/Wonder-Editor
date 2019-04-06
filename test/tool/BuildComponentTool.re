@@ -137,29 +137,27 @@ let buildMaterialMap =
       materialComponent
       label="Diffuse map"
       getMapFunc=LightMaterialEngineService.getLightMaterialDiffuseMap
-      removeTextureFunc=MainEditorLightMaterial.Method.removeTexture
-      onDropFunc=MainEditorLightMaterial.Method.dragToSetMaterialTexture
+      removeTextureFunc=InspectorMaterialUtils.removeTexture
+      onDropFunc=InspectorMaterialUtils.dragToSetLightMaterialTexture
       isShowTextureGroup
     />,
   );
 
-let buildBasicMaterial = materialComponent =>
+let buildBasicMaterialForGameObject = materialComponent =>
   ReactTestRenderer.create(
-    <MainEditorBasicMaterial
+    <MainEditorBasicMaterialForGameObject
       uiState={TestTool.buildEmptyAppState()}
       dispatchFunc={TestTool.getDispatch()}
       materialComponent
-      isShowInspectorCanvas=false
     />,
   );
 
-let buildLightMaterial = materialComponent =>
+let buildLightMaterialForGameObject = materialComponent =>
   ReactTestRenderer.create(
-    <MainEditorLightMaterial
+    <MainEditorLightMaterialForGameObject
       uiState={TestTool.buildEmptyAppState()}
       dispatchFunc={TestTool.getDispatch()}
       materialComponent
-      isShowInspectorCanvas=false
     />,
   );
 

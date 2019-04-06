@@ -1,4 +1,4 @@
-let cloneTextureToOtherEngine =
+let cloneTextureToOtherEngineState =
     (clonedTexture, clonedEngineState, targetEngineState) => {
   let (targetEngineState, texture) =
     targetEngineState |> BasicSourceTextureEngineService.create;

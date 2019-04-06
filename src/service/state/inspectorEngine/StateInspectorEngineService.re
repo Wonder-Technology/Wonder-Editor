@@ -1,3 +1,5 @@
+open Wonderjs;
+
 let deepCopyForRestore = Wonderjs.StateAPI.deepCopyForRestore;
 
 let createState = Wonderjs.StateAPI.createState;
@@ -15,4 +17,10 @@ let setState = (state: Wonderjs.StateDataMainType.state) =>
   Wonderjs.StateDataMainService.setState(
     StateDataInspectorEngineService.getStateData(),
     state,
+  );
+
+let setIsDebug = isDebug =>
+  IsDebugMainService.setIsDebug(
+    StateDataInspectorEngineService.getStateData(),
+    isDebug,
   );

@@ -52,10 +52,8 @@ let _ =
     );
 
     describe("fix bug", () => {
-      let execChangeMaterialColorWork =
-          (isShowInspectorCanvas, currentGameObjectMaterial, newColor) =>
+      let execChangeMaterialColorWork = (currentGameObjectMaterial, newColor) =>
         MainEditorLightMaterialTool.changeColor(
-          isShowInspectorCanvas,
           currentGameObjectMaterial,
           newColor,
         );
@@ -81,11 +79,7 @@ let _ =
             GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
           let newColor = PickColorTool.buildColor1();
 
-          execChangeMaterialColorWork(
-            false,
-            currentGameObjectMaterial,
-            newColor,
-          );
+          execChangeMaterialColorWork(currentGameObjectMaterial, newColor);
           execChangeTransformWork();
 
           RedoUndoTool.undoHistoryState();

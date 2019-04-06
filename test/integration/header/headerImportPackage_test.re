@@ -901,16 +901,8 @@ let _ =
                 let color1 = PickColorTool.buildColor1();
                 let color2 = PickColorTool.buildColor2();
 
-                MainEditorLightMaterialTool.changeColor(
-                  false,
-                  material1,
-                  color1,
-                );
-                MainEditorBasicMaterialTool.changeColor(
-                  false,
-                  material2,
-                  color2,
-                );
+                MainEditorLightMaterialTool.changeColor(material1, color1);
+                MainEditorBasicMaterialTool.changeColor(material2, color2);
 
                 MainEditorAssetUploadTool.loadOneTexture(
                   ~imgName="1.png",

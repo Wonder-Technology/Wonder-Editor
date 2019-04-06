@@ -1,4 +1,3 @@
-/* TODO refactor:rename to cloneBasicMaterialToOtherEngineStateState */
 let cloneBasicMaterialToOtherEngineState =
     (clonedMaterialComponent, clonedEngineState, targetEngineState) => {
   let (targetEngineState, basicMaterial) =
@@ -22,7 +21,6 @@ let cloneBasicMaterialToOtherEngineState =
   (basicMaterial, targetEngineState);
 };
 
-/* TODO refactor:rename to cloneLightMaterialToOtherEngineStateState */
 let cloneLightMaterialToOtherEngineState =
     (clonedMaterialComponent, clonedEngineState, targetEngineState) => {
   let (targetEngineState, lightMaterial) =
@@ -59,7 +57,7 @@ let cloneLightMaterialToOtherEngineState =
     | None => targetEngineState
     | Some(map) =>
       let (material, targetEngineState) =
-        CloneTextureEngineLogicService.cloneTextureToOtherEngine(
+        CloneTextureEngineLogicService.cloneTextureToOtherEngineState(
           map,
           clonedEngineState,
           targetEngineState,

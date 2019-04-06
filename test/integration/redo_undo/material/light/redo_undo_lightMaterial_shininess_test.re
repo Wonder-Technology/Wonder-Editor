@@ -48,6 +48,6 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateTwiceChangeShininess, _beforeEach, () => ()),
-      BuildComponentForCurryTool.buildLightMaterial,
+      BuildComponentForCurryTool.buildLightMaterialForGameObject,
     );
   });

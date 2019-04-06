@@ -351,6 +351,8 @@ let _ =
         afterEach(() => CanvasTool.restoreMainCanvasAndInspectorCanvasDom());
 
         test("the container gameObject children array should be empty", () => {
+          StateInspectorEngineService.setIsDebug(true) |> ignore;
+
           let (addedMaterialNodeId, materialComponent) =
             MaterialInspectorCanvasTool.createNewMaterial();
 
