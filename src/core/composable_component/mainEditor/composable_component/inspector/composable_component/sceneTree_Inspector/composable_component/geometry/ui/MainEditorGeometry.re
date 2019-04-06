@@ -121,11 +121,11 @@ let render =
           languageType,
         )
       }
-      itemText={
+      assetText={
         MainEditorGeometryUtils.getName(state.currentGeometry)
         |> StateLogicService.getEngineStateToGetData
       }
-      selectItemFunc={send => send(ShowGeometryGroup)}
+      selectAssetFunc={send => send(ShowGeometryGroup)}
       sendFunc=send
     />
     {
@@ -134,7 +134,7 @@ let render =
           headerText="Geometry"
           sendFunc=send
           clickHideGroupButtonFunc={send => send(HideGeometryGroup)}
-          getAllItemsFunc={
+          getAllAssetsFunc={
             () => {
               let editorState = StateEditorService.getState();
               let engineState = StateEngineService.unsafeGetState();
@@ -145,14 +145,14 @@ let render =
               );
             }
           }
-          isItemFunc={
+          isAssetFunc={
             geometry => {
               let currentGeometry = state.currentGeometry;
 
               geometry === currentGeometry;
             }
           }
-          changeItemFunc={
+          changeAssetFunc={
             (geometry, send) => send(ChangeGeometry(geometry))
           }
           getTextFunc={

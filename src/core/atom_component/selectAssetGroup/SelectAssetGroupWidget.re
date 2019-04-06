@@ -1,16 +1,16 @@
 module Method = {
-  let showItems =
-      ((getAllItemsFunc, isItemFunc, changeItemFunc, getTextFunc), sendFunc) =>
-    getAllItemsFunc()
+  let showAssets =
+      ((getAllAssetsFunc, isAssetFunc, changeAssetFunc, getTextFunc), sendFunc) =>
+    getAllAssetsFunc()
     |> Js.Array.map(item => {
          let className =
-           isItemFunc(item) ?
+           isAssetFunc(item) ?
              "select-item-content select-item-active" : "select-item-content";
 
          <div
            className
            key={DomHelper.getRandomKey()}
-           onClick={_e => changeItemFunc(item, sendFunc)}>
+           onClick={_e => changeAssetFunc(item, sendFunc)}>
            {DomHelper.textEl(getTextFunc(item))}
          </div>;
        });
@@ -22,7 +22,7 @@ let render =
     (
       headerText,
       (clickHideGroupButtonFunc, sendFunc),
-      (getAllItemsFunc, isItemFunc, changeItemFunc, getTextFunc),
+      (getAllAssetsFunc, isAssetFunc, changeAssetFunc, getTextFunc),
     ) =>
   <div className="select-component-content">
     <div className="select-component-item">
@@ -32,8 +32,8 @@ let render =
       <div className="select-item-body">
         {
           ReasonReact.array(
-            Method.showItems(
-              (getAllItemsFunc, isItemFunc, changeItemFunc, getTextFunc),
+            Method.showAssets(
+              (getAllAssetsFunc, isAssetFunc, changeAssetFunc, getTextFunc),
               sendFunc,
             ),
           )
@@ -51,9 +51,9 @@ let make =
       ~headerText,
       ~clickHideGroupButtonFunc,
       ~sendFunc,
-      ~getAllItemsFunc,
-      ~isItemFunc,
-      ~changeItemFunc,
+      ~getAllAssetsFunc,
+      ~isAssetFunc,
+      ~changeAssetFunc,
       ~getTextFunc,
       _children,
     ) => {
@@ -62,6 +62,6 @@ let make =
     render(
       headerText,
       (clickHideGroupButtonFunc, sendFunc),
-      (getAllItemsFunc, isItemFunc, changeItemFunc, getTextFunc),
+      (getAllAssetsFunc, isAssetFunc, changeAssetFunc, getTextFunc),
     ),
 };

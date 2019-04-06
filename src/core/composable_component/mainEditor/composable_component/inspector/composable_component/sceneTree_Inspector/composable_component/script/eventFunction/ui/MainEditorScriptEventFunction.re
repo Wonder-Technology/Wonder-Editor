@@ -185,8 +185,8 @@ module Method = {
                  languageType,
                )
              }
-             itemText=name
-             selectItemFunc={
+             assetText=name
+             selectAssetFunc={
                send =>
                  _sendShowScriptEventFunctionGroupForChange(
                    currentScript,
@@ -415,14 +415,14 @@ let render =
           clickHideGroupButtonFunc={
             send => send(HideScriptEventFunctionGroupForAdd)
           }
-          getAllItemsFunc={
+          getAllAssetsFunc={
             () =>
               Method.getAllScriptEventFunctions(
                 state.lastScriptEventFunctionNodeIdForAdd,
                 state.unUsedScriptEventFunctionNodeIds,
               )
           }
-          isItemFunc={
+          isAssetFunc={
             scriptEventFunctionNodeId => {
               let currentScriptEventFunctionNodeId =
                 state.lastScriptEventFunctionNodeIdForAdd;
@@ -433,7 +433,7 @@ let render =
               );
             }
           }
-          changeItemFunc={
+          changeAssetFunc={
             (scriptEventFunctionNodeId, send) => {
               let currentScriptEventFunctionNodeId =
                 state.lastScriptEventFunctionNodeIdForAdd;
@@ -467,14 +467,14 @@ let render =
           clickHideGroupButtonFunc={
             send => send(HideScriptEventFunctionGroupForChange)
           }
-          getAllItemsFunc={
+          getAllAssetsFunc={
             () =>
               Method.getAllScriptEventFunctions(
                 state.lastScriptEventFunctionNodeIdForChange,
                 state.unUsedScriptEventFunctionNodeIds,
               )
           }
-          isItemFunc={
+          isAssetFunc={
             scriptEventFunctionNodeId => {
               let currentScriptEventFunctionNodeId =
                 state.lastScriptEventFunctionNodeIdForChange;
@@ -485,7 +485,7 @@ let render =
               );
             }
           }
-          changeItemFunc={
+          changeAssetFunc={
             (scriptEventFunctionNodeId, send) => {
               let currentScriptEventFunctionNodeId =
                 state.lastScriptEventFunctionNodeIdForChange;

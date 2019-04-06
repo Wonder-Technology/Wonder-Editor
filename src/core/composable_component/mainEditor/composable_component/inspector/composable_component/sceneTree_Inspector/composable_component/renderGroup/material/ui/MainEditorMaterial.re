@@ -204,14 +204,14 @@ let render =
           languageType,
         )
       }
-      itemText={
+      assetText={
         NodeNameAssetLogicService.getMaterialNodeName(
           ~material=state.currentMaterial,
           ~type_=state.materialType,
           ~engineState=StateEngineService.unsafeGetState(),
         )
       }
-      selectItemFunc={send => send(ShowMaterialGroup)}
+      selectAssetFunc={send => send(ShowMaterialGroup)}
       sendFunc=send
     />
     {
@@ -220,7 +220,7 @@ let render =
           headerText="Material"
           sendFunc=send
           clickHideGroupButtonFunc={send => send(HideMaterialGroup)}
-          getAllItemsFunc={
+          getAllAssetsFunc={
             () => {
               let engineState = StateEngineService.unsafeGetState();
               let editorState = StateEditorService.getState();
@@ -228,7 +228,7 @@ let render =
               Method._getAllMaterialAssetData(editorState, engineState);
             }
           }
-          isItemFunc={
+          isAssetFunc={
             ((materialNodeId, (material, materialType))) => {
               let currentMaterial = state.currentMaterial;
               let currentMaterialType = state.materialType;
@@ -237,7 +237,7 @@ let render =
               == (currentMaterial, currentMaterialType);
             }
           }
-          changeItemFunc={
+          changeAssetFunc={
             ((materialNodeId, (material, materialType)), send) =>
               send(ChangeMaterial(materialNodeId, (material, materialType)))
           }

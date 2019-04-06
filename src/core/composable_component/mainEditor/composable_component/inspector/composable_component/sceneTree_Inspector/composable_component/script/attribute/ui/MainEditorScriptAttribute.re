@@ -295,8 +295,8 @@ module Method = {
                  languageType,
                )
              }
-             itemText=name
-             selectItemFunc={
+             assetText=name
+             selectAssetFunc={
                send =>
                  _sendShowScriptAttributeGroupForChange(
                    currentScript,
@@ -526,14 +526,14 @@ let render =
           clickHideGroupButtonFunc={
             send => send(HideScriptAttributeGroupForAdd)
           }
-          getAllItemsFunc={
+          getAllAssetsFunc={
             () =>
               Method.getAllScriptAttributes(
                 state.lastScriptAttributeNodeIdForAdd,
                 state.unUsedScriptAttributeNodeIds,
               )
           }
-          isItemFunc={
+          isAssetFunc={
             scriptAttributeNodeId => {
               let currentScriptAttributeNodeId =
                 state.lastScriptAttributeNodeIdForAdd;
@@ -544,7 +544,7 @@ let render =
               );
             }
           }
-          changeItemFunc={
+          changeAssetFunc={
             (scriptAttributeNodeId, send) => {
               let currentScriptAttributeNodeId =
                 state.lastScriptAttributeNodeIdForAdd;
@@ -575,14 +575,14 @@ let render =
           clickHideGroupButtonFunc={
             send => send(HideScriptAttributeGroupForChange)
           }
-          getAllItemsFunc={
+          getAllAssetsFunc={
             () =>
               Method.getAllScriptAttributes(
                 state.lastScriptAttributeNodeIdForChange,
                 state.unUsedScriptAttributeNodeIds,
               )
           }
-          isItemFunc={
+          isAssetFunc={
             scriptAttributeNodeId => {
               let currentScriptAttributeNodeId =
                 state.lastScriptAttributeNodeIdForChange;
@@ -593,7 +593,7 @@ let render =
               );
             }
           }
-          changeItemFunc={
+          changeAssetFunc={
             (scriptAttributeNodeId, send) => {
               let currentScriptAttributeNodeId =
                 state.lastScriptAttributeNodeIdForChange;
