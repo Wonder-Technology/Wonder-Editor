@@ -43,9 +43,6 @@
             },
             {
                 "name": "front_render_light"
-            },
-            {
-                "name": "restoreInspectorEngineJob"
             }
         ]
     }
