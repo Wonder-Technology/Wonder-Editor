@@ -2746,8 +2746,7 @@ html, body {
         width: 100%;
         height: 200px;
         position: relative;
-        margin-bottom: 50px;
-        display: none; }
+        margin-bottom: 50px; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-canvas-parent canvas {
           position: absolute;
           top: 0px;

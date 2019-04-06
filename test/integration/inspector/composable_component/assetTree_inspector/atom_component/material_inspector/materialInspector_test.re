@@ -46,6 +46,8 @@ let _ =
       |> MainUtils._handleInspectorEngineState
       |> StateInspectorEngineService.setState
       |> ignore;
+
+      CanvasTool.stubMainCanvasAndInspectorCanvasDom(~sandbox, ()) |> ignore;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 

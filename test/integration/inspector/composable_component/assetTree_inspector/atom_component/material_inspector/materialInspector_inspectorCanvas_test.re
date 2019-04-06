@@ -98,7 +98,7 @@ let _ =
             "not select asset material, the inspector canvas should be hide",
             () => {
             let (_, _, inspectorParentDom, _) =
-              CanvasTool.stubCanvasAndInspectorCanvasDom(~sandbox, ());
+              CanvasTool.stubMainCanvasAndInspectorCanvasDom(~sandbox, ());
 
             MainEditorTool.mainEditorDidUpdate(
               OldNewSelfTool.buildOldAndNewSelf(
@@ -111,7 +111,7 @@ let _ =
           });
           test("mount the MaterialInspector should show inspector canvas", () => {
             let (_, _, inspectorParentDom, _) =
-              CanvasTool.stubCanvasAndInspectorCanvasDom(~sandbox, ());
+              CanvasTool.stubMainCanvasAndInspectorCanvasDom(~sandbox, ());
 
             let (addedMaterialNodeId, materialComponent) =
               MaterialInspectorCanvasTool.createNewMaterial();
@@ -133,7 +133,7 @@ let _ =
           test(
             "unMount the MaterialInspector should hide inspector canvas", () => {
             let (_, _, inspectorParentDom, _) =
-              CanvasTool.stubCanvasAndInspectorCanvasDom(~sandbox, ());
+              CanvasTool.stubMainCanvasAndInspectorCanvasDom(~sandbox, ());
 
             let (addedMaterialNodeId, materialComponent) =
               MaterialInspectorCanvasTool.createNewMaterial();

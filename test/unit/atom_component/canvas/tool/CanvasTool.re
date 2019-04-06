@@ -37,15 +37,32 @@ let _getParentDom = (offsetWidth, offsetHeight) =>
   }
   |> Obj.magic;
 
-let stubCanvasAndInspectorCanvasDom =
-    (~sandbox, ~offsetWidth=300, ~offsetHeight=500, ()) => {
+let stubMainCanvasAndInspectorCanvasDom =
+    (
+      ~sandbox,
+      ~offsetWidth=300,
+      ~offsetHeight=500,
+      ~canvasWidth=0,
+      ~canvasHeight=0,
+      (),
+    ) => {
   open Sinon;
 
-  let parentDom = _getParentDom(offsetWidth, offsetHeight);
-  let canvasDom = BuildCanvasTool.getFakeCanvasDom("a", sandbox);
+  let mainParentDom = _getParentDom(offsetWidth, offsetHeight);
+  let mainCanvasDom =
+    BuildCanvasTool.getFakeCanvasDom(
+      "a",
+      (canvasWidth, canvasHeight),
+      sandbox,
+    );
 
   let inspectorParentDom = _getParentDom(offsetWidth, offsetHeight);
-  let inspectorCanvasDom = BuildCanvasTool.getFakeCanvasDom("a", sandbox);
+  let inspectorCanvasDom =
+    BuildCanvasTool.getFakeCanvasDom(
+      "a",
+      (canvasWidth, canvasHeight),
+      sandbox,
+    );
   let getElementStub =
     SinonTool.createMethodStub(
       sandbox^,
@@ -54,8 +71,8 @@ let stubCanvasAndInspectorCanvasDom =
     );
 
   getElementStub
-  |> withOneArg("canvasParent")
-  |> returns(parentDom)
+  |> withOneArg("mainCanvasParent")
+  |> returns(mainParentDom)
   |> ignore;
 
   getElementStub
@@ -64,8 +81,8 @@ let stubCanvasAndInspectorCanvasDom =
   |> ignore;
 
   getElementStub
-  |> withOneArg("canvas")
-  |> returns(canvasDom)
+  |> withOneArg("main-canvas")
+  |> returns(mainCanvasDom)
   |> stubToJsObj
   |> ignore;
 
@@ -75,5 +92,5 @@ let stubCanvasAndInspectorCanvasDom =
   |> stubToJsObj
   |> ignore;
 
-  (parentDom, canvasDom, inspectorParentDom, inspectorCanvasDom);
+  (mainParentDom, mainCanvasDom, inspectorParentDom, inspectorCanvasDom);
 };

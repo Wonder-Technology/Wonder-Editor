@@ -1,8 +1,6 @@
 type retainedProps = {isInitEngine: bool};
 
 module Method = {
-  let resizeCanvasAndViewPort = () => ResizeUtils.resizeScreen();
-
   let buildNoCameraElement = () =>
     SceneUtils.isSceneHaveNoActiveCamera() ?
       switch (
@@ -29,7 +27,8 @@ module Method = {
     execFuncOnlyOnceInDidUpdate(
       oldNewSelf,
       () => {
-        resizeCanvasAndViewPort();
+        ResizeUtils.resizeMainCanvasScreen();
+        ResizeUtils.resizeInspectorCanvasScreen();
 
         DomHelper.setDomDisplay(
           DomHelper.getElementById("inspectorCanvasParent"),
@@ -44,10 +43,11 @@ module Method = {
     <article key="mainEditor" className="wonder-mainEditor-component">
       <div key="leftComponent" className="left-component">
         <div className="top-widget">
-          <div id="canvasParent" key="webglParent" className="webgl-parent">
+          <div
+            id="mainCanvasParent" key="webglParent" className="webgl-parent">
             <Canvas
               key="webgl"
-              domId="canvas"
+              domId="main-canvas"
               dragWDB={dragWDB((uiState, dispatchFunc), ())}
               isWDBAssetFile=WDBNodeAssetEditorService.isWDBAssetFile
             />
@@ -72,11 +72,12 @@ module Method = {
       <div key="leftComponent" className="left-component">
         <div className="top-widget">
           <MainEditorLeftComponents uiState dispatchFunc />
-          <div id="canvasParent" key="webglParent" className="webgl-parent">
+          <div
+            id="mainCanvasParent" key="webglParent" className="webgl-parent">
             {buildNoCameraElement()}
             <Canvas
               key="webgl"
-              domId="canvas"
+              domId="main-canvas"
               dragWDB={dragWDB((uiState, dispatchFunc), ())}
               isWDBAssetFile=WDBNodeAssetEditorService.isWDBAssetFile
             />
@@ -104,6 +105,8 @@ module Method = {
         </div>
       </div>
     </article>;
+
+  let onResize = () => ResizeUtils.resizeMainCanvasScreen();
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
@@ -136,7 +139,7 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
       |> ignore
     );
 
-    EventHelper.onresize(Method.resizeCanvasAndViewPort);
+    EventHelper.onresize(Method.onResize);
   },
   render: self => render(uiState, dispatchFunc, self),
 };

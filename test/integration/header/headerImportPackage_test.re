@@ -1447,6 +1447,9 @@ let _ =
 
             MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
             |> ignore;
+
+            CanvasTool.stubMainCanvasAndInspectorCanvasDom(~sandbox, ())
+            |> ignore;
           });
 
           testPromise(

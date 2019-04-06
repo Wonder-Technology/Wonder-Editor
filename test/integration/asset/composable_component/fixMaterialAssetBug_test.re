@@ -51,6 +51,8 @@ let _ =
         sandbox,
         MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
       );
+
+      CanvasTool.stubMainCanvasAndInspectorCanvasDom(~sandbox, ()) |> ignore;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
