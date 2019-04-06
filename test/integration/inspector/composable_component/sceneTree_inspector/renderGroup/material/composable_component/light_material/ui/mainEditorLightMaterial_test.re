@@ -47,7 +47,6 @@ let _ =
 
         PickColorTool.testOperateColorPickToChangeColor(
           sandbox,
-          BuildComponentForCurryTool.buildLightMaterial,
           (
             GameObjectTool.getCurrentSceneTreeNodeLightMaterial,
             MainEditorLightMaterialTool.changeColor(false),
@@ -58,13 +57,17 @@ let _ =
 
       describe("test gameObject light material texture", () => {
         let _getGameObjectMaterialMap = (engineState, gameObject) =>
-          engineState
-          |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-               gameObject,
-             )
-          |. LightMaterialEngineService.getLightMaterialDiffuseMap(
-               engineState,
-             );
+          (
+            engineState
+            |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                 gameObject,
+               )
+          )
+          ->(
+              LightMaterialEngineService.getLightMaterialDiffuseMap(
+                engineState,
+              )
+            );
 
         beforeEach(() => {
           _prepareWithEmptyJob();
@@ -189,13 +192,17 @@ let _ =
                     SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
                     |> StateLogicService.getEditorState;
 
-                  engineState
-                  |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-                       currentGameObject,
-                     )
-                  |. LightMaterialEngineService.hasLightMaterialDiffuseMap(
-                       engineState,
-                     );
+                  (
+                    engineState
+                    |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                         currentGameObject,
+                       )
+                  )
+                  ->(
+                      LightMaterialEngineService.hasLightMaterialDiffuseMap(
+                        engineState,
+                      )
+                    );
                 };
 
                 beforeEach(() => {
@@ -449,15 +456,127 @@ let _ =
               (),
             );
 
-            LightMaterialEngineService.getLightMaterialShininess(
-              currentGameObjectMaterial,
+            (
+              LightMaterialEngineService.getLightMaterialShininess(
+                currentGameObjectMaterial,
+              )
+              |> StateLogicService.getEngineStateToGetData
             )
-            |> StateLogicService.getEngineStateToGetData
-            |. FloatService.truncateFloatValue(5)
+            ->(FloatService.truncateFloatValue(5))
             |> expect == value;
           })
         );
       });
     });
 
+    describe("test change inspectorEngine value", () => {
+      beforeEach(() => {
+        MainEditorSceneTool.initInspectorEngineState(
+          ~sandbox,
+          ~isInitJob=false,
+          ~noWorkerJobRecord=
+            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+              ~initPipelines=
+                {|
+             [
+              {
+                "name": "default",
+                "jobs": [
+                    {"name": "init_inspector_engine" }
+                ]
+              }
+            ]
+             |},
+              ~initJobs=
+                {|
+             [
+                {"name": "init_inspector_engine" }
+             ]
+             |},
+              (),
+            ),
+          (),
+        );
+
+        StateInspectorEngineService.unsafeGetState()
+        |> MainUtils._handleInspectorEngineState
+        |> StateInspectorEngineService.setState
+        |> ignore;
+
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
+        );
+      });
+      let _getMaterialSphereLightMaterial = inspectorEngineState => {
+        let (addedMaterialNodeId, materialComponent) =
+          MaterialInspectorCanvasTool.createNewMaterial();
+
+        MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
+          MaterialDataAssetType.LightMaterial,
+          materialComponent,
+        );
+
+        InspectorEngineTool.getMaterialSphereLightMaterial(
+          StateEditorService.getState(),
+          inspectorEngineState,
+        );
+      };
+      describe(
+        "test change currentSceneTreeNode's lightMaterial value should change materialSphere's  lightMaterial value",
+        () => {
+          test("test change color", () => {
+            let inspectorEngineState =
+              StateInspectorEngineService.unsafeGetState();
+
+            let materialSphereLightMaterial =
+              _getMaterialSphereLightMaterial(inspectorEngineState);
+
+            let newColor = {
+              "hex": "#7df1e8",
+              "rgb": {
+                "r": 125,
+                "g": 241,
+                "b": 232,
+              },
+            };
+
+            MainEditorLightMaterialTool.changeColor(
+              true,
+              GameObjectTool.getCurrentSceneTreeNodeLightMaterial(),
+              newColor,
+            );
+
+            inspectorEngineState
+            |> LightMaterialEngineService.getLightMaterialDiffuseColor(
+                 materialSphereLightMaterial,
+               )
+            |> Color.getHexString
+            |> expect ==
+            newColor##hex;
+          });
+          test("test change shininess", () => {
+            let inspectorEngineState =
+              StateInspectorEngineService.unsafeGetState();
+            let shininessValue = 20.5;
+
+            let materialSphereLightMaterial =
+              _getMaterialSphereLightMaterial(inspectorEngineState);
+
+            MainEditorLightMaterialTool.changeShininess(
+              ~material=GameObjectTool.getCurrentSceneTreeNodeLightMaterial(),
+              ~value=shininessValue,
+              ~isShowInspectorCanvas=true,
+              (),
+            );
+
+            inspectorEngineState
+            |> LightMaterialEngineService.getLightMaterialShininess(
+                 materialSphereLightMaterial,
+               )
+            |> expect == shininessValue;
+          });
+        },
+      );
+    });
   });

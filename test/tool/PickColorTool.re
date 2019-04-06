@@ -1,7 +1,6 @@
 let testOperateColorPickToChangeColor =
     (
       sandbox,
-      buildComponent,
       (getCurrentSceneTreeNodeComponentFunc, changeColorFunc, getColorFunc),
     ) =>
   Wonder_jest.(

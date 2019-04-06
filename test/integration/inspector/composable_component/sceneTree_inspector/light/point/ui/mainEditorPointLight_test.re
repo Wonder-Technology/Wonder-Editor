@@ -49,7 +49,6 @@ let _ =
 
         PickColorTool.testOperateColorPickToChangeColor(
           sandbox,
-          BuildComponentForCurryTool.buildPointLight,
           (
             GameObjectTool.getCurrentSceneTreeNodePointLightComponent,
             MainEditorPointLightTool.changeColor,
@@ -82,11 +81,13 @@ let _ =
               value,
             );
 
-            PointLightEngineService.getPointLightIntensity(
-              currentGameObjectPointLightComponent,
+            (
+              PointLightEngineService.getPointLightIntensity(
+                currentGameObjectPointLightComponent,
+              )
+              |> StateLogicService.getEngineStateToGetData
             )
-            |> StateLogicService.getEngineStateToGetData
-            |. FloatService.truncateFloatValue(5)
+            ->(FloatService.truncateFloatValue(5))
             |> expect == value;
           })
         );
@@ -102,11 +103,13 @@ let _ =
               value,
             );
 
-            PointLightEngineService.getPointLightConstant(
-              currentGameObjectPointLightComponent,
+            (
+              PointLightEngineService.getPointLightConstant(
+                currentGameObjectPointLightComponent,
+              )
+              |> StateLogicService.getEngineStateToGetData
             )
-            |> StateLogicService.getEngineStateToGetData
-            |. FloatService.truncateFloatValue(5)
+            ->(FloatService.truncateFloatValue(5))
             |> expect == value;
           })
         );
@@ -121,11 +124,13 @@ let _ =
               value,
             );
 
-            PointLightEngineService.getPointLightLinear(
-              currentGameObjectPointLightComponent,
+            (
+              PointLightEngineService.getPointLightLinear(
+                currentGameObjectPointLightComponent,
+              )
+              |> StateLogicService.getEngineStateToGetData
             )
-            |> StateLogicService.getEngineStateToGetData
-            |. FloatService.truncateFloatValue(5)
+            ->(FloatService.truncateFloatValue(5))
             |> expect == value;
           })
         );
@@ -140,11 +145,13 @@ let _ =
               value,
             );
 
-            PointLightEngineService.getPointLightQuadratic(
-              currentGameObjectPointLightComponent,
+            (
+              PointLightEngineService.getPointLightQuadratic(
+                currentGameObjectPointLightComponent,
+              )
+              |> StateLogicService.getEngineStateToGetData
             )
-            |> StateLogicService.getEngineStateToGetData
-            |. FloatService.truncateFloatValue(5)
+            ->(FloatService.truncateFloatValue(5))
             |> expect == value;
           })
         );
@@ -159,11 +166,13 @@ let _ =
               value,
             );
 
-            PointLightEngineService.getPointLightRange(
-              currentGameObjectPointLightComponent,
+            (
+              PointLightEngineService.getPointLightRange(
+                currentGameObjectPointLightComponent,
+              )
+              |> StateLogicService.getEngineStateToGetData
             )
-            |> StateLogicService.getEngineStateToGetData
-            |. FloatService.truncateFloatValue(5)
+            ->(FloatService.truncateFloatValue(5))
             |> expect == value;
           })
         );

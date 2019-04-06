@@ -32,7 +32,7 @@ module Method = {
         )
         |> StateLogicService.getEngineStateToGetData
       }
-      isShowInspectorCanvas=true
+      isShowInspectorCanvas=false
     />;
   };
 
