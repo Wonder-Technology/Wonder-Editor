@@ -284,6 +284,8 @@ let _ =
               ~sandbox,
               ~offsetWidth=200,
               ~offsetHeight=200,
+              ~canvasWidth=100,
+              ~canvasHeight=100,
               (),
             );
 

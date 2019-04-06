@@ -19,6 +19,7 @@ module Method = {
        )
     |> StateLogicService.refreshEngineState;
 
+    /* TODO refactor: split to LightMaterialForGameObject, LightMaterialForAsset */
     isShowInspectorCanvas ?
       StateInspectorEngineService.unsafeGetState()
       |> InspectorEngineMaterialChangeValueUtils.changeMaterialValue(
@@ -69,8 +70,7 @@ module Method = {
        )
     |> StateLogicService.refreshEngineState;
 
-    isShowInspectorCanvas ? {
-
+    isShowInspectorCanvas ?
       StateInspectorEngineService.unsafeGetState()
       |> InspectorEngineMaterialChangeValueUtils.changeMaterialValue(
            value,
@@ -78,9 +78,8 @@ module Method = {
              GameObjectComponentEngineService.getLightMaterialComponent,
              LightMaterialEngineService.setLightMaterialShininess,
            ),
-         );
-    }:();
-
+         ) :
+      ();
   };
 };
 

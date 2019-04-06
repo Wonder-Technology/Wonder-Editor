@@ -1,4 +1,5 @@
-let cloneBasicMaterialToOtherEngine =
+/* TODO refactor:rename to cloneBasicMaterialToOtherEngineStateState */
+let cloneBasicMaterialToOtherEngineState =
     (clonedMaterialComponent, clonedEngineState, targetEngineState) => {
   let (targetEngineState, basicMaterial) =
     BasicMaterialEngineService.create(targetEngineState);
@@ -21,7 +22,8 @@ let cloneBasicMaterialToOtherEngine =
   (basicMaterial, targetEngineState);
 };
 
-let cloneLightMaterialToOtherEngine =
+/* TODO refactor:rename to cloneLightMaterialToOtherEngineStateState */
+let cloneLightMaterialToOtherEngineState =
     (clonedMaterialComponent, clonedEngineState, targetEngineState) => {
   let (targetEngineState, lightMaterial) =
     LightMaterialEngineService.create(targetEngineState);

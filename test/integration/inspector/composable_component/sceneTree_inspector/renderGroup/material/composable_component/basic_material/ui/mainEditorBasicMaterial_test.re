@@ -38,6 +38,7 @@ let _ =
       );
     });
 
+    /* TODO refactor move out to MainEditorBasicMaterialForAsset_test */
     describe("test change inspectorEngine value", () => {
       beforeEach(() => {
         MainEditorSceneTool.initInspectorEngineState(
@@ -92,10 +93,15 @@ let _ =
           (),
         );
 
-        MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
-          MaterialDataAssetType.BasicMaterial,
-          materialComponent,
-        );
+        let inspectorEngine =
+          MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
+            MaterialDataAssetType.BasicMaterial,
+            materialComponent,
+            (
+              StateEditorService.getState(),
+              StateEngineService.unsafeGetState(),
+            ),
+          );
 
         InspectorEngineTool.getMaterialSphereBasicMaterial(
           StateEditorService.getState(),
@@ -103,6 +109,7 @@ let _ =
         );
       };
 
+      /* TODO refactor: change to "test change basicMaterial asset's value should change materialSphere's basicMaterial value" */
       describe(
         "test change currentSceneTreeNode's basicMaterial value should change materialSphere's basicMaterial value",
         () =>

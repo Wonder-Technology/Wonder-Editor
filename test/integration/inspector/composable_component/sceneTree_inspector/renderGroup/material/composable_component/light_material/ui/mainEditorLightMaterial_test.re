@@ -469,6 +469,7 @@ let _ =
       });
     });
 
+    /* TODO refactor move out to MainEditorLightMaterialForAsset_test */
     describe("test change inspectorEngine value", () => {
       beforeEach(() => {
         MainEditorSceneTool.initInspectorEngineState(
@@ -512,10 +513,15 @@ let _ =
         let (addedMaterialNodeId, materialComponent) =
           MaterialInspectorCanvasTool.createNewMaterial();
 
-        MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
-          MaterialDataAssetType.LightMaterial,
-          materialComponent,
-        );
+        let inspectorEngine =
+          MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
+            MaterialDataAssetType.LightMaterial,
+            materialComponent,
+            (
+              StateEditorService.getState(),
+              StateEngineService.unsafeGetState(),
+            ),
+          );
 
         InspectorEngineTool.getMaterialSphereLightMaterial(
           StateEditorService.getState(),

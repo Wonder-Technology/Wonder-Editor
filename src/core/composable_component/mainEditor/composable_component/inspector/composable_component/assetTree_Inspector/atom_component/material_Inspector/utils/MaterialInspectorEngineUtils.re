@@ -1,6 +1,6 @@
 open MaterialDataAssetType;
 
-let _createSphereAddIntoTargetGameObject =
+let _createSphereWithClonedMaterial =
     (material, addMaterialFunc, containerGameObject, inspectorEngineState) => {
   let (inspectorEngineState, sphere) =
     inspectorEngineState
@@ -11,67 +11,76 @@ let _createSphereAddIntoTargetGameObject =
   |> HierarchyGameObjectEngineService.addChild(containerGameObject, sphere);
 };
 
-let _createBasicMaterialSphere =
-    (materialComponent, containerGameObject, engineState, inspectorEngineState) => {
+let _createBasicMaterialSphereIntoInspectorCanvas =
+    (
+      materialComponent,
+      containerGameObject,
+      engineState,
+      inspectorEngineState,
+    ) => {
   let (basicMaterial, inspectorEngineState) =
-    CloneMaterialEngineLogicService.cloneBasicMaterialToOtherEngine(
+    CloneMaterialEngineLogicService.cloneBasicMaterialToOtherEngineState(
       materialComponent,
       engineState,
       inspectorEngineState,
     );
 
   inspectorEngineState
-  |> _createSphereAddIntoTargetGameObject(
+  |> _createSphereWithClonedMaterial(
        basicMaterial,
        GameObjectComponentEngineService.addBasicMaterialComponent,
        containerGameObject,
      );
 };
 
-let _createLightMaterialSphere =
-    (materialComponent, containerGameObject, engineState, inspectorEngineState) => {
+let _createLightMaterialSphereIntoInspectorCanvas =
+    (
+      materialComponent,
+      containerGameObject,
+      engineState,
+      inspectorEngineState,
+    ) => {
   let (lightMaterial, inspectorEngineState) =
-    CloneMaterialEngineLogicService.cloneLightMaterialToOtherEngine(
+    CloneMaterialEngineLogicService.cloneLightMaterialToOtherEngineState(
       materialComponent,
       engineState,
       inspectorEngineState,
     );
 
   inspectorEngineState
-  |> _createSphereAddIntoTargetGameObject(
+  |> _createSphereWithClonedMaterial(
        lightMaterial,
        GameObjectComponentEngineService.addLightMaterialComponent,
        containerGameObject,
      );
 };
 
-let createMaterialSphereIntoInspectorCanvas = (type_, materialComponent) => {
-  let engineState = StateEngineService.unsafeGetState();
-  let inspectorEngineState = StateInspectorEngineService.unsafeGetState();
+let createMaterialSphereIntoInspectorCanvas =
+    (
+      type_,
+      materialComponent,
+      (editorState, engineState),
+      inspectorEngineState,
+    ) => {
   let containerGameObject =
-    ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject
-    |> StateLogicService.getEditorState;
+    editorState
+    |> ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject;
 
-  let inspectorEngineState =
-    switch (type_) {
-    | BasicMaterial =>
-      _createBasicMaterialSphere(
-        materialComponent,
-        containerGameObject,
-        engineState,
-        inspectorEngineState,
-      )
+  switch (type_) {
+  | BasicMaterial =>
+    _createBasicMaterialSphereIntoInspectorCanvas(
+      materialComponent,
+      containerGameObject,
+      engineState,
+      inspectorEngineState,
+    )
 
-    | LightMaterial =>
-      _createLightMaterialSphere(
-        materialComponent,
-        containerGameObject,
-        engineState,
-        inspectorEngineState,
-      )
-    };
-
-  inspectorEngineState
-  |> StateLogicService.refreshInspectorEngineState
-  |> ignore;
+  | LightMaterial =>
+    _createLightMaterialSphereIntoInspectorCanvas(
+      materialComponent,
+      containerGameObject,
+      engineState,
+      inspectorEngineState,
+    )
+  };
 };

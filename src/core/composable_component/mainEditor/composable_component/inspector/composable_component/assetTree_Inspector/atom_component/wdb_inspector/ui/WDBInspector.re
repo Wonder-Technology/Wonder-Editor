@@ -1,4 +1,17 @@
-module Method = {};
+module Method = {
+  let didMount = () => {
+    DomHelper.setDomDisplay(
+      DomHelper.getElementById("inspectorCanvasParent"),
+      true,
+    );
+
+    /* WDBInspectorEngineUtils */
+
+  };
+
+  let willUnmount = MaterialInspector.Method.willUnmount;
+
+};
 
 let component = ReasonReact.statelessComponent("WDBInspector");
 
@@ -31,10 +44,5 @@ let make = (~name, ~onChangeFunc, ~onBlurFunc, _children) => {
        materialComponent,
      ), */
   didMount: _self => Js.log("fdccck"),
-  willUnmount: _self =>
-    (
-      StateEditorService.getState(),
-      StateInspectorEngineService.unsafeGetState(),
-    )
-    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChild,
+  willUnmount: _self => Method.willUnmount(),
 };

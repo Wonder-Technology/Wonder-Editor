@@ -94,3 +94,11 @@ let stubMainCanvasAndInspectorCanvasDom =
 
   (mainParentDom, mainCanvasDom, inspectorParentDom, inspectorCanvasDom);
 };
+
+let restoreMainCanvasAndInspectorCanvasDom = [%bs.raw
+  (. param) => {|
+  document.getElementById = (id) => {
+    return undefined;
+  };
+  |}
+];

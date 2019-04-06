@@ -1,18 +1,28 @@
-let _disposeContainerGameObjectAllChild =
+/* TODO refactor:rename to _disposeContainerGameObjectAllChildren */
+let _disposeContainerGameObjectAllChildren =
     (containerGameObject, inspectorEngineState) =>
   inspectorEngineState
-  |> HierarchyGameObjectEngineService.getAllGameObjects(containerGameObject)
-  |> Js.Array.sliceFrom(1)
+  /* TODO refactor: use getAllChildren and remove Js.Array.sliceFrom(1) */
+  |> HierarchyGameObjectEngineService.getAllChildren(containerGameObject)
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. inspectorEngineState, gameObject) =>
          inspectorEngineState
-         |> GameObjectEngineService.disposeGameObjectKeepOrderRemoveGeometryRemoveMaterial(
+         /* TODO fix: use disposeGameObject
+            TODO test: add "material component should be disposed"
+
+            use GeometryToolEngine.isGeometryDisposed
+            use LightMaterialToolEngine.isAlive
+
+            */
+         |> GameObjectEngineService.disposeGameObject(
               gameObject,
             ),
        inspectorEngineState,
      );
 
-let disposeInspectorEngineContainerGameObjectAllChild =
+/* TODO refactor:rename to disposeInspectorEngineContainerGameObjectAllChildren */
+/* TODO refactor: inject and return state */
+let disposeInspectorEngineContainerGameObjectAllChildren =
     ((editorState, inspectorEngineState)) => {
   let containerGameObject =
     ContainerGameObjectInspectorCanvasEditorService.getContainerGameObject(
@@ -23,9 +33,8 @@ let disposeInspectorEngineContainerGameObjectAllChild =
   | None => ()
   | Some(gameObject) =>
     inspectorEngineState
-    |> _disposeContainerGameObjectAllChild(gameObject)
+    |> _disposeContainerGameObjectAllChildren(gameObject)
     |> JobEngineService.execDisposeJob
-    |> StateLogicService.refreshInspectorEngineState
     |> ignore
   };
 };
@@ -36,14 +45,8 @@ let _getContainerGameObjectFirstChild = ((editorState, inspectorEngineState)) =>
     |> ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject;
 
   inspectorEngineState
-  |> HierarchyGameObjectEngineService.hasChildren(containerGameObject) ?
-    (
-      inspectorEngineState
-      |> HierarchyGameObjectEngineService.getChildren(containerGameObject)
-      |> ArrayService.unsafeGetFirst
-    )
-    ->Some :
-    None;
+  |> HierarchyGameObjectEngineService.getChildren(containerGameObject)
+  |> ArrayService.getFirst;
 };
 
 let getMaterialSphere = _getContainerGameObjectFirstChild;

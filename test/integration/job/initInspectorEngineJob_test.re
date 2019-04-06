@@ -119,7 +119,7 @@ let _ =
           |> expect == 1;
         });
 
-        test("set directio-light's local euler angles", () => {
+        test("set direction-light's local euler angles", () => {
           let inspectorEngineState =
             StateInspectorEngineService.unsafeGetState();
           let directionLightTransform =

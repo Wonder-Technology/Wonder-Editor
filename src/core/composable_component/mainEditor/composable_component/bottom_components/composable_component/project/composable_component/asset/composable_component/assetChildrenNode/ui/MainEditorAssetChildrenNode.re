@@ -162,7 +162,7 @@ module Method = {
                      ~type_,
                      ~engineState,
                    );
-
+                 /* TODO get img base64 from map, the wdb same to get */
                  <FileBox
                    key
                    uiState
@@ -211,12 +211,12 @@ module Method = {
                    isSelected
                    widget
                    debounceTime
-                   onDrop=(
+                   onDrop={
                      AssetDragNodeToFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
                        (uiState, dispatchFunc),
                        (),
                      )
-                   )
+                   }
                    isWidget=AssetWidgetService.isWidget
                    checkNodeRelation=OperateTreeAssetLogicService.checkNodeRelation
                  />
@@ -257,7 +257,7 @@ let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
 let render = ((uiState, dispatchFunc), dragImg, debounceTime, _self) =>
   <article key="assetChildrenNode" className="wonder-asset-assetChildren">
-    (
+    {
       ReasonReact.array(
         Method.buildCurrentTreeNodeChildrenComponent(
           (uiState, dispatchFunc),
@@ -265,10 +265,11 @@ let render = ((uiState, dispatchFunc), dragImg, debounceTime, _self) =>
           debounceTime,
         ),
       )
-    )
+    }
   </article>;
 
 let make = (~uiState, ~dispatchFunc, ~dragImg, ~debounceTime, _children) => {
   ...component,
-  render: self => render((uiState, dispatchFunc), dragImg, debounceTime, self),
+  render: self =>
+    render((uiState, dispatchFunc), dragImg, debounceTime, self),
 };

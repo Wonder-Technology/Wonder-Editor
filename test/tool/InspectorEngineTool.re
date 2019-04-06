@@ -28,20 +28,20 @@ let getSceneDirectionLights = engineState =>
 let unsafeGetSceneFirstDirectionLight = engineState =>
   getSceneDirectionLights(engineState) |> ArrayService.unsafeGetFirst;
 
-let getSceneAllChild = engineState =>
+let getSceneAllChildren = engineState =>
   engineState
   |> HierarchyGameObjectEngineService.getChildren(
        engineState |> SceneEngineService.getSceneGameObject,
      );
 
 let getSceneEmptyGameObject = engineState =>
-  engineState |> getSceneAllChild |> ArrayService.unsafeGetLast;
+  engineState |> getSceneAllChildren |> ArrayService.unsafeGetLast;
 
 let getMaterialSphere = InspectorEngineGameObjectLogicService.getMaterialSphere;
 
 let getWDBGameObject = InspectorEngineGameObjectLogicService.getWDBGameObject;
 
-let disposeInspectorEngineContainerGameObjectAllChild = InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChild;
+let disposeInspectorEngineContainerGameObjectAllChildren = InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren;
 
 let getMaterialSphereLightMaterial = (editorState, engineState) => {
   let materialSphere =

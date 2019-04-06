@@ -12,10 +12,13 @@ module Method = {
       true,
     );
 
-    MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
-      type_,
-      materialComponent,
-    );
+    StateInspectorEngineService.unsafeGetState()
+    |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
+         type_,
+         materialComponent,
+         (StateEditorService.getState(), StateEngineService.unsafeGetState()),
+       )
+    |> StateLogicService.refreshInspectorEngineState;
   };
 
   let willUnmount = () => {
@@ -28,7 +31,7 @@ module Method = {
       StateEditorService.getState(),
       StateInspectorEngineService.unsafeGetState(),
     )
-    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChild;
+    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren;
   };
 };
 

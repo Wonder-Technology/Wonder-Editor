@@ -18,6 +18,7 @@ module Method = {
     |> BasicMaterialEngineService.setColor(colorArray, materialComponent)
     |> StateLogicService.refreshEngineState;
 
+    /* TODO refactor: split to MainEditorBasicMaterialForGameObject, MainEditorBasicMaterialForAsset */
     isShowInspectorCanvas ?
       StateInspectorEngineService.unsafeGetState()
       |> InspectorEngineMaterialChangeValueUtils.changeMaterialValue(
