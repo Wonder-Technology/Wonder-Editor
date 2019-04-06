@@ -15,6 +15,9 @@
                 "name": "update_camera"
             },
             {
+                "name": "update_script"
+            },
+            {
                 "name": "update_transform_gizmos"
             },
             {

@@ -29,7 +29,7 @@ let _ =
         )
         |> StateLogicService.getEditorState
         |> expect
-        == ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr();
+        == ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStrAndRemoveNewLinesAndSpaces();
       });
       test("test set init,dispose event function", () => {
         let assetTreeData =
@@ -39,7 +39,7 @@ let _ =
         MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
         let editorState = StateEditorService.getState();
         let jsObjStr =
-          ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr(
+          ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStrAndRemoveNewLinesAndSpaces(
             ~initFunc=Some((. script, api, state) => state),
             ~disposeFunc=Some((. script, api, state) => state),
             (),
@@ -104,7 +104,7 @@ let _ =
               sandbox,
             );
           let jsObjStr =
-            ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr(
+            ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStrAndRemoveNewLinesAndSpaces(
               ~initFunc=Some((. script, api, state) => state),
               ~disposeFunc=Some((. script, api, state) => state),
               (),

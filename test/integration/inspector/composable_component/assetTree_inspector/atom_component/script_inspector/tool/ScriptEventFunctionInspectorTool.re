@@ -39,7 +39,11 @@ let buildEventFunctionDataJsObjStr =
     init: initFunc,
     update: updateFunc,
     dispose: disposeFunc,
-  })
+  });
+
+let buildEventFunctionDataJsObjStrAndRemoveNewLinesAndSpaces =
+    (~initFunc=None, ~updateFunc=None, ~disposeFunc=None, ()) =>
+  buildEventFunctionDataJsObjStr(~initFunc, ~updateFunc, ~disposeFunc, ())
   |> StringTool.removeNewLinesAndSpaces;
 
 module TestUpdateScriptEventFunctionInAllScriptComponents = {

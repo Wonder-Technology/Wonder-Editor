@@ -32,7 +32,7 @@ let getUpdateState = (~state, ~func) => {
   reducer(~action=actionRef^, ~state) |> ReactTool.getUpdateState;
 };
 
-let changeScriptEventFunction =
+/* let changeScriptEventFunction =
     (
       ~currentScript,
       ~currentScriptEventFunctionNodeIdOpt,
@@ -46,7 +46,7 @@ let changeScriptEventFunction =
     currentScriptEventFunctionNodeIdOpt,
     targetScriptEventFunctionNodeId,
     (editorState, engineState),
-  );
+  ); */
 
 let addScriptEventFunction =
     (~script, ~send, ~languageType=LanguageType.EN, ()) =>

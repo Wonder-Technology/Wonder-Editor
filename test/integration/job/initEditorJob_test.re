@@ -48,15 +48,19 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
+    test("disable script event function", () =>
+      ScriptEventFunctionEngineService.isScriptEventFunctionEnable
+      |> StateLogicService.getEngineStateToGetData
+      |> expect == false
+    );
+
     describe("add specific gameObjects for scene view", () => {
       test("add editCamera as current camera", () =>
         MainEditorCameraTool.getCurrentCameraGameObject(
           StateEngineService.unsafeGetState(),
         )
-        |>
-        expect == SceneViewEditorService.getEditCamera(
-                    StateEditorService.getState(),
-                  )
+        |> expect
+        == SceneViewEditorService.getEditCamera(StateEditorService.getState())
       );
 
       describe("add grid plane gameObject", () =>
@@ -92,35 +96,35 @@ let _ =
                 indices
                 |> Js.Typed_array.Uint16Array.slice(~start=0, ~end_=10),
               )
-              |>
-              expect == (
-                          7212,
-                          2404,
-                          Js.Typed_array.Float32Array.make([|
-                            (-300.),
-                            0.,
-                            (-300.),
-                            300.,
-                            0.,
-                            (-300.),
-                            (-300.),
-                            0.,
-                            (-300.),
-                            (-300.),
-                          |]),
-                          Js.Typed_array.Uint16Array.make([|
-                            0,
-                            1,
-                            2,
-                            3,
-                            4,
-                            5,
-                            6,
-                            7,
-                            8,
-                            9,
-                          |]),
-                        );
+              |> expect
+              == (
+                   7212,
+                   2404,
+                   Js.Typed_array.Float32Array.make([|
+                     (-300.),
+                     0.,
+                     (-300.),
+                     300.,
+                     0.,
+                     (-300.),
+                     (-300.),
+                     0.,
+                     (-300.),
+                     (-300.),
+                   |]),
+                   Js.Typed_array.Uint16Array.make([|
+                     0,
+                     1,
+                     2,
+                     3,
+                     4,
+                     5,
+                     6,
+                     7,
+                     8,
+                     9,
+                   |]),
+                 );
             })
           );
           describe("add meshRenderer component", () =>
@@ -130,16 +134,18 @@ let _ =
                 SceneViewEditorService.unsafeGetGridPlane
                 |> StateLogicService.getEditorState;
 
-              engineState
-              |> GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
-                   gridPlaneGameObject,
-                 )
-              |. MeshRendererEngineService.getDrawMode(engineState)
-              |>
-              expect == (
-                          Wonderjs.DrawModeType.Lines
-                          |> Wonderjs.DrawModeType.drawModeToUint8
-                        );
+              (
+                engineState
+                |> GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
+                     gridPlaneGameObject,
+                   )
+              )
+              ->(MeshRendererEngineService.getDrawMode(engineState))
+              |> expect
+              == (
+                   Wonderjs.DrawModeType.Lines
+                   |> Wonderjs.DrawModeType.drawModeToUint8
+                 );
             })
           );
           test("add basic material component", () => {
@@ -187,11 +193,11 @@ let _ =
         GeometryDataAssetEditorService.getGeometryData(
           StateEditorService.getState(),
         )
-        |>
-        expect == {
-                    defaultCubeGeometryComponent: 1,
-                    defaultSphereGeometryComponent: 2,
-                  }
+        |> expect
+        == {
+             defaultCubeGeometryComponent: 1,
+             defaultSphereGeometryComponent: 2,
+           }
       )
     );
 
@@ -264,13 +270,16 @@ let _ =
             let engineState = StateEngineService.unsafeGetState();
             let cube = MainEditorSceneTool.getCubeInDefaultScene(engineState);
             engineState
-            |> GameObjectComponentEngineService.hasMeshRendererComponent(cube)
+            |> GameObjectComponentEngineService.hasMeshRendererComponent(
+                 cube,
+               )
             |> expect == true;
           });
           describe("test geometry component", () =>
             test("add geometry component", () => {
               let engineState = StateEngineService.unsafeGetState();
-              let cube = MainEditorSceneTool.getCubeInDefaultScene(engineState);
+              let cube =
+                MainEditorSceneTool.getCubeInDefaultScene(engineState);
               engineState
               |> GameObjectComponentEngineService.hasGeometryComponent(cube)
               |> expect == true;

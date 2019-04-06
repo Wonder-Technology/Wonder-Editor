@@ -72,5 +72,8 @@
     },
     {
         "name": "render_transform_gizmos"
+    },
+    {
+        "name": "update_script"
     }
 ]

@@ -6,6 +6,9 @@ let _addSceneGameObjectComponentTypeToMap = (engineState, editorState) =>
      );
 
 let initEditorJob = (_, engineState) => {
+  let engineState =
+    ScriptEventFunctionEngineService.disableScriptEventFunction(engineState);
+
   let editorState = StateEditorService.getState();
 
   let (editorState, engineState, editCamera) =
@@ -38,9 +41,11 @@ let initEditorJob = (_, engineState) => {
 
   editorState |> StateEditorService.setState |> ignore;
 
-  engineState
-  |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-       editCamera,
-     )
-  |. BasicCameraViewEngineService.activeBasicCameraView(engineState);
+  (
+    engineState
+    |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
+         editCamera,
+       )
+  )
+  ->(BasicCameraViewEngineService.activeBasicCameraView(engineState));
 };

@@ -5,7 +5,7 @@ let loop = () => {
   let rec _loopRequest = (time) =>
     AnimationFrame.requestAnimationFrame(
       (time) => {
-        StateLogicService.getAndRefreshEngineState();
+        StateLogicService.getAndRefreshEngineStateForRunLoop();
 
         _loopRequest(time)
       }
