@@ -20,4 +20,3 @@ let filterValid = (func, map) =>
        WonderCommonlib.NullService.isInMap(value)
        && func(. value |> WonderCommonlib.SparseMapType.nullableToNotNullable)
      );
-/* |> WonderCommonlib.SparseMapType.arrayNullableToArrayNotNullable; */
