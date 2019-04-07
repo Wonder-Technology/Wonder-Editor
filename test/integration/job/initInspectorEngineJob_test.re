@@ -154,5 +154,16 @@ let _ =
              );
         })
       );
+
+      describe("set ambient light", () =>
+        test("test ambient light color", () => {
+          let inspectorEngineState =
+            StateInspectorEngineService.unsafeGetState();
+
+          inspectorEngineState
+          |> SceneEngineService.getAmbientLightColor
+          |> expect == DefaultSceneInspectorEngineUtils.getAmbientLightArr();
+        })
+      );
     });
   });

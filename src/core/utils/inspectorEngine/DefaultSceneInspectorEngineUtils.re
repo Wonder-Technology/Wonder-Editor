@@ -1,3 +1,5 @@
+let getAmbientLightArr = () => [|0.2, 0.2, 0.2|];
+
 let _initCameraAddToSceneGameObject = (camera, inspectorEngineState) =>
   inspectorEngineState
   |> TransformEngineService.setLocalPosition(
@@ -30,6 +32,10 @@ let _initEmptyGameObjectAddToSceneGameObject =
     (emptyGameObject, inspectorEngineState) =>
   inspectorEngineState |> SceneEngineService.addSceneChild(emptyGameObject);
 
+let _initAmbientLight = inspectorEngineState =>
+  inspectorEngineState
+  |> SceneEngineService.setAmbientLightColor(getAmbientLightArr());
+
 let createDefaultScene = inspectorEngineState => {
   let (inspectorEngineState, camera) =
     PrimitiveEngineService.createCamera(inspectorEngineState);
@@ -42,7 +48,8 @@ let createDefaultScene = inspectorEngineState => {
     inspectorEngineState
     |> _initCameraAddToSceneGameObject(camera)
     |> _initDirectionLightAddToSceneGameObject(directionLight)
-    |> _initEmptyGameObjectAddToSceneGameObject(emptyGameObject);
+    |> _initEmptyGameObjectAddToSceneGameObject(emptyGameObject)
+    |> _initAmbientLight;
 
   (emptyGameObject, inspectorEngineState);
 };
