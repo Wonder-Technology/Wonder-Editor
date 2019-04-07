@@ -1,6 +1,11 @@
 let addDefaultField =
     (~sandbox, ~nodeId, ~send=SinonTool.createOneLengthStub(sandbox^), ()) =>
-  ScriptAttributeInspector.Method.addDefaultField(send, nodeId);
+  ScriptAttributeInspector.Method.addDefaultField(
+    (TestTool.buildEmptyAppState(), TestTool.getDispatch()),
+    attribute =>
+      send(ScriptAttributeInspector.UpdateAttributeEntries(attribute)),
+    nodeId,
+  );
 
 let getAttributeName = (nodeId, editorState) => {
   open NodeAssetType;
@@ -29,24 +34,27 @@ let getAttributeEntries = (nodeId, editorState) =>
   |> ScriptAttributeEngineService.getScriptAttributeEntries;
 
 let updateScriptAttributeNodeByReplaceFieldData =
-    (nodeId, (fieldName, newFieldDataJsObjStr), editorState) =>
+    (nodeId, (fieldName, newFieldDataJsObjStr)) =>
   ScriptAttributeInspector.Method._updateScriptAttributeNodeByReplaceFieldData(
-    nodeId,
-    (fieldName, newFieldDataJsObjStr),
-    editorState,
+    (TestTool.buildEmptyAppState(), TestTool.getDispatch()),
+    (),
+    (nodeId, fieldName, newFieldDataJsObjStr),
   );
 
 let updateScriptAttributeNodeByRemoveFieldData =
-    (nodeId, fieldName, editorState) => {
-  let (editorState, _) =
-    ScriptAttributeInspector.Method._updateScriptAttributeNodeByRemoveFieldData(
-      nodeId,
-      fieldName,
-      editorState,
-    );
-
-  editorState;
-};
+    (
+      ~sandbox,
+      ~nodeId,
+      ~fieldName,
+      ~send=SinonTool.createOneLengthStub(sandbox^),
+      (),
+    ) =>
+  ScriptAttributeInspector.Method._updateScriptAttributeNodeByRemoveFieldData(
+    (TestTool.buildEmptyAppState(), TestTool.getDispatch()),
+    attribute =>
+      send(ScriptAttributeInspector.UpdateAttributeEntries(attribute)),
+    (nodeId, fieldName),
+  );
 
 let convertFieldToJsObjStr = field =>
   ScriptAttributeInspector.Method._convertFieldToJsObjStr(field);
@@ -78,11 +86,13 @@ let renameField =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
   ScriptAttributeInspector.Method._renameField(
-    languageType,
-    send,
-    nodeId,
-    oldName,
-    newName,
+    (TestTool.buildEmptyAppState(), TestTool.getDispatch()),
+    (
+      languageType,
+      attribute =>
+        send(ScriptAttributeInspector.UpdateAttributeEntries(attribute)),
+    ),
+    (nodeId, oldName, newName),
   );
 };
 
@@ -93,10 +103,10 @@ let getScriptAttributeFieldDefaultValue = (nodeId, fieldName, editorState) =>
   );
 
 let getDefaultFieldType = () =>
-  ScriptAttributeInspector.Method._getDefaultFieldType();
+  AddScriptAttributeDefaultFieldEventHandler.CustomEventHandler._getDefaultFieldType();
 
 let getDefaultFieldDefaultValue = () =>
-  ScriptAttributeInspector.Method._getDefaultFieldDefaultValue();
+  AddScriptAttributeDefaultFieldEventHandler.CustomEventHandler._getDefaultFieldDefaultValue();
 
 module TestUpdateScriptAttributeInAllScriptComponents = {
   let createDefaultSceneAndAddScriptComponent = sandbox => {

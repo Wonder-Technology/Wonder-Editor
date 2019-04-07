@@ -1,8 +1,8 @@
 let updateEventFunctionData = (nodeId, name, eventFunctionJsObjStr) =>
   ScriptEventFunctionInspector.Method.updateEventFunctionData(
-    nodeId,
-    name,
-    eventFunctionJsObjStr,
+    (TestTool.buildEmptyAppState(), TestTool.getDispatch()),
+    (),
+    (nodeId, name, eventFunctionJsObjStr),
   );
 
 let getEventFunctionData = (nodeId, editorState) => {
@@ -45,6 +45,9 @@ let buildEventFunctionDataJsObjStrAndRemoveNewLinesAndSpaces =
     (~initFunc=None, ~updateFunc=None, ~disposeFunc=None, ()) =>
   buildEventFunctionDataJsObjStr(~initFunc, ~updateFunc, ~disposeFunc, ())
   |> StringTool.removeNewLinesAndSpaces;
+
+let buildDefaultEventFunctionDataJsObjStrAndRemoveNewLinesAndSpaces = () =>
+  buildEventFunctionDataJsObjStrAndRemoveNewLinesAndSpaces();
 
 module TestUpdateScriptEventFunctionInAllScriptComponents = {
   let createDefaultSceneAndAddScriptComponent = sandbox => {

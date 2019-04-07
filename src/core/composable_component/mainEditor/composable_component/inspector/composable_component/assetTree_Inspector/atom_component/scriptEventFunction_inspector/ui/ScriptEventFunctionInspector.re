@@ -26,46 +26,7 @@ module Method = {
   |j};
   };
 
-  let _convertEventFunctionJsObjStrToData = jsObjStr =>
-    jsObjStr
-    |> SerializeService.deserializeFunction
-    |> ScriptEventFunctionEngineService.createScriptEventFunctionData;
-
-  let updateEventFunctionData = (nodeId, name, eventFunctionJsObjStr) =>
-    Console.tryCatch(
-      () => {
-        let newEventFunctionData =
-          _convertEventFunctionJsObjStrToData(eventFunctionJsObjStr);
-
-        ScriptEventFunctionNodeAssetEditorService.setNodeData(
-          nodeId,
-          ScriptEventFunctionNodeAssetService.buildNodeData(
-            ~name,
-            ~eventFunctionData=newEventFunctionData,
-          ),
-        )
-        |> StateLogicService.getAndSetEditorState;
-
-        ScriptEngineService.updateEventFunctionInAllScriptComponents(
-          name,
-          newEventFunctionData,
-        )
-        |> StateLogicService.getAndSetEngineState;
-      },
-      e => {
-        let message = e##message;
-
-        ConsoleUtils.error(
-          LogUtils.buildErrorMessage(
-            ~description={j|$message|j},
-            ~reason="",
-            ~solution={j||j},
-            ~params={j||j},
-          ),
-        )
-        |> StateLogicService.getEditorState;
-      },
-    );
+  let updateEventFunctionData = UpdateScriptEventFunctionDataEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 };
 
 let component =
@@ -105,7 +66,12 @@ let render =
           Method.convertEventFunctionDataToJsObjStr(eventFunctionData)
         }
         onSubmit={
-          value => Method.updateEventFunctionData(nodeId, name, value)
+          value =>
+            Method.updateEventFunctionData(
+              (uiState, dispatchFunc),
+              (),
+              (nodeId, name, value),
+            )
         }
       />
     </div>

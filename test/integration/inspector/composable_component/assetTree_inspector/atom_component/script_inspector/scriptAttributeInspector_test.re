@@ -127,8 +127,7 @@ let _ =
               ~defaultValue=0.1,
             ),
           ),
-        )
-        |> StateLogicService.getAndSetState;
+        );
 
         ScriptAttributeInspectorTool.getAttributeEntries(addedNodeId)
         |> StateLogicService.getEditorState
@@ -168,8 +167,7 @@ let _ =
           ScriptAttributeInspectorTool.updateScriptAttributeNodeByReplaceFieldData(
             addedNodeId,
             (fieldName, "aaa"),
-          )
-          |> StateLogicService.getAndSetState;
+          );
 
           error |> expect |> toCalled;
         })
@@ -197,8 +195,7 @@ let _ =
                 ~defaultValue=0.1,
               ),
             ),
-          )
-          |> StateLogicService.getAndSetState;
+          );
 
           let attributeName =
             ScriptAttributeInspectorTool.getAttributeName(addedNodeId)
@@ -229,8 +226,7 @@ let _ =
                   ~defaultValue=0,
                 ),
               ),
-            )
-            |> StateLogicService.getAndSetState;
+            );
 
             let attributeName =
               ScriptAttributeInspectorTool.getAttributeName(addedNodeId)
@@ -258,8 +254,7 @@ let _ =
                   ~defaultValue=0,
                 ),
               ),
-            )
-            |> StateLogicService.getAndSetState;
+            );
 
             let attributeName =
               ScriptAttributeInspectorTool.getAttributeName(addedNodeId)
@@ -311,10 +306,11 @@ let _ =
           |> StateLogicService.getEditorState
           |> ArrayService.unsafeGetFirst;
         ScriptAttributeInspectorTool.updateScriptAttributeNodeByRemoveFieldData(
-          addedNodeId,
-          fieldName,
-        )
-        |> StateLogicService.getAndSetState;
+          ~sandbox,
+          ~nodeId=addedNodeId,
+          ~fieldName,
+          (),
+        );
 
         ScriptAttributeInspectorTool.getAttributeEntries(addedNodeId)
         |> StateLogicService.getEditorState
@@ -336,10 +332,11 @@ let _ =
             );
 
           ScriptAttributeInspectorTool.updateScriptAttributeNodeByRemoveFieldData(
-            addedNodeId,
-            fieldName,
-          )
-          |> StateLogicService.getAndSetState;
+            ~sandbox,
+            ~nodeId=addedNodeId,
+            ~fieldName,
+            (),
+          );
 
           let attributeName =
             ScriptAttributeInspectorTool.getAttributeName(addedNodeId)

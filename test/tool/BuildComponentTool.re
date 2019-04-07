@@ -230,8 +230,10 @@ let buildUI = ui => ReactTestRenderer.create(ui);
 let buildScriptAttributeInspectorComponent =
     (
       ~currentNodeId,
-      ~name,
-      ~attribute,
+      ~name=ScriptAttributeInspectorTool.getAttributeName(currentNodeId)
+            |> StateLogicService.getEditorState,
+      ~attribute=ScriptAttributeInspectorTool.getAttribute(currentNodeId)
+                 |> StateLogicService.getEditorState,
       ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~renameFunc=AssetTreeInspectorTool.Rename.renameAssetNode(
