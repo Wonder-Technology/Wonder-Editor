@@ -155,7 +155,7 @@ let _ =
         })
       );
 
-      describe("set ambient light", () =>
+      describe("set ambient light to inspector engine state", () =>
         test("test ambient light color", () => {
           let inspectorEngineState =
             StateInspectorEngineService.unsafeGetState();

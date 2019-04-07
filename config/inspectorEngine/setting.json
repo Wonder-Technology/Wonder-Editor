@@ -7,7 +7,7 @@
         "stencil": true,
         "antialias": true,
         "premultiplied_alpha": true,
-        "preserve_drawing_buffer": false
+        "preserve_drawing_buffer": true
     },
     "buffer": {
         "geometry_point_count": 1000000,
