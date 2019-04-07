@@ -143,6 +143,46 @@ let _ =
       (script, gameObject, addedNodeId, eventFunctionName);
     };
 
+    let _buildUpdateEventFunctionSetLocalPosition1 = () =>
+      Some(
+        (. script, api, engineState: Wonderjs.StateDataMainType.state) => {
+          let unsafeGetGameObjectTransformComponent =
+            api##unsafeGetGameObjectTransformComponent;
+          let setTransformLocalPosition = api##setTransformLocalPosition;
+          let unsafeGetScriptGameObject = api##unsafeGetScriptGameObject;
+
+          let gameObject = unsafeGetScriptGameObject(. script, engineState);
+
+          let tran =
+            unsafeGetGameObjectTransformComponent(. gameObject, engineState);
+
+          let engineState =
+            setTransformLocalPosition(. tran, (1., 0., 0.), engineState);
+
+          engineState;
+        },
+      );
+
+    let _buildUpdateEventFunctionSetLocalPosition2 = () =>
+      Some(
+        (. script, api, engineState: Wonderjs.StateDataMainType.state) => {
+          let unsafeGetGameObjectTransformComponent =
+            api##unsafeGetGameObjectTransformComponent;
+          let setTransformLocalPosition = api##setTransformLocalPosition;
+          let unsafeGetScriptGameObject = api##unsafeGetScriptGameObject;
+
+          let gameObject = unsafeGetScriptGameObject(. script, engineState);
+
+          let tran =
+            unsafeGetGameObjectTransformComponent(. gameObject, engineState);
+
+          let engineState =
+            setTransformLocalPosition(. tran, (2., 0., 0.), engineState);
+
+          engineState;
+        },
+      );
+
     beforeEach(() => {
       sandbox := createSandbox();
       TestTool.closeContractCheck();
@@ -290,7 +330,7 @@ let _ =
            gameObject g2 add script component s2;
            s1 add sef1;
            s2 add sef2;
-           sef1->update: dispose g1;
+           sef1->update: dispose g2;
            run;
            loop;
 
@@ -580,35 +620,7 @@ let _ =
           addedNodeId,
           eventFunctionName,
           ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr(
-            ~updateFunc=
-              Some(
-                (. script, api, engineState: Wonderjs.StateDataMainType.state) => {
-                  let unsafeGetGameObjectTransformComponent =
-                    api##unsafeGetGameObjectTransformComponent;
-                  let setTransformLocalPosition =
-                    api##setTransformLocalPosition;
-                  let unsafeGetScriptGameObject =
-                    api##unsafeGetScriptGameObject;
-
-                  let gameObject =
-                    unsafeGetScriptGameObject(. script, engineState);
-
-                  let tran =
-                    unsafeGetGameObjectTransformComponent(.
-                      gameObject,
-                      engineState,
-                    );
-
-                  let engineState =
-                    setTransformLocalPosition(.
-                      tran,
-                      (1., 0., 0.),
-                      engineState,
-                    );
-
-                  engineState;
-                },
-              ),
+            ~updateFunc=_buildUpdateEventFunctionSetLocalPosition1(),
             (),
           ),
         );
@@ -628,4 +640,186 @@ let _ =
         |> expect == (0., 0., 0.);
       })
     );
+
+    describe("hot reloading", () => {
+      describe("support change event function when run", () =>
+        test("test", () => {
+          _prepareWithNoWorkerJobRecord(
+            _buildNoWorkerJobConfigOnlyWithUpdateScript(),
+          );
+          let (script, gameObject, addedNodeId, eventFunctionName) =
+            _prepareOneScriptEventFunction();
+          ScriptEventFunctionInspectorTool.updateEventFunctionData(
+            addedNodeId,
+            eventFunctionName,
+            ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr(
+              ~updateFunc=_buildUpdateEventFunctionSetLocalPosition1(),
+              (),
+            ),
+          );
+
+          ControllerTool.run();
+          LoopTool.getAndRefreshEngineStateForRunLoop();
+          ScriptEventFunctionInspectorTool.updateEventFunctionData(
+            addedNodeId,
+            eventFunctionName,
+            ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr(
+              ~updateFunc=_buildUpdateEventFunctionSetLocalPosition2(),
+              (),
+            ),
+          );
+          LoopTool.getAndRefreshEngineStateForRunLoop();
+
+          let engineState = StateEngineService.unsafeGetState();
+          TransformEngineService.getLocalPosition(
+            GameObjectComponentEngineService.unsafeGetTransformComponent(
+              gameObject,
+              engineState,
+            ),
+            engineState,
+          )
+          |> expect == (2., 0., 0.);
+        })
+      );
+
+      describe(
+        "support change attribute->default value(will change value too) when run",
+        () =>
+        test("test", () => {
+          _prepareWithNoWorkerJobRecord(
+            _buildNoWorkerJobConfigOnlyWithUpdateScript(),
+          );
+          let (
+            script,
+            gameObject,
+            addedEventFunctionNodeId,
+            eventFunctionName,
+          ) =
+            _prepareOneScriptEventFunction();
+
+          let addedAttributeNodeId = MainEditorAssetIdTool.getNewAssetId();
+          MainEditorAssetHeaderOperateNodeTool.addScriptAttribute();
+          ScriptAttributeInspectorTool.addDefaultField(
+            ~sandbox,
+            ~nodeId=addedAttributeNodeId,
+            (),
+          );
+          let (fieldName, field) =
+            ScriptAttributeInspectorTool.getAttributeEntries(
+              addedAttributeNodeId,
+            )
+            |> StateLogicService.getEditorState
+            |> ArrayService.unsafeGetFirst;
+          let newFieldName = "speed";
+          ScriptAttributeInspectorTool.renameField(
+            ~sandbox,
+            ~nodeId=addedAttributeNodeId,
+            ~oldName=fieldName,
+            ~newName=newFieldName,
+            (),
+          );
+          let attributeName =
+            ScriptAttributeInspectorTool.getAttributeName(
+              addedAttributeNodeId,
+            )
+            |> StateLogicService.getEngineStateToGetData;
+          let attribute =
+            ScriptAttributeInspectorTool.getAttribute(addedAttributeNodeId)
+            |> StateLogicService.getEngineStateToGetData;
+
+          MainEditorScriptAttributeTool.addScriptAttribute(
+            ~script,
+            ~send=SinonTool.createOneLengthStub(sandbox^),
+            (),
+          );
+
+          ScriptEventFunctionInspectorTool.updateEventFunctionData(
+            addedEventFunctionNodeId,
+            eventFunctionName,
+            ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr(
+              ~updateFunc=
+                Some(
+                  (.
+                    script,
+                    api,
+                    engineState: Wonderjs.StateDataMainType.state,
+                  ) => {
+                    let unsafeGetGameObjectTransformComponent =
+                      api##unsafeGetGameObjectTransformComponent;
+                    let setTransformLocalPosition =
+                      api##setTransformLocalPosition;
+                    let unsafeGetScriptGameObject =
+                      api##unsafeGetScriptGameObject;
+
+                    let unsafeGetScriptAttribute =
+                      api##unsafeGetScriptAttribute;
+
+                    let scriptAttributeName = "New Script Attribute";
+
+                    let scriptAttribute =
+                      unsafeGetScriptAttribute(.
+                        script,
+                        scriptAttributeName,
+                        engineState,
+                      );
+
+                    let unsafeGetScriptAttributeFieldValue =
+                      api##unsafeGetScriptAttributeFieldValue;
+
+                    let speed =
+                      unsafeGetScriptAttributeFieldValue(.
+                        "speed",
+                        scriptAttribute,
+                      )
+                      |> Obj.magic;
+
+                    let gameObject =
+                      unsafeGetScriptGameObject(. script, engineState);
+
+                    let tran =
+                      unsafeGetGameObjectTransformComponent(.
+                        gameObject,
+                        engineState,
+                      );
+
+                    let engineState =
+                      setTransformLocalPosition(.
+                        tran,
+                        (speed, 0., 0.),
+                        engineState,
+                      );
+
+                    engineState;
+                  },
+                ),
+              (),
+            ),
+          );
+
+          ControllerTool.run();
+          LoopTool.getAndRefreshEngineStateForRunLoop();
+          let newDefaultValue = 10.0;
+          MainEditorScriptAttributeTool.changeScriptAttributeFieldDefaultValue(
+            script,
+            attributeName,
+            newFieldName,
+            attribute,
+            newDefaultValue,
+          )
+          |> StateLogicService.getAndSetEngineState;
+
+          LoopTool.getAndRefreshEngineStateForRunLoop();
+
+          let engineState = StateEngineService.unsafeGetState();
+          TransformEngineService.getLocalPosition(
+            GameObjectComponentEngineService.unsafeGetTransformComponent(
+              gameObject,
+              engineState,
+            ),
+            engineState,
+          )
+          |> expect == (newDefaultValue, 0., 0.);
+        })
+      );
+    });
   });
