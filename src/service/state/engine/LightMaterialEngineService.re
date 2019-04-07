@@ -73,3 +73,9 @@ let reInitLightMaterialsAndClearShaderCache = (materials, engineState) =>
 let getAllLightMaterials = LightMaterialAPI.getAllLightMaterials;
 
 let batchDisposeLightMaterial = LightMaterialAPI.batchDisposeLightMaterial;
+
+let createLightMaterialAndSetName = (materialName, engineState) => {
+  let (engineState, material) = engineState |> create;
+
+  (material, engineState |> setLightMaterialName(materialName, material));
+};

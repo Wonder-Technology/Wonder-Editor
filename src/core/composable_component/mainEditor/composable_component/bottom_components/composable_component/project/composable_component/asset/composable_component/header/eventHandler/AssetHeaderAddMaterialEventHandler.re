@@ -22,7 +22,7 @@ module CustomEventHandler = {
         );
 
     let (newMaterial, engineState) =
-      OperateLightMaterialLogicService.createLightMaterialAndSetName(
+      LightMaterialEngineService.createLightMaterialAndSetName(
         materialName,
         engineState,
       );
@@ -46,13 +46,13 @@ module CustomEventHandler = {
 
     /* TODO draw material sphere to get base64 store in map */
     /* MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
-      MaterialDataAssetType.LightMaterial,
-      newMaterial,
-    );
+         MaterialDataAssetType.LightMaterial,
+         newMaterial,
+       );
 
-    MaterialInspector.Method.getDataUrl(
-      DomHelper.getElementById("inspector-canvas"),
-    ); */
+       MaterialInspector.Method.getDataUrl(
+         DomHelper.getElementById("inspector-canvas"),
+       ); */
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])))
     |> ignore;
