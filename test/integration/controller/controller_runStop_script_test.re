@@ -880,9 +880,7 @@ let _ =
 
         describe("support remove attribute when run", () =>
           test("if event function used attribute is removed, error", () => {
-            createMethodStub(sandbox^, ConsoleTool.console, "log");
-            let errorStub =
-              createMethodStub(sandbox^, ConsoleTool.console, "error");
+            let errorStub = ConsoleTool.stubError(~sandbox, ());
             let (
               script,
               attributeName,
