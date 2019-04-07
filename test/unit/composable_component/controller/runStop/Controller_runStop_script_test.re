@@ -115,6 +115,34 @@ let _ =
         (),
       );
 
+    let _prepareOneScriptEventFunction = () => {
+      let assetTreeData =
+        MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+
+      let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
+      MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
+      let editorState = StateEditorService.getState();
+      let eventFunctionName =
+        ScriptEventFunctionInspectorTool.getEventFunctionName(
+          addedNodeId,
+          editorState,
+        );
+
+      let script = GameObjectTool.getCurrentSceneTreeNodeScript();
+
+      let gameObject =
+        ScriptEngineService.unsafeGetScriptGameObject(script)
+        |> StateLogicService.getEngineStateToGetData;
+
+      MainEditorScriptEventFunctionTool.addScriptEventFunction(
+        ~script=GameObjectTool.getCurrentSceneTreeNodeScript(),
+        ~send=SinonTool.createOneLengthStub(sandbox^),
+        (),
+      );
+
+      (script, gameObject, addedNodeId, eventFunctionName);
+    };
+
     beforeEach(() => {
       sandbox := createSandbox();
       TestTool.closeContractCheck();
@@ -125,34 +153,6 @@ let _ =
     });
 
     describe("test exec event function", () => {
-      let _prepareOneScriptEventFunction = () => {
-        let assetTreeData =
-          MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
-
-        let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
-        MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
-        let editorState = StateEditorService.getState();
-        let eventFunctionName =
-          ScriptEventFunctionInspectorTool.getEventFunctionName(
-            addedNodeId,
-            editorState,
-          );
-
-        let script = GameObjectTool.getCurrentSceneTreeNodeScript();
-
-        let gameObject =
-          ScriptEngineService.unsafeGetScriptGameObject(script)
-          |> StateLogicService.getEngineStateToGetData;
-
-        MainEditorScriptEventFunctionTool.addScriptEventFunction(
-          ~script=GameObjectTool.getCurrentSceneTreeNodeScript(),
-          ~send=SinonTool.createOneLengthStub(sandbox^),
-          (),
-        );
-
-        (script, gameObject, addedNodeId, eventFunctionName);
-      };
-
       let _prepareTwoScriptEventFunctions = () => {
         let assetTreeData =
           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
@@ -227,10 +227,14 @@ let _ =
             ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr(
               ~initFunc=
                 Some(
-                  (. script, api, state: Wonderjs.StateDataMainType.state) => {
-                    state.arcballCameraControllerRecord = Obj.magic(-1);
+                  (.
+                    script,
+                    api,
+                    engineState: Wonderjs.StateDataMainType.state,
+                  ) => {
+                    engineState.arcballCameraControllerRecord = Obj.magic(-1);
 
-                    state;
+                    engineState;
                   },
                 ),
               (),
@@ -256,10 +260,15 @@ let _ =
               ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr(
                 ~updateFunc=
                   Some(
-                    (. script, api, state: Wonderjs.StateDataMainType.state) => {
-                      state.arcballCameraControllerRecord = Obj.magic(-1);
+                    (.
+                      script,
+                      api,
+                      engineState: Wonderjs.StateDataMainType.state,
+                    ) => {
+                      engineState.arcballCameraControllerRecord =
+                        Obj.magic(-1);
 
-                      state;
+                      engineState;
                     },
                   ),
                 (),
@@ -315,19 +324,27 @@ let _ =
                 ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr(
                   ~updateFunc=
                     Some(
-                      (. script, api, state: Wonderjs.StateDataMainType.state) => {
+                      (.
+                        script,
+                        api,
+                        engineState: Wonderjs.StateDataMainType.state,
+                      ) => {
                         let disposeGameObject = api##disposeGameObject;
                         let findGameObjectsByName = api##findGameObjectsByName;
 
                         let gameObject2 =
                           Array.unsafe_get(
-                            findGameObjectsByName(. "gameObject2", state),
+                            findGameObjectsByName(.
+                              "gameObject2",
+                              engineState,
+                            ),
                             0,
                           );
 
-                        let state = disposeGameObject(. gameObject2, state);
+                        let engineState =
+                          disposeGameObject(. gameObject2, engineState);
 
-                        state;
+                        engineState;
                       },
                     ),
                   (),
@@ -339,7 +356,11 @@ let _ =
                 ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr(
                   ~disposeFunc=
                     Some(
-                      (. script, api, state: Wonderjs.StateDataMainType.state) => {
+                      (.
+                        script,
+                        api,
+                        engineState: Wonderjs.StateDataMainType.state,
+                      ) => {
                         let unsafeGetGameObjectTransformComponent =
                           api##unsafeGetGameObjectTransformComponent;
                         let setTransformLocalPosition =
@@ -348,24 +369,27 @@ let _ =
 
                         let gameObject1 =
                           Array.unsafe_get(
-                            findGameObjectsByName(. "gameObject1", state),
+                            findGameObjectsByName(.
+                              "gameObject1",
+                              engineState,
+                            ),
                             0,
                           );
 
                         let tran1 =
                           unsafeGetGameObjectTransformComponent(.
                             gameObject1,
-                            state,
+                            engineState,
                           );
 
-                        let state =
+                        let engineState =
                           setTransformLocalPosition(.
                             tran1,
                             (1., 0., 0.),
-                            state,
+                            engineState,
                           );
 
-                        state;
+                        engineState;
                       },
                     ),
                   (),
@@ -388,6 +412,45 @@ let _ =
             },
           );
         });
+
+        describe(
+          "editor operation which exec loop shouldn't exec script event functions",
+          () =>
+          test("test leftHeader->dispose gameObject operation", () => {
+            _prepareWithNoWorkerJobRecord(
+              _buildNoWorkerJobConfigOnlyWithUpdateScript(),
+            );
+            let (script, gameObject, addedNodeId, eventFunctionName) =
+              _prepareOneScriptEventFunction();
+            ScriptEventFunctionInspectorTool.updateEventFunctionData(
+              addedNodeId,
+              eventFunctionName,
+              ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr(
+                ~updateFunc=
+                  Some(
+                    (.
+                      script,
+                      api,
+                      engineState: Wonderjs.StateDataMainType.state,
+                    ) => {
+                      engineState.arcballCameraControllerRecord =
+                        Obj.magic(-1);
+
+                      engineState;
+                    },
+                  ),
+                (),
+              ),
+            );
+
+            ControllerTool.run();
+            GameObjectTool.setCurrentSceneTreeNode(gameObject);
+            MainEditorLeftHeaderTool.disposeCurrentSceneTreeNode();
+
+            StateEngineService.unsafeGetState().arcballCameraControllerRecord
+            |> expect != Obj.magic(-1);
+          })
+        );
       });
 
       describe("test stop", () =>
@@ -403,10 +466,14 @@ let _ =
             ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr(
               ~updateFunc=
                 Some(
-                  (. script, api, state: Wonderjs.StateDataMainType.state) => {
-                    state.arcballCameraControllerRecord = Obj.magic(-1);
+                  (.
+                    script,
+                    api,
+                    engineState: Wonderjs.StateDataMainType.state,
+                  ) => {
+                    engineState.arcballCameraControllerRecord = Obj.magic(-1);
 
-                    state;
+                    engineState;
                   },
                 ),
               (),
@@ -445,27 +512,37 @@ let _ =
               ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr(
                 ~updateFunc=
                   Some(
-                    (. script, api, state: Wonderjs.StateDataMainType.state) => {
+                    (.
+                      script,
+                      api,
+                      engineState: Wonderjs.StateDataMainType.state,
+                    ) => {
                       let disposeGameObject = api##disposeGameObject;
                       let findGameObjectsByName = api##findGameObjectsByName;
 
                       let gameObjects =
-                        findGameObjectsByName(. "secondCube", state);
+                        findGameObjectsByName(. "secondCube", engineState);
 
-                      let state =
+                      let engineState =
                         switch (gameObjects |> Js.Array.length) {
-                        | 0 => state
+                        | 0 => engineState
                         | _ =>
                           let secondCubeGameObject =
                             Array.unsafe_get(
-                              findGameObjectsByName(. "secondCube", state),
+                              findGameObjectsByName(.
+                                "secondCube",
+                                engineState,
+                              ),
                               0,
                             );
 
-                          disposeGameObject(. secondCubeGameObject, state);
+                          disposeGameObject(.
+                            secondCubeGameObject,
+                            engineState,
+                          );
                         };
 
-                      state;
+                      engineState;
                     },
                   ),
                 (),
@@ -490,4 +567,65 @@ let _ =
         )
       );
     });
+
+    describe("test redo/undo engine engineState", () =>
+      test(
+        "stop should undo to the engineState which is copied before run", () => {
+        _prepareWithNoWorkerJobRecord(
+          _buildNoWorkerJobConfigOnlyWithUpdateScript(),
+        );
+        let (script, gameObject, addedNodeId, eventFunctionName) =
+          _prepareOneScriptEventFunction();
+        ScriptEventFunctionInspectorTool.updateEventFunctionData(
+          addedNodeId,
+          eventFunctionName,
+          ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr(
+            ~updateFunc=
+              Some(
+                (. script, api, engineState: Wonderjs.StateDataMainType.state) => {
+                  let unsafeGetGameObjectTransformComponent =
+                    api##unsafeGetGameObjectTransformComponent;
+                  let setTransformLocalPosition =
+                    api##setTransformLocalPosition;
+                  let unsafeGetScriptGameObject =
+                    api##unsafeGetScriptGameObject;
+
+                  let gameObject =
+                    unsafeGetScriptGameObject(. script, engineState);
+
+                  let tran =
+                    unsafeGetGameObjectTransformComponent(.
+                      gameObject,
+                      engineState,
+                    );
+
+                  let engineState =
+                    setTransformLocalPosition(.
+                      tran,
+                      (1., 0., 0.),
+                      engineState,
+                    );
+
+                  engineState;
+                },
+              ),
+            (),
+          ),
+        );
+
+        ControllerTool.run();
+        LoopTool.getAndRefreshEngineStateForRunLoop();
+        ControllerTool.stop();
+
+        let engineState = StateEngineService.unsafeGetState();
+        TransformEngineService.getLocalPosition(
+          GameObjectComponentEngineService.unsafeGetTransformComponent(
+            gameObject,
+            engineState,
+          ),
+          engineState,
+        )
+        |> expect == (0., 0., 0.);
+      })
+    );
   });
