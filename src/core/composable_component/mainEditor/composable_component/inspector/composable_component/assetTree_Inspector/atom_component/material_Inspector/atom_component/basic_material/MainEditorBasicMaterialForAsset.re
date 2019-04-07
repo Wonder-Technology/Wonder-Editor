@@ -18,7 +18,9 @@ module Method = {
            GameObjectComponentEngineService.getBasicMaterialComponent,
            BasicMaterialEngineService.setColor,
          ),
-       );
+         StateEditorService.getState(),
+       )
+    |> StateLogicService.refreshInspectorEngineState;
   };
 };
 

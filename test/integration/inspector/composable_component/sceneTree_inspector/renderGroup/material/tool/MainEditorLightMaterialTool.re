@@ -17,10 +17,6 @@ let changeShininess =
     value,
   );
 
-let changeShininessWithInspectorEngineState =
-    (~material=GameObjectTool.getCurrentSceneTreeNodeMaterial(), ~value, ()) =>
-  MainEditorLightMaterialForAsset.Method.changeShininess(material, value);
-
 let blurShininess =
     (
       ~dispatchFunc=_ => (),
@@ -40,9 +36,6 @@ let getColor = material =>
 
 let changeColor = (material, color) =>
   MainEditorLightMaterialForGameObject.Method.changeColor(material, color);
-
-let changeColorWithInspectorEngineState = (material, color) =>
-  MainEditorLightMaterialForAsset.Method.changeColor(material, color);
 
 let closeColorPicker =
     (

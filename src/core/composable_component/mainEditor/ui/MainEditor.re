@@ -107,14 +107,8 @@ module Method = {
     </article>;
 
   let onResize = domElement => {
-
-
-
     DomHelper.isDomVisible(domElement) ?
-      {
-        ResizeUtils.resizeInspectorCanvasScreen();
-      } :
-      ();
+      ResizeUtils.resizeInspectorCanvasScreen() : ();
 
     ResizeUtils.resizeMainCanvasScreen();
   };

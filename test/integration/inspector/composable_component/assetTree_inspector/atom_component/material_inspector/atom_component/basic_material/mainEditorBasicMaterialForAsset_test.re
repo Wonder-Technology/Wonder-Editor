@@ -9,6 +9,7 @@ open Sinon;
 let _ =
   describe("MainEditorBasicMaterialForAsset component", () => {
     let sandbox = getSandboxDefaultVal();
+
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
@@ -19,6 +20,35 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test change inspectorEngine value", () => {
+      let _prepareMaterialSphere = inspectorEngineState => {
+        let (addedMaterialNodeId, newMaterialComponent) =
+          MaterialInspectorCanvasTool.createNewMaterial();
+
+        MaterialInspectorTool.changeMaterialType(
+          ~material=newMaterialComponent,
+          ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
+          ~targetMaterialType=MaterialDataAssetType.BasicMaterial,
+          ~materialNodeId=addedMaterialNodeId,
+          (),
+        );
+
+        let materialSphereBasicMaterial =
+          inspectorEngineState
+          |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
+               MaterialDataAssetType.BasicMaterial,
+               newMaterialComponent,
+               (
+                 StateEditorService.getState(),
+                 StateEngineService.unsafeGetState(),
+               ),
+             )
+          |> InspectorEngineTool.getMaterialSphereBasicMaterial(
+               StateEditorService.getState(),
+             );
+
+        (materialSphereBasicMaterial, newMaterialComponent);
+      };
+
       beforeEach(() => {
         MainEditorSceneTool.initInspectorEngineState(
           ~sandbox,
@@ -60,45 +90,14 @@ let _ =
         MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
       });
 
-      let _getMaterialSphereBasicMaterial = inspectorEngineState => {
-        let (addedMaterialNodeId, newMaterialComponent) =
-          MaterialInspectorCanvasTool.createNewMaterial();
-
-        MaterialInspectorTool.changeMaterialType(
-          ~material=newMaterialComponent,
-          ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
-          ~targetMaterialType=MaterialDataAssetType.BasicMaterial,
-          ~materialNodeId=addedMaterialNodeId,
-          (),
-        );
-
-        let materialSphereBasicMaterial =
-          inspectorEngineState
-          |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
-               MaterialDataAssetType.BasicMaterial,
-               newMaterialComponent,
-               (
-                 StateEditorService.getState(),
-                 StateEngineService.unsafeGetState(),
-               ),
-             )
-          |> InspectorEngineTool.getMaterialSphereBasicMaterial(
-               StateEditorService.getState(),
-             );
-
-        (materialSphereBasicMaterial, newMaterialComponent);
-      };
-
       describe(
-        "test change basicMaterial asset's  value should change materialSphere's basicMaterial value",
+        "test change basicMaterial asset's value should change materialSphere's basicMaterial's value",
         () =>
         test("test change color", () => {
           let inspectorEngineState =
             StateInspectorEngineService.unsafeGetState();
-
           let (materialSphereBasicMaterial, newMaterialComponent) =
-            _getMaterialSphereBasicMaterial(inspectorEngineState);
-
+            _prepareMaterialSphere(inspectorEngineState);
           let newColor = {
             "hex": "#7df1e8",
             "rgb": {
@@ -108,7 +107,7 @@ let _ =
             },
           };
 
-          MainEditorBasicMaterialTool.changeColorWithInspectorEngineState(
+          MainEditorBasicMaterialForAssetTool.changeColor(
             newMaterialComponent,
             newColor,
           );

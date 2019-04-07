@@ -159,6 +159,7 @@ let _ =
           });
         });
       });
+
       describe("test create material sphere gameObject in didMount", () =>
         describe("test create", () => {
           beforeEach(() =>
@@ -369,7 +370,7 @@ let _ =
           |> expect == 0;
         });
 
-        test("the materialSphere material component should be disposed", () => {
+        test("the materialSphere->material component should be disposed", () => {
           let (addedMaterialNodeId, materialComponent) =
             MaterialInspectorCanvasTool.createNewMaterial();
 
@@ -394,7 +395,7 @@ let _ =
           |> LightMaterialToolEngine.isAlive(materialSphereLightMaterial)
           |> expect == false;
         });
-        test("the materialSphere geometry component should be disposed", () => {
+        test("the materialSphere->geometry component should be disposed", () => {
           let (addedMaterialNodeId, materialComponent) =
             MaterialInspectorCanvasTool.createNewMaterial();
 

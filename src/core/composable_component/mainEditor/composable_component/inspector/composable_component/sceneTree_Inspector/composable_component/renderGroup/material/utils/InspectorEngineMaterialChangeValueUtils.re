@@ -1,10 +1,15 @@
 let changeMaterialValue =
-    (value, (getMaterialFunc, setValueFunc), inspectorEngineState) =>
+    (
+      value,
+      (getMaterialFunc, setValueFunc),
+      editorState,
+      inspectorEngineState,
+    ) =>
   switch (
-    (StateEditorService.getState(), inspectorEngineState)
+    (editorState, inspectorEngineState)
     |> InspectorEngineGameObjectLogicService.getMaterialSphere
   ) {
-  | None => ()
+  | None => inspectorEngineState
   | Some(gameObject) =>
     let materialSphereMaterialComponent =
       inspectorEngineState
@@ -12,6 +17,5 @@ let changeMaterialValue =
       |> OptionService.unsafeGet;
 
     inspectorEngineState
-    |> setValueFunc(value, materialSphereMaterialComponent)
-    |> StateLogicService.refreshInspectorEngineState;
+    |> setValueFunc(value, materialSphereMaterialComponent);
   };

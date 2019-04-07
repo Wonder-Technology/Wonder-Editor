@@ -20,9 +20,6 @@ let getColor = material =>
 let changeColor = (material, color) =>
   MainEditorBasicMaterialForGameObject.Method.changeColor(material, color);
 
-let changeColorWithInspectorEngineState = (material, color) =>
-  MainEditorBasicMaterialForAsset.Method.changeColor(material, color);
-
 let closeColorPicker =
     (
       ~material,

@@ -20,6 +20,27 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test change inspectorEngine value", () => {
+      let _prepareMaterialSphere = inspectorEngineState => {
+        let (addedMaterialNodeId, newMaterialComponent) =
+          MaterialInspectorCanvasTool.createNewMaterial();
+
+        let materialSphereLightMaterial =
+          inspectorEngineState
+          |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
+               MaterialDataAssetType.LightMaterial,
+               newMaterialComponent,
+               (
+                 StateEditorService.getState(),
+                 StateEngineService.unsafeGetState(),
+               ),
+             )
+          |> InspectorEngineTool.getMaterialSphereLightMaterial(
+               StateEditorService.getState(),
+             );
+
+        (materialSphereLightMaterial, newMaterialComponent);
+      };
+
       beforeEach(() => {
         MainEditorSceneTool.initInspectorEngineState(
           ~sandbox,
@@ -58,35 +79,15 @@ let _ =
           MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
       });
-      let _getMaterialSphereLightMaterial = inspectorEngineState => {
-        let (addedMaterialNodeId, newMaterialComponent) =
-          MaterialInspectorCanvasTool.createNewMaterial();
 
-        let materialSphereLightMaterial =
-          inspectorEngineState
-          |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
-               MaterialDataAssetType.LightMaterial,
-               newMaterialComponent,
-               (
-                 StateEditorService.getState(),
-                 StateEngineService.unsafeGetState(),
-               ),
-             )
-          |> InspectorEngineTool.getMaterialSphereLightMaterial(
-               StateEditorService.getState(),
-             );
-        (materialSphereLightMaterial, newMaterialComponent);
-      };
       describe(
         "test change currentSceneTreeNode's lightMaterial value should change materialSphere's  lightMaterial value",
         () => {
           test("test change color", () => {
             let inspectorEngineState =
               StateInspectorEngineService.unsafeGetState();
-
             let (materialSphereLightMaterial, newMaterialComponent) =
-              _getMaterialSphereLightMaterial(inspectorEngineState);
-
+              _prepareMaterialSphere(inspectorEngineState);
             let newColor = {
               "hex": "#7df1e8",
               "rgb": {
@@ -96,7 +97,7 @@ let _ =
               },
             };
 
-            MainEditorLightMaterialTool.changeColorWithInspectorEngineState(
+            MainEditorLightMaterialForAssetTool.changeColor(
               newMaterialComponent,
               newColor,
             );
@@ -113,11 +114,10 @@ let _ =
             let inspectorEngineState =
               StateInspectorEngineService.unsafeGetState();
             let shininessValue = 20.5;
-
             let (materialSphereLightMaterial, newMaterialComponent) =
-              _getMaterialSphereLightMaterial(inspectorEngineState);
+              _prepareMaterialSphere(inspectorEngineState);
 
-            MainEditorLightMaterialTool.changeShininessWithInspectorEngineState(
+            MainEditorLightMaterialForAssetTool.changeShininess(
               ~material=newMaterialComponent,
               ~value=shininessValue,
               (),

@@ -21,7 +21,9 @@ module Method = {
            GameObjectComponentEngineService.getLightMaterialComponent,
            LightMaterialEngineService.setLightMaterialDiffuseColor,
          ),
-       );
+         StateEditorService.getState(),
+       )
+    |> StateLogicService.refreshInspectorEngineState;
   };
 
   let changeShininess = (materialComponent, value) => {
@@ -39,7 +41,9 @@ module Method = {
            GameObjectComponentEngineService.getLightMaterialComponent,
            LightMaterialEngineService.setLightMaterialShininess,
          ),
-       );
+         StateEditorService.getState(),
+       )
+    |> StateLogicService.refreshInspectorEngineState;
   };
 };
 
