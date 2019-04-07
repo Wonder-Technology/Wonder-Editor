@@ -127,6 +127,17 @@ let _disposeWDBNodeEngineData =
   (editorState, engineState) |> _disposeWDBGameObjects(wdbGameObjects);
 };
 
+let _removeScriptEventFunctionFromScriptComponents =
+    ({name}: NodeAssetType.scriptEventFunctionNodeData, engineState) =>
+  ScriptEngineService.removeEventFunctionInAllScriptComponents(
+    name,
+    engineState,
+  );
+
+let _removeScriptAttributeFromScriptComponents =
+    ({name}: NodeAssetType.scriptAttributeNodeData, engineState) =>
+  ScriptEngineService.removeAttributeInAllScriptComponents(name, engineState);
+
 let _disposeNodeEngineData = (node, editorState, engineState) =>
   NodeAssetService.handleNode(
     ~node,
@@ -135,9 +146,12 @@ let _disposeNodeEngineData = (node, editorState, engineState) =>
     ~materialNodeFunc=
       (_, nodeData) =>
         _disposeMaterialNodeEngineData(nodeData, (editorState, engineState)),
-    /* TODO remove from script component */
-    ~scriptEventFunctionNodeFunc=(_, _) => engineState,
-    ~scriptAttributeNodeFunc=(_, _) => engineState,
+    ~scriptEventFunctionNodeFunc=
+      (_, nodeData) =>
+        _removeScriptEventFunctionFromScriptComponents(nodeData, engineState),
+    ~scriptAttributeNodeFunc=
+      (_, nodeData) =>
+        _removeScriptAttributeFromScriptComponents(nodeData, engineState),
     ~wdbNodeFunc=
       (_, nodeData) =>
         _disposeWDBNodeEngineData(nodeData, (editorState, engineState)),

@@ -176,3 +176,46 @@ let updateEventFunctionInAllScriptComponents =
     },
   };
 };
+
+let _removeScriptDataMapInAllScriptComponents = (dataName, scriptDataMap) =>
+  scriptDataMap
+  |> WonderEditor.ImmutableSparseMapService.filterValid((. dataMap) =>
+       !(dataMap |> WonderCommonlib.ImmutableHashMapService.has(dataName))
+     );
+
+let removeEventFunctionInAllScriptComponents =
+    (
+      eventFunctionName,
+      ({scriptRecord}: StateDataMainType.state) as engineState,
+    ) => {
+  let {scriptEventFunctionDataMap}: StateDataMainType.scriptRecord = scriptRecord;
+
+  {
+    ...engineState,
+    scriptRecord: {
+      ...scriptRecord,
+      scriptEventFunctionDataMap:
+        _removeScriptDataMapInAllScriptComponents(
+          eventFunctionName,
+          scriptEventFunctionDataMap,
+        ),
+    },
+  };
+};
+
+let removeAttributeInAllScriptComponents =
+    (attributeName, ({scriptRecord}: StateDataMainType.state) as engineState) => {
+  let {scriptAttributeMap}: StateDataMainType.scriptRecord = scriptRecord;
+
+  {
+    ...engineState,
+    scriptRecord: {
+      ...scriptRecord,
+      scriptAttributeMap:
+        _removeScriptDataMapInAllScriptComponents(
+          attributeName,
+          scriptAttributeMap,
+        ),
+    },
+  };
+};

@@ -13,3 +13,11 @@ let find = (func, map) =>
     func,
     map |> WonderCommonlib.SparseMapType.arrayNullableToArrayNotNullable,
   );
+
+let filterValid = (func, map) =>
+  map
+  |> Js.Array.filter(value =>
+       WonderCommonlib.NullService.isInMap(value)
+       && func(. value |> WonderCommonlib.SparseMapType.nullableToNotNullable)
+     );
+/* |> WonderCommonlib.SparseMapType.arrayNullableToArrayNotNullable; */

@@ -23,7 +23,7 @@ module Method = {
       | None => ReasonReact.null
       | Some(currentNode) =>
         <AssetTreeInspector
-          key=(DomHelper.getRandomKey())
+          key={DomHelper.getRandomKey()}
           uiState
           dispatchFunc
           currentNode
@@ -38,7 +38,7 @@ let component =
 let render = ((uiState, dispatchFunc), addableComponentConfig, _self) => {
   let editorState = StateEditorService.getState();
   <article key="inspector" className="wonder-inspector-component">
-    (
+    {
       Method.showInspectorBySourceType(
         (uiState, dispatchFunc),
         addableComponentConfig,
@@ -48,7 +48,7 @@ let render = ((uiState, dispatchFunc), addableComponentConfig, _self) => {
           OperateTreeAssetEditorService.getCurrentNode(editorState),
         ),
       )
-    )
+    }
   </article>;
 };
 

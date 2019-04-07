@@ -642,8 +642,8 @@ let _ =
     );
 
     describe("hot reloading", () => {
-      describe("support change event function when run", () =>
-        test("test", () => {
+      describe("support operate event function", () => {
+        let _prepare = () => {
           _prepareWithNoWorkerJobRecord(
             _buildNoWorkerJobConfigOnlyWithUpdateScript(),
           );
@@ -658,34 +658,66 @@ let _ =
             ),
           );
 
-          ControllerTool.run();
-          LoopTool.getAndRefreshEngineStateForRunLoop();
-          ScriptEventFunctionInspectorTool.updateEventFunctionData(
-            addedNodeId,
-            eventFunctionName,
-            ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr(
-              ~updateFunc=_buildUpdateEventFunctionSetLocalPosition2(),
-              (),
-            ),
-          );
-          LoopTool.getAndRefreshEngineStateForRunLoop();
+          (script, gameObject, addedNodeId, eventFunctionName);
+        };
 
-          let engineState = StateEngineService.unsafeGetState();
-          TransformEngineService.getLocalPosition(
-            GameObjectComponentEngineService.unsafeGetTransformComponent(
-              gameObject,
+        describe("support change event function when run", () =>
+          test("test", () => {
+            let (script, gameObject, addedNodeId, eventFunctionName) =
+              _prepare();
+
+            ControllerTool.run();
+            LoopTool.getAndRefreshEngineStateForRunLoop();
+            ScriptEventFunctionInspectorTool.updateEventFunctionData(
+              addedNodeId,
+              eventFunctionName,
+              ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStr(
+                ~updateFunc=_buildUpdateEventFunctionSetLocalPosition2(),
+                (),
+              ),
+            );
+            LoopTool.getAndRefreshEngineStateForRunLoop();
+
+            let engineState = StateEngineService.unsafeGetState();
+            TransformEngineService.getLocalPosition(
+              GameObjectComponentEngineService.unsafeGetTransformComponent(
+                gameObject,
+                engineState,
+              ),
               engineState,
-            ),
-            engineState,
-          )
-          |> expect == (2., 0., 0.);
-        })
-      );
+            )
+            |> expect == (2., 0., 0.);
+          })
+        );
 
-      describe(
-        "support change attribute->default value(will change value too) when run",
-        () =>
-        test("test", () => {
+        describe("support remove event function when run", () =>
+          test("test", () => {
+            let (script, gameObject, addedNodeId, eventFunctionName) =
+              _prepare();
+
+            ControllerTool.run();
+            LoopTool.getAndRefreshEngineStateForRunLoop();
+            MainEditorAssetHeaderOperateNodeTool.removeScriptEventFunctionNode(
+              ~scriptEventFunctionNodeId=addedNodeId,
+              (),
+            );
+            LoopTool.getAndRefreshEngineStateForRunLoop();
+
+            let engineState = StateEngineService.unsafeGetState();
+            TransformEngineService.getLocalPosition(
+              GameObjectComponentEngineService.unsafeGetTransformComponent(
+                gameObject,
+                engineState,
+              ),
+              engineState,
+            )
+            |> expect == (1., 0., 0.);
+          })
+        );
+      });
+
+      describe("support operate attribute", () => {
+        let _prepare = () => {
           _prepareWithNoWorkerJobRecord(
             _buildNoWorkerJobConfigOnlyWithUpdateScript(),
           );
@@ -796,30 +828,86 @@ let _ =
             ),
           );
 
-          ControllerTool.run();
-          LoopTool.getAndRefreshEngineStateForRunLoop();
-          let newDefaultValue = 10.0;
-          MainEditorScriptAttributeTool.changeScriptAttributeFieldDefaultValue(
+          (
             script,
             attributeName,
             newFieldName,
             attribute,
-            newDefaultValue,
-          )
-          |> StateLogicService.getAndSetEngineState;
+            gameObject,
+            addedAttributeNodeId,
+          );
+        };
 
-          LoopTool.getAndRefreshEngineStateForRunLoop();
-
-          let engineState = StateEngineService.unsafeGetState();
-          TransformEngineService.getLocalPosition(
-            GameObjectComponentEngineService.unsafeGetTransformComponent(
+        describe(
+          "support change attribute->default value(will change value too) when run",
+          () =>
+          test("test", () => {
+            let (
+              script,
+              attributeName,
+              newFieldName,
+              attribute,
               gameObject,
+              addedAttributeNodeId,
+            ) =
+              _prepare();
+
+            ControllerTool.run();
+            LoopTool.getAndRefreshEngineStateForRunLoop();
+            let newDefaultValue = 10.0;
+            MainEditorScriptAttributeTool.changeScriptAttributeFieldDefaultValue(
+              script,
+              attributeName,
+              newFieldName,
+              attribute,
+              newDefaultValue,
+            )
+            |> StateLogicService.getAndSetEngineState;
+
+            LoopTool.getAndRefreshEngineStateForRunLoop();
+
+            let engineState = StateEngineService.unsafeGetState();
+            TransformEngineService.getLocalPosition(
+              GameObjectComponentEngineService.unsafeGetTransformComponent(
+                gameObject,
+                engineState,
+              ),
               engineState,
-            ),
-            engineState,
-          )
-          |> expect == (newDefaultValue, 0., 0.);
-        })
-      );
+            )
+            |> expect == (newDefaultValue, 0., 0.);
+          })
+        );
+
+        describe("support remove attribute when run", () =>
+          test("if event function used attribute is removed, error", () => {
+            createMethodStub(sandbox^, ConsoleTool.console, "log");
+            let errorStub =
+              createMethodStub(sandbox^, ConsoleTool.console, "error");
+            let (
+              script,
+              attributeName,
+              newFieldName,
+              attribute,
+              gameObject,
+              addedAttributeNodeId,
+            ) =
+              _prepare();
+
+            ControllerTool.run();
+            LoopTool.getAndRefreshEngineStateForRunLoop();
+            MainEditorAssetHeaderOperateNodeTool.removeScriptAttributeNode(
+              ~scriptAttributeNodeId=addedAttributeNodeId,
+              (),
+            );
+
+            LoopTool.getAndRefreshEngineStateForRunLoop();
+
+            ConsoleTool.judgeError(
+              "expect data exist(get by getExn), but actual not",
+              errorStub,
+            );
+          })
+        );
+      });
     });
   });

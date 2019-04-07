@@ -64,31 +64,31 @@ module Method = {
     sceneGraphArr
     |> Js.Array.map(({uid, name, children}) =>
          <SceneTreeNode
-           key=(StringService.intToString(uid))
+           key={StringService.intToString(uid)}
            gameObject=uid
            name
-           isSelected=(_isSelected(uid, currentSceneTreeNode))
+           isSelected={_isSelected(uid, currentSceneTreeNode)}
            isActive=true
            dragImg
-           widget=(SceneTreeWidgetService.getWidget())
+           widget={SceneTreeWidgetService.getWidget()}
            onSelect=onSelectFunc
            dragGameObject=dragGameObjectFunc
            dragWDB=dragWDBFunc
            isWidget=SceneTreeWidgetService.isWidget
-           isShowChildren=(
+           isShowChildren={
              SceneTreeEditorService.getIsShowChildern(
                uid,
                sceneGameObject,
                editorState,
              )
-           )
+           }
            isAssetWDBFile=WDBNodeAssetEditorService.isWDBAssetFile
-           isHasChildren=(children |> Js.Array.length >= 1)
-           handleToggleShowTreeChildren=(
+           isHasChildren={children |> Js.Array.length >= 1}
+           handleToggleShowTreeChildren={
              handleToggleShowTreeChildren(dispatchFunc)
-           )
+           }
            checkNodeRelation=CheckSceneTreeLogicService.checkGameObjectRelation
-           treeChildren=(
+           treeChildren={
              buildSceneTreeArray(
                (uiState, dispatchFunc, dragImg),
                currentSceneTreeNode,
@@ -96,10 +96,9 @@ module Method = {
                (sceneGameObject, editorState),
                children,
              )
-           )
+           }
          />
        );
-
 };
 
 let component =
@@ -114,7 +113,7 @@ let render = (uiState, dispatchFunc, _self) => {
     className="wonder-sceneTree-component"
     id="wonder-sceneTree-component">
     <article className="wonder-tree">
-      (
+      {
         ReasonReact.array(
           SceneGraphUtils.getSceneGraphDataFromEngine((
             editorState,
@@ -152,7 +151,7 @@ let render = (uiState, dispatchFunc, _self) => {
                  )
           ),
         )
-      )
+      }
     </article>
   </article>;
 };

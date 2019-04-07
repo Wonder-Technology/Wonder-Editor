@@ -132,6 +132,9 @@ module Select = {
         ~uiState=TestTool.buildEmptyAppState(),
         ~gameObject,
         (),
-      ) =>
+      ) => {
+    GameObjectTool.clearCurrentSceneTreeNode();
+
     MainEditorSceneTree.Method.onSelect((uiState, dispatchFunc), gameObject);
+  };
 };

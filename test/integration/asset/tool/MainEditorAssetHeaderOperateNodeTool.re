@@ -32,6 +32,24 @@ let removeMaterialNode =
     ) =>
   removeNode(~dispatchFunc, ~uiState, ~nodeId=materialNodeId, ());
 
+let removeScriptEventFunctionNode =
+    (
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~scriptEventFunctionNodeId,
+      (),
+    ) =>
+  removeNode(~dispatchFunc, ~uiState, ~nodeId=scriptEventFunctionNodeId, ());
+
+let removeScriptAttributeNode =
+    (
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~scriptAttributeNodeId,
+      (),
+    ) =>
+  removeNode(~dispatchFunc, ~uiState, ~nodeId=scriptAttributeNodeId, ());
+
 let removeFolderNode =
     (
       ~dispatchFunc=TestTool.getDispatch(),

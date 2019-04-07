@@ -40,7 +40,7 @@ let _ =
           (),
         );
 
-        BuildComponentTool.buildAssetTree()
+        BuildComponentTool.buildAssetChildrenNode()
         |> ReactTestTool.createSnapshotAndMatch;
       })
     );

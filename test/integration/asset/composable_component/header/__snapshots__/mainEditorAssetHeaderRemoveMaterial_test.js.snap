@@ -439,34 +439,6 @@ exports[`MainEditorAssetHeader->remove material
         click remove-button;
              should remove it from assetTreeRoot 1`] = `
 <article
-  className="wonder-asset-assetTree"
->
-  <ul
-    className="wonder-tree-node"
-  >
-    <li>
-      <div
-        className="item-triangle"
-      />
-      <img
-        className="treeNode-icon"
-        src="./public/img/package.png"
-      />
-      <div
-        className="draggable-container select-not-active"
-        draggable={true}
-        onClick={[Function]}
-        onDragEnd={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDragStart={[Function]}
-        onDrop={[Function]}
-        style={Object {}}
-      >
-        Assets
-      </div>
-    </li>
-  </ul>
-</article>
+  className="wonder-asset-assetChildren"
+/>
 `;

@@ -134,17 +134,46 @@ module BuildAssetTree = {
   };
 
   module ScriptEventFunction = {
-    /* type assetTreeData = {
-         root: int,
-         materialNodeIdArr: array(int),
-       };
+    type assetTreeData = {
+      root: int,
+      scriptEventFunctionNodeIdArr: array(int),
+    };
 
-       let getRootNodeId = ({root}) => root;
+    let buildOneScriptEventFunctionAssetTree = () => {
+      let rootId = buildEmptyAssetTree();
 
-       let getFirstMaterialNodeId = ({root, materialNodeIdArr}) =>
-         materialNodeIdArr |> ArrayService.unsafeGetFirst;
-       /* let getSecondMaterialNodeId = ({root, materialNodeIdArr}) =>
-          materialNodeIdArr |> ArrayService.unsafeGetNth(1); */ */
+      let id1 = MainEditorAssetIdTool.getNewAssetId();
+      MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
+
+      {root: rootId, scriptEventFunctionNodeIdArr: [|id1|]};
+    };
+
+    let getRootNodeId = ({root}) => root;
+
+    let getFirstScriptEventFunctionNodeId =
+        ({root, scriptEventFunctionNodeIdArr}) =>
+      scriptEventFunctionNodeIdArr |> ArrayService.unsafeGetFirst;
+  };
+
+  module ScriptAttribute = {
+    type assetTreeData = {
+      root: int,
+      scriptAttributeNodeIdArr: array(int),
+    };
+
+    let buildOneScriptAttributeAssetTree = () => {
+      let rootId = buildEmptyAssetTree();
+
+      let id1 = MainEditorAssetIdTool.getNewAssetId();
+      MainEditorAssetHeaderOperateNodeTool.addScriptAttribute();
+
+      {root: rootId, scriptAttributeNodeIdArr: [|id1|]};
+    };
+
+    let getRootNodeId = ({root}) => root;
+
+    let getFirstScriptAttributeNodeId = ({root, scriptAttributeNodeIdArr}) =>
+      scriptAttributeNodeIdArr |> ArrayService.unsafeGetFirst;
   };
 
   module WDB = {
