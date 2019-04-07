@@ -38,9 +38,9 @@ module CustomEventHandler = {
         editorState,
       );
 
-    let targetTreeNode =
-      editorState
-      |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree;
+    /* let targetTreeNode =
+       editorState
+       |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree; */
 
     editorState |> StateEditorService.setState |> ignore;
 

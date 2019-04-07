@@ -62,6 +62,7 @@ let buildCameraView = uiState =>
   ReactTestRenderer.create(
     <MainEditorCameraView uiState dispatchFunc={TestTool.getDispatch()} />,
   );
+
 let buildInspectorComponent = (uiState, addableComponentConfig) =>
   ReactTestRenderer.create(
     <MainEditorInspector
@@ -225,3 +226,27 @@ let buildController = () =>
    ReactTestRenderer.create(ReasonReact.array(uiArr)); */
 
 let buildUI = ui => ReactTestRenderer.create(ui);
+
+let buildScriptAttributeInspectorComponent =
+    (
+      ~currentNodeId,
+      ~name,
+      ~attribute,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~renameFunc=AssetTreeInspectorTool.Rename.renameAssetNode(
+                    (uiState, dispatchFunc),
+                    currentNodeId,
+                  ),
+      (),
+    ) =>
+  ReactTestRenderer.create(
+    <ScriptAttributeInspector
+      uiState
+      dispatchFunc
+      currentNodeId
+      name
+      attribute
+      renameFunc
+    />,
+  );

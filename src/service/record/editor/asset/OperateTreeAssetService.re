@@ -26,6 +26,8 @@ let findNodeById = (targetNodeId, tree) => {
     ~tree,
     ~predTextureNodeFunc=predNodeFunc,
     ~predMaterialNodeFunc=predNodeFunc,
+    ~predScriptEventFunctionNodeFunc=predNodeFunc,
+    ~predScriptAttributeNodeFunc=predNodeFunc,
     ~predWDBNodeFunc=predNodeFunc,
     ~predFolderNodeFunc=predNodeFunc,
     (),
@@ -121,6 +123,18 @@ let replaceNode = (targetNodeId, newTreeNode, tree) => {
     _nodeFunc(nodeId, nodeData, TextureNodeAssetService.buildNodeByNodeData);
   let _materialNodeFunc = (nodeId, nodeData) =>
     _nodeFunc(nodeId, nodeData, MaterialNodeAssetService.buildNodeByNodeData);
+  let _scriptEventFunctionNodeFunc = (nodeId, nodeData) =>
+    _nodeFunc(
+      nodeId,
+      nodeData,
+      ScriptEventFunctionNodeAssetService.buildNodeByNodeData,
+    );
+  let _scriptAttributeNodeFunc = (nodeId, nodeData) =>
+    _nodeFunc(
+      nodeId,
+      nodeData,
+      ScriptAttributeNodeAssetService.buildNodeByNodeData,
+    );
   let _wdbNodeFunc = (nodeId, nodeData) =>
     _nodeFunc(nodeId, nodeData, WDBNodeAssetService.buildNodeByNodeData);
   let _folderNodeFunc = (nodeId, nodeData, children) =>
@@ -134,6 +148,8 @@ let replaceNode = (targetNodeId, newTreeNode, tree) => {
     ~tree,
     ~textureNodeFunc=_textureNodeFunc,
     ~materialNodeFunc=_materialNodeFunc,
+    ~scriptEventFunctionNodeFunc=_scriptEventFunctionNodeFunc,
+    ~scriptAttributeNodeFunc=_scriptAttributeNodeFunc,
     ~wdbNodeFunc=_wdbNodeFunc,
     ~folderNodeFunc=_folderNodeFunc,
     (),

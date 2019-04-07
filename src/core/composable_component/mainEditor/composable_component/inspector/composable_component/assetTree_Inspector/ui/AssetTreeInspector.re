@@ -96,6 +96,42 @@ module Method = {
       }
     />;
 
+  let buildScriptEventFunctionComponent =
+      (
+        (uiState, dispatchFunc),
+        state,
+        currentNodeId,
+        {name, eventFunctionData}: NodeAssetType.scriptEventFunctionNodeData,
+      ) =>
+    <ScriptEventFunctionInspector
+      uiState
+      dispatchFunc
+      currentNodeId
+      name={state.inputValue}
+      eventFunctionData
+      renameFunc={
+        renameAssetTreeNode((uiState, dispatchFunc), currentNodeId)
+      }
+    />;
+
+  let buildScriptAttributeComponent =
+      (
+        (uiState, dispatchFunc),
+        state,
+        currentNodeId,
+        {name, attribute}: NodeAssetType.scriptAttributeNodeData,
+      ) =>
+    <ScriptAttributeInspector
+      uiState
+      dispatchFunc
+      currentNodeId
+      name={state.inputValue}
+      attribute
+      renameFunc={
+        renameAssetTreeNode((uiState, dispatchFunc), currentNodeId)
+      }
+    />;
+
   let buildWDBComponent = (state, send, _, _) =>
     <WDBInspector
       name={state.inputValue}
@@ -114,6 +150,10 @@ module Method = {
       ~node=currentNode,
       ~textureNodeFunc=buildTextureComponent(reduxTuple, state),
       ~materialNodeFunc=buildMaterialComponent(reduxTuple, state),
+      ~scriptEventFunctionNodeFunc=
+        buildScriptEventFunctionComponent(reduxTuple, state),
+      ~scriptAttributeNodeFunc=
+        buildScriptAttributeComponent(reduxTuple, state),
       ~wdbNodeFunc=buildWDBComponent(state, send),
       ~folderNodeFunc=buildFolderComponent(state, send, languageType),
     );
@@ -144,6 +184,21 @@ module Method = {
 
     {inputValue: baseName, originalName: baseName};
   };
+
+  let initScriptEventFunctionNodeName = (engineState, _, nodeData) => {
+    let baseName =
+      ScriptEventFunctionNodeAssetService.getNodeNameByData(nodeData);
+
+    {inputValue: baseName, originalName: baseName};
+  };
+
+  let initScriptAttributeNodeName = (engineState, _, nodeData) => {
+    let baseName =
+      ScriptAttributeNodeAssetService.getNodeNameByData(nodeData);
+
+    {inputValue: baseName, originalName: baseName};
+  };
+
   let initWDBName = (currentNodeId, currentNodeData) => {
     let baseName =
       NodeNameAssetLogicService.getWDBNodeName(
@@ -211,6 +266,10 @@ let make =
       ~node=currentNode,
       ~textureNodeFunc=Method.initTextureName(engineState),
       ~materialNodeFunc=Method.initMaterialName(engineState),
+      ~scriptEventFunctionNodeFunc=
+        Method.initScriptEventFunctionNodeName(engineState),
+      ~scriptAttributeNodeFunc=
+        Method.initScriptAttributeNodeName(engineState),
       ~wdbNodeFunc=Method.initWDBName,
       ~folderNodeFunc=Method.initFolderName,
     );

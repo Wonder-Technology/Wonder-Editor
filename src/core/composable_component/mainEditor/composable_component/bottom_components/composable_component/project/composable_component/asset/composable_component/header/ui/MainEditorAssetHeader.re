@@ -16,6 +16,10 @@ module Method = {
   let fileLoad = AssetHeaderFileLoadEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let addMaterial = AssetHeaderAddMaterialEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let addScriptEventFunction = AssetHeaderAddScriptEventFunctionEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let addScriptAttribute = AssetHeaderAddScriptAttributeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 };
 
 let component = ReasonReact.reducerComponent("MainEditorAssetHeader");
@@ -46,6 +50,24 @@ let _renderSelectNav =
       className="content-section"
       onClick={_e => Method.addMaterial((uiState, dispatchFunc), (), ())}>
       <div className="section-header"> {DomHelper.textEl("Material")} </div>
+    </div>
+    <div
+      className="content-section"
+      onClick={
+        _e => Method.addScriptEventFunction((uiState, dispatchFunc), (), ())
+      }>
+      <div className="section-header">
+        {DomHelper.textEl("Script Event Function")}
+      </div>
+    </div>
+    <div
+      className="content-section"
+      onClick={
+        _e => Method.addScriptAttribute((uiState, dispatchFunc), (), ())
+      }>
+      <div className="section-header">
+        {DomHelper.textEl("Script Attribute")}
+      </div>
     </div>
   </div>;
 
@@ -108,10 +130,7 @@ let render =
       <div
         className="item-canBeClick"
         title={
-          LanguageUtils.getAssetLanguageDataByType(
-            "asset-load",
-            languageType,
-          )
+          LanguageUtils.getAssetLanguageDataByType("asset-load", languageType)
         }>
         <img src="./public/img/load.png" />
         <input

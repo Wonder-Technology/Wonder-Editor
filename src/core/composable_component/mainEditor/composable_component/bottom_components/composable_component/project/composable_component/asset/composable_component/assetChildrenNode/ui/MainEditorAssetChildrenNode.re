@@ -95,6 +95,19 @@ module Method = {
            node |> MaterialNodeAssetService.isMaterialNode
          );
 
+    let scriptEventFunctionAssetTreeChildrenNodeArr =
+      assetTreeChildrenNodeArr
+      |> Js.Array.filter(node =>
+           node
+           |> ScriptEventFunctionNodeAssetService.isScriptEventFunctionNode
+         );
+
+    let scriptAttributeAssetTreeChildrenNodeArr =
+      assetTreeChildrenNodeArr
+      |> Js.Array.filter(node =>
+           node |> ScriptAttributeNodeAssetService.isScriptAttributeNode
+         );
+
     let textureAssetTreeChildrenNodeArr =
       assetTreeChildrenNodeArr
       |> Js.Array.filter(node => node |> TextureNodeAssetService.isTextureNode);
@@ -103,6 +116,8 @@ module Method = {
       _sortByName(folderAssetTreeChildrenNodeArr, engineState),
       _sortByName(wdbAssetTreeChildrenNodeArr, engineState),
       _sortByName(materialAssetTreeChildrenNodeArr, engineState),
+      _sortByName(scriptEventFunctionAssetTreeChildrenNodeArr, engineState),
+      _sortByName(scriptAttributeAssetTreeChildrenNodeArr, engineState),
       _sortByName(textureAssetTreeChildrenNodeArr, engineState),
     |]);
   };
@@ -177,6 +192,36 @@ module Method = {
                  />
                  |> Result.SameDataResult.success;
                },
+             ~scriptEventFunctionNodeFunc=
+               (nodeId, {name}) =>
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc="./public/img/scriptEventFunction.png"
+                   nodeId
+                   fileName=name
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success,
+             ~scriptAttributeNodeFunc=
+               (nodeId, {name}) =>
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc="./public/img/scriptAttribute.png"
+                   nodeId
+                   fileName=name
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success,
              ~wdbNodeFunc=
                (nodeId, nodeData) => {
                  let fileName = WDBNodeAssetService.getNodeName(nodeData);

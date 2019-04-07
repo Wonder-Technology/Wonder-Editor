@@ -3,15 +3,16 @@ type mapAction('a) =
 
 type mapValue;
 
-type componentMapType = Js.Dict.t(mapValue);
+type componentMapType = WonderCommonlib.MutableHashMapService.t(mapValue);
 
-type componentsMapType = Js.Dict.t(componentMapType);
+type componentsMapType =
+  WonderCommonlib.MutableHashMapService.t(componentMapType);
 
 type componentsMap = option(componentsMapType);
 
 type mapState = {componentsMap};
 
-let mapReducer = (state: mapState, action: mapAction('a)) : mapState =>
+let mapReducer = (state: mapState, action: mapAction('a)): mapState =>
   switch (action) {
   | StoreMap(map) => {...state, componentsMap: map}
   };

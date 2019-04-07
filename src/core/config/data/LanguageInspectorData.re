@@ -58,6 +58,34 @@ let inspector_language_array = [|
     },
   },
   {
+    title: "scriptEventFunction-name-describe",
+    language: {
+      zh: {j|Script EventFunction的名字|j},
+      en: "script eventFunction's name",
+    },
+  },
+  {
+    title: "scriptAttribute-name-describe",
+    language: {
+      zh: {j|Script Attribute的名字|j},
+      en: "script attribute's name",
+    },
+  },
+  {
+    title: "scriptAttribute-field-name-describe",
+    language: {
+      zh: {j|Script Attribute field的名字|j},
+      en: "script attribute's field's name",
+    },
+  },
+  {
+    title: "add-scriptAttribute-field",
+    language: {
+      zh: {j|添加Script Attribute Field|j},
+      en: "Add script attribute's field",
+    },
+  },
+  {
     title: "material-describe",
     language: {
       zh: {j|Material|j},
