@@ -1,0 +1,323 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`redo_undo: script component->event function test add script event function test redo operate test redo one step undo step which from first to zero, redo step which from zero to first 1`] = `
+<article
+  className="wonder-inspector-script"
+>
+  <article
+    className="wonder-inspector-script"
+  >
+    <div>
+      <div
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="script event function asset in use"
+        >
+          Script Event Function
+        </div>
+        <div
+          className="item-content"
+        >
+          <div
+            className="inspector-select"
+          >
+            <div
+              className="select-name"
+              onClick={[Function]}
+            >
+              New Script EventFunction
+            </div>
+            <div
+              className="select-img"
+              onClick={[Function]}
+            >
+              <img
+                src="./public/img/select.png"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        className="scriptEventFunction-remove"
+        onClick={[Function]}
+      >
+        Remove
+      </button>
+    </div>
+    <button
+      className="addable-btn"
+      onClick={[Function]}
+    >
+      Add script event function
+    </button>
+  </article>
+  <article
+    className="wonder-inspector-script"
+  >
+    <button
+      className="addable-btn"
+      onClick={[Function]}
+    >
+      Add script attribute
+    </button>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: script component->event function test add script event function test undo operate test undo one step step which from first to zero 1`] = `
+<article
+  className="wonder-inspector-script"
+>
+  <article
+    className="wonder-inspector-script"
+  >
+    <button
+      className="addable-btn"
+      onClick={[Function]}
+    >
+      Add script event function
+    </button>
+  </article>
+  <article
+    className="wonder-inspector-script"
+  >
+    <button
+      className="addable-btn"
+      onClick={[Function]}
+    >
+      Add script attribute
+    </button>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: script component->event function test change script event function test redo operate test redo one step undo step which from first to zero, redo step which from zero to first 1`] = `
+<article
+  className="wonder-inspector-script"
+>
+  <article
+    className="wonder-inspector-script"
+  >
+    <div>
+      <div
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="script event function asset in use"
+        >
+          Script Event Function
+        </div>
+        <div
+          className="item-content"
+        >
+          <div
+            className="inspector-select"
+          >
+            <div
+              className="select-name"
+              onClick={[Function]}
+            >
+              New Script EventFunction 1
+            </div>
+            <div
+              className="select-img"
+              onClick={[Function]}
+            >
+              <img
+                src="./public/img/select.png"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        className="scriptEventFunction-remove"
+        onClick={[Function]}
+      >
+        Remove
+      </button>
+    </div>
+    <button
+      className="addable-btn"
+      onClick={[Function]}
+    >
+      Add script event function
+    </button>
+  </article>
+  <article
+    className="wonder-inspector-script"
+  >
+    <button
+      className="addable-btn"
+      onClick={[Function]}
+    >
+      Add script attribute
+    </button>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: script component->event function test change script event function test undo operate test undo one step step which from first to zero 1`] = `
+<article
+  className="wonder-inspector-script"
+>
+  <article
+    className="wonder-inspector-script"
+  >
+    <div>
+      <div
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="script event function asset in use"
+        >
+          Script Event Function
+        </div>
+        <div
+          className="item-content"
+        >
+          <div
+            className="inspector-select"
+          >
+            <div
+              className="select-name"
+              onClick={[Function]}
+            >
+              New Script EventFunction
+            </div>
+            <div
+              className="select-img"
+              onClick={[Function]}
+            >
+              <img
+                src="./public/img/select.png"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        className="scriptEventFunction-remove"
+        onClick={[Function]}
+      >
+        Remove
+      </button>
+    </div>
+    <button
+      className="addable-btn"
+      onClick={[Function]}
+    >
+      Add script event function
+    </button>
+  </article>
+  <article
+    className="wonder-inspector-script"
+  >
+    <button
+      className="addable-btn"
+      onClick={[Function]}
+    >
+      Add script attribute
+    </button>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: script component->event function test remove script event function test redo operate test redo one step undo step which from first to zero, redo step which from zero to first 1`] = `
+<article
+  className="wonder-inspector-script"
+>
+  <article
+    className="wonder-inspector-script"
+  >
+    <button
+      className="addable-btn"
+      onClick={[Function]}
+    >
+      Add script event function
+    </button>
+  </article>
+  <article
+    className="wonder-inspector-script"
+  >
+    <button
+      className="addable-btn"
+      onClick={[Function]}
+    >
+      Add script attribute
+    </button>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: script component->event function test remove script event function test undo operate test undo one step step which from first to zero 1`] = `
+<article
+  className="wonder-inspector-script"
+>
+  <article
+    className="wonder-inspector-script"
+  >
+    <div>
+      <div
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="script event function asset in use"
+        >
+          Script Event Function
+        </div>
+        <div
+          className="item-content"
+        >
+          <div
+            className="inspector-select"
+          >
+            <div
+              className="select-name"
+              onClick={[Function]}
+            >
+              New Script EventFunction
+            </div>
+            <div
+              className="select-img"
+              onClick={[Function]}
+            >
+              <img
+                src="./public/img/select.png"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        className="scriptEventFunction-remove"
+        onClick={[Function]}
+      >
+        Remove
+      </button>
+    </div>
+    <button
+      className="addable-btn"
+      onClick={[Function]}
+    >
+      Add script event function
+    </button>
+  </article>
+  <article
+    className="wonder-inspector-script"
+  >
+    <button
+      className="addable-btn"
+      onClick={[Function]}
+    >
+      Add script attribute
+    </button>
+  </article>
+</article>
+`;

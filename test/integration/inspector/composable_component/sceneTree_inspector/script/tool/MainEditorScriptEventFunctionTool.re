@@ -33,26 +33,43 @@ let getUpdateState = (~state, ~func) => {
 };
 
 /* let changeScriptEventFunction =
-    (
-      ~currentScript,
-      ~currentScriptEventFunctionNodeIdOpt,
-      ~targetScriptEventFunctionNodeId,
-      ~editorState=StateEditorService.getState(),
-      ~engineState=StateEngineService.unsafeGetState(),
-      (),
-    ) =>
-  MainEditorScriptEventFunction.Method._changeScriptEventFunction(
-    currentScript,
-    currentScriptEventFunctionNodeIdOpt,
-    targetScriptEventFunctionNodeId,
-    (editorState, engineState),
-  ); */
+     (
+       ~currentScript,
+       ~currentScriptEventFunctionNodeIdOpt,
+       ~targetScriptEventFunctionNodeId,
+       ~editorState=StateEditorService.getState(),
+       ~engineState=StateEngineService.unsafeGetState(),
+       (),
+     ) =>
+   MainEditorScriptEventFunction.Method._changeScriptEventFunction(
+     currentScript,
+     currentScriptEventFunctionNodeIdOpt,
+     targetScriptEventFunctionNodeId,
+     (editorState, engineState),
+   ); */
 
 let addScriptEventFunction =
-    (~script, ~send, ~languageType=LanguageType.EN, ()) =>
+    (
+      ~script,
+      ~send,
+      ~languageType=LanguageType.EN,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
   MainEditorScriptEventFunction.Method.addScriptEventFunction(
-    languageType,
-    (buildState(~currentScript=script, ()), send),
+    (uiState, dispatchFunc),
+    (
+      languageType,
+      (lastScriptEventFunctionNodeIdForAdd, unUsedScriptEventFunctionNodeIds) =>
+        send(
+          MainEditorScriptEventFunction.ShowScriptEventFunctionGroupForAdd(
+            lastScriptEventFunctionNodeIdForAdd,
+            unUsedScriptEventFunctionNodeIds,
+          ),
+        ),
+    ),
+    script,
   );
 
 let sendShowScriptEventFunctionGroupForChange =
@@ -73,7 +90,7 @@ let sendShowScriptEventFunctionGroupForChange =
 
 let getUnUsedScriptEventFunctionNodeIds =
     (script, (editorState, engineState)) =>
-  MainEditorScriptEventFunction.Method._getUnUsedScriptEventFunctionNodes(
+  MainEditorScriptEventFunctionUtils.getUnUsedScriptEventFunctionNodes(
     script,
     (editorState, engineState),
   )
@@ -85,9 +102,12 @@ let handleChangeScriptEventFunction =
       ~send,
       ~currentScriptEventFunctionNodeId,
       ~targetScriptEventFunctionNodeId,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
     ) =>
   MainEditorScriptEventFunction.Method.handleChangeScriptEventFunction(
-    script,
+    (uiState, dispatchFunc),
     (targetScriptEventFunctionNodeId, unUsedScriptEventFunctionNodeIds) =>
       send(
         MainEditorScriptEventFunction.ChangeScriptEventFunctionForAdd(
@@ -95,14 +115,23 @@ let handleChangeScriptEventFunction =
           unUsedScriptEventFunctionNodeIds,
         ),
       ),
-    currentScriptEventFunctionNodeId,
-    targetScriptEventFunctionNodeId,
+    (
+      script,
+      currentScriptEventFunctionNodeId,
+      targetScriptEventFunctionNodeId,
+    ),
   );
 
 let removeScriptEventFunction =
-    (~script, ~eventFunctionName, ~dispatchFunc=TestTool.getDispatch(), ()) =>
+    (
+      ~script,
+      ~eventFunctionName,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
   MainEditorScriptEventFunction.Method._removeScriptEventFunction(
-    script,
-    eventFunctionName,
-    dispatchFunc,
+    (uiState, dispatchFunc),
+    (),
+    (script, eventFunctionName),
   );

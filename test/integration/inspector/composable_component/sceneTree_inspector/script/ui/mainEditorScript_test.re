@@ -243,6 +243,7 @@ let _ =
                         |> StateLogicService.getStateToGetData
                         |> ArrayService.unsafeGetFirst,
                       ~targetScriptEventFunctionNodeId,
+                      (),
                     ),
                 );
 

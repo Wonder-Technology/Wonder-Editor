@@ -238,6 +238,7 @@ let _ =
           ~currentScriptEventFunctionNodeId=Some(addedNodeId1),
           ~targetScriptEventFunctionNodeId=addedNodeId2,
           ~send=SinonTool.createOneLengthStub(sandbox^),
+          ()
         );
 
         let gameObject1 =

@@ -28,109 +28,6 @@ type action =
   | HideScriptEventFunctionGroupForChange;
 
 module Method = {
-  let _changeScriptEventFunction =
-      (
-        currentScript,
-        currentScriptEventFunctionNodeIdOpt,
-        targetScriptEventFunctionNodeId,
-        (editorState, engineState),
-      ) => {
-    WonderLog.Contract.requireCheck(
-      () =>
-        WonderLog.(
-          Contract.(
-            Operators.(
-              test(
-                Log.buildAssertMessage(
-                  ~expect={j|targetScriptEventFunctionNodeId not be used|j},
-                  ~actual={j|be used|j},
-                ),
-                () => {
-                  let (name, _) =
-                    ScriptEventFunctionNodeAssetEditorService.getNameAndData(
-                      targetScriptEventFunctionNodeId,
-                      editorState,
-                    );
-
-                  ScriptEngineService.hasScriptEventFunctionData(
-                    currentScript,
-                    name,
-                    engineState,
-                  )
-                  |> assertFalse;
-                },
-              )
-            )
-          )
-        ),
-      StateEditorService.getStateIsDebug(),
-    );
-
-    let (targetName, targetEventFunction) =
-      ScriptEventFunctionNodeAssetEditorService.getNameAndData(
-        targetScriptEventFunctionNodeId,
-        editorState,
-      );
-
-    switch (currentScriptEventFunctionNodeIdOpt) {
-    | None =>
-      ScriptEngineService.addScriptEventFunctionData(
-        currentScript,
-        targetName,
-        targetEventFunction,
-        engineState,
-      )
-    | Some(currentScriptEventFunctionNodeId) =>
-      let (sourceName, _) =
-        ScriptEventFunctionNodeAssetEditorService.getNameAndData(
-          currentScriptEventFunctionNodeId,
-          editorState,
-        );
-
-      ScriptEngineService.replaceScriptEventFunctionData(
-        currentScript,
-        (sourceName, targetName),
-        targetEventFunction,
-        engineState,
-      );
-    };
-  };
-
-  let _getUnUsedScriptEventFunctionNodes =
-      (script, (editorState, engineState)) => {
-    let allScriptEventFunctionNodes =
-      ScriptEventFunctionNodeAssetEditorService.findAllScriptEventFunctionNodes(
-        editorState,
-      );
-
-    let scriptAllEventFunctionEntries =
-      ScriptEngineService.getScriptAllEventFunctionEntries(
-        script,
-        engineState,
-      );
-
-    let allEventFunctionNames =
-      scriptAllEventFunctionEntries
-      |> Js.Array.map(((eventFunctionName, _)) => eventFunctionName);
-
-    ArrayService.excludeWithFunc(
-      scriptAllEventFunctionEntries,
-      (scriptAllEventFunctionEntries, scriptEventFunctionNode) =>
-        allEventFunctionNames
-        |> Js.Array.includes(
-             ScriptEventFunctionNodeAssetService.getNodeName(
-               scriptEventFunctionNode,
-             ),
-           ),
-      allScriptEventFunctionNodes,
-    );
-  };
-
-  let _getUnUsedScriptEventFunctionNodeIds =
-      (script, (editorState, engineState)) =>
-    _getUnUsedScriptEventFunctionNodes(script, (editorState, engineState))
-    |> Js.Array.map(node => NodeAssetService.getNodeId(~node));
-
   let _sendShowScriptEventFunctionGroupForChange =
       (
         currentScript,
@@ -141,31 +38,27 @@ module Method = {
     send(
       ShowScriptEventFunctionGroupForChange(
         scriptEventFunctionNodeId,
-        _getUnUsedScriptEventFunctionNodeIds(
+        MainEditorScriptEventFunctionUtils.getUnUsedScriptEventFunctionNodeIds(
           currentScript,
           (editorState, engineState),
         ),
       ),
     );
 
-  let _removeScriptEventFunction = (script, attributeName, dispatchFunc) => {
-    ScriptEngineService.removeScriptEventFunctionData(script, attributeName)
-    |> StateLogicService.getAndSetEngineState;
-
-    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
-    |> ignore;
-  };
+  let _removeScriptEventFunction = ScriptRemoveScriptEventFunctionEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let renderScriptAllEventFunctions =
       (
+        (uiState, dispatchFunc),
         languageType,
-        dispatchFunc,
         {state, send}: ReasonReact.self('a, 'b, 'c),
       ) => {
     let {currentScript} = state;
 
     let unUsedScriptEventFunctionNodeIds =
-      _getUnUsedScriptEventFunctionNodeIds(currentScript)
+      MainEditorScriptEventFunctionUtils.getUnUsedScriptEventFunctionNodeIds(
+        currentScript,
+      )
       |> StateLogicService.getStateToGetData;
 
     ScriptEngineService.getScriptAllEventFunctionEntries(currentScript)
@@ -201,7 +94,11 @@ module Method = {
              className="scriptEventFunction-remove"
              onClick={
                e =>
-                 _removeScriptEventFunction(currentScript, name, dispatchFunc)
+                 _removeScriptEventFunction(
+                   (uiState, dispatchFunc),
+                   (),
+                   (currentScript, name),
+                 )
              }>
              {DomHelper.textEl("Remove")}
            </button>
@@ -212,109 +109,9 @@ module Method = {
   let sortScriptEventFunctionNodeIds = scriptEventFunctionNodeIds =>
     scriptEventFunctionNodeIds |> Js.Array.sortInPlace;
 
-  let handleChangeScriptEventFunction =
-      (
-        script,
-        sendFunc,
-        currentScriptEventFunctionNodeId,
-        targetScriptEventFunctionNodeId,
-      ) => {
-    WonderLog.Contract.requireCheck(
-      () =>
-        WonderLog.(
-          Contract.(
-            Operators.(
-              test(
-                Log.buildAssertMessage(
-                  ~expect={j|currentScriptEventFunctionNodeId|j},
-                  ~actual={j|not|j},
-                ),
-                () =>
-                currentScriptEventFunctionNodeId |> assertExist
-              )
-            )
-          )
-        ),
-      StateEditorService.getStateIsDebug(),
-    );
+  let handleChangeScriptEventFunction = ScriptChangeScriptEventFunctionEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-    MainEditorScriptUtils.isNodeIdEqual(
-      currentScriptEventFunctionNodeId,
-      targetScriptEventFunctionNodeId,
-    ) ?
-      () :
-      {
-        _changeScriptEventFunction(
-          script,
-          currentScriptEventFunctionNodeId,
-          targetScriptEventFunctionNodeId,
-        )
-        |> StateLogicService.getStateToGetData
-        |> StateEngineService.setState;
-
-        sendFunc(
-          targetScriptEventFunctionNodeId,
-          _getUnUsedScriptEventFunctionNodeIds(script)
-          |> StateLogicService.getStateToGetData,
-        );
-      };
-  };
-
-  let addScriptEventFunction = (languageType, (state, send)) => {
-    let editorState = StateEditorService.getState();
-    let engineState = StateEngineService.unsafeGetState();
-
-    let {currentScript} = state;
-
-    let unUsedScriptEventFunctionNodes =
-      _getUnUsedScriptEventFunctionNodes(
-        currentScript,
-        (editorState, engineState),
-      );
-
-    unUsedScriptEventFunctionNodes |> Js.Array.length > 0 ?
-      {
-        let unUsedScriptEventFunctionNodeIds =
-          unUsedScriptEventFunctionNodes
-          |> Js.Array.map(node => NodeAssetService.getNodeId(~node));
-
-        let (
-          lastScriptEventFunctionNodeIdForAdd,
-          unUsedScriptEventFunctionNodeIds,
-        ) =
-          unUsedScriptEventFunctionNodeIds |> ArrayService.removeFirst;
-
-        let (name, attribute) =
-          ScriptEventFunctionNodeAssetEditorService.getNameAndData(
-            lastScriptEventFunctionNodeIdForAdd,
-            editorState,
-          );
-
-        let engineState =
-          ScriptEngineService.addScriptEventFunctionData(
-            currentScript,
-            name,
-            attribute,
-            engineState,
-          );
-
-        engineState |> StateEngineService.setState |> ignore;
-
-        send(
-          ShowScriptEventFunctionGroupForAdd(
-            lastScriptEventFunctionNodeIdForAdd,
-            unUsedScriptEventFunctionNodeIds,
-          ),
-        );
-      } :
-      ConsoleUtils.warn(
-        LanguageUtils.getMessageLanguageDataByType(
-          "need-add-scriptEventFunction",
-          languageType,
-        ),
-      )
-      |> StateLogicService.getEditorState;
-  };
+  let addScriptEventFunction = ScriptAddScriptEventFunctionEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let getAllScriptEventFunctions =
       (currentScriptEventFunctionNodeId, unUsedScriptEventFunctionNodeIds) =>
@@ -439,7 +236,7 @@ let render =
                 state.lastScriptEventFunctionNodeIdForAdd;
 
               Method.handleChangeScriptEventFunction(
-                state.currentScript,
+                (uiState, dispatchFunc),
                 (
                   targetScriptEventFunctionNodeId,
                   unUsedScriptEventFunctionNodeIds,
@@ -450,8 +247,11 @@ let render =
                       unUsedScriptEventFunctionNodeIds,
                     ),
                   ),
-                currentScriptEventFunctionNodeId,
-                scriptEventFunctionNodeId,
+                (
+                  state.currentScript,
+                  currentScriptEventFunctionNodeId,
+                  scriptEventFunctionNodeId,
+                ),
               );
             }
           }
@@ -491,7 +291,7 @@ let render =
                 state.lastScriptEventFunctionNodeIdForChange;
 
               Method.handleChangeScriptEventFunction(
-                state.currentScript,
+                (uiState, dispatchFunc),
                 (
                   targetScriptEventFunctionNodeId,
                   unUsedScriptEventFunctionNodeIds,
@@ -502,8 +302,11 @@ let render =
                       unUsedScriptEventFunctionNodeIds,
                     ),
                   ),
-                currentScriptEventFunctionNodeId,
-                scriptEventFunctionNodeId,
+                (
+                  state.currentScript,
+                  currentScriptEventFunctionNodeId,
+                  scriptEventFunctionNodeId,
+                ),
               );
             }
           }
@@ -514,8 +317,8 @@ let render =
     {
       ReasonReact.array(
         Method.renderScriptAllEventFunctions(
+          (uiState, dispatchFunc),
           languageType,
-          dispatchFunc,
           self,
         ),
       )
@@ -523,7 +326,24 @@ let render =
     <button
       className="addable-btn"
       onClick={
-        _e => Method.addScriptEventFunction(languageType, (state, send))
+        _e =>
+          Method.addScriptEventFunction(
+            (uiState, dispatchFunc),
+            (
+              languageType,
+              (
+                lastScriptEventFunctionNodeIdForAdd,
+                unUsedScriptEventFunctionNodeIds,
+              ) =>
+                send(
+                  ShowScriptEventFunctionGroupForAdd(
+                    lastScriptEventFunctionNodeIdForAdd,
+                    unUsedScriptEventFunctionNodeIds,
+                  ),
+                ),
+            ),
+            state.currentScript,
+          )
       }>
       {
         DomHelper.textEl(
