@@ -7,7 +7,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("MainEditorLightMaterial", () => {
+  describe("MainEditorLightMaterialForGameObject component", () => {
     let sandbox = getSandboxDefaultVal();
 
     let _prepareWithEmptyJob = () => {

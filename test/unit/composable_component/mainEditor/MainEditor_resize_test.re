@@ -268,12 +268,13 @@ let _ =
     });
 
     describe("resize inspector-canvas and viewPort", () => {
+      beforeEach(() => _prepareState());
+      afterEach(() => CanvasTool.restoreMainCanvasAndInspectorCanvasDom());
+
       describe("set inspector-canvas size", () =>
         test(
           "inspector-canvas's width and height should == parent's width and height",
           () => {
-          _prepareState();
-
           let (
             _mainParentDom,
             _mainCanvasDom,
@@ -304,8 +305,6 @@ let _ =
         test(
           "inspector-canvas's viewport should == canvas parent's width and height",
           () => {
-          _prepareState();
-
           let (
             _mainParentDom,
             _mainCanvasDom,
@@ -335,28 +334,66 @@ let _ =
         })
       );
 
-      describe("fix bug", () =>
-        test(
-          "trigger onResize function should not resize inspector canvas", () => {
-          open MainEditor;
+      describe("fix bug", () => {
+        describe("if not show inspector canvas", () =>
+          test(
+            "trigger onResize function should not resize inspector canvas", () => {
+            open MainEditor;
+            let (canvasWidth, canvasHeight) = (100, 100);
 
-          let (canvasWidth, canvasHeight) = (100, 100);
+            let (_, _, inspectorParentDom, inspectorCanvasDom) =
+              CanvasTool.stubMainCanvasAndInspectorCanvasDom(
+                ~sandbox,
+                ~offsetWidth=0,
+                ~offsetHeight=0,
+                ~canvasWidth,
+                ~canvasHeight,
+                (),
+              );
 
-          let (_, _, inspectorParentDom, inspectorCanvasDom) =
-            CanvasTool.stubMainCanvasAndInspectorCanvasDom(
-              ~sandbox,
-              ~offsetWidth=0,
-              ~offsetHeight=0,
-              ~canvasWidth,
-              ~canvasHeight,
-              (),
+            DomHelper.setDomDisplay(
+              DomHelper.getElementById("inspectorCanvasParent"),
+              false,
             );
 
-          MainEditor.Method.onResize();
+            MainEditor.Method.onResize(
+              DomHelper.getElementById("inspectorCanvasParent"),
+            );
 
-          (inspectorCanvasDom##width, inspectorCanvasDom##height)
-          |> expect == (canvasWidth, canvasHeight);
-        })
-      );
+            (inspectorCanvasDom##width, inspectorCanvasDom##height)
+            |> expect == (canvasWidth, canvasHeight);
+          })
+        );
+        describe("else", () =>
+          test("trigger onResize function should resize inspector canvas", () => {
+            open MainEditor;
+
+            let (canvasWidth, canvasHeight) = (100, 100);
+            let (parentOffsetWidth, parentOffsetHeight) = (200, 200);
+
+            let (_, _, inspectorParentDom, inspectorCanvasDom) =
+              CanvasTool.stubMainCanvasAndInspectorCanvasDom(
+                ~sandbox,
+                ~offsetWidth=200,
+                ~offsetHeight=200,
+                ~canvasWidth,
+                ~canvasHeight,
+                (),
+              );
+
+            DomHelper.setDomDisplay(
+              DomHelper.getElementById("inspectorCanvasParent"),
+              true,
+            );
+
+            MainEditor.Method.onResize(
+              DomHelper.getElementById("inspectorCanvasParent"),
+            );
+
+            (inspectorCanvasDom##width, inspectorCanvasDom##height)
+            |> expect == (parentOffsetWidth, parentOffsetHeight);
+          })
+        );
+      });
     });
   });

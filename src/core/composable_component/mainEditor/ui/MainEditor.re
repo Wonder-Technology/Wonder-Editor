@@ -106,7 +106,18 @@ module Method = {
       </div>
     </article>;
 
-  let onResize = () => ResizeUtils.resizeMainCanvasScreen();
+  let onResize = domElement => {
+
+
+
+    DomHelper.isDomVisible(domElement) ?
+      {
+        ResizeUtils.resizeInspectorCanvasScreen();
+      } :
+      ();
+
+    ResizeUtils.resizeMainCanvasScreen();
+  };
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
@@ -139,7 +150,9 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
       |> ignore
     );
 
-    EventHelper.onresize(Method.onResize);
+    EventHelper.onresize(() =>
+      DomHelper.getElementById("inspectorCanvasParent") |> Method.onResize
+    );
   },
   render: self => render(uiState, dispatchFunc, self),
 };

@@ -91,16 +91,33 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("operate inspector engine state", () => {
-      describe("test create material sphere gameObject", () => {
-        describe("test inspector canvas visibility", () => {
-          open MainEditor;
+      describe("test inspector canvas visibility", () => {
+        open MainEditor;
 
-          afterEach(() => CanvasTool.restoreMainCanvasAndInspectorCanvasDom());
+        afterEach(() => CanvasTool.restoreMainCanvasAndInspectorCanvasDom());
 
-          describe("didUpdate MainEditor", () => {
-            test("should hide the inspector canvas", () => {
+        describe("didUpdate MainEditor", () => {
+          test("should hide the inspector canvas", () => {
+            let (_, _, inspectorParentDom, _) =
+              CanvasTool.stubMainCanvasAndInspectorCanvasDom(~sandbox, ());
+
+            MainEditorTool.mainEditorDidUpdate(
+              OldNewSelfTool.buildOldAndNewSelf(
+                {isInitEngine: false},
+                {isInitEngine: true},
+              ),
+            );
+
+            inspectorParentDom##style##display |> expect == "none";
+          });
+
+          describe("mount the MaterialInspector", () => {
+            test("should show inspector canvas", () => {
               let (_, _, inspectorParentDom, _) =
                 CanvasTool.stubMainCanvasAndInspectorCanvasDom(~sandbox, ());
+
+              let (addedMaterialNodeId, materialComponent) =
+                MaterialInspectorCanvasTool.createNewMaterial();
 
               MainEditorTool.mainEditorDidUpdate(
                 OldNewSelfTool.buildOldAndNewSelf(
@@ -109,65 +126,40 @@ let _ =
                 ),
               );
 
-              inspectorParentDom##style##display |> expect == "none";
+              MaterialInspectorTool.didMount(
+                MaterialDataAssetType.LightMaterial,
+                materialComponent,
+              );
+
+              inspectorParentDom##style##display |> expect == "block";
             });
+            test(
+              "unMount the MaterialInspector, should hide inspector canvas", () => {
+              let (_, _, inspectorParentDom, _) =
+                CanvasTool.stubMainCanvasAndInspectorCanvasDom(~sandbox, ());
 
-            describe("mount the MaterialInspector", () => {
-              test("should show inspector canvas", () => {
-                let (_, _, inspectorParentDom, _) =
-                  CanvasTool.stubMainCanvasAndInspectorCanvasDom(
-                    ~sandbox,
-                    (),
-                  );
+              let (addedMaterialNodeId, materialComponent) =
+                MaterialInspectorCanvasTool.createNewMaterial();
 
-                let (addedMaterialNodeId, materialComponent) =
-                  MaterialInspectorCanvasTool.createNewMaterial();
+              MainEditorTool.mainEditorDidUpdate(
+                OldNewSelfTool.buildOldAndNewSelf(
+                  {isInitEngine: false},
+                  {isInitEngine: true},
+                ),
+              );
 
-                MainEditorTool.mainEditorDidUpdate(
-                  OldNewSelfTool.buildOldAndNewSelf(
-                    {isInitEngine: false},
-                    {isInitEngine: true},
-                  ),
-                );
+              MaterialInspectorTool.didMount(
+                MaterialDataAssetType.LightMaterial,
+                materialComponent,
+              );
+              MaterialInspectorTool.willUnmount();
 
-                MaterialInspectorTool.didMount(
-                  MaterialDataAssetType.LightMaterial,
-                  materialComponent,
-                );
-
-                inspectorParentDom##style##display |> expect == "block";
-              });
-              test(
-                "unMount the MaterialInspector, should hide inspector canvas",
-                () => {
-                let (_, _, inspectorParentDom, _) =
-                  CanvasTool.stubMainCanvasAndInspectorCanvasDom(
-                    ~sandbox,
-                    (),
-                  );
-
-                let (addedMaterialNodeId, materialComponent) =
-                  MaterialInspectorCanvasTool.createNewMaterial();
-
-                MainEditorTool.mainEditorDidUpdate(
-                  OldNewSelfTool.buildOldAndNewSelf(
-                    {isInitEngine: false},
-                    {isInitEngine: true},
-                  ),
-                );
-
-                MaterialInspectorTool.didMount(
-                  MaterialDataAssetType.LightMaterial,
-                  materialComponent,
-                );
-                MaterialInspectorTool.willUnmount();
-
-                inspectorParentDom##style##display |> expect == "none";
-              });
+              inspectorParentDom##style##display |> expect == "none";
             });
           });
         });
-
+      });
+      describe("test create material sphere gameObject in didMount", () =>
         describe("test create", () => {
           beforeEach(() =>
             CanvasTool.stubMainCanvasAndInspectorCanvasDom(~sandbox, ())
@@ -203,8 +195,8 @@ let _ =
 
           describe(
             {|
-        clone the selected material asset to be material component m2(from engine state to inspector engine state);
-        add m2 to material sphere gameObject;
+              clone the selected material asset to be material component m2(from engine state to inspector engine state);
+              add m2 to material sphere gameObject;
           |},
             () => {
               describe(
@@ -317,8 +309,8 @@ let _ =
               );
             },
           );
-        });
-      });
+        })
+      );
 
       describe("test render material sphere gameObject", () => {
         beforeEach(() =>
@@ -343,7 +335,7 @@ let _ =
         });
       });
 
-      describe("test dispose material sphere gameObject", () => {
+      describe("test dispose material sphere gameObject in willUnmount", () => {
         beforeEach(() =>
           CanvasTool.stubMainCanvasAndInspectorCanvasDom(~sandbox, ())
           |> ignore
@@ -351,8 +343,6 @@ let _ =
         afterEach(() => CanvasTool.restoreMainCanvasAndInspectorCanvasDom());
 
         test("the container gameObject children array should be empty", () => {
-          StateInspectorEngineService.setIsDebug(true) |> ignore;
-
           let (addedMaterialNodeId, materialComponent) =
             MaterialInspectorCanvasTool.createNewMaterial();
 
@@ -377,6 +367,62 @@ let _ =
              )
           |> Js.Array.length
           |> expect == 0;
+        });
+
+        test("the materialSphere material component should be disposed", () => {
+          let (addedMaterialNodeId, materialComponent) =
+            MaterialInspectorCanvasTool.createNewMaterial();
+
+          MaterialInspector.Method.didMount(
+            MaterialDataAssetType.LightMaterial,
+            materialComponent,
+          );
+
+          let inspectorEngineState =
+            StateInspectorEngineService.unsafeGetState();
+          let editorState = StateEditorService.getState();
+
+          let materialSphereLightMaterial =
+            InspectorEngineTool.getMaterialSphereLightMaterial(
+              editorState,
+              inspectorEngineState,
+            );
+
+          MaterialInspectorTool.willUnmount();
+
+          StateInspectorEngineService.unsafeGetState()
+          |> LightMaterialToolEngine.isAlive(materialSphereLightMaterial)
+          |> expect == false;
+        });
+        test("the materialSphere geometry component should be disposed", () => {
+          let (addedMaterialNodeId, materialComponent) =
+            MaterialInspectorCanvasTool.createNewMaterial();
+
+          MaterialInspector.Method.didMount(
+            MaterialDataAssetType.LightMaterial,
+            materialComponent,
+          );
+
+          let inspectorEngineState =
+            StateInspectorEngineService.unsafeGetState();
+          let editorState = StateEditorService.getState();
+
+          let materialSphereGeometryComponent =
+            (editorState, inspectorEngineState)
+            |> InspectorEngineTool.getMaterialSphere
+            |> OptionService.unsafeGet
+            |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
+                 _,
+                 inspectorEngineState,
+               );
+
+          MaterialInspectorTool.willUnmount();
+
+          StateInspectorEngineService.unsafeGetState()
+          |> GeometryToolEngine.isGeometryDisposed(
+               materialSphereGeometryComponent,
+             )
+          |> expect == true;
         });
       });
     });

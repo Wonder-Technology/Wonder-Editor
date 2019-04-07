@@ -5,13 +5,6 @@ let _disposeContainerGameObjectAllChildren =
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. inspectorEngineState, gameObject) =>
          inspectorEngineState
-         /* TODO fix: use disposeGameObject
-            TODO test: add "material component should be disposed"
-
-            use GeometryToolEngine.isGeometryDisposed
-            use LightMaterialToolEngine.isAlive
-
-            */
          |> GameObjectEngineService.disposeGameObject(gameObject),
        inspectorEngineState,
      );

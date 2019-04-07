@@ -60,6 +60,12 @@ let setDomDisplay = [%raw
   |}
 ];
 
+let isDomVisible = [%raw
+  domEle => {|
+     return domEle.style.display == "block"
+  |}
+];
+
 let deleteKeyInMap = [%raw
   {|
     function (key,map) {
