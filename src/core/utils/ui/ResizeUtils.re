@@ -24,21 +24,21 @@ let _getCanvasParentSize = parent => (
   parent##offsetHeight,
 );
 
-let getCanvasParentSize = () =>
-  DomHelper.getElementById("canvasParent")
+let getCanvasParentSize = canvasParentDom =>
+  canvasParentDom
   |> DomHelperType.convertDomElementToJsObj
   |> _getCanvasParentSize;
 
 let getCanvasSize = () => {
   let canvas =
-    DomHelper.getElementById("canvas")
+    DomHelper.getElementById("main-canvas")
     |> DomHelperType.convertDomElementToJsObj;
 
   (canvas##width, canvas##height);
 };
 
-let resizeCanvas = ((width, height)) =>
-  DomHelper.getElementById("canvas")
+let resizeCanvas = (canvasDom, (width, height)) =>
+  canvasDom
   |> DomHelperType.convertDomElementToJsObj
   |> ScreenEngineService.setScreenSize((width, height, width, height))
   |> ignore;
@@ -102,28 +102,49 @@ let isViewSizeChange =
       (_, _, gameViewWidth, gameViewHeight),
       (canvasWidth, canvasHeight),
     ) =>
-  ! isSizeEqual(getViewWidth(sceneViewWidth, gameViewWidth), canvasWidth)
+  !isSizeEqual(getViewWidth(sceneViewWidth, gameViewWidth), canvasWidth)
   || !
        isSizeEqual(
          getViewHeight(sceneViewHeight, gameViewHeight),
          canvasHeight,
        );
 
-let resizeScreen = () => {
-  let canvasParentSize = getCanvasParentSize();
+let resizeMainCanvasScreen = () => {
+  let engineState = StateEngineService.unsafeGetState();
+  let mainCanvasParentSize =
+    DomHelper.getElementById("mainCanvasParent") |> getCanvasParentSize;
 
-  resizeCanvas(canvasParentSize);
+  resizeCanvas(
+    DomHelper.getElementById("main-canvas"),
+    mainCanvasParentSize,
+  );
 
-  DeviceManagerEngineService.getGl(StateEngineService.unsafeGetState())
-  |> Js.Option.isSome ?
+  engineState |> DeviceManagerEngineService.getGl |> Js.Option.isSome ?
     {
-      updateViewRect(canvasParentSize)
+      updateViewRect(mainCanvasParentSize)
       |> StateLogicService.getAndSetEditorState;
 
-      StateEngineService.unsafeGetState()
-      |> resizeViewport(canvasParentSize)
+      engineState
+      |> resizeViewport(mainCanvasParentSize)
       |> StateLogicService.refreshEngineState
       |> ignore;
     } :
+    ();
+};
+let resizeInspectorCanvasScreen = () => {
+  let inspectorEngineState = StateInspectorEngineService.unsafeGetState();
+  let inspectorCanvasParentSize =
+    DomHelper.getElementById("inspectorCanvasParent") |> getCanvasParentSize;
+
+  resizeCanvas(
+    DomHelper.getElementById("inspector-canvas"),
+    inspectorCanvasParentSize,
+  );
+
+  inspectorEngineState |> DeviceManagerEngineService.getGl |> Js.Option.isSome ?
+    inspectorEngineState
+    |> resizeViewport(inspectorCanvasParentSize)
+    |> StateLogicService.refreshInspectorEngineState
+    |> ignore :
     ();
 };

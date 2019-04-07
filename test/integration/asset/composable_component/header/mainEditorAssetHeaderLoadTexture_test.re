@@ -23,14 +23,6 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test load texture", () => {
-      let _getUploadedTextureNodeId = editorState =>
-        Array.unsafe_get(
-          RootTreeAssetEditorService.getRootNode(editorState)
-          |> FolderNodeAssetService.getChildrenNodes,
-          0,
-        )
-        |> NodeAssetService.getNodeId(~node=_);
-
       beforeEach(() => {
         MainEditorAssetTool.buildFakeFileReader();
         MainEditorAssetTool.buildFakeImage();

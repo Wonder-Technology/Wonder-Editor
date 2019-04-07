@@ -404,7 +404,6 @@ let _ =
                          )
                       |> WDBNodeAssetService.getWDBGameObject;
 
-                    Js.log(wdbGameObject);
 
                     MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
                       ~wdbNodeId=uploadedWDBNodeId,

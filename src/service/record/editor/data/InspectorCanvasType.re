@@ -1,0 +1,1 @@
+type inspectorCanvasRecord = {containerGameObject: option(int)};

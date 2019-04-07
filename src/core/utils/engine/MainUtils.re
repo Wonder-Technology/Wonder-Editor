@@ -1,15 +1,24 @@
 open Js.Promise;
 
-let _getLoadData = () => {
+let _getLoadEngineData = () => {
   let engineConfigDir = "./config/engine/";
 
   AssetEngineService.loadConfig(
     [|"./config/engine/setting.json", engineConfigDir|],
-    StateDataEngineService.getEngineStateData(),
+    StateDataEngineService.getStateData(),
   );
 };
 
-let _registerJob = engineState =>
+let _getLoadInspectorEngineData = () => {
+  let engineConfigDir = "./config/inspectorEngine/";
+
+  AssetEngineService.loadConfig(
+    [|"./config/inspectorEngine/setting.json", engineConfigDir|],
+    StateDataInspectorEngineService.getStateData(),
+  );
+};
+
+let _registerJobForEngine = engineState =>
   engineState
   |> JobEngineService.registerNoWorkerInitJob(
        "init_editor",
@@ -72,9 +81,19 @@ let _registerJob = engineState =>
        RestoreJob.restoreJob,
      );
 
-let _handleEngineState = engineState => {
-  let engineState = _registerJob(engineState);
+let _registerJobForInspectorEngine = engineState =>
+  engineState
+  |> JobEngineService.registerNoWorkerInitJob(
+       "init_inspector_engine",
+       InitInspectorEngineJob.initInspectorEngineJob,
+     )
+  |> JobEngineService.registerNoWorkerLoopJob(
+       "reallocate_cpu_memory",
+       ReallocateCPUMemoryJob.reallocateJob,
+     );
 
+let _handleEngineState = engineState => {
+  let engineState = _registerJobForEngine(engineState);
   let scene = engineState |> SceneEngineService.getSceneGameObject;
 
   engineState
@@ -86,9 +105,18 @@ let _handleEngineState = engineState => {
   |> StateEngineService.setState;
 };
 
+let _handleInspectorEngineState = inspectorEngineState => {
+  let inspectorEngineState =
+    _registerJobForInspectorEngine(inspectorEngineState);
+
+  inspectorEngineState
+  |> DirectorEngineService.init
+  |> StateInspectorEngineService.setState;
+};
+
 let initEngine = () =>
   Wonderjs.StateDataMainType.(
-    _getLoadData()
+    _getLoadEngineData()
     |> WonderBsMost.Most.flatMap(engineState =>
          LoaderManagerEngineService.loadIMGUIAsset(
            "./public/font/empty.fnt",
@@ -123,6 +151,14 @@ let initEngine = () =>
             )
          |> WonderBsMost.Most.fromPromise
        )
-    |> WonderBsMost.Most.map(engineState => engineState |> _handleEngineState)
+    |> WonderBsMost.Most.tap(engineState =>
+         engineState |> _handleEngineState |> ignore
+       )
+    |> WonderBsMost.Most.flatMap(_ =>
+         _getLoadInspectorEngineData()
+         |> WonderBsMost.Most.tap(inspectorEngineState =>
+              inspectorEngineState |> _handleInspectorEngineState |> ignore
+            )
+       )
     |> WonderBsMost.Most.drain
   );

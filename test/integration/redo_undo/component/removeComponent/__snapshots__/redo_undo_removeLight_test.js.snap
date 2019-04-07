@@ -178,7 +178,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                   onBlur={[Function]}
                   onChange={[Function]}
                   type="text"
-                  value="-135"
+                  value="145"
                 />
               </div>
             </article>
@@ -202,7 +202,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                   onBlur={[Function]}
                   onChange={[Function]}
                   type="text"
-                  value="45"
+                  value="15"
                 />
               </div>
             </article>
@@ -226,7 +226,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                   onBlur={[Function]}
                   onChange={[Function]}
                   type="text"
-                  value="180"
+                  value="0"
                 />
               </div>
             </article>
@@ -520,7 +520,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                   onBlur={[Function]}
                   onChange={[Function]}
                   type="text"
-                  value="-135"
+                  value="145"
                 />
               </div>
             </article>
@@ -544,7 +544,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                   onBlur={[Function]}
                   onChange={[Function]}
                   type="text"
-                  value="45"
+                  value="15"
                 />
               </div>
             </article>
@@ -568,7 +568,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                   onBlur={[Function]}
                   onChange={[Function]}
                   type="text"
-                  value="180"
+                  value="0"
                 />
               </div>
             </article>
@@ -862,7 +862,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                   onBlur={[Function]}
                   onChange={[Function]}
                   type="text"
-                  value="-135"
+                  value="145"
                 />
               </div>
             </article>
@@ -886,7 +886,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                   onBlur={[Function]}
                   onChange={[Function]}
                   type="text"
-                  value="45"
+                  value="15"
                 />
               </div>
             </article>
@@ -910,7 +910,7 @@ exports[`redo_undo: remove light component prepare first step: set currentSceneT
                   onBlur={[Function]}
                   onChange={[Function]}
                   type="text"
-                  value="180"
+                  value="0"
                 />
               </div>
             </article>

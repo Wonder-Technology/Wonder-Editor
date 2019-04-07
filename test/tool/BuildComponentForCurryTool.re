@@ -56,18 +56,18 @@ let buildMaterial = () =>
       currentSceneTreeNode={GameObjectTool.unsafeGetCurrentSceneTreeNode()}
     />,
   );
-let buildBasicMaterial = () =>
+let buildBasicMaterialForGameObject = () =>
   ReactTestRenderer.create(
-    <MainEditorBasicMaterial
+    <MainEditorBasicMaterialForGameObject
       uiState={TestTool.buildEmptyAppState()}
       dispatchFunc={TestTool.getDispatch()}
       materialComponent={GameObjectTool.getCurrentSceneTreeNodeBasicMaterial()}
     />,
   );
 
-let buildLightMaterial = () =>
+let buildLightMaterialForGameObject = () =>
   ReactTestRenderer.create(
-    <MainEditorLightMaterial
+    <MainEditorLightMaterialForGameObject
       uiState={TestTool.buildEmptyAppState()}
       dispatchFunc={TestTool.getDispatch()}
       materialComponent={GameObjectTool.getCurrentSceneTreeNodeLightMaterial()}
@@ -122,13 +122,10 @@ let buildPointLight = () =>
     />,
   );
 
-let buildController = () => {
-  Js.log("controller");
-
+let buildController = () =>
   ReactTestRenderer.create(
     <Controller
       uiState={TestTool.buildEmptyAppState()}
       dispatchFunc={TestTool.getDispatch()}
     />,
   );
-};

@@ -89,7 +89,8 @@ let _ =
           )
           |> StateLogicService.getEngineStateToGetData
           |> Color.getHexString
-          |> expect == newColor##hex;
+          |> expect ==
+          newColor##hex;
         },
       );
     });

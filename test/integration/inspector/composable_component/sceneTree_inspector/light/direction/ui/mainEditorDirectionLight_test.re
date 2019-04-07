@@ -47,7 +47,6 @@ let _ =
 
         PickColorTool.testOperateColorPickToChangeColor(
           sandbox,
-          BuildComponentForCurryTool.buildDirectionLight,
           (
             GameObjectTool.getCurrentSceneTreeNodeDirectionLightComponent,
             MainEditorDirectionLightTool.changeColor,
@@ -78,11 +77,13 @@ let _ =
               value,
             );
 
-            DirectionLightEngineService.getDirectionLightIntensity(
-              currentGameObjectDirectionLightComponent,
+            (
+              DirectionLightEngineService.getDirectionLightIntensity(
+                currentGameObjectDirectionLightComponent,
+              )
+              |> StateLogicService.getEngineStateToGetData
             )
-            |> StateLogicService.getEngineStateToGetData
-            |. FloatService.truncateFloatValue(5)
+            ->(FloatService.truncateFloatValue(5))
             |> expect == value;
           })
         );

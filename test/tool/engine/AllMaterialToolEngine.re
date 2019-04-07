@@ -22,7 +22,10 @@ let prepareForInit = () => {
   |> pregetGLSLData
   |> StateEngineService.setState
   |> ignore;
-  /* StateEngineService.unsafeGetState();
-     |> pregetGLSLData
-     |> StateLogicService.setRunEngineState */
 };
+
+let prepareForInitInspectorEngineState = () =>
+  StateInspectorEngineService.unsafeGetState()
+  |> pregetGLSLData
+  |> StateInspectorEngineService.setState
+  |> ignore;

@@ -1,6 +1,9 @@
 open EditorType;
 
 let create = () => {
+  inspectorCanvasRecord: {
+    containerGameObject: None,
+  },
   settingRecord: RecordSettingService.create(),
   sceneTreeRecord: {
     currentSceneTreeNode: None,

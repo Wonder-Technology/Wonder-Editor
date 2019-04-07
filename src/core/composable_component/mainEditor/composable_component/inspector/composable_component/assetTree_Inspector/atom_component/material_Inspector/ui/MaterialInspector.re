@@ -5,6 +5,37 @@ type action =
 
 module Method = {
   let changeMaterialType = InspectorChangeMaterialTypeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let didMount = (type_, materialComponent) => {
+    DomHelper.setDomDisplay(
+      DomHelper.getElementById("inspectorCanvasParent"),
+      true,
+    );
+
+    StateInspectorEngineService.unsafeGetState()
+    |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
+         type_,
+         materialComponent,
+         (StateEditorService.getState(), StateEngineService.unsafeGetState()),
+       )
+    |> StateLogicService.refreshInspectorEngineState;
+  };
+
+  let willUnmount = () => {
+    DomHelper.setDomDisplay(
+      DomHelper.getElementById("inspectorCanvasParent"),
+      false,
+    );
+
+    (
+      StateEditorService.getState(),
+      StateInspectorEngineService.unsafeGetState(),
+    )
+    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
+    |> JobEngineService.execDisposeJob
+    |> StateInspectorEngineService.setState
+    |> ignore;
+  };
 };
 
 let component = ReasonReact.reducerComponent("MaterialInspector");
@@ -73,10 +104,18 @@ let render =
     {
       switch (state.materialType) {
       | BasicMaterial =>
-        <MainEditorBasicMaterial uiState dispatchFunc materialComponent />
+        <MainEditorBasicMaterialForAsset
+          uiState
+          dispatchFunc
+          materialComponent
+        />
 
       | LightMaterial =>
-        <MainEditorLightMaterial uiState dispatchFunc materialComponent />
+        <MainEditorLightMaterialForAsset
+          uiState
+          dispatchFunc
+          materialComponent
+        />
       }
     }
   </article>;
@@ -104,4 +143,6 @@ let make =
       renameFunc,
       self,
     ),
+  didMount: _self => Method.didMount(type_, materialComponent),
+  willUnmount: _self => Method.willUnmount(),
 };

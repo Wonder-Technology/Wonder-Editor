@@ -66,6 +66,7 @@ let initEngineStateAndInitSceneWithJob =
     ~context,
     (),
   );
+
   initScene();
   _buildFakeConsole(.);
 };

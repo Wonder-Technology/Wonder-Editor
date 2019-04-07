@@ -23,7 +23,7 @@ module Method = {
       SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
       |> StateLogicService.getEditorState;
 
-    <MainEditorBasicMaterial
+    <MainEditorBasicMaterialForGameObject
       uiState
       dispatchFunc
       materialComponent={
@@ -40,7 +40,7 @@ module Method = {
       SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
       |> StateLogicService.getEditorState;
 
-    <MainEditorLightMaterial
+    <MainEditorLightMaterialForGameObject
       uiState
       dispatchFunc
       materialComponent={

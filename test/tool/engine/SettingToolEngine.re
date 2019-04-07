@@ -46,6 +46,15 @@ let setFakeCanvasToEngineState = (~width=1., ~height=1., ()) => {
   StateLogicService.getAndSetEngineState(ViewToolEngine.setCanvas(canvas));
 };
 
+let setFakeCanvasToInspectorEngineState = (~width=1., ~height=1., ()) => {
+  let canvas = buildFakeCanvasOfSize(width, height);
+
+  StateInspectorEngineService.unsafeGetState()
+  |> ViewToolEngine.setCanvas(canvas)
+  |> StateInspectorEngineService.setState
+  |> ignore;
+};
+
 let buildFakeDomForNotPassCanvasId = sandbox => {
   let fakeGl = buildFakeGl(sandbox);
   let canvasDom = buildFakeCanvas("a", fakeGl, sandbox);
@@ -182,6 +191,45 @@ let createStateAndSetToStateData =
      )
   |> ConfigDataLoaderSystem._createRecordWithState
   |> StateToolEngine.setState;
+};
+
+let createStateAndSetToInspectorStateData =
+    (
+      ~isDebug="true",
+      ~canvasId=None,
+      ~context={|
+        {
+        "alpha": true,
+        "depth": true,
+        "stencil": false,
+        "antialias": true,
+        "premultiplied_alpha": true,
+        "preserve_drawing_buffer": false
+        }
+               |},
+      ~useHardwareInstance="false",
+      ~buffer=buildBufferConfigStr(),
+      ~useWorker="false",
+      (),
+    ) => {
+  let stateData = StateToolInspectorEngine.getStateData();
+  ParseSettingService.convertToRecord(
+    buildSetting(
+      isDebug,
+      canvasId,
+      buffer,
+      context,
+      useHardwareInstance,
+      useWorker,
+    )
+    |> Js.Json.parseExn,
+  )
+  |> ConfigDataLoaderSystem._setSetting(
+       stateData,
+       CreateStateMainService.createState(),
+     )
+  |> ConfigDataLoaderSystem._createRecordWithState
+  |> StateToolInspectorEngine.setState;
 };
 
 let setMemory = (~state: StateDataMainType.state, ~maxDisposeCount=1000, ()) => {

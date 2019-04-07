@@ -7,7 +7,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("MainEditorLightMaterial", () => {
+  describe("MainEditorLightMaterialForGameObject component", () => {
     let sandbox = getSandboxDefaultVal();
 
     let _prepareWithEmptyJob = () => {
@@ -47,7 +47,6 @@ let _ =
 
         PickColorTool.testOperateColorPickToChangeColor(
           sandbox,
-          BuildComponentForCurryTool.buildLightMaterial,
           (
             GameObjectTool.getCurrentSceneTreeNodeLightMaterial,
             MainEditorLightMaterialTool.changeColor,
@@ -58,13 +57,17 @@ let _ =
 
       describe("test gameObject light material texture", () => {
         let _getGameObjectMaterialMap = (engineState, gameObject) =>
-          engineState
-          |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-               gameObject,
-             )
-          |. LightMaterialEngineService.getLightMaterialDiffuseMap(
-               engineState,
-             );
+          (
+            engineState
+            |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                 gameObject,
+               )
+          )
+          ->(
+              LightMaterialEngineService.getLightMaterialDiffuseMap(
+                engineState,
+              )
+            );
 
         beforeEach(() => {
           _prepareWithEmptyJob();
@@ -189,13 +192,17 @@ let _ =
                     SceneTreeEditorService.unsafeGetCurrentSceneTreeNode
                     |> StateLogicService.getEditorState;
 
-                  engineState
-                  |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-                       currentGameObject,
-                     )
-                  |. LightMaterialEngineService.hasLightMaterialDiffuseMap(
-                       engineState,
-                     );
+                  (
+                    engineState
+                    |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                         currentGameObject,
+                       )
+                  )
+                  ->(
+                      LightMaterialEngineService.hasLightMaterialDiffuseMap(
+                        engineState,
+                      )
+                    );
                 };
 
                 beforeEach(() => {
@@ -432,7 +439,7 @@ let _ =
             let currentGameObjectMaterial =
               GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
             let component =
-              BuildComponentTool.buildLightMaterial(
+              BuildComponentTool.buildLightMaterialForGameObject(
                 currentGameObjectMaterial,
               );
             let value = 1.1;
@@ -448,11 +455,13 @@ let _ =
               (),
             );
 
-            LightMaterialEngineService.getLightMaterialShininess(
-              currentGameObjectMaterial,
+            (
+              LightMaterialEngineService.getLightMaterialShininess(
+                currentGameObjectMaterial,
+              )
+              |> StateLogicService.getEngineStateToGetData
             )
-            |> StateLogicService.getEngineStateToGetData
-            |. FloatService.truncateFloatValue(5)
+            ->(FloatService.truncateFloatValue(5))
             |> expect == value;
           })
         );
