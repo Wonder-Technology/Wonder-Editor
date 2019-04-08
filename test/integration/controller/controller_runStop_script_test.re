@@ -856,14 +856,13 @@ let _ =
             ControllerTool.run();
             LoopTool.getAndRefreshEngineStateForRunLoop();
             let newDefaultValue = 10.0;
-            MainEditorScriptAttributeTool.changeScriptAttributeFieldDefaultValue(
+            MainEditorScriptAttributeTool.changeScriptAttributeFieldDefaultValueFloat(
               script,
               attributeName,
               newFieldName,
               attribute,
               newDefaultValue,
-            )
-            |> StateLogicService.getAndSetEngineState;
+            );
 
             LoopTool.getAndRefreshEngineStateForRunLoop();
 

@@ -41,17 +41,35 @@ let changeScriptAttribute =
       ~engineState=StateEngineService.unsafeGetState(),
       (),
     ) =>
-  MainEditorScriptAttribute.Method._changeScriptAttribute(
+  ScriptChangeScriptAttributeEventHandler.CustomEventHandler._changeScriptAttribute(
     currentScript,
     currentScriptAttributeNodeIdOpt,
     targetScriptAttributeNodeId,
     (editorState, engineState),
   );
 
-let addScriptAttribute = (~script, ~send, ~languageType=LanguageType.EN, ()) =>
+let addScriptAttribute =
+    (
+      ~script,
+      ~send,
+      ~languageType=LanguageType.EN,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
   MainEditorScriptAttribute.Method.addScriptAttribute(
-    languageType,
-    (buildState(~currentScript=script, ()), send),
+    (uiState, dispatchFunc),
+    (
+      languageType,
+      (lastScriptAttributeNodeIdForAdd, unUsedScriptAttributeNodeIds) =>
+        send(
+          MainEditorScriptAttribute.ShowScriptAttributeGroupForAdd(
+            lastScriptAttributeNodeIdForAdd,
+            unUsedScriptAttributeNodeIds,
+          ),
+        ),
+    ),
+    script,
   );
 
 let sendShowScriptAttributeGroupForChange =
@@ -70,41 +88,62 @@ let sendShowScriptAttributeGroupForChange =
     (editorState, engineState),
   );
 
-let handleChangeScriptAttribute =
+let handleChangeScriptAttributeForChange =
     (
       ~script,
       ~send,
       ~currentScriptAttributeNodeId,
       ~targetScriptAttributeNodeId,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
     ) =>
   MainEditorScriptAttribute.Method.handleChangeScriptAttribute(
-    script,
+    (uiState, dispatchFunc),
     (targetScriptAttributeNodeId, unUsedScriptAttributeNodeIds) =>
       send(
-        MainEditorScriptAttribute.ChangeScriptAttributeForAdd(
+        MainEditorScriptAttribute.ChangeScriptAttributeForChange(
           targetScriptAttributeNodeId,
           unUsedScriptAttributeNodeIds,
         ),
       ),
-    currentScriptAttributeNodeId,
-    targetScriptAttributeNodeId,
+    (script, currentScriptAttributeNodeId, targetScriptAttributeNodeId),
   );
 
 let removeScriptAttribute =
-    (~script, ~attributeName, ~dispatchFunc=TestTool.getDispatch(), ()) =>
+    (
+      ~script,
+      ~attributeName,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
   MainEditorScriptAttribute.Method._removeScriptAttribute(
-    script,
-    attributeName,
-    dispatchFunc,
+    (uiState, dispatchFunc),
+    (),
+    (script, attributeName),
   );
 
-let changeScriptAttributeFieldDefaultValue =
-    (script, attributeName, fieldName, attribute, defaultValue, engineState) =>
+let changeScriptAttributeFieldDefaultValueFloat =
+    (script, attributeName, fieldName, attribute, defaultValue) =>
   MainEditorScriptAttribute.Method._changeScriptAttributeFieldDefaultValue(
     script,
     attributeName,
     fieldName,
     attribute,
-    defaultValue,
-    engineState,
+    defaultValue |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue,
+  );
+
+let blurScriptAttributeFieldDefaultValueFloat =
+    (script, attributeName, fieldName, attribute, defaultValue) =>
+  MainEditorScriptAttribute.Method._blurScriptAttributeFieldDefaultValue(
+    (TestTool.buildEmptyAppState(), TestTool.getDispatch()),
+    MainEditorScriptAttribute.Method._isFloatValueEqual,
+    (
+      script,
+      attributeName,
+      fieldName,
+      attribute,
+      defaultValue |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue,
+    ),
   );

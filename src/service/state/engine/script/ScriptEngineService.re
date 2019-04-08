@@ -56,6 +56,13 @@ let unsafeGetScriptAttributeEntries = ScriptAPI.unsafeGetScriptAttributeEntries;
 
 let unsafeGetScriptAttribute = ScriptAPI.unsafeGetScriptAttribute;
 
+let unsafeGetScriptAttributeFieldDefaultValue =
+    (script, scriptAttributeName, fieldName, engineState) =>
+  unsafeGetScriptAttribute(script, scriptAttributeName, engineState)
+  |> ScriptAttributeEngineService.unsafeGetScriptAttributeFieldDefaultValue(
+       fieldName,
+     );
+
 let setScriptAttributeFieldDefaultValueAndValue = ScriptAPI.setScriptAttributeFieldDefaultValueAndValue;
 
 let getScriptAllEventFunctionEntries =

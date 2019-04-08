@@ -28,102 +28,6 @@ type action =
   | HideScriptAttributeGroupForChange;
 
 module Method = {
-  let _changeScriptAttribute =
-      (
-        currentScript,
-        currentScriptAttributeNodeIdOpt,
-        targetScriptAttributeNodeId,
-        (editorState, engineState),
-      ) => {
-    WonderLog.Contract.requireCheck(
-      () =>
-        WonderLog.(
-          Contract.(
-            Operators.(
-              test(
-                Log.buildAssertMessage(
-                  ~expect={j|targetScriptAttributeNodeId not be used|j},
-                  ~actual={j|be used|j},
-                ),
-                () => {
-                  let (name, _) =
-                    ScriptAttributeNodeAssetEditorService.getNameAndAttribute(
-                      targetScriptAttributeNodeId,
-                      editorState,
-                    );
-
-                  ScriptEngineService.hasScriptAttributeData(
-                    currentScript,
-                    name,
-                    engineState,
-                  )
-                  |> assertFalse;
-                },
-              )
-            )
-          )
-        ),
-      StateEditorService.getStateIsDebug(),
-    );
-
-    let (targetName, targetAttribute) =
-      ScriptAttributeNodeAssetEditorService.getNameAndAttribute(
-        targetScriptAttributeNodeId,
-        editorState,
-      );
-
-    switch (currentScriptAttributeNodeIdOpt) {
-    | None =>
-      ScriptEngineService.addScriptAttribute(
-        currentScript,
-        targetName,
-        targetAttribute,
-        engineState,
-      )
-    | Some(currentScriptAttributeNodeId) =>
-      let (sourceName, _) =
-        ScriptAttributeNodeAssetEditorService.getNameAndAttribute(
-          currentScriptAttributeNodeId,
-          editorState,
-        );
-
-      ScriptEngineService.replaceScriptAttribute(
-        currentScript,
-        (sourceName, targetName),
-        targetAttribute,
-        engineState,
-      );
-    };
-  };
-
-  let _getUnUsedScriptAttributeNodes = (script, (editorState, engineState)) => {
-    let allScriptAttributeNodes =
-      ScriptAttributeNodeAssetEditorService.findAllScriptAttributeNodes(
-        editorState,
-      );
-
-    let scriptAllAttributeEntries =
-      ScriptEngineService.getScriptAllAttributeEntries(script, engineState);
-
-    let allAttributeNames =
-      scriptAllAttributeEntries
-      |> Js.Array.map(((eventFunctionName, _)) => eventFunctionName);
-
-    ArrayService.excludeWithFunc(
-      scriptAllAttributeEntries,
-      (scriptAllAttributeEntries, scriptAttributeNode) =>
-        allAttributeNames
-        |> Js.Array.includes(
-             ScriptAttributeNodeAssetService.getNodeName(scriptAttributeNode),
-           ),
-      allScriptAttributeNodes,
-    );
-  };
-
-  let _getUnUsedScriptAttributeNodeIds = (script, (editorState, engineState)) =>
-    _getUnUsedScriptAttributeNodes(script, (editorState, engineState))
-    |> Js.Array.map(node => NodeAssetService.getNodeId(~node));
-
   let _sendShowScriptAttributeGroupForChange =
       (
         currentScript,
@@ -134,33 +38,60 @@ module Method = {
     send(
       ShowScriptAttributeGroupForChange(
         scriptAttributeNodeId,
-        _getUnUsedScriptAttributeNodeIds(
+        MainEditorScriptAttributeUtils.getUnUsedScriptAttributeNodeIds(
           currentScript,
           (editorState, engineState),
         ),
       ),
     );
 
-  let _removeScriptAttribute = (script, attributeName, dispatchFunc) => {
-    ScriptEngineService.removeScriptAttribute(script, attributeName)
-    |> StateLogicService.getAndSetEngineState;
-
-    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
-    |> ignore;
-  };
+  let _removeScriptAttribute = ScriptRemoveScriptAttributeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let _changeScriptAttributeFieldDefaultValue =
-      (script, attributeName, fieldName, attribute, defaultValue, engineState) =>
+      (script, attributeName, fieldName, attribute, defaultValue) =>
     ScriptEngineService.setScriptAttributeFieldDefaultValueAndValue(
       script,
       attributeName,
       fieldName,
-      defaultValue |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue,
-      engineState,
-    );
+      defaultValue,
+    )
+    |> StateLogicService.getAndSetEngineState;
+
+  let _isFloatValueEqual = (value1, value2) =>
+    value1
+    |> Wonderjs.ScriptAttributeType.scriptAttributeValueToFloat
+    === (value2 |> Wonderjs.ScriptAttributeType.scriptAttributeValueToFloat);
+
+  let _blurScriptAttributeFieldDefaultValue =
+      (
+        (uiState, dispatchFunc),
+        isValueEqualFunc,
+        (script, attributeName, fieldName, attribute, defaultValue),
+      ) =>
+    ScriptEngineService.unsafeGetScriptAttributeFieldDefaultValue(
+      script,
+      attributeName,
+      fieldName,
+    )
+    |> StateLogicService.getEngineStateToGetData
+    |> isValueEqualFunc(defaultValue) ?
+      () :
+      ScriptBlurScriptAttributeFieldDefaultValueEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
+        (uiState, dispatchFunc),
+        (),
+        (script, attributeName, fieldName, attribute, defaultValue),
+      );
 
   let _renderScriptAttributeFieldDefaultValue =
-      (languageType, script, attributeName, fieldName, type_, attribute) =>
+      (
+        (uiState, dispatchFunc),
+        languageType,
+        script,
+        attributeName,
+        fieldName,
+        type_,
+        attribute,
+      ) =>
     Wonderjs.(
       ScriptAttributeType.
         /* TODO handle Int: add MainEditorIntInputBaseComponent */
@@ -189,19 +120,39 @@ module Method = {
                     attributeName,
                     fieldName,
                     attribute,
-                    value,
+                    value
+                    |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue,
                   )
-                  |> StateLogicService.getAndSetEngineState
               )
               blurValueFunc=(
                 value =>
-                  /* TODO redo-undo */
-                  ()
+                  _blurScriptAttributeFieldDefaultValue(
+                    (uiState, dispatchFunc),
+                    _isFloatValueEqual,
+                    (
+                      script,
+                      attributeName,
+                      fieldName,
+                      attribute,
+                      value
+                      |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue,
+                    ),
+                  )
               )
               dragDropFunc=(
                 value =>
-                  /* TODO redo-undo */
-                  ()
+                  _blurScriptAttributeFieldDefaultValue(
+                    (uiState, dispatchFunc),
+                    _isFloatValueEqual,
+                    (
+                      script,
+                      attributeName,
+                      fieldName,
+                      attribute,
+                      value
+                      |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue,
+                    ),
+                  )
               )
             />
           | type_ =>
@@ -218,7 +169,13 @@ module Method = {
     );
 
   let _renderScriptAttributeFields =
-      (languageType, script, attributeName, attribute) =>
+      (
+        (uiState, dispatchFunc),
+        languageType,
+        script,
+        attributeName,
+        attribute,
+      ) =>
     ReasonReact.array(
       ScriptAttributeEngineService.getScriptAttributeEntries(attribute)
       |> Js.Array.map(((fieldName, field)) => {
@@ -254,6 +211,7 @@ module Method = {
              />
              {
                _renderScriptAttributeFieldDefaultValue(
+                 (uiState, dispatchFunc),
                  languageType,
                  script,
                  attributeName,
@@ -268,6 +226,7 @@ module Method = {
 
   let renderScriptAllAttributes =
       (
+        (uiState, dispatchFunc),
         languageType,
         dispatchFunc,
         {state, send}: ReasonReact.self('a, 'b, 'c),
@@ -275,7 +234,9 @@ module Method = {
     let {currentScript} = state;
 
     let unUsedScriptAttributeNodeIds =
-      _getUnUsedScriptAttributeNodeIds(currentScript)
+      MainEditorScriptAttributeUtils.getUnUsedScriptAttributeNodeIds(
+        currentScript,
+      )
       |> StateLogicService.getStateToGetData;
 
     ScriptEngineService.getScriptAllAttributeEntries(currentScript)
@@ -310,13 +271,19 @@ module Method = {
            <button
              className="scriptAttribute-remove"
              onClick={
-               e => _removeScriptAttribute(currentScript, name, dispatchFunc)
+               e =>
+                 _removeScriptAttribute(
+                   (uiState, dispatchFunc),
+                   (),
+                   (currentScript, name),
+                 )
              }>
              {DomHelper.textEl("Remove")}
            </button>
            <div className="scriptAttribute-fields">
              {
                _renderScriptAttributeFields(
+                 (uiState, dispatchFunc),
                  languageType,
                  currentScript,
                  name,
@@ -331,106 +298,9 @@ module Method = {
   let sortScriptAttributeNodeIds = scriptAttributeNodeIds =>
     scriptAttributeNodeIds |> Js.Array.sortInPlace;
 
-  let handleChangeScriptAttribute =
-      (
-        script,
-        sendFunc,
-        currentScriptAttributeNodeId,
-        targetScriptAttributeNodeId,
-      ) => {
-    WonderLog.Contract.requireCheck(
-      () =>
-        WonderLog.(
-          Contract.(
-            Operators.(
-              test(
-                Log.buildAssertMessage(
-                  ~expect={j|currentScriptAttributeNodeId|j},
-                  ~actual={j|not|j},
-                ),
-                () =>
-                currentScriptAttributeNodeId |> assertExist
-              )
-            )
-          )
-        ),
-      StateEditorService.getStateIsDebug(),
-    );
+  let handleChangeScriptAttribute = ScriptChangeScriptAttributeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-    MainEditorScriptUtils.isNodeIdEqual(
-      currentScriptAttributeNodeId,
-      targetScriptAttributeNodeId,
-    ) ?
-      () :
-      {
-        _changeScriptAttribute(
-          script,
-          currentScriptAttributeNodeId,
-          targetScriptAttributeNodeId,
-        )
-        |> StateLogicService.getStateToGetData
-        |> StateEngineService.setState;
-
-        sendFunc(
-          targetScriptAttributeNodeId,
-          _getUnUsedScriptAttributeNodeIds(script)
-          |> StateLogicService.getStateToGetData,
-        );
-      };
-  };
-
-  let addScriptAttribute = (languageType, (state, send)) => {
-    let editorState = StateEditorService.getState();
-    let engineState = StateEngineService.unsafeGetState();
-
-    let {currentScript} = state;
-
-    let unUsedScriptAttributeNodes =
-      _getUnUsedScriptAttributeNodes(
-        currentScript,
-        (editorState, engineState),
-      );
-
-    unUsedScriptAttributeNodes |> Js.Array.length > 0 ?
-      {
-        let unUsedScriptAttributeNodeIds =
-          unUsedScriptAttributeNodes
-          |> Js.Array.map(node => NodeAssetService.getNodeId(~node));
-
-        let (lastScriptAttributeNodeIdForAdd, unUsedScriptAttributeNodeIds) =
-          unUsedScriptAttributeNodeIds |> ArrayService.removeFirst;
-
-        let (name, attribute) =
-          ScriptAttributeNodeAssetEditorService.getNameAndAttribute(
-            lastScriptAttributeNodeIdForAdd,
-            editorState,
-          );
-
-        let engineState =
-          ScriptEngineService.addScriptAttribute(
-            currentScript,
-            name,
-            attribute,
-            engineState,
-          );
-
-        engineState |> StateEngineService.setState |> ignore;
-
-        send(
-          ShowScriptAttributeGroupForAdd(
-            lastScriptAttributeNodeIdForAdd,
-            unUsedScriptAttributeNodeIds,
-          ),
-        );
-      } :
-      ConsoleUtils.warn(
-        LanguageUtils.getMessageLanguageDataByType(
-          "need-add-scriptAttribute",
-          languageType,
-        ),
-      )
-      |> StateLogicService.getEditorState;
-  };
+  let addScriptAttribute = ScriptAddScriptAttributeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let getAllScriptAttributes =
       (currentScriptAttributeNodeId, unUsedScriptAttributeNodeIds) =>
@@ -550,7 +420,7 @@ let render =
                 state.lastScriptAttributeNodeIdForAdd;
 
               Method.handleChangeScriptAttribute(
-                state.currentScript,
+                (uiState, dispatchFunc),
                 (targetScriptAttributeNodeId, unUsedScriptAttributeNodeIds) =>
                   send(
                     ChangeScriptAttributeForAdd(
@@ -558,8 +428,11 @@ let render =
                       unUsedScriptAttributeNodeIds,
                     ),
                   ),
-                currentScriptAttributeNodeId,
-                scriptAttributeNodeId,
+                (
+                  state.currentScript,
+                  currentScriptAttributeNodeId,
+                  scriptAttributeNodeId,
+                ),
               );
             }
           }
@@ -599,7 +472,7 @@ let render =
                 state.lastScriptAttributeNodeIdForChange;
 
               Method.handleChangeScriptAttribute(
-                state.currentScript,
+                (uiState, dispatchFunc),
                 (targetScriptAttributeNodeId, unUsedScriptAttributeNodeIds) =>
                   send(
                     ChangeScriptAttributeForChange(
@@ -607,8 +480,11 @@ let render =
                       unUsedScriptAttributeNodeIds,
                     ),
                   ),
-                currentScriptAttributeNodeId,
-                scriptAttributeNodeId,
+                (
+                  state.currentScript,
+                  currentScriptAttributeNodeId,
+                  scriptAttributeNodeId,
+                ),
               );
             }
           }
@@ -618,12 +494,33 @@ let render =
     }
     {
       ReasonReact.array(
-        Method.renderScriptAllAttributes(languageType, dispatchFunc, self),
+        Method.renderScriptAllAttributes(
+          (uiState, dispatchFunc),
+          languageType,
+          dispatchFunc,
+          self,
+        ),
       )
     }
     <button
       className="addable-btn"
-      onClick={_e => Method.addScriptAttribute(languageType, (state, send))}>
+      onClick={
+        _e =>
+          Method.addScriptAttribute(
+            (uiState, dispatchFunc),
+            (
+              languageType,
+              (lastScriptAttributeNodeIdForAdd, unUsedScriptAttributeNodeIds) =>
+                send(
+                  ShowScriptAttributeGroupForAdd(
+                    lastScriptAttributeNodeIdForAdd,
+                    unUsedScriptAttributeNodeIds,
+                  ),
+                ),
+            ),
+            state.currentScript,
+          )
+      }>
       {
         DomHelper.textEl(
           LanguageUtils.getInspectorLanguageDataByType(

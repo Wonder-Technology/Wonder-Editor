@@ -468,6 +468,7 @@ let _ =
                 |> StateLogicService.getStateToGetData
                 |> ArrayService.unsafeGetFirst;
 
+
               let state =
                 MainEditorScriptAttributeTool.getUpdateState(
                   ~state=
@@ -476,7 +477,7 @@ let _ =
                       (),
                     ),
                   ~func=
-                    MainEditorScriptAttributeTool.handleChangeScriptAttribute(
+                    MainEditorScriptAttributeTool.handleChangeScriptAttributeForChange(
                       ~script,
                       ~currentScriptAttributeNodeId=
                         MainEditorScriptTool.getScriptAllAttributeNodeIds(
@@ -485,6 +486,7 @@ let _ =
                         |> StateLogicService.getStateToGetData
                         |> ArrayService.unsafeGetFirst,
                       ~targetScriptAttributeNodeId,
+                      (),
                     ),
                 );
 
@@ -596,16 +598,15 @@ let _ =
               ) =
                 _prepare();
 
-              let engineState =
-                MainEditorScriptAttributeTool.changeScriptAttributeFieldDefaultValue(
-                  script,
-                  attributeName,
-                  fieldName,
-                  attribute,
-                  newDefaultValue,
-                  engineState,
-                );
               engineState |> StateEngineService.setState |> ignore;
+
+              MainEditorScriptAttributeTool.changeScriptAttributeFieldDefaultValueFloat(
+                script,
+                attributeName,
+                fieldName,
+                attribute,
+                newDefaultValue,
+              );
 
               (
                 addedNodeId,
@@ -614,7 +615,7 @@ let _ =
                 fieldName,
                 attribute,
                 newDefaultValue,
-                engineState,
+                StateEngineService.unsafeGetState(),
               );
             };
 
@@ -630,7 +631,7 @@ let _ =
               ) =
                 _prepareAndExec();
 
-              ScriptAttributeFieldTool.getScriptAttributeFieldDefaultValue(
+              ScriptAttributeFieldTool.unsafeGetScriptAttributeFieldDefaultValue(
                 script,
                 attributeName,
                 fieldName,
@@ -653,7 +654,7 @@ let _ =
               ) =
                 _prepareAndExec();
 
-              ScriptAttributeInspectorTool.getScriptAttributeFieldDefaultValue(
+              ScriptAttributeInspectorTool.unsafeGetScriptAttributeFieldDefaultValue(
                 addedNodeId,
                 fieldName,
               )

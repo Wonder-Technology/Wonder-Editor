@@ -40,11 +40,10 @@ let getScriptAllEventFunctionNodeIds = (script, (editorState, engineState)) =>
      );
 
 let getUnUsedScriptAttributeNodeIds = (script, (editorState, engineState)) =>
-  MainEditorScriptAttribute.Method._getUnUsedScriptAttributeNodes(
+  MainEditorScriptAttributeUtils.getUnUsedScriptAttributeNodeIds(
     script,
     (editorState, engineState),
-  )
-  |> Js.Array.map(node => NodeAssetService.getNodeId(~node));
+  );
 
 let getScriptAllAttributeNodeIds = (script, (editorState, engineState)) =>
   ScriptEngineService.getScriptAllAttributeEntries(script, engineState)

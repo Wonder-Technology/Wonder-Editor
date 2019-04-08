@@ -200,7 +200,7 @@ let _ =
           let attributeName =
             ScriptAttributeInspectorTool.getAttributeName(addedNodeId)
             |> StateLogicService.getEditorState;
-          ScriptAttributeFieldTool.getScriptAttributeFieldDefaultValue(
+          ScriptAttributeFieldTool.unsafeGetScriptAttributeFieldDefaultValue(
             script,
             attributeName,
             fieldName,

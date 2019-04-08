@@ -1,13 +1,11 @@
-let getScriptAttributeFieldDefaultValue =
+let unsafeGetScriptAttributeFieldDefaultValue =
     (script, scriptAttributeName, fieldName, engineState) =>
-  ScriptEngineService.unsafeGetScriptAttribute(
+  ScriptEngineService.unsafeGetScriptAttributeFieldDefaultValue(
     script,
     scriptAttributeName,
+    fieldName,
     engineState,
-  )
-  |> ScriptAttributeEngineService.unsafeGetScriptAttributeFieldDefaultValue(
-       fieldName,
-     );
+  );
 
 let getScriptAttributeFieldType =
     (script, scriptAttributeName, fieldName, engineState) =>
