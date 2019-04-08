@@ -64,7 +64,7 @@ module Method = {
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. editorState, imageDataIndex) =>
            editorState
-           |> Result.SameDataResult.either(_build(imageDataIndex)),
+           |> Result.SameDataResult.map(_build(imageDataIndex)),
          editorState |> Result.SameDataResult.success,
        );
 
@@ -145,7 +145,6 @@ module Method = {
              ~node,
              ~textureNodeFunc=
                (nodeId, {textureComponent, imageDataIndex}) => {
-                 let effectAllowd = "move";
                  let fileName =
                    NodeNameAssetLogicService.getTextureNodeName(
                      ~texture=textureComponent,
@@ -153,13 +152,13 @@ module Method = {
                    );
 
                  ImageDataMapUtils.getImgSrc(imageDataIndex, editorState)
-                 |> Result.SameDataResult.either(imgSrc =>
+                 |> Result.SameDataResult.map(imgSrc =>
                       <FileBox
                         key
                         uiState
                         dispatchFunc
                         dragImg
-                        effectAllowd
+                        effectAllowd="move"
                         imgSrc
                         nodeId
                         fileName
@@ -184,7 +183,7 @@ module Method = {
                    dispatchFunc
                    dragImg
                    effectAllowd="move"
-                   imgSrc="./public/img/mat.png"
+                   imgSrc="./public/img/mat.jpg"
                    nodeId
                    fileName
                    widget
@@ -283,7 +282,7 @@ module Method = {
 
     editorState
     |> _buildImageDataObjectURLIfNoBase64
-    |> Result.SameDataResult.either(
+    |> Result.SameDataResult.map(
          showSpecificTreeNodeChildren(
            (uiState, dispatchFunc),
            (

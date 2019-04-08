@@ -23,6 +23,7 @@ let create = () => {
     materialData: {
       defaultBasicMaterialData: None,
       defaultLightMaterialData: None,
+      defaultMaterialSnapshotPath: "./public/img/mat.jpg",
     },
   },
   uiRecord: {

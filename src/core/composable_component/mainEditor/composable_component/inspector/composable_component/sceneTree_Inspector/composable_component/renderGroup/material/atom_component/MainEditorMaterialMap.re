@@ -130,7 +130,7 @@ module Method = {
         (editorState, engineState),
       ) =>
     ImageDataMapUtils.getImgSrc(imageDataIndex, editorState)
-    |> Result.SameDataResult.either(imgSrc =>
+    |> Result.SameDataResult.map(imgSrc =>
          _buildTextureUIComponent(
            (className, nodeId, textureComponent, imgSrc),
            send,

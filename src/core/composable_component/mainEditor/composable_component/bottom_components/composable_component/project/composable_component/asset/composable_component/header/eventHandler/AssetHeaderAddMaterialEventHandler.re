@@ -38,10 +38,6 @@ module CustomEventHandler = {
         editorState,
       );
 
-    /* let targetTreeNode =
-       editorState
-       |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree; */
-
     editorState |> StateEditorService.setState |> ignore;
 
     /* TODO draw material sphere to get base64 store in map */
