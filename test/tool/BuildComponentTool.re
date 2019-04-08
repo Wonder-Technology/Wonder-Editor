@@ -227,6 +227,36 @@ let buildController = () =>
 
 let buildUI = ui => ReactTestRenderer.create(ui);
 
+let buildScriptEventFunctionInspectorComponent =
+    (
+      ~currentNodeId,
+      ~name=ScriptEventFunctionInspectorTool.getEventFunctionName(
+              currentNodeId,
+            )
+            |> StateLogicService.getEditorState,
+      ~eventFunctionData=ScriptEventFunctionInspectorTool.getEventFunctionData(
+                           currentNodeId,
+                         )
+                         |> StateLogicService.getEditorState,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~renameFunc=AssetTreeInspectorTool.Rename.renameAssetNode(
+                    (uiState, dispatchFunc),
+                    currentNodeId,
+                  ),
+      (),
+    ) =>
+  ReactTestRenderer.create(
+    <ScriptEventFunctionInspector
+      uiState
+      dispatchFunc
+      currentNodeId
+      name
+      eventFunctionData
+      renameFunc
+    />,
+  );
+
 let buildScriptAttributeInspectorComponent =
     (
       ~currentNodeId,
