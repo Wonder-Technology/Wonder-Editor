@@ -22,7 +22,6 @@ let getAndRefreshEngineState = () =>
   |> StateEngineService.setState
   |> ignore;
 
-/* TODO test */
 let getAndRefreshEngineStateForRunLoop = () =>
   StateEngineService.unsafeGetState()
   |> ScriptEventFunctionEngineService.enableScriptEventFunction
