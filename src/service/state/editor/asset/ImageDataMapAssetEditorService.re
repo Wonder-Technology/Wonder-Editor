@@ -31,7 +31,7 @@ let _getImageNodeIdByBase64 = (imageBase64, editorState) =>
   switch (
     editorState
     |> getMap
-    |> ImmutableSparseMapService.getValidDataArr
+    |> WonderCommonlib.ImmutableSparseMapService.getValidDataArr
     |> Js.Array.find(((imageNodeId, {base64}: ImageDataType.imageData)) =>
          Base64Service.isBase64Equal(Some(imageBase64), base64)
        )
@@ -67,7 +67,7 @@ let _getImageNodeIdByUint8Array = (imageUint8Array, editorState) =>
   switch (
     editorState
     |> getMap
-    |> ImmutableSparseMapService.getValidDataArr
+    |> WonderCommonlib.ImmutableSparseMapService.getValidDataArr
     |> Js.Array.find(((imageNodeId, {uint8Array}: ImageDataType.imageData)) =>
          Uint8ArrayService.isUint8ArrayEqual(
            Some(imageUint8Array),

@@ -186,7 +186,7 @@ let updateEventFunctionInAllScriptComponents =
 
 let _removeScriptDataMapInAllScriptComponents = (dataName, scriptDataMap) =>
   scriptDataMap
-  |> WonderEditor.ImmutableSparseMapService.filterValid((. dataMap) =>
+  |> WonderCommonlib.ImmutableSparseMapService.filterValid((. dataMap) =>
        !(dataMap |> WonderCommonlib.ImmutableHashMapService.has(dataName))
      );
 

@@ -37,7 +37,7 @@ let isImageDataEqual =
     ) {
     | None => true
     | Some((_, uint8Array2)) =>
-      Uint8ArrayService.isUint8ArrayEqual(uint8Array, uint8Array2 |. Some)
+      Uint8ArrayService.isUint8ArrayEqual(uint8Array, uint8Array2->Some)
     }
   );
 
@@ -52,16 +52,10 @@ let isTextureDataEqual =
   _isTextureNameEqual(name, texture2, engineState)
   && wrapS == BasicSourceTextureEngineService.getWrapS(texture2, engineState)
   && wrapT == BasicSourceTextureEngineService.getWrapT(texture2, engineState)
-  &&
-  minFilter == BasicSourceTextureEngineService.getMinFilter(
-                 texture2,
-                 engineState,
-               )
-  &&
-  magFilter == BasicSourceTextureEngineService.getMagFilter(
-                 texture2,
-                 engineState,
-               )
+  && minFilter
+  == BasicSourceTextureEngineService.getMinFilter(texture2, engineState)
+  && magFilter
+  == BasicSourceTextureEngineService.getMagFilter(texture2, engineState)
   && isImageDataEqualFunc(
        imageData,
        BasicSourceTextureEngineService.unsafeGetSource(texture2, engineState),
@@ -73,7 +67,8 @@ let _findTextureAsset =
     (textureAssetDataMap, sourceTexture, imageUint8ArrayDataMap, engineState) =>
   switch (
     textureAssetDataMap
-    |> ImmutableSparseMapService.find(((textureComponent, textureAssetData)) =>
+    |> WonderCommonlib.ImmutableSparseMapService.find(
+         ((textureComponent, textureAssetData)) =>
          isTextureDataEqual(
            isImageDataEqual,
            textureAssetData,

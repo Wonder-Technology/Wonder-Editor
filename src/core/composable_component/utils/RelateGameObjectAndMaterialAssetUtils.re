@@ -32,16 +32,16 @@ let isLightMaterialDataEqual =
       (imageUint8ArrayDataMap, isTextureDataEqualFunc, engineState),
     ) =>
   _isLightMaterialNameEqual(name, material2, engineState)
-  &&
-  diffuseColor == LightMaterialEngineService.getLightMaterialDiffuseColor(
-                    material2,
-                    engineState,
-                  )
-  &&
-  shininess == LightMaterialEngineService.getLightMaterialShininess(
-                 material2,
-                 engineState,
-               )
+  && diffuseColor
+  == LightMaterialEngineService.getLightMaterialDiffuseColor(
+       material2,
+       engineState,
+     )
+  && shininess
+  == LightMaterialEngineService.getLightMaterialShininess(
+       material2,
+       engineState,
+     )
   && (
     switch (
       textureData,
@@ -91,7 +91,8 @@ let _findMaterialAsset =
     ) =>
   switch (
     materialAssetDataMap
-    |> ImmutableSparseMapService.find(((_, materialAssetData)) =>
+    |> WonderCommonlib.ImmutableSparseMapService.find(
+         ((_, materialAssetData)) =>
          isMaterialDataEqualFunc(
            materialAssetData,
            material,
