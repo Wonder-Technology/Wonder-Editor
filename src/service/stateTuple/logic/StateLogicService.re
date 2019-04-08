@@ -22,6 +22,14 @@ let getAndRefreshEngineState = () =>
   |> StateEngineService.setState
   |> ignore;
 
+let getAndRefreshEngineStateForRunLoop = () =>
+  StateEngineService.unsafeGetState()
+  |> ScriptEventFunctionEngineService.enableScriptEventFunction
+  |> DirectorEngineService.loopBody(0.)
+  |> ScriptEventFunctionEngineService.disableScriptEventFunction
+  |> StateEngineService.setState
+  |> ignore;
+
 let getAndRefreshEngineStateWithFunc = handleFunc =>
   StateEngineService.unsafeGetState()
   |> handleFunc

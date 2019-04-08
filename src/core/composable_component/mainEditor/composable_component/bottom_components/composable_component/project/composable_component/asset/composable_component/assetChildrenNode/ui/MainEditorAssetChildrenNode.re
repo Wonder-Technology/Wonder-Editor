@@ -70,13 +70,10 @@ module Method = {
   let _sortByName = (assetTreeChildrenNodeArr, engineState) =>
     assetTreeChildrenNodeArr
     |> Js.Array.sortInPlaceWith((node1, node2) =>
-         Js.String.localeCompare(
-           NodeNameAssetLogicService.getNodeName(node2, engineState)
-           |> Js.String.charAt(0),
-           NodeNameAssetLogicService.getNodeName(node1, engineState)
-           |> Js.String.charAt(0),
+         SortService.buildSortByNameFunc(
+           NodeNameAssetLogicService.getNodeName(node2, engineState),
+           NodeNameAssetLogicService.getNodeName(node1, engineState),
          )
-         |> NumberType.convertFloatToInt
        );
 
   let sortAssetTreeChildrenNode = (assetTreeChildrenNodeArr, engineState) => {

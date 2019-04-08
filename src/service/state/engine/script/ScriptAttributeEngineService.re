@@ -4,18 +4,11 @@ open StateDataMainType;
 
 let createScriptAttribute = ScriptAttributeAPI.createScriptAttribute;
 
-let addScriptAttributeField = ScriptAttributeAPI.addScriptAttributeField;
+let addScriptAttributeFieldJsObj = ScriptAttributeAPI.addScriptAttributeFieldJsObj;
 
 let removeScriptAttributeField = ScriptAttributeAPI.removeScriptAttributeField;
 
 let getScriptAttributeEntries = ScriptAttributeAPI.getScriptAttributeEntries;
-
-/* TODO move to engine */
-
-/* let createScriptAttributeField = attributeFieldJsObj =>
-   OperateScriptAttributeDataMainService._createScriptAttributeField(
-     attributeFieldJsObj,
-   ); */
 
 let hasScriptAttributeField = (fieldName, attribute) =>
   attribute |> WonderCommonlib.ImmutableHashMapService.has(fieldName);
@@ -25,12 +18,13 @@ let replaceScriptAttributeField = (fieldName, attributeFieldJsObj, attribute) =>
     fieldName,
     attribute,
   )
-  |> OperateScriptAttributeDataMainService.addScriptAttributeField(
+  |> OperateScriptAttributeDataMainService.addScriptAttributeFieldJsObj(
        fieldName,
        attributeFieldJsObj,
      );
 
-let _unsafeGetScriptAttributeField = (fieldName, attribute) =>
+let unsafeGetScriptAttributeField =
+    (fieldName, attribute): ScriptAttributeType.scriptAttributeField =>
   OperateScriptAttributeDataMainService.getScriptAttributeField(
     fieldName,
     attribute,
@@ -41,15 +35,21 @@ let _addScriptAttributeField = (fieldName, attributeField, attribute) =>
   attribute
   |> WonderCommonlib.ImmutableHashMapService.set(fieldName, attributeField);
 
-/* TODO rename Wonderjs->OperateScriptAttributeDataMainService->addScriptAttributeField to addScriptAttributeFieldJsObj */
-
 let renameScriptAttributeField = (oldFieldName, newFieldName, attribute) => {
-  let attributeFieldJsObj =
-    _unsafeGetScriptAttributeField(oldFieldName, attribute);
+  let attributeField = unsafeGetScriptAttributeField(oldFieldName, attribute);
 
   OperateScriptAttributeDataMainService.removeScriptAttributeField(
     oldFieldName,
     attribute,
   )
-  |> _addScriptAttributeField(newFieldName, attributeFieldJsObj);
+  |> _addScriptAttributeField(newFieldName, attributeField);
 };
+
+let unsafeGetScriptAttributeFieldType = (fieldName, attribute) =>
+  unsafeGetScriptAttributeField(fieldName, attribute).type_;
+
+let unsafeGetScriptAttributeFieldDefaultValue = (fieldName, attribute) =>
+  OperateScriptAttributeDataMainService.unsafeGetScriptAttributeFieldDefaultValue(
+    fieldName,
+    attribute,
+  );

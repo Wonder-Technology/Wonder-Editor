@@ -80,6 +80,59 @@ let _ =
         );
       });
 
+      describe("test add script component", () => {
+        describe("test snapshot", () =>
+          test(
+            "test click add script component, should add into inspector", () => {
+            MainEditorInspectorAddComponentTool.addScriptComponent();
+
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          })
+        );
+
+        describe("test logic", () => {
+          test(
+            "test if not add script component, current gameObject shouldn't has it",
+            () =>
+            GameObjectComponentEngineService.hasScriptComponent(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == false
+          );
+          test("test click add script component, should add into engine", () => {
+            MainEditorInspectorAddComponentTool.addScriptComponent();
+
+            GameObjectComponentEngineService.hasScriptComponent(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == true;
+          });
+        });
+
+        describe("should re-init all script material components", () =>
+          describe("test add direction script component", () =>
+            test("glsl->DIRECTION_LIGHTS_COUNT should + 1", () => {
+              let gl = FakeGlToolEngine.getEngineStateGl();
+              let glShaderSource = gl##shaderSource;
+
+              MainEditorInspectorAddComponentTool.addDirectionLightComponent();
+
+              GLSLToolEngine.contain(
+                GLSLToolEngine.getVsSource(glShaderSource),
+                {|#define DIRECTION_LIGHTS_COUNT 2|},
+              )
+              |> expect == true;
+            })
+          )
+        );
+      });
+
       describe("test add cameraGroup component", () => {
         describe("test snapshot", () =>
           test("test click add cameraGroup, should add into inspector", () => {

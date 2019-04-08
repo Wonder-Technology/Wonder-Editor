@@ -14,6 +14,15 @@ let addDirectionLightComponent =
     ) =>
   _addComponent((uiState, dispatchFunc), gameObject, "Light");
 
+let addScriptComponent =
+    (
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+      (),
+    ) =>
+  _addComponent((uiState, dispatchFunc), gameObject, "Script");
+
 let addCameraGroupComponent =
     (
       ~uiState=TestTool.buildEmptyAppState(),

@@ -6,6 +6,26 @@ module Rename = {
       name,
     );
 
+  let renameAssetScriptAttributeNode =
+      (
+        ~uiState=TestTool.buildEmptyAppState(),
+        ~dispatchFunc=TestTool.getDispatch(),
+        ~nodeId,
+        ~name,
+        (),
+      ) =>
+    renameAssetNode((uiState, dispatchFunc), nodeId, name);
+
+  let renameAssetScriptEventFunctionNode =
+      (
+        ~uiState=TestTool.buildEmptyAppState(),
+        ~dispatchFunc=TestTool.getDispatch(),
+        ~nodeId,
+        ~name,
+        (),
+      ) =>
+    renameAssetNode((uiState, dispatchFunc), nodeId, name);
+
   let renameAssetTextureNode =
       (
         ~uiState=TestTool.buildEmptyAppState(),

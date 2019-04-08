@@ -46,6 +46,12 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
+    test("disable script event function", () =>
+      ScriptEventFunctionEngineService.isScriptEventFunctionEnable
+      |> StateLogicService.getEngineStateToGetData
+      |> expect == false
+    );
+
     describe("add specific gameObjects for scene view", () => {
       test("add editCamera as current camera", () =>
         MainEditorCameraTool.getCurrentCameraGameObject(

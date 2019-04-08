@@ -6,7 +6,7 @@ let setNodeData = (nodeId, nodeData, editorState) =>
     editorState,
   );
 
-let addScriptNodeToAssetTree = (targetTreeNode, newNode, editorState) =>
+let addScriptAttributeNodeToAssetTree = (targetTreeNode, newNode, editorState) =>
   NodeAssetEditorService.addNodeToAssetTree(
     targetTreeNode,
     newNode,
@@ -27,3 +27,12 @@ let getNameAndAttribute = (nodeId, editorState) => {
 
   (name, attribute);
 };
+
+let findAllScriptAttributeNodes = editorState =>
+  IterateTreeAssetEditorService.filter(
+    ~acc=[||],
+    ~pushNodeFunc=(node, acc) => acc |> ArrayService.push(node),
+    ~editorState,
+    ~predScriptAttributeNodeFunc=node => true,
+    (),
+  );

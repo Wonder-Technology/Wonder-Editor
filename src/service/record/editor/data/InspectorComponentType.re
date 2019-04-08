@@ -8,6 +8,7 @@ type componentType =
   | CameraGroup
   | Light
   | SourceInstance
+  | Script
   | Unknown;
 
 type gameObjectComponent = {
@@ -15,6 +16,6 @@ type gameObjectComponent = {
   hasComponentFunc: (int, StateDataMainType.state) => bool,
 };
 
-external convertComponentTypeToInt : componentType => int = "%identity";
+external convertComponentTypeToInt: componentType => int = "%identity";
 
-external convertIntToComponentType : int => componentType = "%identity";
+external convertIntToComponentType: int => componentType = "%identity";

@@ -104,7 +104,8 @@ let removeFirst = arr => {
       ),
     StateEditorService.getStateIsDebug(),
   );
-  arr |> Js.Array.shift |> OptionService.unsafeGet;
+
+  (arr |> Js.Array.shift |> OptionService.unsafeGet, arr);
 };
 
 let unsafeGetNth = (index, arr) =>
@@ -171,13 +172,19 @@ let removeDuplicateItems = (buildKeyFunc, arr) => {
 };
 
 let exclude = (excludeArr, arr) =>
-  arr |> Js.Array.filter(value => ! (excludeArr |> Js.Array.includes(value)));
+  arr |> Js.Array.filter(value => !(excludeArr |> Js.Array.includes(value)));
+
+let excludeWithFunc = (excludeArr, isNeedExcludeFunc, arr) =>
+  arr |> Js.Array.filter(value => !isNeedExcludeFunc(excludeArr, value));
 
 let intersect = (arr1, arr2) =>
   arr1 |> Js.Array.filter(value => arr2 |> Js.Array.includes(value));
 
 let hasIntersect = (arr1, arr2) =>
   intersect(arr1, arr2) |> Js.Array.length > 0;
+
+let hasExclude = (excludeArr, arr) =>
+  exclude(excludeArr, arr) |> Js.Array.length > 0;
 
 let fastConcat = (arr1, arr2) =>
   arr2
@@ -219,7 +226,7 @@ let isEqual = (arr1, arr2) =>
 
 let isInclude = (sourceArr, targetArr) =>
   targetArr
-  |> Js.Array.filter(value => ! (sourceArr |> Js.Array.includes(value)))
+  |> Js.Array.filter(value => !(sourceArr |> Js.Array.includes(value)))
   |> Js.Array.length === 0;
 
 let _addFailureFunc = ((msg1, value1), (msg2, value2)) => (

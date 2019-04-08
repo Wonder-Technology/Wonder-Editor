@@ -48,6 +48,10 @@ let _registerJobForEngine = engineState =>
        "init_camera_controller",
        InitCameraControllerJob.initJob,
      )
+  |> JobEngineService.registerNoWorkerInitJob(
+       "init_script_api",
+       InitScriptAPIJob.initJob,
+     )
   |> JobEngineService.registerNoWorkerLoopJob(
        "reallocate_cpu_memory",
        ReallocateCPUMemoryJob.reallocateJob,

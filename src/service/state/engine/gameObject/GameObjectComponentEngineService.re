@@ -137,6 +137,22 @@ let unsafeGetArcballCameraControllerComponent = GameObjectAPI.unsafeGetGameObjec
 
 let hasArcballCameraControllerComponent = GameObjectAPI.hasGameObjectArcballCameraControllerComponent;
 
+/* script */
+
+let hasScriptComponent = GameObjectAPI.hasGameObjectScriptComponent;
+
+let getScriptComponent = (gameObject, engineState) =>
+  GetComponentGameObjectService.getScriptComponent(.
+    gameObject,
+    engineState.gameObjectRecord,
+  );
+
+let unsafeGetScriptComponent = GameObjectAPI.unsafeGetGameObjectScriptComponent;
+
+let addScriptComponent = GameObjectAPI.addGameObjectScriptComponent;
+
+let disposeScriptComponent = GameObjectAPI.disposeGameObjectScriptComponent;
+
 /* all components */
 
 let getAllLightMaterialComponents = GameObjectAPI.getAllLightMaterialComponents;

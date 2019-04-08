@@ -197,10 +197,11 @@ module Method = {
           languageType,
         )
       }
-      getComponentValueFunc={
+      defaultValue={
         ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
           arcballCameraController,
         )
+        |> StateLogicService.getEngineStateToGetData
       }
       changeComponentValueFunc={changeDistance(arcballCameraController)}
       blurValueFunc={
@@ -230,10 +231,11 @@ module Method = {
           languageType,
         )
       }
-      getComponentValueFunc={
+      defaultValue={
         ArcballCameraEngineService.unsafeGetArcballCameraControllerMinDistance(
           arcballCameraController,
         )
+        |> StateLogicService.getEngineStateToGetData
       }
       changeComponentValueFunc={changeMinDistance(arcballCameraController)}
       blurValueFunc={
@@ -303,10 +305,11 @@ module Method = {
           languageType,
         )
       }
-      getComponentValueFunc={
+      defaultValue={
         ArcballCameraEngineService.unsafeGetArcballCameraControllerPhi(
           arcballCameraController,
         )
+        |> StateLogicService.getEngineStateToGetData
       }
       changeComponentValueFunc={changePhi(arcballCameraController)}
       blurValueFunc={
@@ -340,10 +343,11 @@ module Method = {
           languageType,
         )
       }
-      getComponentValueFunc={
+      defaultValue={
         ArcballCameraEngineService.unsafeGetArcballCameraControllerTheta(
           arcballCameraController,
         )
+        |> StateLogicService.getEngineStateToGetData
       }
       changeComponentValueFunc={changeTheta(arcballCameraController)}
       blurValueFunc={

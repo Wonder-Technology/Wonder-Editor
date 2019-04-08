@@ -310,6 +310,62 @@ let inspector_language_array = [|
     },
   },
   {
+    title: "script-describe",
+    language: {
+      zh: {j|Script|j},
+      en: "Script",
+    },
+  },
+  {
+    title: "script-add-scriptEventFunction",
+    language: {
+      zh: {j|添加script event function|j},
+      en: "Add script event function",
+    },
+  },
+  {
+    title: "script-use-scriptEventFunction-describe",
+    language: {
+      zh: {j|使用的script event function资产|j},
+      en: "script event function asset in use",
+    },
+  },
+  {
+    title: "script-add-scriptAttribute",
+    language: {
+      zh: {j|添加script attribute|j},
+      en: "Add script attribute",
+    },
+  },
+  {
+    title: "script-use-scriptAttribute-describe",
+    language: {
+      zh: {j|使用的script attribute资产|j},
+      en: "script attribute asset in use",
+    },
+  },
+  {
+    title: "script-scriptAttribute-field-name-describe",
+    language: {
+      zh: {j|field的名称|j},
+      en: "field's name",
+    },
+  },
+  {
+    title: "script-scriptAttribute-field-type-describe",
+    language: {
+      zh: {j|field的类型|j},
+      en: "field's type",
+    },
+  },
+  {
+    title: "script-scriptAttribute-field-defaultValue-describe",
+    language: {
+      zh: {j|field的默认值|j},
+      en: "field's default value",
+    },
+  },
+  {
     title: "texture-name-describe",
     language: {
       zh: {j|纹理的名字|j},
@@ -333,7 +389,7 @@ let inspector_language_array = [|
   {
     title: "texture-mag-filter-describe",
     language: {
-      zh: {j|定义当一个纹理单元（texel）覆盖多个像素点时纹理如何采样|j},
+      zh: {j|定义当一个纹理单元（texel）覆盖多个像素点时纹理如何��样|j},
       en: "defines how textures are sampled when a texel covers multiple pixels",
     },
   },

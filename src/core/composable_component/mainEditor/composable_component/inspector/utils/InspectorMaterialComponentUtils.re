@@ -65,10 +65,11 @@ let buildLightMaterialComponent =
           languageType,
         )
       }
-      getComponentValueFunc={
+      defaultValue={
         LightMaterialEngineService.getLightMaterialShininess(
           materialComponent,
         )
+        |> StateLogicService.getEngineStateToGetData
       }
       changeComponentValueFunc={changeShininessFunc(materialComponent)}
       blurValueFunc=blurShininessFunc

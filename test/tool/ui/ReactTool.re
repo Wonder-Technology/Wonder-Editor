@@ -31,7 +31,25 @@ let isNoUpdate = reducerResult =>
 let createDispatchFuncStub = sandbox => {
   let stub = SinonTool.createOneLengthStub(sandbox^);
 
-  Wonderjs.Root.root##dispathFuncStub_wonder_editor#=stub;
+  Wonderjs.Root.root##dispathFuncStub_wonder_editor #= stub;
 
   stub;
 };
+
+let buildFakeSelf = (state, send): ReasonReact.self('a, 'b, 'c) => {
+  handle: Obj.magic(-1),
+  state,
+  retainedProps: Obj.magic(-1),
+  send,
+  onUnmount: Obj.magic(-1),
+};
+
+let getDispatchUpdateActionArr = dispatchedAction =>
+  switch (dispatchedAction) {
+  | AppStore.UpdateAction(action) =>
+    switch (action) {
+    | Update(arr) => arr
+    | _ => [||]
+    }
+  | _ => [||]
+  };

@@ -12,109 +12,11 @@ type action =
   | UpdateAttributeEntries(Wonderjs.ScriptAttributeType.scriptAttribute);
 
 module Method = {
-  let _updateScriptAttributeNode =
-      (nodeId, attributeName, attribute, editorState) =>
-    ScriptAttributeNodeAssetEditorService.setNodeData(
-      nodeId,
-      ScriptAttributeNodeAssetService.buildNodeData(
-        ~name=attributeName,
-        ~attribute,
-      ),
-      editorState,
-    );
+  let _updateScriptAttributeNodeByRemoveFieldData = RemoveScriptAttributeFieldEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let _updateScriptAttributeNodeByReplaceFieldData =
-      (nodeId, (fieldName, newFieldDataJsObjStr), editorState) => {
-    let (attributeName, attribute) =
-      ScriptAttributeNodeAssetEditorService.getNameAndAttribute(nodeId)
-      |> StateLogicService.getEditorState;
+  let _updateScriptAttributeNodeByReplaceFieldData = UpdateScriptAttributeFieldEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-    _updateScriptAttributeNode(
-      nodeId,
-      attributeName,
-      ScriptAttributeEngineService.replaceScriptAttributeField(
-        fieldName,
-        newFieldDataJsObjStr |> Js.Json.parseExn |> Obj.magic,
-        attribute,
-      ),
-      editorState,
-    );
-  };
-
-  let _updateScriptAttributeNodeByRemoveFieldData =
-      (nodeId, fieldName, editorState) => {
-    let (attributeName, attribute) =
-      ScriptAttributeNodeAssetEditorService.getNameAndAttribute(
-        nodeId,
-        editorState,
-      );
-
-    let newAttribute =
-      ScriptAttributeEngineService.removeScriptAttributeField(
-        fieldName,
-        attribute,
-      );
-
-    (
-      _updateScriptAttributeNode(
-        nodeId,
-        attributeName,
-        newAttribute,
-        editorState,
-      ),
-      newAttribute,
-    );
-  };
-
-  let _getAttributeNodeData = (nodeId, editorState) =>
-    OperateTreeAssetEditorService.unsafeFindNodeById(nodeId)
-    |> StateLogicService.getEditorState
-    |> ScriptAttributeNodeAssetService.getNodeData;
-
-  let addDefaultField = (send, nodeId) => {
-    let {name as attributeName, attribute}: NodeAssetType.scriptAttributeNodeData =
-      _getAttributeNodeData(nodeId) |> StateLogicService.getEditorState;
-
-    let attribute =
-      ScriptAttributeEngineService.addScriptAttributeField(
-        OperateTreeAssetLogicService.getUniqueScriptAttributeFieldName(
-          ScriptAttributeNodeNameAssetService.getNewFieldName(),
-          attribute,
-        ),
-        {
-          "type": "int",
-          "defaultValue":
-            0 |> Wonderjs.ScriptAttributeType.intToScriptAttributeValue,
-        },
-        attribute,
-      );
-
-    /* TODO update script component */
-    _updateScriptAttributeNode(nodeId, attributeName, attribute)
-    |> StateLogicService.getAndSetEditorState;
-
-    send(UpdateAttributeEntries(attribute));
-  };
-
-  let _convertFieldTypeToJsObjStr = type_ =>
-    Wonderjs.(
-      ScriptAttributeType.(
-        switch (type_) {
-        | Int => "int"
-        | Float => "float"
-        | type_ =>
-          WonderLog.Log.fatal(
-            WonderLog.Log.buildFatalMessage(
-              ~title="_convertFieldTypeToJsObjStr",
-              ~description={j|unknown type: $type_|j},
-              ~reason="",
-              ~solution={j||j},
-              ~params={j||j},
-            ),
-          )
-        }
-      )
-    );
+  let addDefaultField = AddScriptAttributeDefaultFieldEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let _convertFieldToJsObjStr =
       (
@@ -125,7 +27,7 @@ module Method = {
     map
     |> WonderCommonlib.MutableHashMapService.set(
          "type",
-         _convertFieldTypeToJsObjStr(type_),
+         ScriptAttributeTypeService.convertFieldTypeToJsObjStr(type_),
        )
     |> WonderCommonlib.MutableHashMapService.set(
          "defaultValue",
@@ -135,30 +37,23 @@ module Method = {
     |> Js.Json.stringify;
   };
 
-  let _renameField = (send, nodeId, oldFieldName, newFieldName) => {
-    /* TODO refactor */
-    /* TODO update script component */
+  let _renameField = RenameScriptAttributeFieldEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-    let (attributeName, attribute) =
-      ScriptAttributeNodeAssetEditorService.getNameAndAttribute(nodeId)
-      |> StateLogicService.getEditorState;
-
-    let newAttribute =
-      ScriptAttributeEngineService.renameScriptAttributeField(
-        oldFieldName,
-        newFieldName,
-        attribute,
-      );
-
-    _updateScriptAttributeNode(nodeId, attributeName, newAttribute)
-    |> StateLogicService.getAndSetEditorState;
-
-    send(UpdateAttributeEntries(newAttribute));
-  };
+  let _sortAttributeEntries = attributeEntries =>
+    attributeEntries
+    |> Js.Array.sortInPlaceWith(((fieldName1, _), (fieldName2, _)) =>
+         SortService.buildSortByNameFunc(fieldName1, fieldName2)
+       );
 
   let getAttributeAllFieldsDomArr =
-      (send, (languageType, nodeId), attributeEntries) =>
+      (
+        (uiState, dispatchFunc),
+        send,
+        (languageType, nodeId),
+        attributeEntries,
+      ) =>
     attributeEntries
+    |> _sortAttributeEntries
     |> Js.Array.mapi(((fieldName, field), i) =>
          <div key={DomHelper.getRandomKey()} className="field">
            <StringInput
@@ -170,7 +65,17 @@ module Method = {
                )
              }
              defaultValue=fieldName
-             onBlur={_renameField(send, nodeId, fieldName)}
+             onBlur={
+               value =>
+                 _renameField(
+                   (uiState, dispatchFunc),
+                   (
+                     languageType,
+                     attribute => send(UpdateAttributeEntries(attribute)),
+                   ),
+                   (nodeId, fieldName, value),
+                 )
+             }
              canBeNull=false
            />
            <FileInput
@@ -178,31 +83,23 @@ module Method = {
              inputValue={_convertFieldToJsObjStr(field)}
              onSubmit={
                value =>
-                 /* TODO update script component */
                  _updateScriptAttributeNodeByReplaceFieldData(
-                   nodeId,
-                   (fieldName, value),
+                   (uiState, dispatchFunc),
+                   (),
+                   (nodeId, fieldName, value),
                  )
-                 |> StateLogicService.getAndSetEditorState
              }
            />
            <button
              className="scriptAttribute-field-remove"
              onClick={
-               e => {
-                 /* TODO update script component */
-
-                 let (editorState, newAttribute) =
-                   _updateScriptAttributeNodeByRemoveFieldData(
-                     nodeId,
-                     fieldName,
-                   )
-                   |> StateLogicService.getEditorState;
-
-                 editorState |> StateEditorService.setState |> ignore;
-
-                 send(UpdateAttributeEntries(newAttribute));
-               }
+               e =>
+                 _updateScriptAttributeNodeByRemoveFieldData(
+                   (uiState, dispatchFunc),
+                   newAttribute =>
+                     send(UpdateAttributeEntries(newAttribute)),
+                   (nodeId, fieldName),
+                 )
              }>
              {DomHelper.textEl("Remove")}
            </button>
@@ -258,6 +155,7 @@ let render =
         {
           ReasonReact.array(
             Method.getAttributeAllFieldsDomArr(
+              (uiState, dispatchFunc),
               send,
               (languageType, nodeId),
               state.attributeEntries,
@@ -267,7 +165,14 @@ let render =
       </div>
       <button
         className="addable-btn"
-        onClick={_e => Method.addDefaultField(send, nodeId)}>
+        onClick={
+          _e =>
+            Method.addDefaultField(
+              (uiState, dispatchFunc),
+              attribute => send(UpdateAttributeEntries(attribute)),
+              nodeId,
+            )
+        }>
         {
           DomHelper.textEl(
             LanguageUtils.getInspectorLanguageDataByType(

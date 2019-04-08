@@ -230,8 +230,10 @@ let buildUI = ui => ReactTestRenderer.create(ui);
 let buildScriptAttributeInspectorComponent =
     (
       ~currentNodeId,
-      ~name,
-      ~attribute,
+      ~name=ScriptAttributeInspectorTool.getAttributeName(currentNodeId)
+            |> StateLogicService.getEditorState,
+      ~attribute=ScriptAttributeInspectorTool.getAttribute(currentNodeId)
+                 |> StateLogicService.getEditorState,
       ~uiState=TestTool.buildEmptyAppState(),
       ~dispatchFunc=TestTool.getDispatch(),
       ~renameFunc=AssetTreeInspectorTool.Rename.renameAssetNode(
@@ -250,3 +252,44 @@ let buildScriptAttributeInspectorComponent =
       renameFunc
     />,
   );
+
+let renderScriptEventFunctionComponent =
+    (
+      ~sandbox,
+      ~state,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~send=SinonTool.createOneLengthStub(sandbox^),
+      (),
+    ) =>
+  ReactTestRenderer.create(
+    MainEditorScriptEventFunction.render(
+      (uiState, dispatchFunc),
+      ReactTool.buildFakeSelf(state, send),
+    ),
+  );
+
+let renderScriptAttributeComponent =
+    (
+      ~sandbox,
+      ~state,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~send=SinonTool.createOneLengthStub(sandbox^),
+      (),
+    ) =>
+  ReactTestRenderer.create(
+    MainEditorScriptAttribute.render(
+      (uiState, dispatchFunc),
+      ReactTool.buildFakeSelf(state, send),
+    ),
+  );
+
+let buildScriptComponent =
+    (
+      ~script,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  ReactTestRenderer.create(<MainEditorScript uiState dispatchFunc script />);

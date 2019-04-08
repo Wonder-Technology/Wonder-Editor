@@ -26,23 +26,7 @@ module Method = {
   |j};
   };
 
-  let _convertEventFunctionJsObjStrToData = jsObjStr =>
-    jsObjStr
-    |> SerializeService.deserializeFunction
-    |> ScriptEventFunctionEngineService.createScriptEventFunctionData;
-
-  let updateEventFunctionData = (nodeId, name, eventFunctionJsObjStr) =>
-    /* TODO check eventFunctionJsObjStr: should be valid */
-    /* TODO update script component->event function data of the name */
-    ScriptEventFunctionNodeAssetEditorService.setNodeData(
-      nodeId,
-      ScriptEventFunctionNodeAssetService.buildNodeData(
-        ~name,
-        ~eventFunctionData=
-          _convertEventFunctionJsObjStrToData(eventFunctionJsObjStr),
-      ),
-    )
-    |> StateLogicService.getAndSetEditorState;
+  let updateEventFunctionData = UpdateScriptEventFunctionDataEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 };
 
 let component =
@@ -82,7 +66,12 @@ let render =
           Method.convertEventFunctionDataToJsObjStr(eventFunctionData)
         }
         onSubmit={
-          value => Method.updateEventFunctionData(nodeId, name, value)
+          value =>
+            Method.updateEventFunctionData(
+              (uiState, dispatchFunc),
+              (),
+              (nodeId, name, value),
+            )
         }
       />
     </div>

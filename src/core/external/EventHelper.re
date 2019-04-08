@@ -1,6 +1,6 @@
-let stopPropagation = e : unit => e##stopPropagation();
+let stopPropagation = e: unit => e##stopPropagation();
 
-let preventDefault = e : unit => e##preventDefault();
+let preventDefault = e: unit => e##preventDefault();
 
 let addEventListener = [%raw
   (element, event, handleFunc) => {|

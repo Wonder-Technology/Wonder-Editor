@@ -1,0 +1,2 @@
+let getAndRefreshEngineStateForRunLoop = () =>
+  StateLogicService.getAndRefreshEngineStateForRunLoop();

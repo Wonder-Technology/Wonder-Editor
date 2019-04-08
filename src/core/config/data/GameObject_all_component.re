@@ -19,6 +19,12 @@ let gameObject_all_component = {|
                 { "type" : "RenderGroup" },
                 { "type" : "Light" }
                 ]
+            },
+       {
+            "type":"Scripts",
+            "components":[
+                { "type" : "Script" }
+                ]
             }
     ]
 |};

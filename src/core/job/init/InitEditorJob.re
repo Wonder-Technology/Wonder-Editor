@@ -6,6 +6,9 @@ let _addSceneGameObjectComponentTypeToMap = (engineState, editorState) =>
      );
 
 let initEditorJob = (_, engineState) => {
+  let engineState =
+    ScriptEventFunctionEngineService.disableScriptEventFunction(engineState);
+
   let editorState = StateEditorService.getState();
 
   let (editorState, engineState, editCamera) =

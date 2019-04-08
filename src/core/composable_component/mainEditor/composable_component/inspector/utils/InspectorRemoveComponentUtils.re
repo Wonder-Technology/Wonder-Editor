@@ -22,7 +22,7 @@ let _removeCameraGroup = (currentSceneTreeNode, (editorState, engineState)) =>
        ),
      );
 
-let _removeArcballCameraControllerGroup =
+let _removeArcballCameraController =
     (currentSceneTreeNode, (editorState, engineState)) => {
   let arcballCameraController =
     engineState
@@ -35,6 +35,17 @@ let _removeArcballCameraControllerGroup =
        currentSceneTreeNode,
        arcballCameraController,
      );
+};
+
+let _removeScript = (currentSceneTreeNode, (editorState, engineState)) => {
+  let script =
+    engineState
+    |> GameObjectComponentEngineService.unsafeGetScriptComponent(
+         currentSceneTreeNode,
+       );
+
+  (editorState, engineState)
+  |> GameObjectLogicService.disposeScript(currentSceneTreeNode, script);
 };
 
 let removeComponentByType =
@@ -76,10 +87,11 @@ let removeComponentByType =
   | CameraGroup =>
     _removeCameraGroup(currentSceneTreeNode, (editorState, engineState))
   | ArcballCameraController =>
-    _removeArcballCameraControllerGroup(
+    _removeArcballCameraController(
       currentSceneTreeNode,
       (editorState, engineState),
     )
+  | Script => _removeScript(currentSceneTreeNode, (editorState, engineState))
   | _ =>
     ConsoleUtils.error(
       LogUtils.buildErrorMessage(

@@ -15,11 +15,15 @@ let addFolderNodesToTreeByPath = (path, (editorState, engineState)) => {
   );
 };
 
-let getNodeNameById = (nodeId, tree, engineState) =>
-  OperateTreeAssetService.findNodeById(nodeId, tree)
+let getNodeNameById = (nodeId, (editorState, engineState)) =>
+  OperateTreeAssetEditorService.findNodeById(nodeId, editorState)
   |> Js.Option.map((. node) =>
        NodeNameAssetLogicService.getNodeName(node, engineState)
      );
+
+let unsafeGetNodeNameById = (nodeId, (editorState, engineState)) =>
+  getNodeNameById(nodeId, (editorState, engineState))
+  |> OptionService.unsafeGet;
 
 let _includeTargetChild = (folderNode, targetChild, isNodeEqualFunc) =>
   OperateTreeAssetService.findTargetChild(
@@ -182,3 +186,53 @@ let rec getUniqueScriptAttributeFieldName = (name, attribute) =>
   ScriptAttributeEngineService.hasScriptAttributeField(name, attribute) ?
     getUniqueScriptAttributeFieldName(_buildUniqueName(name), attribute) :
     name;
+
+let findNodeByName = (targetNodeName, (editorState, engineState)) => {
+  let predNodeFunc = node =>
+    NodeNameAssetLogicService.isTargetNameNode(
+      ~node,
+      ~name=targetNodeName,
+      ~engineState,
+    );
+
+  IterateTreeAssetService.findOne(
+    ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
+    ~predScriptEventFunctionNodeFunc=predNodeFunc,
+    ~predScriptAttributeNodeFunc=predNodeFunc,
+    ~predTextureNodeFunc=predNodeFunc,
+    ~predMaterialNodeFunc=predNodeFunc,
+    ~predWDBNodeFunc=predNodeFunc,
+    ~predFolderNodeFunc=predNodeFunc,
+    (),
+  );
+};
+
+let findNodeIdByName = (targetNodeName, (editorState, engineState)) =>
+  findNodeByName(targetNodeName, (editorState, engineState))
+  |> Js.Option.map((. node) => NodeAssetService.getNodeId(~node));
+
+let findNodesByName = (targetNodeName, (editorState, engineState)) => {
+  let predNodeFunc = node =>
+    NodeNameAssetLogicService.isTargetNameNode(
+      ~node,
+      ~name=targetNodeName,
+      ~engineState,
+    );
+
+  IterateTreeAssetService.find(
+    ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
+    ~predScriptEventFunctionNodeFunc=predNodeFunc,
+    ~predScriptAttributeNodeFunc=predNodeFunc,
+    ~predTextureNodeFunc=predNodeFunc,
+    ~predMaterialNodeFunc=predNodeFunc,
+    ~predWDBNodeFunc=predNodeFunc,
+    ~predFolderNodeFunc=predNodeFunc,
+    (),
+  );
+};
+
+let findNodeIdsByName = (targetNodeName, (editorState, engineState)) =>
+  findNodesByName(targetNodeName, (editorState, engineState))
+  |> Js.Option.map((. nodes) =>
+       nodes |> List.map(node => NodeAssetService.getNodeId(~node))
+     );

@@ -1,6 +1,6 @@
 type state = {
   inputValue: string,
-  originalName: string,
+  originValue: string,
 };
 
 type action =
@@ -24,30 +24,37 @@ module Method = {
     | Some(onBlur) => onBlur(value)
     };
 
+  let _isValueNotChange = ({originValue, inputValue}) =>
+    inputValue |> ValueService.isValueEqual(ValueType.String, originValue);
+
   let handleBlurAction = (state, canBeNull, onBlurFunc) =>
     switch (canBeNull) {
     | None =>
-      ReasonReactUtils.updateWithSideEffects(
-        {...state, originalName: state.inputValue}, _state =>
-        triggerOnBlur(state.inputValue, onBlurFunc)
-      )
-    | Some(canBeNull) =>
-      canBeNull ?
+      _isValueNotChange(state) ?
+        ReasonReact.NoUpdate :
         ReasonReactUtils.updateWithSideEffects(
-          {...state, originalName: state.inputValue}, _state =>
+          {...state, originValue: state.inputValue}, _state =>
           triggerOnBlur(state.inputValue, onBlurFunc)
-        ) :
-        (
-          switch (state.inputValue) {
-          | "" =>
-            ReasonReact.Update({...state, inputValue: state.originalName})
-          | value =>
-            ReasonReactUtils.updateWithSideEffects(
-              {...state, originalName: value}, _state =>
-              triggerOnBlur(state.inputValue, onBlurFunc)
-            )
-          }
         )
+    | Some(canBeNull) =>
+      _isValueNotChange(state) ?
+        ReasonReact.NoUpdate :
+        canBeNull ?
+          ReasonReactUtils.updateWithSideEffects(
+            {...state, originValue: state.inputValue}, _state =>
+            triggerOnBlur(state.inputValue, onBlurFunc)
+          ) :
+          (
+            switch (state.inputValue) {
+            | "" =>
+              ReasonReact.Update({...state, inputValue: state.originValue})
+            | value =>
+              ReasonReactUtils.updateWithSideEffects(
+                {...state, originValue: value}, _state =>
+                triggerOnBlur(state.inputValue, onBlurFunc)
+              )
+            }
+          )
     };
 };
 
@@ -106,8 +113,8 @@ let make =
   ...component,
   initialState: () =>
     switch (defaultValue) {
-    | None => {inputValue: "", originalName: ""}
-    | Some(value) => {inputValue: value, originalName: value}
+    | None => {inputValue: "", originValue: ""}
+    | Some(value) => {inputValue: value, originValue: value}
     },
   reducer: reducer((onChange, onBlur), canBeNull),
   render: self => render(label, title, self),

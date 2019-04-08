@@ -25,6 +25,10 @@ let buildAllComponentArray = () => [|
     componentType: Light,
     hasComponentFunc: LightEngineService.hasLightComponent,
   },
+  {
+    componentType: Script,
+    hasComponentFunc: GameObjectComponentEngineService.hasScriptComponent,
+  },
 |];
 
 let _setGameObjectComponentInComponentTypeMap =
@@ -57,7 +61,8 @@ let setGameObjectArrComponentTypeMap =
              );
 
            _iterateGameObject(
-             engineState |> HierarchyGameObjectEngineService.getChildren(gameObject),
+             engineState
+             |> HierarchyGameObjectEngineService.getChildren(gameObject),
              engineState,
              editorState,
            );
