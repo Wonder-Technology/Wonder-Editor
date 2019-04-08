@@ -12,7 +12,10 @@ let changeMaterialTypeToBeLightMaterial =
 
 let changeShininess =
     (~material=GameObjectTool.getCurrentSceneTreeNodeMaterial(), ~value, ()) =>
-  MainEditorLightMaterial.Method.changeShininess(material, value);
+  MainEditorLightMaterialForGameObject.Method.changeShininess(
+    material,
+    value,
+  );
 
 let blurShininess =
     (
@@ -22,17 +25,17 @@ let blurShininess =
       ~value,
       (),
     ) =>
-  MainEditorLightMaterial.Method.blurShininessEvent(
+  InspectorMaterialUtils.blurShininessEvent(
     (uiState, dispatchFunc),
     material,
     value,
   );
 
 let getColor = material =>
-  MainEditorLightMaterial.Method.getColor(material, ());
+  InspectorMaterialUtils.getLightMaterialColor(material, ());
 
 let changeColor = (material, color) =>
-  MainEditorLightMaterial.Method.changeColor(material, color);
+  MainEditorLightMaterialForGameObject.Method.changeColor(material, color);
 
 let closeColorPicker =
     (
@@ -42,7 +45,7 @@ let closeColorPicker =
       ~uiState=TestTool.buildEmptyAppState(),
       (),
     ) =>
-  MainEditorLightMaterial.Method.closeColorPick(
+  InspectorMaterialUtils.closeLightMaterialColorPick(
     (uiState, dispatchFunc),
     material,
     color,
@@ -61,14 +64,7 @@ module Drag = {
         ~textureNodeId,
         (),
       ) =>
-    /* DragEventUtils.handleDragStart(
-         textureNodeId,
-         widget,
-         dragImg,
-         effectAllowd,
-         event,
-       ); */
-    MainEditorLightMaterial.Method.onDrop(
+    InspectorMaterialUtils.dragToSetLightMaterialTexture(
       (uiState, dispatchFunc),
       material,
       textureNodeId,

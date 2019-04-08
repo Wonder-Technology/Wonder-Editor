@@ -69,3 +69,16 @@ let removeArcballCameraControllerComponent =
     gameObject,
     InspectorComponentType.ArcballCameraController,
   );
+
+let removeScriptComponent =
+    (
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+      (),
+    ) =>
+  _removeComponent(
+    (uiState, dispatchFunc),
+    gameObject,
+    InspectorComponentType.Script,
+  );

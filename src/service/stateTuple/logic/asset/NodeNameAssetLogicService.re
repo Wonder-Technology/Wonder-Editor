@@ -57,6 +57,30 @@ let updateNodeName = (node, name, engineState) =>
         ),
         node,
       ),
+    ~scriptEventFunctionNodeFunc=
+      (
+        nodeId,
+        ({name}: NodeAssetType.scriptEventFunctionNodeData) as nodeData,
+      ) => (
+        engineState,
+        ScriptEventFunctionNodeAssetService.buildNodeByNodeData(
+          ~nodeId,
+          ~nodeData=
+            ScriptEventFunctionNodeNameAssetService.rename(~name, ~nodeData),
+        ),
+      ),
+    ~scriptAttributeNodeFunc=
+      (
+        nodeId,
+        ({name}: NodeAssetType.scriptAttributeNodeData) as nodeData,
+      ) => (
+        engineState,
+        ScriptAttributeNodeAssetService.buildNodeByNodeData(
+          ~nodeId,
+          ~nodeData=
+            ScriptAttributeNodeNameAssetService.rename(~name, ~nodeData),
+        ),
+      ),
     ~wdbNodeFunc=
       (nodeId, nodeData) => (
         engineState,

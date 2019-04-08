@@ -65,6 +65,14 @@ let _addLight = (currentSceneTreeNode, (editorState, engineState)) =>
       );
     };
 
+let _addScript = (currentSceneTreeNode, (editorState, engineState)) => {
+  let (engineState, scriptComponent) =
+    engineState |> ScriptEngineService.create;
+
+  (editorState, engineState)
+  |> GameObjectLogicService.addScript(currentSceneTreeNode, scriptComponent);
+};
+
 let _addArcballCameraController =
     (currentSceneTreeNode, (editorState, engineState)) => {
   let (engineState, cameraController) =
@@ -102,6 +110,7 @@ let addComponentByType =
   | Geometry =>
     _addGeometry(currentSceneTreeNode, (editorState, engineState))
   | Light => _addLight(currentSceneTreeNode, (editorState, engineState))
+  | Script => _addScript(currentSceneTreeNode, (editorState, engineState))
   | CameraGroup =>
     let (engineState, cameraComponentRecord) =
       CameraEngineService.createCameraGroup(engineState);

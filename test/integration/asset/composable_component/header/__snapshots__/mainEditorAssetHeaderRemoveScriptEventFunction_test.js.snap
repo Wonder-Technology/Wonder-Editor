@@ -1,0 +1,774 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorAssetHeader->remove script event function 
+        select script event function;
+        click remove-button;
+             should remove it from assetTreeRoot 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+/>
+`;
+
+exports[`MainEditorAssetHeader->remove script event function should remove from script components test 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  >
+    <div
+      className="sceneTree-name"
+    >
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="gameObject's name"
+        >
+          <span
+            className="component-label"
+          >
+            Name
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="Cube"
+          />
+        </div>
+      </article>
+    </div>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+          title="Transform"
+        >
+          Transform
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-transform"
+      >
+        <article
+          className="inspector-item wonder-three-float-input"
+        >
+          <div
+            className="item-header"
+            title="position in local coordinate system"
+          >
+            Position
+          </div>
+          <div
+            className="item-content"
+          >
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                X
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Y
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Z
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+          </div>
+        </article>
+        <article
+          className="inspector-item wonder-three-float-input"
+        >
+          <div
+            className="item-header"
+            title="euler angle in local coordinate system"
+          >
+            Rotation
+          </div>
+          <div
+            className="item-content"
+          >
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                X
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Y
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Z
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+          </div>
+        </article>
+        <article
+          className="inspector-item wonder-three-float-input"
+        >
+          <div
+            className="item-header"
+            title="scale in local coordinate system"
+          >
+            Scale
+          </div>
+          <div
+            className="item-content"
+          >
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                X
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="1"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Y
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="1"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Z
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="1"
+                />
+              </div>
+            </article>
+          </div>
+        </article>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+          title="Render Group decide how to render the gameObject and whether to render it or not "
+        >
+          Render Group
+        </div>
+        <div
+          className="header-close"
+        >
+          <img
+            onClick={[Function]}
+            src="./public/img/close.png"
+          />
+        </div>
+      </div>
+      <article
+        className="wonder-render-group"
+      >
+        <div
+          className="inspector-component"
+        >
+          <div
+            className="component-title"
+            title="MeshRenderer"
+          >
+            Mesh Render
+          </div>
+          <hr />
+          <div
+            className="component-content"
+          >
+            <article
+              className="wonder-mesh-renderer"
+            >
+              <article
+                className="inspector-item"
+              >
+                <div
+                  className="item-header"
+                  title="draw mode"
+                >
+                  <span
+                    className=""
+                  >
+                    Draw Mode
+                  </span>
+                </div>
+                <div
+                  className="item-content"
+                >
+                  <select
+                    onChange={[Function]}
+                    value="4"
+                  >
+                    <option
+                      value="0"
+                    >
+                      points
+                    </option>
+                    <option
+                      value="1"
+                    >
+                      lines
+                    </option>
+                    <option
+                      value="2"
+                    >
+                      line_loop
+                    </option>
+                    <option
+                      value="3"
+                    >
+                      Line_strip
+                    </option>
+                    <option
+                      value="4"
+                    >
+                      Triangles
+                    </option>
+                    <option
+                      value="5"
+                    >
+                      triangle_strip
+                    </option>
+                    <option
+                      value="6"
+                    >
+                      Triangle_fan
+                    </option>
+                  </select>
+                </div>
+              </article>
+            </article>
+          </div>
+        </div>
+        <div
+          className="inspector-component"
+        >
+          <div
+            className="component-title"
+            title="Material"
+          >
+            Material
+          </div>
+          <hr />
+          <div
+            className="component-content"
+          >
+            <article
+              className="wonder-inspector-material"
+            >
+              <div
+                className="inspector-item"
+              >
+                <div
+                  className="item-header"
+                  title="material in use which is default or material asset"
+                >
+                  Material
+                </div>
+                <div
+                  className="item-content"
+                >
+                  <div
+                    className="inspector-select"
+                  >
+                    <div
+                      className="select-name"
+                      onClick={[Function]}
+                    >
+                      Wonder-Default-Light-Material
+                    </div>
+                    <div
+                      className="select-img"
+                      onClick={[Function]}
+                    >
+                      <img
+                        src="./public/img/select.png"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="material-value"
+              >
+                <article
+                  className="inspector-item"
+                >
+                  <div
+                    className="item-header"
+                    title="material's type"
+                  >
+                    <span
+                      className=""
+                    >
+                      Type
+                    </span>
+                  </div>
+                  <div
+                    className="item-content"
+                  >
+                    <select
+                      onChange={[Function]}
+                      value="1"
+                    >
+                      <option
+                        value="0"
+                      >
+                        basic_material
+                      </option>
+                      <option
+                        value="1"
+                      >
+                        light_material
+                      </option>
+                    </select>
+                  </div>
+                </article>
+                <div
+                  className=""
+                >
+                  <article
+                    className="wonder-light-material"
+                  >
+                    <article
+                      className="inspector-item"
+                    >
+                      <div
+                        className="item-header"
+                        title="material's diffuse color"
+                      >
+                        Diffuse Color
+                      </div>
+                      <div
+                        className="item-content item-color"
+                      >
+                        <div
+                          className="color-hex"
+                          onClick={[Function]}
+                          style={
+                            Object {
+                              "background": "#ffffff",
+                            }
+                          }
+                        />
+                        <div
+                          className="color-select"
+                          onClick={[Function]}
+                        >
+                          <img
+                            src="./public/img/color.png"
+                          />
+                        </div>
+                      </div>
+                    </article>
+                    <article
+                      className="inspector-item"
+                    >
+                      <div
+                        className="item-header"
+                        title="material's diffuse map"
+                      >
+                        Diffuse Map
+                      </div>
+                      <div
+                        className="item-content item-texture"
+                      >
+                        <div
+                          className="texture-img"
+                          onClick={[Function]}
+                          style={
+                            Object {
+                              "opacity": "1",
+                            }
+                          }
+                        >
+                          <div
+                            className="img-dragBg"
+                            onDragEnter={[Function]}
+                            onDragLeave={[Function]}
+                            onDragOver={[Function]}
+                            onDrop={[Function]}
+                          />
+                        </div>
+                        <button
+                          className="texture-remove"
+                          onClick={[Function]}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </article>
+                    <article
+                      className="inspector-item wonder-float-input"
+                    >
+                      <div
+                        className="item-header component-label"
+                        onMouseDown={[Function]}
+                        onMouseMove={[Function]}
+                        onMouseUp={[Function]}
+                        title="material's shininess"
+                      >
+                        Shininess
+                      </div>
+                      <div
+                        className="item-content"
+                      >
+                        <input
+                          className="input-component float-input"
+                          onBlur={[Function]}
+                          onChange={[Function]}
+                          type="text"
+                          value="32"
+                        />
+                      </div>
+                    </article>
+                  </article>
+                </div>
+                <div
+                  className="material-shade"
+                />
+              </div>
+            </article>
+          </div>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+          title="Geometry"
+        >
+          Geometry
+        </div>
+        <div
+          className="header-close"
+        >
+          <img
+            onClick={[Function]}
+            src="./public/img/close.png"
+          />
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-geometry"
+      >
+        <div
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+            title="geometry in use which is default or model's geometry"
+          >
+            Geometry
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="inspector-select"
+            >
+              <div
+                className="select-name"
+                onClick={[Function]}
+              >
+                Wonder-Default-Cube
+              </div>
+              <div
+                className="select-img"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/select.png"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+          title="Script"
+        >
+          Script
+        </div>
+        <div
+          className="header-close"
+        >
+          <img
+            onClick={[Function]}
+            src="./public/img/close.png"
+          />
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-script"
+      >
+        <article
+          className="wonder-inspector-script"
+        >
+          <button
+            className="addable-btn"
+            onClick={[Function]}
+          >
+            Add script event function
+          </button>
+        </article>
+        <article
+          className="wonder-inspector-script"
+        >
+          <button
+            className="addable-btn"
+            onClick={[Function]}
+          >
+            Add script attribute
+          </button>
+        </article>
+      </article>
+    </article>
+    <article
+      className="wonder-addable-component"
+    >
+      <div
+        className="addable-component-content"
+      >
+        <div
+          className="content-btn"
+        >
+          <button
+            className="addable-btn"
+            onClick={[Function]}
+          >
+            Add Component
+          </button>
+        </div>
+      </div>
+    </article>
+  </article>
+</article>
+`;

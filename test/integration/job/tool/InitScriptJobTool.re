@@ -1,0 +1,1 @@
+let createScriptAPIJsObj = () => Wonderjs.RecordScriptAPIMainService.create();

@@ -1,3 +1,9 @@
+let _runInitScriptJob = engineState =>
+  engineState
+  |> ScriptEventFunctionEngineService.enableScriptEventFunction
+  |> Wonderjs.InitScriptJobUtils.exec
+  |> ScriptEventFunctionEngineService.disableScriptEventFunction;
+
 let run = uiState => {
   StateEditorService.setIsRun(true);
 
@@ -9,6 +15,7 @@ let run = uiState => {
 
   StateEngineService.unsafeGetState()
   |> ArcballCameraControllerLogicService.bindGameViewActiveCameraArcballCameraControllerEvent
+  |> _runInitScriptJob
   |> StateEngineService.setState
   |> ignore;
 
@@ -24,7 +31,7 @@ let _restoreScreen = () => {
       GameViewEditorService.unsafeGetViewRect(editorState),
       ResizeUtils.getCanvasSize(),
     ) ?
-      ResizeUtils.resizeScreen() : () :
+      ResizeUtils.resizeMainCanvasScreen() : () :
     ();
 };
 

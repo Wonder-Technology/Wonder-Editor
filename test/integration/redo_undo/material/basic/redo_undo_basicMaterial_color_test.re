@@ -76,6 +76,6 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateTwiceChangeColor, _beforeEach, _afterEach),
-      BuildComponentForCurryTool.buildBasicMaterial,
+      BuildComponentForCurryTool.buildBasicMaterialForGameObject,
     );
   });

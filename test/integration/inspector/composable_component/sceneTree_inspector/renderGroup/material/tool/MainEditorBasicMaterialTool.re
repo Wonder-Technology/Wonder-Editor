@@ -15,10 +15,10 @@ let changeMaterialTypeToBeBasicMaterial =
   );
 
 let getColor = material =>
-  MainEditorBasicMaterial.Method.getColor(material, ());
+  InspectorMaterialUtils.getBasicMaterialColor(material, ());
 
 let changeColor = (material, color) =>
-  MainEditorBasicMaterial.Method.changeColor(material, color);
+  MainEditorBasicMaterialForGameObject.Method.changeColor(material, color);
 
 let closeColorPicker =
     (
@@ -28,7 +28,7 @@ let closeColorPicker =
       ~uiState=TestTool.buildEmptyAppState(),
       (),
     ) =>
-  MainEditorBasicMaterial.Method.closeColorPick(
+  InspectorMaterialUtils.closeBasicMaterialColorPick(
     (uiState, dispatchFunc),
     material,
     color,

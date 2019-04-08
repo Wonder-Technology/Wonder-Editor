@@ -7,6 +7,47 @@ let _buildImageObj = src =>
      TreeRootAssetEditorService.unsafeGetAssetTreeRoot(editorState),
    ); */
 
+/* let insertScriptEventFunctionNode =
+    (
+      materialNodeId,
+      parentFolderNodeId,
+      material,
+      (editorState, engineState),
+    ) => (
+  editorState
+  |> OperateTreeAssetEditorService.insertNode(
+       parentFolderNodeId,
+       ScriptEventFunctionNodeAssetService.buildNode(
+         ~nodeId=materialNodeId,
+         ~materialComponent=material,
+         ~type_=ScriptEventFunctionDataAssetType.LightScriptEventFunction,
+       ),
+     ),
+  engineState,
+); */
+
+
+let insertMaterialNode =
+    (
+      materialNodeId,
+      parentFolderNodeId,
+      material,
+      (editorState, engineState),
+    ) => (
+  editorState
+  |> OperateTreeAssetEditorService.insertNode(
+       parentFolderNodeId,
+       MaterialNodeAssetService.buildNode(
+         ~nodeId=materialNodeId,
+         ~materialComponent=material,
+         ~type_=MaterialDataAssetType.LightMaterial,
+       ),
+     ),
+  engineState,
+);
+
+
+
 let insertMaterialNode =
     (
       materialNodeId,

@@ -85,7 +85,8 @@ module Method = {
       )
     };
 
-  let handleBlurAction = (state, (onChangeFunc, onBlurFunc), canBeZero,languageType) =>
+  let handleBlurAction =
+      (state, (onChangeFunc, onBlurFunc), canBeZero, languageType) =>
     switch (state.inputValue) {
     | None
     | Some("-")
@@ -123,12 +124,7 @@ module Method = {
               triggerOnBlur(value, onBlurFunc)
             ),
           _value => {
-            ConsoleUtils.warn(
-              LanguageUtils.getMessageLanguageDataByType(
-                "position-describe",
-                languageType,
-              ),
-            )
+            ConsoleUtils.warn("shouldn't be zero")
             |> StateLogicService.getEditorState;
 
             ReasonReact.Update({
@@ -262,9 +258,14 @@ let reducer = ((onChangeFunc, onBlurFunc), canBeZero, action, state) => {
   | Change(value) =>
     Method.handleChangeAction(state, onChangeFunc, canBeZero, value)
   | Blur =>
-    Method.handleBlurAction(state, (onChangeFunc, onBlurFunc), canBeZero,languageType)
+    Method.handleBlurAction(
+      state,
+      (onChangeFunc, onBlurFunc),
+      canBeZero,
+      languageType,
+    )
   };
-}
+};
 
 let render =
     (

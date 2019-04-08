@@ -71,13 +71,10 @@ module Method = {
   let _sortByName = (assetTreeChildrenNodeArr, engineState) =>
     assetTreeChildrenNodeArr
     |> Js.Array.sortInPlaceWith((node1, node2) =>
-         Js.String.localeCompare(
-           NodeNameAssetLogicService.getNodeName(node2, engineState)
-           |> Js.String.charAt(0),
-           NodeNameAssetLogicService.getNodeName(node1, engineState)
-           |> Js.String.charAt(0),
+         SortService.buildSortByNameFunc(
+           NodeNameAssetLogicService.getNodeName(node2, engineState),
+           NodeNameAssetLogicService.getNodeName(node1, engineState),
          )
-         |> NumberType.convertFloatToInt
        );
 
   let sortAssetTreeChildrenNode = (assetTreeChildrenNodeArr, engineState) => {
@@ -95,6 +92,19 @@ module Method = {
            node |> MaterialNodeAssetService.isMaterialNode
          );
 
+    let scriptEventFunctionAssetTreeChildrenNodeArr =
+      assetTreeChildrenNodeArr
+      |> Js.Array.filter(node =>
+           node
+           |> ScriptEventFunctionNodeAssetService.isScriptEventFunctionNode
+         );
+
+    let scriptAttributeAssetTreeChildrenNodeArr =
+      assetTreeChildrenNodeArr
+      |> Js.Array.filter(node =>
+           node |> ScriptAttributeNodeAssetService.isScriptAttributeNode
+         );
+
     let textureAssetTreeChildrenNodeArr =
       assetTreeChildrenNodeArr
       |> Js.Array.filter(node => node |> TextureNodeAssetService.isTextureNode);
@@ -103,6 +113,8 @@ module Method = {
       _sortByName(folderAssetTreeChildrenNodeArr, engineState),
       _sortByName(wdbAssetTreeChildrenNodeArr, engineState),
       _sortByName(materialAssetTreeChildrenNodeArr, engineState),
+      _sortByName(scriptEventFunctionAssetTreeChildrenNodeArr, engineState),
+      _sortByName(scriptAttributeAssetTreeChildrenNodeArr, engineState),
       _sortByName(textureAssetTreeChildrenNodeArr, engineState),
     |]);
   };
@@ -162,7 +174,7 @@ module Method = {
                      ~type_,
                      ~engineState,
                    );
-
+                 /* TODO get img base64 from map, the wdb same to get */
                  <FileBox
                    key
                    uiState
@@ -177,6 +189,36 @@ module Method = {
                  />
                  |> Result.SameDataResult.success;
                },
+             ~scriptEventFunctionNodeFunc=
+               (nodeId, {name}) =>
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc="./public/img/scriptEventFunction.png"
+                   nodeId
+                   fileName=name
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success,
+             ~scriptAttributeNodeFunc=
+               (nodeId, {name}) =>
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc="./public/img/scriptAttribute.png"
+                   nodeId
+                   fileName=name
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success,
              ~wdbNodeFunc=
                (nodeId, nodeData) => {
                  let fileName = WDBNodeAssetService.getNodeName(nodeData);
@@ -211,12 +253,12 @@ module Method = {
                    isSelected
                    widget
                    debounceTime
-                   onDrop=(
+                   onDrop={
                      AssetDragNodeToFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
                        (uiState, dispatchFunc),
                        (),
                      )
-                   )
+                   }
                    isWidget=AssetWidgetService.isWidget
                    checkNodeRelation=OperateTreeAssetLogicService.checkNodeRelation
                  />
@@ -257,7 +299,7 @@ let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
 let render = ((uiState, dispatchFunc), dragImg, debounceTime, _self) =>
   <article key="assetChildrenNode" className="wonder-asset-assetChildren">
-    (
+    {
       ReasonReact.array(
         Method.buildCurrentTreeNodeChildrenComponent(
           (uiState, dispatchFunc),
@@ -265,10 +307,11 @@ let render = ((uiState, dispatchFunc), dragImg, debounceTime, _self) =>
           debounceTime,
         ),
       )
-    )
+    }
   </article>;
 
 let make = (~uiState, ~dispatchFunc, ~dragImg, ~debounceTime, _children) => {
   ...component,
-  render: self => render((uiState, dispatchFunc), dragImg, debounceTime, self),
+  render: self =>
+    render((uiState, dispatchFunc), dragImg, debounceTime, self),
 };

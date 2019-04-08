@@ -22,7 +22,8 @@ let getBasicMaterialName = NameBasicMaterialMainService.getName;
 
 let unsafeGetBasicMaterialName = BasicMaterialAPI.unsafeGetBasicMaterialName;
 
-let setBasicMaterialName = BasicMaterialAPI.setBasicMaterialName;
+let setBasicMaterialName = (name, material, engineState) =>
+  engineState |> BasicMaterialAPI.setBasicMaterialName(material, name);
 
 let setColor = (color, material, engineState) =>
   engineState |> BasicMaterialAPI.setBasicMaterialColor(material, color);

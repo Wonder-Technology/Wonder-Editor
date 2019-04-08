@@ -62,6 +62,7 @@ let buildCameraView = uiState =>
   ReactTestRenderer.create(
     <MainEditorCameraView uiState dispatchFunc={TestTool.getDispatch()} />,
   );
+
 let buildInspectorComponent = (uiState, addableComponentConfig) =>
   ReactTestRenderer.create(
     <MainEditorInspector
@@ -137,24 +138,24 @@ let buildMaterialMap =
       materialComponent
       label="Diffuse map"
       getMapFunc=LightMaterialEngineService.getLightMaterialDiffuseMap
-      removeTextureFunc=MainEditorLightMaterial.Method.removeTexture
-      onDropFunc=MainEditorLightMaterial.Method.onDrop
+      removeTextureFunc=InspectorMaterialUtils.removeTexture
+      onDropFunc=InspectorMaterialUtils.dragToSetLightMaterialTexture
       isShowTextureGroup
     />,
   );
 
-let buildBasicMaterial = materialComponent =>
+let buildBasicMaterialForGameObject = materialComponent =>
   ReactTestRenderer.create(
-    <MainEditorBasicMaterial
+    <MainEditorBasicMaterialForGameObject
       uiState={TestTool.buildEmptyAppState()}
       dispatchFunc={TestTool.getDispatch()}
       materialComponent
     />,
   );
 
-let buildLightMaterial = materialComponent =>
+let buildLightMaterialForGameObject = materialComponent =>
   ReactTestRenderer.create(
-    <MainEditorLightMaterial
+    <MainEditorLightMaterialForGameObject
       uiState={TestTool.buildEmptyAppState()}
       dispatchFunc={TestTool.getDispatch()}
       materialComponent
@@ -225,3 +226,70 @@ let buildController = () =>
    ReactTestRenderer.create(ReasonReact.array(uiArr)); */
 
 let buildUI = ui => ReactTestRenderer.create(ui);
+
+let buildScriptAttributeInspectorComponent =
+    (
+      ~currentNodeId,
+      ~name=ScriptAttributeInspectorTool.getAttributeName(currentNodeId)
+            |> StateLogicService.getEditorState,
+      ~attribute=ScriptAttributeInspectorTool.getAttribute(currentNodeId)
+                 |> StateLogicService.getEditorState,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~renameFunc=AssetTreeInspectorTool.Rename.renameAssetNode(
+                    (uiState, dispatchFunc),
+                    currentNodeId,
+                  ),
+      (),
+    ) =>
+  ReactTestRenderer.create(
+    <ScriptAttributeInspector
+      uiState
+      dispatchFunc
+      currentNodeId
+      name
+      attribute
+      renameFunc
+    />,
+  );
+
+let renderScriptEventFunctionComponent =
+    (
+      ~sandbox,
+      ~state,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~send=SinonTool.createOneLengthStub(sandbox^),
+      (),
+    ) =>
+  ReactTestRenderer.create(
+    MainEditorScriptEventFunction.render(
+      (uiState, dispatchFunc),
+      ReactTool.buildFakeSelf(state, send),
+    ),
+  );
+
+let renderScriptAttributeComponent =
+    (
+      ~sandbox,
+      ~state,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~send=SinonTool.createOneLengthStub(sandbox^),
+      (),
+    ) =>
+  ReactTestRenderer.create(
+    MainEditorScriptAttribute.render(
+      (uiState, dispatchFunc),
+      ReactTool.buildFakeSelf(state, send),
+    ),
+  );
+
+let buildScriptComponent =
+    (
+      ~script,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      (),
+    ) =>
+  ReactTestRenderer.create(<MainEditorScript uiState dispatchFunc script />);

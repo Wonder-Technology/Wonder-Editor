@@ -88,4 +88,4 @@ let isNeedReInitAllLightMaterials = (gameObjects, engineState) =>
      )
   |> Js.Array.length > 0;
 
-  let getDefaultName = () => "Scene";
+let getDefaultName = () => "Scene";

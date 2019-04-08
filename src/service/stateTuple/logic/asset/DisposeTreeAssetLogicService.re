@@ -35,7 +35,10 @@ let _disposeTextureNodeEditorData = ({imageDataIndex}, editorState) =>
 let _disposeWDBNodeEditorData =
     ({wdbGameObject}, (editorState, engineState)) => {
   let wdbGameObjects =
-    HierarchyGameObjectEngineService.getAllGameObjects(wdbGameObject, engineState);
+    HierarchyGameObjectEngineService.getAllGameObjects(
+      wdbGameObject,
+      engineState,
+    );
 
   editorState
   |> _disposeClonedGameObjectsComponentType(
@@ -49,6 +52,8 @@ let _disposeNodeEditorData = (node, engineState, editorState) =>
     ~textureNodeFunc=
       (_, nodeData) => _disposeTextureNodeEditorData(nodeData, editorState),
     ~materialNodeFunc=(_, _) => editorState,
+    ~scriptEventFunctionNodeFunc=(_, _) => editorState,
+    ~scriptAttributeNodeFunc=(_, _) => editorState,
     ~wdbNodeFunc=
       (_, nodeData) =>
         _disposeWDBNodeEditorData(nodeData, (editorState, engineState)),
@@ -94,7 +99,6 @@ let _disposeWDBGameObjects = (wdbGameObjects, (editorState, engineState)) =>
 let _disposeTextureNodeEngineData = ({textureComponent}, engineState) =>
   engineState |> _disposeTextureFromAllLightMaterials(textureComponent);
 
-
 let _disposeMaterialNodeEngineData =
     ({materialComponent, type_}, (editorState, engineState)) => {
   let (defaultMaterial, defaultMaterialType) =
@@ -112,13 +116,27 @@ let _disposeMaterialNodeEngineData =
 let _disposeWDBNodeEngineData =
     ({wdbGameObject}, (editorState, engineState)) => {
   let wdbGameObjects =
-    HierarchyGameObjectEngineService.getAllGameObjects(wdbGameObject, engineState);
+    HierarchyGameObjectEngineService.getAllGameObjects(
+      wdbGameObject,
+      engineState,
+    );
 
   let engineState =
     _disposeGeometryAssets(wdbGameObjects, (editorState, engineState));
 
   (editorState, engineState) |> _disposeWDBGameObjects(wdbGameObjects);
 };
+
+let _removeScriptEventFunctionFromScriptComponents =
+    ({name}: NodeAssetType.scriptEventFunctionNodeData, engineState) =>
+  ScriptEngineService.removeEventFunctionInAllScriptComponents(
+    name,
+    engineState,
+  );
+
+let _removeScriptAttributeFromScriptComponents =
+    ({name}: NodeAssetType.scriptAttributeNodeData, engineState) =>
+  ScriptEngineService.removeAttributeInAllScriptComponents(name, engineState);
 
 let _disposeNodeEngineData = (node, editorState, engineState) =>
   NodeAssetService.handleNode(
@@ -128,6 +146,12 @@ let _disposeNodeEngineData = (node, editorState, engineState) =>
     ~materialNodeFunc=
       (_, nodeData) =>
         _disposeMaterialNodeEngineData(nodeData, (editorState, engineState)),
+    ~scriptEventFunctionNodeFunc=
+      (_, nodeData) =>
+        _removeScriptEventFunctionFromScriptComponents(nodeData, engineState),
+    ~scriptAttributeNodeFunc=
+      (_, nodeData) =>
+        _removeScriptAttributeFromScriptComponents(nodeData, engineState),
     ~wdbNodeFunc=
       (_, nodeData) =>
         _disposeWDBNodeEngineData(nodeData, (editorState, engineState)),

@@ -15,11 +15,15 @@ let addFolderNodesToTreeByPath = (path, (editorState, engineState)) => {
   );
 };
 
-let getNodeNameById = (nodeId, tree, engineState) =>
-  OperateTreeAssetService.findNodeById(nodeId, tree)
+let getNodeNameById = (nodeId, (editorState, engineState)) =>
+  OperateTreeAssetEditorService.findNodeById(nodeId, editorState)
   |> Js.Option.map((. node) =>
        NodeNameAssetLogicService.getNodeName(node, engineState)
      );
+
+let unsafeGetNodeNameById = (nodeId, (editorState, engineState)) =>
+  getNodeNameById(nodeId, (editorState, engineState))
+  |> OptionService.unsafeGet;
 
 let _includeTargetChild = (folderNode, targetChild, isNodeEqualFunc) =>
   OperateTreeAssetService.findTargetChild(
@@ -89,23 +93,23 @@ let checkNodeRelation =
       editorState,
     );
 
-  ! FolderNodeAssetService.isFolderNode(targetNode) ?
-    Fail("target node should be folder" |. Some) :
+  !FolderNodeAssetService.isFolderNode(targetNode) ?
+    Fail("target node should be folder"->Some) :
     NodeAssetService.isNodeEqualById(~sourceNode, ~targetNode) ?
-      Fail("source and target node shouldn't be the same" |. Some) :
+      Fail("source and target node shouldn't be the same"->Some) :
       _isSourceNodeBeOneOfAllParentsOfTargetNode(sourceNode, targetNode) ?
         Fail(
           "source node shouldn't be one of all parents of the target node"
-          |. Some,
+          ->Some,
         ) :
         _isTargetNodeBeSourceNodeParent(sourceNode, targetNode) ?
           Fail(
-            "target node shouldn't be the parent of the source node" |. Some,
+            "target node shouldn't be the parent of the source node"->Some,
           ) :
           _isTargetNodeHasSameNameChild(sourceNode, targetNode, engineState) ?
             Fail(
               "target node shouldn't has the child with the same name of the source node"
-              |. Some,
+              ->Some,
             ) :
             Success();
 };
@@ -123,8 +127,7 @@ let isNodeChildHasTargetName = (targetName, node, engineState) =>
 
 let _buildUniqueName = name =>
   switch ([%re {|/(.+)[\s](\d+)$/|}] |> Js.Re.exec(name)) {
-  | None => name ++ " 1"
-
+  | None => {j|$(name) 1|j}
   | Some(result) =>
     let resultArr = Js.Re.matches(result);
     let postfix = resultArr[2] |> int_of_string |> succ |> string_of_int;
@@ -140,3 +143,96 @@ let rec getUniqueNodeName = (name, parentFolderNode, engineState) =>
       engineState,
     ) :
     name;
+
+let rec getUniqueScriptEventFunctionNodeName =
+        (name, parentFolderNode, (editorState, engineState)) =>
+  isNodeChildHasTargetName(name, parentFolderNode, engineState) ?
+    getUniqueScriptEventFunctionNodeName(
+      _buildUniqueName(name),
+      parentFolderNode,
+      (editorState, engineState),
+    ) :
+    ScriptEventFunctionNodeAssetEditorService.isTreeScriptEventFunctionNodesHasTargetName(
+      name,
+      editorState,
+    ) ?
+      getUniqueScriptEventFunctionNodeName(
+        _buildUniqueName(name),
+        parentFolderNode,
+        (editorState, engineState),
+      ) :
+      name;
+
+let rec getUniqueScriptAttributeNodeName =
+        (name, parentFolderNode, (editorState, engineState)) =>
+  isNodeChildHasTargetName(name, parentFolderNode, engineState) ?
+    getUniqueScriptAttributeNodeName(
+      _buildUniqueName(name),
+      parentFolderNode,
+      (editorState, engineState),
+    ) :
+    ScriptAttributeNodeAssetEditorService.isTreeScriptAttributeNodesHasTargetName(
+      name,
+      editorState,
+    ) ?
+      getUniqueScriptAttributeNodeName(
+        _buildUniqueName(name),
+        parentFolderNode,
+        (editorState, engineState),
+      ) :
+      name;
+
+let rec getUniqueScriptAttributeFieldName = (name, attribute) =>
+  ScriptAttributeEngineService.hasScriptAttributeField(name, attribute) ?
+    getUniqueScriptAttributeFieldName(_buildUniqueName(name), attribute) :
+    name;
+
+let findNodeByName = (targetNodeName, (editorState, engineState)) => {
+  let predNodeFunc = node =>
+    NodeNameAssetLogicService.isTargetNameNode(
+      ~node,
+      ~name=targetNodeName,
+      ~engineState,
+    );
+
+  IterateTreeAssetService.findOne(
+    ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
+    ~predScriptEventFunctionNodeFunc=predNodeFunc,
+    ~predScriptAttributeNodeFunc=predNodeFunc,
+    ~predTextureNodeFunc=predNodeFunc,
+    ~predMaterialNodeFunc=predNodeFunc,
+    ~predWDBNodeFunc=predNodeFunc,
+    ~predFolderNodeFunc=predNodeFunc,
+    (),
+  );
+};
+
+let findNodeIdByName = (targetNodeName, (editorState, engineState)) =>
+  findNodeByName(targetNodeName, (editorState, engineState))
+  |> Js.Option.map((. node) => NodeAssetService.getNodeId(~node));
+
+let findNodesByName = (targetNodeName, (editorState, engineState)) => {
+  let predNodeFunc = node =>
+    NodeNameAssetLogicService.isTargetNameNode(
+      ~node,
+      ~name=targetNodeName,
+      ~engineState,
+    );
+
+  IterateTreeAssetService.find(
+    ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
+    ~predScriptEventFunctionNodeFunc=predNodeFunc,
+    ~predScriptAttributeNodeFunc=predNodeFunc,
+    ~predTextureNodeFunc=predNodeFunc,
+    ~predMaterialNodeFunc=predNodeFunc,
+    ~predWDBNodeFunc=predNodeFunc,
+    ~predFolderNodeFunc=predNodeFunc,
+    (),
+  );
+};
+
+let findNodeIdsByName = (targetNodeName, (editorState, engineState)) =>
+  findNodesByName(targetNodeName, (editorState, engineState))
+  |> Js.Option.map((. nodes) =>
+       nodes |> List.map(node => NodeAssetService.getNodeId(~node))
+     );

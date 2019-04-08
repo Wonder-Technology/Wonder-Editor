@@ -12,4 +12,18 @@
         @import "../../../utils/_scrollBarUtils.scss";
         @import "component/inspector/inspector";
     }
+    .inspector-canvas-parent{
+        width:100%;
+        height:200px;
+        position: relative;
+        margin-bottom:50px;
+        canvas{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+    }
 }

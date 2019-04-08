@@ -5,8 +5,7 @@ module CustomEventHandler = {
   type dataTuple = int;
   type return = unit;
 
-  let _handleSetMap =
-      (materialComponent, textureComponent, engineState) =>
+  let _handleSetMap = (materialComponent, textureComponent, engineState) =>
     switch (
       LightMaterialEngineService.getLightMaterialDiffuseMap(
         materialComponent,
@@ -31,13 +30,18 @@ module CustomEventHandler = {
       )
     };
 
-  let handleSelfLogic = ((uiState, dispatchFunc), materialComponent, draggedNodeId) =>
+  let handleSelfLogic =
+      ((uiState, dispatchFunc), materialComponent, draggedNodeId) => {
     MaterialDragTextureEventHandlerUtils.handleSelfLogic(
       (uiState, dispatchFunc),
       materialComponent,
       draggedNodeId,
       _handleSetMap,
     );
+
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
+    |> ignore;
+  };
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);

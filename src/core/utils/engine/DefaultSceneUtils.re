@@ -76,10 +76,12 @@ let prepareSpecificGameObjects = (editorState, engineState) => {
 let _prepareEngineState =
     ((camera, directionLight, cube1, cube2), engineState) =>
   engineState
-  |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-       camera,
+  |> BasicCameraViewEngineService.activeBasicCameraView(
+       engineState
+       |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
+            camera,
+          ),
      )
-  |. BasicCameraViewEngineService.activeBasicCameraView(engineState)
   |> TransformEngineService.setLocalPosition(
        (0., 0., 4.),
        GameObjectComponentEngineService.unsafeGetTransformComponent(
@@ -95,7 +97,7 @@ let _prepareEngineState =
        ),
      )
   |> TransformEngineService.setTransformLocalEulerAngles(
-       (45., 135., 0.),
+       (145., 15., 0.),
        GameObjectComponentEngineService.unsafeGetTransformComponent(
          directionLight,
          engineState,

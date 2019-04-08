@@ -48,6 +48,8 @@ let isNodeEqual =
 
 let getNodeId = (~node) =>
   switch (node) {
+  | ScriptEventFunctionNode(nodeId, _) => nodeId
+  | ScriptAttributeNode(nodeId, _) => nodeId
   | TextureNode(nodeId, _) => nodeId
   | MaterialNode(nodeId, _) => nodeId
   | WDBNode(nodeId, _) => nodeId
@@ -62,10 +64,16 @@ let handleNode =
       ~node,
       ~textureNodeFunc,
       ~materialNodeFunc,
+      ~scriptEventFunctionNodeFunc,
+      ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
       ~folderNodeFunc,
     ) =>
   switch (node) {
+  | ScriptEventFunctionNode(nodeId, scriptEventFunctionNodeData) =>
+    scriptEventFunctionNodeFunc(nodeId, scriptEventFunctionNodeData)
+  | ScriptAttributeNode(nodeId, scriptAttributeNodeData) =>
+    scriptAttributeNodeFunc(nodeId, scriptAttributeNodeData)
   | TextureNode(nodeId, textureNodeData) =>
     textureNodeFunc(nodeId, textureNodeData)
   | MaterialNode(nodeId, materialNodeData) =>

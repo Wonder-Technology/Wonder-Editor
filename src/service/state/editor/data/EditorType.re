@@ -24,7 +24,10 @@ open PickingType;
 
 open UIType;
 
+open InspectorCanvasType;
+
 type editorState = {
+  inspectorCanvasRecord,
   uiRecord,
   settingRecord,
   sceneTreeRecord,

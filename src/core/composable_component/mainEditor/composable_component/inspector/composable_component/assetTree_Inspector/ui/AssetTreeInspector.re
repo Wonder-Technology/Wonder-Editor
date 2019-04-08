@@ -17,6 +17,7 @@ module Method = {
   let change = event => {
     let inputVal =
       ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
+
     Change(inputVal);
   };
 
@@ -95,25 +96,48 @@ module Method = {
       }
     />;
 
+  let buildScriptEventFunctionComponent =
+      (
+        (uiState, dispatchFunc),
+        state,
+        currentNodeId,
+        {name, eventFunctionData}: NodeAssetType.scriptEventFunctionNodeData,
+      ) =>
+    <ScriptEventFunctionInspector
+      uiState
+      dispatchFunc
+      currentNodeId
+      name={state.inputValue}
+      eventFunctionData
+      renameFunc={
+        renameAssetTreeNode((uiState, dispatchFunc), currentNodeId)
+      }
+    />;
+
+  let buildScriptAttributeComponent =
+      (
+        (uiState, dispatchFunc),
+        state,
+        currentNodeId,
+        {name, attribute}: NodeAssetType.scriptAttributeNodeData,
+      ) =>
+    <ScriptAttributeInspector
+      uiState
+      dispatchFunc
+      currentNodeId
+      name={state.inputValue}
+      attribute
+      renameFunc={
+        renameAssetTreeNode((uiState, dispatchFunc), currentNodeId)
+      }
+    />;
+
   let buildWDBComponent = (state, send, _, _) =>
-    <div className="inspector-asset-wdb">
-      <h1> {DomHelper.textEl("Model")} </h1>
-      <hr />
-      <div className="inspector-item">
-        <div className="item-header">
-          <span className=""> {DomHelper.textEl("Name:")} </span>
-        </div>
-        <div className="item-content">
-          <input
-            className="input-component float-input"
-            type_="text"
-            value={state.inputValue}
-            onChange={_e => send(change(_e))}
-            onBlur={_e => send(Blur)}
-          />
-        </div>
-      </div>
-    </div>;
+    <WDBInspector
+      name={state.inputValue}
+      onChangeFunc={_e => send(change(_e))}
+      onBlurFunc={_e => send(Blur)}
+    />;
 
   let showAssetNodeComponent =
       (
@@ -126,6 +150,10 @@ module Method = {
       ~node=currentNode,
       ~textureNodeFunc=buildTextureComponent(reduxTuple, state),
       ~materialNodeFunc=buildMaterialComponent(reduxTuple, state),
+      ~scriptEventFunctionNodeFunc=
+        buildScriptEventFunctionComponent(reduxTuple, state),
+      ~scriptAttributeNodeFunc=
+        buildScriptAttributeComponent(reduxTuple, state),
       ~wdbNodeFunc=buildWDBComponent(state, send),
       ~folderNodeFunc=buildFolderComponent(state, send, languageType),
     );
@@ -156,6 +184,21 @@ module Method = {
 
     {inputValue: baseName, originalName: baseName};
   };
+
+  let initScriptEventFunctionNodeName = (engineState, _, nodeData) => {
+    let baseName =
+      ScriptEventFunctionNodeAssetService.getNodeNameByData(nodeData);
+
+    {inputValue: baseName, originalName: baseName};
+  };
+
+  let initScriptAttributeNodeName = (engineState, _, nodeData) => {
+    let baseName =
+      ScriptAttributeNodeAssetService.getNodeNameByData(nodeData);
+
+    {inputValue: baseName, originalName: baseName};
+  };
+
   let initWDBName = (currentNodeId, currentNodeData) => {
     let baseName =
       NodeNameAssetLogicService.getWDBNodeName(
@@ -223,6 +266,10 @@ let make =
       ~node=currentNode,
       ~textureNodeFunc=Method.initTextureName(engineState),
       ~materialNodeFunc=Method.initMaterialName(engineState),
+      ~scriptEventFunctionNodeFunc=
+        Method.initScriptEventFunctionNodeName(engineState),
+      ~scriptAttributeNodeFunc=
+        Method.initScriptAttributeNodeName(engineState),
       ~wdbNodeFunc=Method.initWDBName,
       ~folderNodeFunc=Method.initFolderName,
     );

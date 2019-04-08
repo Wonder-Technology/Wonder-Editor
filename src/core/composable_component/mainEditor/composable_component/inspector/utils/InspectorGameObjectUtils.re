@@ -73,6 +73,20 @@ let _buildArcballCamera = ((uiState, dispatchFunc), gameObject) =>
       |> StateLogicService.getEngineStateToGetData
     }
   />;
+
+let _buildScriptFunc = ((uiState, dispatchFunc), gameObject) =>
+  <MainEditorScript
+    key={DomHelper.getRandomKey()}
+    uiState
+    dispatchFunc
+    script={
+      GameObjectComponentEngineService.unsafeGetScriptComponent(
+        gameObject,
+      )
+      |> StateLogicService.getEngineStateToGetData
+    }
+  />;
+
 let buildComponentUIComponent =
     ((uiState, dispatchFunc), type_, gameObject, languageType) =>
   switch (type_) {
@@ -108,6 +122,28 @@ let buildComponentUIComponent =
            gameObject,
            LanguageUtils.getInspectorLanguageDataByType(
              "light-describe",
+             languageType,
+           ),
+         ),
+         (
+           true,
+           StoreUtils.geGameObjectisShowComponentFromStore(
+             uiState,
+             type_ |> InspectorComponentType.convertComponentTypeToInt,
+           ),
+         ),
+       )
+
+  | Script =>
+    _buildScriptFunc
+    |> buildComponentBox(
+         (uiState, dispatchFunc),
+         (
+           "Script",
+           type_,
+           gameObject,
+           LanguageUtils.getInspectorLanguageDataByType(
+             "script-describe",
              languageType,
            ),
          ),

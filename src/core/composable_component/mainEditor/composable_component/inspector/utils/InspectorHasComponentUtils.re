@@ -7,6 +7,10 @@ let isHasSpecificComponentByType =
     engineState
     |> InspectorRenderGroupUtils.hasRenderGroupComponents(gameObject)
 
+  | Script =>
+    engineState
+    |> GameObjectComponentEngineService.hasScriptComponent(gameObject)
+
   | Geometry =>
     engineState
     |> GameObjectComponentEngineService.hasGeometryComponent(gameObject)

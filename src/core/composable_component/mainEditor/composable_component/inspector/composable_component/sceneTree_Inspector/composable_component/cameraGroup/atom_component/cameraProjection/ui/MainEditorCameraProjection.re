@@ -78,10 +78,11 @@ module Method = {
           languageType,
         )
       }
-      getComponentValueFunc={
+      defaultValue={
         PerspectiveCameraProjectionEngineService.getPerspectiveCameraNear(
           currentGameObjectPerspectiveCamera,
         )
+        |> StateLogicService.getEngineStateToGetData
       }
       changeComponentValueFunc={
         changeNear(currentGameObjectPerspectiveCamera)
@@ -114,10 +115,11 @@ module Method = {
           languageType,
         )
       }
-      getComponentValueFunc={
+      defaultValue={
         PerspectiveCameraProjectionEngineService.getPerspectiveCameraFar(
           currentGameObjectPerspectiveCamera,
         )
+        |> StateLogicService.getEngineStateToGetData
       }
       changeComponentValueFunc={changeFar(currentGameObjectPerspectiveCamera)}
       blurValueFunc={
@@ -168,10 +170,11 @@ module Method = {
           languageType,
         )
       }
-      getComponentValueFunc={
+      defaultValue={
         PerspectiveCameraProjectionEngineService.getPerspectiveCameraFovy(
           currentGameObjectPerspectiveCamera,
         )
+        |> StateLogicService.getEngineStateToGetData
       }
       changeComponentValueFunc={
         changeFovy(currentGameObjectPerspectiveCamera)

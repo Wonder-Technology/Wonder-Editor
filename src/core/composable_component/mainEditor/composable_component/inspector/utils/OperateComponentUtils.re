@@ -2,6 +2,7 @@ open InspectorComponentType;
 
 let getInspectorComponentType = (type_, editorState) =>
   switch (type_) {
+  | "Script" => Script
   | "Light" => Light
   | "Geometry" => Geometry
   | "RenderGroup" => RenderGroup

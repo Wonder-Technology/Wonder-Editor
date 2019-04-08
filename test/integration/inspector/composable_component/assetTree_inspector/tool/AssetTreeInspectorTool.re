@@ -1,10 +1,30 @@
 module Rename = {
-  let _renameAssetNode = ((uiState, dispatchFunc), nodeId, name) =>
+  let renameAssetNode = ((uiState, dispatchFunc), nodeId, name) =>
     AssetTreeInspector.Method.renameAssetTreeNode(
       (uiState, dispatchFunc),
       nodeId,
       name,
     );
+
+  let renameAssetScriptAttributeNode =
+      (
+        ~uiState=TestTool.buildEmptyAppState(),
+        ~dispatchFunc=TestTool.getDispatch(),
+        ~nodeId,
+        ~name,
+        (),
+      ) =>
+    renameAssetNode((uiState, dispatchFunc), nodeId, name);
+
+  let renameAssetScriptEventFunctionNode =
+      (
+        ~uiState=TestTool.buildEmptyAppState(),
+        ~dispatchFunc=TestTool.getDispatch(),
+        ~nodeId,
+        ~name,
+        (),
+      ) =>
+    renameAssetNode((uiState, dispatchFunc), nodeId, name);
 
   let renameAssetTextureNode =
       (
@@ -14,7 +34,7 @@ module Rename = {
         ~name,
         (),
       ) =>
-    _renameAssetNode((uiState, dispatchFunc), nodeId, name);
+    renameAssetNode((uiState, dispatchFunc), nodeId, name);
 
   let renameAssetMaterialNode =
       (
@@ -24,7 +44,7 @@ module Rename = {
         ~name,
         (),
       ) =>
-    _renameAssetNode((uiState, dispatchFunc), nodeId, name);
+    renameAssetNode((uiState, dispatchFunc), nodeId, name);
 
   let renameAssetWDBNode =
       (
@@ -34,7 +54,7 @@ module Rename = {
         ~name,
         (),
       ) =>
-    _renameAssetNode((uiState, dispatchFunc), nodeId, name);
+    renameAssetNode((uiState, dispatchFunc), nodeId, name);
 
   let renameAssetFolderNode =
       (
@@ -44,7 +64,7 @@ module Rename = {
         ~name,
         (),
       ) =>
-    _renameAssetNode((uiState, dispatchFunc), nodeId, name);
+    renameAssetNode((uiState, dispatchFunc), nodeId, name);
 
   let isFolderNameDisabled = nodeId =>
     NodeAssetService.isIdEqual(

@@ -13,6 +13,16 @@ let rec cata =
                                 ~nodeId,
                                 ~nodeData,
                               ),
+          ~scriptEventFunctionNodeFunc=(nodeId, nodeData) =>
+                                         ScriptEventFunctionNodeAssetService.buildNodeByNodeData(
+                                           ~nodeId,
+                                           ~nodeData,
+                                         ),
+          ~scriptAttributeNodeFunc=(nodeId, nodeData) =>
+                                     ScriptAttributeNodeAssetService.buildNodeByNodeData(
+                                       ~nodeId,
+                                       ~nodeData,
+                                     ),
           ~wdbNodeFunc=(nodeId, nodeData) =>
                          WDBNodeAssetService.buildNodeByNodeData(
                            ~nodeId,
@@ -28,9 +38,20 @@ let rec cata =
         )
         : 'r => {
   let recurse =
-    cata(~textureNodeFunc, ~materialNodeFunc, ~wdbNodeFunc, ~folderNodeFunc);
+    cata(
+      ~textureNodeFunc,
+      ~materialNodeFunc,
+      ~scriptEventFunctionNodeFunc,
+      ~scriptAttributeNodeFunc,
+      ~wdbNodeFunc,
+      ~folderNodeFunc,
+    );
 
   switch (tree) {
+  | ScriptEventFunctionNode(nodeId, scriptEventFunctionNodeData) =>
+    scriptEventFunctionNodeFunc(nodeId, scriptEventFunctionNodeData)
+  | ScriptAttributeNode(nodeId, scriptAttributeNodeData) =>
+    scriptAttributeNodeFunc(nodeId, scriptAttributeNodeData)
   | TextureNode(nodeId, textureNodeData) =>
     textureNodeFunc(nodeId, textureNodeData)
   | MaterialNode(nodeId, materialNodeData) =>
@@ -54,6 +75,8 @@ let rec fold =
           ~seqFoldFunc=WonderCommonlib.ArrayService.reduceOneParam,
           ~textureNodeFunc=(acc, _, _) => acc,
           ~materialNodeFunc=(acc, _, _) => acc,
+          ~scriptEventFunctionNodeFunc=(acc, _, _) => acc,
+          ~scriptAttributeNodeFunc=(acc, _, _) => acc,
           ~wdbNodeFunc=(acc, _, _) => acc,
           (),
         )
@@ -62,14 +85,21 @@ let rec fold =
     fold(
       ~acc,
       ~tree=children,
+      ~seqFoldFunc,
       ~textureNodeFunc,
       ~materialNodeFunc,
+      ~scriptEventFunctionNodeFunc,
+      ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
       ~folderNodeFunc,
       (),
     );
 
   switch (tree) {
+  | ScriptEventFunctionNode(nodeId, scriptEventFunctionNodeData) =>
+    scriptEventFunctionNodeFunc(acc, nodeId, scriptEventFunctionNodeData)
+  | ScriptAttributeNode(nodeId, scriptAttributeNodeData) =>
+    scriptAttributeNodeFunc(acc, nodeId, scriptAttributeNodeData)
   | TextureNode(nodeId, textureNodeData) =>
     textureNodeFunc(acc, nodeId, textureNodeData)
   | MaterialNode(nodeId, materialNodeData) =>
@@ -90,6 +120,8 @@ let rec foldWithParentFolderNode =
           ~seqFoldFunc=WonderCommonlib.ArrayService.reduceOneParam,
           ~textureNodeFunc=(_, acc, _, _) => acc,
           ~materialNodeFunc=(_, acc, _, _) => acc,
+          ~scriptEventFunctionNodeFunc=(_, acc, _, _) => acc,
+          ~scriptAttributeNodeFunc=(_, acc, _, _) => acc,
           ~wdbNodeFunc=(_, acc, _, _) => acc,
           ~parentFolderNode=None,
           (),
@@ -101,6 +133,8 @@ let rec foldWithParentFolderNode =
       ~tree=children,
       ~textureNodeFunc,
       ~materialNodeFunc,
+      ~scriptEventFunctionNodeFunc,
+      ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
       ~folderNodeFunc,
       ~parentFolderNode,
@@ -108,6 +142,20 @@ let rec foldWithParentFolderNode =
     );
 
   switch (tree) {
+  | ScriptEventFunctionNode(nodeId, scriptEventFunctionNodeData) =>
+    scriptEventFunctionNodeFunc(
+      parentFolderNode,
+      acc,
+      nodeId,
+      scriptEventFunctionNodeData,
+    )
+  | ScriptAttributeNode(nodeId, scriptAttributeNodeData) =>
+    scriptAttributeNodeFunc(
+      parentFolderNode,
+      acc,
+      nodeId,
+      scriptAttributeNodeData,
+    )
   | TextureNode(nodeId, textureNodeData) =>
     textureNodeFunc(parentFolderNode, acc, nodeId, textureNodeData)
   | MaterialNode(nodeId, materialNodeData) =>
@@ -141,6 +189,8 @@ let rec foldWithHandleBeforeAndAfterFoldChildren =
           ~tree,
           ~textureNodeFunc,
           ~materialNodeFunc,
+          ~scriptEventFunctionNodeFunc,
+          ~scriptAttributeNodeFunc,
           ~wdbNodeFunc,
           ~folderNodeFunc,
           ~handleBeforeFoldChildrenFunc,
@@ -155,6 +205,8 @@ let rec foldWithHandleBeforeAndAfterFoldChildren =
       ~tree=children,
       ~textureNodeFunc,
       ~materialNodeFunc,
+      ~scriptEventFunctionNodeFunc,
+      ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
       ~folderNodeFunc,
       ~handleBeforeFoldChildrenFunc,
@@ -164,6 +216,10 @@ let rec foldWithHandleBeforeAndAfterFoldChildren =
     );
 
   switch (tree) {
+  | ScriptEventFunctionNode(nodeId, scriptEventFunctionNodeData) =>
+    scriptEventFunctionNodeFunc(acc, nodeId, scriptEventFunctionNodeData)
+  | ScriptAttributeNode(nodeId, scriptAttributeNodeData) =>
+    scriptAttributeNodeFunc(acc, nodeId, scriptAttributeNodeData)
   | TextureNode(nodeId, textureNodeData) =>
     textureNodeFunc(acc, nodeId, textureNodeData)
   | MaterialNode(nodeId, materialNodeData) =>
@@ -186,6 +242,8 @@ let filter =
       ~pushNodeFunc,
       ~predTextureNodeFunc=node => false,
       ~predMaterialNodeFunc=node => false,
+      ~predScriptEventFunctionNodeFunc=node => false,
+      ~predScriptAttributeNodeFunc=node => false,
       ~predWDBNodeFunc=node => false,
       ~predFolderNodeFunc=node => false,
       (),
@@ -204,6 +262,21 @@ let filter =
       acc,
       MaterialNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData),
       predMaterialNodeFunc,
+    );
+  let _scriptEventFunctionNodeFunc = (acc, nodeId, nodeData) =>
+    _nodeFunc(
+      acc,
+      ScriptEventFunctionNodeAssetService.buildNodeByNodeData(
+        ~nodeId,
+        ~nodeData,
+      ),
+      predScriptEventFunctionNodeFunc,
+    );
+  let _scriptAttributeNodeFunc = (acc, nodeId, nodeData) =>
+    _nodeFunc(
+      acc,
+      ScriptAttributeNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData),
+      predScriptAttributeNodeFunc,
     );
   let _wdbNodeFunc = (acc, nodeId, nodeData) =>
     _nodeFunc(
@@ -227,6 +300,8 @@ let filter =
     ~tree,
     ~textureNodeFunc=_textureNodeFunc,
     ~materialNodeFunc=_materialNodeFunc,
+    ~scriptEventFunctionNodeFunc=_scriptEventFunctionNodeFunc,
+    ~scriptAttributeNodeFunc=_scriptAttributeNodeFunc,
     ~wdbNodeFunc=_wdbNodeFunc,
     ~folderNodeFunc=_folderNodeFunc,
     (),
@@ -238,6 +313,8 @@ let find =
       ~tree,
       ~predTextureNodeFunc=node => false,
       ~predMaterialNodeFunc=node => false,
+      ~predScriptEventFunctionNodeFunc=node => false,
+      ~predScriptAttributeNodeFunc=node => false,
       ~predWDBNodeFunc=node => false,
       ~predFolderNodeFunc=node => false,
       (),
@@ -250,6 +327,8 @@ let find =
       ~tree,
       ~predTextureNodeFunc,
       ~predMaterialNodeFunc,
+      ~predScriptEventFunctionNodeFunc,
+      ~predScriptAttributeNodeFunc,
       ~predWDBNodeFunc,
       ~predFolderNodeFunc,
       (),
@@ -264,6 +343,8 @@ let findOne =
       ~tree,
       ~predTextureNodeFunc=node => false,
       ~predMaterialNodeFunc=node => false,
+      ~predScriptEventFunctionNodeFunc=node => false,
+      ~predScriptAttributeNodeFunc=node => false,
       ~predWDBNodeFunc=node => false,
       ~predFolderNodeFunc=node => false,
       (),
@@ -273,6 +354,8 @@ let findOne =
     ~tree,
     ~predTextureNodeFunc,
     ~predMaterialNodeFunc,
+    ~predScriptEventFunctionNodeFunc,
+    ~predScriptAttributeNodeFunc,
     ~predWDBNodeFunc,
     ~predFolderNodeFunc,
     (),
@@ -285,6 +368,8 @@ let rec map =
           ~folderNodeFunc,
           ~textureNodeFunc=(_, nodeData) => nodeData,
           ~materialNodeFunc=(_, nodeData) => nodeData,
+          ~scriptEventFunctionNodeFunc=(_, nodeData) => nodeData,
+          ~scriptAttributeNodeFunc=(_, nodeData) => nodeData,
           ~wdbNodeFunc=(_, nodeData) => nodeData,
           (),
         )
@@ -293,12 +378,24 @@ let rec map =
     map(
       ~textureNodeFunc,
       ~materialNodeFunc,
+      ~scriptEventFunctionNodeFunc,
+      ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
       ~folderNodeFunc,
       (),
     );
 
   switch (tree) {
+  | ScriptEventFunctionNode(nodeId, scriptEventFunctionNodeData) =>
+    ScriptEventFunctionNode(
+      nodeId,
+      scriptEventFunctionNodeFunc(nodeId, scriptEventFunctionNodeData),
+    )
+  | ScriptAttributeNode(nodeId, scriptAttributeNodeData) =>
+    ScriptAttributeNode(
+      nodeId,
+      scriptAttributeNodeFunc(nodeId, scriptAttributeNodeData),
+    )
   | TextureNode(nodeId, textureNodeData) =>
     TextureNode(nodeId, textureNodeFunc(nodeId, textureNodeData))
   | MaterialNode(nodeId, materialNodeData) =>

@@ -48,6 +48,24 @@ let _materialNodeFunc =
     ),
   );
 
+let _scriptEventFunctionNodeFunc =
+    (
+      targetNodeId,
+      acc,
+      nodeId,
+      {name}: NodeAssetType.scriptEventFunctionNodeData,
+    ) =>
+  _handleLeafNodeFunc(acc, targetNodeId, nodeId, name);
+
+let _scriptAttributeNodeFunc =
+    (
+      targetNodeId,
+      acc,
+      nodeId,
+      {name}: NodeAssetType.scriptAttributeNodeData,
+    ) =>
+  _handleLeafNodeFunc(acc, targetNodeId, nodeId, name);
+
 let _wdbNodeFunc = (targetNodeId, acc, nodeId, nodeData) =>
   _handleLeafNodeFunc(
     acc,
@@ -101,6 +119,8 @@ let getNodePath = (targetNode, (editorState, engineState)) => {
       ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
       ~textureNodeFunc=_textureNodeFunc(targetNodeId, engineState),
       ~materialNodeFunc=_materialNodeFunc(targetNodeId, engineState),
+      ~scriptEventFunctionNodeFunc=_scriptEventFunctionNodeFunc(targetNodeId),
+      ~scriptAttributeNodeFunc=_scriptAttributeNodeFunc(targetNodeId),
       ~wdbNodeFunc=_wdbNodeFunc(targetNodeId),
       ~folderNodeFunc=_folderNodeFunc(targetNodeId),
       ~handleBeforeFoldChildrenFunc=_handleBeforeFoldChildrenFunc,

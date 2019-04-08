@@ -1,7 +1,6 @@
 let testOperateColorPickToChangeColor =
     (
       sandbox,
-      buildComponent,
       (getCurrentSceneTreeNodeComponentFunc, changeColorFunc, getColorFunc),
     ) =>
   Wonder_jest.(
@@ -26,7 +25,8 @@ let testOperateColorPickToChangeColor =
                 getColorFunc(currentGameObjectComponent)
                 |> StateLogicService.getEngineStateToGetData
                 |> Color.getHexString
-                |> expect == newColor##hex;
+                |> expect ==
+                newColor##hex;
               })
             )
           )

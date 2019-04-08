@@ -1,48 +1,10 @@
-let findNodeByName = (targetNodeName, (editorState, engineState)) => {
-  let predNodeFunc = node =>
-    NodeNameAssetLogicService.isTargetNameNode(
-      ~node,
-      ~name=targetNodeName,
-      ~engineState,
-    );
+let findNodeByName = OperateTreeAssetLogicService.findNodeByName;
 
-  IterateTreeAssetService.findOne(
-    ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
-    ~predTextureNodeFunc=predNodeFunc,
-    ~predMaterialNodeFunc=predNodeFunc,
-    ~predWDBNodeFunc=predNodeFunc,
-    ~predFolderNodeFunc=predNodeFunc,
-    (),
-  );
-};
+let findNodeIdByName = OperateTreeAssetLogicService.findNodeIdByName;
 
-let findNodeIdByName = (targetNodeName, (editorState, engineState)) =>
-  findNodeByName(targetNodeName, (editorState, engineState))
-  |> Js.Option.map((. node) => NodeAssetService.getNodeId(~node));
+let findNodesByName = OperateTreeAssetLogicService.findNodesByName;
 
-let findNodesByName = (targetNodeName, (editorState, engineState)) => {
-  let predNodeFunc = node =>
-    NodeNameAssetLogicService.isTargetNameNode(
-      ~node,
-      ~name=targetNodeName,
-      ~engineState,
-    );
-
-  IterateTreeAssetService.find(
-    ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
-    ~predTextureNodeFunc=predNodeFunc,
-    ~predMaterialNodeFunc=predNodeFunc,
-    ~predWDBNodeFunc=predNodeFunc,
-    ~predFolderNodeFunc=predNodeFunc,
-    (),
-  );
-};
-
-let findNodeIdsByName = (targetNodeName, (editorState, engineState)) =>
-  findNodesByName(targetNodeName, (editorState, engineState))
-  |> Js.Option.map((. nodes) =>
-       nodes |> List.map(node => NodeAssetService.getNodeId(~node))
-     );
+let findNodeIdsByName = OperateTreeAssetLogicService.findNodeIdsByName;
 
 let findNodeParent = OperateTreeAssetEditorService.findNodeParent;
 
@@ -147,7 +109,7 @@ module BuildAssetTree = {
         IdAssetEditorService.generateNodeId(editorState);
 
       let (newMaterial, engineState) =
-        OperateLightMaterialLogicService.createLightMaterialAndSetName(
+        LightMaterialEngineService.createLightMaterialAndSetName(
           "material1",
           engineState,
         );
@@ -169,6 +131,49 @@ module BuildAssetTree = {
       materialNodeIdArr |> ArrayService.unsafeGetFirst;
     /* let getSecondMaterialNodeId = ({root, materialNodeIdArr}) =>
        materialNodeIdArr |> ArrayService.unsafeGetNth(1); */
+  };
+
+  module ScriptEventFunction = {
+    type assetTreeData = {
+      root: int,
+      scriptEventFunctionNodeIdArr: array(int),
+    };
+
+    let buildOneScriptEventFunctionAssetTree = () => {
+      let rootId = buildEmptyAssetTree();
+
+      let id1 = MainEditorAssetIdTool.getNewAssetId();
+      MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
+
+      {root: rootId, scriptEventFunctionNodeIdArr: [|id1|]};
+    };
+
+    let getRootNodeId = ({root}) => root;
+
+    let getFirstScriptEventFunctionNodeId =
+        ({root, scriptEventFunctionNodeIdArr}) =>
+      scriptEventFunctionNodeIdArr |> ArrayService.unsafeGetFirst;
+  };
+
+  module ScriptAttribute = {
+    type assetTreeData = {
+      root: int,
+      scriptAttributeNodeIdArr: array(int),
+    };
+
+    let buildOneScriptAttributeAssetTree = () => {
+      let rootId = buildEmptyAssetTree();
+
+      let id1 = MainEditorAssetIdTool.getNewAssetId();
+      MainEditorAssetHeaderOperateNodeTool.addScriptAttribute();
+
+      {root: rootId, scriptAttributeNodeIdArr: [|id1|]};
+    };
+
+    let getRootNodeId = ({root}) => root;
+
+    let getFirstScriptAttributeNodeId = ({root, scriptAttributeNodeIdArr}) =>
+      scriptAttributeNodeIdArr |> ArrayService.unsafeGetFirst;
   };
 
   module WDB = {
@@ -349,12 +354,12 @@ module BuildAssetTree = {
           IdAssetEditorService.generateNodeId(editorState);
 
         let (newMaterial1, engineState) =
-          OperateLightMaterialLogicService.createLightMaterialAndSetName(
+          LightMaterialEngineService.createLightMaterialAndSetName(
             "material1",
             engineState,
           );
         let (newMaterial2, engineState) =
-          OperateLightMaterialLogicService.createLightMaterialAndSetName(
+          LightMaterialEngineService.createLightMaterialAndSetName(
             "material2",
             engineState,
           );

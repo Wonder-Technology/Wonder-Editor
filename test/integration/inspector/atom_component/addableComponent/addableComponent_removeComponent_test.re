@@ -288,6 +288,57 @@ let _ =
       });
     });
 
+    describe("test remove script component", () => {
+      beforeEach(() => {
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
+        );
+
+        CurrentSelectSourceEditorService.setCurrentSelectSource(
+          SceneTreeWidgetService.getWidget(),
+        )
+        |> StateLogicService.getAndSetEditorState;
+
+        MainEditorInspectorAddComponentTool.addScriptComponent();
+      });
+
+      describe("test snapshot", () => {
+        test("test remove script component, should remove from inspector", () => {
+          MainEditorInspectorRemoveComponentTool.removeScriptComponent();
+
+          BuildComponentTool.buildInspectorComponent(
+            TestTool.buildEmptyAppState(),
+            InspectorTool.buildFakeAllShowComponentConfig(),
+          )
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
+
+        describe("test logic", () => {
+          test(
+            "test if not remove script component, current gameObject should has it",
+            () =>
+            GameObjectComponentEngineService.hasScriptComponent(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == true
+          );
+          test(
+            "test click remove script component, current gameObject shouldn't has it",
+            () => {
+            MainEditorInspectorRemoveComponentTool.removeScriptComponent();
+
+            GameObjectComponentEngineService.hasScriptComponent(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == false;
+          });
+        });
+      });
+    });
+
     describe("deal with specific case", () => {
       beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(

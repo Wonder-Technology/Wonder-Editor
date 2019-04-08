@@ -6,9 +6,9 @@ let _forEachIndices =
   while (checkIntersectData^ |> Js.Option.isNone && index^ < indicesCount) {
     checkIntersectData :=
       checkIntersectFunc(
-        AbstractIndicesService.unsafeGetIndex(index^, indices),
-        AbstractIndicesService.unsafeGetIndex(index^ + 1, indices),
-        AbstractIndicesService.unsafeGetIndex(index^ + 2, indices),
+        AbstractIndicesEngineService.unsafeGetIndex(index^, indices),
+        AbstractIndicesEngineService.unsafeGetIndex(index^ + 1, indices),
+        AbstractIndicesEngineService.unsafeGetIndex(index^ + 2, indices),
       );
 
     index := index^ + 3;

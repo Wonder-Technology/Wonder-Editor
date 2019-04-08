@@ -22,6 +22,14 @@ let getAndRefreshEngineState = () =>
   |> StateEngineService.setState
   |> ignore;
 
+let getAndRefreshEngineStateForRunLoop = () =>
+  StateEngineService.unsafeGetState()
+  |> ScriptEventFunctionEngineService.enableScriptEventFunction
+  |> DirectorEngineService.loopBody(0.)
+  |> ScriptEventFunctionEngineService.disableScriptEventFunction
+  |> StateEngineService.setState
+  |> ignore;
+
 let getAndRefreshEngineStateWithFunc = handleFunc =>
   StateEngineService.unsafeGetState()
   |> handleFunc
@@ -42,6 +50,12 @@ let getAndRefreshEngineStateWhenStop = () =>
 let renderWhenStop = engineState =>
   StateEditorService.getIsRun() ?
     engineState : engineState |> DirectorEngineService.loopBody(0.);
+
+let refreshInspectorEngineState = inspectorEngineState =>
+  inspectorEngineState
+  |> DirectorEngineService.loopBody(0.)
+  |> StateInspectorEngineService.setState
+  |> ignore;
 
 let getEditorState = handleFunc => StateEditorService.getState() |> handleFunc;
 

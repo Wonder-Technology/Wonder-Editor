@@ -114,7 +114,6 @@ let initStateWithJob =
 
   ConsoleTool.notShowMessage();
 };
-
 let initState =
     (
       ~sandbox,
@@ -130,6 +129,27 @@ let initState =
     ~buffer,
     (),
   );
+
+let initInspectorEngineState =
+    (~sandbox, ~noWorkerJobRecord, ~isInitJob=true, ()) => {
+  TestToolEngine.createAndSetInspectorEngineState(
+    ~sandbox,
+    ~isInitJob,
+    ~noWorkerJobRecord,
+    (),
+  );
+
+  StateInspectorEngineService.setIsDebug(true) |> ignore;
+
+  AllMaterialToolEngine.prepareForInitInspectorEngineState();
+
+  SettingToolEngine.setFakeCanvasToInspectorEngineState();
+
+  StateInspectorEngineService.unsafeGetState()
+  |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
+  |> StateInspectorEngineService.setState
+  |> ignore;
+};
 
 let prepareGl = sandbox =>
   StateEngineService.unsafeGetState()

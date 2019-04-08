@@ -33,8 +33,8 @@ let _ =
 
           let engineState =
             LightMaterialEngineService.setLightMaterialName(
-              material,
               name2,
+              material,
               engineState,
             );
 
@@ -67,8 +67,8 @@ let _ =
 
           let engineState =
             LightMaterialEngineService.setLightMaterialName(
-              material,
               name2,
+              material,
               engineState,
             );
 

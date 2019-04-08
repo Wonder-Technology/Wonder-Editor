@@ -263,7 +263,7 @@ let _buildBasicMaterialData = (basicMaterials, (editorState, engineState)) =>
 
          let engineState =
            engineState
-           |> BasicMaterialEngineService.setBasicMaterialName(material, name)
+           |> BasicMaterialEngineService.setBasicMaterialName(name, material)
            |> BasicMaterialEngineService.setColor(color, material);
 
          let editorState =
@@ -303,7 +303,7 @@ let _buildLightMaterialData =
 
          let engineState =
            engineState
-           |> LightMaterialEngineService.setLightMaterialName(material, name)
+           |> LightMaterialEngineService.setLightMaterialName(name, material)
            |> LightMaterialEngineService.setLightMaterialDiffuseColor(
                 diffuseColor,
                 material,

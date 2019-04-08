@@ -4,6 +4,12 @@ open TreeAssetType;
 
 let getNodeName = (~node, ~getTextureNameFunc, ~getMaterialNameFunc) =>
   switch (node) {
+  | ScriptEventFunctionNode(_, scriptEventFunctionNodeData) =>
+    ScriptEventFunctionNodeAssetService.getNodeNameByData(
+      scriptEventFunctionNodeData,
+    )
+  | ScriptAttributeNode(_, scriptAttributeNodeData) =>
+    ScriptAttributeNodeAssetService.getNodeNameByData(scriptAttributeNodeData)
   | TextureNode(_, nodeData) =>
     TextureNodeAssetService.getNodeName(nodeData, getTextureNameFunc)
   | MaterialNode(_, nodeData) =>

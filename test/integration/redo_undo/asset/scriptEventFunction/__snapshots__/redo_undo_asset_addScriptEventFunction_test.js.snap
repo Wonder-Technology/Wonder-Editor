@@ -1,0 +1,155 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`redo_undo: asset add script event function prepare first step: set currentSceneTreeNode test redo operate test redo one step undo step which from second to zero, redo step which from zero to first 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/scriptEventFunction.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Script EventFunction
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: asset add script event function prepare first step: set currentSceneTreeNode test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/scriptEventFunction.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Script EventFunction
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/scriptEventFunction.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Script EventFunction 1
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: asset add script event function prepare first step: set currentSceneTreeNode test undo operate test not undo 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/scriptEventFunction.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Script EventFunction
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/scriptEventFunction.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Script EventFunction 1
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: asset add script event function prepare first step: set currentSceneTreeNode test undo operate test undo one step step which from second to first 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/scriptEventFunction.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Script EventFunction
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: asset add script event function prepare first step: set currentSceneTreeNode test undo operate test undo two step step which from second to zero 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+/>
+`;

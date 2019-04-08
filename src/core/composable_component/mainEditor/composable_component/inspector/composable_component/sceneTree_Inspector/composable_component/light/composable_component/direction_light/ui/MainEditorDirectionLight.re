@@ -66,8 +66,9 @@ let render = ((uiState, dispatchFunc), lightComponent, _self) => {
           languageType,
         )
       }
-      getComponentValueFunc={
+      defaultValue={
         DirectionLightEngineService.getDirectionLightIntensity(lightComponent)
+        |> StateLogicService.getEngineStateToGetData
       }
       changeComponentValueFunc={Method.changeIntensity(lightComponent)}
       blurValueFunc={

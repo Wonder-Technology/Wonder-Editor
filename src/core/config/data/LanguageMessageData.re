@@ -68,7 +68,28 @@ let message_language_array = [|
     title: "asset-rename-material",
     language: {
       zh: {j|材质名称不能与默认名称重复 ！|j},
-      en: "material name shouldn't equal default material name",
+      en: "material's name shouldn't equal default material name",
+    },
+  },
+  {
+    title: "asset-rename-scriptEventFunction",
+    language: {
+      zh: {j|eventFunction脚本名称不能与其他eventFunction脚本名称重复 ！|j},
+      en: "script event function's name shouldn't equal other ones' name",
+    },
+  },
+  {
+    title: "asset-rename-scriptAttribute",
+    language: {
+      zh: {j|attribute脚本名称不能与其他attribute脚本名称重复 ！|j},
+      en: "script attribute's name shouldn't equal other ones' name",
+    },
+  },
+  {
+    title: "asset-rename-scriptAttribute-field",
+    language: {
+      zh: {j|field名称不能与attribute的其他field名称重复 ！|j},
+      en: "field's name shouldn't equal other ones' name of the same attribute",
     },
   },
   {
@@ -83,6 +104,20 @@ let message_language_array = [|
     language: {
       zh: {j|点光源(Point Light)数量超出了最大限制 ！|j},
       en: "the point light count is exceed max count!",
+    },
+  },
+  {
+    title: "need-add-scriptEventFunction",
+    language: {
+      zh: {j|请添加ScriptEventFunction资产|j},
+      en: "please add script event function asset",
+    },
+  },
+  {
+    title: "need-add-scriptAttribute",
+    language: {
+      zh: {j|请添加ScriptAttribute资产|j},
+      en: "please add script attribute asset",
     },
   },
 |];

@@ -9,6 +9,8 @@ module type Result = {
 
   let either: ('a => 'b, 'c => 'b, t('a, 'c)) => 'b;
 
+  let map: ('a => 'b, t('a, 'c)) => t('b, 'c);
+
   let apply:
     (
       ~switchFunc: t('a => 'b, 'c),
@@ -132,12 +134,11 @@ module MakeSameDataResult = (Item: Result) => {
     | Success(result) => successFunc(result)
     | Fail((msg, result)) => failFunc(msg, result)
     };
-
   /* let handleError = (handleFailFunc, result: t('a)) =>
-    switch (result) {
-    | Success(result) => result
-    | Fail((msg, result)) => handleFailFunc(msg, result)
-    }; */
+     switch (result) {
+     | Success(result) => result
+     | Fail((msg, result)) => handleFailFunc(msg, result)
+     }; */
 };
 
 module SameDataResult = MakeSameDataResult(Result);
@@ -149,15 +150,23 @@ module MakeRelationResult = (Item: Result) => {
 
   let fail: option(string) => t = Item.fail;
 
+  let map: (unit => unit, t) => t = Item.map;
+
   let isSuccess = (result: t) =>
     switch (result) {
     | Success(_) => true
     | _ => false
     };
 
-  let handleError = (handleFailFunc, result: t) =>
+  let handleSuccess = (handleSuccessFunc, result: t): t =>
     switch (result) {
-    | Success () => ()
+    | Success () => handleSuccessFunc()
+    | Fail(msg) => result
+    };
+
+  let handleError = (handleFailFunc, result: t): t =>
+    switch (result) {
+    | Success () => result
     | Fail(msg) => handleFailFunc(msg)
     };
 };

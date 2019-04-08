@@ -13,3 +13,9 @@ let changeMaterialType =
     (materialNodeId, material),
     (sourceMaterialType, targetMaterialType),
   );
+
+let createMaterialSphereInToInspectorCanvas = MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas;
+
+let didMount = MaterialInspector.Method.didMount;
+
+let willUnmount = MaterialInspector.Method.willUnmount;

@@ -30,14 +30,14 @@ let setName = (~material, ~type_, ~name, ~engineState) =>
   switch (type_) {
   | BasicMaterial =>
     BasicMaterialEngineService.setBasicMaterialName(
-      material,
       name,
+      material,
       engineState,
     )
   | LightMaterial =>
     LightMaterialEngineService.setLightMaterialName(
-      material,
       name,
+      material,
       engineState,
     )
   };
