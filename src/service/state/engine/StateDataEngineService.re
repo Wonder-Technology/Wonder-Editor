@@ -1,3 +1,3 @@
 open Wonderjs;
 
-let getEngineStateData = () => StateDataMain.stateData;
+let getStateData = () => StateDataMain.stateData;

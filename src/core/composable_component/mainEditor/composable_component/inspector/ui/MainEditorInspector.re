@@ -1,5 +1,7 @@
 open WidgetType;
 
+open TreeAssetType;
+
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
 module Method = {
@@ -37,7 +39,8 @@ let component =
 
 let render = ((uiState, dispatchFunc), addableComponentConfig, _self) => {
   let editorState = StateEditorService.getState();
-  <article key="inspector" className="wonder-inspector-component">
+
+  <article key="mainEditorInspector" className="wonder-inspector-component">
     {
       Method.showInspectorBySourceType(
         (uiState, dispatchFunc),

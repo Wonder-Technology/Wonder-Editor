@@ -14,6 +14,13 @@ let _ =
       sandbox := createSandbox();
       TestTool.closeContractCheck();
       MainEditorSceneTool.initState(~sandbox, ());
+      MainEditorSceneTool.initInspectorEngineState(
+        ~sandbox,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
+        (),
+      );
+
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
@@ -145,24 +152,24 @@ let _ =
         ControllerTool.stubCancelAnimationFrame(
           createEmptyStubWithJsObjSandbox(sandbox),
         );
-        let (parentDom, canvasDom) =
-          CanvasTool.stubCanvasParentAndCanvas(
+        let (mainParentDom, mainCanvasDom, _, _) =
+          CanvasTool.stubMainCanvasAndInspectorCanvasDom(
             ~sandbox,
             ~offsetWidth=300,
             ~offsetHeight=500,
             (),
           );
-        ResizeUtils.resizeScreen();
+        ResizeUtils.resizeMainCanvasScreen();
 
         ControllerTool.run();
-        let (parentDom, canvasDom) =
-          CanvasTool.stubCanvasParentAndCanvas(
+        let (mainParentDom, mainCanvasDom, _, _) =
+          CanvasTool.stubMainCanvasAndInspectorCanvasDom(
             ~sandbox,
             ~offsetWidth=400,
             ~offsetHeight=500,
             (),
           );
-        ResizeUtils.resizeScreen();
+        ResizeUtils.resizeMainCanvasScreen();
         let resizedViewport =
           StateEngineService.unsafeGetState()
           |> DeviceManagerEngineService.getViewport

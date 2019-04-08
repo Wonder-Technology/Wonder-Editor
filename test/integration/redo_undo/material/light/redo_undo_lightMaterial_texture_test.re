@@ -68,6 +68,6 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateTwiceDragTexture, _beforeEach, _afterEach),
-      BuildComponentForCurryTool.buildLightMaterial,
+      BuildComponentForCurryTool.buildLightMaterialForGameObject,
     );
   });

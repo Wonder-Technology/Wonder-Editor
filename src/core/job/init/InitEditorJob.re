@@ -33,19 +33,18 @@ let initEditorJob = (_, engineState) => {
          ),
        );
 
-  let editorState =
-    editorState
-    |> InspectorEditorService.addSceneGameObjectComponentTypeToMap(
-         SceneEngineService.getSceneGameObject(engineState),
-       );
+  editorState
+  |> InspectorEditorService.addSceneGameObjectComponentTypeToMap(
+       SceneEngineService.getSceneGameObject(engineState),
+     )
+  |> StateEditorService.setState
+  |> ignore;
 
-  editorState |> StateEditorService.setState |> ignore;
-
-  (
-    engineState
-    |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-         editCamera,
-       )
-  )
-  ->(BasicCameraViewEngineService.activeBasicCameraView(engineState));
+  engineState
+  |> BasicCameraViewEngineService.activeBasicCameraView(
+       engineState
+       |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
+            editCamera,
+          ),
+     );
 };

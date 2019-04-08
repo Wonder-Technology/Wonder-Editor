@@ -109,7 +109,7 @@ module BuildAssetTree = {
         IdAssetEditorService.generateNodeId(editorState);
 
       let (newMaterial, engineState) =
-        OperateLightMaterialLogicService.createLightMaterialAndSetName(
+        LightMaterialEngineService.createLightMaterialAndSetName(
           "material1",
           engineState,
         );
@@ -354,12 +354,12 @@ module BuildAssetTree = {
           IdAssetEditorService.generateNodeId(editorState);
 
         let (newMaterial1, engineState) =
-          OperateLightMaterialLogicService.createLightMaterialAndSetName(
+          LightMaterialEngineService.createLightMaterialAndSetName(
             "material1",
             engineState,
           );
         let (newMaterial2, engineState) =
-          OperateLightMaterialLogicService.createLightMaterialAndSetName(
+          LightMaterialEngineService.createLightMaterialAndSetName(
             "material2",
             engineState,
           );

@@ -1,0 +1,1 @@
+let mainEditorDidUpdate = MainEditor.Method.didUpdate;

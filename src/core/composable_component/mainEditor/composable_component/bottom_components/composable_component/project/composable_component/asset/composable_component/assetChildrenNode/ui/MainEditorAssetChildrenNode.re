@@ -174,7 +174,7 @@ module Method = {
                      ~type_,
                      ~engineState,
                    );
-
+                 /* TODO get img base64 from map, the wdb same to get */
                  <FileBox
                    key
                    uiState

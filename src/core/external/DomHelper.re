@@ -51,6 +51,21 @@ let apply = [%raw
   |}
 ];
 
+let setDomDisplay = [%raw
+  {|
+    function(domEle, isShow) {
+      isShow ?
+        domEle.style.display = "block" : domEle.style.display = "none"
+    }
+  |}
+];
+
+let isDomVisible = [%raw
+  domEle => {|
+     return domEle.style.display == "block"
+  |}
+];
+
 let deleteKeyInMap = [%raw
   {|
     function (key,map) {

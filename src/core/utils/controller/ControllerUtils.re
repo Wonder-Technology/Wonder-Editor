@@ -31,7 +31,7 @@ let _restoreScreen = () => {
       GameViewEditorService.unsafeGetViewRect(editorState),
       ResizeUtils.getCanvasSize(),
     ) ?
-      ResizeUtils.resizeScreen() : () :
+      ResizeUtils.resizeMainCanvasScreen() : () :
     ();
 };
 

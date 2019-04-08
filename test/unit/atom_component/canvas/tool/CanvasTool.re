@@ -24,17 +24,45 @@ module Drag = {
       |> WDBNodeAssetService.getWDBGameObject;
 
     MainEditor.Method.dragWDB((uiState, dispatchFunc), (), wdbGameObject);
-    /* DragEventUtils.handleDragEnd(event); */
   };
 };
 
-let stubCanvasParentAndCanvas =
-    (~sandbox, ~offsetWidth=300, ~offsetHeight=500, ()) => {
+let _getParentDom = (offsetWidth, offsetHeight) =>
+  {
+    "offsetWidth": offsetWidth,
+    "offsetHeight": offsetHeight,
+    "style": {
+      "display": "block",
+    },
+  }
+  |> Obj.magic;
+
+let stubMainCanvasAndInspectorCanvasDom =
+    (
+      ~sandbox,
+      ~offsetWidth=300,
+      ~offsetHeight=500,
+      ~canvasWidth=0,
+      ~canvasHeight=0,
+      (),
+    ) => {
   open Sinon;
 
-  let parentDom =
-    {"offsetWidth": offsetWidth, "offsetHeight": offsetHeight} |> Obj.magic;
-  let canvasDom = BuildCanvasTool.getFakeCanvasDom("a", sandbox);
+  let mainParentDom = _getParentDom(offsetWidth, offsetHeight);
+  let mainCanvasDom =
+    BuildCanvasTool.getFakeCanvasDom(
+      "a",
+      (canvasWidth, canvasHeight),
+      sandbox,
+    );
+
+  let inspectorParentDom = _getParentDom(offsetWidth, offsetHeight);
+  let inspectorCanvasDom =
+    BuildCanvasTool.getFakeCanvasDom(
+      "a",
+      (canvasWidth, canvasHeight),
+      sandbox,
+    );
   let getElementStub =
     SinonTool.createMethodStub(
       sandbox^,
@@ -43,15 +71,34 @@ let stubCanvasParentAndCanvas =
     );
 
   getElementStub
-  |> withOneArg("canvasParent")
-  |> returns(parentDom)
+  |> withOneArg("mainCanvasParent")
+  |> returns(mainParentDom)
   |> ignore;
 
   getElementStub
-  |> withOneArg("canvas")
-  |> returns(canvasDom)
+  |> withOneArg("inspectorCanvasParent")
+  |> returns(inspectorParentDom)
+  |> ignore;
+
+  getElementStub
+  |> withOneArg("main-canvas")
+  |> returns(mainCanvasDom)
   |> stubToJsObj
   |> ignore;
 
-  (parentDom, canvasDom);
+  getElementStub
+  |> withOneArg("inspector-canvas")
+  |> returns(inspectorCanvasDom)
+  |> stubToJsObj
+  |> ignore;
+
+  (mainParentDom, mainCanvasDom, inspectorParentDom, inspectorCanvasDom);
 };
+
+let restoreMainCanvasAndInspectorCanvasDom = [%bs.raw
+  (. param) => {|
+  document.getElementById = (id) => {
+    return undefined;
+  };
+  |}
+];

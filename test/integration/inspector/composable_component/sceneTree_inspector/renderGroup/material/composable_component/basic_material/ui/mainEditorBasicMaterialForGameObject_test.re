@@ -7,7 +7,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("MainEditorBasicMaterial component", () => {
+  describe("MainEditorBasicMaterialForGameObject component", () => {
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
       sandbox := createSandbox();
@@ -30,7 +30,6 @@ let _ =
 
       PickColorTool.testOperateColorPickToChangeColor(
         sandbox,
-        BuildComponentForCurryTool.buildBasicMaterial,
         (
           GameObjectTool.getCurrentSceneTreeNodeBasicMaterial,
           MainEditorBasicMaterialTool.changeColor,
