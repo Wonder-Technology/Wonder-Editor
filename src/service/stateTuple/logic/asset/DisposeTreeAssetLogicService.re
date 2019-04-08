@@ -24,7 +24,8 @@ let _getClonedGameObjects = (wdbGameObjects, (editorState, engineState)) =>
   |> WonderCommonlib.ArrayService.flatten
   |> ArrayService.exclude(wdbGameObjects);
 
-let _disposeTextureNodeEditorData = ({imageDataIndex}, editorState) =>
+let _disposeTextureNodeEditorData =
+    ({imageDataIndex}: textureNodeData, editorState) =>
   TextureNodeAssetEditorService.doesAnyTextureUseImage(
     imageDataIndex,
     editorState,

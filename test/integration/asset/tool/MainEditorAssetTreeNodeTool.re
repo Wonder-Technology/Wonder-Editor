@@ -21,6 +21,8 @@ let insertMaterialNode =
          ~nodeId=materialNodeId,
          ~materialComponent=material,
          ~type_=MaterialDataAssetType.LightMaterial,
+         ~imageDataIndex=0,
+         /* TODO need fix this imageDataIndex */
        ),
      ),
   engineState,

@@ -14,13 +14,17 @@ module Method = {
     |> BasicMaterialEngineService.setColor(colorArray, materialComponent)
     |> StateLogicService.refreshEngineState;
   };
+
+  let closeBasicMaterialColorPick = BasicMaterialCloseColorPickForGameObjectEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 };
 
 let render = (reduxTuple, materialComponent, _self) =>
   InspectorMaterialComponentUtils.buildBasicMaterialComponent(
-    reduxTuple,
     materialComponent,
-    Method.changeColor,
+    (
+      Method.changeColor,
+      Method.closeBasicMaterialColorPick(reduxTuple, materialComponent),
+    ),
   );
 
 let make =

@@ -128,16 +128,21 @@ module Method = {
         (nodeId, textureComponent, imageDataIndex, className),
         send,
         (editorState, engineState),
-      ) =>
-    ImageDataMapUtils.getImgSrc(imageDataIndex, editorState)
-    |> Result.SameDataResult.map(imgSrc =>
-         _buildTextureUIComponent(
-           (className, nodeId, textureComponent, imgSrc),
-           send,
-           engineState,
-         )
-         |> Result.SameDataResult.success
-       );
+      ) => {
+    let imgSrc =
+      ImageDataMapUtils.getImgSrc(
+        imageDataIndex,
+        ImageUtils.getNullImageSrc(),
+        editorState,
+      );
+
+    _buildTextureUIComponent(
+      (className, nodeId, textureComponent, imgSrc),
+      send,
+      engineState,
+    )
+    |> Result.SameDataResult.success;
+  };
 
   let showTextureAssets = (state, send) => {
     let editorState = StateEditorService.getState();

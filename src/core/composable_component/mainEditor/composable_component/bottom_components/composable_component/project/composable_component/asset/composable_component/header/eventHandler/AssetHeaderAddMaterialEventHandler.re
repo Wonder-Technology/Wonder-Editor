@@ -27,6 +27,9 @@ module CustomEventHandler = {
         engineState,
       );
 
+    let (editorState, newImageDataIndex) =
+      IndexAssetEditorService.generateImageDataMapIndex(editorState);
+
     let editorState =
       MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
         targetTreeNode,
@@ -34,6 +37,7 @@ module CustomEventHandler = {
           ~nodeId=newNodeId,
           ~type_=MaterialDataAssetType.LightMaterial,
           ~materialComponent=newMaterial,
+          ~imageDataIndex=newImageDataIndex,
         ),
         editorState,
       );

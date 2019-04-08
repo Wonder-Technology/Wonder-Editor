@@ -22,16 +22,23 @@ module Method = {
        )
     |> StateLogicService.refreshInspectorEngineState;
   };
+
+  let closeBasicMaterialColorPick = BasicMaterialCloseColorPickForAssetEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 };
 
 let component =
   ReasonReact.statelessComponent("MainEditorBasicMaterialForAsset");
 
-let render = (reduxTuple, materialComponent, _self) =>
+let render = (reduxTuple, (materialComponent, currentNodeId), _self) =>
   InspectorMaterialComponentUtils.buildBasicMaterialComponent(
-    reduxTuple,
     materialComponent,
-    Method.changeColor,
+    (
+      Method.changeColor,
+      Method.closeBasicMaterialColorPick(
+        reduxTuple,
+        (materialComponent, currentNodeId),
+      ),
+    ),
   );
 
 let make =
@@ -39,8 +46,14 @@ let make =
       ~uiState: AppStore.appState,
       ~dispatchFunc,
       ~materialComponent,
+      ~currentNodeId,
       _children,
     ) => {
   ...component,
-  render: self => render((uiState, dispatchFunc), materialComponent, self),
+  render: self =>
+    render(
+      (uiState, dispatchFunc),
+      (materialComponent, currentNodeId),
+      self,
+    ),
 };

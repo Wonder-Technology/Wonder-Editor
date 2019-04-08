@@ -470,10 +470,12 @@ module AssetTree = {
              ) => {
                let materialName =
                  getNameFunc(~material, ~type_=materialType, ~engineState)
-                 |. OperateTreeAssetLogicService.getUniqueNodeName(
-                      folderNode,
-                      engineState,
-                    );
+                 ->(
+                     OperateTreeAssetLogicService.getUniqueNodeName(
+                       folderNode,
+                       engineState,
+                     )
+                   );
 
                let engineState =
                  setNameFunc(
@@ -486,6 +488,12 @@ module AssetTree = {
                let (editorState, newNodeId) =
                  IdAssetEditorService.generateNodeId(editorState);
 
+               let (editorState, newImageDataIndex) =
+                 IndexAssetEditorService.generateImageDataMapIndex(
+                   editorState,
+                 );
+
+               /* TODO extract gltf/wdb material file, create material snapshot to store in imageDataMap */
                let editorState =
                  MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
                    folderNode,
@@ -493,6 +501,7 @@ module AssetTree = {
                      ~nodeId=newNodeId,
                      ~type_=MaterialDataAssetType.LightMaterial,
                      ~materialComponent=material,
+                     ~imageDataIndex=newImageDataIndex,
                    ),
                    editorState,
                  );
@@ -534,10 +543,12 @@ module AssetTree = {
              ) => {
                let textureName =
                  getTextureNameFunc(texture, engineState)
-                 |. OperateTreeAssetLogicService.getUniqueNodeName(
-                      folderNode,
-                      engineState,
-                    );
+                 ->(
+                     OperateTreeAssetLogicService.getUniqueNodeName(
+                       folderNode,
+                       engineState,
+                     )
+                   );
 
                let engineState =
                  setTextureNameFunc(textureName, texture, engineState);

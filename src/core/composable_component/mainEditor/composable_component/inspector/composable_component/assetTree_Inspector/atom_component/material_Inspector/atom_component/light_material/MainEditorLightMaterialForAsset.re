@@ -45,16 +45,45 @@ module Method = {
        )
     |> StateLogicService.refreshInspectorEngineState;
   };
+
+  let closeLightMaterialColorPick = LightMaterialCloseColorPickForAssetEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+
+  let blurShininessEvent =
+      (
+        (uiState, dispatchFunc),
+        (materialComponent, currentNodeId),
+        shininessValue,
+      ) =>
+    LightMaterialEngineService.getLightMaterialShininess(materialComponent)
+    |> StateLogicService.getEngineStateToGetData
+    |> ValueService.isValueEqual(ValueType.Float, shininessValue) ?
+      () :
+      LightMaterialShininessBlurForAssetEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
+        (uiState, dispatchFunc),
+        (materialComponent, currentNodeId),
+        shininessValue,
+      );
 };
 
 let component =
   ReasonReact.statelessComponent("MainEditorLightMaterialForAsset");
 
-let render = ((uiState, dispatchFunc), materialComponent, _self) =>
+let render = (reduxTuple, (materialComponent, currentNodeId), _self) =>
   InspectorMaterialComponentUtils.buildLightMaterialComponent(
-    (uiState, dispatchFunc),
+    reduxTuple,
     materialComponent,
-    (Method.changeColor, Method.changeShininess),
+    (
+      Method.changeColor,
+      Method.changeShininess,
+      Method.closeLightMaterialColorPick(
+        reduxTuple,
+        (materialComponent, currentNodeId),
+      ),
+      Method.blurShininessEvent(
+        reduxTuple,
+        (materialComponent, currentNodeId),
+      ),
+    ),
   );
 
 let make =
@@ -62,8 +91,14 @@ let make =
       ~uiState: AppStore.appState,
       ~dispatchFunc,
       ~materialComponent,
+      ~currentNodeId,
       _children,
     ) => {
   ...component,
-  render: self => render((uiState, dispatchFunc), materialComponent, self),
+  render: self =>
+    render(
+      (uiState, dispatchFunc),
+      (materialComponent, currentNodeId),
+      self,
+    ),
 };

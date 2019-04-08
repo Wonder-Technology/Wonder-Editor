@@ -239,6 +239,10 @@ let _buildMaterialEditorData =
       (editorState, engineState),
     );
 
+  let (editorState, newImageDataIndex) =
+    IndexAssetEditorService.generateImageDataMapIndex(editorState);
+
+  /*TODO import ASB, create imageDataIndex to store asb's material uint8array */
   editorState
   |> MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
        parentFolderNode,
@@ -246,6 +250,7 @@ let _buildMaterialEditorData =
          ~nodeId=assetNodeId,
          ~type_,
          ~materialComponent=material,
+         ~imageDataIndex=newImageDataIndex,
        ),
      );
 };

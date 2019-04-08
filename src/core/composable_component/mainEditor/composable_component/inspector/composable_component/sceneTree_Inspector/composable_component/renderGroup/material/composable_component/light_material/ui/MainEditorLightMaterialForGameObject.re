@@ -22,16 +22,35 @@ module Method = {
          materialComponent,
        )
     |> StateLogicService.refreshEngineState;
+
+  let closeLightMaterialColorPick = LightMaterialCloseColorPickForGameObjectEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+
+  let blurShininessEvent =
+      ((uiState, dispatchFunc), materialComponent, shininessValue) =>
+    LightMaterialEngineService.getLightMaterialShininess(materialComponent)
+    |> StateLogicService.getEngineStateToGetData
+    |> ValueService.isValueEqual(ValueType.Float, shininessValue) ?
+      () :
+      LightMaterialShininessBlurForGameObjectEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
+        (uiState, dispatchFunc),
+        materialComponent,
+        shininessValue,
+      );
 };
 
 let component =
   ReasonReact.statelessComponent("MainEditorLightMaterialForGameObject");
 
-let render = ((uiState, dispatchFunc), materialComponent, _self) =>
+let render = (reduxTuple, materialComponent, _self) =>
   InspectorMaterialComponentUtils.buildLightMaterialComponent(
-    (uiState, dispatchFunc),
+    reduxTuple,
     materialComponent,
-    (Method.changeColor, Method.changeShininess),
+    (
+      Method.changeColor,
+      Method.changeShininess,
+      Method.closeLightMaterialColorPick(reduxTuple, materialComponent),
+      Method.blurShininessEvent(reduxTuple, materialComponent),
+    ),
   );
 
 let make =

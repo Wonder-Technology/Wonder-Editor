@@ -25,7 +25,7 @@ let blurShininess =
       ~value,
       (),
     ) =>
-  InspectorMaterialUtils.blurShininessEvent(
+  MainEditorLightMaterialForGameObject.Method.blurShininessEvent(
     (uiState, dispatchFunc),
     material,
     value,
@@ -45,7 +45,7 @@ let closeColorPicker =
       ~uiState=TestTool.buildEmptyAppState(),
       (),
     ) =>
-  InspectorMaterialUtils.closeLightMaterialColorPick(
+  MainEditorLightMaterialForGameObject.Method.closeLightMaterialColorPick(
     (uiState, dispatchFunc),
     material,
     color,

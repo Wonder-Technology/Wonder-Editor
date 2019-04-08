@@ -63,8 +63,7 @@ module Method = {
        )
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. editorState, imageDataIndex) =>
-           editorState
-           |> Result.SameDataResult.map(_build(imageDataIndex)),
+           editorState |> Result.SameDataResult.map(_build(imageDataIndex)),
          editorState |> Result.SameDataResult.success,
        );
 
@@ -150,23 +149,26 @@ module Method = {
                      ~texture=textureComponent,
                      ~engineState,
                    );
+                 let imgSrc =
+                   ImageDataMapUtils.getImgSrc(
+                     imageDataIndex,
+                     ImageUtils.getNullImageSrc(),
+                     editorState,
+                   );
 
-                 ImageDataMapUtils.getImgSrc(imageDataIndex, editorState)
-                 |> Result.SameDataResult.map(imgSrc =>
-                      <FileBox
-                        key
-                        uiState
-                        dispatchFunc
-                        dragImg
-                        effectAllowd="move"
-                        imgSrc
-                        nodeId
-                        fileName
-                        widget
-                        isSelected
-                      />
-                      |> Result.SameDataResult.success
-                    );
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc
+                   nodeId
+                   fileName
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success;
                },
              ~materialNodeFunc=
                (nodeId, {materialComponent, type_}) => {
@@ -177,6 +179,15 @@ module Method = {
                      ~engineState,
                    );
                  /* TODO get img base64 from map, the wdb same to get */
+                 let imgSrc =
+                   ImageDataMapUtils.getImgSrc(
+                     /* imageDataIndex, */
+                     1,
+                     editorState
+                     |> MaterialDataAssetEditorService.unsafeGetDefaultMaterialSnapshotPath,
+                     editorState,
+                   );
+
                  <FileBox
                    key
                    uiState

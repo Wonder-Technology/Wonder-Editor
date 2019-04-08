@@ -30,7 +30,7 @@ type textureNodeData = {
 type materialNodeData = {
   type_: MaterialDataAssetType.materialType,
   materialComponent: int,
-  /* imageDataIndex: int, */
+  imageDataIndex: int,
 };
 
 type scriptEventFunctionNodeData = {
