@@ -21,7 +21,7 @@ module CustomEventHandler = {
       _getAttributeNodeData(nodeId) |> StateLogicService.getEditorState;
 
     let attribute =
-      ScriptAttributeEngineService.addScriptAttributeField(
+      ScriptAttributeEngineService.addScriptAttributeFieldJsObj(
         OperateTreeAssetLogicService.getUniqueScriptAttributeFieldName(
           ScriptAttributeNodeNameAssetService.getNewFieldName(),
           attribute,

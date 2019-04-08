@@ -1,7 +1,5 @@
 open Wonderjs;
 
-/* TODO move implemention to wonder.js */
-
 let create = ScriptAPI.createScript;
 
 let unsafeGetScriptGameObject = ScriptAPI.unsafeGetScriptGameObject;
@@ -10,25 +8,7 @@ let addScriptEventFunctionData = ScriptAPI.addScriptEventFunctionData;
 
 let removeScriptEventFunctionData = ScriptAPI.removeScriptEventFunctionData;
 
-/* let replaceScriptEventFunctionData = OperateScriptDataMainService.replaceScriptEventFunctionData; */
-
-let replaceScriptEventFunctionData =
-    (
-      script,
-      (sourceScriptEventFunctionDataName, targetScriptEventFunctionDataName),
-      targetScriptEventFunctionData,
-      state,
-    ) =>
-  removeScriptEventFunctionData(
-    script,
-    sourceScriptEventFunctionDataName,
-    state,
-  )
-  |> addScriptEventFunctionData(
-       script,
-       targetScriptEventFunctionDataName,
-       targetScriptEventFunctionData,
-     );
+let replaceScriptEventFunctionData = ScriptAPI.replaceScriptEventFunctionData;
 
 let unsafeGetScriptEventFunctionDataEntries = ScriptAPI.unsafeGetScriptEventFunctionDataEntries;
 
@@ -36,32 +16,13 @@ let addScriptAttribute = ScriptAPI.addScriptAttribute;
 
 let removeScriptAttribute = ScriptAPI.removeScriptAttribute;
 
-/* let replaceScriptAttribute = OperateScriptDataMainService.replaceScriptAttribute; */
-
-let replaceScriptAttribute =
-    (
-      script,
-      (sourceScriptAttributeName, targetScriptAttributeName),
-      targetScriptAttribute,
-      state,
-    ) =>
-  removeScriptAttribute(script, sourceScriptAttributeName, state)
-  |> addScriptAttribute(
-       script,
-       targetScriptAttributeName,
-       targetScriptAttribute,
-     );
+let replaceScriptAttribute = ScriptAPI.replaceScriptAttribute;
 
 let unsafeGetScriptAttributeEntries = ScriptAPI.unsafeGetScriptAttributeEntries;
 
 let unsafeGetScriptAttribute = ScriptAPI.unsafeGetScriptAttribute;
 
-let unsafeGetScriptAttributeFieldDefaultValue =
-    (script, scriptAttributeName, fieldName, engineState) =>
-  unsafeGetScriptAttribute(script, scriptAttributeName, engineState)
-  |> ScriptAttributeEngineService.unsafeGetScriptAttributeFieldDefaultValue(
-       fieldName,
-     );
+let unsafeGetScriptAttributeFieldDefaultValue = ScriptAPI.unsafeGetScriptAttributeFieldDefaultValue;
 
 let setScriptAttributeFieldDefaultValueAndValue = ScriptAPI.setScriptAttributeFieldDefaultValueAndValue;
 
