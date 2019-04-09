@@ -6,6 +6,10 @@ open Expect.Operators;
 
 open Sinon;
 
+open NodeAssetType;
+
+open Js.Promise;
+
 let _ =
   describe("MainEditorLightMaterialForAsset component", () => {
     let sandbox = getSandboxDefaultVal();
@@ -38,7 +42,11 @@ let _ =
                StateEditorService.getState(),
              );
 
-        (materialSphereLightMaterial, newMaterialComponent);
+        (
+          materialSphereLightMaterial,
+          newMaterialComponent,
+          addedMaterialNodeId,
+        );
       };
 
       beforeEach(() => {
@@ -86,7 +94,11 @@ let _ =
           test("test change color", () => {
             let inspectorEngineState =
               StateInspectorEngineService.unsafeGetState();
-            let (materialSphereLightMaterial, newMaterialComponent) =
+            let (
+              materialSphereLightMaterial,
+              newMaterialComponent,
+              addedMaterialNodeId,
+            ) =
               _prepareMaterialSphere(inspectorEngineState);
             let newColor = {
               "hex": "#7df1e8",
@@ -114,7 +126,11 @@ let _ =
             let inspectorEngineState =
               StateInspectorEngineService.unsafeGetState();
             let shininessValue = 20.5;
-            let (materialSphereLightMaterial, newMaterialComponent) =
+            let (
+              materialSphereLightMaterial,
+              newMaterialComponent,
+              addedMaterialNodeId,
+            ) =
               _prepareMaterialSphere(inspectorEngineState);
 
             MainEditorLightMaterialForAssetTool.changeShininess(
@@ -131,5 +147,97 @@ let _ =
           });
         },
       );
+
+      describe("test light material create img snapshot for asset", () => {
+        let _prepareInspectorMaterialSphereAndImgCanvas = () => {
+          let getElementStub =
+            SinonTool.createMethodStub(
+              sandbox^,
+              BuildCanvasTool.documentToJsObj(BuildCanvasTool.document),
+              "getElementById",
+            );
+          let (
+            _mainParentDom,
+            _mainCanvasDom,
+            inspectorParentDom,
+            inspectorCanvasDom,
+          ) =
+            CanvasTool.stubMainCanvasAndInspectorCanvasDom(
+              ~sandbox,
+              ~getElementStub,
+              (),
+            );
+          let imgCanvasDom =
+            CanvasTool.stubImgCanvasDom(~sandbox, ~getElementStub, ());
+          let inspectorEngineState =
+            StateInspectorEngineService.unsafeGetState();
+          let imgCanvasFakeBase64Str =
+            BuildCanvasTool.getImgCanvasFakeBase64Str();
+
+          inspectorCanvasDom##toDataURL
+          |> returns(BuildCanvasTool.getInspectorCanvasFakeBase64Str());
+          imgCanvasDom##toDataURL |> returns(imgCanvasFakeBase64Str);
+
+          let (
+            materialSphereLightMaterial,
+            newMaterialComponent,
+            addedMaterialNodeId,
+          ) =
+            _prepareMaterialSphere(inspectorEngineState);
+          (addedMaterialNodeId, newMaterialComponent, imgCanvasFakeBase64Str);
+        };
+
+        beforeEach(() => MainEditorAssetTool.buildFakeImage());
+        afterEach(() => CanvasTool.restoreMainCanvasAndInspectorCanvasDom());
+
+        describe("create inspector canvas img snapshot", () =>
+          describe(
+            "clip the inspector canvas img snapshot to create img canvas snapshot",
+            () =>
+            describe(
+              "test exec eventHandler should store the img canvas snapshot to store in imageDataMap",
+              () =>
+              testPromise(
+                "test exec light material close color pick eventHandler", () => {
+                let (
+                  addedMaterialNodeId,
+                  newMaterialComponent,
+                  imgCanvasFakeBase64Str,
+                ) =
+                  _prepareInspectorMaterialSphereAndImgCanvas();
+
+                MainEditorLightMaterialForAssetTool.closeColorPicker(
+                  ~currentNodeId=addedMaterialNodeId,
+                  ~material=newMaterialComponent,
+                  ~color="#7df1e8",
+                  (),
+                )
+                |> then_(_ => {
+                     let editorState = StateEditorService.getState();
+                     let {imageDataIndex} =
+                       editorState
+                       |> OperateTreeAssetEditorService.unsafeFindNodeById(
+                            addedMaterialNodeId,
+                          )
+                       |> MaterialNodeAssetService.getNodeData;
+
+                     editorState
+                     |> ImageDataMapAssetEditorService.unsafeGetData(
+                          imageDataIndex,
+                        )
+                     |> WonderLog.Log.print
+                     |> (
+                       ({base64}) =>
+                         base64
+                         |> OptionService.unsafeGet
+                         |> expect == imgCanvasFakeBase64Str
+                         |> resolve
+                     );
+                   });
+              })
+            )
+          )
+        );
+      });
     });
   });

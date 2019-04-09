@@ -6,6 +6,9 @@ type document;
 
 external documentToJsObj: document => Js.t({..}) = "%identity";
 
+let getInspectorCanvasFakeBase64Str = () => "data:image/png;base64 for inspector-canvas";
+let getImgCanvasFakeBase64Str = () => "data:image/png;base64 for img-canvas";
+
 let _buildFakeContext = sandbox => {
   "drawImage": createEmptyStubWithJsObjSandbox(sandbox),
   "fillStyle": 0,

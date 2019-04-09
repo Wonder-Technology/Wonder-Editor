@@ -40,19 +40,19 @@ module CustomEventHandler = {
           ~imageDataIndex=newImageDataIndex,
         ),
         editorState,
-      );
+      )
+      |> ImageDataMapAssetEditorService.setData(
+           newImageDataIndex,
+           ImageDataMapAssetService.buildData(
+             ~base64=None,
+             ~uint8Array=None,
+             ~name=materialName,
+             ~mimeType="image/png",
+             (),
+           ),
+         );
 
     editorState |> StateEditorService.setState |> ignore;
-
-    /* TODO draw material sphere to get base64 store in map */
-    /* MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
-         MaterialDataAssetType.LightMaterial,
-         newMaterial,
-       );
-
-       MaterialInspector.Method.getDataUrl(
-         DomHelper.getElementById("inspector-canvas"),
-       ); */
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])))
     |> ignore;

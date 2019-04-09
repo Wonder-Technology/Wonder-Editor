@@ -4,6 +4,9 @@ let create = () => {
   inspectorCanvasRecord: {
     containerGameObject: None,
   },
+  imgCanvasRecord: {
+    imgContext: None,
+  },
   settingRecord: RecordSettingService.create(),
   sceneTreeRecord: {
     currentSceneTreeNode: None,

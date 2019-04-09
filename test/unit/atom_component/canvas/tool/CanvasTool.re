@@ -44,6 +44,13 @@ let stubMainCanvasAndInspectorCanvasDom =
       ~offsetHeight=500,
       ~canvasWidth=0,
       ~canvasHeight=0,
+      ~getElementStub=SinonTool.createMethodStub(
+                        sandbox^,
+                        BuildCanvasTool.documentToJsObj(
+                          BuildCanvasTool.document,
+                        ),
+                        "getElementById",
+                      ),
       (),
     ) => {
   open Sinon;
@@ -62,12 +69,6 @@ let stubMainCanvasAndInspectorCanvasDom =
       "a",
       (canvasWidth, canvasHeight),
       sandbox,
-    );
-  let getElementStub =
-    SinonTool.createMethodStub(
-      sandbox^,
-      BuildCanvasTool.documentToJsObj(BuildCanvasTool.document),
-      "getElementById",
     );
 
   getElementStub
@@ -95,6 +96,37 @@ let stubMainCanvasAndInspectorCanvasDom =
   (mainParentDom, mainCanvasDom, inspectorParentDom, inspectorCanvasDom);
 };
 
+let stubImgCanvasDom =
+    (
+      ~sandbox,
+      ~canvasWidth=50,
+      ~canvasHeight=50,
+      ~getElementStub=SinonTool.createMethodStub(
+                        sandbox^,
+                        BuildCanvasTool.documentToJsObj(
+                          BuildCanvasTool.document,
+                        ),
+                        "getElementById",
+                      ),
+      (),
+    ) => {
+  open Sinon;
+
+  let imgCanvasDom =
+    BuildCanvasTool.getFakeCanvasDom(
+      "a",
+      (canvasWidth, canvasHeight),
+      sandbox,
+    );
+
+  getElementStub
+  |> withOneArg("img-canvas")
+  |> returns(imgCanvasDom)
+  |> stubToJsObj
+  |> ignore;
+
+  imgCanvasDom;
+};
 let restoreMainCanvasAndInspectorCanvasDom = [%bs.raw
   (. param) => {|
   document.getElementById = (id) => {

@@ -8,24 +8,23 @@ let _buildImageObj = src =>
    ); */
 
 /* let insertScriptEventFunctionNode =
-    (
-      materialNodeId,
-      parentFolderNodeId,
-      material,
-      (editorState, engineState),
-    ) => (
-  editorState
-  |> OperateTreeAssetEditorService.insertNode(
-       parentFolderNodeId,
-       ScriptEventFunctionNodeAssetService.buildNode(
-         ~nodeId=materialNodeId,
-         ~materialComponent=material,
-         ~type_=ScriptEventFunctionDataAssetType.LightScriptEventFunction,
-       ),
-     ),
-  engineState,
-); */
-
+       (
+         materialNodeId,
+         parentFolderNodeId,
+         material,
+         (editorState, engineState),
+       ) => (
+     editorState
+     |> OperateTreeAssetEditorService.insertNode(
+          parentFolderNodeId,
+          ScriptEventFunctionNodeAssetService.buildNode(
+            ~nodeId=materialNodeId,
+            ~materialComponent=material,
+            ~type_=ScriptEventFunctionDataAssetType.LightScriptEventFunction,
+          ),
+        ),
+     engineState,
+   ); */
 
 let insertMaterialNode =
     (
@@ -41,12 +40,11 @@ let insertMaterialNode =
          ~nodeId=materialNodeId,
          ~materialComponent=material,
          ~type_=MaterialDataAssetType.LightMaterial,
+         ~imageDataIndex=0,
        ),
      ),
   engineState,
 );
-
-
 
 let insertMaterialNode =
     (

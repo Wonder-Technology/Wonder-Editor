@@ -26,8 +26,11 @@ open UIType;
 
 open InspectorCanvasType;
 
+open ImgCanvasType;
+
 type editorState = {
   inspectorCanvasRecord,
+  imgCanvasRecord,
   uiRecord,
   settingRecord,
   sceneTreeRecord,

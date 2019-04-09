@@ -168,7 +168,7 @@ module Method = {
                  |> Result.SameDataResult.success;
                },
              ~materialNodeFunc=
-               (nodeId, {materialComponent, type_}) => {
+               (nodeId, {materialComponent, type_, imageDataIndex}) => {
                  let fileName =
                    NodeNameAssetLogicService.getMaterialNodeName(
                      ~material=materialComponent,
@@ -178,12 +178,13 @@ module Method = {
                  /* TODO get img base64 from map, the wdb same to get */
                  let imgSrc =
                    ImageDataMapUtils.getImgSrc(
-                     /* imageDataIndex, */
-                     1,
+                     imageDataIndex,
                      editorState
                      |> MaterialDataAssetEditorService.unsafeGetDefaultMaterialSnapshotPath,
                      editorState,
                    );
+
+                 Js.log(imgSrc);
 
                  <FileBox
                    key
@@ -191,7 +192,7 @@ module Method = {
                    dispatchFunc
                    dragImg
                    effectAllowd="move"
-                   imgSrc="./public/img/mat.jpg"
+                   imgSrc
                    nodeId
                    fileName
                    widget

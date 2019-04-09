@@ -65,6 +65,7 @@ module Method = {
           </div>
         </div>
       </div>
+      <canvas id="img-canvas" key="imgCanvas" width="50" height="50" />
     </article>;
 
   let buildElementAfterInitEngine = (uiState, dispatchFunc) =>
@@ -104,6 +105,7 @@ module Method = {
           />
         </div>
       </div>
+      <canvas id="img-canvas" key="imgCanvas" width="50" height="50" />
     </article>;
 
   let onResize = domElement => {
@@ -135,7 +137,10 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
              editorState =>
                editorState
                |> TreeAssetEditorService.createTree
-               |> StateEditorService.setState
+               |> ImgContextImgCanvasEditorService.setImgContext(
+                    DomHelper.getElementById("img-canvas")
+                    |> CanvasType.getCanvasContext,
+                  )
            )
            |> StateLogicService.getAndSetEditorState;
 

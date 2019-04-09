@@ -106,7 +106,13 @@ let initStateWithJob =
   StateEditorService.setState(
     CreateEditorStateEditorService.create()
     |> SettingTool.initSetting
-    |> TreeAssetEditorService.createTree,
+    |> TreeAssetEditorService.createTree
+    |> ImgContextImgCanvasEditorService.setImgContext(
+         (
+           BuildCanvasTool.getFakeCanvasDom("img-canvas", (0, 0), sandbox)
+           |> Obj.magic
+         )##getContext(),
+       ),
   )
   |> ignore;
 

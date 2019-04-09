@@ -46,7 +46,7 @@ module Method = {
     |> StateLogicService.refreshInspectorEngineState;
   };
 
-  let closeLightMaterialColorPick = LightMaterialCloseColorPickForAssetEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+  let closeLightMaterialColorPick = LightMaterialCloseColorPickForAssetEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineStateForPromise;
 
   let blurShininessEvent =
       (
