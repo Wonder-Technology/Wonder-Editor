@@ -1,4 +1,5 @@
-let replaceToScriptAttributeAssetAttribute =
+/* TODO remove */
+/* let replaceToScriptAttributeAssetAttribute =
     (gameObject, scriptAttributeEntriesMap, engineState) =>
   switch (
     GameObjectComponentEngineService.getScriptComponent(
@@ -6,11 +7,12 @@ let replaceToScriptAttributeAssetAttribute =
       engineState,
     )
   ) {
-  | None => engineState
+  | None =>
+  engineState
   | Some(script) =>
     ScriptEngineService.replaceScriptAttributeByEntriesMap(
       script,
       scriptAttributeEntriesMap,
       engineState,
     )
-  };
+  }; */

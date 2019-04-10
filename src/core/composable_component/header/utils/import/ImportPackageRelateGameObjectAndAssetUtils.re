@@ -159,11 +159,11 @@ let _replaceWDBAssetGameObjectScriptComponentDataToScriptDataAsset =
   |> RelateGameObjectAndScriptEventFunctionAssetUtils.replaceToScriptEventFunctionAssetEventFunctionData(
        gameObject,
        scriptEventFunctionEntriesMap,
-     )
-  |> RelateGameObjectAndScriptAttributeAssetUtils.replaceToScriptAttributeAssetAttribute(
-       gameObject,
-       scriptAttributeEntriesMap,
      );
+/* |> RelateGameObjectAndScriptAttributeAssetUtils.replaceToScriptAttributeAssetAttribute(
+     gameObject,
+     scriptAttributeEntriesMap,
+   ); */
 
 let _isWdbAssetGameObjectGeometry =
     (geometry, wdbAssetGameObjectGeometryDataArr) =>
@@ -337,11 +337,11 @@ let _replaceSceneGameObjectScriptComponentDataToScriptDataAsset =
   |> RelateGameObjectAndScriptEventFunctionAssetUtils.replaceToScriptEventFunctionAssetEventFunctionData(
        gameObject,
        scriptEventFunctionEntriesMap,
-     )
-  |> RelateGameObjectAndScriptAttributeAssetUtils.replaceToScriptAttributeAssetAttribute(
-       gameObject,
-       scriptAttributeEntriesMap,
      );
+/* |> RelateGameObjectAndScriptAttributeAssetUtils.replaceToScriptAttributeAssetAttribute(
+     gameObject,
+     scriptAttributeEntriesMap,
+   ); */
 
 let _getGeometryDataArr = (geometryArr, engineState) =>
   geometryArr
@@ -491,24 +491,28 @@ let relateWDBAssetGameObjectsAndAssets =
   let engineState =
     allWDBGameObjectsArr
     |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. engineState, gameObject) =>
-           _replaceWDBAssetGameObjectMaterialComponentToMaterialAsset(
-             gameObject,
-             (
-               defaultMaterialData,
-               (basicMaterialDataMap, lightMaterialDataMap),
-               imageUint8ArrayDataMap,
-             ),
-             engineState,
-           )
-           |> RelateGameObjectAndGeometryAssetUtils.replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent(
-                gameObject,
-                defaultGeometryData,
-              )
-           |> _replaceWDBAssetGameObjectScriptComponentDataToScriptDataAsset(
-                gameObject,
-                (scriptEventFunctionEntriesMap, scriptAttributeEntriesMap),
-              ),
+         (. engineState, gameObject) => {
+           let engineState =
+             _replaceWDBAssetGameObjectMaterialComponentToMaterialAsset(
+               gameObject,
+               (
+                 defaultMaterialData,
+                 (basicMaterialDataMap, lightMaterialDataMap),
+                 imageUint8ArrayDataMap,
+               ),
+               engineState,
+             )
+             |> RelateGameObjectAndGeometryAssetUtils.replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent(
+                  gameObject,
+                  defaultGeometryData,
+                )
+             |> _replaceWDBAssetGameObjectScriptComponentDataToScriptDataAsset(
+                  gameObject,
+                  (scriptEventFunctionEntriesMap, scriptAttributeEntriesMap),
+                );
+
+           engineState;
+         },
          engineState,
        );
 

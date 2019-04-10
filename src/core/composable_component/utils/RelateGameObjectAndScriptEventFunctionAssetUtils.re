@@ -1,3 +1,5 @@
+
+
 let replaceToScriptEventFunctionAssetEventFunctionData =
     (gameObject, scriptEventFunctionEntriesMap, engineState) =>
   switch (

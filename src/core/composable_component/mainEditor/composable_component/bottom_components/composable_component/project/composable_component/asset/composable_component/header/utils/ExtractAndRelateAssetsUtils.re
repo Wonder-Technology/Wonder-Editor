@@ -8,8 +8,18 @@ module Extract = {
     | _ => false
     };
 
+  let _changeScriptAssetsHashMapToEntriesMap = hashMap =>
+    hashMap
+    |> WonderCommonlib.ImmutableHashMapService.getValidEntries
+    |> WonderCommonlib.SparseMapType.arrayNotNullableToArrayNullable;
+
   let _extractAndRelateScriptEventFunctionAssets =
-      (gameObject, scriptEventFunctionAssetEntriesMap, engineState) => {
+      (
+        gameObject,
+        scriptEventFunctionAssetHashMap,
+        totalExtractedScriptEventFunctionAssetEntriesArr,
+        engineState,
+      ) => {
     let extractedScriptEventFunctionAssetEntriesArr =
       switch (
         GameObjectComponentEngineService.getScriptComponent(
@@ -19,9 +29,9 @@ module Extract = {
       ) {
       | None => WonderCommonlib.ArrayService.createEmpty()
       | Some(script) =>
-        ScriptEngineService.getScriptEventFunctionDataEntriesArrNotInScript(
+        ExtractScriptAssetLogicService.getScriptEventFunctionDataEntriesArrNotInScriptAssets(
           script,
-          scriptEventFunctionAssetEntriesMap,
+          scriptEventFunctionAssetHashMap,
           engineState,
         )
       };
@@ -29,15 +39,27 @@ module Extract = {
     let engineState =
       RelateGameObjectAndScriptEventFunctionAssetUtils.replaceToScriptEventFunctionAssetEventFunctionData(
         gameObject,
-        scriptEventFunctionAssetEntriesMap,
+        scriptEventFunctionAssetHashMap
+        |> _changeScriptAssetsHashMapToEntriesMap,
         engineState,
       );
 
-    (extractedScriptEventFunctionAssetEntriesArr, engineState);
+    (
+      ArrayService.fastConcat(
+        totalExtractedScriptEventFunctionAssetEntriesArr,
+        extractedScriptEventFunctionAssetEntriesArr,
+      ),
+      engineState,
+    );
   };
 
   let _extractAndRelateScriptAttributeAssets =
-      (gameObject, scriptAttributeAssetEntriesMap, engineState) => {
+      (
+        gameObject,
+        scriptAttributeAssetHashMap,
+        totalExtractedScriptAttributeAssetEntriesArr,
+        engineState,
+      ) => {
     let extractedScriptAttributeAssetEntriesArr =
       switch (
         GameObjectComponentEngineService.getScriptComponent(
@@ -47,21 +69,27 @@ module Extract = {
       ) {
       | None => WonderCommonlib.ArrayService.createEmpty()
       | Some(script) =>
-        ScriptEngineService.getScriptAttributeEntriesArrNotInScript(
+        ExtractScriptAssetLogicService.getScriptAttributeEntriesArrNotInScriptAssets(
           script,
-          scriptAttributeAssetEntriesMap,
+          scriptAttributeAssetHashMap,
           engineState,
         )
       };
 
-    let engineState =
-      RelateGameObjectAndScriptAttributeAssetUtils.replaceToScriptAttributeAssetAttribute(
-        gameObject,
-        scriptAttributeAssetEntriesMap,
-        engineState,
-      );
+    /* let engineState =
+       RelateGameObjectAndScriptAttributeAssetUtils.replaceToScriptAttributeAssetAttribute(
+         gameObject,
+         scriptAttributeAssetHashMap|> _changeScriptAssetsHashMapToEntriesMap,
+         engineState,
+       ); */
 
-    (extractedScriptAttributeAssetEntriesArr, engineState);
+    (
+      ArrayService.fastConcat(
+        totalExtractedScriptAttributeAssetEntriesArr,
+        extractedScriptAttributeAssetEntriesArr,
+      ),
+      engineState,
+    );
   };
 
   let _isLightMaterialDataEqual =
@@ -288,16 +316,7 @@ module Extract = {
     )
     |> ImmutableSparseMapType.arrayToImmutableSparseMap;
 
-  /* MaterialNodeMapAssetEditorService.getValidValues(editorState)
-     |> WonderCommonlib.ImmutableSparseMapService.filter(({type_}: NodeAssetType.materialResultType) =>
-          type_ === materialType
-        )
-     |> WonderCommonlib.ImmutableSparseMapService.map(
-          ({materialComponent}: NodeAssetType.materialResultType) =>
-          materialComponent
-        ); */
-
-  let _buildScriptEventFunctionAssetEntriesMap = editorState =>
+  let _buildScriptEventFunctionAssetHashMap = editorState =>
     ScriptEventFunctionNodeAssetEditorService.findAllScriptEventFunctionNodes(
       editorState,
     )
@@ -307,9 +326,11 @@ module Extract = {
 
          (name, eventFunctionData);
        })
-    |> WonderCommonlib.SparseMapType.arrayNotNullableToArrayNullable;
+    |> ImmutableHashMapService.fromArray;
 
-  let _buildScriptAttributeAssetEntriesMap = editorState =>
+  /* |> WonderCommonlib.SparseMapType.arrayNotNullableToArrayNullable; */
+
+  let _buildScriptAttributeAssetHashMap = editorState =>
     ScriptAttributeNodeAssetEditorService.findAllScriptAttributeNodes(
       editorState,
     )
@@ -319,7 +340,8 @@ module Extract = {
 
          (name, attribute);
        })
-    |> WonderCommonlib.SparseMapType.arrayNotNullableToArrayNullable;
+    /* |> WonderCommonlib.SparseMapType.arrayNotNullableToArrayNullable; */
+    |> ImmutableHashMapService.fromArray;
 
   let _prepareData = (editorState, engineState) => {
     let defaultMaterialData =
@@ -367,8 +389,8 @@ module Extract = {
       lightMaterialDataMap,
       textureAssetDataMap,
       (
-        _buildScriptEventFunctionAssetEntriesMap(editorState),
-        _buildScriptAttributeAssetEntriesMap(editorState),
+        _buildScriptEventFunctionAssetHashMap(editorState),
+        _buildScriptAttributeAssetHashMap(editorState),
       ),
     );
   };
@@ -382,7 +404,7 @@ module Extract = {
       basicMaterialDataMap,
       lightMaterialDataMap,
       textureAssetDataMap,
-      (scriptEventFunctionAssetEntriesMap, scriptAttributeAssetEntriesMap),
+      (scriptEventFunctionAssetHashMap, scriptAttributeAssetHashMap),
     ) =
       _prepareData(editorState, engineState);
 
@@ -416,14 +438,16 @@ module Extract = {
              let (extractedScriptEventFunctionAssetEntriesArr, engineState) =
                _extractAndRelateScriptEventFunctionAssets(
                  gameObject,
-                 scriptEventFunctionAssetEntriesMap,
+                 scriptEventFunctionAssetHashMap,
+                 extractedScriptEventFunctionAssetEntriesArr,
                  engineState,
                );
 
              let (extractedScriptAttributeAssetEntriesArr, engineState) =
                _extractAndRelateScriptAttributeAssets(
                  gameObject,
-                 scriptAttributeAssetEntriesMap,
+                 scriptAttributeAssetHashMap,
+                 extractedScriptAttributeAssetEntriesArr,
                  engineState,
                );
 

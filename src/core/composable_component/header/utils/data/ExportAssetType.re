@@ -61,15 +61,13 @@ type lightMaterial = {
 type scriptEventFunction = {
   name: string,
   path: string,
-  /* eventFunctionData: Wonderjs.StateDataMainType.eventFunctionData, */
-  eventFunctionDataStr: string
+  eventFunctionDataStr: string,
 };
 
 type scriptAttribute = {
   name: string,
   path: string,
-  /* attribute: Wonderjs.ScriptAttributeType.scriptAttribute, */
-  attributeStr: string
+  attributeStr: string,
 };
 
 type copyright = {

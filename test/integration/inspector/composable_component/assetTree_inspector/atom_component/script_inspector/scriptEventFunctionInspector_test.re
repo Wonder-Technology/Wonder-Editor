@@ -107,7 +107,7 @@ let _ =
         })
       );
 
-      describe("test update script attribute in all script components", () => {
+      describe("test update event function data in all script components", () => {
         beforeEach(() =>
           ScriptEventFunctionInspectorTool.TestUpdateScriptEventFunctionInAllScriptComponents.createDefaultSceneAndAddScriptComponent(
             sandbox,

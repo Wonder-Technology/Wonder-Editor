@@ -285,15 +285,15 @@ let _import = result => {
            scriptDataMapTuple,
          ),
        ) => {
-       let editorState = StateEditorService.getState();
-       let engineState = StateEngineService.unsafeGetState();
-
        ImportPackageRelateGameObjectAndAssetUtils.relateWDBAssetGameObjectsAndAssets(
          allWDBGameObjectArr,
          materialMapTuple,
          scriptDataMapTuple,
          asbImageUint8ArrayDataMap,
        );
+
+       let editorState = StateEditorService.getState();
+       let engineState = StateEngineService.unsafeGetState();
 
        allWDBGameObjectArrRef := allWDBGameObjectArr;
        materialMapTupleRef := materialMapTuple;
@@ -344,13 +344,11 @@ let _import = result => {
                 StateEditorService.getStateIsDebug(),
               );
 
-              let engineState = StateEngineService.unsafeGetState();
-
               ImportPackageRelateGameObjectAndAssetUtils.relateSceneWDBGameObjectsAndAssets(
                 HierarchyGameObjectEngineService.getAllGameObjects(
                   sceneGameObject,
-                  engineState,
-                ),
+                )
+                |> StateLogicService.getEngineStateToGetData,
                 asbImageUint8ArrayDataMapRef^,
                 materialMapTupleRef^,
                 wdbAssetGameObjectGeometryAssetArrRef^,

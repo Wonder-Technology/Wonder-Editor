@@ -106,6 +106,16 @@ let getImportedWDBAssetNodeId = () =>
   |> StateLogicService.getEditorState
   |> Js.Array.map(node => NodeAssetService.getNodeId(~node));
 
+let getImportedScriptEventFunctionAssetNodeId = () =>
+  ScriptEventFunctionNodeAssetEditorService.findAllScriptEventFunctionNodes
+  |> StateLogicService.getEditorState
+  |> Js.Array.map(node => NodeAssetService.getNodeId(~node));
+
+let getImportedScriptAttributeAssetNodeId = () =>
+  ScriptAttributeNodeAssetEditorService.findAllScriptAttributeNodes
+  |> StateLogicService.getEditorState
+  |> Js.Array.map(node => NodeAssetService.getNodeId(~node));
+
 let disposeAssets = () => {
   HeaderImportPackageUtils._disposeAssets();
 

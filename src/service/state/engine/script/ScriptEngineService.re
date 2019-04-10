@@ -10,6 +10,8 @@ let removeScriptEventFunctionData = ScriptAPI.removeScriptEventFunctionData;
 
 let replaceScriptEventFunctionData = ScriptAPI.replaceScriptEventFunctionData;
 
+let getScriptEventFunctionDataEntries = OperateScriptDataMainService.getScriptEventFunctionDataEntries;
+
 let unsafeGetScriptEventFunctionDataEntries = ScriptAPI.unsafeGetScriptEventFunctionDataEntries;
 
 let addScriptAttribute = ScriptAPI.addScriptAttribute;
@@ -17,6 +19,8 @@ let addScriptAttribute = ScriptAPI.addScriptAttribute;
 let removeScriptAttribute = ScriptAPI.removeScriptAttribute;
 
 let replaceScriptAttribute = ScriptAPI.replaceScriptAttribute;
+
+let getScriptAttributeEntries = OperateScriptDataMainService.getScriptAttributeEntries;
 
 let unsafeGetScriptAttributeEntries = ScriptAPI.unsafeGetScriptAttributeEntries;
 
@@ -91,57 +95,6 @@ let hasScriptAttributeData =
   |> Js.Option.isSome;
 };
 
-let _getScriptDataEntriesArrNotInScript =
-    (
-      script,
-      scriptDataMap,
-      scriptDataEntriesMap,
-      ({scriptRecord}: StateDataMainType.state) as engineState,
-    ) =>
-  switch (
-    scriptDataMap |> WonderCommonlib.ImmutableSparseMapService.get(script)
-  ) {
-  | None => WonderCommonlib.ArrayService.createEmpty()
-  | Some(dataMap) =>
-    scriptDataEntriesMap
-    |> WonderCommonlib.ImmutableSparseMapService.filterValid((. (name, _)) =>
-         !(dataMap |> WonderCommonlib.ImmutableHashMapService.has(name))
-       )
-    |> WonderCommonlib.SparseMapType.arrayNullableToArrayNotNullable
-  };
-
-let getScriptEventFunctionDataEntriesArrNotInScript =
-    (
-      script,
-      scriptEventFunctionEntriesMap,
-      ({scriptRecord}: StateDataMainType.state) as engineState,
-    ) => {
-  let {scriptEventFunctionDataMap}: StateDataMainType.scriptRecord = scriptRecord;
-
-  _getScriptDataEntriesArrNotInScript(
-    script,
-    scriptEventFunctionDataMap,
-    scriptEventFunctionEntriesMap,
-    engineState,
-  );
-};
-
-let getScriptAttributeEntriesArrNotInScript =
-    (
-      script,
-      scriptAttributeEntriesMap,
-      ({scriptRecord}: StateDataMainType.state) as engineState,
-    ) => {
-  let {scriptAttributeMap}: StateDataMainType.scriptRecord = scriptRecord;
-
-  _getScriptDataEntriesArrNotInScript(
-    script,
-    scriptAttributeMap,
-    scriptAttributeEntriesMap,
-    engineState,
-  );
-};
-
 let _replaceScriptDataByEntriesMap =
     (
       script,
@@ -158,6 +111,8 @@ let _replaceScriptDataByEntriesMap =
     |> WonderCommonlib.ImmutableSparseMapService.set(
          script,
          scriptDataEntriesMap
+         /* |> WonderCommonlib.ImmutableHashMapService.getValidEntries
+         |> WonderCommonlib.SparseMapType.arrayNotNullableToArrayNullable */
          |> WonderCommonlib.ImmutableSparseMapService.reduceValid(
               (. dataMap, (name, newData)) =>
                 dataMap |> WonderCommonlib.ImmutableHashMapService.has(name) ?

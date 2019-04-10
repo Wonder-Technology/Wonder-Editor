@@ -142,7 +142,8 @@ let _ =
 
           beforeAll(() => wdbArrayBuffer := _generateWDB());
 
-          testPromise("should has no extracted assets", () => {
+          testPromise(
+            "should has no extracted material assets and texture assets", () => {
             EventListenerTool.buildFakeDom()
             |> EventListenerTool.stubGetElementByIdReturnFakeDom;
 
@@ -168,11 +169,13 @@ let _ =
         });
 
         describe("extract material assets", () => {
-          describe("test asset tree", () => {
+          describe(
+            "if wdb->material not exist in assets, extract them and add to assets",
+            () => {
             describe(
               {j|should add "Materials" folder node and add material node into it|j},
               () => {
-              testPromise("test load the same wdb once", () =>
+              testPromise("test load wdb once", () =>
                 MainEditorAssetUploadTool.loadOneWDB(
                   ~arrayBuffer=boxTexturedWDBArrayBuffer^,
                   (),
@@ -277,101 +280,102 @@ let _ =
             });
           });
 
-          describe("test wdb asset->wdb gameObject->material", () => {
-            testPromise(
+          describe("else, relate them", () =>
+            describe(
               "wdb gameObject should use extraced material asset->materialComponent",
-              () =>
-              MainEditorAssetUploadTool.loadOneWDB(
-                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
-                (),
-              )
-              |> then_(uploadedWDBNodeId => {
-                   let engineState = StateEngineService.unsafeGetState();
-                   let editorState = StateEditorService.getState();
+              () => {
+              testPromise("test load wdb once", () =>
+                MainEditorAssetUploadTool.loadOneWDB(
+                  ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId => {
+                     let engineState = StateEngineService.unsafeGetState();
+                     let editorState = StateEditorService.getState();
 
-                   let boxTexturedMeshGameObject =
-                     LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
-                       uploadedWDBNodeId,
-                       (editorState, engineState),
-                     );
-                   let material =
-                     boxTexturedMeshGameObject
-                     |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-                          _,
-                          engineState,
-                        );
-
-                   MainEditorAssetMaterialNodeTool.hasMaterialComponent(
-                     material,
-                     LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
-                     editorState,
-                   )
-                   |> expect == true
-                   |> resolve;
-                 })
-            );
-            testPromise(
-              "if already has equaled material asset, wdb gameObject should use it",
-              () =>
-              MainEditorAssetUploadTool.loadOneWDB(
-                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
-                (),
-              )
-              |> then_(uploadedWDBNodeId1 =>
-                   MainEditorAssetUploadTool.loadOneWDB(
-                     ~arrayBuffer=boxTexturedWDBArrayBuffer^,
-                     (),
-                   )
-                   |> then_(uploadedWDBNodeId2 => {
-                        let engineState = StateEngineService.unsafeGetState();
-                        let editorState = StateEditorService.getState();
-
-                        let boxTexturedMeshGameObject1 =
-                          LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
-                            uploadedWDBNodeId1,
-                            (editorState, engineState),
+                     let boxTexturedMeshGameObject =
+                       LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
+                         uploadedWDBNodeId,
+                         (editorState, engineState),
+                       );
+                     let material =
+                       boxTexturedMeshGameObject
+                       |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                            _,
+                            engineState,
                           );
-                        let material1 =
-                          boxTexturedMeshGameObject1
-                          |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-                               _,
-                               engineState,
-                             );
 
-                        let boxTexturedMeshGameObject2 =
-                          LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
-                            uploadedWDBNodeId2,
-                            (editorState, engineState),
-                          );
-                        let material2 =
-                          boxTexturedMeshGameObject2
-                          |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-                               _,
-                               engineState,
-                             );
+                     MainEditorAssetMaterialNodeTool.hasMaterialComponent(
+                       material,
+                       LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
+                       editorState,
+                     )
+                     |> expect == true
+                     |> resolve;
+                   })
+              );
+              testPromise("test load the same wdb twice", () =>
+                MainEditorAssetUploadTool.loadOneWDB(
+                  ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId1 =>
+                     MainEditorAssetUploadTool.loadOneWDB(
+                       ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                       (),
+                     )
+                     |> then_(uploadedWDBNodeId2 => {
+                          let engineState =
+                            StateEngineService.unsafeGetState();
+                          let editorState = StateEditorService.getState();
 
-                        (
-                          MainEditorAssetMaterialNodeTool.hasMaterialComponent(
-                            material1,
-                            LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
-                            editorState,
-                          ),
-                          MainEditorAssetMaterialNodeTool.hasMaterialComponent(
-                            material2,
-                            LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
-                            editorState,
-                          ),
-                          MaterialNodeAssetEditorService.findAllMaterialNodes(
-                            editorState,
+                          let boxTexturedMeshGameObject1 =
+                            LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
+                              uploadedWDBNodeId1,
+                              (editorState, engineState),
+                            );
+                          let material1 =
+                            boxTexturedMeshGameObject1
+                            |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                                 _,
+                                 engineState,
+                               );
+
+                          let boxTexturedMeshGameObject2 =
+                            LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
+                              uploadedWDBNodeId2,
+                              (editorState, engineState),
+                            );
+                          let material2 =
+                            boxTexturedMeshGameObject2
+                            |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                                 _,
+                                 engineState,
+                               );
+
+                          (
+                            MainEditorAssetMaterialNodeTool.hasMaterialComponent(
+                              material1,
+                              LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
+                              editorState,
+                            ),
+                            MainEditorAssetMaterialNodeTool.hasMaterialComponent(
+                              material2,
+                              LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
+                              editorState,
+                            ),
+                            MaterialNodeAssetEditorService.findAllMaterialNodes(
+                              editorState,
+                            )
+                            |> Js.Array.length,
                           )
-                          |> Js.Array.length,
-                        )
-                        |> expect == (true, true, 1)
-                        |> resolve;
-                      })
-                 )
-            );
-          });
+                          |> expect == (true, true, 1)
+                          |> resolve;
+                        })
+                   )
+              );
+            })
+          );
 
           describe("fix bug", () => {
             let wdbArrayBuffer = ref(Obj.magic(1));
@@ -446,7 +450,9 @@ let _ =
         });
 
         describe("extract texture assets", () => {
-          describe("test asset tree", () => {
+          describe(
+            "if wdb->texture not exist in assets, extract them and add to assets",
+            () => {
             describe(
               {j|should add "Textures" folder node and add texture node into it|j},
               () => {
@@ -567,124 +573,426 @@ let _ =
             });
           });
 
-          describe("test wdb asset->wdb gameObject->texture", () => {
-            testPromise(
+          describe("else, relate them", () =>
+            describe(
               "wdb gameObject should use extraced texture asset->textureComponent",
-              () =>
-              MainEditorAssetUploadTool.loadOneWDB(
-                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
-                (),
-              )
-              |> then_(uploadedWDBNodeId => {
-                   let engineState = StateEngineService.unsafeGetState();
-                   let editorState = StateEditorService.getState();
+              () => {
+              testPromise("test load wdb once", () =>
+                MainEditorAssetUploadTool.loadOneWDB(
+                  ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId => {
+                     let engineState = StateEngineService.unsafeGetState();
+                     let editorState = StateEditorService.getState();
 
-                   let boxTexturedMeshGameObject =
-                     LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
-                       uploadedWDBNodeId,
-                       (editorState, engineState),
-                     );
-                   let diffuseMap =
-                     boxTexturedMeshGameObject
-                     |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-                          _,
-                          engineState,
-                        )
-                     |> LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
-                          _,
-                          engineState,
-                        );
-
-                   MainEditorAssetTextureNodeTool.hasTextureComponent(
-                     diffuseMap,
-                     editorState,
-                   )
-                   |> expect == true
-                   |> resolve;
-                 })
-            );
-            testPromise(
-              "if already has equaled texture asset, wdb gameObject should use it",
-              () =>
-              MainEditorAssetUploadTool.loadOneWDB(
-                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
-                (),
-              )
-              |> then_(uploadedWDBNodeId1 => {
-                   let engineState = StateEngineService.unsafeGetState();
-                   let editorState = StateEditorService.getState();
-
-                   let boxTexturedMeshGameObject1 =
-                     LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
-                       uploadedWDBNodeId1,
-                       (editorState, engineState),
-                     );
-                   let material1 =
-                     boxTexturedMeshGameObject1
-                     |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-                          _,
-                          engineState,
-                        );
-
-                   editorState |> StateEditorService.setState |> ignore;
-                   engineState |> StateEngineService.setState |> ignore;
-
-                   MainEditorAssetHeaderOperateNodeTool.removeMaterialNode(
-                     ~materialNodeId=
-                       MainEditorAssetMaterialNodeTool.findNodeIdByMaterialComponentAndType(
-                         material1,
-                         LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
-                         editorState,
-                       )
-                       |> OptionService.unsafeGet,
-                     (),
-                   );
-
-                   MainEditorAssetUploadTool.loadOneWDB(
-                     ~arrayBuffer=boxTexturedWDBArrayBuffer^,
-                     (),
-                   )
-                   |> then_(uploadedWDBNodeId2 => {
-                        let engineState = StateEngineService.unsafeGetState();
-                        let editorState = StateEditorService.getState();
-
-                        let boxTexturedMeshGameObject2 =
-                          LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
-                            uploadedWDBNodeId2,
-                            (editorState, engineState),
+                     let boxTexturedMeshGameObject =
+                       LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
+                         uploadedWDBNodeId,
+                         (editorState, engineState),
+                       );
+                     let diffuseMap =
+                       boxTexturedMeshGameObject
+                       |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                            _,
+                            engineState,
+                          )
+                       |> LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
+                            _,
+                            engineState,
                           );
-                        let diffuseMap2 =
-                          boxTexturedMeshGameObject2
-                          |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-                               _,
-                               engineState,
-                             )
-                          |> LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
-                               _,
-                               engineState,
-                             );
 
-                        (
-                          MainEditorAssetTextureNodeTool.hasTextureComponent(
-                            diffuseMap2,
-                            editorState,
-                          ),
-                          TextureNodeAssetEditorService.findAllTextureNodes(
-                            editorState,
+                     MainEditorAssetTextureNodeTool.hasTextureComponent(
+                       diffuseMap,
+                       editorState,
+                     )
+                     |> expect == true
+                     |> resolve;
+                   })
+              );
+              testPromise("test load the same wdb twice", () =>
+                MainEditorAssetUploadTool.loadOneWDB(
+                  ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId1 => {
+                     let engineState = StateEngineService.unsafeGetState();
+                     let editorState = StateEditorService.getState();
+
+                     let boxTexturedMeshGameObject1 =
+                       LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
+                         uploadedWDBNodeId1,
+                         (editorState, engineState),
+                       );
+                     let material1 =
+                       boxTexturedMeshGameObject1
+                       |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                            _,
+                            engineState,
+                          );
+
+                     editorState |> StateEditorService.setState |> ignore;
+                     engineState |> StateEngineService.setState |> ignore;
+
+                     MainEditorAssetHeaderOperateNodeTool.removeMaterialNode(
+                       ~materialNodeId=
+                         MainEditorAssetMaterialNodeTool.findNodeIdByMaterialComponentAndType(
+                           material1,
+                           LoadWDBTool.getBoxTexturedMeshGameObjectMaterialType(),
+                           editorState,
+                         )
+                         |> OptionService.unsafeGet,
+                       (),
+                     );
+
+                     MainEditorAssetUploadTool.loadOneWDB(
+                       ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                       (),
+                     )
+                     |> then_(uploadedWDBNodeId2 => {
+                          let engineState =
+                            StateEngineService.unsafeGetState();
+                          let editorState = StateEditorService.getState();
+
+                          let boxTexturedMeshGameObject2 =
+                            LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
+                              uploadedWDBNodeId2,
+                              (editorState, engineState),
+                            );
+                          let diffuseMap2 =
+                            boxTexturedMeshGameObject2
+                            |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                                 _,
+                                 engineState,
+                               )
+                            |> LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
+                                 _,
+                                 engineState,
+                               );
+
+                          (
+                            MainEditorAssetTextureNodeTool.hasTextureComponent(
+                              diffuseMap2,
+                              editorState,
+                            ),
+                            TextureNodeAssetEditorService.findAllTextureNodes(
+                              editorState,
+                            )
+                            |> Js.Array.length,
+                            ImageDataMapAssetEditorService.getValidValues(
+                              editorState,
+                            )
+                            |> WonderCommonlib.ImmutableSparseMapService.length,
                           )
-                          |> Js.Array.length,
-                          ImageDataMapAssetEditorService.getValidValues(
-                            editorState,
-                          )
-                          |> WonderCommonlib.ImmutableSparseMapService.length,
-                        )
-                        |> expect == (true, 1, 1)
-                        |> resolve;
-                      });
-                 })
-            );
-          });
+                          |> expect == (true, 1, 1)
+                          |> resolve;
+                        });
+                   })
+              );
+            })
+          );
         });
+
+        describe("extract script event function assets", () => {
+          let wdbArrayBuffer = ref(Obj.magic(1));
+          let scriptEventFunctionDataNameRef = ref("");
+          let scriptEventFunctionDataRef = ref(Obj.magic(1));
+
+          beforeAll(() => {
+            scriptEventFunctionDataNameRef := "aaa";
+            scriptEventFunctionDataRef :=
+              ScriptToolEngine.buildScriptEventFunctionData(
+                ~initFunc=None,
+                ~updateFunc=
+                  ScriptToolEngine.buildSetLocalPositionEventFunc()->Some,
+                ~disposeFunc=None,
+              );
+
+            wdbArrayBuffer :=
+              WDBTool.ScriptEventFunction.generateScriptEventFunctionWDB(
+                scriptEventFunctionDataNameRef^,
+                scriptEventFunctionDataRef^,
+              );
+          });
+
+          describe(
+            "if wdb->script event function data not exist in assets, extract them and add to assets",
+            () =>
+            describe(
+              {j|should add "ScriptEventFunctions" folder node and add scriptEventFunction node into it|j},
+              () => {
+                testPromise("test load the same wdb once", () =>
+                  MainEditorAssetUploadTool.loadOneWDB(
+                    ~arrayBuffer=wdbArrayBuffer^,
+                    (),
+                  )
+                  |> then_(uploadedWDBNodeId => {
+                       let editorState = StateEditorService.getState();
+                       let engineState = StateEngineService.unsafeGetState();
+
+                       MainEditorAssetTreeTool.Select.selectFolderNode(
+                         ~nodeId=
+                           MainEditorAssetTreeTool.findNodeIdByName(
+                             "ScriptEventFunctions",
+                             (editorState, engineState),
+                           )
+                           |> OptionService.unsafeGet,
+                         (),
+                       );
+
+                       BuildComponentTool.buildAssetChildrenNode()
+                       |> ReactTestTool.createSnapshotAndMatch
+                       |> resolve;
+                     })
+                );
+                testPromise("test load the same wdb twice", () =>
+                  MainEditorAssetUploadTool.loadOneWDB(
+                    ~arrayBuffer=wdbArrayBuffer^,
+                    (),
+                  )
+                  |> then_(uploadedWDBNodeId1 =>
+                       MainEditorAssetUploadTool.loadOneWDB(
+                         ~arrayBuffer=wdbArrayBuffer^,
+                         (),
+                       )
+                       |> then_(uploadedWDBNodeId2 => {
+                            let editorState = StateEditorService.getState();
+                            let engineState =
+                              StateEngineService.unsafeGetState();
+
+                            MainEditorAssetTreeTool.Select.selectFolderNode(
+                              ~nodeId=
+                                MainEditorAssetTreeTool.findNodeIdByName(
+                                  "ScriptEventFunctions",
+                                  (editorState, engineState),
+                                )
+                                |> OptionService.unsafeGet,
+                              (),
+                            );
+
+                            BuildComponentTool.buildAssetChildrenNode()
+                            |> ReactTestTool.createSnapshotAndMatch
+                            |> resolve;
+                          })
+                     )
+                );
+              },
+            )
+          );
+
+          describe("else, relate them", () =>
+            describe(
+              "wdb gameObject should use existed scriptEventFunction asset->event function data",
+              () =>
+              testPromise("test load wdb once", () => {
+                let assetTreeData =
+                  MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+                let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
+                MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
+
+                AssetTreeInspectorTool.Rename.renameAssetScriptEventFunctionNode(
+                  ~nodeId=addedNodeId,
+                  ~name=scriptEventFunctionDataNameRef^,
+                  (),
+                );
+
+                let jsObjStr =
+                  ScriptEventFunctionInspectorTool.buildEventFunctionDataJsObjStrAndRemoveNewLinesAndSpaces(
+                    ~initFunc=Some((. script, api, state) => state),
+                    ~disposeFunc=Some((. script, api, state) => state),
+                    (),
+                  );
+                ScriptEventFunctionInspectorTool.updateEventFunctionData(
+                  addedNodeId,
+                  scriptEventFunctionDataNameRef^,
+                  jsObjStr,
+                );
+
+                MainEditorAssetUploadTool.loadOneWDB(
+                  ~arrayBuffer=wdbArrayBuffer^,
+                  (),
+                )
+                |> then_(uploadedWDBNodeId => {
+                     let editorState = StateEditorService.getState();
+                     let engineState = StateEngineService.unsafeGetState();
+
+                     let scriptGameObject =
+                       WDBTool.ScriptEventFunction.getScriptGameObjectByWDBGameObject(
+                         MainEditorAssetWDBNodeTool.getWDBGameObject(
+                           uploadedWDBNodeId,
+                           editorState,
+                         ),
+                         engineState,
+                       );
+
+                     ScriptToolEngine.unsafeGetScriptEventFunctionData(
+                       GameObjectComponentEngineService.unsafeGetScriptComponent(
+                         scriptGameObject,
+                         engineState,
+                       ),
+                       scriptEventFunctionDataNameRef^,
+                       engineState,
+                     )
+                     |> ScriptEventFunctionTool.getEventFunctionDataJsObjStr
+                     |> expect == jsObjStr
+                     |> resolve;
+                   });
+              })
+            )
+          );
+        });
+
+        describe("extract script attribute assets", () => {
+          let wdbArrayBuffer = ref(Obj.magic(1));
+          let scriptAttributeNameRef = ref("");
+          let scriptAttributeRef = ref(Obj.magic(1));
+
+          beforeAll(() => {
+            scriptAttributeNameRef := "aaa";
+            scriptAttributeRef :=
+              ScriptToolEngine.buildScriptAttribute(scriptAttributeNameRef^);
+
+            wdbArrayBuffer :=
+              WDBTool.ScriptAttribute.generateScriptAttributeWDB(
+                scriptAttributeNameRef^,
+                scriptAttributeRef^,
+              );
+          });
+
+          describe(
+            "if wdb->script attribute not exist in assets, extract them and add to assets",
+            () =>
+            describe(
+              {j|should add "ScriptAttributes" folder node and add scriptAttribute node into it|j},
+              () => {
+                testPromise("test load wdb once", () =>
+                  MainEditorAssetUploadTool.loadOneWDB(
+                    ~arrayBuffer=wdbArrayBuffer^,
+                    (),
+                  )
+                  |> then_(uploadedWDBNodeId => {
+                       let editorState = StateEditorService.getState();
+                       let engineState = StateEngineService.unsafeGetState();
+
+                       MainEditorAssetTreeTool.Select.selectFolderNode(
+                         ~nodeId=
+                           MainEditorAssetTreeTool.findNodeIdByName(
+                             "ScriptAttributes",
+                             (editorState, engineState),
+                           )
+                           |> OptionService.unsafeGet,
+                         (),
+                       );
+
+                       BuildComponentTool.buildAssetChildrenNode()
+                       |> ReactTestTool.createSnapshotAndMatch
+                       |> resolve;
+                     })
+                );
+                testPromise("test load the same wdb twice", () =>
+                  MainEditorAssetUploadTool.loadOneWDB(
+                    ~arrayBuffer=wdbArrayBuffer^,
+                    (),
+                  )
+                  |> then_(uploadedWDBNodeId1 =>
+                       MainEditorAssetUploadTool.loadOneWDB(
+                         ~arrayBuffer=wdbArrayBuffer^,
+                         (),
+                       )
+                       |> then_(uploadedWDBNodeId2 => {
+                            let editorState = StateEditorService.getState();
+                            let engineState =
+                              StateEngineService.unsafeGetState();
+
+                            MainEditorAssetTreeTool.Select.selectFolderNode(
+                              ~nodeId=
+                                MainEditorAssetTreeTool.findNodeIdByName(
+                                  "ScriptAttributes",
+                                  (editorState, engineState),
+                                )
+                                |> OptionService.unsafeGet,
+                              (),
+                            );
+
+                            BuildComponentTool.buildAssetChildrenNode()
+                            |> ReactTestTool.createSnapshotAndMatch
+                            |> resolve;
+                          })
+                     )
+                );
+              },
+            )
+          );
+          /* describe
+             ("else, not relate them",
+             (
+             () => {
+             })
+             ); */
+        });
+
+        describe("test wdb is exported scene wdb", () =>
+          describe("test extract script attribute assets", () =>
+            describe(
+              "if wdb->script attribute not exist in assets, extract them and add to assets",
+              () =>
+              describe(
+                {j|should add "ScriptAttributes" folder node and add scriptAttribute node into it|j},
+                () =>
+                testPromise("test load wdb once", () => {
+                  let engineState = StateEngineService.unsafeGetState();
+
+                  let scriptAttributeName = "aaa";
+                  let scriptAttribute =
+                    ScriptToolEngine.buildScriptAttribute(
+                      scriptAttributeName,
+                    );
+
+                  let (rootGameObject, engineState) =
+                    WDBTool.ScriptAttribute.createRootGameObjectForGenerateScriptAttributeWDB2(
+                      scriptAttributeName,
+                      scriptAttribute,
+                      engineState,
+                    );
+
+                  let engineState =
+                    SceneEngineService.addSceneChild(
+                      rootGameObject,
+                      engineState,
+                    );
+
+                  let editorState = StateEditorService.getState();
+
+                  let (engineState, sceneWDB) =
+                    ExportSceneTool.exportScene(editorState, engineState);
+
+                  MainEditorAssetUploadTool.loadOneWDB(
+                    ~arrayBuffer=sceneWDB,
+                    (),
+                  )
+                  |> then_(uploadedWDBNodeId => {
+                       let editorState = StateEditorService.getState();
+                       let engineState = StateEngineService.unsafeGetState();
+
+                       MainEditorAssetTreeTool.Select.selectFolderNode(
+                         ~nodeId=
+                           MainEditorAssetTreeTool.findNodeIdByName(
+                             "ScriptAttributes",
+                             (editorState, engineState),
+                           )
+                           |> OptionService.unsafeGet,
+                         (),
+                       );
+
+                       BuildComponentTool.buildAssetChildrenNode()
+                       |> ReactTestTool.createSnapshotAndMatch
+                       |> resolve;
+                     });
+                })
+              )
+            )
+          )
+        );
 
         describe("fix bug", () => {
           let wdbArrayBuffer = ref(Obj.magic(1));

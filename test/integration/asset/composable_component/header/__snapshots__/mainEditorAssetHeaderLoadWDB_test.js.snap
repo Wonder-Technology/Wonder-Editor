@@ -27,7 +27,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
 </article>
 `;
 
-exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract material assets test asset tree material asset should has unique name 1`] = `
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract material assets if wdb->material not exist in assets, extract them and add to assets material asset should has unique name 1`] = `
 <article
   className="wonder-asset-assetChildren"
 >
@@ -142,7 +142,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
 </article>
 `;
 
-exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract material assets test asset tree should add "Materials" folder node and add material node into it test load the same wdb once 1`] = `
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract material assets if wdb->material not exist in assets, extract them and add to assets should add "Materials" folder node and add material node into it test load the same wdb twice 1`] = `
 <article
   className="wonder-asset-assetChildren"
 >
@@ -169,7 +169,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
 </article>
 `;
 
-exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract material assets test asset tree should add "Materials" folder node and add material node into it test load the same wdb twice 1`] = `
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract material assets if wdb->material not exist in assets, extract them and add to assets should add "Materials" folder node and add material node into it test load wdb once 1`] = `
 <article
   className="wonder-asset-assetChildren"
 >
@@ -196,7 +196,115 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
 </article>
 `;
 
-exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract texture assets test asset tree should add "Textures" folder node and add texture node into it test load the same wdb once 1`] = `
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract script attribute assets if wdb->script attribute not exist in assets, extract them and add to assets should add "ScriptAttributes" folder node and add scriptAttribute node into it test load the same wdb twice 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/scriptAttribute.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        aaa
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract script attribute assets if wdb->script attribute not exist in assets, extract them and add to assets should add "ScriptAttributes" folder node and add scriptAttribute node into it test load wdb once 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/scriptAttribute.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        aaa
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract script event function assets if wdb->script event function data not exist in assets, extract them and add to assets should add "ScriptEventFunctions" folder node and add scriptEventFunction node into it test load the same wdb once 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/scriptEventFunction.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        aaa
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract script event function assets if wdb->script event function data not exist in assets, extract them and add to assets should add "ScriptEventFunctions" folder node and add scriptEventFunction node into it test load the same wdb twice 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/scriptEventFunction.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        aaa
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract texture assets if wdb->texture not exist in assets, extract them and add to assets should add "Textures" folder node and add texture node into it test load the same wdb once 1`] = `
 <article
   className="wonder-asset-assetChildren"
 >
@@ -223,7 +331,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
 </article>
 `;
 
-exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract texture assets test asset tree should add "Textures" folder node and add texture node into it test load the same wdb twice 1`] = `
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract texture assets if wdb->texture not exist in assets, extract them and add to assets should add "Textures" folder node and add texture node into it test load the same wdb twice 1`] = `
 <article
   className="wonder-asset-assetChildren"
 >
@@ -250,7 +358,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
 </article>
 `;
 
-exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract texture assets test asset tree texture asset should has unique name 1`] = `
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract texture assets if wdb->texture not exist in assets, extract them and add to assets texture asset should has unique name 1`] = `
 <article
   className="wonder-asset-assetChildren"
 >
@@ -297,7 +405,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
 </article>
 `;
 
-exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset if wdb has no material should has no extracted assets 1`] = `
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset if wdb has no material should has no extracted material assets and texture assets 1`] = `
 <article
   className="wonder-asset-assetChildren"
 >
@@ -318,6 +426,33 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
     >
       <span>
         Wdb
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset test wdb is exported scene wdb test extract script attribute assets if wdb->script attribute not exist in assets, extract them and add to assets should add "ScriptAttributes" folder node and add scriptAttribute node into it test load wdb once 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/scriptAttribute.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        aaa
       </span>
     </div>
   </article>

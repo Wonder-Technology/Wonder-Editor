@@ -19,15 +19,8 @@ let getSceneAllBasicCameraViews = engineState =>
      );
 
 let findGameObjectByName = (name, engineState) =>
-  engineState
-  |> HierarchyGameObjectEngineService.getAllGameObjects(
-       getSceneGameObject(engineState),
-     )
-  |> Js.Array.filter(gameObject =>
-       switch (
-         GameObjectEngineService.getGameObjectName(gameObject, engineState)
-       ) {
-       | None => false
-       | Some(gameObjectName) => gameObjectName === name
-       }
-     );
+  GameObjectToolEngine.findGameObjectByName(
+    name,
+    getSceneGameObject(engineState),
+    engineState,
+  );
