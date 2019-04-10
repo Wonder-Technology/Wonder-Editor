@@ -493,18 +493,43 @@ module AssetTree = {
                    editorState,
                  );
 
-               /* TODO extract gltf/wdb material file, create material snapshot to store in imageDataMap */
+               (editorState, StateInspectorEngineService.unsafeGetState())
+               |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
+               |> JobEngineService.execDisposeJob
+               |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
+                    MaterialDataAssetType.LightMaterial,
+                    material,
+                    (editorState, engineState),
+                  )
+               |> StateLogicService.refreshInspectorEngineState;
+
+               /* TODO  need test */
                let editorState =
-                 MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
-                   folderNode,
-                   MaterialNodeAssetService.buildNode(
-                     ~nodeId=newNodeId,
-                     ~type_=MaterialDataAssetType.LightMaterial,
-                     ~materialComponent=material,
-                     ~imageDataIndex=newImageDataIndex,
-                   ),
-                   editorState,
-                 );
+                 editorState
+                 |> MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
+                      folderNode,
+                      MaterialNodeAssetService.buildNode(
+                        ~nodeId=newNodeId,
+                        ~type_=MaterialDataAssetType.LightMaterial,
+                        ~materialComponent=material,
+                        ~imageDataIndex=newImageDataIndex,
+                      ),
+                    )
+                 |> ImageDataMapAssetEditorService.setData(
+                      newImageDataIndex,
+                      ImageDataMapAssetService.buildData(
+                        ~base64=None,
+                        ~uint8Array=None,
+                        ~name=materialName,
+                        ~mimeType="image/png",
+                        (),
+                      ),
+                    )
+                 |> ImgCanvasUtils.clipTargetCanvasToCreateImgCanvasSnapshot(
+                      DomHelper.getElementById("inspector-canvas"),
+                      DomHelper.getElementById("img-canvas"),
+                      newNodeId,
+                    );
 
                (editorState, engineState);
              },
