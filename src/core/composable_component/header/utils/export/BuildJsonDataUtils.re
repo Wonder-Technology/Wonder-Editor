@@ -303,6 +303,82 @@ let _buildWDBData =
   );
 };
 
+let _convertEventFunctionToStr = eventFunction =>
+  SerializeService.serializeFunction(eventFunction);
+
+let _convertEventFunctionDataToStr =
+    ({init, update, dispose}: Wonderjs.StateDataMainType.eventFunctionData) =>
+  (
+    {
+      init:
+        init
+        |> Js.Option.andThen((. init) => _convertEventFunctionToStr(init)),
+      update:
+        update
+        |> Js.Option.andThen((. update) =>
+             _convertEventFunctionToStr(update)
+           ),
+      dispose:
+        dispose
+        |> Js.Option.andThen((. dispose) =>
+             _convertEventFunctionToStr(dispose)
+           ),
+    }: Wonderjs.StateDataMainType.eventFunctionData
+  )
+  |> Obj.magic
+  |> Js.Json.stringify;
+
+let _buildScriptEventFunctionData = ((editorState, engineState)) =>
+  ScriptEventFunctionNodeAssetEditorService.findAllScriptEventFunctionNodes(
+    editorState,
+  )
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. scriptEventFunctionArr, node) => {
+         let name = NodeNameAssetLogicService.getNodeName(node, engineState);
+         let path =
+           PathTreeAssetLogicService.getNodePath(
+             node,
+             (editorState, engineState),
+           );
+
+         let {eventFunctionData, name}: NodeAssetType.scriptEventFunctionNodeData =
+           ScriptEventFunctionNodeAssetService.getNodeData(node);
+
+         scriptEventFunctionArr
+         |> ArrayService.push(
+              {
+                name,
+                path,
+                eventFunctionDataStr:
+                  _convertEventFunctionDataToStr(eventFunctionData),
+              }: ExportAssetType.scriptEventFunction,
+            );
+       },
+       [||],
+     );
+
+let _convertAttributeToStr = attribute =>
+  attribute |> Obj.magic |> Js.Json.stringify;
+
+let _buildScriptAttributeData = ((editorState, engineState)) =>
+  ScriptAttributeNodeAssetEditorService.findAllScriptAttributeNodes(
+    editorState,
+  )
+  |> Js.Array.map(node => {
+       let path =
+         PathTreeAssetLogicService.getNodePath(
+           node,
+           (editorState, engineState),
+         );
+
+       let {attribute, name}: NodeAssetType.scriptAttributeNodeData =
+         ScriptAttributeNodeAssetService.getNodeData(node);
+
+       (
+         {name, path, attributeStr: _convertAttributeToStr(attribute)}: ExportAssetType.scriptAttribute
+       );
+     });
+
 let buildJsonData = (imageUint8ArrayMap, (editorState, engineState)) => {
   let (
     imageIndexMap,
@@ -331,9 +407,23 @@ let buildJsonData = (imageUint8ArrayMap, (editorState, engineState)) => {
       (editorState, engineState),
     );
 
+  let scriptEventFunctionArr =
+    _buildScriptEventFunctionData((editorState, engineState));
+
+  let scriptAttributeArr =
+    _buildScriptAttributeData((editorState, engineState));
+
   (
     engineState,
-    (imageArr, textureArr, basicMaterialArr, lightMaterialArr, wdbArr),
+    (
+      imageArr,
+      textureArr,
+      basicMaterialArr,
+      lightMaterialArr,
+      wdbArr,
+      scriptEventFunctionArr,
+      scriptAttributeArr,
+    ),
     (imageBufferViewArr, wdbBufferViewArr),
     (imageUint8ArrayArr, wdbArrayBufferArr),
     bufferTotalAlignedByteLength,
@@ -350,6 +440,8 @@ let buildJsonUint8Array =
         basicMaterialArr,
         lightMaterialArr,
         wdbArr,
+        scriptEventFunctionArr,
+        scriptAttributeArr,
       ),
     ) => {
   let encoder = TextEncoder.newTextEncoder();
@@ -366,6 +458,8 @@ let buildJsonUint8Array =
            textures: textureArr,
            basicMaterials: basicMaterialArr,
            lightMaterials: lightMaterialArr,
+           scriptEventFunctions: scriptEventFunctionArr,
+           scriptAttributes: scriptAttributeArr,
            wdbs: wdbArr,
            bufferViews: bufferViewArr,
          }: ExportAssetType.assets

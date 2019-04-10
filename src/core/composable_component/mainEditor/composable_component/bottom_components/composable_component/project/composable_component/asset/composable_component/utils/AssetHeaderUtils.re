@@ -76,7 +76,12 @@ let _handleAssetWDBType =
          ),
        ) => {
        let (
-         (extractedMaterialAssetDataArr, extractedTextureAssetDataArr),
+         (
+           extractedMaterialAssetDataArr,
+           extractedTextureAssetDataArr,
+           extractedScriptEventFunctionAssetEntriesArr,
+           extractedScriptAttributeAssetEntriesArr,
+         ),
          (editorState, engineState),
        ) =
          ExtractAndRelateAssetsUtils.Extract.extractAndRelateAssets(
@@ -109,6 +114,8 @@ let _handleAssetWDBType =
          ExtractAndRelateAssetsUtils.AssetTree.addNodeToAssetTree(
            extractedMaterialAssetDataArr,
            extractedTextureAssetDataArr,
+           extractedScriptEventFunctionAssetEntriesArr,
+           extractedScriptAttributeAssetEntriesArr,
            (editorState, engineState),
          );
 

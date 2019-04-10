@@ -268,12 +268,22 @@ let _import = result => {
 
   let wdbAssetGameObjectGeometryAssetArrRef = ref([||]);
 
+  let scriptDataMapTupleRef =
+    ref((
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+    ));
+
   let engineState = StateEngineService.unsafeGetState();
 
   HeaderImportASBUtils.importASB(asb)
   |> WonderBsMost.Most.map(
        (
-         ((allWDBGameObjectArr, asbImageUint8ArrayDataMap), materialMapTuple),
+         (
+           (allWDBGameObjectArr, asbImageUint8ArrayDataMap),
+           materialMapTuple,
+           scriptDataMapTuple,
+         ),
        ) => {
        let editorState = StateEditorService.getState();
        let engineState = StateEngineService.unsafeGetState();
@@ -281,6 +291,7 @@ let _import = result => {
        ImportPackageRelateGameObjectAndAssetUtils.relateWDBAssetGameObjectsAndAssets(
          allWDBGameObjectArr,
          materialMapTuple,
+         scriptDataMapTuple,
          asbImageUint8ArrayDataMap,
        );
 
@@ -291,6 +302,7 @@ let _import = result => {
            allWDBGameObjectArr,
            (editorState, engineState),
          );
+       scriptDataMapTupleRef := scriptDataMapTuple;
        asbImageUint8ArrayDataMapRef := asbImageUint8ArrayDataMap;
 
        editorState |> StateEditorService.setState |> ignore;
@@ -342,6 +354,7 @@ let _import = result => {
                 asbImageUint8ArrayDataMapRef^,
                 materialMapTupleRef^,
                 wdbAssetGameObjectGeometryAssetArrRef^,
+                scriptDataMapTupleRef^,
               );
 
               ();

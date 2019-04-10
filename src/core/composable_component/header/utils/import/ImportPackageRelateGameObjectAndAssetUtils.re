@@ -9,10 +9,10 @@ let _isImageUint8ArrayWhichHasLengthDataEqual =
   | None => true
   | Some(uint8Array) =>
     uint8Array
-    |>
-    Uint8Array.length === GenerateSceneGraphEngineService.readUint32DataFromUint8Array(
-                            imageUint8ArrayWhichHasLengthData,
-                          )
+    |> Uint8Array.length
+    === GenerateSceneGraphEngineService.readUint32DataFromUint8Array(
+          imageUint8ArrayWhichHasLengthData,
+        )
   };
 
 let _isImageDataEqual =
@@ -148,6 +148,22 @@ let _replaceWDBAssetGameObjectMaterialComponentToMaterialAsset =
     _isLightMaterialDataEqualForWDBAssetGameObject,
     engineState,
   );
+
+let _replaceWDBAssetGameObjectScriptComponentDataToScriptDataAsset =
+    (
+      gameObject,
+      (scriptEventFunctionEntriesMap, scriptAttributeEntriesMap),
+      engineState,
+    ) =>
+  engineState
+  |> RelateGameObjectAndScriptEventFunctionAssetUtils.replaceToScriptEventFunctionAssetEventFunctionData(
+       gameObject,
+       scriptEventFunctionEntriesMap,
+     )
+  |> RelateGameObjectAndScriptAttributeAssetUtils.replaceToScriptAttributeAssetAttribute(
+       gameObject,
+       scriptAttributeEntriesMap,
+     );
 
 let _isWdbAssetGameObjectGeometry =
     (geometry, wdbAssetGameObjectGeometryDataArr) =>
@@ -311,6 +327,22 @@ let _replaceSceneGameObjectGeometryComponentToWDBAssetGeometryComponent =
     );
   };
 
+let _replaceSceneGameObjectScriptComponentDataToScriptDataAsset =
+    (
+      gameObject,
+      (scriptEventFunctionEntriesMap, scriptAttributeEntriesMap),
+      engineState,
+    ) =>
+  engineState
+  |> RelateGameObjectAndScriptEventFunctionAssetUtils.replaceToScriptEventFunctionAssetEventFunctionData(
+       gameObject,
+       scriptEventFunctionEntriesMap,
+     )
+  |> RelateGameObjectAndScriptAttributeAssetUtils.replaceToScriptAttributeAssetAttribute(
+       gameObject,
+       scriptAttributeEntriesMap,
+     );
+
 let _getGeometryDataArr = (geometryArr, engineState) =>
   geometryArr
   |> Js.Array.map(geometry =>
@@ -329,6 +361,7 @@ let relateSceneWDBGameObjectsAndAssets =
       imageUint8ArrayDataMap,
       (basicMaterialMap, lightMaterialMap),
       wdbAssetGameObjectGeometryAssetArr,
+      scriptDataMapTuple,
     ) => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
@@ -377,6 +410,10 @@ let relateSceneWDBGameObjectsAndAssets =
                 gameObject,
                 (defaultGeometryData, wdbAssetGameObjectGeometryDataArr),
                 editorState,
+              )
+           |> _replaceSceneGameObjectScriptComponentDataToScriptDataAsset(
+                gameObject,
+                scriptDataMapTuple,
               ),
          engineState,
        );
@@ -421,6 +458,7 @@ let relateWDBAssetGameObjectsAndAssets =
     (
       allWDBGameObjectsArr,
       (basicMaterialMap, lightMaterialMap),
+      (scriptEventFunctionEntriesMap, scriptAttributeEntriesMap),
       imageUint8ArrayDataMap,
     ) => {
   let editorState = StateEditorService.getState();
@@ -466,6 +504,10 @@ let relateWDBAssetGameObjectsAndAssets =
            |> RelateGameObjectAndGeometryAssetUtils.replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent(
                 gameObject,
                 defaultGeometryData,
+              )
+           |> _replaceWDBAssetGameObjectScriptComponentDataToScriptDataAsset(
+                gameObject,
+                (scriptEventFunctionEntriesMap, scriptAttributeEntriesMap),
               ),
          engineState,
        );

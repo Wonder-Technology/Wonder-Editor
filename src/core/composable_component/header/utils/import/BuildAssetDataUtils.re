@@ -371,6 +371,151 @@ let buildMaterialData =
   (basicMaterialMap, lightMaterialMap, (editorState, engineState));
 };
 
+let _buildScriptEventFunctionEditorData =
+    (eventFunctionData, path, name, (editorState, engineState)) => {
+  let (editorState, assetNodeId) =
+    IdAssetEditorService.generateNodeId(editorState);
+
+  let (editorState, parentFolderNode) =
+    OperateTreeAssetLogicService.addFolderNodesToTreeByPath(
+      path,
+      (editorState, engineState),
+    );
+
+  editorState
+  |> ScriptEventFunctionNodeAssetEditorService.addScriptEventFunctionNodeToAssetTree(
+       parentFolderNode,
+       ScriptEventFunctionNodeAssetService.buildNode(
+         ~nodeId=assetNodeId,
+         ~name,
+         ~eventFunctionData,
+       ),
+     );
+};
+
+let _convertEventFunctionDataStrToRecord =
+    (eventFunctionDataStr: string)
+    : Wonderjs.StateDataMainType.eventFunctionData => {
+  open Wonderjs.StateDataMainType;
+
+  let {init, update, dispose} =
+    eventFunctionDataStr |> Js.Json.parseExn |> Obj.magic;
+
+  let initJsonData = init |> Obj.magic;
+  let updateJsonData = update |> Obj.magic;
+  let disposeJsonData = dispose |> Obj.magic;
+
+  {
+    init:
+      OptionService.isJsonSerializedValueNone(initJsonData) ?
+        None : Some(initJsonData |> SerializeService.deserializeFunction),
+    update:
+      OptionService.isJsonSerializedValueNone(updateJsonData) ?
+        None : Some(updateJsonData |> SerializeService.deserializeFunction),
+    dispose:
+      OptionService.isJsonSerializedValueNone(disposeJsonData) ?
+        None : Some(disposeJsonData |> SerializeService.deserializeFunction),
+  };
+};
+
+let buildScriptEventFunctionData =
+    (
+      {scriptEventFunctions}: ExportAssetType.assets,
+      (editorState, engineState),
+    ) =>
+  scriptEventFunctions
+  |> WonderCommonlib.ArrayService.reduceOneParami(
+       (.
+         (scriptEventFunctionEntriesMap, (editorState, engineState)),
+         {name, path, eventFunctionDataStr}: ExportAssetType.scriptEventFunction,
+         scriptEventFunctionIndex,
+       ) => {
+         let eventFunctionData =
+           _convertEventFunctionDataStrToRecord(eventFunctionDataStr);
+
+         let editorState =
+           _buildScriptEventFunctionEditorData(
+             eventFunctionData,
+             path,
+             name,
+             (editorState, engineState),
+           );
+
+         (
+           scriptEventFunctionEntriesMap
+           |> WonderCommonlib.ImmutableSparseMapService.set(
+                scriptEventFunctionIndex,
+                (name, eventFunctionData),
+              ),
+           (editorState, engineState),
+         );
+       },
+       (
+         WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+         (editorState, engineState),
+       ),
+     );
+
+let _buildScriptAttributeEditorData =
+    (attribute, path, name, (editorState, engineState)) => {
+  let (editorState, assetNodeId) =
+    IdAssetEditorService.generateNodeId(editorState);
+
+  let (editorState, parentFolderNode) =
+    OperateTreeAssetLogicService.addFolderNodesToTreeByPath(
+      path,
+      (editorState, engineState),
+    );
+
+  editorState
+  |> ScriptAttributeNodeAssetEditorService.addScriptAttributeNodeToAssetTree(
+       parentFolderNode,
+       ScriptAttributeNodeAssetService.buildNode(
+         ~nodeId=assetNodeId,
+         ~name,
+         ~attribute,
+       ),
+     );
+};
+
+let _convertAttributeStrToRecord =
+    attributeMapStr: Wonderjs.ScriptAttributeType.scriptAttribute =>
+  attributeMapStr |> Js.Json.parseExn |> Obj.magic;
+
+let buildScriptAttributeData =
+    ({scriptAttributes}: ExportAssetType.assets, (editorState, engineState)) =>
+  scriptAttributes
+  |> WonderCommonlib.ArrayService.reduceOneParami(
+       (.
+         (scriptAttributeEntriesMap, (editorState, engineState)),
+         {name, path, attributeStr}: ExportAssetType.scriptAttribute,
+         scriptAttributeIndex,
+       ) => {
+         let attribute = _convertAttributeStrToRecord(attributeStr);
+
+         let editorState =
+           _buildScriptAttributeEditorData(
+             attribute,
+             path,
+             name,
+             (editorState, engineState),
+           );
+
+         (
+           scriptAttributeEntriesMap
+           |> WonderCommonlib.ImmutableSparseMapService.set(
+                scriptAttributeIndex,
+                (name, attribute),
+              ),
+           (editorState, engineState),
+         );
+       },
+       (
+         WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+         (editorState, engineState),
+       ),
+     );
+
 /* let addExtractedMateriialAssetDataToMaterialData =
      (extractedMaterialAssetDataArr, (basicMaterialMap, lightMaterialMap)) =>
    extractedMaterialAssetDataArr

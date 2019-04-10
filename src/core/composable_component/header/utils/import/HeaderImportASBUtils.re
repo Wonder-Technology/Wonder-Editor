@@ -71,6 +71,18 @@ let importASB = asb => {
          (editorState, engineState),
        )
        |> then_(((allWDBGameObjectArr, (editorState, engineState))) => {
+            let (scriptEventFunctionDataMap, (editorState, engineState)) =
+              BuildAssetDataUtils.buildScriptEventFunctionData(
+                asbRecord,
+                (editorState, engineState),
+              );
+
+            let (scriptAttributeDataMap, (editorState, engineState)) =
+              BuildAssetDataUtils.buildScriptAttributeData(
+                asbRecord,
+                (editorState, engineState),
+              );
+
             editorState |> StateEditorService.setState |> ignore;
             engineState |> StateEngineService.setState |> ignore;
 
@@ -82,6 +94,7 @@ let importASB = asb => {
                 ),
               ),
               (basicMaterialMap, lightMaterialMap),
+              (scriptEventFunctionDataMap, scriptAttributeDataMap),
             )
             |> resolve;
           })
