@@ -53,7 +53,7 @@ let _ =
 
     describe("fix bug", () => {
       let execChangeMaterialColorWork = (currentGameObjectMaterial, newColor) =>
-        MainEditorLightMaterialTool.changeColor(
+        MainEditorLightMaterialForGameObjectTool.changeColor(
           currentGameObjectMaterial,
           newColor,
         );

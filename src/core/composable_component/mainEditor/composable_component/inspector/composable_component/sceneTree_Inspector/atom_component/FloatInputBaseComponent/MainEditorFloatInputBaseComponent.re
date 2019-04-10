@@ -42,7 +42,7 @@ let render =
 
 let make =
     (
-      ~dragDropFunc=_ => (),
+      ~dragDropFunc,
       ~label,
       ~defaultValue,
       ~changeComponentValueFunc,

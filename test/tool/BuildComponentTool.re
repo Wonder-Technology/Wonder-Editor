@@ -138,8 +138,18 @@ let buildMaterialMap =
       materialComponent
       label="Diffuse map"
       getMapFunc=LightMaterialEngineService.getLightMaterialDiffuseMap
-      removeTextureFunc=InspectorMaterialUtils.removeTexture
-      onDropFunc=InspectorMaterialUtils.dragToSetLightMaterialTexture
+      removeTextureFunc={
+        MainEditorLightMaterialForGameObject.Method.removeTexture(
+          (uiState, dispatchFunc),
+          (),
+        )
+      }
+      onDropFunc={
+        MainEditorLightMaterialForGameObject.Method.dragToSetLightMaterialTexture(
+          (uiState, dispatchFunc),
+          materialComponent,
+        )
+      }
       isShowTextureGroup
     />,
   );

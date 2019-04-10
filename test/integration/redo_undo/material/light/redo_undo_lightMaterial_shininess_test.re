@@ -16,8 +16,8 @@ let _ =
       let currentGameObjectMaterial =
         GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
 
-      MainEditorLightMaterialTool.changeShininess(~value, ());
-      MainEditorLightMaterialTool.blurShininess(~value, ());
+      MainEditorLightMaterialForGameObjectTool.changeShininess(~value, ());
+      MainEditorLightMaterialForGameObjectTool.blurShininess(~value, ());
     };
 
     let _simulateTwiceChangeShininess = () => {

@@ -61,7 +61,7 @@ let _ =
             test(
               "test currentSceneTreeNode's material component should be basicMaterial",
               () => {
-              MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
+              MainEditorBasicMaterialForGameObjectTool.changeMaterialTypeToBeBasicMaterial();
 
               GameObjectComponentEngineService.hasBasicMaterialComponent(
                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -75,7 +75,7 @@ let _ =
                 let (basicMaterialRenderCount, lightMaterialRenderCount) =
                   MeshRendererToolEngine.getAllRenderArrayCount();
 
-                MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
+                MainEditorBasicMaterialForGameObjectTool.changeMaterialTypeToBeBasicMaterial();
 
                 MeshRendererToolEngine.getAllRenderArrayCount()
                 |>
@@ -95,7 +95,7 @@ let _ =
                   engineState,
                 );
 
-              MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
+              MainEditorBasicMaterialForGameObjectTool.changeMaterialTypeToBeBasicMaterial();
 
               let engineState = StateEngineService.unsafeGetState();
               (

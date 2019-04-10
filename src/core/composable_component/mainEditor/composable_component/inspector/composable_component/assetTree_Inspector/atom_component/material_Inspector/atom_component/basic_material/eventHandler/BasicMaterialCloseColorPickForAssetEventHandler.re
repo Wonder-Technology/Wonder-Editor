@@ -5,13 +5,28 @@ module CustomEventHandler = {
   type return = unit;
 
   let setUndoValueToCopiedEngineState =
-      ((uiState, dispatchFunc), (materialComponent, currentNodeId), value) =>
-    StateEngineService.unsafeGetState()
-    |> StateEngineService.deepCopyForRestore
-    |> BasicMaterialEngineService.setColor(
-         value |> Color.convert16HexToRGBArr,
-         materialComponent,
-       );
+      ((uiState, dispatchFunc), (materialComponent, currentNodeId), value) => {
+    StateEditorService.getState()
+    |> ImgCanvasUtils.clipTargetCanvasToCreateImgCanvasSnapshot(
+         DomHelper.getElementById("inspector-canvas"),
+         DomHelper.getElementById("img-canvas"),
+         currentNodeId,
+       )
+    |> StateEditorService.setState;
+
+    let engineState =
+      StateEngineService.unsafeGetState()
+      |> StateEngineService.deepCopyForRestore
+      |> BasicMaterialEngineService.setColor(
+           value |> Color.convert16HexToRGBArr,
+           materialComponent,
+         );
+
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])))
+    |> ignore;
+
+    engineState;
+  };
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);

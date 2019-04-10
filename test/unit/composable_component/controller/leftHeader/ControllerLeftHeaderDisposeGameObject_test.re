@@ -115,7 +115,7 @@ let _ =
                         );
                       MainEditorAssetUploadTool.loadOneTexture()
                       |> Js.Promise.then_(uploadedTextureNodeId => {
-                           MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                           MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                              ~textureNodeId=uploadedTextureNodeId,
                              ~material,
                              (),

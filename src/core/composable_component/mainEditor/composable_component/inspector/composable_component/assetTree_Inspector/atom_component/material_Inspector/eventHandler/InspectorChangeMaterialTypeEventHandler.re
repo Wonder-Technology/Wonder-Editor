@@ -4,24 +4,24 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = (int, int);
   type dataTuple = (materialType, materialType);
-  type return = unit;
+  type return = Js.Promise.t(unit);
 
   let handleSelfLogic =
       (
         (uiState, dispatchFunc),
-        (nodeId, materialComponent),
+        (currentNodeId, materialComponent),
         (sourceMaterialType, targetMaterialType),
       ) => {
     MaterialInspectorUtils.replaceMaterialByMaterialType(
-      (nodeId, materialComponent),
+      (currentNodeId, materialComponent),
       sourceMaterialType,
       targetMaterialType,
     );
 
-    dispatchFunc(
-      AppStore.UpdateAction(Update([|Project, Inspector|])),
-    )
-    |> ignore;
+    LightMaterialForAssetEventHandlerUtils.createImgCanvasSnapshotAfterUpdateInspector(
+      currentNodeId,
+      dispatchFunc,
+    );
   };
 };
 

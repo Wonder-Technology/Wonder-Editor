@@ -15,7 +15,7 @@ module Method = {
     |> StateLogicService.refreshEngineState;
   };
 
-  let closeBasicMaterialColorPick = BasicMaterialCloseColorPickForGameObjectEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+  let closeColorPick = BasicMaterialCloseColorPickForGameObjectEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 };
 
 let render = (reduxTuple, materialComponent, _self) =>
@@ -23,7 +23,7 @@ let render = (reduxTuple, materialComponent, _self) =>
     materialComponent,
     (
       Method.changeColor,
-      Method.closeBasicMaterialColorPick(reduxTuple, materialComponent),
+      Method.closeColorPick(reduxTuple, materialComponent),
     ),
   );
 

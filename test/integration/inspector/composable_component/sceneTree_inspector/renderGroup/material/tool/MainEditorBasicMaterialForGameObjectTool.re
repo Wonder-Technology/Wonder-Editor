@@ -28,7 +28,7 @@ let closeColorPicker =
       ~uiState=TestTool.buildEmptyAppState(),
       (),
     ) =>
-  MainEditorBasicMaterialForGameObject.Method.closeBasicMaterialColorPick(
+  MainEditorBasicMaterialForGameObject.Method.closeColorPick(
     (uiState, dispatchFunc),
     material,
     color,

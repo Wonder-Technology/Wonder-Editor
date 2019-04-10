@@ -23,7 +23,7 @@ module Method = {
        )
     |> StateLogicService.refreshEngineState;
 
-  let closeLightMaterialColorPick = LightMaterialCloseColorPickForGameObjectEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+  let closeColorPick = LightMaterialCloseColorPickForGameObjectEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 
   let blurShininessEvent =
       ((uiState, dispatchFunc), materialComponent, shininessValue) =>
@@ -36,6 +36,22 @@ module Method = {
         materialComponent,
         shininessValue,
       );
+
+  let dragToSetLightMaterialTexture = LightMaterialDragTextureForGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let removeTexture = ((uiState, dispatchFunc), (), materialComponent) =>
+    switch (
+      LightMaterialEngineService.getLightMaterialDiffuseMap(materialComponent)
+      |> StateLogicService.getEngineStateToGetData
+    ) {
+    | None => ()
+    | Some(_mapId) =>
+      LightMaterialRemoveTextureForGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+        (uiState, dispatchFunc),
+        (),
+        materialComponent,
+      )
+    };
 };
 
 let component =
@@ -48,8 +64,10 @@ let render = (reduxTuple, materialComponent, _self) =>
     (
       Method.changeColor,
       Method.changeShininess,
-      Method.closeLightMaterialColorPick(reduxTuple, materialComponent),
+      Method.closeColorPick(reduxTuple, materialComponent),
       Method.blurShininessEvent(reduxTuple, materialComponent),
+      Method.dragToSetLightMaterialTexture(reduxTuple, materialComponent),
+      Method.removeTexture(reduxTuple, ()),
     ),
   );
 

@@ -168,7 +168,7 @@ let _ =
                   =>
                     describe("test remove lightMaterial->diffuseMap", () => {
                       let _drag = assetTreeData =>
-                        MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                        MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                           ~textureNodeId=
                             MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
                               assetTreeData,

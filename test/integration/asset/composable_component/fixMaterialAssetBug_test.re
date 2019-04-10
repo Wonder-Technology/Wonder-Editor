@@ -144,7 +144,7 @@ let _ =
                 (),
               );
 
-              MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
+              MainEditorBasicMaterialForGameObjectTool.changeMaterialTypeToBeBasicMaterial();
 
               let type_ =
                 MainEditorAssetMaterialNodeTool.getMaterialType(
@@ -176,8 +176,8 @@ let _ =
                 _prepareTwoGameObjects();
               gameObject1 |> GameObjectTool.setCurrentSceneTreeNode;
 
-              MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
-              MainEditorLightMaterialTool.changeMaterialTypeToBeLightMaterial();
+              MainEditorBasicMaterialForGameObjectTool.changeMaterialTypeToBeBasicMaterial();
+              MainEditorLightMaterialForGameObjectTool.changeMaterialTypeToBeLightMaterial();
 
               let type_ =
                 MainEditorAssetMaterialNodeTool.getMaterialType(
@@ -336,7 +336,7 @@ let _ =
 
                 gameObject1 |> GameObjectTool.setCurrentSceneTreeNode;
 
-                MainEditorLightMaterialTool.changeMaterialTypeToBeLightMaterial();
+                MainEditorLightMaterialForGameObjectTool.changeMaterialTypeToBeLightMaterial();
 
                 MainEditorAssetChildrenNodeTool.selectMaterialNode(
                   ~nodeId=addedMaterialNodeId,
@@ -477,7 +477,7 @@ let _ =
 
                   gameObject1 |> GameObjectTool.setCurrentSceneTreeNode;
 
-                  MainEditorLightMaterialTool.changeMaterialTypeToBeLightMaterial();
+                  MainEditorLightMaterialForGameObjectTool.changeMaterialTypeToBeLightMaterial();
 
                   let type_ =
                     MainEditorAssetMaterialNodeTool.getMaterialType(
@@ -535,7 +535,7 @@ let _ =
                      editorState,
                    );
 
-                 MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                 MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                    ~textureNodeId=uploadedTextureNodeId,
                    ~material,
                    (),

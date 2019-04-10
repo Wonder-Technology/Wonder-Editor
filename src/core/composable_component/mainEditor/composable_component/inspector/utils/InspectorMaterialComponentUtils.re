@@ -21,6 +21,8 @@ let buildLightMaterialComponent =
         changeShininessFunc,
         closeColorPickFunc,
         blurShininessFunc,
+        dragToSetLightMaterialTextureFunc,
+        removeTextureFunc,
       ),
     ) => {
   let languageType =
@@ -53,8 +55,8 @@ let buildLightMaterialComponent =
         )
       }
       getMapFunc=LightMaterialEngineService.getLightMaterialDiffuseMap
-      removeTextureFunc=InspectorMaterialUtils.removeTexture
-      onDropFunc=InspectorMaterialUtils.dragToSetLightMaterialTexture
+      removeTextureFunc
+      onDropFunc=dragToSetLightMaterialTextureFunc
       isShowTextureGroup=false
     />
     <MainEditorFloatInputBaseComponent

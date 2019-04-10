@@ -23,7 +23,7 @@ module Method = {
     |> StateLogicService.refreshInspectorEngineState;
   };
 
-  let closeBasicMaterialColorPick = BasicMaterialCloseColorPickForAssetEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+  let closeColorPick = BasicMaterialCloseColorPickForAssetEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 };
 
 let component =
@@ -34,7 +34,7 @@ let render = (reduxTuple, (materialComponent, currentNodeId), _self) =>
     materialComponent,
     (
       Method.changeColor,
-      Method.closeBasicMaterialColorPick(
+      Method.closeColorPick(
         reduxTuple,
         (materialComponent, currentNodeId),
       ),

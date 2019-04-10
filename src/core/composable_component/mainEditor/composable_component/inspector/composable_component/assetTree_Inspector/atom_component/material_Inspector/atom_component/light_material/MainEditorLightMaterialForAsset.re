@@ -46,7 +46,7 @@ module Method = {
     |> StateLogicService.refreshInspectorEngineState;
   };
 
-  let closeLightMaterialColorPick = LightMaterialCloseColorPickForAssetEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineStateForPromise;
+  let closeColorPick = LightMaterialCloseColorPickForAssetEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 
   let blurShininessEvent =
       (
@@ -63,6 +63,28 @@ module Method = {
         (materialComponent, currentNodeId),
         shininessValue,
       );
+
+  let dragToSetLightMaterialTexture = LightMaterialDragTextureForAssetEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let removeTexture =
+      ((uiState, dispatchFunc), currentNodeId, materialComponent) =>
+    (
+      switch (
+        LightMaterialEngineService.getLightMaterialDiffuseMap(
+          materialComponent,
+        )
+        |> StateLogicService.getEngineStateToGetData
+      ) {
+      | None => Js.Promise.make((~resolve, ~reject) => resolve(. ignore()))
+      | Some(_mapId) =>
+        LightMaterialRemoveTextureForAssetEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+          (uiState, dispatchFunc),
+          currentNodeId,
+          materialComponent,
+        )
+      }
+    )
+    |> ignore;
 };
 
 let component =
@@ -75,7 +97,7 @@ let render = (reduxTuple, (materialComponent, currentNodeId), _self) =>
     (
       Method.changeColor,
       Method.changeShininess,
-      Method.closeLightMaterialColorPick(
+      Method.closeColorPick(
         reduxTuple,
         (materialComponent, currentNodeId),
       ),
@@ -83,6 +105,11 @@ let render = (reduxTuple, (materialComponent, currentNodeId), _self) =>
         reduxTuple,
         (materialComponent, currentNodeId),
       ),
+      Method.dragToSetLightMaterialTexture(
+        reduxTuple,
+        (materialComponent, currentNodeId),
+      ),
+      Method.removeTexture(reduxTuple, currentNodeId),
     ),
   );
 

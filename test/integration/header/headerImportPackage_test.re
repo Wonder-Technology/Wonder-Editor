@@ -665,7 +665,7 @@ let _ =
                   (),
                 )
                 |> then_(uploadedTextureNodeId1 => {
-                     MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                     MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                        ~textureNodeId=uploadedTextureNodeId1,
                        ~material=material1,
                        (),
@@ -765,12 +765,12 @@ let _ =
                        (),
                      )
                      |> then_(uploadedTextureNodeId2 => {
-                          MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                          MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                             ~textureNodeId=uploadedTextureNodeId1,
                             ~material=material1,
                             (),
                           );
-                          MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                          MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                             ~textureNodeId=uploadedTextureNodeId2,
                             ~material=material2,
                             (),
@@ -901,8 +901,8 @@ let _ =
                 let color1 = PickColorTool.buildColor1();
                 let color2 = PickColorTool.buildColor2();
 
-                MainEditorLightMaterialTool.changeColor(material1, color1);
-                MainEditorBasicMaterialTool.changeColor(material2, color2);
+                MainEditorLightMaterialForGameObjectTool.changeColor(material1, color1);
+                MainEditorBasicMaterialForGameObjectTool.changeColor(material2, color2);
 
                 MainEditorAssetUploadTool.loadOneTexture(
                   ~imgName="1.png",
@@ -910,7 +910,7 @@ let _ =
                   (),
                 )
                 |> then_(uploadedTextureNodeId1 => {
-                     MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                     MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                        ~textureNodeId=uploadedTextureNodeId1,
                        ~material=material1,
                        (),
@@ -2015,7 +2015,7 @@ let _ =
                           engineState,
                         );
 
-                   MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                   MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                      ~textureNodeId=
                        boxTexturedMeshDiffuseMap
                        |> MainEditorAssetTextureNodeTool.findTextureNodeIdByTextureComponent(
@@ -2149,7 +2149,7 @@ let _ =
                             editorState,
                           );
 
-                        MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                        MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                           ~textureNodeId=uploadedTextureNodeId1,
                           ~material=wdbMaterial,
                           (),

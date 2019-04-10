@@ -90,7 +90,7 @@ let judgeClonedAndSourceTextureAttributeIsEqual = getAttributeFunc => {
            editorState,
          );
 
-       MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+       MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
          ~material=materialComponent,
          ~textureNodeId=uploadedTextureNodeId,
          (),

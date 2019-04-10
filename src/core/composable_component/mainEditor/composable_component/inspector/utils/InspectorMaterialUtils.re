@@ -11,20 +11,3 @@ let getLightMaterialColor = (materialComponent, ()) =>
   LightMaterialEngineService.getLightMaterialDiffuseColor(materialComponent)
   |> StateLogicService.getEngineStateToGetData
   |> getHexString;
-
-
-let dragToSetLightMaterialTexture = LightMaterialDragTextureEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
-
-let removeTexture = ((uiState, dispatchFunc), (), materialComponent) =>
-  switch (
-    LightMaterialEngineService.getLightMaterialDiffuseMap(materialComponent)
-    |> StateLogicService.getEngineStateToGetData
-  ) {
-  | None => ()
-  | Some(_mapId) =>
-    LightMaterialRemoveTextureEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-      (uiState, dispatchFunc),
-      (),
-      materialComponent,
-    )
-  };

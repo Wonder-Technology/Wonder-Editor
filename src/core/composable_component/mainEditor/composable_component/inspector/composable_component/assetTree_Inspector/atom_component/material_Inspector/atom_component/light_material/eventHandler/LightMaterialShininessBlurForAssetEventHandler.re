@@ -9,13 +9,28 @@ module CustomEventHandler = {
         (uiState, dispatchFunc),
         (materialComponent, currentNodeId),
         shininessValue,
-      ) =>
-    StateEngineService.unsafeGetState()
-    |> StateEngineService.deepCopyForRestore
-    |> LightMaterialEngineService.setLightMaterialShininess(
-         shininessValue,
-         materialComponent,
-       );
+      ) => {
+    StateEditorService.getState()
+    |> ImgCanvasUtils.clipTargetCanvasToCreateImgCanvasSnapshot(
+         DomHelper.getElementById("inspector-canvas"),
+         DomHelper.getElementById("img-canvas"),
+         currentNodeId,
+       )
+    |> StateEditorService.setState;
+
+    let engineState =
+      StateEngineService.unsafeGetState()
+      |> StateEngineService.deepCopyForRestore
+      |> LightMaterialEngineService.setLightMaterialShininess(
+           shininessValue,
+           materialComponent,
+         );
+
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])))
+    |> ignore;
+
+    engineState;
+  };
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);

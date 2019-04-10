@@ -45,7 +45,7 @@ let closeColorPicker =
       ~uiState=TestTool.buildEmptyAppState(),
       (),
     ) =>
-  MainEditorLightMaterialForGameObject.Method.closeLightMaterialColorPick(
+  MainEditorLightMaterialForGameObject.Method.closeColorPick(
     (uiState, dispatchFunc),
     material,
     color,
@@ -64,7 +64,7 @@ module Drag = {
         ~textureNodeId,
         (),
       ) =>
-    InspectorMaterialUtils.dragToSetLightMaterialTexture(
+    MainEditorLightMaterialForGameObject.Method.dragToSetLightMaterialTexture(
       (uiState, dispatchFunc),
       material,
       textureNodeId,

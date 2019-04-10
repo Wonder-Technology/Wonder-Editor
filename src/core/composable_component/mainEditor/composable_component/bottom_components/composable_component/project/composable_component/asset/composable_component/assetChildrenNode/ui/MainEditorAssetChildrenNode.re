@@ -175,6 +175,7 @@ module Method = {
                      ~type_,
                      ~engineState,
                    );
+
                  /* TODO get img base64 from map, the wdb same to get */
                  let imgSrc =
                    ImageDataMapUtils.getImgSrc(
@@ -183,8 +184,6 @@ module Method = {
                      |> MaterialDataAssetEditorService.unsafeGetDefaultMaterialSnapshotPath,
                      editorState,
                    );
-
-                 Js.log(imgSrc);
 
                  <FileBox
                    key
