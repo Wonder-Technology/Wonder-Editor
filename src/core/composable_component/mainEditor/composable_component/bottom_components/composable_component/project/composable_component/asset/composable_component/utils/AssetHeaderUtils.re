@@ -106,7 +106,6 @@ let _handleAssetWDBType =
          |> DirectorEngineService.loopBody(0.);
 
        WonderLog.Console.profile("generate image");
-       let time = Performance.now();
 
        let (editorState, engineState) =
          ExtractAndRelateAssetsUtils.AssetTree.addNodeToAssetTree(
@@ -114,8 +113,6 @@ let _handleAssetWDBType =
            extractedTextureAssetDataArr,
            (editorState, engineState),
          );
-
-       Js.log(Performance.now() -. time);
 
        WonderLog.Console.profileEnd();
 

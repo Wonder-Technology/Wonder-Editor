@@ -613,6 +613,40 @@ let _ =
             ~cameraPos=(0., 2., 3.),
             (),
           );
+        
+        let _prepareInspectorCanvasAndImgCanvas =
+            () => {
+          let getElementStub =
+            SinonTool.createMethodStub(
+              sandbox^,
+              BuildCanvasTool.documentToJsObj(BuildCanvasTool.document),
+              "getElementById",
+            );
+          let (
+            _mainParentDom,
+            _mainCanvasDom,
+            _inspectorParentDom,
+            inspectorCanvasDom,
+          ) =
+            CanvasTool.stubMainCanvasAndInspectorCanvasDom(
+              ~sandbox,
+              ~getElementStub,
+              (),
+            );
+          let imgCanvasDom =
+            CanvasTool.stubImgCanvasDom(~sandbox, ~getElementStub, ());
+          let imgCanvasFakeBase64Str =
+            BuildCanvasTool.getImgCanvasFakeBase64Str();
+
+          inspectorCanvasDom##toDataURL
+          |> returns(BuildCanvasTool.getInspectorCanvasFakeBase64Str());
+          imgCanvasDom##toDataURL |> returns(imgCanvasFakeBase64Str);
+
+          (
+            imgCanvasFakeBase64Str,
+            (inspectorCanvasDom, imgCanvasDom),
+          );
+        };
 
         beforeAll(() =>
           truckGLBArrayBuffer := GLBTool.getGLBArrayBuffer("CesiumMilkTruck")
@@ -627,10 +661,45 @@ let _ =
 
           _prepare();
 
+_prepareInspectorCanvasAndImgCanvas();
+
           MainEditorSceneTool.prepareScene(sandbox);
 
           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
           |> ignore;
+
+        MainEditorSceneTool.initInspectorEngineState(
+          ~sandbox,
+          ~isInitJob=false,
+          ~noWorkerJobRecord=
+            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+              ~initPipelines=
+                {|
+           [
+            {
+              "name": "default",
+              "jobs": [
+                  {"name": "init_inspector_engine" }
+              ]
+            }
+          ]
+           |},
+              ~initJobs=
+                {|
+           [
+              {"name": "init_inspector_engine" }
+           ]
+           |},
+              (),
+            ),
+          (),
+        );
+  
+        StateInspectorEngineService.unsafeGetState()
+        |> MainUtils._handleInspectorEngineState
+        |> StateInspectorEngineService.setState
+        |> ignore;
+
         });
 
         describe("test glb", () => {

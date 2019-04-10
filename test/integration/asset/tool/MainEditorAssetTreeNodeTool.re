@@ -30,7 +30,7 @@ let insertMaterialNode =
     (
       materialNodeId,
       parentFolderNodeId,
-      material,
+      (material, imageDataIndex),
       (editorState, engineState),
     ) => (
   editorState
@@ -40,28 +40,7 @@ let insertMaterialNode =
          ~nodeId=materialNodeId,
          ~materialComponent=material,
          ~type_=MaterialDataAssetType.LightMaterial,
-         ~imageDataIndex=0,
-       ),
-     ),
-  engineState,
-);
-
-let insertMaterialNode =
-    (
-      materialNodeId,
-      parentFolderNodeId,
-      material,
-      (editorState, engineState),
-    ) => (
-  editorState
-  |> OperateTreeAssetEditorService.insertNode(
-       parentFolderNodeId,
-       MaterialNodeAssetService.buildNode(
-         ~nodeId=materialNodeId,
-         ~materialComponent=material,
-         ~type_=MaterialDataAssetType.LightMaterial,
-         ~imageDataIndex=0,
-         /* TODO need fix this imageDataIndex */
+         ~imageDataIndex,
        ),
      ),
   engineState,
