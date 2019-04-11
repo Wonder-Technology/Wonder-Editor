@@ -77,74 +77,6 @@ exports[`MainEditorAssetChildrenNode test show order
     </div>
   </article>
   <article
-    className="wonder-asset-folderBox"
-    id="folder-8"
-    style={
-      Object {
-        "border": "0px",
-      }
-    }
-  >
-    <div
-      className="item-ground"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDragStart={[Function]}
-      onDrop={[Function]}
-    />
-    <div
-      className="box-image"
-    >
-      <img
-        src="./public/img/assetPackage.png"
-      />
-    </div>
-    <div
-      className="item-text "
-    >
-      <span>
-        Materials
-      </span>
-    </div>
-  </article>
-  <article
-    className="wonder-asset-folderBox"
-    id="folder-10"
-    style={
-      Object {
-        "border": "0px",
-      }
-    }
-  >
-    <div
-      className="item-ground"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDragStart={[Function]}
-      onDrop={[Function]}
-    />
-    <div
-      className="box-image"
-    >
-      <img
-        src="./public/img/assetPackage.png"
-      />
-    </div>
-    <div
-      className="item-text "
-    >
-      <span>
-        Textures
-      </span>
-    </div>
-  </article>
-  <article
     className="wonder-asset-fileBox "
     onClick={[Function]}
   >
@@ -153,47 +85,7 @@ exports[`MainEditorAssetChildrenNode test show order
     >
       <img
         onDragStart={[Function]}
-        src="./public/img/wdb.png"
-      />
-    </div>
-    <div
-      className="item-text "
-    >
-      <span>
-        A_WDB
-      </span>
-    </div>
-  </article>
-  <article
-    className="wonder-asset-fileBox "
-    onClick={[Function]}
-  >
-    <div
-      className="box-image"
-    >
-      <img
-        onDragStart={[Function]}
-        src="./public/img/wdb.png"
-      />
-    </div>
-    <div
-      className="item-text "
-    >
-      <span>
-        C_WDB
-      </span>
-    </div>
-  </article>
-  <article
-    className="wonder-asset-fileBox "
-    onClick={[Function]}
-  >
-    <div
-      className="box-image"
-    >
-      <img
-        onDragStart={[Function]}
-        src="./public/img/mat.png"
+        src="./public/img/mat.jpg"
       />
     </div>
     <div
@@ -213,7 +105,7 @@ exports[`MainEditorAssetChildrenNode test show order
     >
       <img
         onDragStart={[Function]}
-        src="./public/img/mat.png"
+        src="./public/img/mat.jpg"
       />
     </div>
     <div

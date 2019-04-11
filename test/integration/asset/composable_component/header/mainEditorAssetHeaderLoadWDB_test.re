@@ -30,6 +30,41 @@ let _ =
       sandbox := createSandbox();
 
       MainEditorSceneTool.initState(~sandbox, ());
+
+      MainEditorSceneTool.initInspectorEngineState(
+        ~sandbox,
+        ~isInitJob=false,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+            ~initPipelines=
+              {|
+             [
+              {
+                "name": "default",
+                "jobs": [
+                    {"name": "init_inspector_engine" }
+                ]
+              }
+            ]
+             |},
+            ~initJobs=
+              {|
+             [
+                {"name": "init_inspector_engine" }
+             ]
+             |},
+            (),
+          ),
+        (),
+      );
+
+      StateInspectorEngineService.unsafeGetState()
+      |> MainUtils._handleInspectorEngineState
+      |> StateInspectorEngineService.setState
+      |> ignore;
+
+      CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
+
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         MainEditorAssetTool.initAssetTree,
@@ -673,7 +708,7 @@ let _ =
                             editorState,
                           )
                           |> Js.Array.length,
-                          ImageDataMapAssetEditorService.getValidValues(
+                          MainEditorAssetWDBNodeTool.getValidTextureArray(
                             editorState,
                           )
                           |> WonderCommonlib.ImmutableSparseMapService.length,
@@ -802,7 +837,9 @@ let _ =
                      editorState,
                    )
                    |> Js.Array.length,
-                   ImageDataMapAssetEditorService.getValidValues(editorState)
+                   MainEditorAssetWDBNodeTool.getValidTextureArray(
+                     editorState,
+                   )
                    |> WonderCommonlib.ImmutableSparseMapService.length,
                  )
                  |> expect == (2, 1)
@@ -1078,6 +1115,41 @@ let _ =
                   ),
                 (),
               );
+
+              MainEditorSceneTool.initInspectorEngineState(
+                ~sandbox,
+                ~isInitJob=false,
+                ~noWorkerJobRecord=
+                  NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                    ~initPipelines=
+                      {|
+             [
+              {
+                "name": "default",
+                "jobs": [
+                    {"name": "init_inspector_engine" }
+                ]
+              }
+            ]
+             |},
+                    ~initJobs=
+                      {|
+             [
+                {"name": "init_inspector_engine" }
+             ]
+             |},
+                    (),
+                  ),
+                (),
+              );
+
+              StateInspectorEngineService.unsafeGetState()
+              |> MainUtils._handleInspectorEngineState
+              |> StateInspectorEngineService.setState
+              |> ignore;
+
+              CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
+
               MainEditorSceneTool.prepareScene(sandbox);
               ConsoleTool.notShowMessage();
 

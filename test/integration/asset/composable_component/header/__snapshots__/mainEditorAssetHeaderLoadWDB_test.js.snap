@@ -13,7 +13,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
     >
       <img
         onDragStart={[Function]}
-        src="./public/img/mat.png"
+        src="data:image/png;base64 for img-canvas"
       />
     </div>
     <div
@@ -128,7 +128,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
     >
       <img
         onDragStart={[Function]}
-        src="./public/img/mat.png"
+        src="./public/img/mat.jpg"
       />
     </div>
     <div
@@ -155,7 +155,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
     >
       <img
         onDragStart={[Function]}
-        src="./public/img/mat.png"
+        src="data:image/png;base64 for img-canvas"
       />
     </div>
     <div
@@ -182,7 +182,7 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
     >
       <img
         onDragStart={[Function]}
-        src="./public/img/mat.png"
+        src="data:image/png;base64 for img-canvas"
       />
     </div>
     <div

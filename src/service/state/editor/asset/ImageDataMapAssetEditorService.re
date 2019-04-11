@@ -18,6 +18,9 @@ let clearMap = editorState => {
   },
 };
 
+let getData = (index, editorState) =>
+  ImageDataMapAssetService.getData(index, editorState.assetRecord);
+
 let unsafeGetData = (index, editorState) =>
   ImageDataMapAssetService.unsafeGetData(index, editorState.assetRecord);
 

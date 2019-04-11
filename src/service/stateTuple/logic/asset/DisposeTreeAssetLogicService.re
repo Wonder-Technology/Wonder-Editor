@@ -33,6 +33,10 @@ let _disposeTextureNodeEditorData =
     editorState :
     editorState |> ImageDataMapAssetEditorService.removeData(imageDataIndex);
 
+let _disposeMaterialNodeEditorData = ({imageDataIndex} : materialNodeData, editorState ) => {
+    editorState |> ImageDataMapAssetEditorService.removeData(imageDataIndex);
+};
+
 let _disposeWDBNodeEditorData =
     ({wdbGameObject}, (editorState, engineState)) => {
   let wdbGameObjects =
@@ -52,7 +56,7 @@ let _disposeNodeEditorData = (node, engineState, editorState) =>
     ~node,
     ~textureNodeFunc=
       (_, nodeData) => _disposeTextureNodeEditorData(nodeData, editorState),
-    ~materialNodeFunc=(_, _) => editorState,
+    ~materialNodeFunc=(_, nodeData) => _disposeMaterialNodeEditorData( nodeData, editorState),
     ~scriptEventFunctionNodeFunc=(_, _) => editorState,
     ~scriptAttributeNodeFunc=(_, _) => editorState,
     ~wdbNodeFunc=

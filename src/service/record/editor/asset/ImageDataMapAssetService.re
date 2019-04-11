@@ -11,6 +11,9 @@ let buildData =
   mimeType,
 };
 
+let getData = (index, record) =>
+  record.imageDataMap |> WonderCommonlib.ImmutableSparseMapService.get(index);
+
 let unsafeGetData = (index, record) =>
   record.imageDataMap
   |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(index);

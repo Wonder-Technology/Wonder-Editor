@@ -91,7 +91,7 @@ exports[`MainEditorAssetHeader->remove wdb drag wdb asset into scene;
     >
       <img
         onDragStart={[Function]}
-        src="./public/img/mat.png"
+        src={Object {}}
       />
     </div>
     <div

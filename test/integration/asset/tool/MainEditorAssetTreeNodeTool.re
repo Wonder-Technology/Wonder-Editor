@@ -42,6 +42,16 @@ let insertMaterialNode =
          ~type_=MaterialDataAssetType.LightMaterial,
          ~imageDataIndex,
        ),
+     )
+  |> ImageDataMapAssetEditorService.setData(
+       imageDataIndex,
+       ImageDataMapAssetService.buildData(
+         ~base64=None,
+         ~uint8Array=None,
+         ~name="material",
+         ~mimeType="image/png",
+         (),
+       ),
      ),
   engineState,
 );

@@ -43,6 +43,39 @@ let _ =
           ),
         (),
       );
+      MainEditorSceneTool.initInspectorEngineState(
+        ~sandbox,
+        ~isInitJob=false,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+            ~initPipelines=
+              {|
+             [
+              {
+                "name": "default",
+                "jobs": [
+                    {"name": "init_inspector_engine" }
+                ]
+              }
+            ]
+             |},
+            ~initJobs=
+              {|
+             [
+                {"name": "init_inspector_engine" }
+             ]
+             |},
+            (),
+          ),
+        (),
+      );
+
+      StateInspectorEngineService.unsafeGetState()
+      |> MainUtils._handleInspectorEngineState
+      |> StateInspectorEngineService.setState
+      |> ignore;
+
+      CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
 
       MainEditorAssetTool.buildFakeFileReader();
       MainEditorAssetTool.buildFakeImage();
@@ -53,11 +86,7 @@ let _ =
 
       LoadTool.buildFakeLoadImage(.);
 
-      EventListenerTool.buildFakeDom()
-      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-
       MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
-
       MainEditorSceneTool.prepareScene(sandbox);
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));

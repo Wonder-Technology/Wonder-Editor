@@ -68,26 +68,26 @@ let clipTargetCanvasToCreateImgCanvasSnapshot =
 };
 
 /* let clipTargetCanvasToCreateImgCanvasSnapshotTest =
-    (targetCanvasDom, imgCanvasDom, imageDataIndex, editorState) => {
-  editorState
-  |> ImgContextImgCanvasEditorService.unsafeGetImgContext
-  |> CanvasType.convertContextToJsObj
-  |> drawImgCanvasSnapshot(
-       _,
-       targetCanvasDom,
-       getClipTagretCanvasArea(targetCanvasDom),
-       getImgCanvasSnapshotArea(),
-     )
-  |> ignore;
+       (targetCanvasDom, imgCanvasDom, imageDataIndex, editorState) => {
+     editorState
+     |> ImgContextImgCanvasEditorService.unsafeGetImgContext
+     |> CanvasType.convertContextToJsObj
+     |> drawImgCanvasSnapshot(
+          _,
+          targetCanvasDom,
+          getClipTagretCanvasArea(targetCanvasDom),
+          getImgCanvasSnapshotArea(),
+        )
+     |> ignore;
 
-  let imgCanvasBase64 =
-    CanvasType.convertCanvasToJsObj(imgCanvasDom)##toDataURL();
+     let imgCanvasBase64 =
+       CanvasType.convertCanvasToJsObj(imgCanvasDom)##toDataURL();
 
-  editorState
-  |> ImageDataMapAssetEditorService.setData(
-       imageDataIndex,
-       editorState
-       |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
-       |> (imageData => {...imageData, base64: imgCanvasBase64}),
-     );
-}; */
+     editorState
+     |> ImageDataMapAssetEditorService.setData(
+          imageDataIndex,
+          editorState
+          |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
+          |> (imageData => {...imageData, base64: imgCanvasBase64}),
+        );
+   }; */

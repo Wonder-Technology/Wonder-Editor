@@ -252,6 +252,16 @@ let _buildMaterialEditorData =
          ~materialComponent=material,
          ~imageDataIndex=newImageDataIndex,
        ),
+     )
+  |> ImageDataMapAssetEditorService.setData(
+       newImageDataIndex,
+       ImageDataMapAssetService.buildData(
+         ~base64=None,
+         ~uint8Array=None,
+         ~name="material",
+         ~mimeType="image/png",
+         (),
+       ),
      );
 };
 

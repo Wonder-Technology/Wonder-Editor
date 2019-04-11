@@ -1,3 +1,5 @@
+open Sinon;
+
 module Drag = {
   let dragWDBAsset =
       (
@@ -134,3 +136,29 @@ let restoreMainCanvasAndInspectorCanvasDom = [%bs.raw
   };
   |}
 ];
+
+let prepareInspectorCanvasAndImgCanvas = sandbox => {
+  let getElementStub =
+    SinonTool.createMethodStub(
+      sandbox^,
+      BuildCanvasTool.documentToJsObj(BuildCanvasTool.document),
+      "getElementById",
+    );
+  let (
+    _mainParentDom,
+    _mainCanvasDom,
+    _inspectorParentDom,
+    inspectorCanvasDom,
+  ) =
+    stubMainCanvasAndInspectorCanvasDom(~sandbox, ~getElementStub, ());
+
+  let imgCanvasDom = stubImgCanvasDom(~sandbox, ~getElementStub, ());
+  let imgCanvasFakeBase64Str = BuildCanvasTool.getImgCanvasFakeBase64Str();
+
+
+  inspectorCanvasDom##toDataURL
+  |> returns(BuildCanvasTool.getInspectorCanvasFakeBase64Str());
+  imgCanvasDom##toDataURL |> returns(imgCanvasFakeBase64Str);
+
+  (imgCanvasFakeBase64Str, (inspectorCanvasDom, imgCanvasDom));
+};
