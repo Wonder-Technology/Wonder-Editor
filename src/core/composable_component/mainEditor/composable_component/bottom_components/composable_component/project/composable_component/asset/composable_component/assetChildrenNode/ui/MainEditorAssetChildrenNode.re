@@ -176,7 +176,6 @@ module Method = {
                      ~engineState,
                    );
 
-                 /* TODO get img base64 from map, the wdb same to get */
                  let imgSrc =
                    ImageDataMapUtils.getImgSrc(
                      imageDataIndex,
@@ -233,6 +232,7 @@ module Method = {
                (nodeId, nodeData) => {
                  let fileName = WDBNodeAssetService.getNodeName(nodeData);
 
+                 /* TODO get wdb img base64 from map */
                  <FileBox
                    key
                    uiState

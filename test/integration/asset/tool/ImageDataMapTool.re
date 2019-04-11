@@ -9,3 +9,6 @@ let getMapValidLength = editorState =>
   ImageDataMapAssetEditorService.getMap(editorState)
   |> WonderCommonlib.ImmutableSparseMapService.getValidValues
   |> Js.Array.length;
+
+let getNewImageDataMapIndex = (~editorState=StateEditorService.getState(), ()) =>
+  IndexAssetEditorService.getImageDataMapIndex(editorState) |> succ;

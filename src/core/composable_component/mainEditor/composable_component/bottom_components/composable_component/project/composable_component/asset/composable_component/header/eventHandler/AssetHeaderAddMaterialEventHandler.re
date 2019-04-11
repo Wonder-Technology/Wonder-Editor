@@ -13,13 +13,11 @@ module CustomEventHandler = {
       |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree;
 
     let materialName =
-      OperateMaterialLogicService.getNewMaterilaName()
-      ->(
-          OperateTreeAssetLogicService.getUniqueNodeName(
-            targetTreeNode,
-            engineState,
-          )
-        );
+      engineState
+      |> OperateTreeAssetLogicService.getUniqueNodeName(
+           OperateMaterialLogicService.getNewMaterilaName(),
+           targetTreeNode,
+         );
 
     let (newMaterial, engineState) =
       LightMaterialEngineService.createLightMaterialAndSetName(

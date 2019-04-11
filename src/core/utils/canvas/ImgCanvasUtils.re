@@ -50,7 +50,7 @@ let clipTargetCanvasToCreateImgCanvasSnapshot =
      )
   |> ignore;
 
-  let imgCanvasBase64 =
+  let imgCanvasBase64: string =
     CanvasType.convertCanvasToJsObj(imgCanvasDom)##toDataURL();
 
   let {imageDataIndex} =
@@ -63,7 +63,14 @@ let clipTargetCanvasToCreateImgCanvasSnapshot =
        imageDataIndex,
        editorState
        |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
-       |> (imageData => {...imageData, base64: imgCanvasBase64}),
+       |> (
+         imageData => {
+           ...imageData,
+           base64: Some(imgCanvasBase64),
+           uint8Array: None,
+           blobObjectURL: None,
+         }
+       ),
      );
 };
 

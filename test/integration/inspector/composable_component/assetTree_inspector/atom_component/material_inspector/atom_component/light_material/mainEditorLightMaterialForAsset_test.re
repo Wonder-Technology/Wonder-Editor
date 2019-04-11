@@ -89,7 +89,7 @@ let _ =
       });
 
       describe(
-        "test change currentSceneTreeNode's lightMaterial value should change materialSphere's  lightMaterial value",
+        "test change currentSceneTreeNode's lightMaterial value should change materialSphere's lightMaterial value",
         () => {
           test("test change color", () => {
             let inspectorEngineState =
@@ -296,31 +296,76 @@ let _ =
               );
 
               describe(
-                "test exec eventHandler should store the img canvas snapshot in imageDataMap",
+                "test exec eventHandler should store the img canvas snapshot in imageDataMap ",
                 () => {
-                  test(
+                  describe(
                     "test exec light material close color pick eventHandler",
                     () => {
-                    let (
-                      addedMaterialNodeId,
-                      newMaterialComponent,
-                      imgCanvasFakeBase64Str,
-                      (inspectorCanvasDom, imgCanvasDom),
-                    ) =
-                      _prepareInspectorMaterialSphereAndImgCanvas();
+                    test(
+                      "should store img canvas snapshot in imageDataMap's base64",
+                      () => {
+                      let (
+                        addedMaterialNodeId,
+                        newMaterialComponent,
+                        imgCanvasFakeBase64Str,
+                        (inspectorCanvasDom, imgCanvasDom),
+                      ) =
+                        _prepareInspectorMaterialSphereAndImgCanvas();
 
-                    MainEditorLightMaterialForAssetTool.closeColorPicker(
-                      ~currentNodeId=addedMaterialNodeId,
-                      ~material=newMaterialComponent,
-                      ~color="#7df1e8",
-                      (),
-                    );
+                      MainEditorLightMaterialForAssetTool.closeColorPicker(
+                        ~currentNodeId=addedMaterialNodeId,
+                        ~material=newMaterialComponent,
+                        ~color="#7df1e8",
+                        (),
+                      );
 
-                    MainEditorLightMaterialForAssetTool.judgeImgCanvasSnapshotIsStoreInImageDataMap(
-                      addedMaterialNodeId,
-                      imgCanvasFakeBase64Str,
-                    );
+                      MainEditorLightMaterialForAssetTool.judgeImgCanvasSnapshotIsStoreInImageDataMap(
+                        addedMaterialNodeId,
+                        imgCanvasFakeBase64Str,
+                      );
+                    });
+                    test(
+                      "should set imageDataMap's uint8Array and blobObjectURL is None",
+                      () => {
+                      let (
+                        addedMaterialNodeId,
+                        newMaterialComponent,
+                        imgCanvasFakeBase64Str,
+                        (inspectorCanvasDom, imgCanvasDom),
+                      ) =
+                        _prepareInspectorMaterialSphereAndImgCanvas();
+
+                      MainEditorLightMaterialForAssetTool.closeColorPicker(
+                        ~currentNodeId=addedMaterialNodeId,
+                        ~material=newMaterialComponent,
+                        ~color="#7df1e8",
+                        (),
+                      );
+
+                      let editorState = StateEditorService.getState();
+                      let {imageDataIndex} =
+                        editorState
+                        |> OperateTreeAssetEditorService.unsafeFindNodeById(
+                             addedMaterialNodeId,
+                           )
+                        |> MaterialNodeAssetService.getNodeData;
+
+                      editorState
+                      |> ImageDataMapAssetEditorService.unsafeGetData(
+                           imageDataIndex,
+                         )
+                      |> (
+                        ({base64, uint8Array, blobObjectURL}) =>
+                          (
+                            base64 |> Js.Option.isSome,
+                            uint8Array |> Js.Option.isSome,
+                            blobObjectURL |> Js.Option.isSome,
+                          )
+                          |> expect == (true, false, false)
+                      );
+                    });
                   });
+
                   test(
                     "test exec light material shininess blur eventHandler", () => {
                     let (

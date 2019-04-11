@@ -53,10 +53,10 @@ let _ =
             StateEditorService.getState(),
           )
           |> OptionService.unsafeGet
-          |>
-          expect == MainEditorAssetTreeTool.BuildAssetTree.Material.getRootNodeId(
-                      assetTreeData,
-                    );
+          |> expect
+          == MainEditorAssetTreeTool.BuildAssetTree.Material.getRootNodeId(
+               assetTreeData,
+             );
         });
       })
     );
@@ -97,6 +97,32 @@ let _ =
         );
 
       materialComponent |> expect == newLightMaterial;
+    });
+
+    test("create new imageDataIndex and new imageDataNode", () => {
+      let assetTreeData =
+        MainEditorAssetTreeTool.BuildAssetTree.Material.buildOneMaterialAssetTree();
+      let addedMaterialNodeId = MainEditorAssetIdTool.getNewAssetId();
+      let newImageDataMapIndex = ImageDataMapTool.getNewImageDataMapIndex();
+
+      MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+      let editorState = StateEditorService.getState();
+
+      let {imageDataIndex}: NodeAssetType.materialNodeData =
+        OperateTreeAssetEditorService.unsafeFindNodeById(
+          addedMaterialNodeId,
+          editorState,
+        )
+        |> MaterialNodeAssetService.getNodeData;
+
+      (
+        imageDataIndex,
+        editorState
+        |> ImageDataMapAssetEditorService.getData(imageDataIndex)
+        |> Js.Option.isSome,
+      )
+      |> expect == (newImageDataMapIndex, true);
     });
 
     test("material type should be LightMaterial", () => {
