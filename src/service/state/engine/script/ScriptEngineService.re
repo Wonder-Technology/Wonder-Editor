@@ -112,7 +112,7 @@ let _replaceScriptDataByEntriesMap =
          script,
          scriptDataEntriesMap
          /* |> WonderCommonlib.ImmutableHashMapService.getValidEntries
-         |> WonderCommonlib.SparseMapType.arrayNotNullableToArrayNullable */
+            |> WonderCommonlib.SparseMapType.arrayNotNullableToArrayNullable */
          |> WonderCommonlib.ImmutableSparseMapService.reduceValid(
               (. dataMap, (name, newData)) =>
                 dataMap |> WonderCommonlib.ImmutableHashMapService.has(name) ?
@@ -303,3 +303,28 @@ let removeAttributeInAllScriptComponents =
     },
   };
 };
+
+let getAllScriptsWithAttribute =
+    (({scriptRecord}: StateDataMainType.state) as engineState) => {
+  let {scriptAttributeMap}: StateDataMainType.scriptRecord = scriptRecord;
+
+  scriptAttributeMap |> WonderCommonlib.ImmutableSparseMapService.getValidKeys;
+};
+
+let replaceAttributeInAllScriptComponents =
+    (
+      (oldAttributeName, newAttributeName),
+      newAttribute,
+      ({scriptRecord}: StateDataMainType.state) as engineState,
+    ) =>
+  getAllScriptsWithAttribute(engineState)
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. engineState, script) =>
+         engineState
+         |> replaceScriptAttribute(
+              script,
+              (oldAttributeName, newAttributeName),
+              newAttribute,
+            ),
+       engineState,
+     );

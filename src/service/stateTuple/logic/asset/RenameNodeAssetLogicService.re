@@ -127,103 +127,104 @@ let _scriptEventFunctionNodeFunc =
       (result, tree, engineState),
       nodeId,
       nodeData,
-    ) => {
-  let (result, newTree, engineState) =
-    result
-    |> Result.RelationResult.isSuccess
-    && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
-      {
-        let (result, newTree) =
-          switch (
-            _checkParentNode(parentFolderNode, name, engineState)
-            |> Result.RelationResult.handleSuccess(() =>
-                 ScriptEventFunctionNodeNameAssetService.isTreeScriptEventFunctionNodesHasTargetName(
-                   name,
-                   tree,
-                 ) ?
-                   Result.RelationResult.fail(
-                     LanguageUtils.getMessageLanguageDataByType(
-                       "asset-rename-scriptEventFunction",
-                       LanguageEditorService.unsafeGetType
-                       |> StateLogicService.getEditorState,
-                     )
-                     ->Some,
-                   ) :
-                   Result.RelationResult.success()
-               )
-          ) {
-          | Success () as result => (
-              result,
-              OperateTreeAssetService.updateNode(
-                nodeId,
-                ScriptEventFunctionNodeNameAssetService.rename(
-                  ~name,
-                  ~nodeData,
-                ),
-                ScriptEventFunctionNodeAssetService.buildNodeByNodeData,
-                tree,
+    ) =>
+  result
+  |> Result.RelationResult.isSuccess
+  && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
+    {
+      let (result, newTree) =
+        switch (
+          _checkParentNode(parentFolderNode, name, engineState)
+          |> Result.RelationResult.handleSuccess(() =>
+               ScriptEventFunctionNodeNameAssetService.isTreeScriptEventFunctionNodesHasTargetName(
+                 name,
+                 tree,
+               ) ?
+                 Result.RelationResult.fail(
+                   LanguageUtils.getMessageLanguageDataByType(
+                     "asset-rename-scriptEventFunction",
+                     LanguageEditorService.unsafeGetType
+                     |> StateLogicService.getEditorState,
+                   )
+                   ->Some,
+                 ) :
+                 Result.RelationResult.success()
+             )
+        ) {
+        | Success () as result => (
+            result,
+            OperateTreeAssetService.updateNode(
+              nodeId,
+              ScriptEventFunctionNodeNameAssetService.rename(
+                ~name,
+                ~nodeData,
               ),
-            )
-          | Fail(msg) as result => (result, tree)
-          };
+              ScriptEventFunctionNodeAssetService.buildNodeByNodeData,
+              tree,
+            ),
+          )
+        | Fail(msg) as result => (result, tree)
+        };
 
-        (result, newTree, engineState);
-      } :
-      (result, tree, engineState);
-
-  (result, newTree, engineState);
-};
+      (result, newTree, engineState);
+    } :
+    (result, tree, engineState);
 
 let _scriptAttributeNodeFunc =
     (
-      (targetNodeId, name),
+      (targetNodeId, newName),
       parentFolderNode,
       (result, tree, engineState),
       nodeId,
       nodeData,
-    ) => {
-  let (result, newTree, engineState) =
-    result
-    |> Result.RelationResult.isSuccess
-    && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
-      {
-        let (result, newTree) =
-          switch (
-            _checkParentNode(parentFolderNode, name, engineState)
-            |> Result.RelationResult.handleSuccess(() =>
-                 ScriptAttributeNodeNameAssetService.isTreeScriptAttributeNodesHasTargetName(
-                   name,
-                   tree,
-                 ) ?
-                   Result.RelationResult.fail(
-                     LanguageUtils.getMessageLanguageDataByType(
-                       "asset-rename-scriptAttribute",
-                       LanguageEditorService.unsafeGetType
-                       |> StateLogicService.getEditorState,
-                     )
-                     ->Some,
-                   ) :
-                   Result.RelationResult.success()
+    ) =>
+  result
+  |> Result.RelationResult.isSuccess
+  && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
+    switch (
+      _checkParentNode(parentFolderNode, newName, engineState)
+      |> Result.RelationResult.handleSuccess(() =>
+           ScriptAttributeNodeNameAssetService.isTreeScriptAttributeNodesHasTargetName(
+             newName,
+             tree,
+           ) ?
+             Result.RelationResult.fail(
+               LanguageUtils.getMessageLanguageDataByType(
+                 "asset-rename-scriptAttribute",
+                 LanguageEditorService.unsafeGetType
+                 |> StateLogicService.getEditorState,
                )
-          ) {
-          | Success () as result => (
-              result,
-              OperateTreeAssetService.updateNode(
-                nodeId,
-                ScriptAttributeNodeNameAssetService.rename(~name, ~nodeData),
-                ScriptAttributeNodeAssetService.buildNodeByNodeData,
-                tree,
-              ),
-            )
-          | Fail(msg) as result => (result, tree)
-          };
+               ->Some,
+             ) :
+             Result.RelationResult.success()
+         )
+    ) {
+    | Success () as result =>
+      let oldName =
+        ScriptAttributeNodeAssetService.getNodeNameByData(nodeData);
+      let attribute =
+        ScriptAttributeNodeAssetService.getAttributeByData(nodeData);
 
-        (result, newTree, engineState);
-      } :
-      (result, tree, engineState);
-
-  (result, newTree, engineState);
-};
+      (
+        result,
+        OperateTreeAssetService.updateNode(
+          nodeId,
+          ScriptAttributeNodeNameAssetService.rename(
+            ~name=newName,
+            ~nodeData,
+          ),
+          ScriptAttributeNodeAssetService.buildNodeByNodeData,
+          tree,
+        ),
+        engineState
+        |> ScriptEngineService.replaceAttributeInAllScriptComponents(
+             (oldName, newName),
+             attribute,
+           ),
+      );
+    | Fail(msg) as result => (result, tree, engineState)
+    } :
+    (result, tree, engineState);
 
 let _wdbNodeFunc =
     (

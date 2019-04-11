@@ -492,4 +492,33 @@ let _ =
         })
       );
     });
+
+    describe("test rename attribute", () =>
+      describe("test update script attribute in all script components", () => {
+        beforeEach(() =>
+          ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.createDefaultSceneAndAddScriptComponent(
+            sandbox,
+          )
+        );
+
+        test("test update one script component", () => {
+          let (script, addedNodeId, fieldName) =
+            ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.prepareForOneScriptComponent(
+              sandbox,
+            );
+          let newAttributeName = "zzz";
+
+          AssetTreeInspectorTool.Rename.renameAssetScriptAttributeNode(
+            ~name=newAttributeName,
+            ~nodeId=addedNodeId,
+            (),
+          );
+
+          ScriptToolEngine.getScriptAttributeEntries(script, newAttributeName)
+          |> StateLogicService.getEngineStateToGetData
+          |> Js.Array.length
+          |> expect == 1;
+        });
+      })
+    );
   });
