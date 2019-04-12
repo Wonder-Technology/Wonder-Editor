@@ -128,8 +128,7 @@ let _ =
         })
       );
 
-      /* TODO test: fix as lightmaterial test */
-      describe("test basic material create img snapshot for asset", () => {
+      describe("create material sphere's snapshot", () => {
         let _prepareInspectorMaterialSphereAndImgCanvas =
             (~inspectorCanvasWidth=300, ~inspectorCanvasHeight=300, ()) => {
           let getElementStub =
@@ -179,36 +178,30 @@ let _ =
         beforeEach(() => MainEditorAssetTool.buildFakeImage());
         afterEach(() => CanvasTool.restoreMainCanvasAndInspectorCanvasDom());
 
-        describe("create img-canvas snapshot", () =>
-          describe(
-            "clip the inspector-canvas snapshot to create img-canvas snapshot",
-            () =>
-            describe(
-              "test exec eventHandler should store the img canvas snapshot in imageDataMap",
-              () =>
-              test(
-                "test exec basic material close color pick eventHandler", () => {
-                let (
-                  addedMaterialNodeId,
-                  newMaterialComponent,
-                  imgCanvasFakeBase64Str,
-                  inspectorCanvasDom,
-                ) =
-                  _prepareInspectorMaterialSphereAndImgCanvas();
+        describe(
+          "create material sphere's snapshot and store in imageDataMap", () =>
+          describe("close color picker", () =>
+            test("test exec basic material close color pick eventHandler", () => {
+              let (
+                addedMaterialNodeId,
+                newMaterialComponent,
+                imgCanvasFakeBase64Str,
+                inspectorCanvasDom,
+              ) =
+                _prepareInspectorMaterialSphereAndImgCanvas();
 
-                MainEditorBasicMaterialForAssetTool.closeColorPicker(
-                  ~currentNodeId=addedMaterialNodeId,
-                  ~material=newMaterialComponent,
-                  ~color="#7df1e8",
-                  (),
-                );
+              MainEditorBasicMaterialForAssetTool.closeColorPicker(
+                ~currentNodeId=addedMaterialNodeId,
+                ~material=newMaterialComponent,
+                ~color="#7df1e8",
+                (),
+              );
 
-                MainEditorBasicMaterialForAssetTool.judgeImgCanvasSnapshotIsStoreInImageDataMap(
-                  addedMaterialNodeId,
-                  imgCanvasFakeBase64Str,
-                );
-              })
-            )
+              MainEditorBasicMaterialForAssetTool.judgeImgCanvasSnapshotIsStoreInImageDataMap(
+                addedMaterialNodeId,
+                imgCanvasFakeBase64Str,
+              );
+            })
           )
         );
       });
