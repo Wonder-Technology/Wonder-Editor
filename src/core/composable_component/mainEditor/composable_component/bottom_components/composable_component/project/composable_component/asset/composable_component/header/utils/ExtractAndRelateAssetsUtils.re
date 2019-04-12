@@ -490,7 +490,6 @@ module AssetTree = {
 
                let (editorState, newNodeId) =
                  IdAssetEditorService.generateNodeId(editorState);
-
                let (editorState, newImageDataIndex) =
                  IndexAssetEditorService.generateImageDataMapIndex(
                    editorState,

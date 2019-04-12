@@ -18,16 +18,15 @@ let calcTargetCanvasClipArea = targetCanvasDom => {
 
 let getImgCanvasSnapshotArea = () => (0., 0., 50., 50.);
 
-let drawImgCanvasSnapshot =
+let _drawImgCanvasSnapshot =
     (
-      imgContext: CanvasType.context,
+      canvasContext,
       targetCanvasDom,
       (clipBegin, clipEnd, clipWidth, clipHeight),
       (snapshotBegin, snapshotEnd, snapshotWidth, snapshotHeight),
-    ) => {
-  let drawImage = imgContext##drawImage;
-
-  drawImage(
+    ) =>
+  CanvasType.drawImage(
+    canvasContext,
     targetCanvasDom,
     clipBegin,
     clipEnd,
@@ -38,12 +37,11 @@ let drawImgCanvasSnapshot =
     snapshotWidth,
     snapshotHeight,
   );
-};
 
 let _ClipTargetCanvasSnapshot = (targetCanvasDom, imgCanvasDom, editorState) => {
   editorState
   |> ImgContextImgCanvasEditorService.unsafeGetImgContext
-  |> drawImgCanvasSnapshot(
+  |> _drawImgCanvasSnapshot(
        _,
        targetCanvasDom,
        calcTargetCanvasClipArea(targetCanvasDom),
@@ -51,9 +49,7 @@ let _ClipTargetCanvasSnapshot = (targetCanvasDom, imgCanvasDom, editorState) => 
      )
   |> ignore;
 
-  let toDataURL = CanvasType.convertDomEleToCanvas(imgCanvasDom)##toDataURL;
-
-  toDataURL();
+  CanvasType.toDataURL(imgCanvasDom);
 };
 
 let _setSnapShotToImageDataMap = (imgCanvasBase64, currentNodeId, editorState) => {

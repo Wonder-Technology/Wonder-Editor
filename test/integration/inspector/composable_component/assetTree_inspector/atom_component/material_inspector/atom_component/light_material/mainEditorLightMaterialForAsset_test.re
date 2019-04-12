@@ -272,7 +272,7 @@ let _ =
                          editorState
                          |> ImgContextImgCanvasEditorService.unsafeGetImgContext;
 
-                       imgContext##drawImage
+                       CanvasType.convertContextToJsObj(imgContext)##drawImage
                        |> expect
                        |> toCalledWith([|
                             inspectorCanvasDom |> Obj.magic,
@@ -331,13 +331,12 @@ let _ =
         );
 
         describe("store snapshot in imageDataMap", () => {
-          describe("drag texture", () => {
+          describe("drag texture", () =>
             describe(
-            "test exec light material dragToSetLightMaterialTexture eventHandler",
-            () => {
+              "test exec light material dragToSetLightMaterialTexture eventHandler",
+              () => {
               testPromise(
-                "should store img canvas snapshot in imageDataMap's base64",
-                () => {
+                "should store img canvas snapshot in imageDataMap's base64", () => {
                 let (
                   addedMaterialNodeId,
                   newMaterialComponent,
@@ -345,7 +344,7 @@ let _ =
                   (inspectorCanvasDom, imgCanvasDom),
                 ) =
                   _prepareInspectorMaterialSphereAndImgCanvas();
-  
+
                 MainEditorAssetUploadTool.loadOneTexture()
                 |> Js.Promise.then_(uploadedTextureNodeId =>
                      MainEditorLightMaterialForAssetTool.dragAssetTextureToMap(
@@ -373,14 +372,14 @@ let _ =
                   (inspectorCanvasDom, imgCanvasDom),
                 ) =
                   _prepareInspectorMaterialSphereAndImgCanvas();
-  
+
                 MainEditorLightMaterialForAssetTool.closeColorPicker(
                   ~currentNodeId=addedMaterialNodeId,
                   ~material=newMaterialComponent,
                   ~color="#7df1e8",
                   (),
                 );
-  
+
                 let editorState = StateEditorService.getState();
                 let {imageDataIndex} =
                   editorState
@@ -388,9 +387,11 @@ let _ =
                        addedMaterialNodeId,
                      )
                   |> MaterialNodeAssetService.getNodeData;
-  
+
                 editorState
-                |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
+                |> ImageDataMapAssetEditorService.unsafeGetData(
+                     imageDataIndex,
+                   )
                 |> (
                   ({base64, uint8Array, blobObjectURL}) =>
                     (
@@ -401,9 +402,8 @@ let _ =
                     |> expect == (true, false, false)
                 );
               });
-             }
-            );
-          });
+            })
+          );
 
           describe("remove texture", () =>
             testPromise(
@@ -441,28 +441,28 @@ let _ =
           );
 
           describe("close color picker", () =>
-              test(
-                "test exec light material colose color picker eventHandler", () => {
-                let (
-                  addedMaterialNodeId,
-                  newMaterialComponent,
-                  imgCanvasFakeBase64Str,
-                  (inspectorCanvasDom, imgCanvasDom),
-                ) =
-                  _prepareInspectorMaterialSphereAndImgCanvas();
+            test(
+              "test exec light material colose color picker eventHandler", () => {
+              let (
+                addedMaterialNodeId,
+                newMaterialComponent,
+                imgCanvasFakeBase64Str,
+                (inspectorCanvasDom, imgCanvasDom),
+              ) =
+                _prepareInspectorMaterialSphereAndImgCanvas();
 
-                MainEditorLightMaterialForAssetTool.closeColorPicker(
-                  ~currentNodeId=addedMaterialNodeId,
-                  ~material=newMaterialComponent,
-                  ~color="#7df1e8",
-                  (),
-                );
+              MainEditorLightMaterialForAssetTool.closeColorPicker(
+                ~currentNodeId=addedMaterialNodeId,
+                ~material=newMaterialComponent,
+                ~color="#7df1e8",
+                (),
+              );
 
-                MainEditorLightMaterialForAssetTool.judgeImgCanvasSnapshotIsStoreInImageDataMap(
-                  addedMaterialNodeId,
-                  imgCanvasFakeBase64Str,
-                );
-              })
+              MainEditorLightMaterialForAssetTool.judgeImgCanvasSnapshotIsStoreInImageDataMap(
+                addedMaterialNodeId,
+                imgCanvasFakeBase64Str,
+              );
+            })
           );
 
           describe("blur shininess", () =>
