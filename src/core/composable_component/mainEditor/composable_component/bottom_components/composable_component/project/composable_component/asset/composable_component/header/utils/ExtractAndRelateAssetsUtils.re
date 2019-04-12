@@ -581,7 +581,7 @@ module AssetTree = {
                  setTextureNameFunc(textureName, texture, engineState);
 
                let (editorState, imageDataIndex) =
-                 ImageDataMapAssetEditorService.addImageDataByUint8Array(
+                 ImageDataMapAssetEditorService.addImageDataIfUint8ArrayNotExist(
                    imageUint8Array,
                    imageName,
                    mimeType,
