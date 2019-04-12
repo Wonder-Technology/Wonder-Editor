@@ -83,7 +83,8 @@ let _getImageDataIndexByUint8Array = (imageUint8Array, editorState) =>
   | Some((imageDataIndex, _)) => Some(imageDataIndex)
   };
 
-let addImageDataIfUint8ArrayNotExist = (uint8Array, name, mimeType, editorState) =>
+let addImageDataIfUint8ArrayNotExist =
+    (uint8Array, name, mimeType, editorState) =>
   switch (_getImageDataIndexByUint8Array(uint8Array, editorState)) {
   | None =>
     let (editorState, newImageDataIndex) =
