@@ -24,7 +24,7 @@ let _handleImage =
              );
 
         let (editorState, imageDataIndex) =
-          ImageDataMapAssetEditorService.addImageDataByBase64(
+          ImageDataMapAssetEditorService.addImageDataIfBase64NotExist(
             imgBase64,
             fileName,
             mimeType,

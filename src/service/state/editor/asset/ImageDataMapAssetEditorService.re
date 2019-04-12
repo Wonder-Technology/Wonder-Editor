@@ -43,9 +43,7 @@ let _getImageDataIndexByBase64 = (imageBase64, editorState) =>
   | Some((imageDataIndex, _)) => Some(imageDataIndex)
   };
 
-/* TODO refactor(all):rename addImageDataByBase64 to addImageDataIfBase64NotExist */
-
-let addImageDataByBase64 = (base64, fileName, mimeType, editorState) =>
+let addImageDataIfBase64NotExist = (base64, fileName, mimeType, editorState) =>
   switch (_getImageDataIndexByBase64(base64, editorState)) {
   | None =>
     let (editorState, newImageDataIndex) =
