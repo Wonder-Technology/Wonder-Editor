@@ -117,8 +117,8 @@ let _ =
         );
 
         describe("test should add into nodeMap", () => {
-          describe("test imageNodeMap", () => {
-            testPromise("add image base64 to imageNodeMap", () => {
+          describe("test imageDataMap", () => {
+            testPromise("add image base64 to imageDataMap", () => {
               MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
               |> ignore;
               let imgBase64 = "newImgBase64";
@@ -146,7 +146,7 @@ let _ =
                  });
             });
             testPromise(
-              "test show texture image, get it base64 from imageNodeMap", () => {
+              "test show texture image, get it base64 from imageDataMap", () => {
               MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
               |> ignore;
               let imgBase64 = "newImgBase64";

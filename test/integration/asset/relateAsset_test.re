@@ -82,7 +82,7 @@ let _ =
       })
     );
 
-    describe("test _isImageNodeDataEqual", () =>
+    describe("test _isImageDataDataEqual", () =>
       describe("test judge name is equal", () => {
         test(
           "if sourceName and targetName are all default name, return true", () =>

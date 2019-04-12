@@ -190,7 +190,7 @@ let buildTextureData =
                  assetNodeId,
                  TextureNodeAssetService.buildNodeData(
                    ~textureComponent=texture,
-                   ~imageNodeId=
+                   ~imageDataIndex=
                      imageDataIndexMap
                      |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(source),
                  ),
