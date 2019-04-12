@@ -2,13 +2,13 @@ open NodeAssetType;
 
 let _getTagretCanvasClipSize = () => (200., 200.);
 
-let getClipTagretCanvasArea = targetCanvasDom => {
+let calcTargetCanvasClipArea = targetCanvasDom => {
   let (targetWidth, targetHeight) = _getTagretCanvasClipSize();
 
   let targetCanvasWidth =
-    CanvasType.convertCanvasToJsObj(targetCanvasDom)##width;
+    CanvasType.convertDomEleToCanvas(targetCanvasDom)##width;
   let targetCanvasHeight =
-    CanvasType.convertCanvasToJsObj(targetCanvasDom)##height;
+    CanvasType.convertDomEleToCanvas(targetCanvasDom)##height;
 
   let offsetLeft = (targetCanvasWidth -. targetWidth) /. 2.;
   let offsetTop = (targetCanvasHeight -. targetHeight) /. 2.;
@@ -20,39 +20,43 @@ let getImgCanvasSnapshotArea = () => (0., 0., 50., 50.);
 
 let drawImgCanvasSnapshot =
     (
-      imgContext,
+      imgContext: CanvasType.context,
       targetCanvasDom,
-      (clipStatr, clipEnd, clipWidth, clipHeight),
-      (snapshotStart, snapshotEnd, snapshotWidth, snapshotHeight),
-    ) =>
-  imgContext##drawImage(
+      (clipBegin, clipEnd, clipWidth, clipHeight),
+      (snapshotBegin, snapshotEnd, snapshotWidth, snapshotHeight),
+    ) => {
+  let drawImage = imgContext##drawImage;
+
+  drawImage(
     targetCanvasDom,
-    clipStatr,
+    clipBegin,
     clipEnd,
     clipWidth,
     clipHeight,
-    snapshotStart,
+    snapshotBegin,
     snapshotEnd,
     snapshotWidth,
     snapshotHeight,
   );
+};
 
-let clipTargetCanvasToCreateImgCanvasSnapshot =
-    (targetCanvasDom, imgCanvasDom, currentNodeId, editorState) => {
+let _ClipTargetCanvasSnapshot = (targetCanvasDom, imgCanvasDom, editorState) => {
   editorState
   |> ImgContextImgCanvasEditorService.unsafeGetImgContext
-  |> CanvasType.convertContextToJsObj
   |> drawImgCanvasSnapshot(
        _,
        targetCanvasDom,
-       getClipTagretCanvasArea(targetCanvasDom),
+       calcTargetCanvasClipArea(targetCanvasDom),
        getImgCanvasSnapshotArea(),
      )
   |> ignore;
 
-  let imgCanvasBase64: string =
-    CanvasType.convertCanvasToJsObj(imgCanvasDom)##toDataURL();
+  let toDataURL = CanvasType.convertDomEleToCanvas(imgCanvasDom)##toDataURL;
 
+  toDataURL();
+};
+
+let _setSnapShotToImageDataMap = (imgCanvasBase64, currentNodeId, editorState) => {
   let {imageDataIndex} =
     editorState
     |> OperateTreeAssetEditorService.unsafeFindNodeById(currentNodeId)
@@ -74,27 +78,8 @@ let clipTargetCanvasToCreateImgCanvasSnapshot =
      );
 };
 
-/* let clipTargetCanvasToCreateImgCanvasSnapshotTest =
-       (targetCanvasDom, imgCanvasDom, imageDataIndex, editorState) => {
-     editorState
-     |> ImgContextImgCanvasEditorService.unsafeGetImgContext
-     |> CanvasType.convertContextToJsObj
-     |> drawImgCanvasSnapshot(
-          _,
-          targetCanvasDom,
-          getClipTagretCanvasArea(targetCanvasDom),
-          getImgCanvasSnapshotArea(),
-        )
-     |> ignore;
-
-     let imgCanvasBase64 =
-       CanvasType.convertCanvasToJsObj(imgCanvasDom)##toDataURL();
-
-     editorState
-     |> ImageDataMapAssetEditorService.setData(
-          imageDataIndex,
-          editorState
-          |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
-          |> (imageData => {...imageData, base64: imgCanvasBase64}),
-        );
-   }; */
+let clipTargetCanvasSnapshotAndSetToImageDataMap =
+    (targetCanvasDom, imgCanvasDom, currentNodeId, editorState) =>
+  editorState
+  |> _ClipTargetCanvasSnapshot(targetCanvasDom, imgCanvasDom)
+  |> _setSnapShotToImageDataMap(_, currentNodeId, editorState);

@@ -1,10 +1,21 @@
 open ImageType;
 
-type context;
+type context = {
+  .
+  "drawImage":
+    (Dom.element, float, float, float, float, float, float, float, float) =>
+    unit,
+};
 
-external convertCanvasToJsObj: Dom.element => Js.t({..}) = "%identity";
+type canvas = {
+  .
+  "width": float,
+  "height": float,
+  "getContext": unit => context,
+  "toDataURL": unit => string,
+};
 
-external convertContextToJsObj: context => Js.t({..}) = "%identity";
+external convertDomEleToCanvas: Dom.element => canvas = "%identity";
 
 let getCanvasContext: Dom.element => context = [%raw
   canvas => {j|
