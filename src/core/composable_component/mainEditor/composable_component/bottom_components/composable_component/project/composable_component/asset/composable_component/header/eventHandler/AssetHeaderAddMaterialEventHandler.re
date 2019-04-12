@@ -44,8 +44,9 @@ module CustomEventHandler = {
            ImageDataMapAssetService.buildData(
              ~base64=None,
              ~uint8Array=None,
+             ~blobObjectURL=None,
              ~name=materialName,
-             ~mimeType="image/png",
+             ~mimeType=ImageUtils.getDefaultMimeType(),
              (),
            ),
          );

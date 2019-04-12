@@ -259,7 +259,7 @@ let _buildMaterialEditorData =
          ~base64=None,
          ~uint8Array=None,
          ~name="material",
-         ~mimeType="image/png",
+         ~mimeType=ImageUtils.getDefaultMimeType(),
          (),
        ),
      );

@@ -148,7 +148,7 @@ let _ =
         },
       );
 
-      describe("test light material create img snapshot for asset", () => {
+      describe("test material sphere's snapshot", () => {
         let _prepareInspectorMaterialSphereAndImgCanvas =
             (~inspectorCanvasWidth=300, ~inspectorCanvasHeight=300, ()) => {
           let getElementStub =
@@ -198,20 +198,100 @@ let _ =
         beforeEach(() => MainEditorAssetTool.buildFakeImage());
         afterEach(() => CanvasTool.restoreMainCanvasAndInspectorCanvasDom());
 
-        describe("create img-canvas snapshot", () =>
-          describe(
-            "clip the inspector-canvas snapshot to create img-canvas snapshot",
-            () => {
-            beforeEach(() => {
-              MainEditorAssetTool.buildFakeFileReader();
-              MainEditorAssetTool.buildFakeImage();
-            });
-
+        /* TODO test: add close color picker, remove texture, blur shininess */
+        describe("create material sphere's snapshot", () =>
+          describe("drag texture", () => {
             describe(
-              "create img-canvas snapshot after materialInspector component didMount",
-              () => {
+              "redraw inspector canvas in MaterialInspector->didMount", () =>
+              testPromise("dispatch Inspector", () => {
+                let dispatchFuncStub =
+                  ReactTool.createDispatchFuncStub(sandbox);
+
+                let (
+                  addedMaterialNodeId,
+                  newMaterialComponent,
+                  imgCanvasFakeBase64Str,
+                  (inspectorCanvasDom, imgCanvasDom),
+                ) =
+                  _prepareInspectorMaterialSphereAndImgCanvas();
+
+                MainEditorAssetUploadTool.loadOneTexture()
+                |> Js.Promise.then_(uploadedTextureNodeId =>
+                     MainEditorLightMaterialForAssetTool.dragAssetTextureToMap(
+                       ~currentNodeId=addedMaterialNodeId,
+                       ~textureNodeId=uploadedTextureNodeId,
+                       ~material=newMaterialComponent,
+                       (),
+                     )
+                   )
+                |> Js.Promise.then_(_ =>
+                     dispatchFuncStub
+                     |> withOneArg(
+                          AppStore.UpdateAction(
+                            Update([|UpdateStore.Inspector|]),
+                          ),
+                        )
+                     |> getCallCount
+                     |> expect == 1
+                     |> resolve
+                   );
+              })
+            );
+
+            describe("clip the inspector-canvas snapshot", () => {
               testPromise(
-                "test dispatch Inspector before img-canvas drawImage", () => {
+                "img-canvas's drawImage calledWith inspector-canvas's clip area and img-canvas snapshot area",
+                () => {
+                  let (
+                    addedMaterialNodeId,
+                    newMaterialComponent,
+                    imgCanvasFakeBase64Str,
+                    (inspectorCanvasDom, imgCanvasDom),
+                  ) =
+                    _prepareInspectorMaterialSphereAndImgCanvas(
+                      ~inspectorCanvasWidth=371,
+                      ~inspectorCanvasHeight=300,
+                      (),
+                    );
+
+                  MainEditorAssetUploadTool.loadOneTexture()
+                  |> Js.Promise.then_(uploadedTextureNodeId =>
+                       MainEditorLightMaterialForAssetTool.dragAssetTextureToMap(
+                         ~currentNodeId=addedMaterialNodeId,
+                         ~textureNodeId=uploadedTextureNodeId,
+                         ~material=newMaterialComponent,
+                         (),
+                       )
+                     )
+                  |> Js.Promise.then_(_ => {
+                       let getContext = imgCanvasDom##getContext;
+                       let drawImageFuncStub = getContext()##drawImage;
+
+                       let editorState = StateEditorService.getState();
+
+                       let imgContext =
+                         editorState
+                         |> ImgContextImgCanvasEditorService.unsafeGetImgContext;
+
+                       imgContext##drawImage
+                       |> expect
+                       |> toCalledWith([|
+                            inspectorCanvasDom |> Obj.magic,
+                            85.5,
+                            50.,
+                            200.,
+                            200.,
+                            0.,
+                            0.,
+                            50.,
+                            50.,
+                          |])
+                       |> resolve;
+                     });
+                },
+              );
+
+              testPromise("clip should after dispatch Inspector", () => {
                 let dispatchFuncStub =
                   ReactTool.createDispatchFuncStub(sandbox);
 
@@ -247,212 +327,315 @@ let _ =
                      |> resolve;
                    });
               });
-
-              describe("test create img-canvas snapshot size", () =>
-                test(
-                  "test img-canvas drawImage callWith inspector-canvas's clip area and img-canvas snapshot area",
-                  () => {
-                    let (
-                      addedMaterialNodeId,
-                      newMaterialComponent,
-                      imgCanvasFakeBase64Str,
-                      (inspectorCanvasDom, imgCanvasDom),
-                    ) =
-                      _prepareInspectorMaterialSphereAndImgCanvas(
-                        ~inspectorCanvasWidth=371,
-                        ~inspectorCanvasHeight=300,
-                        (),
-                      );
-
-                    MainEditorLightMaterialForAssetTool.closeColorPicker(
-                      ~currentNodeId=addedMaterialNodeId,
-                      ~material=newMaterialComponent,
-                      ~color="#7df1e8",
-                      (),
-                    );
-                    let inspectorCanvasSnapshot =
-                      BuildCanvasTool.getInspectorCanvasFakeBase64Str();
-                    let editorState = StateEditorService.getState();
-
-                    let imgContext =
-                      editorState
-                      |> ImgContextImgCanvasEditorService.unsafeGetImgContext;
-
-                    CanvasType.convertContextToJsObj(imgContext)##drawImage
-                    |> expect
-                    |> toCalledWith([|
-                         inspectorCanvasDom |> Obj.magic,
-                         85.5,
-                         50.,
-                         200.,
-                         200.,
-                         0.,
-                         0.,
-                         50.,
-                         50.,
-                       |]);
-                  },
-                )
-              );
-
-              describe(
-                "test exec eventHandler should store the img canvas snapshot in imageDataMap ",
-                () => {
-                  describe(
-                    "test exec light material close color pick eventHandler",
-                    () => {
-                    test(
-                      "should store img canvas snapshot in imageDataMap's base64",
-                      () => {
-                      let (
-                        addedMaterialNodeId,
-                        newMaterialComponent,
-                        imgCanvasFakeBase64Str,
-                        (inspectorCanvasDom, imgCanvasDom),
-                      ) =
-                        _prepareInspectorMaterialSphereAndImgCanvas();
-
-                      MainEditorLightMaterialForAssetTool.closeColorPicker(
-                        ~currentNodeId=addedMaterialNodeId,
-                        ~material=newMaterialComponent,
-                        ~color="#7df1e8",
-                        (),
-                      );
-
-                      MainEditorLightMaterialForAssetTool.judgeImgCanvasSnapshotIsStoreInImageDataMap(
-                        addedMaterialNodeId,
-                        imgCanvasFakeBase64Str,
-                      );
-                    });
-                    test(
-                      "should set imageDataMap's uint8Array and blobObjectURL is None",
-                      () => {
-                      let (
-                        addedMaterialNodeId,
-                        newMaterialComponent,
-                        imgCanvasFakeBase64Str,
-                        (inspectorCanvasDom, imgCanvasDom),
-                      ) =
-                        _prepareInspectorMaterialSphereAndImgCanvas();
-
-                      MainEditorLightMaterialForAssetTool.closeColorPicker(
-                        ~currentNodeId=addedMaterialNodeId,
-                        ~material=newMaterialComponent,
-                        ~color="#7df1e8",
-                        (),
-                      );
-
-                      let editorState = StateEditorService.getState();
-                      let {imageDataIndex} =
-                        editorState
-                        |> OperateTreeAssetEditorService.unsafeFindNodeById(
-                             addedMaterialNodeId,
-                           )
-                        |> MaterialNodeAssetService.getNodeData;
-
-                      editorState
-                      |> ImageDataMapAssetEditorService.unsafeGetData(
-                           imageDataIndex,
-                         )
-                      |> (
-                        ({base64, uint8Array, blobObjectURL}) =>
-                          (
-                            base64 |> Js.Option.isSome,
-                            uint8Array |> Js.Option.isSome,
-                            blobObjectURL |> Js.Option.isSome,
-                          )
-                          |> expect == (true, false, false)
-                      );
-                    });
-                  });
-
-                  test(
-                    "test exec light material shininess blur eventHandler", () => {
-                    let (
-                      addedMaterialNodeId,
-                      newMaterialComponent,
-                      imgCanvasFakeBase64Str,
-                      (inspectorCanvasDom, imgCanvasDom),
-                    ) =
-                      _prepareInspectorMaterialSphereAndImgCanvas();
-
-                    MainEditorLightMaterialForAssetTool.blurShininess(
-                      ~currentNodeId=addedMaterialNodeId,
-                      ~material=newMaterialComponent,
-                      ~value=15.5,
-                      (),
-                    );
-
-                    MainEditorLightMaterialForAssetTool.judgeImgCanvasSnapshotIsStoreInImageDataMap(
-                      addedMaterialNodeId,
-                      imgCanvasFakeBase64Str,
-                    );
-                  });
-                  testPromise(
-                    "test exec light material dragToSetLightMaterialTexture eventHandler",
-                    () => {
-                    let (
-                      addedMaterialNodeId,
-                      newMaterialComponent,
-                      imgCanvasFakeBase64Str,
-                      (inspectorCanvasDom, imgCanvasDom),
-                    ) =
-                      _prepareInspectorMaterialSphereAndImgCanvas();
-
-                    MainEditorAssetUploadTool.loadOneTexture()
-                    |> Js.Promise.then_(uploadedTextureNodeId =>
-                         MainEditorLightMaterialForAssetTool.dragAssetTextureToMap(
-                           ~currentNodeId=addedMaterialNodeId,
-                           ~textureNodeId=uploadedTextureNodeId,
-                           ~material=newMaterialComponent,
-                           (),
-                         )
-                       )
-                    |> Js.Promise.then_(_ =>
-                         MainEditorLightMaterialForAssetTool.judgeImgCanvasSnapshotIsStoreInImageDataMap(
-                           addedMaterialNodeId,
-                           imgCanvasFakeBase64Str,
-                         )
-                         |> resolve
-                       );
-                  });
-                  testPromise(
-                    "test exec light material removeTexture eventHandler", () => {
-                    let (
-                      addedMaterialNodeId,
-                      newMaterialComponent,
-                      imgCanvasFakeBase64Str,
-                      (inspectorCanvasDom, imgCanvasDom),
-                    ) =
-                      _prepareInspectorMaterialSphereAndImgCanvas();
-
-                    MainEditorAssetUploadTool.loadOneTexture()
-                    |> Js.Promise.then_(uploadedTextureNodeId => {
-                         MainEditorLightMaterialForAssetTool.dragAssetTextureToMapNotCreateImgCanvasSnapshot(
-                           ~textureNodeId=uploadedTextureNodeId,
-                           ~material=newMaterialComponent,
-                           (),
-                         );
-
-                         MainEditorLightMaterialForAssetTool.removeTexture(
-                           ~currentNodeId=addedMaterialNodeId,
-                           ~material=newMaterialComponent,
-                           (),
-                         );
-                       })
-                    |> Js.Promise.then_(_ =>
-                         MainEditorLightMaterialForAssetTool.judgeImgCanvasSnapshotIsStoreInImageDataMap(
-                           addedMaterialNodeId,
-                           imgCanvasFakeBase64Str,
-                         )
-                         |> resolve
-                       );
-                  });
-                },
-              );
             });
           })
         );
+
+        describe("store snapshot in imageDataMap ", () =>
+          describe("drag texture", () =>
+            testPromise(
+              "test exec light material dragToSetLightMaterialTexture eventHandler",
+              () => {
+              let (
+                addedMaterialNodeId,
+                newMaterialComponent,
+                imgCanvasFakeBase64Str,
+                (inspectorCanvasDom, imgCanvasDom),
+              ) =
+                _prepareInspectorMaterialSphereAndImgCanvas();
+
+              MainEditorAssetUploadTool.loadOneTexture()
+              |> Js.Promise.then_(uploadedTextureNodeId =>
+                   MainEditorLightMaterialForAssetTool.dragAssetTextureToMap(
+                     ~currentNodeId=addedMaterialNodeId,
+                     ~textureNodeId=uploadedTextureNodeId,
+                     ~material=newMaterialComponent,
+                     (),
+                   )
+                 )
+              |> Js.Promise.then_(_ =>
+                   MainEditorLightMaterialForAssetTool.judgeImgCanvasSnapshotIsStoreInImageDataMap(
+                     addedMaterialNodeId,
+                     imgCanvasFakeBase64Str,
+                   )
+                   |> resolve
+                 );
+            })
+          )
+        );
+        /* describe("create img-canvas snapshot", () =>
+             describe(
+               "clip the inspector-canvas snapshot to create img-canvas snapshot",
+               () => {
+               beforeEach(() => {
+                 MainEditorAssetTool.buildFakeFileReader();
+                 MainEditorAssetTool.buildFakeImage();
+               });
+
+               describe("drag texture", () => {
+                 describe(
+                   "create img-canvas snapshot after materialInspector component didMount",
+                   () =>
+                   testPromise(
+                     "test dispatch Inspector before img-canvas drawImage", () => {
+                     let dispatchFuncStub =
+                       ReactTool.createDispatchFuncStub(sandbox);
+
+                     let (
+                       addedMaterialNodeId,
+                       newMaterialComponent,
+                       imgCanvasFakeBase64Str,
+                       (inspectorCanvasDom, imgCanvasDom),
+                     ) =
+                       _prepareInspectorMaterialSphereAndImgCanvas();
+
+                     MainEditorAssetUploadTool.loadOneTexture()
+                     |> Js.Promise.then_(uploadedTextureNodeId =>
+                          MainEditorLightMaterialForAssetTool.dragAssetTextureToMap(
+                            ~currentNodeId=addedMaterialNodeId,
+                            ~textureNodeId=uploadedTextureNodeId,
+                            ~material=newMaterialComponent,
+                            (),
+                          )
+                        )
+                     |> Js.Promise.then_(_ => {
+                          let getContext = imgCanvasDom##getContext;
+                          let drawImageFuncStub = getContext()##drawImage;
+
+                          dispatchFuncStub
+                          |> withOneArg(
+                               AppStore.UpdateAction(
+                                 Update([|UpdateStore.Inspector|]),
+                               ),
+                             )
+                          |> calledBefore(_, drawImageFuncStub)
+                          |> expect == true
+                          |> resolve;
+                        });
+                   })
+                 );
+
+                 describe(
+                   "test exec eventHandler should store the img canvas snapshot in imageDataMap ",
+                   () =>
+                   testPromise(
+                     "test exec light material dragToSetLightMaterialTexture eventHandler",
+                     () => {
+                     let (
+                       addedMaterialNodeId,
+                       newMaterialComponent,
+                       imgCanvasFakeBase64Str,
+                       (inspectorCanvasDom, imgCanvasDom),
+                     ) =
+                       _prepareInspectorMaterialSphereAndImgCanvas();
+
+                     MainEditorAssetUploadTool.loadOneTexture()
+                     |> Js.Promise.then_(uploadedTextureNodeId =>
+                          MainEditorLightMaterialForAssetTool.dragAssetTextureToMap(
+                            ~currentNodeId=addedMaterialNodeId,
+                            ~textureNodeId=uploadedTextureNodeId,
+                            ~material=newMaterialComponent,
+                            (),
+                          )
+                        )
+                     |> Js.Promise.then_(_ =>
+                          MainEditorLightMaterialForAssetTool.judgeImgCanvasSnapshotIsStoreInImageDataMap(
+                            addedMaterialNodeId,
+                            imgCanvasFakeBase64Str,
+                          )
+                          |> resolve
+                        );
+                   })
+                 );
+               });
+
+               describe("remove texture", () =>
+                 describe(
+                   "test exec eventHandler should store the img canvas snapshot in imageDataMap ",
+                   () =>
+                   testPromise(
+                     "test exec light material removeTexture eventHandler", () => {
+                     let (
+                       addedMaterialNodeId,
+                       newMaterialComponent,
+                       imgCanvasFakeBase64Str,
+                       (inspectorCanvasDom, imgCanvasDom),
+                     ) =
+                       _prepareInspectorMaterialSphereAndImgCanvas();
+
+                     MainEditorAssetUploadTool.loadOneTexture()
+                     |> Js.Promise.then_(uploadedTextureNodeId => {
+                          MainEditorLightMaterialForAssetTool.dragAssetTextureToMapNotCreateImgCanvasSnapshot(
+                            ~textureNodeId=uploadedTextureNodeId,
+                            ~material=newMaterialComponent,
+                            (),
+                          );
+
+                          MainEditorLightMaterialForAssetTool.removeTexture(
+                            ~currentNodeId=addedMaterialNodeId,
+                            ~material=newMaterialComponent,
+                            (),
+                          );
+                        })
+                     |> Js.Promise.then_(_ =>
+                          MainEditorLightMaterialForAssetTool.judgeImgCanvasSnapshotIsStoreInImageDataMap(
+                            addedMaterialNodeId,
+                            imgCanvasFakeBase64Str,
+                          )
+                          |> resolve
+                        );
+                   })
+                 )
+               );
+
+               describe("close color picker", () => {
+                 describe("test create img-canvas snapshot size", () =>
+                   test(
+                     "test img-canvas drawImage callWith inspector-canvas's clip area and img-canvas snapshot area",
+                     () => {
+                       let (
+                         addedMaterialNodeId,
+                         newMaterialComponent,
+                         imgCanvasFakeBase64Str,
+                         (inspectorCanvasDom, imgCanvasDom),
+                       ) =
+                         _prepareInspectorMaterialSphereAndImgCanvas(
+                           ~inspectorCanvasWidth=371,
+                           ~inspectorCanvasHeight=300,
+                           (),
+                         );
+
+                       MainEditorLightMaterialForAssetTool.closeColorPicker(
+                         ~currentNodeId=addedMaterialNodeId,
+                         ~material=newMaterialComponent,
+                         ~color="#7df1e8",
+                         (),
+                       );
+                       let inspectorCanvasSnapshot =
+                         BuildCanvasTool.getInspectorCanvasFakeBase64Str();
+                       let editorState = StateEditorService.getState();
+
+                       let imgContext =
+                         editorState
+                         |> ImgContextImgCanvasEditorService.unsafeGetImgContext;
+
+                       (imgContext)##drawImage
+                       |> expect
+                       |> toCalledWith([|
+                            inspectorCanvasDom |> Obj.magic,
+                            85.5,
+                            50.,
+                            200.,
+                            200.,
+                            0.,
+                            0.,
+                            50.,
+                            50.,
+                          |]);
+                     },
+                   )
+                 );
+
+                 describe(
+                   "test exec eventHandler should store the img canvas snapshot in imageDataMap ",
+                   () => {
+                     test(
+                       "should store img canvas snapshot in imageDataMap's base64",
+                       () => {
+                       let (
+                         addedMaterialNodeId,
+                         newMaterialComponent,
+                         imgCanvasFakeBase64Str,
+                         (inspectorCanvasDom, imgCanvasDom),
+                       ) =
+                         _prepareInspectorMaterialSphereAndImgCanvas();
+
+                       MainEditorLightMaterialForAssetTool.closeColorPicker(
+                         ~currentNodeId=addedMaterialNodeId,
+                         ~material=newMaterialComponent,
+                         ~color="#7df1e8",
+                         (),
+                       );
+
+                       MainEditorLightMaterialForAssetTool.judgeImgCanvasSnapshotIsStoreInImageDataMap(
+                         addedMaterialNodeId,
+                         imgCanvasFakeBase64Str,
+                       );
+                     });
+                     test(
+                       "should set imageDataMap's uint8Array and blobObjectURL is None",
+                       () => {
+                       let (
+                         addedMaterialNodeId,
+                         newMaterialComponent,
+                         imgCanvasFakeBase64Str,
+                         (inspectorCanvasDom, imgCanvasDom),
+                       ) =
+                         _prepareInspectorMaterialSphereAndImgCanvas();
+
+                       MainEditorLightMaterialForAssetTool.closeColorPicker(
+                         ~currentNodeId=addedMaterialNodeId,
+                         ~material=newMaterialComponent,
+                         ~color="#7df1e8",
+                         (),
+                       );
+
+                       let editorState = StateEditorService.getState();
+                       let {imageDataIndex} =
+                         editorState
+                         |> OperateTreeAssetEditorService.unsafeFindNodeById(
+                              addedMaterialNodeId,
+                            )
+                         |> MaterialNodeAssetService.getNodeData;
+
+                       editorState
+                       |> ImageDataMapAssetEditorService.unsafeGetData(
+                            imageDataIndex,
+                          )
+                       |> (
+                         ({base64, uint8Array, blobObjectURL}) =>
+                           (
+                             base64 |> Js.Option.isSome,
+                             uint8Array |> Js.Option.isSome,
+                             blobObjectURL |> Js.Option.isSome,
+                           )
+                           |> expect == (true, false, false)
+                       );
+                     });
+                   },
+                 );
+               });
+
+               describe("blur shiniess", () =>
+                 describe(
+                   "test exec eventHandler should store the img canvas snapshot in imageDataMap ",
+                   () =>
+                   test(
+                     "test exec light material shininess blur eventHandler", () => {
+                     let (
+                       addedMaterialNodeId,
+                       newMaterialComponent,
+                       imgCanvasFakeBase64Str,
+                       (inspectorCanvasDom, imgCanvasDom),
+                     ) =
+                       _prepareInspectorMaterialSphereAndImgCanvas();
+
+                     MainEditorLightMaterialForAssetTool.blurShininess(
+                       ~currentNodeId=addedMaterialNodeId,
+                       ~material=newMaterialComponent,
+                       ~value=15.5,
+                       (),
+                     );
+
+                     MainEditorLightMaterialForAssetTool.judgeImgCanvasSnapshotIsStoreInImageDataMap(
+                       addedMaterialNodeId,
+                       imgCanvasFakeBase64Str,
+                     );
+                   })
+                 )
+               );
+             })
+           ); */
       });
     });
   });

@@ -10,6 +10,45 @@ open NodeAssetType;
 
 open Js.Promise;
 
+/* TODO test render material sphere snapshot:
+describe(
+"render material sphere's snapshot",
+() => {
+
+describe(
+"render default snapshot",
+() => {
+
+  describe(
+  "test render after add material",
+  () => {
+  
+   }
+  );
+
+ }
+);
+
+describe(
+"render updated snapshot",
+() => {
+
+describe(
+"test render after drag texture",
+() => {
+
+ }
+);
+
+
+ }
+);
+
+ }
+);
+;
+*/
+
 let _ =
   describe("MainEditorAssetChildrenNode", () => {
     let sandbox = getSandboxDefaultVal();

@@ -7,7 +7,7 @@ module CustomEventHandler = {
   let setUndoValueToCopiedEngineState =
       ((uiState, dispatchFunc), (materialComponent, currentNodeId), value) => {
     StateEditorService.getState()
-    |> ImgCanvasUtils.clipTargetCanvasToCreateImgCanvasSnapshot(
+    |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMap(
          DomHelper.getElementById("inspector-canvas"),
          DomHelper.getElementById("img-canvas"),
          currentNodeId,

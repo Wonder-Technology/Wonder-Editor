@@ -11,7 +11,7 @@ module CustomEventHandler = {
         shininessValue,
       ) => {
     StateEditorService.getState()
-    |> ImgCanvasUtils.clipTargetCanvasToCreateImgCanvasSnapshot(
+    |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMap(
          DomHelper.getElementById("inspector-canvas"),
          DomHelper.getElementById("img-canvas"),
          currentNodeId,

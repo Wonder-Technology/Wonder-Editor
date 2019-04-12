@@ -99,7 +99,7 @@ let _ =
       materialComponent |> expect == newLightMaterial;
     });
 
-    test("create new imageDataIndex and new imageDataNode", () => {
+    test("create new imageDataIndex and new imageData", () => {
       let assetTreeData =
         MainEditorAssetTreeTool.BuildAssetTree.Material.buildOneMaterialAssetTree();
       let addedMaterialNodeId = MainEditorAssetIdTool.getNewAssetId();

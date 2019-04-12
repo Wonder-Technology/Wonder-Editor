@@ -78,6 +78,8 @@ let _ =
       test("should remove it's imageData from imageDataMap", () => {
         open NodeAssetType;
 
+        /* TODO test: use addMaterial */
+
         let assetTreeData =
           MainEditorAssetTreeTool.BuildAssetTree.Material.buildOneMaterialAssetTree();
         let materialNodeId =

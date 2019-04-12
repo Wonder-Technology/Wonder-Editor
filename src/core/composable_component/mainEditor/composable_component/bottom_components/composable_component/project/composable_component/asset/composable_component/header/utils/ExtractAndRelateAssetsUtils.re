@@ -485,6 +485,9 @@ module AssetTree = {
                    ~engineState,
                  );
 
+               /* TODO need refactor
+                  TODO need test */
+
                let (editorState, newNodeId) =
                  IdAssetEditorService.generateNodeId(editorState);
 
@@ -503,7 +506,6 @@ module AssetTree = {
                   )
                |> StateLogicService.refreshInspectorEngineState;
 
-               /* TODO  need test */
                let editorState =
                  editorState
                  |> MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
@@ -521,11 +523,11 @@ module AssetTree = {
                         ~base64=None,
                         ~uint8Array=None,
                         ~name=materialName,
-                        ~mimeType="image/png",
+                        ~mimeType=ImageUtils.getDefaultMimeType(),
                         (),
                       ),
                     )
-                 |> ImgCanvasUtils.clipTargetCanvasToCreateImgCanvasSnapshot(
+                 |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMap(
                       DomHelper.getElementById("inspector-canvas"),
                       DomHelper.getElementById("img-canvas"),
                       newNodeId,

@@ -128,6 +128,7 @@ let _ =
         })
       );
 
+      /* TODO test: fix as lightmaterial test */
       describe("test basic material create img snapshot for asset", () => {
         let _prepareInspectorMaterialSphereAndImgCanvas =
             (~inspectorCanvasWidth=300, ~inspectorCanvasHeight=300, ()) => {

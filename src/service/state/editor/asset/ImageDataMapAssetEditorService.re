@@ -30,6 +30,15 @@ let setData = (index, data, editorState) => {
     editorState.assetRecord |> ImageDataMapAssetService.setData(index, data),
 };
 
+/* TODO refactor(all):rename ImageNode to ImageData
+
+
+TODO refactor(all):rename imageNodeId to imageDataIndex
+
+
+
+*/
+
 let _getImageNodeIdByBase64 = (imageBase64, editorState) =>
   switch (
     editorState
@@ -42,6 +51,9 @@ let _getImageNodeIdByBase64 = (imageBase64, editorState) =>
   | None => None
   | Some((imageNodeId, _)) => Some(imageNodeId)
   };
+
+
+/* TODO refactor(all):rename addImageNodeByBase64 to addImageDataIfBase64NotExist */
 
 let addImageNodeByBase64 = (base64, fileName, mimeType, editorState) =>
   switch (_getImageNodeIdByBase64(base64, editorState)) {
@@ -82,6 +94,7 @@ let _getImageNodeIdByUint8Array = (imageUint8Array, editorState) =>
   | Some((imageNodeId, _)) => Some(imageNodeId)
   };
 
+/* TODO refactor(all):rename addImageNodeByUint8Array to addImageDataIfUint8ArrayNotExist */
 let addImageNodeByUint8Array = (uint8Array, name, mimeType, editorState) =>
   switch (_getImageNodeIdByUint8Array(uint8Array, editorState)) {
   | None =>

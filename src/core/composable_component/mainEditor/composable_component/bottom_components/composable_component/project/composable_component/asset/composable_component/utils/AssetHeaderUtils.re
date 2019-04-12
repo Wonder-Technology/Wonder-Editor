@@ -105,16 +105,12 @@ let _handleAssetWDBType =
             )
          |> DirectorEngineService.loopBody(0.);
 
-       WonderLog.Console.profile("generate image");
-
        let (editorState, engineState) =
          ExtractAndRelateAssetsUtils.AssetTree.addNodeToAssetTree(
            extractedMaterialAssetDataArr,
            extractedTextureAssetDataArr,
            (editorState, engineState),
          );
-
-       WonderLog.Console.profileEnd();
 
        (editorState, engineState) |> resolve;
      });

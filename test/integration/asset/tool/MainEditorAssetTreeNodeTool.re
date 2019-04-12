@@ -49,7 +49,7 @@ let insertMaterialNode =
          ~base64=None,
          ~uint8Array=None,
          ~name="material",
-         ~mimeType="image/png",
+         ~mimeType=ImageUtils.getDefaultMimeType(),
          (),
        ),
      ),
