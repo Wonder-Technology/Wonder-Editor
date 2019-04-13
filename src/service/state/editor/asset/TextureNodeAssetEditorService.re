@@ -31,9 +31,7 @@ let doesAnyTextureUseImage = (targetImageDataIndex, editorState) =>
       },
     (),
   )
-/* TODO fix: should > 1
-need add test case in mainEditorAssetHeaderRemoveNode_test->"test texture" */
-  |> List.length > 0;
+  |> List.length > 1;
 
 let getDataByTextureComponent = (targetTextureComponent, editorState) =>
   IterateTreeAssetService.findOne(

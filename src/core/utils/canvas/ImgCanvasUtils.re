@@ -38,7 +38,7 @@ let _drawImgCanvasSnapshot =
     snapshotHeight,
   );
 
-let _ClipTargetCanvasSnapshot = (targetCanvasDom, imgCanvasDom, editorState) => {
+let _clipTargetCanvasSnapshot = (targetCanvasDom, imgCanvasDom, editorState) => {
   editorState
   |> ImgContextImgCanvasEditorService.unsafeGetImgContext
   |> _drawImgCanvasSnapshot(
@@ -52,11 +52,9 @@ let _ClipTargetCanvasSnapshot = (targetCanvasDom, imgCanvasDom, editorState) => 
   CanvasType.toDataURL(imgCanvasDom);
 };
 
-let _setSnapShotToImageDataMap = (imgCanvasBase64, currentNodeId, editorState) => {
-  let {imageDataIndex} =
-    editorState
-    |> OperateTreeAssetEditorService.unsafeFindNodeById(currentNodeId)
-    |> MaterialNodeAssetService.getNodeData;
+let _setSnapShotToImageDataMapByNode =
+    (imgCanvasBase64, currentNode, editorState) => {
+  let {imageDataIndex} = currentNode |> MaterialNodeAssetService.getNodeData;
 
   editorState
   |> ImageDataMapAssetEditorService.setData(
@@ -74,8 +72,23 @@ let _setSnapShotToImageDataMap = (imgCanvasBase64, currentNodeId, editorState) =
      );
 };
 
-let clipTargetCanvasSnapshotAndSetToImageDataMap =
+let _setSnapShotToImageDataMapByNodeId =
+    (imgCanvasBase64, currentNodeId, editorState) =>
+  _setSnapShotToImageDataMapByNode(
+    imgCanvasBase64,
+    editorState
+    |> OperateTreeAssetEditorService.unsafeFindNodeById(currentNodeId),
+    editorState,
+  );
+
+let clipTargetCanvasSnapshotAndSetToImageDataMapByNodeId =
     (targetCanvasDom, imgCanvasDom, currentNodeId, editorState) =>
   editorState
-  |> _ClipTargetCanvasSnapshot(targetCanvasDom, imgCanvasDom)
-  |> _setSnapShotToImageDataMap(_, currentNodeId, editorState);
+  |> _clipTargetCanvasSnapshot(targetCanvasDom, imgCanvasDom)
+  |> _setSnapShotToImageDataMapByNodeId(_, currentNodeId, editorState);
+
+let clipTargetCanvasSnapshotAndSetToImageDataMapByNode =
+    (targetCanvasDom, imgCanvasDom, currentNode, editorState) =>
+  editorState
+  |> _clipTargetCanvasSnapshot(targetCanvasDom, imgCanvasDom)
+  |> _setSnapShotToImageDataMapByNode(_, currentNode, editorState);

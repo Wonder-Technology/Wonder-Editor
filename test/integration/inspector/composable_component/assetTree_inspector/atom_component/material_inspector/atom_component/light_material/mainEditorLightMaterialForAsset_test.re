@@ -24,31 +24,6 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test change inspectorEngine value", () => {
-      let _prepareMaterialSphere = inspectorEngineState => {
-        let (addedMaterialNodeId, newMaterialComponent) =
-          MaterialInspectorCanvasTool.createNewMaterial();
-
-        let materialSphereLightMaterial =
-          inspectorEngineState
-          |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
-               MaterialDataAssetType.LightMaterial,
-               newMaterialComponent,
-               (
-                 StateEditorService.getState(),
-                 StateEngineService.unsafeGetState(),
-               ),
-             )
-          |> InspectorEngineTool.getMaterialSphereLightMaterial(
-               StateEditorService.getState(),
-             );
-
-        (
-          materialSphereLightMaterial,
-          newMaterialComponent,
-          addedMaterialNodeId,
-        );
-      };
-
       beforeEach(() => {
         MainEditorSceneTool.initInspectorEngineState(
           ~sandbox,
@@ -99,7 +74,9 @@ let _ =
               newMaterialComponent,
               addedMaterialNodeId,
             ) =
-              _prepareMaterialSphere(inspectorEngineState);
+              MainEditorLightMaterialForAssetTool.prepareMaterialSphere(
+                inspectorEngineState,
+              );
             let newColor = {
               "hex": "#7df1e8",
               "rgb": {
@@ -131,7 +108,9 @@ let _ =
               newMaterialComponent,
               addedMaterialNodeId,
             ) =
-              _prepareMaterialSphere(inspectorEngineState);
+              MainEditorLightMaterialForAssetTool.prepareMaterialSphere(
+                inspectorEngineState,
+              );
 
             MainEditorLightMaterialForAssetTool.changeShininess(
               ~material=newMaterialComponent,
@@ -149,56 +128,13 @@ let _ =
       );
 
       describe("test material sphere's snapshot", () => {
-        let _prepareInspectorMaterialSphereAndImgCanvas =
-            (~inspectorCanvasWidth=300, ~inspectorCanvasHeight=300, ()) => {
-          let getElementStub =
-            SinonTool.createMethodStub(
-              sandbox^,
-              BuildCanvasTool.documentToJsObj(BuildCanvasTool.document),
-              "getElementById",
-            );
-          let (
-            _mainParentDom,
-            _mainCanvasDom,
-            _inspectorParentDom,
-            inspectorCanvasDom,
-          ) =
-            CanvasTool.stubMainCanvasAndInspectorCanvasDom(
-              ~sandbox,
-              ~getElementStub,
-              ~canvasWidth=inspectorCanvasWidth,
-              ~canvasHeight=inspectorCanvasHeight,
-              (),
-            );
-          let imgCanvasDom =
-            CanvasTool.stubImgCanvasDom(~sandbox, ~getElementStub, ());
-          let inspectorEngineState =
-            StateInspectorEngineService.unsafeGetState();
-          let imgCanvasFakeBase64Str =
-            BuildCanvasTool.getImgCanvasFakeBase64Str();
-
-          inspectorCanvasDom##toDataURL
-          |> returns(BuildCanvasTool.getInspectorCanvasFakeBase64Str());
-          imgCanvasDom##toDataURL |> returns(imgCanvasFakeBase64Str);
-
-          let (
-            materialSphereLightMaterial,
-            newMaterialComponent,
-            addedMaterialNodeId,
-          ) =
-            _prepareMaterialSphere(inspectorEngineState);
-          (
-            addedMaterialNodeId,
-            newMaterialComponent,
-            imgCanvasFakeBase64Str,
-            (inspectorCanvasDom, imgCanvasDom),
-          );
-        };
-
-        beforeEach(() => MainEditorAssetTool.buildFakeImage());
+        beforeEach(() => {
+          MainEditorAssetTool.buildFakeImage();
+          MainEditorAssetTool.buildFakeFileReader();
+        });
         afterEach(() => CanvasTool.restoreMainCanvasAndInspectorCanvasDom());
 
-        describe("create material sphere's snapshot", () =>
+        describe("create material sphere's snapshot", () => {
           describe("drag texture", () => {
             describe(
               "redraw inspector canvas in MaterialInspector->didMount", () =>
@@ -212,7 +148,10 @@ let _ =
                   imgCanvasFakeBase64Str,
                   (inspectorCanvasDom, imgCanvasDom),
                 ) =
-                  _prepareInspectorMaterialSphereAndImgCanvas();
+                  MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                    ~sandbox,
+                    (),
+                  );
 
                 MainEditorAssetUploadTool.loadOneTexture()
                 |> Js.Promise.then_(uploadedTextureNodeId =>
@@ -247,7 +186,8 @@ let _ =
                     imgCanvasFakeBase64Str,
                     (inspectorCanvasDom, imgCanvasDom),
                   ) =
-                    _prepareInspectorMaterialSphereAndImgCanvas(
+                    MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                      ~sandbox,
                       ~inspectorCanvasWidth=371,
                       ~inspectorCanvasHeight=300,
                       (),
@@ -300,7 +240,10 @@ let _ =
                   imgCanvasFakeBase64Str,
                   (inspectorCanvasDom, imgCanvasDom),
                 ) =
-                  _prepareInspectorMaterialSphereAndImgCanvas();
+                  MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                    ~sandbox,
+                    (),
+                  );
 
                 MainEditorAssetUploadTool.loadOneTexture()
                 |> Js.Promise.then_(uploadedTextureNodeId =>
@@ -327,8 +270,58 @@ let _ =
                    });
               });
             });
-          })
-        );
+          });
+
+          describe("close color picker", () =>
+            describe("clip the inspector-canvas snapshot", () =>
+              test(
+                "img-canvas's drawImage calledWith inspector-canvas's clip area and img-canvas snapshot area",
+                () => {
+                  let (
+                    addedMaterialNodeId,
+                    newMaterialComponent,
+                    imgCanvasFakeBase64Str,
+                    (inspectorCanvasDom, imgCanvasDom),
+                  ) =
+                    MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                      ~sandbox,
+                      ~inspectorCanvasWidth=371,
+                      ~inspectorCanvasHeight=300,
+                      (),
+                    );
+
+                  MainEditorLightMaterialForAssetTool.closeColorPicker(
+                    ~currentNodeId=addedMaterialNodeId,
+                    ~material=newMaterialComponent,
+                    ~color="#7df1e8",
+                    (),
+                  );
+
+                  let getContext = imgCanvasDom##getContext;
+                  let drawImageFuncStub = getContext()##drawImage;
+                  let editorState = StateEditorService.getState();
+                  let imgContext =
+                    editorState
+                    |> ImgContextImgCanvasEditorService.unsafeGetImgContext;
+
+                  CanvasType.convertContextToJsObj(imgContext)##drawImage
+                  |> expect
+                  |> toCalledWith([|
+                       inspectorCanvasDom |> Obj.magic,
+                       85.5,
+                       50.,
+                       200.,
+                       200.,
+                       0.,
+                       0.,
+                       50.,
+                       50.,
+                     |]);
+                },
+              )
+            )
+          );
+        });
 
         describe("store snapshot in imageDataMap", () => {
           describe("drag texture", () =>
@@ -343,7 +336,10 @@ let _ =
                   imgCanvasFakeBase64Str,
                   (inspectorCanvasDom, imgCanvasDom),
                 ) =
-                  _prepareInspectorMaterialSphereAndImgCanvas();
+                  MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                    ~sandbox,
+                    (),
+                  );
 
                 MainEditorAssetUploadTool.loadOneTexture()
                 |> Js.Promise.then_(uploadedTextureNodeId =>
@@ -371,7 +367,10 @@ let _ =
                   imgCanvasFakeBase64Str,
                   (inspectorCanvasDom, imgCanvasDom),
                 ) =
-                  _prepareInspectorMaterialSphereAndImgCanvas();
+                  MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                    ~sandbox,
+                    (),
+                  );
 
                 MainEditorLightMaterialForAssetTool.closeColorPicker(
                   ~currentNodeId=addedMaterialNodeId,
@@ -414,7 +413,10 @@ let _ =
                 imgCanvasFakeBase64Str,
                 (inspectorCanvasDom, imgCanvasDom),
               ) =
-                _prepareInspectorMaterialSphereAndImgCanvas();
+                MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                  ~sandbox,
+                  (),
+                );
 
               MainEditorAssetUploadTool.loadOneTexture()
               |> Js.Promise.then_(uploadedTextureNodeId => {
@@ -449,7 +451,10 @@ let _ =
                 imgCanvasFakeBase64Str,
                 (inspectorCanvasDom, imgCanvasDom),
               ) =
-                _prepareInspectorMaterialSphereAndImgCanvas();
+                MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                  ~sandbox,
+                  (),
+                );
 
               MainEditorLightMaterialForAssetTool.closeColorPicker(
                 ~currentNodeId=addedMaterialNodeId,
@@ -473,7 +478,10 @@ let _ =
                 imgCanvasFakeBase64Str,
                 (inspectorCanvasDom, imgCanvasDom),
               ) =
-                _prepareInspectorMaterialSphereAndImgCanvas();
+                MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                  ~sandbox,
+                  (),
+                );
 
               MainEditorLightMaterialForAssetTool.blurShininess(
                 ~currentNodeId=addedMaterialNodeId,

@@ -128,7 +128,7 @@ let _ =
         })
       );
 
-      describe("create material sphere's snapshot", () => {
+      describe("test material sphere's snapshot", () => {
         let _prepareInspectorMaterialSphereAndImgCanvas =
             (~inspectorCanvasWidth=300, ~inspectorCanvasHeight=300, ()) => {
           let getElementStub =
@@ -167,19 +167,70 @@ let _ =
             addedMaterialNodeId,
           ) =
             _prepareMaterialSphere(inspectorEngineState);
+
           (
             addedMaterialNodeId,
             newMaterialComponent,
             imgCanvasFakeBase64Str,
-            inspectorCanvasDom,
+            (inspectorCanvasDom, imgCanvasDom),
           );
         };
 
         beforeEach(() => MainEditorAssetTool.buildFakeImage());
         afterEach(() => CanvasTool.restoreMainCanvasAndInspectorCanvasDom());
 
-        describe(
-          "create material sphere's snapshot and store in imageDataMap", () =>
+        describe("create material sphere's snapshot", () =>
+          describe("close color picker", () =>
+            describe("clip the inspector-canvas snapshot", () =>
+              test(
+                "img-canvas's drawImage calledWith inspector-canvas's clip area and img-canvas snapshot area",
+                () => {
+                  let (
+                    addedMaterialNodeId,
+                    newMaterialComponent,
+                    imgCanvasFakeBase64Str,
+                    (inspectorCanvasDom, imgCanvasDom),
+                  ) =
+                    _prepareInspectorMaterialSphereAndImgCanvas(
+                      ~inspectorCanvasWidth=371,
+                      ~inspectorCanvasHeight=300,
+                      (),
+                    );
+
+                  MainEditorLightMaterialForAssetTool.closeColorPicker(
+                    ~currentNodeId=addedMaterialNodeId,
+                    ~material=newMaterialComponent,
+                    ~color="#7df1e8",
+                    (),
+                  );
+
+                  let getContext = imgCanvasDom##getContext;
+                  let drawImageFuncStub = getContext()##drawImage;
+                  let editorState = StateEditorService.getState();
+                  let imgContext =
+                    editorState
+                    |> ImgContextImgCanvasEditorService.unsafeGetImgContext;
+
+                  CanvasType.convertContextToJsObj(imgContext)##drawImage
+                  |> expect
+                  |> toCalledWith([|
+                       inspectorCanvasDom |> Obj.magic,
+                       85.5,
+                       50.,
+                       200.,
+                       200.,
+                       0.,
+                       0.,
+                       50.,
+                       50.,
+                     |]);
+                },
+              )
+            )
+          )
+        );
+
+        describe("store snapshot in imageDataMap", () =>
           describe("close color picker", () =>
             test("test exec basic material close color pick eventHandler", () => {
               let (

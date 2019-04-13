@@ -75,7 +75,7 @@ let _ =
         BuildComponentTool.buildAssetChildrenNode()
         |> ReactTestTool.createSnapshotAndMatch;
       });
-      test("should remove it's imageData from imageDataMap", () => {
+      test("should remove its imageData from imageDataMap", () => {
         open NodeAssetType;
 
         let materialNodeId = MainEditorAssetIdTool.getNewAssetId();

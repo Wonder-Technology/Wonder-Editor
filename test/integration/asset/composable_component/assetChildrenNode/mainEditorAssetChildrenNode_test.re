@@ -10,51 +10,13 @@ open NodeAssetType;
 
 open Js.Promise;
 
-/* TODO test render material sphere snapshot:
-   describe(
-   "render material sphere's snapshot",
-   () => {
-
-   describe(
-   "render default snapshot",
-   () => {
-
-     describe(
-     "test render after add material",
-     () => {
-
-      }
-     );
-
-    }
-   );
-
-   describe(
-   "render updated snapshot",
-   () => {
-
-   describe(
-   "test render after drag texture",
-   () => {
-
-    }
-   );
-
-
-    }
-   );
-
-    }
-   );
-   ;
-   */
-
 let _ =
   describe("MainEditorAssetChildrenNode", () => {
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
+
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         MainEditorAssetTool.initAssetTree,
@@ -227,7 +189,7 @@ let _ =
           },
         ); */
 
-    describe("test asset tree node->isShowChildren", () =>
+    describe("test asset tree node->isShowChildren", () => {
       describe("test double click folder", () =>
         test("folder->parent folder->isShowChildren should set to true", () => {
           let assetTreeData =
@@ -271,8 +233,98 @@ let _ =
           )
           |> expect == true;
         })
-      )
-    );
+      );
+
+      describe("render material sphere's snapshot", () => {
+        describe("render default snapshot", () =>
+          describe("test render after add material", () =>
+            test("test snapshot", () => {
+              MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+              |> ignore;
+
+              MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+              BuildComponentTool.buildAssetChildrenNode()
+              |> ReactTestTool.createSnapshotAndMatch;
+            })
+          )
+        );
+
+        describe("render updated snapshot", () => {
+          beforeEach(() => {
+            MainEditorSceneTool.initInspectorEngineState(
+              ~sandbox,
+              ~isInitJob=false,
+              ~noWorkerJobRecord=
+                NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                  ~initPipelines=
+                    {|
+             [
+              {
+                "name": "default",
+                "jobs": [
+                    {"name": "init_inspector_engine" }
+                ]
+              }
+            ]
+             |},
+                  ~initJobs=
+                    {|
+             [
+                {"name": "init_inspector_engine" }
+             ]
+             |},
+                  (),
+                ),
+              (),
+            );
+
+            StateInspectorEngineService.unsafeGetState()
+            |> MainUtils._handleInspectorEngineState
+            |> StateInspectorEngineService.setState
+            |> ignore;
+
+            MainEditorSceneTool.createDefaultScene(
+              sandbox,
+              MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
+            );
+
+            MainEditorAssetTool.buildFakeImage();
+            MainEditorAssetTool.buildFakeFileReader();
+          });
+
+          describe("test render after drag texture", () =>
+            testPromise("test snapshot", () => {
+              let (
+                addedMaterialNodeId,
+                newMaterialComponent,
+                imgCanvasFakeBase64Str,
+                (inspectorCanvasDom, imgCanvasDom),
+              ) =
+                MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                  ~sandbox,
+                  (),
+                );
+
+              MainEditorAssetUploadTool.loadOneTexture()
+              |> Js.Promise.then_(uploadedTextureNodeId =>
+                   MainEditorLightMaterialForAssetTool.dragAssetTextureToMap(
+                     ~currentNodeId=addedMaterialNodeId,
+                     ~textureNodeId=uploadedTextureNodeId,
+                     ~material=newMaterialComponent,
+                     (),
+                   )
+                 )
+              |> Js.Promise.then_(_ =>
+                   BuildComponentTool.buildAssetChildrenNode()
+                   |> ReactTestTool.createSnapshotAndMatch
+                   |> resolve
+                 );
+            })
+          );
+        });
+      });
+    });
 
     describe("test show order", () => {
       let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));

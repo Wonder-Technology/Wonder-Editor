@@ -78,7 +78,8 @@ let _getHandleFuncByHotKeyAction = hotKeyAction => {
               (uiState, dispatch),
               (),
               (),
-            ) :
+            )
+            |> ignore :
             ()
     )
   | Focus => (

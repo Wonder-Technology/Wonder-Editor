@@ -126,7 +126,7 @@ exports[`MainEditorAssetHeader->remove node test remove tree node else remove-bu
 `;
 
 exports[`MainEditorAssetHeader->remove node test remove tree node else test select file test texture select texture;
-            click remove-button;
+                click remove-button;
              should remove it from assetTreeRoot 1`] = `
 <article
   className="wonder-asset-component"

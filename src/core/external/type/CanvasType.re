@@ -1,6 +1,7 @@
 open ImageType;
 
 type context;
+/* TODO move to canvasTool */
 
 external convertDomEleToCanvas: Dom.element => Js.t({..}) = "%identity";
 

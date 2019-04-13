@@ -1,5 +1,99 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`MainEditorAssetChildrenNode test asset tree node->isShowChildren render material sphere's snapshot render default snapshot test render after add material test snapshot 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/mat.jpg"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Material
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetChildrenNode test asset tree node->isShowChildren render material sphere's snapshot render updated snapshot test render after drag texture test snapshot 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/mat.jpg"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        material1
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="data:image/png;base64 for img-canvas"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Material
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="newImgBase64"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        loadImg
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
 exports[`MainEditorAssetChildrenNode test show order 
         order should be:
         1)for different type_:folder,wdb,material,texture;

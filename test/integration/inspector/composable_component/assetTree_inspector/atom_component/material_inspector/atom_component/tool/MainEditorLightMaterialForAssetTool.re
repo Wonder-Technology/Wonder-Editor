@@ -8,6 +8,64 @@ open Expect.Operators;
 
 open Expect;
 
+let prepareMaterialSphere = inspectorEngineState => {
+  let (addedMaterialNodeId, newMaterialComponent) =
+    MaterialInspectorCanvasTool.createNewMaterial();
+
+  let materialSphereLightMaterial =
+    inspectorEngineState
+    |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
+         MaterialDataAssetType.LightMaterial,
+         newMaterialComponent,
+         (StateEditorService.getState(), StateEngineService.unsafeGetState()),
+       )
+    |> InspectorEngineTool.getMaterialSphereLightMaterial(
+         StateEditorService.getState(),
+       );
+
+  (materialSphereLightMaterial, newMaterialComponent, addedMaterialNodeId);
+};
+
+let prepareInspectorMaterialSphereAndImgCanvas =
+    (~sandbox, ~inspectorCanvasWidth=300, ~inspectorCanvasHeight=300, ()) => {
+  let getElementStub =
+    SinonTool.createMethodStub(
+      sandbox^,
+      BuildCanvasTool.documentToJsObj(BuildCanvasTool.document),
+      "getElementById",
+    );
+  let (
+    _mainParentDom,
+    _mainCanvasDom,
+    _inspectorParentDom,
+    inspectorCanvasDom,
+  ) =
+    CanvasTool.stubMainCanvasAndInspectorCanvasDom(
+      ~sandbox,
+      ~getElementStub,
+      ~canvasWidth=inspectorCanvasWidth,
+      ~canvasHeight=inspectorCanvasHeight,
+      (),
+    );
+  let imgCanvasDom =
+    CanvasTool.stubImgCanvasDom(~sandbox, ~getElementStub, ());
+  let inspectorEngineState = StateInspectorEngineService.unsafeGetState();
+  let imgCanvasFakeBase64Str = BuildCanvasTool.getImgCanvasFakeBase64Str();
+
+  inspectorCanvasDom##toDataURL
+  |> returns(BuildCanvasTool.getInspectorCanvasFakeBase64Str());
+  imgCanvasDom##toDataURL |> returns(imgCanvasFakeBase64Str);
+
+  let (materialSphereLightMaterial, newMaterialComponent, addedMaterialNodeId) =
+    prepareMaterialSphere(inspectorEngineState);
+  (
+    addedMaterialNodeId,
+    newMaterialComponent,
+    imgCanvasFakeBase64Str,
+    (inspectorCanvasDom, imgCanvasDom),
+  );
+};
+
 let changeShininess =
     (~material=GameObjectTool.getCurrentSceneTreeNodeMaterial(), ~value, ()) =>
   MainEditorLightMaterialForAsset.Method.changeShininess(material, value);

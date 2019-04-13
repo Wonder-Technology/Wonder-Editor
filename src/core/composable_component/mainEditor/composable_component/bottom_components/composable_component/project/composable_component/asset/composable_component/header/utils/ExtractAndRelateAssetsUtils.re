@@ -526,7 +526,7 @@ module AssetTree = {
                         (),
                       ),
                     )
-                 |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMap(
+                 |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByNodeId(
                       DomHelper.getElementById("inspector-canvas"),
                       DomHelper.getElementById("img-canvas"),
                       newNodeId,
