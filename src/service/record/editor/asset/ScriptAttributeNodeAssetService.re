@@ -28,6 +28,9 @@ let getNodeName = node => getNodeData(node).name;
 
 let getNodeNameByData = (nodeData: scriptAttributeNodeData) => nodeData.name;
 
+let getAttributeByData = (nodeData: scriptAttributeNodeData) =>
+  nodeData.attribute;
+
 let isScriptAttributeNode = node =>
   switch (node) {
   | ScriptAttributeNode(_, _) => true

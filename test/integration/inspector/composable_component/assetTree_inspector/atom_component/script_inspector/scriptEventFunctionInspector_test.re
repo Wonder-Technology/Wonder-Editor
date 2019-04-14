@@ -16,6 +16,22 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
+    describe("test snapshot", () =>
+      test("test", () => {
+        let assetTreeData =
+          MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+
+        let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
+        MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
+
+        BuildComponentTool.buildScriptEventFunctionInspectorComponent(
+          ~currentNodeId=addedNodeId,
+          (),
+        )
+        |> ReactTestTool.createSnapshotAndMatch;
+      })
+    );
+
     describe("set event function data", () => {
       test("default data is empty closure function which returm {}", () => {
         let assetTreeData =
@@ -91,7 +107,7 @@ let _ =
         })
       );
 
-      describe("test update script attribute in all script components", () => {
+      describe("test update event function data in all script components", () => {
         beforeEach(() =>
           ScriptEventFunctionInspectorTool.TestUpdateScriptEventFunctionInAllScriptComponents.createDefaultSceneAndAddScriptComponent(
             sandbox,

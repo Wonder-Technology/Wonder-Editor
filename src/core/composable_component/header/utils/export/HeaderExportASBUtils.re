@@ -92,7 +92,15 @@ let _computeByteLength = (bufferTotalAlignedByteLength, jsonUint8Array) => {
 let generateASB = (imageUint8ArrayMap, (editorState, engineState)) => {
   let (
     engineState,
-    (imageArr, textureArr, basicMaterialArr, lightMaterialArr, wdbArr),
+    (
+      imageArr,
+      textureArr,
+      basicMaterialArr,
+      lightMaterialArr,
+      wdbArr,
+      scriptEventFunctionArr,
+      scriptAttributeArr,
+    ),
     (imageBufferViewArr, wdbBufferViewArr),
     (imageUint8ArrayArr, wdbArrayBufferArr),
     bufferTotalAlignedByteLength,
@@ -112,6 +120,8 @@ let generateASB = (imageUint8ArrayMap, (editorState, engineState)) => {
         basicMaterialArr,
         lightMaterialArr,
         wdbArr,
+        scriptEventFunctionArr,
+        scriptAttributeArr,
       ),
     );
 

@@ -18,3 +18,11 @@ let getScriptAttributeFieldType =
 
 let buildFloatValue = value =>
   value |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue;
+
+let getScriptAttributeFieldCount = (script, attributeName, engineState) =>
+  ScriptToolEngine.getScriptAttributeEntries(
+    script,
+    attributeName,
+    engineState,
+  )
+  |> Js.Array.length;

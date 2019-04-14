@@ -14,7 +14,7 @@ type texture = {
   wrapT: int,
   format: int,
   type_: int,
-  flipY: bool
+  flipY: bool,
 };
 
 type wdb = {
@@ -58,6 +58,18 @@ type lightMaterial = {
   shininess: float,
 };
 
+type scriptEventFunction = {
+  name: string,
+  path: string,
+  eventFunctionDataStr: string,
+};
+
+type scriptAttribute = {
+  name: string,
+  path: string,
+  attributeStr: string,
+};
+
 type copyright = {
   version: string,
   author: string,
@@ -70,6 +82,7 @@ type assets = {
   basicMaterials: array(basicMaterial),
   lightMaterials: array(lightMaterial),
   wdbs: array(wdb),
-  /* buffer, */
+  scriptEventFunctions: array(scriptEventFunction),
+  scriptAttributes: array(scriptAttribute),
   bufferViews: array(bufferView),
 };

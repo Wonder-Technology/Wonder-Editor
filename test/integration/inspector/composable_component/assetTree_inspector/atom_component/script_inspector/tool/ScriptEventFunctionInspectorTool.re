@@ -28,10 +28,8 @@ let getEventFunctionName = (nodeId, editorState) => {
 };
 
 let getEventFunctionDataJsObjStr = (nodeId, editorState) =>
-  ScriptEventFunctionInspector.Method.convertEventFunctionDataToJsObjStr(
-    getEventFunctionData(nodeId, editorState),
-  )
-  |> StringTool.removeNewLinesAndSpaces;
+  getEventFunctionData(nodeId, editorState)
+  |> ScriptEventFunctionTool.getEventFunctionDataJsObjStr;
 
 let buildEventFunctionDataJsObjStr =
     (~initFunc=None, ~updateFunc=None, ~disposeFunc=None, ()) =>

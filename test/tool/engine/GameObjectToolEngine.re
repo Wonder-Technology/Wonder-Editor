@@ -48,3 +48,15 @@ let disposeAllGameObjects = (gameObject, engineState) =>
      );
 
 let isAlive = Wonderjs.AliveGameObjectMainService.isAlive;
+
+let findGameObjectByName = (name, parentGameObject, engineState) =>
+  engineState
+  |> HierarchyGameObjectEngineService.getAllGameObjects(parentGameObject)
+  |> Js.Array.filter(gameObject =>
+       switch (
+         GameObjectEngineService.getGameObjectName(gameObject, engineState)
+       ) {
+       | None => false
+       | Some(gameObjectName) => gameObjectName === name
+       }
+     );

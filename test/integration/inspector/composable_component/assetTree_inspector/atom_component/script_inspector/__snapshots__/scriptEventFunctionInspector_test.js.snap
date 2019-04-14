@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`script event function inspector test snapshot test 1`] = `
+<article
+  className="wonder-scriptEventFunction-inspector"
+>
+  <h1>
+    ScriptEventFunction
+  </h1>
+  <hr />
+  <article
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+      title="script eventFunction's name"
+    >
+      <span
+        className="component-label"
+      >
+        Name
+      </span>
+    </div>
+    <div
+      className="item-content"
+    >
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="New Script EventFunction"
+      />
+    </div>
+  </article>
+  <div
+    className="scriptEventFunction-data"
+  >
+    <article
+      className="wonder-file-input"
+    >
+      <button
+        onClick={[Function]}
+      >
+        Set EventFunction Data
+      </button>
+    </article>
+  </div>
+</article>
+`;

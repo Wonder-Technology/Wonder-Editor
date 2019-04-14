@@ -206,6 +206,12 @@ let _disposeTreeEngineData = (editorState, engineState) =>
     ~materialNodeFunc=
       (engineState, _, nodeData) =>
         _disposeMaterialNodeEngineData(nodeData, (editorState, engineState)),
+    ~scriptEventFunctionNodeFunc=
+      (engineState, _, nodeData) =>
+        _removeScriptEventFunctionFromScriptComponents(nodeData, engineState),
+    ~scriptAttributeNodeFunc=
+      (engineState, _, nodeData) =>
+        _removeScriptAttributeFromScriptComponents(nodeData, engineState),
     ~wdbNodeFunc=
       (engineState, _, nodeData) =>
         _disposeWDBNodeEngineData(nodeData, (editorState, engineState)),
