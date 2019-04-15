@@ -1,5 +1,5 @@
 let buildBasicMaterialComponent =
-    (reduxTuple, materialComponent, changeColorFunc) =>
+    (materialComponent, (changeColorFunc, closeColorPickFunc)) =>
   <article className="wonder-basic-material">
     <PickColorComponent
       label="Color"
@@ -8,12 +8,7 @@ let buildBasicMaterialComponent =
         InspectorMaterialUtils.getBasicMaterialColor(materialComponent)
       }
       changeColorFunc={changeColorFunc(materialComponent)}
-      closeColorPickFunc={
-        InspectorMaterialUtils.closeBasicMaterialColorPick(
-          reduxTuple,
-          materialComponent,
-        )
-      }
+      closeColorPickFunc
     />
   </article>;
 
@@ -21,7 +16,14 @@ let buildLightMaterialComponent =
     (
       (uiState, dispatchFunc),
       materialComponent,
-      (changeColorFunc, changeShininessFunc),
+      (
+        changeColorFunc,
+        changeShininessFunc,
+        closeColorPickFunc,
+        blurShininessFunc,
+        dragToSetLightMaterialTextureFunc,
+        removeTextureFunc,
+      ),
     ) => {
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
@@ -39,12 +41,7 @@ let buildLightMaterialComponent =
         InspectorMaterialUtils.getLightMaterialColor(materialComponent)
       }
       changeColorFunc={changeColorFunc(materialComponent)}
-      closeColorPickFunc={
-        InspectorMaterialUtils.closeLightMaterialColorPick(
-          (uiState, dispatchFunc),
-          materialComponent,
-        )
-      }
+      closeColorPickFunc
     />
     <MainEditorMaterialMap
       uiState
@@ -58,8 +55,8 @@ let buildLightMaterialComponent =
         )
       }
       getMapFunc=LightMaterialEngineService.getLightMaterialDiffuseMap
-      removeTextureFunc=InspectorMaterialUtils.removeTexture
-      onDropFunc=InspectorMaterialUtils.dragToSetLightMaterialTexture
+      removeTextureFunc
+      onDropFunc=dragToSetLightMaterialTextureFunc
       isShowTextureGroup=false
     />
     <MainEditorFloatInputBaseComponent
@@ -77,18 +74,8 @@ let buildLightMaterialComponent =
         |> StateLogicService.getEngineStateToGetData
       }
       changeComponentValueFunc={changeShininessFunc(materialComponent)}
-      blurValueFunc={
-        InspectorMaterialUtils.blurShininessEvent(
-          (uiState, dispatchFunc),
-          materialComponent,
-        )
-      }
-      dragDropFunc={
-        InspectorMaterialUtils.blurShininessEvent(
-          (uiState, dispatchFunc),
-          materialComponent,
-        )
-      }
+      blurValueFunc=blurShininessFunc
+      dragDropFunc=blurShininessFunc
     />
   </article>;
 };

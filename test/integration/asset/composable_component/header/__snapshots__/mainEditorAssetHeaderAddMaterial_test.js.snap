@@ -251,7 +251,7 @@ exports[`MainEditorAssetHeader->add material if not select specific treeNode sho
       >
         <img
           onDragStart={[Function]}
-          src="./public/img/mat.png"
+          src="./public/img/mat.jpg"
         />
       </div>
       <div
@@ -271,7 +271,7 @@ exports[`MainEditorAssetHeader->add material if not select specific treeNode sho
       >
         <img
           onDragStart={[Function]}
-          src="./public/img/mat.png"
+          src="./public/img/mat.jpg"
         />
       </div>
       <div
@@ -303,7 +303,7 @@ exports[`MainEditorAssetHeader->add material test name remove first material whi
     >
       <img
         onDragStart={[Function]}
-        src="./public/img/mat.png"
+        src="./public/img/mat.jpg"
       />
     </div>
     <div
@@ -323,7 +323,7 @@ exports[`MainEditorAssetHeader->add material test name remove first material whi
     >
       <img
         onDragStart={[Function]}
-        src="./public/img/mat.png"
+        src="./public/img/mat.jpg"
       />
     </div>
     <div
@@ -343,7 +343,7 @@ exports[`MainEditorAssetHeader->add material test name remove first material whi
     >
       <img
         onDragStart={[Function]}
-        src="./public/img/mat.png"
+        src="./public/img/mat.jpg"
       />
     </div>
     <div
@@ -456,7 +456,7 @@ exports[`MainEditorAssetHeader->add material test name test default name 1`] = `
       >
         <img
           onDragStart={[Function]}
-          src="./public/img/mat.png"
+          src="./public/img/mat.jpg"
         />
       </div>
       <div
@@ -476,7 +476,7 @@ exports[`MainEditorAssetHeader->add material test name test default name 1`] = `
       >
         <img
           onDragStart={[Function]}
-          src="./public/img/mat.png"
+          src="./public/img/mat.jpg"
         />
       </div>
       <div

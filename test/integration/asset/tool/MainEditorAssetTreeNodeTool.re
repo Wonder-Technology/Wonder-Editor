@@ -8,30 +8,29 @@ let _buildImageObj = src =>
    ); */
 
 /* let insertScriptEventFunctionNode =
-    (
-      materialNodeId,
-      parentFolderNodeId,
-      material,
-      (editorState, engineState),
-    ) => (
-  editorState
-  |> OperateTreeAssetEditorService.insertNode(
-       parentFolderNodeId,
-       ScriptEventFunctionNodeAssetService.buildNode(
-         ~nodeId=materialNodeId,
-         ~materialComponent=material,
-         ~type_=ScriptEventFunctionDataAssetType.LightScriptEventFunction,
-       ),
-     ),
-  engineState,
-); */
-
+       (
+         materialNodeId,
+         parentFolderNodeId,
+         material,
+         (editorState, engineState),
+       ) => (
+     editorState
+     |> OperateTreeAssetEditorService.insertNode(
+          parentFolderNodeId,
+          ScriptEventFunctionNodeAssetService.buildNode(
+            ~nodeId=materialNodeId,
+            ~materialComponent=material,
+            ~type_=ScriptEventFunctionDataAssetType.LightScriptEventFunction,
+          ),
+        ),
+     engineState,
+   ); */
 
 let insertMaterialNode =
     (
       materialNodeId,
       parentFolderNodeId,
-      material,
+      (material, imageDataIndex),
       (editorState, engineState),
     ) => (
   editorState
@@ -41,27 +40,17 @@ let insertMaterialNode =
          ~nodeId=materialNodeId,
          ~materialComponent=material,
          ~type_=MaterialDataAssetType.LightMaterial,
+         ~imageDataIndex,
        ),
-     ),
-  engineState,
-);
-
-
-
-let insertMaterialNode =
-    (
-      materialNodeId,
-      parentFolderNodeId,
-      material,
-      (editorState, engineState),
-    ) => (
-  editorState
-  |> OperateTreeAssetEditorService.insertNode(
-       parentFolderNodeId,
-       MaterialNodeAssetService.buildNode(
-         ~nodeId=materialNodeId,
-         ~materialComponent=material,
-         ~type_=MaterialDataAssetType.LightMaterial,
+     )
+  |> ImageDataMapAssetEditorService.setData(
+       imageDataIndex,
+       ImageDataMapAssetService.buildData(
+         ~base64=None,
+         ~uint8Array=None,
+         ~name="material",
+         ~mimeType=ImageUtils.getDefaultMimeType(),
+         (),
        ),
      ),
   engineState,

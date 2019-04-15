@@ -16,6 +16,38 @@ let _ =
       sandbox := createSandbox();
 
       MainEditorSceneTool.initState(~sandbox, ());
+
+      MainEditorSceneTool.initInspectorEngineState(
+        ~sandbox,
+        ~isInitJob=false,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+            ~initPipelines=
+              {|
+             [
+              {
+                "name": "default",
+                "jobs": [
+                    {"name": "init_inspector_engine" }
+                ]
+              }
+            ]
+             |},
+            ~initJobs=
+              {|
+             [
+                {"name": "init_inspector_engine" }
+             ]
+             |},
+            (),
+          ),
+        (),
+      );
+
+      StateInspectorEngineService.unsafeGetState()
+      |> MainUtils._handleInspectorEngineState
+      |> StateInspectorEngineService.setState
+      |> ignore;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 

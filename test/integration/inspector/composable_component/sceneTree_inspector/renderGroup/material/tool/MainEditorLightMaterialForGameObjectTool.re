@@ -25,7 +25,7 @@ let blurShininess =
       ~value,
       (),
     ) =>
-  InspectorMaterialUtils.blurShininessEvent(
+  MainEditorLightMaterialForGameObject.Method.blurShininessEvent(
     (uiState, dispatchFunc),
     material,
     value,
@@ -45,7 +45,7 @@ let closeColorPicker =
       ~uiState=TestTool.buildEmptyAppState(),
       (),
     ) =>
-  InspectorMaterialUtils.closeLightMaterialColorPick(
+  MainEditorLightMaterialForGameObject.Method.closeColorPick(
     (uiState, dispatchFunc),
     material,
     color,
@@ -64,7 +64,7 @@ module Drag = {
         ~textureNodeId,
         (),
       ) =>
-    InspectorMaterialUtils.dragToSetLightMaterialTexture(
+    MainEditorLightMaterialForGameObject.Method.dragToSetLightMaterialTexture(
       (uiState, dispatchFunc),
       material,
       textureNodeId,

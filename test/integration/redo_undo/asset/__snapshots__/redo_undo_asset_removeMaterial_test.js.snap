@@ -19,7 +19,7 @@ exports[`redo_undo: asset remove material test undo operate test undo one step s
     >
       <img
         onDragStart={[Function]}
-        src="./public/img/mat.png"
+        src="./public/img/mat.jpg"
       />
     </div>
     <div

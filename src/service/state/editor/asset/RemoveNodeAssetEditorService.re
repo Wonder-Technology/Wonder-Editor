@@ -66,10 +66,10 @@ open NodeAssetType;
      TextureNodeMapAssetEditorService.doesAnyTextureUseImage(image, editorState) ?
        editorState :
        editorState
-       |> ImageNodeMapAssetEditorService.getImageNodeMap
+       |> ImageDataMapAssetEditorService.getImageDataMap
        |> Js.Array.copy
        |> DomHelper.deleteKeyInMap(image)
-       |. ImageNodeMapAssetEditorService.setImageNodeMap(editorState);
+       |. ImageDataMapAssetEditorService.setImageDataMap(editorState);
    };
 
    let deepDisposeAssetTreeRoot = (removedAssetIdArr, editorState) =>

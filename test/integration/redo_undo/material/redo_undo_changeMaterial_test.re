@@ -14,7 +14,7 @@ let _ =
       ArrayService.unsafeGetNth(index, array);
 
     let _simulateChangeMaterial = () =>
-      MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
+      MainEditorBasicMaterialForGameObjectTool.changeMaterialTypeToBeBasicMaterial();
 
     let _beforeEach = () =>
       MainEditorSceneTool.createDefaultScene(

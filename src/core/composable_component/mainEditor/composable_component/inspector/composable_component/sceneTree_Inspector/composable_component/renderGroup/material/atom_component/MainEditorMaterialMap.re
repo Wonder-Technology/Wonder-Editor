@@ -128,16 +128,21 @@ module Method = {
         (nodeId, textureComponent, imageDataIndex, className),
         send,
         (editorState, engineState),
-      ) =>
-    ImageDataMapUtils.getImgSrc(imageDataIndex, editorState)
-    |> Result.SameDataResult.either(imgSrc =>
-         _buildTextureUIComponent(
-           (className, nodeId, textureComponent, imgSrc),
-           send,
-           engineState,
-         )
-         |> Result.SameDataResult.success
-       );
+      ) => {
+    let imgSrc =
+      ImageDataMapUtils.getImgSrc(
+        imageDataIndex,
+        ImageUtils.getNullImageSrc(),
+        editorState,
+      );
+
+    _buildTextureUIComponent(
+      (className, nodeId, textureComponent, imgSrc),
+      send,
+      engineState,
+    )
+    |> Result.SameDataResult.success;
+  };
 
   let showTextureAssets = (state, send) => {
     let editorState = StateEditorService.getState();
@@ -191,14 +196,14 @@ let _handleSetTextureToEngine =
   | None =>
     ReasonReactUtils.updateWithSideEffects(
       {...state, currentTextureComponent: Some(textureComponent)}, _state =>
-      onDropFunc((uiState, dispatchFunc), materialComponent, textureNodeId)
+      onDropFunc(textureNodeId)
     )
   | Some(sourceTextureComponent) =>
     sourceTextureComponent === textureComponent ?
       ReasonReact.NoUpdate :
       ReasonReactUtils.updateWithSideEffects(
         {...state, currentTextureComponent: Some(textureComponent)}, _state =>
-        onDropFunc((uiState, dispatchFunc), materialComponent, textureNodeId)
+        onDropFunc(textureNodeId)
       )
   };
 
@@ -318,10 +323,7 @@ let render =
       {_renderDragableImage(uiState, self)}
       <button
         className="texture-remove"
-        onClick={
-          e =>
-            removeTextureFunc((uiState, dispatchFunc), (), materialComponent)
-        }>
+        onClick={e => removeTextureFunc(materialComponent)}>
         {DomHelper.textEl("Remove")}
       </button>
     </div>

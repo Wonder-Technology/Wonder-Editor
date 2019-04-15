@@ -13,19 +13,20 @@ module CustomEventHandler = {
       |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree;
 
     let materialName =
-      OperateMaterialLogicService.getNewMaterilaName()
-      ->(
-          OperateTreeAssetLogicService.getUniqueNodeName(
-            targetTreeNode,
-            engineState,
-          )
-        );
+      engineState
+      |> OperateTreeAssetLogicService.getUniqueNodeName(
+           OperateMaterialLogicService.getNewMaterilaName(),
+           targetTreeNode,
+         );
 
     let (newMaterial, engineState) =
       LightMaterialEngineService.createLightMaterialAndSetName(
         materialName,
         engineState,
       );
+
+    let (editorState, newImageDataIndex) =
+      IndexAssetEditorService.generateImageDataMapIndex(editorState);
 
     let editorState =
       MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
@@ -34,25 +35,23 @@ module CustomEventHandler = {
           ~nodeId=newNodeId,
           ~type_=MaterialDataAssetType.LightMaterial,
           ~materialComponent=newMaterial,
+          ~imageDataIndex=newImageDataIndex,
         ),
         editorState,
-      );
-
-    /* let targetTreeNode =
-       editorState
-       |> OperateTreeAssetEditorService.unsafeGetSelectedFolderNodeInAssetTree; */
+      )
+      |> ImageDataMapAssetEditorService.setData(
+           newImageDataIndex,
+           ImageDataMapAssetService.buildData(
+             ~base64=None,
+             ~uint8Array=None,
+             ~blobObjectURL=None,
+             ~name=materialName,
+             ~mimeType=ImageUtils.getDefaultMimeType(),
+             (),
+           ),
+         );
 
     editorState |> StateEditorService.setState |> ignore;
-
-    /* TODO draw material sphere to get base64 store in map */
-    /* MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
-         MaterialDataAssetType.LightMaterial,
-         newMaterial,
-       );
-
-       MaterialInspector.Method.getDataUrl(
-         DomHelper.getElementById("inspector-canvas"),
-       ); */
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])))
     |> ignore;

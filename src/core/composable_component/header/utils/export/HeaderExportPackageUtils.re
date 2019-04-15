@@ -2,7 +2,7 @@ open Js.Typed_array;
 
 let _buildEmptyUint8Array = () => Uint8Array.make([||]);
 
-let _buildImageNodeUint8Array = editorState =>
+let _buildImageDataUint8Array = editorState =>
   ImageDataMapAssetEditorService.getMap(editorState)
   |> WonderCommonlib.ImmutableSparseMapService.map((. data) =>
        Js.Nullable.bind(
@@ -42,7 +42,7 @@ let _export = () => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
-  let editorState = editorState |> _buildImageNodeUint8Array;
+  let editorState = editorState |> _buildImageDataUint8Array;
 
   let imageUint8ArrayMap =
     Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(editorState);

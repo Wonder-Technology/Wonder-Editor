@@ -18,6 +18,40 @@ let _ =
 
       MainEditorSceneTool.initState(~sandbox, ());
 
+      MainEditorSceneTool.initInspectorEngineState(
+        ~sandbox,
+        ~isInitJob=false,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+            ~initPipelines=
+              {|
+             [
+              {
+                "name": "default",
+                "jobs": [
+                    {"name": "init_inspector_engine" }
+                ]
+              }
+            ]
+             |},
+            ~initJobs=
+              {|
+             [
+                {"name": "init_inspector_engine" }
+             ]
+             |},
+            (),
+          ),
+        (),
+      );
+
+      StateInspectorEngineService.unsafeGetState()
+      |> MainUtils._handleInspectorEngineState
+      |> StateInspectorEngineService.setState
+      |> ignore;
+
+      CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
+
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
@@ -161,8 +195,8 @@ let _ =
                 newGameObjectGeometry,
               )
               |> StateLogicService.getEngineStateToGetData
-              |>
-              expect == MainEditorGeometryTool.getDefaultSphereGeometryName();
+              |> expect
+              == MainEditorGeometryTool.getDefaultSphereGeometryName();
             },
           );
           test(

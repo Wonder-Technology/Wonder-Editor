@@ -22,16 +22,53 @@ module Method = {
          materialComponent,
        )
     |> StateLogicService.refreshEngineState;
+
+  let closeColorPick = LightMaterialCloseColorPickForGameObjectEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+
+  let blurShininessEvent =
+      ((uiState, dispatchFunc), materialComponent, shininessValue) =>
+    LightMaterialEngineService.getLightMaterialShininess(materialComponent)
+    |> StateLogicService.getEngineStateToGetData
+    |> ValueService.isValueEqual(ValueType.Float, shininessValue) ?
+      () :
+      LightMaterialShininessBlurForGameObjectEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
+        (uiState, dispatchFunc),
+        materialComponent,
+        shininessValue,
+      );
+
+  let dragToSetLightMaterialTexture = LightMaterialDragTextureForGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let removeTexture = ((uiState, dispatchFunc), (), materialComponent) =>
+    switch (
+      LightMaterialEngineService.getLightMaterialDiffuseMap(materialComponent)
+      |> StateLogicService.getEngineStateToGetData
+    ) {
+    | None => ()
+    | Some(_mapId) =>
+      LightMaterialRemoveTextureForGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+        (uiState, dispatchFunc),
+        (),
+        materialComponent,
+      )
+    };
 };
 
 let component =
   ReasonReact.statelessComponent("MainEditorLightMaterialForGameObject");
 
-let render = ((uiState, dispatchFunc), materialComponent, _self) =>
+let render = (reduxTuple, materialComponent, _self) =>
   InspectorMaterialComponentUtils.buildLightMaterialComponent(
-    (uiState, dispatchFunc),
+    reduxTuple,
     materialComponent,
-    (Method.changeColor, Method.changeShininess),
+    (
+      Method.changeColor,
+      Method.changeShininess,
+      Method.closeColorPick(reduxTuple, materialComponent),
+      Method.blurShininessEvent(reduxTuple, materialComponent),
+      Method.dragToSetLightMaterialTexture(reduxTuple, materialComponent),
+      Method.removeTexture(reduxTuple, ()),
+    ),
   );
 
 let make =

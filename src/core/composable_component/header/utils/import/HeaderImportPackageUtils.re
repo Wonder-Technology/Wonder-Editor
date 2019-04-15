@@ -9,14 +9,9 @@ let _disposeAssets = () => {
       StateEngineService.unsafeGetState(),
     ));
 
-  editorState
-  |> ImageDataMapAssetEditorService.clearMap
-  |> StateEditorService.setState
-  |> ignore;
+  editorState |> StateEditorService.setState |> ignore;
 
   engineState |> StateEngineService.setState |> ignore;
-
-  ();
 };
 
 let _readHeader = dataView => {

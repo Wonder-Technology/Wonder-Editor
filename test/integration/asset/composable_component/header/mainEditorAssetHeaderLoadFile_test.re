@@ -26,9 +26,39 @@ let _ =
 
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
+      MainEditorSceneTool.initInspectorEngineState(
+        ~sandbox,
+        ~isInitJob=false,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+            ~initPipelines=
+              {|
+             [
+              {
+                "name": "default",
+                "jobs": [
+                    {"name": "init_inspector_engine" }
+                ]
+              }
+            ]
+             |},
+            ~initJobs=
+              {|
+             [
+                {"name": "init_inspector_engine" }
+             ]
+             |},
+            (),
+          ),
+        (),
+      );
 
-      EventListenerTool.buildFakeDom()
-      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+      StateInspectorEngineService.unsafeGetState()
+      |> MainUtils._handleInspectorEngineState
+      |> StateInspectorEngineService.setState
+      |> ignore;
+
+      CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
     });
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
@@ -87,8 +117,8 @@ let _ =
         );
 
         describe("test should add into nodeMap", () => {
-          describe("test imageNodeMap", () => {
-            testPromise("add image base64 to imageNodeMap", () => {
+          describe("test imageDataMap", () => {
+            testPromise("add image base64 to imageDataMap", () => {
               MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
               |> ignore;
               let imgBase64 = "newImgBase64";
@@ -116,7 +146,7 @@ let _ =
                  });
             });
             testPromise(
-              "test show texture image, get it base64 from imageNodeMap", () => {
+              "test show texture image, get it base64 from imageDataMap", () => {
               MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
               |> ignore;
               let imgBase64 = "newImgBase64";

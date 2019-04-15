@@ -25,14 +25,14 @@ let _ =
           MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
 
-        MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
+        MainEditorBasicMaterialForGameObjectTool.changeMaterialTypeToBeBasicMaterial();
       });
 
       PickColorTool.testOperateColorPickToChangeColor(
         sandbox,
         (
           GameObjectTool.getCurrentSceneTreeNodeBasicMaterial,
-          MainEditorBasicMaterialTool.changeColor,
+          MainEditorBasicMaterialForGameObjectTool.changeColor,
           BasicMaterialEngineService.getColor,
         ),
       );

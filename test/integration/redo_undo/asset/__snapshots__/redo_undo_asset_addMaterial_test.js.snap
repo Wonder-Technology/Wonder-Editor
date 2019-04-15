@@ -99,7 +99,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
       >
         <img
           onDragStart={[Function]}
-          src="./public/img/mat.png"
+          src="./public/img/mat.jpg"
         />
       </div>
       <div
@@ -213,7 +213,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
       >
         <img
           onDragStart={[Function]}
-          src="./public/img/mat.png"
+          src="./public/img/mat.jpg"
         />
       </div>
       <div
@@ -233,7 +233,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
       >
         <img
           onDragStart={[Function]}
-          src="./public/img/mat.png"
+          src="./public/img/mat.jpg"
         />
       </div>
       <div
@@ -347,7 +347,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
       >
         <img
           onDragStart={[Function]}
-          src="./public/img/mat.png"
+          src="./public/img/mat.jpg"
         />
       </div>
       <div
@@ -367,7 +367,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
       >
         <img
           onDragStart={[Function]}
-          src="./public/img/mat.png"
+          src="./public/img/mat.jpg"
         />
       </div>
       <div
@@ -481,7 +481,7 @@ exports[`redo_undo: asset add material prepare first step: set currentSceneTreeN
       >
         <img
           onDragStart={[Function]}
-          src="./public/img/mat.png"
+          src="./public/img/mat.jpg"
         />
       </div>
       <div

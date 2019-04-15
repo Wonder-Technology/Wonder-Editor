@@ -18,6 +18,9 @@ let clearMap = editorState => {
   },
 };
 
+let getData = (index, editorState) =>
+  ImageDataMapAssetService.getData(index, editorState.assetRecord);
+
 let unsafeGetData = (index, editorState) =>
   ImageDataMapAssetService.unsafeGetData(index, editorState.assetRecord);
 
@@ -27,21 +30,21 @@ let setData = (index, data, editorState) => {
     editorState.assetRecord |> ImageDataMapAssetService.setData(index, data),
 };
 
-let _getImageNodeIdByBase64 = (imageBase64, editorState) =>
+let _getImageDataIndexByBase64 = (imageBase64, editorState) =>
   switch (
     editorState
     |> getMap
     |> WonderCommonlib.ImmutableSparseMapService.getValidDataArr
-    |> Js.Array.find(((imageNodeId, {base64}: ImageDataType.imageData)) =>
+    |> Js.Array.find(((imageDataIndex, {base64}: ImageDataType.imageData)) =>
          Base64Service.isBase64Equal(Some(imageBase64), base64)
        )
   ) {
   | None => None
-  | Some((imageNodeId, _)) => Some(imageNodeId)
+  | Some((imageDataIndex, _)) => Some(imageDataIndex)
   };
 
-let addImageNodeByBase64 = (base64, fileName, mimeType, editorState) =>
-  switch (_getImageNodeIdByBase64(base64, editorState)) {
+let addImageDataIfBase64NotExist = (base64, fileName, mimeType, editorState) =>
+  switch (_getImageDataIndexByBase64(base64, editorState)) {
   | None =>
     let (editorState, newImageDataIndex) =
       IndexAssetEditorService.generateImageDataMapIndex(editorState);
@@ -63,12 +66,13 @@ let addImageNodeByBase64 = (base64, fileName, mimeType, editorState) =>
   | Some(imageDataIndex) => (editorState, imageDataIndex)
   };
 
-let _getImageNodeIdByUint8Array = (imageUint8Array, editorState) =>
+let _getImageDataIndexByUint8Array = (imageUint8Array, editorState) =>
   switch (
     editorState
     |> getMap
     |> WonderCommonlib.ImmutableSparseMapService.getValidDataArr
-    |> Js.Array.find(((imageNodeId, {uint8Array}: ImageDataType.imageData)) =>
+    |> Js.Array.find(
+         ((imageDataIndex, {uint8Array}: ImageDataType.imageData)) =>
          Uint8ArrayService.isUint8ArrayEqual(
            Some(imageUint8Array),
            uint8Array,
@@ -76,11 +80,12 @@ let _getImageNodeIdByUint8Array = (imageUint8Array, editorState) =>
        )
   ) {
   | None => None
-  | Some((imageNodeId, _)) => Some(imageNodeId)
+  | Some((imageDataIndex, _)) => Some(imageDataIndex)
   };
 
-let addImageNodeByUint8Array = (uint8Array, name, mimeType, editorState) =>
-  switch (_getImageNodeIdByUint8Array(uint8Array, editorState)) {
+let addImageDataIfUint8ArrayNotExist =
+    (uint8Array, name, mimeType, editorState) =>
+  switch (_getImageDataIndexByUint8Array(uint8Array, editorState)) {
   | None =>
     let (editorState, newImageDataIndex) =
       IndexAssetEditorService.generateImageDataMapIndex(editorState);

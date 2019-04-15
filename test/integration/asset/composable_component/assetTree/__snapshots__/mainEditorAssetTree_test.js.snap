@@ -863,7 +863,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
     >
       <img
         onDragStart={[Function]}
-        src="./public/img/mat.png"
+        src="./public/img/mat.jpg"
       />
     </div>
     <div
@@ -1142,7 +1142,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
     >
       <img
         onDragStart={[Function]}
-        src="./public/img/mat.png"
+        src="./public/img/mat.jpg"
       />
     </div>
     <div

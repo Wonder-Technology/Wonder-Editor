@@ -31,7 +31,7 @@ let doesAnyTextureUseImage = (targetImageDataIndex, editorState) =>
       },
     (),
   )
-  |> List.length > 0;
+  |> List.length > 1;
 
 let getDataByTextureComponent = (targetTextureComponent, editorState) =>
   IterateTreeAssetService.findOne(

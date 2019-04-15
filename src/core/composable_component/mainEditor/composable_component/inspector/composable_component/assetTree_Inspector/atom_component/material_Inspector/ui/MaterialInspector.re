@@ -65,7 +65,7 @@ let reducer =
 let render =
     (
       (uiState, dispatchFunc),
-      (name, type_, materialComponent),
+      (name, type_, currentNodeId, materialComponent),
       renameFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
@@ -108,6 +108,7 @@ let render =
           uiState
           dispatchFunc
           materialComponent
+          currentNodeId
         />
 
       | LightMaterial =>
@@ -115,6 +116,7 @@ let render =
           uiState
           dispatchFunc
           materialComponent
+          currentNodeId
         />
       }
     }
@@ -139,7 +141,7 @@ let make =
   render: self =>
     render(
       (uiState, dispatchFunc),
-      (name, type_, materialComponent),
+      (name, type_, currentNodeId, materialComponent),
       renameFunc,
       self,
     ),

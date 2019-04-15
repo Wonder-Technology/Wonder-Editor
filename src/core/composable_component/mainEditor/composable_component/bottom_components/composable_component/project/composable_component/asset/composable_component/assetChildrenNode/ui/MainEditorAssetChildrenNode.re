@@ -63,8 +63,7 @@ module Method = {
        )
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. editorState, imageDataIndex) =>
-           editorState
-           |> Result.SameDataResult.either(_build(imageDataIndex)),
+           editorState |> Result.SameDataResult.map(_build(imageDataIndex)),
          editorState |> Result.SameDataResult.success,
        );
 
@@ -142,46 +141,56 @@ module Method = {
              ~node,
              ~textureNodeFunc=
                (nodeId, {textureComponent, imageDataIndex}) => {
-                 let effectAllowd = "move";
                  let fileName =
                    NodeNameAssetLogicService.getTextureNodeName(
                      ~texture=textureComponent,
                      ~engineState,
                    );
-
-                 ImageDataMapUtils.getImgSrc(imageDataIndex, editorState)
-                 |> Result.SameDataResult.either(imgSrc =>
-                      <FileBox
-                        key
-                        uiState
-                        dispatchFunc
-                        dragImg
-                        effectAllowd
-                        imgSrc
-                        nodeId
-                        fileName
-                        widget
-                        isSelected
-                      />
-                      |> Result.SameDataResult.success
-                    );
-               },
-             ~materialNodeFunc=
-               (nodeId, {materialComponent, type_}) => {
-                 let fileName =
-                   NodeNameAssetLogicService.getMaterialNodeName(
-                     ~material=materialComponent,
-                     ~type_,
-                     ~engineState,
+                 let imgSrc =
+                   ImageDataMapUtils.getImgSrc(
+                     imageDataIndex,
+                     ImageUtils.getNullImageSrc(),
+                     editorState,
                    );
-                 /* TODO get img base64 from map, the wdb same to get */
+
                  <FileBox
                    key
                    uiState
                    dispatchFunc
                    dragImg
                    effectAllowd="move"
-                   imgSrc="./public/img/mat.png"
+                   imgSrc
+                   nodeId
+                   fileName
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success;
+               },
+             ~materialNodeFunc=
+               (nodeId, {materialComponent, type_, imageDataIndex}) => {
+                 let fileName =
+                   NodeNameAssetLogicService.getMaterialNodeName(
+                     ~material=materialComponent,
+                     ~type_,
+                     ~engineState,
+                   );
+
+                 let imgSrc =
+                   ImageDataMapUtils.getImgSrc(
+                     imageDataIndex,
+                     editorState
+                     |> MaterialDataAssetEditorService.unsafeGetDefaultMaterialSnapshotPath,
+                     editorState,
+                   );
+
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc
                    nodeId
                    fileName
                    widget
@@ -223,6 +232,7 @@ module Method = {
                (nodeId, nodeData) => {
                  let fileName = WDBNodeAssetService.getNodeName(nodeData);
 
+                 /* TODO get wdb img base64 from map */
                  <FileBox
                    key
                    uiState
@@ -280,7 +290,7 @@ module Method = {
 
     editorState
     |> _buildImageDataObjectURLIfNoBase64
-    |> Result.SameDataResult.either(
+    |> Result.SameDataResult.map(
          showSpecificTreeNodeChildren(
            (uiState, dispatchFunc),
            (

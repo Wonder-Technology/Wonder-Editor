@@ -27,7 +27,7 @@ let addOneBasicMaterial = () => {
        (),
      ); */
 
-  /* MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial(); */
+  /* MainEditorBasicMaterialForGameObjectTool.changeMaterialTypeToBeBasicMaterial(); */
 
   let materialComponent =
     MainEditorAssetMaterialNodeTool.getMaterialComponent(

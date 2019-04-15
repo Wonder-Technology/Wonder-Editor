@@ -4,6 +4,9 @@ let create = () => {
   inspectorCanvasRecord: {
     containerGameObject: None,
   },
+  imgCanvasRecord: {
+    imgContext: None,
+  },
   settingRecord: RecordSettingService.create(),
   sceneTreeRecord: {
     currentSceneTreeNode: None,
@@ -23,6 +26,7 @@ let create = () => {
     materialData: {
       defaultBasicMaterialData: None,
       defaultLightMaterialData: None,
+      defaultMaterialSnapshotPath: "./public/img/mat.jpg",
     },
   },
   uiRecord: {

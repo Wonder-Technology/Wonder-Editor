@@ -19,6 +19,7 @@ type nodeId = int;
 type wdbNodeData = {
   name: string,
   wdbGameObject: int,
+  /* imageDataIndex: int, */
 };
 
 type textureNodeData = {
@@ -29,6 +30,7 @@ type textureNodeData = {
 type materialNodeData = {
   type_: MaterialDataAssetType.materialType,
   materialComponent: int,
+  imageDataIndex: int,
 };
 
 type scriptEventFunctionNodeData = {

@@ -14,6 +14,38 @@ let _ =
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
 
+      MainEditorSceneTool.initInspectorEngineState(
+        ~sandbox,
+        ~isInitJob=false,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+            ~initPipelines=
+              {|
+             [
+              {
+                "name": "default",
+                "jobs": [
+                    {"name": "init_inspector_engine" }
+                ]
+              }
+            ]
+             |},
+            ~initJobs=
+              {|
+             [
+                {"name": "init_inspector_engine" }
+             ]
+             |},
+            (),
+          ),
+        (),
+      );
+
+      StateInspectorEngineService.unsafeGetState()
+      |> MainUtils._handleInspectorEngineState
+      |> StateInspectorEngineService.setState
+      |> ignore;
+
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         MainEditorAssetTool.initAssetTree,
@@ -27,7 +59,7 @@ let _ =
         select material;
         click remove-button;
             |},
-      () =>
+      () => {
       test("should remove it from assetTreeRoot", () => {
         let assetTreeData =
           MainEditorAssetTreeTool.BuildAssetTree.Material.buildOneMaterialAssetTree();
@@ -42,8 +74,29 @@ let _ =
 
         BuildComponentTool.buildAssetChildrenNode()
         |> ReactTestTool.createSnapshotAndMatch;
-      })
-    );
+      });
+      test("should remove its imageData from imageDataMap", () => {
+        open NodeAssetType;
+
+        let materialNodeId = MainEditorAssetIdTool.getNewAssetId();
+        MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+        let {imageDataIndex} =
+          StateEditorService.getState()
+          |> OperateTreeAssetEditorService.unsafeFindNodeById(materialNodeId)
+          |> MaterialNodeAssetService.getNodeData;
+
+        MainEditorAssetHeaderOperateNodeTool.removeMaterialNode(
+          ~materialNodeId,
+          (),
+        );
+
+        StateEditorService.getState()
+        |> ImageDataMapAssetEditorService.getData(imageDataIndex)
+        |> Js.Option.isNone
+        |> expect == true;
+      });
+    });
 
     describe(
       {|

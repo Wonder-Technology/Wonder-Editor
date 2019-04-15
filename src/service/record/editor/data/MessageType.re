@@ -1,6 +1,6 @@
 type messageType =
   | Log
-  | Info 
+  | Info
   | Error
   | Warn;
 

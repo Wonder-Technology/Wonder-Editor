@@ -45,16 +45,72 @@ module Method = {
        )
     |> StateLogicService.refreshInspectorEngineState;
   };
+
+  let closeColorPick = LightMaterialCloseColorPickForAssetEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+
+  let blurShininessEvent =
+      (
+        (uiState, dispatchFunc),
+        (materialComponent, currentNodeId),
+        shininessValue,
+      ) =>
+    LightMaterialEngineService.getLightMaterialShininess(materialComponent)
+    |> StateLogicService.getEngineStateToGetData
+    |> ValueService.isValueEqual(ValueType.Float, shininessValue) ?
+      () :
+      LightMaterialShininessBlurForAssetEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
+        (uiState, dispatchFunc),
+        (materialComponent, currentNodeId),
+        shininessValue,
+      );
+
+  let dragToSetLightMaterialTexture = LightMaterialDragTextureForAssetEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let removeTexture =
+      ((uiState, dispatchFunc), currentNodeId, materialComponent) =>
+    (
+      switch (
+        LightMaterialEngineService.getLightMaterialDiffuseMap(
+          materialComponent,
+        )
+        |> StateLogicService.getEngineStateToGetData
+      ) {
+      | None => Js.Promise.make((~resolve, ~reject) => resolve(. ignore()))
+      | Some(_mapId) =>
+        LightMaterialRemoveTextureForAssetEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+          (uiState, dispatchFunc),
+          currentNodeId,
+          materialComponent,
+        )
+      }
+    )
+    |> ignore;
 };
 
 let component =
   ReasonReact.statelessComponent("MainEditorLightMaterialForAsset");
 
-let render = ((uiState, dispatchFunc), materialComponent, _self) =>
+let render = (reduxTuple, (materialComponent, currentNodeId), _self) =>
   InspectorMaterialComponentUtils.buildLightMaterialComponent(
-    (uiState, dispatchFunc),
+    reduxTuple,
     materialComponent,
-    (Method.changeColor, Method.changeShininess),
+    (
+      Method.changeColor,
+      Method.changeShininess,
+      Method.closeColorPick(
+        reduxTuple,
+        (materialComponent, currentNodeId),
+      ),
+      Method.blurShininessEvent(
+        reduxTuple,
+        (materialComponent, currentNodeId),
+      ),
+      Method.dragToSetLightMaterialTexture(
+        reduxTuple,
+        (materialComponent, currentNodeId),
+      ),
+      Method.removeTexture(reduxTuple, currentNodeId),
+    ),
   );
 
 let make =
@@ -62,8 +118,14 @@ let make =
       ~uiState: AppStore.appState,
       ~dispatchFunc,
       ~materialComponent,
+      ~currentNodeId,
       _children,
     ) => {
   ...component,
-  render: self => render((uiState, dispatchFunc), materialComponent, self),
+  render: self =>
+    render(
+      (uiState, dispatchFunc),
+      (materialComponent, currentNodeId),
+      self,
+    ),
 };

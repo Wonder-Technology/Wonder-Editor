@@ -87,7 +87,8 @@ let _renderRemoveItem =
       _e =>
         CurrentNodeIdAssetEditorService.couldRemoveCurrentNode
         |> StateLogicService.getEditorState ?
-          Method.removeAssetNode((uiState, dispatchFunc), (), ()) : ()
+          Method.removeAssetNode((uiState, dispatchFunc), (), ()) |> ignore :
+          ()
     }>
     {
       CurrentNodeIdAssetEditorService.couldRemoveCurrentNode

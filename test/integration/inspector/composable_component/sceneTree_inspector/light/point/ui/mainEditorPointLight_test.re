@@ -160,7 +160,7 @@ let _ =
             let currentGameObjectPointLightComponent =
               GameObjectTool.getCurrentSceneTreeNodePointLightComponent();
             let value = 10.1;
-
+ 
             MainEditorPointLightTool.changeRange(
               currentGameObjectPointLightComponent,
               value,

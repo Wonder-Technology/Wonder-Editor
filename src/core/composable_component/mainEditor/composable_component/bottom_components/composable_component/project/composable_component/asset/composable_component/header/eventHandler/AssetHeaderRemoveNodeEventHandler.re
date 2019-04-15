@@ -1,3 +1,5 @@
+open Js.Promise;
+
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
@@ -17,13 +19,20 @@ module CustomEventHandler = {
 
     let currentNodeId =
       editorState |> CurrentNodeIdAssetEditorService.unsafeGetCurrentNodeId;
+    let currentNode =
+      OperateTreeAssetEditorService.unsafeFindNodeById(
+        currentNodeId,
+        editorState,
+      );
+    let useTextureMaterialArray =
+      AssetHeaderRemoveNodeUtils.getUseTextureMaterialArray(
+        currentNode,
+        engineState,
+      );
 
     let (editorState, engineState) =
       DisposeTreeAssetLogicService.disposeNode(
-        OperateTreeAssetEditorService.unsafeFindNodeById(
-          currentNodeId,
-          editorState,
-        ),
+        currentNode,
         (editorState, engineState),
       );
 
@@ -43,7 +52,32 @@ module CustomEventHandler = {
 
     editorState |> StateEditorService.setState |> ignore;
 
-    dispatchFunc(AppStore.UpdateAction(Update([|All|]))) |> ignore;
+    switch (useTextureMaterialArray) {
+    | None => ()
+    | Some(useTextureMaterialArray) =>
+      let engineState = StateEngineService.unsafeGetState();
+
+      let (editorState, inspectorEngineState) =
+        AssetHeaderRemoveNodeUtils.redrawAllMaterialSetToImageDataMap(
+          useTextureMaterialArray,
+          engineState,
+          (
+            StateEditorService.getState(),
+            StateInspectorEngineService.unsafeGetState(),
+          ),
+        );
+
+      (editorState, inspectorEngineState)
+      |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
+      |> JobEngineService.execDisposeJob
+      |> StateInspectorEngineService.setState
+      |> ignore;
+
+      editorState |> StateEditorService.setState |> ignore;
+    };
+
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))
+    |> ignore;
   };
 };
 

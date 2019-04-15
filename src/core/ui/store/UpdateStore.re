@@ -16,8 +16,7 @@ type updateComponentTypeArr = array(updateComponentType);
 type updateState = {componentTypeArr: updateComponentTypeArr};
 
 let updateReducer =
-    (state: updateState, action: updateAction('a))
-    : updateState =>
+    (state: updateState, action: updateAction('a)): updateState =>
   switch (action) {
   | Update(newComponentTypeArr) => {
       ...state,

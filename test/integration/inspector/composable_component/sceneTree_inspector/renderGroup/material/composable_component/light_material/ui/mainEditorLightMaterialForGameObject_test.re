@@ -49,7 +49,7 @@ let _ =
           sandbox,
           (
             GameObjectTool.getCurrentSceneTreeNodeLightMaterial,
-            MainEditorLightMaterialTool.changeColor,
+            MainEditorLightMaterialForGameObjectTool.changeColor,
             LightMaterialEngineService.getLightMaterialDiffuseColor,
           ),
         );
@@ -111,14 +111,14 @@ let _ =
                 let assetTreeData =
                   MainEditorAssetTreeTool.BuildAssetTree.Texture.buildTwoTextureAssetTree();
 
-                MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                   ~textureNodeId=
                     MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
                       assetTreeData,
                     ),
                   (),
                 );
-                MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                   ~textureNodeId=
                     MainEditorAssetTreeTool.BuildAssetTree.Texture.getSecondTextureNodeId(
                       assetTreeData,
@@ -140,14 +140,14 @@ let _ =
               let assetTreeData =
                 MainEditorAssetTreeTool.BuildAssetTree.Texture.buildTwoTextureAssetTree();
 
-              MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+              MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                 ~textureNodeId=
                   MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
                     assetTreeData,
                   ),
                 (),
               );
-              MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+              MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                 ~textureNodeId=
                   MainEditorAssetTreeTool.BuildAssetTree.Texture.getSecondTextureNodeId(
                     assetTreeData,
@@ -181,7 +181,7 @@ let _ =
                 };
 
                 let _exec = uploadedTextureNodeId =>
-                  MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                  MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                     ~textureNodeId=uploadedTextureNodeId,
                     (),
                   );
@@ -297,7 +297,7 @@ let _ =
                   },
                 };
 
-                MainEditorLightMaterialTool.changeColor(
+                MainEditorLightMaterialForGameObjectTool.changeColor(
                   currentGameObjectMaterial,
                   newColor,
                 );
@@ -312,14 +312,14 @@ let _ =
                 let assetTreeData =
                   MainEditorAssetTreeTool.BuildAssetTree.Texture.buildTwoTextureAssetTree();
 
-                MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                   ~textureNodeId=
                     MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
                       assetTreeData,
                     ),
                   (),
                 );
-                MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+                MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                   ~textureNodeId=
                     MainEditorAssetTreeTool.BuildAssetTree.Texture.getSecondTextureNodeId(
                       assetTreeData,
@@ -343,6 +343,42 @@ let _ =
         });
 
         describe("test set remove texture", () => {
+          beforeEach(() => {
+            MainEditorSceneTool.initInspectorEngineState(
+              ~sandbox,
+              ~isInitJob=false,
+              ~noWorkerJobRecord=
+                NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                  ~initPipelines=
+                    {|
+                   [
+                    {
+                      "name": "default",
+                      "jobs": [
+                          {"name": "init_inspector_engine" }
+                      ]
+                    }
+                  ]
+                   |},
+                  ~initJobs=
+                    {|
+                   [
+                      {"name": "init_inspector_engine" }
+                   ]
+                   |},
+                  (),
+                ),
+              (),
+            );
+
+            StateInspectorEngineService.unsafeGetState()
+            |> MainUtils._handleInspectorEngineState
+            |> StateInspectorEngineService.setState
+            |> ignore;
+
+            CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
+          });
+
           describe("test snapshop", () => {
             test("test if not set map,should change nothing", () => {
               let assetTreeData =
@@ -372,7 +408,7 @@ let _ =
                   assetTreeData,
                 );
 
-              MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+              MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                 ~textureNodeId,
                 (),
               );
@@ -399,7 +435,7 @@ let _ =
                   assetTreeData,
                 );
 
-              MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+              MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
                 ~textureNodeId,
                 (),
               );
@@ -444,12 +480,12 @@ let _ =
               );
             let value = 1.1;
 
-            MainEditorLightMaterialTool.changeShininess(
+            MainEditorLightMaterialForGameObjectTool.changeShininess(
               ~material=currentGameObjectMaterial,
               ~value,
               (),
             );
-            MainEditorLightMaterialTool.blurShininess(
+            MainEditorLightMaterialForGameObjectTool.blurShininess(
               ~material=currentGameObjectMaterial,
               ~value,
               (),

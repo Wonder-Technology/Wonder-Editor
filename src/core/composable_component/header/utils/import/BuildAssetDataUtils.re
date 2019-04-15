@@ -190,7 +190,7 @@ let buildTextureData =
                  assetNodeId,
                  TextureNodeAssetService.buildNodeData(
                    ~textureComponent=texture,
-                   ~imageNodeId=
+                   ~imageDataIndex=
                      imageDataIndexMap
                      |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(source),
                  ),
@@ -239,6 +239,10 @@ let _buildMaterialEditorData =
       (editorState, engineState),
     );
 
+  let (editorState, newImageDataIndex) =
+    IndexAssetEditorService.generateImageDataMapIndex(editorState);
+
+  /*TODO import ASB, create imageDataIndex to store asb's material uint8array */
   editorState
   |> MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
        parentFolderNode,
@@ -246,6 +250,17 @@ let _buildMaterialEditorData =
          ~nodeId=assetNodeId,
          ~type_,
          ~materialComponent=material,
+         ~imageDataIndex=newImageDataIndex,
+       ),
+     )
+  |> ImageDataMapAssetEditorService.setData(
+       newImageDataIndex,
+       ImageDataMapAssetService.buildData(
+         ~base64=None,
+         ~uint8Array=None,
+         ~name="material",
+         ~mimeType=ImageUtils.getDefaultMimeType(),
+         (),
        ),
      );
 };
