@@ -67,8 +67,13 @@ module CustomEventHandler = {
           ),
         );
 
+      (editorState, inspectorEngineState)
+      |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
+      |> JobEngineService.execDisposeJob
+      |> StateInspectorEngineService.setState
+      |> ignore;
+
       editorState |> StateEditorService.setState |> ignore;
-      inspectorEngineState |> StateInspectorEngineService.setState |> ignore;
     };
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))

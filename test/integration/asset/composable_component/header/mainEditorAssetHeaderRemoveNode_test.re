@@ -428,13 +428,6 @@ let _ =
                   (addedMaterialNodeId, materialComponent);
                 };
 
-                let _drag = (textureNodeId, material) =>
-                  MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
-                    ~textureNodeId,
-                    ~material,
-                    (),
-                  );
-
                 beforeEach(() =>
                   CurrentSelectSourceEditorService.setCurrentSelectSource(
                     SceneTreeWidgetService.getWidget(),
@@ -504,6 +497,62 @@ let _ =
                        )
                        |> expect
                        == (imgCanvasFakeBase64Str, imgCanvasFakeBase64Str)
+                       |> resolve;
+                     });
+                });
+
+                testPromise(
+                  "should dispose inspectorEngine container gameObject all children ",
+                  () => {
+                  let (
+                    addedMaterialNodeId,
+                    newMaterialComponent,
+                    imgCanvasFakeBase64Str,
+                    (inspectorCanvasDom, imgCanvasDom),
+                  ) =
+                    MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                      ~sandbox,
+                      (),
+                    );
+
+                  let (addedMaterialNodeId1, materialComponent1) =
+                    _createNewMaterial();
+                  let (addedMaterialNodeId2, materialComponent2) =
+                    _createNewMaterial();
+
+                  MainEditorAssetUploadTool.loadOneTexture()
+                  |> Js.Promise.then_(uploadedTextureNodeId => {
+                       MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
+                         ~textureNodeId=uploadedTextureNodeId,
+                         ~material=materialComponent1,
+                         (),
+                       );
+                       MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
+                         ~textureNodeId=uploadedTextureNodeId,
+                         ~material=materialComponent2,
+                         (),
+                       );
+                       MainEditorAssetHeaderOperateNodeTool.removeTextureNode(
+                         ~textureNodeId=uploadedTextureNodeId,
+                         (),
+                       );
+
+                       let editorState = StateEditorService.getState();
+
+                       let containerGameObject =
+                         ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject(
+                           editorState,
+                         );
+
+                       let inspectorEngineState =
+                         StateInspectorEngineService.unsafeGetState();
+
+                       inspectorEngineState
+                       |> HierarchyGameObjectEngineService.getChildren(
+                            containerGameObject,
+                          )
+                       |> Js.Array.length
+                       |> expect == 0
                        |> resolve;
                      });
                 });

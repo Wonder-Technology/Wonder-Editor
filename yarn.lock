@@ -8296,9 +8296,9 @@ wonder-webgl@^0.0.7:
   dependencies:
     wonder-log "^0.2.11"
 
-wonder.js@1.1.0-alpha.1.6:
-  version "1.1.0-alpha.1.6"
-  resolved "http://registry.npm.taobao.org/wonder.js/download/wonder.js-1.1.0-alpha.1.6.tgz#571a3aa9f82dfba33b1e75fb1bc4eb881855d5bf"
+wonder.js@1.1.0-alpha.1.8:
+  version "1.1.0-alpha.1.8"
+  resolved "http://registry.npm.taobao.org/wonder.js/download/wonder.js-1.1.0-alpha.1.8.tgz#3f1817f39d675d081b26ec348d40c546fa541648"
   dependencies:
     bs-fetch "^0.3.0"
     wonder-bs-json "^0.0.1"

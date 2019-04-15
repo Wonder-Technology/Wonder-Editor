@@ -609,80 +609,89 @@ module AssetTree = {
             (editorState, engineState),
           );
 
-        extractedMaterialAssetDataArr
-        |> WonderCommonlib.ArrayService.reduceOneParam(
-             (.
-               (editorState, engineState),
-               ((material, materialType), (getNameFunc, setNameFunc)),
-             ) => {
-               let materialName =
-                 getNameFunc(~material, ~type_=materialType, ~engineState)
-                 ->(
-                     OperateTreeAssetLogicService.getUniqueNodeName(
-                       folderNode,
-                       engineState,
-                     )
+        let (editorState, engineState) =
+          extractedMaterialAssetDataArr
+          |> WonderCommonlib.ArrayService.reduceOneParam(
+               (.
+                 (editorState, engineState),
+                 ((material, materialType), (getNameFunc, setNameFunc)),
+               ) => {
+                 let materialName =
+                   getNameFunc(~material, ~type_=materialType, ~engineState)
+                   ->(
+                       OperateTreeAssetLogicService.getUniqueNodeName(
+                         folderNode,
+                         engineState,
+                       )
+                     );
+
+                 let engineState =
+                   setNameFunc(
+                     ~material,
+                     ~type_=materialType,
+                     ~name=materialName,
+                     ~engineState,
                    );
 
-               let engineState =
-                 setNameFunc(
-                   ~material,
-                   ~type_=materialType,
-                   ~name=materialName,
-                   ~engineState,
-                 );
+                 /* TODO need refactor
+                    TODO need test */
 
-               /* TODO need refactor
-                  TODO need test */
+                 let (editorState, newNodeId) =
+                   IdAssetEditorService.generateNodeId(editorState);
+                 let (editorState, newImageDataIndex) =
+                   IndexAssetEditorService.generateImageDataMapIndex(
+                     editorState,
+                   );
 
-               let (editorState, newNodeId) =
-                 IdAssetEditorService.generateNodeId(editorState);
-               let (editorState, newImageDataIndex) =
-                 IndexAssetEditorService.generateImageDataMapIndex(
-                   editorState,
-                 );
-
-               (editorState, StateInspectorEngineService.unsafeGetState())
-               |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
-               |> JobEngineService.execDisposeJob
-               |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
-                    MaterialDataAssetType.LightMaterial,
-                    material,
-                    (editorState, engineState),
-                  )
-               |> StateLogicService.refreshInspectorEngineState;
-
-               let editorState =
-                 editorState
-                 |> MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
-                      folderNode,
-                      MaterialNodeAssetService.buildNode(
-                        ~nodeId=newNodeId,
-                        ~type_=MaterialDataAssetType.LightMaterial,
-                        ~materialComponent=material,
-                        ~imageDataIndex=newImageDataIndex,
-                      ),
+                 (editorState, StateInspectorEngineService.unsafeGetState())
+                 |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
+                 |> JobEngineService.execDisposeJob
+                 |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
+                      MaterialDataAssetType.LightMaterial,
+                      material,
+                      (editorState, engineState),
                     )
-                 |> ImageDataMapAssetEditorService.setData(
-                      newImageDataIndex,
-                      ImageDataMapAssetService.buildData(
-                        ~base64=None,
-                        ~uint8Array=None,
-                        ~name=materialName,
-                        ~mimeType=ImageUtils.getDefaultMimeType(),
-                        (),
-                      ),
-                    )
-                 |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByNodeId(
-                      DomHelper.getElementById("inspector-canvas"),
-                      DomHelper.getElementById("img-canvas"),
-                      newNodeId,
-                    );
+                 |> StateLogicService.refreshInspectorEngineState;
 
-               (editorState, engineState);
-             },
-             (editorState, engineState),
-           );
+                 let editorState =
+                   editorState
+                   |> MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
+                        folderNode,
+                        MaterialNodeAssetService.buildNode(
+                          ~nodeId=newNodeId,
+                          ~type_=MaterialDataAssetType.LightMaterial,
+                          ~materialComponent=material,
+                          ~imageDataIndex=newImageDataIndex,
+                        ),
+                      )
+                   |> ImageDataMapAssetEditorService.setData(
+                        newImageDataIndex,
+                        ImageDataMapAssetService.buildData(
+                          ~base64=None,
+                          ~uint8Array=None,
+                          ~name=materialName,
+                          ~mimeType=ImageUtils.getDefaultMimeType(),
+                          (),
+                        ),
+                      )
+                   |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByNodeId(
+                        DomHelper.getElementById("inspector-canvas"),
+                        DomHelper.getElementById("img-canvas"),
+                        newNodeId,
+                      );
+
+                 (editorState, engineState);
+               },
+               (editorState, engineState),
+             );
+
+        (editorState, StateInspectorEngineService.unsafeGetState())
+        |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
+        |> JobEngineService.execDisposeJob
+        |> StateInspectorEngineService.setState
+        |> ignore;
+
+        (editorState, engineState);
       };
 
   let _addTextureNodeToAssetTree =

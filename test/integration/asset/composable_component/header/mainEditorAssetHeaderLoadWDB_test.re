@@ -719,7 +719,7 @@ let _ =
                             )
                             |> WonderCommonlib.ImmutableSparseMapService.length,
                           )
-                          |> expect == (true, 1, 1)
+                          |> expect == (true, 1, 2)
                           |> resolve;
                         });
                    })

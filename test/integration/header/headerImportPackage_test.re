@@ -2240,6 +2240,7 @@ let _ =
           |> ignore;
 
           CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
+        });
 
         describe("relate wdb asset gameObjects and material assets", () => {
           beforeEach(() => {
@@ -2250,11 +2251,37 @@ let _ =
                 NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
               (),
             );
+            MainEditorSceneTool.initInspectorEngineState(
+              ~sandbox,
+              ~isInitJob=false,
+              ~noWorkerJobRecord=
+                NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                  ~initPipelines=
+                    {|
+             [
+              {
+                "name": "default",
+                "jobs": [
+                    {"name": "init_inspector_engine" }
+                ]
+              }
+            ]
+             |},
+                  ~initJobs=
+                    {|
+             [
+                {"name": "init_inspector_engine" }
+             ]
+             |},
+                  (),
+                ),
+              (),
+            );
 
-            /* MainEditorSceneTool.createDefaultScene(
-                 sandbox,
-                 MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
-               ); */
+            StateInspectorEngineService.unsafeGetState()
+            |> MainUtils._handleInspectorEngineState
+            |> StateInspectorEngineService.setState
+            |> ignore;
 
             MainEditorSceneTool.createDefaultComponents();
 

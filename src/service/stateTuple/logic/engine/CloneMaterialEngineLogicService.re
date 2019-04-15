@@ -56,7 +56,7 @@ let cloneLightMaterialToOtherEngineState =
     ) {
     | None => targetEngineState
     | Some(map) =>
-      let (material, targetEngineState) =
+      let (targetTexture, targetEngineState) =
         CloneTextureEngineLogicService.cloneTextureToOtherEngineState(
           map,
           clonedEngineState,
@@ -65,7 +65,7 @@ let cloneLightMaterialToOtherEngineState =
 
       targetEngineState
       |> LightMaterialEngineService.setLightMaterialDiffuseMap(
-           material,
+           targetTexture,
            lightMaterial,
          )
       |> LightMaterialEngineService.reInitLightMaterialsAndClearShaderCache([|
