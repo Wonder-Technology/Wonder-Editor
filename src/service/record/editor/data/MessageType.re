@@ -1,6 +1,6 @@
 type messageType =
   | Log
-  | Info 
+  | Info
   | Error
   | Warn;
 
@@ -9,9 +9,5 @@ type message = {
   type_: messageType,
   info: string,
   time: int,
-<<<<<<< HEAD
   isActive: bool,
-=======
-  mutable isActive: bool,
->>>>>>> origin/mickey
 };

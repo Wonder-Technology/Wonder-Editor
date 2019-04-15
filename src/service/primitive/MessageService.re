@@ -35,7 +35,6 @@ let addMessageIntoSpecificDom = message => {
 };
 
 let showMessageWithinTime = message =>
-<<<<<<< HEAD
   Timeout.setTimeout(
     () => {
       let editorState = StateEditorService.getState();
@@ -52,6 +51,3 @@ let showMessageWithinTime = message =>
     },
     message.time,
   );
-=======
-  Timeout.setTimeout(() => message.isActive = false, message.time);
->>>>>>> origin/mickey
