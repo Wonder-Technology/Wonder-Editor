@@ -12,7 +12,7 @@
     "<rootDir>/test/helper/jest/specHelper.js"
   ],
   "notify": false,
-  "verbose": true,
+  "verbose": false,
   "collectCoverage": true,
   "coverageDirectory": "<rootDir>/coverage/",
   "coveragePathIgnorePatterns": [
