@@ -287,7 +287,7 @@ let fileLoad = ((uiState, dispatchFunc), createJsZipFunc, event) => {
          FileReader.makeSureCanLoadSameNameFileAgain(target);
 
          dispatchFunc(
-           AppStore.UpdateAction(Update([|UpdateStore.Project|])),
+           AppStore.UpdateAction(Update([|UpdateStore.Inspector,UpdateStore.Project|])),
          );
 
          resolve();

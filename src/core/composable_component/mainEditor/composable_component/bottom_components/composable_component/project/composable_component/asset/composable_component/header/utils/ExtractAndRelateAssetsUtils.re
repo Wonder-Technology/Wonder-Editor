@@ -609,11 +609,11 @@ module AssetTree = {
             (editorState, engineState),
           );
 
-        let (editorState, engineState) =
+        let (editorState, engineState, inspectorEngineState) =
           extractedMaterialAssetDataArr
           |> WonderCommonlib.ArrayService.reduceOneParam(
                (.
-                 (editorState, engineState),
+                 (editorState, engineState, inspectorEngineState),
                  ((material, materialType), (getNameFunc, setNameFunc)),
                ) => {
                  let materialName =
@@ -643,14 +643,15 @@ module AssetTree = {
                      editorState,
                    );
 
-                 (editorState, StateInspectorEngineService.unsafeGetState())
-                 |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildren
-                 |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
-                      MaterialDataAssetType.LightMaterial,
-                      material,
-                      (editorState, engineState),
-                    )
-                 |> StateLogicService.refreshInspectorEngineState;
+                 let inspectorEngineState =
+                   (editorState, inspectorEngineState)
+                   |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildren
+                   |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
+                        MaterialDataAssetType.LightMaterial,
+                        material,
+                        (editorState, engineState),
+                      )
+                   |> DirectorEngineService.loopBody(0.);
 
                  let editorState =
                    editorState
@@ -679,15 +680,18 @@ module AssetTree = {
                         newNodeId,
                       );
 
-                 (editorState, engineState);
+                 (editorState, engineState, inspectorEngineState);
                },
-               (editorState, engineState),
+               (
+                 editorState,
+                 engineState,
+                 StateInspectorEngineService.unsafeGetState(),
+               ),
              );
 
-        (editorState, StateInspectorEngineService.unsafeGetState())
+        (editorState, inspectorEngineState)
         |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildren
-        |> StateInspectorEngineService.setState
-        |> ignore;
+        |> StateInspectorEngineService.setState;
 
         (editorState, engineState);
       };
