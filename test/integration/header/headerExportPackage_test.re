@@ -18,6 +18,38 @@ let _ =
       sandbox := createSandbox();
 
       MainEditorSceneTool.initState(~sandbox, ());
+      MainEditorSceneTool.initInspectorEngineState(
+        ~sandbox,
+        ~isInitJob=false,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+            ~initPipelines=
+              {|
+           [
+            {
+              "name": "default",
+              "jobs": [
+                  {"name": "init_inspector_engine" }
+              ]
+            }
+          ]
+           |},
+            ~initJobs=
+              {|
+           [
+              {"name": "init_inspector_engine" }
+           ]
+           |},
+            (),
+          ),
+        (),
+      );
+
+      StateInspectorEngineService.unsafeGetState()
+      |> MainUtils._handleInspectorEngineState
+      |> StateInspectorEngineService.setState
+      |> ignore;
+
       MainEditorSceneTool.prepareScene(sandbox);
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -107,7 +139,7 @@ let _ =
           "add new material;
            export;
 
-           should export material default base64;",
+           should export material default base64 to uint8Array;",
           () => {
             let addedMaterialNodeId = MainEditorAssetIdTool.getNewAssetId();
 
@@ -137,16 +169,31 @@ let _ =
             );
           },
         );
-        /* test(
+        test(
           "add new material m1;
-           change m1 diffuse color;k
+           change m1 color;
+           close color picker;
            export;
 
-           should export material default base64;",
+           should draw material snapshot and export to uint8Array;",
           () => {
-            let addedMaterialNodeId = MainEditorAssetIdTool.getNewAssetId();
+            let (
+              addedMaterialNodeId,
+              newMaterialComponent,
+              imgCanvasFakeBase64Str,
+              (inspectorCanvasDom, imgCanvasDom),
+            ) =
+              MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                ~sandbox,
+                (),
+              );
 
-            MainEditorAssetHeaderOperateNodeTool.addMaterial();
+            MainEditorLightMaterialForAssetTool.closeColorPicker(
+              ~currentNodeId=addedMaterialNodeId,
+              ~material=newMaterialComponent,
+              ~color="#7df1e8",
+              (),
+            );
 
             let wpkArrayBuffer = ExportPackageTool.exportWPK();
 
@@ -165,13 +212,10 @@ let _ =
               ({base64, uint8Array}) =>
                 uint8Array
                 |> OptionService.unsafeGet
-                |> expect
-                == BufferUtils.convertBase64ToUint8Array(
-                     ExportPackageTool.getDefaultSnapshotBase64(),
-                   )
+                |> expect == BufferUtils.convertBase64ToUint8Array(base64)
             );
           },
-        ); */
+        );
       });
     });
   });
