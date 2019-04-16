@@ -29,8 +29,7 @@ let _createAllMaterialSnapshot =
     ) => {
   let inspectorEngineState =
     (editorState, inspectorEngineState)
-    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
-    |> JobEngineService.execDisposeJob
+    |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildren
     |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
          MaterialDataAssetType.LightMaterial,
          material,

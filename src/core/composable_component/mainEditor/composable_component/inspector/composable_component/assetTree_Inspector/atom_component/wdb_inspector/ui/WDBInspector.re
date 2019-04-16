@@ -1,16 +1,7 @@
 module Method = {
-  let didMount = () => {
-    DomHelper.setDomDisplay(
-      DomHelper.getElementById("inspectorCanvasParent"),
-      true,
-    );
+  let didMount = () => AssetTreeInspectorUtils.showInspectorCanvas();
 
-    /* WDBInspectorEngineUtils */
-
-  };
-
-  let willUnmount = MaterialInspector.Method.willUnmount;
-
+  let willUnmount = AssetTreeInspectorUtils.hideInspectorCanvasAndDisposeContainerGameObjectAllChildren;
 };
 
 let component = ReasonReact.statelessComponent("WDBInspector");
@@ -38,11 +29,6 @@ let render = (name, (onChangeFunc, onBlurFunc), _self) =>
 let make = (~name, ~onChangeFunc, ~onBlurFunc, _children) => {
   ...component,
   render: _self => render(name, (onChangeFunc, onBlurFunc), _self),
-  /* didMount: _self =>
-     MaterialInspectorEngineUtils.createMaterialSphereInToInspectorCanvas(
-       type_,
-       materialComponent,
-     ), */
-  didMount: _self => Js.log("fdccck"),
+  didMount: _self => Method.didMount(),
   willUnmount: _self => Method.willUnmount(),
 };

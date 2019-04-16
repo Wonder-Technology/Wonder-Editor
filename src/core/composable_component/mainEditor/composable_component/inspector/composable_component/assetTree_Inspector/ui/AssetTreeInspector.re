@@ -132,7 +132,13 @@ module Method = {
       }
     />;
 
-  let buildWDBComponent = (state, send, _, _) =>
+  let buildWDBComponent =
+      (
+        (uiState, dispatchFunc),
+        (state, send),
+        currentNodeId,
+        {name, wdbGameObject},
+      ) =>
     <WDBInspector
       name={state.inputValue}
       onChangeFunc={_e => send(change(_e))}
@@ -154,7 +160,7 @@ module Method = {
         buildScriptEventFunctionComponent(reduxTuple, state),
       ~scriptAttributeNodeFunc=
         buildScriptAttributeComponent(reduxTuple, state),
-      ~wdbNodeFunc=buildWDBComponent(state, send),
+      ~wdbNodeFunc=buildWDBComponent(reduxTuple, (state, send)),
       ~folderNodeFunc=buildFolderComponent(state, send, languageType),
     );
 

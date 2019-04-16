@@ -644,8 +644,7 @@ module AssetTree = {
                    );
 
                  (editorState, StateInspectorEngineService.unsafeGetState())
-                 |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
-                 |> JobEngineService.execDisposeJob
+                 |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildren
                  |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
                       MaterialDataAssetType.LightMaterial,
                       material,
@@ -686,8 +685,7 @@ module AssetTree = {
              );
 
         (editorState, StateInspectorEngineService.unsafeGetState())
-        |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
-        |> JobEngineService.execDisposeJob
+        |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildren
         |> StateInspectorEngineService.setState
         |> ignore;
 

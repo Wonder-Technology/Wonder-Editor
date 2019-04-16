@@ -30,10 +30,7 @@ module Method = {
         ResizeUtils.resizeMainCanvasScreen();
         ResizeUtils.resizeInspectorCanvasScreen();
 
-        DomHelper.setDomDisplay(
-          DomHelper.getElementById("inspectorCanvasParent"),
-          false,
-        );
+        AssetTreeInspectorUtils.hideInspectorCanvas();
       },
     );
 
