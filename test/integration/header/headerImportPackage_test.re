@@ -12,6 +12,8 @@ open Js.Promise;
 
 open Js.Typed_array;
 
+open NodeAssetType;
+
 let _ =
   describe("header import package", () => {
     let sandbox = getSandboxDefaultVal();
@@ -1969,6 +1971,64 @@ let _ =
             (),
           );
         });
+
+        describe("should draw all material snapshot", () =>
+          testPromise(
+            {j|
+              add new material m1;
+              change m1 color;
+              close color picker;
+              export;
+              import;
+
+              should use imgCanvas create snapshot to createObjectURL
+              |j},
+            () => {
+              let (
+                addedMaterialNodeId,
+                newMaterialComponent,
+                imgCanvasFakeBase64Str,
+                (inspectorCanvasDom, imgCanvasDom),
+              ) =
+                MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                  ~sandbox,
+                  (),
+                );
+              let materialSnapshotObjectURL = "redraw_material_snapshot_objectURL";
+
+              MainEditorLightMaterialForAssetTool.closeColorPicker(
+                ~currentNodeId=addedMaterialNodeId,
+                ~material=newMaterialComponent,
+                ~color="#7df1e8",
+                (),
+              );
+
+              let uint8Array =
+                BufferUtils.convertBase64ToUint8Array(imgCanvasFakeBase64Str);
+
+              let blob =
+                Blob.newBlobFromArrayBuffer(
+                  uint8Array |> Js.Typed_array.Uint8Array.buffer,
+                  "image/png",
+                );
+
+              let createObjectURL = LoadTool.getFakeCreateObjectURL();
+
+              createObjectURL
+              |> withOneArg(blob)
+              |> returns(materialSnapshotObjectURL);
+
+              ImportPackageTool.testImportPackage(
+                ~testFunc=
+                  () =>
+                    BuildComponentTool.buildAssetChildrenNode()
+                    |> ReactTestTool.createSnapshotAndMatch
+                    |> resolve,
+                (),
+              );
+            },
+          )
+        );
 
         describe("fix bug", () => {
           beforeEach(() => {

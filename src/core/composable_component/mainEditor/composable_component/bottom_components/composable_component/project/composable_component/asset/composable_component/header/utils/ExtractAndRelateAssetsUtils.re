@@ -633,8 +633,7 @@ module AssetTree = {
                      ~engineState,
                    );
 
-                 /* TODO need refactor
-                    TODO need test */
+                 /* TODO need test */
 
                  let (editorState, newNodeId) =
                    IdAssetEditorService.generateNodeId(editorState);

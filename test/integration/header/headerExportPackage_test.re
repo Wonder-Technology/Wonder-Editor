@@ -175,7 +175,7 @@ let _ =
            close color picker;
            export;
 
-           should draw material snapshot and export to uint8Array;",
+           should convert base64 to uint8Array;",
           () => {
             let (
               addedMaterialNodeId,
