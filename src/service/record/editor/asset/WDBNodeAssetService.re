@@ -2,8 +2,8 @@ open TreeAssetType;
 
 open NodeAssetType;
 
-let buildNode = (~nodeId, ~name, ~wdbGameObject) =>
-  WDBNode(nodeId, {name, wdbGameObject});
+let buildNode = (~nodeId, ~name, ~wdbGameObject, ~imageDataIndex) =>
+  WDBNode(nodeId, {name, wdbGameObject, imageDataIndex});
 
 let buildNodeByNodeData = (~nodeId, ~nodeData) => WDBNode(nodeId, nodeData);
 
@@ -27,7 +27,7 @@ let isWDBNode = node =>
   | _ => false
   };
 
-let rename = (~name, ~nodeData) : wdbNodeData => {...nodeData, name};
+let rename = (~name, ~nodeData): wdbNodeData => {...nodeData, name};
 
 let getNodeName = ({name}: wdbNodeData) => name;
 

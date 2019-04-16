@@ -229,17 +229,24 @@ module Method = {
                  />
                  |> Result.SameDataResult.success,
              ~wdbNodeFunc=
-               (nodeId, nodeData) => {
+               (nodeId, {imageDataIndex} as nodeData) => {
                  let fileName = WDBNodeAssetService.getNodeName(nodeData);
 
-                 /* TODO get wdb img base64 from map */
+                 let imgSrc =
+                   ImageDataMapUtils.getImgSrc(
+                     imageDataIndex,
+                     editorState
+                     |> MaterialDataAssetEditorService.unsafeGetDefaultMaterialSnapshotPath,
+                     editorState,
+                   );
+
                  <FileBox
                    key
                    uiState
                    dispatchFunc
                    effectAllowd="copyMove"
                    dragImg
-                   imgSrc="./public/img/wdb.png"
+                   imgSrc
                    nodeId
                    fileName
                    widget

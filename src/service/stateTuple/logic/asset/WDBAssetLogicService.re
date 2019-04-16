@@ -23,7 +23,15 @@ let importAssetWDB =
   |> WonderBsMost.Most.tap(
        ((engineState, (imageUint8ArrayDataMap, _), gameObject)) => {
        let allGameObjects =
-         HierarchyGameObjectEngineService.getAllGameObjects(gameObject, engineState);
+         HierarchyGameObjectEngineService.getAllGameObjects(
+           gameObject,
+           engineState,
+         );
+
+       let (editorState, newImageDataIndex) =
+         editorState |> IndexAssetEditorService.generateImageDataMapIndex;
+
+       /* TODO need create wdb snapshot */
 
        editorState
        /* |> WDBNodeMapAssetEditorService.setResult(
@@ -45,6 +53,17 @@ let importAssetWDB =
               ~nodeId=wdbNodeId,
               ~name,
               ~wdbGameObject=gameObject,
+              ~imageDataIndex=newImageDataIndex,
+            ),
+          )
+       |> ImageDataMapAssetEditorService.setData(
+            newImageDataIndex,
+            ImageDataMapAssetService.buildData(
+              ~base64=None,
+              ~uint8Array=None,
+              ~name="wdb",
+              ~mimeType=ImageUtils.getDefaultMimeType(),
+              (),
             ),
           )
        |> StateEditorService.setState

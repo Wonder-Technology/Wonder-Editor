@@ -1,11 +1,6 @@
 module Method = {
   let didMount = () => {
     Js.log("wdb did mount");
-    let state = StateInspectorEngineService.unsafeGetState();
-
-    let game = state |> SceneEngineService.getSceneGameObject;
-
-    state |> HierarchyGameObjectEngineService.getAllChildren(game) |> Js.log;
 
     AssetTreeInspectorUtils.showInspectorCanvas();
   };
