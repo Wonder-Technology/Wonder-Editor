@@ -1,6 +1,9 @@
 open Js.Typed_array;
 
-let _buildEmptyUint8Array = () => Uint8Array.make([||]);
+let _buildDefaultMaterialSnapshotUint8Array = () =>
+  BufferUtils.convertBase64ToUint8Array(
+    OperateMaterialLogicService.getDefaultSnapshotBase64(),
+  );
 
 let _buildImageDataUint8Array = editorState =>
   ImageDataMapAssetEditorService.getMap(editorState)
@@ -17,18 +20,7 @@ let _buildImageDataUint8Array = editorState =>
                  switch (base64) {
                  | Some(base64) =>
                    BufferUtils.convertBase64ToUint8Array(base64)
-                 | None =>
-                   ConsoleUtils.error(
-                     LogUtils.buildErrorMessage(
-                       ~description={j|image->base64 should exist|j},
-                       ~reason="",
-                       ~solution={j||j},
-                       ~params={j||j},
-                     ),
-                     editorState,
-                   );
-
-                   _buildEmptyUint8Array();
+                 | None => _buildDefaultMaterialSnapshotUint8Array()
                  }
                }
              )

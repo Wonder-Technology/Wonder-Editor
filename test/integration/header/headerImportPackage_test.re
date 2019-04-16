@@ -619,7 +619,7 @@ let _ =
                        () =>
                          ImageDataMapTool.getMapValidLength
                          |> StateLogicService.getEditorState
-                         |> expect == 4
+                         |> expect == 2
                          |> resolve,
                      (),
                    ),
@@ -3140,9 +3140,8 @@ let _ =
             );
           });
 
-          /* TODO need pass this test */
-          /* testPromise(
-               {|
+          testPromise(
+            {|
              add gameObject g1 to scene tree;
              add material asset m1;
              load BoxTextured wdb asset w1;
@@ -3155,134 +3154,132 @@ let _ =
              g1->material should be m1;
              g1->material->diffuseMap should be t1;
              |},
-               () => {
-                 let firstCube = GameObjectTool.unsafeGetCurrentSceneTreeNode();
-                 let firstCubeName = "firstCube";
-                 GameObjectEngineService.setGameObjectName(
-                   firstCubeName,
-                   firstCube,
-                 )
-                 |> StateLogicService.getAndSetEngineState;
+            () => {
+              let firstCube = GameObjectTool.unsafeGetCurrentSceneTreeNode();
+              let firstCubeName = "firstCube";
+              GameObjectEngineService.setGameObjectName(
+                firstCubeName,
+                firstCube,
+              )
+              |> StateLogicService.getAndSetEngineState;
 
-                 let addedMaterialNodeId1 = MainEditorAssetIdTool.getNewAssetId();
+              let addedMaterialNodeId1 = MainEditorAssetIdTool.getNewAssetId();
 
-                 MainEditorAssetHeaderOperateNodeTool.addMaterial();
+              MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
-                 let materialComponent1 =
-                   MainEditorAssetMaterialNodeTool.getMaterialComponent(
-                     ~nodeId=addedMaterialNodeId1,
+              let materialComponent1 =
+                MainEditorAssetMaterialNodeTool.getMaterialComponent(
+                  ~nodeId=addedMaterialNodeId1,
+                  (),
+                );
+
+              let materialComponent1Name =
+                LightMaterialEngineService.unsafeGetLightMaterialName(
+                  materialComponent1,
+                )
+                |> StateLogicService.getEngineStateToGetData;
+
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                (),
+              )
+              |> then_(uploadedWDBNodeId => {
+                   MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
+                     ~wdbNodeId=uploadedWDBNodeId,
                      (),
                    );
 
-                 let materialComponent1Name =
-                   LightMaterialEngineService.unsafeGetLightMaterialName(
-                     materialComponent1,
-                   )
-                   |> StateLogicService.getEngineStateToGetData;
+                   let editorState = StateEditorService.getState();
+                   let engineState = StateEngineService.unsafeGetState();
 
-                 MainEditorAssetUploadTool.loadOneWDB(
-                   ~arrayBuffer=boxTexturedWDBArrayBuffer^,
-                   (),
-                 )
-                 |> then_(uploadedWDBNodeId => {
-                      MainEditorSceneTreeTool.Drag.dragWDBAssetToSceneTree(
-                        ~wdbNodeId=uploadedWDBNodeId,
-                        (),
-                      );
-
-                      let editorState = StateEditorService.getState();
-                      let engineState = StateEngineService.unsafeGetState();
-
-                      let boxTexturedMeshDiffuseMap =
-                        LoadWDBTool.unsafeGetBoxTexturedMeshDiffuseMap(
+                   let boxTexturedMeshDiffuseMap =
+                     LoadWDBTool.unsafeGetBoxTexturedMeshDiffuseMap(
+                       engineState,
+                     );
+                   let boxTexturedMeshDiffuseMapName =
+                     boxTexturedMeshDiffuseMap
+                     |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
+                          _,
                           engineState,
                         );
-                      let boxTexturedMeshDiffuseMapName =
-                        boxTexturedMeshDiffuseMap
-                        |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
-                             _,
+
+                   MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
+                     ~textureNodeId=
+                       boxTexturedMeshDiffuseMap
+                       |> MainEditorAssetTextureNodeTool.findTextureNodeIdByTextureComponent(
+                            _,
+                            editorState,
+                          )
+                       |> OptionService.unsafeGet,
+                     ~material=materialComponent1,
+                     (),
+                   );
+
+                   editorState |> StateEditorService.setState |> ignore;
+                   engineState |> StateEngineService.setState |> ignore;
+
+                   MainEditorMaterialTool.changeMaterial(
+                     ~sourceMaterial=
+                       GameObjectTool.getCurrentSceneTreeNodeLightMaterial(),
+                     ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
+                     ~targetMaterial=materialComponent1,
+                     ~targetMaterialType=MaterialDataAssetType.LightMaterial,
+                     ~gameObject=
+                       GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+                     ~materialNodeId=Some(addedMaterialNodeId1),
+                     (),
+                   );
+
+                   let wpkArrayBuffer = ExportPackageTool.exportWPK();
+
+                   ImportPackageTool.testImportPackageWithoutExport(
+                     ~wpkArrayBuffer,
+                     ~testFunc=
+                       () => {
+                         let engineState = StateEngineService.unsafeGetState();
+
+                         let firstCube =
+                           SceneToolEngine.findGameObjectByName(
+                             firstCubeName,
                              engineState,
-                           );
+                           )
+                           |> ArrayService.unsafeGetFirst;
 
-                      MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
-                        ~textureNodeId=
-                          boxTexturedMeshDiffuseMap
-                          |> MainEditorAssetTextureNodeTool.findTextureNodeIdByTextureComponent(
-                               _,
-                               editorState,
-                             )
-                          |> OptionService.unsafeGet,
-                        ~material=materialComponent1,
-                        (),
-                      );
+                         let firstCubeMaterial =
+                           firstCube
+                           |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                                _,
+                                engineState,
+                              );
 
-                      editorState |> StateEditorService.setState |> ignore;
-                      engineState |> StateEngineService.setState |> ignore;
-
-                      MainEditorMaterialTool.changeMaterial(
-                        ~sourceMaterial=
-                          GameObjectTool.getCurrentSceneTreeNodeLightMaterial(),
-                        ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
-                        ~targetMaterial=materialComponent1,
-                        ~targetMaterialType=MaterialDataAssetType.LightMaterial,
-                        ~gameObject=
-                          GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-                        ~materialNodeId=Some(addedMaterialNodeId1),
-                        (),
-                      );
-
-                      let wpkArrayBuffer = ExportPackageTool.exportWPK();
-
-                      ImportPackageTool.testImportPackageWithoutExport(
-                        ~wpkArrayBuffer,
-                        ~testFunc=
-                          () => {
-                            let engineState = StateEngineService.unsafeGetState();
-
-                            let firstCube =
-                              SceneToolEngine.findGameObjectByName(
-                                firstCubeName,
+                         (
+                           firstCubeMaterial
+                           |> LightMaterialEngineService.unsafeGetLightMaterialName(
+                                _,
+                                engineState,
+                              ),
+                           firstCubeMaterial
+                           |> LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
+                                _,
                                 engineState,
                               )
-                              |> ArrayService.unsafeGetFirst;
-
-                            let firstCubeMaterial =
-                              firstCube
-                              |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-                                   _,
-                                   engineState,
-                                 );
-
-                            (
-                              error^ |> getCallCount,
-                              firstCubeMaterial
-                              |> LightMaterialEngineService.unsafeGetLightMaterialName(
-                                   _,
-                                   engineState,
-                                 ),
-                              firstCubeMaterial
-                              |> LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
-                                   _,
-                                   engineState,
-                                 )
-                              |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
-                                   _,
-                                   engineState,
-                                 ),
+                           |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
+                                _,
+                                engineState,
+                              ),
+                         )
+                         |> expect
+                         == (
+                              materialComponent1Name,
+                              boxTexturedMeshDiffuseMapName,
                             )
-                            |> expect
-                            == (
-                                 0,
-                                 materialComponent1Name,
-                                 boxTexturedMeshDiffuseMapName,
-                               )
-                            |> resolve;
-                          },
-                        (),
-                      );
-                    });
-               },
-             ); */
+                         |> resolve;
+                       },
+                     (),
+                   );
+                 });
+            },
+          );
           testPromise(
             {|
           add gameObject g1 to scene tree;
@@ -3741,9 +3738,8 @@ let _ =
           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
           |> ignore;
         });
-        /* TODO need pass this test */
-        /* testPromise(
-             {|
+        testPromise(
+          {|
              load wdb w1;
              add folder f1 to root;
              enter f1;
@@ -3754,51 +3750,51 @@ let _ =
 
              should show w2->materials;
              |},
-             () =>
-             MainEditorAssetUploadTool.loadOneWDB(
-               ~arrayBuffer=boxTexturedWDBArrayBuffer^,
-               (),
-             )
-             |> then_(_ => {
-                  let addedFolderNodeId = MainEditorAssetIdTool.getNewAssetId();
+          () =>
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            (),
+          )
+          |> then_(_ => {
+               let addedFolderNodeId = MainEditorAssetIdTool.getNewAssetId();
 
-                  MainEditorAssetHeaderOperateNodeTool.addFolder();
+               MainEditorAssetHeaderOperateNodeTool.addFolder();
 
-                  MainEditorAssetTreeTool.Select.selectFolderNode(
-                    ~nodeId=addedFolderNodeId,
-                    (),
+               MainEditorAssetTreeTool.Select.selectFolderNode(
+                 ~nodeId=addedFolderNodeId,
+                 (),
+               );
+
+               MainEditorAssetUploadTool.loadOneWDB(
+                 ~arrayBuffer=truckWDBArrayBuffer^,
+                 (),
+               )
+               |> then_(_ =>
+                    ImportPackageTool.testImportPackage(
+                      ~testFunc=
+                        () => {
+                          let truckMaterialsFolderId =
+                            MainEditorAssetTreeTool.findNodeIdsByName(
+                              "Materials",
+                            )
+                            |> StateLogicService.getStateToGetData
+                            |> OptionService.unsafeGet
+                            |> List.nth(_, 1);
+
+                          MainEditorAssetTreeTool.Select.selectFolderNode(
+                            ~nodeId=truckMaterialsFolderId,
+                            (),
+                          );
+
+                          BuildComponentTool.buildAssetChildrenNode()
+                          |> ReactTestTool.createSnapshotAndMatch
+                          |> resolve;
+                        },
+                      (),
+                    )
                   );
-
-                  MainEditorAssetUploadTool.loadOneWDB(
-                    ~arrayBuffer=truckWDBArrayBuffer^,
-                    (),
-                  )
-                  |> then_(_ =>
-                       ImportPackageTool.testImportPackage(
-                         ~testFunc=
-                           () => {
-                             let truckMaterialsFolderId =
-                               MainEditorAssetTreeTool.findNodeIdsByName(
-                                 "Materials",
-                               )
-                               |> StateLogicService.getStateToGetData
-                               |> OptionService.unsafeGet
-                               |> List.nth(_, 1);
-
-                             MainEditorAssetTreeTool.Select.selectFolderNode(
-                               ~nodeId=truckMaterialsFolderId,
-                               (),
-                             );
-
-                             BuildComponentTool.buildAssetChildrenNode()
-                             |> ReactTestTool.createSnapshotAndMatch
-                             |> resolve;
-                           },
-                         (),
-                       )
-                     );
-                })
-           ); */
+             })
+        );
       });
     });
   });

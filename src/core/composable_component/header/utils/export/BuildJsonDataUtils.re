@@ -176,7 +176,8 @@ let _getTextureIndexFromMap = (textureComponent, textureIndexMap) =>
     ->Some
   };
 
-let _buildMaterialData = (textureIndexMap, (editorState, engineState)) =>
+let _buildMaterialData =
+    (imageIndexMap, textureIndexMap, (editorState, engineState)) =>
   MaterialNodeAssetEditorService.findAllMaterialNodes(editorState)
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. (basicMaterialArr, lightMaterialArr), node) => {
@@ -187,8 +188,14 @@ let _buildMaterialData = (textureIndexMap, (editorState, engineState)) =>
              (editorState, engineState),
            );
 
-         let {materialComponent, type_}: NodeAssetType.materialNodeData =
+         let {materialComponent, type_, imageDataIndex}: NodeAssetType.materialNodeData =
            MaterialNodeAssetService.getNodeData(node);
+
+         let snapshot =
+           imageIndexMap
+           |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
+                imageDataIndex,
+              );
 
          switch (type_) {
          | BasicMaterial => (
@@ -197,6 +204,7 @@ let _buildMaterialData = (textureIndexMap, (editorState, engineState)) =>
                   {
                     name,
                     path,
+                    snapshot,
                     color:
                       BasicMaterialEngineService.getColor(
                         materialComponent,
@@ -213,6 +221,7 @@ let _buildMaterialData = (textureIndexMap, (editorState, engineState)) =>
                   {
                     name,
                     path,
+                    snapshot,
                     diffuseColor:
                       LightMaterialEngineService.getLightMaterialDiffuseColor(
                         materialComponent,
@@ -392,7 +401,11 @@ let buildJsonData = (imageUint8ArrayMap, (editorState, engineState)) => {
   let (textureIndexMap, textureArr) =
     _buildTextureData(imageIndexMap, (editorState, engineState));
   let (basicMaterialArr, lightMaterialArr) =
-    _buildMaterialData(textureIndexMap, (editorState, engineState));
+    _buildMaterialData(
+      imageIndexMap,
+      textureIndexMap,
+      (editorState, engineState),
+    );
   let (
     engineState,
     wdbArr,

@@ -8,6 +8,8 @@ open Sinon;
 
 open Js.Promise;
 
+open NodeAssetType;
+
 let _ =
   describe("header export package", () => {
     let sandbox = getSandboxDefaultVal();
@@ -99,5 +101,77 @@ let _ =
           );
         })
       );
+
+      describe("test export all material's snapshot", () => {
+        test(
+          "add new material;
+           export;
+
+           should export material default base64;",
+          () => {
+            let addedMaterialNodeId = MainEditorAssetIdTool.getNewAssetId();
+
+            MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+            let wpkArrayBuffer = ExportPackageTool.exportWPK();
+
+            let editorState = StateEditorService.getState();
+
+            let {imageDataIndex}: materialNodeData =
+              editorState
+              |> OperateTreeAssetEditorService.unsafeFindNodeById(
+                   addedMaterialNodeId,
+                 )
+              |> MaterialNodeAssetService.getNodeData;
+
+            editorState
+            |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
+            |> (
+              ({base64, uint8Array}) =>
+                uint8Array
+                |> OptionService.unsafeGet
+                |> expect
+                == BufferUtils.convertBase64ToUint8Array(
+                     ExportPackageTool.getDefaultSnapshotBase64(),
+                   )
+            );
+          },
+        );
+        /* test(
+          "add new material m1;
+           change m1 diffuse color;k
+           export;
+
+           should export material default base64;",
+          () => {
+            let addedMaterialNodeId = MainEditorAssetIdTool.getNewAssetId();
+
+            MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+            let wpkArrayBuffer = ExportPackageTool.exportWPK();
+
+            let editorState = StateEditorService.getState();
+
+            let {imageDataIndex}: materialNodeData =
+              editorState
+              |> OperateTreeAssetEditorService.unsafeFindNodeById(
+                   addedMaterialNodeId,
+                 )
+              |> MaterialNodeAssetService.getNodeData;
+
+            editorState
+            |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
+            |> (
+              ({base64, uint8Array}) =>
+                uint8Array
+                |> OptionService.unsafeGet
+                |> expect
+                == BufferUtils.convertBase64ToUint8Array(
+                     ExportPackageTool.getDefaultSnapshotBase64(),
+                   )
+            );
+          },
+        ); */
+      });
     });
   });

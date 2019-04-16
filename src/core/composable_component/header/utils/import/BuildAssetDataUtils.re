@@ -2,12 +2,9 @@ open Js.Typed_array;
 
 open Js.Promise;
 
-let _buildLoadImageStream = (arrayBuffer, mimeType, errorMsg) => {
-  let blob = Blob.newBlobFromArrayBuffer(arrayBuffer, mimeType);
-
-  LoadImageUtils.loadBlobImage(blob |> Blob.createObjectURL, errorMsg)
+let _buildLoadImageStream = (blob, blobObjectURL, mimeType, errorMsg) =>
+  LoadImageUtils.loadBlobImage(blobObjectURL, errorMsg)
   |> WonderBsMost.Most.tap(image => Blob.revokeObjectURL(blob));
-};
 
 let _getArrayBuffer =
     (buffer, bufferView, bufferViews: array(ExportAssetType.bufferView)) => {
@@ -31,11 +28,14 @@ let buildImageData =
          imageIndex,
        ) => {
          let arrayBuffer = _getArrayBuffer(buffer, bufferView, bufferViews);
+         let blob = Blob.newBlobFromArrayBuffer(arrayBuffer, mimeType);
+         let blobObjectURL = blob |> Blob.createObjectURL;
 
          streamArr
          |> ArrayService.push(
               _buildLoadImageStream(
-                arrayBuffer,
+                blob,
+                blobObjectURL,
                 mimeType,
                 {j|load image error. imageIndex: $imageIndex|j},
               )
@@ -45,13 +45,7 @@ let buildImageData =
                    image;
                  })
               |> WonderBsMost.Most.map(image =>
-                   (
-                     image,
-                     Uint8Array.fromBuffer(arrayBuffer),
-                     imageIndex,
-                     name,
-                     mimeType,
-                   )
+                   (image, blobObjectURL, imageIndex, name, mimeType)
                  ),
             );
        },
@@ -61,7 +55,7 @@ let buildImageData =
   |> WonderBsMost.Most.reduce(
        (
          (imageMap, imageDataIndexMap, editorState),
-         (image, uint8Array, imageIndex, name, mimeType),
+         (image, blobObjectURL, imageIndex, name, mimeType),
        ) => {
          let (editorState, imageDataIndex) =
            IndexAssetEditorService.generateImageDataMapIndex(editorState);
@@ -79,7 +73,8 @@ let buildImageData =
                 imageDataIndex,
                 ImageDataMapAssetService.buildData(
                   ~base64=None,
-                  ~uint8Array=Some(uint8Array),
+                  ~uint8Array=None,
+                  ~blobObjectURL=Some(blobObjectURL),
                   ~name,
                   ~mimeType,
                   (),
@@ -229,7 +224,11 @@ let buildTextureData =
      );
 
 let _buildMaterialEditorData =
-    (material, path, type_, (editorState, engineState)) => {
+    (
+      (material, path, type_),
+      (snapshot, imageDataIndexMap),
+      (editorState, engineState),
+    ) => {
   let (editorState, assetNodeId) =
     IdAssetEditorService.generateNodeId(editorState);
 
@@ -239,10 +238,6 @@ let _buildMaterialEditorData =
       (editorState, engineState),
     );
 
-  let (editorState, newImageDataIndex) =
-    IndexAssetEditorService.generateImageDataMapIndex(editorState);
-
-  /*TODO import ASB, create imageDataIndex to store asb's material uint8array */
   editorState
   |> MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
        parentFolderNode,
@@ -250,27 +245,20 @@ let _buildMaterialEditorData =
          ~nodeId=assetNodeId,
          ~type_,
          ~materialComponent=material,
-         ~imageDataIndex=newImageDataIndex,
-       ),
-     )
-  |> ImageDataMapAssetEditorService.setData(
-       newImageDataIndex,
-       ImageDataMapAssetService.buildData(
-         ~base64=None,
-         ~uint8Array=None,
-         ~name="material",
-         ~mimeType=ImageUtils.getDefaultMimeType(),
-         (),
+         ~imageDataIndex=
+           imageDataIndexMap
+           |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(snapshot),
        ),
      );
 };
 
-let _buildBasicMaterialData = (basicMaterials, (editorState, engineState)) =>
+let _buildBasicMaterialData =
+    (basicMaterials, imageDataIndexMap, (editorState, engineState)) =>
   basicMaterials
   |> WonderCommonlib.ArrayService.reduceOneParami(
        (.
          (basicMaterialMap, (editorState, engineState)),
-         {name, path, color}: ExportAssetType.basicMaterial,
+         {name, path, snapshot, color}: ExportAssetType.basicMaterial,
          materialIndex,
        ) => {
          let (engineState, material) =
@@ -283,9 +271,8 @@ let _buildBasicMaterialData = (basicMaterials, (editorState, engineState)) =>
 
          let editorState =
            _buildMaterialEditorData(
-             material,
-             path,
-             MaterialDataAssetType.BasicMaterial,
+             (material, path, MaterialDataAssetType.BasicMaterial),
+             (snapshot, imageDataIndexMap),
              (editorState, engineState),
            );
 
@@ -305,12 +292,16 @@ let _buildBasicMaterialData = (basicMaterials, (editorState, engineState)) =>
      );
 
 let _buildLightMaterialData =
-    (lightMaterials, textureMap, (editorState, engineState)) =>
+    (
+      lightMaterials,
+      (imageDataIndexMap, textureMap),
+      (editorState, engineState),
+    ) =>
   lightMaterials
   |> WonderCommonlib.ArrayService.reduceOneParami(
        (.
          (lightMaterialMap, (editorState, engineState)),
-         {name, diffuseColor, diffuseMap, shininess, path}: ExportAssetType.lightMaterial,
+         {name, diffuseColor, diffuseMap, shininess, snapshot, path}: ExportAssetType.lightMaterial,
          materialIndex,
        ) => {
          let (engineState, material) =
@@ -347,9 +338,8 @@ let _buildLightMaterialData =
 
          let editorState =
            _buildMaterialEditorData(
-             material,
-             path,
-             MaterialDataAssetType.LightMaterial,
+             (material, path, MaterialDataAssetType.LightMaterial),
+             (snapshot, imageDataIndexMap),
              (editorState, engineState),
            );
 
@@ -371,15 +361,19 @@ let _buildLightMaterialData =
 let buildMaterialData =
     (
       {basicMaterials, lightMaterials}: ExportAssetType.assets,
-      textureMap,
+      (imageDataIndexMap, textureMap),
       (editorState, engineState),
     ) => {
   let (basicMaterialMap, (editorState, engineState)) =
-    _buildBasicMaterialData(basicMaterials, (editorState, engineState));
+    _buildBasicMaterialData(
+      basicMaterials,
+      imageDataIndexMap,
+      (editorState, engineState),
+    );
   let (lightMaterialMap, (editorState, engineState)) =
     _buildLightMaterialData(
       lightMaterials,
-      textureMap,
+      (imageDataIndexMap, textureMap),
       (editorState, engineState),
     );
 
