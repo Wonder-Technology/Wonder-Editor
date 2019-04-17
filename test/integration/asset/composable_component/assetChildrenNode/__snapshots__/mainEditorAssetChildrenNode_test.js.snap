@@ -40,26 +40,6 @@ exports[`MainEditorAssetChildrenNode test asset tree node->isShowChildren render
     >
       <img
         onDragStart={[Function]}
-        src="./public/img/mat.jpg"
-      />
-    </div>
-    <div
-      className="item-text "
-    >
-      <span>
-        material1
-      </span>
-    </div>
-  </article>
-  <article
-    className="wonder-asset-fileBox "
-    onClick={[Function]}
-  >
-    <div
-      className="box-image"
-    >
-      <img
-        onDragStart={[Function]}
         src="data:image/png;base64 for img-canvas"
       />
     </div>

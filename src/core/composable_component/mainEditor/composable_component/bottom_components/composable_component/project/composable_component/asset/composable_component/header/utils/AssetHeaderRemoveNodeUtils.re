@@ -35,7 +35,7 @@ let _createAllMaterialSnapshot =
          material,
          (editorState, engineState),
        )
-    |> DirectorEngineService.loopBody(0.);
+    |> StateLogicService.renderInspectorEngineStateAndReturnState;
 
   let editorState =
     editorState

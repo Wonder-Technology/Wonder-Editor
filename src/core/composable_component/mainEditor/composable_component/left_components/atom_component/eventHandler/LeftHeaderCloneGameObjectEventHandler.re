@@ -50,7 +50,7 @@ module CustomEventHandler = {
     editorState |> StateEditorService.setState |> ignore;
 
     let engineState =
-      StateLogicService.refreshEngineStateAndReturnEngineState(engineState);
+      StateLogicService.renderEngineStateAndReturnEngineState(engineState);
 
     engineState;
   };

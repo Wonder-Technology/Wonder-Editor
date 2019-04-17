@@ -13,7 +13,7 @@ let refreshEngineState = engineState =>
   |> StateEngineService.setState
   |> ignore;
 
-let refreshEngineStateAndReturnEngineState = engineState =>
+let renderEngineStateAndReturnEngineState = engineState =>
   engineState |> DirectorEngineService.loopBody(0.);
 
 let getAndRefreshEngineState = () =>
@@ -50,6 +50,9 @@ let getAndRefreshEngineStateWhenStop = () =>
 let renderWhenStop = engineState =>
   StateEditorService.getIsRun() ?
     engineState : engineState |> DirectorEngineService.loopBody(0.);
+
+let renderInspectorEngineStateAndReturnState = inspectorEngineState =>
+  inspectorEngineState |> DirectorEngineService.loopBody(0.);
 
 let refreshInspectorEngineState = inspectorEngineState =>
   inspectorEngineState
