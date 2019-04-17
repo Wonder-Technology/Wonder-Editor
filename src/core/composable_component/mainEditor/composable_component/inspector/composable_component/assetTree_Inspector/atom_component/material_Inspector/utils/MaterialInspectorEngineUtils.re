@@ -62,6 +62,35 @@ let createMaterialSphereIntoInspectorCanvas =
       (editorState, engineState),
       inspectorEngineState,
     ) => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect=
+                  {j|inspector canvas-> container gameObject -> children is empty|j},
+                ~actual={j|not|j},
+              ),
+              () => {
+                let containerGameObject =
+                  editorState
+                  |> ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject;
+
+                inspectorEngineState
+                |> HierarchyGameObjectEngineService.getChildren(
+                     containerGameObject,
+                   )
+                |> Js.Array.length == 0;
+              },
+            )
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
   let containerGameObject =
     editorState
     |> ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject;

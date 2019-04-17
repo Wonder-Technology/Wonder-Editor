@@ -1972,7 +1972,7 @@ let _ =
           );
         });
 
-        describe("should draw all material snapshot", () =>
+        describe("should draw all materials->snapshot", () =>
           testPromise(
             {j|
               add new material m1;
@@ -1981,7 +1981,7 @@ let _ =
               export;
               import;
 
-              should use imgCanvas create snapshot to createObjectURL
+              m1->snapshot should equal between before import and after import;
               |j},
             () => {
               let (
@@ -1994,6 +1994,16 @@ let _ =
                   ~sandbox,
                   (),
                 );
+              let newMaterialName =
+                OperateTreeAssetLogicService.getNodeNameById(
+                  addedMaterialNodeId,
+                  (
+                    StateEditorService.getState(),
+                    StateEngineService.unsafeGetState(),
+                  ),
+                )
+                |> OptionService.unsafeGet;
+
               let materialSnapshotObjectURL = "redraw_material_snapshot_objectURL";
 
               MainEditorLightMaterialForAssetTool.closeColorPicker(
@@ -2005,13 +2015,11 @@ let _ =
 
               let uint8Array =
                 BufferUtils.convertBase64ToUint8Array(imgCanvasFakeBase64Str);
-
               let blob =
                 Blob.newBlobFromArrayBuffer(
                   uint8Array |> Js.Typed_array.Uint8Array.buffer,
                   "image/png",
                 );
-
               let createObjectURL = LoadTool.getFakeCreateObjectURL();
 
               createObjectURL
@@ -2020,10 +2028,30 @@ let _ =
 
               ImportPackageTool.testImportPackage(
                 ~testFunc=
-                  () =>
-                    BuildComponentTool.buildAssetChildrenNode()
-                    |> ReactTestTool.createSnapshotAndMatch
-                    |> resolve,
+                  () => {
+                    let editorState = StateEditorService.getState();
+                    let engineState = StateEngineService.unsafeGetState();
+
+                    let {imageDataIndex}: NodeAssetType.materialNodeData =
+                      OperateTreeAssetLogicService.findNodeByName(
+                        newMaterialName,
+                        (editorState, engineState),
+                      )
+                      |> OptionService.unsafeGet
+                      |> MaterialNodeAssetService.getNodeData;
+
+                    editorState
+                    |> ImageDataMapAssetEditorService.unsafeGetData(
+                         imageDataIndex,
+                       )
+                    |> (
+                      ({blobObjectURL}) =>
+                        blobObjectURL
+                        |> OptionService.unsafeGet
+                        |> expect == materialSnapshotObjectURL
+                        |> resolve
+                    );
+                  },
                 (),
               );
             },

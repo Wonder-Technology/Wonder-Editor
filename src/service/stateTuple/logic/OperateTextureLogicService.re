@@ -44,7 +44,7 @@ let changeTextureMapAndRefreshEngineState =
     (material, textureComponent, setMapFunc, engineState) => {
   let engineState = engineState |> setMapFunc(textureComponent, material);
 
-  StateLogicService.refreshEngineStateAndReturnEngineState(engineState);
+  StateLogicService.renderEngineStateAndReturnEngineState(engineState);
 };
 
 let _handleMapAndUpdateShaderAndRefreshEngineState =
@@ -56,7 +56,7 @@ let _handleMapAndUpdateShaderAndRefreshEngineState =
   engineState
   |> handleMapFunc(material)
   |> reInitMaterialsAndClearShaderCacheFunc([|material|])
-  |> StateLogicService.refreshEngineStateAndReturnEngineState;
+  |> StateLogicService.renderEngineStateAndReturnEngineState;
 
 let handleMaterialComponentFromNoMapToHasMap =
     (

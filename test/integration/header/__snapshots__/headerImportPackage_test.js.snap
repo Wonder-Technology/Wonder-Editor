@@ -1378,6 +1378,41 @@ exports[`header import package test import assets test import material assets sh
 </article>
 `;
 
+exports[`header import package test import assets test import material assets should draw all materials->snapshot 
+              add new material m1;
+              change m1 color;
+              close color picker;
+              export;
+              import;
+
+              m1->snapshot should equal between before import and after import;
+               1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="redraw_material_snapshot_objectURL"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Material
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
 exports[`header import package test import assets test import texture assets should add texture assets to asset tree 1`] = `
 <article
   className="wonder-asset-assetChildren"

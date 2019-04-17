@@ -48,6 +48,7 @@ let insertMaterialNode =
        ImageDataMapAssetService.buildData(
          ~base64=None,
          ~uint8Array=None,
+         ~blobObjectURL=None,
          ~name="material",
          ~mimeType=ImageUtils.getDefaultMimeType(),
          (),
@@ -105,6 +106,7 @@ let insertTextureNode =
          ImageDataMapAssetService.buildData(
            ~base64=Some(imageSrc),
            ~uint8Array=None,
+           ~blobObjectURL=None,
            ~name=textureName ++ extName,
            ~mimeType=ImageUtils.getImageMimeType(extName, editorState),
            (),

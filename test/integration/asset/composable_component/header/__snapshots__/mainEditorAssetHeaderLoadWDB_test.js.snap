@@ -196,6 +196,33 @@ exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loade
 </article>
 `;
 
+exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract material assets if wdb->material not exist in assets, extract them and add to assets should draw all materials->snapshot 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="data:image/png;base64 for img-canvas"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        Texture
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
 exports[`MainEditorAssetHeader->load wdb test load wdb extract assets from loaded wdb asset extract script attribute assets if wdb->script attribute not exist in assets, extract them and add to assets should add "ScriptAttributes" folder node and add scriptAttribute node into it test load the same wdb twice 1`] = `
 <article
   className="wonder-asset-assetChildren"

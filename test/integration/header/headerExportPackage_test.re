@@ -134,12 +134,12 @@ let _ =
         })
       );
 
-      describe("test export all material's snapshot", () => {
+      describe("test export all materials->snapshot", () => {
         test(
-          "add new material;
+          "add new material m1;
            export;
 
-           should export material default base64 to uint8Array;",
+           should convert m1->snapshot->default base64 to uint8Array;",
           () => {
             let addedMaterialNodeId = MainEditorAssetIdTool.getNewAssetId();
 
@@ -175,7 +175,7 @@ let _ =
            close color picker;
            export;
 
-           should convert base64 to uint8Array;",
+           should convert m1->snapshot->base64 to uint8Array;",
           () => {
             let (
               addedMaterialNodeId,
@@ -212,7 +212,7 @@ let _ =
               ({base64, uint8Array}) =>
                 uint8Array
                 |> OptionService.unsafeGet
-                |> expect == BufferUtils.convertBase64ToUint8Array(base64)
+                |> expect == BufferUtils.convertBase64ToUint8Array(imgCanvasFakeBase64Str)
             );
           },
         );
