@@ -12,7 +12,7 @@ open Js.Promise;
 
 let createNewMaterial = () => {
   let assetTreeData =
-    MainEditorAssetTreeTool.BuildAssetTree.Material.buildOneMaterialAssetTree();
+    MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
   let addedMaterialNodeId = MainEditorAssetIdTool.getNewAssetId();
 
   MainEditorAssetHeaderOperateNodeTool.addMaterial();

@@ -59,7 +59,7 @@ let importASB = asb => {
 
        BuildAssetDataUtils.buildMaterialData(
          asbRecord,
-         textureMap,
+         (imageDataIndexMap, textureMap),
          (editorState, engineState),
        );
      })

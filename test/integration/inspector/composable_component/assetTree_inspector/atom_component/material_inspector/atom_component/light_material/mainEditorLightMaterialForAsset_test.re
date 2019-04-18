@@ -444,7 +444,7 @@ let _ =
 
           describe("close color picker", () =>
             test(
-              "test exec light material colose color picker eventHandler", () => {
+              "test exec light material close color picker eventHandler", () => {
               let (
                 addedMaterialNodeId,
                 newMaterialComponent,
@@ -456,8 +456,7 @@ let _ =
                   (),
                 );
 
-              MainEditorLightMaterialForAssetTool.closeColorPicker(
-                ~currentNodeId=addedMaterialNodeId,
+              MainEditorLightMaterialForAssetTool.closeColorPicker( ~currentNodeId=addedMaterialNodeId,
                 ~material=newMaterialComponent,
                 ~color="#7df1e8",
                 (),

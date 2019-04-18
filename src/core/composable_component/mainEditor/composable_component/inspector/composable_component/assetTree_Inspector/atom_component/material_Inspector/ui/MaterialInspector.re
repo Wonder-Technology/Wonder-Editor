@@ -7,10 +7,7 @@ module Method = {
   let changeMaterialType = InspectorChangeMaterialTypeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let didMount = (type_, materialComponent) => {
-    DomHelper.setDomDisplay(
-      DomHelper.getElementById("inspectorCanvasParent"),
-      true,
-    );
+    AssetTreeInspectorUtils.showInspectorCanvas();
 
     StateInspectorEngineService.unsafeGetState()
     |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
@@ -21,21 +18,7 @@ module Method = {
     |> StateLogicService.refreshInspectorEngineState;
   };
 
-  let willUnmount = () => {
-    DomHelper.setDomDisplay(
-      DomHelper.getElementById("inspectorCanvasParent"),
-      false,
-    );
-
-    (
-      StateEditorService.getState(),
-      StateInspectorEngineService.unsafeGetState(),
-    )
-    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
-    |> JobEngineService.execDisposeJob
-    |> StateInspectorEngineService.setState
-    |> ignore;
-  };
+  let willUnmount = AssetTreeInspectorUtils.hideInspectorCanvasAndDisposeContainerGameObjectAllChildren;
 };
 
 let component = ReasonReact.reducerComponent("MaterialInspector");

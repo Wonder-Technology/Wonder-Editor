@@ -591,6 +591,92 @@ module AssetTree = {
       (editorState, newNode);
     };
 
+  let _createMateiralNodeAndSnapshot =
+      (folderNode, (material, materialName), editorState) => {
+    let (editorState, newNodeId) =
+      IdAssetEditorService.generateNodeId(editorState);
+    let (editorState, newImageDataIndex) =
+      IndexAssetEditorService.generateImageDataMapIndex(editorState);
+
+    editorState
+    |> MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
+         folderNode,
+         MaterialNodeAssetService.buildNode(
+           ~nodeId=newNodeId,
+           ~type_=MaterialDataAssetType.LightMaterial,
+           ~materialComponent=material,
+           ~imageDataIndex=newImageDataIndex,
+         ),
+       )
+    |> ImageDataMapAssetEditorService.setData(
+         newImageDataIndex,
+         ImageDataMapAssetService.buildData(
+           ~base64=None,
+           ~uint8Array=None,
+           ~name=materialName,
+           ~blobObjectURL=None,
+           ~mimeType=ImageUtils.getDefaultMimeType(),
+           (),
+         ),
+       )
+    |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByNodeId(
+         DomHelper.getElementById("inspector-canvas"),
+         DomHelper.getElementById("img-canvas"),
+         newNodeId,
+       );
+  };
+
+  let _iterateMaterialArrayBuildMaterialNodes =
+      (
+        extractedMaterialAssetDataArr,
+        folderNode,
+        (editorState, engineState, inspectorEngineState),
+      ) =>
+    extractedMaterialAssetDataArr
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (.
+           (editorState, engineState, inspectorEngineState),
+           ((material, materialType), (getNameFunc, setNameFunc)),
+         ) => {
+           let materialName =
+             getNameFunc(~material, ~type_=materialType, ~engineState)
+             ->(
+                 OperateTreeAssetLogicService.getUniqueNodeName(
+                   folderNode,
+                   engineState,
+                 )
+               );
+
+           let engineState =
+             setNameFunc(
+               ~material,
+               ~type_=materialType,
+               ~name=materialName,
+               ~engineState,
+             );
+
+           let inspectorEngineState =
+             (editorState, inspectorEngineState)
+             |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildren
+             |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
+                  MaterialDataAssetType.LightMaterial,
+                  material,
+                  (editorState, engineState),
+                )
+             |> StateLogicService.renderInspectorEngineStateAndReturnState;
+
+           let editorState =
+             _createMateiralNodeAndSnapshot(
+               folderNode,
+               (material, materialName),
+               editorState,
+             );
+
+           (editorState, engineState, inspectorEngineState);
+         },
+         (editorState, engineState, inspectorEngineState),
+       );
+
   let _addMaterialNodeToAssetTree =
       (
         extractedMaterialAssetDataArr,
@@ -609,87 +695,20 @@ module AssetTree = {
             (editorState, engineState),
           );
 
-        let (editorState, engineState) =
-          extractedMaterialAssetDataArr
-          |> WonderCommonlib.ArrayService.reduceOneParam(
-               (.
-                 (editorState, engineState),
-                 ((material, materialType), (getNameFunc, setNameFunc)),
-               ) => {
-                 let materialName =
-                   getNameFunc(~material, ~type_=materialType, ~engineState)
-                   ->(
-                       OperateTreeAssetLogicService.getUniqueNodeName(
-                         folderNode,
-                         engineState,
-                       )
-                     );
+        let (editorState, engineState, inspectorEngineState) =
+          _iterateMaterialArrayBuildMaterialNodes(
+            extractedMaterialAssetDataArr,
+            folderNode,
+            (
+              editorState,
+              engineState,
+              StateInspectorEngineService.unsafeGetState(),
+            ),
+          );
 
-                 let engineState =
-                   setNameFunc(
-                     ~material,
-                     ~type_=materialType,
-                     ~name=materialName,
-                     ~engineState,
-                   );
-
-                 /* TODO need refactor
-                    TODO need test */
-
-                 let (editorState, newNodeId) =
-                   IdAssetEditorService.generateNodeId(editorState);
-                 let (editorState, newImageDataIndex) =
-                   IndexAssetEditorService.generateImageDataMapIndex(
-                     editorState,
-                   );
-
-                 (editorState, StateInspectorEngineService.unsafeGetState())
-                 |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
-                 |> JobEngineService.execDisposeJob
-                 |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
-                      MaterialDataAssetType.LightMaterial,
-                      material,
-                      (editorState, engineState),
-                    )
-                 |> StateLogicService.refreshInspectorEngineState;
-
-                 let editorState =
-                   editorState
-                   |> MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
-                        folderNode,
-                        MaterialNodeAssetService.buildNode(
-                          ~nodeId=newNodeId,
-                          ~type_=MaterialDataAssetType.LightMaterial,
-                          ~materialComponent=material,
-                          ~imageDataIndex=newImageDataIndex,
-                        ),
-                      )
-                   |> ImageDataMapAssetEditorService.setData(
-                        newImageDataIndex,
-                        ImageDataMapAssetService.buildData(
-                          ~base64=None,
-                          ~uint8Array=None,
-                          ~name=materialName,
-                          ~mimeType=ImageUtils.getDefaultMimeType(),
-                          (),
-                        ),
-                      )
-                   |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByNodeId(
-                        DomHelper.getElementById("inspector-canvas"),
-                        DomHelper.getElementById("img-canvas"),
-                        newNodeId,
-                      );
-
-                 (editorState, engineState);
-               },
-               (editorState, engineState),
-             );
-
-        (editorState, StateInspectorEngineService.unsafeGetState())
-        |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
-        |> JobEngineService.execDisposeJob
-        |> StateInspectorEngineService.setState
-        |> ignore;
+        (editorState, inspectorEngineState)
+        |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildren
+        |> StateInspectorEngineService.setState;
 
         (editorState, engineState);
       };

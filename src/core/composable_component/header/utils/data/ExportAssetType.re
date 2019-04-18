@@ -47,12 +47,14 @@ type bufferView = {
 type basicMaterial = {
   name: string,
   path: string,
+  snapshot: imageIndex,
   color: array(float),
 };
 
 type lightMaterial = {
   name: string,
   path: string,
+  snapshot: imageIndex,
   diffuseColor: array(float),
   diffuseMap: option(textureIndex),
   shininess: float,
