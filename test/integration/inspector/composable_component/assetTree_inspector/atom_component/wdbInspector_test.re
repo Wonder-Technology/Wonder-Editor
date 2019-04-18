@@ -15,10 +15,12 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
+    let sceneWDBArrayBuffer = ref(Obj.magic(1));
 
-    beforeAll(() =>
-      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
-    );
+    beforeAll(() => {
+      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
+      sceneWDBArrayBuffer := WDBTool.generateSceneWDB();
+    });
 
     beforeEach(() => {
       sandbox := createSandbox();
@@ -59,11 +61,6 @@ let _ =
 
       CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
 
-      MainEditorSceneTool.createDefaultScene(
-        sandbox,
-        MainEditorAssetTool.initAssetTree,
-      );
-
       MainEditorAssetTool.buildFakeFileReader();
 
       LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
@@ -74,7 +71,14 @@ let _ =
 
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test rename", () =>
+    describe("test rename", () => {
+      beforeEach(() =>
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorAssetTool.initAssetTree,
+        )
+      );
+
       testPromise(
         "if rename to the existed name in the same dir, should fail", () => {
         let fileName1 = "BoxTextured1";
@@ -112,6 +116,47 @@ let _ =
                   |> resolve;
                 })
            );
+      });
+    });
+    describe("test draw wdb snapshot in didMount", () =>
+      test("test", () => {
+        EventListenerTool.buildFakeDom()
+        |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+
+        let (
+          addedMaterialNodeId,
+          newMaterialComponent,
+          imgCanvasFakeBase64Str,
+          (inspectorCanvasDom, imgCanvasDom),
+        ) =
+          MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+            ~sandbox,
+            (),
+          );
+        let (scene, (cube1, cube3, cube4), cube2) =
+          SceneTreeTool.buildFourLayerSceneGraphToEngine(sandbox);
+
+        WDBInspector.Method.didMount(scene);
+
+        1 |> expect == 1;
+        /* MainEditorAssetUploadTool.loadOneWDB(
+             ~arrayBuffer=sceneWDBArrayBuffer^,
+             (),
+           )
+           |> then_(uploadedWDBNodeId => {
+                let editorState = StateEditorService.getState();
+                let engineState = StateEngineService.unsafeGetState();
+
+                let wdbGameObject =
+                  MainEditorAssetWDBNodeTool.getWDBGameObject(
+                    uploadedWDBNodeId,
+                    editorState,
+                  );
+
+                WDBInspector.Method.didMount(scene);
+
+                1 |> expect == 1 |> resolve;
+              }); */
       })
     );
   });

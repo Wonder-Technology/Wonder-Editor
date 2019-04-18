@@ -12,7 +12,6 @@ open NodeAssetType;
 
 open Js.Promise;
 
-
 let _ =
   describe("MainEditorAssetHeader->load wdb", () => {
     let sandbox = getSandboxDefaultVal();
@@ -318,7 +317,7 @@ let _ =
             testPromise("should draw all materials->snapshot", () => {
               EventListenerTool.buildFakeDom()
               |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-/*  */
+
               let (
                 addedMaterialNodeId,
                 newMaterialComponent,
@@ -338,33 +337,38 @@ let _ =
                    let editorState = StateEditorService.getState();
                    let engineState = StateEngineService.unsafeGetState();
 
-                     let boxTexturedMeshGameObject =
-                       LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
-                         uploadedWDBNodeId,
-                         (editorState, engineState),
-                       );
-                     let material =
-                       boxTexturedMeshGameObject
-                       |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-                            _,
-                            engineState,
-                          );
+                   let boxTexturedMeshGameObject =
+                     LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
+                       uploadedWDBNodeId,
+                       (editorState, engineState),
+                     );
+                   let material =
+                     boxTexturedMeshGameObject
+                     |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                          _,
+                          engineState,
+                        );
 
-                      let {imageDataIndex } = 
-                          OperateTreeAssetEditorService.findMaterialNode(material, MaterialDataAssetType.LightMaterial, editorState ) 
-                          |> OptionService.unsafeGet
-                          |> MaterialNodeAssetService.getNodeData;
+                   let {imageDataIndex} =
+                     OperateTreeAssetEditorService.findMaterialNode(
+                       material,
+                       MaterialDataAssetType.LightMaterial,
+                       editorState,
+                     )
+                     |> OptionService.unsafeGet
+                     |> MaterialNodeAssetService.getNodeData;
 
-
-                    editorState
-                    |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
-                    |> (({base64}) => {
-                        base64 
-                        |> OptionService.unsafeGet 
-                        |> expect == imgCanvasFakeBase64Str
-                        |> resolve
-                    })
-
+                   editorState
+                   |> ImageDataMapAssetEditorService.unsafeGetData(
+                        imageDataIndex,
+                      )
+                   |> (
+                     ({base64}) =>
+                       base64
+                       |> OptionService.unsafeGet
+                       |> expect == imgCanvasFakeBase64Str
+                       |> resolve
+                   );
                  });
             });
           });

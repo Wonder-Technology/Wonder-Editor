@@ -143,6 +143,7 @@ module Method = {
       name={state.inputValue}
       onChangeFunc={_e => send(change(_e))}
       onBlurFunc={_e => send(Blur)}
+      wdbGameObject
     />;
 
   let showAssetNodeComponent =

@@ -1,8 +1,15 @@
 module Method = {
-  let didMount = () => {
+  let didMount = wdbGameObject => {
     Js.log("wdb did mount");
 
     AssetTreeInspectorUtils.showInspectorCanvas();
+
+    StateInspectorEngineService.unsafeGetState()
+    |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
+         wdbGameObject,
+         (StateEditorService.getState(), StateEngineService.unsafeGetState()),
+       )
+    |> StateLogicService.refreshInspectorEngineState;
   };
 
   let willUnmount = AssetTreeInspectorUtils.hideInspectorCanvasAndDisposeContainerGameObjectAllChildren;
@@ -30,9 +37,9 @@ let render = (name, (onChangeFunc, onBlurFunc), _self) =>
     </div>
   </article>;
 
-let make = (~name, ~onChangeFunc, ~onBlurFunc, _children) => {
+let make = (~name, ~onChangeFunc, ~onBlurFunc, ~wdbGameObject, _children) => {
   ...component,
   render: _self => render(name, (onChangeFunc, onBlurFunc), _self),
-  didMount: _self => Method.didMount(),
+  didMount: _self => Method.didMount(wdbGameObject),
   willUnmount: _self => Method.willUnmount(),
 };
