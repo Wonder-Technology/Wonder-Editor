@@ -61,7 +61,7 @@ let _buildAllPointsAndLocalToWolrdMatrices = (targetGameObject, engineState) =>
        );
      });
 
-let calcCenterAndDistance = (targetGameObject, engineState) =>
+let _calcCenterAndDistance = (targetGameObject, radiusRatio, engineState) =>
   switch (
     _buildAllPointsAndLocalToWolrdMatrices(targetGameObject, engineState)
   ) {
@@ -81,11 +81,11 @@ let calcCenterAndDistance = (targetGameObject, engineState) =>
 
     let center = AABBShapeUtils.getCenter(aabb);
 
-    (center, AABBShapeUtils.calcRadiusOfAABB(aabb, center) *. 2.5);
+    (center, AABBShapeUtils.calcRadiusOfAABB(aabb, center) *. radiusRatio);
   };
 
 let setEditorCameraFocusTargetGameObject =
-    (editCamera, targetGameObject, engineState) => {
+    (editCamera, targetGameObject, radiusRatio, engineState) => {
   WonderLog.Contract.requireCheck(
     () =>
       WonderLog.(
@@ -117,7 +117,7 @@ let setEditorCameraFocusTargetGameObject =
     );
 
   let (center, distance) =
-    engineState |> calcCenterAndDistance(targetGameObject);
+    engineState |> _calcCenterAndDistance(targetGameObject, radiusRatio);
 
   _setArcballCameraControllerFocusRelatedAttribute(
     editorCameraArcballControllerComponent,

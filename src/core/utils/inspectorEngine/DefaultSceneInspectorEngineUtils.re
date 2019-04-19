@@ -1,13 +1,41 @@
 let getAmbientLightArr = () => [|0.2, 0.2, 0.2|];
 
-let _initCameraAddToSceneGameObject = (camera, inspectorEngineState) =>
+let getCameraDefaultDistance = () => 1.1;
+
+let _initCameraAddToSceneGameObject = (camera, inspectorEngineState) => {
+  let (inspectorEngineState, arcballCameraController) =
+    ArcballCameraEngineService.create(inspectorEngineState);
+
   inspectorEngineState
-  |> TransformEngineService.setLocalPosition(
+  /* |> TransformEngineService.setLocalPosition(
        (0., 0., 1.1),
        GameObjectComponentEngineService.unsafeGetTransformComponent(
          camera,
          inspectorEngineState,
        ),
+     ) */
+  |> ArcballCameraEngineService.setArcballCameraControllerDistance(
+       getCameraDefaultDistance(),
+       arcballCameraController,
+     )
+  |> ArcballCameraEngineService.setArcballCameraControllerWheelSpeed(
+       arcballCameraController,
+       0.5,
+     )
+  |> ArcballCameraEngineService.setArcballCameraControllerMoveSpeedX(
+       arcballCameraController,
+       1.,
+     )
+  |> ArcballCameraEngineService.setArcballCameraControllerMoveSpeedY(
+       arcballCameraController,
+       1.,
+     )
+  |> ArcballCameraEngineService.setArcballCameraControllerTheta(
+       arcballCameraController,
+       1.5,
+     )
+  |> ArcballCameraControllerLogicService.bindArcballCameraControllerEventForSceneView(
+       arcballCameraController,
      )
   |> BasicCameraViewEngineService.activeBasicCameraView(
        inspectorEngineState
@@ -15,7 +43,13 @@ let _initCameraAddToSceneGameObject = (camera, inspectorEngineState) =>
             camera,
           ),
      )
+  |> GameObjectComponentEngineService.addArcballCameraControllerComponent(
+       camera,
+       arcballCameraController,
+     )
   |> SceneEngineService.addSceneChild(camera);
+};
+
 let _initDirectionLightAddToSceneGameObject =
     (directionLight, inspectorEngineState) =>
   inspectorEngineState

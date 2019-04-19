@@ -28,10 +28,21 @@ let importAssetWDB =
            engineState,
          );
 
+       /* TODO need test */
        let (editorState, newImageDataIndex) =
          editorState |> IndexAssetEditorService.generateImageDataMapIndex;
 
-       /* TODO need create wdb snapshot */
+       let inspectorEngineState =
+         (editorState, StateInspectorEngineService.unsafeGetState())
+         |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+         |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
+              gameObject,
+              (
+                StateEditorService.getState(),
+                StateEngineService.unsafeGetState(),
+              ),
+            )
+         |> StateLogicService.renderInspectorEngineStateAndReturnState;
 
        editorState
        /* |> WDBNodeMapAssetEditorService.setResult(
@@ -61,10 +72,16 @@ let importAssetWDB =
             ImageDataMapAssetService.buildData(
               ~base64=None,
               ~uint8Array=None,
+              ~blobObjectURL=None,
               ~name="wdb",
               ~mimeType=ImageUtils.getDefaultMimeType(),
               (),
             ),
+          )
+       |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByWDBNodeId(
+            DomHelper.getElementById("inspector-canvas"),
+            DomHelper.getElementById("img-canvas"),
+            wdbNodeId,
           )
        |> StateEditorService.setState
        |> ignore;
@@ -82,6 +99,10 @@ let importAssetWDB =
        allGameObjectsRef := allGameObjects;
        imageUint8ArrayDataMapRef := imageUint8ArrayDataMap;
 
+       inspectorEngineState
+       |> AssetTreeInspectorUtils.setCameraDistance
+       |> StateInspectorEngineService.setState
+       |> ignore;
        /* allGameObjects
           |> WonderCommonlib.ArrayService.reduceOneParam(
                (. engineState, gameObject) =>
@@ -91,8 +112,6 @@ let importAssetWDB =
           |> DirectorEngineService.loopBody(0.)
           |> StateEngineService.setState
           |> ignore; */
-
-       ();
      })
   |> WonderBsMost.Most.drain
   |> then_(_ =>

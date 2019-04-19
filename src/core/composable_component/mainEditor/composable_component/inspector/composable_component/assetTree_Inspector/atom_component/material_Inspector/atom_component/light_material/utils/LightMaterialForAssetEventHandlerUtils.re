@@ -11,7 +11,7 @@ let createImgCanvasSnapshotAfterUpdateInspector =
   )
   |> then_(_ => {
        StateEditorService.getState()
-       |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByNodeId(
+       |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByMaterialNodeId(
             DomHelper.getElementById("inspector-canvas"),
             DomHelper.getElementById("img-canvas"),
             currentNodeId,

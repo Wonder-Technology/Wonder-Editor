@@ -1,4 +1,4 @@
-let rec _iterateWDBGameObject =
+let rec _iterateCreateNewWDBGameObject =
         (gameObject, engineState, inspectorEngineState) => {
   let (newGameObject, inspectorEngineState) =
     CloneGameObjectLogicService.cloneGameObjectToOtherEngineState(
@@ -10,7 +10,6 @@ let rec _iterateWDBGameObject =
   let inspectorEngineState =
     inspectorEngineState
     |> GameObjectEngineService.initGameObject(newGameObject);
-  Js.log2("newGame", newGameObject);
 
   engineState |> HierarchyGameObjectEngineService.hasChildren(gameObject) ?
     engineState
@@ -18,7 +17,7 @@ let rec _iterateWDBGameObject =
     |> Js.Array.reduce(
          ((newGameObject, inspectorEngineState), gameObjectChild) => {
            let (newGameObjectChild, inspectorEngineState) =
-             _iterateWDBGameObject(
+             _iterateCreateNewWDBGameObject(
                gameObjectChild,
                engineState,
                inspectorEngineState,
@@ -42,16 +41,11 @@ let _setCameraDistance = (newWDBGameObject, inspectorEngineState) => {
   let camera =
     GameObjectInspectorEngineService.unsafeGetCamera(inspectorEngineState);
 
-  let (_center, distance) =
-    inspectorEngineState |> FocusUtils.calcCenterAndDistance(newWDBGameObject);
-
   inspectorEngineState
-  |> TransformEngineService.setLocalPosition(
-       (0., 0., distance),
-       GameObjectComponentEngineService.unsafeGetTransformComponent(
-         camera,
-         inspectorEngineState,
-       ),
+  |> FocusUtils.setEditorCameraFocusTargetGameObject(
+       camera,
+       newWDBGameObject,
+       1.9,
      );
 };
 
@@ -60,8 +54,13 @@ let createWDBIntoInspectorCanvas =
   let containerGameObject =
     editorState
     |> ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject;
+
   let (newWDBGameObject, inspectorEngineState) =
-    _iterateWDBGameObject(wdbGameObject, engineState, inspectorEngineState);
+    _iterateCreateNewWDBGameObject(
+      wdbGameObject,
+      engineState,
+      inspectorEngineState,
+    );
 
   inspectorEngineState
   |> GameObjectEngineService.initGameObject(newWDBGameObject)

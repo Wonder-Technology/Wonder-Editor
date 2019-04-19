@@ -68,7 +68,7 @@ module CustomEventHandler = {
         );
 
       (editorState, inspectorEngineState)
-      |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildren
+      |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
       |> StateInspectorEngineService.setState
       |> ignore;
 

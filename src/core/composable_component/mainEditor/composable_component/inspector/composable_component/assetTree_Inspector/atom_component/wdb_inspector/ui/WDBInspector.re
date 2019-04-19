@@ -12,7 +12,18 @@ module Method = {
     |> StateLogicService.refreshInspectorEngineState;
   };
 
-  let willUnmount =  AssetTreeInspectorUtils.hideInspectorCanvasAndDisposeContainerGameObjectAllChildren;
+  let willUnmount = () => {
+    AssetTreeInspectorUtils.hideInspectorCanvas();
+
+    (
+      StateEditorService.getState(),
+      StateInspectorEngineService.unsafeGetState(),
+    )
+    |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+    |> AssetTreeInspectorUtils.setCameraDistance
+    |> StateInspectorEngineService.setState
+    |> ignore;
+  };
 };
 
 let component = ReasonReact.statelessComponent("WDBInspector");
