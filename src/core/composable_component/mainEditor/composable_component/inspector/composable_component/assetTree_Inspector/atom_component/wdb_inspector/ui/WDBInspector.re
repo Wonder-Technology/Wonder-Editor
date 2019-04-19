@@ -12,7 +12,7 @@ module Method = {
     |> StateLogicService.refreshInspectorEngineState;
   };
 
-  let willUnmount = AssetTreeInspectorUtils.hideInspectorCanvasAndDisposeContainerGameObjectAllChildren;
+  let willUnmount =  AssetTreeInspectorUtils.hideInspectorCanvasAndDisposeContainerGameObjectAllChildren;
 };
 
 let component = ReasonReact.statelessComponent("WDBInspector");

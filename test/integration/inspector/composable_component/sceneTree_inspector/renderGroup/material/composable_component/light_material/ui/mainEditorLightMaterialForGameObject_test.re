@@ -251,8 +251,8 @@ let _ =
                         engineState,
                       )
                       |> GeometryEngineService.setGeometryTexCoords(
-                           _,
                            Js.Typed_array.Float32Array.make([||]),
+                           _,
                            engineState,
                          );
                     engineState |> StateEngineService.setState |> ignore;

@@ -34,7 +34,7 @@ let isSelectTranslationAxisGizmo =
            {
              let aabb =
                AABBShapeUtils.setFromPoints(
-                 GeometryEngineService.getGeometryVertices(
+                 GeometryEngineService.unsafeGetGeometryVertices(
                    GameObjectComponentEngineService.unsafeGetGeometryComponent(
                      gameObject,
                      engineState,

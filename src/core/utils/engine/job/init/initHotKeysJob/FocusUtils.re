@@ -52,7 +52,8 @@ let _buildAllPointsAndLocalToWolrdMatrices = (targetGameObject, engineState) =>
             );
 
        (
-         engineState |> GeometryEngineService.getGeometryVertices(geometry),
+         engineState
+         |> GeometryEngineService.unsafeGetGeometryVertices(geometry),
          engineState
          |> TransformGameObjectEngineService.getLocalToWorldMatrixTypeArray(
               gameObject,
@@ -60,7 +61,7 @@ let _buildAllPointsAndLocalToWolrdMatrices = (targetGameObject, engineState) =>
        );
      });
 
-let _calcCenterAndDistance = (targetGameObject, engineState) =>
+let calcCenterAndDistance = (targetGameObject, engineState) =>
   switch (
     _buildAllPointsAndLocalToWolrdMatrices(targetGameObject, engineState)
   ) {
@@ -84,7 +85,7 @@ let _calcCenterAndDistance = (targetGameObject, engineState) =>
   };
 
 let setEditorCameraFocusTargetGameObject =
-    (editCamera, targetGameObject, editorState, engineState) => {
+    (editCamera, targetGameObject, engineState) => {
   WonderLog.Contract.requireCheck(
     () =>
       WonderLog.(
@@ -114,14 +115,9 @@ let setEditorCameraFocusTargetGameObject =
       editCamera,
       engineState,
     );
-  let targetGameObjectTransform =
-    engineState
-    |> GameObjectComponentEngineService.unsafeGetTransformComponent(
-         targetGameObject,
-       );
 
   let (center, distance) =
-    engineState |> _calcCenterAndDistance(targetGameObject);
+    engineState |> calcCenterAndDistance(targetGameObject);
 
   _setArcballCameraControllerFocusRelatedAttribute(
     editorCameraArcballControllerComponent,

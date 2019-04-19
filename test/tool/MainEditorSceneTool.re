@@ -34,7 +34,7 @@ let _isCube = (gameObject, engineState) =>
     gameObject,
     engineState,
   )
-  && GeometryEngineService.getGeometryVertices(
+  && GeometryEngineService.unsafeGetGeometryVertices(
        GameObjectComponentEngineService.unsafeGetGeometryComponent(
          gameObject,
          engineState,

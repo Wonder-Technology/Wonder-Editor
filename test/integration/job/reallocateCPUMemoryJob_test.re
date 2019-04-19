@@ -99,7 +99,7 @@ let _ =
              _,
              engineState,
            )
-        |> GeometryEngineService.getGeometryVertices(_, engineState)
+        |> GeometryEngineService.unsafeGetGeometryVertices(_, engineState)
         |> expect == vertices
         |> resolve;
       };

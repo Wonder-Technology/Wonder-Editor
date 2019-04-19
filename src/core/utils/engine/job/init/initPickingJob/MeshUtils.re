@@ -65,9 +65,9 @@ let checkIntersectMesh =
   _checkIntersectMesh(
     (geometry, localToWorldMatrixTypeArray, cullType, engineState),
     (
-      GeometryEngineService.getGeometryVertices(geometry, engineState),
-      GeometryEngineService.getGeometryIndices16(geometry, engineState),
-      GeometryEngineService.getGeometryIndices32(geometry, engineState),
+      GeometryEngineService.unsafeGetGeometryVertices(geometry, engineState),
+      GeometryEngineService.unsafeGetGeometryIndices16(geometry, engineState),
+      GeometryEngineService.unsafeGetGeometryIndices32(geometry, engineState),
       GeometryEngineService.getIndicesCount(geometry, engineState),
     ),
     ray,

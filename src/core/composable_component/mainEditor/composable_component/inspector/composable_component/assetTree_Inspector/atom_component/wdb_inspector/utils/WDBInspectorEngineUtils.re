@@ -6,7 +6,11 @@ let rec _iterateWDBGameObject =
       engineState,
       inspectorEngineState,
     );
-    Js.log2("newGame", newGameObject );
+
+  let inspectorEngineState =
+    inspectorEngineState
+    |> GameObjectEngineService.initGameObject(newGameObject);
+  Js.log2("newGame", newGameObject);
 
   engineState |> HierarchyGameObjectEngineService.hasChildren(gameObject) ?
     engineState
@@ -34,14 +38,37 @@ let rec _iterateWDBGameObject =
     (newGameObject, inspectorEngineState);
 };
 
+let _setCameraDistance = (newWDBGameObject, inspectorEngineState) => {
+  let camera =
+    GameObjectInspectorEngineService.unsafeGetCamera(inspectorEngineState);
+
+  let (_center, distance) =
+    inspectorEngineState |> FocusUtils.calcCenterAndDistance(newWDBGameObject);
+
+  inspectorEngineState
+  |> TransformEngineService.setLocalPosition(
+       (0., 0., distance),
+       GameObjectComponentEngineService.unsafeGetTransformComponent(
+         camera,
+         inspectorEngineState,
+       ),
+     );
+};
+
 let createWDBIntoInspectorCanvas =
     (wdbGameObject, (editorState, engineState), inspectorEngineState) => {
-  let (newGameObject, inspectorEngineState) =
+  let containerGameObject =
+    editorState
+    |> ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject;
+  let (newWDBGameObject, inspectorEngineState) =
     _iterateWDBGameObject(wdbGameObject, engineState, inspectorEngineState);
 
   inspectorEngineState
-  |> HierarchyGameObjectEngineService.getChildren(7)
-  |> Js.log;
+  |> GameObjectEngineService.initGameObject(newWDBGameObject)
+  |> HierarchyGameObjectEngineService.addChild(
+       containerGameObject,
+       newWDBGameObject,
+     );
 
-  inspectorEngineState;
+  inspectorEngineState |> _setCameraDistance(newWDBGameObject);
 };

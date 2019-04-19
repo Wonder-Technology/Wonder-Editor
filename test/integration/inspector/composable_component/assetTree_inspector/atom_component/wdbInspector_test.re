@@ -136,6 +136,13 @@ let _ =
         let (scene, (cube1, cube3, cube4), cube2) =
           SceneTreeTool.buildFourLayerSceneGraphToEngine(sandbox);
 
+        let engineState = StateEngineService.unsafeGetState();
+
+        engineState 
+        |> TransformGameObjectEngineService.setLocalPosition(cube3,(0.2,0.2,0.2))
+        |> StateEngineService.setState;
+
+
         WDBInspector.Method.didMount(scene);
 
         1 |> expect == 1;

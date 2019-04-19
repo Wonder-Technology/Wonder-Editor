@@ -92,7 +92,6 @@ let _getHandleFuncByHotKeyAction = hotKeyAction => {
           FocusUtils.setEditorCameraFocusTargetGameObject(
             editorState |> SceneViewEditorService.unsafeGetEditCamera,
             currentSceneTreeNode,
-            editorState,
             StateEngineService.unsafeGetState(),
           )
           |> StateLogicService.refreshEngineState
