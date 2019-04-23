@@ -18,7 +18,7 @@ module Method = {
       StateInspectorEngineService.unsafeGetState(),
     )
     |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
-    |> AssetTreeInspectorUtils.setCameraDistance
+    |> AssetTreeInspectorUtils.setCameraDefaultDistance
     |> StateInspectorEngineService.setState
     |> ignore;
   };

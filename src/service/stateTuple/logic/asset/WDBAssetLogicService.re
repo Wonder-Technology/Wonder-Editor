@@ -100,7 +100,7 @@ let importAssetWDB =
        imageUint8ArrayDataMapRef := imageUint8ArrayDataMap;
 
        inspectorEngineState
-       |> AssetTreeInspectorUtils.setCameraDistance
+       |> AssetTreeInspectorUtils.setCameraDefaultDistance
        |> StateInspectorEngineService.setState
        |> ignore;
        /* allGameObjects

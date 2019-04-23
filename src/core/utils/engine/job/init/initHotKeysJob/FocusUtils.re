@@ -84,8 +84,8 @@ let _calcCenterAndDistance = (targetGameObject, radiusRatio, engineState) =>
     (center, AABBShapeUtils.calcRadiusOfAABB(aabb, center) *. radiusRatio);
   };
 
-let setEditorCameraFocusTargetGameObject =
-    (editCamera, targetGameObject, radiusRatio, engineState) => {
+let setCameraFocusTargetGameObject =
+    (camera, targetGameObject, radiusRatio, engineState) => {
   WonderLog.Contract.requireCheck(
     () =>
       WonderLog.(
@@ -99,7 +99,7 @@ let setEditorCameraFocusTargetGameObject =
               ),
               () =>
               GameObjectComponentEngineService.hasArcballCameraControllerComponent(
-                editCamera,
+                camera,
                 engineState,
               )
               |> assertTrue
@@ -112,7 +112,7 @@ let setEditorCameraFocusTargetGameObject =
 
   let editorCameraArcballControllerComponent =
     GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
-      editCamera,
+      camera,
       engineState,
     );
 
