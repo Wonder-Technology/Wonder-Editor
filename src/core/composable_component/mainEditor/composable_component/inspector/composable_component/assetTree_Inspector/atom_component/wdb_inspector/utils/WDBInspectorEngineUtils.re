@@ -63,7 +63,6 @@ let createWDBIntoInspectorCanvas =
     );
 
   inspectorEngineState
-  |> GameObjectEngineService.initGameObject(newWDBGameObject)
   |> HierarchyGameObjectEngineService.addChild(
        containerGameObject,
        newWDBGameObject,

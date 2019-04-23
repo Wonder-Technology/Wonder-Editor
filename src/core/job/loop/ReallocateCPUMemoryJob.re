@@ -21,8 +21,6 @@ let reallocate = (percent, engineState) =>
   |> _reallocateGeometryToNewBuffer(percent);
 
 let reallocateEveryTime = engineState => {
-  WonderLog.Log.log({j|trigger reallocateEveryTime|j});
-
   let engineState =
     engineState
     |> ReallocateCPUMemoryJobEngineService.resetDisposeCount

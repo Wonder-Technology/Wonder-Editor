@@ -1,7 +1,5 @@
 module Method = {
   let didMount = wdbGameObject => {
-    Js.log("wdb did mount");
-
     AssetTreeInspectorUtils.showInspectorCanvas();
 
     StateInspectorEngineService.unsafeGetState()
