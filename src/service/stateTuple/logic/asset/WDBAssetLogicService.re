@@ -1,5 +1,38 @@
 open Js.Promise;
 
+let _createWDBNodeAndSnapshot =
+    (parentFolderNode, (wdbNodeId, name, gameObject), editorState) => {
+  let (editorState, newImageDataIndex) =
+    editorState |> IndexAssetEditorService.generateImageDataMapIndex;
+
+  editorState
+  |> OperateTreeAssetEditorService.insertNode(
+       NodeAssetService.getNodeId(~node=parentFolderNode),
+       WDBNodeAssetService.buildNode(
+         ~nodeId=wdbNodeId,
+         ~name,
+         ~wdbGameObject=gameObject,
+         ~imageDataIndex=newImageDataIndex,
+       ),
+     )
+  |> ImageDataMapAssetEditorService.setData(
+       newImageDataIndex,
+       ImageDataMapAssetService.buildData(
+         ~base64=None,
+         ~uint8Array=None,
+         ~blobObjectURL=None,
+         ~name,
+         ~mimeType=ImageUtils.getDefaultMimeType(),
+         (),
+       ),
+     )
+  |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByWDBNodeId(
+       DomHelper.getElementById("inspector-canvas"),
+       DomHelper.getElementById("img-canvas"),
+       wdbNodeId,
+     );
+};
+
 let importAssetWDB =
     (
       (name, wdbArrayBuffer),
@@ -29,89 +62,37 @@ let importAssetWDB =
          );
 
        /* TODO need test */
-       let (editorState, newImageDataIndex) =
-         editorState |> IndexAssetEditorService.generateImageDataMapIndex;
-
-       let inspectorEngineState =
-         (editorState, StateInspectorEngineService.unsafeGetState())
-         |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
-         |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
-              gameObject,
-              (
-                StateEditorService.getState(),
-                StateEngineService.unsafeGetState(),
-              ),
-            )
-         |> StateLogicService.renderInspectorEngineStateAndReturnState;
+       (editorState, StateInspectorEngineService.unsafeGetState())
+       |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+       |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
+            gameObject,
+            (
+              StateEditorService.getState(),
+              StateEngineService.unsafeGetState(),
+            ),
+          )
+       |> AssetTreeInspectorUtils.setCameraDefaultDistance
+       |> StateLogicService.refreshInspectorEngineState;
 
        editorState
-       /* |> WDBNodeMapAssetEditorService.setResult(
-               wdbNodeId,
-               WDBNodeMapAssetEditorService.buildWDBNodeResult(
-                 name,
-                 parentFolderNodeId |. Some,
-                 gameObject,
-               ),
-             )
-          |> AssetTreeUtils.createNodeAndAddToTargetNodeChildren(
-               parentFolderNodeId,
-               wdbNodeId,
-               NodeAssetType.WDB,
-             ) */
-       |> OperateTreeAssetEditorService.insertNode(
-            NodeAssetService.getNodeId(~node=parentFolderNode),
-            WDBNodeAssetService.buildNode(
-              ~nodeId=wdbNodeId,
-              ~name,
-              ~wdbGameObject=gameObject,
-              ~imageDataIndex=newImageDataIndex,
-            ),
-          )
-       |> ImageDataMapAssetEditorService.setData(
-            newImageDataIndex,
-            ImageDataMapAssetService.buildData(
-              ~base64=None,
-              ~uint8Array=None,
-              ~blobObjectURL=None,
-              ~name="wdb",
-              ~mimeType=ImageUtils.getDefaultMimeType(),
-              (),
-            ),
-          )
-       |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByWDBNodeId(
-            DomHelper.getElementById("inspector-canvas"),
-            DomHelper.getElementById("img-canvas"),
-            wdbNodeId,
+       |> _createWDBNodeAndSnapshot(
+            parentFolderNode,
+            (wdbNodeId, name, gameObject),
           )
        |> StateEditorService.setState
        |> ignore;
 
-       let engineState =
-         engineState
-         |> GameObjectEngineService.setAllGameObjectsIsRenderIfHasMeshRenderer(
-              false,
-              gameObject,
-            )
-         |> GameObjectEngineService.setGameObjectName(name, gameObject);
-
-       engineState |> StateEngineService.setState |> ignore;
+       engineState
+       |> GameObjectEngineService.setAllGameObjectsIsRenderIfHasMeshRenderer(
+            false,
+            gameObject,
+          )
+       |> GameObjectEngineService.setGameObjectName(name, gameObject)
+       |> StateEngineService.setState
+       |> ignore;
 
        allGameObjectsRef := allGameObjects;
        imageUint8ArrayDataMapRef := imageUint8ArrayDataMap;
-
-       inspectorEngineState
-       |> AssetTreeInspectorUtils.setCameraDefaultDistance
-       |> StateInspectorEngineService.setState
-       |> ignore;
-       /* allGameObjects
-          |> WonderCommonlib.ArrayService.reduceOneParam(
-               (. engineState, gameObject) =>
-                 GameObjectEngineService.initGameObject(gameObject, engineState),
-               engineState,
-             )
-          |> DirectorEngineService.loopBody(0.)
-          |> StateEngineService.setState
-          |> ignore; */
      })
   |> WonderBsMost.Most.drain
   |> then_(_ =>
