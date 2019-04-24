@@ -16,7 +16,8 @@ let disposeContainerGameObjectAllChildrenAndReallocateCPUMemory =
   (editorState, inspectorEngineState)
   |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
   |> JobEngineService.execDisposeJob
-  |> ReallocateCPUMemoryJob.reallocateEveryTime;
+  /* TODO can't pass test if use reallocateEveryTime */
+  |> ReallocateCPUMemoryJob.reallocate(0.1);
 
 let setCameraDefaultDistance = inspectorEngineState => {
   let camera =

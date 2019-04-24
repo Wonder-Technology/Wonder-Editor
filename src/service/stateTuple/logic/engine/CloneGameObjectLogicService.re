@@ -79,6 +79,12 @@ let cloneGameObjectToOtherEngineState =
 
   let targetEngineState =
     targetEngineState
+    |> CloneValueEngineLogicService.cloneValueByGetOptionValueFunc(
+         GameObjectEngineService.getGameObjectName,
+         GameObjectEngineService.setGameObjectName,
+         newGameObject,
+         (clonedGameObject, clonedEngineState),
+       )
     |> _cloneGameObjectTransform(
          newGameObject,
          (clonedGameObject, clonedEngineState),

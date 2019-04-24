@@ -62,25 +62,31 @@ let importAssetWDB =
          );
 
        /* TODO need test */
-       (editorState, StateInspectorEngineService.unsafeGetState())
-       |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
-       |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
-            gameObject,
-            (
-              StateEditorService.getState(),
-              StateEngineService.unsafeGetState(),
-            ),
-          )
-       |> AssetTreeInspectorUtils.setCameraDefaultDistance
-       |> StateLogicService.refreshInspectorEngineState;
+       let inspectorEngineState =
+         (editorState, StateInspectorEngineService.unsafeGetState())
+         |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+         |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
+              gameObject,
+              (
+                StateEditorService.getState(),
+                StateEngineService.unsafeGetState(),
+              ),
+            )
+         |> StateLogicService.renderInspectorEngineStateAndReturnState;
 
-       editorState
-       |> _createWDBNodeAndSnapshot(
-            parentFolderNode,
-            (wdbNodeId, name, gameObject),
-          )
-       |> StateEditorService.setState
-       |> ignore;
+       let editorState =
+         editorState
+         |> _createWDBNodeAndSnapshot(
+              parentFolderNode,
+              (wdbNodeId, name, gameObject),
+            );
+
+       (editorState, inspectorEngineState)
+       |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+       |> AssetTreeInspectorUtils.setCameraDefaultDistance
+       |> StateInspectorEngineService.setState;
+
+       editorState |> StateEditorService.setState |> ignore;
 
        engineState
        |> GameObjectEngineService.setAllGameObjectsIsRenderIfHasMeshRenderer(
