@@ -145,6 +145,52 @@ let _ =
            });
       });
 
+      describe("draw wdb snapshot", () =>
+        testPromise("test draw wdb snapshot store in imageDataMap", () => {
+          EventListenerTool.buildFakeDom()
+          |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+
+          let (
+            addedMaterialNodeId,
+            newMaterialComponent,
+            imgCanvasFakeBase64Str,
+            (inspectorCanvasDom, imgCanvasDom),
+          ) =
+            MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+              ~sandbox,
+              (),
+            );
+
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            (),
+          )
+          |> then_(uploadedWDBNodeId => {
+               let editorState = StateEditorService.getState();
+               let engineState = StateEngineService.unsafeGetState();
+
+               let {imageDataIndex}: wdbNodeData =
+                 editorState
+                 |> OperateTreeAssetEditorService.unsafeFindNodeById(
+                      uploadedWDBNodeId,
+                    )
+                 |> WDBNodeAssetService.getNodeData;
+
+               editorState
+               |> ImageDataMapAssetEditorService.unsafeGetData(
+                    imageDataIndex,
+                  )
+               |> (
+                 ({base64}) =>
+                   base64
+                   |> OptionService.unsafeGet
+                   |> expect == imgCanvasFakeBase64Str
+                   |> resolve
+               );
+             });
+        })
+      );
+
       describe("extract assets from loaded wdb asset", () => {
         beforeEach(() =>
           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
