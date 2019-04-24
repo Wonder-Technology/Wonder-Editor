@@ -184,7 +184,7 @@ exports[`header import package dispose assets dispose material assets
                 onDrop={[Function]}
               />
               <img
-                src="object_url2"
+                src="object_url3"
               />
             </div>
             <button
@@ -334,7 +334,7 @@ exports[`header import package fix bug test material assets after import
     >
       <img
         onDragStart={[Function]}
-        src="object_url5"
+        src="./public/img/mat.jpg"
       />
     </div>
     <div
@@ -354,7 +354,7 @@ exports[`header import package fix bug test material assets after import
     >
       <img
         onDragStart={[Function]}
-        src="object_url4"
+        src="./public/img/mat.jpg"
       />
     </div>
     <div

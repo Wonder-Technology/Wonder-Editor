@@ -235,8 +235,7 @@ module Method = {
                  let imgSrc =
                    ImageDataMapUtils.getImgSrc(
                      imageDataIndex,
-                     editorState
-                     |> MaterialDataAssetEditorService.unsafeGetDefaultMaterialSnapshotPath,
+                     ImageUtils.getNullImageSrc(),
                      editorState,
                    );
 
