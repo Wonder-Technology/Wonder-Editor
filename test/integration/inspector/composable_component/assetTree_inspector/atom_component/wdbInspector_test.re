@@ -16,6 +16,18 @@ let _ =
 
     let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
     let sceneWDBArrayBuffer = ref(Obj.magic(1));
+    let _getInspectorCameraArcballCameraControllerDistance =
+        inspectorEngineState =>
+      inspectorEngineState
+      |> InspectorEngineTool.unsafeGetSceneFirstCamera
+      |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+           _,
+           inspectorEngineState,
+         )
+      |> ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
+           _,
+           inspectorEngineState,
+         );
 
     beforeAll(() => {
       boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
@@ -177,6 +189,60 @@ let _ =
 
                  containerGameObjectFirstChild
                  |> expect == newGameObject
+                 |> resolve;
+               });
+          });
+          testPromise("test inspector canvas camera distance", () => {
+            let (
+              addedMaterialNodeId,
+              newMaterialComponent,
+              imgCanvasFakeBase64Str,
+              (inspectorCanvasDom, imgCanvasDom),
+            ) =
+              MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                ~sandbox,
+                (),
+              );
+
+            MainEditorAssetUploadTool.loadOneWDB(
+              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+              (),
+            )
+            |> then_(uploadedWDBNodeId => {
+                 let editorState = StateEditorService.getState();
+                 let engineState = StateEngineService.unsafeGetState();
+
+                 let inspectorEngineState =
+                   StateInspectorEngineService.unsafeGetState();
+                 let oldCameraArcballControllerDistance =
+                   inspectorEngineState
+                   |> _getInspectorCameraArcballCameraControllerDistance;
+
+                 let boxTexturedMeshGameObject =
+                   LoadWDBTool.getBoxTexturedMeshGameObjectFromAssetNode(
+                     uploadedWDBNodeId,
+                     (editorState, engineState),
+                   );
+
+                 WDBInspector.Method.didMount(boxTexturedMeshGameObject);
+
+                 let inspectorEngineState =
+                   StateInspectorEngineService.unsafeGetState();
+
+                 let newCameraArcballControllerDistance =
+                   inspectorEngineState
+                   |> _getInspectorCameraArcballCameraControllerDistance
+                   |> FloatService.truncateFloatValue(_, 1);
+
+                 (
+                   oldCameraArcballControllerDistance,
+                   newCameraArcballControllerDistance,
+                 )
+                 |> expect
+                 == (
+                      DefaultSceneInspectorEngineUtils.getCameraDefaultDistance(),
+                      1.6,
+                    )
                  |> resolve;
                });
           });
@@ -604,11 +670,9 @@ let _ =
       })
     );
 
-    describe("test draw wdb snapshot in didMount", () =>
-      test("test", () => {
-        EventListenerTool.buildFakeDom()
-        |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-
+    describe("test dispose wdbGameObject in willUnmount", () => {
+      testPromise(
+        "the container gameObject children array should be empty", () => {
         let (
           addedMaterialNodeId,
           newMaterialComponent,
@@ -619,21 +683,82 @@ let _ =
             ~sandbox,
             (),
           );
-        let (scene, (cube1, cube3, cube4), cube2) =
-          SceneTreeTool.buildFourLayerSceneGraphToEngine(sandbox);
 
-        let engineState = StateEngineService.unsafeGetState();
+        MainEditorAssetUploadTool.loadOneWDB(
+          ~arrayBuffer=sceneWDBArrayBuffer^,
+          (),
+        )
+        |> then_(uploadedWDBNodeId => {
+             let editorState = StateEditorService.getState();
 
-        engineState
-        |> TransformGameObjectEngineService.setLocalPosition(
-             cube3,
-             (0.2, 0.2, 0.2),
-           )
-        |> StateEngineService.setState;
+             let sceneWDBGameObject =
+               MainEditorAssetWDBNodeTool.getWDBGameObject(
+                 uploadedWDBNodeId,
+                 editorState,
+               );
 
-        WDBInspector.Method.didMount(scene);
+             WDBInspector.Method.didMount(sceneWDBGameObject);
+             WDBInspector.Method.willUnmount();
 
-        1 |> expect == 1;
-      })
-    );
+             let inspectorEngineState =
+               StateInspectorEngineService.unsafeGetState();
+             let editorState = StateEditorService.getState();
+             let containerGameObject =
+               ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject(
+                 editorState,
+               );
+
+             inspectorEngineState
+             |> HierarchyGameObjectEngineService.getChildren(
+                  containerGameObject,
+                )
+             |> Js.Array.length
+             |> expect == 0
+             |> resolve;
+           });
+      });
+      testPromise(
+        "test inspector canvas camera arcball controller distance", () => {
+        let (
+          addedMaterialNodeId,
+          newMaterialComponent,
+          imgCanvasFakeBase64Str,
+          (inspectorCanvasDom, imgCanvasDom),
+        ) =
+          MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+            ~sandbox,
+            (),
+          );
+
+        MainEditorAssetUploadTool.loadOneWDB(
+          ~arrayBuffer=sceneWDBArrayBuffer^,
+          (),
+        )
+        |> then_(uploadedWDBNodeId => {
+             let editorState = StateEditorService.getState();
+
+             let sceneWDBGameObject =
+               MainEditorAssetWDBNodeTool.getWDBGameObject(
+                 uploadedWDBNodeId,
+                 editorState,
+               );
+
+             WDBInspector.Method.didMount(sceneWDBGameObject);
+             WDBInspector.Method.willUnmount();
+
+             let inspectorEngineState =
+               StateInspectorEngineService.unsafeGetState();
+             let editorState = StateEditorService.getState();
+             let newCameraArcballControllerDistance =
+               inspectorEngineState
+               |> _getInspectorCameraArcballCameraControllerDistance
+               |> FloatService.truncateFloatValue(_, 1);
+
+             newCameraArcballControllerDistance
+             |> expect
+             == DefaultSceneInspectorEngineUtils.getCameraDefaultDistance()
+             |> resolve;
+           });
+      });
+    });
   });
