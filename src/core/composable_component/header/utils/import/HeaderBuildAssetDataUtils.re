@@ -377,7 +377,11 @@ let buildMaterialData =
       (editorState, engineState),
     );
 
-  (basicMaterialMap, lightMaterialMap, (editorState, engineState));
+  (
+    imageDataIndexMap,
+    (basicMaterialMap, lightMaterialMap),
+    (editorState, engineState),
+  );
 };
 
 let _buildScriptEventFunctionEditorData =
@@ -582,6 +586,7 @@ let _mergeImageUint8ArrayDataMap =
 
 let buildWDBData =
     (
+      imageDataIndexMap,
       {wdbs, bufferViews}: ExportAssetType.assets,
       buffer,
       (editorState, engineState),
@@ -595,7 +600,7 @@ let buildWDBData =
   wdbs
   |> WonderBsMost.Most.from
   |> WonderBsMost.Most.concatMap(
-       ({name, bufferView, path}: ExportAssetType.wdb) => {
+       ({name, bufferView, path, snapshot}: ExportAssetType.wdb) => {
        let editorState = StateEditorService.getState();
        let engineState = StateEngineService.unsafeGetState();
 
@@ -609,9 +614,8 @@ let buildWDBData =
            path,
            (editorState, engineState),
          );
-
        HeaderImportASBWDBUtils.importWDB(
-         (name, arrayBuffer),
+         (imageDataIndexMap, snapshot, name, arrayBuffer),
          (assetNodeId, parentFolderNode),
          (editorState, engineState),
        )

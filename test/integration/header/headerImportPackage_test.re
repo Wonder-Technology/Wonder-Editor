@@ -621,7 +621,7 @@ let _ =
                        () =>
                          ImageDataMapTool.getMapValidLength
                          |> StateLogicService.getEditorState
-                         |> expect == 5
+                         |> expect == 3
                          |> resolve,
                      (),
                    ),
@@ -698,6 +698,125 @@ let _ =
         );
       })
     );
+
+    describe("test draw all wdbs->snapshot", () => {
+      beforeEach(() => {
+        MainEditorSceneTool.initState(~sandbox, ());
+        MainEditorSceneTool.initInspectorEngineState(
+          ~sandbox,
+          ~isInitJob=false,
+          ~noWorkerJobRecord=
+            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+              ~initPipelines=
+                {|
+           [
+            {
+              "name": "default",
+              "jobs": [
+                  {"name": "init_inspector_engine" }
+              ]
+            }
+          ]
+           |},
+              ~initJobs=
+                {|
+           [
+              {"name": "init_inspector_engine" }
+           ]
+           |},
+              (),
+            ),
+          (),
+        );
+
+        StateInspectorEngineService.unsafeGetState()
+        |> MainUtils._handleInspectorEngineState
+        |> StateInspectorEngineService.setState
+        |> ignore;
+
+        MainEditorSceneTool.prepareScene(sandbox);
+      });
+      testPromise(
+        " upload one wdb w1;
+          export;
+          import;
+
+          w1->snapshot should equal between before import and after import;",
+        () => {
+          let (
+            addedMaterialNodeId,
+            newMaterialComponent,
+            imgCanvasFakeBase64Str,
+            (inspectorCanvasDom, imgCanvasDom),
+          ) =
+            MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+              ~sandbox,
+              (),
+            );
+          let wdbSnapshotObjectURL = "redraw_wdb_snapshot_objectURL";
+
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            (),
+          )
+          |> then_(uploadedWDBNodeId => {
+               let uploadedWDBName =
+                 OperateTreeAssetLogicService.getNodeNameById(
+                   uploadedWDBNodeId,
+                   (
+                     StateEditorService.getState(),
+                     StateEngineService.unsafeGetState(),
+                   ),
+                 )
+                 |> OptionService.unsafeGet;
+
+               let uint8Array =
+                 BufferUtils.convertBase64ToUint8Array(
+                   imgCanvasFakeBase64Str,
+                 );
+               let blob =
+                 Blob.newBlobFromArrayBuffer(
+                   uint8Array |> Js.Typed_array.Uint8Array.buffer,
+                   "image/png",
+                 );
+               let createObjectURL = LoadTool.getFakeCreateObjectURL();
+
+               createObjectURL
+               |> withOneArg(blob)
+               |> returns(wdbSnapshotObjectURL);
+
+               ImportPackageTool.testImportPackage(
+                 ~testFunc=
+                   () => {
+                     let editorState = StateEditorService.getState();
+                     let engineState = StateEngineService.unsafeGetState();
+
+                     let {imageDataIndex}: NodeAssetType.wdbNodeData =
+                       OperateTreeAssetLogicService.findNodeByName(
+                         uploadedWDBName,
+                         (editorState, engineState),
+                       )
+                       |> OptionService.unsafeGet
+                       |> WDBNodeAssetService.getNodeData;
+
+                     editorState
+                     |> ImageDataMapAssetEditorService.unsafeGetData(
+                          imageDataIndex,
+                        )
+                     |> (
+                       ({blobObjectURL}) =>
+                         blobObjectURL
+                         |> OptionService.unsafeGet
+                         |> expect == wdbSnapshotObjectURL
+                         |> resolve
+                     );
+                   },
+                 (),
+               );
+             });
+        },
+      );
+    });
 
     describe("test import scene wdb", () => {
       beforeEach(() => {

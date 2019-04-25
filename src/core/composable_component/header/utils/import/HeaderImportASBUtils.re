@@ -64,8 +64,15 @@ let importASB = asb => {
        );
      })
   |> WonderBsMost.Most.flatMap(
-       ((basicMaterialMap, lightMaterialMap, (editorState, engineState))) =>
+       (
+         (
+           imageDataIndexMap,
+           (basicMaterialMap, lightMaterialMap),
+           (editorState, engineState),
+         ),
+       ) =>
        HeaderBuildAssetDataUtils.buildWDBData(
+         imageDataIndexMap,
          asbRecord,
          buffer,
          (editorState, engineState),

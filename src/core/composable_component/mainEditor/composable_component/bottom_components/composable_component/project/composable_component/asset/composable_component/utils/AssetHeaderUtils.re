@@ -56,16 +56,15 @@ let _handleAssetWDBType =
   WDBAssetLogicService.importAssetWDB(
     (
       FileNameService.getBaseName(fileName)
-      ->(
-          OperateTreeAssetLogicService.getUniqueNodeName(
-            selectedFolderNodeInAssetTree,
-            engineState,
-          )
-        ),
+      |> OperateTreeAssetLogicService.getUniqueNodeName(
+           _,
+           selectedFolderNodeInAssetTree,
+           engineState,
+         ),
       wdbArrayBuffer,
     ),
-    (wdbNodeId, selectedFolderNodeInAssetTree),
-    true,
+    (wdbNodeId, selectedFolderNodeInAssetTree, true),
+    WDBAssetLogicService.createWDBNodeUseCreatedSnapshot,
     (editorState, engineState),
   )
   |> then_(
@@ -287,7 +286,9 @@ let fileLoad = ((uiState, dispatchFunc), createJsZipFunc, event) => {
          FileReader.makeSureCanLoadSameNameFileAgain(target);
 
          dispatchFunc(
-           AppStore.UpdateAction(Update([|UpdateStore.Inspector,UpdateStore.Project|])),
+           AppStore.UpdateAction(
+             Update([|UpdateStore.Inspector, UpdateStore.Project|]),
+           ),
          );
 
          resolve();

@@ -33,11 +33,56 @@ let _createWDBNodeAndSnapshot =
      );
 };
 
+let createWDBNodeUseImageDataMapSnapshot =
+    (
+      (imageDataIndexMap, snapshot),
+      (wdbNodeId, name, gameObject, parentFolderNode),
+      editorState,
+    ) =>
+  editorState
+  |> OperateTreeAssetEditorService.insertNode(
+       NodeAssetService.getNodeId(~node=parentFolderNode),
+       WDBNodeAssetService.buildNode(
+         ~nodeId=wdbNodeId,
+         ~name,
+         ~wdbGameObject=gameObject,
+         ~imageDataIndex=
+           imageDataIndexMap
+           |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(snapshot),
+       ),
+     );
+
+let createWDBNodeUseCreatedSnapshot =
+    ((wdbNodeId, name, gameObject, parentFolderNode), editorState) => {
+  let inspectorEngineState =
+    (editorState, StateInspectorEngineService.unsafeGetState())
+    |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+    |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
+         gameObject,
+         (StateEditorService.getState(), StateEngineService.unsafeGetState()),
+       )
+    |> StateLogicService.renderInspectorEngineStateAndReturnState;
+
+  let editorState =
+    editorState
+    |> _createWDBNodeAndSnapshot(
+         parentFolderNode,
+         (wdbNodeId, name, gameObject),
+       );
+
+  (editorState, inspectorEngineState)
+  |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+  |> AssetTreeInspectorUtils.setCameraDefaultDistance
+  |> StateInspectorEngineService.setState;
+
+  editorState;
+};
+
 let importAssetWDB =
     (
       (name, wdbArrayBuffer),
-      (wdbNodeId, parentFolderNode),
-      isLoadImage,
+      (wdbNodeId, parentFolderNode, isLoadImage),
+      createWDBNodeFunc,
       (editorState, engineState),
     ) => {
   let allGameObjectsRef = ref([||]);
@@ -61,32 +106,10 @@ let importAssetWDB =
            engineState,
          );
 
-       /* TODO need test */
-       let inspectorEngineState =
-         (editorState, StateInspectorEngineService.unsafeGetState())
-         |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
-         |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
-              gameObject,
-              (
-                StateEditorService.getState(),
-                StateEngineService.unsafeGetState(),
-              ),
-            )
-         |> StateLogicService.renderInspectorEngineStateAndReturnState;
-
-       let editorState =
-         editorState
-         |> _createWDBNodeAndSnapshot(
-              parentFolderNode,
-              (wdbNodeId, name, gameObject),
-            );
-
-       (editorState, inspectorEngineState)
-       |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
-       |> AssetTreeInspectorUtils.setCameraDefaultDistance
-       |> StateInspectorEngineService.setState;
-
-       editorState |> StateEditorService.setState |> ignore;
+       editorState
+       |> createWDBNodeFunc((wdbNodeId, name, gameObject, parentFolderNode))
+       |> StateEditorService.setState
+       |> ignore;
 
        engineState
        |> GameObjectEngineService.setAllGameObjectsIsRenderIfHasMeshRenderer(

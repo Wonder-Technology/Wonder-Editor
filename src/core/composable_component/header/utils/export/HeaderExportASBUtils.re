@@ -105,13 +105,13 @@ let generateASB = (imageUint8ArrayMap, (editorState, engineState)) => {
     (imageUint8ArrayArr, wdbArrayBufferArr),
     bufferTotalAlignedByteLength,
   ) =
-    BuildJsonDataUtils.buildJsonData(
+    HeaderBuildJsonDataUtils.buildJsonData(
       imageUint8ArrayMap,
       (editorState, engineState),
     );
 
   let jsonUint8Array =
-    BuildJsonDataUtils.buildJsonUint8Array(
+    HeaderBuildJsonDataUtils.buildJsonUint8Array(
       bufferTotalAlignedByteLength,
       (
         Js.Array.concat(wdbBufferViewArr, imageBufferViewArr),
