@@ -47,17 +47,17 @@ let importASB = asb => {
   let asbRecord: ExportAssetType.assets =
     jsonStr |> Js.Json.parseExn |> Obj.magic;
 
-  BuildAssetDataUtils.buildImageData(asbRecord, buffer, editorState)
+  HeaderBuildAssetDataUtils.buildImageData(asbRecord, buffer, editorState)
   |> WonderBsMost.Most.fromPromise
   |> WonderBsMost.Most.map(((imageMap, imageDataIndexMap, editorState)) => {
        let (textureMap, (editorState, engineState)) =
-         BuildAssetDataUtils.buildTextureData(
+         HeaderBuildAssetDataUtils.buildTextureData(
            asbRecord,
            (imageMap, imageDataIndexMap),
            (editorState, engineState),
          );
 
-       BuildAssetDataUtils.buildMaterialData(
+       HeaderBuildAssetDataUtils.buildMaterialData(
          asbRecord,
          (imageDataIndexMap, textureMap),
          (editorState, engineState),
@@ -65,20 +65,20 @@ let importASB = asb => {
      })
   |> WonderBsMost.Most.flatMap(
        ((basicMaterialMap, lightMaterialMap, (editorState, engineState))) =>
-       BuildAssetDataUtils.buildWDBData(
+       HeaderBuildAssetDataUtils.buildWDBData(
          asbRecord,
          buffer,
          (editorState, engineState),
        )
        |> then_(((allWDBGameObjectArr, (editorState, engineState))) => {
             let (scriptEventFunctionDataMap, (editorState, engineState)) =
-              BuildAssetDataUtils.buildScriptEventFunctionData(
+              HeaderBuildAssetDataUtils.buildScriptEventFunctionData(
                 asbRecord,
                 (editorState, engineState),
               );
 
             let (scriptAttributeDataMap, (editorState, engineState)) =
-              BuildAssetDataUtils.buildScriptAttributeData(
+              HeaderBuildAssetDataUtils.buildScriptAttributeData(
                 asbRecord,
                 (editorState, engineState),
               );
