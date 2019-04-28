@@ -10,8 +10,8 @@
     @import "../../../../../utils/_scrollBarUtils.scss";
     .wonder-asset-fileBox,
     .wonder-asset-folderBox {
-        width: 80px;
-        height: 80px;
+        width: 120px;
+        height: 85px;
         margin: 5px;
         z-index: 100;
         position: relative;
@@ -26,14 +26,14 @@
             width: 100%;
         }
         .box-image {
-            width: 80px;
-            height: 60px;
+            width: 100%;
+            height: 65px;
             display: flex;
             align-items: center;
             justify-content: center;
             img {
-                width: 50px;
-                height: 50px;
+                width: 55px;
+                height: 55px;
             }
         }
         .item-text {
@@ -45,7 +45,7 @@
             font-size: 12px;
             span {
                 padding-top: 2px;
-                width: 80%;
+                width: 90%;
                 display: block;
                 height: 20px;
                 line-height: 20px;
