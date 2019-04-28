@@ -36,6 +36,7 @@ let buildScriptEventFunctionData = (~initFunc, ~updateFunc, ~disposeFunc) =>
 
 let buildSetLocalPositionEventFunc = () =>
   (. script, api, engineState) => {
+    let api = Obj.magic(api);
     let unsafeGetScriptGameObject = api##unsafeGetScriptGameObject;
     let unsafeGetGameObjectTransformComponent =
       api##unsafeGetGameObjectTransformComponent;

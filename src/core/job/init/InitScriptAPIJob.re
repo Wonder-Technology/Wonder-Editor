@@ -41,6 +41,8 @@ let initJob =
   ...engineState,
   apiRecord: {
     ...apiRecord,
-    scriptAPIJsObj: _createScriptAPIJsObj(apiRecord.scriptAPIJsObj),
+    scriptAPIJsObj:
+      _createScriptAPIJsObj(apiRecord.scriptAPIJsObj |> Obj.magic)
+      |> Obj.magic,
   },
 };
