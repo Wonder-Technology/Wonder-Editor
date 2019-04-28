@@ -363,7 +363,6 @@ let _ =
             testPromise("should draw all materials->snapshot", () => {
               EventListenerTool.buildFakeDom()
               |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-
               let (
                 addedMaterialNodeId,
                 newMaterialComponent,
