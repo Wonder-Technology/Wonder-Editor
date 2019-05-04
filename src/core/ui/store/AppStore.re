@@ -6,12 +6,15 @@ open MainEditorInspectorStore;
 
 open BottomShowComponentStore;
 
+open SelectTreeStore;
+
 type appState = {
   isInitEngine: bool,
   mapState,
   updateState,
   inspectorState,
   showComponentState,
+  selectTreeState,
 };
 
 type ReduxThunk.thunk('a) +=
@@ -23,6 +26,7 @@ type ReduxThunk.thunk(_) +=
   | InspectorAction(inspectorAction(int, bool))
   | UpdateAction(updateAction(updateComponentTypeArr))
   | ShowComponentAction(showComponentAction(bottomComponentType));
+/* | SelectTreeAction(selectTreeAction(SelectTreeType.tree)); */
 
 let state: appState = {
   isInitEngine: false,
@@ -37,6 +41,9 @@ let state: appState = {
   },
   showComponentState: {
     currentComponentType: Project,
+  },
+  selectTreeState: {
+    tree: None,
   },
 };
 
@@ -61,5 +68,9 @@ let appReducter = (state: appState, action) =>
         showComponentReducer(state.showComponentState, action),
     }
   | ReplaceState(replacedState) => replacedState
+  /* | SelectTreeAction(action) => {
+       ...state,
+       selectTreeState: selectTreeReducer(state.selectTreeState, action),
+     } */
   | _ => state
   };
