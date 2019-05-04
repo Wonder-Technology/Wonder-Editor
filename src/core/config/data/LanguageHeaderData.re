@@ -86,6 +86,20 @@ let header_language_array = [|
     },
   },
   {
+    title: "header-asset-bundle",
+    language: {
+      zh: {j|AssetBundle|j},
+      en: "AssetBundle",
+    },
+  },
+  {
+    title: "generate-single-rab",
+    language: {
+      zh: {j|创建单个RAB|j},
+      en: "Generate Single RAB",
+    },
+  },
+  {
     title: "notice-welcome",
     language: {
       zh: {j|欢迎来到Wonder|j},

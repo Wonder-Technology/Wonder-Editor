@@ -13,14 +13,16 @@ let _fatalShouldBeFolderNode = () =>
 let buildNodeByNodeData = (~nodeId, ~nodeData, ~children) =>
   FolderNode(nodeId, nodeData, children);
 
-/* let buildNode = (~nodeId, ~name, ~children=UIStateAssetService.build(), ()) =>
-     FolderNode(nodeId, {name: name}, children);
+let buildNode = (~nodeId, ~name, ~isSelect, ~children=[||], ()) =>
+  FolderNode(nodeId, {name, isSelect}, children);
 
-   let getNodeData = folderNode =>
-     switch (folderNode) {
-     | FolderNode(_, nodeData, _) => nodeData
-     | _ => _fatalShouldBeFolderNode()
-     }; */
+/*
+
+ let getNodeData = folderNode =>
+   switch (folderNode) {
+   | FolderNode(_, nodeData, _) => nodeData
+   | _ => _fatalShouldBeFolderNode()
+   }; */
 
 let isFolderNode = node =>
   switch (node) {

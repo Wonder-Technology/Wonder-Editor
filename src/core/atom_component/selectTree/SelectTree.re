@@ -1,7 +1,5 @@
 open SelectTreeType;
 
-type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
-
 module Method = {
   let _hasChildren = node =>
     FolderNodeSelectTreeService.isFolderNode(node) ?
@@ -14,46 +12,11 @@ module Method = {
     | ValueNode(_, nodeData) => nodeData.isSelect
     };
 
-  let _toggleSelect = (event, node, (uiState, dispatchFunc)) => {
+  let _toggleSelect = (event, node, toggleSelectFunc) => {
     let checked =
       ReactDOMRe.domElementToObj(ReactEventRe.Mouse.target(event))##checked;
 
-    let rec _toggle = (isSelect, node, uiState) =>
-      switch (node) {
-      | FolderNode(nodeId, nodeData, children) =>
-        let uiState =
-          FolderNodeSelectTreeUIService.setNodeData(
-            nodeId,
-            FolderNodeSelectTreeService.setIsSelect(isSelect, nodeData),
-            children,
-            uiState,
-          );
-
-        children
-        |> WonderCommonlib.ArrayService.reduceOneParam(
-             (. uiState, node) => _toggle(isSelect, node, uiState),
-             uiState,
-           );
-      | ValueNode(nodeId, nodeData) =>
-        ValueNodeSelectTreeUIService.setNodeData(
-          nodeId,
-          ValueNodeSelectTreeService.setIsSelect(isSelect, nodeData),
-          uiState,
-        )
-      };
-
-    let uiState =
-      switch (node) {
-      | FolderNode(_, nodeData, _) => _toggle(checked, node, uiState)
-      | ValueNode(nodeId, nodeData) =>
-        ValueNodeSelectTreeUIService.setNodeData(
-          nodeId,
-          ValueNodeSelectTreeService.setIsSelect(checked, nodeData),
-          uiState,
-        )
-      };
-
-    dispatchFunc(AppStore.ReplaceState(uiState));
+    toggleSelectFunc(checked, node);
   };
 
   let _getIcon = (node, getValueNodeIconFunc) =>
@@ -68,11 +31,19 @@ module Method = {
     | ValueNode(_, nodeData) => nodeData.name
     };
 
-  let rec _build = (allNodes, getValueNodeIconFunc, (uiState, dispatchFunc)) =>
+  let _getNodeId = node =>
+    switch (node) {
+    | FolderNode(nodeId, _, _) => nodeId
+    | ValueNode(nodeId, _) => nodeId
+    };
+
+  let rec _build = (allNodes, (getValueNodeIconFunc, toggleSelectFunc)) =>
     allNodes
     /* |> _sortByName */
     |> Js.Array.map(node =>
-         <ul className="wonder-tree-node">
+         <ul
+           className="wonder-tree-node"
+           key={StringService.intToString(_getNodeId(node))}>
            <li>
              {
                _hasChildren(node) ?
@@ -85,9 +56,7 @@ module Method = {
                <input
                  type_="checkbox"
                  defaultChecked={_isSelected(node)}
-                 onClick={
-                   e => _toggleSelect(e, node, (uiState, dispatchFunc))
-                 }
+                 onClick={e => _toggleSelect(e, node, toggleSelectFunc)}
                />
              </div>
              {
@@ -103,47 +72,39 @@ module Method = {
                _build(
                  _hasChildren(node) ?
                    FolderNodeSelectTreeService.getChildren(node) : [||],
-                 getValueNodeIconFunc,
-                 (uiState, dispatchFunc),
+                 (getValueNodeIconFunc, toggleSelectFunc),
                ),
              )
            }
          </ul>
        );
 
-  let buildTreeArray = (getValueNodeIconFunc, (uiState, dispatchFunc)) =>
+  let buildTreeArray = (tree, (getValueNodeIconFunc, toggleSelectFunc)) =>
     _build(
-      [|RootSelectTreeUIService.getRootNode(uiState)|],
-      getValueNodeIconFunc,
-      (uiState, dispatchFunc),
+      [|RootTreeSelectTreeService.getRootNode(tree)|],
+      (getValueNodeIconFunc, toggleSelectFunc),
     );
 };
 
-let component = ReasonReact.statelessComponentWithRetainedProps("SelectTree");
+let component = ReasonReact.statelessComponent("SelectTree");
 
-let render = (getValueNodeIconFunc, (uiState, dispatchFunc), _self) => {
+let render = (tree: tree, (getValueNodeIconFunc, toggleSelectFunc), _self) => {
   let editorState = StateEditorService.getState();
 
   <article key="selectTreeRoot" className="wonder-selectTree">
     {
       ReasonReact.array(
-        Method.buildTreeArray(getValueNodeIconFunc, (uiState, dispatchFunc)),
+        Method.buildTreeArray(
+          tree,
+          (getValueNodeIconFunc, toggleSelectFunc),
+        ),
       )
     }
   </article>;
 };
 
-let shouldUpdate =
-    ({newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
-  newSelf.retainedProps.updateTypeArr
-  |> StoreUtils.shouldComponentUpdate(UpdateStore.SelectTree);
-
-let make = (~uiState, ~dispatchFunc, ~getValueNodeIconFunc, _children) => {
+let make = (~tree, ~getValueNodeIconFunc, ~toggleSelectFunc, _children) => {
   ...component,
-  retainedProps: {
-    updateTypeArr: StoreUtils.getUpdateComponentTypeArr(uiState),
-  },
-  shouldUpdate,
   render: self =>
-    render(getValueNodeIconFunc, (uiState, dispatchFunc), self),
+    render(tree, (getValueNodeIconFunc, toggleSelectFunc), self),
 };
