@@ -26,12 +26,6 @@ module Method = {
       getValueNodeIconFunc(nodeData.type_, nodeData.value, editorState)
     };
 
-  let _getNodeName = node =>
-    switch (node) {
-    | FolderNode(_, nodeData, _) => nodeData.name
-    | ValueNode(_, nodeData) => nodeData.name
-    };
-
   let rec _build = (allNodes, (getValueNodeIconFunc, toggleSelectFunc)) =>
     allNodes
     /* |> _sortByName */
@@ -65,7 +59,9 @@ module Method = {
                | Some(icon) => <img src=icon className="treeNode-icon" />
                }
              }
-             <span> {DomHelper.textEl(_getNodeName(node))} </span>
+             <span>
+               {DomHelper.textEl(NodeSelectTreeService.getNodeName(node))}
+             </span>
            </li>
            {
              ReasonReact.array(

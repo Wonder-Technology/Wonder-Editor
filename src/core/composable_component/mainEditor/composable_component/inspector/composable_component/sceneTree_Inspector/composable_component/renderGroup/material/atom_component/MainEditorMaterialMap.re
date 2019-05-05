@@ -132,7 +132,6 @@ module Method = {
     let imgSrc =
       ImageDataMapUtils.getImgSrc(
         imageDataIndex,
-        ImageUtils.getNullImageSrc(),
         editorState,
       );
 

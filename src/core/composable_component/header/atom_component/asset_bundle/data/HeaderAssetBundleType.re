@@ -11,6 +11,8 @@ type scriptEventFunctionData = Wonderjs.RABType.scriptEventFunctionData;
 
 type scriptAttributeData = Wonderjs.RABType.scriptAttributeData;
 
+type imageData = Wonderjs.RABType.imageData;
+
 type imageDataMap = Wonderjs.RABType.imageDataMap;
 
 external convertMaterialDataToValue: materialData => value = "%identity";
@@ -25,10 +27,12 @@ external convertTextureDataToValue: textureData => value = "%identity";
 
 external convertValueToTextureData: value => textureData = "%identity";
 
-external convertScriptEventFunctionDataToValue: scriptEventFunctionData => value =
+external convertScriptEventFunctionDataToValue:
+  scriptEventFunctionData => value =
   "%identity";
 
-external convertValueToScriptEventFunctionData: value => scriptEventFunctionData =
+external convertValueToScriptEventFunctionData:
+  value => scriptEventFunctionData =
   "%identity";
 
 external convertScriptAttributeDataToValue: scriptAttributeData => value =

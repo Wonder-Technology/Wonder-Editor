@@ -147,11 +147,7 @@ module Method = {
                      ~engineState,
                    );
                  let imgSrc =
-                   ImageDataMapUtils.getImgSrc(
-                     imageDataIndex,
-                     ImageUtils.getNullImageSrc(),
-                     editorState,
-                   );
+                   ImageDataMapUtils.getImgSrc(imageDataIndex, editorState);
 
                  <FileBox
                    key
@@ -177,12 +173,7 @@ module Method = {
                    );
 
                  let imgSrc =
-                   ImageDataMapUtils.getImgSrc(
-                     imageDataIndex,
-                     editorState
-                     |> MaterialDataAssetEditorService.unsafeGetDefaultMaterialSnapshotPath,
-                     editorState,
-                   );
+                   ImageDataMapUtils.getImgSrc(imageDataIndex, editorState);
 
                  <FileBox
                    key
