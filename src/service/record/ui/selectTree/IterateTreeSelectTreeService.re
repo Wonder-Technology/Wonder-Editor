@@ -29,3 +29,23 @@ let rec cata =
     )
   };
 };
+
+let rec fold =
+        (~folderNodeFunc, ~acc, ~tree, ~valueNodeFunc=(acc, _, _) => acc, ())
+        : 'r => {
+  let recurse = (acc, child) =>
+    fold(~acc, ~tree=child, ~valueNodeFunc, ~folderNodeFunc, ());
+
+  switch (tree) {
+  | ValueNode(nodeId, valueNodeData) =>
+    valueNodeFunc(acc, nodeId, valueNodeData)
+  | FolderNode(nodeId, folderNodeData, children) =>
+    let localAccum = folderNodeFunc(acc, nodeId, folderNodeData, children);
+
+    children
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. acc, child) => recurse(acc, child),
+         localAccum,
+       );
+  };
+};

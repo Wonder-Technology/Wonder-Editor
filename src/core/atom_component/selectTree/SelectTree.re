@@ -19,10 +19,11 @@ module Method = {
     toggleSelectFunc(checked, node);
   };
 
-  let _getIcon = (node, getValueNodeIconFunc) =>
+  let _getIcon = (node, getValueNodeIconFunc, editorState) =>
     switch (node) {
     | FolderNode(_, _, _) => Some("./public/img/package.png")
-    | ValueNode(_, nodeData) => getValueNodeIconFunc(nodeData.type_)
+    | ValueNode(_, nodeData) =>
+      getValueNodeIconFunc(nodeData.type_, nodeData.value, editorState)
     };
 
   let _getNodeName = node =>
@@ -31,19 +32,15 @@ module Method = {
     | ValueNode(_, nodeData) => nodeData.name
     };
 
-  let _getNodeId = node =>
-    switch (node) {
-    | FolderNode(nodeId, _, _) => nodeId
-    | ValueNode(nodeId, _) => nodeId
-    };
-
   let rec _build = (allNodes, (getValueNodeIconFunc, toggleSelectFunc)) =>
     allNodes
     /* |> _sortByName */
     |> Js.Array.map(node =>
          <ul
            className="wonder-tree-node"
-           key={StringService.intToString(_getNodeId(node))}>
+           key={
+             StringService.intToString(NodeSelectTreeService.getNodeId(node))
+           }>
            <li>
              {
                _hasChildren(node) ?
@@ -60,7 +57,10 @@ module Method = {
                />
              </div>
              {
-               switch (_getIcon(node, getValueNodeIconFunc)) {
+               switch (
+                 _getIcon(node, getValueNodeIconFunc)
+                 |> StateLogicService.getEditorState
+               ) {
                | None => ReasonReact.null
                | Some(icon) => <img src=icon className="treeNode-icon" />
                }
@@ -88,9 +88,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("SelectTree");
 
-let render = (tree: tree, (getValueNodeIconFunc, toggleSelectFunc), _self) => {
-  let editorState = StateEditorService.getState();
-
+let render = (tree: tree, (getValueNodeIconFunc, toggleSelectFunc), _self) =>
   <article key="selectTreeRoot" className="wonder-selectTree">
     {
       ReasonReact.array(
@@ -101,7 +99,6 @@ let render = (tree: tree, (getValueNodeIconFunc, toggleSelectFunc), _self) => {
       )
     }
   </article>;
-};
 
 let make = (~tree, ~getValueNodeIconFunc, ~toggleSelectFunc, _children) => {
   ...component,

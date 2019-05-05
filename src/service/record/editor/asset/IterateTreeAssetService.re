@@ -81,10 +81,10 @@ let rec fold =
           (),
         )
         : 'r => {
-  let recurse = (acc, children) =>
+  let recurse = (acc, child) =>
     fold(
       ~acc,
-      ~tree=children,
+      ~tree=child,
       ~seqFoldFunc,
       ~textureNodeFunc,
       ~materialNodeFunc,
@@ -112,6 +112,56 @@ let rec fold =
   };
 };
 
+/* let rec foldWithoutRootNode =
+           (
+             ~folderNodeFunc,
+             ~acc,
+             ~tree,
+             ~seqFoldFunc=WonderCommonlib.ArrayService.reduceOneParam,
+             ~textureNodeFunc=(acc, _, _) => acc,
+             ~materialNodeFunc=(acc, _, _) => acc,
+             ~scriptEventFunctionNodeFunc=(acc, _, _) => acc,
+             ~scriptAttributeNodeFunc=(acc, _, _) => acc,
+             ~wdbNodeFunc=(acc, _, _) => acc,
+             (),
+           )
+           : 'r => {
+     let recurse = (acc, child) =>
+       fold(
+         ~acc,
+         ~tree=child,
+         ~seqFoldFunc,
+         ~textureNodeFunc,
+         ~materialNodeFunc,
+         ~scriptEventFunctionNodeFunc,
+         ~scriptAttributeNodeFunc,
+         ~wdbNodeFunc,
+         ~folderNodeFunc,
+         (),
+       );
+
+     switch (tree) {
+     | ScriptEventFunctionNode(nodeId, scriptEventFunctionNodeData) =>
+       scriptEventFunctionNodeFunc(acc, nodeId, scriptEventFunctionNodeData)
+     | ScriptAttributeNode(nodeId, scriptAttributeNodeData) =>
+       scriptAttributeNodeFunc(acc, nodeId, scriptAttributeNodeData)
+     | TextureNode(nodeId, textureNodeData) =>
+       textureNodeFunc(acc, nodeId, textureNodeData)
+     | MaterialNode(nodeId, materialNodeData) =>
+       materialNodeFunc(acc, nodeId, materialNodeData)
+     | WDBNode(nodeId, wdbNodeData) => wdbNodeFunc(acc, nodeId, wdbNodeData)
+     | FolderNode(nodeId, folderNodeData, children) =>
+       FolderNodeAssetService.getNodeName(folderNodeData)
+       === RootTreeAssetService.getAssetTreeRootName() ?
+         UIStateAssetService.fold(seqFoldFunc, recurse, acc, children) :
+         {
+           let localAccum = folderNodeFunc(acc, nodeId, folderNodeData, children);
+
+           UIStateAssetService.fold(seqFoldFunc, recurse, localAccum, children);
+         }
+     };
+   }; */
+
 let rec foldWithParentFolderNode =
         (
           ~folderNodeFunc,
@@ -127,10 +177,10 @@ let rec foldWithParentFolderNode =
           (),
         )
         : 'r => {
-  let recurse = (parentFolderNode, acc, children) =>
+  let recurse = (parentFolderNode, acc, child) =>
     foldWithParentFolderNode(
       ~acc,
-      ~tree=children,
+      ~tree=child,
       ~textureNodeFunc,
       ~materialNodeFunc,
       ~scriptEventFunctionNodeFunc,
@@ -183,6 +233,84 @@ let rec foldWithParentFolderNode =
   };
 };
 
+let rec foldWithParentFolderNodeWithoutRootNode =
+        (
+          ~folderNodeFunc,
+          ~acc,
+          ~tree,
+          ~seqFoldFunc=WonderCommonlib.ArrayService.reduceOneParam,
+          ~textureNodeFunc=(_, acc, _, _) => acc,
+          ~materialNodeFunc=(_, acc, _, _) => acc,
+          ~scriptEventFunctionNodeFunc=(_, acc, _, _) => acc,
+          ~scriptAttributeNodeFunc=(_, acc, _, _) => acc,
+          ~wdbNodeFunc=(_, acc, _, _) => acc,
+          ~parentFolderNode=RootTreeAssetService.getRootNode(tree),
+          (),
+        )
+        : 'r => {
+  let recurse = (parentFolderNode, acc, child) =>
+    foldWithParentFolderNodeWithoutRootNode(
+      ~acc,
+      ~tree=child,
+      ~textureNodeFunc,
+      ~materialNodeFunc,
+      ~scriptEventFunctionNodeFunc,
+      ~scriptAttributeNodeFunc,
+      ~wdbNodeFunc,
+      ~folderNodeFunc,
+      ~parentFolderNode,
+      (),
+    );
+
+  switch (tree) {
+  | ScriptEventFunctionNode(nodeId, scriptEventFunctionNodeData) =>
+    scriptEventFunctionNodeFunc(
+      parentFolderNode,
+      acc,
+      nodeId,
+      scriptEventFunctionNodeData,
+    )
+  | ScriptAttributeNode(nodeId, scriptAttributeNodeData) =>
+    scriptAttributeNodeFunc(
+      parentFolderNode,
+      acc,
+      nodeId,
+      scriptAttributeNodeData,
+    )
+  | TextureNode(nodeId, textureNodeData) =>
+    textureNodeFunc(parentFolderNode, acc, nodeId, textureNodeData)
+  | MaterialNode(nodeId, materialNodeData) =>
+    materialNodeFunc(parentFolderNode, acc, nodeId, materialNodeData)
+  | WDBNode(nodeId, wdbNodeData) =>
+    wdbNodeFunc(parentFolderNode, acc, nodeId, wdbNodeData)
+  | FolderNode(nodeId, folderNodeData, children) =>
+    let localAccum =
+      FolderNodeAssetService.getNodeName(folderNodeData)
+      === RootTreeAssetService.getAssetTreeRootName() ?
+        acc :
+        folderNodeFunc(
+          parentFolderNode,
+          acc,
+          nodeId,
+          folderNodeData,
+          children,
+        );
+
+    UIStateAssetService.fold(
+      seqFoldFunc,
+      recurse(
+        FolderNodeAssetService.buildNodeByNodeData(
+          ~nodeId,
+          ~nodeData=folderNodeData,
+          ~children,
+        ),
+      ),
+      localAccum,
+      children,
+    );
+  };
+};
+
 let rec foldWithHandleBeforeAndAfterFoldChildren =
         (
           ~acc,
@@ -199,10 +327,10 @@ let rec foldWithHandleBeforeAndAfterFoldChildren =
           (),
         )
         : 'r => {
-  let recurse = (acc, children) =>
+  let recurse = (acc, child) =>
     foldWithHandleBeforeAndAfterFoldChildren(
       ~acc,
-      ~tree=children,
+      ~tree=child,
       ~textureNodeFunc,
       ~materialNodeFunc,
       ~scriptEventFunctionNodeFunc,

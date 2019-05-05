@@ -40,3 +40,9 @@ let getNodeData = node =>
       ),
     )
   };
+
+let getMaterialComponent = node => getNodeData(node).materialComponent;
+
+let getMaterialType = node => getNodeData(node).type_;
+
+let getImageDataIndex = node => getNodeData(node).imageDataIndex;
