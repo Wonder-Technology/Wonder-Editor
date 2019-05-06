@@ -108,6 +108,12 @@ module Method = {
       assetTreeChildrenNodeArr
       |> Js.Array.filter(node => node |> TextureNodeAssetService.isTextureNode);
 
+    let assetBundleAssetTreeChildrenNodeArr =
+      assetTreeChildrenNodeArr
+      |> Js.Array.filter(node =>
+           node |> AssetBundleNodeAssetService.isAssetBundleNode
+         );
+
     ArrayService.fastConcatArrays([|
       _sortByName(folderAssetTreeChildrenNodeArr, engineState),
       _sortByName(wdbAssetTreeChildrenNodeArr, engineState),
@@ -115,6 +121,7 @@ module Method = {
       _sortByName(scriptEventFunctionAssetTreeChildrenNodeArr, engineState),
       _sortByName(scriptAttributeAssetTreeChildrenNodeArr, engineState),
       _sortByName(textureAssetTreeChildrenNodeArr, engineState),
+      _sortByName(assetBundleAssetTreeChildrenNodeArr, engineState),
     |]);
   };
 

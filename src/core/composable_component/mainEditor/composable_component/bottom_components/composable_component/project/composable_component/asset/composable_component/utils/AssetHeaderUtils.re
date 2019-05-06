@@ -122,7 +122,6 @@ let _handleAssetWDBType =
        (editorState, engineState) |> resolve;
      });
 
-/* TODO test */
 let _handleAssetAssetBundleType =
     (
       (fileName, assetBundleArrayBuffer),
@@ -135,7 +134,12 @@ let _handleAssetAssetBundleType =
         selectedFolderNodeInAssetTree,
         AssetBundleNodeAssetService.buildNode(
           ~nodeId=assetBundleNodeId,
-          ~name=FileNameService.getBaseName(fileName),
+          ~name=
+            OperateTreeAssetLogicService.getUniqueNodeName(
+              FileNameService.getBaseName(fileName),
+              selectedFolderNodeInAssetTree,
+              engineState,
+            ),
           ~assetBundle=assetBundleArrayBuffer,
           ~type_=
             switch (FileNameService.getExtName(fileName)) {

@@ -394,7 +394,6 @@ let reducer = (action, state) =>
 
 let render =
     ({state, send}: ReasonReact.self('a, 'b, 'c), (closeFunc, submitFunc)) => {
-  Js.log("render sissssssss");
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 

@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorAssetHeader->load assetBundle test load asset bundle fix bug if load the same asset bundle in the same dir, should handle their name to be unique 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/assetBundle.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        A
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/assetBundle.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        A 1
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader->load assetBundle test load asset bundle should add to asset children 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/assetBundle.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        A
+      </span>
+    </div>
+  </article>
+</article>
+`;

@@ -11,6 +11,20 @@ let getTypeStr = ({type_}: assetBundleNodeData) =>
   | WAB => "WAB"
   };
 
+let getNodeData = node =>
+  switch (node) {
+  | AssetBundleNode(_, nodeData) => nodeData
+  | _ =>
+    WonderLog.Log.fatal(
+      LogUtils.buildFatalMessage(
+        ~description={j|should be assetBundle node|j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j||j},
+      ),
+    )
+  };
+
 let buildNodeData = (~name, ~assetBundle, ~type_) => {
   name,
   assetBundle,
@@ -24,3 +38,11 @@ let buildNodeByNodeData = (~nodeId, ~nodeData) =>
   AssetBundleNode(nodeId, nodeData);
 
 let rename = (~name, ~nodeData): assetBundleNodeData => {...nodeData, name};
+
+let isAssetBundleNode = node =>
+  switch (node) {
+  | AssetBundleNode(_, _) => true
+  | _ => false
+  };
+
+let getAssetBundle = node => getNodeData(node).assetBundle;
