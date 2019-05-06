@@ -4,8 +4,16 @@ module CustomEventHandler = {
   type dataTuple = (NodeAssetType.nodeId, string, string);
   type return = unit;
 
+  let _buildFunctionWithJsObjStr = jsObjStr => {j|
+    (function() {
+      return $jsObjStr
+    }())
+  |j};
+
   let _convertEventFunctionJsObjStrToData = jsObjStr =>
     jsObjStr
+    |> _buildFunctionWithJsObjStr
+    |> WonderLog.Log.print
     |> SerializeService.deserializeFunction
     |> ScriptEventFunctionEngineService.createScriptEventFunctionData;
 

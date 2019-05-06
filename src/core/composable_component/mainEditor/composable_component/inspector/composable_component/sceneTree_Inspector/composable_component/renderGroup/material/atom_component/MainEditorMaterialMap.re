@@ -276,6 +276,7 @@ let _renderDragableImage =
     {Method.showMapComponent(state.currentTextureComponent)}
   </div>;
 
+/* TODO change texture not close group */
 let _renderTextureGroup = (state, send) =>
   <div className="select-component-content">
     <div className="select-component-item">
@@ -292,6 +293,7 @@ let _renderTextureGroup = (state, send) =>
         </div>
       </div>
     </div>
+    /* TODO add close function, create material snpashpt */
     <div
       className="select-component-bg"
       onClick={_e => send(HideTextureGroup)}

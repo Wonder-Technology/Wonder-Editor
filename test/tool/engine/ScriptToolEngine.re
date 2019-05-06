@@ -1,3 +1,7 @@
+open Wonderjs;
+
+open ScriptAttributeType;
+
 let getScriptAttributeEntries = (script, attributeName, engineState) =>
   ScriptEngineService.unsafeGetScriptAttribute(
     script,

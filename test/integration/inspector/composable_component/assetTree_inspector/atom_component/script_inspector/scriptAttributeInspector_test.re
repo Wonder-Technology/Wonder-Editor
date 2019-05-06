@@ -122,7 +122,7 @@ let _ =
           addedNodeId,
           (
             fieldName,
-            ScriptAttributeInspectorTool.buildFieldJsObjStr(
+            ScriptAttributeInspectorTool.buildFieldJsObj(
               ~type_="float",
               ~defaultValue=0.1,
             ),
@@ -166,7 +166,13 @@ let _ =
             |> ArrayService.unsafeGetFirst;
           ScriptAttributeInspectorTool.updateScriptAttributeNodeByReplaceFieldData(
             addedNodeId,
-            (fieldName, "aaa"),
+            (
+              fieldName,
+              ScriptAttributeInspectorTool.buildFieldJsObj(
+                ~type_="float",
+                ~defaultValue=0.1,
+              ),
+            ),
           );
 
           error |> expect |> toCalled;
@@ -190,7 +196,7 @@ let _ =
             addedNodeId,
             (
               fieldName,
-              ScriptAttributeInspectorTool.buildFieldJsObjStr(
+              ScriptAttributeInspectorTool.buildFieldJsObj(
                 ~type_=ScriptAttributeInspectorTool.getDefaultFieldType(),
                 ~defaultValue=0.1,
               ),
@@ -221,7 +227,7 @@ let _ =
               addedNodeId,
               (
                 fieldName,
-                ScriptAttributeInspectorTool.buildFieldJsObjStr(
+                ScriptAttributeInspectorTool.buildFieldJsObj(
                   ~type_="int",
                   ~defaultValue=0,
                 ),
@@ -249,7 +255,7 @@ let _ =
               addedNodeId,
               (
                 fieldName,
-                ScriptAttributeInspectorTool.buildFieldJsObjStr(
+                ScriptAttributeInspectorTool.buildFieldJsObj(
                   ~type_="int",
                   ~defaultValue=0,
                 ),
