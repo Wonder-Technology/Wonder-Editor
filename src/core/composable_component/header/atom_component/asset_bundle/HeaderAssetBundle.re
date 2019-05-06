@@ -805,8 +805,6 @@ let render =
       (isAssetBundleNav, toggleShowNavFunc, hoverNavFunc),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
-  Js.log("render") |> ignore;
-
   let className = isAssetBundleNav ? "item-title item-active" : "item-title";
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
@@ -888,8 +886,6 @@ let make =
   },
   reducer,
   didUpdate: ({oldSelf, newSelf}) => {
-    Js.log("didUpdate") |> ignore;
-
     let state = oldSelf.state;
     let send = oldSelf.send;
 
