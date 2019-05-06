@@ -734,7 +734,8 @@ module Method = {
           languageType,
         )
       }
-      closeFunc={
+      closeFunc={() => hideGenerateSingleRABModal(send)}
+      submitFunc={
         () => {
           generateAndDownloadSingleRAB(selectTreeForGenerateSingleRAB)
           |> StateLogicService.getStateToGetData;

@@ -503,7 +503,7 @@ data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQIBA
         className="footer-submit"
         onClick={[Function]}
       >
-        OK
+        Submit
       </button>
     </div>
   </div>
@@ -620,7 +620,7 @@ exports[`Header AssetBundle test generate single rab test buildSelectTreeForGene
         className="footer-submit"
         onClick={[Function]}
       >
-        OK
+        Submit
       </button>
     </div>
   </div>
