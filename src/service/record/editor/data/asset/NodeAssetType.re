@@ -5,6 +5,7 @@ type uploadFileType =
   | LoadGLB
   | LoadGLTFZip
   | LoadTexture
+  | LoadAssetBundle
   | LoadWPK
   | LoadError;
 

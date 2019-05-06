@@ -122,6 +122,44 @@ let _handleAssetWDBType =
        (editorState, engineState) |> resolve;
      });
 
+/* TODO test */
+let _handleAssetAssetBundleType =
+    (
+      (fileName, assetBundleArrayBuffer),
+      (assetBundleNodeId, selectedFolderNodeInAssetTree),
+      (editorState, engineState),
+    ) =>
+  make((~resolve, ~reject) => {
+    let editorState =
+      AssetBundleNodeAssetEditorService.addAssetBundleNodeToAssetTree(
+        selectedFolderNodeInAssetTree,
+        AssetBundleNodeAssetService.buildNode(
+          ~nodeId=assetBundleNodeId,
+          ~name=FileNameService.getBaseName(fileName),
+          ~assetBundle=assetBundleArrayBuffer,
+          ~type_=
+            switch (FileNameService.getExtName(fileName)) {
+            | ".rab" => RAB
+            | ".sab" => SAB
+            | ".wab" => WAB
+            | extName =>
+              WonderLog.Log.fatal(
+                WonderLog.Log.buildFatalMessage(
+                  ~title="_handleAssetAssetBundleType",
+                  ~description={j|unknown extName: $extName|j},
+                  ~reason="",
+                  ~solution={j||j},
+                  ~params={j||j},
+                ),
+              )
+            },
+        ),
+        editorState,
+      );
+
+    resolve(. (editorState, engineState));
+  });
+
 let _handleGLBType =
     (
       (fileName, glbArrayBuffer),
@@ -153,11 +191,18 @@ let _handleGLTFZipType =
 let _handleSpecificFuncByTypeAsync =
     (
       type_,
-      (handleTextureFunc, handleWDBFunc, handleGLBFunc, handleGLTFZipFuncc),
+      (
+        handleTextureFunc,
+        handleWDBFunc,
+        handleAssetBundleFunc,
+        handleGLBFunc,
+        handleGLTFZipFuncc,
+      ),
     ) =>
   switch (type_) {
   | LoadTexture => handleTextureFunc()
   | LoadWDB => handleWDBFunc()
+  | LoadAssetBundle => handleAssetBundleFunc()
   | LoadGLB => handleGLBFunc()
   | LoadGLTFZip => handleGLTFZipFuncc()
   | LoadError =>
@@ -215,6 +260,15 @@ let handleFileByTypeAsync = (fileResult: nodeResultType, createJsZipFunc) => {
         ),
       () =>
         _handleAssetWDBType(
+          (
+            fileResult.name,
+            fileResult.result |> FileReader.convertResultToArrayBuffer,
+          ),
+          (assetNodeId, selectedFolderNodeInAssetTree),
+          (editorState, engineState),
+        ),
+      () =>
+        _handleAssetAssetBundleType(
           (
             fileResult.name,
             fileResult.result |> FileReader.convertResultToArrayBuffer,
@@ -287,7 +341,9 @@ let fileLoad = ((uiState, dispatchFunc), createJsZipFunc, event) => {
          FileReader.makeSureCanLoadSameNameFileAgain(target);
 
          dispatchFunc(
-           AppStore.UpdateAction(Update([|UpdateStore.Inspector,UpdateStore.Project|])),
+           AppStore.UpdateAction(
+             Update([|UpdateStore.Inspector, UpdateStore.Project|]),
+           ),
          );
 
          resolve();
