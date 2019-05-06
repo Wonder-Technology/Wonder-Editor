@@ -374,7 +374,7 @@ exports[`header import package fix bug test material assets after import
     >
       <img
         onDragStart={[Function]}
-        src="./public/img/mat.jpg"
+        src="./public/null.png"
       />
     </div>
     <div
@@ -394,7 +394,7 @@ exports[`header import package fix bug test material assets after import
     >
       <img
         onDragStart={[Function]}
-        src="./public/img/mat.jpg"
+        src="./public/null.png"
       />
     </div>
     <div
