@@ -28,6 +28,11 @@ let rec cata =
                            ~nodeId,
                            ~nodeData,
                          ),
+          ~assetBundleNodeFunc=(nodeId, nodeData) =>
+                                 AssetBundleNodeAssetService.buildNodeByNodeData(
+                                   ~nodeId,
+                                   ~nodeData,
+                                 ),
           ~folderNodeFunc=(nodeId, nodeData, children) =>
                             FolderNodeAssetService.buildNodeByNodeData(
                               ~nodeId,
@@ -44,6 +49,7 @@ let rec cata =
       ~scriptEventFunctionNodeFunc,
       ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
+      ~assetBundleNodeFunc,
       ~folderNodeFunc,
     );
 
@@ -57,6 +63,8 @@ let rec cata =
   | MaterialNode(nodeId, materialNodeData) =>
     materialNodeFunc(nodeId, materialNodeData)
   | WDBNode(nodeId, wdbNodeData) => wdbNodeFunc(nodeId, wdbNodeData)
+  | AssetBundleNode(nodeId, assetBundleNodeData) =>
+    assetBundleNodeFunc(nodeId, assetBundleNodeData)
   | FolderNode(nodeId, folderNodeData, children) =>
     folderNodeFunc(
       nodeId,
@@ -78,6 +86,7 @@ let rec fold =
           ~scriptEventFunctionNodeFunc=(acc, _, _) => acc,
           ~scriptAttributeNodeFunc=(acc, _, _) => acc,
           ~wdbNodeFunc=(acc, _, _) => acc,
+          ~assetBundleNodeFunc=(acc, _, _) => acc,
           (),
         )
         : 'r => {
@@ -91,6 +100,7 @@ let rec fold =
       ~scriptEventFunctionNodeFunc,
       ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
+      ~assetBundleNodeFunc,
       ~folderNodeFunc,
       (),
     );
@@ -105,62 +115,14 @@ let rec fold =
   | MaterialNode(nodeId, materialNodeData) =>
     materialNodeFunc(acc, nodeId, materialNodeData)
   | WDBNode(nodeId, wdbNodeData) => wdbNodeFunc(acc, nodeId, wdbNodeData)
+  | AssetBundleNode(nodeId, assetBundleNodeData) =>
+    assetBundleNodeFunc(acc, nodeId, assetBundleNodeData)
   | FolderNode(nodeId, folderNodeData, children) =>
     let localAccum = folderNodeFunc(acc, nodeId, folderNodeData, children);
 
     UIStateAssetService.fold(seqFoldFunc, recurse, localAccum, children);
   };
 };
-
-/* let rec foldWithoutRootNode =
-           (
-             ~folderNodeFunc,
-             ~acc,
-             ~tree,
-             ~seqFoldFunc=WonderCommonlib.ArrayService.reduceOneParam,
-             ~textureNodeFunc=(acc, _, _) => acc,
-             ~materialNodeFunc=(acc, _, _) => acc,
-             ~scriptEventFunctionNodeFunc=(acc, _, _) => acc,
-             ~scriptAttributeNodeFunc=(acc, _, _) => acc,
-             ~wdbNodeFunc=(acc, _, _) => acc,
-             (),
-           )
-           : 'r => {
-     let recurse = (acc, child) =>
-       fold(
-         ~acc,
-         ~tree=child,
-         ~seqFoldFunc,
-         ~textureNodeFunc,
-         ~materialNodeFunc,
-         ~scriptEventFunctionNodeFunc,
-         ~scriptAttributeNodeFunc,
-         ~wdbNodeFunc,
-         ~folderNodeFunc,
-         (),
-       );
-
-     switch (tree) {
-     | ScriptEventFunctionNode(nodeId, scriptEventFunctionNodeData) =>
-       scriptEventFunctionNodeFunc(acc, nodeId, scriptEventFunctionNodeData)
-     | ScriptAttributeNode(nodeId, scriptAttributeNodeData) =>
-       scriptAttributeNodeFunc(acc, nodeId, scriptAttributeNodeData)
-     | TextureNode(nodeId, textureNodeData) =>
-       textureNodeFunc(acc, nodeId, textureNodeData)
-     | MaterialNode(nodeId, materialNodeData) =>
-       materialNodeFunc(acc, nodeId, materialNodeData)
-     | WDBNode(nodeId, wdbNodeData) => wdbNodeFunc(acc, nodeId, wdbNodeData)
-     | FolderNode(nodeId, folderNodeData, children) =>
-       FolderNodeAssetService.getNodeName(folderNodeData)
-       === RootTreeAssetService.getAssetTreeRootName() ?
-         UIStateAssetService.fold(seqFoldFunc, recurse, acc, children) :
-         {
-           let localAccum = folderNodeFunc(acc, nodeId, folderNodeData, children);
-
-           UIStateAssetService.fold(seqFoldFunc, recurse, localAccum, children);
-         }
-     };
-   }; */
 
 let rec foldWithParentFolderNode =
         (
@@ -173,6 +135,7 @@ let rec foldWithParentFolderNode =
           ~scriptEventFunctionNodeFunc=(_, acc, _, _) => acc,
           ~scriptAttributeNodeFunc=(_, acc, _, _) => acc,
           ~wdbNodeFunc=(_, acc, _, _) => acc,
+          ~assetBundleNodeFunc=(_, acc, _, _) => acc,
           ~parentFolderNode=None,
           (),
         )
@@ -186,6 +149,7 @@ let rec foldWithParentFolderNode =
       ~scriptEventFunctionNodeFunc,
       ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
+      ~assetBundleNodeFunc,
       ~folderNodeFunc,
       ~parentFolderNode,
       (),
@@ -212,6 +176,8 @@ let rec foldWithParentFolderNode =
     materialNodeFunc(parentFolderNode, acc, nodeId, materialNodeData)
   | WDBNode(nodeId, wdbNodeData) =>
     wdbNodeFunc(parentFolderNode, acc, nodeId, wdbNodeData)
+  | AssetBundleNode(nodeId, assetBundleNodeData) =>
+    assetBundleNodeFunc(parentFolderNode, acc, nodeId, assetBundleNodeData)
   | FolderNode(nodeId, folderNodeData, children) =>
     let localAccum =
       folderNodeFunc(parentFolderNode, acc, nodeId, folderNodeData, children);
@@ -244,6 +210,7 @@ let rec foldWithParentFolderNodeWithoutRootNode =
           ~scriptEventFunctionNodeFunc=(_, acc, _, _) => acc,
           ~scriptAttributeNodeFunc=(_, acc, _, _) => acc,
           ~wdbNodeFunc=(_, acc, _, _) => acc,
+          ~assetBundleNodeFunc=(_, acc, _, _) => acc,
           ~parentFolderNode=RootTreeAssetService.getRootNode(tree),
           (),
         )
@@ -257,6 +224,7 @@ let rec foldWithParentFolderNodeWithoutRootNode =
       ~scriptEventFunctionNodeFunc,
       ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
+      ~assetBundleNodeFunc,
       ~folderNodeFunc,
       ~parentFolderNode,
       (),
@@ -283,6 +251,8 @@ let rec foldWithParentFolderNodeWithoutRootNode =
     materialNodeFunc(parentFolderNode, acc, nodeId, materialNodeData)
   | WDBNode(nodeId, wdbNodeData) =>
     wdbNodeFunc(parentFolderNode, acc, nodeId, wdbNodeData)
+  | AssetBundleNode(nodeId, assetBundleNodeData) =>
+    assetBundleNodeFunc(parentFolderNode, acc, nodeId, assetBundleNodeData)
   | FolderNode(nodeId, folderNodeData, children) =>
     let localAccum =
       FolderNodeAssetService.getNodeName(folderNodeData)
@@ -320,6 +290,7 @@ let rec foldWithHandleBeforeAndAfterFoldChildren =
           ~scriptEventFunctionNodeFunc,
           ~scriptAttributeNodeFunc,
           ~wdbNodeFunc,
+          ~assetBundleNodeFunc,
           ~folderNodeFunc,
           ~handleBeforeFoldChildrenFunc,
           ~handleAfterFoldChildrenFunc,
@@ -336,6 +307,7 @@ let rec foldWithHandleBeforeAndAfterFoldChildren =
       ~scriptEventFunctionNodeFunc,
       ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
+      ~assetBundleNodeFunc,
       ~folderNodeFunc,
       ~handleBeforeFoldChildrenFunc,
       ~handleAfterFoldChildrenFunc,
@@ -353,6 +325,8 @@ let rec foldWithHandleBeforeAndAfterFoldChildren =
   | MaterialNode(nodeId, materialNodeData) =>
     materialNodeFunc(acc, nodeId, materialNodeData)
   | WDBNode(nodeId, wdbNodeData) => wdbNodeFunc(acc, nodeId, wdbNodeData)
+  | AssetBundleNode(nodeId, assetBundleNodeData) =>
+    assetBundleNodeFunc(acc, nodeId, assetBundleNodeData)
   | FolderNode(nodeId, folderNodeData, children) =>
     let localAccum = folderNodeFunc(acc, nodeId, folderNodeData, children);
 
@@ -373,6 +347,7 @@ let filter =
       ~predScriptEventFunctionNodeFunc=node => false,
       ~predScriptAttributeNodeFunc=node => false,
       ~predWDBNodeFunc=node => false,
+      ~predAssetBundleNodeFunc=node => false,
       ~predFolderNodeFunc=node => false,
       (),
     )
@@ -412,6 +387,12 @@ let filter =
       WDBNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData),
       predWDBNodeFunc,
     );
+  let _assetBundleNodeFunc = (acc, nodeId, nodeData) =>
+    _nodeFunc(
+      acc,
+      AssetBundleNodeAssetService.buildNodeByNodeData(~nodeId, ~nodeData),
+      predAssetBundleNodeFunc,
+    );
   let _folderNodeFunc = (acc, nodeId, nodeData, children) =>
     _nodeFunc(
       acc,
@@ -431,6 +412,7 @@ let filter =
     ~scriptEventFunctionNodeFunc=_scriptEventFunctionNodeFunc,
     ~scriptAttributeNodeFunc=_scriptAttributeNodeFunc,
     ~wdbNodeFunc=_wdbNodeFunc,
+    ~assetBundleNodeFunc=_assetBundleNodeFunc,
     ~folderNodeFunc=_folderNodeFunc,
     (),
   );
@@ -444,6 +426,7 @@ let find =
       ~predScriptEventFunctionNodeFunc=node => false,
       ~predScriptAttributeNodeFunc=node => false,
       ~predWDBNodeFunc=node => false,
+      ~predAssetBundleNodeFunc=node => false,
       ~predFolderNodeFunc=node => false,
       (),
     )
@@ -458,6 +441,7 @@ let find =
       ~predScriptEventFunctionNodeFunc,
       ~predScriptAttributeNodeFunc,
       ~predWDBNodeFunc,
+      ~predAssetBundleNodeFunc,
       ~predFolderNodeFunc,
       (),
     )
@@ -474,6 +458,7 @@ let findOne =
       ~predScriptEventFunctionNodeFunc=node => false,
       ~predScriptAttributeNodeFunc=node => false,
       ~predWDBNodeFunc=node => false,
+      ~predAssetBundleNodeFunc=node => false,
       ~predFolderNodeFunc=node => false,
       (),
     )
@@ -485,6 +470,7 @@ let findOne =
     ~predScriptEventFunctionNodeFunc,
     ~predScriptAttributeNodeFunc,
     ~predWDBNodeFunc,
+    ~predAssetBundleNodeFunc,
     ~predFolderNodeFunc,
     (),
   )
@@ -499,6 +485,7 @@ let rec map =
           ~scriptEventFunctionNodeFunc=(_, nodeData) => nodeData,
           ~scriptAttributeNodeFunc=(_, nodeData) => nodeData,
           ~wdbNodeFunc=(_, nodeData) => nodeData,
+          ~assetBundleNodeFunc=(_, nodeData) => nodeData,
           (),
         )
         : 'r => {
@@ -509,6 +496,7 @@ let rec map =
       ~scriptEventFunctionNodeFunc,
       ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
+      ~assetBundleNodeFunc,
       ~folderNodeFunc,
       (),
     );
@@ -530,6 +518,8 @@ let rec map =
     MaterialNode(nodeId, materialNodeFunc(nodeId, materialNodeData))
   | WDBNode(nodeId, wdbNodeData) =>
     WDBNode(nodeId, wdbNodeFunc(nodeId, wdbNodeData))
+  | AssetBundleNode(nodeId, assetBundleNodeData) =>
+    AssetBundleNode(nodeId, assetBundleNodeFunc(nodeId, assetBundleNodeData))
   | FolderNode(nodeId, folderNodeData, children) =>
     let (changeStateType, nodeData) = folderNodeFunc(nodeId, folderNodeData);
 

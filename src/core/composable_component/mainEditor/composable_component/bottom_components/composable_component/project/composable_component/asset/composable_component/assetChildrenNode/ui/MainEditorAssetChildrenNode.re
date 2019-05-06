@@ -238,6 +238,22 @@ module Method = {
                  />
                  |> Result.SameDataResult.success;
                },
+             /* TODO update assetBundle.png */
+             ~assetBundleNodeFunc=
+               (nodeId, {name}) =>
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc="./public/img/assetBundle.png"
+                   nodeId
+                   fileName=name
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success,
              ~folderNodeFunc=
                (nodeId, nodeData, children) => {
                  let name = FolderNodeAssetService.getNodeName(nodeData);

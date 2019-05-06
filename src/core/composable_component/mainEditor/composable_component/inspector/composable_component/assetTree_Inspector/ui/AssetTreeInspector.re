@@ -133,14 +133,18 @@ module Method = {
     />;
 
   let buildWDBComponent =
-      (
-        (uiState, dispatchFunc),
-        (state, send),
-        currentNodeId,
-        {name, wdbGameObject},
-      ) =>
+      ((state, send), currentNodeId, {name, wdbGameObject}) =>
     <WDBInspector
       name={state.inputValue}
+      onChangeFunc={_e => send(change(_e))}
+      onBlurFunc={_e => send(Blur)}
+    />;
+
+  /* TODO test */
+  let buildAssetBundleComponent = ((state, send), currentNodeId, nodeData) =>
+    <AssetBundleInspector
+      name={state.inputValue}
+      type_={AssetBundleNodeAssetService.getTypeStr(nodeData)}
       onChangeFunc={_e => send(change(_e))}
       onBlurFunc={_e => send(Blur)}
     />;
@@ -160,7 +164,8 @@ module Method = {
         buildScriptEventFunctionComponent(reduxTuple, state),
       ~scriptAttributeNodeFunc=
         buildScriptAttributeComponent(reduxTuple, state),
-      ~wdbNodeFunc=buildWDBComponent(reduxTuple, (state, send)),
+      ~wdbNodeFunc=buildWDBComponent((state, send)),
+      ~assetBundleNodeFunc=buildAssetBundleComponent((state, send)),
       ~folderNodeFunc=buildFolderComponent(state, send, languageType),
     );
 
@@ -213,6 +218,12 @@ module Method = {
           ~nodeData=currentNodeData,
         ),
       );
+
+    {inputValue: baseName, originalName: baseName};
+  };
+
+  let initAssetBundleName = (_currentNodeId, currentNodeData) => {
+    let baseName = AssetBundleNodeAssetService.getNodeName(currentNodeData);
 
     {inputValue: baseName, originalName: baseName};
   };
@@ -277,6 +288,7 @@ let make =
       ~scriptAttributeNodeFunc=
         Method.initScriptAttributeNodeName(engineState),
       ~wdbNodeFunc=Method.initWDBName,
+      ~assetBundleNodeFunc=Method.initAssetBundleName,
       ~folderNodeFunc=Method.initFolderName,
     );
   },

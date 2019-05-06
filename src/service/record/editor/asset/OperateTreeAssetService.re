@@ -29,6 +29,7 @@ let findNodeById = (targetNodeId, tree) => {
     ~predScriptEventFunctionNodeFunc=predNodeFunc,
     ~predScriptAttributeNodeFunc=predNodeFunc,
     ~predWDBNodeFunc=predNodeFunc,
+    ~predAssetBundleNodeFunc=predNodeFunc,
     ~predFolderNodeFunc=predNodeFunc,
     (),
   );
@@ -137,6 +138,12 @@ let replaceNode = (targetNodeId, newTreeNode, tree) => {
     );
   let _wdbNodeFunc = (nodeId, nodeData) =>
     _nodeFunc(nodeId, nodeData, WDBNodeAssetService.buildNodeByNodeData);
+  let _assetBundleNodeFunc = (nodeId, nodeData) =>
+    _nodeFunc(
+      nodeId,
+      nodeData,
+      AssetBundleNodeAssetService.buildNodeByNodeData,
+    );
   let _folderNodeFunc = (nodeId, nodeData, children) =>
     _nodeFunc(
       nodeId,
@@ -151,6 +158,7 @@ let replaceNode = (targetNodeId, newTreeNode, tree) => {
     ~scriptEventFunctionNodeFunc=_scriptEventFunctionNodeFunc,
     ~scriptAttributeNodeFunc=_scriptAttributeNodeFunc,
     ~wdbNodeFunc=_wdbNodeFunc,
+    ~assetBundleNodeFunc=_assetBundleNodeFunc,
     ~folderNodeFunc=_folderNodeFunc,
     (),
   );

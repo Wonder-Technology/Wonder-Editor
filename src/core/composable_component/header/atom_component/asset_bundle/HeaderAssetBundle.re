@@ -231,6 +231,7 @@ module Method = {
               engineState,
             );
           },
+        ~assetBundleNodeFunc=(parentFolderNode, acc, nodeId, nodeData) => acc,
         ~materialNodeFunc=
           (
             parentFolderNode,

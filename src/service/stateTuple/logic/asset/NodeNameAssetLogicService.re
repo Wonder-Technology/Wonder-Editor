@@ -70,10 +70,7 @@ let updateNodeName = (node, name, engineState) =>
         ),
       ),
     ~scriptAttributeNodeFunc=
-      (
-        nodeId,
-        ({name}: NodeAssetType.scriptAttributeNodeData) as nodeData,
-      ) => (
+      (nodeId, ({name}: NodeAssetType.scriptAttributeNodeData) as nodeData) => (
         engineState,
         ScriptAttributeNodeAssetService.buildNodeByNodeData(
           ~nodeId,
@@ -87,6 +84,14 @@ let updateNodeName = (node, name, engineState) =>
         WDBNodeAssetService.buildNodeByNodeData(
           ~nodeId,
           ~nodeData=WDBNodeAssetService.rename(~name, ~nodeData),
+        ),
+      ),
+    ~assetBundleNodeFunc=
+      (nodeId, nodeData) => (
+        engineState,
+        AssetBundleNodeAssetService.buildNodeByNodeData(
+          ~nodeId,
+          ~nodeData=AssetBundleNodeAssetService.rename(~name, ~nodeData),
         ),
       ),
     ~folderNodeFunc=

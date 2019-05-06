@@ -43,4 +43,15 @@ type scriptAttributeNodeData = {
   attribute: Wonderjs.ScriptAttributeType.scriptAttribute,
 };
 
+type assetBundleType =
+  | RAB
+  | SAB
+  | WAB;
+
+type assetBundleNodeData = {
+  name: string,
+  type_: assetBundleType,
+  assetBundle: Js.Typed_array.ArrayBuffer.t,
+};
+
 type folderNodeData = {name: string};
