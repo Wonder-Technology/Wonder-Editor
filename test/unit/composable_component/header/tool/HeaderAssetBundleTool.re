@@ -10,10 +10,11 @@ let buildGenerateSingleRABModal =
                     |> StateLogicService.getEditorState,
       (),
     ) =>
-  HeaderAssetBundle.Method.renderGenerateSingleRABModal(
+  HeaderAssetBundleGenerateSingleRAB.Method.renderGenerateSingleRABModal(
     languageType,
     selectTree,
     send,
+    (() => (), () => ()),
   );
 
 let filter =
@@ -100,13 +101,13 @@ let findNodeByName = (targetNodeName, tree) => {
 };
 
 let setSelectForSelectTree = (isSelect, nodeName, tree) =>
-  HeaderAssetBundle.Method._setSelectForSelectTree(
+  HeaderAssetBundleGenerateSingleRAB.Method._setSelectForSelectTree(
     tree,
     isSelect,
     findNodeByName(nodeName, tree) |> OptionService.unsafeGet,
   );
 
-let generateSingleRABResourceData = HeaderAssetBundle.Method._generateSingleRABResourceData;
+let generateSingleRABResourceData = HeaderAssetBundleGenerateSingleRAB.Method._generateSingleRABResourceData;
 
 let buildTextureData = (textureComponent, imageDataIndex): textureData => {
   textureComponent,
