@@ -22,6 +22,7 @@ let render =
         languageType,
       )
     }
+    inputText="name"
     defaultValue="WonderSingleSAB"
     closeFunc={() => closeFunc()}
     submitFunc={

@@ -2,7 +2,7 @@
 
 exports[`Header AssetBundle test generate single rab test buildSelectTreeForGenerateSingleRAB test1 1`] = `
 <article
-  className="wonder-modal"
+  className="wonder-singleInput-modal"
 >
   <div
     className="modal-item"
@@ -19,6 +19,25 @@ exports[`Header AssetBundle test generate single rab test buildSelectTreeForGene
     <div
       className="modal-item-content"
     >
+      <div
+        className="content-field"
+      >
+        <div
+          className="field-title"
+        >
+          name
+        </div>
+        <div
+          className="field-content"
+        >
+          <input
+            className="input-component"
+            onChange={[Function]}
+            type="text"
+            value="WonderSingleRAB"
+          />
+        </div>
+      </div>
       <article
         className="wonder-selectTree"
       >
@@ -512,7 +531,7 @@ data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQIBA
 
 exports[`Header AssetBundle test generate single rab test buildSelectTreeForGenerateSingleRAB test2 1`] = `
 <article
-  className="wonder-modal"
+  className="wonder-singleInput-modal"
 >
   <div
     className="modal-item"
@@ -529,6 +548,25 @@ exports[`Header AssetBundle test generate single rab test buildSelectTreeForGene
     <div
       className="modal-item-content"
     >
+      <div
+        className="content-field"
+      >
+        <div
+          className="field-title"
+        >
+          name
+        </div>
+        <div
+          className="field-content"
+        >
+          <input
+            className="input-component"
+            onChange={[Function]}
+            type="text"
+            value="WonderSingleRAB"
+          />
+        </div>
+      </div>
       <article
         className="wonder-selectTree"
       >

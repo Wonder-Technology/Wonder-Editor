@@ -19,24 +19,24 @@ let reducer = (action, state) =>
   | Change(value) => ReasonReact.Update({...state, inputValue: value})
   };
 
-let _renderContent = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
-  <div className="modal-item-content">
-    <div className="content-field">
-      <div className="field-title"> {DomHelper.textEl("name")} </div>
-      <div className="field-content">
-        <input
-          className="input-component"
-          type_="text"
-          value={state.inputValue}
-          onChange={_e => send(Method.change(_e))}
-        />
-      </div>
+let _renderInput = ({state, send}: ReasonReact.self('a, 'b, 'c), inputText) =>
+  <div className="content-field">
+    <div className="field-title"> {DomHelper.textEl(inputText)} </div>
+    <div className="field-content">
+      <input
+        className="input-component"
+        type_="text"
+        value={state.inputValue}
+        onChange={_e => send(Method.change(_e))}
+      />
     </div>
   </div>;
 
 let render =
     (
       title,
+      inputText,
+      content,
       (closeFunc, submitFunc),
       ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
     ) =>
@@ -46,7 +46,10 @@ let render =
         {DomHelper.textEl(title)}
         <img src="./public/img/close.png" onClick={_e => closeFunc()} />
       </div>
-      {_renderContent(self)}
+      <div className="modal-item-content">
+        {_renderInput(self, inputText)}
+        {ReasonReact.array(content)}
+      </div>
       <div className="modal-item-footer">
         <button
           className="footer-submit"
@@ -61,6 +64,8 @@ let make =
     (
       ~closeFunc,
       ~title,
+      ~inputText,
+      ~content=[||],
       ~submitFunc,
       ~defaultValue: option(string)=?,
       _children,
@@ -72,5 +77,6 @@ let make =
     | Some(value) => {inputValue: value}
     },
   reducer,
-  render: _self => render(title, (closeFunc, submitFunc), _self),
+  render: _self =>
+    render(title, inputText, content, (closeFunc, submitFunc), _self),
 };

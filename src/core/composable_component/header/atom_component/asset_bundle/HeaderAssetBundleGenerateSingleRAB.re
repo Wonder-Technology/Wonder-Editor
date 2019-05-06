@@ -317,7 +317,7 @@ module Method = {
   };
 
   let generateAndDownloadSingleRAB =
-      (selectTreeForGenerateSingleRAB, (editorState, engineState)) => {
+      (selectTreeForGenerateSingleRAB, baseName, (editorState, engineState)) => {
     let (
       basicMaterials,
       lightMaterials,
@@ -346,11 +346,8 @@ module Method = {
         engineState,
       );
 
-    /* TODO feat: name should be edit */
-    HeaderAssetBundleUtils.downloadAB("WonderSingleRAB.rab", rab);
+    HeaderAssetBundleUtils.downloadAB({j|$(baseName).rab|j}, rab);
   };
-
-  /* let hideGenerateSingleRABModal = send => send(HideGenerateSingleRABModal); */
 
   let renderGenerateSingleRABModal =
       (
@@ -359,24 +356,23 @@ module Method = {
         send,
         (closeFunc, submitFunc),
       ) =>
-    <Modal
+    <SingleInputModal
       title={
         LanguageUtils.getHeaderLanguageDataByType(
           "generate-single-rab",
           languageType,
         )
       }
-      closeFunc={
-        () =>
-          /* hideGenerateSingleRABModal(send); */
-          closeFunc()
-      }
+      inputText="name"
+      defaultValue="WonderSingleRAB"
+      closeFunc
       submitFunc={
-        () => {
-          generateAndDownloadSingleRAB(selectTreeForGenerateSingleRAB)
+        baseName => {
+          generateAndDownloadSingleRAB(
+            selectTreeForGenerateSingleRAB,
+            baseName,
+          )
           |> StateLogicService.getStateToGetData;
-
-          /* hideGenerateSingleRABModal(send); */
 
           submitFunc();
         }
@@ -392,14 +388,13 @@ let component =
 
 let reducer = (action, state) =>
   switch (action) {
-  /* | HideGenerateSingleRABModal =>
-     ReasonReact.Update({...state, selectTreeForGenerateSingleRAB: None}) */
   | UpdateSelectTreeForGenerateSingleRAB(selectTree) =>
     ReasonReact.Update({...state, selectTreeForGenerateSingleRAB: selectTree})
   };
 
 let render =
     ({state, send}: ReasonReact.self('a, 'b, 'c), (closeFunc, submitFunc)) => {
+  Js.log("render sissssssss");
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
