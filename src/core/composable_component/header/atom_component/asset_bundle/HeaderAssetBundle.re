@@ -1,13 +1,16 @@
 type state = {
   isShowGenerateSingleRABModal: bool,
   isShowGenerateSingleSABModal: bool,
+  isShowGenerateAllABModal: bool,
 };
 
 type action =
   | ShowGenerateSingleRABModal
   | HideGenerateSingleRABModal
   | ShowGenerateSingleSABModal
-  | HideGenerateSingleSABModal;
+  | HideGenerateSingleSABModal
+  | ShowGenerateAllABModal
+  | HideGenerateAllABModal;
 
 module Method = {
   let buildAssetBundleComponentSelectNav = (send, languageType) =>
@@ -34,6 +37,20 @@ module Method = {
             DomHelper.textEl(
               LanguageUtils.getHeaderLanguageDataByType(
                 "generate-single-sab",
+                languageType,
+              ),
+            )
+          }
+        </span>
+      </div>
+      <div
+        className="content-section"
+        onClick={_e => send(ShowGenerateAllABModal)}>
+        <span className="section-header">
+          {
+            DomHelper.textEl(
+              LanguageUtils.getHeaderLanguageDataByType(
+                "generate-all-ab",
                 languageType,
               ),
             )
@@ -383,6 +400,127 @@ module Method = {
 
     selectTree;
   };
+
+  let buildSelectTreeForGenerateAllAB = ((editorState, engineState)) => {
+    /* open HeaderAssetBundleType; */
+
+    let initNodeId = 0;
+    let rootNode =
+      FolderNodeSelectTreeService.buildNode(
+        ~nodeId=initNodeId,
+        ~name=RootTreeAssetService.getAssetTreeRootName(),
+        ~isSelect=false,
+        ~children=[||],
+        (),
+      );
+    let selectTree = rootNode;
+
+    let (_, _, selectTree) =
+      IterateTreeAssetService.foldWithParentFolderNodeWithoutRootNode(
+        ~acc=(
+          initNodeId,
+          _setToFolderTreeMap(
+            RootTreeAssetEditorService.getRootNode(editorState),
+            rootNode,
+            WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+          ),
+          selectTree,
+        ),
+        ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
+        /* TODO refactor: duplicate */
+        ~folderNodeFunc=
+          (
+            parentFolderNode,
+            (currentSelectTreeNodeId, folderTreeMap, selectTree),
+            nodeId,
+            nodeData,
+            children,
+          ) => {
+            let newNodeId =
+              IdSelectTreeService.generateNodeId(currentSelectTreeNodeId);
+
+            let newSelectTreeFolderNode =
+              FolderNodeSelectTreeService.buildNode(
+                ~nodeId=newNodeId,
+                ~name=FolderNodeAssetService.getNodeName(nodeData),
+                ~isSelect=false,
+                ~children=[||],
+                (),
+              );
+
+            let selectTree =
+              selectTree
+              |> OperateTreeSelectTreeService.insertNode(
+                   _unsafeGetSelectTreeNodeIdFromFolderTreeMap(
+                     parentFolderNode,
+                     folderTreeMap,
+                   ),
+                   newSelectTreeFolderNode,
+                 );
+
+            (
+              newNodeId,
+              folderTreeMap
+              |> _setToFolderTreeMap(
+                   FolderNodeAssetService.buildNodeByNodeData(
+                     ~nodeId,
+                     ~nodeData,
+                     ~children,
+                   ),
+                   newSelectTreeFolderNode,
+                 ),
+              selectTree,
+            );
+          },
+        ~textureNodeFunc=(parentFolderNode, acc, nodeId, nodeData) => acc,
+        ~assetBundleNodeFunc=
+          (
+            parentFolderNode,
+            (currentSelectTreeNodeId, folderTreeMap, selectTree),
+            nodeId,
+            nodeData,
+          ) => {
+            /* TODO feat: exclude wab?  */
+            let assetNode =
+              AssetBundleNodeAssetService.buildNodeByNodeData(
+                ~nodeId,
+                ~nodeData,
+              );
+
+            _handleFoldAssetNode(
+              parentFolderNode,
+              (currentSelectTreeNodeId, folderTreeMap, selectTree),
+              (
+                assetNode,
+                "assetBundle",
+                (
+                  {
+                    assetBundle:
+                      AssetBundleNodeAssetService.getAssetBundle(assetNode),
+                    path:
+                      PathTreeAssetLogicService.getNodePath(
+                        assetNode,
+                        (editorState, engineState),
+                      ),
+                    type_: AssetBundleNodeAssetService.getType(assetNode),
+                  }: HeaderAssetBundleType.assetBundleData
+                )
+                |> HeaderAssetBundleType.convertAssetBundleDataToValue,
+              ),
+              engineState,
+            );
+          },
+        ~materialNodeFunc=(parentFolderNode, acc, nodeId, nodeData) => acc,
+        ~scriptEventFunctionNodeFunc=
+          (parentFolderNode, acc, nodeId, nodeData) => acc,
+        ~scriptAttributeNodeFunc=
+          (parentFolderNode, acc, nodeId, nodeData) => acc,
+        ~wdbNodeFunc=(parentFolderNode, acc, nodeId, nodeData) => acc,
+        (),
+      );
+
+    selectTree;
+  };
 };
 
 let component = ReasonReact.reducerComponent("HeaderAssetBundle");
@@ -438,6 +576,18 @@ let render =
         /> :
         ReasonReact.null
     }
+    {
+      state.isShowGenerateAllABModal ?
+        <HeaderAssetBundleGenerateAllAB
+          selectTreeForGenerateAllAB={
+            Method.buildSelectTreeForGenerateAllAB
+            |> StateLogicService.getStateToGetData
+          }
+          closeFunc={() => send(HideGenerateAllABModal)}
+          submitFunc={() => send(HideGenerateAllABModal)}
+        /> :
+        ReasonReact.null
+    }
   </div>;
 };
 
@@ -451,6 +601,10 @@ let reducer = (action, state) =>
     ReasonReact.Update({...state, isShowGenerateSingleSABModal: true})
   | HideGenerateSingleSABModal =>
     ReasonReact.Update({...state, isShowGenerateSingleSABModal: false})
+  | ShowGenerateAllABModal =>
+    ReasonReact.Update({...state, isShowGenerateAllABModal: true})
+  | HideGenerateAllABModal =>
+    ReasonReact.Update({...state, isShowGenerateAllABModal: false})
   };
 
 let make =
@@ -466,6 +620,7 @@ let make =
   initialState: () => {
     isShowGenerateSingleRABModal: false,
     isShowGenerateSingleSABModal: false,
+    isShowGenerateAllABModal: false,
   },
   reducer,
   render: self =>

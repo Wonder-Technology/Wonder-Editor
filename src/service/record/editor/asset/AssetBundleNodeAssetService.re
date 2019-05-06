@@ -45,4 +45,6 @@ let isAssetBundleNode = node =>
   | _ => false
   };
 
+let getType = node => getNodeData(node).type_;
+
 let getAssetBundle = node => getNodeData(node).assetBundle;

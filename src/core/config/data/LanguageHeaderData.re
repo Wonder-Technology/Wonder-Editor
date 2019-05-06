@@ -107,6 +107,13 @@ let header_language_array = [|
     },
   },
   {
+    title: "generate-all-ab",
+    language: {
+      zh: {j|从多个“单个AB”中创建多个AB的zip包|j},
+      en: "Generate All AB->zip from multiple 'Single AB'",
+    },
+  },
+  {
     title: "notice-welcome",
     language: {
       zh: {j|欢迎来到Wonder|j},

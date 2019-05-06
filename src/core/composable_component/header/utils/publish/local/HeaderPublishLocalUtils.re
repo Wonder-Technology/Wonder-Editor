@@ -302,7 +302,7 @@ module Publish = {
                )
              ->(Zip.generateAsyncBlob(Zip.makeAsyncBlobOptions()))
              |> Js.Promise.then_(content =>
-                  FileSaver.saveAs(content, zipName ++ ".zip")
+                  FileSaver.saveAs(content, {j|$zipName.zip|j})
                   |> Js.Promise.resolve
                 )
              |> ignore

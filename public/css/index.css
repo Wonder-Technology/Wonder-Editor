@@ -304,6 +304,119 @@ html, body {
         right: 30px;
         padding-top: 5px; }
 
+.wonder-generateAllAB-modal {
+  position: fixed;
+  z-index: 200;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  top: 20%;
+  display: flex;
+  justify-content: center; }
+  .wonder-generateAllAB-modal .input-component {
+    position: relative;
+    display: inline-block;
+    padding: 4px 7px;
+    width: 100%;
+    height: 22px;
+    cursor: text;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #666;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    -webkit-transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1); }
+  .wonder-generateAllAB-modal .input-component::placeholder {
+    color: #ccc; }
+  .wonder-generateAllAB-modal .input-component:hover {
+    border-color: #57c5f7; }
+  .wonder-generateAllAB-modal .input-component:focus {
+    border-color: #57c5f7;
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(45, 183, 245, 0.2); }
+  .wonder-generateAllAB-modal .modal-item {
+    width: 470px;
+    height: 200px;
+    position: relative;
+    background: #c1c1c1;
+    border-radius: 5px;
+    z-index: 150; }
+    .wonder-generateAllAB-modal .modal-item .modal-item-header {
+      width: 100%;
+      height: 22px;
+      line-height: 22px;
+      font-size: 14px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      text-align: center;
+      font-size: 17px;
+      font-weight: bold;
+      padding: 5px 0px 2px 0px;
+      border-bottom: 1px solid #868686;
+      background: #555454;
+      position: relative; }
+      .wonder-generateAllAB-modal .modal-item .modal-item-header img {
+        position: absolute;
+        top: 8px;
+        cursor: hand;
+        right: 20px;
+        width: 15px;
+        height: 15px; }
+    .wonder-generateAllAB-modal .modal-item .modal-item-content {
+      color: #000;
+      height: 114px;
+      overflow-y: auto;
+      width: 90%;
+      margin-left: 5%;
+      padding-top: 10px;
+      box-sizing: border-box;
+      font-size: 16px; }
+      .wonder-generateAllAB-modal .modal-item .modal-item-content::-webkit-scrollbar {
+        width: 4px;
+        height: 6px; }
+      .wonder-generateAllAB-modal .modal-item .modal-item-content::-webkit-scrollbar-button {
+        display: none; }
+      .wonder-generateAllAB-modal .modal-item .modal-item-content::-webkit-scrollbar-track {
+        background: rgba(1, 1, 1, 0.6);
+        width: 2px; }
+      .wonder-generateAllAB-modal .modal-item .modal-item-content::-webkit-scrollbar-thumb {
+        background: #cfcccc;
+        border-radius: 4px; }
+        .wonder-generateAllAB-modal .modal-item .modal-item-content::-webkit-scrollbar-thumb:hover {
+          background: #fc7100; }
+      .wonder-generateAllAB-modal .modal-item .modal-item-content .content-field {
+        width: 100%;
+        height: 24px;
+        display: flex; }
+        .wonder-generateAllAB-modal .modal-item .modal-item-content .content-field .field-title {
+          width: 20%;
+          text-align: center;
+          height: 24px;
+          line-height: 24px; }
+        .wonder-generateAllAB-modal .modal-item .modal-item-content .content-field .field-content {
+          width: 80%;
+          margin-left: 4px;
+          text-align: center;
+          height: 24px;
+          line-height: 24px; }
+          .wonder-generateAllAB-modal .modal-item .modal-item-content .content-field .field-content a {
+            white-space: nowrap; }
+    .wonder-generateAllAB-modal .modal-item .modal-item-footer {
+      height: 50px;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      position: relative; }
+      .wonder-generateAllAB-modal .modal-item .modal-item-footer .footer-submit {
+        width: 100px;
+        position: absolute;
+        top: 5px;
+        right: 30px;
+        padding-top: 5px; }
+
 .wonder-app-component {
   width: 100%;
   height: 100%;

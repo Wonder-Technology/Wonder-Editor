@@ -11,6 +11,12 @@ type scriptEventFunctionData = Wonderjs.RABType.scriptEventFunctionData;
 
 type scriptAttributeData = Wonderjs.RABType.scriptAttributeData;
 
+type assetBundleData = {
+  assetBundle: Js.Typed_array.ArrayBuffer.t,
+  path: string,
+  type_: NodeAssetType.assetBundleType,
+};
+
 type imageData = Wonderjs.RABType.imageData;
 
 type imageDataMap = Wonderjs.RABType.imageDataMap;
@@ -40,3 +46,7 @@ external convertScriptAttributeDataToValue: scriptAttributeData => value =
 
 external convertValueToScriptAttributeData: value => scriptAttributeData =
   "%identity";
+
+external convertAssetBundleDataToValue: assetBundleData => value = "%identity";
+
+external convertValueToAssetBundleData: value => assetBundleData = "%identity";

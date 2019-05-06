@@ -1,7 +1,6 @@
 type state = {selectTreeForGenerateSingleRAB: SelectTreeType.tree};
 
 type action =
-  | HideGenerateSingleRABModal
   | UpdateSelectTreeForGenerateSingleRAB(SelectTreeType.tree);
 
 module Method = {
@@ -237,6 +236,14 @@ module Method = {
                          value
                          |> HeaderAssetBundleType.convertValueToGeometryComponent,
                        ),
+                    scriptEventFunctionDataArr,
+                    scriptAttributeDataArr,
+                  )
+                | _ => (
+                    basicMaterials,
+                    lightMaterials,
+                    textures,
+                    geometrys,
                     scriptEventFunctionDataArr,
                     scriptAttributeDataArr,
                   )
