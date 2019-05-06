@@ -47,7 +47,7 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("AttributeBox");
 
-let reducer = (action, state) =>
+let reducer = (nodeId, fieldName, submitFunc, action, state) =>
   switch (action) {
   | ChangeAttributeType(value) =>
     ReasonReact.Update({
@@ -128,15 +128,6 @@ let render =
         />
       }
     }
-    <div className="component-submit">
-      <button
-        className="submit-btn"
-        onClick={
-          _e => Method.submitAttribute(nodeId, fieldName, state, submitFunc)
-        }>
-        {DomHelper.textEl("Submit")}
-      </button>
-    </div>
   </article>;
 };
 
@@ -170,11 +161,13 @@ let make =
       }
     };
   },
-  reducer,
+  reducer: reducer(nodeId, fieldName, submitFunc),
   render: self =>
     render(
       (field, fieldName, nodeId),
       (renameFunc, removeFunc, submitFunc),
       self,
     ),
+  didUpdate: ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, 'b, 'c)) =>
+    Method.submitAttribute(nodeId, fieldName, newSelf.state, submitFunc),
 };

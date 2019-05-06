@@ -13,7 +13,6 @@ module CustomEventHandler = {
   let _convertEventFunctionJsObjStrToData = jsObjStr =>
     jsObjStr
     |> _buildFunctionWithJsObjStr
-    |> WonderLog.Log.print
     |> SerializeService.deserializeFunction
     |> ScriptEventFunctionEngineService.createScriptEventFunctionData;
 
