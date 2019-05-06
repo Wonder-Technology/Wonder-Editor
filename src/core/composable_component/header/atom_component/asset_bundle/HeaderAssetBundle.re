@@ -1,14 +1,26 @@
 type state = {
   isShowGenerateSingleRABModal: bool,
   selectTreeForGenerateSingleRAB: option(SelectTreeType.tree),
+  isShowGenerateSingleSABModal: bool,
 };
 
 type action =
   | ShowGenerateSingleRABModal
   | HideGenerateSingleRABModal
-  | UpdateSelectTreeForGenerateSingleRAB(SelectTreeType.tree);
+  | UpdateSelectTreeForGenerateSingleRAB(SelectTreeType.tree)
+  | ShowGenerateSingleSABModal
+  | HideGenerateSingleSABModal;
 
 module Method = {
+  let generateSingleSAB = ((editorState, engineState)) =>
+    GenerateAssetBundleEngineService.generateSingleSAB(
+      SceneEngineService.getSceneGameObject(engineState),
+      Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(editorState),
+      engineState,
+    );
+
+  let downloadAB = (name, ab) => HeaderExportUtils.download(ab, name, "");
+
   let buildAssetBundleComponentSelectNav = (send, languageType) =>
     <div className="item-content item-help">
       <div
@@ -19,6 +31,24 @@ module Method = {
             DomHelper.textEl(
               LanguageUtils.getHeaderLanguageDataByType(
                 "generate-single-rab",
+                languageType,
+              ),
+            )
+          }
+        </span>
+      </div>
+      <div
+        className="content-section"
+        onClick={
+          _e =>
+            /* generateSingleSAB |> StateLogicService.getStateToGetData */
+            send(ShowGenerateSingleSABModal)
+        }>
+        <span className="section-header">
+          {
+            DomHelper.textEl(
+              LanguageUtils.getHeaderLanguageDataByType(
+                "generate-single-sab",
                 languageType,
               ),
             )
@@ -715,12 +745,8 @@ module Method = {
         engineState,
       );
 
-    HeaderExportUtils.download(
-      rab,
-      /* TODO feat: name should be edit */
-      "singleRAB.rab",
-      "",
-    );
+    /* TODO feat: name should be edit */
+    downloadAB("WonderSingleRAB.rab", rab);
   };
 
   let hideGenerateSingleRABModal = send => send(HideGenerateSingleRABModal);
@@ -767,6 +793,10 @@ let reducer = (action, state) =>
       ...state,
       selectTreeForGenerateSingleRAB: Some(selectTree),
     })
+  | ShowGenerateSingleSABModal =>
+    ReasonReact.Update({...state, isShowGenerateSingleSABModal: true})
+  | HideGenerateSingleSABModal =>
+    ReasonReact.Update({...state, isShowGenerateSingleSABModal: false})
   };
 
 let render =
@@ -815,6 +845,29 @@ let render =
         } :
         ReasonReact.null
     }
+    {
+      state.isShowGenerateSingleSABModal ?
+        <SingleInputModal
+          title={
+            LanguageUtils.getHeaderLanguageDataByType(
+              "generate-single-sab",
+              languageType,
+            )
+          }
+          defaultValue="WonderSingleSAB"
+          closeFunc={() => send(HideGenerateSingleSABModal)}
+          submitFunc={
+            baseName => {
+              Method.generateSingleSAB
+              |> StateLogicService.getStateToGetData
+              |> Method.downloadAB({j|$(baseName).sab|j});
+
+              send(HideGenerateSingleSABModal);
+            }
+          }
+        /> :
+        ReasonReact.null
+    }
   </div>;
 };
 
@@ -831,6 +884,7 @@ let make =
   initialState: () => {
     isShowGenerateSingleRABModal: false,
     selectTreeForGenerateSingleRAB: None,
+    isShowGenerateSingleSABModal: false,
   },
   reducer,
   didUpdate: ({oldSelf, newSelf}) => {

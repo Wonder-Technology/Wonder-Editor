@@ -100,6 +100,13 @@ let header_language_array = [|
     },
   },
   {
+    title: "generate-single-sab",
+    language: {
+      zh: {j|创建单个SAB|j},
+      en: "Generate Single SAB",
+    },
+  },
+  {
     title: "notice-welcome",
     language: {
       zh: {j|欢迎来到Wonder|j},
