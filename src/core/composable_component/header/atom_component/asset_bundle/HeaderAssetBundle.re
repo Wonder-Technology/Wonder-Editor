@@ -149,6 +149,20 @@ module Method = {
 
   let _buildWDBGeometryFolderName = wdbAssetNodeName => {j|$(wdbAssetNodeName)_Geometrys|j};
 
+  let _convertAssetPathToAssetBundlePath = (assetNodeData, assetPath) =>
+    Js.String.replace(
+      "Assets/",
+      "",
+      assetPath
+      ++ "/"
+      ++ AssetBundleNodeAssetService.getNodeName(assetNodeData)
+      ++ "."
+      ++ (
+        AssetBundleNodeAssetService.getTypeStr(assetNodeData)
+        |> Js.String.toLowerCase
+      ),
+    );
+
   let buildSelectTreeForGenerateSingleRAB = ((editorState, engineState)) => {
     open HeaderAssetBundleType;
 
@@ -487,6 +501,9 @@ module Method = {
                 ~nodeData,
               );
 
+            let assetNodeData =
+              assetNode |> AssetBundleNodeAssetService.getNodeData;
+
             _handleFoldAssetNode(
               parentFolderNode,
               (currentSelectTreeNodeId, folderTreeMap, selectTree),
@@ -498,9 +515,12 @@ module Method = {
                     assetBundle:
                       AssetBundleNodeAssetService.getAssetBundle(assetNode),
                     path:
-                      PathTreeAssetLogicService.getNodePath(
-                        assetNode,
-                        (editorState, engineState),
+                      _convertAssetPathToAssetBundlePath(
+                        assetNodeData,
+                        PathTreeAssetLogicService.getNodePath(
+                          assetNode,
+                          (editorState, engineState),
+                        ),
                       ),
                     type_: AssetBundleNodeAssetService.getType(assetNode),
                   }: HeaderAssetBundleType.assetBundleData

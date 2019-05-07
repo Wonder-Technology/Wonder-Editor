@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header AssetBundle->generate all ab generate all ab test buildSelectTreeForGenerateAllAB should only has asset bundle assets 1`] = `
+<article
+  className="wonder-generateAllAB-modal"
+>
+  <div
+    className="modal-item"
+  >
+    <div
+      className="modal-item-header"
+    >
+      Generate Single RAB
+      <img
+        onClick={[Function]}
+        src="./public/img/close.png"
+      />
+    </div>
+    <div
+      className="modal-item-content"
+    >
+      <div
+        className="content-field"
+      >
+        <div
+          className="field-title"
+        >
+          name
+        </div>
+        <div
+          className="field-content"
+        >
+          <input
+            className="input-component"
+            onChange={[Function]}
+            type="text"
+            value="WonderAllAB"
+          />
+        </div>
+      </div>
+      <div
+        className="content-field"
+      >
+        <div
+          className="field-title"
+        >
+          dependencyRelation
+        </div>
+        <div
+          className="field-content"
+        >
+          <textarea
+            className="input-component"
+            onChange={[Function]}
+            type="text"
+            value="
+    (function() {
+        var dependencyRelation = {};
+
+        //todo need rewrite
+        dependencyRelation[\\"A.sab\\"] = [\\"AssetBundle/B.rab\\", \\"AssetBundle/F/c.rab\\"];
+
+        return dependencyRelation;
+      }())
+    "
+          />
+        </div>
+      </div>
+      <article
+        className="wonder-selectTree"
+      >
+        <ul
+          className="wonder-tree-node"
+        >
+          <li>
+            <div
+              className="item-triangle"
+            >
+              <img
+                src="./public/img/down.png"
+              />
+            </div>
+            <div
+              className="select-box"
+            >
+              <input
+                defaultChecked={false}
+                onClick={[Function]}
+                type="checkbox"
+              />
+            </div>
+            <img
+              className="treeNode-icon"
+              src="./public/img/package.png"
+            />
+            <span>
+              Assets
+            </span>
+          </li>
+          <ul
+            className="wonder-tree-node"
+          >
+            <li>
+              <div
+                className="item-triangle"
+              >
+                <img
+                  src="./public/img/down.png"
+                />
+              </div>
+              <div
+                className="select-box"
+              >
+                <input
+                  defaultChecked={false}
+                  onClick={[Function]}
+                  type="checkbox"
+                />
+              </div>
+              <img
+                className="treeNode-icon"
+                src="./public/img/package.png"
+              />
+              <span>
+                New Folder
+              </span>
+            </li>
+            <ul
+              className="wonder-tree-node"
+            >
+              <li>
+                <div
+                  className="item-triangle"
+                />
+                <div
+                  className="select-box"
+                >
+                  <input
+                    defaultChecked={false}
+                    onClick={[Function]}
+                    type="checkbox"
+                  />
+                </div>
+                <img
+                  className="treeNode-icon"
+                  src="./public/img/assetBundle.png"
+                />
+                <span>
+                  A
+                </span>
+              </li>
+            </ul>
+          </ul>
+        </ul>
+      </article>
+    </div>
+    <div
+      className="modal-item-footer"
+    >
+      <button
+        className="footer-submit"
+        onClick={[Function]}
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+</article>
+`;

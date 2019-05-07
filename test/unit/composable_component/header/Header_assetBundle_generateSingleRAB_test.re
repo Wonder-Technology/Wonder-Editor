@@ -99,9 +99,9 @@ let _ =
                  (),
                )
                |> then_(uploadedWDBNodeId =>
-                    HeaderAssetBundleTool.buildGenerateSingleRABModal(
+                    HeaderAssetBundleTool.GenerateSingleRAB.buildGenerateSingleRABModal(
                       ~selectTree=
-                        HeaderAssetBundleTool.buildSelectTreeForGenerateSingleRAB
+                        HeaderAssetBundleTool.GenerateSingleRAB.buildSelectTreeForGenerateSingleRAB
                         |> StateLogicService.getStateToGetData,
                       ~send=SinonTool.createOneLengthStub(sandbox^),
                       (),
@@ -117,9 +117,9 @@ let _ =
 
           MainEditorAssetHeaderOperateNodeTool.addScriptEventFunction();
 
-          HeaderAssetBundleTool.buildGenerateSingleRABModal(
+          HeaderAssetBundleTool.GenerateSingleRAB.buildGenerateSingleRABModal(
             ~selectTree=
-              HeaderAssetBundleTool.buildSelectTreeForGenerateSingleRAB
+              HeaderAssetBundleTool.GenerateSingleRAB.buildSelectTreeForGenerateSingleRAB
               |> StateLogicService.getStateToGetData,
             ~send=SinonTool.createOneLengthStub(sandbox^),
             (),
@@ -143,7 +143,7 @@ let _ =
               )
               |> then_(uploadedTextureNodeId1 => {
                    let selectTree =
-                     HeaderAssetBundleTool.buildSelectTreeForGenerateSingleRAB
+                     HeaderAssetBundleTool.GenerateSingleRAB.buildSelectTreeForGenerateSingleRAB
                      |> StateLogicService.getStateToGetData
                      |> HeaderAssetBundleTool.setSelectForSelectTree(
                           true,
@@ -162,7 +162,7 @@ let _ =
                      scriptAttributeDataArr,
                      imageDataMap,
                    ) =
-                     HeaderAssetBundleTool.generateSingleRABResourceData(
+                     HeaderAssetBundleTool.GenerateSingleRAB.generateSingleRABResourceData(
                        selectTree,
                      )
                      |> StateLogicService.getStateToGetData;
@@ -243,7 +243,7 @@ let _ =
                           );
 
                           let selectTree =
-                            HeaderAssetBundleTool.buildSelectTreeForGenerateSingleRAB
+                            HeaderAssetBundleTool.GenerateSingleRAB.buildSelectTreeForGenerateSingleRAB
                             |> StateLogicService.getStateToGetData
                             |> HeaderAssetBundleTool.setSelectForSelectTree(
                                  true,
@@ -269,7 +269,7 @@ let _ =
                             scriptAttributeDataArr,
                             imageDataMap,
                           ) =
-                            HeaderAssetBundleTool.generateSingleRABResourceData(
+                            HeaderAssetBundleTool.GenerateSingleRAB.generateSingleRABResourceData(
                               selectTree,
                             )
                             |> StateLogicService.getStateToGetData;
@@ -285,7 +285,7 @@ let _ =
                                  ),
                                |],
                                [|
-                                 HeaderAssetBundleTool.buildTextureData(
+                                 HeaderAssetBundleTool.GenerateSingleRAB.buildTextureData(
                                    MainEditorAssetTextureNodeTool.getTextureComponent(
                                      uploadedTextureNodeId1,
                                      editorState,
@@ -295,7 +295,7 @@ let _ =
                                      editorState,
                                    ),
                                  ),
-                                 HeaderAssetBundleTool.buildTextureData(
+                                 HeaderAssetBundleTool.GenerateSingleRAB.buildTextureData(
                                    MainEditorAssetTextureNodeTool.getTextureComponent(
                                      uploadedTextureNodeId2,
                                      editorState,
@@ -323,11 +323,11 @@ let _ =
               )
               |> then_(uploadedWDBNodeId => {
                    let selectTree =
-                     HeaderAssetBundleTool.buildSelectTreeForGenerateSingleRAB
+                     HeaderAssetBundleTool.GenerateSingleRAB.buildSelectTreeForGenerateSingleRAB
                      |> StateLogicService.getStateToGetData
                      |> HeaderAssetBundleTool.setSelectForSelectTree(
                           true,
-                          HeaderAssetBundleTool.buildWDBGeometryFolderName(
+                          HeaderAssetBundleTool.GenerateSingleRAB.buildWDBGeometryFolderName(
                             MainEditorAssetWDBNodeTool.getWDBName(
                               ~nodeId=uploadedWDBNodeId,
                               (),
@@ -344,7 +344,7 @@ let _ =
                      scriptAttributeDataArr,
                      imageDataMap,
                    ) =
-                     HeaderAssetBundleTool.generateSingleRABResourceData(
+                     HeaderAssetBundleTool.GenerateSingleRAB.generateSingleRABResourceData(
                        selectTree,
                      )
                      |> StateLogicService.getStateToGetData;

@@ -115,7 +115,7 @@ module Method = {
 
   let _convertDependencyRelationInputValueStrToMap = [%raw
     dependencyRelationInputValueStr => {|
-         return eval('(' + dependencyRelationInputValueStr + ')');
+         return eval( dependencyRelationInputValueStr);
          |}
   ];
 
@@ -164,11 +164,12 @@ module Method = {
       (),
     );
 
-  let generateAndDownloadAllAB =
+  let generateAllABZip =
       (
         selectTreeForGenerateAllAB,
         zipBaseName,
         dependencyRelationInputValueStr,
+        createZipFunc,
         (editorState, engineState),
       ) =>
     MostUtils.callFunc(() =>
@@ -199,7 +200,7 @@ module Method = {
                         `trustme(ab |> TypeArrayType.newBlobFromArrayBuffer),
                       )
                     ),
-                Zip.create(),
+                createZipFunc(),
               )
          )
          ->(Zip.generateAsyncBlob(Zip.makeAsyncBlobOptions()))
@@ -210,12 +211,14 @@ module Method = {
        );
 
   let buildDefaultDependencyRelationInputValue = () => {|
-    var dependencyRelation = {};
+    (function() {
+        var dependencyRelation = {};
 
-    //todo need rewrite
-    dependencyRelation["A.sab"] = ["AssetBundle/B.rab", "AssetBundle/F/c.rab"];
+        //todo need rewrite
+        dependencyRelation["A.sab"] = ["AssetBundle/B.rab", "AssetBundle/F/c.rab"];
 
-    return dependencyRelation;
+        return dependencyRelation;
+      }())
     |};
 
   let _changeName = event =>
@@ -281,10 +284,11 @@ module Method = {
             className="footer-submit"
             onClick={
               _e =>
-                generateAndDownloadAllAB(
+                generateAllABZip(
                   state.selectTreeForGenerateAllAB,
                   state.nameInputValue,
                   state.dependencyRelationInputValue,
+                  Zip.create,
                 )
                 |> StateLogicService.getStateToGetData
                 |> Most.concat(MostUtils.callFunc(submitFunc))
