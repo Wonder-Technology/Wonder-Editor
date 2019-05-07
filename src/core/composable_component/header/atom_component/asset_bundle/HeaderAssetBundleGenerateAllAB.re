@@ -16,49 +16,15 @@ type action =
   | UpdateSelectTreeForGenerateAllAB(SelectTreeType.tree);
 
 module Method = {
-  /* TODO refactor: duplicate */
-  let _setSelectForSelectTree = (tree, isSelect, node) => {
-    open SelectTreeType;
-
-    let rec _toggle = (isSelect, node, tree) =>
-      switch (node) {
-      | FolderNode(nodeId, nodeData, children) =>
-        let tree =
-          FolderNodeSelectTreeUILocalService.setNodeData(
-            nodeId,
-            FolderNodeSelectTreeService.setIsSelect(isSelect, nodeData),
-            children,
-            tree,
-          );
-
-        children
-        |> WonderCommonlib.ArrayService.reduceOneParam(
-             (. tree, node) => _toggle(isSelect, node, tree),
-             tree,
-           );
-      | ValueNode(nodeId, nodeData) =>
-        ValueNodeSelectTreeUILocalService.setNodeData(
-          nodeId,
-          ValueNodeSelectTreeService.setIsSelect(isSelect, nodeData),
-          tree,
-        )
-      };
-
-    switch (node) {
-    | FolderNode(_, nodeData, _) => _toggle(isSelect, node, tree)
-    | ValueNode(nodeId, nodeData) =>
-      ValueNodeSelectTreeUILocalService.setNodeData(
-        nodeId,
-        ValueNodeSelectTreeService.setIsSelect(isSelect, nodeData),
-        tree,
-      )
-    };
-  };
-
   let _toggleSelect = (tree, send, isSelect, node) => {
     open SelectTreeType;
 
-    let tree = _setSelectForSelectTree(tree, isSelect, node);
+    let tree =
+      HeaderAssetBundleUtils.GenerateAB.setSelectForSelectTree(
+        tree,
+        isSelect,
+        node,
+      );
 
     send(UpdateSelectTreeForGenerateAllAB(tree));
   };
@@ -76,42 +42,6 @@ module Method = {
           }
       }
     />;
-
-  let _getMaterialComponentFromMaterialData =
-      (materialData: HeaderAssetBundleType.materialData) =>
-    materialData.materialComponent;
-
-  let _addLightMaterialContainedTextureData =
-      (lightMaterials, textures, (editorState, engineState)) =>
-    lightMaterials
-    |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. textures, lightMaterialComponent) =>
-           LightMaterialEngineService.hasLightMaterialDiffuseMap(
-             lightMaterialComponent,
-             engineState,
-           ) ?
-             switch (
-               TextureNodeAssetEditorService.getDataByTextureComponent(
-                 LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
-                   lightMaterialComponent,
-                   engineState,
-                 ),
-                 editorState,
-               )
-             ) {
-             | None => textures
-             | Some(textureNodeData) =>
-               textures
-               |> ArrayService.push(
-                    {
-                      textureComponent: textureNodeData.textureComponent,
-                      imageDataIndex: textureNodeData.imageDataIndex,
-                    }: HeaderAssetBundleType.textureData,
-                  )
-             } :
-             textures,
-         textures,
-       );
 
   let _convertDependencyRelationInputValueStrToMap = [%raw
     dependencyRelationInputValueStr => {|

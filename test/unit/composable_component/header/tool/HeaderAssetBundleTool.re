@@ -84,7 +84,7 @@ let findNodeByName = (targetNodeName, tree) => {
 };
 
 let setSelectForSelectTree = (isSelect, nodeName, tree) =>
-  HeaderAssetBundleGenerateSingleRAB.Method._setSelectForSelectTree(
+  HeaderAssetBundleUtils.GenerateAB.setSelectForSelectTree(
     tree,
     isSelect,
     findNodeByName(nodeName, tree) |> OptionService.unsafeGet,

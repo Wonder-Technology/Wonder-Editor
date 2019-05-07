@@ -163,9 +163,52 @@ module Method = {
       ),
     );
 
-  let buildSelectTreeForGenerateSingleRAB = ((editorState, engineState)) => {
-    open HeaderAssetBundleType;
+  let _handleFoldFolderAssetNode =
+      (
+        parentFolderNode,
+        (currentSelectTreeNodeId, folderTreeMap, selectTree),
+        nodeId,
+        nodeData,
+        children,
+      ) => {
+    let newNodeId =
+      IdSelectTreeService.generateNodeId(currentSelectTreeNodeId);
 
+    let newSelectTreeFolderNode =
+      FolderNodeSelectTreeService.buildNode(
+        ~nodeId=newNodeId,
+        ~name=FolderNodeAssetService.getNodeName(nodeData),
+        ~isSelect=false,
+        ~children=[||],
+        (),
+      );
+
+    let selectTree =
+      selectTree
+      |> OperateTreeSelectTreeService.insertNode(
+           _unsafeGetSelectTreeNodeIdFromFolderTreeMap(
+             parentFolderNode,
+             folderTreeMap,
+           ),
+           newSelectTreeFolderNode,
+         );
+
+    (
+      newNodeId,
+      folderTreeMap
+      |> _setToFolderTreeMap(
+           FolderNodeAssetService.buildNodeByNodeData(
+             ~nodeId,
+             ~nodeData,
+             ~children,
+           ),
+           newSelectTreeFolderNode,
+         ),
+      selectTree,
+    );
+  };
+
+  let _buildInitAccData = editorState => {
     let initNodeId = 0;
     let rootNode =
       FolderNodeSelectTreeService.buildNode(
@@ -177,62 +220,25 @@ module Method = {
       );
     let selectTree = rootNode;
 
+    (
+      initNodeId,
+      _setToFolderTreeMap(
+        RootTreeAssetEditorService.getRootNode(editorState),
+        rootNode,
+        WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+      ),
+      selectTree,
+    );
+  };
+
+  let buildSelectTreeForGenerateSingleRAB = ((editorState, engineState)) => {
+    open HeaderAssetBundleType;
+
     let (_, _, selectTree) =
       IterateTreeAssetService.foldWithParentFolderNodeWithoutRootNode(
-        ~acc=(
-          initNodeId,
-          _setToFolderTreeMap(
-            RootTreeAssetEditorService.getRootNode(editorState),
-            rootNode,
-            WonderCommonlib.ImmutableSparseMapService.createEmpty(),
-          ),
-          selectTree,
-        ),
+        ~acc=_buildInitAccData(editorState),
         ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
-        ~folderNodeFunc=
-          (
-            parentFolderNode,
-            (currentSelectTreeNodeId, folderTreeMap, selectTree),
-            nodeId,
-            nodeData,
-            children,
-          ) => {
-            let newNodeId =
-              IdSelectTreeService.generateNodeId(currentSelectTreeNodeId);
-
-            let newSelectTreeFolderNode =
-              FolderNodeSelectTreeService.buildNode(
-                ~nodeId=newNodeId,
-                ~name=FolderNodeAssetService.getNodeName(nodeData),
-                ~isSelect=false,
-                ~children=[||],
-                (),
-              );
-
-            let selectTree =
-              selectTree
-              |> OperateTreeSelectTreeService.insertNode(
-                   _unsafeGetSelectTreeNodeIdFromFolderTreeMap(
-                     parentFolderNode,
-                     folderTreeMap,
-                   ),
-                   newSelectTreeFolderNode,
-                 );
-
-            (
-              newNodeId,
-              folderTreeMap
-              |> _setToFolderTreeMap(
-                   FolderNodeAssetService.buildNodeByNodeData(
-                     ~nodeId,
-                     ~nodeData,
-                     ~children,
-                   ),
-                   newSelectTreeFolderNode,
-                 ),
-              selectTree,
-            );
-          },
+        ~folderNodeFunc=_handleFoldFolderAssetNode,
         ~textureNodeFunc=
           (
             parentFolderNode,
@@ -416,76 +422,11 @@ module Method = {
   };
 
   let buildSelectTreeForGenerateAllAB = ((editorState, engineState)) => {
-    /* open HeaderAssetBundleType; */
-
-    let initNodeId = 0;
-    let rootNode =
-      FolderNodeSelectTreeService.buildNode(
-        ~nodeId=initNodeId,
-        ~name=RootTreeAssetService.getAssetTreeRootName(),
-        ~isSelect=false,
-        ~children=[||],
-        (),
-      );
-    let selectTree = rootNode;
-
     let (_, _, selectTree) =
       IterateTreeAssetService.foldWithParentFolderNodeWithoutRootNode(
-        ~acc=(
-          initNodeId,
-          _setToFolderTreeMap(
-            RootTreeAssetEditorService.getRootNode(editorState),
-            rootNode,
-            WonderCommonlib.ImmutableSparseMapService.createEmpty(),
-          ),
-          selectTree,
-        ),
+        ~acc=_buildInitAccData(editorState),
         ~tree=TreeAssetEditorService.unsafeGetTree(editorState),
-        /* TODO refactor: duplicate */
-        ~folderNodeFunc=
-          (
-            parentFolderNode,
-            (currentSelectTreeNodeId, folderTreeMap, selectTree),
-            nodeId,
-            nodeData,
-            children,
-          ) => {
-            let newNodeId =
-              IdSelectTreeService.generateNodeId(currentSelectTreeNodeId);
-
-            let newSelectTreeFolderNode =
-              FolderNodeSelectTreeService.buildNode(
-                ~nodeId=newNodeId,
-                ~name=FolderNodeAssetService.getNodeName(nodeData),
-                ~isSelect=false,
-                ~children=[||],
-                (),
-              );
-
-            let selectTree =
-              selectTree
-              |> OperateTreeSelectTreeService.insertNode(
-                   _unsafeGetSelectTreeNodeIdFromFolderTreeMap(
-                     parentFolderNode,
-                     folderTreeMap,
-                   ),
-                   newSelectTreeFolderNode,
-                 );
-
-            (
-              newNodeId,
-              folderTreeMap
-              |> _setToFolderTreeMap(
-                   FolderNodeAssetService.buildNodeByNodeData(
-                     ~nodeId,
-                     ~nodeData,
-                     ~children,
-                   ),
-                   newSelectTreeFolderNode,
-                 ),
-              selectTree,
-            );
-          },
+        ~folderNodeFunc=_handleFoldFolderAssetNode,
         ~textureNodeFunc=(parentFolderNode, acc, nodeId, nodeData) => acc,
         ~assetBundleNodeFunc=
           (
