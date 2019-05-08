@@ -17,11 +17,7 @@ exports[`leftHeader clone gameObject fix bug test clone gameObject has script co
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -40,7 +36,7 @@ exports[`leftHeader clone gameObject fix bug test clone gameObject has script co
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -324,7 +320,7 @@ exports[`leftHeader clone gameObject fix bug test clone gameObject has script co
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -375,11 +371,7 @@ exports[`leftHeader clone gameObject fix bug test clone gameObject has script co
                   className="item-header"
                   title="draw mode"
                 >
-                  <span
-                    className=""
-                  >
-                    Draw Mode
-                  </span>
+                  Draw Mode
                 </div>
                 <div
                   className="item-content"
@@ -487,11 +479,7 @@ exports[`leftHeader clone gameObject fix bug test clone gameObject has script co
                     className="item-header"
                     title="material's type"
                   >
-                    <span
-                      className=""
-                    >
-                      Type
-                    </span>
+                    Type
                   </div>
                   <div
                     className="item-content"
@@ -626,7 +614,7 @@ exports[`leftHeader clone gameObject fix bug test clone gameObject has script co
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -692,7 +680,7 @@ exports[`leftHeader clone gameObject fix bug test clone gameObject has script co
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -721,24 +709,54 @@ exports[`leftHeader clone gameObject fix bug test clone gameObject has script co
         className="wonder-inspector-script"
       >
         <article
-          className="wonder-inspector-script"
+          className="wonder-inspector-scriptFunction"
         >
-          <button
-            className="addable-btn"
-            onClick={[Function]}
+          <div
+            className="inspector-component"
           >
-            Add script event function
-          </button>
+            <div
+              className="component-title"
+              title="MeshRenderer"
+            >
+              Script Function Group
+            </div>
+            <hr />
+            <div
+              className="component-content"
+            >
+              <button
+                className="addable-btn"
+                onClick={[Function]}
+              >
+                Add script event function
+              </button>
+            </div>
+          </div>
         </article>
         <article
-          className="wonder-inspector-script"
+          className="wonder-inspector-scriptAttribute"
         >
-          <button
-            className="addable-btn"
-            onClick={[Function]}
+          <div
+            className="inspector-component"
           >
-            Add script attribute
-          </button>
+            <div
+              className="component-title"
+              title="MeshRenderer"
+            >
+              Script Attribute Group
+            </div>
+            <hr />
+            <div
+              className="component-content"
+            >
+              <button
+                className="addable-btn"
+                onClick={[Function]}
+              >
+                Add script attribute
+              </button>
+            </div>
+          </div>
         </article>
       </article>
     </article>

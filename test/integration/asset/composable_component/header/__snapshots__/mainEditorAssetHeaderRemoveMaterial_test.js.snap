@@ -84,11 +84,7 @@ exports[`MainEditorAssetHeader->remove material
         className="item-header"
         title="material's type"
       >
-        <span
-          className=""
-        >
-          Type
-        </span>
+        Type
       </div>
       <div
         className="item-content"
@@ -301,11 +297,7 @@ exports[`MainEditorAssetHeader->remove material
         className="item-header"
         title="material's type"
       >
-        <span
-          className=""
-        >
-          Type
-        </span>
+        Type
       </div>
       <div
         className="item-content"

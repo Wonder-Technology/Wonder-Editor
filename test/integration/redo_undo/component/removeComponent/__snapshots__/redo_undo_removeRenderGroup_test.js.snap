@@ -17,11 +17,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -40,7 +36,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -324,7 +320,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -425,11 +421,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -448,7 +440,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -732,7 +724,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -833,11 +825,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -856,7 +844,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -1140,7 +1128,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -1191,11 +1179,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                   className="item-header"
                   title="draw mode"
                 >
-                  <span
-                    className=""
-                  >
-                    Draw Mode
-                  </span>
+                  Draw Mode
                 </div>
                 <div
                   className="item-content"
@@ -1303,11 +1287,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
                     className="item-header"
                     title="material's type"
                   >
-                    <span
-                      className=""
-                    >
-                      Type
-                    </span>
+                    Type
                   </div>
                   <div
                     className="item-content"
@@ -1442,7 +1422,7 @@ exports[`redo_undo: remove renderGroup component prepare first step: set current
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"

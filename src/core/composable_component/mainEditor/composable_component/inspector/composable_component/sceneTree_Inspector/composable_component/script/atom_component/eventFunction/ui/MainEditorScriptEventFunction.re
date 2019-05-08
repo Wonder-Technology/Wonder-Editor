@@ -210,7 +210,8 @@ let render =
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
-  <article key="MainEditorScriptFunction" className="wonder-inspector-scriptFunction">
+  <article
+    key="MainEditorScriptFunction" className="wonder-inspector-scriptFunction">
     <div className="inspector-component">
       <div
         className="component-title"

@@ -92,11 +92,7 @@ exports[`header import package dispose assets dispose material assets
         className="item-header"
         title="material's type"
       >
-        <span
-          className=""
-        >
-          Type
-        </span>
+        Type
       </div>
       <div
         className="item-content"
@@ -753,11 +749,7 @@ exports[`header import package test import assets test import material assets fi
           className="item-header"
           title="material's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -778,11 +770,7 @@ exports[`header import package test import assets test import material assets fi
           className="item-header"
           title="material's type"
         >
-          <span
-            className=""
-          >
-            Type
-          </span>
+          Type
         </div>
         <div
           className="item-content"
@@ -996,11 +984,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -1019,7 +1003,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -1303,7 +1287,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -1354,11 +1338,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                   className="item-header"
                   title="draw mode"
                 >
-                  <span
-                    className=""
-                  >
-                    Draw Mode
-                  </span>
+                  Draw Mode
                 </div>
                 <div
                   className="item-content"
@@ -1466,11 +1446,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     className="item-header"
                     title="material's type"
                   >
-                    <span
-                      className=""
-                    >
-                      Type
-                    </span>
+                    Type
                   </div>
                   <div
                     className="item-content"
@@ -1602,7 +1578,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -1703,11 +1679,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -1726,7 +1698,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -2010,7 +1982,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -2061,11 +2033,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                   className="item-header"
                   title="draw mode"
                 >
-                  <span
-                    className=""
-                  >
-                    Draw Mode
-                  </span>
+                  Draw Mode
                 </div>
                 <div
                   className="item-content"
@@ -2173,11 +2141,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     className="item-header"
                     title="material's type"
                   >
-                    <span
-                      className=""
-                    >
-                      Type
-                    </span>
+                    Type
                   </div>
                   <div
                     className="item-content"
@@ -2312,7 +2276,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -2413,11 +2377,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -2436,7 +2396,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -2720,7 +2680,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -2771,11 +2731,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                   className="item-header"
                   title="draw mode"
                 >
-                  <span
-                    className=""
-                  >
-                    Draw Mode
-                  </span>
+                  Draw Mode
                 </div>
                 <div
                   className="item-content"
@@ -2883,11 +2839,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
                     className="item-header"
                     title="material's type"
                   >
-                    <span
-                      className=""
-                    >
-                      Type
-                    </span>
+                    Type
                   </div>
                   <div
                     className="item-content"
@@ -3019,7 +2971,7 @@ exports[`header import package test import scene wdb relate scene gameObjects an
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -3299,11 +3251,7 @@ exports[`header import package test import scene wdb test show Scene inspector s
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -3322,7 +3270,7 @@ exports[`header import package test import scene wdb test show Scene inspector s
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"

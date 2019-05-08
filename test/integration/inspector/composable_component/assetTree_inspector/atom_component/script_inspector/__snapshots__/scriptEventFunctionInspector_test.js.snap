@@ -5,7 +5,7 @@ exports[`script event function inspector test snapshot test 1`] = `
   className="wonder-scriptEventFunction-inspector"
 >
   <h1>
-    ScriptEventFunction
+    Script Event Function
   </h1>
   <hr />
   <article
@@ -15,11 +15,7 @@ exports[`script event function inspector test snapshot test 1`] = `
       className="item-header"
       title="script eventFunction's name"
     >
-      <span
-        className="component-label"
-      >
-        Name
-      </span>
+      Name
     </div>
     <div
       className="item-content"
@@ -39,10 +35,26 @@ exports[`script event function inspector test snapshot test 1`] = `
     <article
       className="wonder-file-input"
     >
+      <textarea
+        className="input-component file-input"
+        onChange={[Function]}
+        type="text"
+        value="{    
+  init: (script, api, engineState) => { 
+    return engineState 
+  }, 
+  update: (script, api, engineState) => { 
+    return engineState 
+  }, 
+  dispose: (script, api, engineState) => { 
+    return engineState 
+  } 
+}"
+      />
       <button
         onClick={[Function]}
       >
-        Set EventFunction Data
+        submit
       </button>
     </article>
   </div>

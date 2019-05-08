@@ -142,43 +142,6 @@ let _ =
            );
       });
 
-      describe("handle error", () =>
-        test("if data is wrong, error", () => {
-          let error =
-            createMethodStubWithJsObjSandbox(
-              sandbox,
-              ConsoleTool.console,
-              "error",
-            );
-          let assetTreeData =
-            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
-          let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
-          MainEditorAssetHeaderOperateNodeTool.addScriptAttribute();
-          ScriptAttributeInspectorTool.addDefaultField(
-            ~sandbox,
-            ~nodeId=addedNodeId,
-            (),
-          );
-
-          let (fieldName, field) =
-            ScriptAttributeInspectorTool.getAttributeEntries(addedNodeId)
-            |> StateLogicService.getEditorState
-            |> ArrayService.unsafeGetFirst;
-          ScriptAttributeInspectorTool.updateScriptAttributeNodeByReplaceFieldData(
-            addedNodeId,
-            (
-              fieldName,
-              ScriptAttributeInspectorTool.buildFieldJsObj(
-                ~type_="float",
-                ~defaultValue=0.1,
-              ),
-            ),
-          );
-
-          error |> expect |> toCalled;
-        })
-      );
-
       describe("test update script attribute in all script components", () => {
         beforeEach(() =>
           ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.createDefaultSceneAndAddScriptComponent(

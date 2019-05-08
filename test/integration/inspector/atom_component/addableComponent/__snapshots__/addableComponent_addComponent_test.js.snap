@@ -17,11 +17,7 @@ exports[`AddableComponent add component test camera add component test add arcba
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -40,7 +36,7 @@ exports[`AddableComponent add component test camera add component test add arcba
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -327,7 +323,7 @@ exports[`AddableComponent add component test camera add component test add arcba
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -378,11 +374,7 @@ exports[`AddableComponent add component test camera add component test add arcba
                   className="item-header"
                   title="type"
                 >
-                  <span
-                    className=""
-                  >
-                    Type
-                  </span>
+                  Type
                 </div>
                 <div
                   className="item-content"
@@ -445,11 +437,7 @@ exports[`AddableComponent add component test camera add component test add arcba
                   className="item-header"
                   title="perspective matrix's type"
                 >
-                  <span
-                    className=""
-                  >
-                    Type
-                  </span>
+                  Type
                 </div>
                 <div
                   className="item-content"
@@ -547,7 +535,7 @@ exports[`AddableComponent add component test camera add component test add arcba
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -798,11 +786,7 @@ exports[`AddableComponent add component test camera add component test add geome
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -821,7 +805,7 @@ exports[`AddableComponent add component test camera add component test add geome
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -1105,7 +1089,7 @@ exports[`AddableComponent add component test camera add component test add geome
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -1156,11 +1140,7 @@ exports[`AddableComponent add component test camera add component test add geome
                   className="item-header"
                   title="type"
                 >
-                  <span
-                    className=""
-                  >
-                    Type
-                  </span>
+                  Type
                 </div>
                 <div
                   className="item-content"
@@ -1223,11 +1203,7 @@ exports[`AddableComponent add component test camera add component test add geome
                   className="item-header"
                   title="perspective matrix's type"
                 >
-                  <span
-                    className=""
-                  >
-                    Type
-                  </span>
+                  Type
                 </div>
                 <div
                   className="item-content"
@@ -1325,7 +1301,7 @@ exports[`AddableComponent add component test camera add component test add geome
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -1426,11 +1402,7 @@ exports[`AddableComponent add component test camera add component test add rende
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -1449,7 +1421,7 @@ exports[`AddableComponent add component test camera add component test add rende
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -1733,7 +1705,7 @@ exports[`AddableComponent add component test camera add component test add rende
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -1784,11 +1756,7 @@ exports[`AddableComponent add component test camera add component test add rende
                   className="item-header"
                   title="type"
                 >
-                  <span
-                    className=""
-                  >
-                    Type
-                  </span>
+                  Type
                 </div>
                 <div
                   className="item-content"
@@ -1851,11 +1819,7 @@ exports[`AddableComponent add component test camera add component test add rende
                   className="item-header"
                   title="perspective matrix's type"
                 >
-                  <span
-                    className=""
-                  >
-                    Type
-                  </span>
+                  Type
                 </div>
                 <div
                   className="item-content"
@@ -1953,7 +1917,7 @@ exports[`AddableComponent add component test camera add component test add rende
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -2004,11 +1968,7 @@ exports[`AddableComponent add component test camera add component test add rende
                   className="item-header"
                   title="draw mode"
                 >
-                  <span
-                    className=""
-                  >
-                    Draw Mode
-                  </span>
+                  Draw Mode
                 </div>
                 <div
                   className="item-content"
@@ -2116,11 +2076,7 @@ exports[`AddableComponent add component test camera add component test add rende
                     className="item-header"
                     title="material's type"
                   >
-                    <span
-                      className=""
-                    >
-                      Type
-                    </span>
+                    Type
                   </div>
                   <div
                     className="item-content"
@@ -2290,11 +2246,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -2313,7 +2265,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -2597,7 +2549,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -2648,11 +2600,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                   className="item-header"
                   title="draw mode"
                 >
-                  <span
-                    className=""
-                  >
-                    Draw Mode
-                  </span>
+                  Draw Mode
                 </div>
                 <div
                   className="item-content"
@@ -2760,11 +2708,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                     className="item-header"
                     title="material's type"
                   >
-                    <span
-                      className=""
-                    >
-                      Type
-                    </span>
+                    Type
                   </div>
                   <div
                     className="item-content"
@@ -2899,7 +2843,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -2965,7 +2909,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -3016,11 +2960,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                   className="item-header"
                   title="type"
                 >
-                  <span
-                    className=""
-                  >
-                    Type
-                  </span>
+                  Type
                 </div>
                 <div
                   className="item-content"
@@ -3083,11 +3023,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                   className="item-header"
                   title="perspective matrix's type"
                 >
-                  <span
-                    className=""
-                  >
-                    Type
-                  </span>
+                  Type
                 </div>
                 <div
                   className="item-content"
@@ -3220,11 +3156,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -3243,7 +3175,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -3527,7 +3459,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -3578,11 +3510,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                   className="item-header"
                   title="draw mode"
                 >
-                  <span
-                    className=""
-                  >
-                    Draw Mode
-                  </span>
+                  Draw Mode
                 </div>
                 <div
                   className="item-content"
@@ -3690,11 +3618,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                     className="item-header"
                     title="material's type"
                   >
-                    <span
-                      className=""
-                    >
-                      Type
-                    </span>
+                    Type
                   </div>
                   <div
                     className="item-content"
@@ -3829,7 +3753,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -3895,7 +3819,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -3930,11 +3854,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
             className="item-header"
             title="light type"
           >
-            <span
-              className=""
-            >
-              Type
-            </span>
+            Type
           </div>
           <div
             className="item-content"
@@ -4056,11 +3976,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -4079,7 +3995,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -4363,7 +4279,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -4414,11 +4330,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                   className="item-header"
                   title="draw mode"
                 >
-                  <span
-                    className=""
-                  >
-                    Draw Mode
-                  </span>
+                  Draw Mode
                 </div>
                 <div
                   className="item-content"
@@ -4526,11 +4438,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                     className="item-header"
                     title="material's type"
                   >
-                    <span
-                      className=""
-                    >
-                      Type
-                    </span>
+                    Type
                   </div>
                   <div
                     className="item-content"
@@ -4665,7 +4573,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -4731,7 +4639,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -4760,24 +4668,54 @@ exports[`AddableComponent add component test gameObject add component workflow t
         className="wonder-inspector-script"
       >
         <article
-          className="wonder-inspector-script"
+          className="wonder-inspector-scriptFunction"
         >
-          <button
-            className="addable-btn"
-            onClick={[Function]}
+          <div
+            className="inspector-component"
           >
-            Add script event function
-          </button>
+            <div
+              className="component-title"
+              title="MeshRenderer"
+            >
+              Script Function Group
+            </div>
+            <hr />
+            <div
+              className="component-content"
+            >
+              <button
+                className="addable-btn"
+                onClick={[Function]}
+              >
+                Add script event function
+              </button>
+            </div>
+          </div>
         </article>
         <article
-          className="wonder-inspector-script"
+          className="wonder-inspector-scriptAttribute"
         >
-          <button
-            className="addable-btn"
-            onClick={[Function]}
+          <div
+            className="inspector-component"
           >
-            Add script attribute
-          </button>
+            <div
+              className="component-title"
+              title="MeshRenderer"
+            >
+              Script Attribute Group
+            </div>
+            <hr />
+            <div
+              className="component-content"
+            >
+              <button
+                className="addable-btn"
+                onClick={[Function]}
+              >
+                Add script attribute
+              </button>
+            </div>
+          </div>
         </article>
       </article>
     </article>
