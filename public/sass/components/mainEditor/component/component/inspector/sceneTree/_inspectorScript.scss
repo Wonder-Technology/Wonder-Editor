@@ -1,6 +1,6 @@
 @import "../../../../../../utils/inspectorItemMixin";
 
-.wonder-inspector-script{
+.wonder-inspector-scriptAttribute,.wonder-inspector-scriptFunction{
     @import "../utils/inspectorComponent";
     .inspector-component{
         .component-title{
@@ -8,10 +8,11 @@
         }
         .component-content{
             @include inspectorItem("wonder-script-attribute");
+            @include inspectorItem("wonder-script-function");
             display: flex;
             flex-direction: column;
             align-items: center;
-            .wonder-script-attribute{
+            .wonder-script-attribute,.wonder-script-function{
                 @import "../../../../../../utils/inspectorSelectUtils";
                 @import "../utils/inspectorComponentChildren";
                 width:100%;
