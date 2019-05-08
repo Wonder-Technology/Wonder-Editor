@@ -31,9 +31,7 @@ let render = (name, (onChangeFunc, onBlurFunc), _self) =>
     <h1> {DomHelper.textEl("Model")} </h1>
     <hr />
     <div className="inspector-item">
-      <div className="item-header">
-        <span className=""> {DomHelper.textEl("Name:")} </span>
-      </div>
+      <div className="item-header"> {DomHelper.textEl("Name:")} </div>
       <div className="item-content">
         <input
           className="input-component float-input"

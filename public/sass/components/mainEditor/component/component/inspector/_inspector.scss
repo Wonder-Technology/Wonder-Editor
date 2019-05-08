@@ -5,17 +5,27 @@
     .wonder-inspector-sceneTree {
         padding-top: 5px;
         @include inspectorItem("sceneTree-name");
+
         @import "../../../../ui/componentBox";
+
         @include inspectorItem("wonder-inspector-transform");
         @import "sceneTree/inspectorTransform";
+
         @import "sceneTree/inspectorCameraGroup";
+
         @import "sceneTree/inspectorRenderGroup";
+
         @include inspectorItem("wonder-inspector-geometry");
         @import "sceneTree/inspectorGeometry";
+
         @include inspectorItem("wonder-inspector-light");
         @import "sceneTree/inspectorLight";
+
         @include inspectorItem("wonder-inspector-arcballCameraController");
+
         @import "sceneTree/inspectorAddableComponent";
+
+        @import "sceneTree/inspectorScript";
     }
     .wonder-inspector-assetTree {
         @import "../../../../ui/attributeBox";

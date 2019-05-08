@@ -44,16 +44,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 13px;
             span {
                 padding-top: 2px;
-                width: 90%;
+                width: 94%;
                 display: block;
                 height: 20px;
                 line-height: 20px;
                 text-align: center;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                white-space: nowrap;
             }
         }
     }

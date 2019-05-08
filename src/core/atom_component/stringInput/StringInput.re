@@ -85,7 +85,7 @@ let render = (label, title, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
             | Some(title) => title
             }
           }>
-          <span className="component-label"> {DomHelper.textEl(value)} </span>
+          {DomHelper.textEl(value)}
         </div>
       }
     }

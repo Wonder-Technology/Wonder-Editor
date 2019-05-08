@@ -1,11 +1,6 @@
 let component = ReasonReact.statelessComponent("MainEditorScript");
 
-let render =
-    (
-      (uiState, dispatchFunc),
-      script,
-      ({state, send}: ReasonReact.self('a, 'b, 'c)) as self,
-    ) =>
+let render = ((uiState, dispatchFunc), script, self) =>
   <article key="MainEditorScript" className="wonder-inspector-script">
     <MainEditorScriptEventFunction uiState dispatchFunc script />
     <MainEditorScriptAttribute uiState dispatchFunc script />
