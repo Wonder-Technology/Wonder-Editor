@@ -1,3 +1,5 @@
+open WonderBsMost;
+
 type retainedProps = {isInitEngine: bool};
 
 module Method = {
@@ -65,8 +67,30 @@ module Method = {
       <canvas id="img-canvas" key="imgCanvas" width="50" height="50" />
     </article>;
 
+  let progressFunc = () =>
+    ArrayService.range(1, 10)
+    |> Most.from
+    |> Most.concatMap(value => Most.just(value * 10) |> Most.delay(1000))
+    |> Most.tap(value => {
+         let engineState = StateEngineService.unsafeGetState();
+
+         let (engineState, _) =
+           ManageEventEngineService.triggerCustomGlobalEvent(
+             CreateCustomEventEngineService.create(
+               "wonder_progress",
+               Some(value |> EventType.convertIntToUserData),
+             ),
+             engineState,
+           );
+
+         engineState |> StateEngineService.setState |> ignore;
+       })
+    |> Most.drain
+    |> ignore;
+
   let buildElementAfterInitEngine = (uiState, dispatchFunc) =>
     <article key="mainEditor" className="wonder-mainEditor-component">
+      <Progress percent=10 completeFunc={() => Js.log("fckk")} />
       <div key="leftComponent" className="left-component">
         <div className="top-widget">
           <MainEditorLeftComponents uiState dispatchFunc />
@@ -115,8 +139,13 @@ module Method = {
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
 
-let render = (uiState: AppStore.appState, dispatchFunc, _self) =>
-  uiState.isInitEngine ?
+let render =
+    (
+      uiState: AppStore.appState,
+      dispatchFunc,
+      {retainedProps}: ReasonReact.self('a, 'b, 'c),
+    ) =>
+  retainedProps.isInitEngine ?
     Method.buildElementAfterInitEngine(uiState, dispatchFunc) :
     Method.buildElementBeforeInitEngine(uiState, dispatchFunc);
 
@@ -140,6 +169,8 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
                   )
            )
            |> StateLogicService.getAndSetEditorState;
+
+           Method.progressFunc();
 
            dispatchFunc(AppStore.InitEngineAction) |> resolve;
          })
