@@ -1,0 +1,1 @@
+let getProgressCustomGlobalEventName = () => "wd_editor_progress";

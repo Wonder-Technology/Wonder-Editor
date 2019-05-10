@@ -50,9 +50,9 @@ let make = (~percent: int, ~completeFunc, _children) => {
   render: _self => render(_self),
   didUpdate: ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, 'b, 'c)) =>
     newSelf.state.percent === 100 ?
-      Most.just(percent)
-      |> Most.delay(2000)
-      |> Most.tap(percent => completeFunc())
+      Most.empty()
+      |> Most.delay(1000)
+      |> Most.tap(_ => completeFunc())
       |> Most.drain
       |> ignore :
       (),
@@ -63,10 +63,9 @@ let make = (~percent: int, ~completeFunc, _children) => {
     let engineState = StateEngineService.unsafeGetState();
 
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName="wonder_progress",
+      ~eventName=ProgressUtils.getProgressCustomGlobalEventName(),
       ~handleFunc=
         (. event, engineState) => {
-          WonderLog.Log.print(("fckkkkk", event)) |> ignore;
           send(
             ChangePercent(
               event.userData
