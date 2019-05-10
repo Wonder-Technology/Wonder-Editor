@@ -49,13 +49,7 @@ let make = (~percent: int, ~completeFunc, _children) => {
   reducer,
   render: _self => render(_self),
   didUpdate: ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, 'b, 'c)) =>
-    newSelf.state.percent === 100 ?
-      Most.empty()
-      |> Most.delay(1000)
-      |> Most.tap(_ => completeFunc())
-      |> Most.drain
-      |> ignore :
-      (),
+    newSelf.state.percent === 100 ? completeFunc(.) : (),
   didMount: ({state, send}: ReasonReact.self('a, 'b, 'c)) => {
     open Wonderjs;
     open EventType;
