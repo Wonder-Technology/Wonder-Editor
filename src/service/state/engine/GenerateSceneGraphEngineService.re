@@ -1,10 +1,8 @@
-open Wonderjs;
-
 open Js.Typed_array;
 
-let generateGLBData = GenerateSceneGraphAPI.generateGLBData;
+let generateGLBData = Wonderjs.GenerateSceneGraphAPI.generateGLBData;
 
-let generateWDB = GenerateSceneGraphAPI.generateWDB;
+let generateWDB = Wonderjs.GenerateSceneGraphAPI.generateWDB;
 
 let _writeUint32DataToUint8Array = uint32Data =>
   Uint8Array.fromBuffer(
@@ -21,10 +19,10 @@ let readUint32DataFromUint8Array = uint8Array =>
 let _gePointstLength = (geometry, engineState, getPointsFunc) =>
   getPointsFunc(. geometry, engineState)
   |> Float32Array.length
-  |> NumberType.intToFloat;
+  |> NumberType.convertIntToFloat;
 
 let generateWDBForWPK = (sceneGameObject, imageUint8ArrayMap, engineState) =>
-  GenerateWDBSystem.generateWDB(
+  Wonderjs.GenerateWDBSystem.generateWDB(
     sceneGameObject,
     imageUint8ArrayMap |> Js.Nullable.toOption |> OptionService.unsafeGet,
     (
@@ -34,7 +32,7 @@ let generateWDBForWPK = (sceneGameObject, imageUint8ArrayMap, engineState) =>
             _gePointstLength(
               geometry,
               engineState,
-              VerticesGeometryMainService.getVertices,
+              Wonderjs.VerticesGeometryMainService.getVertices,
             );
 
           Float32Array.make([|length, length, length|]);
@@ -44,7 +42,7 @@ let generateWDBForWPK = (sceneGameObject, imageUint8ArrayMap, engineState) =>
             _gePointstLength(
               geometry,
               engineState,
-              NormalsGeometryMainService.getNormals,
+              Wonderjs.NormalsGeometryMainService.getNormals,
             );
 
           Float32Array.make([|length, length, length|]);
@@ -54,19 +52,25 @@ let generateWDBForWPK = (sceneGameObject, imageUint8ArrayMap, engineState) =>
             _gePointstLength(
               geometry,
               engineState,
-              TexCoordsGeometryMainService.getTexCoords,
+              Wonderjs.TexCoordsGeometryMainService.getTexCoords,
             );
 
           Float32Array.make([|length, length|]);
         },
         (. geometry, engineState) =>
           Uint16Array.make([|
-            IndicesGeometryMainService.getIndices16(. geometry, engineState)
+            Wonderjs.IndicesGeometryMainService.getIndices16(.
+              geometry,
+              engineState,
+            )
             |> Uint16Array.length,
           |]),
         (. geometry, engineState) =>
           Uint32Array.make([|
-            IndicesGeometryMainService.getIndices32(. geometry, engineState)
+            Wonderjs.IndicesGeometryMainService.getIndices32(.
+              geometry,
+              engineState,
+            )
             |> Uint32Array.length,
           |]),
       ),
@@ -77,16 +81,16 @@ let generateWDBForWPK = (sceneGameObject, imageUint8ArrayMap, engineState) =>
   );
 
 let generateWDBForASB = (sceneGameObject, imageUint8ArrayMap, engineState) =>
-  GenerateWDBSystem.generateWDB(
+  Wonderjs.GenerateWDBSystem.generateWDB(
     sceneGameObject,
     imageUint8ArrayMap |> Js.Nullable.toOption |> OptionService.unsafeGet,
     (
       (
-        VerticesGeometryMainService.getVertices,
-        NormalsGeometryMainService.getNormals,
-        TexCoordsGeometryMainService.getTexCoords,
-        IndicesGeometryMainService.getIndices16,
-        IndicesGeometryMainService.getIndices32,
+        Wonderjs.VerticesGeometryMainService.getVertices,
+        Wonderjs.NormalsGeometryMainService.getNormals,
+        Wonderjs.TexCoordsGeometryMainService.getTexCoords,
+        Wonderjs.IndicesGeometryMainService.getIndices16,
+        Wonderjs.IndicesGeometryMainService.getIndices32,
       ),
       imageUint8Array =>
         _writeUint32DataToUint8Array(imageUint8Array |> Uint8Array.length),

@@ -76,25 +76,39 @@ let _convertPosition =
       editCamera,
       engineState,
     ) =>
-  CoordinateEngineService.convertWorldToScreen(
-    GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-      editCamera,
+  switch (
+    CoordinateEngineService.convertWorldToScreen(
+      GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
+        editCamera,
+        engineState,
+      ),
+      GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
+        editCamera,
+        engineState,
+      ),
+      (
+        x,
+        y,
+        z,
+        viewWidth |> NumberType.convertIntToFloat,
+        viewHeight |> NumberType.convertIntToFloat,
+      ),
       engineState,
-    ),
-    GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
-      editCamera,
-      engineState,
-    ),
-    (
-      x,
-      y,
-      z,
-      viewWidth |> NumberType.convertIntToFloat,
-      viewHeight |> NumberType.convertIntToFloat,
-    ),
-    engineState,
-  )
-  |> _convertAnchorFromTopLeftToCenter((imageWidth, imageHeight));
+    )
+    |> Js.Nullable.toOption
+  ) {
+  | None =>
+    WonderLog.Log.fatal(
+      WonderLog.Log.buildFatalMessage(
+        ~description={j|_convertPosition|j},
+        ~reason="convertWorldToScreen return undefined",
+        ~solution={j||j},
+        ~params={j||j},
+      ),
+    )
+  | Some((x, y)) =>
+    (x, y) |> _convertAnchorFromTopLeftToCenter((imageWidth, imageHeight))
+  };
 
 let _getImageMaxWidth = () => 30.;
 

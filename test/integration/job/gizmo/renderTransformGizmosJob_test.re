@@ -491,6 +491,7 @@ let _ =
                   |> DirectorToolEngine.runWithDefaultTime;
 
                 let editorState = StateEditorService.getState();
+
                 (
                   drawElements
                   |> withTwoArgs(
