@@ -171,6 +171,29 @@ let _ =
           MainEditorAssetTool.buildFakeFileReader();
         });
 
+        describe("test cache api", () =>
+          describe("not cache", () => {
+            describe("initAssetBundleArrayBufferCache", () =>
+              test("return empty stream", () => {
+                let initAssetBundleArrayBufferCache =
+                  InitScriptJobTool.createRewritedScriptAPIJsObj()##initAssetBundleArrayBufferCache;
+
+                initAssetBundleArrayBufferCache(.) |> expect == Most.empty();
+              })
+            );
+
+            describe("isAssetBundleArrayBufferCached", () =>
+              test("return Most.just(false)", () => {
+                let isAssetBundleArrayBufferCached =
+                  InitScriptJobTool.createRewritedScriptAPIJsObj()##isAssetBundleArrayBufferCached;
+
+                isAssetBundleArrayBufferCached(.)
+                |> expect == Most.just(false);
+              })
+            );
+          })
+        );
+
         describe("getAssetBundlePath", () =>
           test("return empty str", () => {
             let getAssetBundlePath =
