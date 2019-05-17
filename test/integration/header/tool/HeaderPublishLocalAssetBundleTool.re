@@ -23,12 +23,3 @@ let buildPublishLocalModal =
   />;
 
 let buildSelectTreeForAssetBundle = PublishLocalModal.Method.buildSelectTreeForAssetBundle;
-
-/* TODO refactor */
-let setSelectForSelectTree = (isSelect, nodeName, tree) =>
-  HeaderAssetBundleUtils.GenerateAB.setSelectForSelectTree(
-    tree,
-    isSelect,
-    HeaderAssetBundleTool.findNodeByName(nodeName, tree)
-    |> OptionService.unsafeGet,
-  );

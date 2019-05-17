@@ -93,7 +93,7 @@ let _ =
             let selectTree =
               HeaderAssetBundleTool.GenerateSingleRAB.buildSelectTreeForGenerateSingleRAB
               |> StateLogicService.getStateToGetData
-              |> HeaderAssetBundleTool.setSelectForSelectTree(
+              |> SelectTreeTool.setSelectForSelectTree(
                    true,
                    MainEditorAssetMaterialNodeTool.getMaterialName(
                      ~nodeId=addedMaterialNodeId1,
@@ -137,14 +137,14 @@ let _ =
                       let selectTree =
                         HeaderAssetBundleTool.GenerateAllAB.buildSelectTreeForGenerateAllAB
                         |> StateLogicService.getStateToGetData
-                        |> HeaderAssetBundleTool.setSelectForSelectTree(
+                        |> SelectTreeTool.setSelectForSelectTree(
                              true,
                              MainEditorAssetAssetBundleNodeTool.getName(
                                uploadedRABAssetBundleNodeId,
                              )
                              |> StateLogicService.getEditorState,
                            )
-                        |> HeaderAssetBundleTool.setSelectForSelectTree(
+                        |> SelectTreeTool.setSelectForSelectTree(
                              true,
                              MainEditorAssetAssetBundleNodeTool.getName(
                                uploadedSABAssetBundleNodeId,
@@ -193,7 +193,7 @@ let _ =
                let selectTree =
                  HeaderAssetBundleTool.GenerateAllAB.buildSelectTreeForGenerateAllAB
                  |> StateLogicService.getStateToGetData
-                 |> HeaderAssetBundleTool.setSelectForSelectTree(
+                 |> SelectTreeTool.setSelectForSelectTree(
                       true,
                       MainEditorAssetAssetBundleNodeTool.getName(
                         uploadedSABAssetBundleNodeId,

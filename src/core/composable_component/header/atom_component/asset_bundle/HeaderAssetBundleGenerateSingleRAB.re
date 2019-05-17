@@ -8,7 +8,7 @@ module Method = {
     open SelectTreeType;
 
     let tree =
-      HeaderAssetBundleUtils.GenerateAB.setSelectForSelectTree(
+      SelectTreeUtils.setSelectForSelectTree(
         tree,
         isSelect,
         node,

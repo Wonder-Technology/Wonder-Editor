@@ -145,7 +145,7 @@ let _ =
                    let selectTree =
                      HeaderAssetBundleTool.GenerateSingleRAB.buildSelectTreeForGenerateSingleRAB
                      |> StateLogicService.getStateToGetData
-                     |> HeaderAssetBundleTool.setSelectForSelectTree(
+                     |> SelectTreeTool.setSelectForSelectTree(
                           true,
                           MainEditorAssetTextureNodeTool.getTextureName(
                             ~nodeId=uploadedTextureNodeId1,
@@ -245,14 +245,14 @@ let _ =
                           let selectTree =
                             HeaderAssetBundleTool.GenerateSingleRAB.buildSelectTreeForGenerateSingleRAB
                             |> StateLogicService.getStateToGetData
-                            |> HeaderAssetBundleTool.setSelectForSelectTree(
+                            |> SelectTreeTool.setSelectForSelectTree(
                                  true,
                                  MainEditorAssetMaterialNodeTool.getMaterialName(
                                    ~nodeId=addedMaterialNodeId2,
                                    (),
                                  ),
                                )
-                            |> HeaderAssetBundleTool.setSelectForSelectTree(
+                            |> SelectTreeTool.setSelectForSelectTree(
                                  true,
                                  MainEditorAssetTextureNodeTool.getTextureName(
                                    ~nodeId=uploadedTextureNodeId1,
@@ -325,7 +325,7 @@ let _ =
                    let selectTree =
                      HeaderAssetBundleTool.GenerateSingleRAB.buildSelectTreeForGenerateSingleRAB
                      |> StateLogicService.getStateToGetData
-                     |> HeaderAssetBundleTool.setSelectForSelectTree(
+                     |> SelectTreeTool.setSelectForSelectTree(
                           true,
                           HeaderAssetBundleTool.GenerateSingleRAB.buildWDBGeometryFolderName(
                             MainEditorAssetWDBNodeTool.getWDBName(
