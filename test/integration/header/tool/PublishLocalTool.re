@@ -4,7 +4,7 @@ open Js.Typed_array;
 
 open Js.Promise;
 
-let getFetchPackageContentWithoutAssetCountWithDefault = () => 12;
+let getFetchPackageContentWithoutAssetCountWithDefault = () => 13;
 
 let exportScene = (editorState, engineState) =>
   HeaderPublishLocalUtils.Publish._generateSceneWDB(editorState, engineState);
@@ -24,6 +24,7 @@ let buildFakeFetch =
       ~dataNoWorkerSetting="dataNoWorkerSetting",
       ~dataShaderLibs="dataShaderLibs",
       ~dataShaders="dataShaders",
+      ~jsFolderJs="jsFolderJs",
       (),
     ) => {
   let fetch = createEmptyStubWithJsObjSandbox(sandbox);
@@ -105,6 +106,13 @@ let buildFakeFetch =
        BuildFetchTool.buildFakeFetchTextResponse(
          sandbox,
          dataShaders |> Obj.magic,
+       ),
+     )
+  |> onCall(12)
+  |> returns(
+       BuildFetchTool.buildFakeFetchTextResponse(
+         sandbox,
+         jsFolderJs |> Obj.magic,
        ),
      );
 

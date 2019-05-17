@@ -113,6 +113,12 @@ let _ =
           );
         });
 
+        describe("export js data", () =>
+          testPromise("export commonForNoWorkerAndWorker.js", () =>
+            _testText(12, "js/commonForNoWorkerAndWorker.js")
+          )
+        );
+
         testPromise("export Scene.wdb", () =>
           _prepare(
             ~judgeFunc=
@@ -154,6 +160,7 @@ let _ =
               ~dataWorkerMainLoopPipelines="dataWorkerMainLoopPipelines",
               ~dataWorkerWorkerPipelines="dataWorkerWorkerPipelines",
               ~dataWorkerSetting="dataWorkerSetting",
+              ~jsFolderJs="jsFolderJs",
               (),
             ) => {
           let fetch = createEmptyStubWithJsObjSandbox(sandbox);
@@ -297,6 +304,13 @@ let _ =
                BuildFetchTool.buildFakeFetchTextResponse(
                  sandbox,
                  dataWorkerSetting |> Obj.magic,
+               ),
+             )
+          |> onCall(20)
+          |> returns(
+               BuildFetchTool.buildFakeFetchTextResponse(
+                 sandbox,
+                 jsFolderJs |> Obj.magic,
                ),
              );
 

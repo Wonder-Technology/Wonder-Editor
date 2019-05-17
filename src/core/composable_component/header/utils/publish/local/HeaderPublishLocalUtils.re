@@ -217,6 +217,18 @@ module LoadData = {
 
     Most.mergeArray(streamArr) |> Most.drain |> then_(_ => zip |> resolve);
   };
+
+  let loadAndWriteJsData = (fetchFunc, zip) =>
+    fetchFunc(. "./publish/js/commonForNoWorkerAndWorker.js")
+    |> then_(response =>
+         response
+         |> Fetch.Response.text
+         |> then_(jsStr =>
+              zip
+              ->(Zip.write("js/commonForNoWorkerAndWorker.js", `str(jsStr)))
+              |> resolve
+            )
+       );
 };
 
 module Publish = {
@@ -305,6 +317,9 @@ module Publish = {
          Most.fromPromise(
            LoadData.loadAndWriteConfigData(useWorker, fetchFunc, zip),
          )
+       )
+    |> Most.flatMap(zip =>
+         Most.fromPromise(LoadData.loadAndWriteJsData(fetchFunc, zip))
        );
 
   let _generateSceneWDB = (editorState, engineState) =>
