@@ -43,5 +43,11 @@
     },
     {
         "name": "init_imgui"
+    },
+    {
+        "name": "init_script"
+    },
+    {
+        "name": "init_script_api"
     }
 ]

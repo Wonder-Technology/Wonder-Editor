@@ -167,7 +167,6 @@ module AssetBundle = {
           wholeManifest,
           (
             getAssetBundlePathFunc,
-            initAssetBundleArrayBufferCacheFunc,
             isAssetBundleArrayBufferCachedFunc,
             getAssetBundleArrayBufferCacheFunc,
             cacheAssetBundleArrayBufferFunc,
@@ -178,7 +177,6 @@ module AssetBundle = {
         wholeManifest,
         (
           getAssetBundlePathFunc,
-          initAssetBundleArrayBufferCacheFunc,
           isAssetBundleArrayBufferCachedFunc,
           getAssetBundleArrayBufferCacheFunc,
           cacheAssetBundleArrayBufferFunc,
@@ -192,7 +190,6 @@ module AssetBundle = {
         wholeManifest,
         (
           getAssetBundlePathFunc,
-          initAssetBundleArrayBufferCacheFunc,
           isAssetBundleArrayBufferCachedFunc,
           getAssetBundleArrayBufferCacheFunc,
           cacheAssetBundleArrayBufferFunc,
@@ -203,7 +200,6 @@ module AssetBundle = {
           wholeManifest,
           (
             getAssetBundlePathFunc,
-            initAssetBundleArrayBufferCacheFunc,
             isAssetBundleArrayBufferCachedFunc,
             getAssetBundleArrayBufferCacheFunc,
             cacheAssetBundleArrayBufferFunc,
@@ -223,14 +219,17 @@ module AssetBundle = {
         Wonderjs.LoadABSystem.load(abPath, _buildFakeFetchAssetBundle);
   };
   module Cache = {
-    open WonderBsMost;
-
     open Js.Typed_array;
 
-    let initAssetBundleArrayBufferCache = (.) => Most.empty();
+    let initAssetBundleArrayBufferCache =
+      (.) =>
+        Js.Promise.make((~resolve, ~reject) =>
+          (Wonderjs.PromiseType.convertResolveToUnit(resolve))(.)
+        );
 
     let isAssetBundleArrayBufferCached =
-      (. abRelativePath: string, hashId: string) => Most.just(false);
+      (. abRelativePath: string, hashId: string) =>
+        Js.Promise.make((~resolve, ~reject) => resolve(. false));
 
     let getAssetBundleArrayBufferCache =
       (. abRelativePath: string) =>
@@ -246,7 +245,9 @@ module AssetBundle = {
 
     let cacheAssetBundleArrayBuffer =
       (. abRelativePath: string, ab: ArrayBuffer.t, hashId: string) =>
-        Most.empty();
+        Js.Promise.make((~resolve, ~reject) =>
+          (Wonderjs.PromiseType.convertResolveToUnit(resolve))(.)
+        );
   };
 
   module Editor = {

@@ -3,6 +3,9 @@
         "name": "tick"
     },
     {
+        "name": "update_script"
+    },
+    {
         "name": "update_transform"
     },
     {
