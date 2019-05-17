@@ -17,10 +17,8 @@ type action =
 
 module Method = {
   let _toggleSelect = (tree, send, isSelect, node) => {
-    open SelectTreeType;
-
     let tree =
-      HeaderAssetBundleUtils.GenerateAB.setSelectForSelectTree(
+      SelectTreeUtils.setSelectForSelectTree(
         tree,
         isSelect,
         node,
@@ -197,7 +195,7 @@ module Method = {
           {
             DomHelper.textEl(
               LanguageUtils.getHeaderLanguageDataByType(
-                "generate-single-rab",
+                "generate-all-ab",
                 languageType,
               ),
             )

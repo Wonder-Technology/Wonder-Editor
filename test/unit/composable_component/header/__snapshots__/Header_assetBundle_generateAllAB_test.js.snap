@@ -10,7 +10,7 @@ exports[`Header AssetBundle->generate all ab generate all ab test buildSelectTre
     <div
       className="modal-item-header"
     >
-      Generate Single RAB
+      Generate All AB-&gt;zip from multiple 'Single AB'
       <img
         onClick={[Function]}
         src="./public/img/close.png"
