@@ -40,6 +40,9 @@
               "name": "init_imgui"
             },
             {
+              "name": "init_script"
+            },
+            {
               "name": "send_init_render_data"
             }
           ]

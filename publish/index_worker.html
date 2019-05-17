@@ -62,7 +62,8 @@
 </head>
 
 <body>
-    <h1 id="detect" style="display: none">your browser not support sharedArrayBuffer or offscreenCanvas, can't use worker.</h1>
+    <h1 id="detect" style="display: none">your browser not support sharedArrayBuffer or offscreenCanvas, can't use
+        worker.</h1>
 
     <div id="stream-loading">
         <img id="logo" class="loading-img" src="./res/loading/logo.png" />
@@ -171,6 +172,211 @@
         })()
 
 
+        function _extend(destination, source) {
+            for (let property in source) {
+                destination[property] = source[property];
+            }
+            return destination;
+        }
+
+        function _initScriptAPIJob(stateData) {
+            function _getAssetBundlePath() {
+                return "AssetBundles/";
+            };
+
+            function _initAssetBundleArrayBufferCache() {
+                var databaseName = "Wonder_Database";
+                var tableName = "Wonder_AssetBundle_Cache";
+                var cacheFieldName = "Cache";
+                var hashIdFieldName = "HashId";
+                var abRelativePathFieldName = "ABRelativePath";
+
+                if (!!window.db) {
+                    console.log("already init before");
+
+                    return new Promise((resolve) => {
+                        resolve();
+                    }, (reject) => {
+                        reject("error");
+                    })
+
+                };
+
+                var request = window.indexedDB.open(databaseName);
+
+                return new Promise((resolve, reject) => {
+                    request.onerror = (event) => {
+                        reject("open database error: ", event.target.errorCode);
+                    };
+
+                    request.onsuccess = (event) => {
+                        var db = event.target.result;
+
+                        console.log("open onsuccess");
+
+                        window.db = db;
+
+                        resolve();
+                    };
+
+                    request.onupgradeneeded = (event) => {
+                        var db = event.target.result;
+
+                        console.log("open onupgradeneeded");
+
+                        if (!db.objectStoreNames.contains(tableName)) {
+                            var objectStore = db.createObjectStore(
+                                tableName,
+                                {
+                                    keyPath: abRelativePathFieldName,
+                                    autoIncrement: false
+                                }
+                            );
+
+                            // objectStore.createIndex(cacheFieldName, cacheFieldName, { unique: false });
+                            // objectStore.createIndex(hashIdFieldName, hashIdFieldName, { unique: true });
+                            // objectStore.createIndex(abRelativePathFieldName, abRelativePathFieldName, { unique: true });
+                        }
+                        else {
+                            reject("database->table error: shouldn't exist table: ", tableName);
+                        }
+                    };
+                })
+            };
+
+
+            function _isAssetBundleArrayBufferCached(abRelativePath, hashId) {
+                var databaseName = "Wonder_Database";
+                var tableName = "Wonder_AssetBundle_Cache";
+                var cacheFieldName = "Cache";
+                var hashIdFieldName = "HashId";
+                var abRelativePathFieldName = "ABRelativePath";
+
+                var transaction = window.db.transaction([tableName]);
+                var objectStore = transaction.objectStore(tableName);
+                // var abRelativePath = objectStore.index(abRelativePathFieldName);
+                var request = objectStore.get(abRelativePath);
+
+
+
+                return new Promise((resolve, reject) => {
+                    request.onerror = (event) => {
+                        reject("error: ", event.target.errorCode);
+                    };
+
+                    request.onsuccess = (event) => {
+                        if (request.result) {
+
+                            console.log("is cached: ", abRelativePath, request.result[hashIdFieldName] === hashId);
+
+                            resolve(request.result[hashIdFieldName] === hashId);
+                        } else {
+                            console.log("get no data");
+
+                            resolve(false);
+                        }
+                    };
+                })
+
+            };
+
+
+            function _getAssetBundleArrayBufferCache(abRelativePath) {
+                var databaseName = "Wonder_Database";
+                var tableName = "Wonder_AssetBundle_Cache";
+                var cacheFieldName = "Cache";
+                var hashIdFieldName = "HashId";
+                var abRelativePathFieldName = "ABRelativePath";
+
+                var transaction = window.db.transaction([tableName]);
+                var objectStore = transaction.objectStore(tableName);
+                // var abRelativePath = objectStore.index(abRelativePathFieldName);
+                // var request = abRelativePath.get(abRelativePath);
+                // var abRelativePath = objectStore.index(abRelativePathFieldName);
+                var request = objectStore.get(abRelativePath);
+
+
+
+                return new Promise((resolve, reject) => {
+                    request.onerror = (event) => {
+                        reject("error: ", event.target.errorCode);
+                    };
+
+                    request.onsuccess = (event) => {
+                        if (request.result) {
+
+                            console.log("get cached data:", abRelativePath, request.result[cacheFieldName]);
+
+                            resolve(request.result[cacheFieldName]);
+                        } else {
+                            reject("get no cache")
+                        }
+                    };
+                })
+            };
+
+
+            function _cacheAssetBundleArrayBuffer(abRelativePath, ab, hashId) {
+                var databaseName = "Wonder_Database";
+                var tableName = "Wonder_AssetBundle_Cache";
+                var cacheFieldName = "Cache";
+                var hashIdFieldName = "HashId";
+                var abRelativePathFieldName = "ABRelativePath";
+
+                var transaction = window.db.transaction([tableName], "readwrite");
+                var objectStore = transaction.objectStore(tableName);
+                // var abRelativePath = objectStore.index(abRelativePathFieldName);
+                // var request = abRelativePath.get(abRelativePath);
+                // var request = objectStore.get(abRelativePath);
+                var data = {};
+                data[abRelativePathFieldName] = abRelativePath;
+                data[cacheFieldName] = ab;
+                data[hashIdFieldName] = hashId;
+
+                var request =
+                    objectStore.put(
+                        data
+                    );
+
+
+                return new Promise((resolve, reject) => {
+                    request.onerror = (event) => {
+                        reject("cache fail: ", event.target.errorCode);
+                    };
+
+                    request.onsuccess = (event) => {
+                        console.log("cache success: ", abRelativePath);
+
+                        resolve();
+                    };
+                })
+            };
+
+            var state = wd.getStateFromData(stateData);
+
+            var state = wd.setScriptAPIJsObj(
+                _extend(
+                    wd.getScriptAPIJsObj(state),
+                    {
+                        "getAssetBundlePath": _getAssetBundlePath,
+                        "initAssetBundleArrayBufferCache": _initAssetBundleArrayBufferCache,
+                        "isAssetBundleArrayBufferCached": _isAssetBundleArrayBufferCached,
+                        "getAssetBundleArrayBufferCache": _getAssetBundleArrayBufferCache,
+                        "cacheAssetBundleArrayBuffer": _cacheAssetBundleArrayBuffer,
+                    }
+                ),
+                state
+            );
+
+            wd.setState(state);
+        }
+
+        function _addJobs(state) {
+            var state = wd.addWorkerMainInitJob(["init_script_api", "init_script"], 0, _initScriptAPIJob, state);
+
+            return state;
+        }
+
         window.onload = function () {
             if (wd.isSupportRenderWorkerAndSharedArrayBuffer() === false) {
                 document.querySelector("#detect").style.display = "block";
@@ -192,6 +398,10 @@
             }
 
             return AssetTool.loadConfig(["./config/setting.json", "./config/"], null, function () {
+                var state = wd.unsafeGetState();
+
+                var state = _addJobs(state);
+
                 return AssetTool.loadStreamWDB("./Scene.wdb",
                     function (totalLoadedByteLength, contentLength, wdbPath) {
                         AssetTool.showOrCreateLoadingInfo(
@@ -205,13 +415,17 @@
                     function (state, gameObject) {
                         AssetTool.removeLoadingInfo();
 
+                        var state = wd.addSceneChild(gameObject, state);
+
                         return state;
                     },
                     function (state, _, gameObject) {
                         AssetTool.removeLoadingInfo();
 
+                        var state = wd.addSceneChild(gameObject, state);
+
                         wd.startDirector(state);
-                    }, wd.unsafeGetState());
+                    }, state);
             });
         }
     </script>

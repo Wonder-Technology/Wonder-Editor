@@ -21,6 +21,9 @@
         "name": "init_imgui"
     },
     {
+        "name": "init_script"
+    },
+    {
         "name": "init_camera"
     },
     {
