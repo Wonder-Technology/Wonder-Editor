@@ -114,7 +114,7 @@ module Method = {
            node |> AssetBundleNodeAssetService.isAssetBundleNode
          );
 
-    ArrayService.fastConcatArrays([|
+    ArrayService.fastMutableConcatArrays([|
       _sortByName(folderAssetTreeChildrenNodeArr, engineState),
       _sortByName(wdbAssetTreeChildrenNodeArr, engineState),
       _sortByName(materialAssetTreeChildrenNodeArr, engineState),

@@ -28,9 +28,8 @@ let _writeBuffer =
     (
       headerAndJsonAlignedByteOffset,
       (
-        (imageBufferViewArr, wdbBufferViewArr),
-        imageUint8ArrayArr,
-        wdbArrayBufferArr,
+        (imageBufferViewArr, wdbBufferViewArr, assetBundleBufferViewArr),
+        (imageUint8ArrayArr, wdbArrayBufferArr, assetBundleArrayBufferArr),
       ),
       arrayBuffer,
     ) => {
@@ -73,6 +72,26 @@ let _writeBuffer =
          uint8Array,
        );
 
+  let uint8Array =
+    assetBundleBufferViewArr
+    |> WonderCommonlib.ArrayService.reduceOneParami(
+         (.
+           uint8Array,
+           {byteOffset, byteLength}: ExportAssetType.bufferView,
+           index,
+         ) => {
+           let assetBundleArrayBuffer =
+             Array.unsafe_get(assetBundleArrayBufferArr, index);
+
+           BufferUtils.mergeArrayBuffer(
+             uint8Array,
+             assetBundleArrayBuffer,
+             headerAndJsonAlignedByteOffset + byteOffset,
+           );
+         },
+         uint8Array,
+       );
+
   uint8Array |> Uint8Array.buffer;
 };
 
@@ -100,9 +119,10 @@ let generateASB = (imageUint8ArrayMap, (editorState, engineState)) => {
       wdbArr,
       scriptEventFunctionArr,
       scriptAttributeArr,
+      assetBundleArr,
     ),
-    (imageBufferViewArr, wdbBufferViewArr),
-    (imageUint8ArrayArr, wdbArrayBufferArr),
+    (imageBufferViewArr, wdbBufferViewArr, assetBundleBufferViewArr),
+    (imageUint8ArrayArr, wdbArrayBufferArr, assetBundleArrayBufferArr),
     bufferTotalAlignedByteLength,
   ) =
     BuildJsonDataUtils.buildJsonData(
@@ -114,7 +134,11 @@ let generateASB = (imageUint8ArrayMap, (editorState, engineState)) => {
     BuildJsonDataUtils.buildJsonUint8Array(
       bufferTotalAlignedByteLength,
       (
-        Js.Array.concat(wdbBufferViewArr, imageBufferViewArr),
+        ArrayService.fastImmutableConcatArrays([|
+          imageBufferViewArr,
+          wdbBufferViewArr,
+          assetBundleBufferViewArr,
+        |]),
         imageArr,
         textureArr,
         basicMaterialArr,
@@ -122,6 +146,7 @@ let generateASB = (imageUint8ArrayMap, (editorState, engineState)) => {
         wdbArr,
         scriptEventFunctionArr,
         scriptAttributeArr,
+        assetBundleArr,
       ),
     );
 
@@ -147,9 +172,8 @@ let generateASB = (imageUint8ArrayMap, (editorState, engineState)) => {
     _writeBuffer(
       byteOffset,
       (
-        (imageBufferViewArr, wdbBufferViewArr),
-        imageUint8ArrayArr,
-        wdbArrayBufferArr,
+        (imageBufferViewArr, wdbBufferViewArr, assetBundleBufferViewArr),
+        (imageUint8ArrayArr, wdbArrayBufferArr, assetBundleArrayBufferArr),
       ),
       dataView |> DataView.buffer,
     );

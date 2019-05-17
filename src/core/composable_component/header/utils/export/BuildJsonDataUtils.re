@@ -388,6 +388,67 @@ let _buildScriptAttributeData = ((editorState, engineState)) =>
        );
      });
 
+let _buildAssetBundleData =
+    (
+      bufferTotalAlignedByteLength,
+      (imageBufferViewArr, wdbBufferViewArr),
+      (editorState, engineState),
+    ) => {
+  let startBufferViewIndex =
+    (imageBufferViewArr |> Js.Array.length)
+    + (wdbBufferViewArr |> Js.Array.length);
+
+  let (assetBundleArr, arrayBufferArr, bufferViewArr, byteOffset) =
+    AssetBundleNodeAssetEditorService.findAllAssetBundleNodes(editorState)
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (.
+           (assetBundleArr, arrayBufferArr, bufferViewArr, byteOffset),
+           node,
+         ) => {
+           let path =
+             PathTreeAssetLogicService.getNodePath(
+               node,
+               (editorState, engineState),
+             );
+
+           let {type_, assetBundle, name}: NodeAssetType.assetBundleNodeData =
+             AssetBundleNodeAssetService.getNodeData(node);
+
+           let byteLength = assetBundle |> ArrayBuffer.byteLength;
+           let alignedByteLength = BufferUtils.alignedLength(byteLength);
+
+           (
+             assetBundleArr
+             |> ArrayService.push(
+                  {
+                    name,
+                    path,
+                    type_: type_ |> NodeAssetType.convertAssetBundleTypeToInt,
+                    assetBundleBufferView:
+                      startBufferViewIndex + (bufferViewArr |> Js.Array.length),
+                  }: ExportAssetType.assetBundle,
+                ),
+             arrayBufferArr |> ArrayService.push(assetBundle),
+             bufferViewArr
+             |> ArrayService.push(
+                  {byteOffset, byteLength}: ExportAssetType.bufferView,
+                ),
+             byteOffset + alignedByteLength,
+           );
+         },
+         ([||], [||], [||], bufferTotalAlignedByteLength),
+       );
+
+  (
+    assetBundleArr,
+    arrayBufferArr,
+    bufferViewArr,
+    bufferViewArr |> Js.Array.length === 0 ?
+      bufferTotalAlignedByteLength :
+      _computeBufferViewDataByteLength(bufferViewArr),
+  );
+};
+
 let buildJsonData = (imageUint8ArrayMap, (editorState, engineState)) => {
   let (
     imageIndexMap,
@@ -426,6 +487,18 @@ let buildJsonData = (imageUint8ArrayMap, (editorState, engineState)) => {
   let scriptAttributeArr =
     _buildScriptAttributeData((editorState, engineState));
 
+  let (
+    assetBundleArr,
+    assetBundleArrayBufferArr,
+    assetBundleBufferViewArr,
+    bufferTotalAlignedByteLength,
+  ) =
+    _buildAssetBundleData(
+      bufferTotalAlignedByteLength,
+      (imageBufferViewArr, wdbBufferViewArr),
+      (editorState, engineState),
+    );
+
   (
     engineState,
     (
@@ -436,9 +509,10 @@ let buildJsonData = (imageUint8ArrayMap, (editorState, engineState)) => {
       wdbArr,
       scriptEventFunctionArr,
       scriptAttributeArr,
+      assetBundleArr,
     ),
-    (imageBufferViewArr, wdbBufferViewArr),
-    (imageUint8ArrayArr, wdbArrayBufferArr),
+    (imageBufferViewArr, wdbBufferViewArr, assetBundleBufferViewArr),
+    (imageUint8ArrayArr, wdbArrayBufferArr, assetBundleArrayBufferArr),
     bufferTotalAlignedByteLength,
   );
 };
@@ -455,6 +529,7 @@ let buildJsonUint8Array =
         wdbArr,
         scriptEventFunctionArr,
         scriptAttributeArr,
+        assetBundleArr,
       ),
     ) => {
   let encoder = TextEncoder.newTextEncoder();
@@ -474,6 +549,7 @@ let buildJsonUint8Array =
            scriptEventFunctions: scriptEventFunctionArr,
            scriptAttributes: scriptAttributeArr,
            wdbs: wdbArr,
+           assetBundles: assetBundleArr,
            bufferViews: bufferViewArr,
          }: ExportAssetType.assets
        )

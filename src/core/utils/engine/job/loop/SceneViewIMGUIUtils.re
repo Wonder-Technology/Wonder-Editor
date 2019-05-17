@@ -53,7 +53,7 @@ let getIMGUIGameObjects = (scene, engineState) => {
   let allGameObjects =
     HierarchyGameObjectEngineService.getAllGameObjects(scene, engineState);
 
-  ArrayService.fastConcatArrays([|
+  ArrayService.fastMutableConcatArrays([|
     _getSceneCameras(scene, allGameObjects, engineState),
     _getSceneDirectionLights(scene, allGameObjects, engineState),
     _getScenePointLights(scene, allGameObjects, engineState),

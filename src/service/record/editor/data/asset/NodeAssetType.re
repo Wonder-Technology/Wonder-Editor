@@ -56,3 +56,7 @@ type assetBundleNodeData = {
 };
 
 type folderNodeData = {name: string};
+
+external convertAssetBundleTypeToInt: assetBundleType => int = "%identity";
+
+external convertIntToAssetBundleType: int => assetBundleType = "%identity";

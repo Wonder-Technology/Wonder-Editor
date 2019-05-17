@@ -569,6 +569,62 @@ let _ =
         });
       });
 
+      describe("dispose asset bundle assets", () => {
+        beforeEach(() => {
+          MainEditorSceneTool.initStateWithJob(
+            ~sandbox,
+            ~noWorkerJobRecord=
+              NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                ~loopPipelines=
+                  {|
+                   [
+                       {
+                           "name": "default",
+                           "jobs": [
+                               {
+                                   "name": "dispose"
+                               }
+                           ]
+                       }
+                   ]
+               |},
+                (),
+              ),
+            (),
+          );
+
+          MainEditorSceneTool.prepareScene(sandbox);
+        });
+
+        testPromise(
+          {|
+          add asset bundle asset;
+          export;
+          import;
+
+          should has one asset bundle asset;
+          |},
+          () => {
+            let assetTreeData =
+              MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+
+            MainEditorAssetUploadTool.loadOneAssetBundle()
+            |> then_(uploadedAssetBundleNodeId =>
+                 ImportPackageTool.testImportPackage(
+                   ~testFunc=
+                     () =>
+                       AssetBundleNodeAssetEditorService.findAllAssetBundleNodes
+                       |> StateLogicService.getEditorState
+                       |> Js.Array.length
+                       |> expect == 1
+                       |> resolve,
+                   (),
+                 )
+               );
+          },
+        );
+      });
+
       testPromise("clear imageData map", () => {
         MainEditorSceneTool.initState(~sandbox, ());
 
@@ -2947,6 +3003,58 @@ let _ =
           );
         });
       });
+
+      describe("test import asset bundle assets", () =>
+        testPromise("should add asset bundle assets to asset tree", () => {
+          open NodeAssetType;
+
+          MainEditorSceneTool.prepareScene(sandbox);
+          let assetTreeData =
+            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
+
+          let assetBundle1 = ArrayBuffer.make(14);
+          let assetBundle2 = ArrayBuffer.make(12);
+
+          MainEditorAssetUploadTool.loadOneAssetBundle(
+            ~fileName="A.rab",
+            ~assetBundle=assetBundle1,
+            (),
+          )
+          |> then_(uploadedAssetBundleNodeId1 =>
+               MainEditorAssetUploadTool.loadOneAssetBundle(
+                 ~fileName="B.wab",
+                 ~assetBundle=assetBundle2,
+                 (),
+               )
+               |> then_(uploadedAssetBundleNodeId2 =>
+                    ImportPackageTool.testImportPackage(
+                      ~testFunc=
+                        () =>
+                          AssetBundleNodeAssetEditorService.findAllAssetBundleNodes
+                          |> StateLogicService.getEditorState
+                          |> Js.Array.map(
+                               AssetBundleNodeAssetService.getNodeData,
+                             )
+                          |> expect
+                          == [|
+                               {
+                                 type_: RAB,
+                                 name: "A",
+                                 assetBundle: assetBundle1,
+                               },
+                               {
+                                 type_: WAB,
+                                 name: "B",
+                                 assetBundle: assetBundle2,
+                               },
+                             |]
+                          |> resolve,
+                      (),
+                    )
+                  )
+             );
+        })
+      );
     });
 
     describe(

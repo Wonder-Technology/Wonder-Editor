@@ -72,6 +72,13 @@ type scriptAttribute = {
   attributeStr: string,
 };
 
+type assetBundle = {
+  name: string,
+  path: string,
+  type_: int,
+  assetBundleBufferView: bufferViewIndex,
+};
+
 type copyright = {
   version: string,
   author: string,
@@ -86,5 +93,6 @@ type assets = {
   wdbs: array(wdb),
   scriptEventFunctions: array(scriptEventFunction),
   scriptAttributes: array(scriptAttribute),
+  assetBundles: array(assetBundle),
   bufferViews: array(bufferView),
 };
