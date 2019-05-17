@@ -44,6 +44,8 @@ let _ =
 
         HeaderPublishLocalUtils.Publish.publishZip(
           ("WonderLocal", useWorker),
+          /* TODO rewrite */
+          (false, Obj.magic(-1)),
           () => obj,
           fakeFetchFunc,
         )
@@ -236,7 +238,7 @@ let _ =
         );
       });
 
-      describe("test useWorker", () => {
+      describe("test use worker", () => {
         let _buildFakeFetch =
             (
               ~sandbox,
