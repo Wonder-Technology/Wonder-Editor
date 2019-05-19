@@ -30,6 +30,13 @@ let header_language_array = [|
     },
   },
   {
+    title: "file-new-scene",
+    language: {
+      zh: {j|创建新的场景|j},
+      en: "New Scene",
+    },
+  },
+  {
     title: "header-edit",
     language: {
       zh: {j|编辑|j},

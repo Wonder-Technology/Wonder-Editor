@@ -24,6 +24,7 @@ module.exports = {
     { name: "scene-view" },
     { name: "scene-tree" },
     { name: "left-header" },
+    { name: "header" },
     { name: "redo-undo" },
     { name: "inspector" },
     { name: "picking" },
