@@ -9,6 +9,7 @@ open Sinon;
 let _ =
   describe("Progress component", () => {
     let sandbox = getSandboxDefaultVal();
+
     let _buildProgressComponent = (percent, completeFunc) =>
       ReactTestRenderer.create(<Progress percent completeFunc />);
 
@@ -50,7 +51,7 @@ let _ =
 
           completeFunc |> expect |> not_ |> toCalled;
         });
-        test("if percent === 100, execute completeFunc", () => {
+        test("else if percent === 100, execute completeFunc", () => {
           let completeFunc = createEmptyStubWithJsObjSandbox(sandbox);
 
           _buildProgressComponent(80, completeFunc);

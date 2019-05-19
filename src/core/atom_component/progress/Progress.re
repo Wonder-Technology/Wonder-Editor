@@ -76,4 +76,11 @@ let make = (~percent: int, ~completeFunc, _children) => {
     |> StateEngineService.setState
     |> ignore;
   },
+  willUnmount: _self =>
+    ManageEventEngineService.offCustomGlobalEventByEventName(
+      ~eventName=ProgressUtils.getProgressCustomGlobalEventName(),
+      ~state=StateEngineService.unsafeGetState(),
+    )
+    |> StateEngineService.setState
+    |> ignore,
 };

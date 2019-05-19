@@ -1,3 +1,4 @@
+/* TODO add IntInput_test.re */
 type state = {
   inputValue: option(string),
   isDragStart: bool,
@@ -8,6 +9,8 @@ type action =
   | Change(option(string))
   | Blur
   | DragDrop;
+
+/* TODO refactor(duplicate) extract from IntInput and FloatInput */
 
 module Method = {
   let _change = event => {
