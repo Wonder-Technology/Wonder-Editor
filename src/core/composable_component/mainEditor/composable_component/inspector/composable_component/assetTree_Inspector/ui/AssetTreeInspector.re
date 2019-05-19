@@ -140,7 +140,6 @@ module Method = {
       onBlurFunc={_e => send(Blur)}
     />;
 
-  /* TODO test */
   let buildAssetBundleComponent = ((state, send), currentNodeId, nodeData) =>
     <AssetBundleInspector
       name={state.inputValue}
