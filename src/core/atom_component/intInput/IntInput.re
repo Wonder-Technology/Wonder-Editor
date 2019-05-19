@@ -1,32 +1,13 @@
+open InputType;
+
 /* TODO add IntInput_test.re */
 type state = {
   inputValue: option(string),
   isDragStart: bool,
 };
 
-type action =
-  | DragStart
-  | Change(option(string))
-  | Blur
-  | DragDrop;
-
-/* TODO refactor(duplicate) extract from IntInput and FloatInput */
-
 module Method = {
-  let _change = event => {
-    let inputVal =
-      ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
-
-    switch (inputVal) {
-    | "" => Change(Some(""))
-    | "-" => Change(Some("-"))
-    | value =>
-      switch ([%re {|/^-?(0|[1-9][0-9]*)$/|}] |> Js.Re.test(value)) {
-      | false => Change(None)
-      | true => Change(Some(value))
-      }
-    };
-  };
+  let getIntRegEx = () => [%re {|/^-?(0|[1-9][0-9]*)$/|}];
 
   let triggerOnChange = (value, onChangeFunc) =>
     switch (onChangeFunc) {
@@ -65,23 +46,17 @@ module Method = {
           triggerOnBlur(value, onBlurFunc);
         },
       );
-    | Some("0") =>
-      ReasonReactUtils.updateWithSideEffects(
-        {...state, inputValue: Some("0")}, _state =>
-        triggerOnBlur("0", onBlurFunc)
-      )
     | Some(value) =>
-      ReasonReactUtils.sideEffects(_state => triggerOnBlur(value, onBlurFunc))
+      ReasonReactUtils.sideEffects(_state =>
+        triggerOnBlur(value, onBlurFunc)
+      );
     };
 
   let computeNewValue = (currentValue, (movementX, movementY)) => {
     let factor = 10;
 
-
-     currentValue + movementX  - movementY ;
+    currentValue + movementX - movementY;
   };
-
-  let isDragStart = ({isDragStart}) => isDragStart;
 
   let handleDragStart = (event, send) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
@@ -92,7 +67,7 @@ module Method = {
   };
 
   let handleDragDrop = (event, (send, state), onDragDropFunc) =>
-    isDragStart(state) ?
+    state.isDragStart ?
       {
         Wonderjs.DomExtend.exitPointerLock();
 
@@ -100,14 +75,12 @@ module Method = {
           state.inputValue |> OptionService.unsafeGet |> int_of_string,
         );
 
-        send(DragDrop);
-
-        ();
+        send(DragDrop) |> ignore;
       } :
       ();
 
   let handleDragOver = (event, (send, state)) =>
-    isDragStart(state) ?
+    state.isDragStart ?
       {
         let e = ReactEventType.convertReactMouseEventToJsEvent(event);
 
@@ -121,9 +94,8 @@ module Method = {
               |> string_of_int,
             ),
           ),
-        );
-
-        ();
+        )
+        |> ignore;
       } :
       ();
 
@@ -159,7 +131,7 @@ module Method = {
           | Some(value) => value
           }
         }
-        onChange={_e => send(_change(_e))}
+        onChange={e => send(InputUtils.changeInput(getIntRegEx(), e))}
         onBlur={_e => send(Blur)}
       />
     </div>;

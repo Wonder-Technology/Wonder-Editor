@@ -8,8 +8,10 @@ open Sinon;
 
 open InputType;
 
+open IntInput;
+
 let _ =
-  describe("FloatInput", () => {
+  describe("IntInput", () => {
     let sandbox = getSandboxDefaultVal();
 
     beforeEach(() => {
@@ -18,34 +20,23 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test FloatInput component set float value", () => {
+    describe("test IntInput component set int value", () => {
       let _test = (value, onChangeValue, onBlurValue) => {
-        let state = FloatInputTool.buildState();
+        let state = {inputValue: Some(value), isDragStart: false};
 
         let onChangeFunc = SinonTool.createOneLengthStub(sandbox^);
         let onBlurFunc = SinonTool.createOneLengthStub(sandbox^);
 
         let state =
-          FloatInputTool.reducer(
-            ~onChangeFunc=Some(onChangeFunc),
-            ~onBlurFunc=Some(onBlurFunc),
-            ~canBeZero=false,
-            ~action=Change(Some(value)),
-            ~state,
-            (),
+          IntInput.reducer(
+            (onChangeFunc, onBlurFunc),
+            Change(Some(value)),
+            state,
           )
           |> ReactTool.getUpdateState;
 
         let state =
-          FloatInputTool.reducer(
-            ~onChangeFunc=Some(onChangeFunc),
-            ~onBlurFunc=Some(onBlurFunc),
-            ~canBeZero=false,
-            ~action=Blur,
-            ~state,
-            (),
-          )
-          |> ReactTool.getUpdateState;
+          IntInput.reducer((onChangeFunc, onBlurFunc), Blur, state);
 
         (
           onChangeFunc |> getCallCount,
@@ -56,11 +47,8 @@ let _ =
         |> expect == (1, 1, true, true);
       };
 
-      test("if float value's decimal digits <= 5, can set the whole value", () =>
-        _test("351687.54654", 351687.54654, 351687.54654)
-      );
-      test("else, still set the whole value", () =>
-        _test("351687.54654111", 351687.54654111, 351687.54654111)
+      test("can set any int value", () =>
+        _test("351687", 351687, 351687)
       );
     });
 
@@ -80,7 +68,7 @@ let _ =
           let send = SinonTool.createOneLengthStub(sandbox^);
           let event = _buildFakeEvent(~sandbox, ());
 
-          FloatInput.Method.handleDragStart(event, send);
+          IntInput.Method.handleDragStart(event, send);
 
           event##target##requestPointerLock |> expect |> toCalledOnce;
         });
@@ -89,15 +77,15 @@ let _ =
             let send = SinonTool.createOneLengthStub(sandbox^);
             let event = _buildFakeEvent(~sandbox, ());
 
-            FloatInput.Method.handleDragStart(event, send);
+            IntInput.Method.handleDragStart(event, send);
 
             send |> expect |> toCalledWith([|DragStart|]);
           });
           test("set state->isDragStart to true", () => {
-            let state = FloatInputTool.buildState();
+            let state = {inputValue: Some("0"), isDragStart: false};
 
             let state =
-              FloatInputTool.reducer(~action=DragStart, ~state, ())
+              IntInput.reducer((None, None), DragStart, state)
               |> ReactTool.getUpdateState;
 
             state.isDragStart |> expect == true;
@@ -109,9 +97,9 @@ let _ =
         test("if not drag start, do nothing", () => {
           let send = SinonTool.createOneLengthStub(sandbox^);
           let event = _buildFakeEvent(~sandbox, ());
-          let state = FloatInputTool.buildState(~isDragStart=false, ());
+          let state = {inputValue: Some("0"), isDragStart: false};
 
-          FloatInput.Method.handleDragOver(event, (send, state));
+          IntInput.Method.handleDragOver(event, (send, state));
 
           send |> expect |> not_ |> toCalled;
         });
@@ -120,25 +108,12 @@ let _ =
           let _getNewValue = send => send |> getCall(0) |> getArgs |> List.hd;
 
           let _testChangeValue =
-              (
-                ~movementX,
-                ~movementY,
-                ~targetValue,
-                ~inputValue="0.5",
-                ~canBeZero=true,
-                (),
-              ) => {
+              (~movementX, ~movementY, ~targetValue, ~inputValue="0", ()) => {
             let send = SinonTool.createOneLengthStub(sandbox^);
             let event = _buildFakeEvent(~sandbox, ~movementX, ~movementY, ());
-            let state =
-              FloatInputTool.buildState(
-                ~inputValue=Some(inputValue),
-                ~isDragStart=true,
-                ~canBeZero,
-                (),
-              );
+            let state = {inputValue: Some(inputValue), isDragStart: true};
 
-            FloatInput.Method.handleDragOver(event, (send, state));
+            IntInput.Method.handleDragOver(event, (send, state));
 
             _getNewValue(send) |> expect == Change(Some(targetValue));
           };
@@ -147,23 +122,18 @@ let _ =
             _testChangeValue(
               ~movementX=0,
               ~movementY=-2,
-              ~targetValue="0.52",
+              ~targetValue="2",
               (),
             )
           );
           test("if mouse move right, increase value", () =>
-            _testChangeValue(
-              ~movementX=2,
-              ~movementY=0,
-              ~targetValue="0.52",
-              (),
-            )
+            _testChangeValue(~movementX=2, ~movementY=0, ~targetValue="2", ())
           );
           test("if mouse move down, decrease value", () =>
             _testChangeValue(
               ~movementX=0,
               ~movementY=2,
-              ~targetValue="0.48",
+              ~targetValue="-2",
               (),
             )
           );
@@ -171,33 +141,20 @@ let _ =
             _testChangeValue(
               ~movementX=-2,
               ~movementY=0,
-              ~targetValue="0.48",
+              ~targetValue="-2",
               (),
             )
           );
 
-          describe("if change value to nearly zero", () => {
-            test("if canBeZero === false, use 0.001 instead", () =>
-              _testChangeValue(
-                ~movementX=-2,
-                ~movementY=0,
-                ~inputValue="0.0201",
-                ~targetValue="0.001",
-                ~canBeZero=false,
-                (),
-              )
-            );
-            test("else, remain changed value", () =>
-              _testChangeValue(
-                ~movementX=-2,
-                ~movementY=0,
-                ~inputValue="0.0201",
-                ~targetValue="0.0001",
-                ~canBeZero=true,
-                (),
-              )
-            );
-          });
+          test("if change value to nearly zero", () =>
+            _testChangeValue(
+              ~movementX=-2,
+              ~movementY=0,
+              ~inputValue="2",
+              ~targetValue="0",
+              (),
+            )
+          );
         });
       });
 
@@ -210,13 +167,13 @@ let _ =
               ~onDragDrop=SinonTool.createOneLengthStub(sandbox^),
               (),
             ) =>
-          FloatInput.Method.handleDragDrop(event, (send, state), onDragDrop);
+          IntInput.Method.handleDragDrop(event, (send, state), onDragDrop);
 
         describe("if not drag start", () =>
           test("not exec onDragDrop", () => {
             let onDragDrop = SinonTool.createOneLengthStub(sandbox^);
             let send = SinonTool.createOneLengthStub(sandbox^);
-            let state = FloatInputTool.buildState(~isDragStart=false, ());
+            let state = {inputValue: Some("0"), isDragStart: false};
 
             _handleDragDrop(~send, ~state, ~onDragDrop, ());
 
@@ -229,10 +186,10 @@ let _ =
 
           let _prepareDocument = [%raw
             sandbox => {|
- document.exitPointerLock = sandbox.stub();
+              document.exitPointerLock = sandbox.stub();
 
- return document;
-  |}
+              return document;
+            |}
           ];
 
           beforeEach(() => document := _prepareDocument(sandbox^));
@@ -240,7 +197,7 @@ let _ =
           test("exec onDragDrop", () => {
             let onDragDrop = SinonTool.createOneLengthStub(sandbox^);
             let send = SinonTool.createOneLengthStub(sandbox^);
-            let state = FloatInputTool.buildState(~isDragStart=true, ());
+            let state = {inputValue: Some("0"), isDragStart: true};
 
             _handleDragDrop(~send, ~state, ~onDragDrop, ());
 
@@ -248,7 +205,7 @@ let _ =
           });
           test("exit pointer lock", () => {
             let send = SinonTool.createOneLengthStub(sandbox^);
-            let state = FloatInputTool.buildState(~isDragStart=true, ());
+            let state = {inputValue: Some("0"), isDragStart: true};
 
             _handleDragDrop(~send, ~state, ());
 
@@ -256,7 +213,7 @@ let _ =
           });
           test("send DragDrop", () => {
             let send = SinonTool.createOneLengthStub(sandbox^);
-            let state = FloatInputTool.buildState(~isDragStart=true, ());
+            let state = {inputValue: Some("0"), isDragStart: true};
 
             _handleDragDrop(~send, ~state, ());
 
