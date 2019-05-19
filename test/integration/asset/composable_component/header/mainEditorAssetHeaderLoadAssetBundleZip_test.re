@@ -22,39 +22,8 @@ let _ =
       sandbox := createSandbox();
 
       MainEditorSceneTool.initState(~sandbox, ());
-      MainEditorSceneTool.initInspectorEngineState(
-        ~sandbox,
-        ~isInitJob=false,
-        ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-            ~initPipelines=
-              {|
-                [
-                 {
-                   "name": "default",
-                   "jobs": [
-                       {"name": "init_inspector_engine" }
-                   ]
-                 }
-               ]
-                |},
-            ~initJobs=
-              {|
-                [
-                   {"name": "init_inspector_engine" }
-                ]
-                |},
-            (),
-          ),
-        (),
-      );
 
-      StateInspectorEngineService.unsafeGetState()
-      |> MainUtils._handleInspectorEngineState
-      |> StateInspectorEngineService.setState
-      |> ignore;
-
-      CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
+      MainEditorAssetHeaderLoadTool.prepareInspectorCanvas(sandbox);
 
       MainEditorSceneTool.prepareScene(sandbox);
     });
@@ -62,32 +31,6 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test load asset bundle zip", () => {
-      let _buildImportFakeJsZipCreateFunc = [%bs.raw
-        (sandbox, zipData) => {|
-        var obj = {
-           loadAsync: sandbox.stub(),
-        };
-
-        var obj2 = {
-           forEach: function(handleFunc){
-             zipData.forEach((data) => {
-               handleFunc(data[0],data[1]);
-             })
-           },
-           async: function() {
-             return obj2
-           }
-        };
-
-        obj.loadAsync = (zip, a) => {
-          return new Promise((resolve, _) => resolve(obj2))
-        };
-
-        return obj;
-
-|}
-      ];
-
       let _buildFakeZipData = [%bs.raw
         (wab, sab) => {|
   return [
@@ -128,7 +71,7 @@ new Uint8Array(sab)
         let sab = ArrayBuffer.make(2);
 
         let obj =
-          _buildImportFakeJsZipCreateFunc(
+          MainEditorAssetHeaderLoadZipTool.buildImportFakeJsZipCreateFunc(
             sandbox^,
             _buildFakeZipData(wab, sab),
           );
