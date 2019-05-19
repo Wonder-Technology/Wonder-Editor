@@ -174,21 +174,26 @@ let _ =
         describe("test cache api", () =>
           describe("not cache", () => {
             describe("initAssetBundleArrayBufferCache", () =>
-              test("return empty stream", () => {
+              test("return empty promise", () => {
                 let initAssetBundleArrayBufferCache =
                   InitScriptJobTool.createRewritedScriptAPIJsObj()##initAssetBundleArrayBufferCache;
 
-                initAssetBundleArrayBufferCache(.) |> expect == Most.empty();
+                initAssetBundleArrayBufferCache(.)
+                |> expect
+                == Js.Promise.make((~resolve, ~reject) =>
+                     (Wonderjs.PromiseType.convertResolveToUnit(resolve))(.)
+                   );
               })
             );
 
             describe("isAssetBundleArrayBufferCached", () =>
-              test("return Most.just(false)", () => {
+              test("return resolve(false)", () => {
                 let isAssetBundleArrayBufferCached =
                   InitScriptJobTool.createRewritedScriptAPIJsObj()##isAssetBundleArrayBufferCached;
 
                 isAssetBundleArrayBufferCached(.)
-                |> expect == Most.just(false);
+                |> expect
+                == Js.Promise.make((~resolve, ~reject) => resolve(. false));
               })
             );
           })
