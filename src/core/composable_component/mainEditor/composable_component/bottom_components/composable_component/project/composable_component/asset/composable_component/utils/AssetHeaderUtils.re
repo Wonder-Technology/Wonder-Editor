@@ -122,6 +122,23 @@ let _handleAssetWDBType =
        (editorState, engineState) |> resolve;
      });
 
+let _getAssetBundleTypeByExtname = extname =>
+  switch (extname) {
+  | ".rab" => RAB
+  | ".sab" => SAB
+  | ".wab" => WAB
+  | extName =>
+    WonderLog.Log.fatal(
+      WonderLog.Log.buildFatalMessage(
+        ~title="_getAssetBundleTypeByExtname",
+        ~description={j|unknown extName: $extName|j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j||j},
+      ),
+    )
+  };
+
 let _handleAssetAssetBundleType =
     (
       (fileName, assetBundleArrayBuffer),
@@ -142,21 +159,9 @@ let _handleAssetAssetBundleType =
             ),
           ~assetBundle=assetBundleArrayBuffer,
           ~type_=
-            switch (FileNameService.getExtName(fileName)) {
-            | ".rab" => RAB
-            | ".sab" => SAB
-            | ".wab" => WAB
-            | extName =>
-              WonderLog.Log.fatal(
-                WonderLog.Log.buildFatalMessage(
-                  ~title="_handleAssetAssetBundleType",
-                  ~description={j|unknown extName: $extName|j},
-                  ~reason="",
-                  ~solution={j||j},
-                  ~params={j||j},
-                ),
-              )
-            },
+            _getAssetBundleTypeByExtname(
+              FileNameService.getExtName(fileName),
+            ),
         ),
         editorState,
       );
@@ -192,6 +197,174 @@ let _handleGLTFZipType =
        )
      );
 
+let _getZipRelativeFolderPath = zipRelativePath => {
+  let arr = zipRelativePath |> Js.String.split("/");
+
+  arr |> Js.Array.length > 0 ?
+    arr
+    |> Js.Array.slice(~start=0, ~end_=(arr |> Js.Array.length) - 1)
+    |> Js.Array.joinWith("/") :
+    "";
+};
+
+let _buildPathInAssetTree =
+    (
+      selectedFolderNodeInAssetTree,
+      zipRelativePath,
+      (editorState, engineState),
+    ) => {
+  let zipRelativeFolderPath = _getZipRelativeFolderPath(zipRelativePath);
+
+  PathTreeAssetLogicService.getNodePath(
+    selectedFolderNodeInAssetTree,
+    (editorState, engineState),
+  )
+  ++ (zipRelativeFolderPath === "" ? "" : "/" ++ zipRelativeFolderPath);
+};
+
+let _handleAssetBundleZipType =
+    (
+      (fileName, jsZipBlob),
+      (wdbNodeId, selectedFolderNodeInAssetTree),
+      createJsZipFunc,
+      (editorState, engineState),
+    ) =>
+  WonderBsJszip.(
+    createJsZipFunc()->(Zip.loadAsync(`blob(jsZipBlob)))
+    |> WonderBsMost.Most.fromPromise
+    |> WonderBsMost.Most.flatMap(zip => {
+         let streamArr = [||];
+
+         editorState |> StateEditorService.setState |> ignore;
+         engineState |> StateEngineService.setState |> ignore;
+
+         zip
+         ->(
+             Zip.forEach((relativePath, zipEntry) => {
+               let extname = FileNameService.getExtName(relativePath);
+
+               switch (extname) {
+               | "" => ()
+               | ".wab"
+               | ".sab"
+               | ".rab" =>
+                 streamArr
+                 |> ArrayService.push(
+                      zipEntry->(ZipObject.asyncUint8())
+                      |> Obj.magic
+                      |> then_(content => {
+                           let editorState = StateEditorService.getState();
+
+                           let assetBundle =
+                             content |> Js.Typed_array.Uint8Array.buffer;
+
+                           let (editorState, assetNodeId) =
+                             IdAssetEditorService.generateNodeId(editorState);
+
+                           let (editorState, parentFolderNode) =
+                             OperateTreeAssetLogicService.addFolderNodesToTreeByPath(
+                               _buildPathInAssetTree(
+                                 selectedFolderNodeInAssetTree,
+                                 relativePath,
+                                 (editorState, engineState),
+                               ),
+                               (editorState, engineState),
+                             );
+
+                           let editorState =
+                             AssetBundleNodeAssetEditorService.addAssetBundleNodeToAssetTree(
+                               parentFolderNode,
+                               AssetBundleNodeAssetService.buildNode(
+                                 ~nodeId=assetNodeId,
+                                 ~name=
+                                   OperateTreeAssetLogicService.getUniqueNodeName(
+                                     FileNameService.getBaseName(
+                                       relativePath,
+                                     ),
+                                     parentFolderNode,
+                                     engineState,
+                                   ),
+                                 ~assetBundle,
+                                 ~type_=_getAssetBundleTypeByExtname(extname),
+                               ),
+                               editorState,
+                             );
+
+                           editorState |> StateEditorService.setState |> ignore;
+
+                           resolve();
+                         })
+                      |> WonderBsMost.Most.fromPromise,
+                    )
+                 |> ignore
+               | extname =>
+                 WonderLog.Log.fatal(
+                   WonderLog.Log.buildFatalMessage(
+                     ~description={j|_handleAssetBundleZipType|j},
+                     ~reason="unknown extname: $extname",
+                     ~solution={j||j},
+                     ~params={j||j},
+                   ),
+                 )
+               };
+             })
+           );
+
+         Wonderjs.MostUtils.concatArray(streamArr);
+       })
+    |> WonderBsMost.Most.drain
+    |> then_(_ =>
+         resolve((
+           StateEditorService.getState(),
+           StateEngineService.unsafeGetState(),
+         ))
+       )
+  );
+
+let _handleZipType =
+    (
+      (fileName, jsZipBlob),
+      (wdbNodeId, selectedFolderNodeInAssetTree),
+      createJsZipFunc,
+      (editorState, engineState),
+    ) =>
+  WonderBsJszip.(
+    createJsZipFunc()->(Zip.loadAsync(`blob(jsZipBlob)))
+    |> then_(zip => {
+         let isGLTFZip = ref(false);
+         let isAssetBundleZip = ref(false);
+
+         zip
+         ->(
+             Zip.forEach((relativePath, zipEntry) =>
+               switch (FileNameService.getExtName(relativePath)) {
+               | ".gltf" => isGLTFZip := true
+               | ".wab"
+               | ".sab"
+               | ".rab" => isAssetBundleZip := true
+               | _ => ()
+               }
+             )
+           );
+
+         isGLTFZip^ ?
+           _handleGLTFZipType(
+             (fileName, jsZipBlob),
+             (wdbNodeId, selectedFolderNodeInAssetTree),
+             createJsZipFunc,
+             (editorState, engineState),
+           ) :
+           isAssetBundleZip^ ?
+             _handleAssetBundleZipType(
+               (fileName, jsZipBlob),
+               (wdbNodeId, selectedFolderNodeInAssetTree),
+               createJsZipFunc,
+               (editorState, engineState),
+             ) :
+             resolve((editorState, engineState));
+       })
+  );
+
 let _handleSpecificFuncByTypeAsync =
     (
       type_,
@@ -200,7 +373,7 @@ let _handleSpecificFuncByTypeAsync =
         handleWDBFunc,
         handleAssetBundleFunc,
         handleGLBFunc,
-        handleGLTFZipFuncc,
+        handleZipFunc,
       ),
     ) =>
   switch (type_) {
@@ -208,7 +381,7 @@ let _handleSpecificFuncByTypeAsync =
   | LoadWDB => handleWDBFunc()
   | LoadAssetBundle => handleAssetBundleFunc()
   | LoadGLB => handleGLBFunc()
-  | LoadGLTFZip => handleGLTFZipFuncc()
+  | LoadZip => handleZipFunc()
   | LoadError =>
     make((~resolve, ~reject) => reject(. LoadException("load asset error")))
   };
@@ -290,7 +463,7 @@ let handleFileByTypeAsync = (fileResult: nodeResultType, createJsZipFunc) => {
           (editorState, engineState),
         ),
       () =>
-        _handleGLTFZipType(
+        _handleZipType(
           (
             fileResult.name,
             fileResult.result |> FileReader.convertResultToJsZipBlob,

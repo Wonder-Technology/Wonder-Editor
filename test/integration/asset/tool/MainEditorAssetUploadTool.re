@@ -78,6 +78,23 @@ let loadOneGLTFZip =
   |> then_(() => uploadedWDBNodeId |> resolve);
 };
 
+let loadOneAssetBundleZip =
+    (
+      ~sandbox,
+      ~createJsZipFunc,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~fileName="AssetBundleZip",
+      (),
+    ) => {
+  AssetHeaderFileLoadEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+    (uiState, dispatchFunc),
+    createJsZipFunc,
+    BaseEventTool.buildAssetBundleZipFileEvent(fileName),
+  )
+  |> then_(() => () |> resolve);
+};
+
 let loadOneAssetBundle =
     (
       ~uiState=TestTool.buildEmptyAppState(),

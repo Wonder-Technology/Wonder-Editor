@@ -50,6 +50,20 @@ let buildGLBFileEvent = (fileName, arrayBuffer) =>
   }
   |> Obj.magic;
 
+let buildAssetBundleZipFileEvent = fileName =>
+  {
+    "target": {
+      "files": {
+        "0": {
+          name: fileName ++ ".zip",
+          file: Obj.magic(-1),
+        },
+      },
+    },
+    "preventDefault": () => (),
+  }
+  |> Obj.magic;
+
 let buildGLTFZipFileEvent = fileName =>
   {
     "target": {

@@ -3,6 +3,7 @@ exception LoadException(string);
 type uploadFileType =
   | LoadWDB
   | LoadGLB
+  | LoadZip
   | LoadGLTFZip
   | LoadTexture
   | LoadAssetBundle

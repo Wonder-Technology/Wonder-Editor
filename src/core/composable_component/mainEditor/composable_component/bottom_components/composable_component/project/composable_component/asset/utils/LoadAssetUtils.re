@@ -14,7 +14,7 @@ let getUploadAssetType = name => {
   | ".rab"
   | ".sab"
   | ".wab" => LoadAssetBundle
-  | ".zip" => LoadGLTFZip
+  | ".zip" => LoadZip
   | _ =>
     ConsoleUtils.error(
       LogUtils.buildErrorMessage(
@@ -74,7 +74,7 @@ let _handleAssetSpecificFuncByTypeSync =
         handleWDBFunc,
         handleAssetBundleFunc,
         handleGLBFunc,
-        handleGLTFZipFunc,
+        handleZipFunc,
       ),
     ) =>
   switch (type_) {
@@ -82,7 +82,7 @@ let _handleAssetSpecificFuncByTypeSync =
   | LoadWDB => handleWDBFunc()
   | LoadAssetBundle => handleAssetBundleFunc()
   | LoadGLB => handleGLBFunc()
-  | LoadGLTFZip => handleGLTFZipFunc()
+  | LoadZip => handleZipFunc()
   | LoadError => ()
   };
 
