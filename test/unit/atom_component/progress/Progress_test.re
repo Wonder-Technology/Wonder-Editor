@@ -30,6 +30,7 @@ let _ =
         _buildProgressComponent(50, (.) => ())
         |> ReactTestTool.createSnapshotAndMatch
       );
+
       describe("test execute completeFunc", () => {
         test("if percent < 100, not execute completeFunc", () => {
           let completeFunc = createEmptyStubWithJsObjSandbox(sandbox);
@@ -41,7 +42,7 @@ let _ =
           let (engineState, _) =
             ManageEventEngineService.triggerCustomGlobalEvent(
               CreateCustomEventEngineService.create(
-                ProgressUtils.getProgressCustomGlobalEventName(),
+                ProgressUtils.getProgressChangePercentCustomGlobalEventName(),
                 Some(90 |> EventType.convertIntToUserData),
               ),
               engineState,
@@ -61,7 +62,7 @@ let _ =
           let (engineState, _) =
             ManageEventEngineService.triggerCustomGlobalEvent(
               CreateCustomEventEngineService.create(
-                ProgressUtils.getProgressCustomGlobalEventName(),
+                ProgressUtils.getProgressChangePercentCustomGlobalEventName(),
                 Some(100 |> EventType.convertIntToUserData),
               ),
               engineState,
@@ -72,5 +73,30 @@ let _ =
           completeFunc |> expect |> toCalledOnce;
         });
       });
+
+      describe("test off custom global event", () =>
+        test("off custom global event in willUnmount", () => {
+          let completeFunc = createEmptyStubWithJsObjSandbox(sandbox);
+
+          _buildProgressComponent(80, completeFunc);
+
+          Progress.Method.willUnmount();
+
+          let engineState = StateEngineService.unsafeGetState();
+
+          let (engineState, _) =
+            ManageEventEngineService.triggerCustomGlobalEvent(
+              CreateCustomEventEngineService.create(
+                ProgressUtils.getProgressChangePercentCustomGlobalEventName(),
+                Some(100 |> EventType.convertIntToUserData),
+              ),
+              engineState,
+            );
+
+          engineState |> StateEngineService.setState |> ignore;
+
+          completeFunc |> expect |> not_ |> toCalledOnce;
+        })
+      );
     });
   });

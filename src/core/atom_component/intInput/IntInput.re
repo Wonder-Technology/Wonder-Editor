@@ -1,6 +1,5 @@
 open InputType;
 
-/* TODO add IntInput_test.re */
 type state = {
   inputValue: option(string),
   isDragStart: bool,
@@ -9,6 +8,7 @@ type state = {
 module Method = {
   let getIntRegEx = () => [%re {|/^-?(0|[1-9][0-9]*)$/|}];
 
+  /* TODO duplicate */
   let triggerOnChange = (value, onChangeFunc) =>
     switch (onChangeFunc) {
     | None => ()

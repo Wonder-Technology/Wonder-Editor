@@ -12,4 +12,6 @@ let onCustomGlobalEvent = ManageEventMainService.onCustomGlobalEvent;
 
 let offCustomGlobalEventByEventName = ManageEventMainService.offCustomGlobalEventByEventName;
 
+let offCustomGlobalEventByHandleFunc = ManageEventMainService.offCustomGlobalEventByHandleFunc;
+
 let unsubscribeDomEventStream = ManageEventMainService.unsubscribeDomEventStream;

@@ -1,1 +1,1 @@
-let getProgressCustomGlobalEventName = () => "wd_editor_progress";
+let getProgressChangePercentCustomGlobalEventName = () => "wd_editor_progress_change_percent";
