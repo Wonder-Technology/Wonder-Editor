@@ -193,7 +193,7 @@ let fastConcat = (arr1, arr2) =>
        arr1,
      );
 
-let fastConcatArrays = arrayArrays => {
+let _fastConcatArrays = (firstArr, remainArr) => {
   WonderLog.Contract.requireCheck(
     () =>
       WonderLog.(
@@ -205,7 +205,7 @@ let fastConcatArrays = arrayArrays => {
                 ~actual={j|not|j},
               ),
               () =>
-              Js.Array.length(arrayArrays) >= 1
+              Js.Array.length(remainArr) >= 0
             )
           )
         )
@@ -213,13 +213,24 @@ let fastConcatArrays = arrayArrays => {
     StateEditorService.getStateIsDebug(),
   );
 
-  arrayArrays
-  |> Js.Array.sliceFrom(1)
+  remainArr
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. arr1, arr) => fastConcat(arr1, arr),
-       Array.unsafe_get(arrayArrays, 0),
+       firstArr,
      );
 };
+
+let fastMutableConcatArrays = arrayArrays =>
+  _fastConcatArrays(
+    unsafeGetFirst(arrayArrays),
+    arrayArrays |> Js.Array.sliceFrom(1),
+  );
+
+let fastImmutableConcatArrays = arrayArrays =>
+  _fastConcatArrays(
+    unsafeGetFirst(arrayArrays) |> Js.Array.copy,
+    arrayArrays |> Js.Array.sliceFrom(1),
+  );
 
 let isEqual = (arr1, arr2) =>
   arr1 |> Js.Array.sortInPlace == (arr2 |> Js.Array.sortInPlace);

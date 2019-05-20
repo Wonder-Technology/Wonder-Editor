@@ -15,14 +15,7 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
 
-      LoadTool.buildFakeAtob();
-      LoadTool.buildFakeBtoa();
-      LoadTool.buildFakeTextEncoder();
-      LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
-      LoadTool.buildFakeURL(sandbox^);
-      LoadTool.buildFakeLoadImage();
-      MainEditorAssetTool.buildFakeFileReader();
-      MainEditorAssetTool.buildFakeImage();
+      ImportPackageTool.prepareLoad(sandbox);
 
       MainEditorSceneTool.initStateWithJob(
         ~sandbox,

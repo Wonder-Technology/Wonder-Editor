@@ -9,7 +9,8 @@ type updateComponentType =
   | Project
   | Console
   | SceneTree
-  | Controller;
+  | Controller
+  | SelectTree;
 
 type updateComponentTypeArr = array(updateComponentType);
 

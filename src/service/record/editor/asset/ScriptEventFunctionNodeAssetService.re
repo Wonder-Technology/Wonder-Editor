@@ -34,3 +34,5 @@ let isScriptEventFunctionNode = node =>
   | ScriptEventFunctionNode(_, _) => true
   | _ => false
   };
+
+let getEventFunctionData = node => getNodeData(node).eventFunctionData;

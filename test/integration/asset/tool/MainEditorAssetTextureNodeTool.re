@@ -13,6 +13,14 @@ let getTextureComponent = (nodeId, editorState) => {
   textureComponent;
 };
 
+let getTextureImageDataIndex = (nodeId, editorState) => {
+  let {imageDataIndex}: textureNodeData =
+    OperateTreeAssetEditorService.unsafeFindNodeById(nodeId, editorState)
+    |> TextureNodeAssetService.getNodeData;
+
+  imageDataIndex;
+};
+
 let getTextureName =
     (
       ~nodeId,

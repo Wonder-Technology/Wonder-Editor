@@ -67,7 +67,15 @@ let render = (renderDataArr, gl, engineState) =>
               shaderIndex,
               materialIndex,
             )
-         |> RenderJobEngineService.draw(gl, meshRendererIndex, geometryIndex);
+         |> RenderJobEngineService.draw(
+              gl,
+              MeshRendererEngineService.getGlDrawMode(
+                gl,
+                meshRendererIndex,
+                engineState,
+              ),
+              geometryIndex,
+            );
        },
        engineState,
      );

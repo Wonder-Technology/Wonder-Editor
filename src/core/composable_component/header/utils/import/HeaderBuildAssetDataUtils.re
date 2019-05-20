@@ -223,7 +223,7 @@ let buildTextureData =
        ),
      );
 
-let _buildMaterialEditorData =
+let _addMaterialToAssetTree =
     (
       (material, path, type_),
       (snapshot, imageDataIndexMap),
@@ -270,7 +270,7 @@ let _buildBasicMaterialData =
            |> BasicMaterialEngineService.setColor(color, material);
 
          let editorState =
-           _buildMaterialEditorData(
+           _addMaterialToAssetTree(
              (material, path, MaterialDataAssetType.BasicMaterial),
              (snapshot, imageDataIndexMap),
              (editorState, engineState),
@@ -337,7 +337,7 @@ let _buildLightMaterialData =
              };
 
          let editorState =
-           _buildMaterialEditorData(
+           _addMaterialToAssetTree(
              (material, path, MaterialDataAssetType.LightMaterial),
              (snapshot, imageDataIndexMap),
              (editorState, engineState),
@@ -384,8 +384,8 @@ let buildMaterialData =
   );
 };
 
-let _buildScriptEventFunctionEditorData =
-    (eventFunctionData, path, name, (editorState, engineState)) => {
+let _addScriptEventFunctionToAssetTree =
+    (eventFunctionData, path, name, engineState, editorState) => {
   let (editorState, assetNodeId) =
     IdAssetEditorService.generateNodeId(editorState);
 
@@ -434,12 +434,13 @@ let _convertEventFunctionDataStrToRecord =
 let buildScriptEventFunctionData =
     (
       {scriptEventFunctions}: ExportAssetType.assets,
-      (editorState, engineState),
+      engineState,
+      editorState,
     ) =>
   scriptEventFunctions
   |> WonderCommonlib.ArrayService.reduceOneParami(
        (.
-         (scriptEventFunctionEntriesMap, (editorState, engineState)),
+         (scriptEventFunctionEntriesMap, editorState),
          {name, path, eventFunctionDataStr}: ExportAssetType.scriptEventFunction,
          scriptEventFunctionIndex,
        ) => {
@@ -447,11 +448,12 @@ let buildScriptEventFunctionData =
            _convertEventFunctionDataStrToRecord(eventFunctionDataStr);
 
          let editorState =
-           _buildScriptEventFunctionEditorData(
+           _addScriptEventFunctionToAssetTree(
              eventFunctionData,
              path,
              name,
-             (editorState, engineState),
+             engineState,
+             editorState,
            );
 
          (
@@ -460,17 +462,14 @@ let buildScriptEventFunctionData =
                 scriptEventFunctionIndex,
                 (name, eventFunctionData),
               ),
-           (editorState, engineState),
+           editorState,
          );
        },
-       (
-         WonderCommonlib.ImmutableSparseMapService.createEmpty(),
-         (editorState, engineState),
-       ),
+       (WonderCommonlib.ImmutableSparseMapService.createEmpty(), editorState),
      );
 
-let _buildScriptAttributeEditorData =
-    (attribute, path, name, (editorState, engineState)) => {
+let _addScriptAttributeToAssetTree =
+    (attribute, path, name, engineState, editorState) => {
   let (editorState, assetNodeId) =
     IdAssetEditorService.generateNodeId(editorState);
 
@@ -496,22 +495,23 @@ let _convertAttributeStrToRecord =
   attributeMapStr |> Js.Json.parseExn |> Obj.magic;
 
 let buildScriptAttributeData =
-    ({scriptAttributes}: ExportAssetType.assets, (editorState, engineState)) =>
+    ({scriptAttributes}: ExportAssetType.assets, engineState, editorState) =>
   scriptAttributes
   |> WonderCommonlib.ArrayService.reduceOneParami(
        (.
-         (scriptAttributeEntriesMap, (editorState, engineState)),
+         (scriptAttributeEntriesMap, editorState),
          {name, path, attributeStr}: ExportAssetType.scriptAttribute,
          scriptAttributeIndex,
        ) => {
          let attribute = _convertAttributeStrToRecord(attributeStr);
 
          let editorState =
-           _buildScriptAttributeEditorData(
+           _addScriptAttributeToAssetTree(
              attribute,
              path,
              name,
-             (editorState, engineState),
+             engineState,
+             editorState,
            );
 
          (
@@ -520,13 +520,63 @@ let buildScriptAttributeData =
                 scriptAttributeIndex,
                 (name, attribute),
               ),
-           (editorState, engineState),
+           editorState,
          );
        },
-       (
-         WonderCommonlib.ImmutableSparseMapService.createEmpty(),
-         (editorState, engineState),
+       (WonderCommonlib.ImmutableSparseMapService.createEmpty(), editorState),
+     );
+
+let _addAssetBundleToAssetTree =
+    ((name, path, type_, assetBundle), engineState, editorState) => {
+  let (editorState, assetNodeId) =
+    IdAssetEditorService.generateNodeId(editorState);
+
+  let (editorState, parentFolderNode) =
+    OperateTreeAssetLogicService.addFolderNodesToTreeByPath(
+      path,
+      (editorState, engineState),
+    );
+
+  editorState
+  |> AssetBundleNodeAssetEditorService.addAssetBundleNodeToAssetTree(
+       parentFolderNode,
+       AssetBundleNodeAssetService.buildNode(
+         ~nodeId=assetNodeId,
+         ~name,
+         ~type_,
+         ~assetBundle,
        ),
+     );
+};
+
+let buildAssetBundleData =
+    (
+      {assetBundles, bufferViews}: ExportAssetType.assets,
+      buffer,
+      engineState,
+      editorState,
+    ) =>
+  assetBundles
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (.
+         editorState,
+         {name, path, type_, assetBundleBufferView}: ExportAssetType.assetBundle,
+       ) => {
+         let assetBundle =
+           _getArrayBuffer(buffer, assetBundleBufferView, bufferViews);
+
+         _addAssetBundleToAssetTree(
+           (
+             name,
+             path,
+             type_ |> NodeAssetType.convertIntToAssetBundleType,
+             assetBundle,
+           ),
+           engineState,
+           editorState,
+         );
+       },
+       editorState,
      );
 
 /* let addExtractedMateriialAssetDataToMaterialData =

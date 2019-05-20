@@ -11,7 +11,10 @@ let getUploadAssetType = name => {
   | ".jpg"
   | ".jpeg"
   | ".png" => LoadTexture
-  | ".zip" => LoadGLTFZip
+  | ".rab"
+  | ".sab"
+  | ".wab" => LoadAssetBundle
+  | ".zip" => LoadZip
   | _ =>
     ConsoleUtils.error(
       LogUtils.buildErrorMessage(
@@ -66,13 +69,20 @@ let _handlePackageSpecificFuncByTypeSync = (type_, handleWPKFunc) =>
 let _handleAssetSpecificFuncByTypeSync =
     (
       type_,
-      (handleTextureFunc, handleWDBFunc, handleGLBFunc, handleGLTFZipFunc),
+      (
+        handleTextureFunc,
+        handleWDBFunc,
+        handleAssetBundleFunc,
+        handleGLBFunc,
+        handleZipFunc,
+      ),
     ) =>
   switch (type_) {
   | LoadTexture => handleTextureFunc()
   | LoadWDB => handleWDBFunc()
+  | LoadAssetBundle => handleAssetBundleFunc()
   | LoadGLB => handleGLBFunc()
-  | LoadGLTFZip => handleGLTFZipFunc()
+  | LoadZip => handleZipFunc()
   | LoadError => ()
   };
 
@@ -87,6 +97,7 @@ let readAssetByTypeSync = (reader, fileInfo: fileInfoType) =>
     getUploadAssetType(fileInfo.name),
     (
       () => FileReader.readAsDataURL(reader, fileInfo.file),
+      () => FileReader.readAsArrayBuffer(reader, fileInfo.file),
       () => FileReader.readAsArrayBuffer(reader, fileInfo.file),
       () => FileReader.readAsArrayBuffer(reader, fileInfo.file),
       () => FileReader.readAsArrayBuffer(reader, fileInfo.file),

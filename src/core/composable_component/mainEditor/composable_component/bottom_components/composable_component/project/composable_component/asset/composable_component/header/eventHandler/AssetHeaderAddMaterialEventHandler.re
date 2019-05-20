@@ -42,7 +42,8 @@ module CustomEventHandler = {
       |> ImageDataMapAssetEditorService.setData(
            newImageDataIndex,
            ImageDataMapAssetService.buildData(
-             ~base64=None,
+             ~base64=
+               OperateMaterialLogicService.getDefaultSnapshotBase64()->Some,
              ~uint8Array=None,
              ~blobObjectURL=None,
              ~name=materialName,

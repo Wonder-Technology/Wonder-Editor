@@ -45,11 +45,9 @@ module Method = {
       "https://github.com/Wonder-Technology/Wonder.js",
     ),
   |];
-
-  let buildHelpComponent = (state, send, uiState, dispatchFunc) => {};
 };
 
-let component = ReasonReact.reducerComponent("HeaderPublish");
+let component = ReasonReact.reducerComponent("HeaderHelp");
 
 let reducer = (action, state) =>
   switch (action) {

@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`assetBundle inspector show type test type===RAB 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <article
+      className="inspector-asset-wdb"
+    >
+      <h1>
+        AssetBundle
+      </h1>
+      <hr />
+      <div
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+        >
+          <span
+            className=""
+          >
+            Name:
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="A"
+          />
+        </div>
+      </div>
+      <div
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+        >
+          <span
+            className=""
+          >
+            Type:
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <span
+            className=""
+          >
+            RAB
+          </span>
+        </div>
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`assetBundle inspector show type test type===WAB 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <article
+      className="inspector-asset-wdb"
+    >
+      <h1>
+        AssetBundle
+      </h1>
+      <hr />
+      <div
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+        >
+          <span
+            className=""
+          >
+            Name:
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="A"
+          />
+        </div>
+      </div>
+      <div
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+        >
+          <span
+            className=""
+          >
+            Type:
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <span
+            className=""
+          >
+            WAB
+          </span>
+        </div>
+      </div>
+    </article>
+  </article>
+</article>
+`;

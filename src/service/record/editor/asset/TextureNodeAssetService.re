@@ -41,3 +41,9 @@ let getTextureComponent = node => {
 
   textureComponent;
 };
+
+let getImageDataIndex = node => {
+  let {imageDataIndex}: textureNodeData = getNodeData(node);
+
+  imageDataIndex;
+};

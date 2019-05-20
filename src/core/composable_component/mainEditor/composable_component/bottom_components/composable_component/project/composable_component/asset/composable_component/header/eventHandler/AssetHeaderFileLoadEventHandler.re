@@ -5,7 +5,11 @@ module CustomEventHandler = {
   type return = Js.Promise.t(unit);
 
   let handleSelfLogic = ((uiState, dispatchFunc), createJsZipFunc, event) =>
-    AssetHeaderUtils.fileLoad((uiState, dispatchFunc), createJsZipFunc, event)
+    AssetHeaderUtils.fileLoad(
+      (uiState, dispatchFunc),
+      createJsZipFunc,
+      event,
+    )
     |> Js.Promise.catch(e => {
          AllHistoryService.handleUndo(uiState, dispatchFunc);
 

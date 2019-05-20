@@ -62,7 +62,8 @@
 </head>
 
 <body>
-    <h1 id="detect" style="display: none">your browser not support sharedArrayBuffer or offscreenCanvas, can't use worker.</h1>
+    <h1 id="detect" style="display: none">your browser not support sharedArrayBuffer or offscreenCanvas, can't use
+        worker.</h1>
 
     <div id="stream-loading">
         <img id="logo" class="loading-img" src="./res/loading/logo.png" />
@@ -84,92 +85,27 @@
 
 
 
+    <script src="./js/commonForNoWorkerAndWorker.js"></script>
 
 
     <script src="./wd.js"></script>
     <script src="./wd.render.worker.js"></script>
 
     <script>
-        var AssetTool = (function () {
-            function computeLoadingPercent(
-                loadedIMGUIByteLength,
-                totalByteLength
-            ) {
-                return loadedIMGUIByteLength >= totalByteLength ? 100 : Math.ceil(loadedIMGUIByteLength / totalByteLength * 100);
-            }
-
-            function getStreamLoadTextDom() {
-                return document.querySelector("#stream-loading #text");
-            }
-
-            function getWholeLoadTextDom() {
-                return document.querySelector("#whole-loading #text");
-            }
-
-            return {
-                isSupportStreamLoad: function () {
-                    return typeof window.ReadableStream !== "undefined";
-                },
-                showStreamLoading: function () {
-                    var windowWidth = window.innerWidth;
-                    var windowHeight = window.innerHeight;
+        function _initScriptAPIJob(stateData) {
+            var state = initScriptAPIJob(
+                wd.getStateFromData(stateData)
+            );
 
 
-                    document.querySelector("#stream-loading").style.display = "block";
-                    document.querySelector("#whole-loading").style.display = "none";
+            wd.setState(state);
+        }
 
+        function _addJobs(state) {
+            var state = wd.addWorkerMainInitJob(["init_script_api", "init_script"], 0, _initScriptAPIJob, state);
 
-
-                    var dom = document.querySelector("#stream-loading");
-
-                    var totalWidth = 250;
-                    var totalHeight = 360 - 10;
-
-                    var top = (windowHeight - totalHeight) / 2;
-                    var left = (windowWidth - totalWidth) / 2;
-
-
-                    dom.style.cssText = 'display:block;position:absolute;top:' + top + 'px;left:' + left + 'px;color:bisque; text-align: center;';
-                },
-                showWholeLoading: function () {
-                    document.querySelector("#stream-loading").style.display = "none";
-                    document.querySelector("#whole-loading").style.display = "flex";
-                },
-                showOrCreateLoadingInfo: function (
-                    loadedIMGUIByteLength,
-                    totalByteLength,
-                ) {
-                    var loadingPercentStr = String(computeLoadingPercent(
-
-                        loadedIMGUIByteLength,
-                        totalByteLength
-                    )) + '%';
-
-                    getStreamLoadTextDom().innerHTML = loadingPercentStr;
-                    getWholeLoadTextDom().innerHTML = loadingPercentStr;
-
-                },
-                removeLoadingInfo: function () {
-                    document.querySelector("#stream-loading").remove();
-                    document.querySelector("#whole-loading").remove();
-                },
-                loadConfig: function (jsonPathArr, nextFunc, completeFunc) {
-                    return wd.loadConfig(jsonPathArr).forEach(function (state) {
-                        if (!!nextFunc) {
-                            nextFunc(state)
-                        }
-                    }).then(function () {
-                        if (!!completeFunc) {
-                            return completeFunc()
-                        }
-                    })
-                },
-                loadStreamWDB: function (wdbPath, handleWhenLoadingFunc, handleBeforeStartLoopFunc, handleWhenDoneFunc, handleWhenLoadWholeWDBFunc, state) {
-                    return wd.loadStreamWDB(wdbPath, handleWhenLoadingFunc, handleBeforeStartLoopFunc, handleWhenDoneFunc, handleWhenLoadWholeWDBFunc, state).drain()
-                }
-            }
-        })()
-
+            return state;
+        }
 
         window.onload = function () {
             if (wd.isSupportRenderWorkerAndSharedArrayBuffer() === false) {
@@ -192,6 +128,10 @@
             }
 
             return AssetTool.loadConfig(["./config/setting.json", "./config/"], null, function () {
+                var state = wd.unsafeGetState();
+
+                var state = _addJobs(state);
+
                 return AssetTool.loadStreamWDB("./Scene.wdb",
                     function (totalLoadedByteLength, contentLength, wdbPath) {
                         AssetTool.showOrCreateLoadingInfo(
@@ -205,13 +145,17 @@
                     function (state, gameObject) {
                         AssetTool.removeLoadingInfo();
 
+                        var state = wd.addSceneChild(gameObject, state);
+
                         return state;
                     },
                     function (state, _, gameObject) {
                         AssetTool.removeLoadingInfo();
 
+                        var state = wd.addSceneChild(gameObject, state);
+
                         wd.startDirector(state);
-                    }, wd.unsafeGetState());
+                    }, state);
             });
         }
     </script>

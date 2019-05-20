@@ -21,39 +21,7 @@ let _ =
 
       MainEditorSceneTool.initState(~sandbox, ());
 
-      MainEditorSceneTool.initInspectorEngineState(
-        ~sandbox,
-        ~isInitJob=false,
-        ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-            ~initPipelines=
-              {|
-             [
-              {
-                "name": "default",
-                "jobs": [
-                    {"name": "init_inspector_engine" }
-                ]
-              }
-            ]
-             |},
-            ~initJobs=
-              {|
-             [
-                {"name": "init_inspector_engine" }
-             ]
-             |},
-            (),
-          ),
-        (),
-      );
-
-      StateInspectorEngineService.unsafeGetState()
-      |> MainUtils._handleInspectorEngineState
-      |> StateInspectorEngineService.setState
-      |> ignore;
-
-      CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
+      MainEditorAssetHeaderLoadTool.prepareInspectorCanvas(sandbox);
 
       MainEditorSceneTool.createDefaultScene(
         sandbox,
@@ -64,32 +32,6 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test load gltf zip", () => {
-      let _buildImportFakeJsZipCreateFunc = [%bs.raw
-        (sandbox, zipData) => {|
-        var obj = {
-           loadAsync: sandbox.stub(),
-        };
-
-        var obj2 = {
-           forEach: function(handleFunc){
-             zipData.forEach((data) => {
-               handleFunc(data[0],data[1]);
-             })
-           },
-           async: function() {
-             return obj2
-           }
-        };
-
-        obj.loadAsync = (zip, a) => {
-          return new Promise((resolve, _) => resolve(obj2))
-        };
-
-        return obj;
-
-|}
-      ];
-
       let _buildFakeZipData = [%bs.raw
         getArrayBufferFunc => {|
   return [
@@ -308,7 +250,7 @@ new Uint8Array(getArrayBufferFunc("boxTextured/CesiumLogoFlat.png"))
 
       testPromise("convert gltf zip to glb to wdb and load", () => {
         let obj =
-          _buildImportFakeJsZipCreateFunc(
+          MainEditorAssetHeaderLoadZipTool.buildImportFakeJsZipCreateFunc(
             sandbox^,
             _buildFakeZipData(GLTFZipTool.getArrayBuffer),
           );

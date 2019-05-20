@@ -164,6 +164,7 @@ let render =
               languageType,
             )
           }
+          inputText="name"
           defaultValue="WonderPackage"
           closeFunc={() => send(HideExportPackageModal)}
           submitFunc={
@@ -185,6 +186,7 @@ let render =
               languageType,
             )
           }
+          inputText="name"
           defaultValue="WonderScene"
           closeFunc={() => send(HideExportSceneModal)}
           submitFunc={
