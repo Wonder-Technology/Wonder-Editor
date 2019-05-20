@@ -231,11 +231,7 @@ module Method = {
                  let fileName = WDBNodeAssetService.getNodeName(nodeData);
 
                  let imgSrc =
-                   ImageDataMapUtils.getImgSrc(
-                     imageDataIndex,
-                     ImageUtils.getNullImageSrc(),
-                     editorState,
-                   );
+                   ImageDataMapUtils.getImgSrc(imageDataIndex, editorState);
 
                  <FileBox
                    key

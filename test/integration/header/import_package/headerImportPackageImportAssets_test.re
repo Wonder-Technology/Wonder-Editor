@@ -976,7 +976,7 @@ let _ =
             addedNodeId1,
             (
               fieldName,
-              ScriptAttributeInspectorTool.buildFieldJsObjStr(
+              ScriptAttributeInspectorTool.buildFieldJsObj(
                 ~type_="float",
                 ~defaultValue=0.1,
               ),
