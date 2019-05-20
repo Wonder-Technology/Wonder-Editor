@@ -46,11 +46,7 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
         className="item-header"
         title="material's type"
       >
-        <span
-          className=""
-        >
-          Type
-        </span>
+        Type
       </div>
       <div
         className="item-content"
@@ -161,11 +157,7 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
         className="item-header"
         title="material's type"
       >
-        <span
-          className=""
-        >
-          Type
-        </span>
+        Type
       </div>
       <div
         className="item-content"
@@ -276,11 +268,7 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
         className="item-header"
         title="material's type"
       >
-        <span
-          className=""
-        >
-          Type
-        </span>
+        Type
       </div>
       <div
         className="item-content"

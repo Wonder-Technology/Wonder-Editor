@@ -18,25 +18,6 @@ module Method = {
 
   let addDefaultField = AddScriptAttributeDefaultFieldEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let _convertFieldToJsObjStr =
-      (
-        {type_, defaultValue}: Wonderjs.ScriptAttributeType.scriptAttributeField,
-      ) => {
-    let map = WonderCommonlib.MutableHashMapService.createEmpty();
-
-    map
-    |> WonderCommonlib.MutableHashMapService.set(
-         "type",
-         ScriptAttributeTypeService.convertFieldTypeToJsObjStr(type_),
-       )
-    |> WonderCommonlib.MutableHashMapService.set(
-         "defaultValue",
-         defaultValue |> Obj.magic,
-       )
-    |> Obj.magic
-    |> Js.Json.stringify;
-  };
-
   let _renameField = RenameScriptAttributeFieldEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let _sortAttributeEntries = attributeEntries =>
@@ -54,56 +35,34 @@ module Method = {
       ) =>
     attributeEntries
     |> _sortAttributeEntries
-    |> Js.Array.mapi(((fieldName, field), i) =>
-         <div key={DomHelper.getRandomKey()} className="field">
-           <StringInput
-             label="Field Name"
-             title={
-               LanguageUtils.getInspectorLanguageDataByType(
-                 "scriptAttribute-field-name-describe",
+    |> Js.Array.map(((fieldName, field)) =>
+         <AttributeBox
+           key={DomHelper.getRandomKey()}
+           fieldName
+           nodeId
+           field
+           renameFunc={
+             _renameField(
+               (uiState, dispatchFunc),
+               (
                  languageType,
-               )
-             }
-             defaultValue=fieldName
-             onBlur={
-               value =>
-                 _renameField(
-                   (uiState, dispatchFunc),
-                   (
-                     languageType,
-                     attribute => send(UpdateAttributeEntries(attribute)),
-                   ),
-                   (nodeId, fieldName, value),
-                 )
-             }
-             canBeNull=false
-           />
-           <FileInput
-             buttonText="Set Field Data"
-             inputValue={_convertFieldToJsObjStr(field)}
-             onSubmit={
-               value =>
-                 _updateScriptAttributeNodeByReplaceFieldData(
-                   (uiState, dispatchFunc),
-                   (),
-                   (nodeId, fieldName, value),
-                 )
-             }
-           />
-           <button
-             className="scriptAttribute-field-remove"
-             onClick={
-               e =>
-                 _updateScriptAttributeNodeByRemoveFieldData(
-                   (uiState, dispatchFunc),
-                   newAttribute =>
-                     send(UpdateAttributeEntries(newAttribute)),
-                   (nodeId, fieldName),
-                 )
-             }>
-             {DomHelper.textEl("Remove")}
-           </button>
-         </div>
+                 attribute => send(UpdateAttributeEntries(attribute)),
+               ),
+             )
+           }
+           removeFunc={
+             _updateScriptAttributeNodeByRemoveFieldData(
+               (uiState, dispatchFunc), newAttribute =>
+               send(UpdateAttributeEntries(newAttribute))
+             )
+           }
+           submitFunc={
+             _updateScriptAttributeNodeByReplaceFieldData(
+               (uiState, dispatchFunc),
+               (),
+             )
+           }
+         />
        );
 };
 
@@ -136,10 +95,10 @@ let render =
   <article
     key="ScriptAttributeInspector"
     className="wonder-scriptAttribute-inspector">
-    <h1> {DomHelper.textEl("ScriptAttribute")} </h1>
+    <h1> {DomHelper.textEl("Script Attribute")} </h1>
     <hr />
     <StringInput
-      label="Attribute Name"
+      label="Name"
       title={
         LanguageUtils.getInspectorLanguageDataByType(
           "scriptAttribute-name-describe",
@@ -151,7 +110,7 @@ let render =
       canBeNull=false
     />
     <div className="scriptAttribute-data">
-      <div className="fields">
+      <div className="data-fields">
         {
           ReasonReact.array(
             Method.getAttributeAllFieldsDomArr(
@@ -163,8 +122,9 @@ let render =
           )
         }
       </div>
+      <hr />
       <button
-        className="addable-btn"
+        className="data-addable-btn"
         onClick={
           _e =>
             Method.addDefaultField(

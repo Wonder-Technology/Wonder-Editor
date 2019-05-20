@@ -74,7 +74,7 @@ let setFromGameObject = (gameObject, engineState) => {
     );
 
   let vertices =
-    GeometryEngineService.getGeometryVertices(geometry, engineState);
+    GeometryEngineService.unsafeGetGeometryVertices(geometry, engineState);
 
   _forEachVertices(
     vertices,

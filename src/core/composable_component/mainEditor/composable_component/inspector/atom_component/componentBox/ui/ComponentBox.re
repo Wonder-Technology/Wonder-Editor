@@ -44,7 +44,7 @@ let render =
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="componentBox-component">
-    <div className="header">
+    <div className="component-header">
       <div
         className="header-triangle" onClick={_e => send(ToggleShowComponent)}>
         <span className={state.triangleDirection} />

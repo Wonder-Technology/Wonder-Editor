@@ -10,20 +10,32 @@ let hideInspectorCanvas = () =>
     false,
   );
 
-let disposeContainerGameObjectAllChildren =
+/* TODO need fix bug */
+let disposeContainerGameObjectAllChildrenAndReallocateCPUMemory =
     ((editorState, inspectorEngineState)) =>
   (editorState, inspectorEngineState)
   |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
-  |> JobEngineService.execDisposeJob;
+  |> JobEngineService.execDisposeJob
+  /* TODO can't pass test if use reallocateEveryTime */
+  |> ReallocateCPUMemoryJob.reallocate(0.1);
 
-let hideInspectorCanvasAndDisposeContainerGameObjectAllChildren = () => {
-  hideInspectorCanvas();
+let setCameraDefaultDistance = inspectorEngineState => {
+  let camera =
+    GameObjectInspectorEngineService.unsafeGetCamera(inspectorEngineState);
 
-  (
-    StateEditorService.getState(),
-    StateInspectorEngineService.unsafeGetState(),
-  )
-  |> disposeContainerGameObjectAllChildren
-  |> StateInspectorEngineService.setState
-  |> ignore;
+  let cameraArcballControllerComponent =
+    GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+      camera,
+      inspectorEngineState,
+    );
+
+  inspectorEngineState
+  |> ArcballCameraEngineService.setArcballCameraControllerTarget(
+       cameraArcballControllerComponent,
+       (0., 0., 0.),
+     )
+  |> ArcballCameraEngineService.setArcballCameraControllerDistance(
+       DefaultSceneInspectorEngineUtils.getCameraDefaultDistance(),
+       cameraArcballControllerComponent,
+     );
 };

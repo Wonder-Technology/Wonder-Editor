@@ -77,12 +77,12 @@ let _ =
                 );
 
               let vertices =
-                GeometryEngineService.getGeometryVertices(
+                GeometryEngineService.unsafeGetGeometryVertices(
                   geometry,
                   engineState,
                 );
               let indices =
-                GeometryEngineService.getGeometryIndices16(
+                GeometryEngineService.unsafeGetGeometryIndices16(
                   geometry,
                   engineState,
                 );

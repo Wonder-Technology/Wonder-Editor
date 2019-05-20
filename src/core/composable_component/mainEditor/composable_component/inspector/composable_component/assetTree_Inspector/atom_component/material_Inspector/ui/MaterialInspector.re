@@ -18,7 +18,17 @@ module Method = {
     |> StateLogicService.refreshInspectorEngineState;
   };
 
-  let willUnmount = AssetTreeInspectorUtils.hideInspectorCanvasAndDisposeContainerGameObjectAllChildren;
+  let willUnmount = () => {
+    AssetTreeInspectorUtils.hideInspectorCanvas();
+
+    (
+      StateEditorService.getState(),
+      StateInspectorEngineService.unsafeGetState(),
+    )
+    |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+    |> StateInspectorEngineService.setState
+    |> ignore;
+  };
 };
 
 let component = ReasonReact.reducerComponent("MaterialInspector");

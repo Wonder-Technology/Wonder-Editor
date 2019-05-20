@@ -34,12 +34,12 @@ let _createCircleGeometry = engineState => {
   let engineState =
     engineState
     |> GeometryEngineService.setGeometryVertices(
-         geometry,
          Float32Array.make(vertices),
+         geometry,
        )
     |> GeometryEngineService.setGeometryIndices16(
-         geometry,
          Uint16Array.make(indices),
+         geometry,
        );
 
   (engineState, geometry);

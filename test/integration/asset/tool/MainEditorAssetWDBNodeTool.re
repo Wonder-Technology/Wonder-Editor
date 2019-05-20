@@ -14,11 +14,17 @@ let addWDBNodeToRoot =
       ~editorState,
       ~name="",
       ~arrayBuffer=Js.Typed_array.ArrayBuffer.make(0),
+      ~imageDataIndex,
       (),
     ) =>
   WDBNodeAssetEditorService.addWDBNodeToAssetTree(
     RootTreeAssetEditorService.getRootNode(editorState),
-    WDBNodeAssetService.buildNode(~nodeId, ~name, ~wdbGameObject=gameObject),
+    WDBNodeAssetService.buildNode(
+      ~nodeId,
+      ~name,
+      ~wdbGameObject=gameObject,
+      ~imageDataIndex,
+    ),
     editorState,
   );
 

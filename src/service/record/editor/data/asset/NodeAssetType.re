@@ -21,7 +21,7 @@ type nodeId = int;
 type wdbNodeData = {
   name: string,
   wdbGameObject: int,
-  /* imageDataIndex: int, */
+  imageDataIndex: int,
 };
 
 type textureNodeData = {

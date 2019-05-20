@@ -9,7 +9,7 @@ let _handleGeometryAddMap =
   | None => handleSetMapFunc(materialComponent, textureComponent, engineState)
   | Some(geometryComponent)
       when
-        GeometryEngineService.getGeometryTexCoords(
+        GeometryEngineService.unsafeGetGeometryTexCoords(
           geometryComponent,
           engineState,
         )

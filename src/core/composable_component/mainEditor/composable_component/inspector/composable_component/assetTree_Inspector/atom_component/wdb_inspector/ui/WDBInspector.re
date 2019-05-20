@@ -1,16 +1,27 @@
 module Method = {
-  let didMount = () => {
-    Js.log("wdb did mount");
-    let state = StateInspectorEngineService.unsafeGetState();
-
-    let game = state |> SceneEngineService.getSceneGameObject;
-
-    state |> HierarchyGameObjectEngineService.getAllChildren(game) |> Js.log;
-
+  let didMount = wdbGameObject => {
     AssetTreeInspectorUtils.showInspectorCanvas();
+
+    StateInspectorEngineService.unsafeGetState()
+    |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
+         wdbGameObject,
+         (StateEditorService.getState(), StateEngineService.unsafeGetState()),
+       )
+    |> StateLogicService.refreshInspectorEngineState;
   };
 
-  let willUnmount = AssetTreeInspectorUtils.hideInspectorCanvasAndDisposeContainerGameObjectAllChildren;
+  let willUnmount = () => {
+    AssetTreeInspectorUtils.hideInspectorCanvas();
+
+    (
+      StateEditorService.getState(),
+      StateInspectorEngineService.unsafeGetState(),
+    )
+    |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+    |> AssetTreeInspectorUtils.setCameraDefaultDistance
+    |> StateInspectorEngineService.setState
+    |> ignore;
+  };
 };
 
 let component = ReasonReact.statelessComponent("WDBInspector");
@@ -20,9 +31,7 @@ let render = (name, (onChangeFunc, onBlurFunc), _self) =>
     <h1> {DomHelper.textEl("Model")} </h1>
     <hr />
     <div className="inspector-item">
-      <div className="item-header">
-        <span className=""> {DomHelper.textEl("Name:")} </span>
-      </div>
+      <div className="item-header"> {DomHelper.textEl("Name:")} </div>
       <div className="item-content">
         <input
           className="input-component float-input"
@@ -35,9 +44,9 @@ let render = (name, (onChangeFunc, onBlurFunc), _self) =>
     </div>
   </article>;
 
-let make = (~name, ~onChangeFunc, ~onBlurFunc, _children) => {
+let make = (~name, ~onChangeFunc, ~onBlurFunc, ~wdbGameObject, _children) => {
   ...component,
   render: _self => render(name, (onChangeFunc, onBlurFunc), _self),
-  didMount: _self => Method.didMount(),
+  didMount: _self => Method.didMount(wdbGameObject),
   willUnmount: _self => Method.willUnmount(),
 };

@@ -619,7 +619,7 @@ module AssetTree = {
            (),
          ),
        )
-    |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByNodeId(
+    |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByMaterialNodeId(
          DomHelper.getElementById("inspector-canvas"),
          DomHelper.getElementById("img-canvas"),
          newNodeId,
@@ -657,7 +657,7 @@ module AssetTree = {
 
            let inspectorEngineState =
              (editorState, inspectorEngineState)
-             |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildren
+             |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
              |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
                   MaterialDataAssetType.LightMaterial,
                   material,
@@ -707,7 +707,7 @@ module AssetTree = {
           );
 
         (editorState, inspectorEngineState)
-        |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildren
+        |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
         |> StateInspectorEngineService.setState;
 
         (editorState, engineState);

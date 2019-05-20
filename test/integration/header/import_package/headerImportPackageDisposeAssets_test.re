@@ -655,7 +655,7 @@ let _ =
                      () =>
                        ImageDataMapTool.getMapValidLength
                        |> StateLogicService.getEditorState
-                       |> expect == 2
+                       |> expect == 3
                        |> resolve,
                    (),
                  ),

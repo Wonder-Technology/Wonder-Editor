@@ -71,6 +71,10 @@ let _ =
             let _addNoTexCoordGeometryWDBGameObject = () => {
               let editorState = StateEditorService.getState();
               let engineState = StateEngineService.unsafeGetState();
+              let (editorState, newImageDataIndex) =
+                IndexAssetEditorService.generateImageDataMapIndex(
+                  editorState,
+                );
 
               let (engineState, gameObject, _, _, name) =
                 GeometryToolEngine.createGameObjectAndSetPointData(
@@ -87,6 +91,7 @@ let _ =
                   ~nodeId=id1,
                   ~name,
                   ~gameObject,
+                  ~imageDataIndex=newImageDataIndex,
                   (),
                 );
 

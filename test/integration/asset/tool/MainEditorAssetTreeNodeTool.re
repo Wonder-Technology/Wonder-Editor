@@ -63,6 +63,7 @@ let insertWDBNode =
       parentFolderNodeId,
       gameObject,
       name,
+      imageDataIndex,
       (editorState, engineState),
     ) => (
   editorState
@@ -72,6 +73,17 @@ let insertWDBNode =
          ~nodeId=wdbNodeId,
          ~wdbGameObject=gameObject,
          ~name,
+         ~imageDataIndex,
+       ),
+     )
+  |> ImageDataMapAssetEditorService.setData(
+       imageDataIndex,
+       ImageDataMapAssetService.buildData(
+         ~base64=None,
+         ~uint8Array=None,
+         ~name="material",
+         ~mimeType=ImageUtils.getDefaultMimeType(),
+         (),
        ),
      ),
   engineState,

@@ -21,6 +21,7 @@ type wdb = {
   name: string,
   path: string,
   bufferView: bufferViewIndex,
+  snapshot: imageIndex,
 };
 
 type image = {

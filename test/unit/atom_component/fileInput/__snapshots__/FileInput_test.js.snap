@@ -9,19 +9,17 @@ exports[`FileInput test workflow click the showInput button, show the textarea a
   >
     showInput
   </button>
-  <div>
-    <textarea
-      className="input-component file-input"
-      onChange={[Function]}
-      type="text"
-      value=""
-    />
-    <button
-      onClick={[Function]}
-    >
-      submit
-    </button>
-  </div>
+  <textarea
+    className="input-component file-input"
+    onChange={[Function]}
+    type="text"
+    value=""
+  />
+  <button
+    onClick={[Function]}
+  >
+    submit
+  </button>
 </article>
 `;
 
@@ -34,19 +32,17 @@ exports[`FileInput test workflow key in text 1`] = `
   >
     showInput
   </button>
-  <div>
-    <textarea
-      className="input-component file-input"
-      onChange={[Function]}
-      type="text"
-      value="you can input value in textarea"
-    />
-    <button
-      onClick={[Function]}
-    >
-      submit
-    </button>
-  </div>
+  <textarea
+    className="input-component file-input"
+    onChange={[Function]}
+    type="text"
+    value="you can input value in textarea"
+  />
+  <button
+    onClick={[Function]}
+  >
+    submit
+  </button>
 </article>
 `;
 

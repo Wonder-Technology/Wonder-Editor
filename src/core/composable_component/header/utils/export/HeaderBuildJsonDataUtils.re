@@ -250,7 +250,7 @@ let _buildMaterialData =
 
 let _buildWDBData =
     (
-      imageUint8ArrayMap,
+      (imageIndexMap, imageUint8ArrayMap),
       imageAlignedByteLength,
       imageBufferViewArr,
       (editorState, engineState),
@@ -264,7 +264,7 @@ let _buildWDBData =
            (engineState, wdbArr, arrayBufferArr, bufferViewArr, byteOffset),
            node,
          ) => {
-           let {name, wdbGameObject}: NodeAssetType.wdbNodeData =
+           let {name, wdbGameObject, imageDataIndex}: NodeAssetType.wdbNodeData =
              WDBNodeAssetService.getNodeData(node);
 
            let (engineState, wdbArrayBuffer) =
@@ -289,6 +289,11 @@ let _buildWDBData =
                       ),
                     bufferView:
                       imageBufferViewIndex + (bufferViewArr |> Js.Array.length),
+                    snapshot:
+                      imageIndexMap
+                      |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
+                           imageDataIndex,
+                         ),
                   }: ExportAssetType.wdb,
                 ),
              arrayBufferArr |> ArrayService.push(wdbArrayBuffer),
@@ -475,7 +480,7 @@ let buildJsonData = (imageUint8ArrayMap, (editorState, engineState)) => {
     bufferTotalAlignedByteLength,
   ) =
     _buildWDBData(
-      imageUint8ArrayMap,
+      (imageIndexMap, imageUint8ArrayMap),
       imageAlignedByteLength,
       imageBufferViewArr,
       (editorState, engineState),

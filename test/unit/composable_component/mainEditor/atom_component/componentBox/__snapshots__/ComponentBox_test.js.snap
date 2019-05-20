@@ -5,7 +5,7 @@ exports[`componentBox test component arguments build componentBox component whic
   className="componentBox-component"
 >
   <div
-    className="header"
+    className="component-header"
   >
     <div
       className="header-triangle"
@@ -33,7 +33,7 @@ exports[`componentBox test component arguments build disposable componentBox com
   className="componentBox-component"
 >
   <div
-    className="header"
+    className="component-header"
   >
     <div
       className="header-triangle"

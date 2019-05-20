@@ -1,0 +1,45 @@
+.attributeBox-component{
+    padding-bottom: 6px;
+    width:100%;
+    .component-header{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height:30px;
+        margin-bottom: 10px;
+        border-bottom:1px solid #fff;
+        .header-title{
+            flex:3;
+            height:30px;
+            line-height: 30px;
+            font-size:15px;
+            font-weight: bold;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        .header-close{
+            flex:initial;
+            color:black;
+            width:30px;
+            height:30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img{
+                width: 10px;
+                height:10px;
+                cursor: hand;
+            }
+        }
+    }
+    .component-submit{
+        width:100%;
+        height:28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .submit-btn{
+            width:230px;
+        }
+    }
+}

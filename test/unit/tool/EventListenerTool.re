@@ -40,7 +40,7 @@ let buildFakeDom = [%bs.raw
          return {}
       },
       toDataURL: function(){
-         return {}
+         return "data:image/png;base64 for img-canvas"
       }
     }
   }

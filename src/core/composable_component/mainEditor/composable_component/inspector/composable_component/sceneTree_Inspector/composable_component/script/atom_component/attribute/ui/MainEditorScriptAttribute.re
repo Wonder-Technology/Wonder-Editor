@@ -99,13 +99,8 @@ module Method = {
           switch (type_) {
           | Float =>
             <MainEditorFloatInputBaseComponent
-              label="Default Value"
-              title={
-                LanguageUtils.getInspectorLanguageDataByType(
-                  "script-scriptAttribute-field-defaultValue-describe",
-                  languageType,
-                )
-              }
+              label=fieldName
+              title=fieldName
               defaultValue={
                 ScriptAttributeEngineService.unsafeGetScriptAttributeFieldDefaultValue(
                   fieldName,
@@ -187,28 +182,6 @@ module Method = {
 
            <div
              key={DomHelper.getRandomKey()} className="scriptAttribute-field">
-             <Text
-               headerText="Field Name"
-               headerTitle={
-                 LanguageUtils.getInspectorLanguageDataByType(
-                   "script-scriptAttribute-field-name-describe",
-                   languageType,
-                 )
-               }
-               bodyText=fieldName
-             />
-             <Text
-               headerText="Type"
-               headerTitle={
-                 LanguageUtils.getInspectorLanguageDataByType(
-                   "script-scriptAttribute-field-type-describe",
-                   languageType,
-                 )
-               }
-               bodyText={
-                 ScriptAttributeTypeService.convertFieldTypeToJsObjStr(type_)
-               }
-             />
              {
                _renderScriptAttributeFieldDefaultValue(
                  (uiState, dispatchFunc),
@@ -233,12 +206,6 @@ module Method = {
       ) => {
     let {currentScript} = state;
 
-    let unUsedScriptAttributeNodeIds =
-      MainEditorScriptAttributeUtils.getUnUsedScriptAttributeNodeIds(
-        currentScript,
-      )
-      |> StateLogicService.getStateToGetData;
-
     ScriptEngineService.getScriptAllAttributeEntries(currentScript)
     |> StateLogicService.getEngineStateToGetData
     |> Js.Array.map(((name, attribute)) => {
@@ -247,9 +214,28 @@ module Method = {
            |> StateLogicService.getStateToGetData
            |> OptionService.unsafeGet;
 
-         <div key={DomHelper.getRandomKey()}>
+         <div
+           key={DomHelper.getRandomKey()} className="wonder-script-attribute">
+           <div className="component-header">
+             <div className="header-title">
+               {DomHelper.textEl("Script Attribute")}
+             </div>
+             <div className="header-close">
+               <img
+                 src="./public/img/close.png"
+                 onClick={
+                   _e =>
+                     _removeScriptAttribute(
+                       (uiState, dispatchFunc),
+                       (),
+                       (currentScript, name),
+                     )
+                 }
+               />
+             </div>
+           </div>
            <SelectAssetGroupBar
-             headerText="Script Attribute"
+             headerText="Name"
              headerTitle={
                LanguageUtils.getInspectorLanguageDataByType(
                  "script-use-scriptAttribute-describe",
@@ -268,18 +254,6 @@ module Method = {
              }
              sendFunc=send
            />
-           <button
-             className="scriptAttribute-remove"
-             onClick={
-               e =>
-                 _removeScriptAttribute(
-                   (uiState, dispatchFunc),
-                   (),
-                   (currentScript, name),
-                 )
-             }>
-             {DomHelper.textEl("Remove")}
-           </button>
            <div className="scriptAttribute-fields">
              {
                _renderScriptAttributeFields(
@@ -387,7 +361,65 @@ let render =
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
-  <article key="MainEditorScript" className="wonder-inspector-script">
+  <article
+    key="MainEditorScriptAttribute"
+    className="wonder-inspector-scriptAttribute">
+    <div className="inspector-component">
+      <div
+        className="component-title"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "mesh-render-describe",
+            languageType,
+          )
+        }>
+        {DomHelper.textEl("Script Attribute Group")}
+      </div>
+      <hr />
+      <div className="component-content">
+        {
+          ReasonReact.array(
+            Method.renderScriptAllAttributes(
+              (uiState, dispatchFunc),
+              languageType,
+              dispatchFunc,
+              self,
+            ),
+          )
+        }
+        <button
+          className="addable-btn"
+          onClick={
+            _e =>
+              Method.addScriptAttribute(
+                (uiState, dispatchFunc),
+                (
+                  languageType,
+                  (
+                    lastScriptAttributeNodeIdForAdd,
+                    unUsedScriptAttributeNodeIds,
+                  ) =>
+                    send(
+                      ShowScriptAttributeGroupForAdd(
+                        lastScriptAttributeNodeIdForAdd,
+                        unUsedScriptAttributeNodeIds,
+                      ),
+                    ),
+                ),
+                state.currentScript,
+              )
+          }>
+          {
+            DomHelper.textEl(
+              LanguageUtils.getInspectorLanguageDataByType(
+                "script-add-scriptAttribute",
+                languageType,
+              ),
+            )
+          }
+        </button>
+      </div>
+    </div>
     {
       state.isShowScriptAttributeGroupForAdd ?
         <SelectAssetGroupWidget
@@ -492,44 +524,6 @@ let render =
         /> :
         ReasonReact.null
     }
-    {
-      ReasonReact.array(
-        Method.renderScriptAllAttributes(
-          (uiState, dispatchFunc),
-          languageType,
-          dispatchFunc,
-          self,
-        ),
-      )
-    }
-    <button
-      className="addable-btn"
-      onClick={
-        _e =>
-          Method.addScriptAttribute(
-            (uiState, dispatchFunc),
-            (
-              languageType,
-              (lastScriptAttributeNodeIdForAdd, unUsedScriptAttributeNodeIds) =>
-                send(
-                  ShowScriptAttributeGroupForAdd(
-                    lastScriptAttributeNodeIdForAdd,
-                    unUsedScriptAttributeNodeIds,
-                  ),
-                ),
-            ),
-            state.currentScript,
-          )
-      }>
-      {
-        DomHelper.textEl(
-          LanguageUtils.getInspectorLanguageDataByType(
-            "script-add-scriptAttribute",
-            languageType,
-          ),
-        )
-      }
-    </button>
   </article>;
 };
 

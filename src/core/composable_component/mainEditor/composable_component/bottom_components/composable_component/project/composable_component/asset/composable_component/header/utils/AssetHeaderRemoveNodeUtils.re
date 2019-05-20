@@ -29,7 +29,7 @@ let _createAllMaterialSnapshot =
     ) => {
   let inspectorEngineState =
     (editorState, inspectorEngineState)
-    |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildren
+    |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
     |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
          MaterialDataAssetType.LightMaterial,
          material,
@@ -39,7 +39,7 @@ let _createAllMaterialSnapshot =
 
   let editorState =
     editorState
-    |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByNode(
+    |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByMaterialNode(
          DomHelper.getElementById("inspector-canvas"),
          DomHelper.getElementById("img-canvas"),
          currentNode,

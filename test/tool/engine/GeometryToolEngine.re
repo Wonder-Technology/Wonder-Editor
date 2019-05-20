@@ -18,14 +18,14 @@ let createGameObjectAndSetPointData = (~engineState, ~hasTexCoords=true, ()) => 
   let indices1 = Uint16Array.make([|2|]);
   let engineState =
     engineState
-    |> GeometryEngineService.setGeometryVertices(geometry, vertices1)
-    |> GeometryEngineService.setGeometryNormals(geometry, normals1)
-    |> GeometryEngineService.setGeometryIndices16(geometry, indices1);
+    |> GeometryEngineService.setGeometryVertices( vertices1,geometry)
+    |> GeometryEngineService.setGeometryNormals(normals1,geometry)
+    |> GeometryEngineService.setGeometryIndices16( indices1,geometry);
 
   let engineState =
     hasTexCoords ?
       engineState
-      |> GeometryEngineService.setGeometryTexCoords(geometry, texCoords1) :
+      |> GeometryEngineService.setGeometryTexCoords(texCoords1,geometry) :
       engineState;
 
   let name = hasTexCoords ? "geometryWithTexCoord" : "geometryNoTexCoord";
@@ -71,25 +71,25 @@ let getGameObjectVertices = (gameObject, engineState) =>
     gameObject,
     engineState,
   )
-  |> GeometryEngineService.getGeometryVertices(_, engineState);
+  |> GeometryEngineService.unsafeGetGeometryVertices(_, engineState);
 
 let getGameObjectNormals = (gameObject, engineState) =>
   GameObjectComponentEngineService.unsafeGetGeometryComponent(
     gameObject,
     engineState,
   )
-  |> GeometryEngineService.getGeometryNormals(_, engineState);
+  |> GeometryEngineService.unsafeGetGeometryNormals(_, engineState);
 
 let getGameObjectTexCoords = (gameObject, engineState) =>
   GameObjectComponentEngineService.unsafeGetGeometryComponent(
     gameObject,
     engineState,
   )
-  |> GeometryEngineService.getGeometryTexCoords(_, engineState);
+  |> GeometryEngineService.unsafeGetGeometryTexCoords(_, engineState);
 
 let getGameObjectIndices16 = (gameObject, engineState) =>
   GameObjectComponentEngineService.unsafeGetGeometryComponent(
     gameObject,
     engineState,
   )
-  |> GeometryEngineService.getGeometryIndices16(_, engineState);
+  |> GeometryEngineService.unsafeGetGeometryIndices16(_, engineState);

@@ -197,6 +197,8 @@ module BuildAssetTree = {
       let (engineState, gameObject) =
         GameObjectEngineService.create(engineState);
       let name = "gameObject1";
+      let (editorState, newImageDataIndex) =
+        IndexAssetEditorService.generateImageDataMapIndex(editorState);
 
       (editorState, engineState)
       |> MainEditorAssetTreeNodeTool.insertWDBNode(
@@ -204,6 +206,7 @@ module BuildAssetTree = {
            rootId,
            gameObject,
            name,
+           newImageDataIndex,
          )
       |> StateLogicService.setState;
 

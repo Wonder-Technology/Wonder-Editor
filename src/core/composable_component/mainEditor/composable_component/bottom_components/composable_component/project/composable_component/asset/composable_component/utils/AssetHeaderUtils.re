@@ -56,16 +56,15 @@ let _handleAssetWDBType =
   WDBAssetLogicService.importAssetWDB(
     (
       FileNameService.getBaseName(fileName)
-      ->(
-          OperateTreeAssetLogicService.getUniqueNodeName(
-            selectedFolderNodeInAssetTree,
-            engineState,
-          )
-        ),
+      |> OperateTreeAssetLogicService.getUniqueNodeName(
+           _,
+           selectedFolderNodeInAssetTree,
+           engineState,
+         ),
       wdbArrayBuffer,
     ),
-    (wdbNodeId, selectedFolderNodeInAssetTree),
-    true,
+    (wdbNodeId, selectedFolderNodeInAssetTree, true),
+    WDBAssetLogicService.createWDBNodeUseCreatedSnapshot,
     (editorState, engineState),
   )
   |> then_(

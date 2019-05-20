@@ -30,11 +30,7 @@ exports[`header import package test import material assets fix bug
           className="item-header"
           title="material's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -55,11 +51,7 @@ exports[`header import package test import material assets fix bug
           className="item-header"
           title="material's type"
         >
-          <span
-            className=""
-          >
-            Type
-          </span>
+          Type
         </div>
         <div
           className="item-content"

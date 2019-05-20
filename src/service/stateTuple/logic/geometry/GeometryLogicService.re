@@ -1,5 +1,5 @@
 let setGeometryPoints =
-    (geometry, points, setFunc, (editorState, engineState)) => (
+    (points, geometry, setFunc, (editorState, engineState)) => (
   PickingEditorService.removeSphereShape(geometry, editorState),
-  setFunc(geometry, points, engineState),
+  setFunc(points, geometry, engineState),
 );

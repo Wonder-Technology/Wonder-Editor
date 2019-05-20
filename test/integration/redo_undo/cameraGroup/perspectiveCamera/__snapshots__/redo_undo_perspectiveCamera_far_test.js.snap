@@ -11,11 +11,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       className="item-header"
       title="perspective matrix's type"
     >
-      <span
-        className=""
-      >
-        Type
-      </span>
+      Type
     </div>
     <div
       className="item-content"
@@ -118,11 +114,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       className="item-header"
       title="perspective matrix's type"
     >
-      <span
-        className=""
-      >
-        Type
-      </span>
+      Type
     </div>
     <div
       className="item-content"
@@ -225,11 +217,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       className="item-header"
       title="perspective matrix's type"
     >
-      <span
-        className=""
-      >
-        Type
-      </span>
+      Type
     </div>
     <div
       className="item-content"
@@ -332,11 +320,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       className="item-header"
       title="perspective matrix's type"
     >
-      <span
-        className=""
-      >
-        Type
-      </span>
+      Type
     </div>
     <div
       className="item-content"
@@ -439,11 +423,7 @@ exports[`redo_undo: perspectiveCamera far prepare first step: set currentSceneTr
       className="item-header"
       title="perspective matrix's type"
     >
-      <span
-        className=""
-      >
-        Type
-      </span>
+      Type
     </div>
     <div
       className="item-content"

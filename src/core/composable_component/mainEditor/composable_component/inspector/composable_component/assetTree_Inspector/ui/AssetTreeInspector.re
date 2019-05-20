@@ -37,9 +37,7 @@ module Method = {
       </h1>
       <hr />
       <div className="inspector-item">
-        <div className="item-header">
-          <span> {DomHelper.textEl("Name")} </span>
-        </div>
+        <div className="item-header"> {DomHelper.textEl("Name")} </div>
         <div className="item-content">
           <input
             className="input-component float-input"
@@ -138,6 +136,7 @@ module Method = {
       name={state.inputValue}
       onChangeFunc={_e => send(change(_e))}
       onBlurFunc={_e => send(Blur)}
+      wdbGameObject
     />;
 
   let buildAssetBundleComponent = ((state, send), currentNodeId, nodeData) =>

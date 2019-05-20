@@ -14,7 +14,7 @@ module CustomEventHandler = {
   let _getDefaultFieldType = () => "float";
 
   let _getDefaultFieldDefaultValue = () =>
-    0.0 |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue;
+    0. |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue;
 
   let handleSelfLogic = ((uiState, dispatchFunc), sendFunc, nodeId) => {
     let {name as attributeName, attribute}: NodeAssetType.scriptAttributeNodeData =

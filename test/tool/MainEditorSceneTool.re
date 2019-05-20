@@ -34,7 +34,7 @@ let _isCube = (gameObject, engineState) =>
     gameObject,
     engineState,
   )
-  && GeometryEngineService.getGeometryVertices(
+  && GeometryEngineService.unsafeGetGeometryVertices(
        GameObjectComponentEngineService.unsafeGetGeometryComponent(
          gameObject,
          engineState,
@@ -137,7 +137,13 @@ let initState =
   );
 
 let initInspectorEngineState =
-    (~sandbox, ~noWorkerJobRecord, ~isInitJob=true, ()) => {
+    (
+      ~sandbox,
+      ~noWorkerJobRecord,
+      ~buffer=SettingToolEngine.buildBufferConfigStr(),
+      ~isInitJob=true,
+      (),
+    ) => {
   TestToolEngine.createAndSetInspectorEngineState(
     ~sandbox,
     ~isInitJob,

@@ -1,8 +1,9 @@
 @mixin nav-section {
     .content-section{
-        height:24px;
-        line-height: 24px;
+        height:30px;
+        line-height: 30px;
         width:100%;
+        border-bottom: 1px solid #525353;
         color:#ffffff;
         font-weight: normal;
         position: relative;

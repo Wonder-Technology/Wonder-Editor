@@ -69,9 +69,28 @@ module Method = {
            |> StateLogicService.getStateToGetData
            |> OptionService.unsafeGet;
 
-         <div key={DomHelper.getRandomKey()}>
+         <div
+           key={DomHelper.getRandomKey()} className="wonder-script-function">
+           <div className="component-header">
+             <div className="header-title">
+               {DomHelper.textEl("Script Function")}
+             </div>
+             <div className="header-close">
+               <img
+                 src="./public/img/close.png"
+                 onClick={
+                   _e =>
+                     _removeScriptEventFunction(
+                       (uiState, dispatchFunc),
+                       (),
+                       (currentScript, name),
+                     )
+                 }
+               />
+             </div>
+           </div>
            <SelectAssetGroupBar
-             headerText="Script Event Function"
+             headerText="Name"
              headerTitle={
                LanguageUtils.getInspectorLanguageDataByType(
                  "script-use-scriptEventFunction-describe",
@@ -90,18 +109,6 @@ module Method = {
              }
              sendFunc=send
            />
-           <button
-             className="scriptEventFunction-remove"
-             onClick={
-               e =>
-                 _removeScriptEventFunction(
-                   (uiState, dispatchFunc),
-                   (),
-                   (currentScript, name),
-                 )
-             }>
-             {DomHelper.textEl("Remove")}
-           </button>
          </div>;
        });
   };
@@ -203,7 +210,63 @@ let render =
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
-  <article key="MainEditorScript" className="wonder-inspector-script">
+  <article
+    key="MainEditorScriptFunction" className="wonder-inspector-scriptFunction">
+    <div className="inspector-component">
+      <div
+        className="component-title"
+        title={
+          LanguageUtils.getInspectorLanguageDataByType(
+            "mesh-render-describe",
+            languageType,
+          )
+        }>
+        {DomHelper.textEl("Script Function Group")}
+      </div>
+      <hr />
+      <div className="component-content">
+        {
+          ReasonReact.array(
+            Method.renderScriptAllEventFunctions(
+              (uiState, dispatchFunc),
+              languageType,
+              self,
+            ),
+          )
+        }
+        <button
+          className="addable-btn"
+          onClick={
+            _e =>
+              Method.addScriptEventFunction(
+                (uiState, dispatchFunc),
+                (
+                  languageType,
+                  (
+                    lastScriptEventFunctionNodeIdForAdd,
+                    unUsedScriptEventFunctionNodeIds,
+                  ) =>
+                    send(
+                      ShowScriptEventFunctionGroupForAdd(
+                        lastScriptEventFunctionNodeIdForAdd,
+                        unUsedScriptEventFunctionNodeIds,
+                      ),
+                    ),
+                ),
+                state.currentScript,
+              )
+          }>
+          {
+            DomHelper.textEl(
+              LanguageUtils.getInspectorLanguageDataByType(
+                "script-add-scriptEventFunction",
+                languageType,
+              ),
+            )
+          }
+        </button>
+      </div>
+    </div>
     {
       state.isShowScriptEventFunctionGroupForAdd ?
         <SelectAssetGroupWidget
@@ -314,46 +377,6 @@ let render =
         /> :
         ReasonReact.null
     }
-    {
-      ReasonReact.array(
-        Method.renderScriptAllEventFunctions(
-          (uiState, dispatchFunc),
-          languageType,
-          self,
-        ),
-      )
-    }
-    <button
-      className="addable-btn"
-      onClick={
-        _e =>
-          Method.addScriptEventFunction(
-            (uiState, dispatchFunc),
-            (
-              languageType,
-              (
-                lastScriptEventFunctionNodeIdForAdd,
-                unUsedScriptEventFunctionNodeIds,
-              ) =>
-                send(
-                  ShowScriptEventFunctionGroupForAdd(
-                    lastScriptEventFunctionNodeIdForAdd,
-                    unUsedScriptEventFunctionNodeIds,
-                  ),
-                ),
-            ),
-            state.currentScript,
-          )
-      }>
-      {
-        DomHelper.textEl(
-          LanguageUtils.getInspectorLanguageDataByType(
-            "script-add-scriptEventFunction",
-            languageType,
-          ),
-        )
-      }
-    </button>
   </article>;
 };
 

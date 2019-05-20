@@ -11,11 +11,7 @@ exports[`redo_undo: cameraView set currentCamera prepare first step: set current
       className="item-header"
       title="type"
     >
-      <span
-        className=""
-      >
-        Type
-      </span>
+      Type
     </div>
     <div
       className="item-content"
@@ -66,11 +62,7 @@ exports[`redo_undo: cameraView set currentCamera prepare first step: set current
       className="item-header"
       title="type"
     >
-      <span
-        className=""
-      >
-        Type
-      </span>
+      Type
     </div>
     <div
       className="item-content"
@@ -121,11 +113,7 @@ exports[`redo_undo: cameraView set currentCamera prepare first step: set current
       className="item-header"
       title="type"
     >
-      <span
-        className=""
-      >
-        Type
-      </span>
+      Type
     </div>
     <div
       className="item-content"

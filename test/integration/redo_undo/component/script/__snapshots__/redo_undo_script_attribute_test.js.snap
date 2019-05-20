@@ -5,67 +5,110 @@ exports[`redo_undo: script component->attribute test add script attribute test r
   className="wonder-inspector-script"
 >
   <article
-    className="wonder-inspector-script"
+    className="wonder-inspector-scriptFunction"
   >
-    <button
-      className="addable-btn"
-      onClick={[Function]}
+    <div
+      className="inspector-component"
     >
-      Add script event function
-    </button>
+      <div
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Function Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script event function
+        </button>
+      </div>
+    </div>
   </article>
   <article
-    className="wonder-inspector-script"
+    className="wonder-inspector-scriptAttribute"
   >
-    <div>
+    <div
+      className="inspector-component"
+    >
       <div
-        className="inspector-item"
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Attribute Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
       >
         <div
-          className="item-header"
-          title="script attribute asset in use"
-        >
-          Script Attribute
-        </div>
-        <div
-          className="item-content"
+          className="wonder-script-attribute"
         >
           <div
-            className="inspector-select"
+            className="component-header"
           >
             <div
-              className="select-name"
-              onClick={[Function]}
+              className="header-title"
             >
-              New Script Attribute
+              Script Attribute
             </div>
             <div
-              className="select-img"
-              onClick={[Function]}
+              className="header-close"
             >
               <img
-                src="./public/img/select.png"
+                onClick={[Function]}
+                src="./public/img/close.png"
               />
             </div>
           </div>
+          <div
+            className="inspector-item"
+          >
+            <div
+              className="item-header"
+              title="script attribute asset in use"
+            >
+              Name
+            </div>
+            <div
+              className="item-content"
+            >
+              <div
+                className="inspector-select"
+              >
+                <div
+                  className="select-name"
+                  onClick={[Function]}
+                >
+                  New Script Attribute
+                </div>
+                <div
+                  className="select-img"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/select.png"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="scriptAttribute-fields"
+          />
         </div>
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script attribute
+        </button>
       </div>
-      <button
-        className="scriptAttribute-remove"
-        onClick={[Function]}
-      >
-        Remove
-      </button>
-      <div
-        className="scriptAttribute-fields"
-      />
     </div>
-    <button
-      className="addable-btn"
-      onClick={[Function]}
-    >
-      Add script attribute
-    </button>
   </article>
 </article>
 `;
@@ -75,24 +118,54 @@ exports[`redo_undo: script component->attribute test add script attribute test u
   className="wonder-inspector-script"
 >
   <article
-    className="wonder-inspector-script"
+    className="wonder-inspector-scriptFunction"
   >
-    <button
-      className="addable-btn"
-      onClick={[Function]}
+    <div
+      className="inspector-component"
     >
-      Add script event function
-    </button>
+      <div
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Function Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script event function
+        </button>
+      </div>
+    </div>
   </article>
   <article
-    className="wonder-inspector-script"
+    className="wonder-inspector-scriptAttribute"
   >
-    <button
-      className="addable-btn"
-      onClick={[Function]}
+    <div
+      className="inspector-component"
     >
-      Add script attribute
-    </button>
+      <div
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Attribute Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script attribute
+        </button>
+      </div>
+    </div>
   </article>
 </article>
 `;
@@ -102,67 +175,110 @@ exports[`redo_undo: script component->attribute test change script attribute tes
   className="wonder-inspector-script"
 >
   <article
-    className="wonder-inspector-script"
+    className="wonder-inspector-scriptFunction"
   >
-    <button
-      className="addable-btn"
-      onClick={[Function]}
+    <div
+      className="inspector-component"
     >
-      Add script event function
-    </button>
+      <div
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Function Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script event function
+        </button>
+      </div>
+    </div>
   </article>
   <article
-    className="wonder-inspector-script"
+    className="wonder-inspector-scriptAttribute"
   >
-    <div>
+    <div
+      className="inspector-component"
+    >
       <div
-        className="inspector-item"
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Attribute Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
       >
         <div
-          className="item-header"
-          title="script attribute asset in use"
-        >
-          Script Attribute
-        </div>
-        <div
-          className="item-content"
+          className="wonder-script-attribute"
         >
           <div
-            className="inspector-select"
+            className="component-header"
           >
             <div
-              className="select-name"
-              onClick={[Function]}
+              className="header-title"
             >
-              New Script Attribute 1
+              Script Attribute
             </div>
             <div
-              className="select-img"
-              onClick={[Function]}
+              className="header-close"
             >
               <img
-                src="./public/img/select.png"
+                onClick={[Function]}
+                src="./public/img/close.png"
               />
             </div>
           </div>
+          <div
+            className="inspector-item"
+          >
+            <div
+              className="item-header"
+              title="script attribute asset in use"
+            >
+              Name
+            </div>
+            <div
+              className="item-content"
+            >
+              <div
+                className="inspector-select"
+              >
+                <div
+                  className="select-name"
+                  onClick={[Function]}
+                >
+                  New Script Attribute 1
+                </div>
+                <div
+                  className="select-img"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/select.png"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="scriptAttribute-fields"
+          />
         </div>
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script attribute
+        </button>
       </div>
-      <button
-        className="scriptAttribute-remove"
-        onClick={[Function]}
-      >
-        Remove
-      </button>
-      <div
-        className="scriptAttribute-fields"
-      />
     </div>
-    <button
-      className="addable-btn"
-      onClick={[Function]}
-    >
-      Add script attribute
-    </button>
   </article>
 </article>
 `;
@@ -172,67 +288,110 @@ exports[`redo_undo: script component->attribute test change script attribute tes
   className="wonder-inspector-script"
 >
   <article
-    className="wonder-inspector-script"
+    className="wonder-inspector-scriptFunction"
   >
-    <button
-      className="addable-btn"
-      onClick={[Function]}
+    <div
+      className="inspector-component"
     >
-      Add script event function
-    </button>
+      <div
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Function Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script event function
+        </button>
+      </div>
+    </div>
   </article>
   <article
-    className="wonder-inspector-script"
+    className="wonder-inspector-scriptAttribute"
   >
-    <div>
+    <div
+      className="inspector-component"
+    >
       <div
-        className="inspector-item"
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Attribute Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
       >
         <div
-          className="item-header"
-          title="script attribute asset in use"
-        >
-          Script Attribute
-        </div>
-        <div
-          className="item-content"
+          className="wonder-script-attribute"
         >
           <div
-            className="inspector-select"
+            className="component-header"
           >
             <div
-              className="select-name"
-              onClick={[Function]}
+              className="header-title"
             >
-              New Script Attribute
+              Script Attribute
             </div>
             <div
-              className="select-img"
-              onClick={[Function]}
+              className="header-close"
             >
               <img
-                src="./public/img/select.png"
+                onClick={[Function]}
+                src="./public/img/close.png"
               />
             </div>
           </div>
+          <div
+            className="inspector-item"
+          >
+            <div
+              className="item-header"
+              title="script attribute asset in use"
+            >
+              Name
+            </div>
+            <div
+              className="item-content"
+            >
+              <div
+                className="inspector-select"
+              >
+                <div
+                  className="select-name"
+                  onClick={[Function]}
+                >
+                  New Script Attribute
+                </div>
+                <div
+                  className="select-img"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/select.png"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="scriptAttribute-fields"
+          />
         </div>
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script attribute
+        </button>
       </div>
-      <button
-        className="scriptAttribute-remove"
-        onClick={[Function]}
-      >
-        Remove
-      </button>
-      <div
-        className="scriptAttribute-fields"
-      />
     </div>
-    <button
-      className="addable-btn"
-      onClick={[Function]}
-    >
-      Add script attribute
-    </button>
   </article>
 </article>
 `;
@@ -242,24 +401,54 @@ exports[`redo_undo: script component->attribute test remove script attribute tes
   className="wonder-inspector-script"
 >
   <article
-    className="wonder-inspector-script"
+    className="wonder-inspector-scriptFunction"
   >
-    <button
-      className="addable-btn"
-      onClick={[Function]}
+    <div
+      className="inspector-component"
     >
-      Add script event function
-    </button>
+      <div
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Function Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script event function
+        </button>
+      </div>
+    </div>
   </article>
   <article
-    className="wonder-inspector-script"
+    className="wonder-inspector-scriptAttribute"
   >
-    <button
-      className="addable-btn"
-      onClick={[Function]}
+    <div
+      className="inspector-component"
     >
-      Add script attribute
-    </button>
+      <div
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Attribute Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script attribute
+        </button>
+      </div>
+    </div>
   </article>
 </article>
 `;
@@ -269,67 +458,110 @@ exports[`redo_undo: script component->attribute test remove script attribute tes
   className="wonder-inspector-script"
 >
   <article
-    className="wonder-inspector-script"
+    className="wonder-inspector-scriptFunction"
   >
-    <button
-      className="addable-btn"
-      onClick={[Function]}
+    <div
+      className="inspector-component"
     >
-      Add script event function
-    </button>
+      <div
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Function Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script event function
+        </button>
+      </div>
+    </div>
   </article>
   <article
-    className="wonder-inspector-script"
+    className="wonder-inspector-scriptAttribute"
   >
-    <div>
+    <div
+      className="inspector-component"
+    >
       <div
-        className="inspector-item"
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Attribute Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
       >
         <div
-          className="item-header"
-          title="script attribute asset in use"
-        >
-          Script Attribute
-        </div>
-        <div
-          className="item-content"
+          className="wonder-script-attribute"
         >
           <div
-            className="inspector-select"
+            className="component-header"
           >
             <div
-              className="select-name"
-              onClick={[Function]}
+              className="header-title"
             >
-              New Script Attribute
+              Script Attribute
             </div>
             <div
-              className="select-img"
-              onClick={[Function]}
+              className="header-close"
             >
               <img
-                src="./public/img/select.png"
+                onClick={[Function]}
+                src="./public/img/close.png"
               />
             </div>
           </div>
+          <div
+            className="inspector-item"
+          >
+            <div
+              className="item-header"
+              title="script attribute asset in use"
+            >
+              Name
+            </div>
+            <div
+              className="item-content"
+            >
+              <div
+                className="inspector-select"
+              >
+                <div
+                  className="select-name"
+                  onClick={[Function]}
+                >
+                  New Script Attribute
+                </div>
+                <div
+                  className="select-img"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/select.png"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="scriptAttribute-fields"
+          />
         </div>
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script attribute
+        </button>
       </div>
-      <button
-        className="scriptAttribute-remove"
-        onClick={[Function]}
-      >
-        Remove
-      </button>
-      <div
-        className="scriptAttribute-fields"
-      />
     </div>
-    <button
-      className="addable-btn"
-      onClick={[Function]}
-    >
-      Add script attribute
-    </button>
   </article>
 </article>
 `;

@@ -5,23 +5,23 @@ let isGeometryPointDataEqual = (points1, points2, getLengthFunc) =>
 
 let _isGeometryVertexDataEqual = (geometry1, geometry2, engineState) =>
   isGeometryPointDataEqual(
-    GeometryEngineService.getGeometryVertices(geometry1, engineState),
-    GeometryEngineService.getGeometryVertices(geometry2, engineState),
+    GeometryEngineService.unsafeGetGeometryVertices(geometry1, engineState),
+    GeometryEngineService.unsafeGetGeometryVertices(geometry2, engineState),
     Float32Array.length,
   )
   && isGeometryPointDataEqual(
-       GeometryEngineService.getGeometryNormals(geometry1, engineState),
-       GeometryEngineService.getGeometryNormals(geometry2, engineState),
+       GeometryEngineService.unsafeGetGeometryNormals(geometry1, engineState),
+       GeometryEngineService.unsafeGetGeometryNormals(geometry2, engineState),
        Float32Array.length,
      )
   && isGeometryPointDataEqual(
-       GeometryEngineService.getGeometryTexCoords(geometry1, engineState),
-       GeometryEngineService.getGeometryTexCoords(geometry2, engineState),
+       GeometryEngineService.unsafeGetGeometryTexCoords(geometry1, engineState),
+       GeometryEngineService.unsafeGetGeometryTexCoords(geometry2, engineState),
        Float32Array.length,
      )
   && isGeometryPointDataEqual(
-       GeometryEngineService.getGeometryIndices16(geometry1, engineState),
-       GeometryEngineService.getGeometryIndices16(geometry2, engineState),
+       GeometryEngineService.unsafeGetGeometryIndices16(geometry1, engineState),
+       GeometryEngineService.unsafeGetGeometryIndices16(geometry2, engineState),
        Uint16Array.length,
      );
 
