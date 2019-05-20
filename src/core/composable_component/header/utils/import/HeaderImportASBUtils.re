@@ -81,13 +81,23 @@ let importASB = asb => {
             let (scriptEventFunctionDataMap, (editorState, engineState)) =
               HeaderBuildAssetDataUtils.buildScriptEventFunctionData(
                 asbRecord,
-                (editorState, engineState),
+                engineState,
+                editorState,
               );
 
             let (scriptAttributeDataMap, (editorState, engineState)) =
               HeaderBuildAssetDataUtils.buildScriptAttributeData(
                 asbRecord,
-                (editorState, engineState),
+                engineState,
+                editorState,
+              );
+
+            let editorState =
+              BuildAssetDataUtils.buildAssetBundleData(
+                asbRecord,
+                buffer,
+                engineState,
+                editorState,
               );
 
             editorState |> StateEditorService.setState |> ignore;

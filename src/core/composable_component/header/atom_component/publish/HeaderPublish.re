@@ -73,11 +73,13 @@ let render =
           }
           defaultName="WonderLocal"
           defaultUseWorker=false
+          defaultUseAssetBundle=false
           closeFunc={() => send(HideLocalModal)}
           submitFunc={
-            (zipName, useWorker) => {
+            (zipName, useWorker, (useAssetBundle, selectTreeForAssetBundle)) => {
               HeaderPublishLocalUtils.Publish.publishZip(
                 (zipName, useWorker),
+                (useAssetBundle, selectTreeForAssetBundle),
                 WonderBsJszip.Zip.create,
                 FetchUtils.fetch,
               );

@@ -15,6 +15,8 @@ let getNodeName = (~node, ~getTextureNameFunc, ~getMaterialNameFunc) =>
   | MaterialNode(_, nodeData) =>
     MaterialNodeAssetService.getNodeName(nodeData, getMaterialNameFunc)
   | WDBNode(_, nodeData) => WDBNodeAssetService.getNodeName(nodeData)
+  | AssetBundleNode(_, nodeData) =>
+    AssetBundleNodeAssetService.getNodeName(nodeData)
   | FolderNode(_, nodeData, _) =>
     FolderNodeAssetService.getNodeName(nodeData)
   };

@@ -9,3 +9,7 @@ let selectMaterialNode =
 let selectFolderNode =
     (~nodeId, ~event=Obj.magic(-1), ~dispatchFunc=TestTool.getDispatch(), ()) =>
   FileBox.Method.onSelect(nodeId, dispatchFunc, event);
+
+let selectAssetBundleNode =
+    (~nodeId, ~event=Obj.magic(-1), ~dispatchFunc=TestTool.getDispatch(), ()) =>
+  FileBox.Method.onSelect(nodeId, dispatchFunc, event);

@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorAssetHeader->load asset bundle zip test load asset bundle zip should add to asset children 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-folderBox"
+    id="folder-11"
+    style={
+      Object {
+        "border": "0px",
+      }
+    }
+  >
+    <div
+      className="item-ground"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDragStart={[Function]}
+      onDrop={[Function]}
+    />
+    <div
+      className="box-image"
+    >
+      <img
+        src="./public/img/assetPackage.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        SAB
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/assetBundle.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        A
+      </span>
+    </div>
+  </article>
+</article>
+`;

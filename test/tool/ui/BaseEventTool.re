@@ -1,4 +1,4 @@
-external toObject : Js.Dict.t('a) => Js.t({..}) = "%identity";
+external toObject: Js.Dict.t('a) => Js.t({..}) = "%identity";
 
 let buildFormEvent = value =>
   {
@@ -50,6 +50,20 @@ let buildGLBFileEvent = (fileName, arrayBuffer) =>
   }
   |> Obj.magic;
 
+let buildAssetBundleZipFileEvent = fileName =>
+  {
+    "target": {
+      "files": {
+        "0": {
+          name: fileName ++ ".zip",
+          file: Obj.magic(-1),
+        },
+      },
+    },
+    "preventDefault": () => (),
+  }
+  |> Obj.magic;
+
 let buildGLTFZipFileEvent = fileName =>
   {
     "target": {
@@ -91,6 +105,20 @@ let buildOneTextureFileEvent =
         "0": {
           name: imgName,
           file: imgSrc,
+        },
+      },
+    },
+    "preventDefault": () => (),
+  }
+  |> Obj.magic;
+
+let buildAssetBundleFileEvent = (fullFileName, arrayBuffer) =>
+  {
+    "target": {
+      "files": {
+        "0": {
+          name: fullFileName,
+          file: arrayBuffer,
         },
       },
     },
@@ -172,4 +200,6 @@ let buildDragEventWithMouse = (~offsetTop=11, ~offsetHeight=12, ~pageY=12, ()) =
 
 let buildDragEvent =
   (.) =>
-    buildDragEventWithDataMap(WonderCommonlib.MutableHashMapService.createEmpty());
+    buildDragEventWithDataMap(
+      WonderCommonlib.MutableHashMapService.createEmpty(),
+    );

@@ -146,6 +146,7 @@ let _ =
     let _buildUpdateEventFunctionSetLocalPosition1 = () =>
       Some(
         (. script, api, engineState: Wonderjs.StateDataMainType.state) => {
+          let api = Obj.magic(api);
           let unsafeGetGameObjectTransformComponent =
             api##unsafeGetGameObjectTransformComponent;
           let setTransformLocalPosition = api##setTransformLocalPosition;
@@ -166,6 +167,7 @@ let _ =
     let _buildUpdateEventFunctionSetLocalPosition2 = () =>
       Some(
         (. script, api, engineState: Wonderjs.StateDataMainType.state) => {
+          let api = Obj.magic(api);
           let unsafeGetGameObjectTransformComponent =
             api##unsafeGetGameObjectTransformComponent;
           let setTransformLocalPosition = api##setTransformLocalPosition;
@@ -238,7 +240,7 @@ let _ =
           ~currentScriptEventFunctionNodeId=Some(addedNodeId1),
           ~targetScriptEventFunctionNodeId=addedNodeId2,
           ~send=SinonTool.createOneLengthStub(sandbox^),
-          ()
+          (),
         );
 
         let gameObject1 =
@@ -370,6 +372,7 @@ let _ =
                         api,
                         engineState: Wonderjs.StateDataMainType.state,
                       ) => {
+                        let api = Obj.magic(api);
                         let disposeGameObject = api##disposeGameObject;
                         let findGameObjectsByName = api##findGameObjectsByName;
 
@@ -402,6 +405,7 @@ let _ =
                         api,
                         engineState: Wonderjs.StateDataMainType.state,
                       ) => {
+                        let api = Obj.magic(api);
                         let unsafeGetGameObjectTransformComponent =
                           api##unsafeGetGameObjectTransformComponent;
                         let setTransformLocalPosition =
@@ -558,6 +562,7 @@ let _ =
                       api,
                       engineState: Wonderjs.StateDataMainType.state,
                     ) => {
+                      let api = Obj.magic(api);
                       let disposeGameObject = api##disposeGameObject;
                       let findGameObjectsByName = api##findGameObjectsByName;
 
@@ -777,6 +782,7 @@ let _ =
                     api,
                     engineState: Wonderjs.StateDataMainType.state,
                   ) => {
+                    let api = Obj.magic(api);
                     let unsafeGetGameObjectTransformComponent =
                       api##unsafeGetGameObjectTransformComponent;
                     let setTransformLocalPosition =

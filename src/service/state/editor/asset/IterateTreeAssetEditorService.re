@@ -8,6 +8,7 @@ let filter =
       ~predScriptEventFunctionNodeFunc=node => false,
       ~predScriptAttributeNodeFunc=node => false,
       ~predWDBNodeFunc=node => false,
+      ~predAssetBundleNodeFunc=node => false,
       ~predFolderNodeFunc=node => false,
       (),
     )
@@ -21,6 +22,7 @@ let filter =
     ~predScriptEventFunctionNodeFunc,
     ~predScriptAttributeNodeFunc,
     ~predWDBNodeFunc,
+    ~predAssetBundleNodeFunc,
     ~predFolderNodeFunc,
     (),
   );

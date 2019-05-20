@@ -261,6 +261,41 @@ let _wdbNodeFunc =
   (result, newTree, engineState);
 };
 
+let _assetBundleNodeFunc =
+    (
+      (targetNodeId, name),
+      parentFolderNode,
+      (result, tree, engineState),
+      nodeId,
+      nodeData,
+    ) => {
+  let (result, newTree, engineState) =
+    result
+    |> Result.RelationResult.isSuccess
+    && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
+      {
+        let (result, newTree) =
+          switch (_checkParentNode(parentFolderNode, name, engineState)) {
+          | Success () as result => (
+              result,
+              OperateTreeAssetService.updateNode(
+                nodeId,
+                AssetBundleNodeAssetService.rename(~name, ~nodeData),
+                AssetBundleNodeAssetService.buildNodeByNodeData,
+                tree,
+              ),
+            )
+
+          | Fail(msg) as result => (result, tree)
+          };
+
+        (result, newTree, engineState);
+      } :
+      (result, tree, engineState);
+
+  (result, newTree, engineState);
+};
+
 let _folderNodeFunc =
     (
       (targetNodeId, name),
@@ -309,6 +344,7 @@ let renameNode =
         _scriptEventFunctionNodeFunc((targetNodeId, name)),
       ~scriptAttributeNodeFunc=_scriptAttributeNodeFunc((targetNodeId, name)),
       ~wdbNodeFunc=_wdbNodeFunc((targetNodeId, name)),
+      ~assetBundleNodeFunc=_assetBundleNodeFunc((targetNodeId, name)),
       ~folderNodeFunc=_folderNodeFunc((targetNodeId, name)),
       ~parentFolderNode=None,
       ~tree,

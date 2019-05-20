@@ -3,6 +3,8 @@ module LoadData = {
 
   open WonderBsJszip;
 
+  open WonderBsMost;
+
   let loadAndWriteIndexJsData = (useWorker, fetchFunc, zip) =>
     fetchFunc(. "./publish/wd.js")
     |> then_(response =>
@@ -60,10 +62,10 @@ module LoadData = {
               |> resolve
             )
        )
-    |> WonderBsMost.Most.fromPromise;
+    |> Most.fromPromise;
 
   let loadAndWriteResData = (fetchFunc, zip) =>
-    WonderBsMost.Most.mergeArray([|
+    Most.mergeArray([|
       /* fetchFunc(.{j|./publish/res/loading/Lato-Regular-64.fnt|j})
          |> then_(response =>
               response
@@ -77,7 +79,7 @@ module LoadData = {
                    |> resolve
                  )
             )
-         |> WonderBsMost.Most.fromPromise,
+         |> Most.fromPromise,
          _loadAndWriteSingleResArrayBufferData(
            ~name="lato.png",
            ~fetchFunc,
@@ -99,7 +101,7 @@ module LoadData = {
         (),
       ),
     |])
-    |> WonderBsMost.Most.drain
+    |> Most.drain
     |> then_(_ => zip |> resolve);
 
   let _loadAndWriteSingleConfigDataWithTargetFileNamePath =
@@ -113,7 +115,7 @@ module LoadData = {
               |> resolve
             )
        )
-    |> WonderBsMost.Most.fromPromise;
+    |> Most.fromPromise;
 
   let _loadAndWriteSingleConfigData = (fileNamePath, fetchFunc, zip) =>
     _loadAndWriteSingleConfigDataWithTargetFileNamePath(
@@ -213,10 +215,20 @@ module LoadData = {
            ) :
         streamArr;
 
-    WonderBsMost.Most.mergeArray(streamArr)
-    |> WonderBsMost.Most.drain
-    |> then_(_ => zip |> resolve);
+    Most.mergeArray(streamArr) |> Most.drain |> then_(_ => zip |> resolve);
   };
+
+  let loadAndWriteJsData = (fetchFunc, zip) =>
+    fetchFunc(. "./publish/js/commonForNoWorkerAndWorker.js")
+    |> then_(response =>
+         response
+         |> Fetch.Response.text
+         |> then_(jsStr =>
+              zip
+              ->(Zip.write("js/commonForNoWorkerAndWorker.js", `str(jsStr)))
+              |> resolve
+            )
+       );
 };
 
 module Publish = {
@@ -224,11 +236,67 @@ module Publish = {
 
   open WonderBsJszip;
 
+  open WonderBsMost;
+
+  let _generateAssetBundleData = selectTree =>
+    IterateTreeSelectTreeService.fold(
+      ~tree=selectTree,
+      ~acc=WonderCommonlib.ArrayService.createEmpty(),
+      ~valueNodeFunc=
+        (abDataArr, nodeId, nodeData) =>
+          ValueNodeSelectTreeService.getIsSelect(nodeData) ?
+            {
+              let value = ValueNodeSelectTreeService.getValue(nodeData);
+
+              switch (ValueNodeSelectTreeService.getType(nodeData)) {
+              | "assetBundle" =>
+                let {type_, path, assetBundle}: HeaderAssetBundleType.assetBundleData =
+                  value |> HeaderAssetBundleType.convertValueToAssetBundleData;
+
+                abDataArr |> ArrayService.push((path, assetBundle));
+              | type_ =>
+                WonderLog.Log.fatal(
+                  WonderLog.Log.buildFatalMessage(
+                    ~title="_generateAssetBundleData",
+                    ~description={j|unknown type_: $type_|j},
+                    ~reason="",
+                    ~solution={j||j},
+                    ~params={j||j},
+                  ),
+                )
+              };
+            } :
+            abDataArr,
+      ~folderNodeFunc=(acc, nodeId, nodeData, children) => acc,
+      (),
+    );
+
+  let _writeAssetBundleData =
+      (useAssetBundle, selectTreeForAssetBundle, createZipStream) =>
+    useAssetBundle ?
+      createZipStream
+      |> Most.map(zip =>
+           _generateAssetBundleData(selectTreeForAssetBundle)
+           |> WonderCommonlib.ArrayService.reduceOneParam(
+                (. zip, (relativePath, ab)) =>
+                  zip
+                  ->(
+                      Zip.write(
+                        ~options=Options.makeWriteOptions(~binary=true, ()),
+                        relativePath,
+                        `trustme(ab |> TypeArrayType.newBlobFromArrayBuffer),
+                      )
+                    ),
+                zip,
+              )
+         ) :
+      createZipStream;
+
   let _loadData =
       (useWorker, sceneGraphArrayBuffer, fetchFunc, createZipStream) =>
     createZipStream
-    |> WonderBsMost.Most.flatMap(zip =>
-         WonderBsMost.Most.fromPromise(
+    |> Most.flatMap(zip =>
+         Most.fromPromise(
            LoadData.loadAndWriteIndexHtmlData(
              useWorker,
              sceneGraphArrayBuffer,
@@ -237,20 +305,21 @@ module Publish = {
            ),
          )
        )
-    |> WonderBsMost.Most.flatMap(zip =>
-         WonderBsMost.Most.fromPromise(
+    |> Most.flatMap(zip =>
+         Most.fromPromise(
            LoadData.loadAndWriteIndexJsData(useWorker, fetchFunc, zip),
          )
        )
-    |> WonderBsMost.Most.flatMap(zip =>
-         WonderBsMost.Most.fromPromise(
-           LoadData.loadAndWriteResData(fetchFunc, zip),
-         )
+    |> Most.flatMap(zip =>
+         Most.fromPromise(LoadData.loadAndWriteResData(fetchFunc, zip))
        )
-    |> WonderBsMost.Most.flatMap(zip =>
-         WonderBsMost.Most.fromPromise(
+    |> Most.flatMap(zip =>
+         Most.fromPromise(
            LoadData.loadAndWriteConfigData(useWorker, fetchFunc, zip),
          )
+       )
+    |> Most.flatMap(zip =>
+         Most.fromPromise(LoadData.loadAndWriteJsData(fetchFunc, zip))
        );
 
   let _generateSceneWDB = (editorState, engineState) =>
@@ -263,7 +332,13 @@ module Publish = {
       engineState,
     );
 
-  let publishZip = ((zipName, useWorker), createZipFunc, fetchFunc) => {
+  let publishZip =
+      (
+        (zipName, useWorker),
+        (useAssetBundle, selectTreeForAssetBundle),
+        createZipFunc,
+        fetchFunc,
+      ) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
 
@@ -286,9 +361,10 @@ module Publish = {
         engineState |> StateEngineService.setState;
 
         createZipFunc()
-        |> WonderBsMost.Most.just
+        |> Most.just
+        |> _writeAssetBundleData(useAssetBundle, selectTreeForAssetBundle)
         |> _loadData(useWorker, sceneGraphArrayBuffer, fetchFunc)
-        |> WonderBsMost.Most.tap(zip =>
+        |> Most.tap(zip =>
              zip
              ->(
                  Zip.write(
@@ -302,12 +378,12 @@ module Publish = {
                )
              ->(Zip.generateAsyncBlob(Zip.makeAsyncBlobOptions()))
              |> Js.Promise.then_(content =>
-                  FileSaver.saveAs(content, zipName ++ ".zip")
+                  FileSaver.saveAs(content, {j|$zipName.zip|j})
                   |> Js.Promise.resolve
                 )
              |> ignore
            )
-        |> WonderBsMost.Most.drain
+        |> Most.drain
         |> then_(_ => None |> resolve);
       };
   };

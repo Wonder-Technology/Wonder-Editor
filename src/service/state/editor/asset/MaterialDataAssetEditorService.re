@@ -5,9 +5,6 @@ open MaterialDataAssetType;
 let getMaterialData = editorState =>
   editorState.assetRecord |> MaterialDataAssetService.getMaterialData;
 
-let unsafeGetDefaultMaterialSnapshotPath = editorState =>
-  getMaterialData(editorState).defaultMaterialSnapshotPath;
-
 let unsafeGetDefaultBasicMaterialData = editorState =>
   getMaterialData(editorState).defaultBasicMaterialData
   |> OptionService.unsafeGet;

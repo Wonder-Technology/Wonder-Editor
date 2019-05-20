@@ -1,5 +1,16 @@
 open Js.Promise;
 
+let prepareLoad = sandbox => {
+  LoadTool.buildFakeAtob();
+  LoadTool.buildFakeBtoa();
+  LoadTool.buildFakeTextEncoder();
+  LoadTool.buildFakeTextDecoder(LoadTool.convertUint8ArrayToBuffer);
+  LoadTool.buildFakeURL(sandbox^);
+  LoadTool.buildFakeLoadImage();
+  MainEditorAssetTool.buildFakeFileReader();
+  MainEditorAssetTool.buildFakeImage();
+};
+
 let testImportPackageWithoutExport =
     (
       ~testFunc,

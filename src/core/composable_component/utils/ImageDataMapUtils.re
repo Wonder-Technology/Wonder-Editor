@@ -1,4 +1,4 @@
-let getImgSrc = (imageDataIndex, defaultImgPath, editorState) =>
+let getImgSrc = (imageDataIndex, editorState) =>
   editorState
   |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
   |> (
@@ -7,6 +7,17 @@ let getImgSrc = (imageDataIndex, defaultImgPath, editorState) =>
       | (Some(blobObjectURL), Some(_))
       | (Some(blobObjectURL), None) => blobObjectURL |> Obj.magic
       | (None, Some(base64)) => base64
-      | (None, None) => defaultImgPath
+      | (None, None) =>
+        WonderLog.Log.error(
+          WonderLog.Log.buildErrorMessage(
+            ~title="getImgSrc",
+            ~description={j|blobObjectURL or base64 should exist|j},
+            ~reason="",
+            ~solution={j||j},
+            ~params={j||j},
+          ),
+        );
+
+        ImageUtils.getNullImageSrc();
       }
   );

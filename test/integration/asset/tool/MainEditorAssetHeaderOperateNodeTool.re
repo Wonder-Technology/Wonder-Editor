@@ -50,6 +50,15 @@ let removeScriptAttributeNode =
     ) =>
   removeNode(~dispatchFunc, ~uiState, ~nodeId=scriptAttributeNodeId, ());
 
+let removeAssetBundleNode =
+    (
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~assetBundleNodeId,
+      (),
+    ) =>
+  removeNode(~dispatchFunc, ~uiState, ~nodeId=assetBundleNodeId, ());
+
 let removeFolderNode =
     (
       ~dispatchFunc=TestTool.getDispatch(),

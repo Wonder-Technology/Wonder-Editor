@@ -1,0 +1,1208 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`init script api job test api test asset bundle api addSABSceneGameObjectChildrenToScene handle editor state add to scene tree 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
+          scene
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-2"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
+            gameObject2
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init script api job test api test asset bundle api addSABSceneGameObjectChildrenToScene handle editor state test show scene tree inspector 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  >
+    <div
+      className="sceneTree-name"
+    >
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="gameObject's name"
+        >
+          <span
+            className="component-label"
+          >
+            Name
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="gameObject2"
+          />
+        </div>
+      </article>
+    </div>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+          title="Transform"
+        >
+          Transform
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-transform"
+      >
+        <article
+          className="inspector-item wonder-three-float-input"
+        >
+          <div
+            className="item-header"
+            title="position in local coordinate system"
+          >
+            Position
+          </div>
+          <div
+            className="item-content"
+          >
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                X
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Y
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Z
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+          </div>
+        </article>
+        <article
+          className="inspector-item wonder-three-float-input"
+        >
+          <div
+            className="item-header"
+            title="euler angle in local coordinate system"
+          >
+            Rotation
+          </div>
+          <div
+            className="item-content"
+          >
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                X
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Y
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Z
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+          </div>
+        </article>
+        <article
+          className="inspector-item wonder-three-float-input"
+        >
+          <div
+            className="item-header"
+            title="scale in local coordinate system"
+          >
+            Scale
+          </div>
+          <div
+            className="item-content"
+          >
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                X
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="1"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Y
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="1"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Z
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="1"
+                />
+              </div>
+            </article>
+          </div>
+        </article>
+      </article>
+    </article>
+    <article
+      className="wonder-addable-component"
+    >
+      <div
+        className="addable-component-content"
+      >
+        <div
+          className="content-btn"
+        >
+          <button
+            className="addable-btn"
+            onClick={[Function]}
+          >
+            Add Component
+          </button>
+        </div>
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`init script api job test api test asset bundle api disposeSceneAllChildren handle editor state scene tree should has no node 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+        />
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-0"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
+          scene
+        </div>
+      </li>
+    </ul>
+  </article>
+</article>
+`;
+
+exports[`init script api job test api test asset bundle api setSABSceneGameObjectToBeScene handle editor state test show scene tree inspector test show scene gameObject->child->inspector 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  >
+    <div
+      className="sceneTree-name"
+    >
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="gameObject's name"
+        >
+          <span
+            className="component-label"
+          >
+            Name
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="gameObject2"
+          />
+        </div>
+      </article>
+    </div>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+          title="Transform"
+        >
+          Transform
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-transform"
+      >
+        <article
+          className="inspector-item wonder-three-float-input"
+        >
+          <div
+            className="item-header"
+            title="position in local coordinate system"
+          >
+            Position
+          </div>
+          <div
+            className="item-content"
+          >
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                X
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Y
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Z
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+          </div>
+        </article>
+        <article
+          className="inspector-item wonder-three-float-input"
+        >
+          <div
+            className="item-header"
+            title="euler angle in local coordinate system"
+          >
+            Rotation
+          </div>
+          <div
+            className="item-content"
+          >
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                X
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Y
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Z
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+          </div>
+        </article>
+        <article
+          className="inspector-item wonder-three-float-input"
+        >
+          <div
+            className="item-header"
+            title="scale in local coordinate system"
+          >
+            Scale
+          </div>
+          <div
+            className="item-content"
+          >
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                X
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="1"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Y
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="1"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Z
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="1"
+                />
+              </div>
+            </article>
+          </div>
+        </article>
+      </article>
+    </article>
+    <article
+      className="wonder-addable-component"
+    >
+      <div
+        className="addable-component-content"
+      >
+        <div
+          className="content-btn"
+        >
+          <button
+            className="addable-btn"
+            onClick={[Function]}
+          >
+            Add Component
+          </button>
+        </div>
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`init script api job test api test asset bundle api setSABSceneGameObjectToBeScene handle editor state test show scene tree inspector test show scene gameObject->inspector 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  >
+    <div
+      className="sceneTree-name"
+    >
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="gameObject's name"
+        >
+          <span
+            className="component-label"
+          >
+            Name
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="gameObject1"
+          />
+        </div>
+      </article>
+    </div>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+          title="Transform"
+        >
+          Transform
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-transform"
+      >
+        <article
+          className="inspector-item wonder-three-float-input"
+        >
+          <div
+            className="item-header"
+            title="position in local coordinate system"
+          >
+            Position
+          </div>
+          <div
+            className="item-content"
+          >
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                X
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Y
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Z
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+          </div>
+        </article>
+        <article
+          className="inspector-item wonder-three-float-input"
+        >
+          <div
+            className="item-header"
+            title="euler angle in local coordinate system"
+          >
+            Rotation
+          </div>
+          <div
+            className="item-content"
+          >
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                X
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Y
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Z
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="0"
+                />
+              </div>
+            </article>
+          </div>
+        </article>
+        <article
+          className="inspector-item wonder-three-float-input"
+        >
+          <div
+            className="item-header"
+            title="scale in local coordinate system"
+          >
+            Scale
+          </div>
+          <div
+            className="item-content"
+          >
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                X
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="1"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Y
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="1"
+                />
+              </div>
+            </article>
+            <article
+              className="inspector-item wonder-float-input"
+            >
+              <div
+                className="item-header component-label"
+                onMouseDown={[Function]}
+                onMouseMove={[Function]}
+                onMouseUp={[Function]}
+                title=""
+              >
+                Z
+              </div>
+              <div
+                className="item-content"
+              >
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="1"
+                />
+              </div>
+            </article>
+          </div>
+        </article>
+      </article>
+    </article>
+    <article
+      className="wonder-addable-component"
+    >
+      <div
+        className="addable-component-content"
+      >
+        <div
+          className="content-btn"
+        >
+          <button
+            className="addable-btn"
+            onClick={[Function]}
+          >
+            Add Component
+          </button>
+        </div>
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`init script api job test api test asset bundle api setSABSceneGameObjectToBeScene handle editor state update scene tree 1`] = `
+<article
+  className="wonder-sceneTree-component"
+  id="wonder-sceneTree-component"
+>
+  <article
+    className="wonder-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+    >
+      <li>
+        <div
+          className="item-triangle"
+          onMouseDown={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
+        <div
+          className="draggable-container  no-drag"
+          draggable={false}
+          id="sceneTreeNode-1"
+          onClick={[Function]}
+          onDragEnd={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDragStart={[Function]}
+          onDrop={[Function]}
+          style={Object {}}
+        >
+          <img
+            className="treeNode-icon"
+            src="./public/img/gameObjectIcon.png"
+          />
+          gameObject1
+        </div>
+      </li>
+      <ul
+        className="wonder-tree-node"
+      >
+        <li>
+          <div
+            className="item-triangle"
+          />
+          <div
+            className="draggable-container  no-drag"
+            draggable={true}
+            id="sceneTreeNode-2"
+            onClick={[Function]}
+            onDragEnd={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDragStart={[Function]}
+            onDrop={[Function]}
+            style={Object {}}
+          >
+            <img
+              className="treeNode-icon"
+              src="./public/img/gameObjectIcon.png"
+            />
+            gameObject2
+          </div>
+        </li>
+      </ul>
+    </ul>
+  </article>
+</article>
+`;

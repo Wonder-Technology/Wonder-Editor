@@ -1,0 +1,316 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`header import package->geometry 
+          1.export;
+          2.import;
+
+          select geometry group widget should have only default geometrys
+           1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+      title="geometry in use which is default or model's geometry"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="select-item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="select-item-body"
+      >
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Sphere
+        </div>
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;
+
+exports[`header import package->geometry test with wdb assets relate wdb asset gameObjects with default geometrys 
+                  1.load cube wdb asset w1(with default cube geometry);
+                  1.load cube wdb asset w2(with default cube geometry);
+                  2.export;
+                  3.import;
+                  4.drag w1 to scene tree to be gameObject g1;
+                  5.drag w2 to scene tree to be gameObject g2;
+                   g1->geometry->select geometry group widget should only have default geometrys and be using default cube geometry 1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+      title="geometry in use which is default or model's geometry"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="select-item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="select-item-body"
+      >
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Sphere
+        </div>
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;
+
+exports[`header import package->geometry test with wdb assets relate wdb asset gameObjects with default geometrys 
+                  1.load cube wdb asset w1(with default cube geometry);
+                  1.load cube wdb asset w2(with default cube geometry);
+                  2.export;
+                  3.import;
+                  4.drag w1 to scene tree to be gameObject g1;
+                  5.drag w2 to scene tree to be gameObject g2;
+                   g2->geometry->select geometry group widget should only have default geometrys and be using default cube geometry 1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+      title="geometry in use which is default or model's geometry"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="select-item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="select-item-body"
+      >
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Sphere
+        </div>
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;
+
+exports[`header import package->geometry test with wdb assets relate wdb asset gameObjects with default geometrys 
+               1.load cube wdb asset w1(with default cube geometry);
+               2.export;
+               3.import;
+               4.drag w1 to scene tree to be gameObject g1;
+
+
+               g1->geometry->select geometry group widget should only have default geometrys and be using default cube geometry
+                1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="inspector-item"
+  >
+    <div
+      className="item-header"
+      title="geometry in use which is default or model's geometry"
+    >
+      Geometry
+    </div>
+    <div
+      className="item-content"
+    >
+      <div
+        className="inspector-select"
+      >
+        <div
+          className="select-name"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-img"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/select.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="select-item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="select-item-body"
+      >
+        <div
+          className="select-item-content select-item-active"
+          onClick={[Function]}
+        >
+          Wonder-Default-Cube
+        </div>
+        <div
+          className="select-item-content"
+          onClick={[Function]}
+        >
+          Wonder-Default-Sphere
+        </div>
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;
