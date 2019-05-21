@@ -68,6 +68,7 @@ let cloneLightMaterialToOtherEngineState =
            targetTexture,
            lightMaterial,
          )
+      /* TODO remove? */
       |> LightMaterialEngineService.reInitLightMaterialsAndClearShaderCache([|
            lightMaterial,
          |]);

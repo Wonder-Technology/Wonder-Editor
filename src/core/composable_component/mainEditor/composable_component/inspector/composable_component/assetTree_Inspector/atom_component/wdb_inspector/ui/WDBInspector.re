@@ -20,6 +20,7 @@ module Method = {
       StateInspectorEngineService.unsafeGetState(),
     )
     |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+    /* TODO why set camera distance here? */
     |> AssetTreeInspectorUtils.setCameraDistance
     |> StateInspectorEngineService.setState
     |> ignore;

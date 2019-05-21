@@ -3,6 +3,7 @@ let cloneMeshRendererToOtherEngineState =
   let (targetEngineState, newMeshRenderer) =
     MeshRendererEngineService.create(targetEngineState);
 
+  /* TODO feat: clone isRender */
   let targetEngineState =
     targetEngineState
     |> CloneValueEngineLogicService.cloneValueByGetValueFunc(

@@ -145,6 +145,7 @@ let _ =
 
         WDBInspector.Method.didMount(scene);
 
+        /* TODO finish test */
         1 |> expect == 1;
         /* MainEditorAssetUploadTool.loadOneWDB(
              ~arrayBuffer=sceneWDBArrayBuffer^,
