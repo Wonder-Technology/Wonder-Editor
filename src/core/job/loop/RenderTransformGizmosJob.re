@@ -1,5 +1,5 @@
 let _getTranslationAxisGameObjects = (editorState, engineState) =>
-  ArrayService.fastConcatArrays([|
+  ArrayService.fastMutableConcatArrays([|
     HierarchyGameObjectEngineService.getAllGameObjects(
       OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXAxisGizmo(
         editorState,
@@ -21,7 +21,7 @@ let _getTranslationAxisGameObjects = (editorState, engineState) =>
   |]);
 
 let _getTranslationPlaneGameObjects = (editorState, engineState) =>
-  ArrayService.fastConcatArrays([|
+  ArrayService.fastMutableConcatArrays([|
     HierarchyGameObjectEngineService.getAllGameObjects(
       OperateTranslationGizmoSceneViewEditorService.unsafeGetTranslationXYPlaneGizmo(
         editorState,
@@ -121,7 +121,7 @@ let _renderRotationGizmos = (editorState, engineState) =>
      ));
 
 let _getScaleGameObjects = (editorState, engineState) =>
-  ArrayService.fastConcatArrays([|
+  ArrayService.fastMutableConcatArrays([|
     HierarchyGameObjectEngineService.getAllGameObjects(
       OperateScaleGizmoSceneViewEditorService.unsafeGetScaleXAxisGizmo(
         editorState,

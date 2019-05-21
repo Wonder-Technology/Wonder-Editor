@@ -20,7 +20,7 @@ exports[`MainEditorAssetHeader->drag wdb test drag wdb to folder node
     >
       <img
         onDragStart={[Function]}
-        src="./public/img/wdb.png"
+        src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQE"
       />
     </div>
     <div

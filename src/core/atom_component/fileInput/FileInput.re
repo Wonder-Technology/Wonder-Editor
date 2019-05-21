@@ -32,8 +32,7 @@ let component = ReasonReact.reducerComponent("FileInput");
 let reducer = (onSubmitFunc, action) =>
   switch (action) {
   | ShowInput => (
-      state =>
-        ReasonReact.Update({...state, isShowInput: ! state.isShowInput})
+      state => ReasonReact.Update({...state, isShowInput: !state.isShowInput})
     )
 
   | Change(text) => (
@@ -52,33 +51,32 @@ let reducer = (onSubmitFunc, action) =>
         }
     )
   };
-let render =
-    (buttonText, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+let render = (buttonText, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-file-input">
-    (
+    {
       switch (buttonText) {
       | None => ReasonReact.null
       | Some(value) =>
         <button onClick=(_e => send(Method.showInput(_e)))>
-          (DomHelper.textEl(value))
+          {DomHelper.textEl(value)}
         </button>
       }
-    )
-    (
+    }
+    {
       state.isShowInput ?
-        <div>
+        <>
           <textarea
             className="input-component file-input"
             type_="text"
-            value=state.inputValue
-            onChange=(_e => send(Method.change(_e)))
+            value={state.inputValue}
+            onChange={_e => send(Method.change(_e))}
           />
-          <button onClick=(_e => send(Method.submit(_e)))>
-            (DomHelper.textEl("submit"))
+          <button onClick={_e => send(Method.submit(_e))}>
+            {DomHelper.textEl("submit")}
           </button>
-        </div> :
+        </> :
         ReasonReact.null
-    )
+    }
   </article>;
 
 let make =

@@ -104,7 +104,7 @@ let _ =
           inspectorEngineState
           |> TransformEngineService.getLocalPosition(transform)
           |> WonderEditor.Vector3Service.truncate(2)
-          |> expect == (0., 0., 1.1);
+          |> expect == (0., 0., 0.);
         });
       });
 

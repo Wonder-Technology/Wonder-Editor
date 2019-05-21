@@ -2,8 +2,85 @@
 
 exports[`MainEditorScript test set currentSceneTreeNode test script attribute test add script attribute show script attribute group for add show all unused ones 1`] = `
 <article
-  className="wonder-inspector-script"
+  className="wonder-inspector-scriptAttribute"
 >
+  <div
+    className="inspector-component"
+  >
+    <div
+      className="component-title"
+      title="MeshRenderer"
+    >
+      Script Attribute Group
+    </div>
+    <hr />
+    <div
+      className="component-content"
+    >
+      <div
+        className="wonder-script-attribute"
+      >
+        <div
+          className="component-header"
+        >
+          <div
+            className="header-title"
+          >
+            Script Attribute
+          </div>
+          <div
+            className="header-close"
+          >
+            <img
+              onClick={[Function]}
+              src="./public/img/close.png"
+            />
+          </div>
+        </div>
+        <div
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+            title="script attribute asset in use"
+          >
+            Name
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="inspector-select"
+            >
+              <div
+                className="select-name"
+                onClick={[Function]}
+              >
+                New Script Attribute
+              </div>
+              <div
+                className="select-img"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/select.png"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="scriptAttribute-fields"
+        />
+      </div>
+      <button
+        className="addable-btn"
+        onClick={[Function]}
+      >
+        Add script attribute
+      </button>
+    </div>
+  </div>
   <div
     className="select-component-content"
   >
@@ -37,62 +114,90 @@ exports[`MainEditorScript test set currentSceneTreeNode test script attribute te
       onClick={[Function]}
     />
   </div>
-  <div>
-    <div
-      className="inspector-item"
-    >
-      <div
-        className="item-header"
-        title="script attribute asset in use"
-      >
-        Script Attribute
-      </div>
-      <div
-        className="item-content"
-      >
-        <div
-          className="inspector-select"
-        >
-          <div
-            className="select-name"
-            onClick={[Function]}
-          >
-            New Script Attribute
-          </div>
-          <div
-            className="select-img"
-            onClick={[Function]}
-          >
-            <img
-              src="./public/img/select.png"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <button
-      className="scriptAttribute-remove"
-      onClick={[Function]}
-    >
-      Remove
-    </button>
-    <div
-      className="scriptAttribute-fields"
-    />
-  </div>
-  <button
-    className="addable-btn"
-    onClick={[Function]}
-  >
-    Add script attribute
-  </button>
 </article>
 `;
 
 exports[`MainEditorScript test set currentSceneTreeNode test script attribute test change script attribute show script attribute group for change should contain self and all unused ones 1`] = `
 <article
-  className="wonder-inspector-script"
+  className="wonder-inspector-scriptAttribute"
 >
+  <div
+    className="inspector-component"
+  >
+    <div
+      className="component-title"
+      title="MeshRenderer"
+    >
+      Script Attribute Group
+    </div>
+    <hr />
+    <div
+      className="component-content"
+    >
+      <div
+        className="wonder-script-attribute"
+      >
+        <div
+          className="component-header"
+        >
+          <div
+            className="header-title"
+          >
+            Script Attribute
+          </div>
+          <div
+            className="header-close"
+          >
+            <img
+              onClick={[Function]}
+              src="./public/img/close.png"
+            />
+          </div>
+        </div>
+        <div
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+            title="script attribute asset in use"
+          >
+            Name
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="inspector-select"
+            >
+              <div
+                className="select-name"
+                onClick={[Function]}
+              >
+                New Script Attribute
+              </div>
+              <div
+                className="select-img"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/select.png"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="scriptAttribute-fields"
+        />
+      </div>
+      <button
+        className="addable-btn"
+        onClick={[Function]}
+      >
+        Add script attribute
+      </button>
+    </div>
+  </div>
   <div
     className="select-component-content"
   >
@@ -126,62 +231,90 @@ exports[`MainEditorScript test set currentSceneTreeNode test script attribute te
       onClick={[Function]}
     />
   </div>
-  <div>
-    <div
-      className="inspector-item"
-    >
-      <div
-        className="item-header"
-        title="script attribute asset in use"
-      >
-        Script Attribute
-      </div>
-      <div
-        className="item-content"
-      >
-        <div
-          className="inspector-select"
-        >
-          <div
-            className="select-name"
-            onClick={[Function]}
-          >
-            New Script Attribute
-          </div>
-          <div
-            className="select-img"
-            onClick={[Function]}
-          >
-            <img
-              src="./public/img/select.png"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <button
-      className="scriptAttribute-remove"
-      onClick={[Function]}
-    >
-      Remove
-    </button>
-    <div
-      className="scriptAttribute-fields"
-    />
-  </div>
-  <button
-    className="addable-btn"
-    onClick={[Function]}
-  >
-    Add script attribute
-  </button>
 </article>
 `;
 
 exports[`MainEditorScript test set currentSceneTreeNode test script attribute test change script attribute test change script attribute group should be sorted 1`] = `
 <article
-  className="wonder-inspector-script"
+  className="wonder-inspector-scriptAttribute"
 >
+  <div
+    className="inspector-component"
+  >
+    <div
+      className="component-title"
+      title="MeshRenderer"
+    >
+      Script Attribute Group
+    </div>
+    <hr />
+    <div
+      className="component-content"
+    >
+      <div
+        className="wonder-script-attribute"
+      >
+        <div
+          className="component-header"
+        >
+          <div
+            className="header-title"
+          >
+            Script Attribute
+          </div>
+          <div
+            className="header-close"
+          >
+            <img
+              onClick={[Function]}
+              src="./public/img/close.png"
+            />
+          </div>
+        </div>
+        <div
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+            title="script attribute asset in use"
+          >
+            Name
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="inspector-select"
+            >
+              <div
+                className="select-name"
+                onClick={[Function]}
+              >
+                New Script Attribute 1
+              </div>
+              <div
+                className="select-img"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/select.png"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="scriptAttribute-fields"
+        />
+      </div>
+      <button
+        className="addable-btn"
+        onClick={[Function]}
+      >
+        Add script attribute
+      </button>
+    </div>
+  </div>
   <div
     className="select-component-content"
   >
@@ -221,55 +354,6 @@ exports[`MainEditorScript test set currentSceneTreeNode test script attribute te
       onClick={[Function]}
     />
   </div>
-  <div>
-    <div
-      className="inspector-item"
-    >
-      <div
-        className="item-header"
-        title="script attribute asset in use"
-      >
-        Script Attribute
-      </div>
-      <div
-        className="item-content"
-      >
-        <div
-          className="inspector-select"
-        >
-          <div
-            className="select-name"
-            onClick={[Function]}
-          >
-            New Script Attribute 1
-          </div>
-          <div
-            className="select-img"
-            onClick={[Function]}
-          >
-            <img
-              src="./public/img/select.png"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <button
-      className="scriptAttribute-remove"
-      onClick={[Function]}
-    >
-      Remove
-    </button>
-    <div
-      className="scriptAttribute-fields"
-    />
-  </div>
-  <button
-    className="addable-btn"
-    onClick={[Function]}
-  >
-    Add script attribute
-  </button>
 </article>
 `;
 
@@ -278,126 +362,139 @@ exports[`MainEditorScript test set currentSceneTreeNode test script attribute te
   className="wonder-inspector-script"
 >
   <article
-    className="wonder-inspector-script"
+    className="wonder-inspector-scriptFunction"
   >
-    <button
-      className="addable-btn"
-      onClick={[Function]}
+    <div
+      className="inspector-component"
     >
-      Add script event function
-    </button>
+      <div
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Function Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script event function
+        </button>
+      </div>
+    </div>
   </article>
   <article
-    className="wonder-inspector-script"
+    className="wonder-inspector-scriptAttribute"
   >
-    <div>
+    <div
+      className="inspector-component"
+    >
       <div
-        className="inspector-item"
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Attribute Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
       >
         <div
-          className="item-header"
-          title="script attribute asset in use"
-        >
-          Script Attribute
-        </div>
-        <div
-          className="item-content"
+          className="wonder-script-attribute"
         >
           <div
-            className="inspector-select"
+            className="component-header"
           >
             <div
-              className="select-name"
-              onClick={[Function]}
+              className="header-title"
             >
-              New Script Attribute
+              Script Attribute
             </div>
             <div
-              className="select-img"
-              onClick={[Function]}
+              className="header-close"
             >
               <img
-                src="./public/img/select.png"
+                onClick={[Function]}
+                src="./public/img/close.png"
               />
             </div>
           </div>
-        </div>
-      </div>
-      <button
-        className="scriptAttribute-remove"
-        onClick={[Function]}
-      >
-        Remove
-      </button>
-      <div
-        className="scriptAttribute-fields"
-      >
-        <div
-          className="scriptAttribute-field"
-        >
           <div
-            className="text"
-          >
-            <span
-              className="text-header"
-              title="field's name"
-            >
-              Field Name
-            </span>
-            <span
-              className="text-body"
-            >
-              New Script Attribute Field
-            </span>
-          </div>
-          <div
-            className="text"
-          >
-            <span
-              className="text-header"
-              title="field's type"
-            >
-              Type
-            </span>
-            <span
-              className="text-body"
-            >
-              float
-            </span>
-          </div>
-          <article
-            className="inspector-item wonder-float-input"
+            className="inspector-item"
           >
             <div
-              className="item-header component-label"
-              onMouseDown={[Function]}
-              onMouseMove={[Function]}
-              onMouseUp={[Function]}
-              title="field's default value"
+              className="item-header"
+              title="script attribute asset in use"
             >
-              Default Value
+              Name
             </div>
             <div
               className="item-content"
             >
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="0"
-              />
+              <div
+                className="inspector-select"
+              >
+                <div
+                  className="select-name"
+                  onClick={[Function]}
+                >
+                  New Script Attribute
+                </div>
+                <div
+                  className="select-img"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/select.png"
+                  />
+                </div>
+              </div>
             </div>
-          </article>
+          </div>
+          <div
+            className="scriptAttribute-fields"
+          >
+            <div
+              className="scriptAttribute-field"
+            >
+              <article
+                className="inspector-item wonder-float-input"
+              >
+                <div
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
+                  title="New Script Attribute Field"
+                >
+                  New Script Attribute Field
+                </div>
+                <div
+                  className="item-content"
+                >
+                  <input
+                    className="input-component float-input"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    type="text"
+                    value="0"
+                  />
+                </div>
+              </article>
+            </div>
+          </div>
         </div>
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script attribute
+        </button>
       </div>
     </div>
-    <button
-      className="addable-btn"
-      onClick={[Function]}
-    >
-      Add script attribute
-    </button>
   </article>
 </article>
 `;
@@ -407,134 +504,221 @@ exports[`MainEditorScript test set currentSceneTreeNode test script attribute te
   className="wonder-inspector-script"
 >
   <article
-    className="wonder-inspector-script"
+    className="wonder-inspector-scriptFunction"
   >
-    <button
-      className="addable-btn"
-      onClick={[Function]}
+    <div
+      className="inspector-component"
     >
-      Add script event function
-    </button>
+      <div
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Function Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script event function
+        </button>
+      </div>
+    </div>
   </article>
   <article
-    className="wonder-inspector-script"
+    className="wonder-inspector-scriptAttribute"
   >
-    <div>
+    <div
+      className="inspector-component"
+    >
       <div
-        className="inspector-item"
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Attribute Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
       >
         <div
-          className="item-header"
-          title="script attribute asset in use"
-        >
-          Script Attribute
-        </div>
-        <div
-          className="item-content"
+          className="wonder-script-attribute"
         >
           <div
-            className="inspector-select"
+            className="component-header"
           >
             <div
-              className="select-name"
-              onClick={[Function]}
+              className="header-title"
             >
-              New Script Attribute
+              Script Attribute
             </div>
             <div
-              className="select-img"
-              onClick={[Function]}
+              className="header-close"
             >
               <img
-                src="./public/img/select.png"
+                onClick={[Function]}
+                src="./public/img/close.png"
               />
             </div>
           </div>
-        </div>
-      </div>
-      <button
-        className="scriptAttribute-remove"
-        onClick={[Function]}
-      >
-        Remove
-      </button>
-      <div
-        className="scriptAttribute-fields"
-      >
-        <div
-          className="scriptAttribute-field"
-        >
           <div
-            className="text"
-          >
-            <span
-              className="text-header"
-              title="field's name"
-            >
-              Field Name
-            </span>
-            <span
-              className="text-body"
-            >
-              New Script Attribute Field
-            </span>
-          </div>
-          <div
-            className="text"
-          >
-            <span
-              className="text-header"
-              title="field's type"
-            >
-              Type
-            </span>
-            <span
-              className="text-body"
-            >
-              float
-            </span>
-          </div>
-          <article
-            className="inspector-item wonder-float-input"
+            className="inspector-item"
           >
             <div
-              className="item-header component-label"
-              onMouseDown={[Function]}
-              onMouseMove={[Function]}
-              onMouseUp={[Function]}
-              title="field's default value"
+              className="item-header"
+              title="script attribute asset in use"
             >
-              Default Value
+              Name
             </div>
             <div
               className="item-content"
             >
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="1.1"
-              />
+              <div
+                className="inspector-select"
+              >
+                <div
+                  className="select-name"
+                  onClick={[Function]}
+                >
+                  New Script Attribute
+                </div>
+                <div
+                  className="select-img"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/select.png"
+                  />
+                </div>
+              </div>
             </div>
-          </article>
+          </div>
+          <div
+            className="scriptAttribute-fields"
+          >
+            <div
+              className="scriptAttribute-field"
+            >
+              <article
+                className="inspector-item wonder-float-input"
+              >
+                <div
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
+                  title="New Script Attribute Field"
+                >
+                  New Script Attribute Field
+                </div>
+                <div
+                  className="item-content"
+                >
+                  <input
+                    className="input-component float-input"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    type="text"
+                    value="1.1"
+                  />
+                </div>
+              </article>
+            </div>
+          </div>
         </div>
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script attribute
+        </button>
       </div>
     </div>
-    <button
-      className="addable-btn"
-      onClick={[Function]}
-    >
-      Add script attribute
-    </button>
   </article>
 </article>
 `;
 
 exports[`MainEditorScript test set currentSceneTreeNode test script event function test add script event function show script event function group for add show all unused ones 1`] = `
 <article
-  className="wonder-inspector-script"
+  className="wonder-inspector-scriptFunction"
 >
+  <div
+    className="inspector-component"
+  >
+    <div
+      className="component-title"
+      title="MeshRenderer"
+    >
+      Script Function Group
+    </div>
+    <hr />
+    <div
+      className="component-content"
+    >
+      <div
+        className="wonder-script-function"
+      >
+        <div
+          className="component-header"
+        >
+          <div
+            className="header-title"
+          >
+            Script Function
+          </div>
+          <div
+            className="header-close"
+          >
+            <img
+              onClick={[Function]}
+              src="./public/img/close.png"
+            />
+          </div>
+        </div>
+        <div
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+            title="script event function asset in use"
+          >
+            Name
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="inspector-select"
+            >
+              <div
+                className="select-name"
+                onClick={[Function]}
+              >
+                New Script EventFunction
+              </div>
+              <div
+                className="select-img"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/select.png"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        className="addable-btn"
+        onClick={[Function]}
+      >
+        Add script event function
+      </button>
+    </div>
+  </div>
   <div
     className="select-component-content"
   >
@@ -568,59 +752,87 @@ exports[`MainEditorScript test set currentSceneTreeNode test script event functi
       onClick={[Function]}
     />
   </div>
-  <div>
-    <div
-      className="inspector-item"
-    >
-      <div
-        className="item-header"
-        title="script event function asset in use"
-      >
-        Script Event Function
-      </div>
-      <div
-        className="item-content"
-      >
-        <div
-          className="inspector-select"
-        >
-          <div
-            className="select-name"
-            onClick={[Function]}
-          >
-            New Script EventFunction
-          </div>
-          <div
-            className="select-img"
-            onClick={[Function]}
-          >
-            <img
-              src="./public/img/select.png"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <button
-      className="scriptEventFunction-remove"
-      onClick={[Function]}
-    >
-      Remove
-    </button>
-  </div>
-  <button
-    className="addable-btn"
-    onClick={[Function]}
-  >
-    Add script event function
-  </button>
 </article>
 `;
 
 exports[`MainEditorScript test set currentSceneTreeNode test script event function test change script event function show script event function group for change should contain self and all unused ones 1`] = `
 <article
-  className="wonder-inspector-script"
+  className="wonder-inspector-scriptFunction"
 >
+  <div
+    className="inspector-component"
+  >
+    <div
+      className="component-title"
+      title="MeshRenderer"
+    >
+      Script Function Group
+    </div>
+    <hr />
+    <div
+      className="component-content"
+    >
+      <div
+        className="wonder-script-function"
+      >
+        <div
+          className="component-header"
+        >
+          <div
+            className="header-title"
+          >
+            Script Function
+          </div>
+          <div
+            className="header-close"
+          >
+            <img
+              onClick={[Function]}
+              src="./public/img/close.png"
+            />
+          </div>
+        </div>
+        <div
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+            title="script event function asset in use"
+          >
+            Name
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="inspector-select"
+            >
+              <div
+                className="select-name"
+                onClick={[Function]}
+              >
+                New Script EventFunction
+              </div>
+              <div
+                className="select-img"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/select.png"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        className="addable-btn"
+        onClick={[Function]}
+      >
+        Add script event function
+      </button>
+    </div>
+  </div>
   <div
     className="select-component-content"
   >
@@ -654,59 +866,87 @@ exports[`MainEditorScript test set currentSceneTreeNode test script event functi
       onClick={[Function]}
     />
   </div>
-  <div>
-    <div
-      className="inspector-item"
-    >
-      <div
-        className="item-header"
-        title="script event function asset in use"
-      >
-        Script Event Function
-      </div>
-      <div
-        className="item-content"
-      >
-        <div
-          className="inspector-select"
-        >
-          <div
-            className="select-name"
-            onClick={[Function]}
-          >
-            New Script EventFunction
-          </div>
-          <div
-            className="select-img"
-            onClick={[Function]}
-          >
-            <img
-              src="./public/img/select.png"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <button
-      className="scriptEventFunction-remove"
-      onClick={[Function]}
-    >
-      Remove
-    </button>
-  </div>
-  <button
-    className="addable-btn"
-    onClick={[Function]}
-  >
-    Add script event function
-  </button>
 </article>
 `;
 
 exports[`MainEditorScript test set currentSceneTreeNode test script event function test change script event function test change script event function group should be sorted 1`] = `
 <article
-  className="wonder-inspector-script"
+  className="wonder-inspector-scriptFunction"
 >
+  <div
+    className="inspector-component"
+  >
+    <div
+      className="component-title"
+      title="MeshRenderer"
+    >
+      Script Function Group
+    </div>
+    <hr />
+    <div
+      className="component-content"
+    >
+      <div
+        className="wonder-script-function"
+      >
+        <div
+          className="component-header"
+        >
+          <div
+            className="header-title"
+          >
+            Script Function
+          </div>
+          <div
+            className="header-close"
+          >
+            <img
+              onClick={[Function]}
+              src="./public/img/close.png"
+            />
+          </div>
+        </div>
+        <div
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+            title="script event function asset in use"
+          >
+            Name
+          </div>
+          <div
+            className="item-content"
+          >
+            <div
+              className="inspector-select"
+            >
+              <div
+                className="select-name"
+                onClick={[Function]}
+              >
+                New Script EventFunction 1
+              </div>
+              <div
+                className="select-img"
+                onClick={[Function]}
+              >
+                <img
+                  src="./public/img/select.png"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        className="addable-btn"
+        onClick={[Function]}
+      >
+        Add script event function
+      </button>
+    </div>
+  </div>
   <div
     className="select-component-content"
   >
@@ -746,51 +986,5 @@ exports[`MainEditorScript test set currentSceneTreeNode test script event functi
       onClick={[Function]}
     />
   </div>
-  <div>
-    <div
-      className="inspector-item"
-    >
-      <div
-        className="item-header"
-        title="script event function asset in use"
-      >
-        Script Event Function
-      </div>
-      <div
-        className="item-content"
-      >
-        <div
-          className="inspector-select"
-        >
-          <div
-            className="select-name"
-            onClick={[Function]}
-          >
-            New Script EventFunction 1
-          </div>
-          <div
-            className="select-img"
-            onClick={[Function]}
-          >
-            <img
-              src="./public/img/select.png"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-    <button
-      className="scriptEventFunction-remove"
-      onClick={[Function]}
-    >
-      Remove
-    </button>
-  </div>
-  <button
-    className="addable-btn"
-    onClick={[Function]}
-  >
-    Add script event function
-  </button>
 </article>
 `;

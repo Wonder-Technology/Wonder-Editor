@@ -34,11 +34,11 @@ let getAttributeEntries = (nodeId, editorState) =>
   |> ScriptAttributeEngineService.getScriptAttributeEntries;
 
 let updateScriptAttributeNodeByReplaceFieldData =
-    (nodeId, (fieldName, newFieldDataJsObjStr)) =>
+    (nodeId, (fieldName, newAttributeFieldJsObj)) =>
   ScriptAttributeInspector.Method._updateScriptAttributeNodeByReplaceFieldData(
     (TestTool.buildEmptyAppState(), TestTool.getDispatch()),
     (),
-    (nodeId, fieldName, newFieldDataJsObjStr),
+    (nodeId, fieldName, newAttributeFieldJsObj),
   );
 
 let updateScriptAttributeNodeByRemoveFieldData =
@@ -56,15 +56,12 @@ let updateScriptAttributeNodeByRemoveFieldData =
     (nodeId, fieldName),
   );
 
-let convertFieldToJsObjStr = field =>
-  ScriptAttributeInspector.Method._convertFieldToJsObjStr(field);
-
-let buildFieldJsObjStr = (~type_, ~defaultValue) => {j|
-      {
-        "type": "$type_",
-        "defaultValue": $defaultValue
-      }
-      |j};
+let buildFieldJsObj =
+    (~type_, ~defaultValue)
+    : Wonderjs.ScriptAttributeType.scriptAttributeFieldJsObj => {
+  "type": type_,
+  "defaultValue": defaultValue |> Obj.magic,
+};
 
 let buildField =
     (~type_, ~defaultValue): Wonderjs.ScriptAttributeType.scriptAttributeField => {
@@ -96,7 +93,8 @@ let renameField =
   );
 };
 
-let unsafeGetScriptAttributeFieldDefaultValue = (nodeId, fieldName, editorState) =>
+let unsafeGetScriptAttributeFieldDefaultValue =
+    (nodeId, fieldName, editorState) =>
   ScriptAttributeEngineService.unsafeGetScriptAttributeFieldDefaultValue(
     fieldName,
     getAttribute(nodeId, editorState),

@@ -88,6 +88,12 @@ let addBasicCameraViewComponent = GameObjectAPI.addGameObjectBasicCameraViewComp
 
 let hasBasicCameraViewComponent = GameObjectAPI.hasGameObjectBasicCameraViewComponent;
 
+let getBasicCameraViewComponent = (gameObject, engineState) =>
+  GetComponentGameObjectService.getBasicCameraViewComponent(.
+    gameObject,
+    engineState.gameObjectRecord,
+  );
+
 let unsafeGetBasicCameraViewComponent = GameObjectAPI.unsafeGetGameObjectBasicCameraViewComponent;
 
 let disposeBasicCameraViewComponent = GameObjectAPI.disposeGameObjectBasicCameraViewComponent;

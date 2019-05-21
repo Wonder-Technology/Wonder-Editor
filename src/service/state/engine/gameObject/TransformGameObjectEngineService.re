@@ -26,6 +26,25 @@ let setLocalPosition = (gameObject, pos, engineState) =>
     engineState,
   );
 
+let getLocalRotation = (gameObject, engineState) =>
+  TransformEngineService.getLocalRotation(
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      gameObject,
+      engineState,
+    ),
+    engineState,
+  );
+
+let setLocalRotation = (gameObject, rotation, engineState) =>
+  TransformEngineService.setLocalRotation(
+    rotation,
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
+      gameObject,
+      engineState,
+    ),
+    engineState,
+  );
+
 let getLocalScale = (gameObject, engineState) =>
   TransformEngineService.getLocalScale(
     GameObjectComponentEngineService.unsafeGetTransformComponent(

@@ -1,11 +1,13 @@
 let component = ReasonReact.statelessComponent("Text");
 
 let render = ((headerText, headerTitle), bodyText) =>
-  <div className="text">
-    <span className="text-header" title=headerTitle>
+  <div className="inspector-item">
+    <div className="item-header" title=headerTitle>
       {DomHelper.textEl(headerText)}
-    </span>
-    <span className="text-body"> {DomHelper.textEl(bodyText)} </span>
+    </div>
+    <div className="item-content">
+      <span> {DomHelper.textEl(bodyText)} </span>
+    </div>
   </div>;
 
 let make = (~headerText, ~headerTitle, ~bodyText, _children) => {

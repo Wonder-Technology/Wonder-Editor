@@ -37,16 +37,12 @@ let rec _iterateCreateNewWDBGameObject =
     (newGameObject, inspectorEngineState);
 };
 
-let _setCameraDistance = (newWDBGameObject, inspectorEngineState) => {
+let _setCameraFocusWDBGameObject = (newWDBGameObject, inspectorEngineState) => {
   let camera =
     GameObjectInspectorEngineService.unsafeGetCamera(inspectorEngineState);
 
   inspectorEngineState
-  |> FocusUtils.setEditorCameraFocusTargetGameObject(
-       camera,
-       newWDBGameObject,
-       1.9,
-     );
+  |> FocusUtils.setCameraFocusTargetGameObject(camera, newWDBGameObject, 1.9);
 };
 
 let createWDBIntoInspectorCanvas =
@@ -63,11 +59,10 @@ let createWDBIntoInspectorCanvas =
     );
 
   inspectorEngineState
-  |> GameObjectEngineService.initGameObject(newWDBGameObject)
   |> HierarchyGameObjectEngineService.addChild(
        containerGameObject,
        newWDBGameObject,
      );
 
-  inspectorEngineState |> _setCameraDistance(newWDBGameObject);
+  inspectorEngineState |> _setCameraFocusWDBGameObject(newWDBGameObject);
 };

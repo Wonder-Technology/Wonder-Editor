@@ -76,6 +76,10 @@ let _wdbNodeFunc = (targetNodeId, acc, nodeId, nodeData) =>
     ),
   );
 
+let _assetBundleNodeFunc =
+    (targetNodeId, acc, nodeId, {name}: NodeAssetType.assetBundleNodeData) =>
+  _handleLeafNodeFunc(acc, targetNodeId, nodeId, name);
+
 let _folderNodeFunc = (targetNodeId, acc, nodeId, nodeData, children) =>
   _handleFolderNodeFunc(
     acc,
@@ -122,6 +126,7 @@ let getNodePath = (targetNode, (editorState, engineState)) => {
       ~scriptEventFunctionNodeFunc=_scriptEventFunctionNodeFunc(targetNodeId),
       ~scriptAttributeNodeFunc=_scriptAttributeNodeFunc(targetNodeId),
       ~wdbNodeFunc=_wdbNodeFunc(targetNodeId),
+      ~assetBundleNodeFunc=_assetBundleNodeFunc(targetNodeId),
       ~folderNodeFunc=_folderNodeFunc(targetNodeId),
       ~handleBeforeFoldChildrenFunc=_handleBeforeFoldChildrenFunc,
       ~handleAfterFoldChildrenFunc=_handleAfterFoldChildrenFunc,

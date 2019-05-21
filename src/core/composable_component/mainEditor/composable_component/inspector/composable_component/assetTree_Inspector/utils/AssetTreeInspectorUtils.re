@@ -38,7 +38,7 @@ let disposeContainerGameObjectAllChildrenAndReallocateCPUMemory =
   |> JobEngineService.execDisposeJob
   |> _reallocateEveryTime;
 
-let setCameraDistance = inspectorEngineState => {
+let setCameraDefaultDistance = inspectorEngineState => {
   let camera =
     GameObjectInspectorEngineService.unsafeGetCamera(inspectorEngineState);
 

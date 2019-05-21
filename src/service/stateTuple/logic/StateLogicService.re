@@ -79,13 +79,9 @@ let getAndSetState = handleFunc => {
 
   editorState |> StateEditorService.setState |> ignore;
   engineState |> StateEngineService.setState |> ignore;
-
-  ();
 };
 
 let setState = ((editorState, engineState)) => {
   editorState |> StateEditorService.setState |> ignore;
   engineState |> StateEngineService.setState |> ignore;
-
-  ();
 };

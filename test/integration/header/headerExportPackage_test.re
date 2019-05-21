@@ -14,6 +14,14 @@ let _ =
   describe("header export package", () => {
     let sandbox = getSandboxDefaultVal();
 
+    let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
+    let sceneWDBArrayBuffer = ref(Obj.magic(1));
+
+    beforeAll(() => {
+      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
+      sceneWDBArrayBuffer := WDBTool.generateSceneWDB();
+    });
+
     beforeEach(() => {
       sandbox := createSandbox();
 
@@ -145,7 +153,7 @@ let _ =
 
             MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
-            let wpkArrayBuffer = ExportPackageTool.exportWPK();
+            ExportPackageTool.exportWPK() |> ignore;
 
             let editorState = StateEditorService.getState();
 
@@ -195,7 +203,7 @@ let _ =
               (),
             );
 
-            let wpkArrayBuffer = ExportPackageTool.exportWPK();
+            ExportPackageTool.exportWPK() |> ignore;
 
             let editorState = StateEditorService.getState();
 
@@ -212,10 +220,67 @@ let _ =
               ({base64, uint8Array}) =>
                 uint8Array
                 |> OptionService.unsafeGet
-                |> expect == BufferUtils.convertBase64ToUint8Array(imgCanvasFakeBase64Str)
+                |> expect
+                == BufferUtils.convertBase64ToUint8Array(
+                     imgCanvasFakeBase64Str,
+                   )
             );
           },
         );
       });
+
+      describe("test export all wdbs->snapshot", () =>
+        testPromise(
+          "upload one wdb w1;
+           export;
+
+           should convert w1->snapshot base64 to uint8Array;",
+          () => {
+            let (
+              addedMaterialNodeId,
+              newMaterialComponent,
+              imgCanvasFakeBase64Str,
+              (inspectorCanvasDom, imgCanvasDom),
+            ) =
+              MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                ~sandbox,
+                (),
+              );
+
+            MainEditorAssetUploadTool.loadOneWDB(
+              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+              (),
+            )
+            |> then_(uploadedWDBNodeId => {
+                 ExportPackageTool.exportWPK() |> ignore;
+
+                 let editorState = StateEditorService.getState();
+                 let engineState = StateEngineService.unsafeGetState();
+
+                 let {imageDataIndex}: wdbNodeData =
+                   editorState
+                   |> OperateTreeAssetEditorService.unsafeFindNodeById(
+                        uploadedWDBNodeId,
+                      )
+                   |> WDBNodeAssetService.getNodeData;
+
+                 editorState
+                 |> ImageDataMapAssetEditorService.unsafeGetData(
+                      imageDataIndex,
+                    )
+                 |> (
+                   ({base64, uint8Array}) =>
+                     uint8Array
+                     |> OptionService.unsafeGet
+                     |> expect
+                     == BufferUtils.convertBase64ToUint8Array(
+                          imgCanvasFakeBase64Str,
+                        )
+                     |> resolve
+                 );
+               });
+          },
+        )
+      );
     });
   });

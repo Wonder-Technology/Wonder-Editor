@@ -5,6 +5,7 @@ open ParseRenderConfigService;
 let buildRenderConfig =
     (
       ~shaders={|
+
 {
   "static_branchs": [
     {
@@ -222,9 +223,26 @@ let buildRenderConfig =
           "name": "end"
         }
       ]
+    },
+    {
+      "name": "skybox",
+      "shader_libs": [
+        {
+          "type": "group",
+          "name": "top"
+        },
+        {
+          "name": "skybox"
+        },
+        {
+          "type": "group",
+          "name": "end"
+        }
+      ]
     }
   ]
 }
+
         |},
       ~shaderLibs={|
 [
@@ -847,6 +865,35 @@ let buildRenderConfig =
         "name": "webgl1_outline_origin_fragment"
       }
     ]
+  },
+  {
+    "name": "skybox",
+    "glsls": [
+      {
+        "type": "vs",
+        "name": "webgl1_skybox_vertex"
+      },
+      {
+        "type": "fs",
+        "name": "webgl1_skybox_fragment"
+      }
+    ],
+    "variables": {
+      "uniforms": [
+        {
+          "name": "u_skyboxCubeMapSampler",
+          "from": "no_material_shader",
+          "field": "skyboxCubeMap",
+          "type": "samplerCube"
+        },
+        {
+          "name": "u_skyboxVMatrix",
+          "from": "no_material_shader",
+          "field": "skyboxVMatrix",
+          "type": "mat4"
+        }
+      ]
+    }
   },
   {
     "name": "end",

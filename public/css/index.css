@@ -3,7 +3,8 @@ html, body {
   height: 100%;
   font-size: 13px;
   user-select: none;
-  position: relative; }
+  position: relative;
+  -webkit-text-size-adjust: none; }
   html ul, body ul {
     list-style-type: none; }
   html a, body a {
@@ -22,20 +23,26 @@ html, body {
     text-align: center;
     background-color: #555555;
     border: 1px solid #3f3f3f;
-    font-size: 12px;
+    font-size: 13px;
     color: #ffffff;
     font-weight: bold;
     border-radius: 3px;
     min-height: 25px; }
     html button:hover, body button:hover {
       background-color: #777777; }
+  html button[disabled], body button[disabled] {
+    color: rgba(0, 0, 0, 0.4);
+    background-color: #f5f5f5;
+    border-color: #d9d9d9; }
+    html button[disabled]:hover, body button[disabled]:hover {
+      cursor: not-allowed; }
   html .input-component, html select, body .input-component, body select {
     position: relative;
     padding: 0px 7px;
     width: 100%;
     height: 21px;
     cursor: text;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1;
     color: #fc9b00;
     background-color: #333333;
@@ -208,7 +215,7 @@ html, body {
     width: 100%;
     height: 22px;
     cursor: text;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.5;
     color: #666;
     background-color: #fff;
@@ -298,6 +305,119 @@ html, body {
       border-bottom-right-radius: 5px;
       position: relative; }
       .wonder-singleInput-modal .modal-item .modal-item-footer .footer-submit {
+        width: 100px;
+        position: absolute;
+        top: 5px;
+        right: 30px;
+        padding-top: 5px; }
+
+.wonder-generateAllAB-modal {
+  position: fixed;
+  z-index: 200;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  top: 20%;
+  display: flex;
+  justify-content: center; }
+  .wonder-generateAllAB-modal .input-component {
+    position: relative;
+    display: inline-block;
+    padding: 4px 7px;
+    width: 100%;
+    height: 22px;
+    cursor: text;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #666;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    -webkit-transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1); }
+  .wonder-generateAllAB-modal .input-component::placeholder {
+    color: #ccc; }
+  .wonder-generateAllAB-modal .input-component:hover {
+    border-color: #57c5f7; }
+  .wonder-generateAllAB-modal .input-component:focus {
+    border-color: #57c5f7;
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(45, 183, 245, 0.2); }
+  .wonder-generateAllAB-modal .modal-item {
+    width: 470px;
+    height: 200px;
+    position: relative;
+    background: #c1c1c1;
+    border-radius: 5px;
+    z-index: 150; }
+    .wonder-generateAllAB-modal .modal-item .modal-item-header {
+      width: 100%;
+      height: 22px;
+      line-height: 22px;
+      font-size: 14px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      text-align: center;
+      font-size: 17px;
+      font-weight: bold;
+      padding: 5px 0px 2px 0px;
+      border-bottom: 1px solid #868686;
+      background: #555454;
+      position: relative; }
+      .wonder-generateAllAB-modal .modal-item .modal-item-header img {
+        position: absolute;
+        top: 8px;
+        cursor: hand;
+        right: 20px;
+        width: 15px;
+        height: 15px; }
+    .wonder-generateAllAB-modal .modal-item .modal-item-content {
+      color: #000;
+      height: 114px;
+      overflow-y: auto;
+      width: 90%;
+      margin-left: 5%;
+      padding-top: 10px;
+      box-sizing: border-box;
+      font-size: 16px; }
+      .wonder-generateAllAB-modal .modal-item .modal-item-content::-webkit-scrollbar {
+        width: 4px;
+        height: 6px; }
+      .wonder-generateAllAB-modal .modal-item .modal-item-content::-webkit-scrollbar-button {
+        display: none; }
+      .wonder-generateAllAB-modal .modal-item .modal-item-content::-webkit-scrollbar-track {
+        background: rgba(1, 1, 1, 0.6);
+        width: 2px; }
+      .wonder-generateAllAB-modal .modal-item .modal-item-content::-webkit-scrollbar-thumb {
+        background: #cfcccc;
+        border-radius: 4px; }
+        .wonder-generateAllAB-modal .modal-item .modal-item-content::-webkit-scrollbar-thumb:hover {
+          background: #fc7100; }
+      .wonder-generateAllAB-modal .modal-item .modal-item-content .content-field {
+        width: 100%;
+        height: 24px;
+        display: flex; }
+        .wonder-generateAllAB-modal .modal-item .modal-item-content .content-field .field-title {
+          width: 20%;
+          text-align: center;
+          height: 24px;
+          line-height: 24px; }
+        .wonder-generateAllAB-modal .modal-item .modal-item-content .content-field .field-content {
+          width: 80%;
+          margin-left: 4px;
+          text-align: center;
+          height: 24px;
+          line-height: 24px; }
+          .wonder-generateAllAB-modal .modal-item .modal-item-content .content-field .field-content a {
+            white-space: nowrap; }
+    .wonder-generateAllAB-modal .modal-item .modal-item-footer {
+      height: 50px;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      position: relative; }
+      .wonder-generateAllAB-modal .modal-item .modal-item-footer .footer-submit {
         width: 100px;
         position: absolute;
         top: 5px;
@@ -585,9 +705,10 @@ html, body {
                 background-color: #4a4a4a;
                 border: 1px solid #706f6f; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .wonder-left-components .wonder-left-components-header .sceneTree-header-item .item-content .content-section {
-                  height: 24px;
-                  line-height: 24px;
+                  height: 30px;
+                  line-height: 30px;
                   width: 100%;
+                  border-bottom: 1px solid #525353;
                   color: #ffffff;
                   font-weight: normal;
                   position: relative;
@@ -622,9 +743,10 @@ html, body {
                   border: 1px solid #706f6f;
                   background-color: #4a4a4a; }
                   .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .wonder-left-components .wonder-left-components-header .sceneTree-header-item .item-content .section-childLayer .content-section {
-                    height: 24px;
-                    line-height: 24px;
+                    height: 30px;
+                    line-height: 30px;
                     width: 100%;
+                    border-bottom: 1px solid #525353;
                     color: #ffffff;
                     font-weight: normal;
                     position: relative;
@@ -650,6 +772,9 @@ html, body {
                         height: 0;
                         border: 5px solid transparent;
                         border-left-color: #ffffff; }
+            .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .wonder-left-components .wonder-left-components-header .sceneTree-header-item .item-content {
+              top: -20px;
+              left: 25px; }
           .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .wonder-left-components .wonder-sceneTree-component {
             width: 100%;
             height: 100%;
@@ -672,7 +797,7 @@ html, body {
             .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .wonder-left-components .wonder-sceneTree-component .wonder-tree {
               width: 100%;
               height: 100%;
-              font-size: 12px;
+              font-size: 13px;
               position: relative;
               padding-top: 5px; }
               .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .wonder-left-components .wonder-sceneTree-component .wonder-tree .wonder-tree-node {
@@ -774,7 +899,7 @@ html, body {
               flex-direction: row; }
               .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .bottom-header .bottom-widget-category .category-name {
                 width: 80px;
-                font-size: 12px;
+                font-size: 13px;
                 height: 99%;
                 margin-right: 0 5px;
                 display: flex;
@@ -821,8 +946,7 @@ html, body {
                 height: 25px;
                 background-color: #333333;
                 display: flex;
-                position: relative;
-                height: 25px; }
+                position: relative; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .asset-tree .wonder-asset-header .asset-header-item {
                   flex: initial;
                   width: 25px;
@@ -851,9 +975,10 @@ html, body {
                     background-color: #4a4a4a;
                     border: 1px solid #706f6f; }
                     .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .asset-tree .wonder-asset-header .asset-header-item .item-content .content-section {
-                      height: 24px;
-                      line-height: 24px;
+                      height: 30px;
+                      line-height: 30px;
                       width: 100%;
+                      border-bottom: 1px solid #525353;
                       color: #ffffff;
                       font-weight: normal;
                       position: relative;
@@ -888,9 +1013,10 @@ html, body {
                       border: 1px solid #706f6f;
                       background-color: #4a4a4a; }
                       .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .asset-tree .wonder-asset-header .asset-header-item .item-content .section-childLayer .content-section {
-                        height: 24px;
-                        line-height: 24px;
+                        height: 30px;
+                        line-height: 30px;
                         width: 100%;
+                        border-bottom: 1px solid #525353;
                         color: #ffffff;
                         font-weight: normal;
                         position: relative;
@@ -926,6 +1052,9 @@ html, body {
                     background-color: red;
                     width: 100%;
                     height: 100%; }
+                .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .asset-tree .wonder-asset-header .asset-header-item .item-content {
+                  top: -50px;
+                  left: 25px; }
               .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .asset-tree .wonder-asset-assetTree {
                 width: 100%;
                 height: 100%;
@@ -1002,6 +1131,8 @@ html, body {
               flex: initial;
               width: 70%;
               height: 100%;
+              box-sizing: border-box;
+              padding-bottom: 25px;
               background-color: #444444;
               display: flex;
               flex-wrap: wrap;
@@ -1021,8 +1152,8 @@ html, body {
                   background: #fc7100; }
               .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-fileBox,
               .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-folderBox {
-                width: 80px;
-                height: 80px;
+                width: 120px;
+                height: 85px;
                 margin: 5px;
                 z-index: 100;
                 position: relative;
@@ -1038,15 +1169,15 @@ html, body {
                   width: 100%; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-fileBox .box-image,
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-folderBox .box-image {
-                  width: 80px;
-                  height: 60px;
+                  width: 100%;
+                  height: 65px;
                   display: flex;
                   align-items: center;
                   justify-content: center; }
                   .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-fileBox .box-image img,
                   .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-folderBox .box-image img {
-                    width: 50px;
-                    height: 50px; }
+                    width: 55px;
+                    height: 55px; }
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-fileBox .item-text,
                 .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-folderBox .item-text {
                   width: 100%;
@@ -1054,17 +1185,18 @@ html, body {
                   display: flex;
                   align-items: center;
                   justify-content: center;
-                  font-size: 12px; }
+                  font-size: 13px; }
                   .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-fileBox .item-text span,
                   .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-folderBox .item-text span {
                     padding-top: 2px;
-                    width: 80%;
+                    width: 94%;
                     display: block;
                     height: 20px;
                     line-height: 20px;
                     text-align: center;
                     overflow: hidden;
-                    text-overflow: ellipsis; }
+                    text-overflow: ellipsis;
+                    white-space: nowrap; }
               .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-bottom-component .wonder-asset-component .wonder-asset-assetChildren .item-active {
                 background: #5C7EA6;
                 border-radius: 10px; }
@@ -1256,20 +1388,22 @@ html, body {
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree {
           padding-top: 5px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .sceneTree-name h1 {
-            padding-left: 30px; }
+            padding-left: 30px;
+            font-size: 16px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .sceneTree-name .inspector-item {
             width: 100%;
             height: 25px;
             display: flex;
-            font-size: 12px;
-            padding: 3px 0px; }
+            font-size: 13px; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .sceneTree-name .inspector-item .item-header {
               flex: initial;
-              height: 100%;
+              height: 25px;
+              line-height: 25px;
               width: 32%;
-              display: flex;
-              align-items: center;
-              margin-left: 15px; }
+              margin-left: 15px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .sceneTree-name .inspector-item .item-header:hover {
                 color: #00c1de;
                 cursor: pointer; }
@@ -1280,6 +1414,11 @@ html, body {
               display: flex;
               align-items: center;
               padding-right: 4px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .sceneTree-name .inspector-item .item-content span {
+                white-space: nowrap;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .sceneTree-name .inspector-item .item-color {
               display: flex; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .sceneTree-name .inspector-item .item-color .color-hex {
@@ -1330,21 +1469,21 @@ html, body {
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .componentBox-component {
             padding-bottom: 6px;
             width: 100%; }
-            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .componentBox-component .header {
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .componentBox-component .component-header {
               display: flex;
               justify-content: center;
               width: 100%;
               height: 30px;
               margin-bottom: 10px;
               border-bottom: 1px solid #fff; }
-              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .componentBox-component .header .header-triangle {
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .componentBox-component .component-header .header-triangle {
                 flex: initial;
                 width: 30px;
                 height: 30px;
                 display: flex;
                 justify-content: center;
                 align-content: center; }
-                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .componentBox-component .header .header-triangle .triangle-right {
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .componentBox-component .component-header .header-triangle .triangle-right {
                   margin-top: 10px;
                   display: block;
                   width: 0;
@@ -1352,7 +1491,7 @@ html, body {
                   border-top: 4px solid transparent;
                   border-left: 8px solid #fff;
                   border-bottom: 4px solid transparent; }
-                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .componentBox-component .header .header-triangle .triangle-bottom {
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .componentBox-component .component-header .header-triangle .triangle-bottom {
                   margin-top: 10px;
                   display: block;
                   width: 0;
@@ -1360,15 +1499,15 @@ html, body {
                   border-left: 4px solid transparent;
                   border-right: 4px solid transparent;
                   border-top: 8px solid #fff; }
-              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .componentBox-component .header .header-title {
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .componentBox-component .component-header .header-title {
                 flex: 3;
                 height: 30px;
                 line-height: 30px;
                 font-size: 15px; }
-                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .componentBox-component .header .header-title:hover {
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .componentBox-component .component-header .header-title:hover {
                   color: #00c1de;
                   cursor: pointer; }
-              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .componentBox-component .header .header-close {
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .componentBox-component .component-header .header-close {
                 flex: initial;
                 color: black;
                 width: 30px;
@@ -1376,25 +1515,27 @@ html, body {
                 display: flex;
                 align-items: center;
                 justify-content: center; }
-                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .componentBox-component .header .header-close img {
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .componentBox-component .component-header .header-close img {
                   width: 10px;
                   height: 10px;
                   cursor: hand; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform h1 {
-            padding-left: 30px; }
+            padding-left: 30px;
+            font-size: 16px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform .inspector-item {
             width: 100%;
             height: 25px;
             display: flex;
-            font-size: 12px;
-            padding: 3px 0px; }
+            font-size: 13px; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform .inspector-item .item-header {
               flex: initial;
-              height: 100%;
+              height: 25px;
+              line-height: 25px;
               width: 32%;
-              display: flex;
-              align-items: center;
-              margin-left: 15px; }
+              margin-left: 15px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform .inspector-item .item-header:hover {
                 color: #00c1de;
                 cursor: pointer; }
@@ -1405,6 +1546,11 @@ html, body {
               display: flex;
               align-items: center;
               padding-right: 4px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform .inspector-item .item-content span {
+                white-space: nowrap;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform .inspector-item .item-color {
               display: flex; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform .inspector-item .item-color .color-hex {
@@ -1482,20 +1628,22 @@ html, body {
               margin-left: 5%;
               margin-bottom: 10px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-camera-group .inspector-component .component-content .wonder-camera-view h1 {
-            padding-left: 30px; }
+            padding-left: 30px;
+            font-size: 16px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-camera-group .inspector-component .component-content .wonder-camera-view .inspector-item {
             width: 100%;
             height: 25px;
             display: flex;
-            font-size: 12px;
-            padding: 3px 0px; }
+            font-size: 13px; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-camera-group .inspector-component .component-content .wonder-camera-view .inspector-item .item-header {
               flex: initial;
-              height: 100%;
+              height: 25px;
+              line-height: 25px;
               width: 32%;
-              display: flex;
-              align-items: center;
-              margin-left: 15px; }
+              margin-left: 15px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-camera-group .inspector-component .component-content .wonder-camera-view .inspector-item .item-header:hover {
                 color: #00c1de;
                 cursor: pointer; }
@@ -1506,6 +1654,11 @@ html, body {
               display: flex;
               align-items: center;
               padding-right: 4px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-camera-group .inspector-component .component-content .wonder-camera-view .inspector-item .item-content span {
+                white-space: nowrap;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-camera-group .inspector-component .component-content .wonder-camera-view .inspector-item .item-color {
               display: flex; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-camera-group .inspector-component .component-content .wonder-camera-view .inspector-item .item-color .color-hex {
@@ -1554,20 +1707,22 @@ html, body {
                 align-items: center;
                 justify-content: center; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-camera-group .inspector-component .component-content .wonder-camera-projection h1 {
-            padding-left: 30px; }
+            padding-left: 30px;
+            font-size: 16px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-camera-group .inspector-component .component-content .wonder-camera-projection .inspector-item {
             width: 100%;
             height: 25px;
             display: flex;
-            font-size: 12px;
-            padding: 3px 0px; }
+            font-size: 13px; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-camera-group .inspector-component .component-content .wonder-camera-projection .inspector-item .item-header {
               flex: initial;
-              height: 100%;
+              height: 25px;
+              line-height: 25px;
               width: 32%;
-              display: flex;
-              align-items: center;
-              margin-left: 15px; }
+              margin-left: 15px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-camera-group .inspector-component .component-content .wonder-camera-projection .inspector-item .item-header:hover {
                 color: #00c1de;
                 cursor: pointer; }
@@ -1578,6 +1733,11 @@ html, body {
               display: flex;
               align-items: center;
               padding-right: 4px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-camera-group .inspector-component .component-content .wonder-camera-projection .inspector-item .item-content span {
+                white-space: nowrap;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-camera-group .inspector-component .component-content .wonder-camera-projection .inspector-item .item-color {
               display: flex; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-camera-group .inspector-component .component-content .wonder-camera-projection .inspector-item .item-color .color-hex {
@@ -1657,20 +1817,22 @@ html, body {
               margin-left: 5%;
               margin-bottom: 10px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-mesh-renderer h1 {
-            padding-left: 30px; }
+            padding-left: 30px;
+            font-size: 16px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-mesh-renderer .inspector-item {
             width: 100%;
             height: 25px;
             display: flex;
-            font-size: 12px;
-            padding: 3px 0px; }
+            font-size: 13px; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-mesh-renderer .inspector-item .item-header {
               flex: initial;
-              height: 100%;
+              height: 25px;
+              line-height: 25px;
               width: 32%;
-              display: flex;
-              align-items: center;
-              margin-left: 15px; }
+              margin-left: 15px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-mesh-renderer .inspector-item .item-header:hover {
                 color: #00c1de;
                 cursor: pointer; }
@@ -1681,6 +1843,11 @@ html, body {
               display: flex;
               align-items: center;
               padding-right: 4px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-mesh-renderer .inspector-item .item-content span {
+                white-space: nowrap;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-mesh-renderer .inspector-item .item-color {
               display: flex; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-mesh-renderer .inspector-item .item-color .color-hex {
@@ -1729,20 +1896,22 @@ html, body {
                 align-items: center;
                 justify-content: center; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material h1 {
-            padding-left: 30px; }
+            padding-left: 30px;
+            font-size: 16px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .inspector-item {
             width: 100%;
             height: 25px;
             display: flex;
-            font-size: 12px;
-            padding: 3px 0px; }
+            font-size: 13px; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .inspector-item .item-header {
               flex: initial;
-              height: 100%;
+              height: 25px;
+              line-height: 25px;
               width: 32%;
-              display: flex;
-              align-items: center;
-              margin-left: 15px; }
+              margin-left: 15px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .inspector-item .item-header:hover {
                 color: #00c1de;
                 cursor: pointer; }
@@ -1753,6 +1922,11 @@ html, body {
               display: flex;
               align-items: center;
               padding-right: 4px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .inspector-item .item-content span {
+                white-space: nowrap;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .inspector-item .item-color {
               display: flex; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .inspector-item .item-color .color-hex {
@@ -1841,20 +2015,22 @@ html, body {
               width: 100%;
               height: 100%; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-light-material h1 {
-            padding-left: 30px; }
+            padding-left: 30px;
+            font-size: 16px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-light-material .inspector-item {
             width: 100%;
             height: 25px;
             display: flex;
-            font-size: 12px;
-            padding: 3px 0px; }
+            font-size: 13px; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-light-material .inspector-item .item-header {
               flex: initial;
-              height: 100%;
+              height: 25px;
+              line-height: 25px;
               width: 32%;
-              display: flex;
-              align-items: center;
-              margin-left: 15px; }
+              margin-left: 15px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-light-material .inspector-item .item-header:hover {
                 color: #00c1de;
                 cursor: pointer; }
@@ -1865,6 +2041,11 @@ html, body {
               display: flex;
               align-items: center;
               padding-right: 4px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-light-material .inspector-item .item-content span {
+                white-space: nowrap;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-light-material .inspector-item .item-color {
               display: flex; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-light-material .inspector-item .item-color .color-hex {
@@ -1913,20 +2094,22 @@ html, body {
                 align-items: center;
                 justify-content: center; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-basic-material h1 {
-            padding-left: 30px; }
+            padding-left: 30px;
+            font-size: 16px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-basic-material .inspector-item {
             width: 100%;
             height: 25px;
             display: flex;
-            font-size: 12px;
-            padding: 3px 0px; }
+            font-size: 13px; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-basic-material .inspector-item .item-header {
               flex: initial;
-              height: 100%;
+              height: 25px;
+              line-height: 25px;
               width: 32%;
-              display: flex;
-              align-items: center;
-              margin-left: 15px; }
+              margin-left: 15px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-basic-material .inspector-item .item-header:hover {
                 color: #00c1de;
                 cursor: pointer; }
@@ -1937,6 +2120,11 @@ html, body {
               display: flex;
               align-items: center;
               padding-right: 4px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-basic-material .inspector-item .item-content span {
+                white-space: nowrap;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-basic-material .inspector-item .item-color {
               display: flex; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-basic-material .inspector-item .item-color .color-hex {
@@ -2001,20 +2189,22 @@ html, body {
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-mesh-renderer .wonder-light-material .inspector-item .item-content, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-mesh-renderer .wonder-basic-material .inspector-item .item-content, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-light-material .inspector-item .item-content, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-render-group .inspector-component .component-content .wonder-inspector-material .wonder-basic-material .inspector-item .item-content {
             width: 60%; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-geometry h1 {
-            padding-left: 30px; }
+            padding-left: 30px;
+            font-size: 16px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-geometry .inspector-item {
             width: 100%;
             height: 25px;
             display: flex;
-            font-size: 12px;
-            padding: 3px 0px; }
+            font-size: 13px; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-geometry .inspector-item .item-header {
               flex: initial;
-              height: 100%;
+              height: 25px;
+              line-height: 25px;
               width: 32%;
-              display: flex;
-              align-items: center;
-              margin-left: 15px; }
+              margin-left: 15px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-geometry .inspector-item .item-header:hover {
                 color: #00c1de;
                 cursor: pointer; }
@@ -2025,6 +2215,11 @@ html, body {
               display: flex;
               align-items: center;
               padding-right: 4px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-geometry .inspector-item .item-content span {
+                white-space: nowrap;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-geometry .inspector-item .item-color {
               display: flex; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-geometry .inspector-item .item-color .color-hex {
@@ -2100,20 +2295,22 @@ html, body {
                 width: 15px;
                 height: 15px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light h1 {
-            padding-left: 30px; }
+            padding-left: 30px;
+            font-size: 16px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .inspector-item {
             width: 100%;
             height: 25px;
             display: flex;
-            font-size: 12px;
-            padding: 3px 0px; }
+            font-size: 13px; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .inspector-item .item-header {
               flex: initial;
-              height: 100%;
+              height: 25px;
+              line-height: 25px;
               width: 32%;
-              display: flex;
-              align-items: center;
-              margin-left: 15px; }
+              margin-left: 15px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .inspector-item .item-header:hover {
                 color: #00c1de;
                 cursor: pointer; }
@@ -2124,6 +2321,11 @@ html, body {
               display: flex;
               align-items: center;
               padding-right: 4px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .inspector-item .item-content span {
+                white-space: nowrap;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .inspector-item .item-color {
               display: flex; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .inspector-item .item-color .color-hex {
@@ -2172,20 +2374,22 @@ html, body {
                 align-items: center;
                 justify-content: center; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .wonder-direction-light h1 {
-            padding-left: 30px; }
+            padding-left: 30px;
+            font-size: 16px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .wonder-direction-light .inspector-item {
             width: 100%;
             height: 25px;
             display: flex;
-            font-size: 12px;
-            padding: 3px 0px; }
+            font-size: 13px; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .wonder-direction-light .inspector-item .item-header {
               flex: initial;
-              height: 100%;
+              height: 25px;
+              line-height: 25px;
               width: 32%;
-              display: flex;
-              align-items: center;
-              margin-left: 15px; }
+              margin-left: 15px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .wonder-direction-light .inspector-item .item-header:hover {
                 color: #00c1de;
                 cursor: pointer; }
@@ -2196,6 +2400,11 @@ html, body {
               display: flex;
               align-items: center;
               padding-right: 4px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .wonder-direction-light .inspector-item .item-content span {
+                white-space: nowrap;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .wonder-direction-light .inspector-item .item-color {
               display: flex; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .wonder-direction-light .inspector-item .item-color .color-hex {
@@ -2244,20 +2453,22 @@ html, body {
                 align-items: center;
                 justify-content: center; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .wonder-point-light h1 {
-            padding-left: 30px; }
+            padding-left: 30px;
+            font-size: 16px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .wonder-point-light .inspector-item {
             width: 100%;
             height: 25px;
             display: flex;
-            font-size: 12px;
-            padding: 3px 0px; }
+            font-size: 13px; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .wonder-point-light .inspector-item .item-header {
               flex: initial;
-              height: 100%;
+              height: 25px;
+              line-height: 25px;
               width: 32%;
-              display: flex;
-              align-items: center;
-              margin-left: 15px; }
+              margin-left: 15px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .wonder-point-light .inspector-item .item-header:hover {
                 color: #00c1de;
                 cursor: pointer; }
@@ -2268,6 +2479,11 @@ html, body {
               display: flex;
               align-items: center;
               padding-right: 4px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .wonder-point-light .inspector-item .item-content span {
+                white-space: nowrap;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .wonder-point-light .inspector-item .item-color {
               display: flex; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-light .wonder-point-light .inspector-item .item-color .color-hex {
@@ -2316,20 +2532,22 @@ html, body {
                 align-items: center;
                 justify-content: center; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-arcballCameraController h1 {
-            padding-left: 30px; }
+            padding-left: 30px;
+            font-size: 16px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-arcballCameraController .inspector-item {
             width: 100%;
             height: 25px;
             display: flex;
-            font-size: 12px;
-            padding: 3px 0px; }
+            font-size: 13px; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-arcballCameraController .inspector-item .item-header {
               flex: initial;
-              height: 100%;
+              height: 25px;
+              line-height: 25px;
               width: 32%;
-              display: flex;
-              align-items: center;
-              margin-left: 15px; }
+              margin-left: 15px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-arcballCameraController .inspector-item .item-header:hover {
                 color: #00c1de;
                 cursor: pointer; }
@@ -2340,6 +2558,11 @@ html, body {
               display: flex;
               align-items: center;
               padding-right: 4px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-arcballCameraController .inspector-item .item-content span {
+                white-space: nowrap;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-arcballCameraController .inspector-item .item-color {
               display: flex; }
               .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-arcballCameraController .inspector-item .item-color .color-hex {
@@ -2454,21 +2677,398 @@ html, body {
                           background: #777676; }
                           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-addable-component .addable-component-content .content-components .component-list .wonder-addable-componentBox .category-content .content-list .content-type:hover {
                             background-color: #5C7EA6; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component {
+            width: 100%;
+            margin-bottom: 15px; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-title, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-title {
+              font-size: 14px;
+              margin-left: 5%; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-title:hover, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-title:hover {
+                color: #00c1de;
+                cursor: pointer; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component hr, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component hr {
+              border: 0;
+              height: 1px;
+              width: 90%;
+              text-align: center;
+              background-color: #a8a8a8; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content {
+              width: 90%;
+              margin-left: 5%;
+              margin-bottom: 10px; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-title, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-title {
+            font-weight: bold; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute h1, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute h1 {
+              padding-left: 30px;
+              font-size: 16px; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-item, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-item {
+              width: 100%;
+              height: 25px;
+              display: flex;
+              font-size: 13px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-item .item-header, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-item .item-header {
+                flex: initial;
+                height: 25px;
+                line-height: 25px;
+                width: 32%;
+                margin-left: 15px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-item .item-header:hover, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-item .item-header:hover {
+                  color: #00c1de;
+                  cursor: pointer; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-item .item-content, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-item .item-content {
+                flex: initial;
+                height: 100%;
+                width: 68%;
+                display: flex;
+                align-items: center;
+                padding-right: 4px; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-item .item-content span, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-item .item-content span {
+                  white-space: nowrap;
+                  width: 100%;
+                  overflow: hidden;
+                  text-overflow: ellipsis; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-item .item-color, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-item .item-color {
+                display: flex; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-item .item-color .color-hex, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-item .item-color .color-hex {
+                  width: 100%;
+                  height: 60%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  border-radius: 10px; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-item .item-color .color-select, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-item .item-color .color-select {
+                  flex: initial;
+                  width: 30px;
+                  height: 100%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center; }
+                  .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-item .item-color .color-select img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-item .item-color .color-select img {
+                    width: 15px;
+                    height: 15px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-item .item-texture, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-item .item-texture {
+                display: flex; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-item .item-texture .texture-img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-item .item-texture .texture-img {
+                  flex: initial;
+                  width: 23px;
+                  height: 23px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  border: 2px solid #a7a5a5;
+                  position: relative;
+                  box-sizing: border-box; }
+                  .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-item .item-texture .texture-img .img-dragBg, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-item .item-texture .texture-img .img-dragBg {
+                    position: absolute;
+                    z-index: 100;
+                    left: 0px;
+                    top: 0px;
+                    width: 100%;
+                    height: 100%; }
+                  .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-item .item-texture .texture-img img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-item .item-texture .texture-img img {
+                    width: 20px;
+                    height: 20px; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-item .item-texture .texture-remove, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-item .item-texture .texture-remove {
+                  flex: initial;
+                  display: flex;
+                  margin-left: 15px;
+                  align-items: center;
+                  justify-content: center; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function h1, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function h1 {
+              padding-left: 30px;
+              font-size: 16px; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-item, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-item {
+              width: 100%;
+              height: 25px;
+              display: flex;
+              font-size: 13px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-item .item-header, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-item .item-header {
+                flex: initial;
+                height: 25px;
+                line-height: 25px;
+                width: 32%;
+                margin-left: 15px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-item .item-header:hover, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-item .item-header:hover {
+                  color: #00c1de;
+                  cursor: pointer; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-item .item-content, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-item .item-content {
+                flex: initial;
+                height: 100%;
+                width: 68%;
+                display: flex;
+                align-items: center;
+                padding-right: 4px; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-item .item-content span, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-item .item-content span {
+                  white-space: nowrap;
+                  width: 100%;
+                  overflow: hidden;
+                  text-overflow: ellipsis; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-item .item-color, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-item .item-color {
+                display: flex; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-item .item-color .color-hex, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-item .item-color .color-hex {
+                  width: 100%;
+                  height: 60%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  border-radius: 10px; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-item .item-color .color-select, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-item .item-color .color-select {
+                  flex: initial;
+                  width: 30px;
+                  height: 100%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center; }
+                  .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-item .item-color .color-select img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-item .item-color .color-select img {
+                    width: 15px;
+                    height: 15px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-item .item-texture, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-item .item-texture {
+                display: flex; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-item .item-texture .texture-img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-item .item-texture .texture-img {
+                  flex: initial;
+                  width: 23px;
+                  height: 23px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  border: 2px solid #a7a5a5;
+                  position: relative;
+                  box-sizing: border-box; }
+                  .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-item .item-texture .texture-img .img-dragBg, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-item .item-texture .texture-img .img-dragBg {
+                    position: absolute;
+                    z-index: 100;
+                    left: 0px;
+                    top: 0px;
+                    width: 100%;
+                    height: 100%; }
+                  .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-item .item-texture .texture-img img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-item .item-texture .texture-img img {
+                    width: 20px;
+                    height: 20px; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-item .item-texture .texture-remove, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-item .item-texture .texture-remove {
+                  flex: initial;
+                  display: flex;
+                  margin-left: 15px;
+                  align-items: center;
+                  justify-content: center; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function {
+              width: 100%;
+              padding-bottom: 6px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-select, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-select, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-select, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-select {
+                width: 100%;
+                height: 100%;
+                display: flex; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-select .select-name, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-select .select-name, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-select .select-name, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-select .select-name {
+                  overflow: hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  width: 100%;
+                  height: 17px;
+                  line-height: 17px;
+                  color: #fc9b00;
+                  background-color: #333333;
+                  border: 1px solid #d9d9d9;
+                  border-radius: 3px;
+                  padding-left: 7px;
+                  padding-top: 2px;
+                  margin-top: 2px; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-select .select-img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-select .select-img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-select .select-img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-select .select-img {
+                  width: 30px;
+                  height: 25px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center; }
+                  .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-select .select-img img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-select .select-img img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-select .select-img img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-select .select-img img {
+                    width: 15px;
+                    height: 15px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-item .item-header, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-item .item-header, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-item .item-header, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-item .item-header {
+                margin-left: 5px;
+                width: 40%; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-item .item-header:hover, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-item .item-header:hover, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-item .item-header:hover, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-item .item-header:hover {
+                  color: #00c1de;
+                  cursor: pointer; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .inspector-item .item-content, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .inspector-item .item-content, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .inspector-item .item-content, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .inspector-item .item-content {
+                width: 60%; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .component-header, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .component-header, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .component-header, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .component-header {
+                display: flex;
+                justify-content: center;
+                width: 96%;
+                height: 30px;
+                margin-left: 2%;
+                margin-bottom: 10px;
+                border-bottom: 1px solid #a8a8a8; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .component-header .header-title, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .component-header .header-title, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .component-header .header-title, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .component-header .header-title {
+                  flex: 3;
+                  height: 30px;
+                  line-height: 30px;
+                  font-size: 15px;
+                  text-overflow: ellipsis;
+                  overflow: hidden; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .component-header .header-close, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .component-header .header-close, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .component-header .header-close, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .component-header .header-close {
+                  flex: initial;
+                  color: black;
+                  width: 30px;
+                  height: 30px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center; }
+                  .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .component-header .header-close img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .component-header .header-close img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .component-header .header-close img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .component-header .header-close img {
+                    width: 10px;
+                    height: 10px;
+                    cursor: hand; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field h1, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field h1, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field h1, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field h1 {
+                padding-left: 30px;
+                font-size: 16px; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item {
+                width: 100%;
+                height: 25px;
+                display: flex;
+                font-size: 13px; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-header, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-header, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-header, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-header {
+                  flex: initial;
+                  height: 25px;
+                  line-height: 25px;
+                  width: 32%;
+                  margin-left: 15px;
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis; }
+                  .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-header:hover, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-header:hover, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-header:hover, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-header:hover {
+                    color: #00c1de;
+                    cursor: pointer; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-content, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-content, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-content, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-content {
+                  flex: initial;
+                  height: 100%;
+                  width: 68%;
+                  display: flex;
+                  align-items: center;
+                  padding-right: 4px; }
+                  .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-content span, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-content span, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-content span, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-content span {
+                    white-space: nowrap;
+                    width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-color, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-color, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-color, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-color {
+                  display: flex; }
+                  .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-color .color-hex, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-color .color-hex, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-color .color-hex, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-color .color-hex {
+                    width: 100%;
+                    height: 60%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 10px; }
+                  .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-color .color-select, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-color .color-select, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-color .color-select, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-color .color-select {
+                    flex: initial;
+                    width: 30px;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center; }
+                    .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-color .color-select img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-color .color-select img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-color .color-select img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-color .color-select img {
+                      width: 15px;
+                      height: 15px; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture {
+                  display: flex; }
+                  .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture .texture-img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture .texture-img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture .texture-img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture .texture-img {
+                    flex: initial;
+                    width: 23px;
+                    height: 23px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: 2px solid #a7a5a5;
+                    position: relative;
+                    box-sizing: border-box; }
+                    .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture .texture-img .img-dragBg, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture .texture-img .img-dragBg, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture .texture-img .img-dragBg, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture .texture-img .img-dragBg {
+                      position: absolute;
+                      z-index: 100;
+                      left: 0px;
+                      top: 0px;
+                      width: 100%;
+                      height: 100%; }
+                    .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture .texture-img img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture .texture-img img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture .texture-img img, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture .texture-img img {
+                      width: 20px;
+                      height: 20px; }
+                  .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture .texture-remove, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture .texture-remove, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture .texture-remove, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-texture .texture-remove {
+                    flex: initial;
+                    display: flex;
+                    margin-left: 15px;
+                    align-items: center;
+                    justify-content: center; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-header, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-header, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-header, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-header {
+                margin-left: 5px;
+                width: 40%; }
+                .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-header:hover, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-header:hover, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-header:hover, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-header:hover {
+                  color: #00c1de;
+                  cursor: pointer; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-content, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-content, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-attribute .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-content, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .wonder-script-function .scriptAttribute-fields .scriptAttribute-field .inspector-item .item-content {
+                width: 60%; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptAttribute .inspector-component .component-content .addable-btn, .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-scriptFunction .inspector-component .component-content .addable-btn {
+              width: 230px; }
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .attributeBox-component {
+          padding-bottom: 6px;
+          width: 100%; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .attributeBox-component .component-header {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            height: 30px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #fff; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .attributeBox-component .component-header .header-title {
+              flex: 3;
+              height: 30px;
+              line-height: 30px;
+              font-size: 15px;
+              font-weight: bold;
+              text-overflow: ellipsis;
+              overflow: hidden; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .attributeBox-component .component-header .header-close {
+              flex: initial;
+              color: black;
+              width: 30px;
+              height: 30px;
+              display: flex;
+              align-items: center;
+              justify-content: center; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .attributeBox-component .component-header .header-close img {
+                width: 10px;
+                height: 10px;
+                cursor: hand; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .attributeBox-component .component-submit {
+            width: 100%;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .attributeBox-component .component-submit .submit-btn {
+              width: 230px; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .inspector-asset-folder h1 {
-          padding-left: 30px; }
+          padding-left: 30px;
+          font-size: 16px; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .inspector-asset-folder .inspector-item {
           width: 100%;
           height: 25px;
           display: flex;
-          font-size: 12px;
-          padding: 3px 0px; }
+          font-size: 13px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .inspector-asset-folder .inspector-item .item-header {
             flex: initial;
-            height: 100%;
+            height: 25px;
+            line-height: 25px;
             width: 32%;
-            display: flex;
-            align-items: center;
-            margin-left: 15px; }
+            margin-left: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .inspector-asset-folder .inspector-item .item-header:hover {
               color: #00c1de;
               cursor: pointer; }
@@ -2479,6 +3079,11 @@ html, body {
             display: flex;
             align-items: center;
             padding-right: 4px; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .inspector-asset-folder .inspector-item .item-content span {
+              white-space: nowrap;
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .inspector-asset-folder .inspector-item .item-color {
             display: flex; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .inspector-asset-folder .inspector-item .item-color .color-hex {
@@ -2527,20 +3132,22 @@ html, body {
               align-items: center;
               justify-content: center; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-texture-assetTree h1 {
-          padding-left: 30px; }
+          padding-left: 30px;
+          font-size: 16px; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-texture-assetTree .inspector-item {
           width: 100%;
           height: 25px;
           display: flex;
-          font-size: 12px;
-          padding: 3px 0px; }
+          font-size: 13px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-texture-assetTree .inspector-item .item-header {
             flex: initial;
-            height: 100%;
+            height: 25px;
+            line-height: 25px;
             width: 32%;
-            display: flex;
-            align-items: center;
-            margin-left: 15px; }
+            margin-left: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-texture-assetTree .inspector-item .item-header:hover {
               color: #00c1de;
               cursor: pointer; }
@@ -2551,6 +3158,11 @@ html, body {
             display: flex;
             align-items: center;
             padding-right: 4px; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-texture-assetTree .inspector-item .item-content span {
+              white-space: nowrap;
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-texture-assetTree .inspector-item .item-color {
             display: flex; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-texture-assetTree .inspector-item .item-color .color-hex {
@@ -2599,20 +3211,22 @@ html, body {
               align-items: center;
               justify-content: center; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .inspector-asset-wdb h1 {
-          padding-left: 30px; }
+          padding-left: 30px;
+          font-size: 16px; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .inspector-asset-wdb .inspector-item {
           width: 100%;
           height: 25px;
           display: flex;
-          font-size: 12px;
-          padding: 3px 0px; }
+          font-size: 13px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .inspector-asset-wdb .inspector-item .item-header {
             flex: initial;
-            height: 100%;
+            height: 25px;
+            line-height: 25px;
             width: 32%;
-            display: flex;
-            align-items: center;
-            margin-left: 15px; }
+            margin-left: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .inspector-asset-wdb .inspector-item .item-header:hover {
               color: #00c1de;
               cursor: pointer; }
@@ -2623,6 +3237,11 @@ html, body {
             display: flex;
             align-items: center;
             padding-right: 4px; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .inspector-asset-wdb .inspector-item .item-content span {
+              white-space: nowrap;
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .inspector-asset-wdb .inspector-item .item-color {
             display: flex; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .inspector-asset-wdb .inspector-item .item-color .color-hex {
@@ -2671,20 +3290,22 @@ html, body {
               align-items: center;
               justify-content: center; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-material-inspector h1 {
-          padding-left: 30px; }
+          padding-left: 30px;
+          font-size: 16px; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-material-inspector .inspector-item {
           width: 100%;
           height: 25px;
           display: flex;
-          font-size: 12px;
-          padding: 3px 0px; }
+          font-size: 13px; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-material-inspector .inspector-item .item-header {
             flex: initial;
-            height: 100%;
+            height: 25px;
+            line-height: 25px;
             width: 32%;
-            display: flex;
-            align-items: center;
-            margin-left: 15px; }
+            margin-left: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-material-inspector .inspector-item .item-header:hover {
               color: #00c1de;
               cursor: pointer; }
@@ -2695,6 +3316,11 @@ html, body {
             display: flex;
             align-items: center;
             padding-right: 4px; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-material-inspector .inspector-item .item-content span {
+              white-space: nowrap;
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-material-inspector .inspector-item .item-color {
             display: flex; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-material-inspector .inspector-item .item-color .color-hex {
@@ -2742,6 +3368,186 @@ html, body {
               margin-left: 15px;
               align-items: center;
               justify-content: center; }
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector h1 {
+          padding-left: 30px;
+          font-size: 16px; }
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector .inspector-item {
+          width: 100%;
+          height: 25px;
+          display: flex;
+          font-size: 13px; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector .inspector-item .item-header {
+            flex: initial;
+            height: 25px;
+            line-height: 25px;
+            width: 32%;
+            margin-left: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector .inspector-item .item-header:hover {
+              color: #00c1de;
+              cursor: pointer; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector .inspector-item .item-content {
+            flex: initial;
+            height: 100%;
+            width: 68%;
+            display: flex;
+            align-items: center;
+            padding-right: 4px; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector .inspector-item .item-content span {
+              white-space: nowrap;
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector .inspector-item .item-color {
+            display: flex; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector .inspector-item .item-color .color-hex {
+              width: 100%;
+              height: 60%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-radius: 10px; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector .inspector-item .item-color .color-select {
+              flex: initial;
+              width: 30px;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector .inspector-item .item-color .color-select img {
+                width: 15px;
+                height: 15px; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector .inspector-item .item-texture {
+            display: flex; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector .inspector-item .item-texture .texture-img {
+              flex: initial;
+              width: 23px;
+              height: 23px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border: 2px solid #a7a5a5;
+              position: relative;
+              box-sizing: border-box; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector .inspector-item .item-texture .texture-img .img-dragBg {
+                position: absolute;
+                z-index: 100;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector .inspector-item .item-texture .texture-img img {
+                width: 20px;
+                height: 20px; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector .inspector-item .item-texture .texture-remove {
+              flex: initial;
+              display: flex;
+              margin-left: 15px;
+              align-items: center;
+              justify-content: center; }
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector h1 {
+          padding-left: 30px;
+          font-size: 16px; }
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .inspector-item {
+          width: 100%;
+          height: 25px;
+          display: flex;
+          font-size: 13px; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .inspector-item .item-header {
+            flex: initial;
+            height: 25px;
+            line-height: 25px;
+            width: 32%;
+            margin-left: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .inspector-item .item-header:hover {
+              color: #00c1de;
+              cursor: pointer; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .inspector-item .item-content {
+            flex: initial;
+            height: 100%;
+            width: 68%;
+            display: flex;
+            align-items: center;
+            padding-right: 4px; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .inspector-item .item-content span {
+              white-space: nowrap;
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .inspector-item .item-color {
+            display: flex; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .inspector-item .item-color .color-hex {
+              width: 100%;
+              height: 60%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-radius: 10px; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .inspector-item .item-color .color-select {
+              flex: initial;
+              width: 30px;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .inspector-item .item-color .color-select img {
+                width: 15px;
+                height: 15px; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .inspector-item .item-texture {
+            display: flex; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .inspector-item .item-texture .texture-img {
+              flex: initial;
+              width: 23px;
+              height: 23px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border: 2px solid #a7a5a5;
+              position: relative;
+              box-sizing: border-box; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .inspector-item .item-texture .texture-img .img-dragBg {
+                position: absolute;
+                z-index: 100;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                height: 100%; }
+              .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .inspector-item .item-texture .texture-img img {
+                width: 20px;
+                height: 20px; }
+            .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .inspector-item .item-texture .texture-remove {
+              flex: initial;
+              display: flex;
+              margin-left: 15px;
+              align-items: center;
+              justify-content: center; }
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector .scriptEventFunction-data .wonder-file-input {
+          display: flex;
+          flex-direction: column;
+          align-items: center; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector .scriptEventFunction-data .wonder-file-input textarea {
+            height: 300px; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptEventFunction-inspector .scriptEventFunction-data .wonder-file-input button {
+            margin: 20px;
+            height: 28px;
+            width: 230px; }
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .scriptAttribute-data {
+          display: flex;
+          flex-direction: column;
+          align-items: center; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .scriptAttribute-data .data-fields {
+            width: 90%; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .scriptAttribute-data hr {
+            width: 100%; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-scriptAttribute-inspector .scriptAttribute-data .data-addable-btn {
+            margin: 20px;
+            height: 28px;
+            width: 230px; }
       .wonder-app-component .wonder-mainEditor-component .right-component .inspector-canvas-parent {
         width: 100%;
         height: 200px;
@@ -2856,8 +3662,8 @@ html, body {
     position: relative;
     z-index: 120;
     border: 1px solid #333333;
-    background: #c1c1c1;
-    border-radius: 5px; }
+    border-radius: 5px;
+    background: #c1c1c1; }
     .select-component-content .select-component-item .select-item-header {
       width: 100%;
       height: 20px;
@@ -2941,4 +3747,38 @@ html, body {
     width: 100%;
     height: 100%;
     background: rgba(10, 10, 10, 0.5);
+    z-index: 100; }
+
+.wonder-progress {
+  position: fixed;
+  z-index: 300;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .wonder-progress .progress-content {
+    width: 500px;
+    height: 22px;
+    background: #f5f5f5;
+    border-radius: 15px;
+    position: relative;
+    z-index: 200; }
+    .wonder-progress .progress-content .content-percent {
+      width: 0px;
+      height: 22px;
+      line-height: 22px;
+      padding-left: 15px;
+      border-radius: 15px;
+      background: #1890ff;
+      color: #fff; }
+  .wonder-progress .progress-bg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 10, 0.4);
     z-index: 100; }

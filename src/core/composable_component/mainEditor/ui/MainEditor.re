@@ -1,3 +1,5 @@
+open WonderBsMost;
+
 type retainedProps = {isInitEngine: bool};
 
 module Method = {
@@ -115,8 +117,13 @@ module Method = {
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
 
-let render = (uiState: AppStore.appState, dispatchFunc, _self) =>
-  uiState.isInitEngine ?
+let render =
+    (
+      uiState: AppStore.appState,
+      dispatchFunc,
+      {retainedProps}: ReasonReact.self('a, 'b, 'c),
+    ) =>
+  retainedProps.isInitEngine ?
     Method.buildElementAfterInitEngine(uiState, dispatchFunc) :
     Method.buildElementBeforeInitEngine(uiState, dispatchFunc);
 

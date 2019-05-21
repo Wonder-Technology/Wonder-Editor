@@ -7,26 +7,17 @@ let _buildDefaultMaterialSnapshotUint8Array = () =>
 
 let _buildImageDataUint8Array = editorState =>
   ImageDataMapAssetEditorService.getMap(editorState)
-  |> WonderCommonlib.ImmutableSparseMapService.map((. data) =>
-       Js.Nullable.bind(
-         data, (. ({uint8Array, base64}: ImageDataType.imageData) as data) =>
-         {
-           ...data,
-           uint8Array:
-             (
-               switch (uint8Array) {
-               | Some(uint8Array) => uint8Array
-               | None =>
-                 switch (base64) {
-                 | Some(base64) =>
-                   BufferUtils.convertBase64ToUint8Array(base64)
-                 | None => _buildDefaultMaterialSnapshotUint8Array()
-                 }
-               }
-             )
-             ->Some,
-         }
-       )
+  |> WonderCommonlib.ImmutableSparseMapService.mapValid(
+       (. data: ImageDataType.imageData) =>
+       {
+         ...data,
+         uint8Array:
+           ImageDataAssetService.getUint8Array(
+             data,
+             _buildDefaultMaterialSnapshotUint8Array,
+           )
+           ->Some,
+       }
      )
   |> ImageDataMapAssetEditorService.setMap(_, editorState);
 

@@ -1,3 +1,7 @@
+open Wonderjs;
+
+open ScriptAttributeType;
+
 let getScriptAttributeEntries = (script, attributeName, engineState) =>
   ScriptEngineService.unsafeGetScriptAttribute(
     script,
@@ -36,6 +40,7 @@ let buildScriptEventFunctionData = (~initFunc, ~updateFunc, ~disposeFunc) =>
 
 let buildSetLocalPositionEventFunc = () =>
   (. script, api, engineState) => {
+    let api = Obj.magic(api);
     let unsafeGetScriptGameObject = api##unsafeGetScriptGameObject;
     let unsafeGetGameObjectTransformComponent =
       api##unsafeGetGameObjectTransformComponent;

@@ -108,13 +108,20 @@ module Method = {
       assetTreeChildrenNodeArr
       |> Js.Array.filter(node => node |> TextureNodeAssetService.isTextureNode);
 
-    ArrayService.fastConcatArrays([|
+    let assetBundleAssetTreeChildrenNodeArr =
+      assetTreeChildrenNodeArr
+      |> Js.Array.filter(node =>
+           node |> AssetBundleNodeAssetService.isAssetBundleNode
+         );
+
+    ArrayService.fastMutableConcatArrays([|
       _sortByName(folderAssetTreeChildrenNodeArr, engineState),
       _sortByName(wdbAssetTreeChildrenNodeArr, engineState),
       _sortByName(materialAssetTreeChildrenNodeArr, engineState),
       _sortByName(scriptEventFunctionAssetTreeChildrenNodeArr, engineState),
       _sortByName(scriptAttributeAssetTreeChildrenNodeArr, engineState),
       _sortByName(textureAssetTreeChildrenNodeArr, engineState),
+      _sortByName(assetBundleAssetTreeChildrenNodeArr, engineState),
     |]);
   };
 
@@ -147,11 +154,7 @@ module Method = {
                      ~engineState,
                    );
                  let imgSrc =
-                   ImageDataMapUtils.getImgSrc(
-                     imageDataIndex,
-                     ImageUtils.getNullImageSrc(),
-                     editorState,
-                   );
+                   ImageDataMapUtils.getImgSrc(imageDataIndex, editorState);
 
                  <FileBox
                    key
@@ -177,12 +180,7 @@ module Method = {
                    );
 
                  let imgSrc =
-                   ImageDataMapUtils.getImgSrc(
-                     imageDataIndex,
-                     editorState
-                     |> MaterialDataAssetEditorService.unsafeGetDefaultMaterialSnapshotPath,
-                     editorState,
-                   );
+                   ImageDataMapUtils.getImgSrc(imageDataIndex, editorState);
 
                  <FileBox
                    key
@@ -233,12 +231,7 @@ module Method = {
                  let fileName = WDBNodeAssetService.getNodeName(nodeData);
 
                  let imgSrc =
-                   ImageDataMapUtils.getImgSrc(
-                     imageDataIndex,
-                     editorState
-                     |> MaterialDataAssetEditorService.unsafeGetDefaultMaterialSnapshotPath,
-                     editorState,
-                   );
+                   ImageDataMapUtils.getImgSrc(imageDataIndex, editorState);
 
                  <FileBox
                    key
@@ -254,6 +247,22 @@ module Method = {
                  />
                  |> Result.SameDataResult.success;
                },
+             /* TODO update assetBundle.png */
+             ~assetBundleNodeFunc=
+               (nodeId, {name}) =>
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc="./public/img/assetBundle.png"
+                   nodeId
+                   fileName=name
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success,
              ~folderNodeFunc=
                (nodeId, nodeData, children) => {
                  let name = FolderNodeAssetService.getNodeName(nodeData);

@@ -11,11 +11,7 @@ exports[`redo_undo: change meshRenderer drawMode prepare first step: set current
       className="item-header"
       title="draw mode"
     >
-      <span
-        className=""
-      >
-        Draw Mode
-      </span>
+      Draw Mode
     </div>
     <div
       className="item-content"
@@ -76,11 +72,7 @@ exports[`redo_undo: change meshRenderer drawMode prepare first step: set current
       className="item-header"
       title="draw mode"
     >
-      <span
-        className=""
-      >
-        Draw Mode
-      </span>
+      Draw Mode
     </div>
     <div
       className="item-content"
@@ -141,11 +133,7 @@ exports[`redo_undo: change meshRenderer drawMode prepare first step: set current
       className="item-header"
       title="draw mode"
     >
-      <span
-        className=""
-      >
-        Draw Mode
-      </span>
+      Draw Mode
     </div>
     <div
       className="item-content"
@@ -206,11 +194,7 @@ exports[`redo_undo: change meshRenderer drawMode prepare first step: set current
       className="item-header"
       title="draw mode"
     >
-      <span
-        className=""
-      >
-        Draw Mode
-      </span>
+      Draw Mode
     </div>
     <div
       className="item-content"
@@ -271,11 +255,7 @@ exports[`redo_undo: change meshRenderer drawMode prepare first step: set current
       className="item-header"
       title="draw mode"
     >
-      <span
-        className=""
-      >
-        Draw Mode
-      </span>
+      Draw Mode
     </div>
     <div
       className="item-content"

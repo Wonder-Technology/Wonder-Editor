@@ -31,39 +31,7 @@ let _ =
 
       MainEditorSceneTool.initState(~sandbox, ());
 
-      MainEditorSceneTool.initInspectorEngineState(
-        ~sandbox,
-        ~isInitJob=false,
-        ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-            ~initPipelines=
-              {|
-             [
-              {
-                "name": "default",
-                "jobs": [
-                    {"name": "init_inspector_engine" }
-                ]
-              }
-            ]
-             |},
-            ~initJobs=
-              {|
-             [
-                {"name": "init_inspector_engine" }
-             ]
-             |},
-            (),
-          ),
-        (),
-      );
-
-      StateInspectorEngineService.unsafeGetState()
-      |> MainUtils._handleInspectorEngineState
-      |> StateInspectorEngineService.setState
-      |> ignore;
-
-      CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
+      MainEditorAssetHeaderLoadTool.prepareInspectorCanvas(sandbox);
 
       MainEditorSceneTool.createDefaultScene(
         sandbox,
@@ -144,6 +112,52 @@ let _ =
              |> resolve;
            });
       });
+
+      describe("draw wdb snapshot", () =>
+        testPromise("test draw wdb snapshot store in imageDataMap", () => {
+          EventListenerTool.buildFakeDom()
+          |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+
+          let (
+            addedMaterialNodeId,
+            newMaterialComponent,
+            imgCanvasFakeBase64Str,
+            (inspectorCanvasDom, imgCanvasDom),
+          ) =
+            MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+              ~sandbox,
+              (),
+            );
+
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            (),
+          )
+          |> then_(uploadedWDBNodeId => {
+               let editorState = StateEditorService.getState();
+               let engineState = StateEngineService.unsafeGetState();
+
+               let {imageDataIndex}: wdbNodeData =
+                 editorState
+                 |> OperateTreeAssetEditorService.unsafeFindNodeById(
+                      uploadedWDBNodeId,
+                    )
+                 |> WDBNodeAssetService.getNodeData;
+
+               editorState
+               |> ImageDataMapAssetEditorService.unsafeGetData(
+                    imageDataIndex,
+                  )
+               |> (
+                 ({base64}) =>
+                   base64
+                   |> OptionService.unsafeGet
+                   |> expect == imgCanvasFakeBase64Str
+                   |> resolve
+               );
+             });
+        })
+      );
 
       describe("extract assets from loaded wdb asset", () => {
         beforeEach(() =>
@@ -317,7 +331,6 @@ let _ =
             testPromise("should draw all materials->snapshot", () => {
               EventListenerTool.buildFakeDom()
               |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-
               let (
                 addedMaterialNodeId,
                 newMaterialComponent,
@@ -777,7 +790,7 @@ let _ =
                             )
                             |> WonderCommonlib.ImmutableSparseMapService.length,
                           )
-                          |> expect == (true, 1, 2)
+                          |> expect == (true, 1, 4)
                           |> resolve;
                         });
                    })

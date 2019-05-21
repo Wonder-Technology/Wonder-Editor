@@ -210,7 +210,16 @@ let generateSceneWDB = () =>
         engineState,
       );
 
+    let (editorState, engineState, cube2) =
+      PrimitiveLogicService.createCube(
+        (geometry, lightMaterial),
+        editorState,
+        engineState,
+      );
+
     let (editorState, engineState, camera) =
+      CameraLogicService.createCamera(editorState, engineState);
+    let (editorState, engineState, camera2) =
       CameraLogicService.createCamera(editorState, engineState);
     let (engineState, arcballCameraController) =
       ArcballCameraEngineService.create(engineState);
@@ -223,13 +232,13 @@ let generateSceneWDB = () =>
 
     let engineState =
       engineState
-      /* |> TransformEngineService.setLocalPosition(
+      |> TransformEngineService.setLocalPosition(
            (20., 0., 100.),
            GameObjectComponentEngineService.unsafeGetTransformComponent(
-             camera,
+             camera2,
              engineState,
            ),
-         ) */
+         )
       /* |> ArcballCameraEngineService.setArcballCameraControllerDistance(
               200.,
               arcballCameraController,
@@ -268,12 +277,12 @@ let generateSceneWDB = () =>
     let engineState =
       engineState
       |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1)
+      |> HierarchyGameObjectEngineService.addChild(cube1, camera2)
       |> HierarchyGameObjectEngineService.addChild(rootGameObject, camera)
       |> HierarchyGameObjectEngineService.addChild(
            rootGameObject,
            directionLight,
          );
-    /* |> HierarchyGameObjectEngineService.addChild(rootGameObject, pointLight); */
 
     (rootGameObject, (editorState, engineState));
   });

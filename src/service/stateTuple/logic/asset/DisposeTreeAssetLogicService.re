@@ -68,6 +68,7 @@ let _disposeNodeEditorDataBeforeRemoveNode = (node, engineState, editorState) =>
           nodeData,
           (editorState, engineState),
         ),
+    ~assetBundleNodeFunc=(_, _) => editorState,
     ~folderNodeFunc=(_, _, _) => editorState,
   );
 
@@ -166,6 +167,7 @@ let _disposeNodeEngineData = (node, editorState, engineState) =>
     ~wdbNodeFunc=
       (_, nodeData) =>
         _disposeWDBNodeEngineData(nodeData, (editorState, engineState)),
+    ~assetBundleNodeFunc=(_, nodeData) => engineState,
     ~folderNodeFunc=(_, _, _) => engineState,
   );
 
@@ -192,6 +194,7 @@ let _disposeTreeEditorData = (engineState, editorState) =>
         ),
     ~scriptEventFunctionNodeFunc=(editorState, _, nodeData) => editorState,
     ~scriptAttributeNodeFunc=(editorState, _, nodeData) => editorState,
+    ~assetBundleNodeFunc=(editorState, _, nodeData) => editorState,
     ~folderNodeFunc=(editorState, _, _, _) => editorState,
     (),
   );
@@ -215,6 +218,7 @@ let _disposeTreeEngineData = (editorState, engineState) =>
     ~wdbNodeFunc=
       (engineState, _, nodeData) =>
         _disposeWDBNodeEngineData(nodeData, (editorState, engineState)),
+    ~assetBundleNodeFunc=(engineState, _, nodeData) => engineState,
     ~folderNodeFunc=(engineState, _, _, _) => engineState,
     (),
   );

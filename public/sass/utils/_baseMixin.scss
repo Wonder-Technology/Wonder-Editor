@@ -1,6 +1,6 @@
 @mixin fontSize($name:"primary"){
   @if($name == "sm"){
-    font-size:12px;
+    font-size:13px;
   }
   @if($name == "lg"){
     font-size:20px;

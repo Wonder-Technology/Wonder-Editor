@@ -6,6 +6,7 @@ type tree =
   | TextureNode(nodeId, textureNodeData)
   | MaterialNode(nodeId, materialNodeData)
   | WDBNode(nodeId, wdbNodeData)
+  | AssetBundleNode(nodeId, assetBundleNodeData)
   | FolderNode(
       nodeId,
       folderNodeData,
