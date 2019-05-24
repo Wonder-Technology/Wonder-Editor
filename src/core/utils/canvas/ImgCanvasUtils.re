@@ -41,6 +41,7 @@ let _drawImgCanvasSnapshot =
 let _clipTargetCanvasSnapshot = (targetCanvasDom, imgCanvasDom, editorState) => {
   editorState
   |> ImgContextImgCanvasEditorService.unsafeGetImgContext
+  |> CanvasType.clearRect(_, imgCanvasDom)
   |> _drawImgCanvasSnapshot(
        _,
        targetCanvasDom,

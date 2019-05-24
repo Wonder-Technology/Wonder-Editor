@@ -15,6 +15,7 @@ module.exports = {
   ],
 
   scopes: [
+    { name: "imgCanvas" },
     { name: "asset-bundle" },
     { name: "script" },
     { name: "language" },

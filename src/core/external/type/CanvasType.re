@@ -43,6 +43,14 @@ let drawImage:
      |j}
 ];
 
+let clearRect: (context, Dom.element) => context = [%raw
+  (canvasContext, canvasDom) => {j|
+  canvasContext.clearRect(0, 0, canvasDom.width, canvasDom.height);
+
+  return canvasContext;
+     |j}
+];
+
 let toDataURL: Dom.element => string = [%raw
   canvasDom => {j|
     return canvasDom.toDataURL();
