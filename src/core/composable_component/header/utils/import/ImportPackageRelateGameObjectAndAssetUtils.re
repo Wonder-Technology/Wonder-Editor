@@ -160,10 +160,6 @@ let _replaceWDBAssetGameObjectScriptComponentDataToScriptDataAsset =
        gameObject,
        scriptEventFunctionEntriesMap,
      );
-/* |> RelateGameObjectAndScriptAttributeAssetUtils.replaceToScriptAttributeAssetAttribute(
-     gameObject,
-     scriptAttributeEntriesMap,
-   ); */
 
 let _isWdbAssetGameObjectGeometry =
     (geometry, wdbAssetGameObjectGeometryDataArr) =>
@@ -338,10 +334,6 @@ let _replaceSceneGameObjectScriptComponentDataToScriptDataAsset =
        gameObject,
        scriptEventFunctionEntriesMap,
      );
-/* |> RelateGameObjectAndScriptAttributeAssetUtils.replaceToScriptAttributeAssetAttribute(
-     gameObject,
-     scriptAttributeEntriesMap,
-   ); */
 
 let _getGeometryDataArr = (geometryArr, engineState) =>
   geometryArr

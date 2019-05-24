@@ -67,11 +67,7 @@ let cloneLightMaterialToOtherEngineState =
       |> LightMaterialEngineService.setLightMaterialDiffuseMap(
            targetTexture,
            lightMaterial,
-         )
-      /* TODO remove? */
-      |> LightMaterialEngineService.reInitLightMaterialsAndClearShaderCache([|
-           lightMaterial,
-         |]);
+         );
     };
 
   (lightMaterial, targetEngineState);
