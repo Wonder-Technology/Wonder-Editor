@@ -70,6 +70,7 @@ let _ =
             let inspectorEngineState =
               StateInspectorEngineService.unsafeGetState();
             let (
+              inspectorEngineState,
               materialSphereLightMaterial,
               newMaterialComponent,
               addedMaterialNodeId,
@@ -77,6 +78,11 @@ let _ =
               MainEditorLightMaterialForAssetTool.prepareMaterialSphere(
                 inspectorEngineState,
               );
+
+            inspectorEngineState
+            |> StateInspectorEngineService.setState
+            |> ignore;
+
             let newColor = {
               "hex": "#7df1e8",
               "rgb": {
@@ -91,6 +97,8 @@ let _ =
               newColor,
             );
 
+            let inspectorEngineState =
+              StateInspectorEngineService.unsafeGetState();
             inspectorEngineState
             |> LightMaterialEngineService.getLightMaterialDiffuseColor(
                  materialSphereLightMaterial,
@@ -104,6 +112,7 @@ let _ =
               StateInspectorEngineService.unsafeGetState();
             let shininessValue = 20.5;
             let (
+              inspectorEngineState,
               materialSphereLightMaterial,
               newMaterialComponent,
               addedMaterialNodeId,
@@ -111,6 +120,9 @@ let _ =
               MainEditorLightMaterialForAssetTool.prepareMaterialSphere(
                 inspectorEngineState,
               );
+            inspectorEngineState
+            |> StateInspectorEngineService.setState
+            |> ignore;
 
             MainEditorLightMaterialForAssetTool.changeShininess(
               ~material=newMaterialComponent,
@@ -118,6 +130,8 @@ let _ =
               (),
             );
 
+            let inspectorEngineState =
+              StateInspectorEngineService.unsafeGetState();
             inspectorEngineState
             |> LightMaterialEngineService.getLightMaterialShininess(
                  materialSphereLightMaterial,
@@ -136,32 +150,48 @@ let _ =
 
         describe("create material sphere's snapshot", () => {
           describe("drag texture", () => {
+            let _prepareAndExec =
+                (~inspectorCanvasWidth=371, ~inspectorCanvasHeight=300, ()) => {
+              let (
+                addedMaterialNodeId,
+                newMaterialComponent,
+                imgCanvasFakeBase64Str,
+                (inspectorCanvasDom, imgCanvasDom),
+              ) =
+                MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                  ~sandbox,
+                  ~inspectorCanvasWidth,
+                  ~inspectorCanvasHeight,
+                  (),
+                );
+
+              MainEditorAssetUploadTool.loadOneTexture()
+              |> Js.Promise.then_(uploadedTextureNodeId =>
+                   MainEditorLightMaterialForAssetTool.dragAssetTextureToMap(
+                     ~currentNodeId=addedMaterialNodeId,
+                     ~textureNodeId=uploadedTextureNodeId,
+                     ~material=newMaterialComponent,
+                     (),
+                   )
+                 )
+              |> Js.Promise.then_(() =>
+                   (
+                     addedMaterialNodeId,
+                     newMaterialComponent,
+                     imgCanvasFakeBase64Str,
+                     (inspectorCanvasDom, imgCanvasDom),
+                   )
+                   |> resolve
+                 );
+            };
+
             describe(
               "redraw inspector canvas in MaterialInspector->didMount", () =>
               testPromise("dispatch Inspector", () => {
                 let dispatchFuncStub =
                   ReactTool.createDispatchFuncStub(sandbox);
 
-                let (
-                  addedMaterialNodeId,
-                  newMaterialComponent,
-                  imgCanvasFakeBase64Str,
-                  (inspectorCanvasDom, imgCanvasDom),
-                ) =
-                  MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
-                    ~sandbox,
-                    (),
-                  );
-
-                MainEditorAssetUploadTool.loadOneTexture()
-                |> Js.Promise.then_(uploadedTextureNodeId =>
-                     MainEditorLightMaterialForAssetTool.dragAssetTextureToMap(
-                       ~currentNodeId=addedMaterialNodeId,
-                       ~textureNodeId=uploadedTextureNodeId,
-                       ~material=newMaterialComponent,
-                       (),
-                     )
-                   )
+                _prepareAndExec()
                 |> Js.Promise.then_(_ =>
                      dispatchFuncStub
                      |> withOneArg(
@@ -176,85 +206,146 @@ let _ =
               })
             );
 
+            testPromise("clear img canvas", () =>
+              _prepareAndExec()
+              |> Js.Promise.then_(_ => {
+                   let editorState = StateEditorService.getState();
+
+                   let imgContext =
+                     editorState
+                     |> ImgContextImgCanvasEditorService.unsafeGetImgContext;
+
+                   CanvasType.convertContextToJsObj(imgContext)##clearRect
+                   |> expect
+                   |> toCalledWith([|0., 0., 50., 50.|])
+                   |> resolve;
+                 })
+            );
+
             describe("clip the inspector-canvas snapshot", () => {
               testPromise(
                 "img-canvas's drawImage calledWith inspector-canvas's clip area and img-canvas snapshot area",
-                () => {
-                  let (
-                    addedMaterialNodeId,
-                    newMaterialComponent,
-                    imgCanvasFakeBase64Str,
-                    (inspectorCanvasDom, imgCanvasDom),
-                  ) =
-                    MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
-                      ~sandbox,
-                      ~inspectorCanvasWidth=371,
-                      ~inspectorCanvasHeight=300,
-                      (),
-                    );
+                () =>
+                _prepareAndExec()
+                |> Js.Promise.then_(
+                     (
+                       (
+                         addedMaterialNodeId,
+                         newMaterialComponent,
+                         imgCanvasFakeBase64Str,
+                         (inspectorCanvasDom, imgCanvasDom),
+                       ),
+                     ) => {
+                     let getContext = imgCanvasDom##getContext;
+                     let drawImageFuncStub = getContext()##drawImage;
 
-                  MainEditorAssetUploadTool.loadOneTexture()
-                  |> Js.Promise.then_(uploadedTextureNodeId =>
-                       MainEditorLightMaterialForAssetTool.dragAssetTextureToMap(
-                         ~currentNodeId=addedMaterialNodeId,
-                         ~textureNodeId=uploadedTextureNodeId,
-                         ~material=newMaterialComponent,
-                         (),
-                       )
-                     )
-                  |> Js.Promise.then_(_ => {
-                       let getContext = imgCanvasDom##getContext;
-                       let drawImageFuncStub = getContext()##drawImage;
+                     let editorState = StateEditorService.getState();
 
-                       let editorState = StateEditorService.getState();
+                     let imgContext =
+                       editorState
+                       |> ImgContextImgCanvasEditorService.unsafeGetImgContext;
 
-                       let imgContext =
-                         editorState
-                         |> ImgContextImgCanvasEditorService.unsafeGetImgContext;
-
-                       CanvasType.convertContextToJsObj(imgContext)##drawImage
-                       |> expect
-                       |> toCalledWith([|
-                            inspectorCanvasDom |> Obj.magic,
-                            85.5,
-                            50.,
-                            200.,
-                            200.,
-                            0.,
-                            0.,
-                            50.,
-                            50.,
-                          |])
-                       |> resolve;
-                     });
-                },
+                     CanvasType.convertContextToJsObj(imgContext)##drawImage
+                     |> expect
+                     |> toCalledWith([|
+                          inspectorCanvasDom |> Obj.magic,
+                          85.5,
+                          50.,
+                          200.,
+                          200.,
+                          0.,
+                          0.,
+                          50.,
+                          50.,
+                        |])
+                     |> resolve;
+                   })
               );
 
               testPromise("clip should after dispatch Inspector", () => {
                 let dispatchFuncStub =
                   ReactTool.createDispatchFuncStub(sandbox);
 
-                let (
-                  addedMaterialNodeId,
-                  newMaterialComponent,
-                  imgCanvasFakeBase64Str,
-                  (inspectorCanvasDom, imgCanvasDom),
-                ) =
-                  MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
-                    ~sandbox,
-                    (),
-                  );
+                _prepareAndExec()
+                |> Js.Promise.then_(
+                     (
+                       (
+                         addedMaterialNodeId,
+                         newMaterialComponent,
+                         imgCanvasFakeBase64Str,
+                         (inspectorCanvasDom, imgCanvasDom),
+                       ),
+                     ) => {
+                     let getContext = imgCanvasDom##getContext;
+                     let drawImageFuncStub = getContext()##drawImage;
 
-                MainEditorAssetUploadTool.loadOneTexture()
-                |> Js.Promise.then_(uploadedTextureNodeId =>
-                     MainEditorLightMaterialForAssetTool.dragAssetTextureToMap(
-                       ~currentNodeId=addedMaterialNodeId,
-                       ~textureNodeId=uploadedTextureNodeId,
-                       ~material=newMaterialComponent,
-                       (),
-                     )
-                   )
-                |> Js.Promise.then_(_ => {
+                     dispatchFuncStub
+                     |> withOneArg(
+                          AppStore.UpdateAction(
+                            Update([|UpdateStore.Inspector|]),
+                          ),
+                        )
+                     |> calledBefore(_, drawImageFuncStub)
+                     |> expect == true
+                     |> resolve;
+                   });
+              });
+            });
+
+            describe("clip the inspector-canvas snapshot", () => {
+              testPromise(
+                "img-canvas's drawImage calledWith inspector-canvas's clip area and img-canvas snapshot area",
+                () =>
+                _prepareAndExec()
+                |> Js.Promise.then_(
+                     (
+                       (
+                         addedMaterialNodeId,
+                         newMaterialComponent,
+                         imgCanvasFakeBase64Str,
+                         (inspectorCanvasDom, imgCanvasDom),
+                       ),
+                     ) => {
+                     let getContext = imgCanvasDom##getContext;
+                     let drawImageFuncStub = getContext()##drawImage;
+
+                     let editorState = StateEditorService.getState();
+
+                     let imgContext =
+                       editorState
+                       |> ImgContextImgCanvasEditorService.unsafeGetImgContext;
+
+                     CanvasType.convertContextToJsObj(imgContext)##drawImage
+                     |> expect
+                     |> toCalledWith([|
+                          inspectorCanvasDom |> Obj.magic,
+                          85.5,
+                          50.,
+                          200.,
+                          200.,
+                          0.,
+                          0.,
+                          50.,
+                          50.,
+                        |])
+                     |> resolve;
+                   })
+              );
+
+              testPromise("clip should after dispatch Inspector", () => {
+                let dispatchFuncStub =
+                  ReactTool.createDispatchFuncStub(sandbox);
+
+                _prepareAndExec()
+                |> Js.Promise.then_(
+                     (
+                       (
+                         addedMaterialNodeId,
+                         newMaterialComponent,
+                         imgCanvasFakeBase64Str,
+                         (inspectorCanvasDom, imgCanvasDom),
+                       ),
+                     ) => {
                      let getContext = imgCanvasDom##getContext;
                      let drawImageFuncStub = getContext()##drawImage;
 
@@ -456,7 +547,8 @@ let _ =
                   (),
                 );
 
-              MainEditorLightMaterialForAssetTool.closeColorPicker( ~currentNodeId=addedMaterialNodeId,
+              MainEditorLightMaterialForAssetTool.closeColorPicker(
+                ~currentNodeId=addedMaterialNodeId,
                 ~material=newMaterialComponent,
                 ~color="#7df1e8",
                 (),

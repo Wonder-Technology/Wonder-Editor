@@ -101,6 +101,7 @@ let buildFakeGl =
                     |> returns(None),
       ~attachShader=createEmptyStub(refJsObjToSandbox(sandbox^)),
       ~bindAttribLocation=createEmptyStub(refJsObjToSandbox(sandbox^)),
+      ~deleteTexture=createEmptyStub(refJsObjToSandbox(sandbox^)),
       ~deleteShader=createEmptyStub(refJsObjToSandbox(sandbox^)),
       ~deleteBuffer=createEmptyStub(refJsObjToSandbox(sandbox^)),
       ~getAttribLocation=createEmptyStub(refJsObjToSandbox(sandbox^))
@@ -214,6 +215,7 @@ let buildFakeGl =
   "getExtension": getExtension,
   "attachShader": attachShader,
   "bindAttribLocation": bindAttribLocation,
+  "deleteTexture": deleteTexture,
   "deleteShader": deleteShader,
   "deleteBuffer": deleteBuffer,
   "getAttribLocation": getAttribLocation,

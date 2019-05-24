@@ -12,18 +12,26 @@ let prepareMaterialSphere = inspectorEngineState => {
   let (addedMaterialNodeId, newMaterialComponent) =
     MaterialInspectorCanvasTool.createNewMaterial();
 
-  let materialSphereLightMaterial =
+  let inspectorEngineState =
     inspectorEngineState
     |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
          MaterialDataAssetType.LightMaterial,
          newMaterialComponent,
          (StateEditorService.getState(), StateEngineService.unsafeGetState()),
-       )
+       );
+
+  let materialSphereLightMaterial =
+    inspectorEngineState
     |> InspectorEngineTool.getMaterialSphereLightMaterial(
          StateEditorService.getState(),
        );
 
-  (materialSphereLightMaterial, newMaterialComponent, addedMaterialNodeId);
+  (
+    inspectorEngineState,
+    materialSphereLightMaterial,
+    newMaterialComponent,
+    addedMaterialNodeId,
+  );
 };
 
 let prepareInspectorMaterialSphereAndImgCanvas =
@@ -56,8 +64,16 @@ let prepareInspectorMaterialSphereAndImgCanvas =
   |> returns(BuildCanvasTool.getInspectorCanvasFakeBase64Str());
   imgCanvasDom##toDataURL |> returns(imgCanvasFakeBase64Str);
 
-  let (materialSphereLightMaterial, newMaterialComponent, addedMaterialNodeId) =
+  let (
+    inspectorEngineState,
+    materialSphereLightMaterial,
+    newMaterialComponent,
+    addedMaterialNodeId,
+  ) =
     prepareMaterialSphere(inspectorEngineState);
+
+  StateInspectorEngineService.setState(inspectorEngineState) |> ignore;
+
   (
     addedMaterialNodeId,
     newMaterialComponent,

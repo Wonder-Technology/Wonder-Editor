@@ -574,6 +574,35 @@ let _ =
           );
         });
 
+        testPromise("clear img canvas", () => {
+          let (
+            addedMaterialNodeId,
+            newMaterialComponent,
+            imgCanvasFakeBase64Str,
+            (inspectorCanvasDom, imgCanvasDom),
+          ) =
+            MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+              ~sandbox,
+              (),
+            );
+
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            (),
+          )
+          |> then_(uploadedWDBNodeId => {
+               let editorState = StateEditorService.getState();
+               let imgContext =
+                 editorState
+                 |> ImgContextImgCanvasEditorService.unsafeGetImgContext;
+
+               CanvasType.convertContextToJsObj(imgContext)##clearRect
+               |> expect
+               |> toCalledWith([|0., 0., 50., 50.|])
+               |> resolve;
+             });
+        });
+
         describe("clip the inspector-canvas snapshot", () =>
           testPromise(
             "img-canvas's drawImage calledWith inspector-canvas's clip area and img-canvas snapshot area",
@@ -596,9 +625,6 @@ let _ =
                 (),
               )
               |> then_(uploadedWDBNodeId => {
-                   let getContext = imgCanvasDom##getContext;
-                   let drawImageFuncStub = getContext()##drawImage;
-
                    let editorState = StateEditorService.getState();
 
                    let imgContext =

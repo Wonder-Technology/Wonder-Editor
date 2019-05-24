@@ -144,6 +144,7 @@ let buildFakeCanvas = (sandbox, base64, callIndex) => {
     "height": 0,
     "getContext": () => {
       "drawImage": createEmptyStubWithJsObjSandbox(sandbox),
+      "clearRect": createEmptyStubWithJsObjSandbox(sandbox),
     },
     "toDataURL": toDataURLStub,
   };

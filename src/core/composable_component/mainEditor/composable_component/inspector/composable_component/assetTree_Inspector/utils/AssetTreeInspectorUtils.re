@@ -10,29 +10,32 @@ let hideInspectorCanvas = () =>
     false,
   );
 
-let _reallocateEveryTime = engineState => {
+let _reallocateEveryTime =
+    (inspectorEngineState: Wonderjs.StateDataMainType.state) => {
   WonderLog.Log.log({j|trigger reallocateEveryTime|j});
 
-  /* let engineState =
-     engineState
+  /* let inspectorEngineState =
+     inspectorEngineState
      /* TODO fix? */
      |> ReallocateCPUMemoryJobEngineService.resetDisposeCount
      |> ReallocateCPUMemoryJobEngineService.reallocateGameObjectByDisposeCount; */
 
-  let engineState =
-    engineState
+  let inspectorEngineState =
+    inspectorEngineState
     |> ReallocateCPUMemoryJobEngineService.reallocateGameObject;
 
   /* TODO optimize: judge and reallocate */
   ReallocateCPUMemoryJobEngineService.reAllocateToBuffer(
-    ReallocateCPUMemoryJobEngineService.initGeometryBufferData(engineState),
-    engineState,
+    ReallocateCPUMemoryJobEngineService.initGeometryBufferData(
+      inspectorEngineState,
+    ),
+    inspectorEngineState,
   );
 };
 
 /* TODO need fix bug */
 let disposeContainerGameObjectAllChildrenAndReallocateCPUMemory =
-    ((editorState, inspectorEngineState)) =>
+    ((editorState, inspectorEngineState: Wonderjs.StateDataMainType.state)) =>
   (editorState, inspectorEngineState)
   |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
   |> JobEngineService.execDisposeJob
