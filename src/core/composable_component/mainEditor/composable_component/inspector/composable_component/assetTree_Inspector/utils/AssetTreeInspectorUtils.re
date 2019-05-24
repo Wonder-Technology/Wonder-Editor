@@ -10,36 +10,18 @@ let hideInspectorCanvas = () =>
     false,
   );
 
-let _reallocateEveryTime =
-    (inspectorEngineState: Wonderjs.StateDataMainType.state) => {
-  WonderLog.Log.log({j|trigger reallocateEveryTime|j});
+let _reallocateCPUMemory =
+    (inspectorEngineState: Wonderjs.StateDataMainType.state) =>
+  inspectorEngineState
+  |> ReallocateCPUMemoryJobEngineService.reallocateGameObjectByDisposeCount
+  |> ReallocateCPUMemoryJobEngineService.reallocateGeometry(0.5);
 
-  /* let inspectorEngineState =
-     inspectorEngineState
-     /* TODO fix? */
-     |> ReallocateCPUMemoryJobEngineService.resetDisposeCount
-     |> ReallocateCPUMemoryJobEngineService.reallocateGameObjectByDisposeCount; */
-
-  let inspectorEngineState =
-    inspectorEngineState
-    |> ReallocateCPUMemoryJobEngineService.reallocateGameObject;
-
-  /* TODO optimize: judge and reallocate */
-  ReallocateCPUMemoryJobEngineService.reAllocateToBuffer(
-    ReallocateCPUMemoryJobEngineService.initGeometryBufferData(
-      inspectorEngineState,
-    ),
-    inspectorEngineState,
-  );
-};
-
-/* TODO need fix bug */
 let disposeContainerGameObjectAllChildrenAndReallocateCPUMemory =
     ((editorState, inspectorEngineState: Wonderjs.StateDataMainType.state)) =>
   (editorState, inspectorEngineState)
   |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
   |> JobEngineService.execDisposeJob
-  |> _reallocateEveryTime;
+  |> _reallocateCPUMemory;
 
 let setCameraDefaultDistance = inspectorEngineState => {
   let camera =

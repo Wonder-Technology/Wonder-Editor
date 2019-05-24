@@ -147,6 +147,7 @@ let initInspectorEngineState =
   TestToolEngine.createAndSetInspectorEngineState(
     ~sandbox,
     ~isInitJob,
+    ~buffer,
     ~noWorkerJobRecord,
     (),
   );

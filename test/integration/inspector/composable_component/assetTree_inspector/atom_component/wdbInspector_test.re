@@ -16,6 +16,7 @@ let _ =
 
     let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
     let sceneWDBArrayBuffer = ref(Obj.magic(1));
+
     let _getInspectorCameraArcballCameraControllerDistance =
         inspectorEngineState =>
       inspectorEngineState
@@ -29,19 +30,12 @@ let _ =
            inspectorEngineState,
          );
 
-    beforeAll(() => {
-      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
-      sceneWDBArrayBuffer := WDBTool.generateSceneWDB();
-    });
-
-    beforeEach(() => {
-      sandbox := createSandbox();
-
-      MainEditorSceneTool.initState(~sandbox, ());
-
+    let _prepareInspectorEngineState =
+        (~buffer=SettingToolEngine.buildBufferConfigStr(), ()) => {
       MainEditorSceneTool.initInspectorEngineState(
         ~sandbox,
         ~isInitJob=false,
+        ~buffer,
         ~noWorkerJobRecord=
           NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
             ~initPipelines=
@@ -69,6 +63,7 @@ let _ =
                   "jobs": [
                     {
                         "name": "dispose"
+
                     }
                   ]
                 }
@@ -83,6 +78,19 @@ let _ =
       |> MainUtils._handleInspectorEngineState
       |> StateInspectorEngineService.setState
       |> ignore;
+    };
+
+    beforeAll(() => {
+      boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
+      sceneWDBArrayBuffer := WDBTool.generateSceneWDB();
+    });
+
+    beforeEach(() => {
+      sandbox := createSandbox();
+
+      MainEditorSceneTool.initState(~sandbox, ());
+
+      _prepareInspectorEngineState();
 
       CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
 
@@ -696,55 +704,102 @@ let _ =
       })
     );
 
-    describe("test dispose wdbGameObject in willUnmount", () => {
-      testPromise(
-        "the container gameObject children array should be empty", () => {
-        let (
-          addedMaterialNodeId,
-          newMaterialComponent,
-          imgCanvasFakeBase64Str,
-          (inspectorCanvasDom, imgCanvasDom),
-        ) =
-          MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
-            ~sandbox,
+    describe("test willUnmount", () => {
+      describe("dispose wdbGameObject", () =>
+        testPromise(
+          "the container gameObject children array should be empty", () => {
+          let (
+            addedMaterialNodeId,
+            newMaterialComponent,
+            imgCanvasFakeBase64Str,
+            (inspectorCanvasDom, imgCanvasDom),
+          ) =
+            MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+              ~sandbox,
+              (),
+            );
+
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=sceneWDBArrayBuffer^,
             (),
-          );
+          )
+          |> then_(uploadedWDBNodeId => {
+               let editorState = StateEditorService.getState();
 
-        MainEditorAssetUploadTool.loadOneWDB(
-          ~arrayBuffer=sceneWDBArrayBuffer^,
-          (),
+               let sceneWDBGameObject =
+                 MainEditorAssetWDBNodeTool.getWDBGameObject(
+                   uploadedWDBNodeId,
+                   editorState,
+                 );
+
+               WDBInspector.Method.didMount(sceneWDBGameObject);
+               WDBInspector.Method.willUnmount();
+
+               let inspectorEngineState =
+                 StateInspectorEngineService.unsafeGetState();
+               let editorState = StateEditorService.getState();
+               let containerGameObject =
+                 ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject(
+                   editorState,
+                 );
+
+               inspectorEngineState
+               |> HierarchyGameObjectEngineService.getChildren(
+                    containerGameObject,
+                  )
+               |> Js.Array.length
+               |> expect == 0
+               |> resolve;
+             });
+        })
+      );
+
+      describe("reallocate cpu memory", () =>
+        describe("reallocate geometry", () =>
+          describe("if geometry buffer is used >= 50%, reallocate", () =>
+            testPromise("pack type array", () => {
+              TestTool.ignoreError(sandbox);
+              _prepareInspectorEngineState(
+                ~buffer=
+                  SettingToolEngine.buildBufferConfigStr(
+                    ~geometryPointCount=80,
+                    (),
+                  ),
+                (),
+              );
+
+              MainEditorAssetUploadTool.loadOneWDB(
+                ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                (),
+              )
+              |> then_(_ =>
+                   MainEditorAssetUploadTool.loadOneWDB(
+                     ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                     (),
+                   )
+                   |> then_(_ => {
+                        let vertices =
+                          StateInspectorEngineService.unsafeGetState()
+                          |> GeometryToolEngine.getVertices;
+
+                        vertices
+                        |> Js.Typed_array.Float32Array.slice(
+                             ~start=72,
+                             ~end_=75,
+                           )
+                        |> expect
+                        == Js.Typed_array.Float32Array.make([|0., 0., 0.|])
+                        |> resolve;
+                      })
+                 );
+            })
+          )
         )
-        |> then_(uploadedWDBNodeId => {
-             let editorState = StateEditorService.getState();
+      );
 
-             let sceneWDBGameObject =
-               MainEditorAssetWDBNodeTool.getWDBGameObject(
-                 uploadedWDBNodeId,
-                 editorState,
-               );
-
-             WDBInspector.Method.didMount(sceneWDBGameObject);
-             WDBInspector.Method.willUnmount();
-
-             let inspectorEngineState =
-               StateInspectorEngineService.unsafeGetState();
-             let editorState = StateEditorService.getState();
-             let containerGameObject =
-               ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject(
-                 editorState,
-               );
-
-             inspectorEngineState
-             |> HierarchyGameObjectEngineService.getChildren(
-                  containerGameObject,
-                )
-             |> Js.Array.length
-             |> expect == 0
-             |> resolve;
-           });
-      });
       testPromise(
-        "test inspector canvas camera arcball controller distance", () => {
+        "set inspector canvas camera arcball controller distance to default",
+        () => {
         let (
           addedMaterialNodeId,
           newMaterialComponent,
