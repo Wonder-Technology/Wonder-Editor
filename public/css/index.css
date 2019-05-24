@@ -118,7 +118,7 @@ html, body {
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
       text-align: center;
-      font-size: 17px;
+      font-size: 15px;
       font-weight: bold;
       padding: 5px 0px 2px 0px;
       border-bottom: 1px solid #868686;
@@ -243,11 +243,10 @@ html, body {
       width: 100%;
       height: 22px;
       line-height: 22px;
-      font-size: 14px;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
       text-align: center;
-      font-size: 17px;
+      font-size: 15px;
       font-weight: bold;
       padding: 5px 0px 2px 0px;
       border-bottom: 1px solid #868686;
@@ -311,6 +310,41 @@ html, body {
         right: 30px;
         padding-top: 5px; }
 
+.wonder-selectTree {
+  width: 100%;
+  font-size: 13px;
+  position: relative;
+  padding-top: 5px; }
+  .wonder-selectTree .wonder-tree-node {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    top: 0px;
+    z-index: 40;
+    color: #fff;
+    font-weight: normal; }
+    .wonder-selectTree .wonder-tree-node li {
+      width: 100%;
+      height: 25px;
+      display: flex;
+      align-items: center; }
+      .wonder-selectTree .wonder-tree-node li .tree-container {
+        width: 100%;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        color: #000; }
+        .wonder-selectTree .wonder-tree-node li .tree-container input {
+          width: 15px;
+          height: 15px; }
+        .wonder-selectTree .wonder-tree-node li .tree-container .treeNode-icon {
+          width: 20px;
+          height: 20px;
+          margin-top: -3px;
+          margin-right: 3px; }
+    .wonder-selectTree .wonder-tree-node ul {
+      margin-left: 18px; }
+
 .wonder-generateAllAB-modal {
   position: fixed;
   z-index: 200;
@@ -328,7 +362,7 @@ html, body {
     width: 100%;
     height: 22px;
     cursor: text;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.5;
     color: #666;
     background-color: #fff;
@@ -346,8 +380,8 @@ html, body {
     outline: 0;
     box-shadow: 0 0 0 2px rgba(45, 183, 245, 0.2); }
   .wonder-generateAllAB-modal .modal-item {
-    width: 470px;
-    height: 200px;
+    width: 570px;
+    height: 480px;
     position: relative;
     background: #c1c1c1;
     border-radius: 5px;
@@ -356,11 +390,10 @@ html, body {
       width: 100%;
       height: 22px;
       line-height: 22px;
-      font-size: 14px;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
       text-align: center;
-      font-size: 17px;
+      font-size: 15px;
       font-weight: bold;
       padding: 5px 0px 2px 0px;
       border-bottom: 1px solid #868686;
@@ -375,8 +408,9 @@ html, body {
         height: 15px; }
     .wonder-generateAllAB-modal .modal-item .modal-item-content {
       color: #000;
-      height: 114px;
+      height: 400px;
       overflow-y: auto;
+      overflow-x: hidden;
       width: 90%;
       margin-left: 5%;
       padding-top: 10px;
@@ -412,6 +446,10 @@ html, body {
           line-height: 24px; }
           .wonder-generateAllAB-modal .modal-item .modal-item-content .content-field .field-content a {
             white-space: nowrap; }
+      .wonder-generateAllAB-modal .modal-item .modal-item-content .content-textarea {
+        height: 200px; }
+        .wonder-generateAllAB-modal .modal-item .modal-item-content .content-textarea textarea {
+          height: 200px; }
     .wonder-generateAllAB-modal .modal-item .modal-item-footer {
       height: 50px;
       border-bottom-left-radius: 5px;
@@ -474,6 +512,12 @@ html, body {
         flex: initial;
         height: 100%;
         position: relative; }
+        .wonder-app-component .wonder-header-component .header-nav .header-item .wonder-assetBundle-rab .wonder-singleInput-modal .modal-item {
+          width: 680px;
+          height: 560px; }
+          .wonder-app-component .wonder-header-component .header-nav .header-item .wonder-assetBundle-rab .wonder-singleInput-modal .modal-item .modal-item-content {
+            height: 480px;
+            overflow-x: hidden; }
         .wonder-app-component .wonder-header-component .header-nav .header-item .component-item .item-title {
           display: inline-block;
           padding-left: 10px;

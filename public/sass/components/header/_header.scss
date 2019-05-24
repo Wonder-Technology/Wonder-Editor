@@ -10,6 +10,9 @@
             flex: initial;
             height: 100%;
             position: relative;
+
+            @import "component/assetBundleRab";
+
             .component-item {
                 .item-title {
                     display: inline-block;

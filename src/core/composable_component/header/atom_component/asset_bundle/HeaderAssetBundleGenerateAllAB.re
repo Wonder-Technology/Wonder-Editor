@@ -146,7 +146,7 @@ module Method = {
         dependencyRelation["A.sab"] = ["AssetBundle/B.rab", "AssetBundle/F/c.rab"];
 
         return dependencyRelation;
-      }())
+    }())
     |};
 
   let _changeName = event =>
@@ -173,9 +173,9 @@ module Method = {
     </div>;
 
   let _renderDependencyRelationInput = ((state, send)) =>
-    <div className="content-field">
+    <div className="content-field content-textarea">
       <div className="field-title">
-        {DomHelper.textEl("dependencyRelation")}
+        {DomHelper.textEl("relation")}
       </div>
       <div className="field-content">
         <textarea
