@@ -132,9 +132,7 @@ let _ =
                   EventTool.getBody(),
                   MouseEventTool.buildMouseDomEvent(~pageX, ~pageY, ()),
                 );
-                EventTool.triggerDomEvent(
-                  "mousemove",
-                  EventTool.getBody(),
+                EventTool.triggerFirstMouseDragOverEvent(
                   MouseEventTool.buildMouseDomEvent(~pageX, ~pageY, ()),
                 );
                 EventTool.triggerDomEvent(

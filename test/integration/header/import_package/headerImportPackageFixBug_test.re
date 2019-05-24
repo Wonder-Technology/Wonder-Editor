@@ -759,6 +759,11 @@ let _ =
 
         MainEditorSceneTool.initInspectorEngineState(
           ~sandbox,
+          ~buffer=
+            SettingToolEngine.buildBufferConfigStr(
+              ~geometryPointCount=50000,
+              (),
+            ),
           ~isInitJob=false,
           ~noWorkerJobRecord=
             NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(

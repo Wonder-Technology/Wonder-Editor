@@ -82,80 +82,57 @@ exports[`header publish local->asset bundle test ui test show select tree with o
         >
           <li>
             <div
-              className="item-triangle"
-            >
-              <img
-                src="./public/img/down.png"
-              />
-            </div>
-            <div
-              className="select-box"
+              className="tree-container"
             >
               <input
                 defaultChecked={false}
                 onClick={[Function]}
                 type="checkbox"
               />
-            </div>
-            <img
-              className="treeNode-icon"
-              src="./public/img/package.png"
-            />
-            <span>
+              <img
+                className="treeNode-icon"
+                src="./public/img/selectFolder.png"
+              />
               Assets
-            </span>
+            </div>
           </li>
           <ul
             className="wonder-tree-node"
           >
             <li>
               <div
-                className="item-triangle"
-              >
-                <img
-                  src="./public/img/down.png"
-                />
-              </div>
-              <div
-                className="select-box"
+                className="tree-container"
               >
                 <input
                   defaultChecked={false}
                   onClick={[Function]}
                   type="checkbox"
                 />
-              </div>
-              <img
-                className="treeNode-icon"
-                src="./public/img/package.png"
-              />
-              <span>
+                <img
+                  className="treeNode-icon"
+                  src="./public/img/selectFolder.png"
+                />
                 New Folder
-              </span>
+              </div>
             </li>
             <ul
               className="wonder-tree-node"
             >
               <li>
                 <div
-                  className="item-triangle"
-                />
-                <div
-                  className="select-box"
+                  className="tree-container"
                 >
                   <input
                     defaultChecked={false}
                     onClick={[Function]}
                     type="checkbox"
                   />
-                </div>
-                <img
-                  className="treeNode-icon"
-                  src="./public/img/assetBundle.png"
-                />
-                <span>
+                  <img
+                    className="treeNode-icon"
+                    src="./public/img/assetBundle.png"
+                  />
                   A
-                </span>
+                </div>
               </li>
             </ul>
             <ul
@@ -163,24 +140,19 @@ exports[`header publish local->asset bundle test ui test show select tree with o
             >
               <li>
                 <div
-                  className="item-triangle"
-                />
-                <div
-                  className="select-box"
+                  className="tree-container"
                 >
                   <input
                     defaultChecked={false}
                     onClick={[Function]}
                     type="checkbox"
                   />
-                </div>
-                <img
-                  className="treeNode-icon"
-                  src="./public/img/assetBundle.png"
-                />
-                <span>
+                  <img
+                    className="treeNode-icon"
+                    src="./public/img/assetBundle.png"
+                  />
                   B
-                </span>
+                </div>
               </li>
             </ul>
           </ul>

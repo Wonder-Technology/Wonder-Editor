@@ -30,6 +30,21 @@ let triggerMouseMove = (~eventButton=1, ~sandbox, ~pageX, ~pageY, ()) => {
   );
 };
 
+let triggerFirstMouseDragOverEvent =
+    (~eventButton=1, ~sandbox, ~pageX, ~pageY, ()) => {
+  let target = EventTool.buildCanvasTarget();
+
+  EventTool.triggerFirstMouseDragOverEvent(
+    MouseEventTool.buildMouseDomEvent(
+      ~pageX,
+      ~pageY,
+      ~target,
+      ~which=eventButton,
+      (),
+    ),
+  );
+};
+
 let triggerMouseUp = (~eventButton=1, ~pageX=0, ~pageY=0, ~sandbox, ()) => {
   let target = EventTool.buildCanvasTarget();
 

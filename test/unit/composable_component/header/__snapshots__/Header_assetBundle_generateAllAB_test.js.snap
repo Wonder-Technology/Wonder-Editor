@@ -39,12 +39,12 @@ exports[`Header AssetBundle->generate all ab generate all ab test buildSelectTre
         </div>
       </div>
       <div
-        className="content-field"
+        className="content-field content-textarea"
       >
         <div
           className="field-title"
         >
-          dependencyRelation
+          relation
         </div>
         <div
           className="field-content"
@@ -61,7 +61,7 @@ exports[`Header AssetBundle->generate all ab generate all ab test buildSelectTre
         dependencyRelation[\\"A.sab\\"] = [\\"AssetBundle/B.rab\\", \\"AssetBundle/F/c.rab\\"];
 
         return dependencyRelation;
-      }())
+    }())
     "
           />
         </div>
@@ -74,80 +74,57 @@ exports[`Header AssetBundle->generate all ab generate all ab test buildSelectTre
         >
           <li>
             <div
-              className="item-triangle"
-            >
-              <img
-                src="./public/img/down.png"
-              />
-            </div>
-            <div
-              className="select-box"
+              className="tree-container"
             >
               <input
                 defaultChecked={false}
                 onClick={[Function]}
                 type="checkbox"
               />
-            </div>
-            <img
-              className="treeNode-icon"
-              src="./public/img/package.png"
-            />
-            <span>
+              <img
+                className="treeNode-icon"
+                src="./public/img/selectFolder.png"
+              />
               Assets
-            </span>
+            </div>
           </li>
           <ul
             className="wonder-tree-node"
           >
             <li>
               <div
-                className="item-triangle"
-              >
-                <img
-                  src="./public/img/down.png"
-                />
-              </div>
-              <div
-                className="select-box"
+                className="tree-container"
               >
                 <input
                   defaultChecked={false}
                   onClick={[Function]}
                   type="checkbox"
                 />
-              </div>
-              <img
-                className="treeNode-icon"
-                src="./public/img/package.png"
-              />
-              <span>
+                <img
+                  className="treeNode-icon"
+                  src="./public/img/selectFolder.png"
+                />
                 New Folder
-              </span>
+              </div>
             </li>
             <ul
               className="wonder-tree-node"
             >
               <li>
                 <div
-                  className="item-triangle"
-                />
-                <div
-                  className="select-box"
+                  className="tree-container"
                 >
                   <input
                     defaultChecked={false}
                     onClick={[Function]}
                     type="checkbox"
                   />
-                </div>
-                <img
-                  className="treeNode-icon"
-                  src="./public/img/assetBundle.png"
-                />
-                <span>
+                  <img
+                    className="treeNode-icon"
+                    src="./public/img/assetBundle.png"
+                  />
                   A
-                </span>
+                </div>
               </li>
             </ul>
           </ul>
