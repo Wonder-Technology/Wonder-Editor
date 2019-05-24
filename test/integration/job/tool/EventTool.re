@@ -279,4 +279,5 @@ let buildBodyTarget = () => {"tagName": "BODY"};
 let triggerFirstMouseDragOverEvent = mouseEvent => {
   triggerDomEvent("mousemove", getBody(), mouseEvent);
   triggerDomEvent("mousemove", getBody(), mouseEvent);
+  triggerDomEvent("mousemove", getBody(), mouseEvent);
 };
