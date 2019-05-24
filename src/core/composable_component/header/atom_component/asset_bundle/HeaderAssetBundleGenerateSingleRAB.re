@@ -7,12 +7,7 @@ module Method = {
   let _toggleSelect = (tree, send, isSelect, node) => {
     open SelectTreeType;
 
-    let tree =
-      SelectTreeUtils.setSelectForSelectTree(
-        tree,
-        isSelect,
-        node,
-      );
+    let tree = SelectTreeUtils.setSelectForSelectTree(tree, isSelect, node);
 
     send(UpdateSelectTreeForGenerateSingleRAB(tree));
   };
@@ -34,7 +29,7 @@ module Method = {
           /* TODO add geometry image */
           | "geometry" => Some("./public/img/wdb.png")
           | "scriptEventFunction" =>
-            Some("./public/img/scriptEventFunction.png")
+            Some("./public/img/selectJsFunc.png")
           | "scriptAttribute" => Some("./public/img/scriptAttribute.png")
           | "texture" =>
             let {imageDataIndex}: HeaderAssetBundleType.textureData =
@@ -371,12 +366,16 @@ let render =
   let languageType =
     LanguageEditorService.unsafeGetType |> StateLogicService.getEditorState;
 
-  Method.renderGenerateSingleRABModal(
-    languageType,
-    state.selectTreeForGenerateSingleRAB,
-    send,
-    (closeFunc, submitFunc),
-  );
+  <article className="wonder-assetBundle-rab" key="wonderAssetBundleRab">
+    {
+      Method.renderGenerateSingleRABModal(
+        languageType,
+        state.selectTreeForGenerateSingleRAB,
+        send,
+        (closeFunc, submitFunc),
+      )
+    }
+  </article>;
 };
 
 let make =

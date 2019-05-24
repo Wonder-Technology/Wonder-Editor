@@ -21,14 +21,13 @@ module Method = {
 
   let _getIcon = (node, getValueNodeIconFunc, editorState) =>
     switch (node) {
-    | FolderNode(_, _, _) => Some("./public/img/package.png")
+    | FolderNode(_, _, _) => Some("./public/img/selectFolder.png")
     | ValueNode(_, nodeData) =>
       getValueNodeIconFunc(nodeData.type_, nodeData.value, editorState)
     };
 
   let rec _build = (allNodes, (getValueNodeIconFunc, toggleSelectFunc)) =>
     allNodes
-    /* |> _sortByName */
     |> Js.Array.map(node =>
          <ul
            className="wonder-tree-node"
@@ -36,32 +35,23 @@ module Method = {
              StringService.intToString(NodeSelectTreeService.getNodeId(node))
            }>
            <li>
-             {
-               _hasChildren(node) ?
-                 <div className="item-triangle">
-                   <img src="./public/img/down.png" />
-                 </div> :
-                 <div className="item-triangle" />
-             }
-             <div className="select-box">
+             <div className="tree-container">
                <input
                  type_="checkbox"
                  defaultChecked={_isSelected(node)}
                  onClick={e => _toggleSelect(e, node, toggleSelectFunc)}
                />
-             </div>
-             {
-               switch (
-                 _getIcon(node, getValueNodeIconFunc)
-                 |> StateLogicService.getEditorState
-               ) {
-               | None => ReasonReact.null
-               | Some(icon) => <img src=icon className="treeNode-icon" />
+               {
+                 switch (
+                   _getIcon(node, getValueNodeIconFunc)
+                   |> StateLogicService.getEditorState
+                 ) {
+                 | None => ReasonReact.null
+                 | Some(icon) => <img src=icon className="treeNode-icon" />
+                 }
                }
-             }
-             <span>
                {DomHelper.textEl(NodeSelectTreeService.getNodeName(node))}
-             </span>
+             </div>
            </li>
            {
              ReasonReact.array(
