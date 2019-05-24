@@ -97,15 +97,7 @@ let _convertPosition =
     )
     |> Js.Nullable.toOption
   ) {
-  | None =>
-    WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~description={j|_convertPosition|j},
-        ~reason="convertWorldToScreen return undefined",
-        ~solution={j||j},
-        ~params={j||j},
-      ),
-    )
+  | None => ((-100.), (-100.))
   | Some((x, y)) =>
     (x, y) |> _convertAnchorFromTopLeftToCenter((imageWidth, imageHeight))
   };
