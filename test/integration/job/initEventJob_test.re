@@ -559,9 +559,7 @@ let _ =
                 (),
               ),
             );
-            EventTool.triggerDomEvent(
-              "mousemove",
-              EventTool.getBody(),
+            EventTool.triggerFirstMouseDragOverEvent(
               MouseEventTool.buildMouseDomEvent(
                 ~pageX=movePageX,
                 ~pageY=movePageY,
@@ -580,12 +578,12 @@ let _ =
             EventTool.restore();
 
             ((x1^, y1^), (x2^, y2^), (x3^, y3^))
-            |>
-            expect == (
-                        (dragStartLocationInViewX, dragStartLocationInViewY),
-                        (dragOverLocationInViewX, dragOverLocationInViewY),
-                        (dragDropLocationInViewX, dragDropLocationInViewY),
-                      );
+            |> expect
+            == (
+                 (dragStartLocationInViewX, dragStartLocationInViewY),
+                 (dragOverLocationInViewX, dragOverLocationInViewY),
+                 (dragDropLocationInViewX, dragDropLocationInViewY),
+               );
           };
 
           describe("test event target is game view", () =>
