@@ -36,33 +36,15 @@ let prepareMaterialSphere = inspectorEngineState => {
 
 let prepareInspectorMaterialSphereAndImgCanvas =
     (~sandbox, ~inspectorCanvasWidth=300, ~inspectorCanvasHeight=300, ()) => {
-  let getElementStub =
-    SinonTool.createMethodStub(
-      sandbox^,
-      BuildCanvasTool.documentToJsObj(BuildCanvasTool.document),
-      "getElementById",
-    );
-  let (
-    _mainParentDom,
-    _mainCanvasDom,
-    _inspectorParentDom,
-    inspectorCanvasDom,
-  ) =
-    CanvasTool.stubMainCanvasAndInspectorCanvasDom(
+  let (imgCanvasFakeBase64Str, (inspectorCanvasDom, imgCanvasDom)) =
+    InspectorCanvasTool.prepareInspectorAndImgCanvas(
       ~sandbox,
-      ~getElementStub,
-      ~canvasWidth=inspectorCanvasWidth,
-      ~canvasHeight=inspectorCanvasHeight,
+      ~inspectorCanvasWidth,
+      ~inspectorCanvasHeight,
       (),
     );
-  let imgCanvasDom =
-    CanvasTool.stubImgCanvasDom(~sandbox, ~getElementStub, ());
-  let inspectorEngineState = StateInspectorEngineService.unsafeGetState();
-  let imgCanvasFakeBase64Str = BuildCanvasTool.getImgCanvasFakeBase64Str();
 
-  inspectorCanvasDom##toDataURL
-  |> returns(BuildCanvasTool.getInspectorCanvasFakeBase64Str());
-  imgCanvasDom##toDataURL |> returns(imgCanvasFakeBase64Str);
+  let inspectorEngineState = StateInspectorEngineService.unsafeGetState();
 
   let (
     inspectorEngineState,

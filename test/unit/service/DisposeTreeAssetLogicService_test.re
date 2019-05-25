@@ -128,15 +128,14 @@ describe("disposeTree", () => {
           );
 
         MainEditorAssetUploadTool.loadOneTexture()
-        |> Js.Promise.then_(uploadedTextureNodeId =>
+        |> Js.Promise.then_(uploadedTextureNodeId => {
              MainEditorLightMaterialForAssetTool.dragAssetTextureToMap(
                ~currentNodeId=addedMaterialNodeId,
                ~textureNodeId=uploadedTextureNodeId,
                ~material=newMaterialComponent,
                (),
-             )
-           )
-        |> Js.Promise.then_(_ => {
+             );
+
              let {imageDataIndex} =
                StateEditorService.getState()
                |> OperateTreeAssetEditorService.unsafeFindNodeById(

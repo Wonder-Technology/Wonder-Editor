@@ -73,16 +73,8 @@ let _ =
       describe("clone wdb gameObject show in inspector-canvas", () => {
         testPromise(
           "test clone wdb gameObject should add into container gameObject", () => {
-          let (
-            addedMaterialNodeId,
-            newMaterialComponent,
-            imgCanvasFakeBase64Str,
-            (inspectorCanvasDom, imgCanvasDom),
-          ) =
-            MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
-              ~sandbox,
-              (),
-            );
+          let (imgCanvasFakeBase64Str, (inspectorCanvasDom, imgCanvasDom)) =
+            InspectorCanvasTool.prepareInspectorAndImgCanvas(~sandbox, ());
 
           MainEditorAssetUploadTool.loadOneWDB(
             ~arrayBuffer=boxTexturedWDBArrayBuffer^,
@@ -113,16 +105,8 @@ let _ =
              });
         });
         testPromise("test inspector canvas camera distance", () => {
-          let (
-            addedMaterialNodeId,
-            newMaterialComponent,
-            imgCanvasFakeBase64Str,
-            (inspectorCanvasDom, imgCanvasDom),
-          ) =
-            MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
-              ~sandbox,
-              (),
-            );
+          let (imgCanvasFakeBase64Str, (inspectorCanvasDom, imgCanvasDom)) =
+            InspectorCanvasTool.prepareInspectorAndImgCanvas(~sandbox, ());
 
           MainEditorAssetUploadTool.loadOneWDB(
             ~arrayBuffer=boxTexturedWDBArrayBuffer^,
@@ -176,12 +160,10 @@ let _ =
             testPromise(
               "test cloned-gameObject's all children length and name", () => {
               let (
-                addedMaterialNodeId,
-                newMaterialComponent,
                 imgCanvasFakeBase64Str,
                 (inspectorCanvasDom, imgCanvasDom),
               ) =
-                MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                InspectorCanvasTool.prepareInspectorAndImgCanvas(
                   ~sandbox,
                   (),
                 );
@@ -243,12 +225,10 @@ let _ =
             });
             testPromise("test cloned-gameObject's transform", () => {
               let (
-                addedMaterialNodeId,
-                newMaterialComponent,
                 imgCanvasFakeBase64Str,
                 (inspectorCanvasDom, imgCanvasDom),
               ) =
-                MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                InspectorCanvasTool.prepareInspectorAndImgCanvas(
                   ~sandbox,
                   (),
                 );
@@ -319,12 +299,10 @@ let _ =
             });
             testPromise("test cloned-gameObject's geometry if exist", () => {
               let (
-                addedMaterialNodeId,
-                newMaterialComponent,
                 imgCanvasFakeBase64Str,
                 (inspectorCanvasDom, imgCanvasDom),
               ) =
-                MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                InspectorCanvasTool.prepareInspectorAndImgCanvas(
                   ~sandbox,
                   (),
                 );
@@ -415,12 +393,10 @@ let _ =
             });
             testPromise("test cloned-gameObject's meshRenderer if exist", () => {
               let (
-                addedMaterialNodeId,
-                newMaterialComponent,
                 imgCanvasFakeBase64Str,
                 (inspectorCanvasDom, imgCanvasDom),
               ) =
-                MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                InspectorCanvasTool.prepareInspectorAndImgCanvas(
                   ~sandbox,
                   (),
                 );
@@ -487,16 +463,8 @@ let _ =
 
       describe("create wdb snapshot", () => {
         testPromise("clear img canvas", () => {
-          let (
-            addedMaterialNodeId,
-            newMaterialComponent,
-            imgCanvasFakeBase64Str,
-            (inspectorCanvasDom, imgCanvasDom),
-          ) =
-            MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
-              ~sandbox,
-              (),
-            );
+          let (imgCanvasFakeBase64Str, (inspectorCanvasDom, imgCanvasDom)) =
+            InspectorCanvasTool.prepareInspectorAndImgCanvas(~sandbox, ());
 
           let editorState = StateEditorService.getState();
           let imgContext =
@@ -528,12 +496,10 @@ let _ =
             "img-canvas's drawImage calledWith inspector-canvas's clip area and img-canvas snapshot area",
             () => {
               let (
-                addedMaterialNodeId,
-                newMaterialComponent,
                 imgCanvasFakeBase64Str,
                 (inspectorCanvasDom, imgCanvasDom),
               ) =
-                MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                InspectorCanvasTool.prepareInspectorAndImgCanvas(
                   ~sandbox,
                   ~inspectorCanvasWidth=371,
                   ~inspectorCanvasHeight=300,
@@ -581,16 +547,8 @@ let _ =
         describe("store snapshot in imageDataMap", () =>
           testPromise(
             "should store img canvas snapshot in imageDataMap's base64", () => {
-            let (
-              addedMaterialNodeId,
-              newMaterialComponent,
-              imgCanvasFakeBase64Str,
-              (inspectorCanvasDom, imgCanvasDom),
-            ) =
-              MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
-                ~sandbox,
-                (),
-              );
+            let (imgCanvasFakeBase64Str, (inspectorCanvasDom, imgCanvasDom)) =
+              InspectorCanvasTool.prepareInspectorAndImgCanvas(~sandbox, ());
 
             MainEditorAssetUploadTool.loadOneWDB(
               ~arrayBuffer=sceneWDBArrayBuffer^,
@@ -625,16 +583,8 @@ let _ =
         );
 
         testPromise("dispatch Project", () => {
-          let (
-            addedMaterialNodeId,
-            newMaterialComponent,
-            imgCanvasFakeBase64Str,
-            (inspectorCanvasDom, imgCanvasDom),
-          ) =
-            MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
-              ~sandbox,
-              (),
-            );
+          let (imgCanvasFakeBase64Str, (inspectorCanvasDom, imgCanvasDom)) =
+            InspectorCanvasTool.prepareInspectorAndImgCanvas(~sandbox, ());
 
           let dispatchFuncStub = ReactTool.createDispatchFuncStub(sandbox);
 
@@ -665,16 +615,8 @@ let _ =
       describe("dispose container->wdbGameObjects", () =>
         testPromise(
           "the container gameObject children array should be empty", () => {
-          let (
-            addedMaterialNodeId,
-            newMaterialComponent,
-            imgCanvasFakeBase64Str,
-            (inspectorCanvasDom, imgCanvasDom),
-          ) =
-            MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
-              ~sandbox,
-              (),
-            );
+          let (imgCanvasFakeBase64Str, (inspectorCanvasDom, imgCanvasDom)) =
+            InspectorCanvasTool.prepareInspectorAndImgCanvas(~sandbox, ());
 
           MainEditorAssetUploadTool.loadOneWDB(
             ~arrayBuffer=sceneWDBArrayBuffer^,
@@ -758,16 +700,8 @@ let _ =
       testPromise(
         "set inspector canvas camera arcball controller distance to default",
         () => {
-        let (
-          addedMaterialNodeId,
-          newMaterialComponent,
-          imgCanvasFakeBase64Str,
-          (inspectorCanvasDom, imgCanvasDom),
-        ) =
-          MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
-            ~sandbox,
-            (),
-          );
+        let (imgCanvasFakeBase64Str, (inspectorCanvasDom, imgCanvasDom)) =
+          InspectorCanvasTool.prepareInspectorAndImgCanvas(~sandbox, ());
 
         MainEditorAssetUploadTool.loadOneWDB(
           ~arrayBuffer=sceneWDBArrayBuffer^,

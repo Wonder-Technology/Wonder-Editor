@@ -4,7 +4,7 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = int;
   type dataTuple = Wonderjs.MaterialType.material;
-  type return = Js.Promise.t(unit);
+  type return = unit;
 
   let handleSelfLogic =
       ((uiState, dispatchFunc), currentNodeId, materialComponent) => {
@@ -15,10 +15,7 @@ module CustomEventHandler = {
     |> StateEngineService.setState
     |> ignore;
 
-    LightMaterialForAssetEventHandlerUtils.createImgCanvasSnapshotAfterUpdateInspector(
-      currentNodeId,
-      dispatchFunc,
-    );
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|]))) |> ignore;
   };
 };
 

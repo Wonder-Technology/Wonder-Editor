@@ -25,7 +25,21 @@ module Method = {
     );
   };
 
-  let willUnmount = () => {
+  let _updateSnapshot = (currentNodeId, dispatchFunc) => {
+    StateEditorService.getState()
+    |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByMaterialNodeId(
+         DomHelper.getElementById("inspector-canvas"),
+         DomHelper.getElementById("img-canvas"),
+         currentNodeId,
+       )
+    |> StateEditorService.setState
+    |> ignore;
+
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])))
+    |> ignore;
+  };
+
+  let willUnmount = (currentNodeId, dispatchFunc) => {
     AssetTreeInspectorUtils.hideInspectorCanvas();
 
     (
@@ -35,6 +49,8 @@ module Method = {
     |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
     |> StateInspectorEngineService.setState
     |> ignore;
+
+    _updateSnapshot(currentNodeId, dispatchFunc);
   };
 };
 
@@ -146,5 +162,5 @@ let make =
       self,
     ),
   didMount: _self => Method.didMount(type_, materialComponent),
-  willUnmount: _self => Method.willUnmount(),
+  willUnmount: _self => Method.willUnmount(currentNodeId, dispatchFunc),
 };

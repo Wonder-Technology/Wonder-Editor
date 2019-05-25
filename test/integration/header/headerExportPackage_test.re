@@ -179,11 +179,11 @@ let _ =
         );
         test(
           "add new material m1;
-           change m1 color;
-           close color picker;
-           export;
+             change m1 color;
+             close color picker;
+             export;
 
-           should convert m1->snapshot->base64 to uint8Array;",
+           should convert m1->snapshot->default base64 to uint8Array;",
           () => {
             let (
               addedMaterialNodeId,
@@ -222,7 +222,7 @@ let _ =
                 |> OptionService.unsafeGet
                 |> expect
                 == BufferUtils.convertBase64ToUint8Array(
-                     imgCanvasFakeBase64Str,
+                     ExportPackageTool.getDefaultSnapshotBase64(),
                    )
             );
           },

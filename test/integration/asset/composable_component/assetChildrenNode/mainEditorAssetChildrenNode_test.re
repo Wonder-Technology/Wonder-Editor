@@ -307,19 +307,18 @@ let _ =
                 );
 
               MainEditorAssetUploadTool.loadOneTexture()
-              |> Js.Promise.then_(uploadedTextureNodeId =>
+              |> Js.Promise.then_(uploadedTextureNodeId => {
                    MainEditorLightMaterialForAssetTool.dragAssetTextureToMap(
                      ~currentNodeId=addedMaterialNodeId,
                      ~textureNodeId=uploadedTextureNodeId,
                      ~material=newMaterialComponent,
                      (),
-                   )
-                 )
-              |> Js.Promise.then_(_ =>
+                   );
+
                    BuildComponentTool.buildAssetChildrenNode()
                    |> ReactTestTool.createSnapshotAndMatch
-                   |> resolve
-                 );
+                   |> resolve;
+                 });
             })
           );
         });

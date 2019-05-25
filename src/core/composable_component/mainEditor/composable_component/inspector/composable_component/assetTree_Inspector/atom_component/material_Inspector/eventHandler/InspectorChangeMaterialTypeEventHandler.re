@@ -4,7 +4,7 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = (int, int);
   type dataTuple = (materialType, materialType);
-  type return = Js.Promise.t(unit);
+  type return = unit;
 
   let handleSelfLogic =
       (
@@ -18,10 +18,8 @@ module CustomEventHandler = {
       targetMaterialType,
     );
 
-    LightMaterialForAssetEventHandlerUtils.createImgCanvasSnapshotAfterUpdateInspector(
-      currentNodeId,
-      dispatchFunc,
-    );
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
+    |> ignore;
   };
 };
 

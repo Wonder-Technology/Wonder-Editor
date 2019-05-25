@@ -75,7 +75,7 @@ module Method = {
         )
         |> StateLogicService.getEngineStateToGetData
       ) {
-      | None => Js.Promise.make((~resolve, ~reject) => resolve(. ignore()))
+      | None => ()
       | Some(_mapId) =>
         LightMaterialRemoveTextureForAssetEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
           (uiState, dispatchFunc),
@@ -97,10 +97,7 @@ let render = (reduxTuple, (materialComponent, currentNodeId), _self) =>
     (
       Method.changeColor,
       Method.changeShininess,
-      Method.closeColorPick(
-        reduxTuple,
-        (materialComponent, currentNodeId),
-      ),
+      Method.closeColorPick(reduxTuple, (materialComponent, currentNodeId)),
       Method.blurShininessEvent(
         reduxTuple,
         (materialComponent, currentNodeId),

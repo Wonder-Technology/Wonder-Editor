@@ -5,7 +5,7 @@ module CustomEventHandler = {
 
   type prepareTuple = (Wonderjs.MaterialType.material, int);
   type dataTuple = int;
-  type return = Js.Promise.t(unit);
+  type return = unit;
 
   let _handleSetMap = (materialComponent, textureComponent, engineState) =>
     switch (
@@ -45,10 +45,8 @@ module CustomEventHandler = {
       _handleSetMap,
     );
 
-    LightMaterialForAssetEventHandlerUtils.createImgCanvasSnapshotAfterUpdateInspector(
-      currentNodeId,
-      dispatchFunc,
-    );
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
+    |> ignore;
   };
 };
 
