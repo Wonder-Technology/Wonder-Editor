@@ -11,7 +11,7 @@ open Sinon;
 open Js.Promise;
 
 let _ =
-  describe("wdb inspector", () => {
+  describe("wdb inspector: inspector canvas", () => {
     let sandbox = getSandboxDefaultVal();
 
     let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
@@ -40,56 +40,6 @@ let _ =
            inspectorEngineState,
          );
 
-    let _prepareInspectorEngineState =
-        (~buffer=SettingToolEngine.buildBufferConfigStr(), ()) => {
-      MainEditorSceneTool.initInspectorEngineState(
-        ~sandbox,
-        ~isInitJob=false,
-        ~buffer,
-        ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-            ~initPipelines=
-              {|
-             [
-              {
-                "name": "default",
-                "jobs": [
-                    {"name": "init_inspector_engine" }
-                ]
-              }
-            ]
-             |},
-            ~initJobs=
-              {|
-             [
-                {"name": "init_inspector_engine" }
-             ]
-             |},
-            ~loopPipelines=
-              {|
-             [
-                {
-                  "name": "default",
-                  "jobs": [
-                    {
-                        "name": "dispose"
-
-                    }
-                  ]
-                }
-              ]
-             |},
-            (),
-          ),
-        (),
-      );
-
-      StateInspectorEngineService.unsafeGetState()
-      |> MainUtils._handleInspectorEngineState
-      |> StateInspectorEngineService.setState
-      |> ignore;
-    };
-
     beforeAll(() => {
       boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured");
       sceneWDBArrayBuffer := WDBTool.generateSceneWDB();
@@ -100,7 +50,7 @@ let _ =
 
       MainEditorSceneTool.initState(~sandbox, ());
 
-      _prepareInspectorEngineState();
+      WDBInspectorTool.prepareInspectorEngineState(~sandbox, ());
 
       CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
 
@@ -118,47 +68,6 @@ let _ =
     });
 
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-
-    describe("test rename", () =>
-      testPromise(
-        "if rename to the existed name in the same dir, should fail", () => {
-        let fileName1 = "BoxTextured1";
-        let fileName2 = "BoxTextured2";
-
-        MainEditorAssetUploadTool.loadOneWDB(
-          ~fileName=fileName1,
-          ~arrayBuffer=boxTexturedWDBArrayBuffer^,
-          (),
-        )
-        |> then_(uploadedWDBNodeId1 =>
-             MainEditorAssetUploadTool.loadOneWDB(
-               ~fileName=fileName2,
-               ~arrayBuffer=boxTexturedWDBArrayBuffer^,
-               (),
-             )
-             |> then_(uploadedWDBNodeId2 => {
-                  AssetTreeInspectorTool.Rename.renameAssetWDBNode(
-                    ~nodeId=uploadedWDBNodeId2,
-                    ~name=fileName1,
-                    (),
-                  );
-
-                  (
-                    MainEditorAssetWDBNodeTool.getWDBName(
-                      ~nodeId=uploadedWDBNodeId1,
-                      (),
-                    ),
-                    MainEditorAssetWDBNodeTool.getWDBName(
-                      ~nodeId=uploadedWDBNodeId2,
-                      (),
-                    ),
-                  )
-                  |> expect == (fileName1, fileName2)
-                  |> resolve;
-                })
-           );
-      })
-    );
 
     describe("test didMount", () => {
       describe("clone wdb gameObject show in inspector-canvas", () => {
@@ -753,7 +662,7 @@ let _ =
     });
 
     describe("test willUnmount", () => {
-      describe("dispose wdbGameObject", () =>
+      describe("dispose container->wdbGameObjects", () =>
         testPromise(
           "the container gameObject children array should be empty", () => {
           let (
@@ -807,7 +716,8 @@ let _ =
           describe("if geometry buffer is used >= 50%, reallocate", () =>
             testPromise("pack type array", () => {
               TestTool.ignoreError(sandbox);
-              _prepareInspectorEngineState(
+              WDBInspectorTool.prepareInspectorEngineState(
+                ~sandbox,
                 ~buffer=
                   SettingToolEngine.buildBufferConfigStr(
                     ~geometryPointCount=80,
