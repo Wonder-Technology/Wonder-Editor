@@ -2,12 +2,19 @@ module Method = {
   let didMount = wdbGameObject => {
     AssetTreeInspectorUtils.showInspectorCanvas();
 
-    StateInspectorEngineService.unsafeGetState()
-    |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
-         wdbGameObject,
-         (StateEditorService.getState(), StateEngineService.unsafeGetState()),
-       )
-    |> StateLogicService.refreshInspectorEngineState;
+    Console.tryCatch(
+      () =>
+        StateInspectorEngineService.unsafeGetState()
+        |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
+             wdbGameObject,
+             (
+               StateEditorService.getState(),
+               StateEngineService.unsafeGetState(),
+             ),
+           )
+        |> StateLogicService.refreshInspectorEngineState,
+      e => Console.throwFatal(e) |> ignore,
+    );
   };
 
   let willUnmount = () => {

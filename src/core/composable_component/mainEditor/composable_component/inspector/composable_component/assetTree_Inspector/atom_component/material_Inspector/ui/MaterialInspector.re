@@ -9,13 +9,20 @@ module Method = {
   let didMount = (type_, materialComponent) => {
     AssetTreeInspectorUtils.showInspectorCanvas();
 
-    StateInspectorEngineService.unsafeGetState()
-    |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
-         type_,
-         materialComponent,
-         (StateEditorService.getState(), StateEngineService.unsafeGetState()),
-       )
-    |> StateLogicService.refreshInspectorEngineState;
+    Console.tryCatch(
+      () =>
+        StateInspectorEngineService.unsafeGetState()
+        |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
+             type_,
+             materialComponent,
+             (
+               StateEditorService.getState(),
+               StateEngineService.unsafeGetState(),
+             ),
+           )
+        |> StateLogicService.refreshInspectorEngineState,
+      e => Console.throwFatal(e) |> ignore,
+    );
   };
 
   let willUnmount = () => {
