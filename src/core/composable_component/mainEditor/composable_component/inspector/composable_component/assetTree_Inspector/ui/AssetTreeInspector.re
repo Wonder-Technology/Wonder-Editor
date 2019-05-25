@@ -131,12 +131,14 @@ module Method = {
     />;
 
   let buildWDBComponent =
-      ((state, send), currentNodeId, {name, wdbGameObject}) =>
+      ((uiState, dispatchFunc), (state, send), currentNodeId, {name, wdbGameObject}) =>
     <WDBInspector
       name={state.inputValue}
       onChangeFunc={_e => send(change(_e))}
       onBlurFunc={_e => send(Blur)}
       wdbGameObject
+      currentNodeId
+dispatchFunc
     />;
 
   let buildAssetBundleComponent = ((state, send), currentNodeId, nodeData) =>
@@ -162,7 +164,7 @@ module Method = {
         buildScriptEventFunctionComponent(reduxTuple, state),
       ~scriptAttributeNodeFunc=
         buildScriptAttributeComponent(reduxTuple, state),
-      ~wdbNodeFunc=buildWDBComponent((state, send)),
+      ~wdbNodeFunc=buildWDBComponent(reduxTuple, (state, send)),
       ~assetBundleNodeFunc=buildAssetBundleComponent((state, send)),
       ~folderNodeFunc=buildFolderComponent(state, send, languageType),
     );

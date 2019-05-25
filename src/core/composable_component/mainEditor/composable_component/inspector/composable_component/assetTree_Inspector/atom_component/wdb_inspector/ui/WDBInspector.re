@@ -1,9 +1,23 @@
 module Method = {
-  let didMount = wdbGameObject => {
+  let _updateSnapshot = (currentNodeId, dispatchFunc) => {
+    StateEditorService.getState()
+    |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByWDBNodeId(
+         DomHelper.getElementById("inspector-canvas"),
+         DomHelper.getElementById("img-canvas"),
+         currentNodeId,
+       )
+    |> StateEditorService.setState
+    |> ignore;
+
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])))
+    |> ignore;
+  };
+
+  let didMount = (currentNodeId, wdbGameObject, dispatchFunc) => {
     AssetTreeInspectorUtils.showInspectorCanvas();
 
     Console.tryCatch(
-      () =>
+      () => {
         StateInspectorEngineService.unsafeGetState()
         |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
              wdbGameObject,
@@ -12,7 +26,10 @@ module Method = {
                StateEngineService.unsafeGetState(),
              ),
            )
-        |> StateLogicService.refreshInspectorEngineState,
+        |> StateLogicService.refreshInspectorEngineState;
+
+        _updateSnapshot(currentNodeId, dispatchFunc);
+      },
       e => Console.throwFatal(e) |> ignore,
     );
   };
@@ -51,9 +68,19 @@ let render = (name, (onChangeFunc, onBlurFunc), _self) =>
     </div>
   </article>;
 
-let make = (~name, ~onChangeFunc, ~onBlurFunc, ~wdbGameObject, _children) => {
+let make =
+    (
+      ~dispatchFunc,
+      ~name,
+      ~onChangeFunc,
+      ~onBlurFunc,
+      ~currentNodeId,
+      ~wdbGameObject,
+      _children,
+    ) => {
   ...component,
   render: _self => render(name, (onChangeFunc, onBlurFunc), _self),
-  didMount: _self => Method.didMount(wdbGameObject),
+  didMount: _self =>
+    Method.didMount(currentNodeId, wdbGameObject, dispatchFunc),
   willUnmount: _self => Method.willUnmount(),
 };

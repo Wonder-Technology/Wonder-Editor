@@ -59,7 +59,7 @@ let createWDBNodeUseCreatedSnapshot =
     |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
     |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
          gameObject,
-         (StateEditorService.getState(), StateEngineService.unsafeGetState()),
+         (editorState, StateEngineService.unsafeGetState()),
        )
     |> StateLogicService.renderInspectorEngineStateAndReturnState;
 
