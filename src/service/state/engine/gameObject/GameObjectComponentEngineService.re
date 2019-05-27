@@ -38,6 +38,11 @@ let addBasicMaterialComponent = GameObjectAPI.addGameObjectBasicMaterialComponen
 
 let disposeBasicMaterialComponent = GameObjectAPI.disposeGameObjectBasicMaterialComponent;
 
+/*!
+  BasicMaterial has no map, so disposeBasicMaterial == disposeBasicMaterialRemoveTexture
+  */
+let disposeBasicMaterialComponentRemoveTexture = disposeBasicMaterialComponent;
+
 let removeBasicMaterialComponent = GameObjectAPI.removeGameObjectBasicMaterialComponent;
 
 /* mesh renderer */
