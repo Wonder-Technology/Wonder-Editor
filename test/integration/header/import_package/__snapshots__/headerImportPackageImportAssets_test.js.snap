@@ -40,7 +40,7 @@ exports[`header import package test import material assets fix bug
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="New Material"
+            value="NoName Material"
           />
         </div>
       </article>

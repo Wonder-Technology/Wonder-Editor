@@ -206,7 +206,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="Material222"
+            value="NoName Material"
           />
         </div>
       </article>
@@ -314,7 +314,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="New Material"
+            value="NoName Material"
           />
         </div>
       </article>
@@ -595,7 +595,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="New Material 1"
+            value="NoName Material"
           />
         </div>
       </article>
