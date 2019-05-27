@@ -10,32 +10,6 @@ let _ =
   describe("MainEditorAssetHeader->remove material", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let _initStateWithDisposeJob = sandbox => {
-      MainEditorSceneTool.initStateWithJob(
-        ~sandbox,
-        ~isBuildFakeDom=false,
-        ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-            ~loopPipelines=
-              {|
-                   [
-                       {
-                           "name": "default",
-                           "jobs": [
-                               {
-                                   "name": "dispose"
-                               }
-                           ]
-                       }
-                   ]
-               |},
-            (),
-          ),
-        (),
-      );
-      MainEditorSceneTool.prepareScene(sandbox);
-    };
-
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
@@ -125,7 +99,10 @@ let _ =
     });
 
     describe("if material has no gameObjects, dispose material", () => {
-      beforeEach(() => _initStateWithDisposeJob(sandbox));
+      beforeEach(() => {
+        NoWorkerJobTool.initStateWithDisposeJob(~sandbox, ());
+        MainEditorSceneTool.prepareScene(sandbox);
+      });
 
       describe("test basic material", () =>
         test("material shouldn't be alive", () => {

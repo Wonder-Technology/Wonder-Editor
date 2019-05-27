@@ -52,7 +52,9 @@ module Method = {
     |> StateInspectorEngineService.setState
     |> ignore;
 
-    _updateSnapshot(currentNodeId, dispatchFunc);
+    OperateTreeAssetEditorService.isNodeExistById(currentNodeId)
+    |> StateLogicService.getEditorState ?
+      _updateSnapshot(currentNodeId, dispatchFunc) : ();
   };
 };
 

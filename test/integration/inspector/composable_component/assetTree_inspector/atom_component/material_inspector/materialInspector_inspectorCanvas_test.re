@@ -353,7 +353,34 @@ let _ =
       });
 
       describe("test willUnmount", () => {
-        describe("create material sphere's snapshot", () => {
+        test(
+          "if material is removed, not create material sphere's snapshot", () => {
+          NoWorkerJobTool.initStateWithDisposeJob(~sandbox, ());
+          MainEditorSceneTool.prepareScene(sandbox);
+          let _ =
+            InspectorCanvasTool.prepareInspectorAndImgCanvasAndReturnAllData(
+              ~sandbox,
+              (),
+            );
+          let (addedMaterialNodeId, materialComponent) =
+            MaterialInspectorCanvasTool.createNewMaterial();
+
+          MainEditorAssetHeaderOperateNodeTool.removeMaterialNode(
+            ~materialNodeId=addedMaterialNodeId,
+            (),
+          );
+          _willUnmount(addedMaterialNodeId);
+
+          let editorState = StateEditorService.getState();
+          let imgContext =
+            editorState |> ImgContextImgCanvasEditorService.unsafeGetImgContext;
+          CanvasType.convertContextToJsObj(imgContext)##clearRect
+          |> expect
+          |> not_
+          |> toCalled;
+        });
+
+        describe("else, create material sphere's snapshot", () => {
           let _prepareAndExec =
               (
                 ~sandbox,
