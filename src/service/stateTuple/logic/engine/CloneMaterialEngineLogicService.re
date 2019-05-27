@@ -22,7 +22,12 @@ let cloneBasicMaterialToOtherEngineState =
 };
 
 let cloneLightMaterialToOtherEngineState =
-    (clonedMaterialComponent, clonedEngineState, targetEngineState) => {
+    (
+      clonedMaterialComponent,
+      editorState,
+      clonedEngineState,
+      targetEngineState,
+    ) => {
   let (targetEngineState, lightMaterial) =
     LightMaterialEngineService.create(targetEngineState);
 
@@ -47,28 +52,55 @@ let cloneLightMaterialToOtherEngineState =
          (clonedMaterialComponent, clonedEngineState),
        );
 
-  let targetEngineState =
+  let (editorState, targetEngineState) =
     switch (
       clonedEngineState
       |> LightMaterialEngineService.getLightMaterialDiffuseMap(
            clonedMaterialComponent,
          )
     ) {
-    | None => targetEngineState
+    | None => (editorState, targetEngineState)
     | Some(map) =>
-      let (targetTexture, targetEngineState) =
-        CloneTextureEngineLogicService.cloneTextureToOtherEngineState(
-          map,
-          clonedEngineState,
-          targetEngineState,
-        );
+      let (targetTexture, editorState, targetEngineState) =
+        switch (
+          SourceTextureCacheInspectorCanvasLogicService.getCache(
+            map,
+            (editorState, clonedEngineState),
+          )
+        ) {
+        | Some(targetTexture) => (
+            targetTexture,
+            editorState,
+            targetEngineState,
+          )
+        | None =>
+          let (targetTexture, targetEngineState) =
+            CloneTextureEngineLogicService.cloneTextureToOtherEngineState(
+              map,
+              clonedEngineState,
+              targetEngineState,
+            );
 
-      targetEngineState
-      |> LightMaterialEngineService.setLightMaterialDiffuseMap(
-           targetTexture,
-           lightMaterial,
-         );
+          let editorState =
+            SourceTextureCacheInspectorCanvasLogicService.addCache(
+              map,
+              targetTexture,
+              targetEngineState,
+              editorState,
+            );
+
+          (targetTexture, editorState, targetEngineState);
+        };
+
+      (
+        editorState,
+        targetEngineState
+        |> LightMaterialEngineService.setLightMaterialDiffuseMap(
+             targetTexture,
+             lightMaterial,
+           ),
+      );
     };
 
-  (lightMaterial, targetEngineState);
+  (lightMaterial, editorState, targetEngineState);
 };

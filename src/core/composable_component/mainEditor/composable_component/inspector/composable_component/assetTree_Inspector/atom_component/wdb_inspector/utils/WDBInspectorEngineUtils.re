@@ -1,8 +1,9 @@
 let rec _iterateCreateNewWDBGameObject =
-        (gameObject, engineState, inspectorEngineState) => {
-  let (newGameObject, inspectorEngineState) =
+        (gameObject, editorState, engineState, inspectorEngineState) => {
+  let (newGameObject, editorState, inspectorEngineState) =
     CloneGameObjectLogicService.cloneGameObjectToOtherEngineState(
       gameObject,
+      editorState,
       engineState,
       inspectorEngineState,
     );
@@ -15,10 +16,14 @@ let rec _iterateCreateNewWDBGameObject =
     engineState
     |> HierarchyGameObjectEngineService.getChildren(gameObject)
     |> Js.Array.reduce(
-         ((newGameObject, inspectorEngineState), gameObjectChild) => {
-           let (newGameObjectChild, inspectorEngineState) =
+         (
+           (newGameObject, editorState, inspectorEngineState),
+           gameObjectChild,
+         ) => {
+           let (newGameObjectChild, editorState, inspectorEngineState) =
              _iterateCreateNewWDBGameObject(
                gameObjectChild,
+               editorState,
                engineState,
                inspectorEngineState,
              );
@@ -30,11 +35,11 @@ let rec _iterateCreateNewWDBGameObject =
                   newGameObjectChild,
                 );
 
-           (newGameObject, inspectorEngineState);
+           (newGameObject, editorState, inspectorEngineState);
          },
-         (newGameObject, inspectorEngineState),
+         (newGameObject, editorState, inspectorEngineState),
        ) :
-    (newGameObject, inspectorEngineState);
+    (newGameObject, editorState, inspectorEngineState);
 };
 
 let _setCameraFocusWDBGameObject = (newWDBGameObject, inspectorEngineState) => {
@@ -46,14 +51,15 @@ let _setCameraFocusWDBGameObject = (newWDBGameObject, inspectorEngineState) => {
 };
 
 let createWDBIntoInspectorCanvas =
-    (wdbGameObject, (editorState, engineState), inspectorEngineState) => {
+    (wdbGameObject, editorState, engineState, inspectorEngineState) => {
   let containerGameObject =
     editorState
     |> ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject;
 
-  let (newWDBGameObject, inspectorEngineState) =
+  let (newWDBGameObject, editorState, inspectorEngineState) =
     _iterateCreateNewWDBGameObject(
       wdbGameObject,
+      editorState,
       engineState,
       inspectorEngineState,
     );
@@ -64,5 +70,8 @@ let createWDBIntoInspectorCanvas =
        newWDBGameObject,
      );
 
-  inspectorEngineState |> _setCameraFocusWDBGameObject(newWDBGameObject);
+  (
+    editorState,
+    inspectorEngineState |> _setCameraFocusWDBGameObject(newWDBGameObject),
+  );
 };

@@ -32,16 +32,19 @@ let _ =
           (),
         );
 
-        let materialSphereBasicMaterial =
+        let (editorState, inspectorEngineState) =
           inspectorEngineState
           |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
                MaterialDataAssetType.BasicMaterial,
                newMaterialComponent,
-               (
-                 StateEditorService.getState(),
-                 StateEngineService.unsafeGetState(),
-               ),
-             )
+               StateEditorService.getState(),
+               StateEngineService.unsafeGetState(),
+             );
+
+        editorState |> StateEditorService.setState |> ignore;
+
+        let materialSphereBasicMaterial =
+          inspectorEngineState
           |> InspectorEngineTool.getMaterialSphereBasicMaterial(
                StateEditorService.getState(),
              );

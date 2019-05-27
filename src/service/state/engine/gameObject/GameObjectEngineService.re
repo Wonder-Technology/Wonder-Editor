@@ -8,6 +8,8 @@ let isGameObjectAlive = GameObjectAPI.isGameObjectAlive;
 
 let disposeGameObject = GameObjectAPI.disposeGameObject;
 
+let disposeGameObjectRemoveTexture = GameObjectAPI.disposeGameObjectRemoveTexture;
+
 let cloneGameObject =
     (gameObject, count, isShareMaterial, engineState)
     : (array(array('a)), Wonderjs.StateDataMainType.state) => {
@@ -179,7 +181,7 @@ let getGameObjectActiveBasicCameraView = (gameObject, engineState) => {
     _getGameObjectActiveBasicCameraViews(gameObject, engineState);
 
   activeBasicCameraViews |> Js.Array.length === 0 ?
-    None : Array.unsafe_get(activeBasicCameraViews, 0) |. Some;
+    None : Array.unsafe_get(activeBasicCameraViews, 0)->Some;
 };
 
 let setAllGameObjectsIsRenderIfHasMeshRenderer =
@@ -193,14 +195,18 @@ let setAllGameObjectsIsRenderIfHasMeshRenderer =
              |> GameObjectComponentEngineService.hasMeshRendererComponent(
                   gameObject,
                 ) ?
-               engineState
-               |> GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
-                    gameObject,
-                  )
-               |. MeshRendererEngineService.setMeshRendererIsRender(
-                    isRender,
-                    engineState,
-                  ) :
+               (
+                 engineState
+                 |> GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
+                      gameObject,
+                    )
+               )
+               ->(
+                   MeshRendererEngineService.setMeshRendererIsRender(
+                     isRender,
+                     engineState,
+                   )
+                 ) :
                engineState;
 
            _iterateGameObjectArr(

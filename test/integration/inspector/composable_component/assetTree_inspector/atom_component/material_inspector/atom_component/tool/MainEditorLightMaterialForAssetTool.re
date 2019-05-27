@@ -12,13 +12,16 @@ let prepareMaterialSphere = inspectorEngineState => {
   let (addedMaterialNodeId, newMaterialComponent) =
     MaterialInspectorCanvasTool.createNewMaterial();
 
-  let inspectorEngineState =
+  let (editorState, inspectorEngineState) =
     inspectorEngineState
     |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
          MaterialDataAssetType.LightMaterial,
          newMaterialComponent,
-         (StateEditorService.getState(), StateEngineService.unsafeGetState()),
+         StateEditorService.getState(),
+         StateEngineService.unsafeGetState(),
        );
+
+  editorState |> StateEditorService.setState |> ignore;
 
   let materialSphereLightMaterial =
     inspectorEngineState

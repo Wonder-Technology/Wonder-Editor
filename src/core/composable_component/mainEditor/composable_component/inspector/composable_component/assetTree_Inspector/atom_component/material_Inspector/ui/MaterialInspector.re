@@ -10,17 +10,19 @@ module Method = {
     AssetTreeInspectorUtils.showInspectorCanvas();
 
     Console.tryCatch(
-      () =>
-        StateInspectorEngineService.unsafeGetState()
-        |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
-             type_,
-             materialComponent,
-             (
-               StateEditorService.getState(),
-               StateEngineService.unsafeGetState(),
-             ),
-           )
-        |> StateLogicService.refreshInspectorEngineState,
+      () => {
+        let (editorState, inspectorEngineState) =
+          MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
+            type_,
+            materialComponent,
+            StateEditorService.getState(),
+            StateEngineService.unsafeGetState(),
+            StateInspectorEngineService.unsafeGetState(),
+          );
+
+        editorState |> StateEditorService.setState |> ignore;
+        inspectorEngineState |> StateLogicService.refreshInspectorEngineState;
+      },
       e => Console.throwFatal(e) |> ignore,
     );
   };

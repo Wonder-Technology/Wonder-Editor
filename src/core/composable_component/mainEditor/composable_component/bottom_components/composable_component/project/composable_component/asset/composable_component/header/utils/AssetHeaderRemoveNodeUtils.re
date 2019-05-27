@@ -27,14 +27,18 @@ let _createAllMaterialSnapshot =
       engineState,
       (editorState, inspectorEngineState),
     ) => {
-  let inspectorEngineState =
+  let (editorState, inspectorEngineState) =
     (editorState, inspectorEngineState)
     |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
     |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
          MaterialDataAssetType.LightMaterial,
          material,
-         (editorState, engineState),
-       )
+         editorState,
+         engineState,
+       );
+
+  let inspectorEngineState =
+    inspectorEngineState
     |> StateLogicService.renderInspectorEngineStateAndReturnState;
 
   let editorState =

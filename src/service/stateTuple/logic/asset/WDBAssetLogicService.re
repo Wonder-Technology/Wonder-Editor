@@ -54,13 +54,17 @@ let createWDBNodeUseImageDataMapSnapshot =
 
 let createWDBNodeUseCreatedSnapshot =
     ((wdbNodeId, name, gameObject, parentFolderNode), editorState) => {
-  let inspectorEngineState =
+  let (editorState, inspectorEngineState) =
     (editorState, StateInspectorEngineService.unsafeGetState())
     |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
     |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
          gameObject,
-         (editorState, StateEngineService.unsafeGetState()),
-       )
+         editorState,
+         StateEngineService.unsafeGetState(),
+       );
+
+  let inspectorEngineState =
+    inspectorEngineState
     |> StateLogicService.renderInspectorEngineStateAndReturnState;
 
   let editorState =

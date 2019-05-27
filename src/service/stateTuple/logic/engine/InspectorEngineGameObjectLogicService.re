@@ -1,11 +1,11 @@
-let _disposeContainerGameObjectAllChildren =
+let _disposeContainerGameObjectAllChildrenRemoveTexture =
     (containerGameObject, inspectorEngineState) =>
   inspectorEngineState
   |> HierarchyGameObjectEngineService.getAllChildren(containerGameObject)
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. inspectorEngineState, gameObject) =>
          inspectorEngineState
-         |> GameObjectEngineService.disposeGameObject(gameObject),
+         |> GameObjectEngineService.disposeGameObjectRemoveTexture(gameObject),
        inspectorEngineState,
      );
 
@@ -19,7 +19,8 @@ let disposeInspectorEngineContainerGameObjectAllChildren =
   switch (containerGameObject) {
   | None => inspectorEngineState
   | Some(gameObject) =>
-    inspectorEngineState |> _disposeContainerGameObjectAllChildren(gameObject)
+    inspectorEngineState
+    |> _disposeContainerGameObjectAllChildrenRemoveTexture(gameObject)
   };
 };
 

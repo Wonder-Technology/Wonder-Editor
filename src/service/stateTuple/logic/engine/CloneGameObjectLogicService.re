@@ -27,30 +27,39 @@ let _cloneGameObjectTransform =
 };
 
 let _cloneGameObjectRenderGroupIfExist =
-    (newGameObject, (clonedGameObject, clonedEngineState), targetEngineState) =>
+    (
+      newGameObject,
+      (clonedGameObject, clonedEngineState),
+      editorState,
+      targetEngineState,
+    ) =>
   InspectorRenderGroupUtils.hasRenderGroupComponents(
     clonedGameObject,
     clonedEngineState,
   ) ?
     {
-      let (newRenderGroup, addMaterialFunc, targetEngineState) =
+      let (newRenderGroup, addMaterialFunc, editorState, targetEngineState) =
         targetEngineState
         |> CloneRenderGroupEngineLogicService.cloneRenderGroupToOtherEngineState(
              newGameObject,
              (clonedGameObject, clonedEngineState),
+             editorState,
            );
 
-      targetEngineState
-      |> RenderGroupEngineService.addRenderGroupComponents(
-           newGameObject,
-           newRenderGroup,
-           (
-             GameObjectComponentEngineService.addMeshRendererComponent,
-             addMaterialFunc,
+      (
+        editorState,
+        targetEngineState
+        |> RenderGroupEngineService.addRenderGroupComponents(
+             newGameObject,
+             newRenderGroup,
+             (
+               GameObjectComponentEngineService.addMeshRendererComponent,
+               addMaterialFunc,
+             ),
            ),
-         );
+      );
     } :
-    targetEngineState;
+    (editorState, targetEngineState);
 
 let _cloneGameObjectGeometryIfExist =
     (newGameObject, (clonedGameObject, clonedEngineState), targetEngineState) =>
@@ -73,11 +82,11 @@ let _cloneGameObjectGeometryIfExist =
     targetEngineState;
 
 let cloneGameObjectToOtherEngineState =
-    (clonedGameObject, clonedEngineState, targetEngineState) => {
+    (clonedGameObject, editorState, clonedEngineState, targetEngineState) => {
   let (targetEngineState, newGameObject) =
     GameObjectEngineService.create(targetEngineState);
 
-  let targetEngineState =
+  let (editorState, targetEngineState) =
     targetEngineState
     |> CloneValueEngineLogicService.cloneValueByGetOptionValueFunc(
          GameObjectEngineService.getGameObjectName,
@@ -92,11 +101,15 @@ let cloneGameObjectToOtherEngineState =
     |> _cloneGameObjectRenderGroupIfExist(
          newGameObject,
          (clonedGameObject, clonedEngineState),
-       )
+         editorState,
+       );
+
+  let targetEngineState =
+    targetEngineState
     |> _cloneGameObjectGeometryIfExist(
          newGameObject,
          (clonedGameObject, clonedEngineState),
        );
 
-  (newGameObject, targetEngineState);
+  (newGameObject, editorState, targetEngineState);
 };

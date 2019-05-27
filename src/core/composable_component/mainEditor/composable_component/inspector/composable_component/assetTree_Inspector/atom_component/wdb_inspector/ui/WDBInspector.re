@@ -18,15 +18,17 @@ module Method = {
 
     Console.tryCatch(
       () => {
-        StateInspectorEngineService.unsafeGetState()
-        |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
-             wdbGameObject,
-             (
+        let (editorState, inspectorEngineState) =
+          StateInspectorEngineService.unsafeGetState()
+          |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
+               wdbGameObject,
                StateEditorService.getState(),
                StateEngineService.unsafeGetState(),
-             ),
-           )
-        |> StateLogicService.refreshInspectorEngineState;
+             );
+
+        editorState |> StateEditorService.setState |> ignore;
+
+        inspectorEngineState |> StateLogicService.refreshInspectorEngineState;
 
         _updateSnapshot(currentNodeId, dispatchFunc);
       },

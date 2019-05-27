@@ -3,6 +3,8 @@ open EditorType;
 let create = () => {
   inspectorCanvasRecord: {
     containerGameObject: None,
+    basicSourceTextureCacheMap:
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
   },
   imgCanvasRecord: {
     imgContext: None,

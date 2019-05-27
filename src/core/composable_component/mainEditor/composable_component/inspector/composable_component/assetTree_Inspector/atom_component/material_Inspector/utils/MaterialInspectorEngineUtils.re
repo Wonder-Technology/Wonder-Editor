@@ -37,31 +37,31 @@ let _createLightMaterialSphereIntoInspectorCanvas =
     (
       materialComponent,
       containerGameObject,
+      editorState,
       engineState,
       inspectorEngineState,
     ) => {
-  let (lightMaterial, inspectorEngineState) =
+  let (lightMaterial, editorState, inspectorEngineState) =
     CloneMaterialEngineLogicService.cloneLightMaterialToOtherEngineState(
       materialComponent,
+      editorState,
       engineState,
       inspectorEngineState,
     );
 
-  inspectorEngineState
-  |> _createSphereWithClonedMaterial(
-       lightMaterial,
-       GameObjectComponentEngineService.addLightMaterialComponent,
-       containerGameObject,
-     );
+  (
+    editorState,
+    inspectorEngineState
+    |> _createSphereWithClonedMaterial(
+         lightMaterial,
+         GameObjectComponentEngineService.addLightMaterialComponent,
+         containerGameObject,
+       ),
+  );
 };
 
 let createMaterialSphereIntoInspectorCanvas =
-    (
-      type_,
-      materialComponent,
-      (editorState, engineState),
-      inspectorEngineState,
-    ) => {
+    (type_, materialComponent, editorState, engineState, inspectorEngineState) => {
   WonderLog.Contract.requireCheck(
     () =>
       WonderLog.(
@@ -96,18 +96,21 @@ let createMaterialSphereIntoInspectorCanvas =
     |> ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject;
 
   switch (type_) {
-  | BasicMaterial =>
-    _createBasicMaterialSphereIntoInspectorCanvas(
-      materialComponent,
-      containerGameObject,
-      engineState,
-      inspectorEngineState,
+  | BasicMaterial => (
+      editorState,
+      _createBasicMaterialSphereIntoInspectorCanvas(
+        materialComponent,
+        containerGameObject,
+        engineState,
+        inspectorEngineState,
+      ),
     )
 
   | LightMaterial =>
     _createLightMaterialSphereIntoInspectorCanvas(
       materialComponent,
       containerGameObject,
+      editorState,
       engineState,
       inspectorEngineState,
     )

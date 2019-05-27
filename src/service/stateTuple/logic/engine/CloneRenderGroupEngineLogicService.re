@@ -49,6 +49,7 @@ let _addRenderGroupIfHasLightMaterial =
       targetGameObject,
       newMeshRenderer,
       (clonedGameObject, clonedEngineState),
+      editorState,
       targetEngineState,
     ) => {
   let clonedGameObjectMaterial =
@@ -56,9 +57,10 @@ let _addRenderGroupIfHasLightMaterial =
     |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
          clonedGameObject,
        );
-  let (lightMaterial, targetEngineState) =
+  let (lightMaterial, editorState, targetEngineState) =
     CloneMaterialEngineLogicService.cloneLightMaterialToOtherEngineState(
       clonedGameObjectMaterial,
+      editorState,
       clonedEngineState,
       targetEngineState,
     );
@@ -66,6 +68,7 @@ let _addRenderGroupIfHasLightMaterial =
   (
     RenderGroupEngineService.buildRenderGroup(newMeshRenderer, lightMaterial),
     GameObjectComponentEngineService.addLightMaterialComponent,
+    editorState,
     targetEngineState,
   );
 };
@@ -74,6 +77,7 @@ let cloneRenderGroupToOtherEngineState =
     (
       targetGameObject,
       (clonedGameObject, clonedEngineState),
+      editorState,
       targetEngineState,
     ) => {
   let (newMeshRenderer, targetEngineState) =
@@ -91,16 +95,27 @@ let cloneRenderGroupToOtherEngineState =
   |> GameObjectComponentEngineService.hasBasicMaterialComponent(
        clonedGameObject,
      ) ?
-    targetEngineState
-    |> _addRenderGroupIfHasBasicMaterial(
-         targetGameObject,
-         newMeshRenderer,
-         (clonedGameObject, clonedEngineState),
-       ) :
+    {
+      let (renderGroup, addBasicMaterialComponentFunc, targetEngineState) =
+        targetEngineState
+        |> _addRenderGroupIfHasBasicMaterial(
+             targetGameObject,
+             newMeshRenderer,
+             (clonedGameObject, clonedEngineState),
+           );
+
+      (
+        renderGroup,
+        addBasicMaterialComponentFunc,
+        editorState,
+        targetEngineState,
+      );
+    } :
     targetEngineState
     |> _addRenderGroupIfHasLightMaterial(
          targetGameObject,
          newMeshRenderer,
          (clonedGameObject, clonedEngineState),
+         editorState,
        );
 };
