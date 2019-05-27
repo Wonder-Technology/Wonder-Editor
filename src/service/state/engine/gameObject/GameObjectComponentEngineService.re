@@ -18,6 +18,8 @@ let addLightMaterialComponent = GameObjectAPI.addGameObjectLightMaterialComponen
 
 let disposeLightMaterialComponent = GameObjectAPI.disposeGameObjectLightMaterialComponent;
 
+let disposeLightMaterialComponentRemoveTexture = GameObjectAPI.disposeGameObjectLightMaterialComponentRemoveTexture;
+
 let removeLightMaterialComponent = GameObjectAPI.removeGameObjectLightMaterialComponent;
 
 /* basic material */

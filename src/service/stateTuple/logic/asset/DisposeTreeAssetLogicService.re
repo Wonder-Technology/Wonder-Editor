@@ -119,7 +119,10 @@ let _disposeMaterialNodeEngineData =
       editorState,
     );
 
-  InspectorRenderGroupUtils.Dispose.replaceGameObjectsMaterialsOfTheMaterial(
+
+    WonderLog.Log.print(( "_disposeMaterialNodeEngineData",  materialComponent)) |> ignore;
+
+  InspectorRenderGroupUtils.Dispose.disposeMaterialOrReplaceGameObjectsMaterialsOfTheMaterial(
     ((materialComponent, defaultMaterial), (type_, defaultMaterialType)),
     engineState,
   );

@@ -1,6 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MainEditorAssetHeader->remove material 
+        select material;
+        click remove-button;
+             should remove it from assetTreeRoot 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+/>
+`;
+
+exports[`MainEditorAssetHeader->remove material else, replace material's gameObjects' material to default material 
         add material m1;
         select sceneTree->gameObject g1;
         g1 change material to m1;
@@ -213,7 +222,7 @@ exports[`MainEditorAssetHeader->remove material
 </article>
 `;
 
-exports[`MainEditorAssetHeader->remove material 
+exports[`MainEditorAssetHeader->remove material else, replace material's gameObjects' material to default material 
         add material m1;
         select sceneTree->gameObject g1;
         g1 change material to m1;
@@ -424,13 +433,4 @@ exports[`MainEditorAssetHeader->remove material
     />
   </div>
 </article>
-`;
-
-exports[`MainEditorAssetHeader->remove material 
-        select material;
-        click remove-button;
-             should remove it from assetTreeRoot 1`] = `
-<article
-  className="wonder-asset-assetChildren"
-/>
 `;

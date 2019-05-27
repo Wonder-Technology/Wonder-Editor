@@ -44,3 +44,6 @@ let reInitBasicMaterialsAndClearShaderCache = (materials, engineState) =>
 let getAllBasicMaterials = BasicMaterialAPI.getAllBasicMaterials;
 
 let batchDisposeBasicMaterial = BasicMaterialAPI.batchDisposeBasicMaterial;
+
+let disposeBasicMaterial = (material, state) =>
+  batchDisposeBasicMaterial([|material|], state);

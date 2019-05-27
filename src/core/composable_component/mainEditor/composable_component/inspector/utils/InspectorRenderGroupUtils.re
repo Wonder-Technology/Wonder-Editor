@@ -109,30 +109,30 @@ module Remove = {
     };
 
   /* let replaceMaterialByMaterialType =
-      (gameObject, sourceMateralType, targetMaterialType, engineState) => {
-    let (sourceRenderGroup, removeSourceMaterialFunc) =
-      _getOperateSourceRenderGroupData(
-        sourceMateralType,
-        gameObject,
-        engineState,
-      );
+         (gameObject, sourceMateralType, targetMaterialType, engineState) => {
+       let (sourceRenderGroup, removeSourceMaterialFunc) =
+         _getOperateSourceRenderGroupData(
+           sourceMateralType,
+           gameObject,
+           engineState,
+         );
 
-    let (engineState, targetRenderGroup, addTargetMaterialFunc) =
-      _getOperateTargetRenderGroupData(
-        sourceRenderGroup.meshRenderer,
-        targetMaterialType,
-        engineState,
-      );
+       let (engineState, targetRenderGroup, addTargetMaterialFunc) =
+         _getOperateTargetRenderGroupData(
+           sourceRenderGroup.meshRenderer,
+           targetMaterialType,
+           engineState,
+         );
 
-    engineState
-    |> RenderGroupEngineService.replaceMaterial(
-         (sourceRenderGroup, targetRenderGroup),
-         gameObject,
-         (removeSourceMaterialFunc, addTargetMaterialFunc),
-       );
+       engineState
+       |> RenderGroupEngineService.replaceMaterial(
+            (sourceRenderGroup, targetRenderGroup),
+            gameObject,
+            (removeSourceMaterialFunc, addTargetMaterialFunc),
+          );
 
-    engineState;
-  }; */
+       engineState;
+     }; */
 
   let replaceMaterialByMaterialData =
       (
@@ -177,6 +177,12 @@ module Remove = {
 };
 
 module Dispose = {
+  let _getDisposeMaterialFunc = materialType =>
+    switch (materialType) {
+    | BasicMaterial => BasicMaterialEngineService.disposeBasicMaterial
+    | LightMaterial => LightMaterialEngineService.disposeLightMaterialRemoveTexture
+    };
+
   let _getOperateSourceRenderGroupData =
       (meshRenderer, material, materialType, engineState) =>
     switch (materialType) {
@@ -186,7 +192,7 @@ module Dispose = {
       )
     | LightMaterial => (
         RenderGroupEngineService.buildRenderGroup(meshRenderer, material),
-        GameObjectComponentEngineService.disposeLightMaterialComponent,
+        GameObjectComponentEngineService.disposeLightMaterialComponentRemoveTexture,
       )
     };
 
@@ -244,7 +250,7 @@ module Dispose = {
        );
   };
 
-  let replaceGameObjectsMaterialsOfTheMaterial =
+  let disposeMaterialOrReplaceGameObjectsMaterialsOfTheMaterial =
       (
         (
           (sourceMaterial, targetMaterial),
@@ -259,10 +265,14 @@ module Dispose = {
         engineState,
       )
     ) {
-    | None => engineState
+    | None =>
+      let disposeMaterialFunc = _getDisposeMaterialFunc(sourceMaterialType);
+
+      disposeMaterialFunc(sourceMaterial, engineState);
     | Some(gameObjects) =>
       let engineState =
         gameObjects
+        |> WonderLog.Log.print
         |> WonderCommonlib.ArrayService.reduceOneParam(
              (. engineState, gameObject) =>
                replaceMaterial(

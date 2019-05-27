@@ -74,6 +74,14 @@ let getAllLightMaterials = LightMaterialAPI.getAllLightMaterials;
 
 let batchDisposeLightMaterial = LightMaterialAPI.batchDisposeLightMaterial;
 
+let batchDisposeLightMaterialRemoveTexture = LightMaterialAPI.batchDisposeLightMaterialRemoveTexture;
+
+let disposeLightMaterial = (material, state) =>
+  batchDisposeLightMaterial([|material|], state);
+
+let disposeLightMaterialRemoveTexture = (material, state) =>
+  batchDisposeLightMaterialRemoveTexture([|material|], state);
+
 let createLightMaterialAndSetName = (materialName, engineState) => {
   let (engineState, material) = engineState |> create;
 
