@@ -88,6 +88,10 @@ let _disposeTextureFromAllLightMaterials = (textureComponent, engineState) =>
            engineState,
          ),
        engineState,
+     )
+  |> BasicSourceTextureEngineService.disposeBasicSourceTexture(
+       textureComponent,
+       false,
      );
 
 let _disposeGeometryAssets = (wdbGameObjects, (editorState, engineState)) =>
@@ -119,8 +123,8 @@ let _disposeMaterialNodeEngineData =
       editorState,
     );
 
-
-    WonderLog.Log.print(( "_disposeMaterialNodeEngineData",  materialComponent)) |> ignore;
+  WonderLog.Log.print(("_disposeMaterialNodeEngineData", materialComponent))
+  |> ignore;
 
   InspectorRenderGroupUtils.Dispose.disposeMaterialOrReplaceGameObjectsMaterialsOfTheMaterial(
     ((materialComponent, defaultMaterial), (type_, defaultMaterialType)),
