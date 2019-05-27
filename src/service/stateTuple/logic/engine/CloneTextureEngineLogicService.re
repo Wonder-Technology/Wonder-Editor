@@ -61,3 +61,52 @@ let cloneTextureToOtherEngineState =
 
   (texture, targetEngineState);
 };
+
+let cloneTextureAndAddToMaterial =
+    (
+      (clonedMaterialComponent, targetMaterialComponent),
+      (getMaterialMapFunc, setMaterialMapFunc),
+      editorState,
+      clonedEngineState,
+      targetEngineState,
+    ) =>
+  switch (clonedEngineState |> getMaterialMapFunc(clonedMaterialComponent)) {
+  | None => (editorState, targetEngineState)
+  | Some(map) =>
+    let (targetTexture, editorState, targetEngineState) =
+      switch (
+        SourceTextureCacheInspectorCanvasLogicService.getCache(
+          map,
+          (editorState, clonedEngineState),
+        )
+      ) {
+      | Some(targetTexture) => (
+          targetTexture,
+          editorState,
+          targetEngineState,
+        )
+      | None =>
+        let (targetTexture, targetEngineState) =
+          cloneTextureToOtherEngineState(
+            map,
+            clonedEngineState,
+            targetEngineState,
+          );
+
+        let editorState =
+          SourceTextureCacheInspectorCanvasLogicService.addCache(
+            map,
+            targetTexture,
+            targetEngineState,
+            editorState,
+          );
+
+        (targetTexture, editorState, targetEngineState);
+      };
+
+    (
+      editorState,
+      targetEngineState
+      |> setMaterialMapFunc(targetTexture, targetMaterialComponent),
+    );
+  };

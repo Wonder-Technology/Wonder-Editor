@@ -8,6 +8,12 @@ module CustomEventHandler = {
       ((uiState, dispatchFunc), (), (textureComponent, value)) => {
     TextureWrapUtils.changeWrapT(textureComponent, value);
 
+    SourceTextureCacheInspectorCanvasLogicService.removeCache(
+      textureComponent,
+      StateEngineService.unsafeGetState(),
+    )
+    |> StateLogicService.getAndSetEditorState;
+
     ();
   };
 

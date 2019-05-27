@@ -53,54 +53,16 @@ let cloneLightMaterialToOtherEngineState =
        );
 
   let (editorState, targetEngineState) =
-    switch (
-      clonedEngineState
-      |> LightMaterialEngineService.getLightMaterialDiffuseMap(
-           clonedMaterialComponent,
-         )
-    ) {
-    | None => (editorState, targetEngineState)
-    | Some(map) =>
-      let (targetTexture, editorState, targetEngineState) =
-        switch (
-          SourceTextureCacheInspectorCanvasLogicService.getCache(
-            map,
-            (editorState, clonedEngineState),
-          )
-        ) {
-        | Some(targetTexture) => (
-            targetTexture,
-            editorState,
-            targetEngineState,
-          )
-        | None =>
-          let (targetTexture, targetEngineState) =
-            CloneTextureEngineLogicService.cloneTextureToOtherEngineState(
-              map,
-              clonedEngineState,
-              targetEngineState,
-            );
-
-          let editorState =
-            SourceTextureCacheInspectorCanvasLogicService.addCache(
-              map,
-              targetTexture,
-              targetEngineState,
-              editorState,
-            );
-
-          (targetTexture, editorState, targetEngineState);
-        };
-
+    CloneTextureEngineLogicService.cloneTextureAndAddToMaterial(
+      (clonedMaterialComponent, lightMaterial),
       (
-        editorState,
-        targetEngineState
-        |> LightMaterialEngineService.setLightMaterialDiffuseMap(
-             targetTexture,
-             lightMaterial,
-           ),
-      );
-    };
+        LightMaterialEngineService.getLightMaterialDiffuseMap,
+        LightMaterialEngineService.setLightMaterialDiffuseMap,
+      ),
+      editorState,
+      clonedEngineState,
+      targetEngineState,
+    );
 
   (lightMaterial, editorState, targetEngineState);
 };

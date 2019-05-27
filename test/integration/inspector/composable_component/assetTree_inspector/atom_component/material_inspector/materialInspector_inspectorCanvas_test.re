@@ -20,66 +20,8 @@ let _ =
 
     let _prepareState = () => {
       MainEditorSceneTool.initState(~sandbox, ());
-      MainEditorSceneTool.initInspectorEngineState(
-        ~sandbox,
-        ~isInitJob=false,
-        ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-            ~initPipelines=
-              {|
-             [
-              {
-                "name": "default",
-                "jobs": [
-                    {"name": "init_inspector_engine" }
-                ]
-              }
-            ]
-             |},
-            ~initJobs=
-              {|
-             [
-                {"name": "init_inspector_engine" }
-             ]
-             |},
-            ~loopPipelines=
-              {|
-             [
-                {
-                  "name": "default",
-                  "jobs": [
-                    {
-                        "name": "dispose"
-                    },
-                    {
-                        "name": "get_camera_data"
-                    },
-                    {
-                        "name": "create_basic_render_object_buffer"
-                    },
-                    {
-                        "name": "create_light_render_object_buffer"
-                    },
-                    {
-                        "name": "clear_last_send_component"
-                    },
-                    {
-                        "name": "send_uniform_shader_data"
-                    },
-                    {
-                        "name": "render_basic"
-                    },
-                    {
-                        "name": "front_render_light"
-                    }
-                  ]
-                }
-              ]
-             |},
-            (),
-          ),
-        (),
-      );
+
+      InspectorCanvasTool.prepareInspectorEngineState(sandbox);
     };
 
     beforeEach(() => {
@@ -87,10 +29,6 @@ let _ =
 
       _prepareState();
 
-      StateInspectorEngineService.unsafeGetState()
-      |> MainUtils._handleInspectorEngineState
-      |> StateInspectorEngineService.setState
-      |> ignore;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 

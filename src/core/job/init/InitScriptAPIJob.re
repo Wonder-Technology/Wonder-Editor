@@ -30,6 +30,10 @@ module DisposeGameObject = {
       | None => editorState
       };
 
+    /* TODO optimize: only clear material->maps cache */
+    let editorState =
+      editorState |> SourceTextureCacheInspectorCanvasEditorService.clearCache;
+
     editorState;
   };
 
@@ -517,6 +521,10 @@ module AssetBundle = {
              );
 
         let editorState = editorState |> PickingEditorService.clearSphereShape;
+
+        let editorState =
+          editorState
+          |> SourceTextureCacheInspectorCanvasEditorService.clearCache;
 
         let engineState =
           engineState

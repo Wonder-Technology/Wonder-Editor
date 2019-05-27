@@ -24,14 +24,26 @@ let _getClonedGameObjects = (wdbGameObjects, (editorState, engineState)) =>
   |> WonderCommonlib.ArrayService.flatten
   |> ArrayService.exclude(wdbGameObjects);
 
-let _removeTextureImageDataFromImageDataMap =
-    ({imageDataIndex}: textureNodeData, editorState) =>
-  TextureNodeAssetEditorService.doesAnyTextureUseImage(
-    imageDataIndex,
-    editorState,
-  ) ?
-    editorState :
-    editorState |> ImageDataMapAssetEditorService.removeData(imageDataIndex);
+let _disposeTextureNodeEditorDataBeforeRemoveNode =
+    (
+      {imageDataIndex, textureComponent}: textureNodeData,
+      engineState,
+      editorState,
+    ) => {
+  let editorState =
+    TextureNodeAssetEditorService.doesAnyTextureUseImage(
+      imageDataIndex,
+      editorState,
+    ) ?
+      editorState :
+      editorState |> ImageDataMapAssetEditorService.removeData(imageDataIndex);
+
+  editorState
+  |> SourceTextureCacheInspectorCanvasLogicService.removeCache(
+       textureComponent,
+       engineState,
+     );
+};
 
 let _disposeMaterialNodeEditorDataBeforeRemoveNode =
     ({imageDataIndex}: materialNodeData, editorState) =>
@@ -56,7 +68,11 @@ let _disposeNodeEditorDataBeforeRemoveNode = (node, engineState, editorState) =>
     ~node,
     ~textureNodeFunc=
       (_, nodeData) =>
-        _removeTextureImageDataFromImageDataMap(nodeData, editorState),
+        _disposeTextureNodeEditorDataBeforeRemoveNode(
+          nodeData,
+          engineState,
+          editorState,
+        ),
     ~materialNodeFunc=
       (_, nodeData) =>
         _disposeMaterialNodeEditorDataBeforeRemoveNode(nodeData, editorState),
@@ -236,6 +252,7 @@ let disposeTree = ((editorState, engineState)) => {
 
   (
     editorState
+    |> SourceTextureCacheInspectorCanvasEditorService.clearCache
     |> TreeAssetEditorService.clearTree
     |> ImageDataMapAssetEditorService.clearMap
     |> SelectedFolderNodeIdInAssetTreeAssetEditorService.clearSelectedFolderNodeIdInAssetTree

@@ -58,7 +58,7 @@ let prepareInspectorAndImgCanvas =
   (imgCanvasFakeBase64Str, (inspectorCanvasDom, imgCanvasDom));
 };
 
-let prepareInspectorEngineState = (sandbox) => {
+let prepareInspectorEngineState = sandbox => {
   MainEditorSceneTool.initInspectorEngineState(
     ~sandbox,
     ~isInitJob=false,
@@ -90,4 +90,27 @@ let prepareInspectorEngineState = (sandbox) => {
   |> MainUtils._handleInspectorEngineState
   |> StateInspectorEngineService.setState
   |> ignore;
+};
+
+module TextureCache = {
+  let setFakeCaches = () => {
+    let editorState = StateEditorService.getState();
+
+    {
+      ...editorState,
+      inspectorCanvasRecord: {
+        ...editorState.inspectorCanvasRecord,
+        basicSourceTextureCacheMap:
+          editorState.inspectorCanvasRecord.basicSourceTextureCacheMap
+          |> WonderCommonlib.ImmutableSparseMapService.set(0, 10)
+          |> WonderCommonlib.ImmutableSparseMapService.set(1, 11),
+      },
+    }
+    |> StateEditorService.setState
+    |> ignore;
+  };
+
+  let isCacheMapEmpty = (editorState: EditorType.editorState) =>
+    editorState.inspectorCanvasRecord.basicSourceTextureCacheMap
+    |> WonderCommonlib.ImmutableSparseMapService.length === 0;
 };
