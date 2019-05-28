@@ -4,6 +4,11 @@ exports[`Progress component test progress component test snapshot 1`] = `
 <article
   className="wonder-progress"
   id="wonder-progress"
+  style={
+    Object {
+      "display": "none",
+    }
+  }
 >
   <div
     className="progress-content"

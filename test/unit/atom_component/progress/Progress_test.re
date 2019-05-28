@@ -21,81 +21,46 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test progress component", () => {
-      let _buildFakeProgressDom = (~display="flex", ()) => {
-        "style": {
-          "display": display,
-        },
-      };
-
       test("test snapshot", () =>
         _buildProgressComponent() |> ReactTestTool.createSnapshotAndMatch
       );
 
-      describe("operate progress visible", () => {
-        let progressDom = ref(Obj.magic(-1));
+      describe("test didMount", () => {
+        test("bind change percent event", () => {
+          let send = ProgressTool.didMount(sandbox);
 
-        beforeEach(() => {
-          _buildProgressComponent();
-          progressDom := _buildFakeProgressDom(~display="flex", ());
-          DomTool.stubFakeDomForQuerySelector(
-            sandbox,
-            "wonder-progress",
-            progressDom^,
-          );
-        });
-
-        describe("show progress", () =>
-          test("show progress dom", () => {
-            ProgressUtils.hide |> StateLogicService.getAndSetEngineState;
-            ProgressUtils.show |> StateLogicService.getAndSetEngineState;
-
-            (progressDom^)##style##display |> expect == "flex";
-          })
-        );
-
-        describe("hide progress", () =>
-          test("hide progress dom", () => {
-            ProgressUtils.hide |> StateLogicService.getAndSetEngineState;
-
-            (progressDom^)##style##display |> expect == "none";
-          })
-        );
-
-        test("if percent === 100, hide progress", () => {
-          ProgressUtils.changePercent(100)
+          ProgressUtils.changePercent(10)
           |> StateLogicService.getAndSetEngineState;
 
-          (progressDom^)##style##display |> expect == "none";
+          send |> expect |> toCalledWith([|Progress.ChangePercent(10)|]);
         });
-        test("if finish, hide progress", () => {
-          ProgressUtils.finish |> StateLogicService.getAndSetEngineState;
+        test("bind show event", () => {
+          let send = ProgressTool.didMount(sandbox);
 
-          (progressDom^)##style##display |> expect == "none";
+          ProgressUtils.show |> StateLogicService.getAndSetEngineState;
+
+          send |> expect |> toCalledWith([|Progress.Show|]);
         });
-      });
+        test("bind hide event", () => {
+          let send = ProgressTool.didMount(sandbox);
 
-      describe("test off custom global event in willUnmount", () => {
-        let progressDom = ref(Obj.magic(-1));
+          ProgressUtils.show |> StateLogicService.getAndSetEngineState;
 
-        beforeEach(() => {
-          _buildProgressComponent();
-          progressDom := _buildFakeProgressDom(~display="flex", ());
-          DomTool.stubFakeDomForQuerySelector(
-            sandbox,
-            "wonder-progress",
-            progressDom^,
-          );
-        });
-
-        test("test off hide event", () => {
-          _buildProgressComponent();
-
-          Progress.Method.willUnmount();
-
-          ProgressUtils.hide |> StateLogicService.getAndSetEngineState;
-
-          (progressDom^)##style##display |> expect == "flex";
+          send |> expect |> toCalledWith([|Progress.Show|]);
         });
       });
+
+      describe("test willUnmount", () =>
+        describe("off custom global event", () =>
+          test("test off hide event", () => {
+            let send = ProgressTool.didMount(sandbox);
+            ProgressTool.willUnmount();
+
+            ProgressUtils.show |> StateLogicService.getAndSetEngineState;
+
+            send |> expect |> not_ |> toCalledWith([|Progress.Show|]);
+          })
+        )
+      );
     });
   });
