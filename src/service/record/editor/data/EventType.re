@@ -36,12 +36,10 @@ type domEventName =
   | KeyDown_SceneView
   | KeyPress_SceneView;
 
-type eventTarget =
-  | Scene
-  | Game
-  | Other;
-
-type eventRecord = {eventTarget};
+type eventRecord = {
+  eventTarget: EditorEventTargetType.eventTarget,
+  inspectorEventTarget: InspectorEventTargetType.eventTarget,
+};
 
 external documentToEventTarget:
   WonderWebgl.DomExtendType.document => Dom.eventTarget =

@@ -10,3 +10,15 @@ let setEventTarget = (eventTarget, {eventRecord} as editorState) => {
     eventTarget,
   },
 };
+
+let getInspectorEventTarget = ({eventRecord} as editorState) =>
+  eventRecord.inspectorEventTarget;
+
+let setInspectorEventTarget =
+    (inspectorEventTarget, {eventRecord} as editorState) => {
+  ...editorState,
+  eventRecord: {
+    ...eventRecord,
+    inspectorEventTarget,
+  },
+};

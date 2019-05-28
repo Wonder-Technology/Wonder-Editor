@@ -204,7 +204,7 @@ let _ =
               TargetEventEditorService.getEventTarget(
                 StateEditorService.getState(),
               )
-              |> expect == EventType.Other;
+              |> expect == EditorEventTargetType.Other;
             })
           );
         });
@@ -254,7 +254,7 @@ let _ =
               TargetEventEditorService.getEventTarget(
                 StateEditorService.getState(),
               )
-              |> expect == EventType.Other;
+              |> expect == EditorEventTargetType.Other;
             });
 
             describe("else", () =>
@@ -267,7 +267,7 @@ let _ =
                 TargetEventEditorService.getEventTarget(
                   StateEditorService.getState(),
                 )
-                |> expect == EventType.Other;
+                |> expect == EditorEventTargetType.Other;
               })
             );
             /* describe("test loopBody", () =>
@@ -687,7 +687,7 @@ let _ =
             gl##clearColor |> expect |> not_ |> toCalled;
           });
 
-          describe("test event target is other", () =>
+          describe("test event target is Other", () =>
             describe("do nothing", () => {
               describe("test loopBody", () =>
                 test("if is stop, not loopBody", () => {
@@ -874,7 +874,7 @@ let _ =
           value^ |> expect == 1;
         };
 
-        describe("test event target is other", () => {
+        describe("test event target is Other", () => {
           describe("test loopBody", () =>
             test("if is stop, not loopBody", () => {
               _prepareMouseEvent(~sandbox, ());

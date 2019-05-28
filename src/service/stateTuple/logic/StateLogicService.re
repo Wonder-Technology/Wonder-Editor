@@ -1,10 +1,19 @@
 let getEngineStateToGetData = handleFunc =>
   StateEngineService.unsafeGetState() |> handleFunc;
 
+let getInspectorEngineStateToGetData = handleFunc =>
+  StateInspectorEngineService.unsafeGetState() |> handleFunc;
+
 let getAndSetEngineState = handleFunc =>
   StateEngineService.unsafeGetState()
   |> handleFunc
   |> StateEngineService.setState
+  |> ignore;
+
+let getAndSetInspectorEngineState = handleFunc =>
+  StateInspectorEngineService.unsafeGetState()
+  |> handleFunc
+  |> StateInspectorEngineService.setState
   |> ignore;
 
 let refreshEngineState = engineState =>
@@ -50,6 +59,11 @@ let getAndRefreshEngineStateWhenStop = () =>
 let renderWhenStop = engineState =>
   StateEditorService.getIsRun() ?
     engineState : engineState |> DirectorEngineService.loopBody(0.);
+
+let renderInspectorEngineStateWhenStop = inspectorEngineState =>
+  StateEditorService.getIsRun() ?
+    inspectorEngineState :
+    inspectorEngineState |> DirectorEngineService.loopBody(0.);
 
 let renderInspectorEngineStateAndReturnState = inspectorEngineState =>
   inspectorEngineState |> DirectorEngineService.loopBody(0.);

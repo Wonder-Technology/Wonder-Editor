@@ -51,7 +51,8 @@ let create = () => {
     activedBasicCameraView: None,
   },
   eventRecord: {
-    eventTarget: EventType.Other,
+    eventTarget: EditorEventTargetType.Other,
+    inspectorEventTarget: InspectorEventTargetType.Other,
   },
   imguiRecord: {
     gameViewIMGUIFunc: None,

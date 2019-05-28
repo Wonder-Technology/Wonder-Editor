@@ -1,59 +1,59 @@
 open Wonderjs;
 
+open StateDataMainType;
+
 open BrowserDetectType;
 
-let setChrome = () => {
-  let state = StateEngineService.unsafeGetState();
-  let state = {
-    ...state,
-    browserDetectRecord: {
-      browser: Chrome,
-    },
-  };
-
-  StateEngineService.setState(state) |> ignore;
+let setChromeFromEngineState = engineState => {
+  ...engineState,
+  browserDetectRecord: {
+    browser: Chrome,
+  },
 };
 
+let setChrome = () =>
+  setChromeFromEngineState |> StateLogicService.getAndSetEngineState;
+
 /* let setFirefox = () => {
-     let state = MainStateTool.unsafeGetState();
-     let state = {
-       ...state,
+     let engineState = MainStateTool.unsafeGetState();
+     let engineState = {
+       ...engineState,
        browserDetectRecord: {
          browser: Firefox,
        },
      };
-     MainStateTool.setState(state);
+     MainStateTool.setState(engineState);
    };
 
    let setAndroid = () => {
-     let state = MainStateTool.unsafeGetState();
-     let state = {
-       ...state,
+     let engineState = MainStateTool.unsafeGetState();
+     let engineState = {
+       ...engineState,
        browserDetectRecord: {
          browser: Android,
        },
      };
-     MainStateTool.setState(state);
+     MainStateTool.setState(engineState);
    };
 
    let setIOS = () => {
-     let state = MainStateTool.unsafeGetState();
-     let state = {
-       ...state,
+     let engineState = MainStateTool.unsafeGetState();
+     let engineState = {
+       ...engineState,
        browserDetectRecord: {
          browser: IOS,
        },
      };
-     MainStateTool.setState(state);
+     MainStateTool.setState(engineState);
    };
 
    let setUnknown = () => {
-     let state = MainStateTool.unsafeGetState();
-     let state = {
-       ...state,
+     let engineState = MainStateTool.unsafeGetState();
+     let engineState = {
+       ...engineState,
        browserDetectRecord: {
          browser: Unknown,
        },
      };
-     MainStateTool.setState(state);
+     MainStateTool.setState(engineState);
    }; */

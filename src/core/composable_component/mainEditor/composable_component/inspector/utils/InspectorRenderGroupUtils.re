@@ -273,7 +273,6 @@ module Dispose = {
     | Some(gameObjects) =>
       let engineState =
         gameObjects
-        |> WonderLog.Log.print
         |> WonderCommonlib.ArrayService.reduceOneParam(
              (. engineState, gameObject) =>
                replaceMaterial(

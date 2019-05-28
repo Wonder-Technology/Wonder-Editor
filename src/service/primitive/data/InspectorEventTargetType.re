@@ -1,0 +1,3 @@
+type eventTarget =
+  | Inspector
+  | Other;

@@ -1,5 +1,7 @@
 open EventType;
 
+open EditorEventTargetType;
+
 let _isTriggerGameViewEvent = () =>
   TargetEventEditorService.getEventTarget(StateEditorService.getState())
   === Game;
@@ -30,7 +32,7 @@ module PointEvent = {
 
   let _bindDomEventToTriggerPointEvent =
       (
-        (domEventName, customEventName, pointEventName, eventTarget),
+        (domEventName, customEventName, pointEventName),
         (
           onDomEventFunc,
           convertDomEventToPointEventFunc,
@@ -72,12 +74,11 @@ module PointEvent = {
   let _bindMouseEventToTriggerViewPointEvent =
       (
         (mouseEventName, customEventName, pointEventName),
-        eventTarget,
         isTriggerCustomGlobalEventFunc,
         engineState,
       ) =>
     _bindDomEventToTriggerPointEvent(
-      (mouseEventName, customEventName, pointEventName, eventTarget),
+      (mouseEventName, customEventName, pointEventName),
       (
         ManageEventEngineService.onMouseEvent(~priority=0),
         _convertMouseEventToPointEvent,
@@ -94,7 +95,6 @@ module PointEvent = {
       ) =>
     _bindMouseEventToTriggerViewPointEvent(
       (mouseEventName, customEventName, pointEventName),
-      Scene,
       isTriggerCustomGlobalEventFunc,
       engineState,
     );
@@ -107,7 +107,6 @@ module PointEvent = {
       ) =>
     _bindMouseEventToTriggerViewPointEvent(
       (mouseEventName, customEventName, pointEventName),
-      Game,
       isTriggerCustomGlobalEventFunc,
       engineState,
     );

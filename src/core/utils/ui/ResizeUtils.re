@@ -131,10 +131,13 @@ let resizeMainCanvasScreen = () => {
     } :
     ();
 };
+
+let getInspectorCanvasSize = () =>
+  DomHelper.getElementById("inspectorCanvasParent") |> getCanvasParentSize;
+
 let resizeInspectorCanvasScreen = () => {
   let inspectorEngineState = StateInspectorEngineService.unsafeGetState();
-  let inspectorCanvasParentSize =
-    DomHelper.getElementById("inspectorCanvasParent") |> getCanvasParentSize;
+  let inspectorCanvasParentSize = getInspectorCanvasSize();
 
   resizeCanvas(
     DomHelper.getElementById("inspector-canvas"),

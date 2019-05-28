@@ -82,6 +82,7 @@ let prepareWithState =
       ~offsetTop=2,
       ~offsetParent=Js.Nullable.undefined,
       ~setBrowserFunc=BrowserDetectToolEngine.setChrome,
+      ~setEngineFunc=StateEngineService.setState,
       (),
     ) => {
   let canvasDom =
@@ -92,13 +93,10 @@ let prepareWithState =
     );
 
   let engineState =
-    ViewToolEngine.setCanvas(
-      canvasDom |> Obj.magic,
-      StateEngineService.unsafeGetState(),
-    )
+    ViewToolEngine.setCanvas(canvasDom |> Obj.magic, engineState)
     |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()));
 
-  StateEngineService.setState(engineState) |> ignore;
+  setEngineFunc(engineState) |> ignore;
 
   setBrowserFunc();
 };
