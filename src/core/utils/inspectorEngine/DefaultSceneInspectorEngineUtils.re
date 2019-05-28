@@ -2,85 +2,6 @@ let getAmbientLightArr = () => [|0.2, 0.2, 0.2|];
 
 let getCameraDefaultDistance = () => 1.1;
 
-let _renderWhenStop = (event, handleFunc, inspectorEngineState) => {
-  let (inspectorEngineState, event) =
-    handleFunc(. event, inspectorEngineState);
-
-  let inspectorEngineState =
-    StateLogicService.renderInspectorEngineStateWhenStop(
-      inspectorEngineState,
-    );
-
-  (inspectorEngineState, event);
-};
-
-/* TODO duplicate */
-let _bindArcballCameraControllerEventForInspector =
-    (cameraController, inspectorEngineState) => {
-  let (
-    inspectorEngineState,
-    pointDragStartHandleFunc,
-    pointDragDropHandleFunc,
-    pointDragOverHandleFunc,
-    pointScaleHandleFunc,
-    keydownHandleFunc,
-  ) =
-    ArcballCameraEngineService.prepareBindEvent(
-      cameraController,
-      inspectorEngineState,
-    );
-
-  let inspectorEngineState =
-    ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=InspectorEventEditorService.getPointDragStartEventName(),
-      ~handleFunc=
-        (. event, inspectorEngineState) =>
-          MouseEventService.isRightMouseButton(event) ?
-            _renderWhenStop(
-              event,
-              pointDragStartHandleFunc,
-              inspectorEngineState,
-            ) :
-            (inspectorEngineState, event),
-      ~state=inspectorEngineState,
-      (),
-    );
-
-  let inspectorEngineState =
-    ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=InspectorEventEditorService.getPointDragDropEventName(),
-      ~handleFunc=
-        (. event, inspectorEngineState) =>
-          MouseEventService.isRightMouseButton(event) ?
-            _renderWhenStop(
-              event,
-              pointDragDropHandleFunc,
-              inspectorEngineState,
-            ) :
-            (inspectorEngineState, event),
-      ~state=inspectorEngineState,
-      (),
-    );
-
-  let inspectorEngineState =
-    ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=InspectorEventEditorService.getPointDragOverEventName(),
-      ~handleFunc=
-        (. event, inspectorEngineState) =>
-          MouseEventService.isRightMouseButton(event) ?
-            _renderWhenStop(
-              event,
-              pointDragOverHandleFunc,
-              inspectorEngineState,
-            ) :
-            (inspectorEngineState, event),
-      ~state=inspectorEngineState,
-      (),
-    );
-
-  inspectorEngineState;
-};
-
 let _initCameraAddToSceneGameObject = (camera, inspectorEngineState) => {
   let (inspectorEngineState, arcballCameraController) =
     ArcballCameraEngineService.create(inspectorEngineState);
@@ -113,7 +34,9 @@ let _initCameraAddToSceneGameObject = (camera, inspectorEngineState) => {
        arcballCameraController,
        1.5,
      )
-  |> _bindArcballCameraControllerEventForInspector(arcballCameraController)
+  |> ArcballCameraControllerLogicService.bindArcballCameraControllerEventForInspector(
+       arcballCameraController,
+     )
   |> BasicCameraViewEngineService.activeBasicCameraView(
        inspectorEngineState
        |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
