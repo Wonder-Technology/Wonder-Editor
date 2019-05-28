@@ -5,7 +5,8 @@ let rec _iterateArrayDom = (targetDom, domArray, isIncludeTarget) =>
          isIncludeTarget || targetDom === dom === true ?
            true :
            {
-             let children = (dom |> DomHelperType.convertDomElementToJsObj)##children;
+             let children =
+               (dom |> DomHelperType.convertDomElementToJsObj)##children;
 
              _iterateArrayDom(targetDom, children, isIncludeTarget);
            },
@@ -14,3 +15,15 @@ let rec _iterateArrayDom = (targetDom, domArray, isIncludeTarget) =>
 
 let isSpecificDomChildrenHasTargetDom = (targetDom, domArray) =>
   _iterateArrayDom(targetDom, domArray, false);
+
+let hideDom = [%raw
+  domId => {|
+                          document.querySelector("#" + domId).style.display = "none";
+    |}
+];
+
+let showDomFlex = [%raw
+  domId => {|
+                          document.querySelector("#" + domId).style.display = "flex";
+    |}
+];

@@ -3,6 +3,7 @@
 exports[`Progress component test progress component test snapshot 1`] = `
 <article
   className="wonder-progress"
+  id="wonder-progress"
 >
   <div
     className="progress-content"
@@ -11,11 +12,11 @@ exports[`Progress component test progress component test snapshot 1`] = `
       className="content-percent"
       style={
         Object {
-          "width": "50%",
+          "width": "0%",
         }
       }
     >
-      50%
+      0%
     </div>
   </div>
   <div

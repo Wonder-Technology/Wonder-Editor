@@ -52,7 +52,13 @@ let _handleAssetWDBType =
       (fileName, wdbArrayBuffer),
       (wdbNodeId, selectedFolderNodeInAssetTree),
       (editorState, engineState),
-    ) =>
+    ) => {
+  StateEngineService.unsafeGetState()
+  |> ProgressUtils.show
+  |> ProgressUtils.changePercent(0)
+  |> StateEngineService.setState
+  |> ignore;
+
   WDBAssetLogicService.importAssetWDB(
     (
       FileNameService.getBaseName(fileName)
@@ -118,8 +124,11 @@ let _handleAssetWDBType =
            (editorState, engineState),
          );
 
+       ProgressUtils.finish |> StateLogicService.getAndSetEngineState;
+
        (editorState, engineState) |> resolve;
      });
+};
 
 let _getAssetBundleTypeByExtname = extname =>
   switch (extname) {

@@ -11,12 +11,24 @@ type action =
 
 module Method = {
   let importPackage = ((uiState, dispatchFunc), closeNavFunc, event) => {
+    StateEngineService.unsafeGetState()
+    |> ProgressUtils.show
+    |> ProgressUtils.changePercent(0)
+    |> StateEngineService.setState
+    |> ignore;
+
     StateHistoryService.getStateForHistory()
     |> StoreHistoryUtils.storeHistoryStateWithNoCopyEngineState(uiState);
 
     HeaderImportPackageUtils.importPackage(dispatchFunc, event)
-    |> Js.Promise.then_(_ => closeNavFunc() |> Js.Promise.resolve)
+    |> Js.Promise.then_(_ => {
+         ProgressUtils.finish |> StateLogicService.getAndSetEngineState;
+
+         closeNavFunc() |> Js.Promise.resolve;
+       })
     |> Js.Promise.catch(e => {
+         ProgressUtils.finish |> StateLogicService.getAndSetEngineState;
+
          let e = Obj.magic(e);
          let editorState = StateEditorService.getState();
 

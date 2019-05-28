@@ -105,6 +105,7 @@ module Method = {
         </div>
       </div>
       <canvas id="img-canvas" key="imgCanvas" width="50" height="50" />
+      <Progress />
     </article>;
 
   let onResize = domElement => {

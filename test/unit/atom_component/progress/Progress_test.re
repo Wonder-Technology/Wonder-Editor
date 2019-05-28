@@ -10,93 +10,92 @@ let _ =
   describe("Progress component", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let _buildProgressComponent = (percent, completeFunc) =>
-      ReactTestRenderer.create(<Progress percent completeFunc />);
+    let _buildProgressComponent = () =>
+      ReactTestRenderer.create(<Progress />);
 
     beforeEach(() => {
       sandbox := createSandbox();
 
       MainEditorSceneTool.initState(~sandbox, ());
-
-      MainEditorSceneTool.createDefaultScene(
-        sandbox,
-        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
-      );
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test progress component", () => {
+      let _buildFakeProgressDom = (~display="flex", ()) => {
+        "style": {
+          "display": display,
+        },
+      };
+
       test("test snapshot", () =>
-        _buildProgressComponent(50, (.) => ())
-        |> ReactTestTool.createSnapshotAndMatch
+        _buildProgressComponent() |> ReactTestTool.createSnapshotAndMatch
       );
 
-      describe("test execute completeFunc", () => {
-        test("if percent < 100, not execute completeFunc", () => {
-          let completeFunc = createEmptyStubWithJsObjSandbox(sandbox);
+      describe("operate progress visible", () => {
+        let progressDom = ref(Obj.magic(-1));
 
-          _buildProgressComponent(80, completeFunc);
-
-          let engineState = StateEngineService.unsafeGetState();
-
-          let (engineState, _) =
-            ManageEventEngineService.triggerCustomGlobalEvent(
-              CreateCustomEventEngineService.create(
-                ProgressUtils.getProgressChangePercentCustomGlobalEventName(),
-                Some(90 |> EventType.convertIntToUserData),
-              ),
-              engineState,
-            );
-
-          engineState |> StateEngineService.setState |> ignore;
-
-          completeFunc |> expect |> not_ |> toCalled;
+        beforeEach(() => {
+          _buildProgressComponent();
+          progressDom := _buildFakeProgressDom(~display="flex", ());
+          DomTool.stubFakeDomForQuerySelector(
+            sandbox,
+            "wonder-progress",
+            progressDom^,
+          );
         });
-        test("else if percent === 100, execute completeFunc", () => {
-          let completeFunc = createEmptyStubWithJsObjSandbox(sandbox);
 
-          _buildProgressComponent(80, completeFunc);
+        describe("show progress", () =>
+          test("show progress dom", () => {
+            ProgressUtils.hide |> StateLogicService.getAndSetEngineState;
+            ProgressUtils.show |> StateLogicService.getAndSetEngineState;
 
-          let engineState = StateEngineService.unsafeGetState();
+            (progressDom^)##style##display |> expect == "flex";
+          })
+        );
 
-          let (engineState, _) =
-            ManageEventEngineService.triggerCustomGlobalEvent(
-              CreateCustomEventEngineService.create(
-                ProgressUtils.getProgressChangePercentCustomGlobalEventName(),
-                Some(100 |> EventType.convertIntToUserData),
-              ),
-              engineState,
-            );
+        describe("hide progress", () =>
+          test("hide progress dom", () => {
+            ProgressUtils.hide |> StateLogicService.getAndSetEngineState;
 
-          engineState |> StateEngineService.setState |> ignore;
+            (progressDom^)##style##display |> expect == "none";
+          })
+        );
 
-          completeFunc |> expect |> toCalledOnce;
+        test("if percent === 100, hide progress", () => {
+          ProgressUtils.changePercent(100)
+          |> StateLogicService.getAndSetEngineState;
+
+          (progressDom^)##style##display |> expect == "none";
+        });
+        test("if finish, hide progress", () => {
+          ProgressUtils.finish |> StateLogicService.getAndSetEngineState;
+
+          (progressDom^)##style##display |> expect == "none";
         });
       });
 
-      describe("test off custom global event", () =>
-        test("off custom global event in willUnmount", () => {
-          let completeFunc = createEmptyStubWithJsObjSandbox(sandbox);
+      describe("test off custom global event in willUnmount", () => {
+        let progressDom = ref(Obj.magic(-1));
 
-          _buildProgressComponent(80, completeFunc);
+        beforeEach(() => {
+          _buildProgressComponent();
+          progressDom := _buildFakeProgressDom(~display="flex", ());
+          DomTool.stubFakeDomForQuerySelector(
+            sandbox,
+            "wonder-progress",
+            progressDom^,
+          );
+        });
+
+        test("test off hide event", () => {
+          _buildProgressComponent();
 
           Progress.Method.willUnmount();
 
-          let engineState = StateEngineService.unsafeGetState();
+          ProgressUtils.hide |> StateLogicService.getAndSetEngineState;
 
-          let (engineState, _) =
-            ManageEventEngineService.triggerCustomGlobalEvent(
-              CreateCustomEventEngineService.create(
-                ProgressUtils.getProgressChangePercentCustomGlobalEventName(),
-                Some(100 |> EventType.convertIntToUserData),
-              ),
-              engineState,
-            );
-
-          engineState |> StateEngineService.setState |> ignore;
-
-          completeFunc |> expect |> not_ |> toCalledOnce;
-        })
-      );
+          (progressDom^)##style##display |> expect == "flex";
+        });
+      });
     });
   });

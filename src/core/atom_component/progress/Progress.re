@@ -8,20 +8,44 @@ type action =
   | ChangePercent(int);
 
 type state = {
-  style: ReactDOMRe.Style.t,
   percent: int,
+  style: ReactDOMRe.Style.t,
 };
 
 module Method = {
   let buildWidthPercentStr = percent => (percent |> string_of_int) ++ "%";
 
-  let willUnmount = () =>
-    ManageEventEngineService.offCustomGlobalEventByEventName(
-      ~eventName=ProgressUtils.getProgressChangePercentCustomGlobalEventName(),
-      ~state=StateEngineService.unsafeGetState(),
-    )
-    |> StateEngineService.setState
-    |> ignore;
+  let willUnmount = () => {
+    let engineState =
+      ManageEventEngineService.offCustomGlobalEventByEventName(
+        ~eventName=
+          ProgressUtils.getProgressChangePercentCustomGlobalEventName(),
+        ~state=StateEngineService.unsafeGetState(),
+      );
+    let engineState =
+      ManageEventEngineService.offCustomGlobalEventByEventName(
+        ~eventName=ProgressUtils.getProgressShowCustomGlobalEventName(),
+        ~state=engineState,
+      );
+    let engineState =
+      ManageEventEngineService.offCustomGlobalEventByEventName(
+        ~eventName=ProgressUtils.getProgressHideCustomGlobalEventName(),
+        ~state=engineState,
+      );
+    let engineState =
+      ManageEventEngineService.offCustomGlobalEventByEventName(
+        ~eventName=ProgressUtils.getProgressFinishCustomGlobalEventName(),
+        ~state=engineState,
+      );
+
+    engineState |> StateEngineService.setState |> ignore;
+  };
+
+  let showProgress = () => DomUtils.showDomFlex("wonder-progress");
+
+  let hideProgress = () => DomUtils.hideDom("wonder-progress");
+
+  let finish = () => hideProgress();
 };
 
 let component = ReasonReact.reducerComponent("Progress");
@@ -42,7 +66,8 @@ let reducer = (action, state) =>
   };
 
 let render = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
-  <article className="wonder-progress" key="WonderProgress">
+  <article
+    id="wonder-progress" className="wonder-progress" key="WonderProgress">
     <div className="progress-content">
       <div className="content-percent" style={state.style}>
         {DomHelper.textEl(Method.buildWidthPercentStr(state.percent))}
@@ -51,39 +76,79 @@ let render = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
     <div className="progress-bg" />
   </article>;
 
-let make = (~percent: int, ~completeFunc, _children) => {
+let make = _children => {
   ...component,
   initialState: () => {
-    percent,
-    style:
-      ReactDOMRe.Style.make(~width=Method.buildWidthPercentStr(percent), ()),
+    percent: 0,
+    style: ReactDOMRe.Style.make(~width=Method.buildWidthPercentStr(0), ()),
   },
   reducer,
   render: _self => render(_self),
   didUpdate: ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, 'b, 'c)) =>
-    newSelf.state.percent === 100 ? completeFunc(.) : (),
+    newSelf.state.percent === 100 ? Method.finish() : (),
   didMount: ({state, send}: ReasonReact.self('a, 'b, 'c)) => {
     let engineState = StateEngineService.unsafeGetState();
 
-    ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=ProgressUtils.getProgressChangePercentCustomGlobalEventName(),
-      ~handleFunc=
-        (. event, engineState) => {
-          send(
-            ChangePercent(
-              event.userData
-              |> OptionService.unsafeGet
-              |> WonderEditor.EventType.convertUserDataToInt,
-            ),
-          );
+    let engineState =
+      ManageEventEngineService.onCustomGlobalEvent(
+        ~eventName=
+          ProgressUtils.getProgressChangePercentCustomGlobalEventName(),
+        ~handleFunc=
+          (. event, engineState) => {
+            send(
+              ChangePercent(
+                event.userData
+                |> OptionService.unsafeGet
+                |> WonderEditor.EventType.convertUserDataToInt,
+              ),
+            );
 
-          (engineState, event);
-        },
-      ~state=engineState,
-      (),
-    )
-    |> StateEngineService.setState
-    |> ignore;
+            (engineState, event);
+          },
+        ~state=engineState,
+        (),
+      );
+
+    let engineState =
+      ManageEventEngineService.onCustomGlobalEvent(
+        ~eventName=ProgressUtils.getProgressShowCustomGlobalEventName(),
+        ~handleFunc=
+          (. event, engineState) => {
+            Method.showProgress();
+
+            (engineState, event);
+          },
+        ~state=engineState,
+        (),
+      );
+
+    let engineState =
+      ManageEventEngineService.onCustomGlobalEvent(
+        ~eventName=ProgressUtils.getProgressHideCustomGlobalEventName(),
+        ~handleFunc=
+          (. event, engineState) => {
+            Method.hideProgress();
+
+            (engineState, event);
+          },
+        ~state=engineState,
+        (),
+      );
+
+    let engineState =
+      ManageEventEngineService.onCustomGlobalEvent(
+        ~eventName=ProgressUtils.getProgressFinishCustomGlobalEventName(),
+        ~handleFunc=
+          (. event, engineState) => {
+            Method.finish();
+
+            (engineState, event);
+          },
+        ~state=engineState,
+        (),
+      );
+
+    engineState |> StateEngineService.setState |> ignore;
   },
   willUnmount: ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
     Method.willUnmount(),
