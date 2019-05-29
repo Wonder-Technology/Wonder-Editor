@@ -597,6 +597,7 @@ let _rewriteScriptAPIJsObj = scriptAPIJsObj =>
   {
     /* TODO improve: should only set MainEditorTransform->local position values
        "setTransformLocalPosition": scriptAPIJsObj##setTransformLocalPosition, */
+    /* TODO should update localEulerAngleMap when change transform->rotation(e.g. change by quat, euler, ...) */
     "disposeGameObject":
       DisposeGameObject.buildDisposeGameObjectFunc(scriptAPIJsObj),
     "getAssetBundlePath": AssetBundle.Path.getAssetBundlePath,
