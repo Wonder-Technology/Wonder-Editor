@@ -88,7 +88,7 @@ module DomEvent = {
     |> WonderBsMost.Most.flatMap(event =>
          fromPointDomEvent("mousemove", engineState)
          /*!
-           fix chrome bug for getMovementDeltaWhenPointerLocked:
+           fix chrome bug for getMovementDeltaWhenPointerLockedAndFixBug:
            the first movementDelta->x >100!
                   */
          |> WonderBsMost.Most.skip(2)

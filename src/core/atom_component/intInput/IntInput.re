@@ -89,7 +89,7 @@ module Method = {
             Some(
               computeNewValue(
                 state.inputValue |> OptionService.unsafeGet |> int_of_string,
-                MouseEventService.getMovementDeltaWhenPointerLocked(e),
+                MouseEventService.getMovementDeltaWhenPointerLockedAndFixBug(e),
               )
               |> string_of_int,
             ),

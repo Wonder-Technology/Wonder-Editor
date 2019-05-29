@@ -172,7 +172,7 @@ module Method = {
               computeNewValue(
                 state.inputValue |> OptionService.unsafeGet |> float_of_string,
                 state.canBeZero,
-                MouseEventService.getMovementDeltaWhenPointerLocked(e),
+                MouseEventService.getMovementDeltaWhenPointerLockedAndFixBug(e)|> WonderLog.Log.print,
               )
               |> string_of_float,
             ),
