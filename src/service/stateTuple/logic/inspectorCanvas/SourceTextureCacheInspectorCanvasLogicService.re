@@ -1,10 +1,10 @@
 open EditorType;
 
-let _error = (textureInEngineState, editorState) =>
+let _error = (textureInMainEngineState, editorState) =>
   ConsoleUtils.error(
     LogUtils.buildErrorMessage(
       ~description=
-        {j|textureInEngineState:$textureInEngineState should be basicSourceTexture|j},
+        {j|textureInMainEngineState:$textureInMainEngineState should be basicSourceTexture|j},
       ~reason="",
       ~solution={j||j},
       ~params={j||j},
@@ -14,14 +14,14 @@ let _error = (textureInEngineState, editorState) =>
 
 let addCache =
     (
-      textureInEngineState,
+      textureInMainEngineState,
       textureInInspectorEngineState,
-      engineState,
+      mainEngineState,
       editorState,
     ) =>
   SourceTextureEngineService.isBasicSourceTextureIndex(
-    textureInEngineState,
-    engineState,
+    textureInMainEngineState,
+    mainEngineState,
   ) ?
     {
       ...editorState,
@@ -30,21 +30,21 @@ let addCache =
         basicSourceTextureCacheMap:
           editorState.inspectorCanvasRecord.basicSourceTextureCacheMap
           |> WonderCommonlib.ImmutableSparseMapService.set(
-               textureInEngineState,
+               textureInMainEngineState,
                textureInInspectorEngineState,
              ),
       },
     } :
     {
-      _error(textureInEngineState, editorState);
+      _error(textureInMainEngineState, editorState);
 
       editorState;
     };
 
-let removeCache = (textureInEngineState, engineState, editorState) =>
+let removeCache = (textureInMainEngineState, mainEngineState, editorState) =>
   SourceTextureEngineService.isBasicSourceTextureIndex(
-    textureInEngineState,
-    engineState,
+    textureInMainEngineState,
+    mainEngineState,
   ) ?
     {
       ...editorState,
@@ -53,25 +53,25 @@ let removeCache = (textureInEngineState, engineState, editorState) =>
         basicSourceTextureCacheMap:
           editorState.inspectorCanvasRecord.basicSourceTextureCacheMap
           |> WonderCommonlib.ImmutableSparseMapService.deleteVal(
-               textureInEngineState,
+               textureInMainEngineState,
              ),
       },
     } :
     {
-      _error(textureInEngineState, editorState);
+      _error(textureInMainEngineState, editorState);
 
       editorState;
     };
 
-let getCache = (textureInEngineState, (editorState, engineState)) =>
+let getCache = (textureInMainEngineState, (editorState, mainEngineState)) =>
   SourceTextureEngineService.isBasicSourceTextureIndex(
-    textureInEngineState,
-    engineState,
+    textureInMainEngineState,
+    mainEngineState,
   ) ?
     editorState.inspectorCanvasRecord.basicSourceTextureCacheMap
-    |> WonderCommonlib.ImmutableSparseMapService.get(textureInEngineState) :
+    |> WonderCommonlib.ImmutableSparseMapService.get(textureInMainEngineState) :
     {
-      _error(textureInEngineState, editorState);
+      _error(textureInMainEngineState, editorState);
 
       None;
     };

@@ -112,8 +112,8 @@ let _bindArcballCameraControllerEvent =
 };
 
 let bindArcballCameraControllerEventForSceneView =
-    (cameraController, mainCanvasEngineState) => {
-  let (mainCanvasEngineState, (pointScaleHandleFunc, keydownHandleFunc)) =
+    (cameraController, mainEngineState) => {
+  let (mainEngineState, (pointScaleHandleFunc, keydownHandleFunc)) =
     _bindArcballCameraControllerEvent(
       cameraController,
       (
@@ -122,38 +122,38 @@ let bindArcballCameraControllerEventForSceneView =
         SceneViewEventEditorService.getPointDragDropEventName(),
       ),
       _renderWhenStopForSceneView,
-      mainCanvasEngineState,
+      mainEngineState,
     );
 
-  let mainCanvasEngineState =
+  let mainEngineState =
     ManageEventEngineService.onCustomGlobalEvent(
       ~eventName=SceneViewEventEditorService.getPointScaleEventName(),
       ~handleFunc=
-        (. event, mainCanvasEngineState) =>
+        (. event, mainEngineState) =>
           _renderWhenStopForSceneView(
             event,
             pointScaleHandleFunc,
-            mainCanvasEngineState,
+            mainEngineState,
           ),
-      ~state=mainCanvasEngineState,
+      ~state=mainEngineState,
       (),
     );
 
-  let mainCanvasEngineState =
+  let mainEngineState =
     ManageEventEngineService.onKeyboardEvent(
       ~eventName=EventType.KeyDown_SceneView |> Obj.magic,
       ~handleFunc=
-        (. event: EventType.keyboardEvent, mainCanvasEngineState) =>
+        (. event: EventType.keyboardEvent, mainEngineState) =>
           _handleKeyDownForSceneView(
             event,
             keydownHandleFunc,
-            mainCanvasEngineState,
+            mainEngineState,
           ),
-      ~state=mainCanvasEngineState,
+      ~state=mainEngineState,
       (),
     );
 
-  mainCanvasEngineState;
+  mainEngineState;
 };
 
 let bindArcballCameraControllerEventForInspector =
