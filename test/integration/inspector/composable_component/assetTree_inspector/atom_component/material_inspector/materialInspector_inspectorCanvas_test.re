@@ -28,7 +28,6 @@ let _ =
       sandbox := createSandbox();
 
       _prepareState();
-
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
@@ -291,6 +290,81 @@ let _ =
       });
 
       describe("test willUnmount", () => {
+        describe("restore arcball camer controllear", () => {
+          beforeEach(() => {
+            let _ =
+              InspectorCanvasTool.prepareInspectorAndImgCanvas(~sandbox, ());
+            ();
+          });
+
+          test("restore it's phi,theta", () => {
+            let (addedMaterialNodeId, materialComponent) =
+              MaterialInspectorCanvasTool.createNewMaterial();
+
+            _willUnmount(addedMaterialNodeId);
+
+            InspectorCanvasTool.ArcballCameraController.getAngleData
+            |> StateLogicService.getInspectorEngineStateToGetData
+            |> expect
+            == InspectorCanvasTool.ArcballCameraController.getDefaultAngleData();
+          });
+          test("update arcball camera controller", () => {
+            MainEditorSceneTool.initInspectorEngineState(
+              ~sandbox,
+              ~isInitJob=false,
+              ~noWorkerJobRecord=
+                NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                  ~initPipelines=
+                    {|
+                [
+                 {
+                   "name": "default",
+                   "jobs": [
+                       {"name": "init_inspector_engine" }
+                   ]
+                 }
+               ]
+                |},
+                  ~initJobs=
+                    {|
+                [
+                   {"name": "init_inspector_engine" }
+                ]
+                |},
+                  ~loopPipelines=
+                    {|
+                [
+                 {
+                   "name": "default",
+                   "jobs": [
+                       {"name": "update_camera" }
+                   ]
+                 }
+               ]
+                |},
+                  ~loopJobs=
+                    {|
+                [
+                       {"name": "update_camera" }
+                ]
+                |},
+                  (),
+                ),
+              (),
+            );
+            MainUtils._handleInspectorEngineState
+            |> StateLogicService.getAndSetInspectorEngineState;
+            let (addedMaterialNodeId, materialComponent) =
+              MaterialInspectorCanvasTool.createNewMaterial();
+
+            _willUnmount(addedMaterialNodeId);
+
+            InspectorCanvasTool.ArcballCameraController.getGameObjectTransformLocalPosition
+            |> StateLogicService.getInspectorEngineStateToGetData
+            |> expect == (0., 0.08, 1.1);
+          });
+        });
+
         test(
           "if material is removed, not create material sphere's snapshot", () => {
           NoWorkerJobTool.initStateWithDisposeJob(~sandbox, ());

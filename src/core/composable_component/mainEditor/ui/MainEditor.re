@@ -32,7 +32,7 @@ module Method = {
         ResizeUtils.resizeMainCanvasScreen();
         ResizeUtils.resizeInspectorCanvasScreen();
 
-        AssetTreeInspectorUtils.hideInspectorCanvas();
+        InspectorCanvasUtils.hideInspectorCanvas();
       },
     );
 

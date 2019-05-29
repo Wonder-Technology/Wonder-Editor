@@ -657,7 +657,7 @@ module AssetTree = {
 
            let (editorState, inspectorEngineState) =
              (editorState, inspectorEngineState)
-             |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+             |> InspectorCanvasUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
              |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
                   MaterialDataAssetType.LightMaterial,
                   material,
@@ -667,6 +667,7 @@ module AssetTree = {
 
            let inspectorEngineState =
              inspectorEngineState
+             |> InspectorCanvasUtils.restoreArcballCameraControllerAngle
              |> StateLogicService.renderInspectorEngineStateAndReturnState;
 
            let editorState =
@@ -711,7 +712,7 @@ module AssetTree = {
           );
 
         (editorState, inspectorEngineState)
-        |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+        |> InspectorCanvasUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
         |> StateInspectorEngineService.setState;
 
         (editorState, engineState);

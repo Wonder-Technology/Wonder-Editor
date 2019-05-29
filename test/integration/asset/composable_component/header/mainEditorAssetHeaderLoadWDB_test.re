@@ -113,7 +113,40 @@ let _ =
            });
       });
 
-      describe("draw wdb snapshot", () =>
+      describe("draw wdb snapshot", () => {
+        describe("restore arcball camer controllear ", () =>
+          testPromise("restore it's phi,theta", () => {
+            EventListenerTool.buildFakeDom()
+            |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+
+            let (
+              addedMaterialNodeId,
+              newMaterialComponent,
+              imgCanvasFakeBase64Str,
+              (inspectorCanvasDom, imgCanvasDom),
+            ) =
+              MainEditorLightMaterialForAssetTool.prepareInspectorMaterialSphereAndImgCanvas(
+                ~sandbox,
+                (),
+              );
+
+            InspectorCanvasTool.ArcballCameraController.setAngleData
+            |> StateLogicService.getAndSetInspectorEngineState;
+
+            MainEditorAssetUploadTool.loadOneWDB(
+              ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+              (),
+            )
+            |> then_(uploadedWDBNodeId =>
+                 InspectorCanvasTool.ArcballCameraController.getAngleData
+                 |> StateLogicService.getInspectorEngineStateToGetData
+                 |> expect
+                 == InspectorCanvasTool.ArcballCameraController.getDefaultAngleData()
+                 |> resolve
+               );
+          })
+        );
+
         testPromise("test draw wdb snapshot store in imageDataMap", () => {
           EventListenerTool.buildFakeDom()
           |> EventListenerTool.stubGetElementByIdReturnFakeDom;
@@ -156,8 +189,8 @@ let _ =
                    |> resolve
                );
              });
-        })
-      );
+        });
+      });
 
       describe("extract assets from loaded wdb asset", () => {
         beforeEach(() =>

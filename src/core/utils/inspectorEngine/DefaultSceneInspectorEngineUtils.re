@@ -1,7 +1,5 @@
 let getAmbientLightArr = () => [|0.2, 0.2, 0.2|];
 
-let getCameraDefaultDistance = () => 1.1;
-
 let _initCameraAddToSceneGameObject = (camera, inspectorEngineState) => {
   let (inspectorEngineState, arcballCameraController) =
     ArcballCameraEngineService.create(inspectorEngineState);
@@ -15,7 +13,7 @@ let _initCameraAddToSceneGameObject = (camera, inspectorEngineState) => {
        ),
      ) */
   |> ArcballCameraEngineService.setArcballCameraControllerDistance(
-       getCameraDefaultDistance(),
+       InspectorCanvasUtils.getCameraDefaultDistance(),
        arcballCameraController,
      )
   |> ArcballCameraEngineService.setArcballCameraControllerWheelSpeed(
@@ -30,9 +28,8 @@ let _initCameraAddToSceneGameObject = (camera, inspectorEngineState) => {
        arcballCameraController,
        1.,
      )
-  |> ArcballCameraEngineService.setArcballCameraControllerTheta(
+  |> InspectorCanvasUtils.initArcballCameraControllerAngle(
        arcballCameraController,
-       1.5,
      )
   |> ArcballCameraControllerLogicService.bindArcballCameraControllerEventForInspector(
        arcballCameraController,

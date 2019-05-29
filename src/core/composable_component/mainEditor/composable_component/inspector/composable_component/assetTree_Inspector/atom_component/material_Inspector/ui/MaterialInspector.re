@@ -7,7 +7,7 @@ module Method = {
   let changeMaterialType = InspectorChangeMaterialTypeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let didMount = (type_, materialComponent) => {
-    AssetTreeInspectorUtils.showInspectorCanvas();
+    InspectorCanvasUtils.showInspectorCanvas();
 
     Console.tryCatch(
       () => {
@@ -27,34 +27,31 @@ module Method = {
     );
   };
 
-  let _updateSnapshot = (currentNodeId, dispatchFunc) => {
-    StateEditorService.getState()
-    |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByMaterialNodeId(
-         DomHelper.getElementById("inspector-canvas"),
-         DomHelper.getElementById("img-canvas"),
-         currentNodeId,
-       )
-    |> StateEditorService.setState
-    |> ignore;
-
-    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])))
-    |> ignore;
-  };
-
   let willUnmount = (currentNodeId, dispatchFunc) => {
-    AssetTreeInspectorUtils.hideInspectorCanvas();
+    InspectorCanvasUtils.restoreArcballCameraControllerAngle
+    |> StateLogicService.getInspectorEngineStateToGetData
+    |> StateLogicService.refreshInspectorEngineState;
+
+    InspectorCanvasUtils.hideInspectorCanvas();
 
     (
       StateEditorService.getState(),
       StateInspectorEngineService.unsafeGetState(),
     )
-    |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+    |> InspectorCanvasUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
     |> StateInspectorEngineService.setState
     |> ignore;
 
     OperateTreeAssetEditorService.isNodeExistById(currentNodeId)
     |> StateLogicService.getEditorState ?
-      _updateSnapshot(currentNodeId, dispatchFunc) : ();
+      InspectorCanvasUtils.updateSnapshot(
+        currentNodeId,
+        (
+          ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByMaterialNodeId,
+          dispatchFunc,
+        ),
+      ) :
+      ();
   };
 };
 

@@ -54,9 +54,9 @@ let createWDBNodeUseImageDataMapSnapshot =
 
 let createWDBNodeUseCreatedSnapshot =
     ((wdbNodeId, name, gameObject, parentFolderNode), editorState) => {
-  let (editorState, inspectorEngineState) =
+  let (newWDBGameObject, editorState, inspectorEngineState) =
     (editorState, StateInspectorEngineService.unsafeGetState())
-    |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+    |> InspectorCanvasUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
     |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
          gameObject,
          editorState,
@@ -65,6 +65,8 @@ let createWDBNodeUseCreatedSnapshot =
 
   let inspectorEngineState =
     inspectorEngineState
+    |> WDBInspectorEngineUtils.setCameraFocusWDBGameObject(newWDBGameObject)
+    |> InspectorCanvasUtils.restoreArcballCameraControllerAngle
     |> StateLogicService.renderInspectorEngineStateAndReturnState;
 
   let editorState =
@@ -75,8 +77,8 @@ let createWDBNodeUseCreatedSnapshot =
        );
 
   (editorState, inspectorEngineState)
-  |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
-  |> AssetTreeInspectorUtils.setCameraDefaultDistance
+  |> InspectorCanvasUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+  |> InspectorCanvasUtils.setCameraDefaultDistance
   |> StateInspectorEngineService.setState;
 
   editorState;

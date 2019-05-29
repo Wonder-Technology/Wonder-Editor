@@ -29,7 +29,7 @@ let _createAllMaterialSnapshot =
     ) => {
   let (editorState, inspectorEngineState) =
     (editorState, inspectorEngineState)
-    |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+    |> InspectorCanvasUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
     |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
          MaterialDataAssetType.LightMaterial,
          material,
@@ -39,6 +39,7 @@ let _createAllMaterialSnapshot =
 
   let inspectorEngineState =
     inspectorEngineState
+    |> InspectorCanvasUtils.restoreArcballCameraControllerAngle
     |> StateLogicService.renderInspectorEngineStateAndReturnState;
 
   let editorState =

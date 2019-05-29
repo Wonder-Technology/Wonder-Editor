@@ -70,6 +70,93 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test didMount", () => {
+      describe("restore arcball camer controllear", () => {
+        beforeEach(() => {
+          let _ =
+            InspectorCanvasTool.prepareInspectorAndImgCanvas(~sandbox, ());
+          ();
+        });
+
+        testPromise("restore it's phi,theta", () =>
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            (),
+          )
+          |> then_(uploadedWDBNodeId => {
+               let editorState = StateEditorService.getState();
+
+               _didMount(uploadedWDBNodeId, editorState);
+
+               InspectorCanvasTool.ArcballCameraController.getAngleData
+               |> StateLogicService.getInspectorEngineStateToGetData
+               |> expect == InspectorCanvasTool.ArcballCameraController.getDefaultAngleData()
+               |> resolve;
+             })
+        );
+        testPromise("update arcball camera controller", () => {
+          MainEditorSceneTool.initInspectorEngineState(
+            ~sandbox,
+            ~isInitJob=false,
+            ~noWorkerJobRecord=
+              NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                ~initPipelines=
+                  {|
+                [
+                 {
+                   "name": "default",
+                   "jobs": [
+                       {"name": "init_inspector_engine" }
+                   ]
+                 }
+               ]
+                |},
+                ~initJobs=
+                  {|
+                [
+                   {"name": "init_inspector_engine" }
+                ]
+                |},
+                ~loopPipelines=
+                  {|
+                [
+                 {
+                   "name": "default",
+                   "jobs": [
+                       {"name": "update_camera" }
+                   ]
+                 }
+               ]
+                |},
+                ~loopJobs=
+                  {|
+                [
+                       {"name": "update_camera" }
+                ]
+                |},
+                (),
+              ),
+            (),
+          );
+          MainUtils._handleInspectorEngineState
+          |> StateLogicService.getAndSetInspectorEngineState;
+
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            (),
+          )
+          |> then_(uploadedWDBNodeId => {
+               let editorState = StateEditorService.getState();
+
+               _didMount(uploadedWDBNodeId, editorState);
+
+               InspectorCanvasTool.ArcballCameraController.getGameObjectTransformLocalPosition
+               |> StateLogicService.getInspectorEngineStateToGetData
+               |> expect == (0., 0.12, 1.64)
+               |> resolve;
+             });
+        });
+      });
+
       describe("clone wdb gameObject show in inspector-canvas", () => {
         testPromise(
           "test clone wdb gameObject should add into container gameObject", () => {
@@ -137,10 +224,7 @@ let _ =
                  newCameraArcballControllerDistance,
                )
                |> expect
-               == (
-                    DefaultSceneInspectorEngineUtils.getCameraDefaultDistance(),
-                    1.6,
-                  )
+               == (InspectorCanvasUtils.getCameraDefaultDistance(), 1.6)
                |> resolve;
              });
         });
@@ -728,8 +812,7 @@ let _ =
                |> FloatService.truncateFloatValue(_, 1);
 
              newCameraArcballControllerDistance
-             |> expect
-             == DefaultSceneInspectorEngineUtils.getCameraDefaultDistance()
+             |> expect == InspectorCanvasUtils.getCameraDefaultDistance()
              |> resolve;
            });
       });

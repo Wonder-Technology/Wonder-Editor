@@ -42,7 +42,7 @@ let rec _iterateCreateNewWDBGameObject =
     (newGameObject, editorState, inspectorEngineState);
 };
 
-let _setCameraFocusWDBGameObject = (newWDBGameObject, inspectorEngineState) => {
+let setCameraFocusWDBGameObject = (newWDBGameObject, inspectorEngineState) => {
   let camera =
     GameObjectInspectorEngineService.unsafeGetCamera(inspectorEngineState);
 
@@ -70,8 +70,5 @@ let createWDBIntoInspectorCanvas =
        newWDBGameObject,
      );
 
-  (
-    editorState,
-    inspectorEngineState |> _setCameraFocusWDBGameObject(newWDBGameObject),
-  );
+  (newWDBGameObject, editorState, inspectorEngineState);
 };

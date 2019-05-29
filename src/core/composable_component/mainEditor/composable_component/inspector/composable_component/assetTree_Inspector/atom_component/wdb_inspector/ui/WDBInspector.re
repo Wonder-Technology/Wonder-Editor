@@ -1,24 +1,10 @@
 module Method = {
-  let _updateSnapshot = (currentNodeId, dispatchFunc) => {
-    StateEditorService.getState()
-    |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByWDBNodeId(
-         DomHelper.getElementById("inspector-canvas"),
-         DomHelper.getElementById("img-canvas"),
-         currentNodeId,
-       )
-    |> StateEditorService.setState
-    |> ignore;
-
-    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Project|])))
-    |> ignore;
-  };
-
   let didMount = (currentNodeId, wdbGameObject, dispatchFunc) => {
-    AssetTreeInspectorUtils.showInspectorCanvas();
+    InspectorCanvasUtils.showInspectorCanvas();
 
     Console.tryCatch(
       () => {
-        let (editorState, inspectorEngineState) =
+        let (newWDBGameObject, editorState, inspectorEngineState) =
           StateInspectorEngineService.unsafeGetState()
           |> WDBInspectorEngineUtils.createWDBIntoInspectorCanvas(
                wdbGameObject,
@@ -28,23 +14,34 @@ module Method = {
 
         editorState |> StateEditorService.setState |> ignore;
 
-        inspectorEngineState |> StateLogicService.refreshInspectorEngineState;
+        inspectorEngineState
+        |> WDBInspectorEngineUtils.setCameraFocusWDBGameObject(
+             newWDBGameObject,
+           )
+        |> InspectorCanvasUtils.restoreArcballCameraControllerAngle
+        |> StateLogicService.refreshInspectorEngineState;
 
-        _updateSnapshot(currentNodeId, dispatchFunc);
+        InspectorCanvasUtils.updateSnapshot(
+          currentNodeId,
+          (
+            ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByWDBNodeId,
+            dispatchFunc,
+          ),
+        );
       },
       e => Console.throwFatal(e) |> ignore,
     );
   };
 
   let willUnmount = () => {
-    AssetTreeInspectorUtils.hideInspectorCanvas();
+    InspectorCanvasUtils.hideInspectorCanvas();
 
     (
       StateEditorService.getState(),
       StateInspectorEngineService.unsafeGetState(),
     )
-    |> AssetTreeInspectorUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
-    |> AssetTreeInspectorUtils.setCameraDefaultDistance
+    |> InspectorCanvasUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+    |> InspectorCanvasUtils.setCameraDefaultDistance
     |> StateInspectorEngineService.setState
     |> ignore;
   };

@@ -86,10 +86,66 @@ let prepareInspectorEngineState = sandbox => {
     (),
   );
 
-  StateInspectorEngineService.unsafeGetState()
-  |> MainUtils._handleInspectorEngineState
-  |> StateInspectorEngineService.setState
-  |> ignore;
+  MainUtils._handleInspectorEngineState
+  |> StateLogicService.getAndSetInspectorEngineState;
+};
+
+module ArcballCameraController = {
+  let unsafeGetArcballCameraControllerComponent = inspectorEngineState =>
+    GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+      GameObjectInspectorEngineService.unsafeGetCamera(inspectorEngineState),
+      inspectorEngineState,
+    );
+
+  let setAngleData = inspectorEngineState => {
+    let cameraController =
+      unsafeGetArcballCameraControllerComponent(inspectorEngineState);
+
+    inspectorEngineState
+    |> ArcballCameraEngineService.setArcballCameraControllerPhi(
+         cameraController,
+         0.9,
+       )
+    |> ArcballCameraEngineService.setArcballCameraControllerTheta(
+         cameraController,
+         0.8,
+       );
+  };
+
+  let getAngleData = inspectorEngineState => {
+    let cameraController =
+      unsafeGetArcballCameraControllerComponent(inspectorEngineState);
+    (
+      ArcballCameraEngineService.unsafeGetArcballCameraControllerPhi(
+        cameraController,
+        inspectorEngineState,
+      ),
+      ArcballCameraEngineService.unsafeGetArcballCameraControllerTheta(
+        cameraController,
+        inspectorEngineState,
+      ),
+    );
+  };
+
+  let getDefaultAngleData = () => (Js.Math._PI /. 2., 1.5);
+
+  let getGameObjectTransformLocalPosition = inspectorEngineState => {
+    let cameraControllerGameObjectTransform =
+      unsafeGetArcballCameraControllerComponent(inspectorEngineState)
+      |> ArcballCameraEngineService.unsafeGetArcballCameraControllerGameObject(
+           _,
+           inspectorEngineState,
+         )
+      |> GameObjectComponentEngineService.unsafeGetTransformComponent(
+           _,
+           inspectorEngineState,
+         );
+    TransformEngineService.getLocalPosition(
+      cameraControllerGameObjectTransform,
+      inspectorEngineState,
+    )
+    |> Vector3Service.truncate(2);
+  };
 };
 
 module TextureCache = {
