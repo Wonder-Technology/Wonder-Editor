@@ -244,7 +244,7 @@ let replaceToMaterialAssetMaterialComponent =
     switch (materialType) {
     | MaterialDataAssetType.BasicMaterial =>
       engineState
-      |> GameObjectComponentEngineService.disposeBasicMaterialComponent(
+      |> GameObjectComponentEngineService.disposeBasicMaterialComponentRemoveTexture(
            gameObject,
            sourceMaterial,
          )
@@ -254,7 +254,7 @@ let replaceToMaterialAssetMaterialComponent =
          )
     | MaterialDataAssetType.LightMaterial =>
       engineState
-      |> GameObjectComponentEngineService.disposeLightMaterialComponent(
+      |> GameObjectComponentEngineService.disposeLightMaterialComponentRemoveTexture(
            gameObject,
            sourceMaterial,
          )

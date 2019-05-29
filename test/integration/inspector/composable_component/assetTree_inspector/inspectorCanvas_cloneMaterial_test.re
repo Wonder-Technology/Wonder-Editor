@@ -48,6 +48,42 @@ let _ =
         ();
       });
 
+      describe("fix bug", () => {
+        let boxTexturedWDBArrayBuffer = ref(Obj.magic(1));
+
+        beforeAll(() =>
+          boxTexturedWDBArrayBuffer := WDBTool.convertGLBToWDB("BoxTextured")
+        );
+
+        beforeEach(() => {
+          LoadTool.buildFakeURL(sandbox^);
+          LoadTool.buildFakeLoadImage();
+        });
+
+        testPromise(
+          "load wdb->extract material assets shouldn't dispose texture", () =>
+          MainEditorAssetUploadTool.loadOneWDB(
+            ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+            (),
+          )
+          |> then_(uploadedWDBNodeId =>
+               MainEditorAssetUploadTool.loadOneWDB(
+                 ~arrayBuffer=boxTexturedWDBArrayBuffer^,
+                 (),
+               )
+               |> then_(uploadedWDBNodeId => {
+                    JobEngineService.execDisposeJob
+                    |> StateLogicService.getAndSetEngineState;
+
+                    BasicSourceTextureToolEngine.hasDisposedTexture
+                    |> StateLogicService.getEngineStateToGetData
+                    |> expect == false
+                    |> resolve;
+                  })
+             )
+        );
+      });
+
       describe("remove texture asset should remove texture cache", () =>
         testPromise(
           {|

@@ -8,3 +8,8 @@ let isAlive = (texture, engineState) =>
     texture,
     Wonderjs.RecordBasicSourceTextureMainService.getRecord(engineState),
   );
+
+let hasDisposedTexture = engineState =>
+  Wonderjs.RecordBasicSourceTextureMainService.getRecord(engineState).
+    disposedIndexArray
+  |> Js.Array.length > 0;
