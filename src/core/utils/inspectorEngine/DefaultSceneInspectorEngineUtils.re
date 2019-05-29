@@ -1,4 +1,4 @@
-let getAmbientLightArr = () => [|0.2, 0.2, 0.2|];
+let getAmbientLightArr = () => [|0.6, 0.6, 0.6|];
 
 let _initCameraAddToSceneGameObject = (camera, inspectorEngineState) => {
   let (inspectorEngineState, arcballCameraController) =
@@ -53,6 +53,13 @@ let _initDirectionLightAddToSceneGameObject =
   |> TransformEngineService.setTransformLocalEulerAngles(
        (145., 15., 0.),
        GameObjectComponentEngineService.unsafeGetTransformComponent(
+         directionLight,
+         inspectorEngineState,
+       ),
+     )
+  |> DirectionLightEngineService.setDirectionLightIntensity(
+       0.25,
+       GameObjectComponentEngineService.unsafeGetDirectionLightComponent(
          directionLight,
          inspectorEngineState,
        ),

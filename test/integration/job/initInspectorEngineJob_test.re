@@ -137,6 +137,23 @@ let _ =
           |> WonderEditor.Vector3Service.truncate(1)
           |> expect == (145., 15., (-0.));
         });
+        test("set direction-light's intensity", () => {
+          let inspectorEngineState =
+            StateInspectorEngineService.unsafeGetState();
+          let directionLight =
+            inspectorEngineState
+            |> InspectorEngineTool.unsafeGetSceneFirstDirectionLight
+            |> GameObjectComponentEngineService.unsafeGetDirectionLightComponent(
+                 _,
+                 inspectorEngineState,
+               );
+
+          inspectorEngineState
+          |> DirectionLightEngineService.getDirectionLightIntensity(
+               directionLight,
+             )
+          |> expect == 0.25;
+        });
       });
 
       describe("add one empty gameObject", () =>
