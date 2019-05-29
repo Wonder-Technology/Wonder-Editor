@@ -113,3 +113,8 @@ let getChildren = (gameObject, engineState) =>
 
 let hasChildren = (gameObject, engineState) =>
   getChildren(gameObject, engineState) |> Js.Array.length > 0;
+
+let findGameObjectByUid = (uid, parentGameObject, engineState) =>
+  engineState
+  |> getAllGameObjects(parentGameObject)
+  |> Js.Array.find(gameObject => gameObject === uid);

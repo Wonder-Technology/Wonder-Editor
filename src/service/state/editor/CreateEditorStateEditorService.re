@@ -5,6 +5,7 @@ let create = () => {
     containerGameObject: None,
     basicSourceTextureCacheMap:
       WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+    materialSphereGameObjectInInspectorCanvas: None,
   },
   imgCanvasRecord: {
     imgContext: None,

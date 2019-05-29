@@ -3,5 +3,9 @@ type clonedBasicSourceTextureInInspectorEngineState = Wonderjs.BasicSourceTextur
 type inspectorCanvasRecord = {
   containerGameObject: option(int),
   basicSourceTextureCacheMap:
-    WonderCommonlib.ImmutableSparseMapService.t(clonedBasicSourceTextureInInspectorEngineState),
+    WonderCommonlib.ImmutableSparseMapService.t(
+      clonedBasicSourceTextureInInspectorEngineState,
+    ),
+  materialSphereGameObjectInInspectorCanvas:
+    option(Wonderjs.GameObjectPrimitiveType.gameObject),
 };

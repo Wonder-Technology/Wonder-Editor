@@ -90,6 +90,31 @@ let prepareInspectorEngineState = sandbox => {
   |> StateLogicService.getAndSetInspectorEngineState;
 };
 
+let disposeContainerGameObjectAllChildrenAndReallocateCPUMemory = () =>
+  (
+    StateEditorService.getState(),
+    StateInspectorEngineService.unsafeGetState(),
+  )
+  |> InspectorCanvasUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+  |> StateInspectorEngineService.setState
+  |> ignore;
+
+module Material = {
+  let judgeNotCreateMaterialSphere = () => {
+    open Wonder_jest;
+    open Expect;
+    open Sinon;
+
+    let editorState = StateEditorService.getState();
+    let imgContext =
+      editorState |> ImgContextImgCanvasEditorService.unsafeGetImgContext;
+    CanvasType.convertContextToJsObj(imgContext)##clearRect
+    |> expect
+    |> not_
+    |> toCalled;
+  };
+};
+
 module ArcballCameraController = {
   let unsafeGetArcballCameraControllerComponent = inspectorEngineState =>
     GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(

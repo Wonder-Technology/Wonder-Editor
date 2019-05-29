@@ -11,7 +11,7 @@ module Method = {
 
     Console.tryCatch(
       () => {
-        let (editorState, inspectorEngineState) =
+        let (editorState, (inspectorEngineState, sphere)) =
           MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
             type_,
             materialComponent,
@@ -20,12 +20,25 @@ module Method = {
             StateInspectorEngineService.unsafeGetState(),
           );
 
-        editorState |> StateEditorService.setState |> ignore;
+        editorState
+        |> MaterialSphereInspectorCanvasEditorService.setMaterialSphereGameObjectInInspectorCanvas(
+             sphere,
+           )
+        |> StateEditorService.setState
+        |> ignore;
         inspectorEngineState |> StateLogicService.refreshInspectorEngineState;
       },
       e => Console.throwFatal(e) |> ignore,
     );
   };
+
+  let _doesUpdateSnapshot =
+      (currentNodeId, (editorState, inspectorEngineState)) =>
+    OperateTreeAssetEditorService.isNodeExistById(currentNodeId, editorState)
+    && MaterialSphereInspectorCanvasEditorService.isExistInContainer(
+         editorState,
+         inspectorEngineState,
+       );
 
   let willUnmount = (currentNodeId, dispatchFunc) => {
     InspectorCanvasUtils.restoreArcballCameraControllerAngle
@@ -33,6 +46,22 @@ module Method = {
     |> StateLogicService.refreshInspectorEngineState;
 
     InspectorCanvasUtils.hideInspectorCanvas();
+
+    _doesUpdateSnapshot(
+      currentNodeId,
+      (
+        StateEditorService.getState(),
+        StateInspectorEngineService.unsafeGetState(),
+      ),
+    ) ?
+      InspectorCanvasUtils.updateSnapshot(
+        currentNodeId,
+        (
+          ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByMaterialNodeId,
+          dispatchFunc,
+        ),
+      ) :
+      ();
 
     (
       StateEditorService.getState(),
@@ -42,16 +71,8 @@ module Method = {
     |> StateInspectorEngineService.setState
     |> ignore;
 
-    OperateTreeAssetEditorService.isNodeExistById(currentNodeId)
-    |> StateLogicService.getEditorState ?
-      InspectorCanvasUtils.updateSnapshot(
-        currentNodeId,
-        (
-          ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByMaterialNodeId,
-          dispatchFunc,
-        ),
-      ) :
-      ();
+    MaterialSphereInspectorCanvasEditorService.removeMaterialSphereGameObjectInInspectorCanvas
+    |> StateLogicService.getAndSetEditorState;
   };
 };
 

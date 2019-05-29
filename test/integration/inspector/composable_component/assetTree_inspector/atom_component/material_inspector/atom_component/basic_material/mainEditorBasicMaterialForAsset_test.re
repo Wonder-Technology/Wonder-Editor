@@ -32,7 +32,7 @@ let _ =
           (),
         );
 
-        let (editorState, inspectorEngineState) =
+        let (editorState, (inspectorEngineState, _)) =
           inspectorEngineState
           |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
                MaterialDataAssetType.BasicMaterial,

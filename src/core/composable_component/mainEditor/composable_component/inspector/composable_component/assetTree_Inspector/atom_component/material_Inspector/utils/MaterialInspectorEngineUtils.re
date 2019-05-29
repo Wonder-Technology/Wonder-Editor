@@ -6,9 +6,12 @@ let _createSphereWithClonedMaterial =
     inspectorEngineState
     |> PrimitiveEngineService.createSphere(material, addMaterialFunc);
 
-  inspectorEngineState
-  |> GameObjectEngineService.initGameObject(sphere)
-  |> HierarchyGameObjectEngineService.addChild(containerGameObject, sphere);
+  (
+    inspectorEngineState
+    |> GameObjectEngineService.initGameObject(sphere)
+    |> HierarchyGameObjectEngineService.addChild(containerGameObject, sphere),
+    sphere,
+  );
 };
 
 let _createBasicMaterialSphereIntoInspectorCanvas =

@@ -27,7 +27,7 @@ let _createAllMaterialSnapshot =
       engineState,
       (editorState, inspectorEngineState),
     ) => {
-  let (editorState, inspectorEngineState) =
+  let (editorState, (inspectorEngineState, _)) =
     (editorState, inspectorEngineState)
     |> InspectorCanvasUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
     |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(

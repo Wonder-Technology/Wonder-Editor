@@ -369,11 +369,6 @@ let _ =
           "if material is removed, not create material sphere's snapshot", () => {
           NoWorkerJobTool.initStateWithDisposeJob(~sandbox, ());
           MainEditorSceneTool.prepareScene(sandbox);
-          let _ =
-            InspectorCanvasTool.prepareInspectorAndImgCanvasAndReturnAllData(
-              ~sandbox,
-              (),
-            );
           let (addedMaterialNodeId, materialComponent) =
             MaterialInspectorCanvasTool.createNewMaterial();
 
@@ -383,13 +378,22 @@ let _ =
           );
           _willUnmount(addedMaterialNodeId);
 
-          let editorState = StateEditorService.getState();
-          let imgContext =
-            editorState |> ImgContextImgCanvasEditorService.unsafeGetImgContext;
-          CanvasType.convertContextToJsObj(imgContext)##clearRect
-          |> expect
-          |> not_
-          |> toCalled;
+          InspectorCanvasTool.Material.judgeNotCreateMaterialSphere();
+        });
+        test(
+          "if material sphere not in container, not create material sphere's snapshot",
+          () => {
+          let (addedMaterialNodeId, materialComponent) =
+            MaterialInspectorCanvasTool.createNewMaterial();
+
+          MaterialInspectorTool.didMount(
+            MaterialDataAssetType.LightMaterial,
+            materialComponent,
+          );
+          InspectorCanvasTool.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory();
+          _willUnmount(addedMaterialNodeId);
+
+          InspectorCanvasTool.Material.judgeNotCreateMaterialSphere();
         });
 
         describe("else, create material sphere's snapshot", () => {

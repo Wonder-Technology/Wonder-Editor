@@ -655,7 +655,7 @@ module AssetTree = {
                ~engineState,
              );
 
-           let (editorState, inspectorEngineState) =
+           let (editorState, (inspectorEngineState, _)) =
              (editorState, inspectorEngineState)
              |> InspectorCanvasUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
              |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
