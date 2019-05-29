@@ -47,9 +47,7 @@ module Method = {
         },
       );
     | Some(value) =>
-      ReasonReactUtils.sideEffects(_state =>
-        triggerOnBlur(value, onBlurFunc)
-      );
+      ReasonReactUtils.sideEffects(_state => triggerOnBlur(value, onBlurFunc))
     };
 
   let computeNewValue = (currentValue, (movementX, movementY)) => {
@@ -89,7 +87,9 @@ module Method = {
             Some(
               computeNewValue(
                 state.inputValue |> OptionService.unsafeGet |> int_of_string,
-                MouseEventService.getMovementDeltaWhenPointerLockedAndFixBug(e),
+                MouseEventService.getMovementDeltaWhenPointerLockedAndFixBug(
+                  e,
+                ),
               )
               |> string_of_int,
             ),
@@ -123,7 +123,7 @@ module Method = {
   let renderContent = ((send, state)) =>
     <div className="item-content">
       <input
-        className="input-component float-input"
+        className="input-component int-input"
         type_="text"
         value={
           switch (state.inputValue) {
@@ -159,7 +159,7 @@ let render =
       (onBlurFunc, onDragDropFunc),
       {state, handle, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
-  <article className="inspector-item wonder-float-input">
+  <article className="inspector-item wonder-int-input">
     {Method.renderLabel((send, state), label, title, onDragDropFunc)}
     {Method.renderContent((send, state))}
   </article>;

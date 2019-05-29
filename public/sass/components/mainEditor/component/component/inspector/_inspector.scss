@@ -1,6 +1,7 @@
 @import "../../../../../utils/inspectorItemMixin";
 .wonder-inspector-component {
     @import "../../../../ui/floatInput";
+    @import "../../../../ui/intInput";
     @import "../../../../ui/threeFloatInput";
     .wonder-inspector-sceneTree {
         padding-top: 5px;

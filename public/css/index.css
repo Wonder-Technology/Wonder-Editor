@@ -1421,7 +1421,10 @@ html, body {
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent::-webkit-scrollbar-thumb:hover {
             background: #fc7100; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-float-input .component-label {
-          cursor: move;
+          cursor: move !important;
+          user-select: none; }
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-int-input .component-label {
+          cursor: move !important;
           user-select: none; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-three-float-input {
           display: flex;
