@@ -20,7 +20,7 @@ let getTransformScaleData = (transformComponent, engineState) =>
 
 let getTransformRotationData = (transformComponent, engineState) => {
   let (data, editorState) =
-    TransformEditorService.getLocalEulerAngleAndInit(
+    TransformEditorService.getLocalEulerAngleOrInit(
       transformComponent,
       (StateEditorService.getState(), engineState),
     );
