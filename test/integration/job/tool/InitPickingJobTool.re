@@ -54,7 +54,7 @@ let prepareMouseEvent =
     ~engineState=StateEngineService.unsafeGetState(),
     (),
   );
-  MouseEventTool.prepareForPointerLock(sandbox);
+  MouseEventTool.prepareForPointerLock(~sandbox, ());
 
   MouseEventTool.setPointerLocked(.);
 

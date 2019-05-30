@@ -101,12 +101,12 @@ let prepareWithState =
   setBrowserFunc();
 };
 
-let prepareForPointerLock = sandbox => {
+let prepareForPointerLock =
+    (~sandbox, ~unsafeGetStateFunc=StateEngineService.unsafeGetState, ()) => {
   open Sinon;
 
   let canvas =
-    ViewEngineService.unsafeGetCanvas(StateEngineService.unsafeGetState())
-    |> Obj.magic;
+    ViewEngineService.unsafeGetCanvas(unsafeGetStateFunc()) |> Obj.magic;
   let requestPointerLockStub = createEmptyStubWithJsObjSandbox(sandbox);
   canvas##requestPointerLock #= requestPointerLockStub;
 

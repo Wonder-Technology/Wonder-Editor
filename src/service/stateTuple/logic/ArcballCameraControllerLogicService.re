@@ -8,14 +8,16 @@ let _renderWhenStop = (event, (handleFunc, renderWhenStopFunc), engineState) => 
   (engineState, event);
 };
 
-let _renderWhenStopForSceneView = (event, handleFunc, engineState) =>
-  _renderWhenStop(
-    event,
-    (handleFunc, StateLogicService.renderWhenStop),
-    engineState,
-  );
+let _handleEventFuncForSceneView = (event, handleFunc, engineState) =>
+  MouseEventService.isRightMouseButton(event) ?
+    _renderWhenStop(
+      event,
+      (handleFunc, StateLogicService.renderWhenStop),
+      engineState,
+    ) :
+    (engineState, event);
 
-let _renderWhenStopForInspector = (event, handleFunc, inspectorEngineState) =>
+let _handleEventFuncForInspector = (event, handleFunc, inspectorEngineState) =>
   _renderWhenStop(
     event,
     (handleFunc, StateLogicService.renderInspectorEngineStateWhenStop),
@@ -56,7 +58,7 @@ let _bindArcballCameraControllerEvent =
         pointDragOverEventName,
         pointDragDropEventName,
       ),
-      renderWhenStopFunc,
+      handleEventFunc,
       engineState,
     ) => {
   let (
@@ -77,9 +79,7 @@ let _bindArcballCameraControllerEvent =
       ~eventName=pointDragStartEventName,
       ~handleFunc=
         (. event, engineState) =>
-          MouseEventService.isRightMouseButton(event) ?
-            renderWhenStopFunc(event, pointDragStartHandleFunc, engineState) :
-            (engineState, event),
+          handleEventFunc(event, pointDragStartHandleFunc, engineState),
       ~state=engineState,
       (),
     );
@@ -89,9 +89,7 @@ let _bindArcballCameraControllerEvent =
       ~eventName=pointDragOverEventName,
       ~handleFunc=
         (. event, engineState) =>
-          MouseEventService.isRightMouseButton(event) ?
-            renderWhenStopFunc(event, pointDragOverHandleFunc, engineState) :
-            (engineState, event),
+          handleEventFunc(event, pointDragOverHandleFunc, engineState),
       ~state=engineState,
       (),
     );
@@ -101,9 +99,7 @@ let _bindArcballCameraControllerEvent =
       ~eventName=pointDragDropEventName,
       ~handleFunc=
         (. event, engineState) =>
-          MouseEventService.isRightMouseButton(event) ?
-            renderWhenStopFunc(event, pointDragDropHandleFunc, engineState) :
-            (engineState, event),
+          handleEventFunc(event, pointDragDropHandleFunc, engineState),
       ~state=engineState,
       (),
     );
@@ -121,7 +117,7 @@ let bindArcballCameraControllerEventForSceneView =
         SceneViewEventEditorService.getPointDragOverEventName(),
         SceneViewEventEditorService.getPointDragDropEventName(),
       ),
-      _renderWhenStopForSceneView,
+      _handleEventFuncForSceneView,
       mainEngineState,
     );
 
@@ -130,7 +126,7 @@ let bindArcballCameraControllerEventForSceneView =
       ~eventName=SceneViewEventEditorService.getPointScaleEventName(),
       ~handleFunc=
         (. event, mainEngineState) =>
-          _renderWhenStopForSceneView(
+          _handleEventFuncForSceneView(
             event,
             pointScaleHandleFunc,
             mainEngineState,
@@ -166,7 +162,7 @@ let bindArcballCameraControllerEventForInspector =
         InspectorEventEditorService.getPointDragOverEventName(),
         InspectorEventEditorService.getPointDragDropEventName(),
       ),
-      _renderWhenStopForInspector,
+      _handleEventFuncForInspector,
       inspectorEngineState,
     );
 

@@ -12,80 +12,6 @@ let _ =
   describe("init event for inspector job", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let _prepareInspectorCanvasParent =
-        (~sandbox, ~offsetWidth=100, ~offsetHeight=50, ()) =>
-      DomTool.stubFakeDomForGetElementById(
-        sandbox,
-        "inspectorCanvasParent",
-        {"offsetWidth": offsetWidth, "offsetHeight": offsetHeight},
-      );
-
-    let _prepareMouseEvent =
-        (
-          ~sandbox,
-          ~offsetWidth=100,
-          ~offsetHeight=50,
-          ~offsetLeft=1,
-          ~offsetTop=2,
-          (),
-        ) => {
-      MainEditorSceneTool.initState(~sandbox, ());
-
-      MainEditorSceneTool.initInspectorEngineState(
-        ~sandbox,
-        ~isInitJob=false,
-        ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-            ~initPipelines=
-              {|
-                [
-                 {
-                   "name": "default",
-                   "jobs": [
-                       {"name": "init_inspector_engine" },
-            {"name": "init_event_for_editor_inspector"}
-                   ]
-                 }
-               ]
-                |},
-            ~initJobs=
-              {|
-                [
-                   {"name": "init_inspector_engine" },
-            {"name": "init_event_for_editor_inspector"}
-                ]
-                |},
-            (),
-          ),
-        (),
-      );
-
-      _prepareInspectorCanvasParent(
-        ~sandbox,
-        ~offsetWidth,
-        ~offsetHeight,
-        (),
-      );
-
-      MouseEventTool.prepareWithState(
-        ~sandbox,
-        ~offsetLeft,
-        ~offsetTop,
-        ~engineState=StateInspectorEngineService.unsafeGetState(),
-        ~setBrowserFunc=
-          () =>
-            BrowserDetectToolEngine.setChromeFromEngineState
-            |> StateLogicService.getAndSetInspectorEngineState,
-        ~setEngineFunc=StateInspectorEngineService.setState,
-        (),
-      );
-
-      MainUtils._handleInspectorEngineState
-      |> StateLogicService.getAndSetInspectorEngineState;
-
-      MouseEventTool.setPointerLocked(.);
-    };
-
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
@@ -184,25 +110,24 @@ let _ =
           describe("test event target is inspector", () =>
             describe("test locationInView", () =>
               test(
-                "test trigger mousedragstart, mousedragover, mousedragdrop event in scene view",
+                "test trigger mousedragstart, mousedragover, mousedragdrop event",
                 () => {
-                  _prepareMouseEvent(
-                    ~sandbox,
-                    ~offsetLeft=1,
-                    ~offsetTop=2,
-                    (),
-                  );
+                InspectorCanvasEventTool.prepareMouseEvent(
+                  ~sandbox,
+                  ~offsetLeft=1,
+                  ~offsetTop=2,
+                  (),
+                );
 
-                  _test(
-                    (60, 20),
-                    (20, 30),
-                    (10, 22),
-                    (60 - 1, 20 - 2),
-                    (20 - 1, 30 - 2),
-                    (10 - 1, 22 - 2),
-                  );
-                },
-              )
+                _test(
+                  (60, 20),
+                  (20, 30),
+                  (10, 22),
+                  (60 - 1, 20 - 2),
+                  (20 - 1, 30 - 2),
+                  (10 - 1, 22 - 2),
+                );
+              })
             )
           );
         })
@@ -243,7 +168,7 @@ let _ =
         describe("test event target is Other", () =>
           describe("do nothing", () =>
             test("not trigger editor point event", () => {
-              _prepareMouseEvent(~sandbox, ());
+              InspectorCanvasEventTool.prepareMouseEvent(~sandbox, ());
 
               let value =
                 _prepareAndExec(
@@ -258,7 +183,7 @@ let _ =
 
         describe("test event target is Inspector", () =>
           test("trigger editor point event", () => {
-            _prepareMouseEvent(~sandbox, ());
+            InspectorCanvasEventTool.prepareMouseEvent(~sandbox, ());
 
             _test(
               InspectorEventEditorService.getPointDragStartEventName(),
