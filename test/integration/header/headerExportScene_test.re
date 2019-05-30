@@ -70,7 +70,7 @@ let _ =
 
         warn
         |> expect
-        |> toCalledWith([|"should export scene when stop, but now is run!"|]);
+        |> toCalledWith([|"should operate when stop, but now is run!"|]);
       })
     );
 

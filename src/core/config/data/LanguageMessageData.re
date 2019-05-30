@@ -9,31 +9,10 @@ let message_language_array = [|
     },
   },
   {
-    title: "header-export-package",
+    title: "should-in-stop",
     language: {
-      zh: {j|请在停止状态导出包WPK，现在正在运行 ！|j},
-      en: "should export package when stop, but now is run!",
-    },
-  },
-  {
-    title: "header-export-scene",
-    language: {
-      zh: {j|请在停止状态导出场景模型WDB，现在正在运行 ！|j},
-      en: "should export scene when stop, but now is run!",
-    },
-  },
-  {
-    title: "header-import-package",
-    language: {
-      zh: {j|请在停止状态导入包WPK，现在正在运行 ！|j},
-      en: "should import package when stop, but now is run!",
-    },
-  },
-  {
-    title: "header-publish-local",
-    language: {
-      zh: {j|请在停止状态发布本地包，现在正在运行 ！|j},
-      en: "should publish local when stop, but now is run!",
+      zh: {j|请在停止状态操作，现在正在运行 ！|j},
+      en: "should operate when stop, but now is run!",
     },
   },
   {

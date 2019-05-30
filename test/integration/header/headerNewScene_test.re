@@ -50,96 +50,117 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("replace scene with default scene", () =>
-      test("test", () => {
-        MainEditorLeftHeaderTool.addCube();
+    test("if is run, warn", () => {
+      ConsoleTool.notShowMessage();
+      let warn =
+        createMethodStubWithJsObjSandbox(
+          sandbox,
+          ConsoleTool.console,
+          "warn",
+        );
+      ControllerTool.setIsRun(true);
+
+      let (editorState, engineState) = _handleNewScene();
+
+      warn
+      |> expect
+      |> toCalledWith([|"should operate when stop, but now is run!"|]);
+    });
+
+    describe("else", () => {
+      beforeEach(() => ControllerTool.setIsRun(false));
+
+      describe("replace scene with default scene", () =>
+        test("test", () => {
+          MainEditorLeftHeaderTool.addCube();
+          let (editorState, engineState) = _handleNewScene();
+
+          HierarchyGameObjectEngineService.getAllChildren(
+            SceneEngineService.getSceneGameObject(engineState),
+            engineState,
+          )
+          |> Js.Array.length
+          |> expect == 4;
+        })
+      );
+
+      test("default geometry shouldn't be disposed", () => {
         let (editorState, engineState) = _handleNewScene();
 
-        HierarchyGameObjectEngineService.getAllChildren(
-          SceneEngineService.getSceneGameObject(engineState),
+        GeometryToolEngine.isGeometryDisposed(
+          GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent
+          |> StateLogicService.getEditorState,
           engineState,
         )
-        |> Js.Array.length
-        |> expect == 4;
-      })
-    );
+        |> expect == false;
+      });
+      test("default material shouldn't be disposed", () => {
+        let (editorState, engineState) = _handleNewScene();
 
-    test("default geometry shouldn't be disposed", () => {
-      let (editorState, engineState) = _handleNewScene();
+        LightMaterialToolEngine.isAlive(
+          MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial
+          |> StateLogicService.getEditorState,
+          engineState,
+        )
+        |> expect == true;
+      });
 
-      GeometryToolEngine.isGeometryDisposed(
-        GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent
-        |> StateLogicService.getEditorState,
-        engineState,
-      )
-      |> expect == false;
-    });
-    test("default material shouldn't be disposed", () => {
-      let (editorState, engineState) = _handleNewScene();
-
-      LightMaterialToolEngine.isAlive(
-        MaterialDataAssetEditorService.unsafeGetDefaultLightMaterial
-        |> StateLogicService.getEditorState,
-        engineState,
-      )
-      |> expect == true;
-    });
-
-    describe("update active basic camera view", () => {
-      let _prepare = sandbox => {
-        let _ =
-          MainEditorInspectorAddComponentTool.buildTwoAddedArcballCameraControllerCamera(
-            sandbox,
+      describe("update active basic camera view", () => {
+        let _prepare = sandbox => {
+          let _ =
+            MainEditorInspectorAddComponentTool.buildTwoAddedArcballCameraControllerCamera(
+              sandbox,
+            );
+          MainEditorSceneTool.setSceneSecondCameraToBeCurrentSceneTreeNode();
+          MainEditorCameraViewTool.setCurrentCamera(
+            ~cameraView=
+              GameObjectTool.getCurrentSceneTreeNodeBasicCameraView(),
+            (),
           );
-        MainEditorSceneTool.setSceneSecondCameraToBeCurrentSceneTreeNode();
-        MainEditorCameraViewTool.setCurrentCamera(
-          ~cameraView=GameObjectTool.getCurrentSceneTreeNodeBasicCameraView(),
-          (),
-        );
-      };
+        };
 
-      test("test editorState", () => {
-        _prepare(sandbox);
-        let editorState = StateEditorService.getState();
-        let activedBasicCameraViewBefore =
+        test("test editorState", () => {
+          _prepare(sandbox);
+          let editorState = StateEditorService.getState();
+          let activedBasicCameraViewBefore =
+            editorState
+            |> GameViewEditorService.getActivedBasicCameraView
+            |> OptionService.unsafeGet;
+
+          let (editorState, engineState) = _handleNewScene();
+
           editorState
           |> GameViewEditorService.getActivedBasicCameraView
-          |> OptionService.unsafeGet;
+          |> OptionService.unsafeGet
+          |> expect !== activedBasicCameraViewBefore;
+        });
+        test("test engineState", () => {
+          _prepare(sandbox);
+          let engineState = StateEngineService.unsafeGetState();
+          let activedBasicCameraViewBefore =
+            engineState
+            |> BasicCameraViewEngineService.getActiveBasicCameraView
+            |> OptionService.unsafeGet;
 
-        let (editorState, engineState) = _handleNewScene();
+          let (editorState, engineState) = _handleNewScene();
 
-        editorState
-        |> GameViewEditorService.getActivedBasicCameraView
-        |> OptionService.unsafeGet
-        |> expect !== activedBasicCameraViewBefore;
-      });
-      test("test engineState", () => {
-        _prepare(sandbox);
-        let engineState = StateEngineService.unsafeGetState();
-        let activedBasicCameraViewBefore =
           engineState
           |> BasicCameraViewEngineService.getActiveBasicCameraView
-          |> OptionService.unsafeGet;
-
-        let (editorState, engineState) = _handleNewScene();
-
-        engineState
-        |> BasicCameraViewEngineService.getActiveBasicCameraView
-        |> OptionService.unsafeGet
-        |> expect !== activedBasicCameraViewBefore;
+          |> OptionService.unsafeGet
+          |> expect !== activedBasicCameraViewBefore;
+        });
       });
-    });
 
-    test(
-      "should clear current scene tree node before exec update_transform_gizmos job",
-      () => {
-      MainEditorSceneTool.initStateWithJob(
-        ~sandbox,
-        ~isBuildFakeDom=false,
-        ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-            ~loopPipelines=
-              {|
+      test(
+        "should clear current scene tree node before exec update_transform_gizmos job",
+        () => {
+        MainEditorSceneTool.initStateWithJob(
+          ~sandbox,
+          ~isBuildFakeDom=false,
+          ~noWorkerJobRecord=
+            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+              ~loopPipelines=
+                {|
                    [
                        {
                            "name": "default",
@@ -154,18 +175,19 @@ let _ =
                        }
                    ]
                |},
-            (),
-          ),
-        (),
-      );
-      MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
-      StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
-      MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
-      TestTool.openContractCheck();
+              (),
+            ),
+          (),
+        );
+        MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
+        StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
+        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
+        TestTool.openContractCheck();
 
-      let (editorState, engineState) = _handleNewScene();
-      editorState |> StateEditorService.setState |> ignore;
+        let (editorState, engineState) = _handleNewScene();
+        editorState |> StateEditorService.setState |> ignore;
 
-      GameObjectTool.getCurrentSceneTreeNode() |> expect == None;
+        GameObjectTool.getCurrentSceneTreeNode() |> expect == None;
+      });
     });
   });

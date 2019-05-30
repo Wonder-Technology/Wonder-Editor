@@ -372,7 +372,7 @@ let _import = result => {
 let _handleIsRun = (dispatchFunc, languageType, editorState) => {
   ConsoleUtils.warn(
     LanguageUtils.getMessageLanguageDataByType(
-      "header-import-package",
+      "should-in-stop",
       languageType,
     ),
     editorState,

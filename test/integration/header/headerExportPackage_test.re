@@ -78,7 +78,7 @@ let _ =
         warn
         |> expect
         |> toCalledWith([|
-             "should export package when stop, but now is run!",
+             "should operate when stop, but now is run!",
            |]);
       })
     );

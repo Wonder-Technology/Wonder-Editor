@@ -62,7 +62,7 @@ let exportPackage = packageName => {
     {
       ConsoleUtils.warn(
         LanguageUtils.getMessageLanguageDataByType(
-          "header-export-package",
+          "should-in-stop",
           languageType,
         ),
         editorState,

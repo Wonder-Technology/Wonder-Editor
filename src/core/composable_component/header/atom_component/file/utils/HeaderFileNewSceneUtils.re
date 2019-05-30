@@ -42,53 +42,67 @@ let initEditorJob = (_, engineState) => {
      );
 };
 
-let handleNewScene = (dispatchFunc, (editorState, engineState)) => {
-  let engineState =
-    engineState
-    |> SceneEngineService.disposeSceneAllChildrenKeepOrderRemoveGeometryRemoveMaterial
-    |> JobEngineService.execDisposeJob;
-
-  let (editorState, engineState, sceneCamera) =
-    DefaultSceneUtils.createDefaultScene(
-      GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
+let handleNewScene = (dispatchFunc, (editorState, engineState)) =>
+  StateEditorService.getIsRun() ?
+    {
+      ConsoleUtils.warn(
+        LanguageUtils.getMessageLanguageDataByType(
+          "should-in-stop",
+          LanguageEditorService.unsafeGetType(editorState),
+        ),
         editorState,
-      ),
-      editorState,
-      engineState,
-    );
+      )
+      |> ignore;
 
-  let editorState =
-    editorState
-    |> GameViewEditorService.setActivedBasicCameraView(
-         GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-           sceneCamera,
-           engineState,
-         ),
-       );
+      (editorState, engineState);
+    } :
+    {
+      let engineState =
+        engineState
+        |> SceneEngineService.disposeSceneAllChildrenKeepOrderRemoveGeometryRemoveMaterial
+        |> JobEngineService.execDisposeJob;
 
-  let engineState =
-    engineState
-    |> BasicCameraViewEngineService.activeBasicCameraView(
-         engineState
-         |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-              editorState |> SceneViewEditorService.unsafeGetEditCamera,
-            ),
-       );
+      let (editorState, engineState, sceneCamera) =
+        DefaultSceneUtils.createDefaultScene(
+          GeometryDataAssetEditorService.unsafeGetDefaultCubeGeometryComponent(
+            editorState,
+          ),
+          editorState,
+          engineState,
+        );
 
-  editorState
-  |> SceneTreeSelectCurrentNodeUtils.clearCurrentData
-  |> StateEditorService.setState
-  |> ignore;
+      let editorState =
+        editorState
+        |> GameViewEditorService.setActivedBasicCameraView(
+             GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
+               sceneCamera,
+               engineState,
+             ),
+           );
 
-  let engineState =
-    engineState |> StateLogicService.renderEngineStateAndReturnEngineState;
+      let engineState =
+        engineState
+        |> BasicCameraViewEngineService.activeBasicCameraView(
+             engineState
+             |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
+                  editorState |> SceneViewEditorService.unsafeGetEditCamera,
+                ),
+           );
 
-  dispatchFunc(
-    AppStore.UpdateAction(
-      Update([|UpdateStore.SceneTree, UpdateStore.Inspector|]),
-    ),
-  )
-  |> ignore;
+      editorState
+      |> SceneTreeSelectCurrentNodeUtils.clearCurrentData
+      |> StateEditorService.setState
+      |> ignore;
 
-  (StateEditorService.getState(), engineState);
-};
+      let engineState =
+        engineState |> StateLogicService.renderEngineStateAndReturnEngineState;
+
+      dispatchFunc(
+        AppStore.UpdateAction(
+          Update([|UpdateStore.SceneTree, UpdateStore.Inspector|]),
+        ),
+      )
+      |> ignore;
+
+      (StateEditorService.getState(), engineState);
+    };

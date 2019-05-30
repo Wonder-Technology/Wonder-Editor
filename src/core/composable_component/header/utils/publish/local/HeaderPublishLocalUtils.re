@@ -346,7 +346,7 @@ module Publish = {
       {
         ConsoleUtils.warn(
           LanguageUtils.getMessageLanguageDataByType(
-            "header-publish-local",
+            "should-in-stop",
             LanguageEditorService.unsafeGetType(editorState),
           ),
           editorState,

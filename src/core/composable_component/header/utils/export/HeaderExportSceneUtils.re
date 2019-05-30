@@ -17,7 +17,7 @@ let exportScene = sceneName => {
     {
       ConsoleUtils.warn(
         LanguageUtils.getMessageLanguageDataByType(
-          "header-export-scene",
+          "should-in-stop",
           languageType,
         ),
         editorState,
