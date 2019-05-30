@@ -20,37 +20,7 @@ let _ =
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
 
-      MainEditorSceneTool.initInspectorEngineState(
-        ~sandbox,
-        ~isInitJob=false,
-        ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-            ~initPipelines=
-              {|
-           [
-            {
-              "name": "default",
-              "jobs": [
-                  {"name": "init_inspector_engine" }
-              ]
-            }
-          ]
-           |},
-            ~initJobs=
-              {|
-           [
-              {"name": "init_inspector_engine" }
-           ]
-           |},
-            (),
-          ),
-        (),
-      );
-
-      StateInspectorEngineService.unsafeGetState()
-      |> MainUtils._handleInspectorEngineState
-      |> StateInspectorEngineService.setState
-      |> ignore;
+      InspectorCanvasTool.prepareInspectorEngineState(sandbox);
 
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
@@ -82,7 +52,7 @@ let _ =
         },
       );
 
-      describe("else", () => {
+      describe("else", () =>
         test("remove-button's disabled props should == false", () => {
           MainEditorSceneTool.createDefaultScene(
             sandbox,
@@ -102,34 +72,7 @@ let _ =
 
           BuildComponentTool.buildAssetComponent()
           |> ReactTestTool.createSnapshotAndMatch;
-        });
-
-        describe("test select folder", () => {
-          beforeEach(() =>
-            MainEditorSceneTool.createDefaultScene(
-              sandbox,
-              MainEditorAssetTool.initAssetTree,
-            )
-          );
-
-          test(
-            "click remove-button should remove folder from assetTreeRoot", () => {
-            let assetTreeData =
-              MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
-            let component = BuildComponentTool.buildAssetComponent();
-
-            MainEditorAssetHeaderOperateNodeTool.removeFolderNode(
-              ~folderNodeId=
-                MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId(
-                  assetTreeData,
-                ),
-              (),
-            );
-
-            BuildComponentTool.buildAssetComponent()
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
-        });
-      });
+        })
+      );
     });
   });

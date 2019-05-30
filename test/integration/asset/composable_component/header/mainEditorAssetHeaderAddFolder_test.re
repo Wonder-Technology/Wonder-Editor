@@ -54,10 +54,10 @@ let _ =
             editorState,
           )
           |> OptionService.unsafeGet
-          |>
-          expect == MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getRootNodeId(
-                      assetTreeData,
-                    );
+          |> expect
+          == MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getRootNodeId(
+               assetTreeData,
+             );
         });
       })
     );

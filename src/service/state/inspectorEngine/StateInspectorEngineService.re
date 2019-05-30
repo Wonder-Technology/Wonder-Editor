@@ -8,6 +8,8 @@ let getStateFromData = Wonderjs.StateAPI.getStateFromData;
 
 let setStateToData = Wonderjs.StateAPI.setStateToData;
 
+let getState = () => StateDataInspectorEngineService.getStateData().state;
+
 let unsafeGetState = () =>
   Wonderjs.StateDataMainService.unsafeGetState(
     StateDataInspectorEngineService.getStateData(),

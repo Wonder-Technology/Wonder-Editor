@@ -177,12 +177,15 @@ let _ =
           (addedMaterialNodeId, materialComponent);
         };
 
-        beforeEach(() =>
+        beforeEach(() => {
           CurrentSelectSourceEditorService.setCurrentSelectSource(
             SceneTreeWidgetService.getWidget(),
           )
-          |> StateLogicService.getAndSetEditorState
-        );
+          |> StateLogicService.getAndSetEditorState;
+
+          MainEditorAssetTool.buildFakeImage();
+          MainEditorAssetTool.buildFakeFileReader();
+        });
 
         testPromise("should redraw m1,m2 snapshot to imageDataMap", () => {
           let (
