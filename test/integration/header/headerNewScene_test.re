@@ -84,6 +84,7 @@ let _ =
       )
       |> expect == true;
     });
+
     describe("update active basic camera view", () => {
       let _prepare = sandbox => {
         let _ =
@@ -127,5 +128,44 @@ let _ =
         |> OptionService.unsafeGet
         |> expect !== activedBasicCameraViewBefore;
       });
+    });
+
+    test(
+      "should clear current scene tree node before exec update_transform_gizmos job",
+      () => {
+      MainEditorSceneTool.initStateWithJob(
+        ~sandbox,
+        ~isBuildFakeDom=false,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+            ~loopPipelines=
+              {|
+                   [
+                       {
+                           "name": "default",
+                           "jobs": [
+                               {
+                                   "name": "dispose"
+                               },
+            {
+                "name": "update_transform_gizmos"
+            }
+                           ]
+                       }
+                   ]
+               |},
+            (),
+          ),
+        (),
+      );
+      MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
+      StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
+      MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
+      TestTool.openContractCheck();
+
+      let (editorState, engineState) = _handleNewScene();
+      editorState |> StateEditorService.setState |> ignore;
+
+      GameObjectTool.getCurrentSceneTreeNode() |> expect == None;
     });
   });

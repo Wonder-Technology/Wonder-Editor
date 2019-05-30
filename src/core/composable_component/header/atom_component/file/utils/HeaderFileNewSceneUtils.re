@@ -75,6 +75,11 @@ let handleNewScene = (dispatchFunc, (editorState, engineState)) => {
             ),
        );
 
+  editorState
+  |> SceneTreeSelectCurrentNodeUtils.clearCurrentData
+  |> StateEditorService.setState
+  |> ignore;
+
   let engineState =
     engineState |> StateLogicService.renderEngineStateAndReturnEngineState;
 
@@ -85,5 +90,5 @@ let handleNewScene = (dispatchFunc, (editorState, engineState)) => {
   )
   |> ignore;
 
-  (editorState, engineState);
+  (StateEditorService.getState(), engineState);
 };
