@@ -126,9 +126,9 @@ let bindArcballCameraControllerEventForSceneView =
       ~eventName=SceneViewEventEditorService.getPointScaleEventName(),
       ~handleFunc=
         (. event, mainEngineState) =>
-          _handleEventFuncForSceneView(
+          _renderWhenStop(
             event,
-            pointScaleHandleFunc,
+            (pointScaleHandleFunc, StateLogicService.renderWhenStop),
             mainEngineState,
           ),
       ~state=mainEngineState,

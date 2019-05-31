@@ -226,6 +226,59 @@ let _ =
         });
       });
 
+      describe("test bind point scale start event", () => {
+        let _testPointScaleEvent =
+            (sandbox, (wheelDelta, eventButton), (judgeFunc, bindEventFunc)) => {
+          _prepareMouseEvent(~sandbox, ());
+
+          let engineState = StateEngineService.unsafeGetState();
+          let (engineState, _, _, (cameraController, _, _)) =
+            ArcballCameraControllerToolEngine.createGameObject(engineState);
+
+          let engineState = bindEventFunc(cameraController, engineState);
+
+          engineState |> StateEngineService.setState |> ignore;
+
+          PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
+          StateLogicService.getAndSetEngineState(
+            MainUtils._handleEngineState,
+          );
+
+          EventTool.triggerDomEvent(
+            "mousewheel",
+            EventTool.getBody(),
+            MouseEventTool.buildMouseDomEvent(
+              ~wheelDelta,
+              ~which=eventButton,
+              (),
+            ),
+          );
+          EventTool.restore();
+
+          judgeFunc(cameraController);
+        };
+
+        let _test = (sandbox, (wheelDelta, eventButton), judgeFunc) =>
+          _testPointScaleEvent(
+            sandbox,
+            (wheelDelta, eventButton),
+            (
+              judgeFunc,
+              ArcballCameraControllerLogicService.bindArcballCameraControllerEventForSceneView,
+            ),
+          );
+
+        test("if mouse button isn't right button, still trigger", () =>
+          _test(sandbox, (Js.Nullable.return(200), 1), cameraController =>
+            ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
+              cameraController,
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == 9.
+          )
+        );
+      });
+
       describe("test bind keydown event", () => {
         let _prepareMouseEvent = (~sandbox, ()) =>
           _prepareMouseEventForTestKeyboardEvent(
