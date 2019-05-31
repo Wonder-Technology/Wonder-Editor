@@ -11,7 +11,7 @@
     @import "./normalInput";
     .modal-item {
         width: 470px;
-        height: 200px;
+        height: 400px;
         position: relative;
         background: #c1c1c1;
         border-radius: 5px;
@@ -41,7 +41,7 @@
         .modal-item-content {
             @import "../../utils/scrollBarUtils";
             color: #000;
-            height: 114px;
+            height: 314px;
             overflow-y: auto;
             width: 90%;
             margin-left: 5%;

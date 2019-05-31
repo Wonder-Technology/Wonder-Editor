@@ -234,7 +234,7 @@ html, body {
     box-shadow: 0 0 0 2px rgba(45, 183, 245, 0.2); }
   .wonder-singleInput-modal .modal-item {
     width: 470px;
-    height: 200px;
+    height: 400px;
     position: relative;
     background: #c1c1c1;
     border-radius: 5px;
@@ -261,7 +261,7 @@ html, body {
         height: 15px; }
     .wonder-singleInput-modal .modal-item .modal-item-content {
       color: #000;
-      height: 114px;
+      height: 314px;
       overflow-y: auto;
       width: 90%;
       margin-left: 5%;
@@ -316,7 +316,6 @@ html, body {
   position: relative;
   padding-top: 5px; }
   .wonder-selectTree .wonder-tree-node {
-    width: 100%;
     margin: 0px;
     padding: 0px;
     top: 0px;
