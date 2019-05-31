@@ -406,31 +406,6 @@ let _addScriptEventFunctionToAssetTree =
      );
 };
 
-let _convertEventFunctionDataStrToRecord =
-    (eventFunctionDataStr: string)
-    : Wonderjs.StateDataMainType.eventFunctionData => {
-  open Wonderjs.StateDataMainType;
-
-  let {init, update, dispose} =
-    eventFunctionDataStr |> Js.Json.parseExn |> Obj.magic;
-
-  let initJsonData = init |> Obj.magic;
-  let updateJsonData = update |> Obj.magic;
-  let disposeJsonData = dispose |> Obj.magic;
-
-  {
-    init:
-      OptionService.isJsonSerializedValueNone(initJsonData) ?
-        None : Some(initJsonData |> SerializeService.deserializeFunction),
-    update:
-      OptionService.isJsonSerializedValueNone(updateJsonData) ?
-        None : Some(updateJsonData |> SerializeService.deserializeFunction),
-    dispose:
-      OptionService.isJsonSerializedValueNone(disposeJsonData) ?
-        None : Some(disposeJsonData |> SerializeService.deserializeFunction),
-  };
-};
-
 let buildScriptEventFunctionData =
     (
       {scriptEventFunctions}: ExportAssetType.assets,
@@ -445,7 +420,9 @@ let buildScriptEventFunctionData =
          scriptEventFunctionIndex,
        ) => {
          let eventFunctionData =
-           _convertEventFunctionDataStrToRecord(eventFunctionDataStr);
+           Wonderjs.AssembleABSystem.RAB.convertEventFunctionDataStrToRecord(
+             eventFunctionDataStr,
+           );
 
          let editorState =
            _addScriptEventFunctionToAssetTree(
@@ -490,10 +467,6 @@ let _addScriptAttributeToAssetTree =
      );
 };
 
-let _convertAttributeStrToRecord =
-    attributeMapStr: Wonderjs.ScriptAttributeType.scriptAttribute =>
-  attributeMapStr |> Js.Json.parseExn |> Obj.magic;
-
 let buildScriptAttributeData =
     ({scriptAttributes}: ExportAssetType.assets, engineState, editorState) =>
   scriptAttributes
@@ -503,7 +476,10 @@ let buildScriptAttributeData =
          {name, path, attributeStr}: ExportAssetType.scriptAttribute,
          scriptAttributeIndex,
        ) => {
-         let attribute = _convertAttributeStrToRecord(attributeStr);
+         let attribute =
+           Wonderjs.AssembleABSystem.RAB.convertAttributeStrToRecord(
+             attributeStr,
+           );
 
          let editorState =
            _addScriptAttributeToAssetTree(

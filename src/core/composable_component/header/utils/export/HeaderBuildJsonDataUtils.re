@@ -317,31 +317,6 @@ let _buildWDBData =
   );
 };
 
-let _convertEventFunctionToStr = eventFunction =>
-  SerializeService.serializeFunction(eventFunction);
-
-let _convertEventFunctionDataToStr =
-    ({init, update, dispose}: Wonderjs.StateDataMainType.eventFunctionData) =>
-  (
-    {
-      init:
-        init
-        |> Js.Option.andThen((. init) => _convertEventFunctionToStr(init)),
-      update:
-        update
-        |> Js.Option.andThen((. update) =>
-             _convertEventFunctionToStr(update)
-           ),
-      dispose:
-        dispose
-        |> Js.Option.andThen((. dispose) =>
-             _convertEventFunctionToStr(dispose)
-           ),
-    }: Wonderjs.StateDataMainType.eventFunctionData
-  )
-  |> Obj.magic
-  |> Js.Json.stringify;
-
 let _buildScriptEventFunctionData = ((editorState, engineState)) =>
   ScriptEventFunctionNodeAssetEditorService.findAllScriptEventFunctionNodes(
     editorState,
@@ -364,15 +339,14 @@ let _buildScriptEventFunctionData = ((editorState, engineState)) =>
                 name,
                 path,
                 eventFunctionDataStr:
-                  _convertEventFunctionDataToStr(eventFunctionData),
+                  Wonderjs.BuildSingleRABJsonDataSystem.convertEventFunctionDataToStr(
+                    eventFunctionData,
+                  ),
               }: ExportAssetType.scriptEventFunction,
             );
        },
        [||],
      );
-
-let _convertAttributeToStr = attribute =>
-  attribute |> Obj.magic |> Js.Json.stringify;
 
 let _buildScriptAttributeData = ((editorState, engineState)) =>
   ScriptAttributeNodeAssetEditorService.findAllScriptAttributeNodes(
@@ -389,7 +363,14 @@ let _buildScriptAttributeData = ((editorState, engineState)) =>
          ScriptAttributeNodeAssetService.getNodeData(node);
 
        (
-         {name, path, attributeStr: _convertAttributeToStr(attribute)}: ExportAssetType.scriptAttribute
+         {
+           name,
+           path,
+           attributeStr:
+             Wonderjs.BuildSingleRABJsonDataSystem.convertAttributeToStr(
+               attribute,
+             ),
+         }: ExportAssetType.scriptAttribute
        );
      });
 
