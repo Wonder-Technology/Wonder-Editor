@@ -357,7 +357,7 @@ exports[`MainEditorScript test set currentSceneTreeNode test script attribute te
 </article>
 `;
 
-exports[`MainEditorScript test set currentSceneTreeNode test script attribute test script attribute field show attribute's fields 1`] = `
+exports[`MainEditorScript test set currentSceneTreeNode test script attribute test script attribute field show attribute's fields test float type 1`] = `
 <article
   className="wonder-inspector-script"
 >
@@ -480,6 +480,148 @@ exports[`MainEditorScript test set currentSceneTreeNode test script attribute te
                     onBlur={[Function]}
                     onChange={[Function]}
                     type="text"
+                    value="0."
+                  />
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script attribute
+        </button>
+      </div>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorScript test set currentSceneTreeNode test script attribute test script attribute field show attribute's fields test int type 1`] = `
+<article
+  className="wonder-inspector-script"
+>
+  <article
+    className="wonder-inspector-scriptFunction"
+  >
+    <div
+      className="inspector-component"
+    >
+      <div
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Function Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add script event function
+        </button>
+      </div>
+    </div>
+  </article>
+  <article
+    className="wonder-inspector-scriptAttribute"
+  >
+    <div
+      className="inspector-component"
+    >
+      <div
+        className="component-title"
+        title="MeshRenderer"
+      >
+        Script Attribute Group
+      </div>
+      <hr />
+      <div
+        className="component-content"
+      >
+        <div
+          className="wonder-script-attribute"
+        >
+          <div
+            className="component-header"
+          >
+            <div
+              className="header-title"
+            >
+              Script Attribute
+            </div>
+            <div
+              className="header-close"
+            >
+              <img
+                onClick={[Function]}
+                src="./public/img/close.png"
+              />
+            </div>
+          </div>
+          <div
+            className="inspector-item"
+          >
+            <div
+              className="item-header"
+              title="script attribute asset in use"
+            >
+              Name
+            </div>
+            <div
+              className="item-content"
+            >
+              <div
+                className="inspector-select"
+              >
+                <div
+                  className="select-name"
+                  onClick={[Function]}
+                >
+                  New Script Attribute
+                </div>
+                <div
+                  className="select-img"
+                  onClick={[Function]}
+                >
+                  <img
+                    src="./public/img/select.png"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="scriptAttribute-fields"
+          >
+            <div
+              className="scriptAttribute-field"
+            >
+              <article
+                className="inspector-item wonder-int-input"
+              >
+                <div
+                  className="item-header component-label"
+                  onMouseDown={[Function]}
+                  onMouseMove={[Function]}
+                  onMouseUp={[Function]}
+                  title="New Script Attribute Field"
+                >
+                  New Script Attribute Field
+                </div>
+                <div
+                  className="item-content"
+                >
+                  <input
+                    className="input-component int-input"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    type="text"
                     value="0"
                   />
                 </div>
@@ -499,7 +641,7 @@ exports[`MainEditorScript test set currentSceneTreeNode test script attribute te
 </article>
 `;
 
-exports[`MainEditorScript test set currentSceneTreeNode test script attribute test script attribute field test set field's defaultValue test show attribute's fields 1`] = `
+exports[`MainEditorScript test set currentSceneTreeNode test script attribute test script attribute field test set field's defaultValue test float type test show attribute's fields 1`] = `
 <article
   className="wonder-inspector-script"
 >

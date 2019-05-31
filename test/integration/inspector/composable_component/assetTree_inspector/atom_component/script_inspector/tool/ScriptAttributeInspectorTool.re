@@ -114,9 +114,15 @@ module TestUpdateScriptAttributeInAllScriptComponents = {
     );
 
     MainEditorInspectorAddComponentTool.addScriptComponent();
-    /* (
-       GameObjectTool.getCurrentSceneTreeNodeScript()
-                 ) */
+  };
+
+  let getFieldName = nodeId => {
+    let (fieldName, field) =
+      getAttributeEntries(nodeId)
+      |> StateLogicService.getEditorState
+      |> ArrayService.unsafeGetFirst;
+
+    fieldName;
   };
 
   let prepareForOneScriptComponent = sandbox => {
@@ -133,12 +139,7 @@ module TestUpdateScriptAttributeInAllScriptComponents = {
       (),
     );
 
-    let (fieldName, field) =
-      getAttributeEntries(addedNodeId)
-      |> StateLogicService.getEditorState
-      |> ArrayService.unsafeGetFirst;
-
-    (script, addedNodeId, fieldName);
+    (script, addedNodeId, getFieldName(addedNodeId));
   };
 
   let prepareForTwoScriptComponents = sandbox => {
@@ -164,11 +165,6 @@ module TestUpdateScriptAttributeInAllScriptComponents = {
       (),
     );
 
-    let (fieldName, field) =
-      getAttributeEntries(addedNodeId)
-      |> StateLogicService.getEditorState
-      |> ArrayService.unsafeGetFirst;
-
-    ((script1, script2), addedNodeId, fieldName);
+    ((script1, script2), addedNodeId, getFieldName(addedNodeId));
   };
 };

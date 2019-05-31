@@ -468,7 +468,6 @@ let _ =
                 |> StateLogicService.getStateToGetData
                 |> ArrayService.unsafeGetFirst;
 
-
               let state =
                 MainEditorScriptAttributeTool.getUpdateState(
                   ~state=
@@ -516,165 +515,264 @@ let _ =
         });
 
         describe("test script attribute field", () => {
-          test("show attribute's fields", () => {
-            let assetTreeData =
-              MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
-            let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
-            MainEditorAssetHeaderOperateNodeTool.addScriptAttribute();
-            ScriptAttributeInspectorTool.addDefaultField(
-              ~sandbox,
-              ~nodeId=addedNodeId,
-              (),
-            );
+          describe("show attribute's fields", () => {
+            test("test float type", () => {
+              let (script, addedNodeId, fieldName) =
+                ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.prepareForOneScriptComponent(
+                  sandbox,
+                );
 
-            MainEditorScriptAttributeTool.addScriptAttribute(
-              ~script=GameObjectTool.getCurrentSceneTreeNodeScript(),
-              ~send=SinonTool.createOneLengthStub(sandbox^),
-              (),
-            );
+              let script = GameObjectTool.getCurrentSceneTreeNodeScript();
+              BuildComponentTool.buildScriptComponent(~script, ())
+              |> ReactTestTool.createSnapshotAndMatch;
+            });
+            test("test int type", () => {
+              let (script, addedNodeId, fieldName) =
+                ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.prepareForOneScriptComponent(
+                  sandbox,
+                );
 
-            let script = GameObjectTool.getCurrentSceneTreeNodeScript();
-            BuildComponentTool.buildScriptComponent(~script, ())
-            |> ReactTestTool.createSnapshotAndMatch;
+              ScriptAttributeInspectorTool.updateScriptAttributeNodeByReplaceFieldData(
+                addedNodeId,
+                (
+                  fieldName,
+                  ScriptAttributeInspectorTool.buildFieldJsObj(
+                    ~type_="int",
+                    ~defaultValue=0,
+                  ),
+                ),
+              );
+
+              let script = GameObjectTool.getCurrentSceneTreeNodeScript();
+              BuildComponentTool.buildScriptComponent(~script, ())
+              |> ReactTestTool.createSnapshotAndMatch;
+            });
           });
 
           describe("test set field's defaultValue", () => {
-            let _prepare = () => {
-              let script = GameObjectTool.getCurrentSceneTreeNodeScript();
-              let assetTreeData =
-                MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
-              let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
-              MainEditorAssetHeaderOperateNodeTool.addScriptAttribute();
-              ScriptAttributeInspectorTool.addDefaultField(
-                ~sandbox,
-                ~nodeId=addedNodeId,
-                (),
-              );
+            describe("test float type", () => {
+              let _prepare = () => {
+                let (script, addedNodeId, fieldName) =
+                  ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.prepareForOneScriptComponent(
+                    sandbox,
+                  );
 
-              MainEditorScriptAttributeTool.addScriptAttribute(
-                ~script=GameObjectTool.getCurrentSceneTreeNodeScript(),
-                ~send=SinonTool.createOneLengthStub(sandbox^),
-                (),
-              );
+                let engineState = StateEngineService.unsafeGetState();
+                let attributeName =
+                  ScriptAttributeInspectorTool.getAttributeName(
+                    addedNodeId,
+                    engineState,
+                  );
+                let attribute =
+                  ScriptAttributeInspectorTool.getAttribute(
+                    addedNodeId,
+                    engineState,
+                  );
 
-              let engineState = StateEngineService.unsafeGetState();
-              let attributeName =
-                ScriptAttributeInspectorTool.getAttributeName(
+                let newDefaultValue = 1.1;
+
+                (
                   addedNodeId,
+                  script,
+                  attributeName,
+                  fieldName,
+                  attribute,
+                  newDefaultValue,
                   engineState,
                 );
-              let attribute =
-                ScriptAttributeInspectorTool.getAttribute(
+              };
+
+              let _prepareAndExec = () => {
+                let (
                   addedNodeId,
+                  script,
+                  attributeName,
+                  fieldName,
+                  attribute,
+                  newDefaultValue,
                   engineState,
+                ) =
+                  _prepare();
+
+                engineState |> StateEngineService.setState |> ignore;
+
+                MainEditorScriptAttributeTool.changeScriptAttributeFieldDefaultValueFloat(
+                  script,
+                  attributeName,
+                  fieldName,
+                  attribute,
+                  newDefaultValue,
                 );
-              let (fieldName, field) =
-                ScriptAttributeInspectorTool.getAttributeEntries(addedNodeId)
+
+                (
+                  addedNodeId,
+                  script,
+                  attributeName,
+                  fieldName,
+                  attribute,
+                  newDefaultValue,
+                  StateEngineService.unsafeGetState(),
+                );
+              };
+
+              test("update script->attribute->field->defaultValue", () => {
+                let (
+                  addedNodeId,
+                  script,
+                  attributeName,
+                  fieldName,
+                  attribute,
+                  newDefaultValue,
+                  engineState,
+                ) =
+                  _prepareAndExec();
+
+                ScriptAttributeFieldTool.unsafeGetScriptAttributeFieldDefaultValue(
+                  script,
+                  attributeName,
+                  fieldName,
+                  engineState,
+                )
+                |> expect
+                == (
+                     newDefaultValue |> ScriptAttributeFieldTool.buildFloatValue
+                   );
+              });
+              test(
+                "shouldn't update script attribute asset->field->defaultValue",
+                () => {
+                let (
+                  addedNodeId,
+                  script,
+                  attributeName,
+                  fieldName,
+                  attribute,
+                  newDefaultValue,
+                  engineState,
+                ) =
+                  _prepareAndExec();
+
+                ScriptAttributeInspectorTool.unsafeGetScriptAttributeFieldDefaultValue(
+                  addedNodeId,
+                  fieldName,
+                )
                 |> StateLogicService.getEditorState
-                |> ArrayService.unsafeGetFirst;
+                |> expect == (0. |> ScriptAttributeFieldTool.buildFloatValue);
+              });
+              test("test show attribute's fields", () => {
+                let (
+                  addedNodeId,
+                  script,
+                  attributeName,
+                  fieldName,
+                  attribute,
+                  newDefaultValue,
+                  engineState,
+                ) =
+                  _prepareAndExec();
 
-              let newDefaultValue = 1.1;
-
-              (
-                addedNodeId,
-                script,
-                attributeName,
-                fieldName,
-                attribute,
-                newDefaultValue,
-                engineState,
-              );
-            };
-
-            let _prepareAndExec = () => {
-              let (
-                addedNodeId,
-                script,
-                attributeName,
-                fieldName,
-                attribute,
-                newDefaultValue,
-                engineState,
-              ) =
-                _prepare();
-
-              engineState |> StateEngineService.setState |> ignore;
-
-              MainEditorScriptAttributeTool.changeScriptAttributeFieldDefaultValueFloat(
-                script,
-                attributeName,
-                fieldName,
-                attribute,
-                newDefaultValue,
-              );
-
-              (
-                addedNodeId,
-                script,
-                attributeName,
-                fieldName,
-                attribute,
-                newDefaultValue,
-                StateEngineService.unsafeGetState(),
-              );
-            };
-
-            test("update script->attribute->field->defaultValue", () => {
-              let (
-                addedNodeId,
-                script,
-                attributeName,
-                fieldName,
-                attribute,
-                newDefaultValue,
-                engineState,
-              ) =
-                _prepareAndExec();
-
-              ScriptAttributeFieldTool.unsafeGetScriptAttributeFieldDefaultValue(
-                script,
-                attributeName,
-                fieldName,
-                engineState,
-              )
-              |> expect
-              == (newDefaultValue |> ScriptAttributeFieldTool.buildFloatValue);
+                BuildComponentTool.buildScriptComponent(~script, ())
+                |> ReactTestTool.createSnapshotAndMatch;
+              });
             });
-            test(
-              "shouldn't update script attribute asset->field->defaultValue",
-              () => {
-              let (
-                addedNodeId,
-                script,
-                attributeName,
-                fieldName,
-                attribute,
-                newDefaultValue,
-                engineState,
-              ) =
-                _prepareAndExec();
 
-              ScriptAttributeInspectorTool.unsafeGetScriptAttributeFieldDefaultValue(
-                addedNodeId,
-                fieldName,
-              )
-              |> StateLogicService.getEditorState
-              |> expect == (0. |> ScriptAttributeFieldTool.buildFloatValue);
-            });
-            test("test show attribute's fields", () => {
-              let (
-                addedNodeId,
-                script,
-                attributeName,
-                fieldName,
-                attribute,
-                newDefaultValue,
-                engineState,
-              ) =
-                _prepareAndExec();
+            describe("test int type", () => {
+              let _prepare = () => {
+                let (script, addedNodeId, fieldName) =
+                  ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.prepareForOneScriptComponent(
+                    sandbox,
+                  );
 
-              BuildComponentTool.buildScriptComponent(~script, ())
-              |> ReactTestTool.createSnapshotAndMatch;
+                ScriptAttributeInspectorTool.updateScriptAttributeNodeByReplaceFieldData(
+                  addedNodeId,
+                  (
+                    fieldName,
+                    ScriptAttributeInspectorTool.buildFieldJsObj(
+                      ~type_="int",
+                      ~defaultValue=0,
+                    ),
+                  ),
+                );
+
+                let engineState = StateEngineService.unsafeGetState();
+                let attributeName =
+                  ScriptAttributeInspectorTool.getAttributeName(
+                    addedNodeId,
+                    engineState,
+                  );
+                let attribute =
+                  ScriptAttributeInspectorTool.getAttribute(
+                    addedNodeId,
+                    engineState,
+                  );
+
+                let newDefaultValue = 2;
+
+                (
+                  addedNodeId,
+                  script,
+                  attributeName,
+                  fieldName,
+                  attribute,
+                  newDefaultValue,
+                  engineState,
+                );
+              };
+
+              let _prepareAndExec = () => {
+                let (
+                  addedNodeId,
+                  script,
+                  attributeName,
+                  fieldName,
+                  attribute,
+                  newDefaultValue,
+                  engineState,
+                ) =
+                  _prepare();
+
+                engineState |> StateEngineService.setState |> ignore;
+
+                MainEditorScriptAttributeTool.changeScriptAttributeFieldDefaultValueInt(
+                  script,
+                  attributeName,
+                  fieldName,
+                  attribute,
+                  newDefaultValue,
+                );
+
+                (
+                  addedNodeId,
+                  script,
+                  attributeName,
+                  fieldName,
+                  attribute,
+                  newDefaultValue,
+                  StateEngineService.unsafeGetState(),
+                );
+              };
+
+              test("update script->attribute->field->defaultValue", () => {
+                let (
+                  addedNodeId,
+                  script,
+                  attributeName,
+                  fieldName,
+                  attribute,
+                  newDefaultValue,
+                  engineState,
+                ) =
+                  _prepareAndExec();
+
+                ScriptAttributeFieldTool.unsafeGetScriptAttributeFieldDefaultValue(
+                  script,
+                  attributeName,
+                  fieldName,
+                  engineState,
+                )
+                |> expect
+                == (newDefaultValue |> ScriptAttributeFieldTool.buildIntValue);
+              });
             });
           });
         });

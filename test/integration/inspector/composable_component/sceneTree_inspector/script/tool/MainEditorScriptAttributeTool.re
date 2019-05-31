@@ -134,6 +134,16 @@ let changeScriptAttributeFieldDefaultValueFloat =
     defaultValue |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue,
   );
 
+let changeScriptAttributeFieldDefaultValueInt =
+    (script, attributeName, fieldName, attribute, defaultValue) =>
+  MainEditorScriptAttribute.Method._changeScriptAttributeFieldDefaultValue(
+    script,
+    attributeName,
+    fieldName,
+    attribute,
+    defaultValue |> Wonderjs.ScriptAttributeType.intToScriptAttributeValue,
+  );
+
 let blurScriptAttributeFieldDefaultValueFloat =
     (script, attributeName, fieldName, attribute, defaultValue) =>
   MainEditorScriptAttribute.Method._blurScriptAttributeFieldDefaultValue(

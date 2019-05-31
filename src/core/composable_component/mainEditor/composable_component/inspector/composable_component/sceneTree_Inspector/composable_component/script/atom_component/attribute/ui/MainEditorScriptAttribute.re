@@ -62,6 +62,11 @@ module Method = {
     |> Wonderjs.ScriptAttributeType.scriptAttributeValueToFloat
     === (value2 |> Wonderjs.ScriptAttributeType.scriptAttributeValueToFloat);
 
+  let _isIntValueEqual = (value1, value2) =>
+    value1
+    |> Wonderjs.ScriptAttributeType.scriptAttributeValueToInt
+    === (value2 |> Wonderjs.ScriptAttributeType.scriptAttributeValueToInt);
+
   let _blurScriptAttributeFieldDefaultValue =
       (
         (uiState, dispatchFunc),
@@ -93,74 +98,128 @@ module Method = {
         attribute,
       ) =>
     Wonderjs.(
-      ScriptAttributeType.
-        /* TODO handle Int: add MainEditorIntInputBaseComponent */
-        (
-          switch (type_) {
-          | Float =>
-            <MainEditorFloatInputBaseComponent
-              label=fieldName
-              title=fieldName
-              defaultValue={
-                ScriptAttributeEngineService.unsafeGetScriptAttributeFieldDefaultValue(
+      ScriptAttributeType.(
+        switch (type_) {
+        | Float =>
+          <FloatInput
+            label=fieldName
+            title=fieldName
+            defaultValue={
+              ScriptAttributeEngineService.unsafeGetScriptAttributeFieldDefaultValue(
+                fieldName,
+                attribute,
+              )
+              |> Wonderjs.ScriptAttributeType.scriptAttributeValueToFloat
+              |> string_of_float
+            }
+            onChange=(
+              value =>
+                _changeScriptAttributeFieldDefaultValue(
+                  script,
+                  attributeName,
                   fieldName,
                   attribute,
+                  value
+                  |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue,
                 )
-                |> Wonderjs.ScriptAttributeType.scriptAttributeValueToFloat
-              }
-              changeComponentValueFunc=(
-                value =>
-                  _changeScriptAttributeFieldDefaultValue(
+            )
+            onBlur=(
+              value =>
+                _blurScriptAttributeFieldDefaultValue(
+                  (uiState, dispatchFunc),
+                  _isFloatValueEqual,
+                  (
                     script,
                     attributeName,
                     fieldName,
                     attribute,
                     value
                     |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue,
-                  )
-              )
-              blurValueFunc=(
-                value =>
-                  _blurScriptAttributeFieldDefaultValue(
-                    (uiState, dispatchFunc),
-                    _isFloatValueEqual,
-                    (
-                      script,
-                      attributeName,
-                      fieldName,
-                      attribute,
-                      value
-                      |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue,
-                    ),
-                  )
-              )
-              dragDropFunc=(
-                value =>
-                  _blurScriptAttributeFieldDefaultValue(
-                    (uiState, dispatchFunc),
-                    _isFloatValueEqual,
-                    (
-                      script,
-                      attributeName,
-                      fieldName,
-                      attribute,
-                      value
-                      |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue,
-                    ),
-                  )
-              )
-            />
-          | type_ =>
-            WonderLog.Log.fatal(
-              WonderLog.Log.buildFatalMessage(
-                ~description={j|unknown field type: $type_|j},
-                ~reason="",
-                ~solution={j||j},
-                ~params={j||j},
-              ),
+                  ),
+                )
             )
-          }
-        )
+            onDragDrop=(
+              value =>
+                _blurScriptAttributeFieldDefaultValue(
+                  (uiState, dispatchFunc),
+                  _isFloatValueEqual,
+                  (
+                    script,
+                    attributeName,
+                    fieldName,
+                    attribute,
+                    value
+                    |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue,
+                  ),
+                )
+            )
+          />
+        | Int =>
+          <IntInput
+            key={DomHelper.getRandomKey()}
+            label=fieldName
+            title=fieldName
+            defaultValue={
+              ScriptAttributeEngineService.unsafeGetScriptAttributeFieldDefaultValue(
+                fieldName,
+                attribute,
+              )
+              |> Wonderjs.ScriptAttributeType.scriptAttributeValueToInt
+              |> string_of_int
+            }
+            onChange=(
+              value =>
+                _changeScriptAttributeFieldDefaultValue(
+                  script,
+                  attributeName,
+                  fieldName,
+                  attribute,
+                  value
+                  |> Wonderjs.ScriptAttributeType.intToScriptAttributeValue,
+                )
+            )
+            onBlur=(
+              value =>
+                _blurScriptAttributeFieldDefaultValue(
+                  (uiState, dispatchFunc),
+                  _isIntValueEqual,
+                  (
+                    script,
+                    attributeName,
+                    fieldName,
+                    attribute,
+                    value
+                    |> Wonderjs.ScriptAttributeType.intToScriptAttributeValue,
+                  ),
+                )
+            )
+            onDragDrop=(
+              value =>
+                _blurScriptAttributeFieldDefaultValue(
+                  (uiState, dispatchFunc),
+                  _isIntValueEqual,
+                  (
+                    script,
+                    attributeName,
+                    fieldName,
+                    attribute,
+                    value
+                    |> Wonderjs.ScriptAttributeType.intToScriptAttributeValue,
+                  ),
+                )
+            )
+          />
+        | type_ =>
+          WonderLog.Log.fatal(
+            WonderLog.Log.buildFatalMessage(
+              ~description={j|unknown field type: $type_|j},
+              ~reason="",
+              ~solution={j||j},
+              ~params={j||j},
+            ),
+          )
+        }
+      )
     );
 
   let _renderScriptAttributeFields =
