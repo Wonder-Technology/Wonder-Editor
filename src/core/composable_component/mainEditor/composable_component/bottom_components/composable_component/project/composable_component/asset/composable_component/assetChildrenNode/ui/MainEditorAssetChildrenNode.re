@@ -247,7 +247,6 @@ module Method = {
                  />
                  |> Result.SameDataResult.success;
                },
-             /* TODO update assetBundle.png */
              ~assetBundleNodeFunc=
                (nodeId, {name}) =>
                  <FileBox

@@ -20,14 +20,6 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
 
       MainEditorSceneTool.prepareScene(sandbox);
-      /* MainEditorSceneTool.createDefaultScene(
-           sandbox,
-           MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
-         ); */
-      /* LoadTool.buildFakeTextEncoder();
-         LoadTool.buildFakeURL(sandbox^);
-
-         LoadTool.buildFakeLoadImage(.); */
 
       MainEditorAssetTool.buildFakeFileReader();
     });

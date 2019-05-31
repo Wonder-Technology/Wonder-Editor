@@ -73,8 +73,6 @@ let _ =
       });
 
       describe("test buildSelectTreeForGenerateSingleRAB", () => {
-        /* TODO add more tests */
-
         testPromise("test1", () => {
           let addedMaterialNodeId1 = MainEditorAssetIdTool.getNewAssetId();
           MainEditorAssetHeaderOperateNodeTool.addMaterial();

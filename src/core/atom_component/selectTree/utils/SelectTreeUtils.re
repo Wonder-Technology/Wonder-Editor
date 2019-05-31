@@ -123,7 +123,6 @@ let buildSelectTreeForAssetBundle =
           nodeId,
           nodeData,
         ) => {
-          /* TODO feat: exclude wab?  */
           let assetNode =
             AssetBundleNodeAssetService.buildNodeByNodeData(
               ~nodeId,

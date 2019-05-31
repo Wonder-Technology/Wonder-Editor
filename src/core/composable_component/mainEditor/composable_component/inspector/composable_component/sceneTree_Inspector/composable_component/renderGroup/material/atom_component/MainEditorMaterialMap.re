@@ -129,11 +129,7 @@ module Method = {
         send,
         (editorState, engineState),
       ) => {
-    let imgSrc =
-      ImageDataMapUtils.getImgSrc(
-        imageDataIndex,
-        editorState,
-      );
+    let imgSrc = ImageDataMapUtils.getImgSrc(imageDataIndex, editorState);
 
     _buildTextureUIComponent(
       (className, nodeId, textureComponent, imgSrc),
@@ -292,7 +288,6 @@ let _renderTextureGroup = (state, send) =>
         </div>
       </div>
     </div>
-    /* TODO add close function, create material snpashpt */
     <div
       className="select-component-bg"
       onClick={_e => send(HideTextureGroup)}

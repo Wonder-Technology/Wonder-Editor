@@ -14,3 +14,23 @@ let changeInput = (inputRegEx, event) => {
     }
   };
 };
+
+let triggerOnChange = (value, (convertToStringFunc, onChangeFunc)) =>
+  switch (onChangeFunc) {
+  | None => ()
+  | Some(onChange) => onChange(convertToStringFunc(value))
+  };
+
+let triggerOnBlur = (value, (convertToStringFunc, onBlurFunc)) =>
+  switch (onBlurFunc) {
+  | None => ()
+  | Some(onBlur) => onBlur(convertToStringFunc(value))
+  };
+
+let handleDragStart = (event, dragStartType, send) => {
+  let e = ReactEventType.convertReactMouseEventToJsEvent(event);
+
+  Wonderjs.DomExtend.requestPointerLock(e##target);
+
+  send(dragStartType);
+};

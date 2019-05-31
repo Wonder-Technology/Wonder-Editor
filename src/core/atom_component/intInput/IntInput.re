@@ -8,19 +8,6 @@ type state = {
 module Method = {
   let getIntRegEx = () => [%re {|/^-?(0|[1-9][0-9]*)$/|}];
 
-  /* TODO duplicate */
-  let triggerOnChange = (value, onChangeFunc) =>
-    switch (onChangeFunc) {
-    | None => ()
-    | Some(onChange) => onChange(int_of_string(value))
-    };
-
-  let triggerOnBlur = (value, onBlurFunc) =>
-    switch (onBlurFunc) {
-    | None => ()
-    | Some(onBlur) => onBlur(int_of_string(value))
-    };
-
   let handleChangeAction = (state, onChangeFunc, value) =>
     switch (value) {
     | None => ReasonReact.NoUpdate
@@ -29,7 +16,7 @@ module Method = {
     | Some(value) =>
       ReasonReactUtils.updateWithSideEffects(
         {...state, inputValue: Some(value)}, _state =>
-        triggerOnChange(value, onChangeFunc)
+        InputUtils.triggerOnChange(value, (int_of_string, onChangeFunc))
       )
     };
 
@@ -42,12 +29,14 @@ module Method = {
       ReasonReactUtils.updateWithSideEffects(
         {...state, inputValue: Some(value)},
         _state => {
-          triggerOnChange(value, onChangeFunc);
-          triggerOnBlur(value, onBlurFunc);
+          InputUtils.triggerOnChange(value, (int_of_string, onChangeFunc));
+          InputUtils.triggerOnBlur(value, (int_of_string, onBlurFunc));
         },
       );
     | Some(value) =>
-      ReasonReactUtils.sideEffects(_state => triggerOnBlur(value, onBlurFunc))
+      ReasonReactUtils.sideEffects(_state =>
+        InputUtils.triggerOnBlur(value, (int_of_string, onBlurFunc))
+      )
     };
 
   let computeNewValue = (currentValue, (movementX, movementY)) => {
@@ -56,13 +45,8 @@ module Method = {
     currentValue + movementX - movementY;
   };
 
-  let handleDragStart = (event, send) => {
-    let e = ReactEventType.convertReactMouseEventToJsEvent(event);
-
-    Wonderjs.DomExtend.requestPointerLock(e##target);
-
-    send(DragStart);
-  };
+  let handleDragStart = (event, send) =>
+    InputUtils.handleDragStart(event, DragStart, send);
 
   let handleDragDrop = (event, (send, state), onDragDropFunc) =>
     state.isDragStart ?
@@ -137,7 +121,7 @@ module Method = {
     </div>;
 };
 
-let component = ReasonReact.reducerComponent("FloatInput");
+let component = ReasonReact.reducerComponent("IntInput");
 
 let reducer = ((onChangeFunc, onBlurFunc), action, state) => {
   let languageType =
