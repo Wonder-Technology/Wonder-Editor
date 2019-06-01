@@ -28,8 +28,7 @@ module Method = {
             ImageDataMapUtils.getImgSrc(imageDataIndex, editorState)->Some;
           /* TODO add geometry image */
           | "geometry" => Some("./public/img/wdb.png")
-          | "scriptEventFunction" =>
-            Some("./public/img/selectJsFunc.png")
+          | "scriptEventFunction" => Some("./public/img/selectJsFunc.png")
           | "scriptAttribute" => Some("./public/img/scriptAttribute.png")
           | "texture" =>
             let {imageDataIndex}: HeaderAssetBundleType.textureData =
@@ -77,6 +76,9 @@ module Method = {
          textures,
        );
 
+  let _addResourceData = (resources, value, convertValueToResourceDataFunc) =>
+    resources |> ArrayService.push(value |> convertValueToResourceDataFunc);
+
   let _generateSingleRABResourceData =
       (selectTreeForGenerateSingleRAB, (editorState, engineState)) => {
     let (
@@ -118,22 +120,21 @@ module Method = {
                 | "texture" => (
                     basicMaterials,
                     lightMaterials,
-                    textures
-                    |> ArrayService.push(
-                         value
-                         |> HeaderAssetBundleType.convertValueToTextureData,
-                       ),
+                    _addResourceData(
+                      textures,
+                      value,
+                      HeaderAssetBundleType.convertValueToTextureData,
+                    ),
                     geometrys,
                     scriptEventFunctionDataArr,
                     scriptAttributeDataArr,
                   )
                 | "basicMaterial" => (
-                    basicMaterials
-                    |> ArrayService.push(
-                         value
-                         |> HeaderAssetBundleType.convertValueToMaterialData
-                         |> _getMaterialComponentFromMaterialData,
-                       ),
+                    _addResourceData(basicMaterials, value, value =>
+                      value
+                      |> HeaderAssetBundleType.convertValueToMaterialData
+                      |> _getMaterialComponentFromMaterialData
+                    ),
                     lightMaterials,
                     textures,
                     geometrys,
@@ -142,12 +143,11 @@ module Method = {
                   )
                 | "lightMaterial" => (
                     basicMaterials,
-                    lightMaterials
-                    |> ArrayService.push(
-                         value
-                         |> HeaderAssetBundleType.convertValueToMaterialData
-                         |> _getMaterialComponentFromMaterialData,
-                       ),
+                    _addResourceData(basicMaterials, value, value =>
+                      value
+                      |> HeaderAssetBundleType.convertValueToMaterialData
+                      |> _getMaterialComponentFromMaterialData
+                    ),
                     textures,
                     geometrys,
                     scriptEventFunctionDataArr,
@@ -156,11 +156,11 @@ module Method = {
                 | "texture" => (
                     basicMaterials,
                     lightMaterials,
-                    textures
-                    |> ArrayService.push(
-                         value
-                         |> HeaderAssetBundleType.convertValueToTextureData,
-                       ),
+                    _addResourceData(
+                      textures,
+                      value,
+                      HeaderAssetBundleType.convertValueToTextureData,
+                    ),
                     geometrys,
                     scriptEventFunctionDataArr,
                     scriptAttributeDataArr,
@@ -170,11 +170,11 @@ module Method = {
                     lightMaterials,
                     textures,
                     geometrys,
-                    scriptEventFunctionDataArr
-                    |> ArrayService.push(
-                         value
-                         |> HeaderAssetBundleType.convertValueToScriptEventFunctionData,
-                       ),
+                    _addResourceData(
+                      scriptEventFunctionDataArr,
+                      value,
+                      HeaderAssetBundleType.convertValueToScriptEventFunctionData,
+                    ),
                     scriptAttributeDataArr,
                   )
                 | "scriptAttribute" => (
@@ -183,21 +183,21 @@ module Method = {
                     textures,
                     geometrys,
                     scriptEventFunctionDataArr,
-                    scriptAttributeDataArr
-                    |> ArrayService.push(
-                         value
-                         |> HeaderAssetBundleType.convertValueToScriptAttributeData,
-                       ),
+                    _addResourceData(
+                      scriptAttributeDataArr,
+                      value,
+                      HeaderAssetBundleType.convertValueToScriptAttributeData,
+                    ),
                   )
                 | "geometry" => (
                     basicMaterials,
                     lightMaterials,
                     textures,
-                    geometrys
-                    |> ArrayService.push(
-                         value
-                         |> HeaderAssetBundleType.convertValueToGeometryComponent,
-                       ),
+                    _addResourceData(
+                      geometrys,
+                      value,
+                      HeaderAssetBundleType.convertValueToGeometryComponent,
+                    ),
                     scriptEventFunctionDataArr,
                     scriptAttributeDataArr,
                   )

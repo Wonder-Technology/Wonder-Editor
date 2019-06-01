@@ -59,19 +59,8 @@ module Method = {
     send(UpdateSelectTreeForAssetBundle(tree));
   };
 
-  let renderContent = (state, send) =>
-    <div className="modal-item-content">
-      <div className="content-field">
-        <div className="field-title"> {DomHelper.textEl("name")} </div>
-        <div className="field-content">
-          <input
-            className="input-component"
-            type_="text"
-            value={state.name}
-            onChange={_e => send(changeName(_e))}
-          />
-        </div>
-      </div>
+  let _renderConfig = (state, send) =>
+    <>
       <div className="content-field">
         <div className="field-title"> {DomHelper.textEl("useWorker")} </div>
         <div className="field-content">
@@ -94,6 +83,22 @@ module Method = {
           />
         </div>
       </div>
+    </>;
+
+  let renderContent = (state, send) =>
+    <div className="modal-item-content">
+      <div className="content-field">
+        <div className="field-title"> {DomHelper.textEl("name")} </div>
+        <div className="field-content">
+          <input
+            className="input-component"
+            type_="text"
+            value={state.name}
+            onChange={_e => send(changeName(_e))}
+          />
+        </div>
+      </div>
+      {_renderConfig(state, send)}
       {
         state.useAssetBundle ?
           <SelectTree

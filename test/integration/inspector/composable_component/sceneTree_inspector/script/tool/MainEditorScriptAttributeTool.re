@@ -128,8 +128,7 @@ let changeScriptAttributeFieldDefaultValueFloat =
     (script, attributeName, fieldName, attribute, defaultValue) =>
   MainEditorScriptAttribute.Method._changeScriptAttributeFieldDefaultValue(
     script,
-    attributeName,
-    fieldName,
+    (attributeName, fieldName),
     attribute,
     defaultValue |> Wonderjs.ScriptAttributeType.floatToScriptAttributeValue,
   );
@@ -138,8 +137,7 @@ let changeScriptAttributeFieldDefaultValueInt =
     (script, attributeName, fieldName, attribute, defaultValue) =>
   MainEditorScriptAttribute.Method._changeScriptAttributeFieldDefaultValue(
     script,
-    attributeName,
-    fieldName,
+    (attributeName, fieldName),
     attribute,
     defaultValue |> Wonderjs.ScriptAttributeType.intToScriptAttributeValue,
   );

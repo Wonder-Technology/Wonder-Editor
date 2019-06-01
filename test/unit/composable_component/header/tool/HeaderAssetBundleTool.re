@@ -111,8 +111,7 @@ module GenerateAllAB = {
       ) =>
     HeaderAssetBundleGenerateAllAB.Method.generateAllABZip(
       selectTree,
-      nameInputValue,
-      dependencyRelationInputValue,
+      (nameInputValue, dependencyRelationInputValue),
       createZipFunc,
       (editorState, engineState),
     );

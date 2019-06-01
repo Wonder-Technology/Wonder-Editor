@@ -88,6 +88,35 @@ module AssetBundle = {
       |> resolve
       |> Obj.magic;
 
+    let _findInNextFolderNode =
+        (
+          (
+            nodeNameHierachy,
+            folderNode,
+            editorState,
+            findAssetBundbleNodeDataFunc,
+          ),
+        ) => {
+      let nextFolderNodeName = ArrayService.unsafeGetFirst(nodeNameHierachy);
+
+      let nextFolderNode =
+        FolderNodeAssetService.getChildrenNodes(folderNode)
+        |> Js.Array.find(childNode =>
+             FolderNodeAssetService.isFolderNode(childNode)
+             && FolderNodeAssetService.getNodeName(
+                  FolderNodeAssetService.getNodeData(childNode),
+                )
+             === nextFolderNodeName
+           )
+        |> OptionService.unsafeGet;
+
+      findAssetBundbleNodeDataFunc(
+        nodeNameHierachy |> Js.Array.sliceFrom(1),
+        nextFolderNode,
+        editorState,
+      );
+    };
+
     let rec _findAssetBundbleNodeData =
             (nodeNameHierachy, folderNode, editorState)
             : NodeAssetType.assetBundleNodeData => {
@@ -111,27 +140,12 @@ module AssetBundle = {
       );
 
       nodeNameHierachy |> Js.Array.length > 1 ?
-        {
-          let nextFolderNodeName =
-            ArrayService.unsafeGetFirst(nodeNameHierachy);
-
-          let nextFolderNode =
-            FolderNodeAssetService.getChildrenNodes(folderNode)
-            |> Js.Array.find(childNode =>
-                 FolderNodeAssetService.isFolderNode(childNode)
-                 && FolderNodeAssetService.getNodeName(
-                      FolderNodeAssetService.getNodeData(childNode),
-                    )
-                 === nextFolderNodeName
-               )
-            |> OptionService.unsafeGet;
-
-          _findAssetBundbleNodeData(
-            nodeNameHierachy |> Js.Array.sliceFrom(1),
-            nextFolderNode,
-            editorState,
-          );
-        } :
+        _findInNextFolderNode((
+          nodeNameHierachy,
+          folderNode,
+          editorState,
+          _findAssetBundbleNodeData,
+        )) :
         {
           let assetBundleNodeName =
             ArrayService.unsafeGetFirst(nodeNameHierachy)

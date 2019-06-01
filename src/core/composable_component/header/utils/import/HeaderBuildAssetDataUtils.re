@@ -291,6 +291,30 @@ let _buildBasicMaterialData =
        ),
      );
 
+let _setLightMaterialNotMapData =
+    (material, (name, diffuseColor, shininess), engineState) =>
+  engineState
+  |> LightMaterialEngineService.setLightMaterialName(name, material)
+  |> LightMaterialEngineService.setLightMaterialDiffuseColor(
+       diffuseColor,
+       material,
+     )
+  |> LightMaterialEngineService.setLightMaterialShininess(shininess, material);
+
+let _setLightMaterialMapData = (material, textureMap, diffuseMap, engineState) =>
+  OptionService.isJsonSerializedValueNone(diffuseMap) ?
+    engineState :
+    {
+      let diffuseMap = diffuseMap |> OptionService.unsafeGetJsonSerializedValue;
+
+      engineState
+      |> LightMaterialEngineService.setLightMaterialDiffuseMap(
+           textureMap
+           |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(diffuseMap),
+           material,
+         );
+    };
+
 let _buildLightMaterialData =
     (
       lightMaterials,
@@ -308,33 +332,19 @@ let _buildLightMaterialData =
            LightMaterialEngineService.create(engineState);
 
          let engineState =
-           engineState
-           |> LightMaterialEngineService.setLightMaterialName(name, material)
-           |> LightMaterialEngineService.setLightMaterialDiffuseColor(
-                diffuseColor,
-                material,
-              )
-           |> LightMaterialEngineService.setLightMaterialShininess(
-                shininess,
-                material,
-              );
+           _setLightMaterialNotMapData(
+             material,
+             (name, diffuseColor, shininess),
+             engineState,
+           );
 
          let engineState =
-           OptionService.isJsonSerializedValueNone(diffuseMap) ?
-             engineState :
-             {
-               let diffuseMap =
-                 diffuseMap |> OptionService.unsafeGetJsonSerializedValue;
-
-               engineState
-               |> LightMaterialEngineService.setLightMaterialDiffuseMap(
-                    textureMap
-                    |> WonderCommonlib.ImmutableSparseMapService.unsafeGet(
-                         diffuseMap,
-                       ),
-                    material,
-                  );
-             };
+           _setLightMaterialMapData(
+             material,
+             textureMap,
+             diffuseMap,
+             engineState,
+           );
 
          let editorState =
            _addMaterialToAssetTree(
@@ -385,7 +395,7 @@ let buildMaterialData =
 };
 
 let _addScriptEventFunctionToAssetTree =
-    (eventFunctionData, path, name, engineState, editorState) => {
+    (path, (eventFunctionData, name), engineState, editorState) => {
   let (editorState, assetNodeId) =
     IdAssetEditorService.generateNodeId(editorState);
 
@@ -426,9 +436,8 @@ let buildScriptEventFunctionData =
 
          let editorState =
            _addScriptEventFunctionToAssetTree(
-             eventFunctionData,
              path,
-             name,
+             (eventFunctionData, name),
              engineState,
              editorState,
            );
@@ -446,7 +455,7 @@ let buildScriptEventFunctionData =
      );
 
 let _addScriptAttributeToAssetTree =
-    (attribute, path, name, engineState, editorState) => {
+    (path, (attribute, name), engineState, editorState) => {
   let (editorState, assetNodeId) =
     IdAssetEditorService.generateNodeId(editorState);
 
@@ -483,9 +492,8 @@ let buildScriptAttributeData =
 
          let editorState =
            _addScriptAttributeToAssetTree(
-             attribute,
              path,
-             name,
+             (attribute, name),
              engineState,
              editorState,
            );

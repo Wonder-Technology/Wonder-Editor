@@ -56,8 +56,13 @@ let setLocalEulerAngleZ =
   };
 };
 
-let setLocalEulerAngleFieldWhenNotExistInMap =
-    (transformComponent, valueInEngineState, valueInMap, setFunc, editorState) =>
+let _setLocalEulerAngleFieldWhenNotExistInMap =
+    (
+      transformComponent,
+      (valueInEngineState, valueInMap),
+      setFunc,
+      editorState,
+    ) =>
   switch (valueInMap) {
   | None => setFunc(transformComponent, valueInEngineState, editorState)
   | _ => editorState
@@ -104,22 +109,19 @@ let getLocalEulerAngleOrInit =
 
     let editorState =
       editorState
-      |> setLocalEulerAngleFieldWhenNotExistInMap(
+      |> _setLocalEulerAngleFieldWhenNotExistInMap(
            transformComponent,
-           ex,
-           valueX,
+           (ex, valueX),
            setLocalEulerAngleX,
          )
-      |> setLocalEulerAngleFieldWhenNotExistInMap(
+      |> _setLocalEulerAngleFieldWhenNotExistInMap(
            transformComponent,
-           ey,
-           valueY,
+           (ey, valueY),
            setLocalEulerAngleY,
          )
-      |> setLocalEulerAngleFieldWhenNotExistInMap(
+      |> _setLocalEulerAngleFieldWhenNotExistInMap(
            transformComponent,
-           ez,
-           valueZ,
+           (ez, valueZ),
            setLocalEulerAngleZ,
          );
 

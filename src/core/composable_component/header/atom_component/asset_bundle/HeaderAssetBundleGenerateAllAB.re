@@ -17,12 +17,7 @@ type action =
 
 module Method = {
   let _toggleSelect = (tree, send, isSelect, node) => {
-    let tree =
-      SelectTreeUtils.setSelectForSelectTree(
-        tree,
-        isSelect,
-        node,
-      );
+    let tree = SelectTreeUtils.setSelectForSelectTree(tree, isSelect, node);
 
     send(UpdateSelectTreeForGenerateAllAB(tree));
   };
@@ -95,8 +90,7 @@ module Method = {
   let generateAllABZip =
       (
         selectTreeForGenerateAllAB,
-        zipBaseName,
-        dependencyRelationInputValueStr,
+        (zipBaseName, dependencyRelationInputValueStr),
         createZipFunc,
         (editorState, engineState),
       ) =>
@@ -174,9 +168,7 @@ module Method = {
 
   let _renderDependencyRelationInput = ((state, send)) =>
     <div className="content-field content-textarea">
-      <div className="field-title">
-        {DomHelper.textEl("relation")}
-      </div>
+      <div className="field-title"> {DomHelper.textEl("relation")} </div>
       <div className="field-content">
         <textarea
           className="input-component"
@@ -214,8 +206,7 @@ module Method = {
               _e =>
                 generateAllABZip(
                   state.selectTreeForGenerateAllAB,
-                  state.nameInputValue,
-                  state.dependencyRelationInputValue,
+                  (state.nameInputValue, state.dependencyRelationInputValue),
                   Zip.create,
                 )
                 |> StateLogicService.getStateToGetData

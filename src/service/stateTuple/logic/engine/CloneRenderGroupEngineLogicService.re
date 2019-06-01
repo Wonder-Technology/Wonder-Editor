@@ -49,8 +49,7 @@ let _addRenderGroupIfHasLightMaterial =
       targetGameObject,
       newMeshRenderer,
       (clonedGameObject, clonedEngineState),
-      editorState,
-      targetEngineState,
+      (editorState, targetEngineState),
     ) => {
   let clonedGameObjectMaterial =
     clonedEngineState
@@ -111,11 +110,10 @@ let cloneRenderGroupToOtherEngineState =
         targetEngineState,
       );
     } :
-    targetEngineState
-    |> _addRenderGroupIfHasLightMaterial(
-         targetGameObject,
-         newMeshRenderer,
-         (clonedGameObject, clonedEngineState),
-         editorState,
-       );
+    _addRenderGroupIfHasLightMaterial(
+      targetGameObject,
+      newMeshRenderer,
+      (clonedGameObject, clonedEngineState),
+      (editorState, targetEngineState),
+    );
 };

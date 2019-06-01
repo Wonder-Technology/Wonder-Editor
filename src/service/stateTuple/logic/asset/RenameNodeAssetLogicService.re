@@ -120,6 +120,27 @@ let _materialNodeFunc =
     ) :
     (result, tree, engineState);
 
+let _hasTargetName =
+    (
+      (name, engineState),
+      (parentFolderNode, tree),
+      itemName,
+      isTreeScriptNodesHasTargetNameFunc,
+    ) =>
+  _checkParentNode(parentFolderNode, name, engineState)
+  |> Result.RelationResult.handleSuccess(() =>
+       isTreeScriptNodesHasTargetNameFunc(name, tree) ?
+         Result.RelationResult.fail(
+           LanguageUtils.getMessageLanguageDataByType(
+             itemName,
+             LanguageEditorService.unsafeGetType
+             |> StateLogicService.getEditorState,
+           )
+           ->Some,
+         ) :
+         Result.RelationResult.success()
+     );
+
 let _scriptEventFunctionNodeFunc =
     (
       (targetNodeId, name),
@@ -134,22 +155,12 @@ let _scriptEventFunctionNodeFunc =
     {
       let (result, newTree) =
         switch (
-          _checkParentNode(parentFolderNode, name, engineState)
-          |> Result.RelationResult.handleSuccess(() =>
-               ScriptEventFunctionNodeNameAssetService.isTreeScriptEventFunctionNodesHasTargetName(
-                 name,
-                 tree,
-               ) ?
-                 Result.RelationResult.fail(
-                   LanguageUtils.getMessageLanguageDataByType(
-                     "asset-rename-scriptEventFunction",
-                     LanguageEditorService.unsafeGetType
-                     |> StateLogicService.getEditorState,
-                   )
-                   ->Some,
-                 ) :
-                 Result.RelationResult.success()
-             )
+          _hasTargetName(
+            (name, engineState),
+            (parentFolderNode, tree),
+            "asset-rename-scriptEventFunction",
+            ScriptEventFunctionNodeNameAssetService.isTreeScriptEventFunctionNodesHasTargetName,
+          )
         ) {
         | Success () as result => (
             result,
@@ -182,22 +193,12 @@ let _scriptAttributeNodeFunc =
   |> Result.RelationResult.isSuccess
   && NodeAssetService.isIdEqual(nodeId, targetNodeId) ?
     switch (
-      _checkParentNode(parentFolderNode, newName, engineState)
-      |> Result.RelationResult.handleSuccess(() =>
-           ScriptAttributeNodeNameAssetService.isTreeScriptAttributeNodesHasTargetName(
-             newName,
-             tree,
-           ) ?
-             Result.RelationResult.fail(
-               LanguageUtils.getMessageLanguageDataByType(
-                 "asset-rename-scriptAttribute",
-                 LanguageEditorService.unsafeGetType
-                 |> StateLogicService.getEditorState,
-               )
-               ->Some,
-             ) :
-             Result.RelationResult.success()
-         )
+      _hasTargetName(
+        (newName, engineState),
+        (parentFolderNode, tree),
+        "asset-rename-scriptAttribute",
+        ScriptAttributeNodeNameAssetService.isTreeScriptAttributeNodesHasTargetName,
+      )
     ) {
     | Success () as result =>
       let oldName =
