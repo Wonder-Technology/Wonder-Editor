@@ -41,13 +41,13 @@ exports[`script event function inspector test snapshot test 1`] = `
         type="text"
         value="{    
   init: (script, api, engineState) => { 
-    return engineState 
+    return engineState; 
   }, 
   update: (script, api, engineState) => { 
-    return engineState 
+    return engineState; 
   }, 
   dispose: (script, api, engineState) => { 
-    return engineState 
+    return engineState; 
   } 
 }"
       />

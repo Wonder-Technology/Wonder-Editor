@@ -3,7 +3,7 @@ module Method = {
 
   let _buildBodyStr = (eventFunctionName, eventFunction, str) =>
     switch (eventFunction) {
-    | None => {j| $str \n  $eventFunctionName: (script, api, engineState) => { \n    return engineState \n  }|j}
+    | None => {j| $str \n  $eventFunctionName: (script, api, engineState) => { \n    return engineState; \n  }|j}
     | Some(func) =>
       let funcStr = SerializeService.serializeFunction(func);
 
