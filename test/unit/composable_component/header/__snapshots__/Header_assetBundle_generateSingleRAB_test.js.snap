@@ -152,7 +152,7 @@ exports[`Header AssetBundle test generate single rab test buildSelectTreeForGene
                     />
                     <img
                       className="treeNode-icon"
-                      src="./public/img/wdb.png"
+                      src="./public/img/geo.png"
                     />
                     Cesium_Milk_Truck_0
                   </div>
@@ -172,7 +172,7 @@ exports[`Header AssetBundle test generate single rab test buildSelectTreeForGene
                     />
                     <img
                       className="treeNode-icon"
-                      src="./public/img/wdb.png"
+                      src="./public/img/geo.png"
                     />
                     Cesium_Milk_Truck_1
                   </div>
@@ -192,7 +192,7 @@ exports[`Header AssetBundle test generate single rab test buildSelectTreeForGene
                     />
                     <img
                       className="treeNode-icon"
-                      src="./public/img/wdb.png"
+                      src="./public/img/geo.png"
                     />
                     Cesium_Milk_Truck_2
                   </div>
@@ -212,7 +212,7 @@ exports[`Header AssetBundle test generate single rab test buildSelectTreeForGene
                     />
                     <img
                       className="treeNode-icon"
-                      src="./public/img/wdb.png"
+                      src="./public/img/geo.png"
                     />
                     Wheels
                   </div>
@@ -232,7 +232,7 @@ exports[`Header AssetBundle test generate single rab test buildSelectTreeForGene
                     />
                     <img
                       className="treeNode-icon"
-                      src="./public/img/wdb.png"
+                      src="./public/img/geo.png"
                     />
                     Wheels
                   </div>

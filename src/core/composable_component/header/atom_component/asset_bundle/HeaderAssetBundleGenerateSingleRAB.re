@@ -26,8 +26,7 @@ module Method = {
               value |> HeaderAssetBundleType.convertValueToMaterialData;
 
             ImageDataMapUtils.getImgSrc(imageDataIndex, editorState)->Some;
-          /* TODO add geometry image */
-          | "geometry" => Some("./public/img/wdb.png")
+          | "geometry" => Some("./public/img/geo.png")
           | "scriptEventFunction" => Some("./public/img/selectJsFunc.png")
           | "scriptAttribute" => Some("./public/img/scriptAttribute.png")
           | "texture" =>
