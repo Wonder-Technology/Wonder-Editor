@@ -197,120 +197,161 @@ let _ =
             })
           );
 
-          describe("add lightMaterial contained textureData to textures", () =>
-            testPromise(
-              "if selectTree->textures not has selectTree->lightMaterials contained textureData, resourceData->textures should has them",
-              () => {
+          describe("test resource data->material data", () => {
+            describe(
+              "add light material contained textureData to textures", () =>
+              testPromise(
+                "if selectTree->textures not has selectTree->lightMaterials contained textureData, resourceData->textures should has them",
+                () => {
+                  let addedMaterialNodeId1 =
+                    MainEditorAssetIdTool.getNewAssetId();
+                  MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+                  let addedMaterialNodeId2 =
+                    MainEditorAssetIdTool.getNewAssetId();
+                  MainEditorAssetHeaderOperateNodeTool.addMaterial();
+
+                  let addedFolderNodeId1 =
+                    MainEditorAssetIdTool.getNewAssetId();
+                  MainEditorAssetHeaderOperateNodeTool.addFolder();
+
+                  MainEditorAssetTreeTool.Select.selectFolderNode(
+                    ~nodeId=addedFolderNodeId1,
+                    (),
+                  );
+
+                  MainEditorAssetUploadTool.loadOneTexture(
+                    ~imgName="image1.png",
+                    ~imgSrc=Base64Tool.buildFakeBase64_1(),
+                    (),
+                  )
+                  |> then_(uploadedTextureNodeId1 =>
+                       MainEditorAssetUploadTool.loadOneTexture(
+                         ~imgName="image2.png",
+                         ~imgSrc=Base64Tool.buildFakeBase64_2(),
+                         (),
+                       )
+                       |> then_(uploadedTextureNodeId2 => {
+                            MainEditorLightMaterialForAssetTool.dragAssetTextureToMap(
+                              ~currentNodeId=addedMaterialNodeId2,
+                              ~textureNodeId=uploadedTextureNodeId2,
+                              ~material=
+                                MainEditorAssetMaterialNodeTool.getMaterialComponent(
+                                  ~nodeId=addedMaterialNodeId2,
+                                  (),
+                                ),
+                              (),
+                            );
+
+                            let selectTree =
+                              HeaderAssetBundleTool.GenerateSingleRAB.buildSelectTreeForGenerateSingleRAB
+                              |> StateLogicService.getStateToGetData
+                              |> SelectTreeTool.setSelectForSelectTree(
+                                   true,
+                                   MainEditorAssetMaterialNodeTool.getMaterialName(
+                                     ~nodeId=addedMaterialNodeId2,
+                                     (),
+                                   ),
+                                 )
+                              |> SelectTreeTool.setSelectForSelectTree(
+                                   true,
+                                   MainEditorAssetTextureNodeTool.getTextureName(
+                                     ~nodeId=uploadedTextureNodeId1,
+                                     (),
+                                   ),
+                                 );
+
+                            let (
+                              basicMaterials,
+                              lightMaterials,
+                              textures,
+                              geometrys,
+                              scriptEventFunctionDataArr,
+                              scriptAttributeDataArr,
+                              imageDataMap,
+                            ) =
+                              HeaderAssetBundleTool.GenerateSingleRAB.generateSingleRABResourceData(
+                                selectTree,
+                              )
+                              |> StateLogicService.getStateToGetData;
+
+                            let editorState = StateEditorService.getState();
+                            (lightMaterials, textures)
+                            |> expect
+                            == (
+                                 [|
+                                   MainEditorAssetMaterialNodeTool.getMaterialComponent(
+                                     ~nodeId=addedMaterialNodeId2,
+                                     (),
+                                   ),
+                                 |],
+                                 [|
+                                   HeaderAssetBundleTool.GenerateSingleRAB.buildTextureData(
+                                     MainEditorAssetTextureNodeTool.getTextureComponent(
+                                       uploadedTextureNodeId1,
+                                       editorState,
+                                     ),
+                                     MainEditorAssetTextureNodeTool.getTextureImageDataIndex(
+                                       uploadedTextureNodeId1,
+                                       editorState,
+                                     ),
+                                   ),
+                                   HeaderAssetBundleTool.GenerateSingleRAB.buildTextureData(
+                                     MainEditorAssetTextureNodeTool.getTextureComponent(
+                                       uploadedTextureNodeId2,
+                                       editorState,
+                                     ),
+                                     MainEditorAssetTextureNodeTool.getTextureImageDataIndex(
+                                       uploadedTextureNodeId2,
+                                       editorState,
+                                     ),
+                                   ),
+                                 |],
+                               )
+                            |> resolve;
+                          })
+                     );
+                },
+              )
+            );
+
+            describe("fix bug", () =>
+              test(
+                "added light material shouldn't add to basic material resource data",
+                () => {
                 let addedMaterialNodeId1 =
                   MainEditorAssetIdTool.getNewAssetId();
                 MainEditorAssetHeaderOperateNodeTool.addMaterial();
 
-                let addedMaterialNodeId2 =
-                  MainEditorAssetIdTool.getNewAssetId();
-                MainEditorAssetHeaderOperateNodeTool.addMaterial();
+                let selectTree =
+                  HeaderAssetBundleTool.GenerateSingleRAB.buildSelectTreeForGenerateSingleRAB
+                  |> StateLogicService.getStateToGetData
+                  |> SelectTreeTool.setSelectForSelectTree(
+                       true,
+                       MainEditorAssetMaterialNodeTool.getMaterialName(
+                         ~nodeId=addedMaterialNodeId1,
+                         (),
+                       ),
+                     );
 
-                let addedFolderNodeId1 = MainEditorAssetIdTool.getNewAssetId();
-                MainEditorAssetHeaderOperateNodeTool.addFolder();
+                let (
+                  basicMaterials,
+                  lightMaterials,
+                  textures,
+                  geometrys,
+                  scriptEventFunctionDataArr,
+                  scriptAttributeDataArr,
+                  imageDataMap,
+                ) =
+                  HeaderAssetBundleTool.GenerateSingleRAB.generateSingleRABResourceData(
+                    selectTree,
+                  )
+                  |> StateLogicService.getStateToGetData;
 
-                MainEditorAssetTreeTool.Select.selectFolderNode(
-                  ~nodeId=addedFolderNodeId1,
-                  (),
-                );
-
-                MainEditorAssetUploadTool.loadOneTexture(
-                  ~imgName="image1.png",
-                  ~imgSrc=Base64Tool.buildFakeBase64_1(),
-                  (),
-                )
-                |> then_(uploadedTextureNodeId1 =>
-                     MainEditorAssetUploadTool.loadOneTexture(
-                       ~imgName="image2.png",
-                       ~imgSrc=Base64Tool.buildFakeBase64_2(),
-                       (),
-                     )
-                     |> then_(uploadedTextureNodeId2 => {
-                          MainEditorLightMaterialForAssetTool.dragAssetTextureToMap(
-                            ~currentNodeId=addedMaterialNodeId2,
-                            ~textureNodeId=uploadedTextureNodeId2,
-                            ~material=
-                              MainEditorAssetMaterialNodeTool.getMaterialComponent(
-                                ~nodeId=addedMaterialNodeId2,
-                                (),
-                              ),
-                            (),
-                          );
-
-                          let selectTree =
-                            HeaderAssetBundleTool.GenerateSingleRAB.buildSelectTreeForGenerateSingleRAB
-                            |> StateLogicService.getStateToGetData
-                            |> SelectTreeTool.setSelectForSelectTree(
-                                 true,
-                                 MainEditorAssetMaterialNodeTool.getMaterialName(
-                                   ~nodeId=addedMaterialNodeId2,
-                                   (),
-                                 ),
-                               )
-                            |> SelectTreeTool.setSelectForSelectTree(
-                                 true,
-                                 MainEditorAssetTextureNodeTool.getTextureName(
-                                   ~nodeId=uploadedTextureNodeId1,
-                                   (),
-                                 ),
-                               );
-
-                          let (
-                            basicMaterials,
-                            lightMaterials,
-                            textures,
-                            geometrys,
-                            scriptEventFunctionDataArr,
-                            scriptAttributeDataArr,
-                            imageDataMap,
-                          ) =
-                            HeaderAssetBundleTool.GenerateSingleRAB.generateSingleRABResourceData(
-                              selectTree,
-                            )
-                            |> StateLogicService.getStateToGetData;
-
-                          let editorState = StateEditorService.getState();
-                          (lightMaterials, textures)
-                          |> expect
-                          == (
-                               [|
-                                 MainEditorAssetMaterialNodeTool.getMaterialComponent(
-                                   ~nodeId=addedMaterialNodeId2,
-                                   (),
-                                 ),
-                               |],
-                               [|
-                                 HeaderAssetBundleTool.GenerateSingleRAB.buildTextureData(
-                                   MainEditorAssetTextureNodeTool.getTextureComponent(
-                                     uploadedTextureNodeId1,
-                                     editorState,
-                                   ),
-                                   MainEditorAssetTextureNodeTool.getTextureImageDataIndex(
-                                     uploadedTextureNodeId1,
-                                     editorState,
-                                   ),
-                                 ),
-                                 HeaderAssetBundleTool.GenerateSingleRAB.buildTextureData(
-                                   MainEditorAssetTextureNodeTool.getTextureComponent(
-                                     uploadedTextureNodeId2,
-                                     editorState,
-                                   ),
-                                   MainEditorAssetTextureNodeTool.getTextureImageDataIndex(
-                                     uploadedTextureNodeId2,
-                                     editorState,
-                                   ),
-                                 ),
-                               |],
-                             )
-                          |> resolve;
-                        })
-                   );
-              },
-            )
-          );
+                basicMaterials |> expect == [||];
+              })
+            );
+          });
 
           describe("test resource data->geometrys", () =>
             testPromise("test", () =>

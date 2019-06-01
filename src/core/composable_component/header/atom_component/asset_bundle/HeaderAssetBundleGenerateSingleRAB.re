@@ -116,18 +116,6 @@ module Method = {
                 let value = ValueNodeSelectTreeService.getValue(nodeData);
 
                 switch (ValueNodeSelectTreeService.getType(nodeData)) {
-                | "texture" => (
-                    basicMaterials,
-                    lightMaterials,
-                    _addResourceData(
-                      textures,
-                      value,
-                      HeaderAssetBundleType.convertValueToTextureData,
-                    ),
-                    geometrys,
-                    scriptEventFunctionDataArr,
-                    scriptAttributeDataArr,
-                  )
                 | "basicMaterial" => (
                     _addResourceData(basicMaterials, value, value =>
                       value
@@ -142,7 +130,7 @@ module Method = {
                   )
                 | "lightMaterial" => (
                     basicMaterials,
-                    _addResourceData(basicMaterials, value, value =>
+                    _addResourceData(lightMaterials, value, value =>
                       value
                       |> HeaderAssetBundleType.convertValueToMaterialData
                       |> _getMaterialComponentFromMaterialData
