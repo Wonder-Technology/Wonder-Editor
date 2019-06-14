@@ -43,6 +43,39 @@ let _ =
           ),
         (),
       );
+      MainEditorSceneTool.initInspectorEngineState(
+        ~sandbox,
+        ~isInitJob=false,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+            ~initPipelines=
+              {|
+             [
+              {
+                "name": "default",
+                "jobs": [
+                    {"name": "init_inspector_engine" }
+                ]
+              }
+            ]
+             |},
+            ~initJobs=
+              {|
+             [
+                {"name": "init_inspector_engine" }
+             ]
+             |},
+            (),
+          ),
+        (),
+      );
+
+      StateInspectorEngineService.unsafeGetState()
+      |> MainUtils._handleInspectorEngineState
+      |> StateInspectorEngineService.setState
+      |> ignore;
+
+      CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
 
       MainEditorAssetTool.buildFakeFileReader();
       MainEditorAssetTool.buildFakeImage();
@@ -53,11 +86,7 @@ let _ =
 
       LoadTool.buildFakeLoadImage(.);
 
-      EventListenerTool.buildFakeDom()
-      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-
       MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree() |> ignore;
-
       MainEditorSceneTool.prepareScene(sandbox);
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -101,16 +130,16 @@ let _ =
 
              (
                geometry
-               |> GeometryEngineService.getGeometryVertices(_, engineState)
+               |> GeometryEngineService.unsafeGetGeometryVertices(_, engineState)
                |> Js.Typed_array.Float32Array.length,
                geometry
-               |> GeometryEngineService.getGeometryNormals(_, engineState)
+               |> GeometryEngineService.unsafeGetGeometryNormals(_, engineState)
                |> Js.Typed_array.Float32Array.length,
                geometry
-               |> GeometryEngineService.getGeometryTexCoords(_, engineState)
+               |> GeometryEngineService.unsafeGetGeometryTexCoords(_, engineState)
                |> Js.Typed_array.Float32Array.length,
                geometry
-               |> GeometryEngineService.getGeometryIndices16(_, engineState)
+               |> GeometryEngineService.unsafeGetGeometryIndices16(_, engineState)
                |> Js.Typed_array.Uint16Array.length,
              )
              |> expect == (72, 72, 48, 36)

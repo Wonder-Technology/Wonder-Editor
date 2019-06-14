@@ -21,11 +21,7 @@ exports[`material inspector test rename material if type is basicMaterial, renam
           className="item-header"
           title="material's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -35,7 +31,7 @@ exports[`material inspector test rename material if type is basicMaterial, renam
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="New Material"
+            value="NoName Material"
           />
         </div>
       </article>
@@ -46,11 +42,7 @@ exports[`material inspector test rename material if type is basicMaterial, renam
           className="item-header"
           title="material's type"
         >
-          <span
-            className=""
-          >
-            Type
-          </span>
+          Type
         </div>
         <div
           className="item-content"
@@ -133,11 +125,7 @@ exports[`material inspector test rename material if type is lightMaterial, renam
           className="item-header"
           title="material's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -158,11 +146,7 @@ exports[`material inspector test rename material if type is lightMaterial, renam
           className="item-header"
           title="material's type"
         >
-          <span
-            className=""
-          >
-            Type
-          </span>
+          Type
         </div>
         <div
           className="item-content"

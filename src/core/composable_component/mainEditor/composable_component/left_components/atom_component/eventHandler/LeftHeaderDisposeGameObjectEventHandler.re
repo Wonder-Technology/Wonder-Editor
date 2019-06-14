@@ -30,8 +30,6 @@ module CustomEventHandler = {
                     engineState,
                   );
 
-             editorState |> StateEditorService.setState |> ignore;
-
              let engineState = engineState |> JobEngineService.execDisposeJob;
 
              let engineState =
@@ -40,8 +38,6 @@ module CustomEventHandler = {
                    engineState,
                  ) :
                  engineState;
-
-             let editorState = StateEditorService.getState();
 
              let editorState =
                SceneTreeEditorService.removeIsShowChildren(
@@ -52,7 +48,7 @@ module CustomEventHandler = {
              editorState |> StateEditorService.setState |> ignore;
 
              let engineState =
-               StateLogicService.refreshEngineStateAndReturnEngineState(
+               StateLogicService.renderEngineStateAndReturnEngineState(
                  engineState,
                );
 

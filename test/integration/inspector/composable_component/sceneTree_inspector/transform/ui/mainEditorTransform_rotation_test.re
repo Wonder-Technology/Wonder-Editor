@@ -137,6 +137,66 @@ let _ =
             |> ReactTestTool.createSnapshotAndMatch;
           },
         );
+
+        describe(
+          {|
+        set rotation to (x:0.0, y:91.0, z:0.0);
+        set rotation to (x:0.0, y:96.0, z:0.0);
+          |},
+          () => {
+            let _prepareAndExec = () => {
+              let currentGameObjectTransform =
+                GameObjectTool.getCurrentSceneTreeNodeTransform();
+              let x = 0.;
+              let y = 91.;
+              let z = 0.;
+
+              MainEditorTransformTool.changeRotationX(
+                currentGameObjectTransform,
+                x,
+              );
+              MainEditorTransformTool.changeRotationY(
+                currentGameObjectTransform,
+                y,
+              );
+              MainEditorTransformTool.changeRotationZ(
+                currentGameObjectTransform,
+                z,
+              );
+
+              MainEditorTransformTool.changeRotationY(
+                currentGameObjectTransform,
+                96.,
+              );
+
+              currentGameObjectTransform;
+            };
+
+            test(
+              "inspector->transform->rotation should show (0.0, 96.0, 0.0);",
+              () => {
+              let currentGameObjectTransform = _prepareAndExec();
+
+              BuildComponentTool.buildMainEditorTransformComponent(
+                TestTool.buildEmptyAppState(),
+                currentGameObjectTransform,
+              )
+              |> ReactTestTool.createSnapshotAndMatch;
+            });
+            test(
+              "engineState->transform->rotation should be (180.0, 84.0, 180.0);",
+              () => {
+              let currentGameObjectTransform = _prepareAndExec();
+
+              TransformEngineService.getLocalEulerAngles(
+                currentGameObjectTransform,
+              )
+              |> StateLogicService.getEngineStateToGetData
+              |> Vector3Service.truncate(3)
+              |> expect == (180., 84., 180.);
+            });
+          },
+        );
       });
     });
   });

@@ -18,6 +18,40 @@ let _ =
 
       MainEditorSceneTool.initState(~sandbox, ());
 
+      MainEditorSceneTool.initInspectorEngineState(
+        ~sandbox,
+        ~isInitJob=false,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+            ~initPipelines=
+              {|
+             [
+              {
+                "name": "default",
+                "jobs": [
+                    {"name": "init_inspector_engine" }
+                ]
+              }
+            ]
+             |},
+            ~initJobs=
+              {|
+             [
+                {"name": "init_inspector_engine" }
+             ]
+             |},
+            (),
+          ),
+        (),
+      );
+
+      StateInspectorEngineService.unsafeGetState()
+      |> MainUtils._handleInspectorEngineState
+      |> StateInspectorEngineService.setState
+      |> ignore;
+
+      CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
+
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
@@ -37,6 +71,10 @@ let _ =
             let _addNoTexCoordGeometryWDBGameObject = () => {
               let editorState = StateEditorService.getState();
               let engineState = StateEngineService.unsafeGetState();
+              let (editorState, newImageDataIndex) =
+                IndexAssetEditorService.generateImageDataMapIndex(
+                  editorState,
+                );
 
               let (engineState, gameObject, _, _, name) =
                 GeometryToolEngine.createGameObjectAndSetPointData(
@@ -53,6 +91,7 @@ let _ =
                   ~nodeId=id1,
                   ~name,
                   ~gameObject,
+                  ~imageDataIndex=newImageDataIndex,
                   (),
                 );
 
@@ -161,8 +200,8 @@ let _ =
                 newGameObjectGeometry,
               )
               |> StateLogicService.getEngineStateToGetData
-              |>
-              expect == MainEditorGeometryTool.getDefaultSphereGeometryName();
+              |> expect
+              == MainEditorGeometryTool.getDefaultSphereGeometryName();
             },
           );
           test(

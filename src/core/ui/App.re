@@ -3,8 +3,10 @@ open DomHelper;
 module Method = {
   /* let getStorageParentKey = () => "userExtension";
      let addExtension = text =>
+
        /* todo use extension names instead of the name */
        AppExtensionUtils.setExtension(getStorageParentKey(), text); */
+
 
   let showComponent =
       (
@@ -30,6 +32,7 @@ module Method = {
                }
            )
          } */
+
 
         <div className="wonder-app-message" id="appMessage" />
         {

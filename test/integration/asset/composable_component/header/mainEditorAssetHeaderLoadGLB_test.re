@@ -28,6 +28,9 @@ let _ =
       sandbox := createSandbox();
 
       MainEditorSceneTool.initState(~sandbox, ());
+
+      MainEditorAssetHeaderLoadTool.prepareInspectorCanvas(sandbox);
+
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         MainEditorAssetTool.initAssetTree,

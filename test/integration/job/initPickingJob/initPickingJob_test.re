@@ -222,12 +222,12 @@ let _ =
                   let engineState =
                     engineState
                     |> GeometryEngineService.setGeometryVertices(
-                         geometry,
                          vertices1,
+                         geometry,
                        )
                     |> GeometryEngineService.setGeometryIndices16(
-                         geometry,
                          indices1,
+                         geometry,
                        );
 
                   InitPickingJobTool.createGameObject(geometry, engineState);
@@ -295,7 +295,6 @@ let _ =
             let (editorState, engineState) =
               (editorState, engineState)
               |> GeometryLogicService.setGeometryPoints(
-                   geometry,
                    Js.Typed_array.Float32Array.make([|
                      2.5,
                      0.,
@@ -307,11 +306,12 @@ let _ =
                      0.,
                      0.,
                    |]),
+                   geometry,
                    GeometryEngineService.setGeometryVertices,
                  )
               |> GeometryLogicService.setGeometryPoints(
-                   geometry,
                    Js.Typed_array.Uint16Array.make([|0, 1, 2|]),
+                   geometry,
                    GeometryEngineService.setGeometryIndices16,
                  );
 
@@ -627,9 +627,43 @@ let _ =
 
           _prepare();
 
+          CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
+
           MainEditorSceneTool.prepareScene(sandbox);
 
           MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
+          |> ignore;
+
+          MainEditorSceneTool.initInspectorEngineState(
+            ~sandbox,
+            ~isInitJob=false,
+            ~noWorkerJobRecord=
+              NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                ~initPipelines=
+                  {|
+           [
+            {
+              "name": "default",
+              "jobs": [
+                  {"name": "init_inspector_engine" }
+              ]
+            }
+          ]
+           |},
+                ~initJobs=
+                  {|
+           [
+              {"name": "init_inspector_engine" }
+           ]
+           |},
+                (),
+              ),
+            (),
+          );
+
+          StateInspectorEngineService.unsafeGetState()
+          |> MainUtils._handleInspectorEngineState
+          |> StateInspectorEngineService.setState
           |> ignore;
         });
 
@@ -997,12 +1031,12 @@ let _ =
             let engineState =
               engineState
               |> GeometryEngineService.setGeometryVertices(
-                   geometry,
                    vertices1,
+                   geometry,
                  )
               |> GeometryEngineService.setGeometryIndices32(
-                   geometry,
                    indices1,
+                   geometry,
                  );
 
             InitPickingJobTool.createGameObject(geometry, engineState);

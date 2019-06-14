@@ -6,7 +6,7 @@ return new Blob([arrayBuffer], {type: type_})
   |}
 ];
 
-let createObjectURL = [%raw
+let createObjectURL: blob => string = [%raw
   blob => {|
      return URL.createObjectURL( blob )
     |}

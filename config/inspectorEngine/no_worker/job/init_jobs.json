@@ -40,5 +40,8 @@
     },
     {
         "name": "init_texture"
+    },
+    {
+        "name": "init_event_for_editor_inspector"
     }
 ]

@@ -1,5 +1,5 @@
 var dataCacheName = 'wonder-editor';
-var cacheName = 'wonder-editor-cache-1.0.2';
+var cacheName = 'wonder-editor-cache-1.1.0';
 var filesToCache = [
     './',
     './index.html',
@@ -30,6 +30,10 @@ var filesToCache = [
     './public/img/null.png',
     './public/img/wdb.png',
     './public/img/mat.png',
+    './public/img/geo.png',
+    './public/img/scriptEventFunction.png',
+    './public/img/scriptAttribute.png',
+    './public/img/assetBundle.png',
     './public/img/assetPackage.png',
     './public/img/close.png',
     './public/img/select.png',

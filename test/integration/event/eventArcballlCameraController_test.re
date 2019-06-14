@@ -62,7 +62,7 @@ let _ =
     let _prepareMouseEventForTestKeyboardEvent =
         (~sandbox, ~bindEventFunc, ()) => {
       _prepareMouseEvent(~sandbox, ());
-      MouseEventTool.prepareForPointerLock(sandbox);
+      MouseEventTool.prepareForPointerLock(~sandbox, ());
 
       let engineState = StateEngineService.unsafeGetState();
       let (
@@ -105,7 +105,7 @@ let _ =
     };
 
     let _prepareForPointerLock = sandbox =>
-      MouseEventTool.prepareForPointerLock(sandbox);
+      MouseEventTool.prepareForPointerLock(~sandbox, ());
 
     let _testPointDragStartEvent =
         (sandbox, (pageX, pageY, eventButton), (judgeFunc, bindEventFunc)) => {
@@ -224,6 +224,59 @@ let _ =
             )
           );
         });
+      });
+
+      describe("test bind point scale start event", () => {
+        let _testPointScaleEvent =
+            (sandbox, (wheelDelta, eventButton), (judgeFunc, bindEventFunc)) => {
+          _prepareMouseEvent(~sandbox, ());
+
+          let engineState = StateEngineService.unsafeGetState();
+          let (engineState, _, _, (cameraController, _, _)) =
+            ArcballCameraControllerToolEngine.createGameObject(engineState);
+
+          let engineState = bindEventFunc(cameraController, engineState);
+
+          engineState |> StateEngineService.setState |> ignore;
+
+          PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
+          StateLogicService.getAndSetEngineState(
+            MainUtils._handleEngineState,
+          );
+
+          EventTool.triggerDomEvent(
+            "mousewheel",
+            EventTool.getBody(),
+            MouseEventTool.buildMouseDomEvent(
+              ~wheelDelta,
+              ~which=eventButton,
+              (),
+            ),
+          );
+          EventTool.restore();
+
+          judgeFunc(cameraController);
+        };
+
+        let _test = (sandbox, (wheelDelta, eventButton), judgeFunc) =>
+          _testPointScaleEvent(
+            sandbox,
+            (wheelDelta, eventButton),
+            (
+              judgeFunc,
+              ArcballCameraControllerLogicService.bindArcballCameraControllerEventForSceneView,
+            ),
+          );
+
+        test("if mouse button isn't right button, still trigger", () =>
+          _test(sandbox, (Js.Nullable.return(200), 1), cameraController =>
+            ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
+              cameraController,
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == 9.
+          )
+        );
       });
 
       describe("test bind keydown event", () => {
@@ -418,4 +471,71 @@ let _ =
         });
       });
     });
+
+    describe("test bind for inspector", () =>
+      describe("test bind point drag start event", () => {
+        let _testPointDragStartEvent =
+            (
+              sandbox,
+              (pageX, pageY, eventButton),
+              (judgeFunc, bindEventFunc),
+            ) => {
+          InspectorCanvasEventTool.prepareMouseEvent(~sandbox, ());
+
+          let requestPointerLockStub =
+            MouseEventTool.prepareForPointerLock(
+              ~sandbox,
+              ~unsafeGetStateFunc=StateInspectorEngineService.unsafeGetState,
+              (),
+            );
+          let inspectorEngineState =
+            StateInspectorEngineService.unsafeGetState();
+          let (inspectorEngineState, _, _, (cameraController, _, _)) =
+            ArcballCameraControllerToolEngine.createGameObject(
+              inspectorEngineState,
+            );
+
+          let inspectorEngineState =
+            bindEventFunc(cameraController, inspectorEngineState);
+
+          inspectorEngineState
+          |> StateInspectorEngineService.setState
+          |> ignore;
+
+          StateLogicService.getAndSetEngineState(
+            MainUtils._handleEngineState,
+          );
+
+          EventTool.triggerDomEvent(
+            "mousedown",
+            EventTool.getBody(),
+            MouseEventTool.buildMouseDomEvent(
+              ~pageX,
+              ~pageY,
+              ~which=eventButton,
+              (),
+            ),
+          );
+          EventTool.restore();
+
+          judgeFunc(requestPointerLockStub);
+        };
+
+        let _test = (sandbox, (pageX, pageY, eventButton), judgeFunc) =>
+          _testPointDragStartEvent(
+            sandbox,
+            (pageX, pageY, eventButton),
+            (
+              judgeFunc,
+              ArcballCameraControllerLogicService.bindArcballCameraControllerEventForInspector,
+            ),
+          );
+
+        test("if mouse button isn't right button, still trigger", () =>
+          _test(sandbox, (10, 20, 1), requestPointerLockStub =>
+            requestPointerLockStub |> expect |> toCalledOnce
+          )
+        );
+      })
+    );
   });

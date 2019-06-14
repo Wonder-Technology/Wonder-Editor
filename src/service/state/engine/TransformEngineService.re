@@ -61,7 +61,12 @@ let getGameObjectByTransform = Wonderjs.TransformAPI.unsafeGetTransformGameObjec
 
 let getLocalRotation = Wonderjs.TransformAPI.getTransformLocalRotation;
 
-let setLocalRotation = Wonderjs.TransformAPI.setTransformLocalRotation;
+let setLocalRotation = (value, component, engineState) =>
+  Wonderjs.TransformAPI.setTransformLocalRotation(
+    component,
+    value,
+    engineState,
+  );
 
 let getRotation = Wonderjs.TransformAPI.getTransformRotation;
 

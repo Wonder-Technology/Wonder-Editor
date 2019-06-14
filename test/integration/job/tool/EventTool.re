@@ -10,8 +10,6 @@ let _isHostMethod = [%raw
 
 let _extend = [%raw
   (destination, source) => {|
-                var property = "";
-
                 var target = null;
                 Object.defineProperty(destination, "target", {
                     configurable: true,
@@ -24,7 +22,7 @@ let _extend = [%raw
                     }
                 })
 
-                for (property in source) {
+                for (let property in source) {
                     destination[property] = source[property];
                 }
                 return destination;
@@ -277,3 +275,9 @@ let getCanvas = () =>
 let buildCanvasTarget = () => {"tagName": "CANVAS"};
 
 let buildBodyTarget = () => {"tagName": "BODY"};
+
+let triggerFirstMouseDragOverEvent = mouseEvent => {
+  triggerDomEvent("mousemove", getBody(), mouseEvent);
+  triggerDomEvent("mousemove", getBody(), mouseEvent);
+  triggerDomEvent("mousemove", getBody(), mouseEvent);
+};

@@ -50,7 +50,7 @@ let render =
             | Some(title) => title
             }
           }>
-          <span className=""> {DomHelper.textEl(label)} </span>
+          {DomHelper.textEl(label)}
         </div>
       }
     }

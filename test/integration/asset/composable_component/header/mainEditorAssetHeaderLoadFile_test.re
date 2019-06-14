@@ -26,9 +26,7 @@ let _ =
 
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
-
-      EventListenerTool.buildFakeDom()
-      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+      MainEditorAssetHeaderLoadTool.prepareInspectorCanvas(sandbox);
     });
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
@@ -87,8 +85,8 @@ let _ =
         );
 
         describe("test should add into nodeMap", () => {
-          describe("test imageNodeMap", () => {
-            testPromise("add image base64 to imageNodeMap", () => {
+          describe("test imageDataMap", () => {
+            testPromise("add image base64 to imageDataMap", () => {
               MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
               |> ignore;
               let imgBase64 = "newImgBase64";
@@ -116,7 +114,7 @@ let _ =
                  });
             });
             testPromise(
-              "test show texture image, get it base64 from imageNodeMap", () => {
+              "test show texture image, get it base64 from imageDataMap", () => {
               MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree()
               |> ignore;
               let imgBase64 = "newImgBase64";
@@ -265,7 +263,7 @@ let _ =
 
           LoadAssetUtils._handleAssetSpecificFuncByTypeSync(
             _getErrorTypeFile(),
-            (() => (), () => (), () => (), () => ()),
+            (() => (), () => (), () => (), () => (), () => ()),
           );
 
           ConsoleTool.judgeError("type is error", errorStub);

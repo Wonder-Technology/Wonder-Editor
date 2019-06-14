@@ -1,0 +1,249 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`header import package test import material assets fix bug 
+          1.add material asset m1;
+          2.export;
+          3.import;
+          4.change scecne tree gameObject->material component to m1;
+          5.change m1->type to BasicMaterial
+          6.change m1->type to LightMaterial
+
+          MaterialInspector should be LightMaterial
+           1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <article
+      className="wonder-material-inspector"
+    >
+      <h1>
+        Material
+      </h1>
+      <hr />
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="material's name"
+        >
+          Name
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="NoName Material"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+          title="material's type"
+        >
+          Type
+        </div>
+        <div
+          className="item-content"
+        >
+          <select
+            onChange={[Function]}
+            value="1"
+          >
+            <option
+              value="0"
+            >
+              basic_material
+            </option>
+            <option
+              value="1"
+            >
+              light_material
+            </option>
+          </select>
+        </div>
+      </article>
+      <article
+        className="wonder-light-material"
+      >
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+            title="material's diffuse color"
+          >
+            Diffuse Color
+          </div>
+          <div
+            className="item-content item-color"
+          >
+            <div
+              className="color-hex"
+              onClick={[Function]}
+              style={
+                Object {
+                  "background": "#ffffff",
+                }
+              }
+            />
+            <div
+              className="color-select"
+              onClick={[Function]}
+            >
+              <img
+                src="./public/img/color.png"
+              />
+            </div>
+          </div>
+        </article>
+        <article
+          className="inspector-item"
+        >
+          <div
+            className="item-header"
+            title="material's diffuse map"
+          >
+            Diffuse Map
+          </div>
+          <div
+            className="item-content item-texture"
+          >
+            <div
+              className="texture-img"
+              onClick={[Function]}
+              style={
+                Object {
+                  "opacity": "1",
+                }
+              }
+            >
+              <div
+                className="img-dragBg"
+                onDragEnter={[Function]}
+                onDragLeave={[Function]}
+                onDragOver={[Function]}
+                onDrop={[Function]}
+              />
+            </div>
+            <button
+              className="texture-remove"
+              onClick={[Function]}
+            >
+              Remove
+            </button>
+          </div>
+        </article>
+        <article
+          className="inspector-item wonder-float-input"
+        >
+          <div
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
+            title="material's shininess"
+          >
+            Shininess
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="32"
+            />
+          </div>
+        </article>
+      </article>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`header import package test import material assets should add material assets to asset tree 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="object_url0"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Material
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="object_url1"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        New Material 1
+      </span>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`header import package test import texture assets should add texture assets to asset tree 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="object_url0"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        loadImg
+      </span>
+    </div>
+  </article>
+</article>
+`;

@@ -3,7 +3,8 @@ type navType =
   | File
   | Edit
   | Publish
-  | Help;
+  | Help
+  | AssetBundle;
 
 type state = {
   isSelectNav: bool,
@@ -97,6 +98,13 @@ let render =
         isHelpNav={state.currentSelectNav === Help}
         toggleShowNavFunc={() => send(ToggleShowNav(Help))}
         hoverNavFunc={() => send(HoverNav(Help))}
+      />
+      <HeaderAssetBundle
+        uiState
+        dispatchFunc
+        isAssetBundleNav={state.currentSelectNav === AssetBundle}
+        toggleShowNavFunc={() => send(ToggleShowNav(AssetBundle))}
+        hoverNavFunc={() => send(HoverNav(AssetBundle))}
       />
       <HeaderNotice uiState dispatchFunc />
     </div>

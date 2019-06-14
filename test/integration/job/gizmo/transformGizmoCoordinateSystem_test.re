@@ -67,7 +67,7 @@ let _ =
                 ~pageY=200,
                 (),
               );
-              EventTransformGizmosTool.triggerMouseMove(
+              EventTransformGizmosTool.triggerFirstMouseDragOverEvent(
                 ~sandbox,
                 ~pageX=250 + 40 + 10,
                 ~pageY=200,
@@ -98,7 +98,7 @@ let _ =
                 ~pageY=194,
                 (),
               );
-              EventTransformGizmosTool.triggerMouseMove(
+              EventTransformGizmosTool.triggerFirstMouseDragOverEvent(
                 ~sandbox,
                 ~pageX=264 + 10,
                 ~pageY=194 + 10,
@@ -141,7 +141,7 @@ let _ =
                 ~pageY=172,
                 (),
               );
-              EventTransformGizmosTool.triggerMouseMove(
+              EventTransformGizmosTool.triggerFirstMouseDragOverEvent(
                 ~sandbox,
                 ~pageX=277 + 10,
                 ~pageY=172,
@@ -181,7 +181,7 @@ let _ =
                 ~pageY=162,
                 (),
               );
-              EventTransformGizmosTool.triggerMouseMove(
+              EventTransformGizmosTool.triggerFirstMouseDragOverEvent(
                 ~sandbox,
                 ~pageX=283 + 5,
                 ~pageY=162,
@@ -223,7 +223,7 @@ let _ =
                 ~pageY=182,
                 (),
               );
-              EventTransformGizmosTool.triggerMouseMove(
+              EventTransformGizmosTool.triggerFirstMouseDragOverEvent(
                 ~sandbox,
                 ~pageX=268 + 10,
                 ~pageY=182,
@@ -254,7 +254,7 @@ let _ =
                 ~pageY=199,
                 (),
               );
-              EventTransformGizmosTool.triggerMouseMove(
+              EventTransformGizmosTool.triggerFirstMouseDragOverEvent(
                 ~sandbox,
                 ~pageX=240 + 10,
                 ~pageY=199 + 10,
@@ -294,7 +294,7 @@ let _ =
                 ~pageY=206,
                 (),
               );
-              EventTransformGizmosTool.triggerMouseMove(
+              EventTransformGizmosTool.triggerFirstMouseDragOverEvent(
                 ~sandbox,
                 ~pageX=220,
                 ~pageY=206 + 10,
@@ -334,7 +334,7 @@ let _ =
                 ~pageY=162,
                 (),
               );
-              EventTransformGizmosTool.triggerMouseMove(
+              EventTransformGizmosTool.triggerFirstMouseDragOverEvent(
                 ~sandbox,
                 ~pageX=283 + 5,
                 ~pageY=162,

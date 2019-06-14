@@ -11,9 +11,39 @@ module Method = {
       |> StateHistoryService.getAndRefreshStateForHistory :
       ();
 
+  /* let _handleNewScene = engineState =>
+       {
+
+         let engineState = engineState
+       |> SceneEngineService.disposeSceneAllChildrenKeepOrderRemoveGeometryRemoveMaterial
+       |> JobEngineService.execDisposeJob;
+
+
+
+
+     }; */
+
   let buildFileComponentSelectNav =
       (send, uiState, dispatchFunc, languageType) =>
     <div className="item-content">
+      <div
+        className="content-section"
+        onClick={
+          _e =>
+            HeaderFileNewSceneUtils.handleNewScene(dispatchFunc)
+            |> StateLogicService.getAndSetState
+        }>
+        <span className="section-header">
+          {
+            DomHelper.textEl(
+              LanguageUtils.getHeaderLanguageDataByType(
+                "file-new-scene",
+                languageType,
+              ),
+            )
+          }
+        </span>
+      </div>
       <div
         className="content-section"
         onClick={_e => AllHistoryService.handleUndo(uiState, dispatchFunc)}>

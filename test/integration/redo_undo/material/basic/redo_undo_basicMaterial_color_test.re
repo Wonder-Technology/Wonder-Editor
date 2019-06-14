@@ -15,11 +15,11 @@ let _ =
 
     let _changeColorAndPushUndoStack = (materialComponent, color) => {
       let sourceColor =
-        MainEditorBasicMaterialTool.getColor(materialComponent);
+        MainEditorBasicMaterialForGameObjectTool.getColor(materialComponent);
 
-      MainEditorBasicMaterialTool.changeColor(materialComponent, color);
+      MainEditorBasicMaterialForGameObjectTool.changeColor(materialComponent, color);
 
-      MainEditorBasicMaterialTool.closeColorPicker(
+      MainEditorBasicMaterialForGameObjectTool.closeColorPicker(
         ~material=materialComponent,
         ~color=sourceColor,
         (),
@@ -54,7 +54,7 @@ let _ =
       )
       |> StateLogicService.getAndSetEditorState;
 
-      MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
+      MainEditorBasicMaterialForGameObjectTool.changeMaterialTypeToBeBasicMaterial();
     };
 
     let _afterEach = () =>

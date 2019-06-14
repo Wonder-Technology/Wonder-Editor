@@ -1,6 +1,6 @@
 {
     "debug": {
-        "is_debug": true,
+        "is_debug": false,
         "show_message": true
     },
     "redo_undo": {

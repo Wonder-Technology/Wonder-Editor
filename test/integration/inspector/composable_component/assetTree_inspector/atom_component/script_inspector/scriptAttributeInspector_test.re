@@ -122,7 +122,7 @@ let _ =
           addedNodeId,
           (
             fieldName,
-            ScriptAttributeInspectorTool.buildFieldJsObjStr(
+            ScriptAttributeInspectorTool.buildFieldJsObj(
               ~type_="float",
               ~defaultValue=0.1,
             ),
@@ -142,37 +142,6 @@ let _ =
            );
       });
 
-      describe("handle error", () =>
-        test("if data is wrong, error", () => {
-          let error =
-            createMethodStubWithJsObjSandbox(
-              sandbox,
-              ConsoleTool.console,
-              "error",
-            );
-          let assetTreeData =
-            MainEditorAssetTreeTool.BuildAssetTree.buildEmptyAssetTree();
-          let addedNodeId = MainEditorAssetIdTool.getNewAssetId();
-          MainEditorAssetHeaderOperateNodeTool.addScriptAttribute();
-          ScriptAttributeInspectorTool.addDefaultField(
-            ~sandbox,
-            ~nodeId=addedNodeId,
-            (),
-          );
-
-          let (fieldName, field) =
-            ScriptAttributeInspectorTool.getAttributeEntries(addedNodeId)
-            |> StateLogicService.getEditorState
-            |> ArrayService.unsafeGetFirst;
-          ScriptAttributeInspectorTool.updateScriptAttributeNodeByReplaceFieldData(
-            addedNodeId,
-            (fieldName, "aaa"),
-          );
-
-          error |> expect |> toCalled;
-        })
-      );
-
       describe("test update script attribute in all script components", () => {
         beforeEach(() =>
           ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.createDefaultSceneAndAddScriptComponent(
@@ -190,7 +159,7 @@ let _ =
             addedNodeId,
             (
               fieldName,
-              ScriptAttributeInspectorTool.buildFieldJsObjStr(
+              ScriptAttributeInspectorTool.buildFieldJsObj(
                 ~type_=ScriptAttributeInspectorTool.getDefaultFieldType(),
                 ~defaultValue=0.1,
               ),
@@ -221,7 +190,7 @@ let _ =
               addedNodeId,
               (
                 fieldName,
-                ScriptAttributeInspectorTool.buildFieldJsObjStr(
+                ScriptAttributeInspectorTool.buildFieldJsObj(
                   ~type_="int",
                   ~defaultValue=0,
                 ),
@@ -249,7 +218,7 @@ let _ =
               addedNodeId,
               (
                 fieldName,
-                ScriptAttributeInspectorTool.buildFieldJsObjStr(
+                ScriptAttributeInspectorTool.buildFieldJsObj(
                   ~type_="int",
                   ~defaultValue=0,
                 ),
@@ -492,4 +461,33 @@ let _ =
         })
       );
     });
+
+    describe("test rename attribute", () =>
+      describe("test update script attribute in all script components", () => {
+        beforeEach(() =>
+          ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.createDefaultSceneAndAddScriptComponent(
+            sandbox,
+          )
+        );
+
+        test("test update one script component", () => {
+          let (script, addedNodeId, fieldName) =
+            ScriptAttributeInspectorTool.TestUpdateScriptAttributeInAllScriptComponents.prepareForOneScriptComponent(
+              sandbox,
+            );
+          let newAttributeName = "zzz";
+
+          AssetTreeInspectorTool.Rename.renameAssetScriptAttributeNode(
+            ~name=newAttributeName,
+            ~nodeId=addedNodeId,
+            (),
+          );
+
+          ScriptToolEngine.getScriptAttributeEntries(script, newAttributeName)
+          |> StateLogicService.getEngineStateToGetData
+          |> Js.Array.length
+          |> expect == 1;
+        });
+      })
+    );
   });

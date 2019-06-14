@@ -5,7 +5,7 @@ exports[`redo_undo: asset script attribute->add default field test redo operate 
   className="wonder-scriptAttribute-inspector"
 >
   <h1>
-    ScriptAttribute
+    Script Attribute
   </h1>
   <hr />
   <article
@@ -15,11 +15,7 @@ exports[`redo_undo: asset script attribute->add default field test redo operate 
       className="item-header"
       title="script attribute's name"
     >
-      <span
-        className="component-label"
-      >
-        Attribute Name
-      </span>
+      Name
     </div>
     <div
       className="item-content"
@@ -37,23 +33,36 @@ exports[`redo_undo: asset script attribute->add default field test redo operate 
     className="scriptAttribute-data"
   >
     <div
-      className="fields"
+      className="data-fields"
     >
-      <div
-        className="field"
+      <article
+        className="attributeBox-component"
       >
+        <div
+          className="component-header"
+        >
+          <div
+            className="header-title"
+          >
+            Attribute
+          </div>
+          <div
+            className="header-close"
+          >
+            <img
+              onClick={[Function]}
+              src="./public/img/close.png"
+            />
+          </div>
+        </div>
         <article
           className="inspector-item"
         >
           <div
             className="item-header"
-            title="script attribute's field's name"
+            title=""
           >
-            <span
-              className="component-label"
-            >
-              Field Name
-            </span>
+            Name
           </div>
           <div
             className="item-content"
@@ -67,25 +76,68 @@ exports[`redo_undo: asset script attribute->add default field test redo operate 
             />
           </div>
         </article>
-        <article
-          className="wonder-file-input"
+        <div
+          className="component-content"
         >
-          <button
-            onClick={[Function]}
+          <article
+            className="inspector-item"
           >
-            Set Field Data
-          </button>
-        </article>
-        <button
-          className="scriptAttribute-field-remove"
-          onClick={[Function]}
+            <div
+              className="item-header"
+              title="defines how textures are sampled when a texel is insufficient to cover a single pixel"
+            >
+              Type
+            </div>
+            <div
+              className="item-content"
+            >
+              <select
+                onChange={[Function]}
+                value="1"
+              >
+                <option
+                  value="0"
+                >
+                  Int
+                </option>
+                <option
+                  value="1"
+                >
+                  Float
+                </option>
+              </select>
+            </div>
+          </article>
+        </div>
+        <article
+          className="inspector-item wonder-float-input"
         >
-          Remove
-        </button>
-      </div>
+          <div
+            className="item-header component-label"
+            onMouseDown={[Function]}
+            onMouseMove={[Function]}
+            onMouseUp={[Function]}
+            title=""
+          >
+            Value
+          </div>
+          <div
+            className="item-content"
+          >
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="0."
+            />
+          </div>
+        </article>
+      </article>
     </div>
+    <hr />
     <button
-      className="addable-btn"
+      className="data-addable-btn"
       onClick={[Function]}
     >
       Add script attribute's field
@@ -99,7 +151,7 @@ exports[`redo_undo: asset script attribute->add default field test undo operate 
   className="wonder-scriptAttribute-inspector"
 >
   <h1>
-    ScriptAttribute
+    Script Attribute
   </h1>
   <hr />
   <article
@@ -109,11 +161,7 @@ exports[`redo_undo: asset script attribute->add default field test undo operate 
       className="item-header"
       title="script attribute's name"
     >
-      <span
-        className="component-label"
-      >
-        Attribute Name
-      </span>
+      Name
     </div>
     <div
       className="item-content"
@@ -131,10 +179,11 @@ exports[`redo_undo: asset script attribute->add default field test undo operate 
     className="scriptAttribute-data"
   >
     <div
-      className="fields"
+      className="data-fields"
     />
+    <hr />
     <button
-      className="addable-btn"
+      className="data-addable-btn"
       onClick={[Function]}
     >
       Add script attribute's field

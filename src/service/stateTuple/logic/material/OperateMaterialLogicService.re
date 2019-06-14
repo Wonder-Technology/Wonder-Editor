@@ -1,5 +1,8 @@
 open MaterialDataAssetType;
 
+let getDefaultSnapshotBase64 = () =>
+  ImageDataAssetService.getBase64ForWhiteImage();
+
 let getNewMaterilaName = () => "New Material";
 
 let getDefaultName = () => "NoName Material";

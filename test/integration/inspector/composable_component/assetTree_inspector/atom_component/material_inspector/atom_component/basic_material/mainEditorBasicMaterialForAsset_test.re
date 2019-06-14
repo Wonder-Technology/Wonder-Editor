@@ -32,21 +32,28 @@ let _ =
           (),
         );
 
-        let materialSphereBasicMaterial =
+        let (editorState, (inspectorEngineState, _)) =
           inspectorEngineState
           |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
                MaterialDataAssetType.BasicMaterial,
                newMaterialComponent,
-               (
-                 StateEditorService.getState(),
-                 StateEngineService.unsafeGetState(),
-               ),
-             )
+               StateEditorService.getState(),
+               StateEngineService.unsafeGetState(),
+             );
+
+        editorState |> StateEditorService.setState |> ignore;
+
+        let materialSphereBasicMaterial =
+          inspectorEngineState
           |> InspectorEngineTool.getMaterialSphereBasicMaterial(
                StateEditorService.getState(),
              );
 
-        (materialSphereBasicMaterial, newMaterialComponent);
+        (
+          materialSphereBasicMaterial,
+          newMaterialComponent,
+          addedMaterialNodeId,
+        );
       };
 
       beforeEach(() => {
@@ -87,7 +94,7 @@ let _ =
           MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode,
         );
 
-        MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
+        MainEditorBasicMaterialForGameObjectTool.changeMaterialTypeToBeBasicMaterial();
       });
 
       describe(
@@ -96,7 +103,11 @@ let _ =
         test("test change color", () => {
           let inspectorEngineState =
             StateInspectorEngineService.unsafeGetState();
-          let (materialSphereBasicMaterial, newMaterialComponent) =
+          let (
+            materialSphereBasicMaterial,
+            newMaterialComponent,
+            addedMaterialNodeId,
+          ) =
             _prepareMaterialSphere(inspectorEngineState);
           let newColor = {
             "hex": "#7df1e8",

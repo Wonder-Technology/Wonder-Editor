@@ -5,14 +5,19 @@ let getImgSrc = (imageDataIndex, editorState) =>
     ({blobObjectURL, base64}: ImageDataType.imageData) =>
       switch (blobObjectURL, base64) {
       | (Some(blobObjectURL), Some(_))
-      | (Some(blobObjectURL), None) =>
-        blobObjectURL |> Obj.magic |> Result.SameDataResult.success
-      | (None, Some(base64)) => base64 |> Result.SameDataResult.success
+      | (Some(blobObjectURL), None) => blobObjectURL |> Obj.magic
+      | (None, Some(base64)) => base64
       | (None, None) =>
-        (
-          "texture->source should has base64 or blobObjectURL data, but acutally not has",
-          ImageUtils.getNullImageSrc(),
-        )
-        |> Result.SameDataResult.fail
+        WonderLog.Log.error(
+          WonderLog.Log.buildErrorMessage(
+            ~title="getImgSrc",
+            ~description={j|blobObjectURL or base64 should exist|j},
+            ~reason="",
+            ~solution={j||j},
+            ~params={j||j},
+          ),
+        );
+
+        ImageUtils.getNullImageSrc();
       }
   );

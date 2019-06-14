@@ -1,3 +1,5 @@
+open InputType;
+
 type state = {
   inputValue: option(string),
   originValue: string,
@@ -5,41 +7,8 @@ type state = {
   canBeZero: bool,
 };
 
-type action =
-  | DragStart
-  | Change(option(string))
-  | Blur
-  | DragDrop;
-
 module Method = {
-  let _change = event => {
-    let inputVal =
-      ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
-
-    switch (inputVal) {
-    | "" => Change(Some(""))
-    | "-" => Change(Some("-"))
-    | value =>
-      switch (
-        [%re {|/^-?(0|[1-9][0-9]*)(\.[0-9]{0,6})?$/|}] |> Js.Re.test(value)
-      ) {
-      | false => Change(None)
-      | true => Change(Some(value))
-      }
-    };
-  };
-
-  let triggerOnChange = (value, onChangeFunc) =>
-    switch (onChangeFunc) {
-    | None => ()
-    | Some(onChange) => onChange(float_of_string(value))
-    };
-
-  let triggerOnBlur = (value, onBlurFunc) =>
-    switch (onBlurFunc) {
-    | None => ()
-    | Some(onBlur) => onBlur(float_of_string(value))
-    };
+  let getFloatRegEx = () => [%re {|/^-?(0|[1-9][0-9]*)(\.[0-9]{0,6})?$/|}];
 
   let handleSpecificFuncByCanBeZero =
       (state, value, canBeZero, (canBeZeroFunc, canNotBeZeroFunc)) =>
@@ -59,7 +28,10 @@ module Method = {
           value =>
             ReasonReactUtils.updateWithSideEffects(
               {...state, inputValue: Some(value)}, _state =>
-              triggerOnChange(value, onChangeFunc)
+              InputUtils.triggerOnChange(
+                value,
+                (float_of_string, onChangeFunc),
+              )
             ),
           value => ReasonReact.Update({...state, inputValue: Some(value)}),
         ),
@@ -73,7 +45,10 @@ module Method = {
           value =>
             ReasonReactUtils.updateWithSideEffects(
               {...state, inputValue: Some(value)}, _state =>
-              triggerOnChange(value, onChangeFunc)
+              InputUtils.triggerOnChange(
+                value,
+                (float_of_string, onChangeFunc),
+              )
             ),
           value => ReasonReact.Update({...state, inputValue: Some(value)}),
         ),
@@ -81,7 +56,7 @@ module Method = {
     | Some(value) =>
       ReasonReactUtils.updateWithSideEffects(
         {...state, inputValue: Some(value)}, _state =>
-        triggerOnChange(value, onChangeFunc)
+        InputUtils.triggerOnChange(value, (float_of_string, onChangeFunc))
       )
     };
 
@@ -100,8 +75,14 @@ module Method = {
             ReasonReactUtils.updateWithSideEffects(
               {...state, inputValue: Some(value)},
               _state => {
-                triggerOnChange(value, onChangeFunc);
-                triggerOnBlur(value, onBlurFunc);
+                InputUtils.triggerOnChange(
+                  value,
+                  (float_of_string, onChangeFunc),
+                );
+                InputUtils.triggerOnBlur(
+                  value,
+                  (float_of_string, onBlurFunc),
+                );
               },
             ),
           value =>
@@ -121,7 +102,7 @@ module Method = {
           value =>
             ReasonReactUtils.updateWithSideEffects(
               {...state, inputValue: Some(value)}, _state =>
-              triggerOnBlur(value, onBlurFunc)
+              InputUtils.triggerOnBlur(value, (float_of_string, onBlurFunc))
             ),
           _value => {
             ConsoleUtils.warn("shouldn't be zero")
@@ -137,7 +118,7 @@ module Method = {
     | Some(value) =>
       ReasonReactUtils.updateWithSideEffects(
         {...state, originValue: value}, _state =>
-        triggerOnBlur(value, onBlurFunc)
+        InputUtils.triggerOnBlur(value, (float_of_string, onBlurFunc))
       )
     };
 
@@ -159,20 +140,11 @@ module Method = {
       newValue : _isNearlyZero(newValue) ? _getReplacedZero() : newValue;
   };
 
-  let isDragStart = ({isDragStart}) => isDragStart;
-
-  let handleDragStart = (event, send) => {
-    let e = ReactEventType.convertReactMouseEventToJsEvent(event);
-
-    Wonderjs.DomExtend.requestPointerLock(e##target);
-
-    send(DragStart);
-
-    ();
-  };
+  let handleDragStart = (event, send) =>
+    InputUtils.handleDragStart(event, DragStart, send);
 
   let handleDragDrop = (event, (send, state), onDragDropFunc) =>
-    isDragStart(state) ?
+    state.isDragStart ?
       {
         Wonderjs.DomExtend.exitPointerLock();
 
@@ -180,14 +152,12 @@ module Method = {
           state.inputValue |> OptionService.unsafeGet |> float_of_string,
         );
 
-        send(DragDrop);
-
-        ();
+        send(DragDrop) |> ignore;
       } :
       ();
 
   let handleDragOver = (event, (send, state)) =>
-    isDragStart(state) ?
+    state.isDragStart ?
       {
         let e = ReactEventType.convertReactMouseEventToJsEvent(event);
 
@@ -197,14 +167,15 @@ module Method = {
               computeNewValue(
                 state.inputValue |> OptionService.unsafeGet |> float_of_string,
                 state.canBeZero,
-                MouseEventService.getMovementDeltaWhenPointerLocked(e),
+                MouseEventService.getMovementDeltaWhenPointerLockedAndFixBug(
+                  e,
+                ),
               )
               |> string_of_float,
             ),
           ),
-        );
-
-        ();
+        )
+        |> ignore;
       } :
       ();
 
@@ -240,7 +211,7 @@ module Method = {
           | Some(value) => value
           }
         }
-        onChange={_e => send(_change(_e))}
+        onChange={e => send(InputUtils.changeInput(getFloatRegEx(), e))}
         onBlur={_e => send(Blur)}
       />
     </div>;

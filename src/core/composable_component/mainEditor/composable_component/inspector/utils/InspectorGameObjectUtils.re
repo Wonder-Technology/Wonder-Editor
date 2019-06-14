@@ -20,7 +20,7 @@ let buildComponentBox =
       buildComponentFunc((uiState, dispatchFunc), gameObject)
     }
   />;
-let _buildTransformFunc = ((uiState, dispatchFunc), gameObject) =>
+let _buildTransform = ((uiState, dispatchFunc), gameObject) =>
   <MainEditorTransform
     key={DomHelper.getRandomKey()}
     uiState
@@ -32,22 +32,22 @@ let _buildTransformFunc = ((uiState, dispatchFunc), gameObject) =>
     }
   />;
 
-let _buildLightFunc = ((uiState, dispatchFunc), gameObject) =>
+let _buildLight = ((uiState, dispatchFunc), gameObject) =>
   <MainEditorLight key={DomHelper.getRandomKey()} uiState dispatchFunc />;
 
-let _buildSouceInstanceFunc = ((uiState, dispatchFunc), gameObject) =>
+let _buildSouceInstance = ((uiState, dispatchFunc), gameObject) =>
   <div key={DomHelper.getRandomKey()}>
     {DomHelper.textEl("simulate source instance")}
   </div>;
 
-let _buildRenderGroupFunc = ((uiState, dispatchFunc), gameObject) =>
+let _buildRenderGroup = ((uiState, dispatchFunc), gameObject) =>
   <MainEditorRenderGroup
     uiState
     dispatchFunc
     currentSceneTreeNode=gameObject
   />;
 
-let _buildGeometryFunc = ((uiState, dispatchFunc), gameObject) =>
+let _buildGeometry = ((uiState, dispatchFunc), gameObject) =>
   <MainEditorGeometry
     uiState
     dispatchFunc
@@ -59,7 +59,7 @@ let _buildGeometryFunc = ((uiState, dispatchFunc), gameObject) =>
     isShowGeometryGroup=false
   />;
 
-let _buildCameraGroupFunc = ((uiState, dispatchFunc), gameObject) =>
+let _buildCameraGroup = ((uiState, dispatchFunc), gameObject) =>
   <MainEditorCameraGroup uiState dispatchFunc />;
 
 let _buildArcballCamera = ((uiState, dispatchFunc), gameObject) =>
@@ -74,15 +74,13 @@ let _buildArcballCamera = ((uiState, dispatchFunc), gameObject) =>
     }
   />;
 
-let _buildScriptFunc = ((uiState, dispatchFunc), gameObject) =>
+let _buildScript = ((uiState, dispatchFunc), gameObject) =>
   <MainEditorScript
     key={DomHelper.getRandomKey()}
     uiState
     dispatchFunc
     script={
-      GameObjectComponentEngineService.unsafeGetScriptComponent(
-        gameObject,
-      )
+      GameObjectComponentEngineService.unsafeGetScriptComponent(gameObject)
       |> StateLogicService.getEngineStateToGetData
     }
   />;
@@ -91,7 +89,7 @@ let buildComponentUIComponent =
     ((uiState, dispatchFunc), type_, gameObject, languageType) =>
   switch (type_) {
   | Transform =>
-    _buildTransformFunc
+    _buildTransform
     |> buildComponentBox(
          (uiState, dispatchFunc),
          (
@@ -113,7 +111,7 @@ let buildComponentUIComponent =
        )
 
   | Light =>
-    _buildLightFunc
+    _buildLight
     |> buildComponentBox(
          (uiState, dispatchFunc),
          (
@@ -135,7 +133,7 @@ let buildComponentUIComponent =
        )
 
   | Script =>
-    _buildScriptFunc
+    _buildScript
     |> buildComponentBox(
          (uiState, dispatchFunc),
          (
@@ -157,7 +155,7 @@ let buildComponentUIComponent =
        )
 
   | RenderGroup =>
-    _buildRenderGroupFunc
+    _buildRenderGroup
     |> buildComponentBox(
          (uiState, dispatchFunc),
          (
@@ -179,7 +177,7 @@ let buildComponentUIComponent =
        )
 
   | Geometry =>
-    _buildGeometryFunc
+    _buildGeometry
     |> buildComponentBox(
          (uiState, dispatchFunc),
          (
@@ -201,11 +199,11 @@ let buildComponentUIComponent =
        )
 
   | SourceInstance => ReasonReact.null
-  /* _buildSouceInstanceFunc
+  /* _buildSouceInstance
      |> buildComponentBox((type_, component), (uiState, dispatchFunc), true) */
 
   | CameraGroup =>
-    _buildCameraGroupFunc
+    _buildCameraGroup
     |> buildComponentBox(
          (uiState, dispatchFunc),
          (

@@ -14,9 +14,39 @@ let _ =
 
     let _prepare = () => {
       MainEditorSceneTool.initState(~sandbox, ());
+      MainEditorSceneTool.initInspectorEngineState(
+        ~sandbox,
+        ~isInitJob=false,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+            ~initPipelines=
+              {|
+             [
+              {
+                "name": "default",
+                "jobs": [
+                    {"name": "init_inspector_engine" }
+                ]
+              }
+            ]
+             |},
+            ~initJobs=
+              {|
+             [
+                {"name": "init_inspector_engine" }
+             ]
+             |},
+            (),
+          ),
+        (),
+      );
 
-      EventListenerTool.buildFakeDom()
-      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+      StateInspectorEngineService.unsafeGetState()
+      |> MainUtils._handleInspectorEngineState
+      |> StateInspectorEngineService.setState
+      |> ignore;
+
+      CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
 
       MainEditorAssetTool.buildFakeFileReader();
 

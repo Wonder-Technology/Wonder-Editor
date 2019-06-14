@@ -17,11 +17,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -40,7 +36,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -324,7 +320,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -375,11 +371,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                   className="item-header"
                   title="type"
                 >
-                  <span
-                    className=""
-                  >
-                    Type
-                  </span>
+                  Type
                 </div>
                 <div
                   className="item-content"
@@ -442,11 +434,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                   className="item-header"
                   title="perspective matrix's type"
                 >
-                  <span
-                    className=""
-                  >
-                    Type
-                  </span>
+                  Type
                 </div>
                 <div
                   className="item-content"
@@ -579,11 +567,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -602,7 +586,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -886,7 +870,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -937,11 +921,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                   className="item-header"
                   title="type"
                 >
-                  <span
-                    className=""
-                  >
-                    Type
-                  </span>
+                  Type
                 </div>
                 <div
                   className="item-content"
@@ -1004,11 +984,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                   className="item-header"
                   title="perspective matrix's type"
                 >
-                  <span
-                    className=""
-                  >
-                    Type
-                  </span>
+                  Type
                 </div>
                 <div
                   className="item-content"
@@ -1141,11 +1117,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -1164,7 +1136,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -1451,7 +1423,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -1502,11 +1474,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                   className="item-header"
                   title="type"
                 >
-                  <span
-                    className=""
-                  >
-                    Type
-                  </span>
+                  Type
                 </div>
                 <div
                   className="item-content"
@@ -1569,11 +1537,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
                   className="item-header"
                   title="perspective matrix's type"
                 >
-                  <span
-                    className=""
-                  >
-                    Type
-                  </span>
+                  Type
                 </div>
                 <div
                   className="item-content"
@@ -1671,7 +1635,7 @@ exports[`redo_undo: remove cameraGroup component prepare first step: set current
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"

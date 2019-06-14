@@ -6,6 +6,8 @@ open Expect.Operators;
 
 open Sinon;
 
+open InputType;
+
 let _ =
   describe("FloatInput", () => {
     let sandbox = getSandboxDefaultVal();
@@ -18,7 +20,6 @@ let _ =
 
     describe("test FloatInput component set float value", () => {
       let _test = (value, onChangeValue, onBlurValue) => {
-        open FloatInput;
         let state = FloatInputTool.buildState();
 
         let onChangeFunc = SinonTool.createOneLengthStub(sandbox^);
@@ -90,10 +91,9 @@ let _ =
 
             FloatInput.Method.handleDragStart(event, send);
 
-            send |> expect |> toCalledWith([|FloatInput.DragStart|]);
+            send |> expect |> toCalledWith([|DragStart|]);
           });
           test("set state->isDragStart to true", () => {
-            open FloatInput;
             let state = FloatInputTool.buildState();
 
             let state =
@@ -117,8 +117,6 @@ let _ =
         });
 
         describe("else", () => {
-          open FloatInput;
-
           let _getNewValue = send => send |> getCall(0) |> getArgs |> List.hd;
 
           let _testChangeValue =
@@ -262,7 +260,7 @@ let _ =
 
             _handleDragDrop(~send, ~state, ());
 
-            send |> expect |> toCalledWith([|FloatInput.DragDrop|]);
+            send |> expect |> toCalledWith([|DragDrop|]);
           });
         });
       });

@@ -100,42 +100,50 @@ module Method = {
     _setCurrentSceneTreeNodeLocalScale(transformComponent, (x, y, value));
   };
 
-  let _setCurrentSceneTreeNodeLocalRotation = (transformComponent, (x, y, z)) =>
-    TransformEngineService.setLocalEulerAngles((x, y, z), transformComponent)
+  let _setCurrentSceneTreeNodeLocalRotation =
+      (transformComponent, localEulerAngles) =>
+    TransformEngineService.setLocalEulerAngles(
+      localEulerAngles,
+      transformComponent,
+    )
     |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
-  let changeRotationX = (transformComponent, value) => {
-    TransformEditorService.setLocalEulerAngleX(transformComponent, value)
+  let _changeRotationField =
+      (transformComponent, value, setLocalEulerAngleFieldFunc) => {
+    setLocalEulerAngleFieldFunc(transformComponent, value)
     |> StateLogicService.getAndSetEditorState;
 
-    let (_x, y, z) =
-      TransformEngineService.getLocalEulerAngles(transformComponent)
-      |> StateLogicService.getEngineStateToGetData;
+    let (localEulerAngles, editorState) =
+      TransformEditorService.getLocalEulerAngleOrInit(transformComponent)
+      |> StateLogicService.getStateToGetData;
+    editorState |> StateEditorService.setState |> ignore;
 
-    _setCurrentSceneTreeNodeLocalRotation(transformComponent, (value, y, z));
+    _setCurrentSceneTreeNodeLocalRotation(
+      transformComponent,
+      localEulerAngles,
+    );
   };
 
-  let changeRotationY = (transformComponent, value) => {
-    TransformEditorService.setLocalEulerAngleY(transformComponent, value)
-    |> StateLogicService.getAndSetEditorState;
+  let changeRotationX = (transformComponent, value) =>
+    _changeRotationField(
+      transformComponent,
+      value,
+      TransformEditorService.setLocalEulerAngleX,
+    );
 
-    let (x, _y, z) =
-      TransformEngineService.getLocalEulerAngles(transformComponent)
-      |> StateLogicService.getEngineStateToGetData;
+  let changeRotationY = (transformComponent, value) =>
+    _changeRotationField(
+      transformComponent,
+      value,
+      TransformEditorService.setLocalEulerAngleY,
+    );
 
-    _setCurrentSceneTreeNodeLocalRotation(transformComponent, (x, value, z));
-  };
-
-  let changeRotationZ = (transformComponent, value) => {
-    TransformEditorService.setLocalEulerAngleZ(transformComponent, value)
-    |> StateLogicService.getAndSetEditorState;
-
-    let (x, y, _z) =
-      TransformEngineService.getLocalEulerAngles(transformComponent)
-      |> StateLogicService.getEngineStateToGetData;
-
-    _setCurrentSceneTreeNodeLocalRotation(transformComponent, (x, y, value));
-  };
+  let changeRotationZ = (transformComponent, value) =>
+    _changeRotationField(
+      transformComponent,
+      value,
+      TransformEditorService.setLocalEulerAngleZ,
+    );
 
   let buildShadeComponent = gameObject =>
     StateEngineService.unsafeGetState()

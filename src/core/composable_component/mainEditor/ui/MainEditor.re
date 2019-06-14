@@ -1,3 +1,5 @@
+open WonderBsMost;
+
 type retainedProps = {isInitEngine: bool};
 
 module Method = {
@@ -30,10 +32,7 @@ module Method = {
         ResizeUtils.resizeMainCanvasScreen();
         ResizeUtils.resizeInspectorCanvasScreen();
 
-        DomHelper.setDomDisplay(
-          DomHelper.getElementById("inspectorCanvasParent"),
-          false,
-        );
+        InspectorCanvasUtils.hideInspectorCanvas();
       },
     );
 
@@ -65,6 +64,7 @@ module Method = {
           </div>
         </div>
       </div>
+      <canvas id="img-canvas" key="imgCanvas" width="50" height="50" />
     </article>;
 
   let buildElementAfterInitEngine = (uiState, dispatchFunc) =>
@@ -104,6 +104,8 @@ module Method = {
           />
         </div>
       </div>
+      <canvas id="img-canvas" key="imgCanvas" width="50" height="50" />
+      <Progress />
     </article>;
 
   let onResize = domElement => {
@@ -116,8 +118,13 @@ module Method = {
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
 
-let render = (uiState: AppStore.appState, dispatchFunc, _self) =>
-  uiState.isInitEngine ?
+let render =
+    (
+      uiState: AppStore.appState,
+      dispatchFunc,
+      {retainedProps}: ReasonReact.self('a, 'b, 'c),
+    ) =>
+  retainedProps.isInitEngine ?
     Method.buildElementAfterInitEngine(uiState, dispatchFunc) :
     Method.buildElementBeforeInitEngine(uiState, dispatchFunc);
 
@@ -135,7 +142,10 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
              editorState =>
                editorState
                |> TreeAssetEditorService.createTree
-               |> StateEditorService.setState
+               |> ImgContextImgCanvasEditorService.setImgContext(
+                    DomHelper.getElementById("img-canvas")
+                    |> CanvasType.getCanvasContext,
+                  )
            )
            |> StateLogicService.getAndSetEditorState;
 

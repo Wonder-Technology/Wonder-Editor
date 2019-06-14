@@ -6,9 +6,12 @@ let _createSphereWithClonedMaterial =
     inspectorEngineState
     |> PrimitiveEngineService.createSphere(material, addMaterialFunc);
 
-  inspectorEngineState
-  |> GameObjectEngineService.initGameObject(sphere)
-  |> HierarchyGameObjectEngineService.addChild(containerGameObject, sphere);
+  (
+    inspectorEngineState
+    |> GameObjectEngineService.initGameObject(sphere)
+    |> HierarchyGameObjectEngineService.addChild(containerGameObject, sphere),
+    sphere,
+  );
 };
 
 let _createBasicMaterialSphereIntoInspectorCanvas =
@@ -37,48 +40,80 @@ let _createLightMaterialSphereIntoInspectorCanvas =
     (
       materialComponent,
       containerGameObject,
+      editorState,
       engineState,
       inspectorEngineState,
     ) => {
-  let (lightMaterial, inspectorEngineState) =
+  let (lightMaterial, editorState, inspectorEngineState) =
     CloneMaterialEngineLogicService.cloneLightMaterialToOtherEngineState(
       materialComponent,
+      editorState,
       engineState,
       inspectorEngineState,
     );
 
-  inspectorEngineState
-  |> _createSphereWithClonedMaterial(
-       lightMaterial,
-       GameObjectComponentEngineService.addLightMaterialComponent,
-       containerGameObject,
-     );
+  (
+    editorState,
+    inspectorEngineState
+    |> _createSphereWithClonedMaterial(
+         lightMaterial,
+         GameObjectComponentEngineService.addLightMaterialComponent,
+         containerGameObject,
+       ),
+  );
 };
 
 let createMaterialSphereIntoInspectorCanvas =
-    (
-      type_,
-      materialComponent,
-      (editorState, engineState),
-      inspectorEngineState,
-    ) => {
+    (type_, materialComponent, editorState, engineState, inspectorEngineState) => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect=
+                  {j|inspector canvas-> container gameObject -> children is empty|j},
+                ~actual={j|not|j},
+              ),
+              () => {
+                let containerGameObject =
+                  editorState
+                  |> ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject;
+
+                inspectorEngineState
+                |> HierarchyGameObjectEngineService.getChildren(
+                     containerGameObject,
+                   )
+                |> Js.Array.length == 0;
+              },
+            )
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
   let containerGameObject =
     editorState
     |> ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject;
 
   switch (type_) {
-  | BasicMaterial =>
-    _createBasicMaterialSphereIntoInspectorCanvas(
-      materialComponent,
-      containerGameObject,
-      engineState,
-      inspectorEngineState,
+  | BasicMaterial => (
+      editorState,
+      _createBasicMaterialSphereIntoInspectorCanvas(
+        materialComponent,
+        containerGameObject,
+        engineState,
+        inspectorEngineState,
+      ),
     )
 
   | LightMaterial =>
     _createLightMaterialSphereIntoInspectorCanvas(
       materialComponent,
       containerGameObject,
+      editorState,
       engineState,
       inspectorEngineState,
     )

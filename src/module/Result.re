@@ -116,7 +116,7 @@ module MakeSameDataResult = (Item: Result) => {
     | Fail((_, data)) => data
     };
 
-  let either = (handleDataFunc, twoTrackInput) =>
+  let map = (handleDataFunc, twoTrackInput) =>
     Item.either(
       handleDataFunc,
       ((msg, data)) => (msg, handleDataFunc(data) |> getData) |> fail,

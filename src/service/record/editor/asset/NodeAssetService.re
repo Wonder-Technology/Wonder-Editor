@@ -12,7 +12,7 @@ let isIdEqual = isEqual;
      (
        node,
        (
-         getImageNodeJudgeDataFunc,
+         getImageDataJudgeDataFunc,
          getTextureNodeJudgeDataFunc,
          getMaterialNodeJudgeDataFunc,
          getWDBNodeJudgeDataFunc,
@@ -20,7 +20,7 @@ let isIdEqual = isEqual;
        ),
      ) =>
    switch (node) {
-   | ImageNode(_) => node |> getImageNodeData |> getImageNodeJudgeDataFunc
+   | ImageData(_) => node |> getImageDataData |> getImageDataJudgeDataFunc
    | TextureNode(_) => node |> getTextureNodeData |> getTextureNodeJudgeDataFunc
    | MaterialNode(_) =>
      node |> getMaterialNodeData |> getMaterialNodeJudgeDataFunc
@@ -53,6 +53,7 @@ let getNodeId = (~node) =>
   | TextureNode(nodeId, _) => nodeId
   | MaterialNode(nodeId, _) => nodeId
   | WDBNode(nodeId, _) => nodeId
+  | AssetBundleNode(nodeId, _) => nodeId
   | FolderNode(nodeId, _, _) => nodeId
   };
 
@@ -67,6 +68,7 @@ let handleNode =
       ~scriptEventFunctionNodeFunc,
       ~scriptAttributeNodeFunc,
       ~wdbNodeFunc,
+      ~assetBundleNodeFunc,
       ~folderNodeFunc,
     ) =>
   switch (node) {
@@ -79,6 +81,8 @@ let handleNode =
   | MaterialNode(nodeId, materialNodeData) =>
     materialNodeFunc(nodeId, materialNodeData)
   | WDBNode(nodeId, wdbNodeData) => wdbNodeFunc(nodeId, wdbNodeData)
+  | AssetBundleNode(nodeId, assetBundleNodeData) =>
+    assetBundleNodeFunc(nodeId, assetBundleNodeData)
   | FolderNode(nodeId, folderNodeData, children) =>
     folderNodeFunc(nodeId, folderNodeData, children)
   };

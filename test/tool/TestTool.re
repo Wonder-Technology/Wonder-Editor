@@ -74,13 +74,21 @@ let initEngineStateAndInitSceneWithJob =
 let openContractCheck = () => {
   StateEditorService.setStateIsDebug(true);
   StateEngineService.setIsDebug(true) |> ignore;
+  StateInspectorEngineService.setIsDebug(true) |> ignore;
 };
 
 let closeContractCheck = () => {
   StateEditorService.setStateIsDebug(false);
   StateEngineService.setIsDebug(false) |> ignore;
+  StateInspectorEngineService.setIsDebug(false) |> ignore;
 };
 
 let setLanguageTypeToEn = () =>
   LanguageEditorService.setType(LanguageType.EN)
   |> StateLogicService.getAndSetEditorState;
+
+let ignoreError = sandbox => {
+  closeContractCheck();
+  Sinon.createMethodStub(sandbox^, ConsoleTool.console, "error");
+  Sinon.createMethodStub(sandbox^, ConsoleTool.console, "log");
+};

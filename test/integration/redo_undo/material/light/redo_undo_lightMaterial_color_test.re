@@ -20,11 +20,11 @@ let _ =
 
     let _changeColorAndPushUndoStack = (materialComponent, color) => {
       let sourceColor =
-        MainEditorLightMaterialTool.getColor(materialComponent);
+        MainEditorLightMaterialForGameObjectTool.getColor(materialComponent);
 
-      MainEditorLightMaterialTool.changeColor(materialComponent, color);
+      MainEditorLightMaterialForGameObjectTool.changeColor(materialComponent, color);
 
-      MainEditorLightMaterialTool.closeColorPicker(
+      MainEditorLightMaterialForGameObjectTool.closeColorPicker(
         ~material=materialComponent,
         ~color=sourceColor,
         (),

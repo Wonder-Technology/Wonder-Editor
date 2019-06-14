@@ -6,8 +6,4 @@
      None; */
 
 let getNewAssetId = (~editorState=StateEditorService.getState(), ()) =>
-  /* switch (editorState |> getFirstIdIfHasUsableAssetId) {
-     | None => IndexAssetEditorService.getNodeIndex(editorState) |> succ
-     | Some(assetId) => assetId
-     }; */
   IndexAssetEditorService.getNodeIndex(editorState) |> succ;

@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`header import package->fix bug test material assets after import 
+             load wdb w1;
+             add folder f1 to root;
+             enter f1;
+             load wdb w2;
+             export;
+             import;
+             enter f1->Materials folder;
+
+             should show w2->materials;
+              1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/null.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        glass
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/null.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        truck
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/null.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        window_trim
+      </span>
+    </div>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <div
+      className="box-image"
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/null.png"
+      />
+    </div>
+    <div
+      className="item-text "
+    >
+      <span>
+        wheels
+      </span>
+    </div>
+  </article>
+</article>
+`;

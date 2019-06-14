@@ -144,7 +144,7 @@ let _computeSphereShapeData = (allGameObjectData, (editorState, engineState)) =>
            PickingEditorService.setSphereShape(
              geometry,
              SphereShapeUtils.setFromPoints(
-               GeometryEngineService.getGeometryVertices(
+               GeometryEngineService.unsafeGetGeometryVertices(
                  geometry,
                  engineState,
                ),

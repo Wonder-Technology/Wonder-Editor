@@ -77,3 +77,38 @@ let loadOneGLTFZip =
   )
   |> then_(() => uploadedWDBNodeId |> resolve);
 };
+
+let loadOneAssetBundleZip =
+    (
+      ~sandbox,
+      ~createJsZipFunc,
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~fileName="AssetBundleZip",
+      (),
+    ) => {
+  AssetHeaderFileLoadEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+    (uiState, dispatchFunc),
+    createJsZipFunc,
+    BaseEventTool.buildAssetBundleZipFileEvent(fileName),
+  )
+  |> then_(() => () |> resolve);
+};
+
+let loadOneAssetBundle =
+    (
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~fileName="A.rab",
+      ~assetBundle=Js.Typed_array.ArrayBuffer.make(10),
+      (),
+    ) => {
+  let uploadedWDBNodeId = MainEditorAssetIdTool.getNewAssetId();
+
+  AssetHeaderFileLoadEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+    (uiState, dispatchFunc),
+    WonderBsJszip.Zip.create,
+    BaseEventTool.buildAssetBundleFileEvent(fileName, assetBundle),
+  )
+  |> then_(() => uploadedWDBNodeId |> resolve);
+};

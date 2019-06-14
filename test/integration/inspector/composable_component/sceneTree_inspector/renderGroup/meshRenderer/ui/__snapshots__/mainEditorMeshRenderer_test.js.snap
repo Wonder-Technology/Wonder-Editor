@@ -11,11 +11,7 @@ exports[`mainEditor meshRenderer test meshRenderer change drawMode test set draw
       className="item-header"
       title="draw mode"
     >
-      <span
-        className=""
-      >
-        Draw Mode
-      </span>
+      Draw Mode
     </div>
     <div
       className="item-content"
@@ -76,11 +72,7 @@ exports[`mainEditor meshRenderer test meshRenderer change drawMode test set draw
       className="item-header"
       title="draw mode"
     >
-      <span
-        className=""
-      >
-        Draw Mode
-      </span>
+      Draw Mode
     </div>
     <div
       className="item-content"
@@ -141,11 +133,7 @@ exports[`mainEditor meshRenderer test meshRenderer change drawMode test set draw
       className="item-header"
       title="draw mode"
     >
-      <span
-        className=""
-      >
-        Draw Mode
-      </span>
+      Draw Mode
     </div>
     <div
       className="item-content"

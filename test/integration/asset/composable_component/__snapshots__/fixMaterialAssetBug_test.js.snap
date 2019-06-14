@@ -26,11 +26,7 @@ exports[`fix material asset bug fix bug
           className="item-header"
           title="material's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -51,11 +47,7 @@ exports[`fix material asset bug fix bug
           className="item-header"
           title="material's type"
         >
-          <span
-            className=""
-          >
-            Type
-          </span>
+          Type
         </div>
         <div
           className="item-content"
@@ -204,11 +196,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
           className="item-header"
           title="material's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -218,7 +206,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="Material222"
+            value="NoName Material"
           />
         </div>
       </article>
@@ -229,11 +217,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
           className="item-header"
           title="material's type"
         >
-          <span
-            className=""
-          >
-            Type
-          </span>
+          Type
         </div>
         <div
           className="item-content"
@@ -320,11 +304,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
           className="item-header"
           title="material's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -334,7 +314,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="New Material"
+            value="NoName Material"
           />
         </div>
       </article>
@@ -345,11 +325,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
           className="item-header"
           title="material's type"
         >
-          <span
-            className=""
-          >
-            Type
-          </span>
+          Type
         </div>
         <div
           className="item-content"
@@ -440,11 +416,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
           className="item-header"
           title="material's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -465,11 +437,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
           className="item-header"
           title="material's type"
         >
-          <span
-            className=""
-          >
-            Type
-          </span>
+          Type
         </div>
         <div
           className="item-content"
@@ -617,11 +585,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
           className="item-header"
           title="material's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -631,7 +595,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="New Material 1"
+            value="NoName Material"
           />
         </div>
       </article>
@@ -642,11 +606,7 @@ exports[`fix material asset bug fix bug fix change material type bug fix change 
           className="item-header"
           title="material's type"
         >
-          <span
-            className=""
-          >
-            Type
-          </span>
+          Type
         </div>
         <div
           className="item-content"

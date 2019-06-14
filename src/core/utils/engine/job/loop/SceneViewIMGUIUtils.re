@@ -53,7 +53,7 @@ let getIMGUIGameObjects = (scene, engineState) => {
   let allGameObjects =
     HierarchyGameObjectEngineService.getAllGameObjects(scene, engineState);
 
-  ArrayService.fastConcatArrays([|
+  ArrayService.fastMutableConcatArrays([|
     _getSceneCameras(scene, allGameObjects, engineState),
     _getSceneDirectionLights(scene, allGameObjects, engineState),
     _getScenePointLights(scene, allGameObjects, engineState),
@@ -76,25 +76,31 @@ let _convertPosition =
       editCamera,
       engineState,
     ) =>
-  CoordinateEngineService.convertWorldToScreen(
-    GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
-      editCamera,
+  switch (
+    CoordinateEngineService.convertWorldToScreen(
+      GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
+        editCamera,
+        engineState,
+      ),
+      GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
+        editCamera,
+        engineState,
+      ),
+      (
+        x,
+        y,
+        z,
+        viewWidth |> NumberType.convertIntToFloat,
+        viewHeight |> NumberType.convertIntToFloat,
+      ),
       engineState,
-    ),
-    GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
-      editCamera,
-      engineState,
-    ),
-    (
-      x,
-      y,
-      z,
-      viewWidth |> NumberType.convertIntToFloat,
-      viewHeight |> NumberType.convertIntToFloat,
-    ),
-    engineState,
-  )
-  |> _convertAnchorFromTopLeftToCenter((imageWidth, imageHeight));
+    )
+    |> Js.Nullable.toOption
+  ) {
+  | None => ((-100.), (-100.))
+  | Some((x, y)) =>
+    (x, y) |> _convertAnchorFromTopLeftToCenter((imageWidth, imageHeight))
+  };
 
 let _getImageMaxWidth = () => 30.;
 

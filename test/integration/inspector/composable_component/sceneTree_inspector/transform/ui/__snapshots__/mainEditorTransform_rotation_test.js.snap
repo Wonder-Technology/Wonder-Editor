@@ -1,6 +1,274 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MainEditorTransform rotation test change rotation value deal with the specific case 
+        set rotation to (x:0.0, y:91.0, z:0.0);
+        set rotation to (x:0.0, y:96.0, z:0.0);
+           inspector->transform->rotation should show (0.0, 96.0, 0.0); 1`] = `
+<article
+  className="wonder-inspector-transform"
+>
+  <article
+    className="inspector-item wonder-three-float-input"
+  >
+    <div
+      className="item-header"
+      title="position in local coordinate system"
+    >
+      Position
+    </div>
+    <div
+      className="item-content"
+    >
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
+          title=""
+        >
+          X
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
+          title=""
+        >
+          Y
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
+          title=""
+        >
+          Z
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
+      </article>
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-three-float-input"
+  >
+    <div
+      className="item-header"
+      title="euler angle in local coordinate system"
+    >
+      Rotation
+    </div>
+    <div
+      className="item-content"
+    >
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
+          title=""
+        >
+          X
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
+          title=""
+        >
+          Y
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="96"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
+          title=""
+        >
+          Z
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </div>
+      </article>
+    </div>
+  </article>
+  <article
+    className="inspector-item wonder-three-float-input"
+  >
+    <div
+      className="item-header"
+      title="scale in local coordinate system"
+    >
+      Scale
+    </div>
+    <div
+      className="item-content"
+    >
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
+          title=""
+        >
+          X
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="1"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
+          title=""
+        >
+          Y
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="1"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item wonder-float-input"
+      >
+        <div
+          className="item-header component-label"
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          onMouseUp={[Function]}
+          title=""
+        >
+          Z
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="1"
+          />
+        </div>
+      </article>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorTransform rotation test change rotation value deal with the specific case 
       1.getTransformRotationData;
       2.set rotation to (x:-45.0, y:180.0);
 
@@ -127,7 +395,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="135"
+            value="-45"
           />
         </div>
       </article>
@@ -151,7 +419,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="0"
+            value="180"
           />
         </div>
       </article>
@@ -175,7 +443,7 @@ exports[`MainEditorTransform rotation test change rotation value deal with the s
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="180"
+            value="0"
           />
         </div>
       </article>

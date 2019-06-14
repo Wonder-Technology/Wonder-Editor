@@ -44,3 +44,11 @@ let reInitBasicMaterialsAndClearShaderCache = (materials, engineState) =>
 let getAllBasicMaterials = BasicMaterialAPI.getAllBasicMaterials;
 
 let batchDisposeBasicMaterial = BasicMaterialAPI.batchDisposeBasicMaterial;
+
+let disposeBasicMaterial = (material, state) =>
+  batchDisposeBasicMaterial([|material|], state);
+
+/*!
+  BasicMaterial has no map, so disposeBasicMaterial == disposeBasicMaterialRemoveTexture
+  */
+let disposeBasicMaterialRemoveTexture = disposeBasicMaterial;

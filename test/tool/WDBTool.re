@@ -62,6 +62,7 @@ let _buildFakeCanvas = (sandbox, base64, callIndex) => {
     "height": 0,
     "getContext": () => {
       "drawImage": createEmptyStubWithJsObjSandbox(sandbox),
+      "clearRect": createEmptyStubWithJsObjSandbox(sandbox),
     },
     "toDataURL": toDataURLStub,
   };
@@ -210,7 +211,16 @@ let generateSceneWDB = () =>
         engineState,
       );
 
+    let (editorState, engineState, cube2) =
+      PrimitiveLogicService.createCube(
+        (geometry, lightMaterial),
+        editorState,
+        engineState,
+      );
+
     let (editorState, engineState, camera) =
+      CameraLogicService.createCamera(editorState, engineState);
+    let (editorState, engineState, camera2) =
       CameraLogicService.createCamera(editorState, engineState);
     let (engineState, arcballCameraController) =
       ArcballCameraEngineService.create(engineState);
@@ -223,13 +233,13 @@ let generateSceneWDB = () =>
 
     let engineState =
       engineState
-      /* |> TransformEngineService.setLocalPosition(
+      |> TransformEngineService.setLocalPosition(
            (20., 0., 100.),
            GameObjectComponentEngineService.unsafeGetTransformComponent(
-             camera,
+             camera2,
              engineState,
            ),
-         ) */
+         )
       /* |> ArcballCameraEngineService.setArcballCameraControllerDistance(
               200.,
               arcballCameraController,
@@ -268,12 +278,180 @@ let generateSceneWDB = () =>
     let engineState =
       engineState
       |> HierarchyGameObjectEngineService.addChild(rootGameObject, cube1)
+      |> HierarchyGameObjectEngineService.addChild(cube1, camera2)
       |> HierarchyGameObjectEngineService.addChild(rootGameObject, camera)
       |> HierarchyGameObjectEngineService.addChild(
            rootGameObject,
            directionLight,
          );
-    /* |> HierarchyGameObjectEngineService.addChild(rootGameObject, pointLight); */
 
     (rootGameObject, (editorState, engineState));
   });
+
+module ScriptEventFunction = {
+  let getScriptGameObjectName = () => "ScriptGameObject";
+
+  let generateScriptEventFunctionWDB =
+      (scriptEventFunctionDataName, scriptEventFunctionData) =>
+    generateWDB((editorState, engineState) => {
+      let (engineState, rootGameObject) =
+        GameObjectEngineService.create(engineState);
+
+      let (engineState, gameObject1) =
+        GameObjectEngineService.create(engineState);
+
+      let engineState =
+        GameObjectEngineService.setGameObjectName(
+          getScriptGameObjectName(),
+          gameObject1,
+          engineState,
+        );
+
+      let (engineState, script) = ScriptEngineService.create(engineState);
+      let engineState =
+        engineState
+        |> GameObjectComponentEngineService.addScriptComponent(
+             gameObject1,
+             script,
+           );
+
+      let engineState =
+        ScriptEngineService.addScriptEventFunctionData(
+          script,
+          scriptEventFunctionDataName,
+          scriptEventFunctionData,
+          engineState,
+        );
+
+      let engineState =
+        engineState
+        |> HierarchyGameObjectEngineService.addChild(
+             rootGameObject,
+             gameObject1,
+           );
+
+      (rootGameObject, (editorState, engineState));
+    });
+
+  let getScriptGameObject = engineState =>
+    LoadWDBTool.findGameObjectByName(getScriptGameObjectName(), engineState);
+
+  let getScriptGameObjectByWDBGameObject = (rootGameObject, engineState) =>
+    GameObjectToolEngine.findGameObjectByName(
+      getScriptGameObjectName(),
+      rootGameObject,
+      engineState,
+    )
+    |> ArrayService.unsafeGetFirst;
+};
+
+module ScriptAttribute = {
+  let getScriptGameObjectName = () => "ScriptGameObject";
+
+  let createRootGameObjectForGenerateScriptAttributeWDB =
+      (scriptAttributeName, scriptAttribute, engineState) => {
+    let (engineState, rootGameObject) =
+      GameObjectEngineService.create(engineState);
+
+    let (engineState, gameObject1) =
+      GameObjectEngineService.create(engineState);
+
+    let engineState =
+      GameObjectEngineService.setGameObjectName(
+        getScriptGameObjectName(),
+        gameObject1,
+        engineState,
+      );
+
+    let (engineState, script) = ScriptEngineService.create(engineState);
+    let engineState =
+      engineState
+      |> GameObjectComponentEngineService.addScriptComponent(
+           gameObject1,
+           script,
+         );
+
+    let engineState =
+      ScriptEngineService.addScriptAttribute(
+        script,
+        scriptAttributeName,
+        scriptAttribute,
+        engineState,
+      );
+
+    let engineState =
+      engineState
+      |> HierarchyGameObjectEngineService.addChild(
+           rootGameObject,
+           gameObject1,
+         );
+
+    (rootGameObject, engineState);
+  };
+
+  let createRootGameObjectForGenerateScriptAttributeWDB2 =
+      (scriptAttributeName, scriptAttribute, engineState) => {
+    let (engineState, rootGameObject) =
+      GameObjectEngineService.create(engineState);
+
+    let (engineState, gameObject1) =
+      GameObjectEngineService.create(engineState);
+
+    let (engineState, gameObject2) =
+      GameObjectEngineService.create(engineState);
+
+    let engineState =
+      GameObjectEngineService.setGameObjectName(
+        getScriptGameObjectName(),
+        gameObject1,
+        engineState,
+      );
+
+    let (engineState, script) = ScriptEngineService.create(engineState);
+    let engineState =
+      engineState
+      |> GameObjectComponentEngineService.addScriptComponent(
+           gameObject1,
+           script,
+         );
+
+    let engineState =
+      ScriptEngineService.addScriptAttribute(
+        script,
+        scriptAttributeName,
+        scriptAttribute,
+        engineState,
+      );
+
+    let engineState =
+      engineState
+      |> HierarchyGameObjectEngineService.addChild(
+           rootGameObject,
+           gameObject1,
+         );
+
+    let engineState =
+      engineState
+      |> HierarchyGameObjectEngineService.addChild(
+           rootGameObject,
+           gameObject2,
+         );
+
+    (rootGameObject, engineState);
+  };
+
+  let generateScriptAttributeWDB = (scriptAttributeName, scriptAttribute) =>
+    generateWDB((editorState, engineState) => {
+      let (rootGameObject, engineState) =
+        createRootGameObjectForGenerateScriptAttributeWDB(
+          scriptAttributeName,
+          scriptAttribute,
+          engineState,
+        );
+
+      (rootGameObject, (editorState, engineState));
+    });
+
+  let getScriptGameObject = engineState =>
+    LoadWDBTool.findGameObjectByName(getScriptGameObjectName(), engineState);
+};

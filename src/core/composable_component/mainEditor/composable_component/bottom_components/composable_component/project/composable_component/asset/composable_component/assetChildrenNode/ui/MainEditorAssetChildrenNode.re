@@ -63,8 +63,7 @@ module Method = {
        )
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. editorState, imageDataIndex) =>
-           editorState
-           |> Result.SameDataResult.either(_build(imageDataIndex)),
+           editorState |> Result.SameDataResult.map(_build(imageDataIndex)),
          editorState |> Result.SameDataResult.success,
        );
 
@@ -109,13 +108,20 @@ module Method = {
       assetTreeChildrenNodeArr
       |> Js.Array.filter(node => node |> TextureNodeAssetService.isTextureNode);
 
-    ArrayService.fastConcatArrays([|
+    let assetBundleAssetTreeChildrenNodeArr =
+      assetTreeChildrenNodeArr
+      |> Js.Array.filter(node =>
+           node |> AssetBundleNodeAssetService.isAssetBundleNode
+         );
+
+    ArrayService.fastMutableConcatArrays([|
       _sortByName(folderAssetTreeChildrenNodeArr, engineState),
       _sortByName(wdbAssetTreeChildrenNodeArr, engineState),
       _sortByName(materialAssetTreeChildrenNodeArr, engineState),
       _sortByName(scriptEventFunctionAssetTreeChildrenNodeArr, engineState),
       _sortByName(scriptAttributeAssetTreeChildrenNodeArr, engineState),
       _sortByName(textureAssetTreeChildrenNodeArr, engineState),
+      _sortByName(assetBundleAssetTreeChildrenNodeArr, engineState),
     |]);
   };
 
@@ -142,46 +148,47 @@ module Method = {
              ~node,
              ~textureNodeFunc=
                (nodeId, {textureComponent, imageDataIndex}) => {
-                 let effectAllowd = "move";
                  let fileName =
                    NodeNameAssetLogicService.getTextureNodeName(
                      ~texture=textureComponent,
                      ~engineState,
                    );
+                 let imgSrc =
+                   ImageDataMapUtils.getImgSrc(imageDataIndex, editorState);
 
-                 ImageDataMapUtils.getImgSrc(imageDataIndex, editorState)
-                 |> Result.SameDataResult.either(imgSrc =>
-                      <FileBox
-                        key
-                        uiState
-                        dispatchFunc
-                        dragImg
-                        effectAllowd
-                        imgSrc
-                        nodeId
-                        fileName
-                        widget
-                        isSelected
-                      />
-                      |> Result.SameDataResult.success
-                    );
-               },
-             ~materialNodeFunc=
-               (nodeId, {materialComponent, type_}) => {
-                 let fileName =
-                   NodeNameAssetLogicService.getMaterialNodeName(
-                     ~material=materialComponent,
-                     ~type_,
-                     ~engineState,
-                   );
-                 /* TODO get img base64 from map, the wdb same to get */
                  <FileBox
                    key
                    uiState
                    dispatchFunc
                    dragImg
                    effectAllowd="move"
-                   imgSrc="./public/img/mat.png"
+                   imgSrc
+                   nodeId
+                   fileName
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success;
+               },
+             ~materialNodeFunc=
+               (nodeId, {materialComponent, type_, imageDataIndex}) => {
+                 let fileName =
+                   NodeNameAssetLogicService.getMaterialNodeName(
+                     ~material=materialComponent,
+                     ~type_,
+                     ~engineState,
+                   );
+
+                 let imgSrc =
+                   ImageDataMapUtils.getImgSrc(imageDataIndex, editorState);
+
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc
                    nodeId
                    fileName
                    widget
@@ -220,8 +227,11 @@ module Method = {
                  />
                  |> Result.SameDataResult.success,
              ~wdbNodeFunc=
-               (nodeId, nodeData) => {
+               (nodeId, {imageDataIndex} as nodeData) => {
                  let fileName = WDBNodeAssetService.getNodeName(nodeData);
+
+                 let imgSrc =
+                   ImageDataMapUtils.getImgSrc(imageDataIndex, editorState);
 
                  <FileBox
                    key
@@ -229,7 +239,7 @@ module Method = {
                    dispatchFunc
                    effectAllowd="copyMove"
                    dragImg
-                   imgSrc="./public/img/wdb.png"
+                   imgSrc
                    nodeId
                    fileName
                    widget
@@ -237,6 +247,21 @@ module Method = {
                  />
                  |> Result.SameDataResult.success;
                },
+             ~assetBundleNodeFunc=
+               (nodeId, {name}) =>
+                 <FileBox
+                   key
+                   uiState
+                   dispatchFunc
+                   dragImg
+                   effectAllowd="move"
+                   imgSrc="./public/img/assetBundle.png"
+                   nodeId
+                   fileName=name
+                   widget
+                   isSelected
+                 />
+                 |> Result.SameDataResult.success,
              ~folderNodeFunc=
                (nodeId, nodeData, children) => {
                  let name = FolderNodeAssetService.getNodeName(nodeData);
@@ -280,7 +305,7 @@ module Method = {
 
     editorState
     |> _buildImageDataObjectURLIfNoBase64
-    |> Result.SameDataResult.either(
+    |> Result.SameDataResult.map(
          showSpecificTreeNodeChildren(
            (uiState, dispatchFunc),
            (

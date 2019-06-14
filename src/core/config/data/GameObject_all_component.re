@@ -21,7 +21,7 @@ let gameObject_all_component = {|
                 ]
             },
        {
-            "type":"Scripts",
+            "type":"Script",
             "components":[
                 { "type" : "Script" }
                 ]

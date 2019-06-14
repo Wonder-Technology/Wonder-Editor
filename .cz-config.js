@@ -15,6 +15,8 @@ module.exports = {
   ],
 
   scopes: [
+    { name: "inspectorCanvas" },
+    { name: "asset-bundle" },
     { name: "script" },
     { name: "language" },
     { name: "pwa" },
@@ -23,6 +25,7 @@ module.exports = {
     { name: "scene-view" },
     { name: "scene-tree" },
     { name: "left-header" },
+    { name: "header" },
     { name: "redo-undo" },
     { name: "inspector" },
     { name: "picking" },
@@ -63,6 +66,7 @@ module.exports = {
       { name: "duplicate" },
       { name: "dead-code" },
       { name: "code-climate" },
+      { name: "split" },
       { name: "rewrite" }
     ],
     chore: [

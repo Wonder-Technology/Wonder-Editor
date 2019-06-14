@@ -1,0 +1,1 @@
+let isBasicSourceTextureIndex = Wonderjs.IndexSourceTextureMainService.isBasicSourceTextureIndex;

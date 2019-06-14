@@ -1,5 +1,3 @@
-open Wonderjs;
-
 open Wonder_jest;
 
 open Expect;
@@ -14,79 +12,22 @@ let _ =
   describe("materialInspector: inspector canvas", () => {
     let sandbox = getSandboxDefaultVal();
 
+    let _willUnmount = currentNodeId =>
+      MaterialInspector.Method.willUnmount(
+        currentNodeId,
+        TestTool.getDispatch(),
+      );
+
     let _prepareState = () => {
       MainEditorSceneTool.initState(~sandbox, ());
-      MainEditorSceneTool.initInspectorEngineState(
-        ~sandbox,
-        ~isInitJob=false,
-        ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-            ~initPipelines=
-              {|
-             [
-              {
-                "name": "default",
-                "jobs": [
-                    {"name": "init_inspector_engine" }
-                ]
-              }
-            ]
-             |},
-            ~initJobs=
-              {|
-             [
-                {"name": "init_inspector_engine" }
-             ]
-             |},
-            ~loopPipelines=
-              {|
-             [
-                {
-                  "name": "default",
-                  "jobs": [
-                    {
-                        "name": "dispose"
-                    },
-                    {
-                        "name": "get_camera_data"
-                    },
-                    {
-                        "name": "create_basic_render_object_buffer"
-                    },
-                    {
-                        "name": "create_light_render_object_buffer"
-                    },
-                    {
-                        "name": "clear_last_send_component"
-                    },
-                    {
-                        "name": "send_uniform_shader_data"
-                    },
-                    {
-                        "name": "render_basic"
-                    },
-                    {
-                        "name": "front_render_light"
-                    }
-                  ]
-                }
-              ]
-             |},
-            (),
-          ),
-        (),
-      );
+
+      InspectorCanvasTool.prepareInspectorEngineState(sandbox);
     };
 
     beforeEach(() => {
       sandbox := createSandbox();
 
       _prepareState();
-
-      StateInspectorEngineService.unsafeGetState()
-      |> MainUtils._handleInspectorEngineState
-      |> StateInspectorEngineService.setState
-      |> ignore;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
@@ -135,8 +76,20 @@ let _ =
             });
             test(
               "unMount the MaterialInspector, should hide inspector canvas", () => {
-              let (_, _, inspectorParentDom, _) =
-                CanvasTool.stubMainCanvasAndInspectorCanvasDom(~sandbox, ());
+              let (
+                imgCanvasFakeBase64Str,
+                (
+                  mainParentDom,
+                  mainCanvasDom,
+                  inspectorParentDom,
+                  inspectorCanvasDom,
+                  imgCanvasDom,
+                ),
+              ) =
+                InspectorCanvasTool.prepareInspectorAndImgCanvasAndReturnAllData(
+                  ~sandbox,
+                  (),
+                );
 
               let (addedMaterialNodeId, materialComponent) =
                 MaterialInspectorCanvasTool.createNewMaterial();
@@ -152,7 +105,7 @@ let _ =
                 MaterialDataAssetType.LightMaterial,
                 materialComponent,
               );
-              MaterialInspectorTool.willUnmount();
+              _willUnmount(addedMaterialNodeId);
 
               inspectorParentDom##style##display |> expect == "none";
             });
@@ -336,94 +289,337 @@ let _ =
         });
       });
 
-      describe("test dispose material sphere gameObject in willUnmount", () => {
-        beforeEach(() =>
-          CanvasTool.stubMainCanvasAndInspectorCanvasDom(~sandbox, ())
-          |> ignore
-        );
-        afterEach(() => CanvasTool.restoreMainCanvasAndInspectorCanvasDom());
+      describe("test willUnmount", () => {
+        describe("restore arcball camer controllear", () => {
+          beforeEach(() => {
+            let _ =
+              InspectorCanvasTool.prepareInspectorAndImgCanvas(~sandbox, ());
+            ();
+          });
 
-        test("the container gameObject children array should be empty", () => {
-          let (addedMaterialNodeId, materialComponent) =
-            MaterialInspectorCanvasTool.createNewMaterial();
+          test("restore it's phi,theta", () => {
+            let (addedMaterialNodeId, materialComponent) =
+              MaterialInspectorCanvasTool.createNewMaterial();
 
-          MaterialInspector.Method.didMount(
-            MaterialDataAssetType.LightMaterial,
-            materialComponent,
-          );
+            _willUnmount(addedMaterialNodeId);
 
-          MaterialInspectorTool.willUnmount();
-
-          let inspectorEngineState =
-            StateInspectorEngineService.unsafeGetState();
-          let editorState = StateEditorService.getState();
-          let containerGameObject =
-            ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject(
-              editorState,
+            InspectorCanvasTool.ArcballCameraController.getAngleData
+            |> StateLogicService.getInspectorEngineStateToGetData
+            |> expect
+            == InspectorCanvasTool.ArcballCameraController.getDefaultAngleData();
+          });
+          test("update arcball camera controller", () => {
+            MainEditorSceneTool.initInspectorEngineState(
+              ~sandbox,
+              ~isInitJob=false,
+              ~noWorkerJobRecord=
+                NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                  ~initPipelines=
+                    {|
+                [
+                 {
+                   "name": "default",
+                   "jobs": [
+                       {"name": "init_inspector_engine" }
+                   ]
+                 }
+               ]
+                |},
+                  ~initJobs=
+                    {|
+                [
+                   {"name": "init_inspector_engine" }
+                ]
+                |},
+                  ~loopPipelines=
+                    {|
+                [
+                 {
+                   "name": "default",
+                   "jobs": [
+                       {"name": "update_camera" }
+                   ]
+                 }
+               ]
+                |},
+                  ~loopJobs=
+                    {|
+                [
+                       {"name": "update_camera" }
+                ]
+                |},
+                  (),
+                ),
+              (),
             );
+            MainUtils._handleInspectorEngineState
+            |> StateLogicService.getAndSetInspectorEngineState;
+            let (addedMaterialNodeId, materialComponent) =
+              MaterialInspectorCanvasTool.createNewMaterial();
 
-          inspectorEngineState
-          |> HierarchyGameObjectEngineService.getChildren(
-               containerGameObject,
-             )
-          |> Js.Array.length
-          |> expect == 0;
+            _willUnmount(addedMaterialNodeId);
+
+            InspectorCanvasTool.ArcballCameraController.getGameObjectTransformLocalPosition
+            |> StateLogicService.getInspectorEngineStateToGetData
+            |> expect == (0., 0.08, 1.1);
+          });
         });
 
-        test("the materialSphere->material component should be disposed", () => {
+        test(
+          "if material is removed, not create material sphere's snapshot", () => {
+          NoWorkerJobTool.initStateWithDisposeJob(~sandbox, ());
+          MainEditorSceneTool.prepareScene(sandbox);
           let (addedMaterialNodeId, materialComponent) =
             MaterialInspectorCanvasTool.createNewMaterial();
 
-          MaterialInspector.Method.didMount(
+          MainEditorAssetHeaderOperateNodeTool.removeMaterialNode(
+            ~materialNodeId=addedMaterialNodeId,
+            (),
+          );
+          _willUnmount(addedMaterialNodeId);
+
+          InspectorCanvasTool.Material.judgeNotCreateMaterialSphere();
+        });
+        test(
+          "if material sphere not in container, not create material sphere's snapshot",
+          () => {
+          let (addedMaterialNodeId, materialComponent) =
+            MaterialInspectorCanvasTool.createNewMaterial();
+
+          MaterialInspectorTool.didMount(
             MaterialDataAssetType.LightMaterial,
             materialComponent,
           );
+          InspectorCanvasTool.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory();
+          _willUnmount(addedMaterialNodeId);
 
-          let inspectorEngineState =
-            StateInspectorEngineService.unsafeGetState();
-          let editorState = StateEditorService.getState();
+          InspectorCanvasTool.Material.judgeNotCreateMaterialSphere();
+        });
 
-          let materialSphereLightMaterial =
-            InspectorEngineTool.getMaterialSphereLightMaterial(
-              editorState,
-              inspectorEngineState,
+        describe("else, create material sphere's snapshot", () => {
+          let _prepareAndExec =
+              (
+                ~sandbox,
+                ~inspectorCanvasWidth=371,
+                ~inspectorCanvasHeight=300,
+                (),
+              ) => {
+            let (imgCanvasFakeBase64Str, (inspectorCanvasDom, imgCanvasDom)) =
+              InspectorCanvasTool.prepareInspectorAndImgCanvas(
+                ~sandbox,
+                ~inspectorCanvasWidth,
+                ~inspectorCanvasHeight,
+                (),
+              );
+            let (addedMaterialNodeId, materialComponent) =
+              MaterialInspectorCanvasTool.createNewMaterial();
+
+            MaterialInspector.Method.didMount(
+              MaterialDataAssetType.LightMaterial,
+              materialComponent,
             );
 
-          MaterialInspectorTool.willUnmount();
+            _willUnmount(addedMaterialNodeId);
 
-          StateInspectorEngineService.unsafeGetState()
-          |> LightMaterialToolEngine.isAlive(materialSphereLightMaterial)
-          |> expect == false;
-        });
-        test("the materialSphere->geometry component should be disposed", () => {
-          let (addedMaterialNodeId, materialComponent) =
-            MaterialInspectorCanvasTool.createNewMaterial();
+            (
+              addedMaterialNodeId,
+              imgCanvasFakeBase64Str,
+              (inspectorCanvasDom, imgCanvasDom),
+            );
+          };
 
-          MaterialInspector.Method.didMount(
-            MaterialDataAssetType.LightMaterial,
-            materialComponent,
+          /* beforeEach(() =>
+               InspectorCanvasTool.prepareInspectorAndImgCanvas(~sandbox, ())
+               |> ignore
+             );
+             afterEach(() => CanvasTool.restoreMainCanvasAndInspectorCanvasDom()); */
+
+          test("clear img canvas", () => {
+            let _ = _prepareAndExec(~sandbox, ());
+
+            let editorState = StateEditorService.getState();
+            let imgContext =
+              editorState
+              |> ImgContextImgCanvasEditorService.unsafeGetImgContext;
+
+            CanvasType.convertContextToJsObj(imgContext)##clearRect
+            |> expect
+            |> toCalledWith([|0., 0., 50., 50.|]);
+          });
+
+          describe("clip the inspector-canvas snapshot", () =>
+            test(
+              "img-canvas's drawImage calledWith inspector-canvas's clip area and img-canvas snapshot area",
+              () => {
+                let (
+                  _,
+                  imgCanvasFakeBase64Str,
+                  (inspectorCanvasDom, imgCanvasDom),
+                ) =
+                  _prepareAndExec(
+                    ~sandbox,
+                    ~inspectorCanvasWidth=371,
+                    ~inspectorCanvasHeight=300,
+                    (),
+                  );
+
+                let editorState = StateEditorService.getState();
+                let imgContext =
+                  editorState
+                  |> ImgContextImgCanvasEditorService.unsafeGetImgContext;
+
+                CanvasType.convertContextToJsObj(imgContext)##drawImage
+                |> expect
+                |> toCalledWith([|
+                     inspectorCanvasDom |> Obj.magic,
+                     85.5,
+                     50.,
+                     200.,
+                     200.,
+                     0.,
+                     0.,
+                     50.,
+                     50.,
+                   |]);
+              },
+            )
           );
 
-          let inspectorEngineState =
-            StateInspectorEngineService.unsafeGetState();
-          let editorState = StateEditorService.getState();
+          describe("store snapshot in imageDataMap", () =>
+            test(
+              "should store img canvas snapshot in imageDataMap's base64", () => {
+              let (
+                addedMaterialNodeId,
+                imgCanvasFakeBase64Str,
+                (inspectorCanvasDom, imgCanvasDom),
+              ) =
+                _prepareAndExec(~sandbox, ());
 
-          let materialSphereGeometryComponent =
-            (editorState, inspectorEngineState)
-            |> InspectorEngineTool.getMaterialSphere
-            |> OptionService.unsafeGet
-            |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
-                 _,
-                 inspectorEngineState,
-               );
+              let editorState = StateEditorService.getState();
+              let {imageDataIndex}: NodeAssetType.materialNodeData =
+                editorState
+                |> OperateTreeAssetEditorService.unsafeFindNodeById(
+                     addedMaterialNodeId,
+                   )
+                |> MaterialNodeAssetService.getNodeData;
 
-          MaterialInspectorTool.willUnmount();
+              editorState
+              |> ImageDataMapAssetEditorService.unsafeGetData(imageDataIndex)
+              |> (
+                ({base64}) =>
+                  base64
+                  |> OptionService.unsafeGet
+                  |> expect == imgCanvasFakeBase64Str
+              );
+            })
+          );
 
-          StateInspectorEngineService.unsafeGetState()
-          |> GeometryToolEngine.isGeometryDisposed(
-               materialSphereGeometryComponent,
-             )
-          |> expect == true;
+          test("dispatch Project", () => {
+            let dispatchFuncStub = ReactTool.createDispatchFuncStub(sandbox);
+            let (
+              addedMaterialNodeId,
+              imgCanvasFakeBase64Str,
+              (inspectorCanvasDom, imgCanvasDom),
+            ) =
+              _prepareAndExec(~sandbox, ());
+
+            dispatchFuncStub
+            |> expect
+            |> toCalledWith([|
+                 AppStore.UpdateAction(Update([|UpdateStore.Project|])),
+               |]);
+          });
+        });
+
+        describe("dispose container->material sphere gameObject", () => {
+          beforeEach(() =>
+            InspectorCanvasTool.prepareInspectorAndImgCanvas(~sandbox, ())
+            |> ignore
+          );
+          afterEach(() => CanvasTool.restoreMainCanvasAndInspectorCanvasDom());
+
+          test("the container gameObject children array should be empty", () => {
+            let (addedMaterialNodeId, materialComponent) =
+              MaterialInspectorCanvasTool.createNewMaterial();
+
+            MaterialInspector.Method.didMount(
+              MaterialDataAssetType.LightMaterial,
+              materialComponent,
+            );
+
+            _willUnmount(addedMaterialNodeId);
+
+            let inspectorEngineState =
+              StateInspectorEngineService.unsafeGetState();
+            let editorState = StateEditorService.getState();
+            let containerGameObject =
+              ContainerGameObjectInspectorCanvasEditorService.unsafeGetContainerGameObject(
+                editorState,
+              );
+
+            inspectorEngineState
+            |> HierarchyGameObjectEngineService.getChildren(
+                 containerGameObject,
+               )
+            |> Js.Array.length
+            |> expect == 0;
+          });
+
+          test("the materialSphere->material component should be disposed", () => {
+            let (addedMaterialNodeId, materialComponent) =
+              MaterialInspectorCanvasTool.createNewMaterial();
+
+            MaterialInspector.Method.didMount(
+              MaterialDataAssetType.LightMaterial,
+              materialComponent,
+            );
+
+            let inspectorEngineState =
+              StateInspectorEngineService.unsafeGetState();
+            let editorState = StateEditorService.getState();
+
+            let materialSphereLightMaterial =
+              InspectorEngineTool.getMaterialSphereLightMaterial(
+                editorState,
+                inspectorEngineState,
+              );
+
+            _willUnmount(addedMaterialNodeId);
+
+            StateInspectorEngineService.unsafeGetState()
+            |> LightMaterialToolEngine.isAlive(materialSphereLightMaterial)
+            |> expect == false;
+          });
+          test("the materialSphere->geometry component should be disposed", () => {
+            let (addedMaterialNodeId, materialComponent) =
+              MaterialInspectorCanvasTool.createNewMaterial();
+
+            MaterialInspector.Method.didMount(
+              MaterialDataAssetType.LightMaterial,
+              materialComponent,
+            );
+
+            let inspectorEngineState =
+              StateInspectorEngineService.unsafeGetState();
+            let editorState = StateEditorService.getState();
+
+            let materialSphereGeometryComponent =
+              (editorState, inspectorEngineState)
+              |> InspectorEngineTool.getMaterialSphere
+              |> OptionService.unsafeGet
+              |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
+                   _,
+                   inspectorEngineState,
+                 );
+
+            _willUnmount(addedMaterialNodeId);
+
+            StateInspectorEngineService.unsafeGetState()
+            |> GeometryToolEngine.isGeometryDisposed(
+                 materialSphereGeometryComponent,
+               )
+            |> expect == true;
+          });
         });
       });
     });

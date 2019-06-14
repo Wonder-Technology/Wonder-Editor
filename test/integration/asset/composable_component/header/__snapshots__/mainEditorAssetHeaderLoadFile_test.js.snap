@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditorAssetHeader->load file test load file test logic test should add into nodeMap test imageNodeMap test show texture image, get it base64 from imageNodeMap 1`] = `
+exports[`MainEditorAssetHeader->load file test load file test logic test should add into nodeMap test imageDataMap test show texture image, get it base64 from imageDataMap 1`] = `
 <article
   className="wonder-asset-component"
 >

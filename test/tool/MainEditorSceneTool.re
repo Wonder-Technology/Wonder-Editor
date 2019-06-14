@@ -34,7 +34,7 @@ let _isCube = (gameObject, engineState) =>
     gameObject,
     engineState,
   )
-  && GeometryEngineService.getGeometryVertices(
+  && GeometryEngineService.unsafeGetGeometryVertices(
        GameObjectComponentEngineService.unsafeGetGeometryComponent(
          gameObject,
          engineState,
@@ -106,7 +106,13 @@ let initStateWithJob =
   StateEditorService.setState(
     CreateEditorStateEditorService.create()
     |> SettingTool.initSetting
-    |> TreeAssetEditorService.createTree,
+    |> TreeAssetEditorService.createTree
+    |> ImgContextImgCanvasEditorService.setImgContext(
+         (
+           BuildCanvasTool.getFakeCanvasDom("img-canvas", (0, 0), sandbox)
+           |> Obj.magic
+         )##getContext(),
+       ),
   )
   |> ignore;
 
@@ -131,10 +137,17 @@ let initState =
   );
 
 let initInspectorEngineState =
-    (~sandbox, ~noWorkerJobRecord, ~isInitJob=true, ()) => {
+    (
+      ~sandbox,
+      ~noWorkerJobRecord,
+      ~buffer=SettingToolEngine.buildBufferConfigStr(),
+      ~isInitJob=true,
+      (),
+    ) => {
   TestToolEngine.createAndSetInspectorEngineState(
     ~sandbox,
     ~isInitJob,
+    ~buffer,
     ~noWorkerJobRecord,
     (),
   );

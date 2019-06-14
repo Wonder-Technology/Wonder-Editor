@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Progress component test progress component test snapshot 1`] = `
+<article
+  className="wonder-progress"
+  id="wonder-progress"
+  style={
+    Object {
+      "display": "none",
+    }
+  }
+>
+  <div
+    className="progress-content"
+  >
+    <div
+      className="content-percent"
+      style={
+        Object {
+          "width": "0%",
+        }
+      }
+    >
+      0%
+    </div>
+  </div>
+  <div
+    className="progress-bg"
+  />
+</article>
+`;

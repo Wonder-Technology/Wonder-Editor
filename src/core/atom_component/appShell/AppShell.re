@@ -1,9 +1,5 @@
 module Method = {
-  let hideLoading = [%raw
-    loadingDomId => {|
-                          document.querySelector("#" + loadingDomId).style.display = "none";
-    |}
-  ];
+  let hideLoading = loadingDomId => DomUtils.hideDom(loadingDomId);
 };
 
 let component = ReasonReact.statelessComponent("AppShell");

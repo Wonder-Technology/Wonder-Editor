@@ -11,3 +11,9 @@ let getMeshRendererIsRender = MeshRendererAPI.getMeshRendererIsRender;
 
 let setMeshRendererIsRender = MeshRendererAPI.setMeshRendererIsRender;
 
+let getGlDrawMode = (gl, meshRenderer, engineState) =>
+  DrawModeMeshRendererService.getGlDrawMode(
+    gl,
+    meshRenderer,
+    CreateRenderStateMainService.createRenderState(engineState),
+  );

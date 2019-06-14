@@ -8,6 +8,90 @@ module Extract = {
     | _ => false
     };
 
+  let _changeScriptAssetsHashMapToEntriesMap = hashMap =>
+    hashMap
+    |> WonderCommonlib.ImmutableHashMapService.getValidEntries
+    |> WonderCommonlib.SparseMapType.arrayNotNullableToArrayNullable;
+
+  let _extractAndRelateScriptEventFunctionAssets =
+      (
+        gameObject,
+        scriptEventFunctionAssetHashMap,
+        totalExtractedScriptEventFunctionAssetEntriesArr,
+        engineState,
+      ) => {
+    let extractedScriptEventFunctionAssetEntriesArr =
+      switch (
+        GameObjectComponentEngineService.getScriptComponent(
+          gameObject,
+          engineState,
+        )
+      ) {
+      | None => WonderCommonlib.ArrayService.createEmpty()
+      | Some(script) =>
+        ExtractScriptAssetLogicService.getScriptEventFunctionDataEntriesArrNotInScriptAssets(
+          script,
+          scriptEventFunctionAssetHashMap,
+          engineState,
+        )
+      };
+
+    let engineState =
+      RelateGameObjectAndScriptEventFunctionAssetUtils.replaceToScriptEventFunctionAssetEventFunctionData(
+        gameObject,
+        scriptEventFunctionAssetHashMap
+        |> _changeScriptAssetsHashMapToEntriesMap,
+        engineState,
+      );
+
+    (
+      ArrayService.fastConcat(
+        totalExtractedScriptEventFunctionAssetEntriesArr,
+        extractedScriptEventFunctionAssetEntriesArr,
+      ),
+      engineState,
+    );
+  };
+
+  let _extractAndRelateScriptAttributeAssets =
+      (
+        gameObject,
+        scriptAttributeAssetHashMap,
+        totalExtractedScriptAttributeAssetEntriesArr,
+        engineState,
+      ) => {
+    let extractedScriptAttributeAssetEntriesArr =
+      switch (
+        GameObjectComponentEngineService.getScriptComponent(
+          gameObject,
+          engineState,
+        )
+      ) {
+      | None => WonderCommonlib.ArrayService.createEmpty()
+      | Some(script) =>
+        ExtractScriptAssetLogicService.getScriptAttributeEntriesArrNotInScriptAssets(
+          script,
+          scriptAttributeAssetHashMap,
+          engineState,
+        )
+      };
+
+    /* let engineState =
+       RelateGameObjectAndScriptAttributeAssetUtils.replaceToScriptAttributeAssetAttribute(
+         gameObject,
+         scriptAttributeAssetHashMap|> _changeScriptAssetsHashMapToEntriesMap,
+         engineState,
+       ); */
+
+    (
+      ArrayService.fastConcat(
+        totalExtractedScriptAttributeAssetEntriesArr,
+        extractedScriptAttributeAssetEntriesArr,
+      ),
+      engineState,
+    );
+  };
+
   let _isLightMaterialDataEqual =
       (
         (name, diffuseColor, shininess, textureData),
@@ -232,14 +316,32 @@ module Extract = {
     )
     |> ImmutableSparseMapType.arrayToImmutableSparseMap;
 
-  /* MaterialNodeMapAssetEditorService.getValidValues(editorState)
-     |> WonderCommonlib.ImmutableSparseMapService.filter(({type_}: NodeAssetType.materialResultType) =>
-          type_ === materialType
-        )
-     |> WonderCommonlib.ImmutableSparseMapService.map(
-          ({materialComponent}: NodeAssetType.materialResultType) =>
-          materialComponent
-        ); */
+  let _buildScriptEventFunctionAssetHashMap = editorState =>
+    ScriptEventFunctionNodeAssetEditorService.findAllScriptEventFunctionNodes(
+      editorState,
+    )
+    |> Js.Array.map(node => {
+         let {eventFunctionData, name}: NodeAssetType.scriptEventFunctionNodeData =
+           ScriptEventFunctionNodeAssetService.getNodeData(node);
+
+         (name, eventFunctionData);
+       })
+    |> ImmutableHashMapService.fromArray;
+
+  /* |> WonderCommonlib.SparseMapType.arrayNotNullableToArrayNullable; */
+
+  let _buildScriptAttributeAssetHashMap = editorState =>
+    ScriptAttributeNodeAssetEditorService.findAllScriptAttributeNodes(
+      editorState,
+    )
+    |> Js.Array.map(node => {
+         let {attribute, name}: NodeAssetType.scriptAttributeNodeData =
+           ScriptAttributeNodeAssetService.getNodeData(node);
+
+         (name, attribute);
+       })
+    /* |> WonderCommonlib.SparseMapType.arrayNotNullableToArrayNullable; */
+    |> ImmutableHashMapService.fromArray;
 
   let _prepareData = (editorState, engineState) => {
     let defaultMaterialData =
@@ -286,6 +388,10 @@ module Extract = {
       basicMaterialDataMap,
       lightMaterialDataMap,
       textureAssetDataMap,
+      (
+        _buildScriptEventFunctionAssetHashMap(editorState),
+        _buildScriptAttributeAssetHashMap(editorState),
+      ),
     );
   };
 
@@ -298,13 +404,19 @@ module Extract = {
       basicMaterialDataMap,
       lightMaterialDataMap,
       textureAssetDataMap,
+      (scriptEventFunctionAssetHashMap, scriptAttributeAssetHashMap),
     ) =
       _prepareData(editorState, engineState);
 
     let (
       _,
       _,
-      (extractedMaterialAssetDataArr, extractedTextureAssetDataArr),
+      (
+        extractedMaterialAssetDataArr,
+        extractedTextureAssetDataArr,
+        extractedScriptEventFunctionAssetEntriesArr,
+        extractedScriptAttributeAssetEntriesArr,
+      ),
       (editorState, engineState),
     ) =
       allGameObjects
@@ -313,11 +425,32 @@ module Extract = {
              (
                (replacedTargetMaterialMap, replacedTargetTextureMap),
                (hasExtractedMaterialAssetMap, hasExtractedTextureAssetMap),
-               (extractedMaterialAssetDataArr, extractedTextureAssetDataArr),
+               (
+                 extractedMaterialAssetDataArr,
+                 extractedTextureAssetDataArr,
+                 extractedScriptEventFunctionAssetEntriesArr,
+                 extractedScriptAttributeAssetEntriesArr,
+               ),
                (editorState, engineState),
              ),
              gameObject,
            ) => {
+             let (extractedScriptEventFunctionAssetEntriesArr, engineState) =
+               _extractAndRelateScriptEventFunctionAssets(
+                 gameObject,
+                 scriptEventFunctionAssetHashMap,
+                 extractedScriptEventFunctionAssetEntriesArr,
+                 engineState,
+               );
+
+             let (extractedScriptAttributeAssetEntriesArr, engineState) =
+               _extractAndRelateScriptAttributeAssets(
+                 gameObject,
+                 scriptAttributeAssetHashMap,
+                 extractedScriptAttributeAssetEntriesArr,
+                 engineState,
+               );
+
              let (
                doseNeedExtractTextureAssets,
                replacedTargetMaterialMap,
@@ -369,6 +502,8 @@ module Extract = {
                    (
                      extractedMaterialAssetDataArr,
                      extractedTextureAssetDataArr,
+                     extractedScriptEventFunctionAssetEntriesArr,
+                     extractedScriptAttributeAssetEntriesArr,
                    ),
                    (editorState, engineState),
                  );
@@ -379,6 +514,8 @@ module Extract = {
                  (
                    extractedMaterialAssetDataArr,
                    extractedTextureAssetDataArr,
+                   extractedScriptEventFunctionAssetEntriesArr,
+                   extractedScriptAttributeAssetEntriesArr,
                  ),
                  (editorState, engineState),
                );
@@ -392,13 +529,23 @@ module Extract = {
                WonderCommonlib.ImmutableSparseMapService.createEmpty(),
                WonderCommonlib.ImmutableSparseMapService.createEmpty(),
              ),
-             ([||], [||]),
+             (
+               WonderCommonlib.ArrayService.createEmpty(),
+               WonderCommonlib.ArrayService.createEmpty(),
+               WonderCommonlib.ArrayService.createEmpty(),
+               WonderCommonlib.ArrayService.createEmpty(),
+             ),
              (editorState, engineState),
            ),
          );
 
     (
-      (extractedMaterialAssetDataArr, extractedTextureAssetDataArr),
+      (
+        extractedMaterialAssetDataArr,
+        extractedTextureAssetDataArr,
+        extractedScriptEventFunctionAssetEntriesArr,
+        extractedScriptAttributeAssetEntriesArr,
+      ),
       (editorState, engineState),
     );
   };
@@ -444,6 +591,97 @@ module AssetTree = {
       (editorState, newNode);
     };
 
+  let _createMateiralNodeAndSnapshot =
+      (folderNode, (material, materialName), editorState) => {
+    let (editorState, newNodeId) =
+      IdAssetEditorService.generateNodeId(editorState);
+    let (editorState, newImageDataIndex) =
+      IndexAssetEditorService.generateImageDataMapIndex(editorState);
+
+    editorState
+    |> MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
+         folderNode,
+         MaterialNodeAssetService.buildNode(
+           ~nodeId=newNodeId,
+           ~type_=MaterialDataAssetType.LightMaterial,
+           ~materialComponent=material,
+           ~imageDataIndex=newImageDataIndex,
+         ),
+       )
+    |> ImageDataMapAssetEditorService.setData(
+         newImageDataIndex,
+         ImageDataMapAssetService.buildData(
+           ~base64=None,
+           ~uint8Array=None,
+           ~name=materialName,
+           ~blobObjectURL=None,
+           ~mimeType=ImageUtils.getDefaultMimeType(),
+           (),
+         ),
+       )
+    |> ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByMaterialNodeId(
+         DomHelper.getElementById("inspector-canvas"),
+         DomHelper.getElementById("img-canvas"),
+         newNodeId,
+       );
+  };
+
+  let _iterateMaterialArrayBuildMaterialNodes =
+      (
+        extractedMaterialAssetDataArr,
+        folderNode,
+        (editorState, engineState, inspectorEngineState),
+      ) =>
+    extractedMaterialAssetDataArr
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (.
+           (editorState, engineState, inspectorEngineState),
+           ((material, materialType), (getNameFunc, setNameFunc)),
+         ) => {
+           let materialName =
+             getNameFunc(~material, ~type_=materialType, ~engineState)
+             ->(
+                 OperateTreeAssetLogicService.getUniqueNodeName(
+                   folderNode,
+                   engineState,
+                 )
+               );
+
+           let engineState =
+             setNameFunc(
+               ~material,
+               ~type_=materialType,
+               ~name=materialName,
+               ~engineState,
+             );
+
+           let (editorState, (inspectorEngineState, _)) =
+             (editorState, inspectorEngineState)
+             |> InspectorCanvasUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+             |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
+                  MaterialDataAssetType.LightMaterial,
+                  material,
+                  editorState,
+                  engineState,
+                );
+
+           let inspectorEngineState =
+             inspectorEngineState
+             |> InspectorCanvasUtils.restoreArcballCameraControllerAngle
+             |> StateLogicService.renderInspectorEngineStateAndReturnState;
+
+           let editorState =
+             _createMateiralNodeAndSnapshot(
+               folderNode,
+               (material, materialName),
+               editorState,
+             );
+
+           (editorState, engineState, inspectorEngineState);
+         },
+         (editorState, engineState, inspectorEngineState),
+       );
+
   let _addMaterialNodeToAssetTree =
       (
         extractedMaterialAssetDataArr,
@@ -462,45 +700,22 @@ module AssetTree = {
             (editorState, engineState),
           );
 
-        extractedMaterialAssetDataArr
-        |> WonderCommonlib.ArrayService.reduceOneParam(
-             (.
-               (editorState, engineState),
-               ((material, materialType), (getNameFunc, setNameFunc)),
-             ) => {
-               let materialName =
-                 getNameFunc(~material, ~type_=materialType, ~engineState)
-                 |. OperateTreeAssetLogicService.getUniqueNodeName(
-                      folderNode,
-                      engineState,
-                    );
+        let (editorState, engineState, inspectorEngineState) =
+          _iterateMaterialArrayBuildMaterialNodes(
+            extractedMaterialAssetDataArr,
+            folderNode,
+            (
+              editorState,
+              engineState,
+              StateInspectorEngineService.unsafeGetState(),
+            ),
+          );
 
-               let engineState =
-                 setNameFunc(
-                   ~material,
-                   ~type_=materialType,
-                   ~name=materialName,
-                   ~engineState,
-                 );
+        (editorState, inspectorEngineState)
+        |> InspectorCanvasUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
+        |> StateInspectorEngineService.setState;
 
-               let (editorState, newNodeId) =
-                 IdAssetEditorService.generateNodeId(editorState);
-
-               let editorState =
-                 MaterialNodeAssetEditorService.addMaterialNodeToAssetTree(
-                   folderNode,
-                   MaterialNodeAssetService.buildNode(
-                     ~nodeId=newNodeId,
-                     ~type_=MaterialDataAssetType.LightMaterial,
-                     ~materialComponent=material,
-                   ),
-                   editorState,
-                 );
-
-               (editorState, engineState);
-             },
-             (editorState, engineState),
-           );
+        (editorState, engineState);
       };
 
   let _addTextureNodeToAssetTree =
@@ -534,16 +749,18 @@ module AssetTree = {
              ) => {
                let textureName =
                  getTextureNameFunc(texture, engineState)
-                 |. OperateTreeAssetLogicService.getUniqueNodeName(
-                      folderNode,
-                      engineState,
-                    );
+                 ->(
+                     OperateTreeAssetLogicService.getUniqueNodeName(
+                       folderNode,
+                       engineState,
+                     )
+                   );
 
                let engineState =
                  setTextureNameFunc(textureName, texture, engineState);
 
                let (editorState, imageDataIndex) =
-                 ImageDataMapAssetEditorService.addImageNodeByUint8Array(
+                 ImageDataMapAssetEditorService.addImageDataIfUint8ArrayNotExist(
                    imageUint8Array,
                    imageName,
                    mimeType,
@@ -570,10 +787,94 @@ module AssetTree = {
            );
       };
 
+  let _addScriptEventFunctionNodeToAssetTree =
+      (
+        extractedScriptEventFunctionAssetEntriesArr,
+        selectedFolderNodeInAssetTree,
+        (editorState, engineState),
+      ) =>
+    extractedScriptEventFunctionAssetEntriesArr |> Js.Array.length === 0 ?
+      (editorState, engineState) :
+      {
+        let folderName = "ScriptEventFunctions";
+
+        let (editorState, folderNode) =
+          _buildFolderNode(
+            folderName,
+            selectedFolderNodeInAssetTree,
+            (editorState, engineState),
+          );
+
+        extractedScriptEventFunctionAssetEntriesArr
+        |> WonderCommonlib.ArrayService.reduceOneParam(
+             (. (editorState, engineState), (name, eventFunctionData)) => {
+               let (editorState, nodeId) =
+                 IdAssetEditorService.generateNodeId(editorState);
+
+               let editorState =
+                 ScriptEventFunctionNodeAssetEditorService.addScriptEventFunctionNodeToAssetTree(
+                   folderNode,
+                   ScriptEventFunctionNodeAssetService.buildNode(
+                     ~nodeId,
+                     ~name,
+                     ~eventFunctionData,
+                   ),
+                   editorState,
+                 );
+
+               (editorState, engineState);
+             },
+             (editorState, engineState),
+           );
+      };
+
+  let _addScriptAttributeNodeToAssetTree =
+      (
+        extractedScriptAttributeAssetEntriesArr,
+        selectedFolderNodeInAssetTree,
+        (editorState, engineState),
+      ) =>
+    extractedScriptAttributeAssetEntriesArr |> Js.Array.length === 0 ?
+      (editorState, engineState) :
+      {
+        let folderName = "ScriptAttributes";
+
+        let (editorState, folderNode) =
+          _buildFolderNode(
+            folderName,
+            selectedFolderNodeInAssetTree,
+            (editorState, engineState),
+          );
+
+        extractedScriptAttributeAssetEntriesArr
+        |> WonderCommonlib.ArrayService.reduceOneParam(
+             (. (editorState, engineState), (name, attribute)) => {
+               let (editorState, nodeId) =
+                 IdAssetEditorService.generateNodeId(editorState);
+
+               let editorState =
+                 ScriptAttributeNodeAssetEditorService.addScriptAttributeNodeToAssetTree(
+                   folderNode,
+                   ScriptAttributeNodeAssetService.buildNode(
+                     ~nodeId,
+                     ~name,
+                     ~attribute,
+                   ),
+                   editorState,
+                 );
+
+               (editorState, engineState);
+             },
+             (editorState, engineState),
+           );
+      };
+
   let addNodeToAssetTree =
       (
         extractedMaterialAssetDataArr,
         extractedTextureAssetDataArr,
+        extractedScriptEventFunctionAssetEntriesArr,
+        extractedScriptAttributeAssetEntriesArr,
         (editorState, engineState),
       ) => {
     let selectedFolderNodeInAssetTree =
@@ -587,6 +888,14 @@ module AssetTree = {
        )
     |> _addTextureNodeToAssetTree(
          extractedTextureAssetDataArr,
+         selectedFolderNodeInAssetTree,
+       )
+    |> _addScriptEventFunctionNodeToAssetTree(
+         extractedScriptEventFunctionAssetEntriesArr,
+         selectedFolderNodeInAssetTree,
+       )
+    |> _addScriptAttributeNodeToAssetTree(
+         extractedScriptAttributeAssetEntriesArr,
          selectedFolderNodeInAssetTree,
        );
   };

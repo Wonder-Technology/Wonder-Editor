@@ -30,6 +30,13 @@ let header_language_array = [|
     },
   },
   {
+    title: "file-new-scene",
+    language: {
+      zh: {j|创建新的场景|j},
+      en: "New Scene",
+    },
+  },
+  {
     title: "header-edit",
     language: {
       zh: {j|编辑|j},
@@ -83,6 +90,34 @@ let header_language_array = [|
     language: {
       zh: {j|关于Wonder|j},
       en: "About Wonder",
+    },
+  },
+  {
+    title: "header-asset-bundle",
+    language: {
+      zh: {j|AssetBundle|j},
+      en: "AssetBundle",
+    },
+  },
+  {
+    title: "generate-single-rab",
+    language: {
+      zh: {j|创建单个RAB|j},
+      en: "Generate Single RAB",
+    },
+  },
+  {
+    title: "generate-single-sab",
+    language: {
+      zh: {j|创建单个SAB|j},
+      en: "Generate Single SAB",
+    },
+  },
+  {
+    title: "generate-all-ab",
+    language: {
+      zh: {j|从多个“单个AB”中创建多个AB的zip包|j},
+      en: "Generate All AB->zip from multiple 'Single AB'",
     },
   },
   {

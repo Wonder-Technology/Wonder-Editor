@@ -1,0 +1,44 @@
+
+.wonder-selectTree {
+    width: 100%;
+    font-size: 13px;
+    position: relative;
+    padding-top: 5px;
+    .wonder-tree-node {
+        margin: 0px;
+        padding: 0px;
+        top: 0px;
+        z-index: 40;
+        color: #fff;
+        font-weight: normal;
+
+        $size:25px;
+
+        li {
+            width:100%;
+            height: $size;
+            display: flex;
+            align-items: center;
+            .tree-container {
+                width: 100%;
+                height: $size;
+                display: flex;
+                align-items: center;
+                color:#000;
+                input{
+                    width:15px;
+                    height:15px;
+                }
+                .treeNode-icon {
+                    width: 20px;
+                    height: 20px;
+                    margin-top: -3px;
+                    margin-right: 3px;
+                }
+            }
+        }
+        ul {
+            margin-left: 18px;
+        }
+    }
+}

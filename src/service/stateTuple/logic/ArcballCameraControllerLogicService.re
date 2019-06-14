@@ -1,12 +1,28 @@
 open ShapeType;
 
-let _renderWhenStop = (event, handleFunc, engineState) => {
+let _renderWhenStop = (event, (handleFunc, renderWhenStopFunc), engineState) => {
   let (engineState, event) = handleFunc(. event, engineState);
 
-  let engineState = StateLogicService.renderWhenStop(engineState);
+  let engineState = renderWhenStopFunc(engineState);
 
   (engineState, event);
 };
+
+let _handleEventFuncForSceneView = (event, handleFunc, engineState) =>
+  MouseEventService.isRightMouseButton(event) ?
+    _renderWhenStop(
+      event,
+      (handleFunc, StateLogicService.renderWhenStop),
+      engineState,
+    ) :
+    (engineState, event);
+
+let _handleEventFuncForInspector = (event, handleFunc, inspectorEngineState) =>
+  _renderWhenStop(
+    event,
+    (handleFunc, StateLogicService.renderInspectorEngineStateWhenStop),
+    inspectorEngineState,
+  );
 
 let _isKeyAffectedArballCameraController = ({key}: EventType.keyboardEvent) =>
   switch (key) {
@@ -34,8 +50,17 @@ let _handleKeyDownForSceneView = (event, keydownHandleFunc, engineState) =>
     } :
     engineState;
 
-let bindArcballCameraControllerEventForSceneView =
-    (cameraController, engineState) => {
+let _bindArcballCameraControllerEvent =
+    (
+      cameraController,
+      (
+        pointDragStartEventName,
+        pointDragOverEventName,
+        pointDragDropEventName,
+      ),
+      handleEventFunc,
+      engineState,
+    ) => {
   let (
     engineState,
     pointDragStartHandleFunc,
@@ -51,61 +76,97 @@ let bindArcballCameraControllerEventForSceneView =
 
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=SceneViewEventEditorService.getPointDragStartEventName(),
+      ~eventName=pointDragStartEventName,
       ~handleFunc=
         (. event, engineState) =>
-          MouseEventService.isRightMouseButton(event) ?
-            _renderWhenStop(event, pointDragStartHandleFunc, engineState) :
-            (engineState, event),
+          handleEventFunc(event, pointDragStartHandleFunc, engineState),
       ~state=engineState,
       (),
     );
 
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=SceneViewEventEditorService.getPointDragDropEventName(),
+      ~eventName=pointDragOverEventName,
       ~handleFunc=
         (. event, engineState) =>
-          MouseEventService.isRightMouseButton(event) ?
-            _renderWhenStop(event, pointDragDropHandleFunc, engineState) :
-            (engineState, event),
+          handleEventFunc(event, pointDragOverHandleFunc, engineState),
       ~state=engineState,
       (),
     );
 
   let engineState =
     ManageEventEngineService.onCustomGlobalEvent(
-      ~eventName=SceneViewEventEditorService.getPointDragOverEventName(),
+      ~eventName=pointDragDropEventName,
       ~handleFunc=
         (. event, engineState) =>
-          MouseEventService.isRightMouseButton(event) ?
-            _renderWhenStop(event, pointDragOverHandleFunc, engineState) :
-            (engineState, event),
+          handleEventFunc(event, pointDragDropHandleFunc, engineState),
       ~state=engineState,
       (),
     );
 
-  let engineState =
+  (engineState, (pointScaleHandleFunc, keydownHandleFunc));
+};
+
+let bindArcballCameraControllerEventForSceneView =
+    (cameraController, mainEngineState) => {
+  let (mainEngineState, (pointScaleHandleFunc, keydownHandleFunc)) =
+    _bindArcballCameraControllerEvent(
+      cameraController,
+      (
+        SceneViewEventEditorService.getPointDragStartEventName(),
+        SceneViewEventEditorService.getPointDragOverEventName(),
+        SceneViewEventEditorService.getPointDragDropEventName(),
+      ),
+      _handleEventFuncForSceneView,
+      mainEngineState,
+    );
+
+  let mainEngineState =
     ManageEventEngineService.onCustomGlobalEvent(
       ~eventName=SceneViewEventEditorService.getPointScaleEventName(),
       ~handleFunc=
-        (. event, engineState) =>
-          _renderWhenStop(event, pointScaleHandleFunc, engineState),
-      ~state=engineState,
+        (. event, mainEngineState) =>
+          _renderWhenStop(
+            event,
+            (pointScaleHandleFunc, StateLogicService.renderWhenStop),
+            mainEngineState,
+          ),
+      ~state=mainEngineState,
       (),
     );
 
-  let engineState =
+  let mainEngineState =
     ManageEventEngineService.onKeyboardEvent(
       ~eventName=EventType.KeyDown_SceneView |> Obj.magic,
       ~handleFunc=
-        (. event: EventType.keyboardEvent, engineState) =>
-          _handleKeyDownForSceneView(event, keydownHandleFunc, engineState),
-      ~state=engineState,
+        (. event: EventType.keyboardEvent, mainEngineState) =>
+          _handleKeyDownForSceneView(
+            event,
+            keydownHandleFunc,
+            mainEngineState,
+          ),
+      ~state=mainEngineState,
       (),
     );
 
-  engineState;
+  mainEngineState;
+};
+
+let bindArcballCameraControllerEventForInspector =
+    (cameraController, inspectorEngineState) => {
+  let (inspectorEngineState, _) =
+    _bindArcballCameraControllerEvent(
+      cameraController,
+      (
+        InspectorEventEditorService.getPointDragStartEventName(),
+        InspectorEventEditorService.getPointDragOverEventName(),
+        InspectorEventEditorService.getPointDragDropEventName(),
+      ),
+      _handleEventFuncForInspector,
+      inspectorEngineState,
+    );
+
+  inspectorEngineState;
 };
 
 let _checkSceneAllArcballCameraControllersNotBindEvent = engineState =>

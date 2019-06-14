@@ -11,7 +11,7 @@
     @import "./normalInput";
     .modal-item {
         width: 470px;
-        height: 200px;
+        height: 400px;
         position: relative;
         background: #c1c1c1;
         border-radius: 5px;
@@ -20,11 +20,10 @@
             width: 100%;
             height: 22px;
             line-height: 22px;
-            font-size: 14px;
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
             text-align: center;
-            font-size: 17px;
+            font-size: 15px;
             font-weight: bold;
             padding: 5px 0px 2px 0px;
             border-bottom: 1px solid #868686;
@@ -42,7 +41,7 @@
         .modal-item-content {
             @import "../../utils/scrollBarUtils";
             color: #000;
-            height: 114px;
+            height: 314px;
             overflow-y: auto;
             width: 90%;
             margin-left: 5%;

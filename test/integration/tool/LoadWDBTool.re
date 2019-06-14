@@ -1,14 +1,7 @@
 open Js.Typed_array;
 
 let findGameObjectsByName = (name, engineState) =>
-  engineState
-  |> HierarchyGameObjectEngineService.getAllGameObjects(
-       SceneEngineService.getSceneGameObject(engineState),
-     )
-  |> Js.Array.filter(gameObject =>
-       GameObjectEngineService.getGameObjectName(gameObject, engineState)
-       === Some(name)
-     );
+  SceneToolEngine.findGameObjectByName(name, engineState);
 
 let findGameObjectByName = (name, engineState) =>
   findGameObjectsByName(name, engineState) |> ArrayService.unsafeGetFirst;
@@ -286,7 +279,7 @@ let getBoxTexturedGeometryData = () => (
     22,
     21,
   |])
-  |. Some,
+  ->Some,
   None,
 );
 
@@ -532,7 +525,7 @@ module Truck = {
              1624,
              1625,
            |])
-           |. Some,
+           ->Some,
            None,
          ),
        )
@@ -726,7 +719,7 @@ module Truck = {
              71,
              69,
            |])
-           |. Some,
+           ->Some,
            None,
          ),
        )
@@ -920,7 +913,7 @@ module Truck = {
              47,
              45,
            |])
-           |. Some,
+           ->Some,
            None,
          ),
        )
@@ -1155,7 +1148,7 @@ module Truck = {
              68,
              67,
            |])
-           |. Some,
+           ->Some,
            None,
          ),
        );

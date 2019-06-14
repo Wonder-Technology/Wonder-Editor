@@ -12,7 +12,7 @@ module Method = {
   let changeGeometry = MainEditorChangeGeometryEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   /* let _isValidGeometry = (geometry, engineState) =>
-     GeometryEngineService.getGeometryVertices(geometry, engineState)
+     GeometryEngineService.unsafeGetGeometryVertices(geometry, engineState)
      |> Js.Typed_array.Float32Array.length > 0; */
 
   let _isGameObjectLightMaterialComponentHasMap = (gameObject, engineState) => {

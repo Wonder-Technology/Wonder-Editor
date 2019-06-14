@@ -12,7 +12,7 @@ let replaceMaterialByMaterialType =
     };
 
   let engineState =
-    InspectorRenderGroupUtils.Dispose.replaceGameObjectsMaterialsOfTheMaterial(
+    InspectorRenderGroupUtils.Dispose.disposeMaterialOrReplaceGameObjectsMaterialsOfTheMaterial(
       (
         (sourceMaterial, targetMaterial),
         (sourceMaterialType, targetMaterialType),

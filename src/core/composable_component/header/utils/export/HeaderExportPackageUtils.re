@@ -1,40 +1,23 @@
 open Js.Typed_array;
 
-let _buildEmptyUint8Array = () => Uint8Array.make([||]);
+let _buildDefaultMaterialSnapshotUint8Array = () =>
+  BufferUtils.convertBase64ToUint8Array(
+    OperateMaterialLogicService.getDefaultSnapshotBase64(),
+  );
 
-let _buildImageNodeUint8Array = editorState =>
+let _buildImageDataUint8Array = editorState =>
   ImageDataMapAssetEditorService.getMap(editorState)
-  |> WonderCommonlib.ImmutableSparseMapService.map((. data) =>
-       Js.Nullable.bind(
-         data, (. ({uint8Array, base64}: ImageDataType.imageData) as data) =>
-         {
-           ...data,
-           uint8Array:
-             (
-               switch (uint8Array) {
-               | Some(uint8Array) => uint8Array
-               | None =>
-                 switch (base64) {
-                 | Some(base64) =>
-                   BufferUtils.convertBase64ToUint8Array(base64)
-                 | None =>
-                   ConsoleUtils.error(
-                     LogUtils.buildErrorMessage(
-                       ~description={j|image->base64 should exist|j},
-                       ~reason="",
-                       ~solution={j||j},
-                       ~params={j||j},
-                     ),
-                     editorState,
-                   );
-
-                   _buildEmptyUint8Array();
-                 }
-               }
-             )
-             ->Some,
-         }
-       )
+  |> WonderCommonlib.ImmutableSparseMapService.mapValid(
+       (. data: ImageDataType.imageData) =>
+       {
+         ...data,
+         uint8Array:
+           ImageDataAssetService.getUint8Array(
+             data,
+             _buildDefaultMaterialSnapshotUint8Array,
+           )
+           ->Some,
+       }
      )
   |> ImageDataMapAssetEditorService.setMap(_, editorState);
 
@@ -42,7 +25,7 @@ let _export = () => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
 
-  let editorState = editorState |> _buildImageNodeUint8Array;
+  let editorState = editorState |> _buildImageDataUint8Array;
 
   let imageUint8ArrayMap =
     Uint8ArrayAssetEditorService.buildImageUint8ArrayMap(editorState);
@@ -79,7 +62,7 @@ let exportPackage = packageName => {
     {
       ConsoleUtils.warn(
         LanguageUtils.getMessageLanguageDataByType(
-          "header-export-package",
+          "should-in-stop",
           languageType,
         ),
         editorState,

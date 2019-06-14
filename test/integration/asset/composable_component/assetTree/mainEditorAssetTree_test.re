@@ -20,6 +20,8 @@ let _ =
         sandbox,
         MainEditorAssetTool.initAssetTree,
       );
+
+
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });

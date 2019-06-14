@@ -91,6 +91,10 @@ let _registerJobForInspectorEngine = engineState =>
        "init_inspector_engine",
        InitInspectorEngineJob.initInspectorEngineJob,
      )
+  |> JobEngineService.registerNoWorkerInitJob(
+       "init_event_for_editor_inspector",
+       InitEventForInspectorJob.initJob,
+     )
   |> JobEngineService.registerNoWorkerLoopJob(
        "reallocate_cpu_memory",
        ReallocateCPUMemoryJob.reallocateJob,

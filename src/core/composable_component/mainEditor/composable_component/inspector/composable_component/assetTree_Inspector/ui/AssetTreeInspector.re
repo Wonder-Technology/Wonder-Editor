@@ -37,9 +37,7 @@ module Method = {
       </h1>
       <hr />
       <div className="inspector-item">
-        <div className="item-header">
-          <span> {DomHelper.textEl("Name")} </span>
-        </div>
+        <div className="item-header"> {DomHelper.textEl("Name")} </div>
         <div className="item-content">
           <input
             className="input-component float-input"
@@ -132,9 +130,21 @@ module Method = {
       }
     />;
 
-  let buildWDBComponent = (state, send, _, _) =>
+  let buildWDBComponent =
+      ((uiState, dispatchFunc), (state, send), currentNodeId, {name, wdbGameObject}) =>
     <WDBInspector
       name={state.inputValue}
+      onChangeFunc={_e => send(change(_e))}
+      onBlurFunc={_e => send(Blur)}
+      wdbGameObject
+      currentNodeId
+dispatchFunc
+    />;
+
+  let buildAssetBundleComponent = ((state, send), currentNodeId, nodeData) =>
+    <AssetBundleInspector
+      name={state.inputValue}
+      type_={AssetBundleNodeAssetService.getTypeStr(nodeData)}
       onChangeFunc={_e => send(change(_e))}
       onBlurFunc={_e => send(Blur)}
     />;
@@ -154,7 +164,8 @@ module Method = {
         buildScriptEventFunctionComponent(reduxTuple, state),
       ~scriptAttributeNodeFunc=
         buildScriptAttributeComponent(reduxTuple, state),
-      ~wdbNodeFunc=buildWDBComponent(state, send),
+      ~wdbNodeFunc=buildWDBComponent(reduxTuple, (state, send)),
+      ~assetBundleNodeFunc=buildAssetBundleComponent((state, send)),
       ~folderNodeFunc=buildFolderComponent(state, send, languageType),
     );
 
@@ -207,6 +218,12 @@ module Method = {
           ~nodeData=currentNodeData,
         ),
       );
+
+    {inputValue: baseName, originalName: baseName};
+  };
+
+  let initAssetBundleName = (_currentNodeId, currentNodeData) => {
+    let baseName = AssetBundleNodeAssetService.getNodeName(currentNodeData);
 
     {inputValue: baseName, originalName: baseName};
   };
@@ -271,6 +288,7 @@ let make =
       ~scriptAttributeNodeFunc=
         Method.initScriptAttributeNodeName(engineState),
       ~wdbNodeFunc=Method.initWDBName,
+      ~assetBundleNodeFunc=Method.initAssetBundleName,
       ~folderNodeFunc=Method.initFolderName,
     );
   },

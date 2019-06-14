@@ -48,7 +48,7 @@ let _ =
           ~pageY=100,
           (),
         );
-        EventTransformGizmosTool.triggerMouseMove(
+        EventTransformGizmosTool.triggerFirstMouseDragOverEvent(
           ~sandbox,
           ~pageX=250 + 20,
           ~pageY=100,
@@ -142,7 +142,7 @@ let _ =
           ~pageY=172,
           (),
         );
-        EventTransformGizmosTool.triggerMouseMove(
+        EventTransformGizmosTool.triggerFirstMouseDragOverEvent(
           ~sandbox,
           ~pageX=226 + 10,
           ~pageY=172,
@@ -157,7 +157,7 @@ let _ =
           ~pageY=172,
           (),
         );
-        EventTransformGizmosTool.triggerMouseMove(
+        EventTransformGizmosTool.triggerFirstMouseDragOverEvent(
           ~sandbox,
           ~pageX=226 + 20,
           ~pageY=172,
@@ -279,7 +279,7 @@ let _ =
           ~pageY=100,
           (),
         );
-        EventTransformGizmosTool.triggerMouseMove(
+        EventTransformGizmosTool.triggerFirstMouseDragOverEvent(
           ~sandbox,
           ~pageX=250 + 20,
           ~pageY=100,
@@ -293,7 +293,7 @@ let _ =
           ~pageY=100,
           (),
         );
-        EventTransformGizmosTool.triggerMouseMove(
+        EventTransformGizmosTool.triggerFirstMouseDragOverEvent(
           ~sandbox,
           ~pageX=250 + 40,
           ~pageY=100,

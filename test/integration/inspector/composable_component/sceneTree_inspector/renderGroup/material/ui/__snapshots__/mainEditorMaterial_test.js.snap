@@ -95,11 +95,7 @@ exports[`MainEditorMaterial test select material group->show order
         className="item-header"
         title="material's type"
       >
-        <span
-          className=""
-        >
-          Type
-        </span>
+        Type
       </div>
       <div
         className="item-content"
@@ -274,11 +270,7 @@ exports[`MainEditorMaterial test set currentSceneTreeNode test change material t
         className="item-header"
         title="material's type"
       >
-        <span
-          className=""
-        >
-          Type
-        </span>
+        Type
       </div>
       <div
         className="item-content"

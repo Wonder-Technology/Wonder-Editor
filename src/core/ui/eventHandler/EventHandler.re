@@ -1,5 +1,7 @@
 open Wonderjs;
 
+open Js.Promise;
+
 module type EventHandler = {
   type prepareTuple;
   type dataTuple;
@@ -26,6 +28,17 @@ module type EventHandler = {
       dataTuple
     ) =>
     StateDataMainType.state;
+
+  let setUndoValueToCopiedEngineStateForPromise:
+    (
+      (
+        AppStore.appState,
+        WonderEditor.ReduxThunk.thunk(AppStore.appState) => 'a,
+      ),
+      prepareTuple,
+      dataTuple
+    ) =>
+    Js.Promise.t(StateDataMainType.state);
 };
 
 module MakeEventHandler = (EventItem: EventHandler) => {
@@ -47,10 +60,23 @@ module MakeEventHandler = (EventItem: EventHandler) => {
       );
 
     (StateEditorService.getState(), engineState)
-    |> StoreHistoryUtils.storeHistoryStateWithCopiedEngineState(uiState);
-
-    ();
+    |> StoreHistoryUtils.storeHistoryStateWithCopiedEngineState(uiState)
+    |> ignore;
   };
+
+  let pushUndoStackWithCopiedEngineStateForPromise =
+      ((uiState, dispatchFunc) as reduxTuple, prepareTuple, dataTuple) =>
+    EventItem.setUndoValueToCopiedEngineStateForPromise(
+      reduxTuple,
+      prepareTuple,
+      dataTuple,
+    )
+    |> then_(engineState => {
+         (StateEditorService.getState(), engineState)
+         |> StoreHistoryUtils.storeHistoryStateWithCopiedEngineState(uiState);
+
+         resolve();
+       });
 
   let pushUndoStackWithTwoHandleFunc =
       ((uiState, dispatchFunc) as reduxTuple, prepareTuple, dataTuple) => {

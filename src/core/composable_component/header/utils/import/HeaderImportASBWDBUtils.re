@@ -1,12 +1,15 @@
 let importWDB =
     (
-      (name, wdbArrayBuffer),
+      (imageDataIndexMap, snapshot, name, wdbArrayBuffer),
       (wdbNodeId, parentFolderNode),
       (editorState, engineState),
     ) =>
   WDBAssetLogicService.importAssetWDB(
     (name, wdbArrayBuffer),
-    (wdbNodeId, parentFolderNode),
-    false,
+    (wdbNodeId, parentFolderNode, false),
+    WDBAssetLogicService.createWDBNodeUseImageDataMapSnapshot((
+      imageDataIndexMap,
+      snapshot,
+    )),
     (editorState, engineState),
   );

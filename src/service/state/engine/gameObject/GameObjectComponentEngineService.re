@@ -18,6 +18,8 @@ let addLightMaterialComponent = GameObjectAPI.addGameObjectLightMaterialComponen
 
 let disposeLightMaterialComponent = GameObjectAPI.disposeGameObjectLightMaterialComponent;
 
+let disposeLightMaterialComponentRemoveTexture = GameObjectAPI.disposeGameObjectLightMaterialComponentRemoveTexture;
+
 let removeLightMaterialComponent = GameObjectAPI.removeGameObjectLightMaterialComponent;
 
 /* basic material */
@@ -35,6 +37,11 @@ let unsafeGetBasicMaterialComponent = GameObjectAPI.unsafeGetGameObjectBasicMate
 let addBasicMaterialComponent = GameObjectAPI.addGameObjectBasicMaterialComponent;
 
 let disposeBasicMaterialComponent = GameObjectAPI.disposeGameObjectBasicMaterialComponent;
+
+/*!
+  BasicMaterial has no map, so disposeBasicMaterial == disposeBasicMaterialRemoveTexture
+  */
+let disposeBasicMaterialComponentRemoveTexture = disposeBasicMaterialComponent;
 
 let removeBasicMaterialComponent = GameObjectAPI.removeGameObjectBasicMaterialComponent;
 
@@ -87,6 +94,12 @@ let disposePerspectiveCameraProjectionComponent = GameObjectAPI.disposeGameObjec
 let addBasicCameraViewComponent = GameObjectAPI.addGameObjectBasicCameraViewComponent;
 
 let hasBasicCameraViewComponent = GameObjectAPI.hasGameObjectBasicCameraViewComponent;
+
+let getBasicCameraViewComponent = (gameObject, engineState) =>
+  GetComponentGameObjectService.getBasicCameraViewComponent(.
+    gameObject,
+    engineState.gameObjectRecord,
+  );
 
 let unsafeGetBasicCameraViewComponent = GameObjectAPI.unsafeGetGameObjectBasicCameraViewComponent;
 

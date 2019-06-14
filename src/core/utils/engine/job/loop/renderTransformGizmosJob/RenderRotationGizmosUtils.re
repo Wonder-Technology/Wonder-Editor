@@ -1,4 +1,4 @@
-external vec3ToArray : ((float, float, float)) => array(float) = "%identity";
+external vec3ToArray: ((float, float, float)) => array(float) = "%identity";
 
 let prepareRotationGlState = engineState => {
   let gl = DeviceManagerEngineService.unsafeGetGl(engineState);
@@ -42,32 +42,31 @@ let _getNoMaterialShaderData =
       name,
       (gizmoType, transformIndex, materialIndex, cameraPos),
       (editorState, engineState),
-    ) => {
-    switch (name) {
-    | "u_alpha" =>
-      ComputeRotationGizmosUtils.isGizmoUnUsed(
-        gizmoType,
-        editorState,
+    ) =>
+  switch (name) {
+  | "u_alpha" =>
+    ComputeRotationGizmosUtils.isGizmoUnUsed(
+      gizmoType,
+      editorState,
+      engineState,
+    ) ?
+      DataRotationGizmoSceneViewEditorService.getAlphaForUnUsedGizmo() :
+      1.0 |> Obj.magic
+  | "u_color" =>
+    BasicMaterialEngineService.getColor(materialIndex, engineState)
+    |> Obj.magic
+  | "u_cameraPosInLocalCoordSystem" =>
+    CameraPosUtils.getCameraPosInLocalCoordSystem(
+      cameraPos,
+      TransformEngineService.getLocalToWorldMatrixTypeArray(
+        transformIndex,
         engineState,
-      ) ?
-        DataRotationGizmoSceneViewEditorService.getAlphaForUnUsedGizmo() :
-        1.0 |> Obj.magic
-    | "u_color" =>
-      BasicMaterialEngineService.getColor(materialIndex, engineState)
-      |> Obj.magic
-    | "u_cameraPosInLocalCoordSystem" =>
-      CameraPosUtils.getCameraPosInLocalCoordSystem(
-        cameraPos,
-        TransformEngineService.getLocalToWorldMatrixTypeArray(
-          transformIndex,
-          engineState,
-        ),
-        engineState,
-      )
-      |> vec3ToArray
-      |> Obj.magic
-    };
-};
+      ),
+      engineState,
+    )
+    |> vec3ToArray
+    |> Obj.magic
+  };
 
 let _sendUniformNoMaterialShaderData =
     (
@@ -88,11 +87,11 @@ let _sendUniformNoMaterialShaderData =
   )
   |> WonderCommonlib.ArrayService.forEach(
        (.
-         {shaderCacheMap, name, pos, getDataFunc, sendDataFunc}: Wonderjs.GLSLSenderType.uniformNoMaterialShaderSendCachableData,
+         {shaderCacheMap, name, pos, getDataFunc, sendDataFunc}: Wonderjs.GLSLSenderType.uniformNoMaterialShaderSendData,
        ) =>
        GLSLLocationEngineService.isUniformLocationExist(pos) ?
          /* TODO refactor(extend): need refactor with engine! */
-         sendDataFunc(.
+         (Obj.magic(sendDataFunc))(.
            gl,
            shaderCacheMap,
            (name, pos),
@@ -155,7 +154,15 @@ let render = (editorState, renderDataArr, gl, engineState) => {
               ),
               editorState,
             )
-         |> RenderJobEngineService.draw(gl, meshRendererIndex, geometryIndex),
+         |> RenderJobEngineService.draw(
+              gl,
+              MeshRendererEngineService.getGlDrawMode(
+                gl,
+                meshRendererIndex,
+                engineState,
+              ),
+              geometryIndex,
+            ),
        engineState,
      );
 };

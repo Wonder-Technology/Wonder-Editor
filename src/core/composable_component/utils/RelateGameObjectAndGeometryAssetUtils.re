@@ -91,9 +91,9 @@ let replaceGeometryComponent =
 
 let getGeometryData = (geometry, engineState) => (
   GeometryEngineService.getGeometryName(geometry, engineState),
-  GeometryEngineService.getGeometryVertices(geometry, engineState),
-  GeometryEngineService.getGeometryNormals(geometry, engineState),
-  GeometryEngineService.getGeometryTexCoords(geometry, engineState),
+  GeometryEngineService.unsafeGetGeometryVertices(geometry, engineState),
+  GeometryEngineService.unsafeGetGeometryNormals(geometry, engineState),
+  GeometryEngineService.unsafeGetGeometryTexCoords(geometry, engineState),
 );
 
 let replaceWDBAssetGameObjectGeometryComponentToDefaultGeometryComponent =

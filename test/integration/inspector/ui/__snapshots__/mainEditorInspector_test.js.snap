@@ -21,11 +21,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
           className="item-header"
           title="texture's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -46,11 +42,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
           className="item-header"
           title="repetitive pattern in horizontal direction of texture"
         >
-          <span
-            className=""
-          >
-            WrapS
-          </span>
+          WrapS
         </div>
         <div
           className="item-content"
@@ -84,11 +76,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
           className="item-header"
           title="repetitive pattern in vertical direction of texture"
         >
-          <span
-            className=""
-          >
-            WrapT
-          </span>
+          WrapT
         </div>
         <div
           className="item-content"
@@ -122,11 +110,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
           className="item-header"
           title="defines how textures are sampled when a texel covers multiple pixels"
         >
-          <span
-            className=""
-          >
-            Mag Filter
-          </span>
+          Mag Filter
         </div>
         <div
           className="item-content"
@@ -155,11 +139,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
           className="item-header"
           title="defines how textures are sampled when a texel is insufficient to cover a single pixel"
         >
-          <span
-            className=""
-          >
-            Min Filter
-          </span>
+          Min Filter
         </div>
         <div
           className="item-content"
@@ -223,11 +203,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
           className="item-header"
           title="gameObject's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -246,7 +222,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -530,7 +506,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"
@@ -581,11 +557,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
                   className="item-header"
                   title="draw mode"
                 >
-                  <span
-                    className=""
-                  >
-                    Draw Mode
-                  </span>
+                  Draw Mode
                 </div>
                 <div
                   className="item-content"
@@ -693,11 +665,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
                     className="item-header"
                     title="material's type"
                   >
-                    <span
-                      className=""
-                    >
-                      Type
-                    </span>
+                    Type
                   </div>
                   <div
                     className="item-content"
@@ -832,7 +800,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
       className="componentBox-component"
     >
       <div
-        className="header"
+        className="component-header"
       >
         <div
           className="header-triangle"

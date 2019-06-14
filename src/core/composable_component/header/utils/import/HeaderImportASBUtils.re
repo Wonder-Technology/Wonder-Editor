@@ -47,30 +47,59 @@ let importASB = asb => {
   let asbRecord: ExportAssetType.assets =
     jsonStr |> Js.Json.parseExn |> Obj.magic;
 
-  BuildAssetDataUtils.buildImageData(asbRecord, buffer, editorState)
+  HeaderBuildAssetDataUtils.buildImageData(asbRecord, buffer, editorState)
   |> WonderBsMost.Most.fromPromise
   |> WonderBsMost.Most.map(((imageMap, imageDataIndexMap, editorState)) => {
        let (textureMap, (editorState, engineState)) =
-         BuildAssetDataUtils.buildTextureData(
+         HeaderBuildAssetDataUtils.buildTextureData(
            asbRecord,
            (imageMap, imageDataIndexMap),
            (editorState, engineState),
          );
 
-       BuildAssetDataUtils.buildMaterialData(
+       HeaderBuildAssetDataUtils.buildMaterialData(
          asbRecord,
-         textureMap,
+         (imageDataIndexMap, textureMap),
          (editorState, engineState),
        );
      })
   |> WonderBsMost.Most.flatMap(
-       ((basicMaterialMap, lightMaterialMap, (editorState, engineState))) =>
-       BuildAssetDataUtils.buildWDBData(
+       (
+         (
+           imageDataIndexMap,
+           (basicMaterialMap, lightMaterialMap),
+           (editorState, engineState),
+         ),
+       ) =>
+       HeaderBuildAssetDataUtils.buildWDBData(
+         imageDataIndexMap,
          asbRecord,
          buffer,
          (editorState, engineState),
        )
        |> then_(((allWDBGameObjectArr, (editorState, engineState))) => {
+            let (scriptEventFunctionDataMap, editorState) =
+              HeaderBuildAssetDataUtils.buildScriptEventFunctionData(
+                asbRecord,
+                engineState,
+                editorState,
+              );
+
+            let (scriptAttributeDataMap, editorState) =
+              HeaderBuildAssetDataUtils.buildScriptAttributeData(
+                asbRecord,
+                engineState,
+                editorState,
+              );
+
+            let editorState =
+              HeaderBuildAssetDataUtils.buildAssetBundleData(
+                asbRecord,
+                buffer,
+                engineState,
+                editorState,
+              );
+
             editorState |> StateEditorService.setState |> ignore;
             engineState |> StateEngineService.setState |> ignore;
 
@@ -82,6 +111,7 @@ let importASB = asb => {
                 ),
               ),
               (basicMaterialMap, lightMaterialMap),
+              (scriptEventFunctionDataMap, scriptAttributeDataMap),
             )
             |> resolve;
           })

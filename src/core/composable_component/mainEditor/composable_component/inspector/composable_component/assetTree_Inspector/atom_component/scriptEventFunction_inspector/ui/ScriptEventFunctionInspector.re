@@ -1,12 +1,13 @@
 module Method = {
+  let _addSplitSymbol = str => {j|$str,|j};
+
   let _buildBodyStr = (eventFunctionName, eventFunction, str) =>
     switch (eventFunction) {
-    | None => str
+    | None => {j| $str \n  $eventFunctionName: (script, api, engineState) => { \n    return engineState; \n  }|j}
     | Some(func) =>
       let funcStr = SerializeService.serializeFunction(func);
 
-      {j|$str,
-  $(eventFunctionName): $funcStr|j};
+      {j|$str \n $(eventFunctionName): $funcStr|j};
     };
 
   let convertEventFunctionDataToJsObjStr =
@@ -14,16 +15,13 @@ module Method = {
     let bodyStr =
       ""
       |> _buildBodyStr("init", init)
+      |> _addSplitSymbol
       |> _buildBodyStr("update", update)
+      |> _addSplitSymbol
       |> _buildBodyStr("dispose", dispose)
       |> Js.String.sliceToEnd(~from=1);
 
-    {j| (function() {
-    return {
-      $bodyStr
-    };
-  }())
-  |j};
+    {j|{ $bodyStr \n}|j};
   };
 
   let updateEventFunctionData = UpdateScriptEventFunctionDataEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
@@ -45,7 +43,7 @@ let render =
   <article
     key="ScriptEventFunctionInspector"
     className="wonder-scriptEventFunction-inspector">
-    <h1> {DomHelper.textEl("ScriptEventFunction")} </h1>
+    <h1> {DomHelper.textEl("Script Event Function")} </h1>
     <hr />
     <StringInput
       label="Name"
@@ -61,7 +59,6 @@ let render =
     />
     <div className="scriptEventFunction-data">
       <FileInput
-        buttonText="Set EventFunction Data"
         inputValue={
           Method.convertEventFunctionDataToJsObjStr(eventFunctionData)
         }
@@ -73,6 +70,7 @@ let render =
               (nodeId, name, value),
             )
         }
+        isShowInput=true
       />
     </div>
   </article>;

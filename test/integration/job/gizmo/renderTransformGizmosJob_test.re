@@ -491,6 +491,7 @@ let _ =
                   |> DirectorToolEngine.runWithDefaultTime;
 
                 let editorState = StateEditorService.getState();
+
                 (
                   drawElements
                   |> withTwoArgs(
@@ -803,7 +804,7 @@ let _ =
                       bufferData
                       |> withThreeArgs(
                            element_array_buffer,
-                           GeometryEngineService.getGeometryIndices16(
+                           GeometryEngineService.unsafeGetGeometryIndices16(
                              _getPlaneGeometry(editorState, engineState),
                              engineState,
                            ),
@@ -1596,7 +1597,7 @@ let _ =
                             engineState,
                           );
                         _prepareForBufferData(
-                          GeometryEngineService.getGeometryVertices(
+                          GeometryEngineService.unsafeGetGeometryVertices(
                             cubeGeometry,
                             engineState,
                           ),

@@ -1,0 +1,64 @@
+@import "../../../../../../utils/inspectorItemMixin";
+
+.wonder-inspector-scriptAttribute,.wonder-inspector-scriptFunction{
+    @import "../utils/inspectorComponent";
+    .inspector-component{
+        .component-title{
+            font-weight: bold;
+        }
+        .component-content{
+            @include inspectorItem("wonder-script-attribute");
+            @include inspectorItem("wonder-script-function");
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .wonder-script-attribute,.wonder-script-function{
+                @import "../../../../../../utils/inspectorSelectUtils";
+                @import "../utils/inspectorComponentChildren";
+                width:100%;
+                padding-bottom: 6px;
+                .component-header{
+                    display: flex;
+                    justify-content: center;
+                    width: 96%;
+                    height:30px;
+                    margin-left:2%;
+                    margin-bottom: 10px;
+                    border-bottom:1px solid #a8a8a8;
+                    .header-title{
+                        flex:3;
+                        height:30px;
+                        line-height: 30px;
+                        font-size:15px;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
+                    .header-close{
+                        flex:initial;
+                        color:black;
+                        width:30px;
+                        height:30px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        img{
+                            width: 10px;
+                            height:10px;
+                            cursor: hand;
+                        }
+                    }
+                }
+                .scriptAttribute-fields{
+                    @include inspectorItem("scriptAttribute-field");
+
+                    .scriptAttribute-field{
+                        @import "../utils/inspectorComponentChildren";
+                    }
+                }
+            }
+            .addable-btn{
+                width:230px;
+            }
+        }
+    }
+}

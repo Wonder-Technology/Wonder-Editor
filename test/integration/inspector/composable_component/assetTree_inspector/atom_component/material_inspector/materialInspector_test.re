@@ -15,37 +15,7 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
-      MainEditorSceneTool.initInspectorEngineState(
-        ~sandbox,
-        ~isInitJob=false,
-        ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-            ~initPipelines=
-              {|
-             [
-              {
-                "name": "default",
-                "jobs": [
-                    {"name": "init_inspector_engine" }
-                ]
-              }
-            ]
-             |},
-            ~initJobs=
-              {|
-             [
-                {"name": "init_inspector_engine" }
-             ]
-             |},
-            (),
-          ),
-        (),
-      );
-
-      StateInspectorEngineService.unsafeGetState()
-      |> MainUtils._handleInspectorEngineState
-      |> StateInspectorEngineService.setState
-      |> ignore;
+      InspectorCanvasTool.prepareInspectorEngineState(sandbox);
 
       CanvasTool.stubMainCanvasAndInspectorCanvasDom(~sandbox, ()) |> ignore;
     });
@@ -182,4 +152,34 @@ let _ =
         });
       });
     });
+
+    describe("change material type", () =>
+      test(
+        "if source material has no gameObject, still dispose source material",
+        () => {
+        let addedMaterialNodeId1 = MainEditorAssetIdTool.getNewAssetId();
+        MainEditorAssetHeaderOperateNodeTool.addMaterial();
+        let materialComponent1 =
+          MainEditorAssetMaterialNodeTool.getMaterialComponent(
+            ~nodeId=addedMaterialNodeId1,
+            (),
+          );
+
+        MainEditorAssetChildrenNodeTool.selectMaterialNode(
+          ~nodeId=addedMaterialNodeId1,
+          (),
+        );
+        MaterialInspectorTool.changeMaterialType(
+          ~material=materialComponent1,
+          ~sourceMaterialType=MaterialDataAssetType.LightMaterial,
+          ~targetMaterialType=MaterialDataAssetType.BasicMaterial,
+          ~materialNodeId=addedMaterialNodeId1,
+          (),
+        );
+
+        LightMaterialToolEngine.isAlive(materialComponent1)
+        |> StateLogicService.getEngineStateToGetData
+        |> expect == false;
+      })
+    );
   });

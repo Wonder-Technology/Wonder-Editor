@@ -74,6 +74,12 @@ let buildFakeURL = [%raw
   |}
 ];
 
+let getFakeCreateObjectURL = [%raw
+  param => {|
+  return window.URL.createObjectURL
+  |}
+];
+
 let buildFakeAtob = [%raw
   param => {|
     window.atob = (a) => {

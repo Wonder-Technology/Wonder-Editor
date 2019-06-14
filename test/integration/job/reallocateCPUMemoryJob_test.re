@@ -41,6 +41,44 @@ let _ =
           ),
         (),
       );
+      MainEditorSceneTool.initInspectorEngineState(
+        ~sandbox,
+        ~isInitJob=false,
+        ~buffer=
+          SettingToolEngine.buildBufferConfigStr(
+            ~geometryPointCount=50000,
+            (),
+          ),
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+            ~initPipelines=
+              {|
+             [
+              {
+                "name": "default",
+                "jobs": [
+                    {"name": "init_inspector_engine" }
+                ]
+              }
+            ]
+             |},
+            ~initJobs=
+              {|
+             [
+                {"name": "init_inspector_engine" }
+             ]
+             |},
+            (),
+          ),
+        (),
+      );
+
+      StateInspectorEngineService.unsafeGetState()
+      |> MainUtils._handleInspectorEngineState
+      |> StateInspectorEngineService.setState
+      |> ignore;
+
+      CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
 
       MainEditorSceneTool.prepareScene(sandbox);
     };
@@ -66,7 +104,7 @@ let _ =
              _,
              engineState,
            )
-        |> GeometryEngineService.getGeometryVertices(_, engineState)
+        |> GeometryEngineService.unsafeGetGeometryVertices(_, engineState)
         |> expect == vertices
         |> resolve;
       };
@@ -125,14 +163,14 @@ let _ =
       );
       testPromise(
         {|
-        load wdb w1;
-        remove w1(trigger reallocate);
-        load wdb w2;
-        undo;
-        undo;
+           load wdb w1;
+           remove w1(trigger reallocate);
+           load wdb w2;
+           undo;
+           undo;
 
-        w1->vertices should exist.
-        |},
+           w1->vertices should exist.
+           |},
         () =>
         MainEditorAssetUploadTool.loadOneWDB(
           ~arrayBuffer=boxTexturedWDBArrayBuffer^,

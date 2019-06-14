@@ -10,6 +10,7 @@ type action =
 module Method = {
   let buildMultiLineStringComponent = str =>
     str
+    |> Js.String.make
     |> Js.String.split("\n")
     |> Js.Array.mapi((info, i) =>
          <p key={"info" ++ (i |> string_of_int)} className="multi-line-str">

@@ -9,14 +9,9 @@ let _disposeAssets = () => {
       StateEngineService.unsafeGetState(),
     ));
 
-  editorState
-  |> ImageDataMapAssetEditorService.clearMap
-  |> StateEditorService.setState
-  |> ignore;
+  editorState |> StateEditorService.setState |> ignore;
 
   engineState |> StateEngineService.setState |> ignore;
-
-  ();
 };
 
 let _readHeader = dataView => {
@@ -268,21 +263,32 @@ let _import = result => {
 
   let wdbAssetGameObjectGeometryAssetArrRef = ref([||]);
 
+  let scriptDataMapTupleRef =
+    ref((
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+    ));
+
   let engineState = StateEngineService.unsafeGetState();
 
   HeaderImportASBUtils.importASB(asb)
   |> WonderBsMost.Most.map(
        (
-         ((allWDBGameObjectArr, asbImageUint8ArrayDataMap), materialMapTuple),
+         (
+           (allWDBGameObjectArr, asbImageUint8ArrayDataMap),
+           materialMapTuple,
+           scriptDataMapTuple,
+         ),
        ) => {
-       let editorState = StateEditorService.getState();
-       let engineState = StateEngineService.unsafeGetState();
-
        ImportPackageRelateGameObjectAndAssetUtils.relateWDBAssetGameObjectsAndAssets(
          allWDBGameObjectArr,
          materialMapTuple,
+         scriptDataMapTuple,
          asbImageUint8ArrayDataMap,
        );
+
+       let editorState = StateEditorService.getState();
+       let engineState = StateEngineService.unsafeGetState();
 
        allWDBGameObjectArrRef := allWDBGameObjectArr;
        materialMapTupleRef := materialMapTuple;
@@ -291,6 +297,7 @@ let _import = result => {
            allWDBGameObjectArr,
            (editorState, engineState),
          );
+       scriptDataMapTupleRef := scriptDataMapTuple;
        asbImageUint8ArrayDataMapRef := asbImageUint8ArrayDataMap;
 
        editorState |> StateEditorService.setState |> ignore;
@@ -332,16 +339,15 @@ let _import = result => {
                 StateEditorService.getStateIsDebug(),
               );
 
-              let engineState = StateEngineService.unsafeGetState();
-
               ImportPackageRelateGameObjectAndAssetUtils.relateSceneWDBGameObjectsAndAssets(
                 HierarchyGameObjectEngineService.getAllGameObjects(
                   sceneGameObject,
-                  engineState,
-                ),
+                )
+                |> StateLogicService.getEngineStateToGetData,
                 asbImageUint8ArrayDataMapRef^,
                 materialMapTupleRef^,
                 wdbAssetGameObjectGeometryAssetArrRef^,
+                scriptDataMapTupleRef^,
               );
 
               ();
@@ -366,7 +372,7 @@ let _import = result => {
 let _handleIsRun = (dispatchFunc, languageType, editorState) => {
   ConsoleUtils.warn(
     LanguageUtils.getMessageLanguageDataByType(
-      "header-import-package",
+      "should-in-stop",
       languageType,
     ),
     editorState,

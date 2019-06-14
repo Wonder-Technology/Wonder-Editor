@@ -14,11 +14,17 @@ let addWDBNodeToRoot =
       ~editorState,
       ~name="",
       ~arrayBuffer=Js.Typed_array.ArrayBuffer.make(0),
+      ~imageDataIndex,
       (),
     ) =>
   WDBNodeAssetEditorService.addWDBNodeToAssetTree(
     RootTreeAssetEditorService.getRootNode(editorState),
-    WDBNodeAssetService.buildNode(~nodeId, ~name, ~wdbGameObject=gameObject),
+    WDBNodeAssetService.buildNode(
+      ~nodeId,
+      ~name,
+      ~wdbGameObject=gameObject,
+      ~imageDataIndex,
+    ),
     editorState,
   );
 
@@ -34,3 +40,10 @@ let getWDBNodeIdByName = (wdbGameObjectName, (editorState, engineState)) =>
   )
   |> OptionService.unsafeGet
   |> NodeAssetService.getNodeId(~node=_);
+
+let getValidTextureArray = editorState =>
+  ImageDataMapAssetEditorService.getValidValues(editorState)
+  |> Js.Array.filter(
+       ({base64, uint8Array, blobObjectURL}: ImageDataType.imageData) =>
+       uint8Array |> Js.Option.isSome
+     );

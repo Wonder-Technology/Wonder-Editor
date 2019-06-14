@@ -24,14 +24,14 @@ let _ =
       let assetTreeData =
         MainEditorAssetTreeTool.BuildAssetTree.Texture.buildTwoTextureAssetTree();
 
-      MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+      MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
         ~textureNodeId=
           MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
             assetTreeData,
           ),
         (),
       );
-      MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
+      MainEditorLightMaterialForGameObjectTool.Drag.dragAssetTextureToMap(
         ~textureNodeId=
           MainEditorAssetTreeTool.BuildAssetTree.Texture.getSecondTextureNodeId(
             assetTreeData,

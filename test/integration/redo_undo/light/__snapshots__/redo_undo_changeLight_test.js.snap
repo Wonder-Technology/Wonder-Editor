@@ -11,11 +11,7 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
       className="item-header"
       title="light type"
     >
-      <span
-        className=""
-      >
-        Type
-      </span>
+      Type
     </div>
     <div
       className="item-content"
@@ -206,11 +202,7 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
       className="item-header"
       title="light type"
     >
-      <span
-        className=""
-      >
-        Type
-      </span>
+      Type
     </div>
     <div
       className="item-content"
@@ -401,11 +393,7 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
       className="item-header"
       title="light type"
     >
-      <span
-        className=""
-      >
-        Type
-      </span>
+      Type
     </div>
     <div
       className="item-content"

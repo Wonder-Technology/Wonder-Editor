@@ -109,30 +109,30 @@ module Remove = {
     };
 
   /* let replaceMaterialByMaterialType =
-      (gameObject, sourceMateralType, targetMaterialType, engineState) => {
-    let (sourceRenderGroup, removeSourceMaterialFunc) =
-      _getOperateSourceRenderGroupData(
-        sourceMateralType,
-        gameObject,
-        engineState,
-      );
+         (gameObject, sourceMateralType, targetMaterialType, engineState) => {
+       let (sourceRenderGroup, removeSourceMaterialFunc) =
+         _getOperateSourceRenderGroupData(
+           sourceMateralType,
+           gameObject,
+           engineState,
+         );
 
-    let (engineState, targetRenderGroup, addTargetMaterialFunc) =
-      _getOperateTargetRenderGroupData(
-        sourceRenderGroup.meshRenderer,
-        targetMaterialType,
-        engineState,
-      );
+       let (engineState, targetRenderGroup, addTargetMaterialFunc) =
+         _getOperateTargetRenderGroupData(
+           sourceRenderGroup.meshRenderer,
+           targetMaterialType,
+           engineState,
+         );
 
-    engineState
-    |> RenderGroupEngineService.replaceMaterial(
-         (sourceRenderGroup, targetRenderGroup),
-         gameObject,
-         (removeSourceMaterialFunc, addTargetMaterialFunc),
-       );
+       engineState
+       |> RenderGroupEngineService.replaceMaterial(
+            (sourceRenderGroup, targetRenderGroup),
+            gameObject,
+            (removeSourceMaterialFunc, addTargetMaterialFunc),
+          );
 
-    engineState;
-  }; */
+       engineState;
+     }; */
 
   let replaceMaterialByMaterialData =
       (
@@ -177,16 +177,22 @@ module Remove = {
 };
 
 module Dispose = {
+  let _getDisposeMaterialRemoveTextureFunc = materialType =>
+    switch (materialType) {
+    | BasicMaterial => BasicMaterialEngineService.disposeBasicMaterialRemoveTexture
+    | LightMaterial => LightMaterialEngineService.disposeLightMaterialRemoveTexture
+    };
+
   let _getOperateSourceRenderGroupData =
       (meshRenderer, material, materialType, engineState) =>
     switch (materialType) {
     | BasicMaterial => (
         RenderGroupEngineService.buildRenderGroup(meshRenderer, material),
-        GameObjectComponentEngineService.disposeBasicMaterialComponent,
+        GameObjectComponentEngineService.disposeBasicMaterialComponentRemoveTexture,
       )
     | LightMaterial => (
         RenderGroupEngineService.buildRenderGroup(meshRenderer, material),
-        GameObjectComponentEngineService.disposeLightMaterialComponent,
+        GameObjectComponentEngineService.disposeLightMaterialComponentRemoveTexture,
       )
     };
 
@@ -220,7 +226,7 @@ module Dispose = {
         engineState,
       );
 
-    let (sourceRenderGroup, disposeSourceMaterialFunc) =
+    let (sourceRenderGroup, disposeSourceMaterialRemoveTextureFunc) =
       _getOperateSourceRenderGroupData(
         meshRenderer,
         sourceMaterial,
@@ -240,11 +246,11 @@ module Dispose = {
     |> RenderGroupEngineService.replaceMaterial(
          (sourceRenderGroup, targetRenderGroup),
          gameObject,
-         (disposeSourceMaterialFunc, addTargetMaterialFunc),
+         (disposeSourceMaterialRemoveTextureFunc, addTargetMaterialFunc),
        );
   };
 
-  let replaceGameObjectsMaterialsOfTheMaterial =
+  let disposeMaterialOrReplaceGameObjectsMaterialsOfTheMaterial =
       (
         (
           (sourceMaterial, targetMaterial),
@@ -259,7 +265,11 @@ module Dispose = {
         engineState,
       )
     ) {
-    | None => engineState
+    | None =>
+      let disposeMaterialRemoveTextureFunc =
+        _getDisposeMaterialRemoveTextureFunc(sourceMaterialType);
+
+      disposeMaterialRemoveTextureFunc(sourceMaterial, engineState);
     | Some(gameObjects) =>
       let engineState =
         gameObjects

@@ -7,34 +7,72 @@ module Method = {
   let changeMaterialType = InspectorChangeMaterialTypeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let didMount = (type_, materialComponent) => {
-    DomHelper.setDomDisplay(
-      DomHelper.getElementById("inspectorCanvasParent"),
-      true,
-    );
+    InspectorCanvasUtils.showInspectorCanvas();
 
-    StateInspectorEngineService.unsafeGetState()
-    |> MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
-         type_,
-         materialComponent,
-         (StateEditorService.getState(), StateEngineService.unsafeGetState()),
-       )
-    |> StateLogicService.refreshInspectorEngineState;
+    Console.tryCatch(
+      () => {
+        let (editorState, (inspectorEngineState, sphere)) =
+          MaterialInspectorEngineUtils.createMaterialSphereIntoInspectorCanvas(
+            type_,
+            materialComponent,
+            StateEditorService.getState(),
+            StateEngineService.unsafeGetState(),
+            StateInspectorEngineService.unsafeGetState(),
+          );
+
+        editorState
+        |> MaterialSphereInspectorCanvasEditorService.setMaterialSphereGameObjectInInspectorCanvas(
+             sphere,
+           )
+        |> StateEditorService.setState
+        |> ignore;
+        inspectorEngineState |> StateLogicService.refreshInspectorEngineState;
+      },
+      e => Console.throwFatal(e) |> ignore,
+    );
   };
 
-  let willUnmount = () => {
-    DomHelper.setDomDisplay(
-      DomHelper.getElementById("inspectorCanvasParent"),
-      false,
-    );
+  let _doesUpdateSnapshot =
+      (currentNodeId, (editorState, inspectorEngineState)) =>
+    OperateTreeAssetEditorService.isNodeExistById(currentNodeId, editorState)
+    && MaterialSphereInspectorCanvasEditorService.isExistInContainer(
+         editorState,
+         inspectorEngineState,
+       );
+
+  let willUnmount = (currentNodeId, dispatchFunc) => {
+    InspectorCanvasUtils.restoreArcballCameraControllerAngle
+    |> StateLogicService.getInspectorEngineStateToGetData
+    |> StateLogicService.refreshInspectorEngineState;
+
+    InspectorCanvasUtils.hideInspectorCanvas();
+
+    _doesUpdateSnapshot(
+      currentNodeId,
+      (
+        StateEditorService.getState(),
+        StateInspectorEngineService.unsafeGetState(),
+      ),
+    ) ?
+      InspectorCanvasUtils.updateSnapshot(
+        currentNodeId,
+        (
+          ImgCanvasUtils.clipTargetCanvasSnapshotAndSetToImageDataMapByMaterialNodeId,
+          dispatchFunc,
+        ),
+      ) :
+      ();
 
     (
       StateEditorService.getState(),
       StateInspectorEngineService.unsafeGetState(),
     )
-    |> InspectorEngineGameObjectLogicService.disposeInspectorEngineContainerGameObjectAllChildren
-    |> JobEngineService.execDisposeJob
+    |> InspectorCanvasUtils.disposeContainerGameObjectAllChildrenAndReallocateCPUMemory
     |> StateInspectorEngineService.setState
     |> ignore;
+
+    MaterialSphereInspectorCanvasEditorService.removeMaterialSphereGameObjectInInspectorCanvas
+    |> StateLogicService.getAndSetEditorState;
   };
 };
 
@@ -65,7 +103,7 @@ let reducer =
 let render =
     (
       (uiState, dispatchFunc),
-      (name, type_, materialComponent),
+      (name, type_, currentNodeId, materialComponent),
       renameFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
@@ -108,6 +146,7 @@ let render =
           uiState
           dispatchFunc
           materialComponent
+          currentNodeId
         />
 
       | LightMaterial =>
@@ -115,6 +154,7 @@ let render =
           uiState
           dispatchFunc
           materialComponent
+          currentNodeId
         />
       }
     }
@@ -139,10 +179,10 @@ let make =
   render: self =>
     render(
       (uiState, dispatchFunc),
-      (name, type_, materialComponent),
+      (name, type_, currentNodeId, materialComponent),
       renameFunc,
       self,
     ),
   didMount: _self => Method.didMount(type_, materialComponent),
-  willUnmount: _self => Method.willUnmount(),
+  willUnmount: _self => Method.willUnmount(currentNodeId, dispatchFunc),
 };

@@ -11,11 +11,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
       className="item-header"
       title="light type"
     >
-      <span
-        className=""
-      >
-        Type
-      </span>
+      Type
     </div>
     <div
       className="item-content"
@@ -110,11 +106,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
       className="item-header"
       title="light type"
     >
-      <span
-        className=""
-      >
-        Type
-      </span>
+      Type
     </div>
     <div
       className="item-content"
@@ -305,11 +297,7 @@ exports[`MainEditorLight component test set currentSceneTreeNode test change lig
       className="item-header"
       title="light type"
     >
-      <span
-        className=""
-      >
-        Type
-      </span>
+      Type
     </div>
     <div
       className="item-content"

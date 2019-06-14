@@ -9,18 +9,16 @@ module CustomEventHandler = {
   let handleSelfLogic =
       (
         (uiState, dispatchFunc),
-        (nodeId, materialComponent),
+        (currentNodeId, materialComponent),
         (sourceMaterialType, targetMaterialType),
       ) => {
     MaterialInspectorUtils.replaceMaterialByMaterialType(
-      (nodeId, materialComponent),
+      (currentNodeId, materialComponent),
       sourceMaterialType,
       targetMaterialType,
     );
 
-    dispatchFunc(
-      AppStore.UpdateAction(Update([|Project, Inspector|])),
-    )
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
     |> ignore;
   };
 };

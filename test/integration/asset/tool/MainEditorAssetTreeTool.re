@@ -108,6 +108,9 @@ module BuildAssetTree = {
       let (editorState, id1) =
         IdAssetEditorService.generateNodeId(editorState);
 
+      let (editorState, newImageDataIndex) =
+        IndexAssetEditorService.generateImageDataMapIndex(editorState);
+
       let (newMaterial, engineState) =
         LightMaterialEngineService.createLightMaterialAndSetName(
           "material1",
@@ -118,7 +121,7 @@ module BuildAssetTree = {
       |> MainEditorAssetTreeNodeTool.insertMaterialNode(
            id1,
            rootId,
-           newMaterial,
+           (newMaterial, newImageDataIndex),
          )
       |> StateLogicService.setState;
 
@@ -194,6 +197,8 @@ module BuildAssetTree = {
       let (engineState, gameObject) =
         GameObjectEngineService.create(engineState);
       let name = "gameObject1";
+      let (editorState, newImageDataIndex) =
+        IndexAssetEditorService.generateImageDataMapIndex(editorState);
 
       (editorState, engineState)
       |> MainEditorAssetTreeNodeTool.insertWDBNode(
@@ -201,6 +206,7 @@ module BuildAssetTree = {
            rootId,
            gameObject,
            name,
+           newImageDataIndex,
          )
       |> StateLogicService.setState;
 
@@ -364,18 +370,23 @@ module BuildAssetTree = {
             engineState,
           );
 
+        let (editorState, imgIndex1) =
+          IndexAssetEditorService.generateImageDataMapIndex(editorState);
+        let (editorState, imgIndex2) =
+          IndexAssetEditorService.generateImageDataMapIndex(editorState);
+
         (editorState, engineState)
         |> MainEditorAssetTreeNodeTool.insertFolderNode(id1, rootId)
         |> MainEditorAssetTreeNodeTool.insertFolderNode(id2, rootId)
         |> MainEditorAssetTreeNodeTool.insertMaterialNode(
              id6,
              id1,
-             newMaterial1,
+             (newMaterial1, imgIndex1),
            )
         |> MainEditorAssetTreeNodeTool.insertMaterialNode(
              id7,
              id2,
-             newMaterial2,
+             (newMaterial2, imgIndex2),
            )
         |> MainEditorAssetTreeNodeTool.insertTextureNode(
              id5,

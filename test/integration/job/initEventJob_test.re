@@ -204,7 +204,7 @@ let _ =
               TargetEventEditorService.getEventTarget(
                 StateEditorService.getState(),
               )
-              |> expect == EventType.Other;
+              |> expect == EditorEventTargetType.Other;
             })
           );
         });
@@ -254,7 +254,7 @@ let _ =
               TargetEventEditorService.getEventTarget(
                 StateEditorService.getState(),
               )
-              |> expect == EventType.Other;
+              |> expect == EditorEventTargetType.Other;
             });
 
             describe("else", () =>
@@ -267,7 +267,7 @@ let _ =
                 TargetEventEditorService.getEventTarget(
                   StateEditorService.getState(),
                 )
-                |> expect == EventType.Other;
+                |> expect == EditorEventTargetType.Other;
               })
             );
             /* describe("test loopBody", () =>
@@ -559,9 +559,7 @@ let _ =
                 (),
               ),
             );
-            EventTool.triggerDomEvent(
-              "mousemove",
-              EventTool.getBody(),
+            EventTool.triggerFirstMouseDragOverEvent(
               MouseEventTool.buildMouseDomEvent(
                 ~pageX=movePageX,
                 ~pageY=movePageY,
@@ -580,12 +578,12 @@ let _ =
             EventTool.restore();
 
             ((x1^, y1^), (x2^, y2^), (x3^, y3^))
-            |>
-            expect == (
-                        (dragStartLocationInViewX, dragStartLocationInViewY),
-                        (dragOverLocationInViewX, dragOverLocationInViewY),
-                        (dragDropLocationInViewX, dragDropLocationInViewY),
-                      );
+            |> expect
+            == (
+                 (dragStartLocationInViewX, dragStartLocationInViewY),
+                 (dragOverLocationInViewX, dragOverLocationInViewY),
+                 (dragDropLocationInViewX, dragDropLocationInViewY),
+               );
           };
 
           describe("test event target is game view", () =>
@@ -689,7 +687,7 @@ let _ =
             gl##clearColor |> expect |> not_ |> toCalled;
           });
 
-          describe("test event target is other", () =>
+          describe("test event target is Other", () =>
             describe("do nothing", () => {
               describe("test loopBody", () =>
                 test("if is stop, not loopBody", () => {
@@ -876,7 +874,7 @@ let _ =
           value^ |> expect == 1;
         };
 
-        describe("test event target is other", () => {
+        describe("test event target is Other", () => {
           describe("test loopBody", () =>
             test("if is stop, not loopBody", () => {
               _prepareMouseEvent(~sandbox, ());

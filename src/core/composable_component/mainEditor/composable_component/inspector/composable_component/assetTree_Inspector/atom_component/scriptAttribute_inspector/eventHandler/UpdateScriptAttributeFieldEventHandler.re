@@ -1,9 +1,12 @@
+open Wonderjs;
+
+open ScriptAttributeType;
+
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
-  type dataTuple = (NodeAssetType.nodeId, string, string);
+  type dataTuple = (NodeAssetType.nodeId, string, scriptAttributeFieldJsObj);
   type return = unit;
-
 
   let _isOnlyFieldDefaultValueChange =
       (
@@ -22,12 +25,11 @@ module CustomEventHandler = {
     && defaultValue !== newDefaultValue;
   };
 
-
   let handleSelfLogic =
       (
         (uiState, dispatchFunc),
         (),
-        (nodeId, fieldName, newFieldDataJsObjStr),
+        (nodeId, fieldName, newAttributeFieldJsObj),
       ) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
@@ -38,9 +40,6 @@ module CustomEventHandler = {
           let (attributeName, attribute) =
             ScriptAttributeNodeAssetEditorService.getNameAndAttribute(nodeId)
             |> StateLogicService.getEditorState;
-
-          let newAttributeFieldJsObj =
-            newFieldDataJsObjStr |> Js.Json.parseExn |> Obj.magic;
 
           let isOnlyFieldDefaultValueChange =
             _isOnlyFieldDefaultValueChange(

@@ -1,4 +1,11 @@
 .wonder-left-components-header{
     @import "../../../../../utils/navMixin";
     @include header-nav("sceneTree");
+
+    .sceneTree-header-item{
+        .item-content{
+            top:-20px;
+            left:25px;
+        }
+    }
 }

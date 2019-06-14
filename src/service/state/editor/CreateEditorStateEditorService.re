@@ -3,6 +3,12 @@ open EditorType;
 let create = () => {
   inspectorCanvasRecord: {
     containerGameObject: None,
+    basicSourceTextureCacheMap:
+      WonderCommonlib.ImmutableSparseMapService.createEmpty(),
+    materialSphereGameObjectInInspectorCanvas: None,
+  },
+  imgCanvasRecord: {
+    imgContext: None,
   },
   settingRecord: RecordSettingService.create(),
   sceneTreeRecord: {
@@ -46,7 +52,8 @@ let create = () => {
     activedBasicCameraView: None,
   },
   eventRecord: {
-    eventTarget: EventType.Other,
+    eventTarget: EditorEventTargetType.Other,
+    inspectorEventTarget: InspectorEventTargetType.Other,
   },
   imguiRecord: {
     gameViewIMGUIFunc: None,

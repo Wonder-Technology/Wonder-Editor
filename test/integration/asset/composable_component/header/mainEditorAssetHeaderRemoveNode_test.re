@@ -10,6 +10,8 @@ open Sinon;
 
 open NodeAssetType;
 
+open Js.Promise;
+
 let _ =
   describe("MainEditorAssetHeader->remove node", () => {
     let sandbox = getSandboxDefaultVal();
@@ -17,6 +19,8 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
+
+      InspectorCanvasTool.prepareInspectorEngineState(sandbox);
 
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
@@ -48,7 +52,7 @@ let _ =
         },
       );
 
-      describe("else", () => {
+      describe("else", () =>
         test("remove-button's disabled props should == false", () => {
           MainEditorSceneTool.createDefaultScene(
             sandbox,
@@ -68,279 +72,7 @@ let _ =
 
           BuildComponentTool.buildAssetComponent()
           |> ReactTestTool.createSnapshotAndMatch;
-        });
-
-        describe("test select folder", () => {
-          beforeEach(() =>
-            MainEditorSceneTool.createDefaultScene(
-              sandbox,
-              MainEditorAssetTool.initAssetTree,
-            )
-          );
-
-          test(
-            "click remove-button should remove folder from assetTreeRoot", () => {
-            let assetTreeData =
-              MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
-            let component = BuildComponentTool.buildAssetComponent();
-
-            MainEditorAssetHeaderOperateNodeTool.removeFolderNode(
-              ~folderNodeId=
-                MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId(
-                  assetTreeData,
-                ),
-              (),
-            );
-
-            BuildComponentTool.buildAssetComponent()
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
-        });
-
-        describe("test select file", () => {
-          beforeEach(() =>
-            MainEditorSceneTool.createDefaultScene(
-              sandbox,
-              MainEditorAssetTool.initAssetTree,
-            )
-          );
-
-          describe("test texture", () => {
-            describe(
-              {|select texture;
-            click remove-button;
-            |},
-              () =>
-              test("should remove it from assetTreeRoot", () => {
-                let assetTreeData =
-                  MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
-
-                MainEditorAssetHeaderOperateNodeTool.removeTextureNode(
-                  ~textureNodeId=
-                    MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
-                      assetTreeData,
-                    ),
-                  (),
-                );
-
-                BuildComponentTool.buildAssetComponent()
-                |> ReactTestTool.createSnapshotAndMatch;
-              })
-            );
-
-            describe(
-              {|select texture;
-            drag texture to set gameObject material map;
-            select texture;
-            click remove-button;
-            |},
-              () =>
-              describe("should remove it from engineState", () => {
-                beforeEach(() => {
-                  CurrentSelectSourceEditorService.setCurrentSelectSource(
-                    SceneTreeWidgetService.getWidget(),
-                  )
-                  |> StateLogicService.getAndSetEditorState;
-                  MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
-                });
-
-                describe("should remove it from scene->materials", ()
-                  /* test("test remove basicMaterial->map", () => {
-                       let currentGameObject =
-                         GameObjectTool.unsafeGetCurrentSceneTreeNode();
-                       BasicMaterialToolEngine.replaceGameObjectLightMaterialToBasicMaterialAndRefreshDispose(
-                         currentGameObject,
-                       )
-                       |> StateLogicService.getAndSetEngineState;
-
-                       _exec();
-
-                       MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
-                       let basicMaterial =
-                         GameObjectTool.getCurrentSceneTreeNodeBasicMaterial();
-                       let engineState = StateEngineService.unsafeGetState();
-                       BasicMaterialEngineService.getBasicMaterialMap(
-                         basicMaterial,
-                         engineState,
-                       )
-                       |> expect == None;
-                     }); */
-                  =>
-                    describe("test remove lightMaterial->diffuseMap", () => {
-                      let _drag = assetTreeData =>
-                        MainEditorLightMaterialTool.Drag.dragAssetTextureToMap(
-                          ~textureNodeId=
-                            MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
-                              assetTreeData,
-                            ),
-                          (),
-                        );
-
-                      let _remove = assetTreeData =>
-                        MainEditorAssetHeaderOperateNodeTool.removeTextureNode(
-                          ~textureNodeId=
-                            MainEditorAssetTreeTool.BuildAssetTree.Texture.getFirstTextureNodeId(
-                              assetTreeData,
-                            ),
-                          (),
-                        );
-
-                      test("test one gameObject use one material", () => {
-                        let assetTreeData =
-                          MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
-
-                        _drag(assetTreeData);
-                        _remove(assetTreeData);
-
-                        MainEditorSceneTool.setFirstCubeToBeCurrentSceneTreeNode();
-                        let lightMaterial =
-                          GameObjectTool.getCurrentSceneTreeNodeLightMaterial();
-                        let engineState = StateEngineService.unsafeGetState();
-                        LightMaterialEngineService.getLightMaterialDiffuseMap(
-                          lightMaterial,
-                          engineState,
-                        )
-                        |> expect == None;
-                      });
-
-                      describe("test two gameObjects use one material", () =>
-                        test("test gameObjects are in scene", () => {
-                          let currentGameObject =
-                            GameObjectTool.unsafeGetCurrentSceneTreeNode();
-                          let engineState =
-                            StateEngineService.unsafeGetState();
-                          let oldMaterial =
-                            engineState
-                            |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-                                 currentGameObject,
-                               );
-                          let secondCubeGameObject =
-                            engineState
-                            |> MainEditorSceneTool.getCubeByIndex(1);
-                          let engineState =
-                            engineState
-                            |> LightMaterialToolEngine.replaceGameObjectLightMaterial(
-                                 secondCubeGameObject,
-                                 oldMaterial,
-                               );
-                          engineState |> StateEngineService.setState |> ignore;
-
-                          let assetTreeData =
-                            MainEditorAssetTreeTool.BuildAssetTree.Texture.buildOneTextureAssetTree();
-                          _drag(assetTreeData);
-                          MainEditorSceneTool.setSecondCubeToBeCurrentSceneTreeNode();
-                          _drag(assetTreeData);
-                          _remove(assetTreeData);
-
-                          let engineState =
-                            StateEngineService.unsafeGetState();
-                          let newMaterial1 =
-                            engineState
-                            |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-                                 currentGameObject,
-                               );
-                          let newMaterial2 =
-                            engineState
-                            |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-                                 secondCubeGameObject,
-                               );
-
-                          (
-                            LightMaterialEngineService.getLightMaterialDiffuseMap(
-                              newMaterial1,
-                              engineState,
-                            ),
-                            LightMaterialEngineService.getLightMaterialDiffuseMap(
-                              newMaterial2,
-                              engineState,
-                            ),
-                          )
-                          |> expect == (None, None);
-                        })
-                      );
-                    })
-                  );
-              })
-            );
-          });
-
-          /* describe(
-            "test removed asset node, the id should be added into removedAssetIdArray",
-            () =>
-            describe("test remove first folder", () => {
-              beforeEach(() =>
-                MainEditorSceneTool.createDefaultScene(
-                  sandbox,
-                  MainEditorAssetTool.initAssetTree,
-                )
-              );
-
-              test("test the folderId should add into removedAssetIdArray", () => {
-                let assetTreeData =
-                  MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
-                let removedFolderNodeId =
-                  MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId(
-                    assetTreeData,
-                  );
-
-                MainEditorAssetHeaderOperateNodeTool.removeFolderNode(
-                  ~folderNodeId=removedFolderNodeId,
-                  (),
-                );
-
-                StateEditorService.getState()
-                |> RemovedAssetIdArrayAssetEditorService.getRemovedAssetIdArray
-                |> expect == [|removedFolderNodeId|];
-              });
-              test("test add a new folder, use the removed id", () => {
-                let assetTreeData =
-                  MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
-                let removedFolderNodeId =
-                  MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId(
-                    assetTreeData,
-                  );
-
-                MainEditorAssetHeaderOperateNodeTool.removeFolderNode(
-                  ~folderNodeId=removedFolderNodeId,
-                  (),
-                );
-                MainEditorAssetHeaderOperateNodeTool.addFolder();
-
-                StateEditorService.getState()
-                |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
-                |> (root => root.children)
-                |> ArrayService.unsafeGetLast
-                |> (assetNode => assetNode.nodeId)
-                |> expect == removedFolderNodeId;
-              });
-              test(
-                "test add two new folders, use the removed id and generate one new id",
-                () => {
-                let assetTreeData =
-                  MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.buildOneFolderAssetTree();
-                let removedFolderNodeId =
-                  MainEditorAssetTreeTool.BuildAssetTree.Folder.TwoLayer.getFirstFolderNodeId(
-                    assetTreeData,
-                  );
-
-                MainEditorAssetHeaderOperateNodeTool.removeFolderNode(
-                  ~folderNodeId=removedFolderNodeId,
-                  (),
-                );
-                MainEditorAssetHeaderOperateNodeTool.addFolder();
-                MainEditorAssetHeaderOperateNodeTool.addFolder();
-
-                StateEditorService.getState()
-                |> TreeRootAssetEditorService.unsafeGetAssetTreeRoot
-                |> (root => root.children)
-                |> Js.Array.sliceFrom(-2)
-                |> Js.Array.map(assetNode => assetNode.nodeId)
-                |>
-                expect == [|removedFolderNodeId, removedFolderNodeId |> succ|];
-              });
-            })
-          ); */
-        });
-      });
+        })
+      );
     });
   });

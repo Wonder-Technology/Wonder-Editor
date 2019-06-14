@@ -36,51 +36,55 @@ type domEventName =
   | KeyDown_SceneView
   | KeyPress_SceneView;
 
-type eventTarget =
-  | Scene
-  | Game
-  | Other;
+type eventRecord = {
+  eventTarget: EditorEventTargetType.eventTarget,
+  inspectorEventTarget: InspectorEventTargetType.eventTarget,
+};
 
-type eventRecord = {eventTarget};
-
-external documentToEventTarget :
+external documentToEventTarget:
   WonderWebgl.DomExtendType.document => Dom.eventTarget =
   "%identity";
 
-external bodyToEventTarget : WonderWebgl.DomExtendType.body => Dom.eventTarget =
+external bodyToEventTarget: WonderWebgl.DomExtendType.body => Dom.eventTarget =
   "%identity";
 
-external eventTargetToDomEvent : Dom.event => Wonderjs.EventType.domEvent =
+external eventTargetToDomEvent: Dom.event => Wonderjs.EventType.domEvent =
   "%identity";
 
-external eventTargetToMouseDomEvent :
+external eventTargetToMouseDomEvent:
   Dom.event => Wonderjs.EventType.mouseDomEvent =
   "%identity";
 
-external eventTargetToKeyboardDomEvent :
+external eventTargetToKeyboardDomEvent:
   Dom.event => Wonderjs.EventType.keyboardDomEvent =
   "%identity";
 
-external canvasToEventTarget :
+external canvasToEventTarget:
   WonderWebgl.DomExtendType.htmlElement => Dom.eventTarget =
   "%identity";
 
-external mouseDomEventToPointDomEvent :
+external mouseDomEventToPointDomEvent:
   Wonderjs.EventType.mouseDomEvent => pointDomEvent =
   "%identity";
 
-external pointEventToUserData : pointEvent => Wonderjs.EventType.userData =
+external pointEventToUserData: pointEvent => Wonderjs.EventType.userData =
   "%identity";
 
-external userDataToMouseEvent : Wonderjs.EventType.userData => mouseEvent =
+external convertIntToUserData: int => Wonderjs.EventType.userData =
   "%identity";
 
-external userDataToPointEvent : userData => pointEvent = "%identity";
+external convertUserDataToInt: Wonderjs.EventType.userData => int =
+  "%identity";
 
-external editorDomEventNameToEngineDomEventName :
+external userDataToMouseEvent: Wonderjs.EventType.userData => mouseEvent =
+  "%identity";
+
+external userDataToPointEvent: userData => pointEvent = "%identity";
+
+external editorDomEventNameToEngineDomEventName:
   domEventName => Wonderjs.EventType.domEventName =
   "%identity";
 
-external keyboardDomEventToDomEvent :
+external keyboardDomEventToDomEvent:
   Wonderjs.EventType.keyboardDomEvent => Wonderjs.EventType.domEvent =
   "%identity";

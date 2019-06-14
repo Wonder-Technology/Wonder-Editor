@@ -1,5 +1,7 @@
 open EventType;
 
+open EditorEventTargetType;
+
 let _isTriggerGameViewEvent = () =>
   TargetEventEditorService.getEventTarget(StateEditorService.getState())
   === Game;
@@ -13,109 +15,10 @@ let _isTriggerOtherEvent = () =>
   === Other;
 
 module PointEvent = {
-  let _convertMouseEventToPointEvent =
-      (
-        eventName,
-        {location, locationInView, button, wheel, movementDelta, event}: mouseEvent,
-      )
-      : pointEvent => {
-    name: eventName,
-    location,
-    locationInView,
-    button: Some(button),
-    wheel: Some(wheel),
-    movementDelta,
-    event: event |> mouseDomEventToPointDomEvent,
-  };
-
-  let _bindDomEventToTriggerPointEvent =
-      (
-        (domEventName, customEventName, pointEventName, eventTarget),
-        (
-          onDomEventFunc,
-          convertDomEventToPointEventFunc,
-          isTriggerCustomGlobalEventFunc,
-        ),
-        engineState,
-      ) =>
-    onDomEventFunc(
-      ~eventName=domEventName,
-      ~handleFunc=
-        (. mouseEvent, engineState) =>
-          isTriggerCustomGlobalEventFunc() ?
-            {
-              /* let engineState = _triggerRefreshInspectorEvent(engineState); */
-
-              let (engineState, _) =
-                ManageEventEngineService.triggerCustomGlobalEvent(
-                  CreateCustomEventEngineService.create(
-                    customEventName,
-                    (
-                      convertDomEventToPointEventFunc(
-                        pointEventName,
-                        mouseEvent,
-                      )
-                      |> pointEventToUserData
-                    )
-                    ->Some,
-                  ),
-                  engineState,
-                );
-
-              engineState;
-            } :
-            engineState,
-      ~state=engineState,
-      (),
-    );
-
-  let _bindMouseEventToTriggerViewPointEvent =
-      (
-        (mouseEventName, customEventName, pointEventName),
-        eventTarget,
-        isTriggerCustomGlobalEventFunc,
-        engineState,
-      ) =>
-    _bindDomEventToTriggerPointEvent(
-      (mouseEventName, customEventName, pointEventName, eventTarget),
-      (
-        ManageEventEngineService.onMouseEvent(~priority=0),
-        _convertMouseEventToPointEvent,
-        isTriggerCustomGlobalEventFunc,
-      ),
-      engineState,
-    );
-
-  let _bindMouseEventToTriggerSceneViewPointEvent =
-      (
-        (mouseEventName, customEventName, pointEventName),
-        isTriggerCustomGlobalEventFunc,
-        engineState,
-      ) =>
-    _bindMouseEventToTriggerViewPointEvent(
-      (mouseEventName, customEventName, pointEventName),
-      Scene,
-      isTriggerCustomGlobalEventFunc,
-      engineState,
-    );
-
-  let _bindMouseEventToTriggerGameViewPointEvent =
-      (
-        (mouseEventName, customEventName, pointEventName),
-        isTriggerCustomGlobalEventFunc,
-        engineState,
-      ) =>
-    _bindMouseEventToTriggerViewPointEvent(
-      (mouseEventName, customEventName, pointEventName),
-      Game,
-      isTriggerCustomGlobalEventFunc,
-      engineState,
-    );
-
   let bindDomEventToTriggerPointEvent = (editorState, engineState) =>
     BrowserEngineService.isPC(engineState) ?
       engineState
-      |> _bindMouseEventToTriggerGameViewPointEvent(
+      |> InitEventJobUtils.PointEvent.bindMouseEventToTriggerPointEvent(
            (
              Click,
              GameViewEventEditorService.getPointTapEventName(),
@@ -123,7 +26,7 @@ module PointEvent = {
            ),
            _isTriggerGameViewEvent,
          )
-      |> _bindMouseEventToTriggerGameViewPointEvent(
+      |> InitEventJobUtils.PointEvent.bindMouseEventToTriggerPointEvent(
            (
              MouseUp,
              GameViewEventEditorService.getPointUpEventName(),
@@ -131,7 +34,7 @@ module PointEvent = {
            ),
            _isTriggerGameViewEvent,
          )
-      |> _bindMouseEventToTriggerGameViewPointEvent(
+      |> InitEventJobUtils.PointEvent.bindMouseEventToTriggerPointEvent(
            (
              MouseDown,
              GameViewEventEditorService.getPointDownEventName(),
@@ -139,7 +42,7 @@ module PointEvent = {
            ),
            _isTriggerGameViewEvent,
          )
-      |> _bindMouseEventToTriggerGameViewPointEvent(
+      |> InitEventJobUtils.PointEvent.bindMouseEventToTriggerPointEvent(
            (
              MouseWheel,
              GameViewEventEditorService.getPointScaleEventName(),
@@ -147,7 +50,7 @@ module PointEvent = {
            ),
            _isTriggerGameViewEvent,
          )
-      |> _bindMouseEventToTriggerGameViewPointEvent(
+      |> InitEventJobUtils.PointEvent.bindMouseEventToTriggerPointEvent(
            (
              MouseMove,
              GameViewEventEditorService.getPointMoveEventName(),
@@ -155,7 +58,7 @@ module PointEvent = {
            ),
            _isTriggerGameViewEvent,
          )
-      |> _bindMouseEventToTriggerGameViewPointEvent(
+      |> InitEventJobUtils.PointEvent.bindMouseEventToTriggerPointEvent(
            (
              MouseDragStart,
              GameViewEventEditorService.getPointDragStartEventName(),
@@ -163,7 +66,7 @@ module PointEvent = {
            ),
            _isTriggerGameViewEvent,
          )
-      |> _bindMouseEventToTriggerGameViewPointEvent(
+      |> InitEventJobUtils.PointEvent.bindMouseEventToTriggerPointEvent(
            (
              MouseDragOver,
              GameViewEventEditorService.getPointDragOverEventName(),
@@ -171,7 +74,7 @@ module PointEvent = {
            ),
            _isTriggerGameViewEvent,
          )
-      |> _bindMouseEventToTriggerGameViewPointEvent(
+      |> InitEventJobUtils.PointEvent.bindMouseEventToTriggerPointEvent(
            (
              MouseDragDrop,
              GameViewEventEditorService.getPointDragDropEventName(),
@@ -179,7 +82,7 @@ module PointEvent = {
            ),
            _isTriggerGameViewEvent,
          )
-      |> _bindMouseEventToTriggerSceneViewPointEvent(
+      |> InitEventJobUtils.PointEvent.bindMouseEventToTriggerPointEvent(
            (
              Click,
              SceneViewEventEditorService.getPointTapEventName(),
@@ -187,7 +90,7 @@ module PointEvent = {
            ),
            _isTriggerSceneViewEvent,
          )
-      |> _bindMouseEventToTriggerSceneViewPointEvent(
+      |> InitEventJobUtils.PointEvent.bindMouseEventToTriggerPointEvent(
            (
              MouseUp,
              SceneViewEventEditorService.getPointUpEventName(),
@@ -195,7 +98,7 @@ module PointEvent = {
            ),
            _isTriggerSceneViewEvent,
          )
-      |> _bindMouseEventToTriggerSceneViewPointEvent(
+      |> InitEventJobUtils.PointEvent.bindMouseEventToTriggerPointEvent(
            (
              MouseDown,
              SceneViewEventEditorService.getPointDownEventName(),
@@ -203,7 +106,7 @@ module PointEvent = {
            ),
            _isTriggerSceneViewEvent,
          )
-      |> _bindMouseEventToTriggerSceneViewPointEvent(
+      |> InitEventJobUtils.PointEvent.bindMouseEventToTriggerPointEvent(
            (
              MouseWheel,
              SceneViewEventEditorService.getPointScaleEventName(),
@@ -211,7 +114,7 @@ module PointEvent = {
            ),
            _isTriggerSceneViewEvent,
          )
-      |> _bindMouseEventToTriggerSceneViewPointEvent(
+      |> InitEventJobUtils.PointEvent.bindMouseEventToTriggerPointEvent(
            (
              MouseMove,
              SceneViewEventEditorService.getPointMoveEventName(),
@@ -219,7 +122,7 @@ module PointEvent = {
            ),
            _isTriggerSceneViewEvent,
          )
-      |> _bindMouseEventToTriggerSceneViewPointEvent(
+      |> InitEventJobUtils.PointEvent.bindMouseEventToTriggerPointEvent(
            (
              MouseDragStart,
              SceneViewEventEditorService.getPointDragStartEventName(),
@@ -227,7 +130,7 @@ module PointEvent = {
            ),
            _isTriggerSceneViewEvent,
          )
-      |> _bindMouseEventToTriggerSceneViewPointEvent(
+      |> InitEventJobUtils.PointEvent.bindMouseEventToTriggerPointEvent(
            (
              MouseDragOver,
              SceneViewEventEditorService.getPointDragOverEventName(),
@@ -235,7 +138,7 @@ module PointEvent = {
            ),
            _isTriggerSceneViewEvent,
          )
-      |> _bindMouseEventToTriggerSceneViewPointEvent(
+      |> InitEventJobUtils.PointEvent.bindMouseEventToTriggerPointEvent(
            (
              MouseDragDrop,
              SceneViewEventEditorService.getPointDragDropEventName(),
@@ -259,9 +162,6 @@ module PointEvent = {
 };
 
 module DomEvent = {
-  let _fromPointDomEvent = (eventName, engineState) =>
-    WonderBsMost.Most.fromEvent(eventName, EventUtils.getBody(), false);
-
   let _fromKeyboardDomEvent = (eventName, engineState) =>
     WonderBsMost.Most.fromEvent(eventName, EventUtils.getBody(), false);
 
@@ -347,24 +247,18 @@ module DomEvent = {
     ();
   };
 
-  let _isMouseInView = ((mouseX, mouseY), (x, y, width, height)) =>
-    mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
-
-  let _isTargetNotCanvas = event =>
-    Obj.magic(event)##target##tagName !== "CANVAS";
-
   let _setEventTarget = (({locationInView, event}: mouseEvent) as mouseEvent) => {
     let editorState = StateEditorService.getState();
 
     let eventTarget =
-      _isTargetNotCanvas(event) ?
+      InitEventJobUtils.DomEvent.isTargetNotCanvas(event) ?
         Other :
-        _isMouseInView(
+        InitEventJobUtils.DomEvent.isMouseInView(
           locationInView,
           SceneViewEditorService.unsafeGetViewRect(editorState),
         ) ?
           Scene :
-          _isMouseInView(
+          InitEventJobUtils.DomEvent.isMouseInView(
             locationInView,
             GameViewEditorService.unsafeGetViewRect(editorState),
           ) ?
@@ -418,7 +312,6 @@ module DomEvent = {
   let _execViewKeyboardEventHandle =
       (sceneViewEventName, gameViewEventName, event) =>
     _isTriggerGameViewEvent() ?
-      /* _triggerRefreshInspectorEvent |> StateLogicService.getAndSetEngineState; */
       _execKeyboardEventHandle(
         gameViewEventName |> EventType.editorDomEventNameToEngineDomEventName,
         event,
@@ -431,136 +324,88 @@ module DomEvent = {
         ) :
         ();
 
-  let _fromPCDomEventArr = engineState => [|
-    WonderBsMost.Most.fromEvent("contextmenu", EventUtils.getBody(), false)
-    |> WonderBsMost.Most.tap(event => _preventContextMenuEvent(event)),
-    _fromPointDomEvent("click", engineState)
-    |> WonderBsMost.Most.tap(event =>
-         _mapAndExecMouseEventHandle(Click, event)
-       ),
-    _fromPointDomEvent("mousedown", engineState)
-    |> WonderBsMost.Most.tap(event =>
-         _setEventTarget(_convertDomEventToMouseEvent(MouseDown, event))
-         |> _mapMouseEventToView
-         |> _execMouseEventHandle
-       ),
-    _fromPointDomEvent("mouseup", engineState)
-    |> WonderBsMost.Most.tap(event =>
-         _mapAndExecMouseEventHandle(MouseUp, event)
-       ),
-    _fromPointDomEvent("mousemove", engineState)
-    |> WonderBsMost.Most.tap(event =>
-         _mapAndExecMouseEventHandle(MouseMove, event)
-       ),
-    _fromPointDomEvent("mousewheel", engineState)
-    |> WonderBsMost.Most.tap(event =>
-         _setEventTarget(_convertDomEventToMouseEvent(MouseWheel, event))
-         |> _mapMouseEventToView
-         |> _execMouseEventHandle
-       ),
-    _fromPointDomEvent("mousedown", engineState)
-    |> WonderBsMost.Most.tap(event =>
-         _convertDomEventToMouseEvent(MouseDragStart, event)
-         |> _mapMouseEventToView
-         |> _execMouseDragStartEventHandle
-       )
-    |> WonderBsMost.Most.flatMap(event =>
-         _fromPointDomEvent("mousemove", engineState)
-         |> WonderBsMost.Most.until(
-              _fromPointDomEvent("mouseup", engineState)
-              |> WonderBsMost.Most.tap(event =>
-                   _convertDomEventToMouseEvent(MouseDragDrop, event)
-                   |> _mapMouseEventToView
-                   |> _execMouseDragDropEventHandle
-                 ),
-            )
-       )
-    |> WonderBsMost.Most.tap(event =>
-         _convertDomEventToMouseEvent(MouseDragOver, event)
-         |> _mapMouseEventToView
-         |> _execMouseDragOverEventHandle
-       ),
-    _fromKeyboardDomEvent("keyup", engineState)
-    |> WonderBsMost.Most.tap(event =>
-         _execViewKeyboardEventHandle(KeyUp_SceneView, KeyUp_GameView, event)
-       ),
-    _fromKeyboardDomEvent("keydown", engineState)
-    |> WonderBsMost.Most.tap(event =>
-         _execViewKeyboardEventHandle(
-           KeyDown_SceneView,
-           KeyDown_GameView,
-           event,
-         )
-       ),
-    _fromKeyboardDomEvent("keypress", engineState)
-    |> WonderBsMost.Most.tap(event =>
-         _execViewKeyboardEventHandle(
-           KeyPress_SceneView,
-           KeyPress_GameView,
-           event,
-         )
-       ),
-  |];
-
-  let fromDomEvent = (editorState, engineState) =>
-    WonderBsMost.Most.mergeArray(
-      BrowserEngineService.isPC(engineState) ?
-        _fromPCDomEventArr(engineState) :
-        {
-          ConsoleUtils.error(
-            LogUtils.buildErrorMessage(
-              ~description={j|unknown browser|j},
-              ~reason="",
-              ~solution={j||j},
-              ~params={j||j},
-            ),
-            editorState,
-          );
-
-          [||];
-        },
-    );
-
-  let handleDomEventStreamError = (e, editorState) => {
-    let message = Obj.magic(e)##message;
-    let stack = Obj.magic(e)##stack;
-
-    ConsoleUtils.debug(
-      LogUtils.buildDebugMessage(
-        ~description={j|from dom event stream error|j},
-        ~params={j|message:$message\nstack:$stack|j},
+  let fromPCDomEventArr = engineState =>
+    ArrayService.fastConcat(
+      [|
+        WonderBsMost.Most.fromEvent(
+          "contextmenu",
+          EventUtils.getBody(),
+          false,
+        )
+        |> WonderBsMost.Most.tap(event => _preventContextMenuEvent(event)),
+        InitEventJobUtils.DomEvent.fromPointDomEvent("click", engineState)
+        |> WonderBsMost.Most.tap(event =>
+             _mapAndExecMouseEventHandle(Click, event)
+           ),
+        InitEventJobUtils.DomEvent.fromPointDomEvent("mousedown", engineState)
+        |> WonderBsMost.Most.tap(event =>
+             _setEventTarget(_convertDomEventToMouseEvent(MouseDown, event))
+             |> _mapMouseEventToView
+             |> _execMouseEventHandle
+           ),
+        InitEventJobUtils.DomEvent.fromPointDomEvent("mouseup", engineState)
+        |> WonderBsMost.Most.tap(event =>
+             _mapAndExecMouseEventHandle(MouseUp, event)
+           ),
+        InitEventJobUtils.DomEvent.fromPointDomEvent("mousemove", engineState)
+        |> WonderBsMost.Most.tap(event =>
+             _mapAndExecMouseEventHandle(MouseMove, event)
+           ),
+        InitEventJobUtils.DomEvent.fromPointDomEvent(
+          "mousewheel",
+          engineState,
+        )
+        |> WonderBsMost.Most.tap(event =>
+             _setEventTarget(_convertDomEventToMouseEvent(MouseWheel, event))
+             |> _mapMouseEventToView
+             |> _execMouseEventHandle
+           ),
+        _fromKeyboardDomEvent("keyup", engineState)
+        |> WonderBsMost.Most.tap(event =>
+             _execViewKeyboardEventHandle(
+               KeyUp_SceneView,
+               KeyUp_GameView,
+               event,
+             )
+           ),
+        _fromKeyboardDomEvent("keydown", engineState)
+        |> WonderBsMost.Most.tap(event =>
+             _execViewKeyboardEventHandle(
+               KeyDown_SceneView,
+               KeyDown_GameView,
+               event,
+             )
+           ),
+        _fromKeyboardDomEvent("keypress", engineState)
+        |> WonderBsMost.Most.tap(event =>
+             _execViewKeyboardEventHandle(
+               KeyPress_SceneView,
+               KeyPress_GameView,
+               event,
+             )
+           ),
+      |],
+      InitEventJobUtils.DomEvent.fromPCDragDomEventArr(
+        (
+          _setEventTarget,
+          _convertDomEventToMouseEvent,
+          _mapMouseEventToView,
+          _execMouseDragStartEventHandle,
+          _execMouseDragOverEventHandle,
+          _execMouseDragDropEventHandle,
+        ),
+        engineState,
       ),
-      StateEditorService.getStateIsDebug(),
-      editorState,
     );
-  };
 };
 
-let rec _fromDomEventAndHandleError = (editorState, engineState) =>
-  DomEvent.fromDomEvent(editorState, engineState)
-  |> WonderBsMost.Most.recoverWith(e => {
-       Console.throwFatal(e |> Obj.magic) |> ignore;
-
-       _fromDomEventAndHandleError(editorState, engineState);
-     });
-
-let initEventForEditorJob = (_, engineState) => {
-  let editorState = StateEditorService.getState();
-  let domEventStreamSubscription =
-    _fromDomEventAndHandleError(editorState, engineState)
-    |> WonderBsMost.Most.subscribe({
-         "next": _ => (),
-         "error": e => {
-           Console.throwFatal(e |> Obj.magic) |> ignore;
-
-           ();
-         },
-         "complete": () => (),
-       });
-
-  engineState
-  |> ManageEventEngineService.setDomEventStreamSubscription(
-       domEventStreamSubscription |> Obj.magic,
-     )
-  |> PointEvent.bindDomEventToTriggerPointEvent(editorState);
-};
+let initEventForEditorJob = (_, engineState) =>
+  InitEventJobUtils.initJob(
+    (
+      InitEventJobUtils.fromDomEventAndHandleError(
+        InitEventJobUtils.DomEvent.fromDomEvent(DomEvent.fromPCDomEventArr),
+      ),
+      PointEvent.bindDomEventToTriggerPointEvent,
+    ),
+    engineState,
+  );

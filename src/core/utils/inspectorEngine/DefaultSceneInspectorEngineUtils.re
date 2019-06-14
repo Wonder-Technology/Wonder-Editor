@@ -1,13 +1,38 @@
-let getAmbientLightArr = () => [|0.2, 0.2, 0.2|];
+let getAmbientLightArr = () => [|0.6, 0.6, 0.6|];
 
-let _initCameraAddToSceneGameObject = (camera, inspectorEngineState) =>
+let _initCameraAddToSceneGameObject = (camera, inspectorEngineState) => {
+  let (inspectorEngineState, arcballCameraController) =
+    ArcballCameraEngineService.create(inspectorEngineState);
+
   inspectorEngineState
-  |> TransformEngineService.setLocalPosition(
+  /* |> TransformEngineService.setLocalPosition(
        (0., 0., 1.1),
        GameObjectComponentEngineService.unsafeGetTransformComponent(
          camera,
          inspectorEngineState,
        ),
+     ) */
+  |> ArcballCameraEngineService.setArcballCameraControllerDistance(
+       InspectorCanvasUtils.getCameraDefaultDistance(),
+       arcballCameraController,
+     )
+  |> ArcballCameraEngineService.setArcballCameraControllerWheelSpeed(
+       arcballCameraController,
+       0.5,
+     )
+  |> ArcballCameraEngineService.setArcballCameraControllerMoveSpeedX(
+       arcballCameraController,
+       1.,
+     )
+  |> ArcballCameraEngineService.setArcballCameraControllerMoveSpeedY(
+       arcballCameraController,
+       1.,
+     )
+  |> InspectorCanvasUtils.initArcballCameraControllerAngle(
+       arcballCameraController,
+     )
+  |> ArcballCameraControllerLogicService.bindArcballCameraControllerEventForInspector(
+       arcballCameraController,
      )
   |> BasicCameraViewEngineService.activeBasicCameraView(
        inspectorEngineState
@@ -15,13 +40,26 @@ let _initCameraAddToSceneGameObject = (camera, inspectorEngineState) =>
             camera,
           ),
      )
+  |> GameObjectComponentEngineService.addArcballCameraControllerComponent(
+       camera,
+       arcballCameraController,
+     )
   |> SceneEngineService.addSceneChild(camera);
+};
+
 let _initDirectionLightAddToSceneGameObject =
     (directionLight, inspectorEngineState) =>
   inspectorEngineState
   |> TransformEngineService.setTransformLocalEulerAngles(
        (145., 15., 0.),
        GameObjectComponentEngineService.unsafeGetTransformComponent(
+         directionLight,
+         inspectorEngineState,
+       ),
+     )
+  |> DirectionLightEngineService.setDirectionLightIntensity(
+       0.25,
+       GameObjectComponentEngineService.unsafeGetDirectionLightComponent(
          directionLight,
          inspectorEngineState,
        ),

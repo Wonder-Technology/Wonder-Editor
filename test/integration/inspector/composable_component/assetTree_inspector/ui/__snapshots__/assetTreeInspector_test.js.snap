@@ -20,9 +20,7 @@ exports[`assetTree inspector prepare currentSelectSource test component snapshot
         <div
           className="item-header"
         >
-          <span>
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -63,11 +61,7 @@ exports[`assetTree inspector prepare currentSelectSource test component snapshot
           className="item-header"
           title="texture's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -88,11 +82,7 @@ exports[`assetTree inspector prepare currentSelectSource test component snapshot
           className="item-header"
           title="repetitive pattern in horizontal direction of texture"
         >
-          <span
-            className=""
-          >
-            WrapS
-          </span>
+          WrapS
         </div>
         <div
           className="item-content"
@@ -126,11 +116,7 @@ exports[`assetTree inspector prepare currentSelectSource test component snapshot
           className="item-header"
           title="repetitive pattern in vertical direction of texture"
         >
-          <span
-            className=""
-          >
-            WrapT
-          </span>
+          WrapT
         </div>
         <div
           className="item-content"
@@ -164,11 +150,7 @@ exports[`assetTree inspector prepare currentSelectSource test component snapshot
           className="item-header"
           title="defines how textures are sampled when a texel covers multiple pixels"
         >
-          <span
-            className=""
-          >
-            Mag Filter
-          </span>
+          Mag Filter
         </div>
         <div
           className="item-content"
@@ -197,11 +179,7 @@ exports[`assetTree inspector prepare currentSelectSource test component snapshot
           className="item-header"
           title="defines how textures are sampled when a texel is insufficient to cover a single pixel"
         >
-          <span
-            className=""
-          >
-            Min Filter
-          </span>
+          Min Filter
         </div>
         <div
           className="item-content"
@@ -399,9 +377,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename folder node
         <div
           className="item-header"
         >
-          <span>
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -441,9 +417,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename folder node
         <div
           className="item-header"
         >
-          <span>
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -484,11 +458,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename texture nod
           className="item-header"
           title="texture's name"
         >
-          <span
-            className="component-label"
-          >
-            Name
-          </span>
+          Name
         </div>
         <div
           className="item-content"
@@ -509,11 +479,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename texture nod
           className="item-header"
           title="repetitive pattern in horizontal direction of texture"
         >
-          <span
-            className=""
-          >
-            WrapS
-          </span>
+          WrapS
         </div>
         <div
           className="item-content"
@@ -547,11 +513,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename texture nod
           className="item-header"
           title="repetitive pattern in vertical direction of texture"
         >
-          <span
-            className=""
-          >
-            WrapT
-          </span>
+          WrapT
         </div>
         <div
           className="item-content"
@@ -585,11 +547,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename texture nod
           className="item-header"
           title="defines how textures are sampled when a texel covers multiple pixels"
         >
-          <span
-            className=""
-          >
-            Mag Filter
-          </span>
+          Mag Filter
         </div>
         <div
           className="item-content"
@@ -618,11 +576,7 @@ exports[`assetTree inspector prepare currentSelectSource test rename texture nod
           className="item-header"
           title="defines how textures are sampled when a texel is insufficient to cover a single pixel"
         >
-          <span
-            className=""
-          >
-            Min Filter
-          </span>
+          Min Filter
         </div>
         <div
           className="item-content"

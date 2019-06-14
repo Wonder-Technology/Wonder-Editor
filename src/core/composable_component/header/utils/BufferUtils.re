@@ -1,6 +1,6 @@
 open Js.Typed_array;
 
-let alignedLength = (value: int) : int =>
+let alignedLength = (value: int): int =>
   switch (value) {
   | 0 => value
   | value =>

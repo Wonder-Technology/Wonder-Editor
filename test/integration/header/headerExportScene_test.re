@@ -16,6 +16,41 @@ let _ =
       sandbox := createSandbox();
 
       MainEditorSceneTool.initState(~sandbox, ());
+
+      MainEditorSceneTool.initInspectorEngineState(
+        ~sandbox,
+        ~isInitJob=false,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+            ~initPipelines=
+              {|
+             [
+              {
+                "name": "default",
+                "jobs": [
+                    {"name": "init_inspector_engine" }
+                ]
+              }
+            ]
+             |},
+            ~initJobs=
+              {|
+             [
+                {"name": "init_inspector_engine" }
+             ]
+             |},
+            (),
+          ),
+        (),
+      );
+
+      StateInspectorEngineService.unsafeGetState()
+      |> MainUtils._handleInspectorEngineState
+      |> StateInspectorEngineService.setState
+      |> ignore;
+
+      CanvasTool.prepareInspectorCanvasAndImgCanvas(sandbox) |> ignore;
+
       MainEditorSceneTool.prepareScene(sandbox);
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -35,7 +70,7 @@ let _ =
 
         warn
         |> expect
-        |> toCalledWith([|"should export scene when stop, but now is run!"|]);
+        |> toCalledWith([|"should operate when stop, but now is run!"|]);
       })
     );
 

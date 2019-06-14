@@ -13,3 +13,5 @@ let resetDisposeCount = ReallocateCPUMemoryJobAPI.resetDisposeCount;
 let reAllocateToBuffer = ReallocateCPUMemoryJobAPI.reAllocateToBuffer;
 
 let initGeometryBufferData = ReallocateCPUMemoryJobAPI.initGeometryBufferData;
+
+let reallocateGeometry = ReallocateCPUMemoryJobAPI.reallocateGeometry;
