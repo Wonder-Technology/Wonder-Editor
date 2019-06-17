@@ -1,6 +1,6 @@
 open InspectorComponentType;
 
-let _getCameraControllerType = (gameObject, engineState) =>
+let getCameraControllerType = (gameObject, engineState) =>
   engineState
   |> GameObjectComponentEngineService.hasFlyCameraControllerComponent(
        gameObject,
@@ -29,7 +29,7 @@ let _updateFlyCameraDirection = (editCamera, engineState) => {
 let renderWhenCameraChangeDirection = (editorState, engineState) => {
   let editCamera = editorState |> SceneViewEditorService.unsafeGetEditCamera;
 
-  switch (_getCameraControllerType(editCamera, engineState)) {
+  switch (getCameraControllerType(editCamera, engineState)) {
   | Some(FlyCameraController) =>
     engineState |> _updateFlyCameraDirection(editCamera)
   | Some(ArcballCameraController) => engineState
@@ -51,7 +51,7 @@ let bindGameViewActiveCameraControllerEvent = engineState =>
         engineState,
       );
 
-    switch (_getCameraControllerType(gameObject, engineState)) {
+    switch (getCameraControllerType(gameObject, engineState)) {
     | Some(FlyCameraController) =>
       engineState
       |> FlyCameraControllerLogicService.bindGameViewActiveCameraFlyCameraControllerEvent(
@@ -78,7 +78,7 @@ let unbindGameViewActiveCameraControllerEvent = engineState =>
         engineState,
       );
 
-    switch (_getCameraControllerType(gameObject, engineState)) {
+    switch (getCameraControllerType(gameObject, engineState)) {
     | Some(FlyCameraController) =>
       engineState
       |> FlyCameraControllerLogicService.unbindGameViewActiveCameraFlyCameraControllerEvent(
