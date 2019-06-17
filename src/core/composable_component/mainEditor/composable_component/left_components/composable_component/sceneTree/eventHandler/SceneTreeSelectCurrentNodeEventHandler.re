@@ -59,7 +59,7 @@ module CustomEventHandler = {
         );
       engineState |> StateEngineService.setState |> ignore;
 
-      StateLogicService.getAndRefreshEngineStateWhenStop();
+      StateLogicService.getAndRefreshEngineState();
     };
 
     dispatchFunc(

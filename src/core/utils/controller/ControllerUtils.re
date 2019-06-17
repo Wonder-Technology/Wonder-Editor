@@ -14,7 +14,7 @@ let run = uiState => {
      );
 
   StateEngineService.unsafeGetState()
-  |> ArcballCameraControllerLogicService.bindGameViewActiveCameraArcballCameraControllerEvent
+  |> CameraControllerUtils.bindGameViewActiveCameraControllerEvent
   |> _runInitScriptJob
   |> StateEngineService.setState
   |> ignore;
@@ -52,7 +52,7 @@ let stop = dispatchFunc => {
   );
 
   StateEngineService.unsafeGetState()
-  |> ArcballCameraControllerLogicService.unbindGameViewActiveCameraArcballCameraControllerEvent
+  |> CameraControllerUtils.unbindGameViewActiveCameraControllerEvent
   |> StateEngineService.setState
   |> ignore;
 

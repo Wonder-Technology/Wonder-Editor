@@ -123,11 +123,6 @@ let _ =
       PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
       StateLogicService.getAndSetEngineState(MainUtils._handleEngineState);
 
-      /* EventTool.triggerDomEvent(
-           "click",
-           EventTool.getBody(),
-           MouseEventTool.buildMouseDomEvent(~pageX, ~pageY, ()),
-         ); */
       EventTool.triggerDomEvent(
         "mousedown",
         EventTool.getBody(),
