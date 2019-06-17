@@ -29,40 +29,28 @@ let prepareSpecificGameObjects = (editorState, engineState) => {
     );
   let (editorState, engineState, camera) =
     CameraLogicService.createCamera(editorState, engineState);
-  let (engineState, arcballCameraController) =
-    ArcballCameraEngineService.create(engineState);
+  let (engineState, flyCameraController) =
+    FlyCameraEngineService.create(engineState);
 
   let engineState =
     engineState
-    |> ArcballCameraEngineService.setArcballCameraControllerDistance(
-         20.,
-         arcballCameraController,
+    |> FlyCameraEngineService.setFlyCameraControllerMoveSpeed(
+         flyCameraController,
+         0.1,
        )
-    |> ArcballCameraEngineService.setArcballCameraControllerWheelSpeed(
-         arcballCameraController,
-         0.5,
+    |> FlyCameraEngineService.setFlyCameraControllerWheelSpeed(
+         flyCameraController,
+         1.5,
        )
-    |> ArcballCameraEngineService.setArcballCameraControllerMoveSpeedX(
-         arcballCameraController,
-         1.,
-       )
-    |> ArcballCameraEngineService.setArcballCameraControllerMoveSpeedY(
-         arcballCameraController,
-         1.,
-       )
-    |> ArcballCameraEngineService.setArcballCameraControllerTheta(
-         arcballCameraController,
-         Js.Math._PI /. 5.,
-       )
-    |> ArcballCameraControllerLogicService.bindArcballCameraControllerEventForSceneView(
-         arcballCameraController,
+    |> FlyCameraControllerLogicService.bindFlyCameraControllerEventForSceneView(
+         flyCameraController,
        );
 
   let (editorState, engineState) =
     (editorState, engineState)
-    |> GameObjectLogicService.addArcballCameraController(
+    |> GameObjectLogicService.addFlyCameraController(
          camera,
-         arcballCameraController,
+         flyCameraController,
        );
 
   let editorState =

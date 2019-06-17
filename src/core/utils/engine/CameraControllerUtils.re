@@ -1,6 +1,6 @@
 open InspectorComponentType;
 
-let getCameraControllerType = (gameObject, engineState) =>
+let _getCameraControllerType = (gameObject, engineState) =>
   engineState
   |> GameObjectComponentEngineService.hasFlyCameraControllerComponent(
        gameObject,
@@ -11,6 +11,31 @@ let getCameraControllerType = (gameObject, engineState) =>
          gameObject,
        ) ?
       Some(ArcballCameraController) : None;
+
+let _updateFlyCameraDirection = (editCamera, engineState) => {
+  let flyCameraController =
+    engineState
+    |> GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
+         editCamera,
+       );
+
+  FlyCameraEngineService.hasFlyCameraControllerDirection(
+    flyCameraController,
+    engineState,
+  ) ?
+    engineState |> StateLogicService.renderWhenStop : engineState;
+};
+
+let renderWhenCameraChangeDirection = (editorState, engineState) => {
+  let editCamera = editorState |> SceneViewEditorService.unsafeGetEditCamera;
+
+  switch (_getCameraControllerType(editCamera, engineState)) {
+  | Some(FlyCameraController) =>
+    engineState |> _updateFlyCameraDirection(editCamera)
+  | Some(ArcballCameraController) => engineState
+  | None => engineState
+  };
+};
 
 let bindGameViewActiveCameraControllerEvent = engineState =>
   switch (
@@ -26,7 +51,7 @@ let bindGameViewActiveCameraControllerEvent = engineState =>
         engineState,
       );
 
-    switch (getCameraControllerType(gameObject, engineState)) {
+    switch (_getCameraControllerType(gameObject, engineState)) {
     | Some(FlyCameraController) =>
       engineState
       |> FlyCameraControllerLogicService.bindGameViewActiveCameraFlyCameraControllerEvent(
@@ -53,7 +78,7 @@ let unbindGameViewActiveCameraControllerEvent = engineState =>
         engineState,
       );
 
-    switch (getCameraControllerType(gameObject, engineState)) {
+    switch (_getCameraControllerType(gameObject, engineState)) {
     | Some(FlyCameraController) =>
       engineState
       |> FlyCameraControllerLogicService.unbindGameViewActiveCameraFlyCameraControllerEvent(

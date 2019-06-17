@@ -24,7 +24,6 @@ let setFlyCameraControllerRotateSpeed = FlyCameraControllerAPI.setFlyCameraContr
 
 let bindFlyCameraControllerEventForGameView = FlyCameraControllerAPI.bindFlyCameraControllerEvent;
 
-
 let prepareBindEvent = EventFlyCameraControllerMainService.prepareBindEvent;
 
 let unbindFlyCameraControllerEventForGameView = FlyCameraControllerAPI.unbindFlyCameraControllerEvent;

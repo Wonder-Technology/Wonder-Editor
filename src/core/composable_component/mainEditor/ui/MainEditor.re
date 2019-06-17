@@ -3,6 +3,20 @@ open WonderBsMost;
 type retainedProps = {isInitEngine: bool};
 
 module Method = {
+  let rec startLoop = (time: float, state): int => {
+    StateEngineService.setState(state);
+
+    AnimationFrame.requestAnimationFrame((time: float) =>
+      StateEngineService.unsafeGetState()
+      |> CameraControllerUtils.renderWhenCameraChangeDirection(
+           StateEditorService.getState(),
+         )
+      |> StateEngineService.setState
+      |> startLoop(time)
+      |> ignore
+    );
+  };
+
   let buildNoCameraElement = () =>
     SceneUtils.isSceneHaveNoActiveCamera() ?
       switch (
@@ -148,6 +162,8 @@ let make = (~uiState: AppStore.appState, ~dispatchFunc, _children) => {
                   )
            )
            |> StateLogicService.getAndSetEditorState;
+
+           StateEngineService.unsafeGetState() |> Method.startLoop(0.);
 
            dispatchFunc(AppStore.InitEngineAction) |> resolve;
          })

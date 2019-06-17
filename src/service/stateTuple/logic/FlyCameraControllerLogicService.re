@@ -37,13 +37,14 @@ let _handleKeyDownForSceneView = (event, keydownHandleFunc, engineState) =>
       )
       |> ignore;
 
-      let engineState = keydownHandleFunc(. event, engineState);
-
-      let engineState = StateLogicService.renderWhenStop(engineState);
-
-      engineState;
+       keydownHandleFunc(. event, engineState);
     } :
     engineState;
+
+let _handleKeyUpForSceneView = (event, keyupHandleFunc, engineState) => {
+   keyupHandleFunc(. event, engineState);
+
+};
 
 let _bindFlyCameraControllerEvent =
     (
@@ -97,12 +98,15 @@ let _bindFlyCameraControllerEvent =
       (),
     );
 
-  (engineState, (pointScaleHandleFunc, keydownHandleFunc));
+  (engineState, (pointScaleHandleFunc, keydownHandleFunc, keyupHandleFunc));
 };
 
 let bindFlyCameraControllerEventForSceneView =
     (cameraController, mainEngineState) => {
-  let (mainEngineState, (pointScaleHandleFunc, keydownHandleFunc)) =
+  let (
+    mainEngineState,
+    (pointScaleHandleFunc, keydownHandleFunc, keyupHandleFunc),
+  ) =
     _bindFlyCameraControllerEvent(
       cameraController,
       (
@@ -138,6 +142,16 @@ let bindFlyCameraControllerEventForSceneView =
             keydownHandleFunc,
             mainEngineState,
           ),
+      ~state=mainEngineState,
+      (),
+    );
+
+  let mainEngineState =
+    ManageEventEngineService.onKeyboardEvent(
+      ~eventName=EventType.KeyUp_SceneView |> Obj.magic,
+      ~handleFunc=
+        (. event: EventType.keyboardEvent, mainEngineState) =>
+          _handleKeyUpForSceneView(event, keyupHandleFunc, mainEngineState),
       ~state=mainEngineState,
       (),
     );
