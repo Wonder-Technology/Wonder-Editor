@@ -22,6 +22,21 @@ let _removeCameraGroup = (currentSceneTreeNode, (editorState, engineState)) =>
        ),
      );
 
+let _removeFlyCameraController =
+    (currentSceneTreeNode, (editorState, engineState)) => {
+  let flyCameraController =
+    engineState
+    |> GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
+         currentSceneTreeNode,
+       );
+
+  (editorState, engineState)
+  |> GameObjectLogicService.disposeFlyCameraController(
+       currentSceneTreeNode,
+       flyCameraController,
+     );
+};
+
 let _removeArcballCameraController =
     (currentSceneTreeNode, (editorState, engineState)) => {
   let arcballCameraController =
@@ -86,6 +101,11 @@ let removeComponentByType =
 
   | CameraGroup =>
     _removeCameraGroup(currentSceneTreeNode, (editorState, engineState))
+  | FlyCameraController =>
+    _removeFlyCameraController(
+      currentSceneTreeNode,
+      (editorState, engineState),
+    )
   | ArcballCameraController =>
     _removeArcballCameraController(
       currentSceneTreeNode,

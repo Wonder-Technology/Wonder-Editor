@@ -32,6 +32,7 @@ module Method = {
         ),
       )
       |> StateLogicService.getEditorState :
+      /* TODO handle arcball and fly camera add */
       AddableComponentAddComponentEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
         (uiState, dispatchFunc),
         currentSceneTreeNode,

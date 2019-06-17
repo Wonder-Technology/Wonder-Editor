@@ -46,16 +46,6 @@ let getAndRefreshEngineStateWithFunc = handleFunc =>
   |> StateEngineService.setState
   |> ignore;
 
-let loopBodyWhenStop = engineState =>
-  StateEditorService.getIsRun() ?
-    engineState : engineState |> DirectorEngineService.loopBody(0.);
-
-let getAndRefreshEngineStateWhenStop = () =>
-  StateEngineService.unsafeGetState()
-  |> loopBodyWhenStop
-  |> StateEngineService.setState
-  |> ignore;
-
 let renderWhenStop = engineState =>
   StateEditorService.getIsRun() ?
     engineState : engineState |> DirectorEngineService.loopBody(0.);

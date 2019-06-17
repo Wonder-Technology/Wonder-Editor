@@ -24,6 +24,11 @@ let isHasSpecificComponentByType =
   | CameraGroup =>
     engineState |> CameraEngineService.hasCameraGroup(gameObject)
 
+  | FlyCameraController =>
+    engineState
+    |> GameObjectComponentEngineService.hasFlyCameraControllerComponent(
+         gameObject,
+       )
   | ArcballCameraController =>
     engineState
     |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(

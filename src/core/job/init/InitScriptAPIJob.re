@@ -328,6 +328,17 @@ module AssetBundle = {
              ) :
           editorState;
       let editorState =
+        GameObjectComponentEngineService.hasFlyCameraControllerComponent(
+          gameObject,
+          engineState,
+        ) ?
+          editorState
+          |> InspectorEditorService.addComponentTypeToMap(
+               gameObject,
+               InspectorComponentType.FlyCameraController,
+             ) :
+          editorState;
+      let editorState =
         GameObjectComponentEngineService.hasArcballCameraControllerComponent(
           gameObject,
           engineState,
