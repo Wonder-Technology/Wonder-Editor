@@ -4,33 +4,19 @@ module CustomEventHandler = {
   type dataTuple = int;
   type return = unit;
 
-  let _unbindCurrentActiveCameraEventIfHasComponentAndInRunMode = engineState =>
-    switch (
-      engineState |> BasicCameraViewEngineService.getActiveBasicCameraView
-    ) {
-    | None => engineState
-    | Some(currentBasicCameraView) =>
-      StateEditorService.getIsRun() ?
-        ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponentForGameView(
-          currentBasicCameraView
-          |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
-               _,
-               engineState,
-             ),
-          engineState,
-        ) :
-        engineState
-    };
-
-  let _bindTargetEventIfHasComponentAndInRunMode =
-      (targetBasicCameraView, engineState) =>
+  let _unbindCurrentActiveCameraEventIfHasComponentAndInRunMode =
+      (camera, engineState) =>
     StateEditorService.getIsRun() ?
-      ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponentForGameView(
-        targetBasicCameraView
-        |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
-             _,
-             engineState,
-           ),
+      CameraControllerUtils.unbindCameraControllerEventByType(
+        camera,
+        engineState,
+      ) :
+      engineState;
+
+  let _bindTargetEventIfHasComponentAndInRunMode = (camera, engineState) =>
+    StateEditorService.getIsRun() ?
+      CameraControllerUtils.bindCameraControllerEventByType (
+        camera,
         engineState,
       ) :
       engineState;
@@ -40,9 +26,17 @@ module CustomEventHandler = {
     |> GameViewEditorService.setActivedBasicCameraView(targetBasicCameraView)
     |> StateEditorService.setState;
 
-    StateEngineService.unsafeGetState()
-    |> _unbindCurrentActiveCameraEventIfHasComponentAndInRunMode
-    |> _bindTargetEventIfHasComponentAndInRunMode(targetBasicCameraView)
+    let engineState = 
+    StateEngineService.unsafeGetState();
+
+    let currentActiveCamera = 
+    engineState
+    |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
+      targetBasicCameraView );
+
+engineState
+    |> _unbindCurrentActiveCameraEventIfHasComponentAndInRunMode(currentActiveCamera)
+    |> _bindTargetEventIfHasComponentAndInRunMode(currentActiveCamera)
     |> StateEngineService.setState;
 
     StateLogicService.getAndRefreshEngineState();

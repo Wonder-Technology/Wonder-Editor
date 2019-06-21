@@ -5,10 +5,9 @@ open Wonderjs;
 open CameraGroupType;
 
 let _removeCameraGroup = (currentSceneTreeNode, (editorState, engineState)) =>
-  engineState
-  |> CameraLogicService.unbindArcballCameraControllerEventIfHasComponentForGameView(
+  (editorState, engineState)
+  |> CameraLogicService.unbindCameraControllerEventIfHasComponentGameView(
        currentSceneTreeNode,
-       editorState,
      )
   |> GameObjectLogicService.disposeCameraGroup(
        currentSceneTreeNode,

@@ -10,10 +10,9 @@ let disposeCurrentSceneTreeNode =
            let (editorState, engineState) =
              engineState
              |> CameraEngineService.hasCameraGroup(removedGameObject) ?
-               engineState
-               |> CameraLogicService.unbindArcballCameraControllerEventIfHasComponentForGameView(
+               (editorState, engineState)
+               |> CameraLogicService.unbindCameraControllerEventIfHasComponentGameView(
                     removedGameObject,
-                    editorState,
                   ) :
                (editorState, engineState);
 

@@ -202,49 +202,33 @@ let _checkSceneAllArcballCameraControllersNotBindEvent = engineState =>
     )
   );
 
-let bindGameViewActiveCameraArcballCameraControllerEvent = engineState => {
+let bindGameViewActiveCameraArcballCameraControllerEvent =
+    (gameObject, engineState) => {
   WonderLog.Contract.requireCheck(
     () => _checkSceneAllArcballCameraControllersNotBindEvent(engineState),
     StateEditorService.getStateIsDebug(),
   );
 
-  switch (
-    GameViewEditorService.getActivedBasicCameraView(
-      StateEditorService.getState(),
-    )
-  ) {
-  | None => engineState
-  | Some(activeBasicCameraView) =>
-    BasicCameraViewEngineService.getBasicCameraViewGameObject(
-      activeBasicCameraView,
-      engineState,
-    )
-    |> ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponentForGameView(
-         _,
-         engineState,
-       )
-  };
+  engineState
+  |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+       gameObject,
+     )
+  |> ArcballCameraEngineService.bindArcballCameraControllerEventForGameView(
+       _,
+       engineState,
+     );
 };
 
-let unbindGameViewActiveCameraArcballCameraControllerEvent = engineState =>
-  (
-    switch (
-      GameViewEditorService.getActivedBasicCameraView(
-        StateEditorService.getState(),
-      )
-    ) {
-    | None => engineState
-    | Some(activeBasicCameraView) =>
-      BasicCameraViewEngineService.getBasicCameraViewGameObject(
-        activeBasicCameraView,
-        engineState,
-      )
-      |> ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponentForGameView(
-           _,
-           engineState,
-         )
-    }
-  )
+let unbindGameViewActiveCameraArcballCameraControllerEvent =
+    (gameObject, engineState) =>
+  engineState
+  |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
+       gameObject,
+     )
+  |> ArcballCameraEngineService.unbindArcballCameraControllerEventForGameView(
+       _,
+       engineState,
+     )
   |> WonderLog.Contract.ensureCheck(
        engineState =>
          _checkSceneAllArcballCameraControllersNotBindEvent(engineState),

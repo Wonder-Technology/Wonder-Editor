@@ -9,10 +9,10 @@ let _calcMoveSpeed = distance => distance /. 100.;
 let _calcWheelSpeed = distance =>
   _isFixedDistance(distance) ? 0.5 : distance /. 50.;
 
+/* TODO test copy */
 let _calcPosition = (transform, (target, distance), engineState) =>
   engineState
   |> TransformEngineService.getLocalToWorldMatrixTypeArray(transform)
-  |> Wonderjs.Matrix4Service.copy
   |> Wonderjs.Matrix4Service.setTranslation(target)
   |> Vector3Service.transformMat4Tuple((0., 0., distance));
 
