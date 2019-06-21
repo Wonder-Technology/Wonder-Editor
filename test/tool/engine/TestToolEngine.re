@@ -79,6 +79,7 @@ let createAndSetEngineState =
       ),
     (),
   )
+  |> GPUDetectToolEngine.setMaxTextureUnit(16)
   |> StateEngineService.setState
   |> ignore;
 };

@@ -6,246 +6,238 @@ let buildRenderConfig =
     (
       ~shaders={|
 
-{
-  "static_branchs": [
-    {
-      "name": "modelMatrix_instance",
-      "value": [
-        "modelMatrix_noInstance",
-        "modelMatrix_hardware_instance",
-        "modelMatrix_batch_instance"
-      ]
-    },
-    {
-      "name": "normalMatrix_instance",
-      "value": [
-        "normalMatrix_noInstance",
-        "normalMatrix_hardware_instance",
-        "normalMatrix_batch_instance"
-      ]
-    }
-  ],
-  "dynamic_branchs": [
-    {
-      "name": "basic_map",
-      "condition": "basic_has_map",
-      "pass": "basic_map",
-      "fail": "no_basic_map"
-    },
-    {
-      "name": "common_light_map",
-      "condition": "light_has_map",
-      "pass": "common_light_map"
-    },
-    {
-      "name": "diffuse_map",
-      "condition": "has_diffuse_map",
-      "pass": "diffuse_map",
-      "fail": "no_diffuse_map"
-    },
-    {
-      "name": "specular_map",
-      "condition": "has_specular_map",
-      "pass": "specular_map",
-      "fail": "no_specular_map"
-    }
-  ],
-  "groups": [
-    {
-      "name": "top",
-      "value": [
-        "common",
-        "vertex"
-      ]
-    },
-    {
-      "name": "end",
-      "value": [
-        "end"
-      ]
-    }
-  ],
-  "material_shaders": [
-    {
-      "name": "render_basic",
-      "shader_libs": [
         {
-          "type": "group",
-          "name": "top"
-        },
-        {
-          "type": "static_branch",
-          "name": "modelMatrix_instance"
-        },
-        {
-          "name": "basic"
-        },
-        {
-          "type": "dynamic_branch",
-          "name": "basic_map"
-        },
-        {
-          "name": "basic_end"
-        },
-        {
-          "type": "group",
-          "name": "end"
+          "static_branchs": [
+            {
+              "name": "modelMatrix_instance",
+              "value": [
+                "modelMatrix_noInstance",
+                "modelMatrix_hardware_instance",
+                "modelMatrix_batch_instance"
+              ]
+            },
+            {
+              "name": "normalMatrix_instance",
+              "value": [
+                "normalMatrix_noInstance",
+                "normalMatrix_hardware_instance",
+                "normalMatrix_batch_instance"
+              ]
+            }
+          ],
+          "dynamic_branchs": [
+            {
+              "name": "common_light_map",
+              "condition": "light_has_map",
+              "pass": "common_light_map"
+            },
+            {
+              "name": "diffuse_map",
+              "condition": "has_diffuse_map",
+              "pass": "diffuse_map",
+              "fail": "no_diffuse_map"
+            },
+            {
+              "name": "specular_map",
+              "condition": "has_specular_map",
+              "pass": "specular_map",
+              "fail": "no_specular_map"
+            }
+          ],
+          "groups": [
+            {
+              "name": "top",
+              "value": [
+                "common",
+                "vertex"
+              ]
+            },
+            {
+              "name": "end",
+              "value": [
+                "end"
+              ]
+            }
+          ],
+          "material_shaders": [
+            {
+              "name": "render_basic",
+              "shader_libs": [
+                {
+                  "type": "group",
+                  "name": "top"
+                },
+                {
+                  "type": "static_branch",
+                  "name": "modelMatrix_instance"
+                },
+                {
+                  "name": "basic"
+                },
+                {
+                  "name": "no_basic_map"
+                },
+                {
+                  "name": "basic_end"
+                },
+                {
+                  "type": "group",
+                  "name": "end"
+                }
+              ]
+            },
+            {
+              "name": "front_render_light",
+              "shader_libs": [
+                {
+                  "type": "group",
+                  "name": "top"
+                },
+                {
+                  "name": "normal"
+                },
+                {
+                  "type": "static_branch",
+                  "name": "modelMatrix_instance"
+                },
+                {
+                  "type": "static_branch",
+                  "name": "normalMatrix_instance"
+                },
+                {
+                  "name": "light_common"
+                },
+                {
+                  "name": "light_setWorldPosition"
+                },
+                {
+                  "type": "dynamic_branch",
+                  "name": "common_light_map"
+                },
+                {
+                  "type": "dynamic_branch",
+                  "name": "diffuse_map"
+                },
+                {
+                  "type": "dynamic_branch",
+                  "name": "specular_map"
+                },
+                {
+                  "name": "no_light_map"
+                },
+                {
+                  "name": "no_emission_map"
+                },
+                {
+                  "name": "no_normal_map"
+                },
+                {
+                  "name": "no_shadow_map"
+                },
+                {
+                  "name": "light"
+                },
+                {
+                  "name": "ambient_light"
+                },
+                {
+                  "name": "direction_light"
+                },
+                {
+                  "name": "point_light"
+                },
+                {
+                  "name": "light_end"
+                },
+                {
+                  "type": "group",
+                  "name": "end"
+                }
+              ]
+            }
+          ],
+          "no_material_shaders": [
+            {
+              "name": "rotation_gizmo_for_editor",
+              "shader_libs": [
+                {
+                  "type": "group",
+                  "name": "top"
+                },
+                {
+                  "name": "modelMatrix_noInstance"
+                },
+                {
+                  "name": "rotation_gizmo_circle_for_editor"
+                },
+                {
+                  "type": "group",
+                  "name": "end"
+                }
+              ]
+            },
+            {
+              "name": "outline_draw_origin_gameObjects",
+              "shader_libs": [
+                {
+                  "type": "group",
+                  "name": "top"
+                },
+                {
+                  "name": "modelMatrix_noInstance"
+                },
+                {
+                  "name": "outline_origin"
+                },
+                {
+                  "type": "group",
+                  "name": "end"
+                }
+              ]
+            },
+            {
+              "name": "outline_draw_expand_gameObjects",
+              "shader_libs": [
+                {
+                  "type": "group",
+                  "name": "top"
+                },
+                {
+                  "name": "normal"
+                },
+                {
+                  "name": "outline_scaled_modelMatrix"
+                },
+                {
+                  "name": "outline_expand"
+                },
+                {
+                  "type": "group",
+                  "name": "end"
+                }
+              ]
+            },
+            {
+              "name": "skybox",
+              "shader_libs": [
+                {
+                  "type": "group",
+                  "name": "top"
+                },
+                {
+                  "name": "skybox"
+                },
+                {
+                  "type": "group",
+                  "name": "end"
+                }
+              ]
+            }
+          ]
         }
-      ]
-    },
-    {
-      "name": "front_render_light",
-      "shader_libs": [
-        {
-          "type": "group",
-          "name": "top"
-        },
-        {
-          "name": "normal"
-        },
-        {
-          "type": "static_branch",
-          "name": "modelMatrix_instance"
-        },
-        {
-          "type": "static_branch",
-          "name": "normalMatrix_instance"
-        },
-        {
-          "name": "light_common"
-        },
-        {
-          "name": "light_setWorldPosition"
-        },
-        {
-          "type": "dynamic_branch",
-          "name": "common_light_map"
-        },
-        {
-          "type": "dynamic_branch",
-          "name": "diffuse_map"
-        },
-        {
-          "type": "dynamic_branch",
-          "name": "specular_map"
-        },
-        {
-          "name": "no_light_map"
-        },
-        {
-          "name": "no_emission_map"
-        },
-        {
-          "name": "no_normal_map"
-        },
-        {
-          "name": "no_shadow_map"
-        },
-        {
-          "name": "light"
-        },
-        {
-          "name": "ambient_light"
-        },
-        {
-          "name": "direction_light"
-        },
-        {
-          "name": "point_light"
-        },
-        {
-          "name": "light_end"
-        },
-        {
-          "type": "group",
-          "name": "end"
-        }
-      ]
-    }
-  ],
-  "no_material_shaders": [
-    {
-      "name": "rotation_gizmo_for_editor",
-      "shader_libs": [
-        {
-          "type": "group",
-          "name": "top"
-        },
-        {
-          "name": "modelMatrix_noInstance"
-        },
-        {
-          "name": "rotation_gizmo_circle_for_editor"
-        },
-        {
-          "type": "group",
-          "name": "end"
-        }
-      ]
-    },
-    {
-      "name": "outline_draw_origin_gameObjects",
-      "shader_libs": [
-        {
-          "type": "group",
-          "name": "top"
-        },
-        {
-          "name": "modelMatrix_noInstance"
-        },
-        {
-          "name": "outline_origin"
-        },
-        {
-          "type": "group",
-          "name": "end"
-        }
-      ]
-    },
-    {
-      "name": "outline_draw_expand_gameObjects",
-      "shader_libs": [
-        {
-          "type": "group",
-          "name": "top"
-        },
-        {
-          "name": "normal"
-        },
-        {
-          "name": "outline_scaled_modelMatrix"
-        },
-        {
-          "name": "outline_expand"
-        },
-        {
-          "type": "group",
-          "name": "end"
-        }
-      ]
-    },
-    {
-      "name": "skybox",
-      "shader_libs": [
-        {
-          "type": "group",
-          "name": "top"
-        },
-        {
-          "name": "skybox"
-        },
-        {
-          "type": "group",
-          "name": "end"
-        }
-      ]
-    }
-  ]
-}
-
         |},
       ~shaderLibs={|
-[
+        [
   {
     "name": "common",
     "glsls": [
@@ -366,48 +358,6 @@ let buildRenderConfig =
         "name": "webgl1_basic_vertex"
       }
     ]
-  },
-  {
-    "name": "basic_map",
-    "glsls": [
-      {
-        "type": "vs",
-        "name": "webgl1_basic_map_vertex"
-      },
-      {
-        "type": "fs",
-        "name": "webgl1_basic_map_fragment"
-      }
-    ],
-    "variables": {
-      "attributes": [
-        {
-          "name": "a_texCoord",
-          "buffer": 2,
-          "type": "vec2"
-        }
-      ],
-      "uniforms": [
-        {
-          "name": "u_color",
-          "field": "color",
-          "type": "float3",
-          "from": "basicMaterial"
-        },
-        {
-          "name": "u_alpha",
-          "field": "alpha",
-          "type": "float",
-          "from": "basicMaterial"
-        },
-        {
-          "name": "u_mapSampler",
-          "field": "map",
-          "type": "sampler2D",
-          "from": "basicMaterial"
-        }
-      ]
-    }
   },
   {
     "name": "no_basic_map",
@@ -866,51 +816,51 @@ let buildRenderConfig =
       }
     ]
   },
-  {
-    "name": "skybox",
-    "glsls": [
-      {
-        "type": "vs",
-        "name": "webgl1_skybox_vertex"
-      },
-      {
-        "type": "fs",
-        "name": "webgl1_skybox_fragment"
-      }
-    ],
-    "variables": {
-      "uniforms": [
-        {
-          "name": "u_skyboxCubeMapSampler",
-          "from": "no_material_shader",
-          "field": "skyboxCubeMap",
-          "type": "samplerCube"
-        },
-        {
-          "name": "u_skyboxVMatrix",
-          "from": "no_material_shader",
-          "field": "skyboxVMatrix",
-          "type": "mat4"
-        }
-      ]
-    }
-  },
-  {
-    "name": "end",
-    "variables": {
-      "attributes": [
-        {
-          "buffer": 3
-        }
-      ]
-    }
-  }
-]
+          {
+            "name": "skybox",
+            "glsls": [
+              {
+                "type": "vs",
+                "name": "webgl1_skybox_vertex"
+              },
+              {
+                "type": "fs",
+                "name": "webgl1_skybox_fragment"
+              }
+            ],
+            "variables": {
+              "uniforms": [
+                {
+                  "name": "u_skyboxCubeMapSampler",
+                  "from": "no_material_shader",
+                  "field": "skyboxCubeMap",
+                  "type": "samplerCube"
+                },
+                {
+                  "name": "u_skyboxVMatrix",
+                  "from": "no_material_shader",
+                  "field": "skyboxVMatrix",
+                  "type": "mat4"
+                }
+              ]
+            }
+          },
+          {
+            "name": "end",
+            "variables": {
+              "attributes": [
+                {
+                  "buffer": 3
+                }
+              ]
+            }
+          }
+        ]
         |},
-      ()
+      (),
     ) => (
   shaders,
-  shaderLibs
+  shaderLibs,
 );
 
 let create = ((shaders, shaderLibs), state: StateDataMainType.state) => {
@@ -918,6 +868,6 @@ let create = ((shaders, shaderLibs), state: StateDataMainType.state) => {
   renderConfigRecord:
     Some({
       shaders: convertShadersToRecord(shaders |> Js.Json.parseExn),
-      shaderLibs: convertShaderLibsToRecord(shaderLibs |> Js.Json.parseExn)
-    })
+      shaderLibs: convertShaderLibsToRecord(shaderLibs |> Js.Json.parseExn),
+    }),
 };
