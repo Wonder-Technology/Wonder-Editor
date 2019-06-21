@@ -112,6 +112,12 @@ let getCurrentSceneTreeNodeGeometry = () =>
   )
   |> StateLogicService.getEngineStateToGetData;
 
+let getCurrentSceneTreeNodeFlyCamera = () =>
+  GameObjectComponentEngineService.unsafeGetFlyCameraControllerComponent(
+    unsafeGetCurrentSceneTreeNode(),
+  )
+  |> StateLogicService.getEngineStateToGetData;
+
 let getCurrentSceneTreeNodeArcballCamera = () =>
   GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
     unsafeGetCurrentSceneTreeNode(),

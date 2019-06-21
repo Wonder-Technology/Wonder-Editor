@@ -50,6 +50,15 @@ let addRenderGroupComponent =
     ) =>
   _addComponent((uiState, dispatchFunc), gameObject, "RenderGroup");
 
+let addFlyCameraControllerComponent =
+    (
+      ~uiState=TestTool.buildEmptyAppState(),
+      ~dispatchFunc=TestTool.getDispatch(),
+      ~gameObject=GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+      (),
+    ) =>
+  _addComponent((uiState, dispatchFunc), gameObject, "FlyCameraController");
+
 let addArcballCameraControllerComponent =
     (
       ~uiState=TestTool.buildEmptyAppState(),
