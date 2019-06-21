@@ -44,6 +44,13 @@ let prepareSpecificGameObjects = (editorState, engineState) => {
        )
     |> FlyCameraControllerLogicService.bindFlyCameraControllerEventForSceneView(
          flyCameraController,
+       )
+    |> TransformEngineService.setLocalPosition(
+         (0., 0., 10.),
+         engineState
+         |> GameObjectComponentEngineService.unsafeGetTransformComponent(
+              camera,
+            ),
        );
 
   let (editorState, engineState) =

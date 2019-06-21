@@ -1,5 +1,7 @@
 open Wonderjs;
 
+open StateDataMainType;
+
 let create = FlyCameraControllerAPI.createFlyCameraController;
 
 let unsafeGetFlyCameraControllerGameObject = FlyCameraControllerAPI.unsafeGetFlyCameraControllerGameObject;
@@ -61,3 +63,22 @@ let bindFlyCameraControllerEventIfHasComponentForGameView =
     engineState;
 
 let isTriggerKeydownEventHandler = EventFlyCameraControllerMainService.isTriggerKeydownEventHandler;
+
+let setFlyCameraLocalEulerAngle =
+    (transformComponent, (x, y, z), engineState) => {
+  ...engineState,
+  flyCameraControllerRecord:
+    engineState.flyCameraControllerRecord
+    |> OperateFlyCameraControllerService.setLocalEulerAngleX(
+         transformComponent,
+         x,
+       )
+    |> OperateFlyCameraControllerService.setLocalEulerAngleY(
+         transformComponent,
+         y,
+       )
+    |> OperateFlyCameraControllerService.setLocalEulerAngleZ(
+         transformComponent,
+         z,
+       ),
+};

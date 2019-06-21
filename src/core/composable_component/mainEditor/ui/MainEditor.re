@@ -8,7 +8,7 @@ module Method = {
 
     AnimationFrame.requestAnimationFrame((time: float) =>
       StateEngineService.unsafeGetState()
-      |> CameraControllerUtils.renderWhenCameraChangeDirection(
+      |> CameraControllerUtils.loopBodyWhenCameraChangeDirection(
            StateEditorService.getState(),
          )
       |> StateEngineService.setState
